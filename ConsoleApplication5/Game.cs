@@ -132,18 +132,18 @@ namespace Next_Game
         /// </summary>
         /// <param name="showRoutes"></param>
         /// <param name="showConnectors"></param>
-        public void UpdateMap(bool showRoutes = false, bool showConnectors = false)
+        /*public void UpdateMap(bool showRoutes = false, bool showConnectors = false)
         {
             map.ShowRoutes(showRoutes);
             map.ShowConnectorRoutes(showConnectors);
-        }
+        }*/
 
         /// <summary>
         /// Display player character status to multi-Console
         /// </summary>
         /// <param name="multiConsole"></param>
         /// <param name="locationsOnly">show characters at locations and NOT travelling if true (default false - show all)</param>
-        public void ShowCharacters(RLConsole multiConsole, ConsoleDisplay consoleDisplay, bool locationsOnly = false)
+        /*public void ShowCharacters(RLConsole multiConsole, ConsoleDisplay consoleDisplay, bool locationsOnly = false)
         {
             //output to console
             world.ShowPlayerCharacters(false);
@@ -151,7 +151,7 @@ namespace Next_Game
             multiConsole.Clear();
             infoChannel.SetInfoList(world.ShowPlayerCharactersRL(locationsOnly), consoleDisplay);
             infoChannel.DrawInfoConsole(multiConsole, consoleDisplay);
-        }
+        }*/
 
         /// <summary>
         /// Display Location based on Left Mouse Click

@@ -246,8 +246,8 @@ namespace Next_Game
                 switch (keyPress.Key)
                 {
                     case RLKey.M:
-                        //applies to all menu modes
-                        game.UpdateMap(false, true);
+                        //Draw Map: applies to all menu modes
+                        map.UpdateMap(false, true);
                         renderRequired = true;
                         mouseOn = false;
                         break;
@@ -265,7 +265,8 @@ namespace Next_Game
                         switch (_menuMode)
                         {
                             case MenuMode.Main:
-                                game.ShowCharacters(_multiConsole, ConsoleDisplay.Multi);
+                                //Show Player Characters
+                                infoChannel.SetInfoList(world.ShowPlayerCharactersRL(), ConsoleDisplay.Multi);
                                 renderRequired = true;
                                 mouseOn = false;
                                 break;
@@ -307,7 +308,7 @@ namespace Next_Game
                                 break;
                             case MenuMode.Debug:
                                 //show debug route
-                                game.UpdateMap(true, false);
+                                map.UpdateMap(true, false);
                                 renderRequired = true;
                                 mouseOn = true;
                                 break;
@@ -347,7 +348,8 @@ namespace Next_Game
                         }
                         break;
                     case RLKey.Enter:
-                        game.ProcessTurn();
+                        world.IncrementGameTurn();
+                        map.UpdatePlayers(world.MoveCharacters());
                         renderRequired = true;
                         mouseOn = false;
                         break;
@@ -382,12 +384,15 @@ namespace Next_Game
             // Tell RLNET to draw the console that we set
             if (renderRequired == true)
             {
-                //auto update status consol
-                game.ShowCharacters(_statusConsole, ConsoleDisplay.Status);
-                messageLog.DrawMessageLog(_messageConsole);
+                //update status console
+                infoChannel.SetInfoList(world.ShowPlayerCharactersRL(), ConsoleDisplay.Status);
+
                 //draw to consoles
+                messageLog.DrawMessageLog(_messageConsole);
                 game.DrawMap(_mapConsole);
                 menu.DrawMenuRL(_menuConsole);
+                infoChannel.DrawInfoConsole(_multiConsole, ConsoleDisplay.Multi);
+                infoChannel.DrawInfoConsole(_statusConsole, ConsoleDisplay.Status);
 
                 //Blit to root Console
                 RLConsole.Blit(_menuConsole, 0, 0, _menuWidth, _menuHeight,_rootConsole, 0, 0);

@@ -122,7 +122,7 @@ namespace Next_Game
         /// Handles movement of all Player characters througout world
         /// </summary>
         /// <returns>returns a dictionary of mapMarkers and coordinates for the "Player" mapGrid layer</returns>
-        private Dictionary<Position, int> MoveCharacters()
+        internal Dictionary<Position, int> MoveCharacters()
         {
             //create a dictionary of position and map markers to return (passed up to game thence to map to update mapgrid
             Dictionary<Position, int> dictMapMarkers = new Dictionary<Position, int>();
@@ -201,7 +201,7 @@ namespace Next_Game
         /// Display Player Character Pool
         /// </summary>
         /// <param name="locationsOnly">If true only show those at Locations, default is show all</param>
-        public void ShowPlayerCharacters(bool locationsOnly = false)
+        /*public void ShowPlayerCharacters(bool locationsOnly = false)
         {
             Console.WriteLine();
             Console.WriteLine("Player Characters");
@@ -222,7 +222,7 @@ namespace Next_Game
                 if (locationsOnly == true && status == (int)CharStatus.Location || !locationsOnly)
                 { Console.WriteLine("ID {0,-2} {1,-15} Status: {2,-20}", pair.Key, pair.Value.GetCharacterName(), locStatus); }
             }            
-        }
+        }*/
 
         /// <summary>
         /// Returns a list of characters in string format to pass to InfoChannel to display in multi-Console

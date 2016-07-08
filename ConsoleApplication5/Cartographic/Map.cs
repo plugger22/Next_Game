@@ -1821,6 +1821,12 @@ namespace Next_Game.Cartographic
             { mapGrid[(int)MapLayer.Player, entry.Key.PosX, entry.Key.PosY] = entry.Value; }
         }
 
+        public void UpdateMap(bool showRoutes = false, bool showConnectors = false)
+        {
+            ShowRoutes(showRoutes);
+            ShowConnectorRoutes(showConnectors);
+        }
+
         /// <summary>
         /// takes raw x, y mouse input and converts to a map Position
         /// </summary>
