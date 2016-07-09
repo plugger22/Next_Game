@@ -196,10 +196,13 @@ namespace Next_Game
                                     if (secondInput == false)
                                     {
                                         //valid location?
-                                        if (game.ShowLocationInput(_inputConsole, mouse.X, mouse.Y) == true)
+                                        int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                                        if (locID > 0)
                                         {
-                                            posSelect1 = new Position(game.MouseInput(mouse.X, mouse.Y));
-                                            game.GetRouteDestination(_inputConsole);
+                                            string locName = world.GetLocationName(locID);
+                                            infoChannel.AppendInfoList(locName, ConsoleDisplay.Input);
+                                            posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                            infoChannel.AppendInfoList("Select DESTINATION Location by Mouse (press ESC to Exit)", ConsoleDisplay.Input);
                                             secondInput = true;
                                         }
                                     }
@@ -207,11 +210,16 @@ namespace Next_Game
                                     else if (secondInput == true)
                                     {
                                         //valid location?
-                                        if (game.ShowLocationInput(_inputConsole, mouse.X, mouse.Y) == true)
+                                        int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                                        if (locID > 0)
                                         {
                                             //process two positions to show on map.
-                                            posSelect2 = new Position(game.MouseInput(mouse.X, mouse.Y));
-                                            game.ShowRoute(_mapConsole, posSelect1, posSelect2);
+                                            posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                            if ((posSelect1 != null && posSelect2 != null) && (posSelect1.PosX != posSelect2.PosX || posSelect1.PosY != posSelect2.PosY))
+                                            {
+                                                List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
+                                                map.DrawRouteRL(listOfRoutes);
+                                            }
                                             secondInput = false;
                                             mouseOn = false;
                                         }
@@ -220,25 +228,28 @@ namespace Next_Game
                             }
                             break;
                         case RLKey.P:
-                            //Position posDestination = GetLocationPosInput("Destination");
                             switch (_menuMode)
                             {
                                 case MenuMode.Character:
                                     //move Player character from A to B
                                     //valid location?
-                                    if (game.ShowLocationInput(_inputConsole, mouse.X, mouse.Y) == true)
+                                    int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                                    if (locID > 0)
                                     {
                                         //process two positions to show on map.
-                                        posSelect2 = new Position(game.MouseInput(mouse.X, mouse.Y));
+                                        posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
                                         if (posSelect2 != null)
                                         {
-                                            game.MoveCharacters(posSelect1, posSelect2, charIDSelected, _inputConsole, ConsoleDisplay.Input);
+                                            List<Position> pathToTravel = network.GetPathAnywhere(posSelect1, posSelect2);
+                                            string infoText = world.InitiateMoveCharacters(charIDSelected, posSelect1, posSelect2, pathToTravel);
+                                            messageLog.Add(infoText, world.GetGameTurn());
+                                            infoChannel.AppendInfoList(infoText, ConsoleDisplay.Input);
                                             mouseOn = false;
                                             renderRequired = true;
                                             //autoswitch back to Main menu
                                             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
                                         }
-                                        else { game.MouseInputError(_inputConsole, ConsoleDisplay.Input); }
+                                        else { infoChannel.AppendInfoList("ERROR: Not a valid Location", ConsoleDisplay.Input); }
                                     }
                                     break;
                             }
@@ -282,16 +293,20 @@ namespace Next_Game
                         break;
                     case RLKey.D:
                         //List<Route> listOfRoutes_2 = network.RouteInput("D"); map.DrawRouteDebug(listOfRoutes_2);
+                        renderRequired = true;
                         switch(_menuMode)
                             {
                             case MenuMode.Main:
                                 //switch to Debug menu
                                 _menuMode = menu.SwitchMenuMode(MenuMode.Debug);
-                                renderRequired = true;
+                                
                                 break;
                             case MenuMode.Debug:
                                 //show debug route
-                                game.GetRouteOrigin(_inputConsole);
+                                List<string> inputList = new List<string>();
+                                inputList.Add("--- Show the Route between two Locations");
+                                inputList.Add("Select ORIGIN Location by Mouse (press ESC to Exit)");
+                                infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                 mouseOn = true;
                                 break;
                             }
@@ -328,12 +343,14 @@ namespace Next_Game
                         {
                             case MenuMode.Character:
                                 //move Player characters around map
-                                posSelect1 = game.GetCharacterLocation(_inputConsole, ConsoleDisplay.Input, charIDSelected);
-                                //valid position for origin
+                                List<string> charList = new List<string>();
+                                charList.Add(world.GetCharacterRL(charIDSelected));
+                                posSelect1 = world.GetCharacterLocationByPos(charIDSelected);
                                 if (posSelect1 != null)
-                                { mouseOn = true; }
-                                //get destination
-                                else { mouseOn = false; }
+                                { charList.Add("Click on the Destination location or press [ESC] to cancel"); mouseOn = true; }
+                                else
+                                { charList.Add("The character is not currently at your disposal"); mouseOn = false; }
+                                infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
                                 renderRequired = true;
                                 break;
                         }
@@ -350,7 +367,9 @@ namespace Next_Game
                             case MenuMode.Main:
                                 _menuMode = menu.SwitchMenuMode(MenuMode.Character);
                                 charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
-                                game.ShowSelectedCharacter(_inputConsole, ConsoleDisplay.Input, charIDSelected);
+                                List<string> infoList = new List<string>();
+                                infoList.Add(world.ShowSelectedCharacter(charIDSelected));
+                                infoChannel.SetInfoList(infoList, ConsoleDisplay.Input);
                                 renderRequired = true;
                                 break;
                         }

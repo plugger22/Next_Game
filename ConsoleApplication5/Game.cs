@@ -33,7 +33,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="name"></param>
         /// <returns>Returns Location ID</returns>
-        private int GetLocationIDInput(string name)
+        /*private int GetLocationIDInput(string name)
         {
             Console.WriteLine("Input {0} Coordinates in format X,Y", name);
             string coords = Console.ReadLine();
@@ -43,14 +43,14 @@ namespace Next_Game
             int y_Cord = Convert.ToInt32(tokens[1]);
             int locID = map.GetLocationID(x_Cord, y_Cord);
             return locID;
-        }
+        }*/
 
         /// <summary>
         /// General location input routine
         /// </summary>
         /// <param name="name"></param>
         /// <returns>Returns Position</returns>
-        private Position GetLocationPosInput(string name)
+        /*private Position GetLocationPosInput(string name)
         {
             int locID = 0;
             Position pos = new Position();
@@ -72,7 +72,7 @@ namespace Next_Game
             }
             while (locID == 0);
             return pos;
-        }
+        }*/
 
         /// <summary>
         /// handles initial input for selection of character and returns pos of location (null if travelling)
@@ -81,7 +81,7 @@ namespace Next_Game
         /// <param name="consoleDisplay"></param>
         /// <param name="charID"></param>
         /// <returns></returns>
-        public Position GetCharacterLocation(RLConsole inputConsole, ConsoleDisplay consoleDisplay, int charID)
+        /*public Position GetCharacterLocation(RLConsole inputConsole, ConsoleDisplay consoleDisplay, int charID)
         {
             Position pos = new Position();
             List<string> charList = new List<string>();
@@ -94,28 +94,28 @@ namespace Next_Game
             infoChannel.SetInfoList(charList, consoleDisplay);
             //infoChannel.DrawInfoConsole(inputConsole, consoleDisplay);
             return pos;
-        }
+        }*/
 
-        public void MoveCharacters(Position posOrigin, Position posDestination, int charID, RLConsole inputConsole, ConsoleDisplay inputDisplay)
+        /*public void MoveCharacters(Position posOrigin, Position posDestination, int charID, RLConsole inputConsole, ConsoleDisplay inputDisplay)
         {
             List<Position> pathToTravel = network.GetPathAnywhere(posOrigin, posDestination);
             string infoText = world.InitiateMoveCharacters(charID, posOrigin, posDestination, pathToTravel);
             Program.messageLog.Add(infoText, world.GetGameTurn());
             infoChannel.AppendInfoList(infoText, inputDisplay);
             infoChannel.DrawInfoConsole(inputConsole, inputDisplay, true);
-        }
+        }*/
 
         /// <summary>
         /// when a character # is pressed in the main menu it switches to the character menu and this highlights which character you've chosen
         /// </summary>
         /// <param name="charID"></param>
-        public void ShowSelectedCharacter(RLConsole inputConsole, ConsoleDisplay consoleDisplay, int charID)
+        /*public void ShowSelectedCharacter(RLConsole inputConsole, ConsoleDisplay consoleDisplay, int charID)
         {
             List<string> infoList = new List<string>();
             infoList.Add(world.ShowSelectedCharacter(charID));
             infoChannel.SetInfoList(infoList, consoleDisplay);
             infoChannel.DrawInfoConsole(inputConsole, consoleDisplay, true);
-        }
+        }*/
 
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Next_Game
             return validLocation;
         }*/
 
-           public void ShowRoute(RLConsole mapConsole, Position pos1, Position pos2)
+          /* public void ShowRoute(RLConsole mapConsole, Position pos1, Position pos2)
         {
             //check that the two coords aren't identical
             if ((pos1 != null && pos2 != null) && (pos1.PosX != pos2.PosX || pos1.PosY != pos2.PosY))
@@ -191,7 +191,7 @@ namespace Next_Game
                 map.DrawRouteRL(listOfRoutes);
                 map.DrawMapRL(mapConsole);
             }
-        }
+        }*/
 
         /*public void ShowRouteDebug(RLConsole mapConsole, Position pos1, Position pos2)
         {
@@ -242,11 +242,11 @@ namespace Next_Game
             return pos;
         }*/
 
-        public void MouseInputError(RLConsole inputConsole, ConsoleDisplay consoleDisplay)
+        /*public void MouseInputError(RLConsole inputConsole, ConsoleDisplay consoleDisplay)
         {
             infoChannel.AppendInfoList("ERROR: Not a valid Location", consoleDisplay);
             infoChannel.DrawInfoConsole(inputConsole, consoleDisplay, true);
-        }
+        }*/
 
     }
 }
