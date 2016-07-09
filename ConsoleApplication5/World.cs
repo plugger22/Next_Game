@@ -361,10 +361,10 @@ namespace Next_Game
         internal List<string> ShowLocationRL(int locID)
         {
             List<string> locList = new List<string>();
-            Location loc = Program.network.GetLocation(locID);
             //Location display
-            if (loc != null)
+            if (locID > 0)
             {
+                Location loc = Program.network.GetLocation(locID);
                 string locDetails = string.Format("Location (ID {0}) {1} ---", loc.LocationID, loc.LocName);
                 locList.Add(locDetails);
                 if (loc.IsCapital() == true)
@@ -394,7 +394,7 @@ namespace Next_Game
                 }
             }
             else
-            { locList.Add(string.Format("ERROR: LocID {0} doesn't exist in Dictionary", locID)); }
+            { locList.Add("ERROR: There is no Location present here"); }
             return locList;
         }
 
