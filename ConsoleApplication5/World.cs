@@ -288,7 +288,7 @@ namespace Next_Game
             { Console.WriteLine("ID {0,-2}   {1,-20}", pair.Key, pair.Value.LocName); }
         }*/
 
-        private string GetLocationName(int locID)
+        internal string GetLocationName(int locID)
         {
             string locName = "unknown";
             Location loc = Program.network.GetLocation(locID);
@@ -296,7 +296,7 @@ namespace Next_Game
             return locName;
         }
 
-        private string GetLocationName(Position pos)
+        internal string GetLocationName(Position pos)
         {
             string locName = "unknown";
             int locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
@@ -358,7 +358,7 @@ namespace Next_Game
         /// click on a location to get info
         /// </summary>
         /// <param name="pos"></param>
-        private List<string> ShowLocationRL(int locID)
+        internal List<string> ShowLocationRL(int locID)
         {
             List<string> locList = new List<string>();
             Location loc = Program.network.GetLocation(locID);

@@ -198,7 +198,7 @@ namespace Next_Game.Cartographic
         /// <summary>
         /// Draw Map Console version
         /// </summary>
-        public void DrawMap()
+        /*public void DrawMap()
         {
             //write header to screen (two rows, vertical 2 digit, spaced 3 apart)
             Console.Write("   ");
@@ -354,7 +354,7 @@ namespace Next_Game.Cartographic
             }
             while (counter < mapSize);
             Console.WriteLine();
-        }
+        }*/
 
         /// <summary>
         /// Draw map RLNET version
@@ -362,6 +362,7 @@ namespace Next_Game.Cartographic
         /// <param name="mapConsole"></param>
         public void DrawMapRL(RLConsole mapConsole)
         {
+            mapConsole.Clear();
             RLColor foreground; //normal foreground color
             //RLColor forVertical; //color used for vertical above and below connections
             int playerLayer = 0;
@@ -1793,14 +1794,21 @@ namespace Next_Game.Cartographic
         }
 
         /// <summary>
-        /// Input X & Y coords and return LocID based on MapGrid Layer
+        /// Input X & Y coords and return LocID based on MapGrid Layer. Converts raw mouse input coords if needed.
         /// </summary>
         /// <param name="x_cord"></param>
         /// <param name="y_cord"></param>
-        /// <returns></returns>
-        public int GetLocationID(int x_cord, int y_cord)
+        /// /// <param name="convert">Converts raw mouse coords if true, default false</param>
+        /// <returns>'0' if location ID not valid</returns>
+        public int GetLocationID(int x_cord, int y_cord, bool convert = false)
         {
             int locID = 0;
+            //convert raw mouse input coords?
+            if(convert == true)
+            {
+                x_cord= (x_cord - margin - offsetHorizontal) / 3;
+                y_cord = (y_cord - margin - offsetVertical - 19) / 3;
+            }
             return locID = mapGrid[(int)MapLayer.LocID, x_cord, y_cord];
         }
 

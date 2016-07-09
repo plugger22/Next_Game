@@ -132,11 +132,11 @@ namespace Next_Game
             //mouse input
             if(mouseLeft == true)
             {
-                game.MouseInput(mouse.X, mouse.Y);
                 //Mouse specific input OFF - generic location and party info
                 if (mouseOn == false)
                 {
-                    game.ShowLocationMulti(_multiConsole, mouse.X, mouse.Y);
+                    int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                    infoChannel.SetInfoList(world.ShowLocationRL(locID), ConsoleDisplay.Multi);
                     renderRequired = true;
                 }
                 //Mouse specific input ON
@@ -150,16 +150,18 @@ namespace Next_Game
                             {
                                 case MenuMode.Debug:
                                     //debug route between two points
-                                    //List<Route> listOfRoutes_2 = network.RouteInput("D"); map.DrawRouteDebug(listOfRoutes_2);
                                     renderRequired = true;
                                     //Origin location
                                     if (secondInput == false)
                                     {
                                         //valid location?
-                                        if (game.ShowLocationInput(_inputConsole, mouse.X, mouse.Y) == true)
+                                        int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                                        if (locID > 0)
                                         {
-                                            posSelect1 = new Position(game.MouseInput(mouse.X, mouse.Y));
-                                            game.GetRouteDestination(_inputConsole);
+                                            string locName = world.GetLocationName(locID);
+                                            infoChannel.AppendInfoList(locName, ConsoleDisplay.Input);
+                                            posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                            infoChannel.AppendInfoList("Select DESTINATION Location by Mouse (press ESC to Exit)", ConsoleDisplay.Input);
                                             secondInput = true;
                                         }
                                     }
@@ -167,11 +169,17 @@ namespace Next_Game
                                     else if (secondInput == true)
                                     {
                                         //valid location?
-                                        if (game.ShowLocationInput(_inputConsole, mouse.X, mouse.Y) == true)
+                                        int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                                        if (locID > 0)
                                         {
                                             //process two positions to show on map.
-                                            posSelect2 = new Position(game.MouseInput(mouse.X, mouse.Y));
-                                            game.ShowRouteDebug(_mapConsole, posSelect1, posSelect2);
+                                            posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                            //check that the two coords aren't identical
+                                            if ((posSelect1 != null && posSelect2 != null) && (posSelect1.PosX != posSelect2.PosX || posSelect1.PosY != posSelect2.PosY))
+                                            {
+                                                List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
+                                                map.DrawRouteDebug(listOfRoutes);
+                                            }
                                             secondInput = false;
                                             mouseOn = false;
                                         }
@@ -388,9 +396,10 @@ namespace Next_Game
                 infoChannel.SetInfoList(world.ShowPlayerCharactersRL(), ConsoleDisplay.Status);
 
                 //draw to consoles
+                map.DrawMapRL(_mapConsole);
                 messageLog.DrawMessageLog(_messageConsole);
-                game.DrawMap(_mapConsole);
                 menu.DrawMenuRL(_menuConsole);
+                infoChannel.DrawInfoConsole(_inputConsole, ConsoleDisplay.Input);
                 infoChannel.DrawInfoConsole(_multiConsole, ConsoleDisplay.Multi);
                 infoChannel.DrawInfoConsole(_statusConsole, ConsoleDisplay.Status);
 

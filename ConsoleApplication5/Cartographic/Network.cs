@@ -650,7 +650,7 @@ namespace Next_Game.Cartographic
         /// <param name="posOrigin"></param>
         /// <param name="posDestination"></param>
         /// <returns></returns>
-        private List<Position> GetPathAnywhere(Position posOrigin, Position posDestination)
+        internal List<Position> GetPathAnywhere(Position posOrigin, Position posDestination)
         {
             List<Position> path = new List<Position>();
             List<Route> listOfRoutes = GetRouteAnywhere(posOrigin, posDestination);
@@ -669,7 +669,7 @@ namespace Next_Game.Cartographic
         //Main Route Finding Algorithim from A to B anywhere on the map.
         //Returns List<Route> to enable a Map object to draw the route on the map
         //data validation of A & B positions is done by Network.RouteInput()
-        private List<Route> GetRouteAnywhere(Position posOrigin, Position posDestination)
+        internal List<Route> GetRouteAnywhere(Position posOrigin, Position posDestination)
         {
             List<Route> listOfDirectRoutes = new List<Route>(); //default straight shot routes
             List<Route> listOfAlternateRoutes = new List<Route>(); //alternate routes via connectors

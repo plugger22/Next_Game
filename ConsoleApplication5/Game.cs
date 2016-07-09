@@ -121,11 +121,11 @@ namespace Next_Game
         /// <summary>
         /// Main map update routine (Draws map only, other options handle ShowRoute/ShowConnectorRoutes)
         /// </summary>
-        public void DrawMap(RLConsole mapConsole)
+        /*public void DrawMap(RLConsole mapConsole)
         {
            mapConsole.Clear();
            map.DrawMapRL(mapConsole);
-        }
+        }*/
 
         /// <summary>
         /// General purpose map update routine
@@ -159,30 +159,29 @@ namespace Next_Game
         /// <param name="multiConsole"></param>
         /// <param name="mouseX"></param>
         /// <param name="mouseY"></param>
-        public void ShowLocationMulti(RLConsole multiConsole, int mouseX, int mouseY)
+        /*public void ShowLocationMulti(RLConsole multiConsole, int mouseX, int mouseY)
         {
             Position pos = new Position(map.ConvertMouseCoords(mouseX, mouseY));
             infoChannel.SetInfoList(world.ShowLocationRL(pos), ConsoleDisplay.Multi);
             infoChannel.DrawInfoConsole(multiConsole, ConsoleDisplay.Multi);
-        }
+        }*/
 
         //returns true if a valid location found
-        public bool ShowLocationInput(RLConsole inputConsole, int mouseX, int mouseY)
+       /* public bool ShowLocationInput(RLConsole inputConsole, int mouseX, int mouseY)
         {
             bool validLocation = false;
             Position pos = new Position(map.ConvertMouseCoords(mouseX, mouseY));
             string locName = world.GetLocationName(pos);
             if (locName != "unknown")
             {
-                infoChannel.AppendInfoList(locName, ConsoleDisplay.Input);
+                
                 validLocation = true;
             }
             infoChannel.DrawInfoConsole(inputConsole, ConsoleDisplay.Input);
             return validLocation;
-        }
+        }*/
 
-
-        public void ShowRoute(RLConsole mapConsole, Position pos1, Position pos2)
+           public void ShowRoute(RLConsole mapConsole, Position pos1, Position pos2)
         {
             //check that the two coords aren't identical
             if ((pos1 != null && pos2 != null) && (pos1.PosX != pos2.PosX || pos1.PosY != pos2.PosY))
@@ -194,7 +193,7 @@ namespace Next_Game
             }
         }
 
-        public void ShowRouteDebug(RLConsole mapConsole, Position pos1, Position pos2)
+        /*public void ShowRouteDebug(RLConsole mapConsole, Position pos1, Position pos2)
         {
             //check that the two coords aren't identical
             if ((pos1 != null && pos2 != null) && (pos1.PosX != pos2.PosX || pos1.PosY != pos2.PosY))
@@ -204,7 +203,7 @@ namespace Next_Game
                 map.DrawRouteDebug(listOfRoutes);
                 map.DrawMapRL(mapConsole);
             }
-        }
+        }*/
 
 
         public void GetRouteOrigin(RLConsole inputConsole)
@@ -217,12 +216,13 @@ namespace Next_Game
             infoChannel.DrawInfoConsole(inputConsole, ConsoleDisplay.Input);
         }
 
+        /*
         public void GetRouteDestination(RLConsole inputConsole)
         {
             List<string> inputList = new List<string>();
             infoChannel.AppendInfoList("Select DESTINATION Location by Mouse (press ESC to Exit)", ConsoleDisplay.Input);
             infoChannel.DrawInfoConsole(inputConsole, ConsoleDisplay.Input);
-        }
+        }*/
 
         /// <summary>
         /// Mouse output in form of Location and coords written to input-Console - No console output, take click, return pos only
@@ -231,7 +231,7 @@ namespace Next_Game
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// /// <returns>Returns position in map coordinates, returns 'null' if not a location</returns>
-        public Position MouseInput(int x, int y)
+        /*public Position MouseInput(int x, int y)
         {
             //convert coords
             Position pos = new Position(map.ConvertMouseCoords(x, y));
@@ -240,7 +240,7 @@ namespace Next_Game
             if( locName == "unknown")
             { pos = null; }
             return pos;
-        }
+        }*/
 
         public void MouseInputError(RLConsole inputConsole, ConsoleDisplay consoleDisplay)
         {
