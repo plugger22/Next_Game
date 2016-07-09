@@ -71,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Character.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="Archive.cs" />
     <Compile Include="History.cs" />
     <Compile Include="InfoChannel.cs" />
     <Compile Include="Cartographic\Location.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="Cartographic\Move.cs" />
     <Compile Include="Cartographic\Network.cs" />
     <Compile Include="MessageLog.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cartographic\Route.cs" />
     <Compile Include="World.cs" />

@@ -1799,7 +1799,7 @@ namespace Next_Game.Cartographic
         /// <param name="x_cord"></param>
         /// <param name="y_cord"></param>
         /// /// <param name="convert">Converts raw mouse coords if true, default false</param>
-        /// <returns>'0' if location ID not valid</returns>
+        /// <returns>'0' if location ID not valid, '-1' if not on map area</returns>
         public int GetLocationID(int x_cord, int y_cord, bool convert = false)
         {
             int locID = 0;
@@ -1809,7 +1809,12 @@ namespace Next_Game.Cartographic
                 x_cord= (x_cord - margin - offsetHorizontal) / 3;
                 y_cord = (y_cord - margin - offsetVertical - 19) / 3;
             }
-            return locID = mapGrid[(int)MapLayer.LocID, x_cord, y_cord];
+            //make sure coords are somewhere on the map
+            if (x_cord >= 0 && x_cord < mapSize && y_cord >= 0 && y_cord < mapSize)
+            { locID = mapGrid[(int)MapLayer.LocID, x_cord, y_cord]; }
+            else
+            { locID = -1; }
+            return locID;
         }
 
         /// <summary>

@@ -27,10 +27,10 @@ namespace Next_Game.Cartographic
             dictLocations = new Dictionary<int, Location>();
             rnd = new Random(seed);
             //set up data structures
-            ListOfRoutes = Program.map.GetRoutes();
-            ListOfLocations = Program.map.GetLocations();
-            ListOfConnectorRoutes = Program.map.GetConnectors();
-            ArrayOfConnectors = Program.map.GetArrayOfConnectors();
+            ListOfRoutes = Game.map.GetRoutes();
+            ListOfLocations = Game.map.GetLocations();
+            ListOfConnectorRoutes = Game.map.GetConnectors();
+            ArrayOfConnectors = Game.map.GetArrayOfConnectors();
         }
 
         //set up Network collections
@@ -92,7 +92,7 @@ namespace Next_Game.Cartographic
                     //Console.WriteLine("Debug: Neighbour found at {0}:{1}", pos.PosX, pos.PosY);
                     //look up neighbour in Dictionary of Locations
                     Location loc = new Location();
-                    int locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+                    int locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
                     int direction = 0;
                     if( dictLocations.TryGetValue(locID, out loc))
                     {
@@ -189,7 +189,7 @@ namespace Next_Game.Cartographic
             Position posBase = new Position();
             Position posNew = new Position();
             Position posSearch = new Position();
-            int locID = Program.map.GetLocationID(posOrigin.PosX, posOrigin.PosY);
+            int locID = Game.map.GetLocationID(posOrigin.PosX, posOrigin.PosY);
             //position pair (route origin/destination)
             //lookup origin location in dictionary
             if (dictLocations.TryGetValue(locID, out baseLoc))
@@ -402,7 +402,7 @@ namespace Next_Game.Cartographic
                         //Console.WriteLine("Debug: TEST - Continue");
                         foundPos = false;
                         //get newLoc by searching dictionary with newPos
-                        locID = Program.map.GetLocationID(posNew.PosX, posNew.PosY);
+                        locID = Game.map.GetLocationID(posNew.PosX, posNew.PosY);
                         if (dictLocations.TryGetValue(locID, out newLoc))
                         {
                             //Console.WriteLine("Debug: DICTIONARY SEARCH SUCCESSFUL");
@@ -522,7 +522,7 @@ namespace Next_Game.Cartographic
                                 //find loc in dictionary and get correct list of Neighbours to search for any remaining viable routes
                                 Location searchLoc = new Location();
                                 List<Position> searchNeighbours = new List<Position>();
-                                locID = Program.map.GetLocationID(posBase.PosX, posBase.PosY);
+                                locID = Game.map.GetLocationID(posBase.PosX, posBase.PosY);
                                 if (dictLocations.TryGetValue(locID, out searchLoc))
                                 { searchNeighbours = searchLoc.GetNeighbours(); }
                                 //check that there isn't a viable pos from the base that hasn't already been searched != Capital, != Base, != origin, != posNew default (from peek) != posSearch
@@ -689,14 +689,14 @@ namespace Next_Game.Cartographic
             int destinationBranch = 0;
             int alternateBranch = 0;
             //Get origin routes
-            int locID = Program.map.GetLocationID(posOrigin.PosX, posOrigin.PosY);
+            int locID = Game.map.GetLocationID(posOrigin.PosX, posOrigin.PosY);
             if (dictLocations.TryGetValue(locID, out originLoc))
             {
                 originToCapitalRoutes.AddRange(originLoc.GetRouteToCapital());
                 originFromCapitalRoutes.AddRange(originLoc.GetRouteFromCapital());
             }
             //Get destination routes
-            locID = Program.map.GetLocationID(posDestination.PosX, posDestination.PosY);
+            locID = Game.map.GetLocationID(posDestination.PosX, posDestination.PosY);
             if (dictLocations.TryGetValue(locID, out destinationLoc))
             {
                 destinationToCapitalRoutes.AddRange(destinationLoc.GetRouteToCapital());
@@ -724,7 +724,7 @@ namespace Next_Game.Cartographic
                         distanceAcrossConnector = ArrayOfConnectors[originBranch, 1];
                         //find loc in Dictionary
                         Location loc = new Location();
-                        locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+                        locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
                         if (dictLocations.TryGetValue(locID, out loc))
                         {
                             //get distance to Capital
@@ -770,7 +770,7 @@ namespace Next_Game.Cartographic
                         distanceAcrossConnector = ArrayOfConnectors[originBranch, 1];
                         //find destination of connector route loc in Dictionary
                         Location loc = new Location();
-                        locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+                        locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
                         if (dictLocations.TryGetValue(locID, out loc))
                         {
                             //get distance to Capital
@@ -790,7 +790,7 @@ namespace Next_Game.Cartographic
                                         //add to combined route ('Add' because it's a single route, not a collection)
                                         listOfAlternateRoutes.Add(route);
                                         //get destination route to Capital
-                                        locID = Program.map.GetLocationID(posEnd.PosX, posEnd.PosY);
+                                        locID = Game.map.GetLocationID(posEnd.PosX, posEnd.PosY);
                                         if (dictLocations.TryGetValue(locID, out loc))
                                         {
                                             //add to combined route
@@ -832,7 +832,7 @@ namespace Next_Game.Cartographic
                         distanceAcrossConnector = ArrayOfConnectors[originBranch, 1];
                         //find loc in Dictionary
                         Location loc = new Location();
-                        locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+                        locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
                         if (dictLocations.TryGetValue(locID, out loc))
                         {
                             //get distance to Capital
@@ -893,7 +893,7 @@ namespace Next_Game.Cartographic
                             distanceAcrossConnector = ArrayOfConnectors[originBranch, 1];
                             //find loc in Dictionary
                             Location loc = new Location();
-                            locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+                            locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
                             if (dictLocations.TryGetValue(locID, out loc))
                             {
                                 distanceAlternate = destinationLoc.DistanceToConnector;
@@ -937,7 +937,7 @@ namespace Next_Game.Cartographic
                                 distanceAcrossConnector = ArrayOfConnectors[destinationBranch, 1];
                                 //find loc in Dictionary
                                 Location loc = new Location();
-                                locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+                                locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
                                 if (dictLocations.TryGetValue(locID, out loc))
                                 {
                                     distanceAlternate = loc.DistanceToCapital;
@@ -976,7 +976,7 @@ namespace Next_Game.Cartographic
                                 distanceAcrossConnector = ArrayOfConnectors[originBranch, 1];
                                 //find loc in Dictionary
                                 Location loc = new Location();
-                                locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+                                locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
                                 if (dictLocations.TryGetValue(locID, out loc))
                                 {
                                     distanceAlternate = loc.DistanceToCapital;
@@ -1019,7 +1019,7 @@ namespace Next_Game.Cartographic
                                 distanceAcrossConnector = ArrayOfConnectors[originBranch, 1];
                                 //find loc in Dictionary
                                 Location loc = new Location();
-                                locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+                                locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
                                 if (dictLocations.TryGetValue(locID, out loc))
                                 {
                                     //get distance to Capital
@@ -1061,7 +1061,7 @@ namespace Next_Game.Cartographic
                                 distanceAcrossConnector = ArrayOfConnectors[destinationBranch, 1];
                                 //find loc in Dictionary
                                 Location locConn = new Location();
-                                locID = Program.map.GetLocationID(posConn.PosX, posConn.PosY);
+                                locID = Game.map.GetLocationID(posConn.PosX, posConn.PosY);
                                 if (dictLocations.TryGetValue(locID, out locConn))
                                 {
                                     //get distance to Capital
@@ -1173,7 +1173,7 @@ namespace Next_Game.Cartographic
             //Location display
             if (input.Equals("L"))
             {
-                int locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+                int locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
                 if (dictLocations.ContainsKey(locID))
                 { loc = dictLocations[locID]; loc.PrintStatus(); }
                 else
@@ -1233,7 +1233,7 @@ namespace Next_Game.Cartographic
             Position pos = new Position();
             pos.PosX = Convert.ToInt32(tokens[0]);
             pos.PosY = Convert.ToInt32(tokens[1]);
-            int locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+            int locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
             //check a valid location, return null if not
             if (!dictLocations.ContainsKey(locID))
             { pos = null; }
@@ -1247,7 +1247,7 @@ namespace Next_Game.Cartographic
             List<Route> listOfRoutes = new List<Route>();
             listOfRoutes = null;
             Location loc = new Location();
-            int locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+            int locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
             if (dictLocations.ContainsKey(locID))
             {
                 loc = dictLocations[locID];
@@ -1284,7 +1284,7 @@ namespace Next_Game.Cartographic
         {
             string locName = null;
             Location loc = new Location();
-            int locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
+            int locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
             if (dictLocations.TryGetValue(locID, out loc))
             { locName = loc.LocName; }
             return locName;

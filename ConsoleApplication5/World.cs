@@ -54,10 +54,10 @@ namespace Next_Game
             {
                 //place characters at Location
                 person.CharLocationID = locID;
-                person.SetCharacterPosition(Program.map.GetCapital());
+                person.SetCharacterPosition(Game.map.GetCapital());
                 dictPlayerCharacters.Add(person.GetCharacterID(), person);
                 //add to Location list of Characters
-                Location loc = Program.network.GetLocation(locID);
+                Location loc = Game.network.GetLocation(locID);
                 loc.AddCharacter(person.GetCharacterID());
             }
         }
@@ -88,7 +88,7 @@ namespace Next_Game
                     int time = (distance / speed) + 1; //prevents 0 result
                     string originLocation = GetLocationName(posOrigin);
                     string destinationLocation = GetLocationName(posDestination);
-                    returnText = string.Format("It will take approximately {0} days for {1} to travel from {2} to {3}. The Journey has commenced.", time, name, originLocation, destinationLocation);
+                    returnText = string.Format("It will take {0} days for {1} to travel from {2} to {3}. The Journey has commenced.", time, name, originLocation, destinationLocation);
 
                     //are you sure?
                     /*Console.WriteLine("Are you sure [Y] Yes, [N] No?");
@@ -97,8 +97,8 @@ namespace Next_Game
                     if (cki.Key == ConsoleKey.Y)*/
 
                     //remove character from current location 
-                    int locID = Program.map.GetLocationID(posOrigin.PosX, posOrigin.PosY);
-                    Location loc = Program.network.GetLocation(locID);
+                    int locID_Origin = Game.map.GetLocationID(posOrigin.PosX, posOrigin.PosY);
+                    Location loc = Game.network.GetLocation(locID_Origin);
                     if (loc != null)
                     {
                         loc.RemoveCharacter(charID);
@@ -109,7 +109,8 @@ namespace Next_Game
                         //update character status to 'travelling'
                         person.SetCharacterStatus(CharStatus.Travelling);
                         //update characterLocationID (now becomes destination)
-                        person.CharLocationID = locID;
+                        int locID_Destination = Game.map.GetLocationID(posDestination.PosX, posDestination.PosY);
+                        person.CharLocationID = locID_Destination;
                     }
                     else
                     { returnText = "ERROR: The Journey has been cancelled (world.InitiateMoveCharacters"; }
@@ -136,8 +137,8 @@ namespace Next_Game
                 {
                     //update location list at destination
                     Position posDestination = moveObject.GetCurrentPosition();
-                    int locID = Program.map.GetLocationID(posDestination.PosX, posDestination.PosY);
-                    Location loc = Program.network.GetLocation(locID);
+                    int locID = Game.map.GetLocationID(posDestination.PosX, posDestination.PosY);
+                    Location loc = Game.network.GetLocation(locID);
                     List<int> charListMoveObject = new List<int>(moveObject.GetCharacterList());
                     //find location, get list, update for each character
                     if (loc != null)
@@ -153,14 +154,14 @@ namespace Next_Game
                                 person.SetCharacterStatus(CharStatus.Location);
                                 person.SetCharacterPosition(posDestination);
                                 person.CharLocationID = locID;
-                                Program.messageLog.Add(person.GetCharacterName() + " has arrived safely at " + loc.LocName, GameTurn);
+                                Game.messageLog.Add(person.GetCharacterName() + " has arrived safely at " + loc.LocName, GameTurn);
                             }
                             else
-                            { Program.messageLog.Add("Error in World.MoveCharacters(): Character not found", GameTurn); }
+                            { Game.messageLog.Add("Error in World.MoveCharacters(): Character not found", GameTurn); }
                         }
                     }
                     else
-                    { Program.messageLog.Add("Error in World.MoveCharacters(): Location not found", GameTurn); }
+                    { Game.messageLog.Add("Error in World.MoveCharacters(): Location not found", GameTurn); }
                     //update Party status to enable deletion of moveObject from list (below)
                     moveObject.SetPartyStatus(PartyStatus.Done);
                 }
@@ -249,11 +250,11 @@ namespace Next_Game
                 else if (status == (int)CharStatus.Travelling)
                 { locStatus = "Travelling to " + locName; }
                 //get location coords
-                Location loc = Program.network.GetLocation(locID);
+                Location loc = Game.network.GetLocation(locID);
                 //only show chosen characters (at Location or not depending on parameter)
                 if (locationsOnly == true && status == (int)CharStatus.Location || !locationsOnly)
                 {
-                    charString = string.Format("ID {0,-2} {1,-15} Status: {2,-30} (Loc {3}:{4})", pair.Key, pair.Value.GetCharacterName(), locStatus, loc.GetPosX(), loc.GetPosY());
+                    charString = string.Format("ID {0,-2} {1,-15} Status: {2,-40} (Loc {3}:{4})", pair.Key, pair.Value.GetCharacterName(), locStatus, loc.GetPosX(), loc.GetPosY());
                     listToDisplay.Add(charString);
                 }
             }
@@ -273,9 +274,10 @@ namespace Next_Game
             if (dictPlayerCharacters.ContainsKey(charID))
             {
                 Character person = dictPlayerCharacters[charID];
+                Position pos = person.GetCharacterPosition();
                 returnText = person.GetCharacterName() + " at ";
                 returnText += this.GetLocationName(person.CharLocationID);
-                returnText += " has been selected";
+                returnText += string.Format(" ({0}:{1}) has been selected", pos.PosX, pos.PosY);
             }
             return returnText;
         }
@@ -291,7 +293,7 @@ namespace Next_Game
         internal string GetLocationName(int locID)
         {
             string locName = "unknown";
-            Location loc = Program.network.GetLocation(locID);
+            Location loc = Game.network.GetLocation(locID);
             locName = loc.LocName;
             return locName;
         }
@@ -299,8 +301,8 @@ namespace Next_Game
         internal string GetLocationName(Position pos)
         {
             string locName = "unknown";
-            int locID = Program.map.GetLocationID(pos.PosX, pos.PosY);
-            Location loc = Program.network.GetLocation(locID);
+            int locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
+            Location loc = Game.network.GetLocation(locID);
             locName = loc.LocName;
             return locName;
         }
@@ -364,7 +366,7 @@ namespace Next_Game
             //Location display
             if (locID > 0)
             {
-                Location loc = Program.network.GetLocation(locID);
+                Location loc = Game.network.GetLocation(locID);
                 string locDetails = string.Format("Location (ID {0}) {1} ---", loc.LocationID, loc.LocName);
                 locList.Add(locDetails);
                 if (loc.IsCapital() == true)
@@ -393,8 +395,10 @@ namespace Next_Game
                     }
                 }
             }
-            else
+            else if (locID == 0)
             { locList.Add("ERROR: There is no Location present here"); }
+            else
+            { locList.Add("ERROR: Please click on the map"); }
             return locList;
         }
 
@@ -437,8 +441,10 @@ namespace Next_Game
                 { charReturn += " isn't currently available"; }
                 else
                 {
+                    Position pos = person.GetCharacterPosition();
                     charReturn += " is awaiting your orders at ";
                     charReturn += GetLocationName(person.CharLocationID);
+                    charReturn += string.Format(" (loc {0}:{1})", pos.PosX, pos.PosY);
                 }
             }
             return charReturn;
