@@ -300,9 +300,10 @@ namespace Next_Game
                         switch (_menuMode)
                         {
                             case MenuMode.Debug:
-                                game.GetRouteOrigin(_inputConsole);
-                                //game.ShowRoute(_mapConsole);
-                                //List<Route> listOfRoutes_3 = network.RouteInput("G"); map.DrawRoute(listOfRoutes_3);
+                                List<string> inputList = new List<string>();
+                                inputList.Add("--- Show the Route between two Locations");
+                                inputList.Add("Select ORIGIN Location by Mouse (press ESC to Exit)");
+                                infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                 renderRequired = true;
                                 mouseOn = true;
                                 break;
@@ -327,7 +328,6 @@ namespace Next_Game
                         {
                             case MenuMode.Character:
                                 //move Player characters around map
-                                //game.ShowCharacters(_multiConsole, ConsoleDisplay.Multi, true);
                                 posSelect1 = game.GetCharacterLocation(_inputConsole, ConsoleDisplay.Input, charIDSelected);
                                 //valid position for origin
                                 if (posSelect1 != null)

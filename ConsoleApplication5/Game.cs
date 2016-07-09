@@ -21,11 +21,11 @@ namespace Next_Game
         }*/
 
 
-        public void ProcessTurn()
+        /*public void ProcessTurn()
         {
             world.IncrementGameTurn();
             map.UpdatePlayers(world.MoveCharacters());
-        }
+        }*/
 
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Next_Game
             else
             { charList.Add("The character is not currently at your disposal"); }
             infoChannel.SetInfoList(charList, consoleDisplay);
-            infoChannel.DrawInfoConsole(inputConsole, consoleDisplay);
+            //infoChannel.DrawInfoConsole(inputConsole, consoleDisplay);
             return pos;
         }
 
@@ -206,7 +206,7 @@ namespace Next_Game
         }*/
 
 
-        public void GetRouteOrigin(RLConsole inputConsole)
+        /*public void GetRouteOrigin(RLConsole inputConsole)
         {
             inputConsole.Clear();
             List<string> inputList = new List<string>();
@@ -214,7 +214,7 @@ namespace Next_Game
             inputList.Add("Select ORIGIN Location by Mouse (press ESC to Exit)");
             infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
             infoChannel.DrawInfoConsole(inputConsole, ConsoleDisplay.Input);
-        }
+        }*/
 
         /*
         public void GetRouteDestination(RLConsole inputConsole)
