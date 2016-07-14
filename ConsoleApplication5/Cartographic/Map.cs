@@ -597,16 +597,29 @@ namespace Next_Game.Cartographic
                 {
                     //route.PrintRouteDetails();
                     path = route.GetPath();
-                    //keep a tab of distance
-                    //routeDistance += path.Count - 1;
                     //loop through path
-                    foreach (Position pos in path)
+                    /*foreach (Position pos in path)
                     {
                         //roads only, set all roads to red (20 - 25) to indicate a known route
                         if (mapGrid[(int)MapLayer.Base, pos.PosX, pos.PosY] >= 10 && mapGrid[(int)MapLayer.Base, pos.PosX, pos.PosY] <= 15)
                             { mapGrid[(int)MapLayer.Base, pos.PosX, pos.PosY] += 10; }
-                    }
+                    }*/
+                    DrawRoutePath(path);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Marks out path on mapGrid array in red (20-25)
+        /// </summary>
+        /// <param name="pathToTravel"></param>
+        internal void DrawRoutePath(List<Position> pathToTravel)
+        {
+            foreach (Position pos in pathToTravel)
+            {
+                //roads only, set all roads to red (20 - 25) to indicate a known route
+                if (mapGrid[(int)MapLayer.Base, pos.PosX, pos.PosY] >= 10 && mapGrid[(int)MapLayer.Base, pos.PosX, pos.PosY] <= 15)
+                { mapGrid[(int)MapLayer.Base, pos.PosX, pos.PosY] += 10; }
             }
         }
 

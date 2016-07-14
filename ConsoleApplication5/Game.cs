@@ -83,6 +83,7 @@ namespace Next_Game
             history.CreatePlayerCharacters(6);
             world.InitiatePlayerCharacters(history.GetPlayerCharacters(), 1);
             infoChannel = new InfoChannel();
+            messageLog.Add($"Game world created with seed {seed}", world.GetGameTurn());
             //set up menu
             menu = new Menu(4, 6);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
@@ -269,6 +270,8 @@ namespace Next_Game
                                             string infoText = world.InitiateMoveCharacters(charIDSelected, posSelect1, posSelect2, pathToTravel);
                                             messageLog.Add(infoText, world.GetGameTurn());
                                             infoChannel.AppendInfoList(infoText, ConsoleDisplay.Input);
+                                            //show route
+                                            map.DrawRoutePath(pathToTravel);
                                         }
                                         else if(mouseRight == true)
                                         { infoChannel.AppendInfoList("Journey Cancelled!", ConsoleDisplay.Input); }
@@ -404,6 +407,7 @@ namespace Next_Game
                         break;
                     case RLKey.Enter:
                         world.IncrementGameTurn();
+                        map.UpdateMap();
                         map.UpdatePlayers(world.MoveCharacters());
                         renderRequired = true;
                         mouseOn = false;
