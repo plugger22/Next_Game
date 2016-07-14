@@ -61,7 +61,7 @@ namespace Next_Game
         //flags
         private static bool renderRequired = true; //redraw Console?
         private static bool mouseOn = false; //receive mouse input?
-        private static bool secondInput = false; //used for double input situations, eg. origin and destination
+        private static int inputState = 0; //used to differentiate suquential levels of input for individual commands
         private static MenuMode _menuMode = MenuMode.Main; //menu mode in operation (corresponds to enum above)
 
         //other
@@ -116,11 +116,14 @@ namespace Next_Game
         }
 
 
-        // Event handler for RLNET's Update event
+        /// <summary>
+        /// Event handler for RLNET's Update event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void OnRootConsoleUpdate(object sender, UpdateEventArgs e)
         {
             //game loop
-            
             RLKeyPress keyPress =_rootConsole.Keyboard.GetKeyPress();
             //last used keypress
             if (keyPress != null)
@@ -150,7 +153,7 @@ namespace Next_Game
                                     //debug route between two points
                                     renderRequired = true;
                                     //Origin location
-                                    if (secondInput == false)
+                                    if (inputState == 1)
                                     {
                                         //valid location?
                                         int locID = map.GetLocationID(mouse.X, mouse.Y, true);
@@ -160,11 +163,11 @@ namespace Next_Game
                                             infoChannel.AppendInfoList(locName, ConsoleDisplay.Input);
                                             posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
                                             infoChannel.AppendInfoList("Select DESTINATION Location by Mouse (press ESC to Exit)", ConsoleDisplay.Input);
-                                            secondInput = true;
+                                            inputState = 2;
                                         }
                                     }
                                     //Destination location
-                                    else if (secondInput == true)
+                                    else if (inputState == 2)
                                     {
                                         //valid location?
                                         int locID = map.GetLocationID(mouse.X, mouse.Y, true);
@@ -177,8 +180,9 @@ namespace Next_Game
                                             {
                                                 List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
                                                 map.DrawRouteDebug(listOfRoutes);
+                                                infoChannel.AppendInfoList(network.ShowRouteDetails(listOfRoutes), ConsoleDisplay.Input);
                                             }
-                                            secondInput = false;
+                                            inputState = 0;
                                             mouseOn = false;
                                         }
                                     }
@@ -191,7 +195,7 @@ namespace Next_Game
                                 case MenuMode.Debug:
                                     renderRequired = true;
                                     //Origin location
-                                    if (secondInput == false)
+                                    if (inputState == 1)
                                     {
                                         //valid location?
                                         int locID = map.GetLocationID(mouse.X, mouse.Y, true);
@@ -201,11 +205,11 @@ namespace Next_Game
                                             infoChannel.AppendInfoList(locName, ConsoleDisplay.Input);
                                             posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
                                             infoChannel.AppendInfoList("Select DESTINATION Location by Mouse (press ESC to Exit)", ConsoleDisplay.Input);
-                                            secondInput = true;
+                                            inputState = 2;
                                         }
                                     }
                                     //Destination location
-                                    else if (secondInput == true)
+                                    else if (inputState == 2)
                                     {
                                         //valid location?
                                         int locID = map.GetLocationID(mouse.X, mouse.Y, true);
@@ -217,8 +221,9 @@ namespace Next_Game
                                             {
                                                 List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
                                                 map.DrawRouteRL(listOfRoutes);
+                                                infoChannel.AppendInfoList(network.ShowRouteDetails(listOfRoutes), ConsoleDisplay.Input);
                                             }
-                                            secondInput = false;
+                                            inputState = 0;
                                             mouseOn = false;
                                         }
                                     }
@@ -297,7 +302,6 @@ namespace Next_Game
                             case MenuMode.Main:
                                 //switch to Debug menu
                                 _menuMode = menu.SwitchMenuMode(MenuMode.Debug);
-                                
                                 break;
                             case MenuMode.Debug:
                                 //show debug route
@@ -306,6 +310,7 @@ namespace Next_Game
                                 inputList.Add("Select ORIGIN Location by Mouse (press ESC to Exit)");
                                 infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                 mouseOn = true;
+                                inputState = 1;
                                 break;
                             }
                         break;
@@ -318,6 +323,7 @@ namespace Next_Game
                                 inputList.Add("Select ORIGIN Location by Mouse (press ESC to Exit)");
                                 infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                 renderRequired = true;
+                                inputState = 1;
                                 mouseOn = true;
                                 break;
                         }
@@ -402,7 +408,7 @@ namespace Next_Game
             }
         }
 
-
+    
         // Event handler for RLNET's Render event
         private static void OnRootConsoleRender(object sender, UpdateEventArgs e)
         {

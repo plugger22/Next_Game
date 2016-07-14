@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using RLNET;
 
 //TODO optimise route search routines by having four separate route lists, one for each branch
 
@@ -1103,14 +1104,18 @@ namespace Next_Game.Cartographic
             else
             { returnRoutes = listOfDirectRoutes; }
             //return & display info line
-            int distance = GetDistance(returnRoutes);
+            /*int distance = GetDistance(returnRoutes);
             string originName = GetLocationName(posOrigin);
             string destinationName = GetLocationName(posDestination);
             Console.WriteLine();
-            Console.WriteLine("Route from {0} to {1} distance {2}", originName, destinationName, distance);
+            Console.WriteLine("Route from {0} to {1} distance {2}", originName, destinationName, distance);)
             Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();*/
             return returnRoutes;
         }
+
+
 
         //prints highlighted text for GetRouteOnSameBranch, eg. POP in blue to better show what's going on in the debug trace
         private void ColourText(string text, ConsoleColor color)
@@ -1297,6 +1302,25 @@ namespace Next_Game.Cartographic
             foreach(Route route in listOfRoutes)
             { distance += route.GetDistance(); }
             return distance;
+        }
+
+        /// <summary>
+        /// Shows route details (returns a formated string)
+        /// </summary>
+        /// <param name="listOfRoutes"></param>
+        /// <returns></returns>
+        internal string ShowRouteDetails(List<Route> listOfRoutes)
+        {
+            string returnString = "Error: ShowRouteDetails";
+            //return & display info line
+            int distance = GetDistance(listOfRoutes);
+            Position posOrigin = listOfRoutes[0].GetRouteStart();
+            Position posDestination = listOfRoutes[listOfRoutes.Count - 1].GetRouteEnd();
+            string originName = GetLocationName(posOrigin);
+            string destinationName = GetLocationName(posDestination);
+            //Console.WriteLine("Route from {0} to {1} distance {2}", originName, destinationName, distance);
+            returnString = string.Format("Route from {0} to {1} distance {2}", originName, destinationName, distance);
+            return returnString;
         }
 
         //methods above here

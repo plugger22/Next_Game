@@ -27,6 +27,12 @@ namespace Next_Game.Cartographic
         public Position GetLoc1() { return loc1; }
         public Position GetLoc2() { return loc2; }
 
+        public Position GetRouteStart()
+        { return path[0]; }
+
+        public Position GetRouteEnd()
+        { return path[path.Count - 1]; }
+
         //Get Route distance (length of route - 1 to allow for originating point)
         public int GetDistance()
         { return path.Count - 1; }
