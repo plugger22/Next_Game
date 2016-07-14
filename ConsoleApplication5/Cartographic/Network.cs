@@ -1285,7 +1285,7 @@ namespace Next_Game.Cartographic
         }
 
         //returns Location name for a given Position
-        private string GetLocationName(Position pos)
+        internal string GetLocationName(Position pos)
         {
             string locName = null;
             Location loc = new Location();

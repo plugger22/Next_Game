@@ -130,8 +130,9 @@ namespace Next_Game
             { keyLast = keyPress; }
             RLMouse mouse = _rootConsole.Mouse;
             bool mouseLeft = _rootConsole.Mouse.GetLeftClick();
+            bool mouseRight = _rootConsole.Mouse.GetRightClick();
             //mouse input
-            if(mouseLeft == true)
+            if(mouseLeft == true || mouseRight == true)
             {
                 //Mouse specific input OFF - generic location and party info
                 if (mouseOn == false)
@@ -235,24 +236,46 @@ namespace Next_Game
                             {
                                 case MenuMode.Character:
                                     //move Player character from A to B
+                                    renderRequired = true;
                                     //valid location?
-                                    int locID = map.GetLocationID(mouse.X, mouse.Y, true);
-                                    if (locID > 0)
+                                    if (inputState == 1)
+                                    { 
+                                        int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                                        if (locID > 0)
+                                        {
+                                            //process two positions to show on map.
+                                            posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                            if (posSelect2 != null)
+                                            {
+                                                string infoString = string.Format("Journey from {0} to {1}? [Left Click] to confirm, [Right Click] to Cancel.",
+                                                    network.GetLocationName(posSelect1), network.GetLocationName(posSelect2));
+                                                infoChannel.AppendInfoList(infoString, ConsoleDisplay.Input);
+                                                inputState = 2;
+                                            }
+                                        }
+                                        else
+                                        { 
+                                        //cancel journey
+                                        if (mouseRight == true)
+                                            { infoChannel.AppendInfoList("Journey Cancelled!", ConsoleDisplay.Input); inputState = 0; mouseOn = false; }
+                                        }
+                                        
+                                    }
+                                    else if (inputState == 2)
                                     {
-                                        //process two positions to show on map.
-                                        posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                        if (posSelect2 != null)
+                                        if(mouseLeft == true)
                                         {
                                             List<Position> pathToTravel = network.GetPathAnywhere(posSelect1, posSelect2);
                                             string infoText = world.InitiateMoveCharacters(charIDSelected, posSelect1, posSelect2, pathToTravel);
                                             messageLog.Add(infoText, world.GetGameTurn());
                                             infoChannel.AppendInfoList(infoText, ConsoleDisplay.Input);
-                                            mouseOn = false;
-                                            renderRequired = true;
-                                            //autoswitch back to Main menu
-                                            _menuMode = menu.SwitchMenuMode(MenuMode.Main);
                                         }
-                                        else { infoChannel.AppendInfoList("ERROR: Not a valid Location", ConsoleDisplay.Input); }
+                                        else if(mouseRight == true)
+                                        { infoChannel.AppendInfoList("Journey Cancelled!", ConsoleDisplay.Input); }
+                                        inputState = 0;
+                                        mouseOn = false;
+                                        //autoswitch back to Main menu
+                                        _menuMode = menu.SwitchMenuMode(MenuMode.Main);
                                     }
                                     break;
                             }
@@ -351,11 +374,12 @@ namespace Next_Game
                                 charList.Add(world.GetCharacterRL(charIDSelected));
                                 posSelect1 = world.GetCharacterLocationByPos(charIDSelected);
                                 if (posSelect1 != null)
-                                { charList.Add("Click on the Destination location or press [ESC] to cancel"); mouseOn = true; }
+                                { charList.Add("Click on the Destination location or press [Right Click] to cancel"); mouseOn = true; }
                                 else
                                 { charList.Add("The character is not currently at your disposal"); mouseOn = false; }
                                 infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
                                 renderRequired = true;
+                                inputState = 1;
                                 break;
                         }
                         break;
