@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RLNET;
 
 namespace Next_Game
@@ -64,6 +65,7 @@ namespace Next_Game
         {
             List<string> displayList = new List<string>();
             int margin = 2;
+            int maxLength = 10;
             switch (consoleDisplay)
             {
                 case ConsoleDisplay.Input:
@@ -73,16 +75,19 @@ namespace Next_Game
                 case ConsoleDisplay.Multi:
                     displayList = multiList;
                     margin = multiMargin;
+                    maxLength = 40;
                     break;
                 case ConsoleDisplay.Status:
                     displayList = statusList;
                     margin = statusMargin;
                     break;
             }
+            //max number of lines
+            maxLength = Math.Min(maxLength, displayList.Count);
 
             if (clearDisplay)
             { infoConsole.Clear(); }
-            for (int i = 0; i < displayList.Count; i++)
+            for (int i = 0; i < maxLength; i++)
             { infoConsole.Print(margin, i * 2 + margin, displayList[i], RLColor.White, RLColor.Black); }
         }
 

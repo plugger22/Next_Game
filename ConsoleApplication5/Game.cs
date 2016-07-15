@@ -260,7 +260,6 @@ namespace Next_Game
                                         if (mouseRight == true)
                                             { infoChannel.AppendInfoList("Journey Cancelled!", ConsoleDisplay.Input); inputState = 0; mouseOn = false; }
                                         }
-                                        
                                     }
                                     else if (inputState == 2)
                                     {
@@ -289,23 +288,21 @@ namespace Next_Game
             else if (keyPress != null)
             {
                 //turn off mouse specific input whenever a key is pressed
-
+                renderRequired = true;
+                mouseOn = false;
                 //which key pressed?
                 switch (keyPress.Key)
                 {
                     case RLKey.M:
                         //Draw Map: applies to all menu modes
                         map.UpdateMap(false, true);
-                        renderRequired = true;
-                        mouseOn = false;
                         break;
                     case RLKey.E:
-                        //world.ShowPastEvents();
                         switch (_menuMode)
                         {
                             case MenuMode.Main:
-                                renderRequired = true;
-                                mouseOn = false;
+                                //Show Full message log
+                                infoChannel.SetInfoList(messageLog.GetMessageList(), ConsoleDisplay.Multi);
                                 break;
                         }
                         break;
@@ -315,8 +312,6 @@ namespace Next_Game
                             case MenuMode.Main:
                                 //Show Player Characters
                                 infoChannel.SetInfoList(world.ShowPlayerCharactersRL(), ConsoleDisplay.Multi);
-                                renderRequired = true;
-                                mouseOn = false;
                                 break;
                         }
                         break;
@@ -348,7 +343,6 @@ namespace Next_Game
                                 inputList.Add("--- Show the Route between two Locations");
                                 inputList.Add("Select ORIGIN Location by Mouse (press ESC to Exit)");
                                 infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
-                                renderRequired = true;
                                 inputState = 1;
                                 mouseOn = true;
                                 break;
@@ -363,7 +357,6 @@ namespace Next_Game
                             case MenuMode.Debug:
                                 //show debug route
                                 map.UpdateMap(true, false);
-                                renderRequired = true;
                                 mouseOn = true;
                                 break;
                         }
@@ -381,7 +374,6 @@ namespace Next_Game
                                 else
                                 { charList.Add("The character is not currently at your disposal"); mouseOn = false; }
                                 infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
-                                renderRequired = true;
                                 inputState = 1;
                                 break;
                         }
@@ -401,7 +393,6 @@ namespace Next_Game
                                 List<string> infoList = new List<string>();
                                 infoList.Add(world.ShowSelectedCharacter(charIDSelected));
                                 infoChannel.SetInfoList(infoList, ConsoleDisplay.Input);
-                                renderRequired = true;
                                 break;
                         }
                         break;
@@ -409,8 +400,6 @@ namespace Next_Game
                         world.IncrementGameTurn();
                         map.UpdateMap();
                         map.UpdatePlayers(world.MoveCharacters());
-                        renderRequired = true;
-                        mouseOn = false;
                         break;
                     case RLKey.Escape:
                         //exit mouse input 
@@ -428,7 +417,6 @@ namespace Next_Game
                                 default:
                                     //return to main menu from sub menus
                                     _menuMode = menu.SwitchMenuMode(MenuMode.Main);
-                                    renderRequired = true;
                                     break;
                             }
                         break;
@@ -448,7 +436,7 @@ namespace Next_Game
 
                 //draw to consoles
                 map.DrawMapRL(_mapConsole);
-                messageLog.DrawMessageLog(_messageConsole);
+                messageLog.DrawMessageQueue(_messageConsole);
                 menu.DrawMenuRL(_menuConsole);
                 infoChannel.DrawInfoConsole(_inputConsole, ConsoleDisplay.Input);
                 infoChannel.DrawInfoConsole(_multiConsole, ConsoleDisplay.Multi);
