@@ -38,7 +38,7 @@ namespace Next_Game.Cartographic
         public void InitialiseNetwork()
         {
             //read in location names
-            string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/ConsoleApplication5/Data/locations.txt";
+            string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/locations.txt";
             string[] arrayOfLocationNames = File.ReadAllLines(filePath);
             //read location names from array into list
             for (int i = 0; i < arrayOfLocationNames.Length; i++)

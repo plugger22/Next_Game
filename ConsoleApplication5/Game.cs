@@ -78,9 +78,10 @@ namespace Next_Game
             map.InitialiseMap(4, 2);
             network = new Network(seed);
             network.InitialiseNetwork();
-            History history = new History();
-            world = new World();
+            History history = new History(seed);
+            history.InitialiseHistory();
             history.CreatePlayerCharacters(6);
+            world = new World();
             world.InitiatePlayerCharacters(history.GetPlayerCharacters(), 1);
             infoChannel = new InfoChannel();
             messageLog.Add($"Game world created with seed {seed}", world.GetGameTurn());

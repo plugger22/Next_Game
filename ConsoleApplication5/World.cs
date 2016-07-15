@@ -237,7 +237,7 @@ namespace Next_Game
                 //only show chosen characters (at Location or not depending on parameter)
                 if (locationsOnly == true && status == (int)CharStatus.Location || !locationsOnly)
                 {
-                    charString = string.Format("ID {0,-2} {1,-15} Status: {2,-40} (Loc {3}:{4})", pair.Key, pair.Value.GetCharacterName(), locStatus, loc.GetPosX(), loc.GetPosY());
+                    charString = string.Format("ID {0,-2} {1,-25} Status: {2,-40} (Loc {3}:{4})", pair.Key, pair.Value.GetCharacterName(), locStatus, loc.GetPosX(), loc.GetPosY());
                     listToDisplay.Add(charString);
                 }
             }
