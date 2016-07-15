@@ -9,11 +9,6 @@ namespace Next_Game
     {
         private List<Move> moveList; //list of characters moving through the world
         private Dictionary<int, Character> dictPlayerCharacters; //list of all characters
-        //Dictionary<int, Location> dictLocationsByID;
-        //Dictionary<Position, Location> dictLocationsByPos; //two different dictionaries to allow for dual use access (lookup Location by locId or Pos)
-        //Position posCapital;
-        //Interface class to enable dictionary keys (Position) to be compared
-        //PositionEqualityComparer posEqC;
         public int GameTurn { get; set; } = 1;
 
         //default constructor
@@ -21,18 +16,6 @@ namespace Next_Game
         {
             moveList = new List<Move>();
             dictPlayerCharacters = new Dictionary<int, Character>();
-            /*dictLocationsByID = new Dictionary<int, Location>();
-            posEqC = new PositionEqualityComparer();
-            dictLocationsByPos = new Dictionary<Position, Location>(posEqC);*/
-            //this.posCapital = new Position(posCapital);
-            //set up location ID & Position dictionarys
-            /*foreach( Location loc in listOfLocations)
-            {
-                int locID = loc.LocationID;
-                dictLocationsByID.Add(locID, loc);
-                Position pos = loc.GetPosition();
-                dictLocationsByPos.Add(pos, loc);
-            }*/
         }
 
         public void IncrementGameTurn()
@@ -233,7 +216,7 @@ namespace Next_Game
         public List<string> ShowPlayerCharactersRL(bool locationsOnly = false)
         {
             List<string> listToDisplay = new List<string>();
-            listToDisplay.Add("Year of our Lord " + Convert.ToString(1200 + GameTurn));
+            listToDisplay.Add($"Day of our Lord {GameTurn}");
             listToDisplay.Add("Player Characters ---");
             int status;
             int locID;

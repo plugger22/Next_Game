@@ -22,7 +22,7 @@ namespace Next_Game
         public void Add(string message, int turn)
         {
             //add a turn time stamp
-            message = Convert.ToString(turn + 1200) + " " + message;
+            message = "Day " + turn + " " + message;
             messageQueue.Enqueue(message);
             //max 8 entries in queue at any one time
             if (messageQueue.Count > 8)
