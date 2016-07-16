@@ -19,7 +19,7 @@ namespace Next_Game.Cartographic
         //Interface class to enable dictionary keys (Position) to be compared
         List<string> listOfLocationNames = new List<string>(); //list of all location names
         Dictionary<int, Location> dictLocations;
-        private int[,] arrayOfNetworkAnalysis; //analysises network [1 for each branch direction] [# locs] [# of connection of first loc out from capital][# of houses on branch]
+        private int[,] arrayOfNetworkAnalysis; //analysises network [1 for each branch direction] [,0] # locs, [,1] # of connection of first loc out from capital,[,2] # of houses on branch
 
         //default constructor with seed for random # generator
         public Network(int seed)
@@ -32,7 +32,7 @@ namespace Next_Game.Cartographic
             ListOfLocations = Game.map.GetLocations();
             ListOfConnectorRoutes = Game.map.GetConnectors();
             ArrayOfConnectors = Game.map.GetArrayOfConnectors();
-            arrayOfNetworkAnalysis = new int[5, 2]; //0 capital, 1-4 N,E,S,W
+            arrayOfNetworkAnalysis = new int[5, 2]; //[5,] 0 capital, 1-4 N,E,S,W
 
 
         }
@@ -1335,12 +1335,12 @@ namespace Next_Game.Cartographic
         {
             Console.WriteLine();
             Console.WriteLine("--- Network Analysis");
-            for (int i = 0; i < arrayOfNetworkAnalysis.Length; i++)
+            for (int i = 0; i <= arrayOfNetworkAnalysis.GetUpperBound(0); i++)
             {
-                int direction = arrayOfNetworkAnalysis[i, 0];
-                Console.WriteLine("Dir {0,-10} {1, -15) Locations {2, -15} Connections", );
+                int locConsole = arrayOfNetworkAnalysis[i, 0];
+                int connConsole = arrayOfNetworkAnalysis[i, 1];
+                Console.WriteLine($"Dir {i, -5} {locConsole, 5} Locations {connConsole, 5} Connections");
             }
-
         }
 
         //methods above here
