@@ -271,6 +271,7 @@ namespace Next_Game
                                             messageLog.Add(new Snippet(infoText), world.GetGameTurn());
                                             infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
                                             //show route
+                                            map.UpdateMap();
                                             map.DrawRoutePath(pathToTravel);
                                         }
                                         else if(mouseRight == true)

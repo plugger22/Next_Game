@@ -13,13 +13,13 @@ namespace Next_Game.Cartographic
         static int capitalY;
         static Random rnd;
         public int[,] ArrayOfConnectors { get; set; }
-        private List<Route> ListOfRoutes { get;  set; }
+        private List<Route> ListOfRoutes { get; set; }
         private List<Route> ListOfConnectorRoutes { get; set; } //list of all special branch Connector routes
         private List<Location> ListOfLocations { get; set; }
         //Interface class to enable dictionary keys (Position) to be compared
-        PositionEqualityComparer posEqC;
         List<string> listOfLocationNames = new List<string>(); //list of all location names
         Dictionary<int, Location> dictLocations;
+        private int[,] arrayOfNetworkAnalysis; //analysises network [1 for each branch direction] [# locs] [# of connection of first loc out from capital][# of houses on branch]
 
         //default constructor with seed for random # generator
         public Network(int seed)
@@ -32,6 +32,9 @@ namespace Next_Game.Cartographic
             ListOfLocations = Game.map.GetLocations();
             ListOfConnectorRoutes = Game.map.GetConnectors();
             ArrayOfConnectors = Game.map.GetArrayOfConnectors();
+            arrayOfNetworkAnalysis = new int[5, 2]; //0 capital, 1-4 N,E,S,W
+
+
         }
 
         //set up Network collections
@@ -53,6 +56,9 @@ namespace Next_Game.Cartographic
                     loc.LocName = GetRandomLocationName();
                     //add to dictionary
                     dictLocations.Add(loc.LocationID, loc);
+                    //tally up number of locations on each branch
+                    int branch = loc.GetCapitalRouteDirection();
+                    arrayOfNetworkAnalysis[branch, 0]++;
                 }
                 //create list of neighbours for each location
                 InitialiseNeighbours();
@@ -79,8 +85,6 @@ namespace Next_Game.Cartographic
                     capitalY = loc.GetPosY();
                     //Capital pos in array[0], 4 directions from capital (initial loc's in that direction) store in array[1...4]
                     arrayOfCapitalNeighbours[0] = loc.GetPosition();
-                    //Console.WriteLine();
-                    //Console.WriteLine("Debug: --- Capital found at {0}:{1}", capitalX, capitalY);
                     break;
                 }
             }
@@ -125,6 +129,9 @@ namespace Next_Game.Cartographic
                     routeDistance += path.Count - 1;
                 }
                 loc.DistanceToCapital = routeDistance;
+                //find first loc out from capital in each direction
+                if(listOfRoutesToDestination.Count == 1)
+                { arrayOfNetworkAnalysis[direction, 1] = loc.Connections; }
             }
         }
         //sets up routes to connectors (if one exists for that branch)
@@ -1321,6 +1328,19 @@ namespace Next_Game.Cartographic
             //Console.WriteLine("Route from {0} to {1} distance {2}", originName, destinationName, distance);
             returnString = string.Format("Route from {0} to {1} distance {2}", originName, destinationName, distance);
             return returnString;
+        }
+
+        //debug program
+        public void ShowNetworkAnalysis()
+        {
+            Console.WriteLine();
+            Console.WriteLine("--- Network Analysis");
+            for (int i = 0; i < arrayOfNetworkAnalysis.Length; i++)
+            {
+                int direction = arrayOfNetworkAnalysis[i, 0];
+                Console.WriteLine("Dir {0,-10} {1, -15) Locations {2, -15} Connections", );
+            }
+
         }
 
         //methods above here

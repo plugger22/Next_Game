@@ -218,7 +218,7 @@ namespace Next_Game
         public List<Snippet> ShowPlayerCharactersRL(bool locationsOnly = false)
         {
             List<Snippet> listToDisplay = new List<Snippet>();
-            listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}"));
+            listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}", RLColor.Yellow, RLColor.Black));
             listToDisplay.Add(new Snippet("Player Characters ---"));
             int status;
             int locID;

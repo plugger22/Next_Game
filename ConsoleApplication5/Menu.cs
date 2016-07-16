@@ -3,7 +3,7 @@
 namespace Next_Game
 {
 
-    //MenuMode used (defined in Program.cs) for unique menu set-ups - Main, Character, Debug, etc.
+    //MenuMode used (defined in Game.cs) for unique menu set-ups - Main, Character, Debug, etc.
 
     
 
@@ -20,6 +20,8 @@ namespace Next_Game
         int margin; // margin offset from top and left of console
         int menuWidth; //width (in chars) between characters
         int menuSpacing; //lines between each menu item (vertically), 1 means no spacing
+        RLColor menuColorFore; //menu catergory text colors
+        RLColor menuColorBack;
 
 
         public Menu(int categories, int size)
@@ -31,6 +33,8 @@ namespace Next_Game
             menuSpacing = 2;
             menuCatNum = categories;
             menuSize = size;
+            menuColorFore = RLColor.White;
+            menuColorBack = RLColor.Black;
             //duplicate sized arrays
             menuArrayText = new string[categories, size];
             menuArrayStatus = new int[categories, size];
@@ -67,6 +71,8 @@ namespace Next_Game
             switch (menuMode)
             {
                 case MenuMode.Main:
+                    menuColorFore = RLColor.Black;
+                    menuColorBack = RLColor.LightGray;
                     //input categories
                     menuArrayCategories[0] = "Main MENU ---";
                     menuArrayCategories[1] = "Info ---";
@@ -82,6 +88,8 @@ namespace Next_Game
                     menuArrayText[3, 2] = "[ENTER] End Turn";
                     break;
                 case MenuMode.Character:
+                    menuColorFore = RLColor.Blue;
+                    menuColorBack = RLColor.LightGray;
                     //input categories
                     menuArrayCategories[0] = "Character MENU ---";
                     menuArrayCategories[3] = "Switch ---";
@@ -92,6 +100,8 @@ namespace Next_Game
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
                 case MenuMode.Debug:
+                    menuColorFore = RLColor.Red;
+                    menuColorBack = RLColor.LightGray;
                     //input categories
                     menuArrayCategories[0] = "Debug Map ---";
                     menuArrayCategories[3] = "Switch ---";
@@ -117,7 +127,7 @@ namespace Next_Game
             {
                 //only print category if present
                 if (menuArrayCategories[cat] != null)
-                { menuConsole.Print(cat * menuWidth + margin, margin, menuArrayCategories[cat], RLColor.White, RLColor.Black); }
+                { menuConsole.Print(cat * menuWidth + margin, margin, menuArrayCategories[cat], menuColorFore, menuColorBack); }
                 //innner loop (command for this category)
                 for (int cmd = 0; cmd < menuSize; cmd++)
                 {
