@@ -138,14 +138,15 @@ namespace Next_Game
                                 person.SetCharacterStatus(CharStatus.Location);
                                 person.SetCharacterPosition(posDestination);
                                 person.CharLocationID = locID;
-                                Game.messageLog.Add(person.GetCharacterName() + " has arrived safely at " + loc.LocName, GameTurn);
+                                Snippet snippet = new Snippet(string.Format(person.GetCharacterName() + " has arrived safely at " + loc.LocName));
+                                Game.messageLog.Add(snippet, GameTurn);
                             }
                             else
-                            { Game.messageLog.Add("Error in World.MoveCharacters(): Character not found", GameTurn); }
+                            { Game.messageLog.Add(new Snippet("Error in World.MoveCharacters(): Character not found"), GameTurn); }
                         }
                     }
                     else
-                    { Game.messageLog.Add("Error in World.MoveCharacters(): Location not found", GameTurn); }
+                    { Game.messageLog.Add(new Snippet("Error in World.MoveCharacters(): Location not found"), GameTurn); }
                     //update Party status to enable deletion of moveObject from list (below)
                     moveObject.SetPartyStatus(PartyStatus.Done);
                 }
@@ -214,11 +215,11 @@ namespace Next_Game
         /// </summary>
         /// <returns>List with info on each character a single, sequential, entry in the list</returns>
         /// <param name="locationsOnly">If true only show those at Locations, default is show all</param>
-        public List<string> ShowPlayerCharactersRL(bool locationsOnly = false)
+        public List<Snippet> ShowPlayerCharactersRL(bool locationsOnly = false)
         {
-            List<string> listToDisplay = new List<string>();
-            listToDisplay.Add($"Day of our Lord {GameTurn}");
-            listToDisplay.Add("Player Characters ---");
+            List<Snippet> listToDisplay = new List<Snippet>();
+            listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}"));
+            listToDisplay.Add(new Snippet("Player Characters ---"));
             int status;
             int locID;
             string locName;
@@ -239,7 +240,7 @@ namespace Next_Game
                 if (locationsOnly == true && status == (int)CharStatus.Location || !locationsOnly)
                 {
                     charString = string.Format("ID {0,-2} {1,-25} Status: {2,-40} (Loc {3}:{4})", pair.Key, pair.Value.GetCharacterName(), locStatus, loc.GetPosX(), loc.GetPosY());
-                    listToDisplay.Add(charString);
+                    listToDisplay.Add(new Snippet(charString));
                 }
             }
             return listToDisplay;
@@ -251,7 +252,7 @@ namespace Next_Game
         /// <param name="inputConsole"></param>
         /// <param name="consoleDisplay"></param>
         /// <param name="charID"></param>
-        public string ShowSelectedCharacter(int charID)
+        public Snippet ShowSelectedCharacter(int charID)
         {
             string returnText = "Character NOT KNOWN";
             //find in dictionary
@@ -263,7 +264,7 @@ namespace Next_Game
                 returnText += this.GetLocationName(person.CharLocationID);
                 returnText += string.Format(" ({0}:{1}) has been selected", pos.PosX, pos.PosY);
             }
-            return returnText;
+            return new Snippet(returnText);
         }
 
         /*public void ShowAllLocations()
@@ -412,7 +413,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="charID"></param>
         /// <returns></returns>
-        public string GetCharacterRL(int charID)
+        public Snippet GetCharacterRL(int charID)
         {
             Character person = new Character();
             string charReturn = "Character doesn't exist!";
@@ -431,7 +432,7 @@ namespace Next_Game
                     charReturn += string.Format(" (loc {0}:{1})", pos.PosX, pos.PosY);
                 }
             }
-            return charReturn;
+            return new Snippet(charReturn);
 
         }
 

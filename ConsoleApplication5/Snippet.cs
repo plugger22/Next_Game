@@ -2,7 +2,7 @@
 
 namespace Next_Game
 {
-    //Text snippets that can be displayed in multiple colors
+    //Text snippets that can be displayed in multiple colors. Can be part line or full line texts
     public class Snippet
     {
         private string textString; //string to be displayed
@@ -18,7 +18,7 @@ namespace Next_Game
         public Snippet(string textString, bool newLine = true)
         {
             this.textString = textString;
-            this.foreColor = RLColor.Gray;
+            this.foreColor = RLColor.White;
             this.backColor = RLColor.Black;
             this.newLine = newLine;
         }
@@ -49,6 +49,9 @@ namespace Next_Game
 
         public bool GetNewLine()
         { return newLine; }
+
+        public void SetText(string snippetText)
+        { this.textString = snippetText; }
        
     }
 }

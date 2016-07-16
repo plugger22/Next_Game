@@ -102,10 +102,10 @@ namespace Next_Game
             for (int i = 0; i < maxLength; i++)
             {
                 Snippet snippet = displayList[i];
+                infoConsole.Print(margin, lineCounter * 2 + margin, snippet.GetText(), snippet.GetForeColor(), snippet.GetBackColor());
                 //new line or on existing line?
                 if (snippet.GetNewLine() == true)
                 { lineCounter++; }
-                infoConsole.Print(margin, lineCounter * 2 + margin, snippet.GetText(), snippet.GetForeColor(), snippet.GetBackColor());
             }
         }
 

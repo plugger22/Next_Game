@@ -84,7 +84,7 @@ namespace Next_Game
             world = new World();
             world.InitiatePlayerCharacters(history.GetPlayerCharacters(), 1);
             infoChannel = new InfoChannel();
-            messageLog.Add($"Game world created with seed {seed}", world.GetGameTurn());
+            messageLog.Add(new Snippet($"Game world created with seed {seed}"), world.GetGameTurn());
             //set up menu
             menu = new Menu(4, 6);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
@@ -163,9 +163,9 @@ namespace Next_Game
                                         if (locID > 0)
                                         {
                                             string locName = world.GetLocationName(locID);
-                                            infoChannel.AppendInfoList(locName, ConsoleDisplay.Input);
+                                            infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
                                             posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                            infoChannel.AppendInfoList("Select DESTINATION Location by Mouse (press ESC to Exit)", ConsoleDisplay.Input);
+                                            infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
                                             inputState = 2;
                                         }
                                     }
@@ -183,7 +183,7 @@ namespace Next_Game
                                             {
                                                 List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
                                                 map.DrawRouteDebug(listOfRoutes);
-                                                infoChannel.AppendInfoList(network.ShowRouteDetails(listOfRoutes), ConsoleDisplay.Input);
+                                                infoChannel.AppendInfoList(new Snippet(network.ShowRouteDetails(listOfRoutes)), ConsoleDisplay.Input);
                                             }
                                             inputState = 0;
                                             mouseOn = false;
@@ -205,9 +205,9 @@ namespace Next_Game
                                         if (locID > 0)
                                         {
                                             string locName = world.GetLocationName(locID);
-                                            infoChannel.AppendInfoList(locName, ConsoleDisplay.Input);
+                                            infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
                                             posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                            infoChannel.AppendInfoList("Select DESTINATION Location by Mouse (press ESC to Exit)", ConsoleDisplay.Input);
+                                            infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
                                             inputState = 2;
                                         }
                                     }
@@ -224,7 +224,7 @@ namespace Next_Game
                                             {
                                                 List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
                                                 map.DrawRouteRL(listOfRoutes);
-                                                infoChannel.AppendInfoList(network.ShowRouteDetails(listOfRoutes), ConsoleDisplay.Input);
+                                                infoChannel.AppendInfoList(new Snippet(network.ShowRouteDetails(listOfRoutes)), ConsoleDisplay.Input);
                                             }
                                             inputState = 0;
                                             mouseOn = false;
@@ -251,7 +251,7 @@ namespace Next_Game
                                             {
                                                 string infoString = string.Format("Journey from {0} to {1}? [Left Click] to confirm, [Right Click] to Cancel.",
                                                     network.GetLocationName(posSelect1), network.GetLocationName(posSelect2));
-                                                infoChannel.AppendInfoList(infoString, ConsoleDisplay.Input);
+                                                infoChannel.AppendInfoList(new Snippet(infoString), ConsoleDisplay.Input);
                                                 inputState = 2;
                                             }
                                         }
@@ -259,7 +259,7 @@ namespace Next_Game
                                         { 
                                         //cancel journey
                                         if (mouseRight == true)
-                                            { infoChannel.AppendInfoList("Journey Cancelled!", ConsoleDisplay.Input); inputState = 0; mouseOn = false; }
+                                            { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!"), ConsoleDisplay.Input); inputState = 0; mouseOn = false; }
                                         }
                                     }
                                     else if (inputState == 2)
@@ -268,13 +268,13 @@ namespace Next_Game
                                         {
                                             List<Position> pathToTravel = network.GetPathAnywhere(posSelect1, posSelect2);
                                             string infoText = world.InitiateMoveCharacters(charIDSelected, posSelect1, posSelect2, pathToTravel);
-                                            messageLog.Add(infoText, world.GetGameTurn());
-                                            infoChannel.AppendInfoList(infoText, ConsoleDisplay.Input);
+                                            messageLog.Add(new Snippet(infoText), world.GetGameTurn());
+                                            infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
                                             //show route
                                             map.DrawRoutePath(pathToTravel);
                                         }
                                         else if(mouseRight == true)
-                                        { infoChannel.AppendInfoList("Journey Cancelled!", ConsoleDisplay.Input); }
+                                        { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!"), ConsoleDisplay.Input); }
                                         inputState = 0;
                                         mouseOn = false;
                                         //autoswitch back to Main menu
@@ -327,9 +327,9 @@ namespace Next_Game
                                 break;
                             case MenuMode.Debug:
                                 //show debug route
-                                List<string> inputList = new List<string>();
-                                inputList.Add("--- Show the Route between two Locations");
-                                inputList.Add("Select ORIGIN Location by Mouse (press ESC to Exit)");
+                                List<Snippet> inputList = new List<Snippet>();
+                                inputList.Add(new Snippet("--- Show the Route between two Locations"));
+                                inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
                                 infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                 mouseOn = true;
                                 inputState = 1;
@@ -340,9 +340,9 @@ namespace Next_Game
                         switch (_menuMode)
                         {
                             case MenuMode.Debug:
-                                List<string> inputList = new List<string>();
-                                inputList.Add("--- Show the Route between two Locations");
-                                inputList.Add("Select ORIGIN Location by Mouse (press ESC to Exit)");
+                                List<Snippet> inputList = new List<Snippet>();
+                                inputList.Add(new Snippet("--- Show the Route between two Locations"));
+                                inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
                                 infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                 inputState = 1;
                                 mouseOn = true;
@@ -367,13 +367,13 @@ namespace Next_Game
                         {
                             case MenuMode.Character:
                                 //move Player characters around map
-                                List<string> charList = new List<string>();
+                                List<Snippet> charList = new List<Snippet>();
                                 charList.Add(world.GetCharacterRL(charIDSelected));
                                 posSelect1 = world.GetCharacterLocationByPos(charIDSelected);
                                 if (posSelect1 != null)
-                                { charList.Add("Click on the Destination location or press [Right Click] to cancel"); mouseOn = true; }
+                                { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); mouseOn = true; }
                                 else
-                                { charList.Add("The character is not currently at your disposal"); mouseOn = false; }
+                                { charList.Add(new Snippet("The character is not currently at your disposal")); mouseOn = false; }
                                 infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
                                 inputState = 1;
                                 break;
@@ -391,7 +391,7 @@ namespace Next_Game
                             case MenuMode.Main:
                                 _menuMode = menu.SwitchMenuMode(MenuMode.Character);
                                 charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
-                                List<string> infoList = new List<string>();
+                                List<Snippet> infoList = new List<Snippet>();
                                 infoList.Add(world.ShowSelectedCharacter(charIDSelected));
                                 infoChannel.SetInfoList(infoList, ConsoleDisplay.Input);
                                 break;
