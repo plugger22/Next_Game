@@ -1277,16 +1277,15 @@ namespace Next_Game.Cartographic
                 //main loop - keep backing up nodes until you return to the capital
                 do
                 {
-                    //Console.WriteLine("Debug: Main Loop starts (capDirection {0} ---", capDirection);
                     //start at a node, check each direction in turn, if viable, go to next node
                     do
                     {
-                        //Console.WriteLine("Debug: Outer Loop starts NEXT NODE IN ---");
                         for (int direction = 1; direction < 5; direction++)
                         {
                             //if starting out from capital, ensure correct direction
-                            if (startAtCapital == true)
+                            if (startAtCapital == true )
                             { direction = capDirection; startAtCapital = false; }
+                            //{ direction = capDirection; }
                             endStatus = true;
                             if (CheckRouteExists(newPos, direction))
                             {
@@ -1295,16 +1294,12 @@ namespace Next_Game.Cartographic
                                 newPos = path[path.Count - 1];
                                 otherPos = path[0];
                                 endStatus = EndOfRoad(otherPos, newPos);
-                                
                                 if (endStatus == false)
                                 {
                                     //new route
                                     Route route = new Route(path);
                                     //add to list of all routes
                                     listOfRoutes.Add(route);
-                                    //Console.WriteLine("Debug: NEW ROUTE ADDED - {0} records", listOfRoutes.Count);
-                                    //print route for debugging
-                                    //route.PrintRoute();
                                     // create new Location and add to list
                                     Location locNew = new Location(newPos, capDirection, false);
                                     locNew.Connections = CheckConnection(newPos.PosX, newPos.PosY);
@@ -1316,27 +1311,22 @@ namespace Next_Game.Cartographic
                                     //route already exists, continue checking existing node for possible routes
                                     endStatus = true; //reset so to enable continuation
                                     newPos = path[0]; //reset origin point
-                                    //Console.WriteLine("Debug: ROUTE EXISTS (direction {0}), continue checking )", direction);
                                 }
                             }
+                            //Starting at Capital - single go through loop then exit
+                            //if (startAtCapital == true)
+                            //{ startAtCapital = false; }
+                            //break;
                         }
                     }
                     while (endStatus == false);
-                    //Console.WriteLine("Debug: BACK UP A NODE - Before: newPos {0}:{1}", newPos.PosX, newPos.PosY);
                     //O.K, back up a node - get last route in listOfRoutes and get starting pos
                     //if NOT at end of branch (but still backing up a node), the last route in the list isn't the one you want
-
                     pathPrevious = GetPreviousNode(newPos);
                     newPos = pathPrevious[0];
-                    //otherPos = pathPrevious[pathPrevious.Count - 1];
-                    //Console.WriteLine("Debug: BACK UP A NODE - After: newPos {0}:{1}", newPos.PosX, newPos.PosY);
-                    //Console.WriteLine();
                 }
                 //check if at capital
                 while (newPos.PosX != capitalX || newPos.PosY != capitalY);
-                //Console.WriteLine("Debug: Map Summary ---");
-                //Console.WriteLine("Debug: listOfRoutes {0} records", listOfRoutes.Count);
-                //Console.WriteLine("Debug: listOfLocations {0} records", listOfLocations.Count);
             }
         }
 
