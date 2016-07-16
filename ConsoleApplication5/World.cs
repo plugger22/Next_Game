@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Next_Game.Cartographic;
+using RLNET;
 
 namespace Next_Game
 {
@@ -343,25 +344,25 @@ namespace Next_Game
         /// click on a location to get info
         /// </summary>
         /// <param name="pos"></param>
-        internal List<string> ShowLocationRL(int locID)
+        internal List<Snippet> ShowLocationRL(int locID)
         {
-            List<string> locList = new List<string>();
+            List<Snippet> locList = new List<Snippet>();
             //Location display
             if (locID > 0)
             {
                 Location loc = Game.network.GetLocation(locID);
                 string locDetails = string.Format("Location (ID {0}) {1} ---", loc.LocationID, loc.LocName);
-                locList.Add(locDetails);
+                locList.Add(new Snippet(locDetails));
                 if (loc.IsCapital() == true)
-                { locList.Add("CAPITAL"); }
+                { locList.Add(new Snippet("CAPITAL", RLColor.Yellow, RLColor.Black)); }
                 if (loc.Connector == true)
-                { locList.Add("CONNECTOR"); }
+                { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
                 //characters at location
                 List<int> charList = loc.GetCharacterList();
                 if (charList.Count > 0)
                 {
                     int row = 3;
-                    locList.Add("Characters at " + loc.LocName + " ---");
+                    locList.Add(new Snippet("Characters at " + loc.LocName + " ---"));
                     string charDetails;
                     foreach (int charID in charList)
                     {
@@ -374,14 +375,14 @@ namespace Next_Game
                         }
                         else
                         {   charDetails = string.Format("unknown ID " + Convert.ToString(charID)); }
-                        locList.Add(charDetails);
+                        locList.Add(new Snippet(charDetails));
                     }
                 }
             }
             else if (locID == 0)
-            { locList.Add("ERROR: There is no Location present here"); }
+            { locList.Add(new Snippet("ERROR: There is no Location present here", RLColor.Red, RLColor.Black)); }
             else
-            { locList.Add("ERROR: Please click on the map"); }
+            { locList.Add(new Snippet("ERROR: Please click on the map", RLColor.Red, RLColor.Black)); }
             return locList;
         }
 
