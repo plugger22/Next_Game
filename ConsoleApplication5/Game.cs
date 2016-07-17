@@ -15,9 +15,10 @@ namespace Next_Game
     public static class Game
     {
         // The screen height and width are in number of tiles
-        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
 
-        private static int seed = 43904;
+        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        //DEBUG: insert seed here to test a particular map
+        //private static int seed = 57738;
 
         private static readonly int _rootWidth = 230;
         private static readonly int _rootHeight = 140;

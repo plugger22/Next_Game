@@ -1268,7 +1268,6 @@ namespace Next_Game.Cartographic
             locCapital.Connections = CheckConnection(pos.PosX, pos.PosY);
             listOfLocations.Add(locCapital);
 
-
             //capital loop
             for (int capDirection = 1; capDirection < 5; capDirection++)
             {
@@ -1283,9 +1282,8 @@ namespace Next_Game.Cartographic
                         for (int direction = 1; direction < 5; direction++)
                         {
                             //if starting out from capital, ensure correct direction
-                            if (startAtCapital == true )
-                            { direction = capDirection; startAtCapital = false; }
-                            //{ direction = capDirection; }
+                            if (startAtCapital == true)
+                            { direction = capDirection; }
                             endStatus = true;
                             if (CheckRouteExists(newPos, direction))
                             {
@@ -1304,6 +1302,8 @@ namespace Next_Game.Cartographic
                                     Location locNew = new Location(newPos, capDirection, false);
                                     locNew.Connections = CheckConnection(newPos.PosX, newPos.PosY);
                                     listOfLocations.Add(locNew);
+                                    if (startAtCapital == true)
+                                    { startAtCapital = false; }
                                     break;
                                 }
                                 else
@@ -1313,22 +1313,28 @@ namespace Next_Game.Cartographic
                                     newPos = path[0]; //reset origin point
                                 }
                             }
-                            //Starting at Capital - single go through loop then exit
-                            //if (startAtCapital == true)
-                            //{ startAtCapital = false; }
-                            //break;
+                            else
+                            {
+                                //Starting at Capital - single go through loop then exit
+                                if (startAtCapital == true)
+                                { startAtCapital = false; break; }
+                            }
                         }
                     }
                     while (endStatus == false);
                     //O.K, back up a node - get last route in listOfRoutes and get starting pos
                     //if NOT at end of branch (but still backing up a node), the last route in the list isn't the one you want
                     pathPrevious = GetPreviousNode(newPos);
-                    newPos = pathPrevious[0];
+                    if (pathPrevious.Count > 0)
+                    { newPos = pathPrevious[0]; }
+                    else
+                    { Console.WriteLine("ERROR: Map.InitialiseRoutes  pathPrevious.Count == 0, CapDirection {0}, newPos {1}:{2}", capDirection, newPos.PosX, newPos.PosY); }
                 }
                 //check if at capital
                 while (newPos.PosX != capitalX || newPos.PosY != capitalY);
             }
         }
+        
 
 
 
@@ -1350,7 +1356,7 @@ namespace Next_Game.Cartographic
                 if((pos.PosX != posStart.PosX || pos.PosY != posStart.PosY) && (pos.PosX == posEnd.PosX && pos.PosY == posEnd.PosY))
                 { return path; }
             }
-            //Console.WriteLine("Debug: ERROR in GetPreviousNode - no suitable route found");
+            Console.WriteLine("Debug: ERROR in GetPreviousNode - no suitable route found");
             return path;
         }
 
