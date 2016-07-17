@@ -1353,7 +1353,6 @@ namespace Next_Game.Cartographic
         public void InitialiseHouseLocations(int maxHouses, int idealLocs)
         {
             int totalLocs = 0;
-            
             //tally up number of locations (exclude capital)
             for (int i = 1; i < 5; i++)
             { totalLocs += arrayOfNetworkAnalysis[i, 0]; }
@@ -1362,19 +1361,37 @@ namespace Next_Game.Cartographic
             //don't exceed cap
             numHouses = Math.Min(numHouses, maxHouses);
             int housesTally = numHouses;
-            //allocate houses
-            do
+            //allocate house - special case to accommodate branches with a small number of locations (they end up with a default house regardless)
+            if( numHouses > 2 )
             {
-                for(int i = 1; i < 5; i++)
+                for (int i = 1; i < 5; i++)
                 {
-                    //enough locs in branch to support a house?
-                    int branchHouses = arrayOfNetworkAnalysis[i, 2];
-                    if(arrayOfNetworkAnalysis[i, 0] >= idealLocs * (branchHouses + 1))
+                    if (arrayOfNetworkAnalysis[i, 0] >= 2)
                     {
                         arrayOfNetworkAnalysis[i, 2]++;
                         housesTally--;
                     }
                 }
+            }
+            //allocate houses - the bulk of them
+            bool changeFlag = false;
+            do
+            {
+                changeFlag = false;
+                for(int i = 1; i < 5; i++)
+                {
+                    //enough locs in branch to support a house?
+                    int branchHouses = arrayOfNetworkAnalysis[i, 2];
+                    if(arrayOfNetworkAnalysis[i, 0] >= idealLocs * (branchHouses + 1) && housesTally > 0)
+                    {
+                        arrayOfNetworkAnalysis[i, 2]++;
+                        housesTally--;
+                        changeFlag = true;
+                    }
+                }
+                //to prevent being stuck in an endless loop (no branch meets criteria)
+                if(changeFlag == false)
+                { break; }
             }
             while (housesTally > 0);
             //debug output
@@ -1382,8 +1399,11 @@ namespace Next_Game.Cartographic
             Console.WriteLine("--- InitialiseHouseLocations");
             Console.WriteLine("Total Locations (excluding Capital) {0}", totalLocs);
             Console.WriteLine("Number of Houses {0}, Max Cap on House Numbers {1}", numHouses, maxHouses);
+            Console.WriteLine();
             for(int i = 1; i < 5; i++)
             { Console.WriteLine("Branch {0} has {1} Houses allocated", i, arrayOfNetworkAnalysis[i, 2]); }
+            Console.WriteLine();
+            Console.WriteLine("Total Houses Allocated {0} out of {1}", numHouses - housesTally, numHouses);
         }
 
         //methods above here
