@@ -65,6 +65,7 @@ namespace Next_Game.Cartographic
                 //create list of routes from locations back to the capital
                 InitialiseRoutesToCapital();
                 InitialiseRoutesToConnectors();
+                InitialiseHouseLocations(6, 3);
             }
         }
 
@@ -1341,6 +1342,25 @@ namespace Next_Game.Cartographic
                 int connConsole = arrayOfNetworkAnalysis[i, 1];
                 Console.WriteLine($"Dir {i, -5} {locConsole, 5} Locations {connConsole, 5} Connections");
             }
+        }
+
+        /// <summary>
+        /// returns a list of groups of locations for houses and specials
+        /// </summary>
+        /// <param name="numHouses">Hou many houses there should be in the land</param>
+        /// <param name="numLocs">number of locations per house as a divisor (average)</param>
+        public void InitialiseHouseLocations(int numHouses, int numLocs)
+        {
+            int totalLocs = 0;
+            //tally up number of locations (exclude capital)
+            for (int i = 1; i < 5; i++)
+            { totalLocs += arrayOfNetworkAnalysis[i, 0]; }
+            //work out average distribution of Locations
+            int averageLocs = totalLocs / numHouses;
+            Console.WriteLine();
+            Console.WriteLine("--- InitialiseHouseLocations");
+            Console.WriteLine("Total Locations (excluding Capital) {0}", totalLocs);
+            Console.WriteLine("Number of Houses {0}, Average distribution {1}", numHouses, averageLocs);
         }
 
         //methods above here
