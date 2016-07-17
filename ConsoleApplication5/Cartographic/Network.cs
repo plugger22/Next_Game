@@ -19,7 +19,7 @@ namespace Next_Game.Cartographic
         //Interface class to enable dictionary keys (Position) to be compared
         List<string> listOfLocationNames = new List<string>(); //list of all location names
         Dictionary<int, Location> dictLocations;
-        private int[,] arrayOfNetworkAnalysis; //analysises network [1 for each branch direction] [,0] # locs, [,1] # of connection of first loc out from capital,[,2] # of houses on branch
+        private int[,] arrayOfNetworkAnalysis; //analysises network [i,] direction [,0] # locs [,1] # of conn's, 1st loc from CAP [,2] # of houses on branch [,3] working # of houses on branch
 
         //default constructor with seed for random # generator
         public Network(int seed)
@@ -32,7 +32,7 @@ namespace Next_Game.Cartographic
             ListOfLocations = Game.map.GetLocations();
             ListOfConnectorRoutes = Game.map.GetConnectors();
             ArrayOfConnectors = Game.map.GetArrayOfConnectors();
-            arrayOfNetworkAnalysis = new int[5, 2]; //[5,] 0 capital, 1-4 N,E,S,W
+            arrayOfNetworkAnalysis = new int[5, 4]; //[5,] direction: 0 capital, 1-4 N,E,S,W
 
 
         }
@@ -65,7 +65,8 @@ namespace Next_Game.Cartographic
                 //create list of routes from locations back to the capital
                 InitialiseRoutesToCapital();
                 InitialiseRoutesToConnectors();
-                InitialiseHouseLocations(6, 3);
+                ShowNetworkAnalysis();
+                InitialiseHouseLocations(8, 3);
             }
         }
 
@@ -1347,20 +1348,42 @@ namespace Next_Game.Cartographic
         /// <summary>
         /// returns a list of groups of locations for houses and specials
         /// </summary>
-        /// <param name="numHouses">Hou many houses there should be in the land</param>
-        /// <param name="numLocs">number of locations per house as a divisor (average)</param>
-        public void InitialiseHouseLocations(int numHouses, int numLocs)
+        /// <param name="maxHouses">max. number of houses there could be in the land</param>
+        /// <param name="idealLocs">ideal number of locations per house, used as a divisor</param>
+        public void InitialiseHouseLocations(int maxHouses, int idealLocs)
         {
             int totalLocs = 0;
+            
             //tally up number of locations (exclude capital)
             for (int i = 1; i < 5; i++)
             { totalLocs += arrayOfNetworkAnalysis[i, 0]; }
-            //work out average distribution of Locations
-            int averageLocs = totalLocs / numHouses;
+            //work out number of houses based on how many Locations
+            int numHouses = totalLocs / idealLocs;
+            //don't exceed cap
+            numHouses = Math.Min(numHouses, maxHouses);
+            int housesTally = numHouses;
+            //allocate houses
+            do
+            {
+                for(int i = 1; i < 5; i++)
+                {
+                    //enough locs in branch to support a house?
+                    int branchHouses = arrayOfNetworkAnalysis[i, 2];
+                    if(arrayOfNetworkAnalysis[i, 0] >= idealLocs * (branchHouses + 1))
+                    {
+                        arrayOfNetworkAnalysis[i, 2]++;
+                        housesTally--;
+                    }
+                }
+            }
+            while (housesTally > 0);
+            //debug output
             Console.WriteLine();
             Console.WriteLine("--- InitialiseHouseLocations");
             Console.WriteLine("Total Locations (excluding Capital) {0}", totalLocs);
-            Console.WriteLine("Number of Houses {0}, Average distribution {1}", numHouses, averageLocs);
+            Console.WriteLine("Number of Houses {0}, Max Cap on House Numbers {1}", numHouses, maxHouses);
+            for(int i = 1; i < 5; i++)
+            { Console.WriteLine("Branch {0} has {1} Houses allocated", i, arrayOfNetworkAnalysis[i, 2]); }
         }
 
         //methods above here

@@ -77,7 +77,6 @@ namespace Next_Game
             map.InitialiseMap(4, 2);
             network = new Network(seed);
             network.InitialiseNetwork();
-            network.ShowNetworkAnalysis();
             History history = new History(seed);
             history.InitialiseHistory();
             history.CreatePlayerCharacters(6);
