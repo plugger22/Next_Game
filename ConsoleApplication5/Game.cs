@@ -16,9 +16,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        //private static int seed = 57738;
+        private static int seed = 33686;
 
         private static readonly int _rootWidth = 230;
         private static readonly int _rootHeight = 140;
@@ -71,6 +71,7 @@ namespace Next_Game
 
         public static void Main(string[] args)
         {
+            Console.SetWindowSize(100, 80);
             //initialise game objects
             messageLog = new MessageLog();
             map = new Map(mapSize, seed);

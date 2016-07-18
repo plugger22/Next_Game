@@ -1465,6 +1465,7 @@ namespace Next_Game.Cartographic
 
             //loop through each branch
             List<Location> branchList = new List<Location>();
+            int totalHouseTally = numHouses;
             for (int branch = 1; branch < 5; branch++)
             {
                 
@@ -1495,10 +1496,10 @@ namespace Next_Game.Cartographic
                 int houseLocTally;
                 bool endStatus = false;
                 //first check for special location (will automatically be the first location in the sorted List)
-                if (arrayOfNetworkAnalysis[1, 4] > 0)
+                if (arrayOfNetworkAnalysis[branch, 4] > 0)
                 { arrayStatus[0] = 99; }
                 //how many houses assigned to branch
-                branchHouseTally = arrayOfNetworkAnalysis[1, 2];
+                branchHouseTally = arrayOfNetworkAnalysis[branch, 2];
                 //number of loc's assigned to a house
                 houseLocTally = 0;
                 bool foundFlag = false;
@@ -1517,7 +1518,7 @@ namespace Next_Game.Cartographic
                             if (loc.Connections == 1)
                             {
                                 //assign to highest number house
-                                arrayStatus[i] = branchHouseTally;
+                                arrayStatus[i] = totalHouseTally;
                                 //update tally of locs assigned to house
                                 houseLocTally++;
                                 foundFlag = true;
@@ -1529,24 +1530,26 @@ namespace Next_Game.Cartographic
                         }
                     }
                     //one run through list
-                    if( foundFlag == true)
+                    if (foundFlag == true)
                     {
-                        branchHouseTally--;
-                        if( branchHouseTally == 0 )
+                        branchHouseTally--; totalHouseTally--;
+                        if (branchHouseTally == 0)
                         { endStatus = true; }
                     }
                     //no unassigned end of branch locations remaining on list
                     else
-                    { endStatus == true }
+                    { endStatus = true; }
                 }
-                while (endStatus == false);
+                while (endStatus == false && totalHouseTally > 0);
 
                 //use arrayStatus to update Loc types
                 Console.WriteLine();
                 for(int i = 0; i < branchList.Count; i++)
                 {
+                    if( i == 0)
+                    { Console.WriteLine("--- Branch {0}", branch); }
                     Location loc = branchList[i];
-                    Console.WriteLine("Loc ID {0}, {1} is assigned to House {2}", loc.LocationID, loc.LocName, arrayStatus[i]);
+                    Console.WriteLine("Loc ID {0} {1} is assigned to House {2}", loc.LocationID, loc.LocName, arrayStatus[i]);
                 }
             }
         }
