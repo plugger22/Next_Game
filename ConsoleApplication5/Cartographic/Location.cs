@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Next_Game;
 
 namespace Next_Game.Cartographic
 {
@@ -63,7 +64,8 @@ namespace Next_Game.Cartographic
         public int DistanceToCapital { get; set; } 
         public int DistanceToConnector { get; set; }
         public int LocationID { get; }
-        private List<Position> listOfNeighbours = new List<Position>(); //list of immediate neighbours with distance to each
+        private List<Position> listOfNeighboursPos = new List<Position>(); //list of immediate neighbours, by Position
+        private List<int> listOfNeighboursLocID = new List<int>(); //list of immediate neighbours, by LocID
         private readonly List<Route> routeToCapital = new List<Route>(); //Loc -> Capital
         private readonly List<Route> routeToConnector = new List<Route>(); //Loc -> Connector
         private readonly List<Route> routeFromCapital = new List<Route>(); //Capital -> Loc
@@ -120,7 +122,11 @@ namespace Next_Game.Cartographic
 
         //add Neighbour data
         public void AddNeighbour(Position pos)
-        { listOfNeighbours.Add(pos); }
+        {
+            listOfNeighboursPos.Add(pos);
+            int locID = Next_Game.Game.map.GetLocationID(pos.PosX, pos.PosY);
+            listOfNeighboursLocID.Add(locID);
+        }
 
         //input list of routes to Capital
         public void SetRoutesToCapital(List<Route> listOfRoutes)
@@ -194,8 +200,11 @@ namespace Next_Game.Cartographic
         }
 
         //return list of Neighbours
-        public List<Position> GetNeighbours()
-        { return listOfNeighbours; }
+        public List<Position> GetNeighboursPos()
+        { return listOfNeighboursPos; }
+
+        public List<int> GetNeighboursLocID()
+        { return listOfNeighboursLocID; }
 
         //get Position coord 
         public int GetPosX()

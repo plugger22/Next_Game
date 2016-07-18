@@ -117,7 +117,7 @@ namespace Next_Game.Cartographic
             {
                 if(loc.IsCapital() == true)
                 {
-                    listOfNeighbours = loc.GetNeighbours();
+                    listOfNeighbours = loc.GetNeighboursPos();
                     capitalX = loc.GetPosX();
                     capitalY = loc.GetPosY();
                     //Capital pos in array[0], 4 directions from capital (initial loc's in that direction) store in array[1...4]
@@ -248,7 +248,7 @@ namespace Next_Game.Cartographic
             //lookup origin location in dictionary
             if (dictLocations.TryGetValue(locID, out baseLoc))
             {
-                baseNeighbours = baseLoc.GetNeighbours();
+                baseNeighbours = baseLoc.GetNeighboursPos();
                 //set up originNeighbours
                 for (int i = 0; i < baseNeighbours.Count; i++)
                 {
@@ -473,7 +473,7 @@ namespace Next_Game.Cartographic
                             }
                             
                             //get newNeighbours
-                            newNeighbours = newLoc.GetNeighbours();
+                            newNeighbours = newLoc.GetNeighboursPos();
                             //find next position on newNeighbours list that != posBase || ! = posSearch || != Capital || != Origin
                             foreach (Position pos in newNeighbours)
                             {
@@ -578,7 +578,7 @@ namespace Next_Game.Cartographic
                                 List<Position> searchNeighbours = new List<Position>();
                                 locID = Game.map.GetLocationID(posBase.PosX, posBase.PosY);
                                 if (dictLocations.TryGetValue(locID, out searchLoc))
-                                { searchNeighbours = searchLoc.GetNeighbours(); }
+                                { searchNeighbours = searchLoc.GetNeighboursPos(); }
                                 //check that there isn't a viable pos from the base that hasn't already been searched != Capital, != Base, != origin, != posNew default (from peek) != posSearch
                                 foreach (Position pos in searchNeighbours)
                                 {
@@ -1217,7 +1217,6 @@ namespace Next_Game.Cartographic
                     //if a valid route found, add details to Location object's list of neighbours
                     //if (posNeighbour != null)
                     //{ loc.AddNeighbour(posNeighbour); }
-                    
                 }
             }
         }
@@ -1463,9 +1462,11 @@ namespace Next_Game.Cartographic
             Console.WriteLine();
             Console.WriteLine("Total Houses Allocated {0} out of {1}", numHouses - housesTally, numHouses);
 
-            //loop through each branch
             List<Location> branchList = new List<Location>();
-            int totalHouseTally = numHouses;
+            List<int> locConnections = new List<int>();
+            int totalHouseTally = numHouses - housesTally;
+
+            //loop through each branch
             for (int branch = 1; branch < 5; branch++)
             {
                 
@@ -1494,6 +1495,7 @@ namespace Next_Game.Cartographic
                 int[] arrayStatus = new int[countLocs];
                 int branchHouseTally;
                 int houseLocTally;
+                int locID;
                 bool endStatus = false;
                 //first check for special location (will automatically be the first location in the sorted List)
                 if (arrayOfNetworkAnalysis[branch, 4] > 0)
@@ -1524,6 +1526,21 @@ namespace Next_Game.Cartographic
                                 foundFlag = true;
 
                                 //find immediate neighbour (same house) and keep going until a connector location is found
+                                locConnections.AddRange(loc.GetNeighboursLocID());
+                                //automatically assign to first node in from end of branch
+                                locID = locConnections[0];
+                                //find position in branchList
+                                for (int p = 0; p < countLocs; p++)
+                                {
+                                    if (branchList[p].LocationID == locID && arrayStatus[p] == 0)
+                                    {
+                                        //assign to same house, IF free
+                                        arrayStatus[p] = totalHouseTally;
+                                        houseLocTally++;
+                                        break;
+                                    }
+                                }
+                                    
 
                                 break;
                             }
