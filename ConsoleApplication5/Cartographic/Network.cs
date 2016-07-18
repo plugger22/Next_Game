@@ -19,9 +19,21 @@ namespace Next_Game.Cartographic
         //Interface class to enable dictionary keys (Position) to be compared
         List<string> listOfLocationNames = new List<string>(); //list of all location names
         Dictionary<int, Location> dictLocations;
-        private int[,] arrayOfNetworkAnalysis; //analysises network [i,] direction [,0] # locs [,1] # of conn's, 1st loc from CAP [,2] # of houses on branch [,3] working # of houses on branch
+        //analysises network [i,] direction [,0] # locs [,1] # of conn's, 1st loc from CAP [,2] # of houses on branch [,3] working # of houses on branch
+        //[,4] # of special sites on branch (calculated)
+        //[5,] direction: 0 capital, 1-4 N,E,S,W
+        private int[,] arrayOfNetworkAnalysis;
+        //four lists (sorted by distance to capital) of locations, one for each branch.
+        private List<Location> listNorthBranch;
+        private List<Location> listEastBranch;
+        private List<Location> listSouthBranch;
+        private List<Location> listWestBranch;
 
-        //default constructor with seed for random # generator
+
+        /// <summary>
+        /// default constructor with seed for random # generator
+        /// </summary>
+        /// <param name="seed">Random seed passed from Game</param>
         public Network(int seed)
         {
             //posEqC = new PositionEqualityComparer();
@@ -32,12 +44,16 @@ namespace Next_Game.Cartographic
             ListOfLocations = Game.map.GetLocations();
             ListOfConnectorRoutes = Game.map.GetConnectors();
             ArrayOfConnectors = Game.map.GetArrayOfConnectors();
-            arrayOfNetworkAnalysis = new int[5, 4]; //[5,] direction: 0 capital, 1-4 N,E,S,W
-
-
+            arrayOfNetworkAnalysis = new int[5, 5];
+            listNorthBranch = new List<Location>();
+            listEastBranch = new List<Location>();
+            listSouthBranch = new List<Location>();
+            listWestBranch = new List<Location>();
         }
 
-        //set up Network collections
+        /// <summary>
+        /// set up Network collections
+        /// </summary>
         public void InitialiseNetwork()
         {
             //read in location names
@@ -59,7 +75,24 @@ namespace Next_Game.Cartographic
                     //tally up number of locations on each branch
                     int branch = loc.GetCapitalRouteDirection();
                     arrayOfNetworkAnalysis[branch, 0]++;
+                    //add to correct branch list
+                    switch( branch)
+                        {
+                        case 1:
+                            listNorthBranch.Add(loc);
+                            break;
+                        case 2:
+                            listEastBranch.Add(loc);
+                            break;
+                        case 3:
+                            listSouthBranch.Add(loc);
+                            break;
+                        case 4:
+                            listWestBranch.Add(loc);
+                            break;
+                        }
                 }
+                
                 //create list of neighbours for each location
                 InitialiseNeighbours();
                 //create list of routes from locations back to the capital
@@ -70,7 +103,9 @@ namespace Next_Game.Cartographic
             }
         }
 
-        //sorts out all locations on a branch
+        /// <summary>
+        /// sorts out all locations on a branch
+        /// </summary>
         private void InitialiseRoutesToCapital()
         {
             List<Position> listOfNeighbours = new List<Position>();
@@ -135,8 +170,17 @@ namespace Next_Game.Cartographic
                 if(listOfRoutesToDestination.Count == 1)
                 { arrayOfNetworkAnalysis[direction, 1] = loc.Connections; }
             }
+            //sort branch lists (distance from Capital)
+            listNorthBranch.Sort();
+            listEastBranch.Sort();
+            listSouthBranch.Sort();
+            listWestBranch.Sort();
         }
-        //sets up routes to connectors (if one exists for that branch)
+
+
+        /// <summary>
+        /// sets up routes to connectors (if one exists for that branch)
+        /// </summary>
         private void InitialiseRoutesToConnectors()
         {
             //loop through array to check if a connector exists for the branch
@@ -1189,7 +1233,7 @@ namespace Next_Game.Cartographic
             {
                 int locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
                 if (dictLocations.ContainsKey(locID))
-                { loc = dictLocations[locID]; loc.PrintStatus(); }
+                { loc = dictLocations[locID]; loc.ShowStatus(); }
                 else
                 { Console.WriteLine("Debug: Location {0}:{1} doesn't exist in the dictLocations", pos.PosX, pos.PosY); }
             }
@@ -1332,7 +1376,9 @@ namespace Next_Game.Cartographic
             return returnString;
         }
 
-        //debug program
+        /// <summary>
+        /// Debug method, console output
+        /// </summary>
         public void ShowNetworkAnalysis()
         {
             Console.WriteLine();
@@ -1353,21 +1399,33 @@ namespace Next_Game.Cartographic
         public void InitialiseHouseLocations(int maxHouses, int idealLocs)
         {
             int totalLocs = 0;
-            //tally up number of locations (exclude capital)
             for (int i = 1; i < 5; i++)
-            { totalLocs += arrayOfNetworkAnalysis[i, 0]; }
+            {
+                //tally up number of locations (exclude capital)
+                totalLocs += arrayOfNetworkAnalysis[i, 0];
+                //copy across location numbers to [i, 3] (used for calcs, keep original for reference)
+                arrayOfNetworkAnalysis[i, 3] = arrayOfNetworkAnalysis[i, 0];
+            }
             //work out number of houses based on how many Locations
             int numHouses = totalLocs / idealLocs;
             //don't exceed cap
             numHouses = Math.Min(numHouses, maxHouses);
             int housesTally = numHouses;
-            //allocate house - special case to accommodate branches with a small number of locations (they end up with a default house regardless)
+            
             if( numHouses > 2 )
             {
                 for (int i = 1; i < 5; i++)
                 {
-                    if (arrayOfNetworkAnalysis[i, 0] >= 2)
+                    //check for special locations first and subtract from location totals in [,3] (store # special locations in [i, 4]
+                    if(arrayOfNetworkAnalysis[i, 3] == 1)
+                    { arrayOfNetworkAnalysis[i, 4]++; arrayOfNetworkAnalysis[i, 3]--; }
+                    //first loc from capital has 3 or 4 connections and >= 6 locs on branch => inn
+                    if(arrayOfNetworkAnalysis[i, 1] >= 3 && arrayOfNetworkAnalysis[i, 3] >= 6)
+                    { arrayOfNetworkAnalysis[i, 4]++; arrayOfNetworkAnalysis[i, 3]--; }
+                    //allocate house - special case to accommodate branches with a small number of locations (they end up with a default house regardless)
+                    if (arrayOfNetworkAnalysis[i, 3] >= 2)
                     {
+                        // [,2] is used to keep a tally of houses in each branch
                         arrayOfNetworkAnalysis[i, 2]++;
                         housesTally--;
                     }
@@ -1382,7 +1440,7 @@ namespace Next_Game.Cartographic
                 {
                     //enough locs in branch to support a house?
                     int branchHouses = arrayOfNetworkAnalysis[i, 2];
-                    if(arrayOfNetworkAnalysis[i, 0] >= idealLocs * (branchHouses + 1) && housesTally > 0)
+                    if(arrayOfNetworkAnalysis[i, 3] >= idealLocs * (branchHouses + 1) && housesTally > 0)
                     {
                         arrayOfNetworkAnalysis[i, 2]++;
                         housesTally--;
@@ -1401,7 +1459,7 @@ namespace Next_Game.Cartographic
             Console.WriteLine("Number of Houses {0}, Max Cap on House Numbers {1}", numHouses, maxHouses);
             Console.WriteLine();
             for(int i = 1; i < 5; i++)
-            { Console.WriteLine("Branch {0} has {1} Houses allocated", i, arrayOfNetworkAnalysis[i, 2]); }
+            { Console.WriteLine("Branch {0} has {1} Houses allocated, Special Locations {2}", i, arrayOfNetworkAnalysis[i, 2], arrayOfNetworkAnalysis[i, 4]); }
             Console.WriteLine();
             Console.WriteLine("Total Houses Allocated {0} out of {1}", numHouses - housesTally, numHouses);
         }

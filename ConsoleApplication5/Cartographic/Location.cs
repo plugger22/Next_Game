@@ -51,7 +51,8 @@ namespace Next_Game.Cartographic
     }
 
     //Location class
-    internal class Location
+    //sortable on distance to capital (closest to furthest)
+    internal class Location : IComparable<Location>
     {
         private static int locationIndex = 1;
         public string LocName { get; set; }
@@ -103,6 +104,18 @@ namespace Next_Game.Cartographic
             Capital = capital;
             Connector = false;
             LocationID = locationIndex++;
+        }
+
+        /// <summary>
+        /// Default comparer for Location (based on distance to Capital)
+        /// </summary>
+        /// <param name="pos"></param>
+        public int CompareTo(Location compareLoc)
+        {
+            if (compareLoc == null)
+            { return 1; }
+            else
+            { return this.DistanceToCapital.CompareTo(compareLoc.DistanceToCapital); }
         }
 
         //add Neighbour data
@@ -260,7 +273,7 @@ namespace Next_Game.Cartographic
 
 
         //prints details of array
-        public void PrintStatus()
+        public void ShowStatus()
         {
             Console.WriteLine();
             Console.WriteLine("--- Location (ID {0})", LocationID);
