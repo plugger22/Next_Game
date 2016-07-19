@@ -1488,6 +1488,10 @@ namespace Next_Game.Cartographic
                         branchList.AddRange(listWestBranch);
                         break;
                 }
+
+                Console.WriteLine();
+                Console.WriteLine("Branch {0} ---", branch);
+
                 //allocate locations to houses - north branch
                 int countLocs = branchList.Count;
                 //create array to mark which loc's have been used (0 - unassigned, 99 - special, 1+ house ID)
@@ -1511,7 +1515,6 @@ namespace Next_Game.Cartographic
                 //start at end branch and work in
                 do
                 {
-                    foundFlag = false;
                     //search list for first end of branch location
                     /*for (int i = 0; i < countLocs; i++)
                      {
@@ -1551,20 +1554,23 @@ namespace Next_Game.Cartographic
                          }
                      }*/
 
+                    Location loc_1 = new Location();
                     //loop branch list to find first unassigned end of branch location
                     for (int i = 0; i < countLocs; i++)
                     {
+                        foundFlag = false;
                         //is location unassigned?
                         if (arrayStatus[i] == 0)
                         {
-                            Location loc_1 = branchList[i];
+                            loc_1 = branchList[i];
                             //end of branch?
                             if (loc_1.Connections == 1)
                             {
+                                Console.WriteLine("-0- Loc {0}:{1} {2} TotalHouseTally: {3} Connections {4}", loc_1.GetPosX(), loc_1.GetPosY(), loc_1.LocName, totalHouseTally, loc_1.Connections);
                                 //assign to highest number house
                                 arrayStatus[i] = totalHouseTally;
-                                //update tally of locs assigned to house
                                 houseLocTally++;
+                                //update tally of locs assigned to house
                                 foundFlag = true;
                                 innerStatus = false;
                                 finishLoop = false;
@@ -1572,6 +1578,7 @@ namespace Next_Game.Cartographic
                                 //keep going with same house number until a limit is reached
                                 do
                                 {
+                                    locID = 0;
                                     newNode = false;
                                     //find immediate neighbour (same house)
                                     locConnections.Clear();
@@ -1601,10 +1608,13 @@ namespace Next_Game.Cartographic
 
                                     }
 
+                                    Console.WriteLine("Loc {0}:{1}  newNode: {2}, innerStatus: {3}, totalHouseTally: {4}, ID: {5}", loc_1.GetPosX(), loc_1.GetPosY(), newNode, innerStatus, totalHouseTally, locID);
+
                                     //new node found?
                                     if (newNode == true)
                                     {
                                         assignedLoc = false;
+                                        int branchIndex = 0;
                                         //assign node - find in List of branchLocs
                                         for (int p = 0; p < countLocs; p++)
                                         {
@@ -1614,6 +1624,7 @@ namespace Next_Game.Cartographic
                                                 arrayStatus[p] = totalHouseTally;
                                                 houseLocTally++;
                                                 assignedLoc = true;
+                                                branchIndex = p;
                                                 break;
                                             }
                                         }
@@ -1627,33 +1638,45 @@ namespace Next_Game.Cartographic
                                         else if (assignedLoc == true && innerStatus == false)
                                         {
                                             //roll over to next location
+                                            loc_1 = branchList[branchIndex];
                                         }
                                     }
 
                                 }
                                 while (innerStatus == false);
+
+                                //update house count
+                                if (foundFlag == true)
+                                { branchHouseTally--; totalHouseTally--; }
+                                else if (foundFlag == false)
+                                { outerStatus = true; }
+                                //no more houses?
+                                if (branchHouseTally <= 0)
+                                { outerStatus = true; }
                             }
                         }
                     }
-
-                    //one run through list
+                    /*
+                    //update house count
                     if (foundFlag == true)
-                    {
-                        branchHouseTally--; totalHouseTally--;
-                        if (branchHouseTally == 0)
-                        { outerStatus = true; }
-                    }
-                    //no unassigned end of branch locations remaining on list
-                    else
+                    { branchHouseTally--; totalHouseTally--; }
+                    else if (foundFlag == false)
                     { outerStatus = true; }
+                    //no more houses?
+                    if (branchHouseTally <= 0)
+                    { outerStatus = true; }
+                    */
                 }
                 while (outerStatus == false && totalHouseTally > 0);
 
+                Console.WriteLine("--- Set HouseID's");
                 //use arrayStatus to update House ID's on house MapGrid layer
                 for(int i = 0; i < branchList.Count; i++)
                 {
                     Location loc = branchList[i];
                     Game.map.SetHouseID(loc.GetPosX(), loc.GetPosY(), arrayStatus[i]);
+                    Console.WriteLine("Loc {0}:{1} arrayStatus: {2} ID: {3}", loc.GetPosX(), loc.GetPosY(), arrayStatus[i], loc.LocationID);
+
                 }
                 //debug output
                 Console.WriteLine();
