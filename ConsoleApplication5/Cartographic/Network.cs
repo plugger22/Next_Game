@@ -7,7 +7,7 @@ using RLNET;
 
 namespace Next_Game.Cartographic
 {
-    public enum NetGrid { Branch, Locations, Connections, Houses, Specials } //arrayOfNetworkAnalysis
+    public enum NetGrid { Locations, Connections, Houses, WorkingLocs, Specials, Count } //arrayOfNetworkAnalysis
 
     public class Network
     {
@@ -21,9 +21,7 @@ namespace Next_Game.Cartographic
         //Interface class to enable dictionary keys (Position) to be compared
         List<string> listOfLocationNames = new List<string>(); //list of all location names
         Dictionary<int, Location> dictLocations;
-        //analysises network [i,] direction [,0] # locs [,1] # of conn's, 1st loc from CAP [,2] # of houses on branch [,3] working # of houses on branch
-        //[,4] # of special sites on branch (calculated)
-        //[5,] direction: 0 capital, 1-4 N,E,S,W
+        //see NetGrid enum above
         private int[,] arrayOfNetworkAnalysis;
         //four lists (sorted by distance to capital) of locations, one for each branch.
         private List<Location> listNorthBranch;
@@ -45,7 +43,7 @@ namespace Next_Game.Cartographic
             ListOfLocations = Game.map.GetLocations();
             ListOfConnectorRoutes = Game.map.GetConnectors();
             ArrayOfConnectors = Game.map.GetArrayOfConnectors();
-            arrayOfNetworkAnalysis = new int[5, 6];
+            arrayOfNetworkAnalysis = new int[5, (int)NetGrid.Count + 1];
             listNorthBranch = new List<Location>();
             listEastBranch = new List<Location>();
             listSouthBranch = new List<Location>();
@@ -1385,8 +1383,8 @@ namespace Next_Game.Cartographic
             Console.WriteLine("--- Network Analysis");
             for (int i = 0; i <= arrayOfNetworkAnalysis.GetUpperBound(0); i++)
             {
-                int locConsole = arrayOfNetworkAnalysis[i, 0];
-                int connConsole = arrayOfNetworkAnalysis[i, 1];
+                int locConsole = arrayOfNetworkAnalysis[i, (int)NetGrid.Locations];
+                int connConsole = arrayOfNetworkAnalysis[i, (int)NetGrid.Connections];
                 Console.WriteLine($"Dir {i, -5} {locConsole, 5} Locations {connConsole, 5} Connections");
             }
         }
@@ -1402,9 +1400,9 @@ namespace Next_Game.Cartographic
             for (int i = 1; i < 5; i++)
             {
                 //tally up number of locations (exclude capital)
-                totalLocs += arrayOfNetworkAnalysis[i, 0];
+                totalLocs += arrayOfNetworkAnalysis[i, (int)NetGrid.Locations];
                 //copy across location numbers to [i, 3] (used for calcs, keep original for reference)
-                arrayOfNetworkAnalysis[i, 3] = arrayOfNetworkAnalysis[i, 0];
+                arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] = arrayOfNetworkAnalysis[i, (int)NetGrid.Locations];
             }
             //work out number of houses based on how many Locations
             int numHouses = totalLocs / idealLocs;
@@ -1417,16 +1415,16 @@ namespace Next_Game.Cartographic
                 for (int i = 1; i < 5; i++)
                 {
                     //check for special locations first and subtract from location totals in [,3] (store # special locations in [i, 4]
-                    if(arrayOfNetworkAnalysis[i, 3] == 1)
-                    { arrayOfNetworkAnalysis[i, 4]++; arrayOfNetworkAnalysis[i, 3]--; }
+                    if(arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] == 1)
+                    { arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]++; arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs]--; }
                     //first loc from capital has 3 or 4 connections and >= 6 locs on branch => inn
-                    if(arrayOfNetworkAnalysis[i, 1] >= 3 && arrayOfNetworkAnalysis[i, 3] >= 6)
-                    { arrayOfNetworkAnalysis[i, 4]++; arrayOfNetworkAnalysis[i, 3]--; }
+                    if(arrayOfNetworkAnalysis[i, (int)NetGrid.Connections] >= 3 && arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] >= 6)
+                    { arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]++; arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs]--; }
                     //allocate house - special case to accommodate branches with a small number of locations (they end up with a default house regardless)
-                    if (arrayOfNetworkAnalysis[i, 3] >= 2)
+                    if (arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] >= 2)
                     {
                         // [,2] is used to keep a tally of houses in each branch
-                        arrayOfNetworkAnalysis[i, 2]++;
+                        arrayOfNetworkAnalysis[i, (int)NetGrid.Houses]++;
                         housesTally--;
                     }
                 }
@@ -1439,10 +1437,10 @@ namespace Next_Game.Cartographic
                 for(int i = 1; i < 5; i++)
                 {
                     //enough locs in branch to support a house?
-                    int branchHouses = arrayOfNetworkAnalysis[i, 2];
-                    if(arrayOfNetworkAnalysis[i, 3] >= idealLocs * (branchHouses + 1) && housesTally > 0)
+                    int branchHouses = arrayOfNetworkAnalysis[i, (int)NetGrid.Houses];
+                    if(arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] >= idealLocs * (branchHouses + 1) && housesTally > 0)
                     {
-                        arrayOfNetworkAnalysis[i, 2]++;
+                        arrayOfNetworkAnalysis[i, (int)NetGrid.Houses]++;
                         housesTally--;
                         changeFlag = true;
                     }
@@ -1459,7 +1457,7 @@ namespace Next_Game.Cartographic
             Console.WriteLine("Number of Houses {0}, Max Cap on House Numbers {1}", numHouses, maxHouses);
             Console.WriteLine();
             for(int i = 1; i < 5; i++)
-            { Console.WriteLine("Branch {0} has {1} Houses allocated, Special Locations {2}", i, arrayOfNetworkAnalysis[i, 2], arrayOfNetworkAnalysis[i, 4]); }
+            { Console.WriteLine("Branch {0} has {1} Houses allocated, Special Locations {2}", i, arrayOfNetworkAnalysis[i, (int)NetGrid.Houses], arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]); }
             Console.WriteLine();
             Console.WriteLine("Total Houses Allocated {0} out of {1}", numHouses - housesTally, numHouses);
 
@@ -1499,10 +1497,10 @@ namespace Next_Game.Cartographic
                 int locID;
                 bool endStatus = false;
                 //first check for special location (will automatically be the first location in the sorted List)
-                if (arrayOfNetworkAnalysis[branch, 4] > 0)
+                if (arrayOfNetworkAnalysis[branch, (int)NetGrid.Specials] > 0)
                 { arrayStatus[0] = 99; }
                 //how many houses assigned to branch
-                branchHouseTally = arrayOfNetworkAnalysis[branch, 2];
+                branchHouseTally = arrayOfNetworkAnalysis[branch, (int)NetGrid.Houses];
                 //number of loc's assigned to a house
                 houseLocTally = 0;
                 bool foundFlag = false;
