@@ -7,6 +7,8 @@ using RLNET;
 
 namespace Next_Game.Cartographic
 {
+    public enum NetGrid { Branch, Locations, Connections, Houses, Specials } //arrayOfNetworkAnalysis
+
     public class Network
     {
         static int capitalX;
@@ -28,7 +30,6 @@ namespace Next_Game.Cartographic
         private List<Location> listEastBranch;
         private List<Location> listSouthBranch;
         private List<Location> listWestBranch;
-
 
         /// <summary>
         /// default constructor with seed for random # generator
@@ -1526,6 +1527,7 @@ namespace Next_Game.Cartographic
                                 foundFlag = true;
 
                                 //find immediate neighbour (same house) and keep going until a connector location is found
+                                locConnections.Clear();
                                 locConnections.AddRange(loc.GetNeighboursLocID());
                                 //automatically assign to first node in from end of branch
                                 locID = locConnections[0];
@@ -1559,7 +1561,13 @@ namespace Next_Game.Cartographic
                 }
                 while (endStatus == false && totalHouseTally > 0);
 
-                //use arrayStatus to update Loc types
+                //use arrayStatus to update House ID's on house MapGrid layer
+                for(int i = 0; i < branchList.Count; i++)
+                {
+                    Location loc = branchList[i];
+                    Game.map.SetHouseID(loc.GetPosX(), loc.GetPosY(), arrayStatus[i]);
+                }
+                //debug output
                 Console.WriteLine();
                 for(int i = 0; i < branchList.Count; i++)
                 {

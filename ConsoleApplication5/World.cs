@@ -352,7 +352,7 @@ namespace Next_Game
             if (locID > 0)
             {
                 Location loc = Game.network.GetLocation(locID);
-                string locDetails = string.Format("Location (ID {0}) {1} ---", loc.LocationID, loc.LocName);
+                string locDetails = string.Format("Location (ID {0}) {1} (loc {2}:{3})---", loc.LocationID, loc.LocName, loc.GetPosX(), loc.GetPosY());
                 locList.Add(new Snippet(locDetails));
                 if (loc.IsCapital() == true)
                 { locList.Add(new Snippet("CAPITAL", RLColor.Yellow, RLColor.Black)); }

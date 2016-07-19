@@ -5,7 +5,7 @@ using RLNET;
 namespace Next_Game.Cartographic
 {
 
-    public enum MapLayer { Base, Player, NPC, LocID, Debug, Count }
+    public enum MapLayer { Base, Player, NPC, LocID, Debug, Houses, Count }
 
     //Main Map class (single instance, it's job is to set everything up at the start)
     public class Map
@@ -372,6 +372,7 @@ namespace Next_Game.Cartographic
             int horizontal3;
             int vertical1; //ascii character as an alt code (vertical plane above)
             int vertical2; //(vertical plane below)
+            int houseID; //House Id for houses layer
             //
             //margin and the vertical & horizontal offsets are class instances
             //
@@ -432,15 +433,21 @@ namespace Next_Game.Cartographic
                         {
                             //empty cell - centred period
                             case 0:
-                                horizontal2 = 7;  foreground = RLColor.Gray;
+                                horizontal2 = 7; foreground = RLColor.Gray;
                                 break;
                             //location -filled square
                             case 1:
                                 horizontal2 = 219;
                                 foreground = RLColor.Cyan;
-                                //check cells above and below and draw vertical bars if appropriae
-                                //if( mainUp == 10 || mainUp == 13 || mainUp == 15) { vertical1 = 179; }
-                                //if( mainDown == 10 || mainDown == 12 || mainDown == 14) { vertical2 = 179; }
+                                //override with a number if a house
+                                houseID = mapGrid[(int)MapLayer.Houses, column, row];
+                                if (houseID > 0)
+                                {
+                                    if (houseID < 99) // house
+                                    { horizontal2 = houseID + 48;  foreground = RLColor.Yellow; }
+                                    else // special location
+                                    { foreground = RLColor.LightMagenta; }
+                                }
                                 break;
                             //kingdom capital - filled square (large)
                             case 2:
@@ -1801,6 +1808,17 @@ namespace Next_Game.Cartographic
             foreach(Location loc in listOfLocations)
             { mapGrid[(int)MapLayer.LocID, loc.GetPosX(), loc.GetPosY()] = loc.LocationID; }
         }
+
+
+        /// <summary>
+        /// Initialises HouseID layer on MapGrid using data from Network.InitialiseHouses
+        /// </summary>
+        /// <param name="coord_X"></param>
+        /// <param name="coord_Y"></param>
+        /// <param name="houseID"></param>
+        public void SetHouseID(int coord_X, int coord_Y, int houseID)
+        { mapGrid[(int)MapLayer.Houses, coord_X, coord_Y] = houseID; }
+
 
         /// <summary>
         /// Input X & Y coords and return LocID based on MapGrid Layer. Converts raw mouse input coords if needed.
