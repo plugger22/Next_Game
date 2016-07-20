@@ -1715,41 +1715,159 @@ namespace Next_Game.Cartographic
                     int houseID = 0;
                     for (int i = 0; i < arrayStatus.Length; i++)
                     {
+                        if (arrayStatus[i] == 0)
                         {
-                            //location on branchList, get list of neighbours
-                            Location loc_3 = branchList[i];
-                            List<int> listOfNeighbours = loc_3.GetNeighboursLocID();  
-                            //loop list of neighbours looking for any with a house # assigned
-                            for(int n = 0; n < listOfNeighbours.Count; n++)
                             {
-                                neighbourID = listOfNeighbours[n];
-                                //find index to use
-                                for (int index = 0; index < arrayLocID.Length; index++)
+                                //location on branchList, get list of neighbours
+                                Location loc_3 = branchList[i];
+                                List<int> listOfNeighbours = loc_3.GetNeighboursLocID();
+                                //loop list of neighbours looking for any with a house # assigned
+                                for (int n = 0; n < listOfNeighbours.Count; n++)
                                 {
-                                    if (arrayLocID[index] == neighbourID)
+                                    neighbourID = listOfNeighbours[n];
+                                    //find index to use
+                                    for (int index = 0; index < arrayLocID.Length; index++)
                                     {
-                                        //get house ID
-                                        houseID = arrayStatus[index];
-                                        if (houseID > 0 && houseID != 99)
+                                        if (arrayLocID[index] == neighbourID)
                                         {
-                                            //house number - assign to current node and break;
-                                            arrayStatus[i] = houseID;
-                                            Game.map.SetHouseID(loc_3.GetPosX(), loc_3.GetPosY(), houseID);
-                                            updateFlag = true;
-                                            break;
+                                            //get house ID
+                                            houseID = arrayStatus[index];
+                                            if (houseID > 0 && houseID != 99)
+                                            {
+                                                //house number - assign to current node and break;
+                                                arrayStatus[i] = houseID;
+                                                Game.map.SetHouseID(loc_3.GetPosX(), loc_3.GetPosY(), houseID);
+                                                updateFlag = true;
+                                                break;
+                                            }
                                         }
                                     }
+                                    //back out of search if already got a hit - one per iteration
+                                    if (updateFlag == true)
+                                    { break; }
                                 }
-                                //back out of search if already got a hit - one per iteration
-                                if (updateFlag == true)
-                                { break; }
                             }
                         }
                     }
                 }
                 while (updateFlag == true);
 
-                
+                //check for orphaned routes (a sub branch leading out from a special location)
+                bool unassignedFlag = false;
+                bool rerunNeeded = false;
+                int specialIndex = 0;
+                int newHouseID = 0;
+
+                if (arrayOfNetworkAnalysis[branch, (int)NetGrid.Specials] > 0)
+                {
+                    //loop through arrayStatus and find special index and if there are any locations without an assigned houseID
+                    for (int i = 0; i < arrayStatus.Length; i++)
+                    {
+                        if (arrayStatus[i] == 99)
+                        { specialIndex = i; }
+                        else if (arrayStatus[i] == 0)
+                        { unassignedFlag = true; }
+                    }
+                }
+                //any unassigned locations?
+                if (unassignedFlag == true)
+                {
+                    //get neighbour list for Special location
+                    Location loc_4 = branchList[specialIndex];
+                    List<int> specialNeighbours = loc_4.GetNeighboursLocID();
+                    //loop list of neighbours looking for a valid house # (first one you find)
+                    for(int index = 0; index < specialNeighbours.Count; index++)
+                    {
+                        newHouseID = 0;
+                        int nearID = specialNeighbours[index];
+                        //does ID have a houseID?
+                        for(int k = 0; k < arrayLocID.Length; k++)
+                        {
+                            if (arrayLocID[k] == nearID)
+                            {
+                                newHouseID = arrayStatus[k];
+                                if (newHouseID > 0)
+                                { break; }
+                            }
+                        }
+                        //exit again
+                        if (newHouseID > 0)
+                        { break; }
+                    }
+                    //assign to neighbouring loc with no houseID
+                    if (newHouseID > 0)
+                    {
+                        //loop list of special location neighbours looking for an unassigned location
+                        for (int index = 0; index < specialNeighbours.Count; index++)
+                        {
+                            int nearID = specialNeighbours[index];
+                            //does ID have a houseID?
+                            for (int k = 0; k < arrayLocID.Length; k++)
+                            {
+                                if (arrayLocID[k] == nearID)
+                                {
+                                    //don't break, loop through and assign to ALL unassigned locations.
+                                    arrayStatus[k] = newHouseID;
+                                    Location loc_5 = branchList[k];
+                                    Game.map.SetHouseID(loc_5.GetPosX(), loc_5.GetPosY(), newHouseID);
+                                    rerunNeeded = true;
+                                } 
+                            }
+                        }
+                    }
+                }
+
+                //Have any neighbours of the special location been assigned a like houseID?
+                if (rerunNeeded == true)
+                {
+                    //need to rerun base 'fill in the blanks' functionality to allocate all unassigned locations (which will key off the loc adjacent to the special, above)
+                    do
+                    {
+                        updateFlag = false;
+                        int neighbourID = 0;
+                        int houseID = 0;
+                        for (int i = 0; i < arrayStatus.Length; i++)
+                        {
+                            if (arrayStatus[i] == 0)
+                            {
+                                {
+                                    //location on branchList, get list of neighbours
+                                    Location loc_3 = branchList[i];
+                                    List<int> listOfNeighbours = loc_3.GetNeighboursLocID();
+                                    //loop list of neighbours looking for any with a house # assigned
+                                    for (int n = 0; n < listOfNeighbours.Count; n++)
+                                    {
+                                        neighbourID = listOfNeighbours[n];
+                                        //find index to use
+                                        for (int index = 0; index < arrayLocID.Length; index++)
+                                        {
+                                            if (arrayLocID[index] == neighbourID)
+                                            {
+                                                //get house ID
+                                                houseID = arrayStatus[index];
+                                                if (houseID > 0 && houseID != 99)
+                                                {
+                                                    //house number - assign to current node and break;
+                                                    arrayStatus[i] = houseID;
+                                                    Game.map.SetHouseID(loc_3.GetPosX(), loc_3.GetPosY(), houseID);
+                                                    updateFlag = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        //back out of search if already got a hit - one per iteration
+                                        if (updateFlag == true)
+                                        { break; }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    while (updateFlag == true);
+                }
+
+
+
                 //debug output
                 /*Console.WriteLine();
                 for (int i = 0; i < branchList.Count; i++)
