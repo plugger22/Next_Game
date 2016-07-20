@@ -18,7 +18,8 @@ namespace Next_Game
 
         //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        private static int seed = 20131;
+        private static int seed = 32805;
+        
 
         private static readonly int _rootWidth = 230;
         private static readonly int _rootHeight = 140;
@@ -72,6 +73,7 @@ namespace Next_Game
         public static void Main(string[] args)
         {
             Console.SetWindowSize(100, 80);
+            Console.WriteLine("Seed: {0}", seed);
             //initialise game objects
             messageLog = new MessageLog();
             map = new Map(mapSize, seed);

@@ -1468,7 +1468,7 @@ namespace Next_Game.Cartographic
             //loop through each branch
             for (int branch = 1; branch < 5; branch++)
             {
-                
+
                 switch (branch)
                 {
                     case 1:
@@ -1494,198 +1494,205 @@ namespace Next_Game.Cartographic
 
                 //allocate locations to houses - north branch
                 int countLocs = branchList.Count;
-                //create array to mark which loc's have been used (0 - unassigned, 99 - special, 1+ house ID)
-                int[] arrayStatus = new int[countLocs];
-                int branchHouseTally;
-                int houseLocTally;
-                int locID = 0;
-                bool innerStatus = false; //do-while exit flags
-                bool outerStatus = false;
-                bool newNode = false; //new node found
-                bool finishLoop = false;
-                bool assignedLoc = false;
-                //first check for special location (will automatically be the first location in the sorted List)
-                if (arrayOfNetworkAnalysis[branch, (int)NetGrid.Specials] > 0)
-                { arrayStatus[0] = 99; }
-                //how many houses assigned to branch
-                branchHouseTally = arrayOfNetworkAnalysis[branch, (int)NetGrid.Houses];
-                //number of loc's assigned to a house
-                houseLocTally = 0;
-                bool foundFlag = false;
-                //start at end branch and work in
-                do
+                if (countLocs > 0)
                 {
-                    //search list for first end of branch location
-                    /*for (int i = 0; i < countLocs; i++)
-                     {
-                         //is location unassigned?
-                         if (arrayStatus[i] == 0)
-                         {
-                             Location loc = branchList[i];
-                             //end of branch?
-                             if (loc.Connections == 1)
-                             {
-                                 //assign to highest number house
-                                 arrayStatus[i] = totalHouseTally;
-                                 //update tally of locs assigned to house
-                                 houseLocTally++;
-                                 foundFlag = true;
-
-                                 //find immediate neighbour (same house) and keep going until a connector location is found
-                                 locConnections.Clear();
-                                 locConnections.AddRange(loc.GetNeighboursLocID());
-                                 //automatically assign to first node in from end of branch
-                                 locID = locConnections[0];
-                                 //find position in branchList
-                                 for (int p = 0; p < countLocs; p++)
-                                 {
-                                     if (branchList[p].LocationID == locID && arrayStatus[p] == 0)
-                                     {
-                                         //assign to same house, IF free
-                                         arrayStatus[p] = totalHouseTally;
-                                         houseLocTally++;
-                                         break;
-                                     }
-                                 }
-
-
-                                 break;
-                             }
-                         }
-                     }*/
-
-                    Location loc_1 = new Location();
-                    //loop branch list to find first unassigned end of branch location
-                    for (int i = 0; i < countLocs; i++)
+                    //create array to mark which loc's have been used (0 - unassigned, 99 - special, 1+ house ID)
+                    int[] arrayStatus = new int[countLocs];
+                    int branchHouseTally;
+                    int houseLocTally;
+                    int locID = 0;
+                    bool innerStatus = false; //do-while exit flags
+                    bool outerStatus = false;
+                    bool newNode = false; //new node found
+                    bool finishLoop = false;
+                    bool assignedLoc = false;
+                    //first check for special location (will automatically be the first location in the sorted List)
+                    if (arrayOfNetworkAnalysis[branch, (int)NetGrid.Specials] > 0)
+                    { arrayStatus[0] = 99; }
+                    //how many houses assigned to branch
+                    branchHouseTally = arrayOfNetworkAnalysis[branch, (int)NetGrid.Houses];
+                    //number of loc's assigned to a house
+                    houseLocTally = 0;
+                    bool foundFlag = false;
+                    //start at end branch and work in
+                    do
                     {
-                        foundFlag = false;
-                        //is location unassigned?
-                        if (arrayStatus[i] == 0)
+                        //search list for first end of branch location
+                        /*for (int i = 0; i < countLocs; i++)
+                         {
+                             //is location unassigned?
+                             if (arrayStatus[i] == 0)
+                             {
+                                 Location loc = branchList[i];
+                                 //end of branch?
+                                 if (loc.Connections == 1)
+                                 {
+                                     //assign to highest number house
+                                     arrayStatus[i] = totalHouseTally;
+                                     //update tally of locs assigned to house
+                                     houseLocTally++;
+                                     foundFlag = true;
+
+                                     //find immediate neighbour (same house) and keep going until a connector location is found
+                                     locConnections.Clear();
+                                     locConnections.AddRange(loc.GetNeighboursLocID());
+                                     //automatically assign to first node in from end of branch
+                                     locID = locConnections[0];
+                                     //find position in branchList
+                                     for (int p = 0; p < countLocs; p++)
+                                     {
+                                         if (branchList[p].LocationID == locID && arrayStatus[p] == 0)
+                                         {
+                                             //assign to same house, IF free
+                                             arrayStatus[p] = totalHouseTally;
+                                             houseLocTally++;
+                                             break;
+                                         }
+                                     }
+
+
+                                     break;
+                                 }
+                             }
+                         }*/
+
+                        Location loc_1 = new Location();
+                        //loop branch list to find first unassigned end of branch location
+                        for (int i = 0; i < countLocs; i++)
                         {
-                            loc_1 = branchList[i];
-                            //end of branch?
-                            if (loc_1.Connections == 1)
+                            foundFlag = false;
+                            //is location unassigned?
+                            if (arrayStatus[i] == 0)
                             {
-                                Console.WriteLine("-0- Loc {0}:{1} {2} TotalHouseTally: {3} Connections {4}", loc_1.GetPosX(), loc_1.GetPosY(), loc_1.LocName, totalHouseTally, loc_1.Connections);
-                                //assign to highest number house
-                                arrayStatus[i] = totalHouseTally;
-                                houseLocTally++;
-                                //update tally of locs assigned to house
-                                foundFlag = true;
-                                innerStatus = false;
-                                finishLoop = false;
-                                
-                                //keep going with same house number until a limit is reached
-                                do
+                                loc_1 = branchList[i];
+                                //end of branch?
+                                if (loc_1.Connections == 1)
                                 {
-                                    locID = 0;
-                                    newNode = false;
-                                    //find immediate neighbour (same house)
-                                    locConnections.Clear();
-                                    locConnections.AddRange(loc_1.GetNeighboursLocID());
-                                    int connectionsCount = locConnections.Count;
-                                    //Single connection
-                                    if (connectionsCount == 1)
+                                    Console.WriteLine("-- New House: Loc {0}:{1} {2} TotalHouseTally: {3} Connections {4}", loc_1.GetPosX(), loc_1.GetPosY(), loc_1.LocName, totalHouseTally, loc_1.Connections);
+                                    //assign to highest number house
+                                    arrayStatus[i] = totalHouseTally;
+                                    houseLocTally = 1;
+                                    Console.WriteLine("Before loop: houseLocTally: {0}", houseLocTally);
+                                    //update tally of locs assigned to house
+                                    foundFlag = true;
+                                    innerStatus = false;
+                                    finishLoop = false;
+
+                                    //keep going with same house number until a limit is reached
+                                    do
                                     {
-                                        //get next node (loc_2)
-                                        locID = locConnections[0];
-                                        newNode = true;
-                                        //check # loc's per house not exceeded, if so then exit
-                                        if(houseLocTally >= idealLocs)
-                                        { innerStatus = true; }
-                                    }
-                                    else if (connectionsCount > 1)
-                                    {
-
-                                        //loop list of neighbours looking for all single conection nodes - use INDEX
-                                        
-                                        //when INDEX finished (gone through all neighbours), do this to exit do/while structure
-                                        finishLoop = true;
-
-                                        //exit once loop finished (ignore houseLocTally in this instance as you want all single connectors to be the same house)
-                                        if (finishLoop == true)
-                                        { innerStatus = true; }
-
-                                    }
-
-                                    Console.WriteLine("Loc {0}:{1}  newNode: {2}, innerStatus: {3}, totalHouseTally: {4}, ID: {5}", loc_1.GetPosX(), loc_1.GetPosY(), newNode, innerStatus, totalHouseTally, locID);
-
-                                    //new node found?
-                                    if (newNode == true)
-                                    {
-                                        assignedLoc = false;
-                                        int branchIndex = 0;
-                                        //assign node - find in List of branchLocs
-                                        for (int p = 0; p < countLocs; p++)
+                                        locID = 0;
+                                        newNode = false;
+                                        //find immediate neighbour (same house)
+                                        locConnections.Clear();
+                                        locConnections.AddRange(loc_1.GetNeighboursLocID());
+                                        int connectionsCount = locConnections.Count;
+                                        //Single connection
+                                        if (connectionsCount <= 2)
                                         {
-                                            if (branchList[p].LocationID == locID && arrayStatus[p] == 0)
+                                            //get next node (loc_2)
+                                            locID = locConnections[0];
+                                            newNode = true;
+                                            //check # loc's per house not exceeded, if so then exit
+                                            if (houseLocTally == idealLocs - 1)
+                                            { innerStatus = true; }
+                                            else
+                                            { innerStatus = false; }
+                                        }
+                                        else if (connectionsCount > 2)
+                                        {
+
+                                            //loop list of neighbours looking for all single conection nodes - use INDEX
+
+                                            //when INDEX finished (gone through all neighbours), do this to exit do/while structure
+                                            finishLoop = true;
+
+                                            //exit once loop finished (ignore houseLocTally in this instance as you want all single connectors to be the same house)
+                                            if (finishLoop == true)
+                                            { innerStatus = true; }
+
+                                        }
+
+                                        Console.WriteLine("Same House: Loc {0}:{1}  newNode: {2}, innerStatus: {3}, totalHouseTally: {4}, ID: {5}", loc_1.GetPosX(), loc_1.GetPosY(), newNode, innerStatus, totalHouseTally, locID);
+
+                                        //new node found?
+                                        if (newNode == true)
+                                        {
+                                            assignedLoc = false;
+                                            int branchIndex = 0;
+                                            //assign node - find in List of branchLocs
+                                            for (int p = 0; p < countLocs; p++)
                                             {
-                                                //assign to same house, IF free
-                                                arrayStatus[p] = totalHouseTally;
-                                                houseLocTally++;
-                                                assignedLoc = true;
-                                                branchIndex = p;
-                                                break;
+                                                if (branchList[p].LocationID == locID && arrayStatus[p] == 0)
+                                                {
+                                                    //assign to same house, IF free
+                                                    arrayStatus[p] = totalHouseTally;
+                                                    houseLocTally++;
+                                                    Console.WriteLine("newMode == true: houseLocTally: {0}", houseLocTally);
+                                                    assignedLoc = true;
+                                                    branchIndex = p;
+                                                    break;
+                                                }
+                                            }
+                                            //if single connector and that node isn't viable, exit.
+                                            if (assignedLoc == false)
+                                            {
+                                                if (connectionsCount <= 2)
+                                                { innerStatus = true; }
+                                            }
+                                            //give value of new node to loc_1
+                                            else if (assignedLoc == true && innerStatus == false)
+                                            {
+                                                //roll over to next location
+                                                loc_1 = branchList[branchIndex];
                                             }
                                         }
-                                        //if single connector and that node isn't viable, exit.
-                                        if (assignedLoc == false)
-                                        {
-                                            if (connectionsCount == 1)
-                                            { innerStatus = true; }
-                                        }
-                                        //give value of new node to loc_1
-                                        else if (assignedLoc == true && innerStatus == false)
-                                        {
-                                            //roll over to next location
-                                            loc_1 = branchList[branchIndex];
-                                        }
+
                                     }
+                                    while (innerStatus == false);
 
+                                    //update house count
+                                    if (foundFlag == true)
+                                    { branchHouseTally--; totalHouseTally--; }
+                                    else if (foundFlag == false)
+                                    { outerStatus = true; break; }
+                                    //no more houses?
+                                    if (branchHouseTally < 1)
+                                    { outerStatus = true; break; }
                                 }
-                                while (innerStatus == false);
-
-                                //update house count
-                                if (foundFlag == true)
-                                { branchHouseTally--; totalHouseTally--; }
-                                else if (foundFlag == false)
-                                { outerStatus = true; }
-                                //no more houses?
-                                if (branchHouseTally <= 0)
-                                { outerStatus = true; }
                             }
                         }
+                        /*
+                        //update house count
+                        if (foundFlag == true)
+                        { branchHouseTally--; totalHouseTally--; }
+                        else if (foundFlag == false)
+                        { outerStatus = true; }
+                        //no more houses?
+                        if (branchHouseTally <= 0)
+                        { outerStatus = true; }
+                        */
                     }
-                    /*
-                    //update house count
-                    if (foundFlag == true)
-                    { branchHouseTally--; totalHouseTally--; }
-                    else if (foundFlag == false)
-                    { outerStatus = true; }
-                    //no more houses?
-                    if (branchHouseTally <= 0)
-                    { outerStatus = true; }
-                    */
-                }
-                while (outerStatus == false && totalHouseTally > 0);
+                    while (outerStatus == false && totalHouseTally > 0);
 
-                Console.WriteLine("--- Set HouseID's");
-                //use arrayStatus to update House ID's on house MapGrid layer
-                for(int i = 0; i < branchList.Count; i++)
-                {
-                    Location loc = branchList[i];
-                    Game.map.SetHouseID(loc.GetPosX(), loc.GetPosY(), arrayStatus[i]);
-                    Console.WriteLine("Loc {0}:{1} arrayStatus: {2} ID: {3}", loc.GetPosX(), loc.GetPosY(), arrayStatus[i], loc.LocationID);
+                    Console.WriteLine("--- Set HouseID's");
+                    //use arrayStatus to update House ID's on house MapGrid layer
+                    for (int i = 0; i < branchList.Count; i++)
+                    {
+                        Location loc = branchList[i];
+                        Game.map.SetHouseID(loc.GetPosX(), loc.GetPosY(), arrayStatus[i]);
+                        Console.WriteLine("Loc {0}:{1} arrayStatus: {2} ID: {3}", loc.GetPosX(), loc.GetPosY(), arrayStatus[i], loc.LocationID);
 
-                }
-                //debug output
-                Console.WriteLine();
-                for(int i = 0; i < branchList.Count; i++)
-                {
-                    if( i == 0)
-                    { Console.WriteLine("--- Branch {0}", branch); }
-                    Location loc = branchList[i];
-                    Console.WriteLine("Loc ID {0} {1} is assigned to House {2}", loc.LocationID, loc.LocName, arrayStatus[i]);
+                    }
+                    //debug output
+                    Console.WriteLine();
+                    for (int i = 0; i < branchList.Count; i++)
+                    {
+                        if (i == 0)
+                        { Console.WriteLine("--- Branch {0}", branch); }
+                        Location loc = branchList[i];
+                        Console.WriteLine("Loc ID {0} {1} is assigned to House {2}", loc.LocationID, loc.LocName, arrayStatus[i]);
+                    }
                 }
             }
         }
