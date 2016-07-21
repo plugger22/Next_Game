@@ -1620,13 +1620,16 @@ namespace Next_Game.Cartographic
                                     if (foundFlag == true)
                                     { branchHouseTally--; totalHouseTally--; }
                                     else if (foundFlag == false)
-                                    { outerStatus = true; break; }
+                                    { break; }
                                     //no more houses?
                                     if (branchHouseTally < 1)
                                     { outerStatus = true; break; }
                                 }
                             }
                         }
+                        //didn't find any suitable nodes after a full loop through?
+                        if (foundFlag == false)
+                        { outerStatus = true; }
                     }
                     while (outerStatus == false && totalHouseTally > 0);
                 }
