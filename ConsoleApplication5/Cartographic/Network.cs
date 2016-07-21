@@ -1706,6 +1706,7 @@ namespace Next_Game.Cartographic
                     arrayLocID[i] = loc.LocationID;
                 }
 
+                
                 //fill in the blanks (if adjacent node has a house number, use that
                 bool updateFlag = false;
                 do
@@ -1752,6 +1753,7 @@ namespace Next_Game.Cartographic
                 }
                 while (updateFlag == true);
 
+                
                 //check for orphaned routes (a sub branch leading out from a special location)
                 bool unassignedFlag = false;
                 bool rerunNeeded = false;
@@ -1801,10 +1803,10 @@ namespace Next_Game.Cartographic
                         for (int index = 0; index < specialNeighbours.Count; index++)
                         {
                             int nearID = specialNeighbours[index];
-                            //does ID have a houseID?
+                            //find index
                             for (int k = 0; k < arrayLocID.Length; k++)
                             {
-                                if (arrayLocID[k] == nearID)
+                                if (arrayLocID[k] == nearID && arrayStatus[k] == 0)
                                 {
                                     //don't break, loop through and assign to ALL unassigned locations.
                                     arrayStatus[k] = newHouseID;
@@ -1816,7 +1818,7 @@ namespace Next_Game.Cartographic
                         }
                     }
                 }
-
+                
                 //Have any neighbours of the special location been assigned a like houseID?
                 if (rerunNeeded == true)
                 {
@@ -1865,8 +1867,6 @@ namespace Next_Game.Cartographic
                     }
                     while (updateFlag == true);
                 }
-
-
 
                 //debug output
                 /*Console.WriteLine();
