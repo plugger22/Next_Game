@@ -1410,16 +1410,17 @@ namespace Next_Game.Cartographic
             //don't exceed cap
             numHouses = Math.Min(numHouses, maxHouses);
             int housesTally = numHouses;
+            int totalSpecials = 0;
             if( numHouses > 2 )
             {
                 for (int i = 1; i < 5; i++)
                 {
                     //check for special locations first and subtract from location totals in [,3] (store # special locations in [i, 4]
                     if(arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] == 1)
-                    { arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]++; arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs]--; }
+                    { arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]++; arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs]--; totalSpecials++; }
                     //first loc from capital has 3 or 4 connections and >= 6 locs on branch => inn
                     if(arrayOfNetworkAnalysis[i, (int)NetGrid.Connections] >= 3 && arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] >= 6)
-                    { arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]++; arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs]--; }
+                    { arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]++; arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs]--; totalSpecials++; }
                     //allocate house - special case to accommodate branches with a small number of locations (they end up with a default house regardless)
                     if (arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] >= 2)
                     {
@@ -1427,6 +1428,16 @@ namespace Next_Game.Cartographic
                         arrayOfNetworkAnalysis[i, (int)NetGrid.Houses]++;
                         housesTally--;
                     }
+                }
+            }
+            //check at least one special
+            if( totalSpecials < 1)
+            {
+                //allocate first link in first branch that has > 3 locations as a special, regardless of connections.
+                for(int i = 1; i < 5; i++)
+                {
+                    if (arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] > 3)
+                    { arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]++; arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs]--; break; }
                 }
             }
             //allocate houses - the bulk of them
