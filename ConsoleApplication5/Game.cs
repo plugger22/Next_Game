@@ -135,7 +135,9 @@ namespace Next_Game
             RLMouse mouse = _rootConsole.Mouse;
             bool mouseLeft = _rootConsole.Mouse.GetLeftClick();
             bool mouseRight = _rootConsole.Mouse.GetRightClick();
-            //mouse input
+            //
+            // MOUSE input ---
+            //
             if(mouseLeft == true || mouseRight == true)
             {
                 //Mouse specific input OFF - generic location and party info
@@ -289,6 +291,9 @@ namespace Next_Game
                     }
                 }
             }
+            //
+            // KEYBOARD Input ---
+            //
             else if (keyPress != null)
             {
                 //turn off mouse specific input whenever a key is pressed

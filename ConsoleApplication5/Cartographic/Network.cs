@@ -1461,6 +1461,7 @@ namespace Next_Game.Cartographic
                 { break; }
             }
             while (housesTally > 0);
+           
             //debug output
             Console.WriteLine();
             Console.WriteLine("--- InitialiseHouseLocations");
@@ -1471,9 +1472,12 @@ namespace Next_Game.Cartographic
             { Console.WriteLine("Branch {0} has {1} Houses allocated, Special Locations {2}", i, arrayOfNetworkAnalysis[i, (int)NetGrid.Houses], arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]); }
             Console.WriteLine();
             Console.WriteLine("Total Houses Allocated {0} out of {1}", numHouses - housesTally, numHouses);
+
             List<Location> branchList = new List<Location>();
             List<int> locConnections = new List<int>();
             int totalHouseTally = numHouses - housesTally;
+            //tracks finished result (houses)
+            int[]
 
             //loop through each branch
             for (int branch = 1; branch < 5; branch++)

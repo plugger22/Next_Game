@@ -444,7 +444,7 @@ namespace Next_Game.Cartographic
                                 if (houseID > 0)
                                 {
                                     if (houseID < 99) // house
-                                    { horizontal2 = houseID + 48;  foreground = RLColor.Yellow; }
+                                    { horizontal2 = houseID + 48;  foreground = RLColor.Green; }
                                     else // special location
                                     { foreground = RLColor.LightMagenta; }
                                 }
