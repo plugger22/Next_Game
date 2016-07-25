@@ -1889,7 +1889,27 @@ namespace Next_Game.Cartographic
                         }
                     }
                 }
-
+                //determine House Capitals
+                for(int outer = 0; outer < listIndividualHouseLocID.Count; outer++)
+                {
+                    int numLocs = listIndividualHouseLocID[outer].Count;
+                    int locID = 0;
+                    //create 2D array [0,] for # connections that Loc has, [1,] # routes to Capital
+                    int[,] tempArrayLocDetails = new int[2, numLocs];
+                    Console.WriteLine("- House {0}", outer);
+                    for(int inner = 0; inner < numLocs; inner++)
+                    {
+                        locID = listIndividualHouseLocID[outer][inner];
+                        Location tempLoc = GetLocation(locID);
+                        if (locID > 0)
+                        {
+                            tempArrayLocDetails[0, inner] = tempLoc.Connections;
+                            tempArrayLocDetails[1, inner] = tempLoc.GetNumRoutesToCapital();
+                            Console.WriteLine("LocID {0} has {1} connections and is {2} routes from the Capital", locID, tempLoc.Connections, tempLoc.GetNumRoutesToCapital());
+                        }
+                    }
+                    //which location will be capital? (highest # connections first, if equal then loc furtherst from Capital)
+                }
             }
 
             //debug list contents

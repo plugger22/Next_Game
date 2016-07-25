@@ -5,7 +5,7 @@ using RLNET;
 namespace Next_Game.Cartographic
 {
 
-    public enum MapLayer { Base, Player, NPC, LocID, Debug, Houses, Count }
+    public enum MapLayer { Base, Player, NPC, LocID, Debug, Houses, Capitals, Count } //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
 
     //Main Map class (single instance, it's job is to set everything up at the start)
     public class Map
