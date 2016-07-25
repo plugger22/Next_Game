@@ -444,7 +444,13 @@ namespace Next_Game.Cartographic
                                 if (houseID > 0)
                                 {
                                     if (houseID < 99) // house
-                                    { horizontal2 = houseID + 48;  foreground = RLColor.Green; }
+                                    {
+                                        horizontal2 = houseID + 48;
+                                        foreground = RLColor.Green;
+                                        //if a house Capital show as different color
+                                        if ( mapGrid[(int)MapLayer.Capitals, column, row] > 0)
+                                        { foreground = RLColor.Yellow; }
+                                    }
                                     else // special location
                                     { foreground = RLColor.LightMagenta; }
                                 }
@@ -1819,6 +1825,14 @@ namespace Next_Game.Cartographic
         public void SetHouseID(int coord_X, int coord_Y, int houseID)
         { mapGrid[(int)MapLayer.Houses, coord_X, coord_Y] = houseID; }
 
+        /// <summary>
+        /// Initialises House Capital layer on MapGrid using data from Network.InitialiseHouses
+        /// </summary>
+        /// <param name="coord_X"></param>
+        /// <param name="coord_Y"></param>
+        /// <param name="houseID"></param>
+        public void SetHouseCapital(int coord_X, int coord_Y, int houseID)
+        { mapGrid[(int)MapLayer.Capitals, coord_X, coord_Y] = houseID; }
 
         /// <summary>
         /// Input X & Y coords and return LocID based on MapGrid Layer. Converts raw mouse input coords if needed.

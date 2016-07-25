@@ -1477,6 +1477,7 @@ namespace Next_Game.Cartographic
             List<Location> branchList = new List<Location>();
             List<int> locConnections = new List<int>();
             int totalHouseTally = numHouses - housesTally;
+            int houseCounter = 1; //used to assign house ID's (1 to ...)
             //tracks finished result (houses)
             List<List<int>> listUniqueHousesByBranch = new List<List<int>>();
             List<List<int>> listIndividualHouseLocID = new List<List<int>>();
@@ -1547,9 +1548,10 @@ namespace Next_Game.Cartographic
                                 //end of branch?
                                 if (loc_1.Connections == 1)
                                 {
-                                    Console.WriteLine("-- New House: Loc {0}:{1} {2} TotalHouseTally: {3} Connections {4}", loc_1.GetPosX(), loc_1.GetPosY(), loc_1.LocName, totalHouseTally, loc_1.Connections);
+                                    Console.WriteLine("-- New House: Loc {0}:{1} {2} TotalHouseTally: {3} Connections {4} houseCounter", 
+                                        loc_1.GetPosX(), loc_1.GetPosY(), loc_1.LocName, totalHouseTally, loc_1.Connections, houseCounter);
                                     //assign to highest number house
-                                    arrayStatus[i] = totalHouseTally;
+                                    arrayStatus[i] = houseCounter;
                                     houseLocTally = 1;
                                     Console.WriteLine("Before loop: houseLocTally: {0}", houseLocTally);
                                     //update tally of locs assigned to house
@@ -1591,7 +1593,7 @@ namespace Next_Game.Cartographic
                                                         //assign to same house, IF free
                                                         Console.WriteLine("MULTI: Loc {0}:{1} Connections: {2}  arrayStatus: {3}", loc_2.GetPosX(), loc_2.GetPosY(), loc_2.Connections, arrayStatus[p]);
                                                         if (loc_2.Connections <= 2 && arrayStatus[p] == 0)
-                                                        { arrayStatus[p] = totalHouseTally; }
+                                                        { arrayStatus[p] = houseCounter; }
                                                     }
                                                 }
                                             }
@@ -1599,7 +1601,8 @@ namespace Next_Game.Cartographic
                                             innerStatus = true;
                                         }
 
-                                        Console.WriteLine("Same House: Loc {0}:{1}  newNode: {2}, innerStatus: {3}, totalHouseTally: {4}, ID: {5}", loc_1.GetPosX(), loc_1.GetPosY(), newNode, innerStatus, totalHouseTally, locID);
+                                        Console.WriteLine("Same House: Loc {0}:{1}  newNode: {2}, innerStatus: {3}, totalHouseTally: {4}, ID: {5}, houseCounter {6}", 
+                                            loc_1.GetPosX(), loc_1.GetPosY(), newNode, innerStatus, totalHouseTally, locID, houseCounter);
 
                                         //new node found?
                                         if (newNode == true)
@@ -1612,7 +1615,7 @@ namespace Next_Game.Cartographic
                                                 if (branchList[p].LocationID == locID && arrayStatus[p] == 0)
                                                 {
                                                     //assign to same house, IF free
-                                                    arrayStatus[p] = totalHouseTally;
+                                                    arrayStatus[p] = houseCounter;
                                                     houseLocTally++;
                                                     Console.WriteLine("newMode == true: houseLocTally: {0}", houseLocTally);
                                                     assignedLoc = true;
@@ -1638,7 +1641,7 @@ namespace Next_Game.Cartographic
 
                                     //update house count
                                     if (foundFlag == true)
-                                    { branchHouseTally--; totalHouseTally--; }
+                                    { branchHouseTally--; totalHouseTally--; houseCounter++; }
                                     else if (foundFlag == false)
                                     { break; }
                                     //no more houses?
@@ -1909,6 +1912,13 @@ namespace Next_Game.Cartographic
                         }
                     }
                     //which location will be capital? (highest # connections first, if equal then loc furtherst from Capital)
+                    if(numLocs == 1)
+                    {
+                        //only loc must automatically be the capital
+                        locID = listIndividualHouseLocID[outer][0];
+                        Location loc = GetLocation(locID);
+                        Game.map.SetHouseCapital(loc.GetPosX(), loc.GetPosY(), outer);
+                    }
                 }
             }
 
@@ -1920,7 +1930,7 @@ namespace Next_Game.Cartographic
             Console.WriteLine();
             Console.WriteLine("--- listIndividualHouseLocID");
             for (int i = 0; i < listIndividualHouseLocID.Count; i++)
-            { Console.WriteLine("Branch {0} has {1} records", i, listIndividualHouseLocID[i].Count); }
+            { Console.WriteLine("House {0} has {1} records", i, listIndividualHouseLocID[i].Count); }
         }
 
 
