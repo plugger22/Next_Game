@@ -1484,6 +1484,7 @@ namespace Next_Game.Cartographic
             List<List<int>> listIndividualHouseLocID = new List<List<int>>();
             int[][] masterStatus = new int[numBranches][];
             int[][] masterLocID = new int[numBranches][];
+            int[] arrayOfCapitals = new int[0]; //locID of all house capitals
             //
             //loop through each branch ---
             //
@@ -1875,6 +1876,8 @@ namespace Next_Game.Cartographic
                     List<int> sublist = new List<int>();
                     listIndividualHouseLocID.Add(sublist);
                 }
+                //initialise array holding capital locID's
+                arrayOfCapitals = new int[uniqueHouses + 1];
                 //loop through MasterList and populate Lists
                 for (int outer = 1; outer < numBranches; outer++)
                 {
@@ -1913,14 +1916,16 @@ namespace Next_Game.Cartographic
                             Console.WriteLine("LocID {0} has {1} connections and is {2} routes from the Capital", locID, tempLoc.Connections, tempLoc.GetNumRoutesToCapital());
                         }
                     }
-                    //which location will be capital? (highest # connections first, if equal then loc furtherst from Capital)
+                    //if only a single loc then it must be the house capital
                     if(numLocs == 1)
                     {
                         //only loc must automatically be the capital
                         locID = listIndividualHouseLocID[outer][0];
                         Location loc = GetLocation(locID);
                         Game.map.SetHouseCapital(loc.GetPosX(), loc.GetPosY(), outer);
+                        arrayOfCapitals[outer] = locID;
                     }
+                    //which location will be capital? (highest # connections first, if equal then loc furtherst from Capital)
                     else if (numLocs > 1)
                     {
                         int maxValue = tempArrayConnections.Max();
@@ -1940,8 +1945,8 @@ namespace Next_Game.Cartographic
                         locID = listIndividualHouseLocID[outer][indexValue];
                         Location loc = GetLocation(locID);
                         Game.map.SetHouseCapital(loc.GetPosX(), loc.GetPosY(), outer);
+                        arrayOfCapitals[outer] = locID;
                     }
-                            
                 }
             }
 
@@ -1954,6 +1959,10 @@ namespace Next_Game.Cartographic
             Console.WriteLine("--- listIndividualHouseLocID");
             for (int i = 0; i < listIndividualHouseLocID.Count; i++)
             { Console.WriteLine("House {0} has {1} records", i, listIndividualHouseLocID[i].Count); }
+            Console.WriteLine();
+            Console.WriteLine("--- House Capitals");
+            for(int i = 0; i < arrayOfCapitals.Length; i++)
+            { Console.WriteLine("House {0} has ID {1} as it's capital", i, arrayOfCapitals[i]); }
         }
 
 
