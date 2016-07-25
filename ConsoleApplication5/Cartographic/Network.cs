@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using RLNET;
 
 //TODO optimise route search routines by having four separate route lists, one for each branch
@@ -1897,8 +1898,9 @@ namespace Next_Game.Cartographic
                 {
                     int numLocs = listIndividualHouseLocID[outer].Count;
                     int locID = 0;
-                    //create 2D array [0,] for # connections that Loc has, [1,] # routes to Capital
-                    int[,] tempArrayLocDetails = new int[2, numLocs];
+                    //create 2 arrays: first for # connections that Loc has, 2nd # routes to Capital
+                    int[] tempArrayConnections = new int[numLocs];
+                    int[] tempArrayRoutes = new int[numLocs];
                     Console.WriteLine("- House {0}", outer);
                     for(int inner = 0; inner < numLocs; inner++)
                     {
@@ -1906,8 +1908,8 @@ namespace Next_Game.Cartographic
                         Location tempLoc = GetLocation(locID);
                         if (locID > 0)
                         {
-                            tempArrayLocDetails[0, inner] = tempLoc.Connections;
-                            tempArrayLocDetails[1, inner] = tempLoc.GetNumRoutesToCapital();
+                            tempArrayConnections[inner] = tempLoc.Connections;
+                            tempArrayRoutes[inner] = tempLoc.GetNumRoutesToCapital();
                             Console.WriteLine("LocID {0} has {1} connections and is {2} routes from the Capital", locID, tempLoc.Connections, tempLoc.GetNumRoutesToCapital());
                         }
                     }
@@ -1919,6 +1921,27 @@ namespace Next_Game.Cartographic
                         Location loc = GetLocation(locID);
                         Game.map.SetHouseCapital(loc.GetPosX(), loc.GetPosY(), outer);
                     }
+                    else if (numLocs > 1)
+                    {
+                        int maxValue = tempArrayConnections.Max();
+                        int indexValue = 0;
+                        int routeValue = 0;
+                        //# connections
+                        for(int i = 0; i < tempArrayConnections.Length; i++)
+                        {
+                            if(tempArrayConnections[i] == maxValue)
+                            {
+                                //duplicate connection values, does it have a longer route from capital?
+                                if (tempArrayRoutes[i] > routeValue)
+                                { routeValue = tempArrayRoutes[i]; indexValue = i; }
+                            }
+                        }
+                        //capital is index value in List
+                        locID = listIndividualHouseLocID[outer][indexValue];
+                        Location loc = GetLocation(locID);
+                        Game.map.SetHouseCapital(loc.GetPosX(), loc.GetPosY(), outer);
+                    }
+                            
                 }
             }
 
