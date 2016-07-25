@@ -1397,8 +1397,9 @@ namespace Next_Game.Cartographic
         /// <param name="idealLocs">ideal number of locations per house, used as a divisor</param>
         public void InitialiseHouseLocations(int maxHouses, int idealLocs)
         {
+            int numBranches = 5; //1 to 4 loop counter and array sizer
             int totalLocs = 0;
-            for (int i = 1; i < 5; i++)
+            for (int i = 1; i < numBranches; i++)
             {
                 //tally up number of locations (exclude capital)
                 totalLocs += arrayOfNetworkAnalysis[i, (int)NetGrid.Locations];
@@ -1413,7 +1414,7 @@ namespace Next_Game.Cartographic
             int totalSpecials = 0;
             if( numHouses > 2 )
             {
-                for (int i = 1; i < 5; i++)
+                for (int i = 1; i < numBranches; i++)
                 {
                     //check for special locations first and subtract from location totals in [,3] (store # special locations in [i, 4]
                     if(arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] == 1)
@@ -1434,7 +1435,7 @@ namespace Next_Game.Cartographic
             if( totalSpecials < 1)
             {
                 //allocate first link in first branch that has > 3 locations as a special, regardless of connections.
-                for(int i = 1; i < 5; i++)
+                for(int i = 1; i < numBranches; i++)
                 {
                     if (arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] > 3)
                     { arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]++; arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs]--; break; }
@@ -1445,7 +1446,7 @@ namespace Next_Game.Cartographic
             do
             {
                 changeFlag = false;
-                for(int i = 1; i < 5; i++)
+                for(int i = 1; i < numBranches; i++)
                 {
                     //enough locs in branch to support a house?
                     int branchHouses = arrayOfNetworkAnalysis[i, (int)NetGrid.Houses];
@@ -1468,7 +1469,7 @@ namespace Next_Game.Cartographic
             Console.WriteLine("Total Locations (excluding Capital) {0}", totalLocs);
             Console.WriteLine("Number of Houses {0}, Max Cap on House Numbers {1}", numHouses, maxHouses);
             Console.WriteLine();
-            for(int i = 1; i < 5; i++)
+            for(int i = 1; i < numBranches; i++)
             { Console.WriteLine("Branch {0} has {1} Houses allocated, Special Locations {2}", i, arrayOfNetworkAnalysis[i, (int)NetGrid.Houses], arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]); }
             Console.WriteLine();
             Console.WriteLine("Total Houses Allocated {0} out of {1}", numHouses - housesTally, numHouses);
@@ -1477,10 +1478,13 @@ namespace Next_Game.Cartographic
             List<int> locConnections = new List<int>();
             int totalHouseTally = numHouses - housesTally;
             //tracks finished result (houses)
-            int[]
-
-            //loop through each branch
-            for (int branch = 1; branch < 5; branch++)
+            List<List<int>> listOfAllHouses = new List<List<int>>();
+            int[][] masterStatus = new int[numBranches][];
+            int[][] masterLocID = new int[numBranches][];
+            //
+            //loop through each branch ---
+            //
+            for (int branch = 1; branch < numBranches; branch++)
             {
                 switch (branch)
                 {
@@ -1816,6 +1820,34 @@ namespace Next_Game.Cartographic
                         }
                     }
                     while (updateFlag == true);
+                }
+                //update master Arrays (data for all branches)
+                masterStatus[branch] = new int[arrayStatus.Length];
+                masterLocID[branch] = new int[arrayLocID.Length];
+                //copy data across
+                for(int i = 0; i < arrayStatus.Length; i++)
+                {
+                    masterStatus[branch][i] = arrayStatus[i];
+                    masterLocID[branch][i] = arrayLocID[i];
+                }
+            }
+            //
+            //create analysis data structures ---
+            //
+            Console.WriteLine();
+            Console.WriteLine("--- House Analysis");
+            //populate a list with unique houses for each branch
+            for(int outer = 1; outer < numBranches; outer++)
+            {
+                int arrayLength = masterStatus[outer].GetUpperBound(0);
+                Console.WriteLine("- Branch {0} upperBound {1}", outer, arrayLength);
+                //only if branch isn't empty
+                if (arrayLength > -1)
+                {
+                    for (int inner = 0; inner < arrayLength + 1; inner++)
+                    {
+                        Console.WriteLine("masterStatus[{0}][{1}] = {2}", outer, inner, masterStatus[outer][inner]);
+                    }
                 }
             }
         }

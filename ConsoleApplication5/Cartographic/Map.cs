@@ -423,7 +423,7 @@ namespace Next_Game.Cartographic
                         else if (mainLayer == 1)
                         { foreground = RLColor.Cyan; } //location
                         else
-                        { foreground = RLColor.Green; } //in enroute
+                        { foreground = RLColor.LightGreen; } //in enroute
                     }
                     //draw base level
                     else
