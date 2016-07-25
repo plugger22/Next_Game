@@ -1478,7 +1478,8 @@ namespace Next_Game.Cartographic
             List<int> locConnections = new List<int>();
             int totalHouseTally = numHouses - housesTally;
             //tracks finished result (houses)
-            List<List<int>> listOfAllHouses = new List<List<int>>();
+            List<List<int>> listUniqueHousesByBranch = new List<List<int>>();
+            List<List<int>> listIndividualHouseLocID = new List<List<int>>();
             int[][] masterStatus = new int[numBranches][];
             int[][] masterLocID = new int[numBranches][];
             //
@@ -1836,7 +1837,8 @@ namespace Next_Game.Cartographic
             //
             Console.WriteLine();
             Console.WriteLine("--- House Analysis");
-            //populate a list with unique houses for each branch
+            //loop through MasterList and populate Lists
+            int uniqueHouses = 0;
             for(int outer = 1; outer < numBranches; outer++)
             {
                 int arrayLength = masterStatus[outer].GetUpperBound(0);
@@ -1844,12 +1846,61 @@ namespace Next_Game.Cartographic
                 //only if branch isn't empty
                 if (arrayLength > -1)
                 {
+                    List<int> subListUnique = new List<int>();
+                    int houseValue = 0;
                     for (int inner = 0; inner < arrayLength + 1; inner++)
                     {
-                        Console.WriteLine("masterStatus[{0}][{1}] = {2}", outer, inner, masterStatus[outer][inner]);
+                        houseValue = masterStatus[outer][inner];
+                        Console.WriteLine("masterStatus[{0}][{1}] = {2}", outer, inner, houseValue);
+                        //populate a list with unique houses for each branch
+                        if(subListUnique.Contains(houseValue) == false && houseValue != 99)
+                        { subListUnique.Add(houseValue); uniqueHouses++; }
                     }
+                    //add to master list
+                    listUniqueHousesByBranch.Add(subListUnique);
                 }
             }
+            //group LocID's by houses
+            if (uniqueHouses > 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Unique Houses: {0}", uniqueHouses);
+                //Set up subLists, one for each unique house, access by house #
+                for (int i = 0; i < uniqueHouses + 1; i++)
+                {
+                    List<int> sublist = new List<int>();
+                    listIndividualHouseLocID.Add(sublist);
+                }
+                //loop through MasterList and populate Lists
+                for (int outer = 1; outer < numBranches; outer++)
+                {
+                    int arrayLength = masterStatus[outer].GetUpperBound(0);
+                    if (arrayLength > -1)
+                    {
+                        for (int inner = 0; inner < arrayLength + 1; inner++)
+                        {
+                            int houseID = masterStatus[outer][inner];
+                            int locID = masterLocID[outer][inner];
+                            if (houseID != 99)
+                            {
+                                //populate array with locID's grouped by houses
+                                listIndividualHouseLocID[houseID].Add(locID);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            //debug list contents
+            Console.WriteLine();
+            Console.WriteLine("--- listOfAllHouses");
+            for (int i = 0; i < listUniqueHousesByBranch.Count; i++)
+            { Console.WriteLine("Branch {0} has {1} records", i + 1, listUniqueHousesByBranch[i].Count); }
+            Console.WriteLine();
+            Console.WriteLine("--- listIndividualHouseLocID");
+            for (int i = 0; i < listIndividualHouseLocID.Count; i++)
+            { Console.WriteLine("Branch {0} has {1} records", i, listIndividualHouseLocID[i].Count); }
         }
 
 
