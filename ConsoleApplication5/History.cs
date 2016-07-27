@@ -118,7 +118,7 @@ namespace Next_Game
             int index = 0;
             while(count > numHousesRequired)
             {
-                index = rnd.Next(0, count - 1);
+                index = rnd.Next(0, count);
                 Console.WriteLine("House {0} removed", listHousePool[index].Name);
                 listHousePool.RemoveAt(index);
                 count = listHousePool.Count;
@@ -151,7 +151,7 @@ namespace Next_Game
             for (int i = 0; i < numCharacters; i++)
             {
                 int index;
-                index = rnd.Next(0, listOfCharacterNames.Count - 1);
+                index = rnd.Next(0, listOfCharacterNames.Count);
                 //get name
                 charName = listOfCharacterNames[index];
                 //delete record in list to prevent duplicate names

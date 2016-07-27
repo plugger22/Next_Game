@@ -1335,7 +1335,7 @@ namespace Next_Game.Cartographic
         {
             int index;
             string name;
-            index = rnd.Next(0, listOfLocationNames.Count - 1);
+            index = rnd.Next(0, listOfLocationNames.Count);
             //get name
             name = listOfLocationNames[index];
             //delete record in list to prevent duplicate names
@@ -1992,14 +1992,24 @@ namespace Next_Game.Cartographic
         /// <returns>house objects updated with network data for permanent storage in the World dictHouses</returns>
         internal List<House> UpdateHouses(List<House> listOfHouses)
         {
+            //List<House> returnListOfHouses = listOfHouses;
             Console.WriteLine();
+            //set up a quick list for randomly assigning houses to houseID's
+            List<int> randomList = new List<int>();
+            for(int i = 0; i <= listOfHouses.Count; i++)
+            { randomList.Add(i + 1); }
+            int randomIndex = 0;
             //Assign Capitals
             for(int i = 1; i < arrayOfCapitals.Length; i++)
             {
                 House house = new House();
                 house = listOfHouses[i - 1];
                 house.CapitalLocID = arrayOfCapitals[i];
-                Console.WriteLine("House {0} has LocID {1}", house.Name, house.CapitalLocID);
+                //assign a random house ID (from available) to house
+                randomIndex = rnd.Next(1, randomList.Count + 1);
+                house.HouseID = randomList[randomIndex - 1];
+                randomList.RemoveAt(randomIndex - 1);
+                Console.WriteLine("House {0} has LocID {1} and HouseID {2}", house.Name, house.CapitalLocID, house.HouseID);
             }
             return listOfHouses;
         }

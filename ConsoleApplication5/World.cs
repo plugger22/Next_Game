@@ -476,6 +476,11 @@ namespace Next_Game
             { dictHouses.Add(house.HouseID, house); }
         }
 
+        /// <summary>
+        /// Quickly access a house name using houseID
+        /// </summary>
+        /// <param name="houseID"></param>
+        /// <returns></returns>
         public String GetHouseName(int houseID)
         {
             string houseName = "Unknown";
