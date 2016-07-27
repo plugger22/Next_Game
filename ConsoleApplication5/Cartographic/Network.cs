@@ -31,6 +31,9 @@ namespace Next_Game.Cartographic
         private List<Location> listWestBranch;
         //house analysis data
         private int uniqueHouses;
+        private List<List<int>> listUniqueHousesByBranch;
+        private List<List<int>> listIndividualHouseLocID;
+        private int[] arrayOfCapitals; //locID of capitals, indexed by houseID #, eg. houseID #2 is arrayOfCapital[2]
 
         /// <summary>
         /// default constructor with seed for random # generator
@@ -51,6 +54,8 @@ namespace Next_Game.Cartographic
             listEastBranch = new List<Location>();
             listSouthBranch = new List<Location>();
             listWestBranch = new List<Location>();
+            listUniqueHousesByBranch = new List<List<int>>();
+            listIndividualHouseLocID = new List<List<int>>();
         }
 
         /// <summary>
@@ -1482,11 +1487,11 @@ namespace Next_Game.Cartographic
             int totalHouseTally = numHouses - housesTally;
             int houseCounter = 1; //used to assign house ID's (1 to ...)
             //tracks finished result (houses)
-            List<List<int>> listUniqueHousesByBranch = new List<List<int>>();
-            List<List<int>> listIndividualHouseLocID = new List<List<int>>();
+            /*List<List<int>> listUniqueHousesByBranch = new List<List<int>>();
+            List<List<int>> listIndividualHouseLocID = new List<List<int>>();*/
             int[][] masterStatus = new int[numBranches][];
             int[][] masterLocID = new int[numBranches][];
-            int[] arrayOfCapitals = new int[0]; //locID of all house capitals
+            arrayOfCapitals = new int[0]; //locID of all house capitals
             //
             //loop through each branch ---
             //
@@ -1667,8 +1672,10 @@ namespace Next_Game.Cartographic
                 {
                     Location loc = branchList[i];
                     Game.map.SetHouseID(loc.GetPosX(), loc.GetPosY(), arrayStatus[i]);
+                    loc.HouseID = arrayStatus[i];
                     Console.WriteLine("Loc {0}:{1} arrayStatus: {2} ID: {3}", loc.GetPosX(), loc.GetPosY(), arrayStatus[i], loc.LocationID);
                     arrayLocID[i] = loc.LocationID;
+                    
                 }
 
                 //fill in the blanks (if adjacent node has a house number, use that
@@ -1702,6 +1709,7 @@ namespace Next_Game.Cartographic
                                                 //house number - assign to current node and break;
                                                 arrayStatus[i] = houseID;
                                                 Game.map.SetHouseID(loc_3.GetPosX(), loc_3.GetPosY(), houseID);
+                                                loc_3.HouseID = arrayStatus[i];
                                                 updateFlag = true;
                                                 break;
                                             }
@@ -1775,6 +1783,7 @@ namespace Next_Game.Cartographic
                                     arrayStatus[k] = newHouseID;
                                     Location loc_5 = branchList[k];
                                     Game.map.SetHouseID(loc_5.GetPosX(), loc_5.GetPosY(), newHouseID);
+                                    loc_5.HouseID = arrayStatus[k];
                                     rerunNeeded = true;
                                 } 
                             }
@@ -1814,6 +1823,7 @@ namespace Next_Game.Cartographic
                                                     //house number - assign to current node and break;
                                                     arrayStatus[i] = houseID;
                                                     Game.map.SetHouseID(loc_3.GetPosX(), loc_3.GetPosY(), houseID);
+                                                    loc_3.HouseID = arrayStatus[i];
                                                     updateFlag = true;
                                                     break;
                                                 }
@@ -1967,8 +1977,32 @@ namespace Next_Game.Cartographic
             { Console.WriteLine("House {0} has ID {1} as it's capital", i, arrayOfCapitals[i]); }
         }
 
+        /// <summary>
+        /// Returns the actual number of Houses required for the map
+        /// </summary>
+        /// <returns></returns>
         public int GetNumUniqueHouses()
         { return uniqueHouses; }
+
+
+        /// <summary>
+        /// Takes basic house objects from History and assigns them to HouseID's
+        /// </summary>
+        /// <param name="listOfHouses"></param>
+        /// <returns>house objects updated with network data for permanent storage in the World dictHouses</returns>
+        internal List<House> UpdateHouses(List<House> listOfHouses)
+        {
+            Console.WriteLine();
+            //Assign Capitals
+            for(int i = 1; i < arrayOfCapitals.Length; i++)
+            {
+                House house = new House();
+                house = listOfHouses[i - 1];
+                house.CapitalLocID = arrayOfCapitals[i];
+                Console.WriteLine("House {0} has LocID {1}", house.Name, house.CapitalLocID);
+            }
+            return listOfHouses;
+        }
 
         //methods above here
     }

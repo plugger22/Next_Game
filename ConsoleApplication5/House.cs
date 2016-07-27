@@ -8,6 +8,8 @@ namespace Next_Game
     {
         public string Name { get; set; }
         public string Motto { get; set; }
+        public string Banner { get; set; }
+        public string CapitalName { get; set; }
         public int HouseID { get; set; }
         public int CapitalLocID { get; set; }
         public int ArchetypeID { get; set; }

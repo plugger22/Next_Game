@@ -9,7 +9,8 @@ namespace Next_Game
     public class World
     {
         private List<Move> moveList; //list of characters moving through the world
-        private Dictionary<int, Character> dictPlayerCharacters; //list of all characters
+        private Dictionary<int, Character> dictPlayerCharacters; //list of all characters keyed off charID
+        private Dictionary<int, House> dictHouses; //list of all houses keyed off houseID
         public int GameTurn { get; set; } = 1;
 
         //default constructor
@@ -17,6 +18,7 @@ namespace Next_Game
         {
             moveList = new List<Move>();
             dictPlayerCharacters = new Dictionary<int, Character>();
+            dictHouses = new Dictionary<int, House>();
         }
 
         public void IncrementGameTurn()
@@ -352,7 +354,8 @@ namespace Next_Game
             if (locID > 0)
             {
                 Location loc = Game.network.GetLocation(locID);
-                string locDetails = string.Format("Location (ID {0}) {1} (loc {2}:{3})---", loc.LocationID, loc.LocName, loc.GetPosX(), loc.GetPosY());
+                string locDetails = string.Format("Location (ID {0}) {1} (loc {2}:{3}) House {4} ID {5} ---", 
+                    loc.LocationID, loc.LocName, loc.GetPosX(), loc.GetPosY(), GetHouseName(loc.HouseID), loc.HouseID);
                 locList.Add(new Snippet(locDetails));
                 if (loc.IsCapital() == true)
                 { locList.Add(new Snippet("CAPITAL", RLColor.Yellow, RLColor.Black)); }
@@ -463,7 +466,25 @@ namespace Next_Game
             return locID;
         }
 
+        /// <summary>
+        /// receives list of Houses from Network and places in dictHouses for permanent use
+        /// </summary>
+        /// <param name="listOfHouses"></param>
+        internal void GetHouses(List<House> listOfHouses)
+        {
+            foreach(House house in listOfHouses)
+            { dictHouses.Add(house.HouseID, house); }
+        }
 
+        public String GetHouseName(int houseID)
+        {
+            string houseName = "Unknown";
+            House house = new House();
+            if(dictHouses.TryGetValue(houseID, out house))
+            { houseName = house.Name; }
+            return houseName;
+        }
+            
 
         //new Methods above here
     }

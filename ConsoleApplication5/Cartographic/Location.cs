@@ -64,6 +64,7 @@ namespace Next_Game.Cartographic
         public int DistanceToCapital { get; set; } 
         public int DistanceToConnector { get; set; }
         public int LocationID { get; }
+        public int HouseID { get; set; }
         private List<Position> listOfNeighboursPos = new List<Position>(); //list of immediate neighbours, by Position
         private List<int> listOfNeighboursLocID = new List<int>(); //list of immediate neighbours, by LocID
         private readonly List<Route> routeToCapital = new List<Route>(); //Loc -> Capital

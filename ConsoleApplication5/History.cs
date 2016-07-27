@@ -29,6 +29,7 @@ namespace Next_Game
     {
         private List<Character> playerCharacters;
         private List<string> listOfCharacterNames;
+        private List<House> listOfHouses;
         static Random rnd;
 
         public History(int seed)
@@ -36,6 +37,7 @@ namespace Next_Game
             rnd = new Random(seed);
             playerCharacters = new List<Character>();
             listOfCharacterNames = new List<string>();
+            listOfHouses = new List<House>();
             //Location data flow: create in Map -> Network to generate routes -> History to generate names and data -> World for current state and future changes
         }
 
@@ -110,6 +112,7 @@ namespace Next_Game
             }
             Console.WriteLine();
             Console.WriteLine("{0} Houses imported, {1} Houses required", dataCounter, numHousesRequired);
+            Console.WriteLine();
             //remove surplus houses from pool
             int count = listHousePool.Count;
             int index = 0;
@@ -120,7 +123,21 @@ namespace Next_Game
                 listHousePool.RemoveAt(index);
                 count = listHousePool.Count;
             }
-            
+            Console.WriteLine();
+            //loop through structures and initialise House classes
+            for(int i = 0; i < listHousePool.Count; i++)
+            {
+                House house = new House();
+                //copy data from House pool structures
+                house.Name = listHousePool[i].Name;
+                house.Motto = listHousePool[i].Motto;
+                house.Banner = listHousePool[i].Banner;
+                house.ArchetypeID = listHousePool[i].Archetype;
+                house.CapitalName = listHousePool[i].Capital;
+                //add house to listOfHouses
+                listOfHouses.Add(house);
+                Console.WriteLine("House {0} added to listOfHouses", house.Name);
+            }
         }
 
         /// <summary>
@@ -151,5 +168,14 @@ namespace Next_Game
         /// <returns>List of Characters</returns>
         internal List<Character> GetPlayerCharacters()
         { return playerCharacters; }
+
+        /// <summary>
+        ///return list of Houses (one house for each houseID)
+        /// </summary>
+        /// <returns></returns>
+        internal List<House> GetHouses()
+        { return listOfHouses; }
+
+        //add methods above
     }
 }
