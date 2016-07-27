@@ -29,6 +29,8 @@ namespace Next_Game.Cartographic
         private List<Location> listEastBranch;
         private List<Location> listSouthBranch;
         private List<Location> listWestBranch;
+        //house analysis data
+        private int uniqueHouses;
 
         /// <summary>
         /// default constructor with seed for random # generator
@@ -1843,7 +1845,7 @@ namespace Next_Game.Cartographic
             Console.WriteLine();
             Console.WriteLine("--- House Analysis");
             //loop through MasterList and populate Lists
-            int uniqueHouses = 0;
+            uniqueHouses = 0;
             for(int outer = 1; outer < numBranches; outer++)
             {
                 int arrayLength = masterStatus[outer].GetUpperBound(0);
@@ -1965,6 +1967,8 @@ namespace Next_Game.Cartographic
             { Console.WriteLine("House {0} has ID {1} as it's capital", i, arrayOfCapitals[i]); }
         }
 
+        public int GetNumUniqueHouses()
+        { return uniqueHouses; }
 
         //methods above here
     }

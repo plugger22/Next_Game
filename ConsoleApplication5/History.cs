@@ -39,8 +39,11 @@ namespace Next_Game
             //Location data flow: create in Map -> Network to generate routes -> History to generate names and data -> World for current state and future changes
         }
 
-
-        public void InitialiseHistory()
+        /// <summary>
+        /// Set up history
+        /// </summary>
+        /// <param name="numHousesRequired">uniqueHouses from Network.InitialiseHouses</param>
+        public void InitialiseHistory(int numHousesRequired)
         {
             //read in location names
             string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Names.txt";
@@ -106,7 +109,18 @@ namespace Next_Game
                 }
             }
             Console.WriteLine();
-            Console.WriteLine("{0} Houses imported", dataCounter);
+            Console.WriteLine("{0} Houses imported, {1} Houses required", dataCounter, numHousesRequired);
+            //remove surplus houses from pool
+            int count = listHousePool.Count;
+            int index = 0;
+            while(count > numHousesRequired)
+            {
+                index = rnd.Next(0, count - 1);
+                Console.WriteLine("House {0} removed", listHousePool[index].Name);
+                listHousePool.RemoveAt(index);
+                count = listHousePool.Count;
+            }
+            
         }
 
         /// <summary>

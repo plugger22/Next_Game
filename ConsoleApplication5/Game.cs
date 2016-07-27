@@ -81,7 +81,7 @@ namespace Next_Game
             network = new Network(seed);
             network.InitialiseNetwork();
             History history = new History(seed);
-            history.InitialiseHistory();
+            history.InitialiseHistory( network.GetNumUniqueHouses() );
             history.CreatePlayerCharacters(6);
             world = new World();
             world.InitiatePlayerCharacters(history.GetPlayerCharacters(), 1);
