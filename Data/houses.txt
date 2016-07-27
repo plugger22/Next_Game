@@ -1,0 +1,60 @@
+House: Lannister
+Motto: Hear Me Roar!
+Banner: Roaring Lion
+ArchetypeID: 1
+Capital: Casterly Rock
+
+House: Martell
+Motto: Unbowed, Unbent, Unbroken
+Banner: Red Sun pierced by a Gold Spear
+ArchetypeID: 1
+Capital: Dorne
+
+House: Florent
+Motto: Never forget, never forgive
+Banner: Fox Head in a circle of Flowers
+ArchetypeID: 1
+Capital: Brightwater Keep
+
+House: Greyjoy
+Motto: We Do Not Sow
+Banner: Golden Kraken
+ArchetypeID: 1
+Capital: Pyke
+
+House: Arryn
+Motto: As High as Honour
+Banner: Moon and Falcon
+ArchetypeID: 1
+Capital: Eyrie
+
+House: Baratheon
+Motto: Ours is the Fury
+Banner: Crowned Stag on a Golden Field
+ArchetypeID: 1
+Capital: Bloodkeep
+
+House: Stark
+Motto: Winter is Coming
+Banner: Grey Direwolf on an Ice Field
+ArchetypeID: 1
+Capital: Winterfell
+
+House: Tully
+Motto: Family, Duty, Honour
+Banner: Leaping Silver Trout
+ArchetypeID: 1
+Capital: Riverrun
+
+House: Tyrell
+Motto: Growing Strong
+Banner: Golden Rose on a Green Field
+ArchetypeID: 1
+Capital: Highgarden
+
+House: Targaryen
+Motto: Fire and Blood
+Banner: Three Headed Dragon
+ArchetypeID: 1
+Capital: Valyria
+
