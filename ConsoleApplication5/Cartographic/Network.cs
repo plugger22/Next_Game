@@ -1996,7 +1996,7 @@ namespace Next_Game.Cartographic
             Console.WriteLine();
             //set up a quick list for randomly assigning houses to houseID's
             List<int> randomList = new List<int>();
-            for(int i = 0; i <= listOfHouses.Count; i++)
+            for(int i = 0; i < listOfHouses.Count; i++)
             { randomList.Add(i + 1); }
             int randomIndex = 0;
             //Assign Capitals
