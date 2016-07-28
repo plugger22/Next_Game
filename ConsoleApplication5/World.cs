@@ -354,7 +354,7 @@ namespace Next_Game
             if (locID > 0)
             {
                 Location loc = Game.network.GetLocation(locID);
-                string locDetails = string.Format("Location (ID {0}) {1} (loc {2}:{3}) House {4} ID {5} ---", 
+                string locDetails = string.Format("Location (ID {0}) {1} (loc {2}:{3}) House {4} HID {5} ---", 
                     loc.LocationID, loc.LocName, loc.GetPosX(), loc.GetPosY(), GetHouseName(loc.HouseID), loc.HouseID);
                 locList.Add(new Snippet(locDetails));
                 if (loc.IsCapital() == true)
@@ -470,7 +470,7 @@ namespace Next_Game
         /// receives list of Houses from Network and places in dictHouses for permanent use
         /// </summary>
         /// <param name="listOfHouses"></param>
-        internal void GetHouses(List<House> listOfHouses)
+        internal void InitialiseHouses(List<House> listOfHouses)
         {
             foreach(House house in listOfHouses)
             { dictHouses.Add(house.HouseID, house); }

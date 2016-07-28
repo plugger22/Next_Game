@@ -81,11 +81,12 @@ namespace Next_Game
             network = new Network(seed);
             network.InitialiseNetwork();
             History history = new History(seed);
-            history.InitialiseHistory( network.GetNumUniqueHouses() );
+            history.InitialiseHistory(network.GetNumUniqueHouses());
             history.CreatePlayerCharacters(6);
             world = new World();
-            world.InitiatePlayerCharacters( history.GetPlayerCharacters(), 1 );
-            world.GetHouses( network.UpdateHouses( history.GetHouses() ));
+            world.InitiatePlayerCharacters(history.GetPlayerCharacters(), 1);
+            network.UpdateHouses(history.GetHouses());
+            world.InitialiseHouses(history.GetHouses());
             infoChannel = new InfoChannel();
             messageLog.Add(new Snippet($"Game world created with seed {seed}"), world.GetGameTurn());
             //set up menu

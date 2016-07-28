@@ -1487,8 +1487,6 @@ namespace Next_Game.Cartographic
             int totalHouseTally = numHouses - housesTally;
             int houseCounter = 1; //used to assign house ID's (1 to ...)
             //tracks finished result (houses)
-            /*List<List<int>> listUniqueHousesByBranch = new List<List<int>>();
-            List<List<int>> listIndividualHouseLocID = new List<List<int>>();*/
             int[][] masterStatus = new int[numBranches][];
             int[][] masterLocID = new int[numBranches][];
             arrayOfCapitals = new int[0]; //locID of all house capitals
@@ -1989,8 +1987,7 @@ namespace Next_Game.Cartographic
         /// Takes basic house objects from History and assigns them to HouseID's
         /// </summary>
         /// <param name="listOfHouses"></param>
-        /// <returns>house objects updated with network data for permanent storage in the World dictHouses</returns>
-        internal List<House> UpdateHouses(List<House> listOfHouses)
+        internal void UpdateHouses(List<House> listOfHouses)
         {
             //List<House> returnListOfHouses = listOfHouses;
             Console.WriteLine();
@@ -2011,7 +2008,41 @@ namespace Next_Game.Cartographic
                 randomList.RemoveAt(randomIndex - 1);
                 Console.WriteLine("House {0} has LocID {1} and HouseID {2}", house.Name, house.CapitalLocID, house.HouseID);
             }
-            return listOfHouses;
+            //loop houses and update data
+            int houseID;
+            int capitalLocID;
+            int locID;
+            int minorHouseID;
+            Console.WriteLine();
+            for(int i = 0; i < listOfHouses.Count; i++)
+            {
+                houseID = listOfHouses[i].HouseID;
+                //change name of Location to house name
+                capitalLocID = arrayOfCapitals[houseID];
+                Location loc = GetLocation(capitalLocID);
+                loc.LocName = listOfHouses[i].CapitalName;
+                //update capital Loc ID & branch
+                listOfHouses[i].CapitalLocID = capitalLocID;
+                listOfHouses[i].Branch = loc.GetCapitalRouteDirection();
+                //update all house locations for house
+                for(int k = 0; k < listIndividualHouseLocID[houseID].Count; k++)
+                {
+                    locID = listIndividualHouseLocID[houseID][k];
+                    //if not capital, add to house list
+                    if( locID != capitalLocID && locID > 0)
+                    { listOfHouses[i].AddLocation(locID); }
+                }
+                //Work out unique Loc's from house capital to kingdom capital
+                List<Route> tempListOfRoutes = loc.GetRouteToCapital();
+                Console.WriteLine("--- House {0}", houseID);
+                foreach(Route route in tempListOfRoutes)
+                {
+                    //route.PrintRoute();
+                    Position pos = route.GetLoc1();
+                    minorHouseID = Game.map.GetHouseID(pos.PosX, pos.PosY);
+                    Console.WriteLine("House {0}", minorHouseID);
+                }
+            }
         }
 
         //methods above here

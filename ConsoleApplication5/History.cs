@@ -63,6 +63,8 @@ namespace Next_Game
             int dataCounter = 0; //number of houses
             List<HouseStruct> listHousePool = new List<HouseStruct>();
             HouseStruct houseStruct = new HouseStruct();
+            string cleanToken;
+            string cleanTag;
             for (int i = 0; i < arrayOfHouseNames.Length; i++)
             {
                 if (arrayOfHouseNames[i] != "")
@@ -77,23 +79,26 @@ namespace Next_Game
                         houseStruct = new HouseStruct();
                     }
                     string[] tokens = arrayOfHouseNames[i].Split(':');
+                    //strip out leading spaces
+                    cleanTag = tokens[0].Trim();
+                    cleanToken = tokens[1].Trim();
                     Console.WriteLine("{0}: {1}", tokens[0], tokens[1]);
-                    switch(tokens[0])
+                    switch(cleanTag)
                     {
                         case "House":
-                            houseStruct.Name = tokens[1];
+                            houseStruct.Name = cleanToken;
                             break;
                         case "Motto":
-                            houseStruct.Motto = tokens[1];
+                            houseStruct.Motto = cleanToken;
                             break;
                         case "Banner":
-                            houseStruct.Banner = tokens[1];
+                            houseStruct.Banner = cleanToken;
                             break;
                         case "ArchetypeID":
-                            houseStruct.Archetype = Convert.ToInt32(tokens[1]);
+                            houseStruct.Archetype = Convert.ToInt32(cleanToken);
                             break;
                         case "Capital":
-                            houseStruct.Capital = tokens[1];
+                            houseStruct.Capital = cleanToken;
                             break;
                     }
                 }

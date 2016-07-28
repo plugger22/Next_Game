@@ -1859,6 +1859,30 @@ namespace Next_Game.Cartographic
         }
 
         /// <summary>
+        /// Input X & Y coords and return HouseID based on MapGrid Layer. Converts raw mouse input coords if needed.
+        /// </summary>
+        /// <param name="x_cord"></param>
+        /// <param name="y_cord"></param>
+        /// /// <param name="convert">Converts raw mouse coords if true, default false</param>
+        /// <returns>'0' if House ID not valid, '-1' if not on map area</returns>
+        public int GetHouseID(int x_cord, int y_cord, bool convert = false)
+        {
+            int houseID = 0;
+            //convert raw mouse input coords?
+            if (convert == true)
+            {
+                x_cord = (x_cord - margin - offsetHorizontal) / 3;
+                y_cord = (y_cord - margin - offsetVertical - 19) / 3;
+            }
+            //make sure coords are somewhere on the map
+            if (x_cord >= 0 && x_cord < mapSize && y_cord >= 0 && y_cord < mapSize)
+            { houseID = mapGrid[(int)MapLayer.Houses, x_cord, y_cord]; }
+            else
+            { houseID = -1; }
+            return houseID;
+        }
+
+        /// <summary>
         /// Update MapGrid [Player] layer with a dictionary of current Player positions
         /// </summary>
         /// <param name="dictUpdatePlayers">Position coord and mapMarker for Player Move Object</param>

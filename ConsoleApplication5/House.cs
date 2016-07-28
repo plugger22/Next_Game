@@ -25,5 +25,11 @@ namespace Next_Game
             listHousesToConnector = new List<int>();
         }
         
+        /// <summary>
+        /// add a location to list of house controlled locations
+        /// </summary>
+        /// <param name="locID"></param>
+        public void AddLocation(int locID)
+        { listLocations.Add(locID); }
     }
 }
