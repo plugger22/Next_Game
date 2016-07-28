@@ -83,7 +83,7 @@ namespace Next_Game
                     if (cki.Key == ConsoleKey.Y)*/
 
                     //remove character from current location 
-                    int locID_Origin = Game.map.GetLocationID(posOrigin.PosX, posOrigin.PosY);
+                    int locID_Origin = Game.map.GetMapInfo(MapLayer.LocID, posOrigin.PosX, posOrigin.PosY);
                     Location loc = Game.network.GetLocation(locID_Origin);
                     if (loc != null)
                     {
@@ -95,7 +95,7 @@ namespace Next_Game
                         //update character status to 'travelling'
                         person.SetCharacterStatus(CharStatus.Travelling);
                         //update characterLocationID (now becomes destination)
-                        int locID_Destination = Game.map.GetLocationID(posDestination.PosX, posDestination.PosY);
+                        int locID_Destination = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
                         person.CharLocationID = locID_Destination;
                     }
                     else
@@ -123,7 +123,7 @@ namespace Next_Game
                 {
                     //update location list at destination
                     Position posDestination = moveObject.GetCurrentPosition();
-                    int locID = Game.map.GetLocationID(posDestination.PosX, posDestination.PosY);
+                    int locID = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
                     Location loc = Game.network.GetLocation(locID);
                     List<int> charListMoveObject = new List<int>(moveObject.GetCharacterList());
                     //find location, get list, update for each character
@@ -288,25 +288,11 @@ namespace Next_Game
         internal string GetLocationName(Position pos)
         {
             string locName = "unknown";
-            int locID = Game.map.GetLocationID(pos.PosX, pos.PosY);
+            int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
             Location loc = Game.network.GetLocation(locID);
             locName = loc.LocName;
             return locName;
         }
-
-        //straight conversion utility to get LocID from a location Position
-        /*public int GetLocationID(Position pos)
-        {
-            int locID = 0;
-            Location loc = new Location();
-            //Location display
-            if (dictLocationsByPos.ContainsKey(pos))
-            {
-                loc = dictLocationsByPos[pos];
-                locID = loc.LocationID;
-            }
-            return locID;
-        }*/
 
 
         /// <summary>
@@ -353,9 +339,18 @@ namespace Next_Game
             //Location display
             if (locID > 0)
             {
+                string description = "House";
                 Location loc = Game.network.GetLocation(locID);
-                string locDetails = string.Format("Location (ID {0}) {1} (loc {2}:{3}) House {4} HID {5} ---", 
-                    loc.LocationID, loc.LocName, loc.GetPosX(), loc.GetPosY(), GetHouseName(loc.HouseID), loc.HouseID);
+                //correct location description
+                if (loc.HouseID == 99)
+                { description = "A homely Inn"; }
+                else if (loc.LocationID == 1)
+                { description = "The Home of the King"; }
+                else if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) == 0)
+                { description = "Banner Lord of House"; }
+                
+                string locDetails = string.Format("LID {0} {1} (loc {2}:{3}) {4} {5} HID {6} ---", 
+                    loc.LocationID, loc.LocName, loc.GetPosX(), loc.GetPosY(), description, GetHouseName(loc.HouseID), loc.HouseID);
                 locList.Add(new Snippet(locDetails));
                 if (loc.IsCapital() == true)
                 { locList.Add(new Snippet("CAPITAL", RLColor.Yellow, RLColor.Black)); }
@@ -483,7 +478,7 @@ namespace Next_Game
         /// <returns></returns>
         public String GetHouseName(int houseID)
         {
-            string houseName = "Unknown";
+            string houseName = "";
             House house = new House();
             if(dictHouses.TryGetValue(houseID, out house))
             { houseName = house.Name; }

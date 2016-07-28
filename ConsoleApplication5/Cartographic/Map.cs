@@ -1834,40 +1834,18 @@ namespace Next_Game.Cartographic
         public void SetHouseCapital(int coord_X, int coord_Y, int houseID)
         { mapGrid[(int)MapLayer.Capitals, coord_X, coord_Y] = houseID; }
 
+        
         /// <summary>
-        /// Input X & Y coords and return LocID based on MapGrid Layer. Converts raw mouse input coords if needed.
+        /// Generic method to retrieve a data point given a MapLayer (enum) and coords
         /// </summary>
+        /// <param name="layer"></param>
         /// <param name="x_cord"></param>
         /// <param name="y_cord"></param>
-        /// /// <param name="convert">Converts raw mouse coords if true, default false</param>
-        /// <returns>'0' if location ID not valid, '-1' if not on map area</returns>
-        public int GetLocationID(int x_cord, int y_cord, bool convert = false)
+        /// <param name="convert">if true converts mouse coords to map coords</param>
+        /// <returns></returns>
+        public int GetMapInfo(MapLayer layer, int x_cord, int y_cord, bool convert = false)
         {
-            int locID = 0;
-            //convert raw mouse input coords?
-            if(convert == true)
-            {
-                x_cord= (x_cord - margin - offsetHorizontal) / 3;
-                y_cord = (y_cord - margin - offsetVertical - 19) / 3;
-            }
-            //make sure coords are somewhere on the map
-            if (x_cord >= 0 && x_cord < mapSize && y_cord >= 0 && y_cord < mapSize)
-            { locID = mapGrid[(int)MapLayer.LocID, x_cord, y_cord]; }
-            else
-            { locID = -1; }
-            return locID;
-        }
-
-        /// <summary>
-        /// Input X & Y coords and return HouseID based on MapGrid Layer. Converts raw mouse input coords if needed.
-        /// </summary>
-        /// <param name="x_cord"></param>
-        /// <param name="y_cord"></param>
-        /// /// <param name="convert">Converts raw mouse coords if true, default false</param>
-        /// <returns>'0' if House ID not valid, '-1' if not on map area</returns>
-        public int GetHouseID(int x_cord, int y_cord, bool convert = false)
-        {
-            int houseID = 0;
+            int data = 0;
             //convert raw mouse input coords?
             if (convert == true)
             {
@@ -1876,10 +1854,10 @@ namespace Next_Game.Cartographic
             }
             //make sure coords are somewhere on the map
             if (x_cord >= 0 && x_cord < mapSize && y_cord >= 0 && y_cord < mapSize)
-            { houseID = mapGrid[(int)MapLayer.Houses, x_cord, y_cord]; }
+            { data = mapGrid[(int)layer, x_cord, y_cord]; }
             else
-            { houseID = -1; }
-            return houseID;
+            { data = -1; }
+            return data;
         }
 
         /// <summary>

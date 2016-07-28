@@ -145,7 +145,7 @@ namespace Next_Game
                 //Mouse specific input OFF - generic location and party info
                 if (mouseOn == false)
                 {
-                    int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                    int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                     infoChannel.SetInfoList(world.ShowLocationRL(locID), ConsoleDisplay.Multi);
                     renderRequired = true;
                 }
@@ -165,7 +165,7 @@ namespace Next_Game
                                     if (inputState == 1)
                                     {
                                         //valid location?
-                                        int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                         if (locID > 0)
                                         {
                                             string locName = world.GetLocationName(locID);
@@ -179,7 +179,7 @@ namespace Next_Game
                                     else if (inputState == 2)
                                     {
                                         //valid location?
-                                        int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                         if (locID > 0)
                                         {
                                             //process two positions to show on map.
@@ -207,7 +207,7 @@ namespace Next_Game
                                     if (inputState == 1)
                                     {
                                         //valid location?
-                                        int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                         if (locID > 0)
                                         {
                                             string locName = world.GetLocationName(locID);
@@ -221,7 +221,7 @@ namespace Next_Game
                                     else if (inputState == 2)
                                     {
                                         //valid location?
-                                        int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                         if (locID > 0)
                                         {
                                             //process two positions to show on map.
@@ -248,7 +248,7 @@ namespace Next_Game
                                     //valid location?
                                     if (inputState == 1)
                                     { 
-                                        int locID = map.GetLocationID(mouse.X, mouse.Y, true);
+                                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                         if (locID > 0)
                                         {
                                             //process two positions to show on map.

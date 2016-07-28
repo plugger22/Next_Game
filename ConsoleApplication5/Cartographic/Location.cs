@@ -125,7 +125,7 @@ namespace Next_Game.Cartographic
         public void AddNeighbour(Position pos)
         {
             listOfNeighboursPos.Add(pos);
-            int locID = Next_Game.Game.map.GetLocationID(pos.PosX, pos.PosY);
+            int locID = Next_Game.Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
             listOfNeighboursLocID.Add(locID);
         }
 
