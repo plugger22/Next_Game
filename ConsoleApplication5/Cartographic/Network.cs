@@ -2040,6 +2040,9 @@ namespace Next_Game.Cartographic
                     //route.PrintRoute();
                     Position pos = route.GetLoc1();
                     minorHouseID = Game.map.GetMapInfo(MapLayer.Houses, pos.PosX, pos.PosY);
+                    //called method checks for locID = 0 & duplicate houseID's
+                    if (minorHouseID != houseID && minorHouseID != 99)
+                    { listOfHouses[i].AddHousesToCapital(minorHouseID); }
                     Console.WriteLine("House {0}", minorHouseID);
                 }
             }

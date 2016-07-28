@@ -15,8 +15,8 @@ namespace Next_Game
         public int ArchetypeID { get; set; }
         public int Branch { get; set; }
         private List<int> listLocations;
-        private List<int> listHousesToCapital;
-        private List<int> listHousesToConnector;
+        private List<int> listHousesToCapital; //unique houses (HID), ignoring special locations
+        private List<int> listHousesToConnector; //unique houses (HID), ignoring special locations
 
         public House()
         {
@@ -31,5 +31,19 @@ namespace Next_Game
         /// <param name="locID"></param>
         public void AddLocation(int locID)
         { listLocations.Add(locID); }
+
+        /// <summary>
+        /// add a house ID to list of unique houses to capital
+        /// </summary>
+        /// <param name="houseID"></param>
+        public void AddHousesToCapital(int houseID)
+        {
+            //check houseID isn't already in list (only unique HouseID's are stored)
+            if (houseID > 0)
+            {
+                if (listHousesToCapital.Contains(houseID) == false)
+                { listHousesToCapital.Add(houseID); }
+            }
+        }
     }
 }

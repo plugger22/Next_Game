@@ -239,6 +239,22 @@ namespace Next_Game
                                     break;
                             }
                             break;
+                        case RLKey.H:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    renderRequired = true;
+                                    //Show House Details
+                                    if (inputState == 1)
+                                    {
+                                        //valid location?
+                                        int houseID = map.GetMapInfo(MapLayer.Houses, mouse.X, mouse.Y, true);
+                                        if (houseID > 0)
+                                        { infoChannel.SetInfoList(world.ShowHousesRL(houseID), ConsoleDisplay.Multi); }
+                                    }
+                                    break;
+                            }
+                            break;
                         case RLKey.P:
                             switch (_menuMode)
                             {
@@ -353,6 +369,20 @@ namespace Next_Game
                                 List<Snippet> inputList = new List<Snippet>();
                                 inputList.Add(new Snippet("--- Show the Route between two Locations"));
                                 inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
+                                infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
+                                inputState = 1;
+                                mouseOn = true;
+                                break;
+                        }
+                        break;
+                    case RLKey.H:
+                        switch (_menuMode)
+                        {
+                            case MenuMode.Main:
+                                //Show House Details
+                                List<Snippet> inputList = new List<Snippet>();
+                                inputList.Add(new Snippet("--- Show House Details"));
+                                inputList.Add(new Snippet("Select Location by Mouse (press ESC to Exit)"));
                                 infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                 inputState = 1;
                                 mouseOn = true;

@@ -296,40 +296,6 @@ namespace Next_Game
 
 
         /// <summary>
-        /// Display Location based on input coords
-        /// </summary>
-        /// <param name="locID"></param>
-        /*public void ShowLocation(int locID)
-        {
-            Location loc = new Location();
-            //Location display
-            if (dictLocationsByID.ContainsKey(locID))
-            {
-                loc = dictLocationsByID[locID];
-                loc.PrintStatus();
-                List<int> charList = loc.GetCharacterList();
-                if (charList.Count > 0)
-                {
-                    //characters at location
-                    Console.WriteLine("Characters at " + loc.LocName + " ---");
-                    foreach (int charID in charList)
-                    {
-                        if (dictPlayerCharacters.ContainsKey(charID))
-                        {
-                            Character person = new Character();
-                            person = dictPlayerCharacters[charID];
-                            Console.WriteLine("ID {0}: {1}", person.GetCharacterID(), person.GetCharacterName());
-                        }
-                        else
-                        { Console.WriteLine("unknown ID " + Convert.ToString(charID)); }
-                    }
-                }
-            }
-            else
-            { Console.WriteLine("Debug: Location {0} doesn't exist in the dictLocations", locID); }
-        }*/
-
-        /// <summary>
         /// click on a location to get info
         /// </summary>
         /// <param name="pos"></param>
@@ -383,6 +349,17 @@ namespace Next_Game
             else
             { locList.Add(new Snippet("ERROR: Please click on the map", RLColor.Red, RLColor.Black)); }
             return locList;
+        }
+
+        internal List<Snippet> ShowHousesRL(int houseID)
+        {
+            List<Snippet> houseList = new List<Snippet>();
+            //House display
+            if (houseID > 0)
+            {
+                houseList.Add(new Snippet("House Data"));
+            }
+            return houseList;
         }
 
         /// <summary>

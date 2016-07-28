@@ -82,6 +82,7 @@ namespace Next_Game
                     //Info category commands
                     menuArrayText[1, 0] = "[C] Show Characters";
                     menuArrayText[1, 1] = "[E] Show Events";
+                    menuArrayText[1, 2] = "[H] Show House";
                     //Switch Menu category commands
                     menuArrayText[3, 0] = "[1..6] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
