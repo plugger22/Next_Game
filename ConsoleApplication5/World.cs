@@ -380,7 +380,7 @@ namespace Next_Game
                 houseList.Add(new Snippet(motto));
                 string banner = string.Format("Banner \"{0}\"", house.Banner);
                 houseList.Add(new Snippet(banner));
-                string seat = string.Format("Seated at {0} {1}", house.CapitalName, ShowLocationCoords(house.CapitalLocID));
+                string seat = string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(house.LocID));
                 houseList.Add(new Snippet(seat));
                 //bannerlords
                 List<int> listLordLocations = house.GetLords();

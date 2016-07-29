@@ -1,0 +1,225 @@
+House: Ambrose
+Motto: Never Resting
+Banner: Red Ants on a Yellow Field
+ArchetypeID: 1
+Seat: Blackwater
+
+House: Bolton
+Motto: A Naked Man has few Secrets, but a Flayed Man has None.
+Banner: A Flayed Man 
+ArchetypeID: 1
+Seat: Dreadfort
+
+House: Botley
+Motto: We Take Your Women
+Banner: A Mermaid
+ArchetypeID: 1
+Seat: Lordsport
+
+House: Bracken
+Motto: Charged and Ready
+Banner: A Red Stallion 
+ArchetypeID: 1
+Seat: Stone Hedge
+
+House: Brax
+Motto: Rare is our Pride
+Banner: A Purple Unicorn 
+ArchetypeID: 1
+Seat: Hornvale
+
+House: Caron
+Motto: No Song So Sweet
+Banner: Nightingales
+ArchetypeID: 1
+Seat: Nightsong
+
+House: Cerwyn
+Motto: Honed and Ready
+Banner: A Battle Axe 
+ArchetypeID: 1
+Seat: Cerwyn
+
+House: Clegane
+Motto: Our Bite Draws Blood
+Banner: Three Dogs in the Yellow of Autumn Grass
+ArchetypeID: 1
+Seat: Clegane's Keep
+
+House: Codd
+Motto: Though All Men Do Despise Us
+Banner: A Silver Cod on a Black Field
+ArchetypeID: 1
+Seat: Fishfork
+
+House: Crane
+Motto: Walk With Care
+Banner: Cranes 
+ArchetypeID: 1
+Seat: Red Lake
+
+House: Dondarrion
+Motto: We Know the Swamp
+Banner: A Purple Lighning Bolt on a Black Field 
+ArchetypeID: 1
+Seat: Blackhaven
+
+House: Estermont
+Motto: Hard as a Shell
+Banner: A Sea Turtle, Green on Green 
+ArchetypeID: 1
+Seat: Greenstone
+
+House: Fowler
+Motto: Let Me Soar
+Banner: Buzzard Eagle 
+ArchetypeID: 1
+Seat: Skyreach
+
+House: Frey
+Motto: We Stand Together
+Banner: Twin Towers, Blue on Silvery Grey 
+ArchetypeID: 1
+Seat: The Twins
+
+House: Glover
+Motto: None Strike As Hard
+Banner: A Mailed Fist, Silver on Scarlet 
+ArchetypeID: 1
+Seat: Deepwood Motte
+
+House: Harlaw
+Motto: Death and Darkness
+Banner: A Silver Scythe on a Black Field 
+ArchetypeID: 1
+Seat: Ten Towers
+
+House: Hightower
+Motto: We Light the Way
+Banner: A Stepped White Tower Crowned with Fire on a Smoke Grey Field
+ArchetypeID: 1
+Seat: Oldtown
+
+House: Hornwood
+Motto: Righteous in Wrath
+Banner: A Bull Moose 
+ArchetypeID: 1
+Seat: Hornwood
+
+House: Hunt
+Motto: The Dead Bleed
+Banner: A Brown Deer, Dead, Bound and Slung beneath a Pole 
+ArchetypeID: 1
+Seat: Longbow Hall
+
+House: Karstark
+Motto: The Sun of Winter
+Banner: A White Sun on Black 
+ArchetypeID: 1
+Seat: Karhold
+
+House: Leygood
+Motto: We Ride By Night
+Banner: Three Thunderbolts 
+ArchetypeID: 1
+Seat: Barrow Hill
+
+House: Mooton
+Motto: Wisdom and Strength
+Banner: A Red Salmon
+ArchetypeID: 1
+Seat: Maidenpool
+
+House: Mormont
+Motto: The Claws Take All
+Banner: A Black Bear 
+ArchetypeID: 1
+Seat: Bearpit
+
+House: Mullendore
+Motto: We Fly to Glory
+Banner: A Cloud of Black and Orange Butterflies 
+ArchetypeID: 1
+Seat: Uplands
+
+House: Oakheart
+Motto: Our Roots Go Deep
+Banner: Green Oakleaves on a Yellow Field
+ArchetypeID: 1
+Seat: Old Oak
+
+House: Penrose
+Motto: Set Down Our Deeds
+Banner: White Quills on an Orange Brown Field 
+ArchetypeID: 1
+Seat: Parchments
+
+House: Redwyne
+Motto: The Red Vine Endures
+Banner: A Cluster of Grapes, Burgundy on Blue 
+ArchetypeID: 1
+Seat: The Arbor
+
+House: Slynt
+Motto: Thrust Firm and Fast
+Banner: A Bloody Spear, Gold on a Black Field 
+ArchetypeID: 1
+Seat: Harrenhal
+
+House: Tallhart
+Motto: Proud and Free
+Banner: Three Sentinel Trees 
+ArchetypeID: 1
+Seat: Torrhen's Square
+
+House: Tarly
+Motto: First in Battle
+Banner: A Striding Huntsman 
+ArchetypeID: 1
+Seat: Horn Hill
+
+House: Tarth
+Motto: None Shall Pass
+Banner: A Yellow Sun and Crescent Moon on a Quartered Rose and Azure
+ArchetypeID: 1
+Seat: Evenfall
+
+House: Umber
+Motto: Unchained and Untamed
+Banner: A Roaring Giant in Shattered Chains 
+ArchetypeID: 1
+Seat: Last Hearth
+
+House: Westerling
+Motto: Honor, not Honors
+Banner: Seashells 
+ArchetypeID: 1
+Seat: The Crag
+
+House: Wull
+Motto: Dig to Prosper
+Banner: Three Brown Buckets on a Blue Field 
+ArchetypeID: 1
+Seat: Sodhall
+
+House: Peake
+Motto: We Stand Firm
+Banner: Three Black Castles on an Orange Field
+ArchetypeID: 1
+Seat: Starpike
+
+House: Yronwood
+Motto: We Guard the Way
+Banner: A Black Porticullis On a Gold Field
+ArchetypeID: 1
+Seat: Yronwood Castle
+
+House: Flint
+Motto: Ever Vigilant
+Banner: Whitecaps on a Blue Ocean with a Pair of Blue Eyes on a Yellow Field above
+ArchetypeID: 1
+Seat: Widow's Watch
+
+
+
+

@@ -9,9 +9,9 @@ namespace Next_Game
         public string Name { get; set; }
         public string Motto { get; set; }
         public string Banner { get; set; }
-        public string CapitalName { get; set; }
+        public string LocName { get; set; }
         public int HouseID { get; set; }
-        public int CapitalLocID { get; set; }
+        public int LocID { get; set; }
         public int ArchetypeID { get; set; }
         public int Branch { get; set; }
         private List<int> listLordLocations;

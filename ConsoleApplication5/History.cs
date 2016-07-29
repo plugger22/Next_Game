@@ -55,7 +55,7 @@ namespace Next_Game
             { listOfCharacterNames.Add(arrayOfCharacterNames[i]); }
 
             //read in house pool
-            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Houses.txt";
+            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/GreatHouses.txt";
             string[] arrayOfHouseNames = File.ReadAllLines(filePath);
             Console.WriteLine();
             Console.WriteLine("--- House Names Import");
@@ -138,7 +138,7 @@ namespace Next_Game
                 house.Motto = listHousePool[i].Motto;
                 house.Banner = listHousePool[i].Banner;
                 house.ArchetypeID = listHousePool[i].Archetype;
-                house.CapitalName = listHousePool[i].Capital;
+                house.LocName = listHousePool[i].Capital;
                 //add house to listOfHouses
                 listOfHouses.Add(house);
                 Console.WriteLine("House {0} added to listOfHouses", house.Name);
