@@ -87,6 +87,7 @@ namespace Next_Game
                     menuArrayText[3, 0] = "[1..6] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
                     menuArrayText[3, 2] = "[ENTER] End Turn";
+                    menuArrayText[3, 3] = "[X] Quit";
                     break;
                 case MenuMode.Character:
                     menuColorFore = RLColor.Blue;

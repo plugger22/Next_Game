@@ -14,13 +14,13 @@ namespace Next_Game
         public int CapitalLocID { get; set; }
         public int ArchetypeID { get; set; }
         public int Branch { get; set; }
-        private List<int> listLocations;
+        private List<int> listLordLocations;
         private List<int> listHousesToCapital; //unique houses (HID), ignoring special locations
         private List<int> listHousesToConnector; //unique houses (HID), ignoring special locations
 
         public House()
         {
-            listLocations = new List<int>();
+            listLordLocations = new List<int>();
             listHousesToCapital = new List<int>();
             listHousesToConnector = new List<int>();
         }
@@ -29,8 +29,8 @@ namespace Next_Game
         /// add a location to list of house controlled locations
         /// </summary>
         /// <param name="locID"></param>
-        public void AddLocation(int locID)
-        { listLocations.Add(locID); }
+        public void AddLordLocations(int locID)
+        { listLordLocations.Add(locID); }
 
         /// <summary>
         /// add a house ID to list of unique houses to capital
@@ -45,5 +45,14 @@ namespace Next_Game
                 { listHousesToCapital.Add(houseID); }
             }
         }
+
+        /// <summary>
+        /// returns list of Lords (subsidary bannerlord locations)
+        /// </summary>
+        /// <returns></returns>
+        public List<int> GetLords()
+        { return listLordLocations; }
+
+        //new methods above here
     }
 }

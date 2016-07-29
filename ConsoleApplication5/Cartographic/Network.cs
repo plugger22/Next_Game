@@ -2030,7 +2030,7 @@ namespace Next_Game.Cartographic
                     locID = listIndividualHouseLocID[houseID][k];
                     //if not capital, add to house list
                     if( locID != capitalLocID && locID > 0)
-                    { listOfHouses[i].AddLocation(locID); }
+                    { listOfHouses[i].AddLordLocations(locID); }
                 }
                 //Work out unique Loc's from house capital to kingdom capital
                 List<Route> tempListOfRoutes = loc.GetRouteToCapital();

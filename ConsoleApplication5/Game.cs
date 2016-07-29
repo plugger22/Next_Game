@@ -250,8 +250,9 @@ namespace Next_Game
                                         //valid location?
                                         int houseID = map.GetMapInfo(MapLayer.Houses, mouse.X, mouse.Y, true);
                                         if (houseID > 0)
-                                        { infoChannel.SetInfoList(world.ShowHousesRL(houseID), ConsoleDisplay.Multi); }
+                                        { infoChannel.SetInfoList(world.ShowHouseRL(houseID), ConsoleDisplay.Multi); }
                                     }
+                                    mouseOn = false;
                                     break;
                             }
                             break;
@@ -442,24 +443,29 @@ namespace Next_Game
                         map.UpdateMap();
                         map.UpdatePlayers(world.MoveCharacters());
                         break;
+                    case RLKey.X:
+                        //exit application from Main Menu
+                        if (_menuMode == MenuMode.Main)
+                        {
+                            _rootConsole.Close();
+                            Environment.Exit(1);
+                        }
+                        break;
                     case RLKey.Escape:
+                        //clear input console
+                        infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
                         //exit mouse input 
-                        if(mouseOn)
+                        if (mouseOn == true)
                         { mouseOn = false; }
-                        //exit app
+                        //revert back to main menu
                         else
-                        switch(_menuMode)
+                        {
+                            if (_menuMode != MenuMode.Main)
                             {
-                                case MenuMode.Main:
-                                    //exit application
-                                    _rootConsole.Close();
-                                    Environment.Exit(1);
-                                    break;
-                                default:
-                                    //return to main menu from sub menus
-                                    _menuMode = menu.SwitchMenuMode(MenuMode.Main);
-                                    break;
+                                //return to main menu from sub menus
+                                _menuMode = menu.SwitchMenuMode(MenuMode.Main);
                             }
+                        }
                         break;
                 }
             }

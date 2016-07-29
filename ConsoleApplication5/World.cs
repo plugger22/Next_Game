@@ -294,6 +294,19 @@ namespace Next_Game
             return locName;
         }
 
+        /// <summary>
+        /// Get location coords in a formatted string
+        /// </summary>
+        /// <param name="locID"></param>
+        /// <returns>returns '(loc 20:4)' format string</returns>
+        private string ShowLocationCoords(int locID)
+        {
+            Location loc = Game.network.GetLocation(locID);
+            string coords = string.Format("(loc {0}:{1})", loc.GetPosX(), loc.GetPosY());
+            return coords;
+        }
+
+
 
         /// <summary>
         /// click on a location to get info
@@ -351,13 +364,36 @@ namespace Next_Game
             return locList;
         }
 
-        internal List<Snippet> ShowHousesRL(int houseID)
+        /// <summary>
+        /// Display House data to main infoConsole
+        /// </summary>
+        /// <param name="houseID"></param>
+        /// <returns></returns>
+        internal List<Snippet> ShowHouseRL(int houseID)
         {
+            House house = GetHouse(houseID);
             List<Snippet> houseList = new List<Snippet>();
-            //House display
-            if (houseID > 0)
+            if (house != null)
             {
-                houseList.Add(new Snippet("House Data"));
+                houseList.Add(new Snippet("House " + house.Name, RLColor.Yellow, RLColor.Black));
+                string motto = string.Format("Motto \"{0}\"", house.Motto);
+                houseList.Add(new Snippet(motto));
+                string banner = string.Format("Banner \"{0}\"", house.Banner);
+                houseList.Add(new Snippet(banner));
+                string seat = string.Format("Seated at {0} {1}", house.CapitalName, ShowLocationCoords(house.CapitalLocID));
+                houseList.Add(new Snippet(seat));
+                //bannerlords
+                List<int> listLordLocations = house.GetLords();
+                if (listLordLocations.Count > 0)
+                {
+                    houseList.Add(new Snippet("BannerLords", RLColor.Yellow, RLColor.Black));
+                    string bannerLord;
+                    foreach (int locID in listLordLocations)
+                    {
+                        bannerLord = string.Format("{0} {1}", GetLocationName(locID), ShowLocationCoords(locID));
+                        houseList.Add(new Snippet(bannerLord));
+                    }
+                }
             }
             return houseList;
         }
@@ -461,7 +497,19 @@ namespace Next_Game
             { houseName = house.Name; }
             return houseName;
         }
-            
+
+        /// <summary>
+        /// Returns house if found, otherwise null
+        /// </summary>
+        /// <param name="houseID"></param>
+        /// <returns></returns>
+        private House GetHouse(int houseID)
+        {
+            House house = new House();
+            if (dictHouses.TryGetValue(houseID, out house))
+            { return house; }
+            return null;
+        }
 
         //new Methods above here
     }
