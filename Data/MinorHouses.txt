@@ -220,6 +220,3 @@ Banner: Whitecaps on a Blue Ocean with a Pair of Blue Eyes on a Yellow Field abo
 ArchetypeID: 1
 Seat: Widow's Watch
 
-
-
-
