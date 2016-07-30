@@ -103,21 +103,19 @@ namespace Next_Game
                             break;
                         case "Capital":
                             houseStruct.Capital = cleanToken;
+                            //last datapoint - save structure to list
+                            if (dataCounter > 0)
+                            {
+                                //add to housePool
+                                listHousePool.Add(houseStruct);
+                                //debug
+                                houseStruct.ShowHouseStruct();
+                            }
                             break;
                     }
                 }
                 else
-                {
-                    newHouse = false;
-                    //new house structure has been created?
-                    if(dataCounter > 0)
-                    {
-                        //add to housePool
-                        listHousePool.Add(houseStruct);
-                        //debug
-                        houseStruct.ShowHouseStruct();
-                    }
-                }
+                { newHouse = false; }
             }
             Console.WriteLine();
             Console.WriteLine("{0} Great Houses imported, {1} Houses required", dataCounter, numHousesRequired);
@@ -194,21 +192,19 @@ namespace Next_Game
                             break;
                         case "Seat":
                             houseStruct.Capital = cleanToken;
+                            //last datapoint - save structure to list
+                            if (dataCounter > 0)
+                            {
+                                //add to housePool
+                                listHousePool.Add(houseStruct);
+                                //debug
+                                houseStruct.ShowHouseStruct();
+                            }
                             break;
                     }
                 }
                 else
-                {
-                    newHouse = false;
-                    //new house structure has been created?
-                    if (dataCounter > 0)
-                    {
-                        //add to housePool
-                        listHousePool.Add(houseStruct);
-                        //debug
-                        houseStruct.ShowHouseStruct();
-                    }
-                }
+                { newHouse = false; }
             }
             Console.WriteLine();
             Console.WriteLine("{0} Minor Houses imported, {1} Houses required", dataCounter, numHousesRequired);

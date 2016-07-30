@@ -94,6 +94,9 @@ Banner: A Silver Scythe on a Black Field
 ArchetypeID: 1
 Seat: Ten Towers
 
+
+
+
 House: Hightower
 Motto: We Light the Way
 Banner: A Stepped White Tower Crowned with Fire on a Smoke Grey Field
@@ -219,4 +222,3 @@ Motto: Ever Vigilant
 Banner: Whitecaps on a Blue Ocean with a Pair of Blue Eyes on a Yellow Field above
 ArchetypeID: 1
 Seat: Widow's Watch
-
