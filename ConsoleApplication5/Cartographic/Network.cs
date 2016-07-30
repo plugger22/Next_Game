@@ -64,11 +64,11 @@ namespace Next_Game.Cartographic
         public void InitialiseNetwork()
         {
             //read in location names
-            string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/locations.txt";
+            /*string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/locations.txt";
             string[] arrayOfLocationNames = File.ReadAllLines(filePath);
             //read location names from array into list
             for (int i = 0; i < arrayOfLocationNames.Length; i++)
-            { listOfLocationNames.Add(arrayOfLocationNames[i]); }
+            { listOfLocationNames.Add(arrayOfLocationNames[i]); }*/
             //set up locations dictionary
             //one entry for each location, keyed off it's ID
             if ( dictLocations != null)
@@ -76,7 +76,7 @@ namespace Next_Game.Cartographic
                 foreach(Location loc in ListOfLocations)
                 {
                     //name
-                    loc.LocName = GetRandomLocationName();
+                    //loc.LocName = GetRandomLocationName();
                     //add to dictionary
                     dictLocations.Add(loc.LocationID, loc);
                     //tally up number of locations on each branch
@@ -2016,22 +2016,24 @@ namespace Next_Game.Cartographic
             Console.WriteLine();
             for(int i = 0; i < listOfHouses.Count; i++)
             {
-                MajorHouse majorHouse = listOfHouses[i] as MajorHouse;
-                houseID = majorHouse.HouseID;
+                MajorHouse house = new MajorHouse();
+                house = listOfHouses[i] as MajorHouse;
+                //MajorHouse majorHouse = house as MajorHouse;
+                houseID = house.HouseID;
                 //change name of Location to house name
                 capitalLocID = arrayOfCapitals[houseID];
                 Location loc = GetLocation(capitalLocID);
-                loc.LocName = majorHouse.LocName;
+                loc.LocName = house.LocName;
                 //update capital Loc ID & branch
-                majorHouse.LocID = capitalLocID;
-                majorHouse.Branch = loc.GetCapitalRouteDirection();
+                house.LocID = capitalLocID;
+                house.Branch = loc.GetCapitalRouteDirection();
                 //update all house locations for house
                 for(int k = 0; k < listIndividualHouseLocID[houseID].Count; k++)
                 {
                     locID = listIndividualHouseLocID[houseID][k];
                     //if not capital, add to house list
                     if( locID != capitalLocID && locID > 0)
-                    { majorHouse.AddLordLocations(locID); }
+                    { house.AddLordLocations(locID); }
                 }
                 //Work out unique Loc's from house capital to kingdom capital
                 List<Route> tempListOfRoutes = loc.GetRouteToCapital();
@@ -2043,7 +2045,7 @@ namespace Next_Game.Cartographic
                     minorHouseID = Game.map.GetMapInfo(MapLayer.Houses, pos.PosX, pos.PosY);
                     //called method checks for locID = 0 & duplicate houseID's
                     if (minorHouseID != houseID && minorHouseID != 99)
-                    { majorHouse.AddHousesToCapital(minorHouseID); }
+                    { house.AddHousesToCapital(minorHouseID); }
                     Console.WriteLine("House {0}", minorHouseID);
                 }
             }

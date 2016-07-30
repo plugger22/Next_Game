@@ -20,7 +20,7 @@ namespace Next_Game
             Console.WriteLine("Motto: {0}", Motto);
             Console.WriteLine("Banner: {0}", Banner);
             Console.WriteLine("ArchetypeID: {0}", Archetype);
-            Console.WriteLine("Capital: {0}", Capital);
+            Console.WriteLine("Seat: {0}", Capital);
         }
     }
 
@@ -29,7 +29,7 @@ namespace Next_Game
     {
         private List<Character> playerCharacters;
         private List<string> listOfCharacterNames;
-        private List<House> listOfHouses;
+        private List<House> listOfGreatHouses;
         static Random rnd;
 
         public History(int seed)
@@ -37,7 +37,7 @@ namespace Next_Game
             rnd = new Random(seed);
             playerCharacters = new List<Character>();
             listOfCharacterNames = new List<string>();
-            listOfHouses = new List<House>();
+            listOfGreatHouses = new List<House>();
             //Location data flow: create in Map -> Network to generate routes -> History to generate names and data -> World for current state and future changes
         }
 
@@ -132,7 +132,7 @@ namespace Next_Game
             //loop through structures and initialise House classes
             for(int i = 0; i < listHousePool.Count; i++)
             {
-                House house = new House();
+                MajorHouse house = new MajorHouse();
                 //copy data from House pool structures
                 house.Name = listHousePool[i].Name;
                 house.Motto = listHousePool[i].Motto;
@@ -140,7 +140,7 @@ namespace Next_Game
                 house.ArchetypeID = listHousePool[i].Archetype;
                 house.LocName = listHousePool[i].Capital;
                 //add house to listOfHouses
-                listOfHouses.Add(house);
+                listOfGreatHouses.Add(house);
                 Console.WriteLine("House {0} added to listOfHouses", house.Name);
             }
         }
@@ -179,7 +179,7 @@ namespace Next_Game
         /// </summary>
         /// <returns></returns>
         internal List<House> GetHouses()
-        { return listOfHouses; }
+        { return listOfGreatHouses; }
 
         //add methods above
     }

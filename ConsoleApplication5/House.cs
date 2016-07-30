@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Next_Game
 {
     //
-    //Base class ---
+    // Base class ---
     //
     class House
     {
@@ -74,6 +74,7 @@ namespace Next_Game
     //
     class MinorHouse : House
     {
-
+        public MinorHouse()
+        { }
     }
 }
