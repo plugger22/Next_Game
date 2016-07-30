@@ -2016,21 +2016,22 @@ namespace Next_Game.Cartographic
             Console.WriteLine();
             for(int i = 0; i < listOfHouses.Count; i++)
             {
-                houseID = listOfHouses[i].HouseID;
+                MajorHouse majorHouse = listOfHouses[i] as MajorHouse;
+                houseID = majorHouse.HouseID;
                 //change name of Location to house name
                 capitalLocID = arrayOfCapitals[houseID];
                 Location loc = GetLocation(capitalLocID);
-                loc.LocName = listOfHouses[i].LocName;
+                loc.LocName = majorHouse.LocName;
                 //update capital Loc ID & branch
-                listOfHouses[i].LocID = capitalLocID;
-                listOfHouses[i].Branch = loc.GetCapitalRouteDirection();
+                majorHouse.LocID = capitalLocID;
+                majorHouse.Branch = loc.GetCapitalRouteDirection();
                 //update all house locations for house
                 for(int k = 0; k < listIndividualHouseLocID[houseID].Count; k++)
                 {
                     locID = listIndividualHouseLocID[houseID][k];
                     //if not capital, add to house list
                     if( locID != capitalLocID && locID > 0)
-                    { listOfHouses[i].AddLordLocations(locID); }
+                    { majorHouse.AddLordLocations(locID); }
                 }
                 //Work out unique Loc's from house capital to kingdom capital
                 List<Route> tempListOfRoutes = loc.GetRouteToCapital();
@@ -2042,7 +2043,7 @@ namespace Next_Game.Cartographic
                     minorHouseID = Game.map.GetMapInfo(MapLayer.Houses, pos.PosX, pos.PosY);
                     //called method checks for locID = 0 & duplicate houseID's
                     if (minorHouseID != houseID && minorHouseID != 99)
-                    { listOfHouses[i].AddHousesToCapital(minorHouseID); }
+                    { majorHouse.AddHousesToCapital(minorHouseID); }
                     Console.WriteLine("House {0}", minorHouseID);
                 }
             }

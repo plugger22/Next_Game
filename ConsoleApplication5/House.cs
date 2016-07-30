@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Next_Game
 {
+    //
+    //Base class ---
+    //
     class House
     {
         public string Name { get; set; }
@@ -14,17 +17,28 @@ namespace Next_Game
         public int LocID { get; set; }
         public int ArchetypeID { get; set; }
         public int Branch { get; set; }
+
+
+        public House()
+        { }        
+    }
+
+    //
+    // Great house ---
+    //
+    class MajorHouse : House
+    {
         private List<int> listLordLocations;
         private List<int> listHousesToCapital; //unique houses (HID), ignoring special locations
         private List<int> listHousesToConnector; //unique houses (HID), ignoring special locations
 
-        public House()
+        public MajorHouse()
         {
             listLordLocations = new List<int>();
             listHousesToCapital = new List<int>();
             listHousesToConnector = new List<int>();
         }
-        
+
         /// <summary>
         /// add a location to list of house controlled locations
         /// </summary>
@@ -53,6 +67,13 @@ namespace Next_Game
         public List<int> GetLords()
         { return listLordLocations; }
 
-        //new methods above here
+    }
+
+    //
+    //Bannerlords ---
+    //
+    class MinorHouse : House
+    {
+
     }
 }

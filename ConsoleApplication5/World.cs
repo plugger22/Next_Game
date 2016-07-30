@@ -371,19 +371,19 @@ namespace Next_Game
         /// <returns></returns>
         internal List<Snippet> ShowHouseRL(int houseID)
         {
-            House house = GetHouse(houseID);
+            MajorHouse majorHouse = GetHouse(houseID) as MajorHouse;
             List<Snippet> houseList = new List<Snippet>();
-            if (house != null)
+            if (majorHouse != null)
             {
-                houseList.Add(new Snippet("House " + house.Name, RLColor.Yellow, RLColor.Black));
-                string motto = string.Format("Motto \"{0}\"", house.Motto);
+                houseList.Add(new Snippet("House " + majorHouse.Name, RLColor.Yellow, RLColor.Black));
+                string motto = string.Format("Motto \"{0}\"", majorHouse.Motto);
                 houseList.Add(new Snippet(motto));
-                string banner = string.Format("Banner \"{0}\"", house.Banner);
+                string banner = string.Format("Banner \"{0}\"", majorHouse.Banner);
                 houseList.Add(new Snippet(banner));
-                string seat = string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(house.LocID));
+                string seat = string.Format("Seated at {0} {1}", majorHouse.LocName, ShowLocationCoords(majorHouse.LocID));
                 houseList.Add(new Snippet(seat));
                 //bannerlords
-                List<int> listLordLocations = house.GetLords();
+                List<int> listLordLocations = majorHouse.GetLords();
                 if (listLordLocations.Count > 0)
                 {
                     houseList.Add(new Snippet("BannerLords", RLColor.Yellow, RLColor.Black));
