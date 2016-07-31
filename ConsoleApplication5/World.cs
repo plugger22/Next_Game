@@ -330,8 +330,8 @@ namespace Next_Game
                 { description = "The Home of the King"; }
                 else if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) == 0)
                 { description = "Banner Lord of House"; }
-                
-                string locDetails = string.Format("LID {0} {1} (loc {2}:{3}) {4} {5} HID {6} RID {7} ---", 
+
+                string locDetails = string.Format("LID {0} {1} (loc {2}:{3}) {4} {5} HID {6} RID {7} ---",
                     loc.LocationID, loc.LocName, loc.GetPosX(), loc.GetPosY(), description, GetGreatHouseName(loc.HouseID), loc.HouseID, loc.HouseRefID);
                 locList.Add(new Snippet(locDetails));
                 if (loc.IsCapital() == true)
@@ -494,6 +494,16 @@ namespace Next_Game
             List<House> listOfMinorHouses = Game.history.GetMinorHouses();
             foreach (House house in listOfMinorHouses)
             { dictAllHouses.Add(house.RefID, house); }
+            //update Map layer for RefID
+            int locID = 0;
+            int refID = 0;
+            foreach (KeyValuePair<int, House> record in dictAllHouses)
+            {
+                locID = record.Value.LocID;
+                refID = record.Value.RefID;
+                Location loc = Game.network.GetLocation(locID);
+                Game.map.SetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY(), refID);
+            }
         }
 
         /// <summary>

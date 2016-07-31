@@ -1669,7 +1669,7 @@ namespace Next_Game.Cartographic
                 for (int i = 0; i < branchList.Count; i++)
                 {
                     Location loc = branchList[i];
-                    Game.map.SetHouseID(loc.GetPosX(), loc.GetPosY(), arrayStatus[i]);
+                    Game.map.SetMapInfo(MapLayer.Houses, loc.GetPosX(), loc.GetPosY(), arrayStatus[i]);
                     loc.HouseID = arrayStatus[i];
                     Console.WriteLine("Loc {0}:{1} arrayStatus: {2} ID: {3}", loc.GetPosX(), loc.GetPosY(), arrayStatus[i], loc.LocationID);
                     arrayLocID[i] = loc.LocationID;
@@ -1706,7 +1706,7 @@ namespace Next_Game.Cartographic
                                             {
                                                 //house number - assign to current node and break;
                                                 arrayStatus[i] = houseID;
-                                                Game.map.SetHouseID(loc_3.GetPosX(), loc_3.GetPosY(), houseID);
+                                                Game.map.SetMapInfo(MapLayer.Houses, loc_3.GetPosX(), loc_3.GetPosY(), houseID);
                                                 loc_3.HouseID = arrayStatus[i];
                                                 updateFlag = true;
                                                 break;
@@ -1780,7 +1780,7 @@ namespace Next_Game.Cartographic
                                     //don't break, loop through and assign to ALL unassigned locations.
                                     arrayStatus[k] = newHouseID;
                                     Location loc_5 = branchList[k];
-                                    Game.map.SetHouseID(loc_5.GetPosX(), loc_5.GetPosY(), newHouseID);
+                                    Game.map.SetMapInfo(MapLayer.Houses, loc_5.GetPosX(), loc_5.GetPosY(), newHouseID);
                                     loc_5.HouseID = arrayStatus[k];
                                     rerunNeeded = true;
                                 } 
@@ -1820,7 +1820,7 @@ namespace Next_Game.Cartographic
                                                 {
                                                     //house number - assign to current node and break;
                                                     arrayStatus[i] = houseID;
-                                                    Game.map.SetHouseID(loc_3.GetPosX(), loc_3.GetPosY(), houseID);
+                                                    Game.map.SetMapInfo(MapLayer.Houses, loc_3.GetPosX(), loc_3.GetPosY(), houseID);
                                                     loc_3.HouseID = arrayStatus[i];
                                                     updateFlag = true;
                                                     break;
@@ -1932,7 +1932,7 @@ namespace Next_Game.Cartographic
                         //only loc must automatically be the capital
                         locID = listIndividualHouseLocID[outer][0];
                         Location loc = GetLocation(locID);
-                        Game.map.SetHouseCapital(loc.GetPosX(), loc.GetPosY(), outer);
+                        Game.map.SetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY(), outer);
                         arrayOfCapitals[outer] = locID;
                     }
                     //which location will be capital? (highest # connections first, if equal then loc furtherst from Capital)
@@ -1954,7 +1954,7 @@ namespace Next_Game.Cartographic
                         //capital is index value in List
                         locID = listIndividualHouseLocID[outer][indexValue];
                         Location loc = GetLocation(locID);
-                        Game.map.SetHouseCapital(loc.GetPosX(), loc.GetPosY(), outer);
+                        Game.map.SetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY(), outer);
                         arrayOfCapitals[outer] = locID;
                     }
                 }

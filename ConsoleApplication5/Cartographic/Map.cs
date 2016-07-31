@@ -5,7 +5,7 @@ using RLNET;
 namespace Next_Game.Cartographic
 {
 
-    public enum MapLayer { Base, Player, NPC, LocID, Debug, Houses, Capitals, Count } //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
+    public enum MapLayer { Base, Player, NPC, LocID, Debug, Houses, Capitals, RefID, Count } //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
 
     //Main Map class (single instance, it's job is to set everything up at the start)
     public class Map
@@ -1822,8 +1822,8 @@ namespace Next_Game.Cartographic
         /// <param name="coord_X"></param>
         /// <param name="coord_Y"></param>
         /// <param name="houseID"></param>
-        public void SetHouseID(int coord_X, int coord_Y, int houseID)
-        { mapGrid[(int)MapLayer.Houses, coord_X, coord_Y] = houseID; }
+        //public void SetHouseID(int coord_X, int coord_Y, int houseID)
+        //{ mapGrid[(int)MapLayer.Houses, coord_X, coord_Y] = houseID; }
 
         /// <summary>
         /// Initialises House Capital layer on MapGrid using data from Network.InitialiseHouses
@@ -1831,10 +1831,19 @@ namespace Next_Game.Cartographic
         /// <param name="coord_X"></param>
         /// <param name="coord_Y"></param>
         /// <param name="houseID"></param>
-        public void SetHouseCapital(int coord_X, int coord_Y, int houseID)
-        { mapGrid[(int)MapLayer.Capitals, coord_X, coord_Y] = houseID; }
+        //public void SetHouseCapital(int coord_X, int coord_Y, int houseID)
+        //{ mapGrid[(int)MapLayer.Capitals, coord_X, coord_Y] = houseID; }
 
-        
+        /// <summary>
+        /// Generic method to set a datapoint in any MapLayer
+        /// </summary>
+        /// <param name="layer"></param>
+        /// <param name="coord_X"></param>
+        /// <param name="coord_Y"></param>
+        /// <param name="data"></param>
+        public void SetMapInfo(MapLayer layer, int coord_X, int coord_Y, int data)
+        { mapGrid[(int)layer, coord_X, coord_Y] = data; }
+
         /// <summary>
         /// Generic method to retrieve a data point given a MapLayer (enum) and coords
         /// </summary>
