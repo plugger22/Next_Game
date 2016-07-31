@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Next_Game.Cartographic;
 
 namespace Next_Game
 {
@@ -11,6 +12,7 @@ namespace Next_Game
         public string Motto { get; set; }
         public string Banner { get; set; }
         public int Archetype { get; set; }
+        public int RefID { get; set; }
         public string Capital { get; set; }
 
         public void ShowHouseStruct()
@@ -106,6 +108,9 @@ namespace Next_Game
                         case "ArchetypeID":
                             houseStruct.Archetype = Convert.ToInt32(cleanToken);
                             break;
+                        case "ReferenceID":
+                            houseStruct.RefID = Convert.ToInt32(cleanToken);
+                            break;
                         case "Capital":
                             houseStruct.Capital = cleanToken;
                             //last datapoint - save structure to list
@@ -145,6 +150,7 @@ namespace Next_Game
                 house.Motto = listHousePool[i].Motto;
                 house.Banner = listHousePool[i].Banner;
                 house.ArchetypeID = listHousePool[i].Archetype;
+                house.RefID = listHousePool[i].RefID;
                 house.LocName = listHousePool[i].Capital;
                 //add house to listOfHouses
                 listOfGreatHouses.Add(house);
@@ -195,6 +201,9 @@ namespace Next_Game
                         case "ArchetypeID":
                             houseStruct.Archetype = Convert.ToInt32(cleanToken);
                             break;
+                        case "ReferenceID":
+                            houseStruct.RefID = Convert.ToInt32(cleanToken);
+                            break;
                         case "Seat":
                             houseStruct.Capital = cleanToken;
                             //last datapoint - save structure to list
@@ -203,7 +212,7 @@ namespace Next_Game
                                 //add to housePool
                                 listHousePool.Add(houseStruct);
                                 //debug
-                                houseStruct.ShowHouseStruct();
+                                //houseStruct.ShowHouseStruct();
                             }
                             break;
                     }
@@ -218,8 +227,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="LocID"></param>
         /// <param name="houseID"></param>
-        /// <returns>Minor House Name</returns>
-        public string InitialiseMinorHouse(int LocID, int houseID)
+        public void InitialiseMinorHouse(int LocID, int houseID)
         {
             //get random minorhouse
             int index = rnd.Next(0, listHousePool.Count);
@@ -230,14 +238,17 @@ namespace Next_Game
             house.Banner = listHousePool[index].Banner;
             house.ArchetypeID = listHousePool[index].Archetype;
             house.LocName = listHousePool[index].Capital;
+            house.RefID = listHousePool[index].RefID;
             house.LocID = LocID;
             house.HouseID = houseID;
             //add house to listOfHouses
             listOfMinorHouses.Add(house);
             //remove minorhouse from pool list to avoid being chosen again
             listHousePool.RemoveAt(index);
-            //return house name
-            return house.LocName;
+            //update location details
+            Location loc = Game.network.GetLocation(LocID);
+            loc.LocName = house.LocName;
+            loc.HouseRefID = house.RefID;
         }
             
 
@@ -276,6 +287,13 @@ namespace Next_Game
         /// <returns></returns>
         internal List<House> GetGreatHouses()
         { return listOfGreatHouses; }
+
+        /// <summary>
+        /// return list of Minor Houses
+        /// </summary>
+        /// <returns></returns>
+        internal List<House> GetMinorHouses()
+        { return listOfMinorHouses; }
 
         //add methods above
     }

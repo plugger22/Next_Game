@@ -86,7 +86,8 @@ namespace Next_Game
             world = new World();
             world.InitiatePlayerCharacters(history.GetPlayerCharacters(), 1);
             network.UpdateHouses(history.GetGreatHouses());
-            world.InitialiseHouses(history.GetGreatHouses());
+            world.InitialiseHouses();
+            //---interim history.cs step needed to update History of houses
             infoChannel = new InfoChannel();
             messageLog.Add(new Snippet($"Game world created with seed {seed}"), world.GetGameTurn());
             //set up menu

@@ -13,11 +13,11 @@ namespace Next_Game
         public string Motto { get; set; }
         public string Banner { get; set; }
         public string LocName { get; set; }
-        public int HouseID { get; set; }
-        public int LocID { get; set; }
+        public int HouseID { get; set; } //unique to Great House (allocated by Network.cs)
+        public int LocID { get; set; } //unique to location
+        public int RefID { get; set; } //unique to house (great or minor)
         public int ArchetypeID { get; set; }
         public int Branch { get; set; }
-
 
         public House()
         { }        

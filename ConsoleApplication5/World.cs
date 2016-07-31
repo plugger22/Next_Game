@@ -10,7 +10,8 @@ namespace Next_Game
     {
         private List<Move> moveList; //list of characters moving through the world
         private Dictionary<int, Character> dictPlayerCharacters; //list of all characters keyed off charID
-        private Dictionary<int, House> dictHouses; //list of all houses keyed off houseID
+        private Dictionary<int, House> dictGreatHouses; //list of all Greathouses keyed off houseID
+        private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
         public int GameTurn { get; set; } = 1;
 
         //default constructor
@@ -18,8 +19,10 @@ namespace Next_Game
         {
             moveList = new List<Move>();
             dictPlayerCharacters = new Dictionary<int, Character>();
-            dictHouses = new Dictionary<int, House>();
+            dictGreatHouses = new Dictionary<int, House>();
+            dictAllHouses = new Dictionary<int, House>();
         }
+
 
         public void IncrementGameTurn()
         { GameTurn++; }
@@ -328,8 +331,8 @@ namespace Next_Game
                 else if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) == 0)
                 { description = "Banner Lord of House"; }
                 
-                string locDetails = string.Format("LID {0} {1} (loc {2}:{3}) {4} {5} HID {6} ---", 
-                    loc.LocationID, loc.LocName, loc.GetPosX(), loc.GetPosY(), description, GetHouseName(loc.HouseID), loc.HouseID);
+                string locDetails = string.Format("LID {0} {1} (loc {2}:{3}) {4} {5} HID {6} RID {7} ---", 
+                    loc.LocationID, loc.LocName, loc.GetPosX(), loc.GetPosY(), description, GetGreatHouseName(loc.HouseID), loc.HouseID, loc.HouseRefID);
                 locList.Add(new Snippet(locDetails));
                 if (loc.IsCapital() == true)
                 { locList.Add(new Snippet("CAPITAL", RLColor.Yellow, RLColor.Black)); }
@@ -371,7 +374,7 @@ namespace Next_Game
         /// <returns></returns>
         internal List<Snippet> ShowHouseRL(int houseID)
         {
-            MajorHouse majorHouse = GetHouse(houseID) as MajorHouse;
+            MajorHouse majorHouse = GetGreatHouse(houseID) as MajorHouse;
             List<Snippet> houseList = new List<Snippet>();
             if (majorHouse != null)
             {
@@ -475,13 +478,22 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// receives list of Houses from Network and places in dictHouses for permanent use
+        /// receives list of Houses from Network and places in releveant House Dictionaries for permanent use
         /// </summary>
         /// <param name="listOfHouses"></param>
-        internal void InitialiseHouses(List<House> listOfHouses)
+        internal void InitialiseHouses()
         {
-            foreach(House house in listOfHouses)
-            { dictHouses.Add(house.HouseID, house); }
+            //great houses
+            List<House> listOfGreatHouses = Game.history.GetGreatHouses();
+            foreach(House house in listOfGreatHouses)
+            {
+                dictGreatHouses.Add(house.HouseID, house);
+                dictAllHouses.Add(house.RefID, house);
+            }
+            //minor houses
+            List<House> listOfMinorHouses = Game.history.GetMinorHouses();
+            foreach (House house in listOfMinorHouses)
+            { dictAllHouses.Add(house.RefID, house); }
         }
 
         /// <summary>
@@ -489,24 +501,37 @@ namespace Next_Game
         /// </summary>
         /// <param name="houseID"></param>
         /// <returns></returns>
-        public String GetHouseName(int houseID)
+        public string GetGreatHouseName(int houseID)
         {
             string houseName = "";
             House house = new House();
-            if(dictHouses.TryGetValue(houseID, out house))
+            if(dictGreatHouses.TryGetValue(houseID, out house))
             { houseName = house.Name; }
             return houseName;
         }
 
         /// <summary>
-        /// Returns house if found, otherwise null
+        /// Returns Great house if found, otherwise null, keyed of
         /// </summary>
         /// <param name="houseID"></param>
         /// <returns></returns>
-        private House GetHouse(int houseID)
+        private House GetGreatHouse(int houseID)
         {
             House house = new House();
-            if (dictHouses.TryGetValue(houseID, out house))
+            if (dictGreatHouses.TryGetValue(houseID, out house))
+            { return house; }
+            return null;
+        }
+
+        /// <summary>
+        /// Returns house (any type) if found, otherwise null, keyed off refID)
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        private House GetHouse(int refID)
+        {
+            House house = new House();
+            if (dictAllHouses.TryGetValue(refID, out house))
             { return house; }
             return null;
         }
