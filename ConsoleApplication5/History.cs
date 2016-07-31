@@ -25,14 +25,20 @@ namespace Next_Game
     }
 
     //history class handles living world procedural generation at game start. Once created, data is passed to World for game use.
+    //Location data flow: create in Map => Network to generate routes => History to generate names and data => World for current state and future changes
     public class History
     {
         private List<Character> playerCharacters;
         private List<string> listOfCharacterNames;
         private List<House> listOfGreatHouses;
         private List<House> listOfMinorHouses;
+        private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
         static Random rnd;
 
+        /// <summary>
+        ///default constructor
+        /// </summary>
+        /// <param name="seed"></param>
         public History(int seed)
         {
             rnd = new Random(seed);
@@ -40,7 +46,7 @@ namespace Next_Game
             listOfCharacterNames = new List<string>();
             listOfGreatHouses = new List<House>();
             listOfMinorHouses = new List<House>();
-            //Location data flow: create in Map -> Network to generate routes -> History to generate names and data -> World for current state and future changes
+            listHousePool = new List<HouseStruct>(); 
         }
 
         /// <summary>
@@ -65,7 +71,6 @@ namespace Next_Game
             Console.WriteLine("--- House Names Import");
             bool newHouse = false;
             int dataCounter = 0; //number of houses
-            List<HouseStruct> listHousePool = new List<HouseStruct>();
             HouseStruct houseStruct = new HouseStruct();
             string cleanToken;
             string cleanTag;
@@ -152,8 +157,8 @@ namespace Next_Game
             filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/MinorHouses.txt";
             arrayOfHouseNames = null;
             arrayOfHouseNames = File.ReadAllLines(filePath);
-            Console.WriteLine();
-            Console.WriteLine("--- Minor House Names Import");
+            //Console.WriteLine();
+            //Console.WriteLine("--- Minor House Names Import");
             newHouse = false;
             dataCounter = 0; //number of houses
             listHousePool.Clear();
@@ -166,7 +171,7 @@ namespace Next_Game
                     if (newHouse == false)
                     {
                         newHouse = true;
-                        Console.WriteLine();
+                        //Console.WriteLine();
                         dataCounter++;
                         //new structure
                         houseStruct = new HouseStruct();
@@ -175,7 +180,7 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     cleanToken = tokens[1].Trim();
-                    Console.WriteLine("{0}: {1}", tokens[0], tokens[1]);
+                    //Console.WriteLine("{0}: {1}", tokens[0], tokens[1]);
                     switch (cleanTag)
                     {
                         case "House":
@@ -206,26 +211,35 @@ namespace Next_Game
                 else
                 { newHouse = false; }
             }
-            Console.WriteLine();
-            Console.WriteLine("{0} Minor Houses imported, {1} Houses required", dataCounter, numHousesRequired);
-            Console.WriteLine();
-           
-            //loop through structures and initialise House classes
-            /*for (int i = 0; i < listHousePool.Count; i++)
-            {
-                MajorHouse house = new MajorHouse();
-                //copy data from House pool structures
-                house.Name = listHousePool[i].Name;
-                house.Motto = listHousePool[i].Motto;
-                house.Banner = listHousePool[i].Banner;
-                house.ArchetypeID = listHousePool[i].Archetype;
-                house.LocName = listHousePool[i].Capital;
-                //add house to listOfHouses
-                listOfGreatHouses.Add(house);
-                Console.WriteLine("House {0} added to listOfHouses", house.Name);
-            }*/
-
         }
+
+        /// <summary>
+        /// called by Network.UpdateHouses(), it randomly chooses a minor house from list and initiliases it
+        /// </summary>
+        /// <param name="LocID"></param>
+        /// <param name="houseID"></param>
+        /// <returns>Minor House Name</returns>
+        public string InitialiseMinorHouse(int LocID, int houseID)
+        {
+            //get random minorhouse
+            int index = rnd.Next(0, listHousePool.Count);
+            MinorHouse house = new MinorHouse();
+            //copy data from House pool structures
+            house.Name = listHousePool[index].Name;
+            house.Motto = listHousePool[index].Motto;
+            house.Banner = listHousePool[index].Banner;
+            house.ArchetypeID = listHousePool[index].Archetype;
+            house.LocName = listHousePool[index].Capital;
+            house.LocID = LocID;
+            house.HouseID = houseID;
+            //add house to listOfHouses
+            listOfMinorHouses.Add(house);
+            //remove minorhouse from pool list to avoid being chosen again
+            listHousePool.RemoveAt(index);
+            //return house name
+            return house.LocName;
+        }
+            
 
         /// <summary>
         /// create a base list of Player controlled Characters
@@ -257,10 +271,10 @@ namespace Next_Game
         { return playerCharacters; }
 
         /// <summary>
-        ///return list of Houses (one house for each houseID)
+        ///return list of Great Houses (one house for each houseID)
         /// </summary>
         /// <returns></returns>
-        internal List<House> GetHouses()
+        internal List<House> GetGreatHouses()
         { return listOfGreatHouses; }
 
         //add methods above

@@ -2013,6 +2013,7 @@ namespace Next_Game.Cartographic
             int capitalLocID;
             int locID;
             int minorHouseID;
+            string minorHouseName;
             Console.WriteLine();
             for(int i = 0; i < listOfHouses.Count; i++)
             {
@@ -2033,7 +2034,14 @@ namespace Next_Game.Cartographic
                     locID = listIndividualHouseLocID[houseID][k];
                     //if not capital, add to house list
                     if( locID != capitalLocID && locID > 0)
-                    { house.AddLordLocations(locID); }
+                    {
+                        house.AddLordLocations(locID);
+                        //assign a Minor House (bannerlord)
+                        minorHouseName = Game.history.InitialiseMinorHouse(locID, houseID);
+                        //change name of location to that of minor house
+                        Location loc_1 = GetLocation(locID);
+                        loc_1.LocName = minorHouseName;
+                    }
                 }
                 //Work out unique Loc's from house capital to kingdom capital
                 List<Route> tempListOfRoutes = loc.GetRouteToCapital();

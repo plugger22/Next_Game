@@ -80,13 +80,13 @@ namespace Next_Game
             map.InitialiseMap(4, 2);
             network = new Network(seed);
             network.InitialiseNetwork();
-            History history = new History(seed);
+            history = new History(seed);
             history.InitialiseHistory(network.GetNumUniqueHouses());
             history.CreatePlayerCharacters(6);
             world = new World();
             world.InitiatePlayerCharacters(history.GetPlayerCharacters(), 1);
-            network.UpdateHouses(history.GetHouses());
-            world.InitialiseHouses(history.GetHouses());
+            network.UpdateHouses(history.GetGreatHouses());
+            world.InitialiseHouses(history.GetGreatHouses());
             infoChannel = new InfoChannel();
             messageLog.Add(new Snippet($"Game world created with seed {seed}"), world.GetGameTurn());
             //set up menu
