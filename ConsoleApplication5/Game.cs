@@ -356,7 +356,7 @@ namespace Next_Game
                             case MenuMode.Debug:
                                 //show debug route
                                 List<Snippet> inputList = new List<Snippet>();
-                                inputList.Add(new Snippet("--- Show the Route between two Locations"));
+                                inputList.Add(new Snippet("--- Show the Route between two Locations", RLColor.Magenta, RLColor.Black));
                                 inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
                                 infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                 mouseOn = true;
@@ -369,7 +369,7 @@ namespace Next_Game
                         {
                             case MenuMode.Debug:
                                 List<Snippet> inputList = new List<Snippet>();
-                                inputList.Add(new Snippet("--- Show the Route between two Locations"));
+                                inputList.Add(new Snippet("--- Show the Route between two Locations", RLColor.Magenta, RLColor.Black));
                                 inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
                                 infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                 inputState = 1;
@@ -383,7 +383,7 @@ namespace Next_Game
                             case MenuMode.Main:
                                 //Show House Details
                                 List<Snippet> inputList = new List<Snippet>();
-                                inputList.Add(new Snippet("--- Show House Details"));
+                                inputList.Add(new Snippet("--- Show House Details", RLColor.Magenta, RLColor.Black));
                                 inputList.Add(new Snippet("Select Location by Mouse (press ESC to Exit)"));
                                 infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                 inputState = 1;

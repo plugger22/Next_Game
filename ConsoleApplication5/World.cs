@@ -223,8 +223,8 @@ namespace Next_Game
         public List<Snippet> ShowPlayerCharactersRL(bool locationsOnly = false)
         {
             List<Snippet> listToDisplay = new List<Snippet>();
-            listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}", RLColor.Yellow, RLColor.Black));
-            listToDisplay.Add(new Snippet("Player Characters ---"));
+            //listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}", RLColor.Yellow, RLColor.Black));
+            listToDisplay.Add(new Snippet("--- Player Characters", RLColor.Brown, RLColor.Black));
             int status;
             int locID;
             string locName;
@@ -322,7 +322,22 @@ namespace Next_Game
             if (locID > 0)
             {
                 string description = "House";
+                RLColor color = RLColor.Cyan;
+                bool houseCapital = false;
                 Location loc = Game.network.GetLocation(locID);
+                House house = GetHouse(loc.HouseRefID);
+                //if a House Capital show in Yellow
+                if(Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) > 0 )
+                { color = RLColor.Yellow; houseCapital = true; }
+                //ignore the capital and special locations for the moment until they are included in dictAllHouses
+                if (house != null)
+                {
+                    locList.Add(new Snippet(string.Format("House {0} of {1}", house.Name, loc.LocName), color, RLColor.Black));
+                    locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
+                    locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
+                    locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
+                }
+                
                 //correct location description
                 if (loc.HouseID == 99)
                 { description = "A homely Inn"; }
@@ -330,10 +345,13 @@ namespace Next_Game
                 { description = "The Home of the King"; }
                 else if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) == 0)
                 { description = "Banner Lord of House"; }
-
-                string locDetails = string.Format("LID {0} {1} (loc {2}:{3}) {4} {5} HID {6} RID {7} ---",
-                    loc.LocationID, loc.LocName, loc.GetPosX(), loc.GetPosY(), description, GetGreatHouseName(loc.HouseID), loc.HouseID, loc.HouseRefID);
-                locList.Add(new Snippet(locDetails));
+                //bannerlord details if applicable
+                if (houseCapital == false)
+                {
+                    string locDetails = string.Format("{0} {1}", description, GetGreatHouseName(loc.HouseID));
+                    locList.Add(new Snippet(locDetails));
+                }
+                
                 if (loc.IsCapital() == true)
                 { locList.Add(new Snippet("CAPITAL", RLColor.Yellow, RLColor.Black)); }
                 if (loc.Connector == true)
@@ -343,7 +361,7 @@ namespace Next_Game
                 if (charList.Count > 0)
                 {
                     int row = 3;
-                    locList.Add(new Snippet("Characters at " + loc.LocName + " ---"));
+                    locList.Add(new Snippet(string.Format("Characters at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
                     string charDetails;
                     foreach (int charID in charList)
                     {
@@ -391,9 +409,13 @@ namespace Next_Game
                 {
                     houseList.Add(new Snippet("BannerLords", RLColor.Yellow, RLColor.Black));
                     string bannerLord;
+                    int refID;
                     foreach (int locID in listLordLocations)
                     {
-                        bannerLord = string.Format("{0} {1}", GetLocationName(locID), ShowLocationCoords(locID));
+                        Location loc = Game.network.GetLocation(locID);
+                        refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
+                        House house = GetHouse(refID);
+                        bannerLord = string.Format("House {0} at {1} {2}", house.Name, GetLocationName(locID), ShowLocationCoords(locID));
                         houseList.Add(new Snippet(bannerLord));
                     }
                 }
