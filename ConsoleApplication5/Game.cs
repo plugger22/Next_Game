@@ -89,7 +89,7 @@ namespace Next_Game
             world.InitialiseHouses();
             //---interim history.cs step needed to update History of houses
             infoChannel = new InfoChannel();
-            world.ShowGeneratorStats();
+            world.ShowGeneratorStatsRL();
             messageLog.Add(new Snippet($"Game world created with seed {seed}"), world.GetGameTurn());
             //set up menu
             menu = new Menu(4, 6);
@@ -369,7 +369,7 @@ namespace Next_Game
                         switch (_menuMode)
                         {
                             case MenuMode.Main:
-                                world.ShowGeneratorStats();
+                                world.ShowGeneratorStatsRL();
                                 break;
                             case MenuMode.Debug:
                                 List<Snippet> inputList = new List<Snippet>();

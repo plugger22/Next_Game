@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Next_Game.Cartographic;
+using System.Linq;
 using RLNET;
 
 namespace Next_Game
@@ -11,8 +12,10 @@ namespace Next_Game
         private List<Move> moveList; //list of characters moving through the world
         private Dictionary<int, Actor> dictActiveActors; //list of all Player controlled actors keyed off actorID
         private Dictionary<int, Actor> dictPassiveActors; //list of all NPC actors keyed of actorID
-        private Dictionary<int, House> dictGreatHouses; //list of all Greathouses keyed off houseID
+        private Dictionary<int, MajorHouse> dictGreatHouses; //list of all Greathouses keyed off houseID
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
+        private Dictionary<int, int> dictGreatID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
+        private Dictionary<int, int> dictHousePower; // list of Great Houses, Sorted (key is House ID, value is # of bannerlords (power))
         public int GameTurn { get; set; } = 1;
 
         //default constructor
@@ -21,8 +24,10 @@ namespace Next_Game
             moveList = new List<Move>();
             dictActiveActors = new Dictionary<int, Actor>();
             dictPassiveActors = new Dictionary<int, Actor>();
-            dictGreatHouses = new Dictionary<int, House>();
+            dictGreatHouses = new Dictionary<int, MajorHouse>();
             dictAllHouses = new Dictionary<int, House>();
+            dictGreatID = new Dictionary<int, int>();
+            dictHousePower = new Dictionary<int, int>();
         }
 
 
@@ -509,11 +514,15 @@ namespace Next_Game
         {
             //great houses
             List<House> listOfGreatHouses = Game.history.GetGreatHouses();
-            foreach(House house in listOfGreatHouses)
+            foreach(MajorHouse house in listOfGreatHouses)
             {
                 dictGreatHouses.Add(house.HouseID, house);
                 dictAllHouses.Add(house.RefID, house);
+                dictGreatID.Add(house.HouseID, house.GetNumBannerLords());
             }
+            //populate sorted dictionary (descending) of house ID's by Power (# of BannerLords)
+            foreach (KeyValuePair<int, int> kvp in dictGreatID.OrderByDescending(key => key.Value))
+            { dictHousePower.Add(kvp.Key, kvp.Value); }
             //minor houses
             List<House> listOfMinorHouses = Game.history.GetMinorHouses();
             foreach (House house in listOfMinorHouses)
@@ -533,7 +542,7 @@ namespace Next_Game
         /// <summary>
         /// places a message in info panel detailing all relevant data for a single generation
         /// </summary>
-        public void ShowGeneratorStats()
+        public void ShowGeneratorStatsRL()
         {
             List<Snippet> listStats = new List<Snippet>();
             //calcs
@@ -548,6 +557,18 @@ namespace Next_Game
             listStats.Add(new Snippet(string.Format("{0} Banner Lords", numBannerLords)));
             listStats.Add(new Snippet(string.Format("{0} Special Locations", numSpecialLocs)));
             listStats.Add(new Snippet("1 Capital"));
+            //checksum
+            if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
+                listStats.Add(new Snippet("Error: Locations don't tally", RLColor.Red, RLColor.Black));
+            //list of all Greathouses by power
+            listStats.Add(new Snippet("Great Houses", RLColor.Yellow, RLColor.Black));
+            string housePower;
+            foreach (KeyValuePair<int, int> kvp in dictHousePower)
+            {
+                MajorHouse house = GetGreatHouse(kvp.Key);
+                housePower = string.Format("HID {0} House {1} has {2} BannerLords", house.HouseID, house.Name, house.GetNumBannerLords());
+                listStats.Add(new Snippet(housePower));
+            }
             //display data
             Game.infoChannel.SetInfoList(listStats, ConsoleDisplay.Multi);
         }
@@ -560,7 +581,7 @@ namespace Next_Game
         public string GetGreatHouseName(int houseID)
         {
             string houseName = "";
-            House house = new House();
+            MajorHouse house = new MajorHouse();
             if(dictGreatHouses.TryGetValue(houseID, out house))
             { houseName = house.Name; }
             return houseName;
@@ -571,9 +592,9 @@ namespace Next_Game
         /// </summary>
         /// <param name="houseID"></param>
         /// <returns></returns>
-        private House GetGreatHouse(int houseID)
+        private MajorHouse GetGreatHouse(int houseID)
         {
-            House house = new House();
+            MajorHouse house = new MajorHouse();
             if (dictGreatHouses.TryGetValue(houseID, out house))
             { return house; }
             return null;

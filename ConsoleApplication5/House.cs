@@ -39,6 +39,9 @@ namespace Next_Game
             listHousesToConnector = new List<int>();
         }
 
+        public int GetNumBannerLords()
+        { return listLordLocations.Count; }
+
         /// <summary>
         /// add a location to list of house controlled locations
         /// </summary>
