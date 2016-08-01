@@ -423,7 +423,7 @@ namespace Next_Game.Cartographic
                         else if (mainLayer == 1)
                         { foreground = RLColor.Cyan; } //location
                         else
-                        { foreground = RLColor.LightGreen; } //in enroute
+                        { foreground = RLColor.Brown; } //in enroute
                     }
                     //draw base level
                     else
@@ -1815,24 +1815,6 @@ namespace Next_Game.Cartographic
             { mapGrid[(int)MapLayer.LocID, loc.GetPosX(), loc.GetPosY()] = loc.LocationID; }
         }
 
-
-        /// <summary>
-        /// Initialises HouseID layer on MapGrid using data from Network.InitialiseHouses
-        /// </summary>
-        /// <param name="coord_X"></param>
-        /// <param name="coord_Y"></param>
-        /// <param name="houseID"></param>
-        //public void SetHouseID(int coord_X, int coord_Y, int houseID)
-        //{ mapGrid[(int)MapLayer.Houses, coord_X, coord_Y] = houseID; }
-
-        /// <summary>
-        /// Initialises House Capital layer on MapGrid using data from Network.InitialiseHouses
-        /// </summary>
-        /// <param name="coord_X"></param>
-        /// <param name="coord_Y"></param>
-        /// <param name="houseID"></param>
-        //public void SetHouseCapital(int coord_X, int coord_Y, int houseID)
-        //{ mapGrid[(int)MapLayer.Capitals, coord_X, coord_Y] = houseID; }
 
         /// <summary>
         /// Generic method to set a datapoint in any MapLayer

@@ -70,7 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Character.cs" />
+    <Compile Include="Actor.cs" />
     <Compile Include="Archive.cs" />
     <Compile Include="House.cs" />
     <Compile Include="History.cs" />

@@ -30,7 +30,7 @@ namespace Next_Game
     //Location data flow: create in Map => Network to generate routes => History to generate names and data => World for current state and future changes
     public class History
     {
-        private List<Character> playerCharacters;
+        private List<Actor> playerCharacters;
         private List<string> listOfCharacterNames;
         private List<House> listOfGreatHouses;
         private List<House> listOfMinorHouses;
@@ -44,7 +44,7 @@ namespace Next_Game
         public History(int seed)
         {
             rnd = new Random(seed);
-            playerCharacters = new List<Character>();
+            playerCharacters = new List<Actor>();
             listOfCharacterNames = new List<string>();
             listOfGreatHouses = new List<House>();
             listOfMinorHouses = new List<House>();
@@ -269,7 +269,7 @@ namespace Next_Game
                 //delete record in list to prevent duplicate names
                 listOfCharacterNames.RemoveAt(index);
                 //new character
-                Character person = new Character(charName);
+                Actor person = new Actor(charName);
                 playerCharacters.Add(person);
             }
         }
@@ -278,7 +278,7 @@ namespace Next_Game
         /// return list of Initial Player Characters
         /// </summary>
         /// <returns>List of Characters</returns>
-        internal List<Character> GetPlayerCharacters()
+        internal List<Actor> GetPlayerCharacters()
         { return playerCharacters; }
 
         /// <summary>
