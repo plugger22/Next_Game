@@ -1279,6 +1279,7 @@ namespace Next_Game.Cartographic
             // create new Location for the capital and add to list
             Location locCapital = new Location(pos, 0, true);
             locCapital.Connections = CheckConnection(pos.PosX, pos.PosY);
+            locCapital.LocName = "Kingskeep";
             listOfLocations.Add(locCapital);
 
             //capital loop

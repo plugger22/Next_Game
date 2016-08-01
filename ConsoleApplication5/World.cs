@@ -9,7 +9,8 @@ namespace Next_Game
     public class World
     {
         private List<Move> moveList; //list of characters moving through the world
-        private Dictionary<int, Actor> dictPlayerCharacters; //list of all characters keyed off charID
+        private Dictionary<int, Actor> dictActiveActors; //list of all Player controlled actors keyed off actorID
+        private Dictionary<int, Actor> dictPassiveActors; //list of all NPC actors keyed of actorID
         private Dictionary<int, House> dictGreatHouses; //list of all Greathouses keyed off houseID
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
         public int GameTurn { get; set; } = 1;
@@ -18,7 +19,8 @@ namespace Next_Game
         public World()
         {
             moveList = new List<Move>();
-            dictPlayerCharacters = new Dictionary<int, Actor>();
+            dictActiveActors = new Dictionary<int, Actor>();
+            dictPassiveActors = new Dictionary<int, Actor>();
             dictGreatHouses = new Dictionary<int, House>();
             dictAllHouses = new Dictionary<int, House>();
         }
@@ -44,7 +46,7 @@ namespace Next_Game
                 //place characters at Location
                 person.LocID = locID;
                 person.SetActorPosition(Game.map.GetCapital());
-                dictPlayerCharacters.Add(person.GetActorID(), person);
+                dictActiveActors.Add(person.GetActorID(), person);
                 //add to Location list of Characters
                 Location loc = Game.network.GetLocation(locID);
                 loc.AddCharacter(person.GetActorID());
@@ -65,10 +67,10 @@ namespace Next_Game
             if (charID > 0 && posOrigin != null && posDestination != null && path != null)
             {
                 //find in dictionary
-                if (dictPlayerCharacters.ContainsKey(charID))
+                if (dictActiveActors.ContainsKey(charID))
                 {
                     
-                    Actor person = dictPlayerCharacters[charID];
+                    Actor person = dictActiveActors[charID];
                     List<int> party = new List<int>(); //list of charID's of all characters in party
                     party.Add(charID);
                     string name = person.Name;
@@ -136,10 +138,10 @@ namespace Next_Game
                         {
                             loc.AddCharacter(charID);
                             //find character and update details
-                            if (dictPlayerCharacters.ContainsKey(charID))
+                            if (dictActiveActors.ContainsKey(charID))
                             {
                                 Actor person = new Actor();
-                                person = dictPlayerCharacters[charID];
+                                person = dictActiveActors[charID];
                                 person.SetActorStatus(ActorStatus.AtLocation);
                                 person.SetActorPosition(posDestination);
                                 person.LocID = locID;
@@ -167,9 +169,9 @@ namespace Next_Game
                     {
                         int charID = characterList[j];
                         //find in dictionary
-                        if (dictPlayerCharacters.ContainsKey(charID))
+                        if (dictActiveActors.ContainsKey(charID))
                         {
-                            Actor person = dictPlayerCharacters[charID];
+                            Actor person = dictActiveActors[charID];
                             person.SetActorPosition(pos);
                         }
                     }
@@ -200,7 +202,7 @@ namespace Next_Game
             int locID;
             string locName;
             string locStatus = "who knows?";
-            foreach (KeyValuePair<int, Character> pair in dictPlayerCharacters)
+            foreach (KeyValuePair<int, Character> pair in dictActiveActors)
             {
                 status = (int)pair.Value.GetCharacterStatus();
                 locID = pair.Value.CharLocationID;
@@ -230,7 +232,7 @@ namespace Next_Game
             string locName;
             string locStatus = "who knows?";
             string charString; //overall string
-            foreach (KeyValuePair<int, Actor> pair in dictPlayerCharacters)
+            foreach (KeyValuePair<int, Actor> pair in dictActiveActors)
             {
                 status = (int)pair.Value.GetActorStatus();
                 locID = pair.Value.LocID;
@@ -261,9 +263,9 @@ namespace Next_Game
         {
             string returnText = "Character NOT KNOWN";
             //find in dictionary
-            if (dictPlayerCharacters.ContainsKey(charID))
+            if (dictActiveActors.ContainsKey(charID))
             {
-                Actor person = dictPlayerCharacters[charID];
+                Actor person = dictActiveActors[charID];
                 Position pos = person.GetActorPosition();
                 returnText = person.Name + " at ";
                 returnText += this.GetLocationName(person.LocID);
@@ -342,7 +344,7 @@ namespace Next_Game
                 if (loc.HouseID == 99)
                 { description = "A homely Inn"; }
                 else if (loc.LocationID == 1)
-                { description = "The Home of the King"; }
+                { description = loc.LocName + ": the Home of the King"; }
                 else if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) == 0)
                 { description = "Banner Lord of House"; }
                 //bannerlord details if applicable
@@ -366,10 +368,10 @@ namespace Next_Game
                     foreach (int charID in charList)
                     {
                         row++;
-                        if (dictPlayerCharacters.ContainsKey(charID))
+                        if (dictActiveActors.ContainsKey(charID))
                         {
                             Actor person = new Actor();
-                            person = dictPlayerCharacters[charID];
+                            person = dictActiveActors[charID];
                             charDetails = string.Format("ID {0}: {1}", person.GetActorID(), person.Name);
                         }
                         else
@@ -433,9 +435,9 @@ namespace Next_Game
             int charID = Convert.ToInt32(Console.ReadLine());
             Actor person = new Actor();
             //check character exists
-            if(dictPlayerCharacters.ContainsKey(charID))
+            if(dictActiveActors.ContainsKey(charID))
             {
-                person = dictPlayerCharacters[charID];
+                person = dictActiveActors[charID];
                 if (person.GetActorStatus() != (int)ActorStatus.AtLocation)
                 { Console.WriteLine("That Character isn't at a Location and can't be selected"); charID = 0; }
             }
@@ -454,9 +456,9 @@ namespace Next_Game
             Actor person = new Actor();
             string charReturn = "Character doesn't exist!";
             //check character exists
-            if (dictPlayerCharacters.ContainsKey(charID))
+            if (dictActiveActors.ContainsKey(charID))
             {
-                person = dictPlayerCharacters[charID];
+                person = dictActiveActors[charID];
                 charReturn = person.Name;
                 if (person.GetActorStatus() != (int)ActorStatus.AtLocation)
                 { charReturn += " isn't currently available"; }
@@ -476,9 +478,9 @@ namespace Next_Game
         {
             Position pos = new Position();
             //find in dictionary
-            if (dictPlayerCharacters.ContainsKey(charID))
+            if (dictActiveActors.ContainsKey(charID))
             {
-                Actor person = dictPlayerCharacters[charID];
+                Actor person = dictActiveActors[charID];
                 pos = person.GetActorPosition();
             }
             else
@@ -491,9 +493,9 @@ namespace Next_Game
         {
             int locID = 0;
             //find in dictionary
-            if (dictPlayerCharacters.ContainsKey(charID))
+            if (dictActiveActors.ContainsKey(charID))
             {
-                Actor person = dictPlayerCharacters[charID];
+                Actor person = dictActiveActors[charID];
                 locID = person.LocID;
             }
             return locID;
@@ -526,6 +528,28 @@ namespace Next_Game
                 Location loc = Game.network.GetLocation(locID);
                 Game.map.SetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY(), refID);
             }
+        }
+
+        /// <summary>
+        /// places a message in info panel detailing all relevant data for a single generation
+        /// </summary>
+        public void ShowGeneratorStats()
+        {
+            List<Snippet> listStats = new List<Snippet>();
+            //calcs
+            int numLocs = Game.network.GetNumLocations();
+            int numGreatHouses = dictGreatHouses.Count;
+            int numSpecialLocs = Game.network.GetNumSpecialLocations();
+            int numBannerLords = dictAllHouses.Count - numGreatHouses;
+            //data
+            listStats.Add(new Snippet("--- Generation Statistics", RLColor.Yellow, RLColor.Black));
+            listStats.Add(new Snippet(string.Format("{0} Locations", numLocs )));
+            listStats.Add(new Snippet(string.Format("{0} Great Houses", numGreatHouses )));
+            listStats.Add(new Snippet(string.Format("{0} Banner Lords", numBannerLords)));
+            listStats.Add(new Snippet(string.Format("{0} Special Locations", numSpecialLocs)));
+            listStats.Add(new Snippet("1 Capital"));
+            //display data
+            Game.infoChannel.SetInfoList(listStats, ConsoleDisplay.Multi);
         }
 
         /// <summary>

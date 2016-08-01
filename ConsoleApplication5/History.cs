@@ -70,7 +70,7 @@ namespace Next_Game
             filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/GreatHouses.txt";
             string[] arrayOfHouseNames = File.ReadAllLines(filePath);
             Console.WriteLine();
-            Console.WriteLine("--- House Names Import");
+            //Console.WriteLine("--- House Names Import");
             bool newHouse = false;
             int dataCounter = 0; //number of houses
             HouseStruct houseStruct = new HouseStruct();
@@ -84,7 +84,7 @@ namespace Next_Game
                     if(newHouse == false)
                     {
                         newHouse = true;
-                        Console.WriteLine();
+                        //Console.WriteLine();
                         dataCounter++;
                         //new structure
                         houseStruct = new HouseStruct();
@@ -93,7 +93,7 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     cleanToken = tokens[1].Trim();
-                    Console.WriteLine("{0}: {1}", tokens[0], tokens[1]);
+                    //Console.WriteLine("{0}: {1}", tokens[0], tokens[1]);
                     switch(cleanTag)
                     {
                         case "House":
@@ -119,7 +119,7 @@ namespace Next_Game
                                 //add to housePool
                                 listHousePool.Add(houseStruct);
                                 //debug
-                                houseStruct.ShowHouseStruct();
+                                //houseStruct.ShowHouseStruct();
                             }
                             break;
                     }
@@ -127,7 +127,7 @@ namespace Next_Game
                 else
                 { newHouse = false; }
             }
-            Console.WriteLine();
+            //Console.WriteLine();
             Console.WriteLine("{0} Great Houses imported, {1} Houses required", dataCounter, numHousesRequired);
             Console.WriteLine();
             //remove surplus houses from pool
