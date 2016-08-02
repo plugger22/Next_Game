@@ -12,6 +12,7 @@ namespace Next_Game
         private List<Move> moveList; //list of characters moving through the world
         private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID
         private Dictionary<int, Passive> dictPassiveActors; //list of all NPC actors keyed of actorID
+        private Dictionary<int, Actor> dictAllActors; //list of all Actors keyed of actorID
         private Dictionary<int, MajorHouse> dictGreatHouses; //list of all Greathouses keyed off houseID
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
         private Dictionary<int, int> dictGreatID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
@@ -24,6 +25,7 @@ namespace Next_Game
             moveList = new List<Move>();
             dictActiveActors = new Dictionary<int, Active>();
             dictPassiveActors = new Dictionary<int, Passive>();
+            dictAllActors = new Dictionary<int, Actor>();
             dictGreatHouses = new Dictionary<int, MajorHouse>();
             dictAllHouses = new Dictionary<int, House>();
             dictGreatID = new Dictionary<int, int>();
@@ -42,7 +44,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="listPlayerCharacters"></param>
         /// <param name="locID"></param>
-        internal void InitiatePlayerCharacters(List<Active> listPlayerCharacters, int locID)
+        internal void InitiatePlayerActors(List<Active> listPlayerCharacters, int locID)
         {
             //int locID = 
             //loop list and transfer characters to dictionary
@@ -52,6 +54,7 @@ namespace Next_Game
                 person.LocID = locID;
                 person.SetActorPosition(Game.map.GetCapital());
                 dictActiveActors.Add(person.GetActorID(), person);
+                dictAllActors.Add(person.GetActorID(), person);
                 //add to Location list of Characters
                 Location loc = Game.network.GetLocation(locID);
                 loc.AddCharacter(person.GetActorID());
@@ -251,7 +254,7 @@ namespace Next_Game
                 //only show chosen characters (at Location or not depending on parameter)
                 if (locationsOnly == true && status == (int)ActorStatus.AtLocation || !locationsOnly)
                 {
-                    charString = string.Format("ID {0,-2} {1,-25} Status: {2,-40} (Loc {3}:{4})", pair.Key, pair.Value.Name, locStatus, loc.GetPosX(), loc.GetPosY());
+                    charString = string.Format("Aid {0,-2} {1,-25} Status: {2,-40} (Loc {3}:{4})", pair.Key, pair.Value.Name, locStatus, loc.GetPosX(), loc.GetPosY());
                     listToDisplay.Add(new Snippet(charString));
                 }
             }
@@ -263,10 +266,39 @@ namespace Next_Game
         /// </summary>
         /// <param name="ActID"></param>
         /// <returns></returns>
-        public List<Snippet> ShowActorRL(int ActID)
+        public List<Snippet> ShowActorRL(int actorID)
         {
             List<Snippet> listToDisplay = new List<Snippet>();
-            listToDisplay.Add(new Snippet("Display Actor", RLColor.Yellow, RLColor.Black));
+            Actor person = new Actor();
+            if (dictAllActors.TryGetValue(actorID, out person))
+            {
+                int locID = person.LocID;
+                string name = string.Format("{0}, Aid {1}", person.Name, actorID);
+                string actorType = "?";
+                RLColor color = RLColor.White;
+                Console.WriteLine("0", person.GetType().Name);
+                if (person is Active)
+                //Player controlled
+                {
+                    if (person is Player)
+                    { actorType = "Player"; color = RLColor.Cyan; }
+                    else if (person is Minion)
+                    { actorType = "Minion"; color = RLColor.Brown;}
+                }
+                string locString = "?";
+                if (person.GetActorStatus() == (int)ActorStatus.AtLocation)
+                { locString = string.Format("Located at {0}, Lid {1}, {2}", GetLocationName(locID), locID, ShowLocationCoords(locID) );}
+                else if (person.GetActorStatus() == (int)ActorStatus.Travelling)
+                {
+                    Position pos = person.GetActorPosition();
+                    locString = string.Format("Currently at {0}:{1}, travelling towards {2}, Lid {3}, {4}", pos.PosX, pos.PosY, GetLocationName(locID), locID, ShowLocationCoords(locID));
+                }
+                listToDisplay.Add(new Snippet(name, RLColor.Yellow, RLColor.Black));
+                listToDisplay.Add(new Snippet(actorType, color, RLColor.Black));
+                listToDisplay.Add(new Snippet(locString));
+
+            }
+            
             return listToDisplay;
         }
 
@@ -351,7 +383,7 @@ namespace Next_Game
                 //ignore the capital and special locations for the moment until they are included in dictAllHouses
                 if (house != null)
                 {
-                    locList.Add(new Snippet(string.Format("House {0} of {1}", house.Name, loc.LocName), color, RLColor.Black));
+                    locList.Add(new Snippet(string.Format("House {0} of {1} Lid {2}", house.Name, loc.LocName, loc.LocationID), color, RLColor.Black));
                     locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                     locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
                     locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
@@ -389,7 +421,7 @@ namespace Next_Game
                         {
                             Active person = new Active();
                             person = dictActiveActors[charID];
-                            charDetails = string.Format("ID {0}: {1}", person.GetActorID(), person.Name);
+                            charDetails = string.Format("Aid {0}: {1}", person.GetActorID(), person.Name);
                         }
                         else
                         {   charDetails = string.Format("unknown ID " + Convert.ToString(charID)); }
@@ -420,7 +452,7 @@ namespace Next_Game
                 houseList.Add(new Snippet(motto));
                 string banner = string.Format("Banner \"{0}\"", majorHouse.Banner);
                 houseList.Add(new Snippet(banner));
-                string seat = string.Format("Seated at {0} {1}", majorHouse.LocName, ShowLocationCoords(majorHouse.LocID));
+                string seat = string.Format("Seated at {0} {1} ", majorHouse.LocName, ShowLocationCoords(majorHouse.LocID));
                 houseList.Add(new Snippet(seat));
                 //bannerlords
                 List<int> listLordLocations = majorHouse.GetLords();
@@ -578,7 +610,7 @@ namespace Next_Game
             foreach (KeyValuePair<int, int> kvp in dictHousePower)
             {
                 MajorHouse house = GetGreatHouse(kvp.Key);
-                housePower = string.Format("HID {0} House {1} has {2} BannerLords", house.HouseID, house.Name, house.GetNumBannerLords());
+                housePower = string.Format("Hid {0} House {1} has {2} BannerLords", house.HouseID, house.Name, house.GetNumBannerLords());
                 listStats.Add(new Snippet(housePower));
             }
             //display data
