@@ -71,6 +71,27 @@ namespace Next_Game
             }
         }
 
+        /// <summary>
+        /// Inserts a snippet to the head of a list to be displayed - do so AFTER calling AppendInfoList as it clears the list
+        /// </summary>
+        /// <param name="snippet"></param>
+        /// <param name="consoleDisplay"></param>
+        public void InsertHeader(Snippet snippet, ConsoleDisplay consoleDisplay)
+        {
+            switch (consoleDisplay)
+            {
+                case ConsoleDisplay.Input:
+                    inputList.Insert(0, snippet);
+                    break;
+                case ConsoleDisplay.Multi:
+                    multiList.Insert(0, snippet);
+                    break;
+                case ConsoleDisplay.Status:
+                    statusList.Insert(0, snippet);
+                    break;
+            }
+        }
+
 
         public void DrawInfoConsole(RLConsole infoConsole, ConsoleDisplay consoleDisplay, bool clearDisplay = true)
         {

@@ -50,4 +50,48 @@ namespace Next_Game
         public int GetActorID()
         { return ActID; }
     }
+
+    //Active actors - player controlled
+    class Active : Actor
+    {
+        public Active()
+        { }
+
+        public Active(string name) : base (name)
+        { }
+    }
+
+    //Player avatar
+    class Player : Active
+    {
+        public Player(string name) : base (name)
+        { }
+    }
+
+    //Player controlled Minions
+    class Minion : Active
+    {
+        public Minion(string name) : base (name)
+        { }
+    }
+
+    //Passive actors - all NPC's
+    class Passive : Actor
+    { }
+
+    //Great House Family members
+    class Family : Passive
+    { }
+
+    //BannerLords
+    class Lord : Passive
+    { }
+
+    //Kings Council Members
+    class Advisor : Passive
+    { }
+
+    //Special NPC's
+    class Special : Passive
+    { }
 }

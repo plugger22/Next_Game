@@ -16,7 +16,7 @@ namespace Next_Game
             margin = 2;
             messageQueue = new Queue<Snippet>();
             messageList = new List<Snippet>();
-            messageList.Add(new Snippet("--- Message Log Full"));
+            //messageList.Add(new Snippet("--- Message Log Full"));
         }
 
         public void Add(Snippet message, int turn)

@@ -10,8 +10,8 @@ namespace Next_Game
     public class World
     {
         private List<Move> moveList; //list of characters moving through the world
-        private Dictionary<int, Actor> dictActiveActors; //list of all Player controlled actors keyed off actorID
-        private Dictionary<int, Actor> dictPassiveActors; //list of all NPC actors keyed of actorID
+        private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID
+        private Dictionary<int, Passive> dictPassiveActors; //list of all NPC actors keyed of actorID
         private Dictionary<int, MajorHouse> dictGreatHouses; //list of all Greathouses keyed off houseID
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
         private Dictionary<int, int> dictGreatID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
@@ -22,8 +22,8 @@ namespace Next_Game
         public World()
         {
             moveList = new List<Move>();
-            dictActiveActors = new Dictionary<int, Actor>();
-            dictPassiveActors = new Dictionary<int, Actor>();
+            dictActiveActors = new Dictionary<int, Active>();
+            dictPassiveActors = new Dictionary<int, Passive>();
             dictGreatHouses = new Dictionary<int, MajorHouse>();
             dictAllHouses = new Dictionary<int, House>();
             dictGreatID = new Dictionary<int, int>();
@@ -42,11 +42,11 @@ namespace Next_Game
         /// </summary>
         /// <param name="listPlayerCharacters"></param>
         /// <param name="locID"></param>
-        internal void InitiatePlayerCharacters(List<Actor> listPlayerCharacters, int locID)
+        internal void InitiatePlayerCharacters(List<Active> listPlayerCharacters, int locID)
         {
             //int locID = 
             //loop list and transfer characters to dictionary
-            foreach (Actor person in listPlayerCharacters)
+            foreach (Active person in listPlayerCharacters)
             {
                 //place characters at Location
                 person.LocID = locID;
@@ -75,7 +75,7 @@ namespace Next_Game
                 if (dictActiveActors.ContainsKey(charID))
                 {
                     
-                    Actor person = dictActiveActors[charID];
+                    Active person = dictActiveActors[charID];
                     List<int> party = new List<int>(); //list of charID's of all characters in party
                     party.Add(charID);
                     string name = person.Name;
@@ -145,7 +145,7 @@ namespace Next_Game
                             //find character and update details
                             if (dictActiveActors.ContainsKey(charID))
                             {
-                                Actor person = new Actor();
+                                Active person = new Active();
                                 person = dictActiveActors[charID];
                                 person.SetActorStatus(ActorStatus.AtLocation);
                                 person.SetActorPosition(posDestination);
@@ -176,7 +176,7 @@ namespace Next_Game
                         //find in dictionary
                         if (dictActiveActors.ContainsKey(charID))
                         {
-                            Actor person = dictActiveActors[charID];
+                            Active person = dictActiveActors[charID];
                             person.SetActorPosition(pos);
                         }
                     }
@@ -237,7 +237,7 @@ namespace Next_Game
             string locName;
             string locStatus = "who knows?";
             string charString; //overall string
-            foreach (KeyValuePair<int, Actor> pair in dictActiveActors)
+            foreach (KeyValuePair<int, Active> pair in dictActiveActors)
             {
                 status = (int)pair.Value.GetActorStatus();
                 locID = pair.Value.LocID;
@@ -375,7 +375,7 @@ namespace Next_Game
                         row++;
                         if (dictActiveActors.ContainsKey(charID))
                         {
-                            Actor person = new Actor();
+                            Active person = new Active();
                             person = dictActiveActors[charID];
                             charDetails = string.Format("ID {0}: {1}", person.GetActorID(), person.Name);
                         }
@@ -438,7 +438,7 @@ namespace Next_Game
         {
             Console.WriteLine("Which Character do you want to move (Enter ID #)? ");
             int charID = Convert.ToInt32(Console.ReadLine());
-            Actor person = new Actor();
+            Active person = new Active();
             //check character exists
             if(dictActiveActors.ContainsKey(charID))
             {
@@ -479,13 +479,13 @@ namespace Next_Game
 
         }
 
-        internal Position GetCharacterLocationByPos(int charID)
+        internal Position GetActiveActorLocationByPos(int charID)
         {
             Position pos = new Position();
             //find in dictionary
             if (dictActiveActors.ContainsKey(charID))
             {
-                Actor person = dictActiveActors[charID];
+                Active person = dictActiveActors[charID];
                 pos = person.GetActorPosition();
             }
             else
@@ -494,13 +494,13 @@ namespace Next_Game
         }
 
         
-        public int GetCharacterLocationByID(int charID)
+        public int GetActiveActorLocByID(int charID)
         {
             int locID = 0;
             //find in dictionary
             if (dictActiveActors.ContainsKey(charID))
             {
-                Actor person = dictActiveActors[charID];
+                Active person = dictActiveActors[charID];
                 locID = person.LocID;
             }
             return locID;

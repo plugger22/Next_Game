@@ -333,6 +333,7 @@ namespace Next_Game
                             case MenuMode.Main:
                                 //Show Full message log
                                 infoChannel.SetInfoList(messageLog.GetMessageList(), ConsoleDisplay.Multi);
+                                infoChannel.InsertHeader(new Snippet("--- Message Log ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                 break;
                         }
                         break;
@@ -415,7 +416,7 @@ namespace Next_Game
                                 //move Player characters around map
                                 List<Snippet> charList = new List<Snippet>();
                                 charList.Add(world.GetCharacterRL(charIDSelected));
-                                posSelect1 = world.GetCharacterLocationByPos(charIDSelected);
+                                posSelect1 = world.GetActiveActorLocationByPos(charIDSelected);
                                 if (posSelect1 != null)
                                 { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); mouseOn = true; }
                                 else
