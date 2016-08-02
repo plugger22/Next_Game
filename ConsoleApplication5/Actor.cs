@@ -3,6 +3,8 @@
 namespace Next_Game
 {
     public enum ActorStatus {AtLocation, Travelling};
+    public enum ActorTitle {None, King, Queen, Lord, Lady};
+    public enum ActorSex {Male, Female};
 
     internal class Actor
     {
@@ -12,7 +14,13 @@ namespace Next_Game
         public string Name { get; set; }
         public int LocID { get; set; } //current location (if travelling then destination)
         public int Speed { get; set; } = 2; //speed of travel throughout the world
-        public int ActID; //Can only have a max of 9 characters (including player) due to map draw limitations (mapMarker based on lowest Party ID)
+        private int ActID; //Can only have a max of 9 characters (including player) due to map draw limitations (mapMarker based on lowest Party ID)
+        public int Age { get; set; }
+        public string Description { get; set; }
+        public ActorTitle Title { get; set; }
+        public ActorSex Sex { get; set; }
+        public string Handle { get; set; } //eg. Nickname
+        
 
         //default constructor 
         public Actor()
@@ -21,6 +29,10 @@ namespace Next_Game
             status = ActorStatus.AtLocation;
             actorPos = new Position();
             ActID = characterIndex++;
+            Description = "standard human";
+            Age = 30;
+            Title = ActorTitle.None;
+            Sex = ActorSex.Male;
         }
 
         /// <summary>
@@ -33,6 +45,10 @@ namespace Next_Game
             Name = name;
             this.ActID = characterIndex++;
             actorPos = new Position();
+            Description = "standard human";
+            Age = 30;
+            Title = ActorTitle.None;
+            Sex = ActorSex.Male;
         }
 
         public void SetActorPosition(Position posLoc)

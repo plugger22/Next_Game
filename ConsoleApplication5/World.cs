@@ -227,7 +227,7 @@ namespace Next_Game
         /// </summary>
         /// <returns>List with info on each character a single, sequential, entry in the list</returns>
         /// <param name="locationsOnly">If true only show those at Locations, default is show all</param>
-        public List<Snippet> ShowPlayerCharactersRL(bool locationsOnly = false)
+        public List<Snippet> ShowPlayerActorsRL(bool locationsOnly = false)
         {
             List<Snippet> listToDisplay = new List<Snippet>();
             //listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}", RLColor.Yellow, RLColor.Black));
@@ -255,6 +255,18 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet(charString));
                 }
             }
+            return listToDisplay;
+        }
+
+        /// <summary>
+        /// Display a single Actor in detail
+        /// </summary>
+        /// <param name="ActID"></param>
+        /// <returns></returns>
+        public List<Snippet> ShowActorRL(int ActID)
+        {
+            List<Snippet> listToDisplay = new List<Snippet>();
+            listToDisplay.Add(new Snippet("Display Actor", RLColor.Yellow, RLColor.Black));
             return listToDisplay;
         }
 

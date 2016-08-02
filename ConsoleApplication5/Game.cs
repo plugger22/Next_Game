@@ -323,9 +323,14 @@ namespace Next_Game
                 //which key pressed?
                 switch (keyPress.Key)
                 {
-                    case RLKey.M:
-                        //Draw Map: applies to all menu modes
-                        map.UpdateMap(false, true);
+                    case RLKey.A:
+                        switch(_menuMode)
+                        {
+                            case MenuMode.Main:
+                                //show Actor
+                                infoChannel.SetInfoList(world.ShowActorRL(1), ConsoleDisplay.Multi);
+                                break;
+                        }
                         break;
                     case RLKey.E:
                         switch (_menuMode)
@@ -340,10 +345,6 @@ namespace Next_Game
                     case RLKey.C:
                         switch (_menuMode)
                         {
-                            case MenuMode.Main:
-                                //Show Player Characters
-                                infoChannel.SetInfoList(world.ShowPlayerCharactersRL(), ConsoleDisplay.Multi);
-                                break;
                         }
                         break;
                     case RLKey.D:
@@ -396,6 +397,10 @@ namespace Next_Game
                                 break;
                         }
                         break;
+                    case RLKey.M:
+                        //Draw Map: applies to all menu modes
+                        map.UpdateMap(false, true);
+                        break;
                     case RLKey.R:
                         //Show all routes on the map in red
                         switch (_menuMode)
@@ -412,6 +417,10 @@ namespace Next_Game
                     case RLKey.P:
                         switch (_menuMode)
                         {
+                            case MenuMode.Main:
+                                //Show Player Characters
+                                infoChannel.SetInfoList(world.ShowPlayerActorsRL(), ConsoleDisplay.Multi);
+                                break;
                             case MenuMode.Character:
                                 //move Player characters around map
                                 List<Snippet> charList = new List<Snippet>();
@@ -485,7 +494,7 @@ namespace Next_Game
             if (renderRequired == true)
             {
                 //update status console
-                infoChannel.SetInfoList(world.ShowPlayerCharactersRL(), ConsoleDisplay.Status);
+                infoChannel.SetInfoList(world.ShowPlayerActorsRL(), ConsoleDisplay.Status);
 
                 //draw to consoles
                 map.DrawMapRL(_mapConsole);

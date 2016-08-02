@@ -80,10 +80,11 @@ namespace Next_Game
                     //Main menu commands
                     menuArrayText[0, 0] = "[M] Map";
                     //Info category commands
-                    menuArrayText[1, 0] = "[C] Show Characters";
+                    menuArrayText[1, 0] = "[P] Show Player Actors";
                     menuArrayText[1, 1] = "[E] Show Events";
                     menuArrayText[1, 2] = "[H] Show House";
                     menuArrayText[1, 3] = "[G] Show Generator Stats";
+                    menuArrayText[1, 4] = "[A] Show Actor";
                     //Switch Menu category commands
                     menuArrayText[3, 0] = "[1..6] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
