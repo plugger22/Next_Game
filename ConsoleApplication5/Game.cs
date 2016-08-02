@@ -61,6 +61,9 @@ namespace Next_Game
         //flags
         private static bool renderRequired = true; //redraw Console?
         private static bool mouseOn = false; //receive mouse input?
+        private static bool multiInput = false; //flag to allow multiple key inputs
+        private static int multiCaller = 0; //each instance that calls multi key input has a unique ID which is > 0
+        private static string multiData = null; //multi key input is stored here
         private static int inputState = 0; //used to differentiate suquential levels of input for individual commands
         private static MenuMode _menuMode = MenuMode.Main; //menu mode in operation (corresponds to enum above)
 
@@ -140,104 +143,277 @@ namespace Next_Game
             bool mouseLeft = _rootConsole.Mouse.GetLeftClick();
             bool mouseRight = _rootConsole.Mouse.GetRightClick();
             //
-            // MOUSE input ---
+            // Multi Key input ---
             //
-            if(mouseLeft == true || mouseRight == true)
+            if (multiInput == true && keyPress != null)
             {
-                //Mouse specific input OFF - generic location and party info
-                if (mouseOn == false)
+                bool complete = MultiKeyInput(keyPress);
+                renderRequired = true;
+                if (complete == true)
                 {
-                    int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                    infoChannel.SetInfoList(world.ShowLocationRL(locID), ConsoleDisplay.Multi);
-                    renderRequired = true;
-                }
-                //Mouse specific input ON
-                else if (mouseOn == true)
-                {
-                    //last pressed key indicates context of mouse press
-                    switch (keyLast?.Key)
+                    switch(multiCaller)
                     {
-                        case RLKey.D:
-                            switch (_menuMode)
-                            {
-                                case MenuMode.Debug:
-                                    //debug route between two points
-                                    renderRequired = true;
-                                    //Origin location
-                                    if (inputState == 1)
-                                    {
-                                        //valid location?
-                                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                                        if (locID > 0)
+                        case 1:
+                            //Show Actor (input actorID)
+                            infoChannel.SetInfoList(world.ShowActorRL(Convert.ToInt32(multiData)), ConsoleDisplay.Multi);
+                            break;
+
+                    }
+                    //reset
+                    multiCaller = 0;
+                    multiData = null;
+                }
+            }
+            //normal mouse and keyboard input
+            else
+            {
+                //
+                // MOUSE input ---
+                //
+                if (mouseLeft == true || mouseRight == true)
+                {
+                    //Mouse specific input OFF - generic location and party info
+                    if (mouseOn == false)
+                    {
+                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
+                        infoChannel.SetInfoList(world.ShowLocationRL(locID), ConsoleDisplay.Multi);
+                        renderRequired = true;
+                    }
+                    //Mouse specific input ON
+                    else if (mouseOn == true)
+                    {
+                        //last pressed key indicates context of mouse press
+                        switch (keyLast?.Key)
+                        {
+                            case RLKey.D:
+                                switch (_menuMode)
+                                {
+                                    case MenuMode.Debug:
+                                        //debug route between two points
+                                        renderRequired = true;
+                                        //Origin location
+                                        if (inputState == 1)
                                         {
-                                            string locName = world.GetLocationName(locID);
-                                            infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
-                                            posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                            infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
-                                            inputState = 2;
-                                        }
-                                    }
-                                    //Destination location
-                                    else if (inputState == 2)
-                                    {
-                                        //valid location?
-                                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                                        if (locID > 0)
-                                        {
-                                            //process two positions to show on map.
-                                            posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                            //check that the two coords aren't identical
-                                            if ((posSelect1 != null && posSelect2 != null) && (posSelect1.PosX != posSelect2.PosX || posSelect1.PosY != posSelect2.PosY))
+                                            //valid location?
+                                            int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
+                                            if (locID > 0)
                                             {
-                                                List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
-                                                map.DrawRouteDebug(listOfRoutes);
-                                                infoChannel.AppendInfoList(new Snippet(network.ShowRouteDetails(listOfRoutes)), ConsoleDisplay.Input);
+                                                string locName = world.GetLocationName(locID);
+                                                infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
+                                                posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
+                                                inputState = 2;
                                             }
+                                        }
+                                        //Destination location
+                                        else if (inputState == 2)
+                                        {
+                                            //valid location?
+                                            int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
+                                            if (locID > 0)
+                                            {
+                                                //process two positions to show on map.
+                                                posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                //check that the two coords aren't identical
+                                                if ((posSelect1 != null && posSelect2 != null) && (posSelect1.PosX != posSelect2.PosX || posSelect1.PosY != posSelect2.PosY))
+                                                {
+                                                    List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
+                                                    map.DrawRouteDebug(listOfRoutes);
+                                                    infoChannel.AppendInfoList(new Snippet(network.ShowRouteDetails(listOfRoutes)), ConsoleDisplay.Input);
+                                                }
+                                                inputState = 0;
+                                                mouseOn = false;
+                                            }
+                                        }
+                                        break;
+                                }
+                                break;
+                            case RLKey.G:
+                                switch (_menuMode)
+                                {
+                                    case MenuMode.Debug:
+                                        renderRequired = true;
+                                        //Origin location
+                                        if (inputState == 1)
+                                        {
+                                            //valid location?
+                                            int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
+                                            if (locID > 0)
+                                            {
+                                                string locName = world.GetLocationName(locID);
+                                                infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
+                                                posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
+                                                inputState = 2;
+                                            }
+                                        }
+                                        //Destination location
+                                        else if (inputState == 2)
+                                        {
+                                            //valid location?
+                                            int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
+                                            if (locID > 0)
+                                            {
+                                                //process two positions to show on map.
+                                                posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                if ((posSelect1 != null && posSelect2 != null) && (posSelect1.PosX != posSelect2.PosX || posSelect1.PosY != posSelect2.PosY))
+                                                {
+                                                    List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
+                                                    map.DrawRouteRL(listOfRoutes);
+                                                    infoChannel.AppendInfoList(new Snippet(network.ShowRouteDetails(listOfRoutes)), ConsoleDisplay.Input);
+                                                }
+                                                inputState = 0;
+                                                mouseOn = false;
+                                            }
+                                        }
+                                        break;
+                                }
+                                break;
+                            case RLKey.H:
+                                switch (_menuMode)
+                                {
+                                    case MenuMode.Main:
+                                        renderRequired = true;
+                                        //Show House Details
+                                        if (inputState == 1)
+                                        {
+                                            //valid location?
+                                            int houseID = map.GetMapInfo(MapLayer.Houses, mouse.X, mouse.Y, true);
+                                            if (houseID > 0)
+                                            { infoChannel.SetInfoList(world.ShowHouseRL(houseID), ConsoleDisplay.Multi); }
+                                        }
+                                        mouseOn = false;
+                                        break;
+                                }
+                                break;
+                            case RLKey.P:
+                                switch (_menuMode)
+                                {
+                                    case MenuMode.Character:
+                                        //move Player character from A to B
+                                        renderRequired = true;
+                                        //valid location?
+                                        if (inputState == 1)
+                                        {
+                                            int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
+                                            if (locID > 0)
+                                            {
+                                                //process two positions to show on map.
+                                                posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                if (posSelect2 != null)
+                                                {
+                                                    string infoString = string.Format("Journey from {0} to {1}? [Left Click] to confirm, [Right Click] to Cancel.",
+                                                        network.GetLocationName(posSelect1), network.GetLocationName(posSelect2));
+                                                    infoChannel.AppendInfoList(new Snippet(infoString), ConsoleDisplay.Input);
+                                                    inputState = 2;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                //cancel journey
+                                                if (mouseRight == true)
+                                                { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!"), ConsoleDisplay.Input); inputState = 0; mouseOn = false; }
+                                            }
+                                        }
+                                        else if (inputState == 2)
+                                        {
+                                            if (mouseLeft == true)
+                                            {
+                                                List<Position> pathToTravel = network.GetPathAnywhere(posSelect1, posSelect2);
+                                                string infoText = world.InitiateMoveCharacters(charIDSelected, posSelect1, posSelect2, pathToTravel);
+                                                messageLog.Add(new Snippet(infoText), world.GetGameTurn());
+                                                infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
+                                                //show route
+                                                map.UpdateMap();
+                                                map.DrawRoutePath(pathToTravel);
+                                            }
+                                            else if (mouseRight == true)
+                                            { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!"), ConsoleDisplay.Input); }
                                             inputState = 0;
                                             mouseOn = false;
+                                            //autoswitch back to Main menu
+                                            _menuMode = menu.SwitchMenuMode(MenuMode.Main);
                                         }
-                                    }
+                                        break;
+                                }
+                                break;
+                        }
+                    }
+                }
+                //
+                // KEYBOARD Input ---
+                //
+                else if (keyPress != null)
+                {
+                    //turn off mouse specific input whenever a key is pressed
+                    renderRequired = true;
+                    mouseOn = false;
+                    //which key pressed?
+                    switch (keyPress.Key)
+                    {
+                        case RLKey.A:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    //show Actor
+                                    infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+                                    infoChannel.AppendInfoList(new Snippet("---Input Actor ID ", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
+                                    infoChannel.AppendInfoList(new Snippet("Press ENTER when done, ESC to exit"), ConsoleDisplay.Input);
+                                    multiInput = true;
+                                    multiCaller = 1;
+                                    break;
+                            }
+                            break;
+                        case RLKey.E:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    //Show Full message log
+                                    infoChannel.SetInfoList(messageLog.GetMessageList(), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- Message Log ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
+                        case RLKey.C:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    break;
+                            }
+                            break;
+                        case RLKey.D:
+                            //List<Route> listOfRoutes_2 = network.RouteInput("D"); map.DrawRouteDebug(listOfRoutes_2);
+                            renderRequired = true;
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    //switch to Debug menu
+                                    _menuMode = menu.SwitchMenuMode(MenuMode.Debug);
+                                    break;
+                                case MenuMode.Debug:
+                                    //show debug route
+                                    List<Snippet> inputList = new List<Snippet>();
+                                    inputList.Add(new Snippet("--- Show the Route between two Locations", RLColor.Magenta, RLColor.Black));
+                                    inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
+                                    infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
+                                    mouseOn = true;
+                                    inputState = 1;
                                     break;
                             }
                             break;
                         case RLKey.G:
                             switch (_menuMode)
                             {
+                                case MenuMode.Main:
+                                    world.ShowGeneratorStatsRL();
+                                    break;
                                 case MenuMode.Debug:
-                                    renderRequired = true;
-                                    //Origin location
-                                    if (inputState == 1)
-                                    {
-                                        //valid location?
-                                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                                        if (locID > 0)
-                                        {
-                                            string locName = world.GetLocationName(locID);
-                                            infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
-                                            posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                            infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
-                                            inputState = 2;
-                                        }
-                                    }
-                                    //Destination location
-                                    else if (inputState == 2)
-                                    {
-                                        //valid location?
-                                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                                        if (locID > 0)
-                                        {
-                                            //process two positions to show on map.
-                                            posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                            if ((posSelect1 != null && posSelect2 != null) && (posSelect1.PosX != posSelect2.PosX || posSelect1.PosY != posSelect2.PosY))
-                                            {
-                                                List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
-                                                map.DrawRouteRL(listOfRoutes);
-                                                infoChannel.AppendInfoList(new Snippet(network.ShowRouteDetails(listOfRoutes)), ConsoleDisplay.Input);
-                                            }
-                                            inputState = 0;
-                                            mouseOn = false;
-                                        }
-                                    }
+                                    List<Snippet> inputList = new List<Snippet>();
+                                    inputList.Add(new Snippet("--- Show the Route between two Locations", RLColor.Magenta, RLColor.Black));
+                                    inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
+                                    infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
+                                    inputState = 1;
+                                    mouseOn = true;
                                     break;
                             }
                             break;
@@ -245,243 +421,102 @@ namespace Next_Game
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
-                                    renderRequired = true;
                                     //Show House Details
-                                    if (inputState == 1)
-                                    {
-                                        //valid location?
-                                        int houseID = map.GetMapInfo(MapLayer.Houses, mouse.X, mouse.Y, true);
-                                        if (houseID > 0)
-                                        { infoChannel.SetInfoList(world.ShowHouseRL(houseID), ConsoleDisplay.Multi); }
-                                    }
-                                    mouseOn = false;
+                                    List<Snippet> inputList = new List<Snippet>();
+                                    inputList.Add(new Snippet("--- Show House Details", RLColor.Magenta, RLColor.Black));
+                                    inputList.Add(new Snippet("Select Location by Mouse (press ESC to Exit)"));
+                                    infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
+                                    inputState = 1;
+                                    mouseOn = true;
+                                    break;
+                            }
+                            break;
+                        case RLKey.M:
+                            //Draw Map: applies to all menu modes
+                            map.UpdateMap(false, true);
+                            break;
+                        case RLKey.R:
+                            //Show all routes on the map in red
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    break;
+                                case MenuMode.Debug:
+                                    //show debug route
+                                    map.UpdateMap(true, false);
+                                    mouseOn = true;
                                     break;
                             }
                             break;
                         case RLKey.P:
                             switch (_menuMode)
                             {
+                                case MenuMode.Main:
+                                    //Show Player Characters
+                                    infoChannel.SetInfoList(world.ShowPlayerActorsRL(), ConsoleDisplay.Multi);
+                                    break;
                                 case MenuMode.Character:
-                                    //move Player character from A to B
-                                    renderRequired = true;
-                                    //valid location?
-                                    if (inputState == 1)
-                                    { 
-                                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                                        if (locID > 0)
-                                        {
-                                            //process two positions to show on map.
-                                            posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                            if (posSelect2 != null)
-                                            {
-                                                string infoString = string.Format("Journey from {0} to {1}? [Left Click] to confirm, [Right Click] to Cancel.",
-                                                    network.GetLocationName(posSelect1), network.GetLocationName(posSelect2));
-                                                infoChannel.AppendInfoList(new Snippet(infoString), ConsoleDisplay.Input);
-                                                inputState = 2;
-                                            }
-                                        }
-                                        else
-                                        { 
-                                        //cancel journey
-                                        if (mouseRight == true)
-                                            { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!"), ConsoleDisplay.Input); inputState = 0; mouseOn = false; }
-                                        }
-                                    }
-                                    else if (inputState == 2)
-                                    {
-                                        if(mouseLeft == true)
-                                        {
-                                            List<Position> pathToTravel = network.GetPathAnywhere(posSelect1, posSelect2);
-                                            string infoText = world.InitiateMoveCharacters(charIDSelected, posSelect1, posSelect2, pathToTravel);
-                                            messageLog.Add(new Snippet(infoText), world.GetGameTurn());
-                                            infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
-                                            //show route
-                                            map.UpdateMap();
-                                            map.DrawRoutePath(pathToTravel);
-                                        }
-                                        else if(mouseRight == true)
-                                        { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!"), ConsoleDisplay.Input); }
-                                        inputState = 0;
-                                        mouseOn = false;
-                                        //autoswitch back to Main menu
-                                        _menuMode = menu.SwitchMenuMode(MenuMode.Main);
-                                    }
+                                    //move Player characters around map
+                                    List<Snippet> charList = new List<Snippet>();
+                                    charList.Add(world.GetCharacterRL(charIDSelected));
+                                    posSelect1 = world.GetActiveActorLocationByPos(charIDSelected);
+                                    if (posSelect1 != null)
+                                    { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); mouseOn = true; }
+                                    else
+                                    { charList.Add(new Snippet("The character is not currently at your disposal")); mouseOn = false; }
+                                    infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
+                                    inputState = 1;
                                     break;
                             }
                             break;
+                        //Player controlled character selected
+                        case RLKey.Number1:
+                        case RLKey.Number2:
+                        case RLKey.Number3:
+                        case RLKey.Number4:
+                        case RLKey.Number5:
+                        case RLKey.Number6:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    _menuMode = menu.SwitchMenuMode(MenuMode.Character);
+                                    charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
+                                    List<Snippet> infoList = new List<Snippet>();
+                                    infoList.Add(world.ShowSelectedCharacter(charIDSelected));
+                                    infoChannel.SetInfoList(infoList, ConsoleDisplay.Input);
+                                    break;
+                            }
+                            break;
+                        case RLKey.Enter:
+                            world.IncrementGameTurn();
+                            map.UpdateMap();
+                            map.UpdatePlayers(world.MoveCharacters());
+                            break;
+                        case RLKey.X:
+                            //exit application from Main Menu
+                            if (_menuMode == MenuMode.Main)
+                            {
+                                _rootConsole.Close();
+                                Environment.Exit(1);
+                            }
+                            break;
+                        case RLKey.Escape:
+                            //clear input console
+                            infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+                            //exit mouse input 
+                            if (mouseOn == true)
+                            { mouseOn = false; }
+                            //revert back to main menu
+                            else
+                            {
+                                if (_menuMode != MenuMode.Main)
+                                {
+                                    //return to main menu from sub menus
+                                    _menuMode = menu.SwitchMenuMode(MenuMode.Main);
+                                }
+                            }
+                            break;
                     }
-                }
-            }
-            //
-            // KEYBOARD Input ---
-            //
-            else if (keyPress != null)
-            {
-                //turn off mouse specific input whenever a key is pressed
-                renderRequired = true;
-                mouseOn = false;
-                //which key pressed?
-                switch (keyPress.Key)
-                {
-                    case RLKey.A:
-                        switch(_menuMode)
-                        {
-                            case MenuMode.Main:
-                                //show Actor
-                                infoChannel.SetInfoList(world.ShowActorRL(1), ConsoleDisplay.Multi);
-                                break;
-                        }
-                        break;
-                    case RLKey.E:
-                        switch (_menuMode)
-                        {
-                            case MenuMode.Main:
-                                //Show Full message log
-                                infoChannel.SetInfoList(messageLog.GetMessageList(), ConsoleDisplay.Multi);
-                                infoChannel.InsertHeader(new Snippet("--- Message Log ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
-                                break;
-                        }
-                        break;
-                    case RLKey.C:
-                        switch (_menuMode)
-                        {
-                        }
-                        break;
-                    case RLKey.D:
-                        //List<Route> listOfRoutes_2 = network.RouteInput("D"); map.DrawRouteDebug(listOfRoutes_2);
-                        renderRequired = true;
-                        switch(_menuMode)
-                            {
-                            case MenuMode.Main:
-                                //switch to Debug menu
-                                _menuMode = menu.SwitchMenuMode(MenuMode.Debug);
-                                break;
-                            case MenuMode.Debug:
-                                //show debug route
-                                List<Snippet> inputList = new List<Snippet>();
-                                inputList.Add(new Snippet("--- Show the Route between two Locations", RLColor.Magenta, RLColor.Black));
-                                inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
-                                infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
-                                mouseOn = true;
-                                inputState = 1;
-                                break;
-                            }
-                        break;
-                    case RLKey.G:
-                        switch (_menuMode)
-                        {
-                            case MenuMode.Main:
-                                world.ShowGeneratorStatsRL();
-                                break;
-                            case MenuMode.Debug:
-                                List<Snippet> inputList = new List<Snippet>();
-                                inputList.Add(new Snippet("--- Show the Route between two Locations", RLColor.Magenta, RLColor.Black));
-                                inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
-                                infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
-                                inputState = 1;
-                                mouseOn = true;
-                                break;
-                        }
-                        break;
-                    case RLKey.H:
-                        switch (_menuMode)
-                        {
-                            case MenuMode.Main:
-                                //Show House Details
-                                List<Snippet> inputList = new List<Snippet>();
-                                inputList.Add(new Snippet("--- Show House Details", RLColor.Magenta, RLColor.Black));
-                                inputList.Add(new Snippet("Select Location by Mouse (press ESC to Exit)"));
-                                infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
-                                inputState = 1;
-                                mouseOn = true;
-                                break;
-                        }
-                        break;
-                    case RLKey.M:
-                        //Draw Map: applies to all menu modes
-                        map.UpdateMap(false, true);
-                        break;
-                    case RLKey.R:
-                        //Show all routes on the map in red
-                        switch (_menuMode)
-                        {
-                            case MenuMode.Main:
-                                break;
-                            case MenuMode.Debug:
-                                //show debug route
-                                map.UpdateMap(true, false);
-                                mouseOn = true;
-                                break;
-                        }
-                        break;
-                    case RLKey.P:
-                        switch (_menuMode)
-                        {
-                            case MenuMode.Main:
-                                //Show Player Characters
-                                infoChannel.SetInfoList(world.ShowPlayerActorsRL(), ConsoleDisplay.Multi);
-                                break;
-                            case MenuMode.Character:
-                                //move Player characters around map
-                                List<Snippet> charList = new List<Snippet>();
-                                charList.Add(world.GetCharacterRL(charIDSelected));
-                                posSelect1 = world.GetActiveActorLocationByPos(charIDSelected);
-                                if (posSelect1 != null)
-                                { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); mouseOn = true; }
-                                else
-                                { charList.Add(new Snippet("The character is not currently at your disposal")); mouseOn = false; }
-                                infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
-                                inputState = 1;
-                                break;
-                        }
-                        break;
-                    //Player controlled character selected
-                    case RLKey.Number1:
-                    case RLKey.Number2:
-                    case RLKey.Number3:
-                    case RLKey.Number4:
-                    case RLKey.Number5:
-                    case RLKey.Number6:
-                        switch (_menuMode)
-                        {
-                            case MenuMode.Main:
-                                _menuMode = menu.SwitchMenuMode(MenuMode.Character);
-                                charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
-                                List<Snippet> infoList = new List<Snippet>();
-                                infoList.Add(world.ShowSelectedCharacter(charIDSelected));
-                                infoChannel.SetInfoList(infoList, ConsoleDisplay.Input);
-                                break;
-                        }
-                        break;
-                    case RLKey.Enter:
-                        world.IncrementGameTurn();
-                        map.UpdateMap();
-                        map.UpdatePlayers(world.MoveCharacters());
-                        break;
-                    case RLKey.X:
-                        //exit application from Main Menu
-                        if (_menuMode == MenuMode.Main)
-                        {
-                            _rootConsole.Close();
-                            Environment.Exit(1);
-                        }
-                        break;
-                    case RLKey.Escape:
-                        //clear input console
-                        infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
-                        //exit mouse input 
-                        if (mouseOn == true)
-                        { mouseOn = false; }
-                        //revert back to main menu
-                        else
-                        {
-                            if (_menuMode != MenuMode.Main)
-                            {
-                                //return to main menu from sub menus
-                                _menuMode = menu.SwitchMenuMode(MenuMode.Main);
-                            }
-                        }
-                        break;
                 }
             }
         }
@@ -514,6 +549,193 @@ namespace Next_Game
                _rootConsole.Draw();
                 renderRequired = false;
             }
+        }
+
+        /// <summary>
+        /// allows multi key input. input stored in a string 'dataInput', process ended once enter pressed. Handles alpha and numeric input.
+        /// </summary>
+        /// <param name="keyPress"></param>
+        /// <returns>false if input ongoing, true if completed (ENTER pressed)</returns>
+        private static bool MultiKeyInput(RLKeyPress keyPress, bool numInput = true, bool alphaInput = false)
+            {
+            char data = '?';
+            bool inputComplete = false;
+            int inputType = 0; //1 - numeric, 2 - alphabetic
+            switch(keyPress.Key)
+            {
+                case RLKey.Number0:
+                    data = '0';
+                    inputType = 1;
+                    break;
+                case RLKey.Number1:
+                    data = '1';
+                    inputType = 1;
+                    break;
+                case RLKey.Number2:
+                    data = '2';
+                    inputType = 1;
+                    break;
+                case RLKey.Number3:
+                    data = '3';
+                    inputType = 1;
+                    break;
+                case RLKey.Number4:
+                    data = '4';
+                    inputType = 1;
+                    break;
+                case RLKey.Number5:
+                    data = '5';
+                    inputType = 1;
+                    break;
+                case RLKey.Number6:
+                    data = '6';
+                    inputType = 1;
+                    break;
+                case RLKey.Number7:
+                    data = '7';
+                    inputType = 1;
+                    break;
+                case RLKey.Number8:
+                    data = '8';
+                    inputType = 1;
+                    break;
+                case RLKey.Number9:
+                    data = '9';
+                    inputType = 1;
+                    break;
+                case RLKey.A:
+                    data = 'A';
+                    inputType = 2;
+                    break;
+                case RLKey.B:
+                    data = 'B';
+                    inputType = 2;
+                    break;
+                case RLKey.C:
+                    data = 'C';
+                    inputType = 2;
+                    break;
+                case RLKey.D:
+                    data = 'D';
+                    inputType = 2;
+                    break;
+                case RLKey.E:
+                    data = 'E';
+                    inputType = 2;
+                    break;
+                case RLKey.F:
+                    data = 'F';
+                    inputType = 2;
+                    break;
+                case RLKey.G:
+                    data = 'G';
+                    inputType = 2;
+                    break;
+                case RLKey.H:
+                    data = 'H';
+                    inputType = 2;
+                    break;
+                case RLKey.I:
+                    data = 'I';
+                    inputType = 2;
+                    break;
+                case RLKey.J:
+                    data = 'J';
+                    inputType = 2;
+                    break;
+                case RLKey.K:
+                    data = 'K';
+                    inputType = 2;
+                    break;
+                case RLKey.L:
+                    data = 'L';
+                    inputType = 2;
+                    break;
+                case RLKey.M:
+                    data = 'M';
+                    inputType = 2;
+                    break;
+                case RLKey.N:
+                    data = 'N';
+                    inputType = 2;
+                    break;
+                case RLKey.O:
+                    data = 'O';
+                    inputType = 2;
+                    break;
+                case RLKey.P:
+                    data = 'P';
+                    inputType = 2;
+                    break;
+                case RLKey.Q:
+                    data = 'Q';
+                    inputType = 2;
+                    break;
+                case RLKey.R:
+                    data = 'R';
+                    inputType = 2;
+                    break;
+                case RLKey.S:
+                    data = 'S';
+                    inputType = 2;
+                    break;
+                case RLKey.T:
+                    data = 'T';
+                    inputType = 2;
+                    break;
+                case RLKey.U:
+                    data = 'U';
+                    inputType = 2;
+                    break;
+                case RLKey.V:
+                    data = 'V';
+                    inputType = 2;
+                    break;
+                case RLKey.W:
+                    data = 'W';
+                    inputType = 2;
+                    break;
+                case RLKey.X:
+                    data = 'X';
+                    inputType = 2;
+                    break;
+                case RLKey.Y:
+                    data = 'Y';
+                    inputType = 2;
+                    break;
+                case RLKey.Z:
+                    data = 'Z';
+                    inputType = 2;
+                    break;
+                case RLKey.Enter:
+                    //exit multi key input
+                    multiInput = false;
+                    multiData = multiData.Replace("?", "");
+                    Console.WriteLine("{0} input", multiData);
+                    inputComplete = true;
+                    break;
+                case RLKey.Escape:
+                    //exit data input, exit calling routine
+                    multiInput = false;
+                    inputComplete = true;
+                    multiCaller = 0;
+                    break;         
+            }
+            //add to global character string (exclude the final 'Enter')
+            if (inputComplete == false)
+            {
+                //only accept valid input types
+                if ((numInput == true && inputType == 1) || (alphaInput == true && inputType == 2))
+                { multiData += data; }
+                else
+                { multiData += '?'; }
+            }
+            //clear input console before displaying input
+            infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+            infoChannel.AppendInfoList(new Snippet(string.Format("{0} input", multiData), RLColor.LightMagenta, RLColor.Black), ConsoleDisplay.Input);
+            infoChannel.AppendInfoList(new Snippet(string.Format("Press ENTER when done or ESC to exit", multiData)), ConsoleDisplay.Input);
+            infoChannel.AppendInfoList(new Snippet("Any '?' will be automatically removed"), ConsoleDisplay.Input);
+            return inputComplete;
         }
     }
 }
