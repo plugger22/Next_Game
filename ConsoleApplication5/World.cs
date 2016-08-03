@@ -276,13 +276,14 @@ namespace Next_Game
                 string name = string.Format("{0}, Aid {1}", person.Name, actorID);
                 string actorType = "?";
                 RLColor color = RLColor.White;
-                Console.WriteLine("0", person.GetType().Name);
+                //Type type = person.GetType();
+                //Console.WriteLine("{0}",type.Name);
                 if (person is Active)
                 //Player controlled
                 {
-                    if (person is Player)
+                    if (person.GetActorID() == 1)
                     { actorType = "Player"; color = RLColor.Cyan; }
-                    else if (person is Minion)
+                    else
                     { actorType = "Minion"; color = RLColor.Brown;}
                 }
                 string locString = "?";
@@ -295,7 +296,12 @@ namespace Next_Game
                 }
                 listToDisplay.Add(new Snippet(name, RLColor.Yellow, RLColor.Black));
                 listToDisplay.Add(new Snippet(actorType, color, RLColor.Black));
+                if (person.Handle != null)
+                { listToDisplay.Add(new Snippet(string.Format("\"{0}\"", person.Handle))); }
                 listToDisplay.Add(new Snippet(locString));
+                listToDisplay.Add(new Snippet(string.Format("Title: {0}", person.Title)));
+                listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
+                listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}", person.Age, person.Sex)));
 
             }
             
@@ -383,7 +389,7 @@ namespace Next_Game
                 //ignore the capital and special locations for the moment until they are included in dictAllHouses
                 if (house != null)
                 {
-                    locList.Add(new Snippet(string.Format("House {0} of {1} Lid {2}", house.Name, loc.LocName, loc.LocationID), color, RLColor.Black));
+                    locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}", house.Name, loc.LocName, loc.LocationID), color, RLColor.Black));
                     locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                     locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
                     locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));

@@ -491,6 +491,8 @@ namespace Next_Game
                             world.IncrementGameTurn();
                             map.UpdateMap();
                             map.UpdatePlayers(world.MoveCharacters());
+                            infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+                            infoChannel.AppendInfoList(new Snippet($"Day of our Lord {world.GameTurn}", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
                             break;
                         case RLKey.X:
                             //exit application from Main Menu

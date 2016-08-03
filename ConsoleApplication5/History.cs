@@ -65,8 +65,9 @@ namespace Next_Game
             //read location names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
             { listOfCharacterNames.Add(arrayOfCharacterNames[i]); }
-
-            //read in house pool
+            //
+            //read in house pool for BannerLords ---
+            //
             filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/GreatHouses.txt";
             string[] arrayOfHouseNames = File.ReadAllLines(filePath);
             Console.WriteLine();
@@ -270,6 +271,9 @@ namespace Next_Game
                 listOfCharacterNames.RemoveAt(index);
                 //new character
                 Active person = new Active(charName);
+                //set player as ursuper
+                if (person.GetActorID() == 1)
+                { person.Title = ActorTitle.Ursuper; }
                 playerCharacters.Add(person);
             }
         }

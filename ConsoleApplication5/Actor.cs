@@ -3,7 +3,7 @@
 namespace Next_Game
 {
     public enum ActorStatus {AtLocation, Travelling};
-    public enum ActorTitle {None, King, Queen, Lord, Lady};
+    public enum ActorTitle {None, Ursuper, King, Queen, Lord, Lady, BannerLord}; //none should be '0'
     public enum ActorSex {Male, Female};
 
     internal class Actor
@@ -33,6 +33,7 @@ namespace Next_Game
             Age = 30;
             Title = ActorTitle.None;
             Sex = ActorSex.Male;
+            Handle = null;
         }
 
         /// <summary>
