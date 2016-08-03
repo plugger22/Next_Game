@@ -304,6 +304,8 @@ namespace Next_Game
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}", person.Age, person.Sex)));
 
             }
+            else
+            { listToDisplay.Add(new Snippet("No Character with this ID exists", RLColor.Red, RLColor.Black)); }
             
             return listToDisplay;
         }
