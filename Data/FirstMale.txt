@@ -3,6 +3,7 @@ Eddard
 Jon
 Tyrion
 Davos
+Mace
 Theon
 Jaime
 Samwell

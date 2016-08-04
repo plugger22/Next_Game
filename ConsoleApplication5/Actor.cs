@@ -3,7 +3,10 @@
 namespace Next_Game
 {
     public enum ActorStatus {AtLocation, Travelling};
-    public enum ActorTitle {None, Ursuper, King, Queen, Lord, Lady, BannerLord, Minion}; //none should be '0'
+    public enum ActorTitle {None, Ursuper, Lord, Lady, BannerLord, Loyal_Follower}; //none should be '0'
+    public enum ActorOffice {None, King, Queen, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch, Master_of_Coin, Master_of_Whisperers, Master_of_Laws,
+                             Master_of_Ships, Warden_of_the_North, Warden_of_the_East, Warden_of_the_South, Warden_of_the_West }
+    public enum ActorRealm {None, Head_of_Noble_House, Head_of_House}
     public enum ActorSex {Male, Female};
 
     internal class Actor
@@ -18,6 +21,8 @@ namespace Next_Game
         public int Age { get; set; }
         public string Description { get; set; }
         public ActorTitle Title { get; set; }
+        public ActorOffice Office { get; set; } = 0; //official title, if any
+        public ActorRealm Realm { get; set; } = 0; //local house title, if any
         public ActorSex Sex { get; set; }
         public string Handle { get; set; } //eg. Nickname
         
@@ -68,7 +73,11 @@ namespace Next_Game
         { return ActID; }
     }
 
-    //Active actors - player controlled
+
+    //
+    //Active actors - player controlled ---
+    //
+
     class Active : Actor
     {
         public Active()
@@ -92,9 +101,18 @@ namespace Next_Game
         { }
     }
 
-    //Passive actors - all NPC's
+
+    //
+    //Passive actors - all NPC's ---
+    //
+
     class Passive : Actor
     {
+        public int RefID { get; set; } = 0; //house assignment, eg. Lannister (not HouseID). A 
+        public int GenID { get; set; } = 1; //generation (1st, 2nd etc.
+        
+
+
         public Passive()
         { }
 

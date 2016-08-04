@@ -267,33 +267,25 @@ namespace Next_Game
             if (dictAllActors.TryGetValue(actorID, out person))
             {
                 int locID = person.LocID;
-                string name = string.Format("{0}, Aid {1}", person.Name, actorID);
-                string actorType = "?";
+                string name = string.Format("{0} {1}, Aid {2}", person.Title, person.Name, actorID);
                 RLColor color = RLColor.White;
-                //Type type = person.GetType();
-                //Console.WriteLine("{0}",type.Name);
-                if (person is Active)
-                //Player controlled
-                {
-                    if (person.GetActorID() == 1)
-                    { actorType = "Player"; color = RLColor.Cyan; }
-                    else
-                    { actorType = "Minion"; color = RLColor.Brown;}
-                }
                 string locString = "?";
                 if (person.GetActorStatus() == (int)ActorStatus.AtLocation)
-                { locString = string.Format("Located at {0}, Lid {1}, {2}", GetLocationName(locID), locID, ShowLocationCoords(locID) );}
+                { locString = string.Format("Located at {0} {1}, Lid {2}", GetLocationName(locID), ShowLocationCoords(locID), locID );}
                 else if (person.GetActorStatus() == (int)ActorStatus.Travelling)
                 {
                     Position pos = person.GetActorPosition();
-                    locString = string.Format("Currently at {0}:{1}, travelling towards {2}, Lid {3}, {4}", pos.PosX, pos.PosY, GetLocationName(locID), locID, ShowLocationCoords(locID));
+                    locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}", pos.PosX, pos.PosY, GetLocationName(locID), ShowLocationCoords(locID), locID);
                 }
                 listToDisplay.Add(new Snippet(name, RLColor.Yellow, RLColor.Black));
-                listToDisplay.Add(new Snippet(actorType, color, RLColor.Black));
+                if ((int)person.Realm > 0)
+                { listToDisplay.Add(new Snippet(string.Format("Realm Title: {0}", person.Realm))); }
+                if ((int)person.Office > 0)
+                { listToDisplay.Add(new Snippet(string.Format("Office: {0}", person.Office), RLColor.Yellow, RLColor.Black)); }
                 if (person.Handle != null)
                 { listToDisplay.Add(new Snippet(string.Format("\"{0}\"", person.Handle))); }
                 listToDisplay.Add(new Snippet(locString));
-                listToDisplay.Add(new Snippet(string.Format("Title: {0}", person.Title)));
+                //listToDisplay.Add(new Snippet(string.Format("Title: {0}", person.Title)));
                 listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}", person.Age, person.Sex)));
 
@@ -567,13 +559,15 @@ namespace Next_Game
                 dictGreatID.Add(house.HouseID, house.GetNumBannerLords());
                 //create Lord and Lady for house
                 Passive actorLord = Game.history.CreatePassiveActor(house.Name, ActorTitle.Lord);
-                Passive actorLady = Game.history.CreatePassiveActor(house.Name, ActorTitle.Lady);
+                Passive actorLady = Game.history.CreatePassiveActor(house.Name, ActorTitle.Lady, ActorSex.Female);
                 actorLord.LocID = house.LocID;
                 actorLady.LocID = house.LocID;
                 Location loc = Game.network.GetLocation(house.LocID);
                 Position pos = loc.GetPosition();
                 actorLord.SetActorPosition(pos);
                 actorLady.SetActorPosition(pos);
+                actorLord.RefID = house.RefID;
+                actorLady.RefID = house.RefID;
                 //add to dictionaries of actors
                 dictPassiveActors.Add(actorLord.GetActorID(), actorLord);
                 dictPassiveActors.Add(actorLady.GetActorID(), actorLady);

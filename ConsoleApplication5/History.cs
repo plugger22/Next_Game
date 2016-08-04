@@ -288,7 +288,7 @@ namespace Next_Game
                 //delete record in list to prevent duplicate names
                 listOfActorNames.RemoveAt(index);
                 //new character
-                ActorTitle title = ActorTitle.Minion;
+                ActorTitle title = ActorTitle.Loyal_Follower;
                 //set player as ursuper
                 if (i == 0)
                 { title = ActorTitle.Ursuper; }
@@ -305,9 +305,9 @@ namespace Next_Game
             string actorName = GetActorName(lastName, sex);
             //create actor
             if (title == ActorTitle.BannerLord)
-            { actor = new BannerLord(actorName, title, sex); }
+            { actor = new BannerLord(actorName, title, sex); actor.Realm = ActorRealm.Head_of_House; }
             else if (title == ActorTitle.Lord)
-            { actor = new Family (actorName, title, sex); }
+            { actor = new Family (actorName, title, sex); actor.Realm = ActorRealm.Head_of_Noble_House; }
             else if (title == ActorTitle.Lady)
             { actor = new Family(actorName, title, sex); }
 
