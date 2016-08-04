@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Actor.cs" />
     <Compile Include="Archive.cs" />
+    <Compile Include="HistLog.cs" />
     <Compile Include="House.cs" />
     <Compile Include="History.cs" />
     <Compile Include="System\InfoChannel.cs" />
