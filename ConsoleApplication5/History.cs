@@ -30,8 +30,10 @@ namespace Next_Game
     //Location data flow: create in Map => Network to generate routes => History to generate names and data => World for current state and future changes
     public class History
     {
-        private List<Active> playerCharacters;
-        private List<string> listOfCharacterNames;
+        private List<Active> listOfPlayerActors;
+        private List<string> listOfActorNames;
+        private List<string> listOfMaleFirstNames;
+        private List<string> listOfFemaleFirstNames;
         private List<House> listOfGreatHouses;
         private List<House> listOfMinorHouses;
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
@@ -44,8 +46,10 @@ namespace Next_Game
         public History(int seed)
         {
             rnd = new Random(seed);
-            playerCharacters = new List<Active>();
-            listOfCharacterNames = new List<string>();
+            listOfPlayerActors = new List<Active>();
+            listOfActorNames = new List<string>();
+            listOfMaleFirstNames = new List<string>();
+            listOfFemaleFirstNames = new List<string>();
             listOfGreatHouses = new List<House>();
             listOfMinorHouses = new List<House>();
             listHousePool = new List<HouseStruct>(); 
@@ -58,15 +62,29 @@ namespace Next_Game
         public void InitialiseHistory(int numHousesRequired)
         {
             //
-            // read in location names for Great Houses ---
+            // read in lists of First Male and Female names ---
             //
-            string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Names.txt";
+            string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/FirstMale.txt";
             string[] arrayOfCharacterNames = File.ReadAllLines(filePath);
             //read location names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
-            { listOfCharacterNames.Add(arrayOfCharacterNames[i]); }
+            { listOfMaleFirstNames.Add(arrayOfCharacterNames[i]); }
+            //female
+            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/FirstFemale.txt";
+            arrayOfCharacterNames = File.ReadAllLines(filePath);
+            //read location names from array into list
+            for (int i = 0; i < arrayOfCharacterNames.Length; i++)
+            { listOfFemaleFirstNames.Add(arrayOfCharacterNames[i]); }
             //
-            //read in house pool for BannerLords ---
+            // read in Player Names ---
+            //
+            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/PlayerNames.txt";
+            arrayOfCharacterNames = File.ReadAllLines(filePath);
+            //read location names from array into list
+            for (int i = 0; i < arrayOfCharacterNames.Length; i++)
+            { listOfActorNames.Add(arrayOfCharacterNames[i]); }
+            //
+            //read in house pool for GreatHouses ---
             //
             filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/GreatHouses.txt";
             string[] arrayOfHouseNames = File.ReadAllLines(filePath);
@@ -257,25 +275,50 @@ namespace Next_Game
         /// create a base list of Player controlled Characters
         /// </summary>
         /// <param name="numCharacters" how many characters do you want?></param>
-        public void CreatePlayerCharacters(int numCharacters)
+        public void CreatePlayerActors(int numCharacters)
         {
-            string charName;
+            string actorName;
             //rough and ready creation of a handful of basic player characters
             for (int i = 0; i < numCharacters; i++)
             {
                 int index;
-                index = rnd.Next(0, listOfCharacterNames.Count);
+                index = rnd.Next(0, listOfActorNames.Count);
                 //get name
-                charName = listOfCharacterNames[index];
+                actorName = listOfActorNames[index];
                 //delete record in list to prevent duplicate names
-                listOfCharacterNames.RemoveAt(index);
+                listOfActorNames.RemoveAt(index);
                 //new character
-                Active person = new Active(charName);
+                ActorTitle title = ActorTitle.Minion;
                 //set player as ursuper
-                if (person.GetActorID() == 1)
-                { person.Title = ActorTitle.Ursuper; }
-                playerCharacters.Add(person);
+                if (i == 0)
+                { title = ActorTitle.Ursuper; }
+                Active person = new Active(actorName, title);
+                listOfPlayerActors.Add(person);
+                
             }
+        }
+
+        public void CreatePassiveActor(string lastName, ActorTitle title, int locID, ActorSex sex = ActorSex.Male)
+        {
+            string actorName;
+            List<string> listOfNames = new List<string>();
+            //get a random first name
+            if (sex == ActorSex.Male)
+            { listOfNames = listOfMaleFirstNames; }
+            else
+            { listOfNames = listOfFemaleFirstNames; }
+            int index = rnd.Next(0, listOfNames.Count);
+            //complete name
+            actorName = listOfNames[index] + lastName;
+            //create actor
+            if (title == ActorTitle.BannerLord)
+            { Passive actor = new BannerLord(actorName, title, locID, sex); }
+            else if (title == ActorTitle.Lord)
+            { Passive actor = new Family (actorName, title, locID, sex); }
+            else if (title == ActorTitle.Lady)
+            { Passive actor = new Family(actorName, title, locID, sex); }
+
+
         }
 
         //CreateBannerLord
@@ -284,8 +327,8 @@ namespace Next_Game
         /// return list of Initial Player Characters
         /// </summary>
         /// <returns>List of Characters</returns>
-        internal List<Active> GetPlayerCharacters()
-        { return playerCharacters; }
+        internal List<Active> GetPlayerActors()
+        { return listOfPlayerActors; }
 
         /// <summary>
         ///return list of Great Houses (one house for each houseID)

@@ -88,9 +88,9 @@ namespace Next_Game
             network.InitialiseNetwork();
             history = new History(seed);
             history.InitialiseHistory(network.GetNumUniqueHouses());
-            history.CreatePlayerCharacters(6);
+            history.CreatePlayerActors(6);
             world = new World();
-            world.InitiatePlayerActors(history.GetPlayerCharacters(), 1);
+            world.InitiatePlayerActors(history.GetPlayerActors(), 1);
             network.UpdateHouses(history.GetGreatHouses());
             world.InitialiseHouses();
             //---interim history.cs step needed to update History of houses

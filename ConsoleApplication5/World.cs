@@ -429,7 +429,7 @@ namespace Next_Game
                         {
                             Active person = new Active();
                             person = dictActiveActors[charID];
-                            charDetails = string.Format("Aid {0}: {1}", person.GetActorID(), person.Name);
+                            charDetails = string.Format("Aid {0}, {1}", person.GetActorID(), person.Name);
                         }
                         else
                         {   charDetails = string.Format("unknown ID " + Convert.ToString(charID)); }

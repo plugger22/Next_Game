@@ -3,7 +3,7 @@
 namespace Next_Game
 {
     public enum ActorStatus {AtLocation, Travelling};
-    public enum ActorTitle {None, Ursuper, King, Queen, Lord, Lady, BannerLord}; //none should be '0'
+    public enum ActorTitle {None, Ursuper, King, Queen, Lord, Lady, BannerLord, Minion}; //none should be '0'
     public enum ActorSex {Male, Female};
 
     internal class Actor
@@ -40,16 +40,17 @@ namespace Next_Game
         /// main constructor
         /// </summary>
         /// <param name="name"></param>
-        public Actor(string name)
+        public Actor(string name, ActorTitle title, int locID = 1, ActorSex sex = ActorSex.Male)
         {
             status = ActorStatus.AtLocation;
             Name = name;
             this.ActID = characterIndex++;
             actorPos = new Position();
+            this.LocID = locID;
             Description = "standard human";
             Age = 30;
-            Title = ActorTitle.None;
-            Sex = ActorSex.Male;
+            Title = title;
+            Sex = sex;
         }
 
         public void SetActorPosition(Position posLoc)
@@ -74,41 +75,56 @@ namespace Next_Game
         public Active()
         { }
 
-        public Active(string name) : base (name)
+        public Active(string name, ActorTitle title, int locID = 1, ActorSex sex = ActorSex.Male) : base (name, title, locID, sex)
         { }
     }
 
     //Player avatar
     class Player : Active
     {
-        public Player(string name) : base (name)
+        public Player(string name, ActorTitle title, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, title, locID, sex)
         { }
     }
 
     //Player controlled Minions
     class Minion : Active
     {
-        public Minion(string name) : base (name)
+        public Minion(string name, ActorTitle title, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, title, locID, sex)
         { }
     }
 
     //Passive actors - all NPC's
     class Passive : Actor
-    { }
+    {
+        public Passive(string name, ActorTitle title, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, title, locID, sex)
+        { }
+    }
 
     //Great House Family members
     class Family : Passive
-    { }
+    {
+        public Family (string name, ActorTitle title, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, title, locID, sex)
+        { }
+    }
 
     //BannerLords
-    class Lord : Passive
-    { }
+    class BannerLord : Passive
+    {
+        public BannerLord (string name, ActorTitle title, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, title, locID, sex)
+        { }
+    }
 
     //Kings Council Members
     class Advisor : Passive
-    { }
+    {
+        public Advisor (string name, ActorTitle title, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, title, locID, sex)
+        { }
+    }
 
     //Special NPC's
     class Special : Passive
-    { }
+    {
+        public Special (string name, ActorTitle title, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, title, locID, sex)
+        { }
+    }
 }
