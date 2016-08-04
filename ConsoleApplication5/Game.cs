@@ -50,6 +50,9 @@ namespace Next_Game
         private static RLConsole _messageConsole; //bottom right
 
         private static int mapSize = 30;
+        public static int gameTurn = 0; //each turn represents a day
+        public static int gameStart = 1200; //starting year for 1st generation
+        public static int gameYear = 1200; //current game year
         public static Menu menu;
         public static MessageLog messageLog;
         public static Map map;
@@ -93,7 +96,7 @@ namespace Next_Game
             //---interim history.cs step needed to update History of houses
             infoChannel = new InfoChannel();
             world.ShowGeneratorStatsRL();
-            messageLog.Add(new Snippet($"Game world created with seed {seed}"), world.GetGameTurn());
+            messageLog.Add(new Snippet($"Game world created with seed {seed}"), gameTurn);
             //set up menu
             menu = new Menu(4, 6);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
@@ -321,7 +324,7 @@ namespace Next_Game
                                             {
                                                 List<Position> pathToTravel = network.GetPathAnywhere(posSelect1, posSelect2);
                                                 string infoText = world.InitiateMoveCharacters(charIDSelected, posSelect1, posSelect2, pathToTravel);
-                                                messageLog.Add(new Snippet(infoText), world.GetGameTurn());
+                                                messageLog.Add(new Snippet(infoText), gameTurn);
                                                 infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
                                                 //show route
                                                 map.UpdateMap();
@@ -488,11 +491,11 @@ namespace Next_Game
                             }
                             break;
                         case RLKey.Enter:
-                            world.IncrementGameTurn();
                             map.UpdateMap();
                             map.UpdatePlayers(world.MoveCharacters());
                             infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
-                            infoChannel.AppendInfoList(new Snippet($"Day of our Lord {world.GameTurn}", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
+                            infoChannel.AppendInfoList(new Snippet(ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
+                            gameTurn++;
                             break;
                         case RLKey.X:
                             //exit application from Main Menu
@@ -738,6 +741,22 @@ namespace Next_Game
             infoChannel.AppendInfoList(new Snippet(string.Format("Press ENTER when done or ESC to exit", multiData)), ConsoleDisplay.Input);
             infoChannel.AppendInfoList(new Snippet("Any '?' will be automatically removed"), ConsoleDisplay.Input);
             return inputComplete;
+        }
+
+        public static string ShowDate()
+        {
+            string dateReturn = "Unknown";
+            int moonDay = (gameTurn % 30) + 1;
+            int moonCycle = (gameTurn / 30) + 1;
+            string moonSuffix = "th";
+            if (moonCycle == 1)
+            { moonSuffix = "st"; }
+            else if (moonCycle == 2)
+            { moonSuffix = "nd"; }
+            else if (moonCycle == 3)
+            { moonSuffix = "rd"; }
+            dateReturn = string.Format("Day {0} of the {1}{2} Moon in the Year of our Gods {3}  (Turn {4})", moonDay, moonCycle, moonSuffix, gameYear, gameTurn + 1);
+            return dateReturn;
         }
     }
 }

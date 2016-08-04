@@ -278,6 +278,8 @@ namespace Next_Game
             }
         }
 
+        //CreateBannerLord
+
         /// <summary>
         /// return list of Initial Player Characters
         /// </summary>

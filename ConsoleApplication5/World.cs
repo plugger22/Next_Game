@@ -17,7 +17,7 @@ namespace Next_Game
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
         private Dictionary<int, int> dictGreatID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
         private Dictionary<int, int> dictHousePower; // list of Great Houses, Sorted (key is House ID, value is # of bannerlords (power))
-        public int GameTurn { get; set; } = 1;
+        //public int GameTurn { get; set; } = 1;
 
         //default constructor
         public World()
@@ -33,11 +33,11 @@ namespace Next_Game
         }
 
 
-        public void IncrementGameTurn()
-        { GameTurn++; }
+        //public void IncrementGameTurn()
+        //{ Game.GameTurn++; }
 
-        public int GetGameTurn()
-        { return GameTurn; }
+        //public int GetGameTurn()
+        //{ return GameTurn; }
 
         /// <summary>
         /// Sets up Player characters at the specificied location at start of game
@@ -102,7 +102,7 @@ namespace Next_Game
                     {
                         loc.RemoveCharacter(charID);
                         //create new move object
-                        Move moveObject = new Move(path, party, speed, true, this.GameTurn);
+                        Move moveObject = new Move(path, party, speed, true, Game.gameTurn);
                         //insert into moveList
                         moveList.Add(moveObject);
                         //update character status to 'travelling'
@@ -154,14 +154,14 @@ namespace Next_Game
                                 person.SetActorPosition(posDestination);
                                 person.LocID = locID;
                                 Snippet snippet = new Snippet(string.Format(person.Name + " has arrived safely at " + loc.LocName));
-                                Game.messageLog.Add(snippet, GameTurn);
+                                Game.messageLog.Add(snippet, Game.gameTurn);
                             }
                             else
-                            { Game.messageLog.Add(new Snippet("Error in World.MoveCharacters(): Character not found"), GameTurn); }
+                            { Game.messageLog.Add(new Snippet("Error in World.MoveCharacters(): Character not found"), Game.gameTurn); }
                         }
                     }
                     else
-                    { Game.messageLog.Add(new Snippet("Error in World.MoveCharacters(): Location not found"), GameTurn); }
+                    { Game.messageLog.Add(new Snippet("Error in World.MoveCharacters(): Location not found"), Game.gameTurn); }
                     //update Party status to enable deletion of moveObject from list (below)
                     moveObject.SetPartyStatus(PartyStatus.Done);
                 }

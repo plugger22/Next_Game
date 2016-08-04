@@ -101,6 +101,9 @@ namespace Next_Game
             switch (consoleDisplay)
             {
                 case ConsoleDisplay.Input:
+                    //default date display if nothing present
+                    if (inputList.Count == 0)
+                    { inputList.Add(new Snippet(Game.ShowDate(), RLColor.Yellow, RLColor.Black)); }
                     displayList = inputList;
                     margin = inputMargin;
                     break;
