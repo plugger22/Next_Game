@@ -298,27 +298,46 @@ namespace Next_Game
             }
         }
 
-        public void CreatePassiveActor(string lastName, ActorTitle title, int locID, ActorSex sex = ActorSex.Male)
+        internal Passive CreatePassiveActor(string lastName, ActorTitle title, ActorSex sex = ActorSex.Male )
         {
-            string actorName;
-            List<string> listOfNames = new List<string>();
+            Passive actor = null;
             //get a random first name
-            if (sex == ActorSex.Male)
-            { listOfNames = listOfMaleFirstNames; }
-            else
-            { listOfNames = listOfFemaleFirstNames; }
-            int index = rnd.Next(0, listOfNames.Count);
-            //complete name
-            actorName = listOfNames[index] + lastName;
+            string actorName = GetActorName(lastName, sex);
             //create actor
             if (title == ActorTitle.BannerLord)
-            { Passive actor = new BannerLord(actorName, title, locID, sex); }
+            { actor = new BannerLord(actorName, title, sex); }
             else if (title == ActorTitle.Lord)
-            { Passive actor = new Family (actorName, title, locID, sex); }
+            { actor = new Family (actorName, title, sex); }
             else if (title == ActorTitle.Lady)
-            { Passive actor = new Family(actorName, title, locID, sex); }
+            { actor = new Family(actorName, title, sex); }
 
+            return actor;
+        }
 
+        /// <summary>
+        /// takes a surname and a sex and returns a full name, eg. 'Edward Stark'
+        /// </summary>
+        /// <param name="lastName"></param>
+        /// <param name="sex"></param>
+        /// <returns></returns>
+        private string GetActorName(string lastName, ActorSex sex)
+        {
+            string fullName = null;
+            List<string> listOfNames = new List<string>();
+            int numRecords = 0;
+            if (sex == ActorSex.Male)
+            {
+                numRecords = listOfMaleFirstNames.Count;
+                int index = rnd.Next(0, numRecords);
+                fullName = listOfMaleFirstNames[index] + " " + lastName;
+            }
+            else
+            {
+                numRecords = listOfFemaleFirstNames.Count;
+                int index = rnd.Next(0, numRecords);
+                fullName = listOfFemaleFirstNames[index] + " " + lastName;
+            }
+            return fullName;
         }
 
         //CreateBannerLord

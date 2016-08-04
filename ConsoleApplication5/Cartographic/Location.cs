@@ -72,7 +72,7 @@ namespace Next_Game.Cartographic
         private readonly List<Route> routeToConnector = new List<Route>(); //Loc -> Connector
         private readonly List<Route> routeFromCapital = new List<Route>(); //Capital -> Loc
         private readonly List<Route> routeFromConnector = new List<Route>(); //Connector -> Loc
-        private List<int> characterList = new List<int>(); //list of characters (charID's) currently at Location
+        private List<int> listOfActors = new List<int>(); //list of characters (charID's) currently at Location
 
         public Location()
         { LocName = "testville"; Capital = false; locPos = new Position(); LocationID = locationIndex++; }
@@ -251,8 +251,8 @@ namespace Next_Game.Cartographic
         public Position GetPosition()
         { return locPos; }
 
-        public List<int> GetCharacterList()
-        { return characterList; }
+        public List<int> GetActorList()
+        { return listOfActors; }
        
 
         //set Connector status (connector node to another branch?)
@@ -275,12 +275,12 @@ namespace Next_Game.Cartographic
         }
 
         //add character to location
-        public void AddCharacter(int charID)
-        { characterList.Add(charID); }
+        public void AddActor(int charID)
+        { listOfActors.Add(charID); }
 
         //remove character from location
         public void RemoveCharacter(int charID)
-        { characterList.Remove(charID); }
+        { listOfActors.Remove(charID); }
 
 
         //prints details of array

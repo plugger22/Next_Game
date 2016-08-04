@@ -33,12 +33,6 @@ namespace Next_Game
         }
 
 
-        //public void IncrementGameTurn()
-        //{ Game.GameTurn++; }
-
-        //public int GetGameTurn()
-        //{ return GameTurn; }
-
         /// <summary>
         /// Sets up Player characters at the specificied location at start of game
         /// </summary>
@@ -57,7 +51,7 @@ namespace Next_Game
                 dictAllActors.Add(person.GetActorID(), person);
                 //add to Location list of Characters
                 Location loc = Game.network.GetLocation(locID);
-                loc.AddCharacter(person.GetActorID());
+                loc.AddActor(person.GetActorID());
             }
         }
 
@@ -144,7 +138,7 @@ namespace Next_Game
                     {
                         foreach(int charID in charListMoveObject)
                         {
-                            loc.AddCharacter(charID);
+                            loc.AddActor(charID);
                             //find character and update details
                             if (dictActiveActors.ContainsKey(charID))
                             {
@@ -416,24 +410,24 @@ namespace Next_Game
                 if (loc.Connector == true)
                 { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
                 //characters at location
-                List<int> charList = loc.GetCharacterList();
+                List<int> charList = loc.GetActorList();
                 if (charList.Count > 0)
                 {
                     int row = 3;
                     locList.Add(new Snippet(string.Format("Characters at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
-                    string charDetails;
+                    string actorDetails;
                     foreach (int charID in charList)
                     {
                         row++;
-                        if (dictActiveActors.ContainsKey(charID))
+                        if (dictAllActors.ContainsKey(charID))
                         {
-                            Active person = new Active();
-                            person = dictActiveActors[charID];
-                            charDetails = string.Format("Aid {0}, {1}", person.GetActorID(), person.Name);
+                            Actor person = new Actor();
+                            person = dictAllActors[charID];
+                            actorDetails = string.Format("Aid {0} {1} {2}", person.GetActorID(), person.Title, person.Name);
                         }
                         else
-                        {   charDetails = string.Format("unknown ID " + Convert.ToString(charID)); }
-                        locList.Add(new Snippet(charDetails));
+                        {   actorDetails = string.Format("unknown ID " + Convert.ToString(charID)); }
+                        locList.Add(new Snippet(actorDetails));
                     }
                 }
             }
@@ -571,6 +565,23 @@ namespace Next_Game
                 dictGreatHouses.Add(house.HouseID, house);
                 dictAllHouses.Add(house.RefID, house);
                 dictGreatID.Add(house.HouseID, house.GetNumBannerLords());
+                //create Lord and Lady for house
+                Passive actorLord = Game.history.CreatePassiveActor(house.Name, ActorTitle.Lord);
+                Passive actorLady = Game.history.CreatePassiveActor(house.Name, ActorTitle.Lady);
+                actorLord.LocID = house.LocID;
+                actorLady.LocID = house.LocID;
+                Location loc = Game.network.GetLocation(house.LocID);
+                Position pos = loc.GetPosition();
+                actorLord.SetActorPosition(pos);
+                actorLady.SetActorPosition(pos);
+                //add to dictionaries of actors
+                dictPassiveActors.Add(actorLord.GetActorID(), actorLord);
+                dictPassiveActors.Add(actorLady.GetActorID(), actorLady);
+                dictAllActors.Add(actorLord.GetActorID(), actorLord);
+                dictAllActors.Add(actorLady.GetActorID(), actorLady);
+                //store actors in location
+                loc.AddActor(actorLord.GetActorID());
+                loc.AddActor(actorLady.GetActorID());
             }
             //populate sorted dictionary (descending) of house ID's by Power (# of BannerLords)
             foreach (KeyValuePair<int, int> kvp in dictGreatID.OrderByDescending(key => key.Value))
