@@ -289,8 +289,15 @@ namespace Next_Game
                 listToDisplay.Add(new Snippet(locString));
                 //listToDisplay.Add(new Snippet(string.Format("Title: {0}", person.Title)));
                 listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
-                listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}", person.Age, person.Sex)));
-
+                listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
+                //personal history
+                List<string> actorHistory = GetActorRecords(person.GetActorID());
+                if (actorHistory.Count > 0)
+                {
+                    listToDisplay.Add(new Snippet("Personal History", RLColor.Brown, RLColor.Black));
+                    foreach (string text in actorHistory)
+                    { listToDisplay.Add(new Snippet(text)); }
+                }
             }
             else
             { listToDisplay.Add(new Snippet("No Character with this ID exists", RLColor.Red, RLColor.Black)); }
@@ -304,7 +311,7 @@ namespace Next_Game
         /// <param name="inputConsole"></param>
         /// <param name="consoleDisplay"></param>
         /// <param name="charID"></param>
-        public Snippet ShowSelectedCharacter(int charID)
+        public Snippet ShowSelectedActor(int charID)
         {
             string returnText = "Character NOT KNOWN";
             //find in dictionary
@@ -319,13 +326,17 @@ namespace Next_Game
             return new Snippet(returnText);
         }
 
-        /*public void ShowAllLocations()
+        public List<Snippet> ShowRecordsRL()
         {
-            Console.WriteLine();
-            Console.WriteLine("Locations");
-            foreach (KeyValuePair<int, Location> pair in dictLocationsByID)
-            { Console.WriteLine("ID {0,-2}   {1,-20}", pair.Key, pair.Value.LocName); }
-        }*/
+            List<Snippet> listOfHistory = new List<Snippet>();
+            listOfHistory.Add(new Snippet("--- All Records", RLColor.Yellow, RLColor.Black));
+            foreach(KeyValuePair<int, Record> kvp in dictRecords)
+            {
+                string text = string.Format("{0} {1}", kvp.Value.Year, kvp.Value.Text);
+                listOfHistory.Add(new Snippet(text));
+            }
+            return listOfHistory;
+        }
 
         internal string GetLocationName(int locID)
         {
@@ -466,6 +477,14 @@ namespace Next_Game
                         houseList.Add(new Snippet(bannerLord));
                     }
                 }
+                //house history
+                List<string> houseHistory = GetHouseRecords(majorHouse.RefID);
+                if (houseHistory.Count > 0)
+                {
+                    houseList.Add(new Snippet("House History", RLColor.Brown, RLColor.Black));
+                    foreach(string text in houseHistory)
+                    { houseList.Add(new Snippet(text)); }
+                }
             }
             return houseList;
         }
@@ -577,10 +596,10 @@ namespace Next_Game
                 dictAllActors.Add(actorLady.GetActorID(), actorLady);
                 //create records of being born
                 string descriptor = string.Format("{0} born at {1}", actorLord.Name, loc.LocName);
-                Record recordLord = new Record(descriptor, actorLord.GetActorID(), loc.LocationID, house.RefID);
+                Record recordLord = new Record(descriptor, actorLord.GetActorID(), loc.LocationID, house.RefID, actorLord.Born, HistEvent.Born);
                 dictRecords.Add(recordLord.eventID, recordLord);
                 descriptor = string.Format("{0} born at {1}", actorLady.Name, loc.LocName);
-                Record recordLady = new Record(descriptor, actorLady.GetActorID(), loc.LocationID, house.RefID);
+                Record recordLady = new Record(descriptor, actorLady.GetActorID(), loc.LocationID, house.RefID, actorLady.Born, HistEvent.Born);
                 dictRecords.Add(recordLady.eventID, recordLady);
                 //store actors in location
                 loc.AddActor(actorLord.GetActorID());
@@ -677,6 +696,44 @@ namespace Next_Game
             if (dictAllHouses.TryGetValue(refID, out house))
             { return house; }
             return null;
+        }
+
+        /// <summary>
+        /// Query to return list of strings containing selected actor's personal history
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <returns></returns>
+        private List<string> GetActorRecords(int actorID)
+        {
+            List<string> actorRecords = new List<string>();
+            //query
+            IEnumerable<string> actorHistory =
+                from actor in dictRecords
+                from actID in actor.Value.listOfActors
+                where actID == actorID
+                select Convert.ToString(actor.Value.Year + " " + actor.Value.Text);
+            //place filtered data into list
+            actorRecords = actorHistory.ToList();
+            return actorRecords;
+        }
+
+        /// <summary>
+        /// Query to return list of strings containing selected house's history
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        private List<string> GetHouseRecords(int refID)
+        {
+            List<string> houseRecords = new List<string>();
+            //query
+            IEnumerable<string> houseHistory =
+                from house in dictRecords
+                from _refID in house.Value.listOfHouses
+                where _refID == refID
+                select Convert.ToString(house.Value.Year + " " + house.Value.Text);
+            //place filtered data into list
+            houseRecords = houseHistory.ToList();
+            return houseRecords;
         }
 
         //new Methods above here

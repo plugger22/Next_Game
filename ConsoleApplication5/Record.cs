@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    //categories - each should have multually exclusive events
-    public enum ActorEvent {None, Born, Died, Married}
-    public enum KingdomEvent {None, Battle}
+    //categories (can choose multiple)
+    public enum HistEvent {None, Born, Died, Married, Battle}
 
     //
     //tracks historical Information & Events ---
@@ -20,37 +19,42 @@ namespace Next_Game
         public int eventID { get; }
         public int Year { get; set; }
         public int Turn { get; set; } = 0; //pre-game start events don't need this, hence '0'
-        private List<string> listOfText; //A log entry can have multiple lines of text if needed
-        private List<int> listOfActors; //actorID
-        private List<int> listOfLocs; //locID
-        private List<int> listOfHouses; //refID
-        private List<int> listOfItems; //itemID
-        //categories
-        public ActorEvent actorEvent { get; set; } = 0;
-        public KingdomEvent kingdomEvent { get; set; } = 0;
+        public string Text { get; set; } //descriptor
+        public List<int> listOfActors; //actorID
+        public List<int> listOfLocs; //locID
+        public List<int> listOfHouses; //refID
+        public List<int> listOfItems; //itemID
+        public List<HistEvent> listOfEvents; //categories
 
         public Record()
         {
             eventID = eventIndex++;
             Year = Game.gameYear;
             Turn = Game.gameTurn;
-            listOfText = new List<string>();
+            //initialise lists
             listOfActors = new List<int>();
             listOfLocs = new List<int>();
             listOfHouses = new List<int>();
             listOfItems = new List<int>();
+            listOfEvents = new List<HistEvent>();
         }
 
-        public Record(string text, int actorID, int locID, int refID, int itemID = 0)
+        public Record(string description, int actorID, int locID, int refID, int year, HistEvent histEvent = 0, int itemID = 0)
         {
             //it's a valid record only if there is a descriptive text
-            if (text != null)
+            if (description != null)
             {
                 eventID = eventIndex++;
-                Year = Game.gameYear;
+                this.Year = year;
                 Turn = Game.gameTurn;
+                //initialise lists
+                listOfActors = new List<int>();
+                listOfLocs = new List<int>();
+                listOfHouses = new List<int>();
+                listOfItems = new List<int>();
+                listOfEvents = new List<HistEvent>();
                 //lists
-                listOfText.Add(text);
+                Text = description;
                 if (actorID > 0)
                 { listOfActors.Add(actorID); }
                 if (locID > 0)
@@ -59,6 +63,8 @@ namespace Next_Game
                 { listOfHouses.Add(refID); }
                 if (itemID > 0)
                 { listOfItems.Add(itemID); }
+                if (histEvent > 0)
+                { listOfEvents.Add(histEvent); }
 
             }
         }

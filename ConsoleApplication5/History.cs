@@ -68,13 +68,19 @@ namespace Next_Game
             string[] arrayOfCharacterNames = File.ReadAllLines(filePath);
             //read location names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
-            { listOfMaleFirstNames.Add(arrayOfCharacterNames[i]); }
+            {
+                if (arrayOfCharacterNames[i] != "")
+                { listOfMaleFirstNames.Add(arrayOfCharacterNames[i]); }
+            }
             //female
             filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/FirstFemale.txt";
             arrayOfCharacterNames = File.ReadAllLines(filePath);
             //read location names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
-            { listOfFemaleFirstNames.Add(arrayOfCharacterNames[i]); }
+            {
+                if (arrayOfCharacterNames[i] != "")
+                { listOfFemaleFirstNames.Add(arrayOfCharacterNames[i]); }
+            }
             //
             // read in Player Names ---
             //

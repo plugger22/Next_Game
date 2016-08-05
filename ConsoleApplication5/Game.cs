@@ -98,7 +98,7 @@ namespace Next_Game
             world.ShowGeneratorStatsRL();
             messageLog.Add(new Snippet($"Game world created with seed {seed}"), gameTurn);
             //set up menu
-            menu = new Menu(4, 6);
+            menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
             // This must be the exact name of the bitmap font file we are using or it will error.
             string fontFileName = "terminal8x8.png";
@@ -443,6 +443,8 @@ namespace Next_Game
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
+                                    //show all historical Records
+                                    infoChannel.SetInfoList(world.ShowRecordsRL(), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Debug:
                                     //show debug route
@@ -485,7 +487,7 @@ namespace Next_Game
                                     _menuMode = menu.SwitchMenuMode(MenuMode.Character);
                                     charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
                                     List<Snippet> infoList = new List<Snippet>();
-                                    infoList.Add(world.ShowSelectedCharacter(charIDSelected));
+                                    infoList.Add(world.ShowSelectedActor(charIDSelected));
                                     infoChannel.SetInfoList(infoList, ConsoleDisplay.Input);
                                     break;
                             }
