@@ -17,6 +17,7 @@ namespace Next_Game
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
         private Dictionary<int, int> dictGreatID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
         private Dictionary<int, int> dictHousePower; // list of Great Houses, Sorted (key is House ID, value is # of bannerlords (power))
+        private Dictionary<int, Record> dictRecords; //all historical records in a central collection (key is eventID)
         //public int GameTurn { get; set; } = 1;
 
         //default constructor
@@ -30,6 +31,7 @@ namespace Next_Game
             dictAllHouses = new Dictionary<int, House>();
             dictGreatID = new Dictionary<int, int>();
             dictHousePower = new Dictionary<int, int>();
+            dictRecords = new Dictionary<int, Record>();
         }
 
 
@@ -573,6 +575,13 @@ namespace Next_Game
                 dictPassiveActors.Add(actorLady.GetActorID(), actorLady);
                 dictAllActors.Add(actorLord.GetActorID(), actorLord);
                 dictAllActors.Add(actorLady.GetActorID(), actorLady);
+                //create records of being born
+                string descriptor = string.Format("{0} born at {1}", actorLord.Name, loc.LocName);
+                Record recordLord = new Record(descriptor, actorLord.GetActorID(), loc.LocationID, house.RefID);
+                dictRecords.Add(recordLord.eventID, recordLord);
+                descriptor = string.Format("{0} born at {1}", actorLady.Name, loc.LocName);
+                Record recordLady = new Record(descriptor, actorLady.GetActorID(), loc.LocationID, house.RefID);
+                dictRecords.Add(recordLady.eventID, recordLady);
                 //store actors in location
                 loc.AddActor(actorLord.GetActorID());
                 loc.AddActor(actorLady.GetActorID());

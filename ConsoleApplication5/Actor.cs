@@ -2,7 +2,7 @@
 
 namespace Next_Game
 {
-    public enum ActorStatus {AtLocation, Travelling};
+    public enum ActorStatus {AtLocation, Travelling, Dead};
     public enum ActorTitle {None, Ursuper, Lord, Lady, BannerLord, Loyal_Follower}; //none should be '0'
     public enum ActorOffice {None, King, Queen, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch, Master_of_Coin, Master_of_Whisperers, Master_of_Laws,
                              Master_of_Ships, Warden_of_the_North, Warden_of_the_East, Warden_of_the_South, Warden_of_the_West }
@@ -19,6 +19,8 @@ namespace Next_Game
         public int Speed { get; set; } = 2; //speed of travel throughout the world
         private int ActID; //Can only have a max of 9 characters (including player) due to map draw limitations (mapMarker based on lowest Party ID)
         public int Age { get; set; }
+        public int Born { get; set; }
+        public int Died { get; set; }
         public string Description { get; set; }
         public ActorTitle Title { get; set; }
         public ActorOffice Office { get; set; } = 0; //official title, if any
@@ -110,8 +112,7 @@ namespace Next_Game
     {
         public int RefID { get; set; } = 0; //house assignment, eg. Lannister (not HouseID). A 
         public int GenID { get; set; } = 1; //generation (1st, 2nd etc.
-        
-
+        public int Married { get; set; }
 
         public Passive()
         { }

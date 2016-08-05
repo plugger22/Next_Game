@@ -310,6 +310,14 @@ namespace Next_Game
             { actor = new Family (actorName, title, sex); actor.Realm = ActorRealm.Head_of_Noble_House; }
             else if (title == ActorTitle.Lady)
             { actor = new Family(actorName, title, sex); }
+            //age (older men, younger wives
+            int age = 0;
+            if (sex == ActorSex.Male)
+            { age = rnd.Next(20, 70); }
+            else
+            { age = rnd.Next(15, 45); }
+            actor.Born = Game.gameYear - age;
+            actor.Age = age;
 
             return actor;
         }
