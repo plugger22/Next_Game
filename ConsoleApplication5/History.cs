@@ -304,7 +304,17 @@ namespace Next_Game
             }
         }
 
-        internal Passive CreatePassiveActor(string lastName, ActorTitle title, ActorSex sex = ActorSex.Male )
+        /// <summary>
+        /// Initialise Passive Actors at game start (populate world)
+        /// </summary>
+        /// <param name="lastName"></param>
+        /// <param name="title"></param>
+        /// <param name="pos"></param>
+        /// <param name="locID"></param>
+        /// <param name="refID"></param>
+        /// <param name="sex"></param>
+        /// <returns></returns>
+        internal Passive CreatePassiveActor(string lastName, ActorTitle title, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male )
         {
             Passive actor = null;
             //get a random first name
@@ -324,7 +334,38 @@ namespace Next_Game
             { age = rnd.Next(15, 45); }
             actor.Born = Game.gameYear - age;
             actor.Age = age;
-
+            //data
+            actor.SetActorPosition(pos);
+            actor.LocID = locID;
+            actor.RefID = refID;
+            actor.HouseID = houseID;
+            //house at birth (males the same, females from an adjacent house)
+            actor.BornRefID = refID;
+            actor.MaidenName = lastName;
+            int wifeHouseID = refID;
+            int highestHouseID = listOfGreatHouses.Count;
+            if (sex == ActorSex.Female && highestHouseID >= 2)
+            {
+                if (rnd.Next(100) < 50)
+                {
+                    //wife was born in Great House with lower HouseID
+                    wifeHouseID = houseID - 1;
+                    //can't be '0', instead roll over
+                    if (wifeHouseID == 0)
+                    { wifeHouseID = highestHouseID; }
+                }
+                else
+                {
+                    //wife born in higher HouseID
+                    wifeHouseID = houseID + 1;
+                    if (wifeHouseID > highestHouseID)
+                    { wifeHouseID = highestHouseID - 2; }
+                }
+                int bornRefID = Game.world.GetGreatHouseRefID(wifeHouseID);
+                actor.BornRefID = bornRefID;
+                actor.MaidenName = Game.world.GetGreatHouseName(wifeHouseID);
+            }
+            //return
             return actor;
         }
 

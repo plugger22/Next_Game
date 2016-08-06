@@ -110,9 +110,12 @@ namespace Next_Game
 
     class Passive : Actor
     {
-        public int RefID { get; set; } = 0; //house assignment, eg. Lannister (not HouseID). A 
+        public int RefID { get; set; } = 0; //house assignment, eg. Lannister (not HouseID).
+        public int HouseID { get; set; } = 0; //dynamically assigned great house alignment 
+        public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
         public int GenID { get; set; } = 1; //generation (1st, 2nd etc.
         public int Married { get; set; }
+        public string MaidenName { get; set; } = "unknown"; //used to store a wife's maiden name prior to marriage
 
         public Passive()
         { }

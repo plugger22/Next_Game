@@ -578,17 +578,11 @@ namespace Next_Game
                 dictGreatHouses.Add(house.HouseID, house);
                 dictAllHouses.Add(house.RefID, house);
                 dictGreatID.Add(house.HouseID, house.GetNumBannerLords());
-                //create Lord and Lady for house
-                Passive actorLord = Game.history.CreatePassiveActor(house.Name, ActorTitle.Lord);
-                Passive actorLady = Game.history.CreatePassiveActor(house.Name, ActorTitle.Lady, ActorSex.Female);
-                actorLord.LocID = house.LocID;
-                actorLady.LocID = house.LocID;
+                /*//create Lord and Lady for house
                 Location loc = Game.network.GetLocation(house.LocID);
                 Position pos = loc.GetPosition();
-                actorLord.SetActorPosition(pos);
-                actorLady.SetActorPosition(pos);
-                actorLord.RefID = house.RefID;
-                actorLady.RefID = house.RefID;
+                Passive actorLord = Game.history.CreatePassiveActor(house.Name, ActorTitle.Lord, pos, house.LocID, house.RefID);
+                Passive actorLady = Game.history.CreatePassiveActor(house.Name, ActorTitle.Lady, pos, house.LocID, house.RefID, ActorSex.Female);
                 //add to dictionaries of actors
                 dictPassiveActors.Add(actorLord.GetActorID(), actorLord);
                 dictPassiveActors.Add(actorLady.GetActorID(), actorLady);
@@ -598,12 +592,15 @@ namespace Next_Game
                 string descriptor = string.Format("{0} born at {1}", actorLord.Name, loc.LocName);
                 Record recordLord = new Record(descriptor, actorLord.GetActorID(), loc.LocationID, house.RefID, actorLord.Born, HistEvent.Born);
                 dictRecords.Add(recordLord.eventID, recordLord);
-                descriptor = string.Format("{0} born at {1}", actorLady.Name, loc.LocName);
-                Record recordLady = new Record(descriptor, actorLady.GetActorID(), loc.LocationID, house.RefID, actorLady.Born, HistEvent.Born);
+                //location born (different for lady)
+                House ladyHouse = GetHouse(actorLady.BornRefID);
+                Location locLady = Game.network.GetLocation(ladyHouse.LocID);
+                descriptor = string.Format("{0} born at {1}", actorLady.Name, locLady.LocName);
+                Record recordLady = new Record(descriptor, actorLady.GetActorID(), locLady.LocationID, house.RefID, actorLady.Born, HistEvent.Born);
                 dictRecords.Add(recordLady.eventID, recordLady);
                 //store actors in location
                 loc.AddActor(actorLord.GetActorID());
-                loc.AddActor(actorLady.GetActorID());
+                loc.AddActor(actorLady.GetActorID());*/
             }
             //populate sorted dictionary (descending) of house ID's by Power (# of BannerLords)
             foreach (KeyValuePair<int, int> kvp in dictGreatID.OrderByDescending(key => key.Value))
@@ -621,6 +618,33 @@ namespace Next_Game
                 refID = record.Value.RefID;
                 Location loc = Game.network.GetLocation(locID);
                 Game.map.SetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY(), refID);
+            }
+            //fill Great Houses with Lords and Ladies
+            foreach (KeyValuePair<int, MajorHouse> kvp in dictGreatHouses)
+            {
+                //create Lord and Lady for house
+                Location loc = Game.network.GetLocation(kvp.Value.LocID);
+                Position pos = loc.GetPosition();
+                Passive actorLord = Game.history.CreatePassiveActor(kvp.Value.Name, ActorTitle.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                Passive actorLady = Game.history.CreatePassiveActor(kvp.Value.Name, ActorTitle.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Female);
+                //add to dictionaries of actors
+                dictPassiveActors.Add(actorLord.GetActorID(), actorLord);
+                dictPassiveActors.Add(actorLady.GetActorID(), actorLady);
+                dictAllActors.Add(actorLord.GetActorID(), actorLord);
+                dictAllActors.Add(actorLady.GetActorID(), actorLady);
+                //create records of being born
+                string descriptor = string.Format("{0} born at {1}", actorLord.Name, loc.LocName);
+                Record recordLord = new Record(descriptor, actorLord.GetActorID(), loc.LocationID, kvp.Value.RefID, actorLord.Born, HistEvent.Born);
+                dictRecords.Add(recordLord.eventID, recordLord);
+                //location born (different for lady)
+                House ladyHouse = GetHouse(actorLady.BornRefID);
+                Location locLady = Game.network.GetLocation(ladyHouse.LocID);
+                descriptor = string.Format("{0} (maiden name: {1}) born at {2}", actorLady.Name, actorLady.MaidenName, locLady.LocName);
+                Record recordLady = new Record(descriptor, actorLady.GetActorID(), locLady.LocationID, actorLady.BornRefID, actorLady.Born, HistEvent.Born);
+                dictRecords.Add(recordLady.eventID, recordLady);
+                //store actors in location
+                loc.AddActor(actorLord.GetActorID());
+                loc.AddActor(actorLady.GetActorID());
             }
         }
 
@@ -734,6 +758,14 @@ namespace Next_Game
             //place filtered data into list
             houseRecords = houseHistory.ToList();
             return houseRecords;
+        }
+
+        public int GetGreatHouseRefID(int houseID)
+        {
+            MajorHouse house = new MajorHouse();
+            if (dictGreatHouses.TryGetValue(houseID, out house))
+            { return house.RefID; }
+            return 0;
         }
 
         //new Methods above here
