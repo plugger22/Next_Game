@@ -114,7 +114,7 @@ namespace Next_Game
         public int HouseID { get; set; } = 0; //dynamically assigned great house alignment 
         public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
         public int GenID { get; set; } = 1; //generation (1st, 2nd etc.
-        public int Married { get; set; }
+        public int Married { get; set; } = 0; //year married, 0 if not
         public string MaidenName { get; set; } = "unknown"; //used to store a wife's maiden name prior to marriage
 
         public Passive()
