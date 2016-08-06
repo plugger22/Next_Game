@@ -1,4 +1,5 @@
 ﻿using Next_Game.Cartographic;
+using System.Collections.Generic;
 
 namespace Next_Game
 {
@@ -8,6 +9,7 @@ namespace Next_Game
                              Master_of_Ships, Warden_of_the_North, Warden_of_the_East, Warden_of_the_South, Warden_of_the_West }
     public enum ActorRealm {None, Head_of_Noble_House, Head_of_House}
     public enum ActorSex {Male, Female};
+    public enum Relation {None, Wife, Husband, Son, Daughter, Bastard, Father, Mother}
 
     internal class Actor
     {
@@ -57,6 +59,7 @@ namespace Next_Game
             Age = 30;
             Title = title;
             Sex = sex;
+            
         }
 
         public void SetActorPosition(Position posLoc)
@@ -115,13 +118,36 @@ namespace Next_Game
         public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
         public int GenID { get; set; } = 1; //generation (1st, 2nd etc.
         public int Married { get; set; } = 0; //year married, 0 if not
-        public string MaidenName { get; set; } = "unknown"; //used to store a wife's maiden name prior to marriage
+        public string MaidenName { get; set; } = null; //used to store a wife's maiden name prior to marriage
+        private SortedDictionary<int, Relation> dictFamily; //stores list of all relations (keyed off actorID)
 
         public Passive()
-        { }
+        {
+            dictFamily = new SortedDictionary<int, Relation>();
+        }
 
         public Passive(string name, ActorTitle title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
-        { }
+        {
+            dictFamily = new SortedDictionary<int, Relation>();
+        }
+
+        /// <summary>
+        /// add relative to sorted Dictionary of same
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <param name="relation">enum Actor.cs</param>
+        public void AddRelation(int actorID, Relation relation)
+        {
+            if (actorID > 0 && relation != Relation.None)
+            { dictFamily.Add(actorID, relation); }
+        }
+
+        /// <summary>
+        /// returns sorted dict of Family members (sorted by enum Actor.cs Relation order)
+        /// </summary>
+        /// <returns></returns>
+        public SortedDictionary<int, Relation> GetFamily()
+        { return dictFamily; }
     }
 
     //Great House Family members

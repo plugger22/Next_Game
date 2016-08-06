@@ -290,6 +290,28 @@ namespace Next_Game
                 //listToDisplay.Add(new Snippet(string.Format("Title: {0}", person.Title)));
                 listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
+                //family
+                if (person is Passive)
+                {
+                    Passive tempPerson = person as Passive;
+                    SortedDictionary<int, Relation> dictTempFamily = tempPerson.GetFamily();
+                    if (dictTempFamily.Count > 0)
+                    {
+                        listToDisplay.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
+                        string maidenName;
+                        foreach(KeyValuePair<int, Relation> kvp in dictTempFamily)
+                        {
+                            Passive relPerson = GetPassiveActor(kvp.Key);
+                            maidenName = "";
+                            if (relPerson.MaidenName != null)
+                            { maidenName = string.Format(" (nee {0})", relPerson.MaidenName); }
+                            int relAge = Game.gameYear - relPerson.Born;
+                            string text = string.Format("{0}: {1} {2}{3} of House {4}, Age {5} (Aid {6})", 
+                                kvp.Value, relPerson.Title, relPerson.Name, maidenName, GetGreatHouseName(relPerson.HouseID), relAge, relPerson.GetActorID());
+                            listToDisplay.Add(new Snippet(text));
+                        }
+                    }
+                }
                 //personal history
                 List<string> actorHistory = GetActorRecords(person.GetActorID());
                 if (actorHistory.Count > 0)
@@ -298,6 +320,7 @@ namespace Next_Game
                     foreach (string text in actorHistory)
                     { listToDisplay.Add(new Snippet(text)); }
                 }
+                
             }
             else
             { listToDisplay.Add(new Snippet("No Character with this ID exists", RLColor.Red, RLColor.Black)); }
@@ -493,7 +516,7 @@ namespace Next_Game
         /// Select a Player Character from the displayed list
         /// </summary>
         /// <returns>Character ID</returns>
-        public int ChooseCharacter()
+        public int ChooseActor()
         {
             Console.WriteLine("Which Character do you want to move (Enter ID #)? ");
             int charID = Convert.ToInt32(Console.ReadLine());
@@ -511,11 +534,24 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// return a Passive actor from dictPassiveActors
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <returns></returns>
+        internal Passive GetPassiveActor(int actorID)
+        {
+            Passive person = new Passive();
+            if (dictPassiveActors.ContainsKey(actorID))
+            { person = dictPassiveActors[actorID]; }
+            return person;
+        }
+
+        /// <summary>
         /// returns string showing character name and status (at 'x' loc, travelling)
         /// </summary>
         /// <param name="charID"></param>
         /// <returns></returns>
-        public Snippet GetCharacterRL(int charID)
+        public Snippet GetActorStatusRL(int charID)
         {
             Actor person = new Actor();
             string charReturn = "Character doesn't exist!";

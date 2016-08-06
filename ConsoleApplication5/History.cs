@@ -341,7 +341,6 @@ namespace Next_Game
             actor.HouseID = houseID;
             //house at birth (males the same, females from an adjacent house)
             actor.BornRefID = refID;
-            actor.MaidenName = lastName;
             int wifeHouseID = refID;
             int highestHouseID = listOfGreatHouses.Count;
             if (sex == ActorSex.Female && highestHouseID >= 2)
@@ -383,12 +382,18 @@ namespace Next_Game
             int yearMarried = lady.Born + ageMarried;
             lady.Married = yearMarried;
             lord.Married = yearMarried;
+            int lordAgeMarried = yearMarried - lord.Born;
             //record event - single record tagged to both characters and houses
-            string descriptor = string.Format("{0} and {1} (nee {2}) married at {3} in {4}", lord.Name, lady.Name, lady.MaidenName, Game.world.GetLocationName(lady.LocID) , yearMarried);
+            string descriptor = string.Format("{0}, age {1} and {2} (nee {3}, age {4}) married at {5}", 
+                lord.Name, lordAgeMarried, lady.Name, lady.MaidenName, ageMarried, Game.world.GetLocationName(lady.LocID));
             Record recordLord = new Record(descriptor, lord.GetActorID(), lord.LocID, lord.RefID, lord.Married, HistEvent.Married);
             recordLord.AddHouse(lady.BornRefID);
             recordLord.AddActor(lady.GetActorID());
             Game.world.SetRecord(recordLord.eventID, recordLord);
+            //add relatives
+            lord.AddRelation(lady.GetActorID(), Relation.Wife);
+            lady.AddRelation(lord.GetActorID(), Relation.Husband);
+
 
         }
 

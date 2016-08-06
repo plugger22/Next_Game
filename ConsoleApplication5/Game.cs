@@ -463,7 +463,7 @@ namespace Next_Game
                                 case MenuMode.Character:
                                     //move Player characters around map
                                     List<Snippet> charList = new List<Snippet>();
-                                    charList.Add(world.GetCharacterRL(charIDSelected));
+                                    charList.Add(world.GetActorStatusRL(charIDSelected));
                                     posSelect1 = world.GetActiveActorLocationByPos(charIDSelected);
                                     if (posSelect1 != null)
                                     { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); mouseOn = true; }
