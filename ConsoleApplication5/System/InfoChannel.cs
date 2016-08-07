@@ -110,7 +110,7 @@ namespace Next_Game
                 case ConsoleDisplay.Multi:
                     displayList = multiList;
                     margin = multiMargin;
-                    maxLength = 40;
+                    maxLength = 48;
                     break;
                 case ConsoleDisplay.Status:
                     displayList = statusList;

@@ -329,9 +329,9 @@ namespace Next_Game
             //age (older men, younger wives
             int age = 0;
             if (sex == ActorSex.Male)
-            { age = rnd.Next(30, 70); }
+            { age = rnd.Next(25, 60); }
             else
-            { age = rnd.Next(15, 45); }
+            { age = rnd.Next(14, 35); }
             actor.Born = Game.gameYear - age;
             actor.Age = age;
             //data
@@ -370,7 +370,11 @@ namespace Next_Game
             {
                 int lordshipAge = rnd.Next(20, age - 2);
                 actor.Lordship = actor.Born + lordshipAge;
-                string descriptor = string.Format("{0} assumes Lordship of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge);
+                string descriptor = "unknown";
+                if (actor.Title == ActorTitle.Lord)
+                { descriptor = string.Format("{0} assumes Lordship of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge); }
+                else if (actor.Title == ActorTitle.BannerLord)
+                { descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge); }
                 Record record = new Record(descriptor, actor.GetActorID(), actor.LocID, actor.RefID, actor.Lordship, HistEvent.Lordship);
                 Game.world.SetRecord(record);
             }
@@ -384,18 +388,27 @@ namespace Next_Game
         internal void CreatePassiveFamily(Passive lord, Passive lady)
         {
             int ladyAge = lady.Age;
-            int ageMarried = rnd.Next(12, 22);
+            int ageLadyMarried = rnd.Next(13, 22);
             //check ageMarried is less than ladies Age
-            if (ladyAge <= ageMarried)
-            { ageMarried = ladyAge - 2; }
+            if (ladyAge <= ageLadyMarried)
+            { ageLadyMarried = ladyAge - 2; }
             //year married
-            int yearMarried = lady.Born + ageMarried;
+            int yearMarried = lady.Born + ageLadyMarried;
+            //check Lord at least 13 before being married
+            int ageLordMarried = yearMarried - lord.Born;
+            if (ageLordMarried < 10)
+            {
+                int diff = 10 - ageLordMarried;
+                yearMarried += diff;
+                ageLadyMarried += diff;
+                ageLordMarried += diff;
+            }
             lady.Married = yearMarried;
             lord.Married = yearMarried;
             int lordAgeMarried = yearMarried - lord.Born;
             //record event - single record tagged to both characters and houses
             string descriptor = string.Format("{0}, age {1}, and {2} (nee {3}, age {4}) married at {5}", 
-                lord.Name, lordAgeMarried, lady.Name, lady.MaidenName, ageMarried, Game.world.GetLocationName(lady.LocID));
+                lord.Name, lordAgeMarried, lady.Name, lady.MaidenName, ageLadyMarried, Game.world.GetLocationName(lady.LocID));
             Record recordLord = new Record(descriptor, lord.GetActorID(), lord.LocID, lord.RefID, lord.Married, HistEvent.Married);
             recordLord.AddHouse(lady.BornRefID);
             recordLord.AddActor(lady.GetActorID());
@@ -403,6 +416,9 @@ namespace Next_Game
             //add relatives
             lord.AddRelation(lady.GetActorID(), Relation.Wife);
             lady.AddRelation(lord.GetActorID(), Relation.Husband);
+            //
+            // kids ---
+            //
 
 
         }

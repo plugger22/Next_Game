@@ -666,6 +666,27 @@ namespace Next_Game
                 loc.AddActor(actorLord.GetActorID());
                 loc.AddActor(actorLady.GetActorID());
             }
+            //fill minor houses with BannerLords
+            foreach(KeyValuePair<int, House> kvp in dictAllHouses)
+            {
+                //minor houses only
+                if (kvp.Value is MinorHouse)
+                {
+                    //create BannerLord for house
+                    Location loc = Game.network.GetLocation(kvp.Value.LocID);
+                    Position pos = loc.GetPosition();
+                    Passive bannerLord = Game.history.CreatePassiveActor(kvp.Value.Name, ActorTitle.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                    //add to dictionaries of actors
+                    dictPassiveActors.Add(bannerLord.GetActorID(), bannerLord);
+                    dictAllActors.Add(bannerLord.GetActorID(), bannerLord);
+                    //create records of being born
+                    string descriptor = string.Format("{0} born at {1}", bannerLord.Name, loc.LocName);
+                    Record recordLord = new Record(descriptor, bannerLord.GetActorID(), loc.LocationID, kvp.Value.RefID, bannerLord.Born, HistEvent.Born);
+                    SetRecord(recordLord);
+                    //store actors in location
+                    loc.AddActor(bannerLord.GetActorID());
+                }
+            }
         }
 
         /// <summary>
