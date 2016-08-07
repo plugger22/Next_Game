@@ -287,7 +287,6 @@ namespace Next_Game
                 if (person.Handle != null)
                 { listToDisplay.Add(new Snippet(string.Format("\"{0}\"", person.Handle))); }
                 listToDisplay.Add(new Snippet(locString));
-                //listToDisplay.Add(new Snippet(string.Format("Title: {0}", person.Title)));
                 listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
                 //family
@@ -349,15 +348,22 @@ namespace Next_Game
             return new Snippet(returnText);
         }
 
+        /// <summary>
+        /// return a List of Snippets, sorted by year (ascending)
+        /// </summary>
+        /// <returns></returns>
         public List<Snippet> ShowRecordsRL()
         {
             List<Snippet> listOfHistory = new List<Snippet>();
             listOfHistory.Add(new Snippet("--- All Records", RLColor.Yellow, RLColor.Black));
-            foreach(KeyValuePair<int, Record> kvp in dictRecords)
-            {
-                string text = string.Format("{0} {1}", kvp.Value.Year, kvp.Value.Text);
-                listOfHistory.Add(new Snippet(text));
-            }
+            //sort in ascending order
+            IEnumerable<string> allHistory =
+                from rec in dictRecords
+                orderby rec.Value.Year
+                select Convert.ToString(rec.Value.Year + " " + rec.Value.Text);
+            List <string> listOfSortedRecords = allHistory.ToList();
+            foreach(string text in listOfSortedRecords)
+            { listOfHistory.Add(new Snippet(text)); }
             return listOfHistory;
         }
 
@@ -749,6 +755,7 @@ namespace Next_Game
                 from actor in dictRecords
                 from actID in actor.Value.listOfActors
                 where actID == actorID
+                orderby actor.Value.Year
                 select Convert.ToString(actor.Value.Year + " " + actor.Value.Text);
             //place filtered data into list
             actorRecords = actorHistory.ToList();
@@ -768,6 +775,7 @@ namespace Next_Game
                 from house in dictRecords
                 from _refID in house.Value.listOfHouses
                 where _refID == refID
+                orderby house.Value.Year
                 select Convert.ToString(house.Value.Year + " " + house.Value.Text);
             //place filtered data into list
             houseRecords = houseHistory.ToList();
