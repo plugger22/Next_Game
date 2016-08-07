@@ -118,6 +118,7 @@ namespace Next_Game
         public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
         public int GenID { get; set; } = 1; //generation (1st, 2nd etc.
         public int Married { get; set; } = 0; //year married, 0 if not
+        public int Lordship { get; set; } = 0; //year made lord (Great House/Bannerlord)
         public string MaidenName { get; set; } = null; //used to store a wife's maiden name prior to marriage
         private SortedDictionary<int, Relation> dictFamily; //stores list of all relations (keyed off actorID)
 

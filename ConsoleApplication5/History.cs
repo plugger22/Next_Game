@@ -329,7 +329,7 @@ namespace Next_Game
             //age (older men, younger wives
             int age = 0;
             if (sex == ActorSex.Male)
-            { age = rnd.Next(20, 70); }
+            { age = rnd.Next(30, 70); }
             else
             { age = rnd.Next(15, 45); }
             actor.Born = Game.gameYear - age;
@@ -339,6 +339,7 @@ namespace Next_Game
             actor.LocID = locID;
             actor.RefID = refID;
             actor.HouseID = houseID;
+            actor.GenID = 1;
             //house at birth (males the same, females from an adjacent house)
             actor.BornRefID = refID;
             int wifeHouseID = refID;
@@ -364,6 +365,15 @@ namespace Next_Game
                 actor.BornRefID = bornRefID;
                 actor.MaidenName = Game.world.GetGreatHouseName(wifeHouseID);
             }
+            //date Lord attained lordship of House
+            if (sex == ActorSex.Male)
+            {
+                int lordshipAge = rnd.Next(20, age - 2);
+                actor.Lordship = actor.Born + lordshipAge;
+                string descriptor = string.Format("{0} assumes Lordship of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge);
+                Record record = new Record(descriptor, actor.GetActorID(), actor.LocID, actor.RefID, actor.Lordship, HistEvent.Lordship);
+                Game.world.SetRecord(record);
+            }
             //return
             return actor;
         }
@@ -384,12 +394,12 @@ namespace Next_Game
             lord.Married = yearMarried;
             int lordAgeMarried = yearMarried - lord.Born;
             //record event - single record tagged to both characters and houses
-            string descriptor = string.Format("{0}, age {1} and {2} (nee {3}, age {4}) married at {5}", 
+            string descriptor = string.Format("{0}, age {1}, and {2} (nee {3}, age {4}) married at {5}", 
                 lord.Name, lordAgeMarried, lady.Name, lady.MaidenName, ageMarried, Game.world.GetLocationName(lady.LocID));
             Record recordLord = new Record(descriptor, lord.GetActorID(), lord.LocID, lord.RefID, lord.Married, HistEvent.Married);
             recordLord.AddHouse(lady.BornRefID);
             recordLord.AddActor(lady.GetActorID());
-            Game.world.SetRecord(recordLord.eventID, recordLord);
+            Game.world.SetRecord(recordLord);
             //add relatives
             lord.AddRelation(lady.GetActorID(), Relation.Wife);
             lady.AddRelation(lord.GetActorID(), Relation.Husband);
