@@ -9,7 +9,7 @@ using Next_Game.Cartographic;
 
 namespace Next_Game
 {
-    public enum MenuMode {Main, Character, Debug} //distinct menu sets (Menu.cs)
+    public enum MenuMode {Main, Actor, Debug} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi} //different console windows (Menu window handled independently by Menu.cs)
 
     public static class Game
@@ -292,7 +292,7 @@ namespace Next_Game
                             case RLKey.P:
                                 switch (_menuMode)
                                 {
-                                    case MenuMode.Character:
+                                    case MenuMode.Actor:
                                         //move Player character from A to B
                                         renderRequired = true;
                                         //valid location?
@@ -323,7 +323,7 @@ namespace Next_Game
                                             if (mouseLeft == true)
                                             {
                                                 List<Position> pathToTravel = network.GetPathAnywhere(posSelect1, posSelect2);
-                                                string infoText = world.InitiateMoveCharacters(charIDSelected, posSelect1, posSelect2, pathToTravel);
+                                                string infoText = world.InitiateMoveActors(charIDSelected, posSelect1, posSelect2, pathToTravel);
                                                 messageLog.Add(new Snippet(infoText), gameTurn);
                                                 infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
                                                 //show route
@@ -438,6 +438,27 @@ namespace Next_Game
                             //Draw Map: applies to all menu modes
                             map.UpdateMap(false, true);
                             break;
+                        case RLKey.P:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    //Show Player Characters
+                                    infoChannel.SetInfoList(world.ShowPlayerActorsRL(), ConsoleDisplay.Multi);
+                                    break;
+                                case MenuMode.Actor:
+                                    //move Player characters around map
+                                    List<Snippet> charList = new List<Snippet>();
+                                    charList.Add(world.GetActorStatusRL(charIDSelected));
+                                    posSelect1 = world.GetActiveActorLocationByPos(charIDSelected);
+                                    if (posSelect1 != null)
+                                    { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); mouseOn = true; }
+                                    else
+                                    { charList.Add(new Snippet("The character is not currently at your disposal")); mouseOn = false; }
+                                    infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
+                                    inputState = 1;
+                                    break;
+                            }
+                            break;
                         case RLKey.R:
                             //Show all routes on the map in red
                             switch (_menuMode)
@@ -453,27 +474,6 @@ namespace Next_Game
                                     break;
                             }
                             break;
-                        case RLKey.P:
-                            switch (_menuMode)
-                            {
-                                case MenuMode.Main:
-                                    //Show Player Characters
-                                    infoChannel.SetInfoList(world.ShowPlayerActorsRL(), ConsoleDisplay.Multi);
-                                    break;
-                                case MenuMode.Character:
-                                    //move Player characters around map
-                                    List<Snippet> charList = new List<Snippet>();
-                                    charList.Add(world.GetActorStatusRL(charIDSelected));
-                                    posSelect1 = world.GetActiveActorLocationByPos(charIDSelected);
-                                    if (posSelect1 != null)
-                                    { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); mouseOn = true; }
-                                    else
-                                    { charList.Add(new Snippet("The character is not currently at your disposal")); mouseOn = false; }
-                                    infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
-                                    inputState = 1;
-                                    break;
-                            }
-                            break;
                         //Player controlled character selected
                         case RLKey.Number1:
                         case RLKey.Number2:
@@ -484,7 +484,7 @@ namespace Next_Game
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
-                                    _menuMode = menu.SwitchMenuMode(MenuMode.Character);
+                                    _menuMode = menu.SwitchMenuMode(MenuMode.Actor);
                                     charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
                                     List<Snippet> infoList = new List<Snippet>();
                                     infoList.Add(world.ShowSelectedActor(charIDSelected));
@@ -494,7 +494,7 @@ namespace Next_Game
                             break;
                         case RLKey.Enter:
                             map.UpdateMap();
-                            map.UpdatePlayers(world.MoveCharacters());
+                            map.UpdatePlayers(world.MoveActors());
                             infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
                             infoChannel.AppendInfoList(new Snippet(ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
                             gameTurn++;

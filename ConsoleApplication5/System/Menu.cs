@@ -92,7 +92,7 @@ namespace Next_Game
                     menuArrayText[3, 2] = "[ENTER] End Turn";
                     menuArrayText[3, 3] = "[X] Quit";
                     break;
-                case MenuMode.Character:
+                case MenuMode.Actor:
                     menuColorFore = RLColor.Blue;
                     menuColorBack = RLColor.LightGray;
                     //input categories

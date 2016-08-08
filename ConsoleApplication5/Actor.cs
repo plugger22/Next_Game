@@ -4,13 +4,13 @@ using System.Collections.Generic;
 namespace Next_Game
 {
     public enum ActorStatus {AtLocation, Travelling, Dead};
-    public enum ActorTitle {None, Ursuper, Lord, Lady, BannerLord, Prince, Princess, Loyal_Follower}; //none should be '0'
+    public enum ActorTitle {None, Ursuper, Loyal_Follower, Lord, Lady, BannerLord, Prince, Princess, Heir, lord, lady }; //lord and lady are children of Lords, Heir is first in line to inherit
     public enum ActorOffice {None, King, Queen, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch, Master_of_Coin, Master_of_Whisperers, Master_of_Laws,
                              Master_of_Ships, Warden_of_the_North, Warden_of_the_East, Warden_of_the_South, Warden_of_the_West }
     public enum ActorRealm {None, Head_of_Noble_House, Head_of_House}
     public enum ActorSex {Male, Female};
     public enum ActorDied {None, Childbirth} //how died?
-    public enum Relation {None, Wife, Husband, Son, Daughter, Bastard, Father, Mother}
+    public enum Relation {None, Wife, Husband, Son, Daughter, Bastard, Father, Mother, Brother, Sister}
 
     internal class Actor
     {
@@ -114,6 +114,7 @@ namespace Next_Game
         public int HouseID { get; set; } = 0; //dynamically assigned great house alignment 
         public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
         public int GenID { get; set; } = 1; //generation (1st, 2nd etc.
+        public int InLine { get; set; } = 0; //number in line to inherit (males only)
         public int Married { get; set; } = 0; //year married, 0 if not
         public int Lordship { get; set; } = 0; //year made lord (Great House/Bannerlord)
         public bool Fertile { get; set; } = false; //females - can have children?

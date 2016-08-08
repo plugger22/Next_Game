@@ -450,10 +450,70 @@ namespace Next_Game
                     child.BornRefID = lady.RefID;
                     child.HouseID = lady.HouseID;
                     child.GenID = 2;
+                    //family relations
+                    child.AddRelation(lord.ActID, Relation.Father);
+                    child.AddRelation(lady.ActID, Relation.Mother);
+                    //get Lord's family
+                    SortedDictionary<int, Relation> dictTempFamily = lord.GetFamily();
+                    //new child is DAUGHTER
                     if (sex == ActorSex.Female)
                     {
                         child.MaidenName = Game.world.GetGreatHouseName(lord.HouseID);
                         child.Fertile = true;
+                        child.Title = ActorTitle.lady;
+                        //loop list of lord's family
+                        foreach(KeyValuePair<int, Relation> kvp in dictTempFamily)
+                        {
+                            if (kvp.Value == Relation.Son)
+                            {
+                                Passive son = Game.world.GetPassiveActor(kvp.Key);
+                                //relations
+                                son.AddRelation(child.ActID, Relation.Sister);
+                                child.AddRelation(son.ActID, Relation.Brother);
+                            }
+                            else if (kvp.Value == Relation.Daughter)
+                            {
+                                Passive daughter = Game.world.GetPassiveActor(kvp.Key);
+                                //relations
+                                daughter.AddRelation(child.ActID, Relation.Sister);
+                                child.AddRelation(daughter.ActID, Relation.Sister);
+                            }
+                        }
+                        //update parent relations
+                        lord.AddRelation(child.ActID, Relation.Daughter);
+                        lady.AddRelation(child.ActID, Relation.Daughter);
+                    }
+                    //new child is SON
+                    else if (sex == ActorSex.Male)
+                    {
+                        int sonCounter = 0;
+                        //loop list of lord's family
+                        foreach (KeyValuePair<int, Relation> kvp in dictTempFamily)
+                        {
+                            if (kvp.Value == Relation.Son)
+                            {
+                                Passive son = Game.world.GetPassiveActor(kvp.Key);
+                                //relations
+                                son.AddRelation(child.ActID, Relation.Brother);
+                                child.AddRelation(son.ActID, Relation.Brother);
+                                sonCounter++;
+                            }
+                            else if (kvp.Value == Relation.Daughter)
+                            {
+                                Passive daughter = Game.world.GetPassiveActor(kvp.Key);
+                                //relations
+                                daughter.AddRelation(child.ActID, Relation.Brother);
+                                child.AddRelation(daughter.ActID, Relation.Sister);
+                            }
+                        }
+                        //status (males - who is in line to inherit?)
+                        if (sonCounter == 0)
+                        { child.Title = ActorTitle.Heir; child.InLine = 1; }
+                        else
+                        { child.Title = ActorTitle.lord;  child.InLine = sonCounter; }
+                        //update parent relations
+                        lord.AddRelation(child.ActID, Relation.Son);
+                        lady.AddRelation(child.ActID, Relation.Son);
                     }
                     //add to dictionaries
                     Game.world.SetPassiveActor(child);

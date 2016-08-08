@@ -64,7 +64,7 @@ namespace Next_Game
         /// <param name="posOrigin"></param>
         /// <param name="posDestination"></param>
         /// <param name="path">sequenced List of Positions to destination</param>
-        internal string InitiateMoveCharacters(int charID, Position posOrigin, Position posDestination, List<Position> path)
+        internal string InitiateMoveActors(int charID, Position posOrigin, Position posDestination, List<Position> path)
         {
             string returnText = "Error in World.InitiateMoveCharacters";
             //viable Character & Position?
@@ -118,7 +118,7 @@ namespace Next_Game
         /// Handles movement of all Player characters througout world
         /// </summary>
         /// <returns>returns a dictionary of mapMarkers and coordinates for the "Player" mapGrid layer</returns>
-        internal Dictionary<Position, int> MoveCharacters()
+        internal Dictionary<Position, int> MoveActors()
         {
             //create a dictionary of position and map markers to return (passed up to game thence to map to update mapgrid
             Dictionary<Position, int> dictMapMarkers = new Dictionary<Position, int>();
@@ -310,13 +310,16 @@ namespace Next_Game
                         foreach(KeyValuePair<int, Relation> kvp in dictTempFamily)
                         {
                             Passive relPerson = GetPassiveActor(kvp.Key);
+                            RLColor familyColor = RLColor.White;
+                            if (relPerson.Status == ActorStatus.Dead)
+                            { familyColor = RLColor.LightGray; }
                             maidenName = "";
                             if (relPerson.MaidenName != null)
                             { maidenName = string.Format(" (nee {0})", relPerson.MaidenName); }
                             int relAge = Game.gameYear - relPerson.Born;
-                            string text = string.Format("{0}: {1} {2}{3} of House {4}, Age {5} (Aid {6})", 
-                                kvp.Value, relPerson.Title, relPerson.Name, maidenName, GetGreatHouseName(relPerson.HouseID), relAge, relPerson.ActID);
-                            listToDisplay.Add(new Snippet(text));
+                            string text = string.Format("{0}, Aid {1}: {2} {3}{4} of House {5}, Age {6}", 
+                                kvp.Value, relPerson.ActID, relPerson.Title, relPerson.Name, maidenName, GetGreatHouseName(relPerson.HouseID), relAge);
+                            listToDisplay.Add(new Snippet(text, familyColor, RLColor.Black));
                         }
                     }
                 }
@@ -554,8 +557,6 @@ namespace Next_Game
                         houseList.Add(new Snippet(personText + locString, locColor, RLColor.Black));
                     }
                 }
-
-
                 //house history
                 List < string > houseHistory = GetHouseRecords(majorHouse.RefID);
                 if (houseHistory.Count > 0)
