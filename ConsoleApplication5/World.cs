@@ -49,11 +49,11 @@ namespace Next_Game
                 //place characters at Location
                 person.LocID = locID;
                 person.SetActorPosition(Game.map.GetCapital());
-                dictActiveActors.Add(person.GetActorID(), person);
-                dictAllActors.Add(person.GetActorID(), person);
+                dictActiveActors.Add(person.ActID, person);
+                dictAllActors.Add(person.ActID, person);
                 //add to Location list of Characters
                 Location loc = Game.network.GetLocation(locID);
-                loc.AddActor(person.GetActorID());
+                loc.AddActor(person.ActID);
             }
         }
 
@@ -315,13 +315,13 @@ namespace Next_Game
                             { maidenName = string.Format(" (nee {0})", relPerson.MaidenName); }
                             int relAge = Game.gameYear - relPerson.Born;
                             string text = string.Format("{0}: {1} {2}{3} of House {4}, Age {5} (Aid {6})", 
-                                kvp.Value, relPerson.Title, relPerson.Name, maidenName, GetGreatHouseName(relPerson.HouseID), relAge, relPerson.GetActorID());
+                                kvp.Value, relPerson.Title, relPerson.Name, maidenName, GetGreatHouseName(relPerson.HouseID), relAge, relPerson.ActID);
                             listToDisplay.Add(new Snippet(text));
                         }
                     }
                 }
                 //personal history
-                List<string> actorHistory = GetActorRecords(person.GetActorID());
+                List<string> actorHistory = GetActorRecords(person.ActID);
                 if (actorHistory.Count > 0)
                 {
                     listToDisplay.Add(new Snippet("Personal History", RLColor.Brown, RLColor.Black));
@@ -465,7 +465,7 @@ namespace Next_Game
                         {
                             Actor person = new Actor();
                             person = dictAllActors[charID];
-                            actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.GetActorID(), person.Title, person.Name, person.Age);
+                            actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, person.Title, person.Name, person.Age);
                         }
                         else
                         {   actorDetails = string.Format("unknown ID " + Convert.ToString(charID)); }
@@ -521,15 +521,15 @@ namespace Next_Game
                 IEnumerable<int> familyMembers =
                     from person in dictPassiveActors
                     where person.Value.RefID == refID
-                    orderby person.Value.GetActorID()
-                    select person.Value.GetActorID();
+                    orderby person.Value.ActID
+                    select person.Value.ActID;
                 listOfFamily = familyMembers.ToList();
                 //loop list and display each actor appropriately (dead in Lt.Gray)
                 string personText;
                 foreach(int actorID in listOfFamily)
                 {
                     Passive person = GetPassiveActor(actorID);
-                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.GetActorID(), person.Title, person.Name, person.Age);
+                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, person.Title, person.Name, person.Age);
                     //valid actor?
                     if (person.Name != null)
                     {
@@ -697,23 +697,23 @@ namespace Next_Game
                 Passive actorLord = Game.history.CreatePassiveActor(kvp.Value.Name, ActorTitle.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
                 Passive actorLady = Game.history.CreatePassiveActor(kvp.Value.Name, ActorTitle.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Female);
                 //add to dictionaries of actors
-                dictPassiveActors.Add(actorLord.GetActorID(), actorLord);
-                dictPassiveActors.Add(actorLady.GetActorID(), actorLady);
-                dictAllActors.Add(actorLord.GetActorID(), actorLord);
-                dictAllActors.Add(actorLady.GetActorID(), actorLady);
+                dictPassiveActors.Add(actorLord.ActID, actorLord);
+                dictPassiveActors.Add(actorLady.ActID, actorLady);
+                dictAllActors.Add(actorLord.ActID, actorLord);
+                dictAllActors.Add(actorLady.ActID, actorLady);
                 //create records of being born
-                string descriptor = string.Format("{0} born, Aid {1}, at {2}", actorLord.Name, actorLord.GetActorID(), loc.LocName);
-                Record recordLord = new Record(descriptor, actorLord.GetActorID(), loc.LocationID, kvp.Value.RefID, actorLord.Born, HistEvent.Born);
+                string descriptor = string.Format("{0} born, Aid {1}, at {2}", actorLord.Name, actorLord.ActID, loc.LocName);
+                Record recordLord = new Record(descriptor, actorLord.ActID, loc.LocationID, kvp.Value.RefID, actorLord.Born, HistEvent.Born);
                 SetRecord(recordLord);
                 //location born (different for lady)
                 House ladyHouse = GetHouse(actorLady.BornRefID);
                 Location locLady = Game.network.GetLocation(ladyHouse.LocID);
-                descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", actorLady.Name, actorLady.MaidenName, actorLady.GetActorID(), locLady.LocName);
-                Record recordLady = new Record(descriptor, actorLady.GetActorID(), locLady.LocationID, actorLady.BornRefID, actorLady.Born, HistEvent.Born);
+                descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", actorLady.Name, actorLady.MaidenName, actorLady.ActID, locLady.LocName);
+                Record recordLady = new Record(descriptor, actorLady.ActID, locLady.LocationID, actorLady.BornRefID, actorLady.Born, HistEvent.Born);
                 SetRecord(recordLady);
                 //store actors in location
-                loc.AddActor(actorLord.GetActorID());
-                loc.AddActor(actorLady.GetActorID());
+                loc.AddActor(actorLord.ActID);
+                loc.AddActor(actorLady.ActID);
                 //create family
                 Game.history.CreatePassiveFamily(actorLord, actorLady);
             }
@@ -728,14 +728,14 @@ namespace Next_Game
                     Position pos = loc.GetPosition();
                     Passive bannerLord = Game.history.CreatePassiveActor(kvp.Value.Name, ActorTitle.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
                     //add to dictionaries of actors
-                    dictPassiveActors.Add(bannerLord.GetActorID(), bannerLord);
-                    dictAllActors.Add(bannerLord.GetActorID(), bannerLord);
+                    dictPassiveActors.Add(bannerLord.ActID, bannerLord);
+                    dictAllActors.Add(bannerLord.ActID, bannerLord);
                     //create records of being born
-                    string descriptor = string.Format("{0}, Aid {1}, born at {2}", bannerLord.Name, bannerLord.GetActorID(), loc.LocName);
-                    Record recordLord = new Record(descriptor, bannerLord.GetActorID(), loc.LocationID, kvp.Value.RefID, bannerLord.Born, HistEvent.Born);
+                    string descriptor = string.Format("{0}, Aid {1}, born at {2}", bannerLord.Name, bannerLord.ActID, loc.LocName);
+                    Record recordLord = new Record(descriptor, bannerLord.ActID, loc.LocationID, kvp.Value.RefID, bannerLord.Born, HistEvent.Born);
                     SetRecord(recordLord);
                     //store actors in location
-                    loc.AddActor(bannerLord.GetActorID());
+                    loc.AddActor(bannerLord.ActID);
                 }
             }
         }
@@ -875,8 +875,8 @@ namespace Next_Game
         /// <param name="actor"></param>
         internal void SetPassiveActor(Passive actor)
         {
-            dictPassiveActors.Add(actor.GetActorID(), actor);
-            dictAllActors.Add(actor.GetActorID(), actor);
+            dictPassiveActors.Add(actor.ActID, actor);
+            dictAllActors.Add(actor.ActID, actor);
         }
 
         //new Methods above here

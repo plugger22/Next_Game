@@ -20,7 +20,7 @@ namespace Next_Game
         public string Name { get; set; }
         public int LocID { get; set; } //current location (if travelling then destination)
         public int Speed { get; set; } = 2; //speed of travel throughout the world
-        private int ActID; //Can only have a max of 9 characters (including player) due to map draw limitations (mapMarker based on lowest Party ID)
+        public int ActID { get; } //set in constructor
         public int Age { get; set; }
         public int Born { get; set; } //year born
         public int Died { get; set; } //year died
@@ -71,8 +71,8 @@ namespace Next_Game
         public Position GetActorPosition()
         { return actorPos; }
 
-        public int GetActorID()
-        { return ActID; }
+        /*public int GetActorID()
+        { return ActID; }*/
     }
 
 
