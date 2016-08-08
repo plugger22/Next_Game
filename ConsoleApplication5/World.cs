@@ -96,7 +96,7 @@ namespace Next_Game
                     Location loc = Game.network.GetLocation(locID_Origin);
                     if (loc != null)
                     {
-                        loc.RemoveCharacter(charID);
+                        loc.RemoveActor(charID);
                         //create new move object
                         Move moveObject = new Move(path, party, speed, true, Game.gameTurn);
                         //insert into moveList
@@ -271,13 +271,22 @@ namespace Next_Game
                 int locID = person.LocID;
                 string name = string.Format("{0} {1}, Aid {2}", person.Title, person.Name, actorID);
                 RLColor color = RLColor.White;
+                RLColor locColor = RLColor.White;
                 string locString = "?";
-                if (person.Status == ActorStatus.AtLocation)
-                { locString = string.Format("Located at {0} {1}, Lid {2}", GetLocationName(locID), ShowLocationCoords(locID), locID );}
-                else if (person.Status == ActorStatus.Travelling)
+                //location descriptor
+                switch(person.Status)
                 {
-                    Position pos = person.GetActorPosition();
-                    locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}", pos.PosX, pos.PosY, GetLocationName(locID), ShowLocationCoords(locID), locID);
+                    case ActorStatus.AtLocation:
+                        locString = string.Format("Located at {0} {1}, Lid {2}", GetLocationName(locID), ShowLocationCoords(locID), locID);
+                        break;
+                    case ActorStatus.Travelling:
+                        Position pos = person.GetActorPosition();
+                        locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}", pos.PosX, pos.PosY, GetLocationName(locID), ShowLocationCoords(locID), locID);
+                        break;
+                    case ActorStatus.Dead:
+                        locString = string.Format("Passed away ({0}) in {1}", person.ReasonDied, person.Died);
+                        locColor = RLColor.Red;
+                        break;
                 }
                 listToDisplay.Add(new Snippet(name, RLColor.Yellow, RLColor.Black));
                 if ((int)person.Realm > 0)
@@ -286,7 +295,7 @@ namespace Next_Game
                 { listToDisplay.Add(new Snippet(string.Format("Office: {0}", person.Office), RLColor.Yellow, RLColor.Black)); }
                 if (person.Handle != null)
                 { listToDisplay.Add(new Snippet(string.Format("\"{0}\"", person.Handle))); }
-                listToDisplay.Add(new Snippet(locString));
+                listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
                 listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
                 //family
@@ -480,6 +489,7 @@ namespace Next_Game
         {
             MajorHouse majorHouse = GetGreatHouse(houseID) as MajorHouse;
             List<Snippet> houseList = new List<Snippet>();
+            int refID;
             if (majorHouse != null)
             {
                 houseList.Add(new Snippet("House " + majorHouse.Name, RLColor.Yellow, RLColor.Black));
@@ -495,7 +505,6 @@ namespace Next_Game
                 {
                     houseList.Add(new Snippet("BannerLords", RLColor.Yellow, RLColor.Black));
                     string bannerLord;
-                    int refID;
                     foreach (int locID in listLordLocations)
                     {
                         Location loc = Game.network.GetLocation(locID);
@@ -505,8 +514,50 @@ namespace Next_Game
                         houseList.Add(new Snippet(bannerLord));
                     }
                 }
+                //family - get list of all actorID's in family
+                houseList.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
+                List<int> listOfFamily = new List<int>();
+                refID = majorHouse.RefID;
+                IEnumerable<int> familyMembers =
+                    from person in dictPassiveActors
+                    where person.Value.RefID == refID
+                    orderby person.Value.GetActorID()
+                    select person.Value.GetActorID();
+                listOfFamily = familyMembers.ToList();
+                //loop list and display each actor appropriately (dead in Lt.Gray)
+                string personText;
+                foreach(int actorID in listOfFamily)
+                {
+                    Passive person = GetPassiveActor(actorID);
+                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.GetActorID(), person.Title, person.Name, person.Age);
+                    //valid actor?
+                    if (person.Name != null)
+                    {
+
+                        RLColor locColor = RLColor.White;
+                        string locString = "?";
+                        //location descriptor
+                        switch (person.Status)
+                        {
+                            case ActorStatus.AtLocation:
+                                locString = string.Format("at {0} {1}", GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
+                                break;
+                            case ActorStatus.Travelling:
+                                Position pos = person.GetActorPosition();
+                                locString = string.Format("travelling to {0} {1}",  GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
+                                break;
+                            case ActorStatus.Dead:
+                                locString = string.Format("Passed away ({0}) in {1}", person.ReasonDied, person.Died);
+                                locColor = RLColor.LightGray;
+                                break;
+                        }
+                        houseList.Add(new Snippet(personText + locString, locColor, RLColor.Black));
+                    }
+                }
+
+
                 //house history
-                List<string> houseHistory = GetHouseRecords(majorHouse.RefID);
+                List < string > houseHistory = GetHouseRecords(majorHouse.RefID);
                 if (houseHistory.Count > 0)
                 {
                     houseList.Add(new Snippet("House History", RLColor.Brown, RLColor.Black));
@@ -651,19 +702,20 @@ namespace Next_Game
                 dictAllActors.Add(actorLord.GetActorID(), actorLord);
                 dictAllActors.Add(actorLady.GetActorID(), actorLady);
                 //create records of being born
-                string descriptor = string.Format("{0} born at {1}", actorLord.Name, loc.LocName);
+                string descriptor = string.Format("{0} born, Aid {1}, at {2}", actorLord.Name, actorLord.GetActorID(), loc.LocName);
                 Record recordLord = new Record(descriptor, actorLord.GetActorID(), loc.LocationID, kvp.Value.RefID, actorLord.Born, HistEvent.Born);
                 SetRecord(recordLord);
                 //location born (different for lady)
                 House ladyHouse = GetHouse(actorLady.BornRefID);
                 Location locLady = Game.network.GetLocation(ladyHouse.LocID);
-                descriptor = string.Format("{0} (nee {1}) born at {2}", actorLady.Name, actorLady.MaidenName, locLady.LocName);
+                descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", actorLady.Name, actorLady.MaidenName, actorLady.GetActorID(), locLady.LocName);
                 Record recordLady = new Record(descriptor, actorLady.GetActorID(), locLady.LocationID, actorLady.BornRefID, actorLady.Born, HistEvent.Born);
                 SetRecord(recordLady);
-                Game.history.CreatePassiveFamily(actorLord, actorLady);
                 //store actors in location
                 loc.AddActor(actorLord.GetActorID());
                 loc.AddActor(actorLady.GetActorID());
+                //create family
+                Game.history.CreatePassiveFamily(actorLord, actorLady);
             }
             //fill minor houses with BannerLords
             foreach(KeyValuePair<int, House> kvp in dictAllHouses)
@@ -679,7 +731,7 @@ namespace Next_Game
                     dictPassiveActors.Add(bannerLord.GetActorID(), bannerLord);
                     dictAllActors.Add(bannerLord.GetActorID(), bannerLord);
                     //create records of being born
-                    string descriptor = string.Format("{0} born at {1}", bannerLord.Name, loc.LocName);
+                    string descriptor = string.Format("{0}, Aid {1}, born at {2}", bannerLord.Name, bannerLord.GetActorID(), loc.LocName);
                     Record recordLord = new Record(descriptor, bannerLord.GetActorID(), loc.LocationID, kvp.Value.RefID, bannerLord.Born, HistEvent.Born);
                     SetRecord(recordLord);
                     //store actors in location

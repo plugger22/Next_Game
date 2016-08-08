@@ -72,7 +72,7 @@ namespace Next_Game.Cartographic
         private readonly List<Route> routeToConnector = new List<Route>(); //Loc -> Connector
         private readonly List<Route> routeFromCapital = new List<Route>(); //Capital -> Loc
         private readonly List<Route> routeFromConnector = new List<Route>(); //Connector -> Loc
-        private List<int> listOfActors = new List<int>(); //list of characters (charID's) currently at Location
+        private List<int> listOfActors = new List<int>(); //list of characters (actorID's) currently at Location
 
         public Location()
         { LocName = "testville"; Capital = false; locPos = new Position(); LocationID = locationIndex++; }
@@ -275,12 +275,12 @@ namespace Next_Game.Cartographic
         }
 
         //add character to location
-        public void AddActor(int charID)
-        { listOfActors.Add(charID); }
+        public void AddActor(int actorID)
+        { listOfActors.Add(actorID); }
 
         //remove character from location
-        public void RemoveCharacter(int charID)
-        { listOfActors.Remove(charID); }
+        public void RemoveActor(int actorID)
+        { listOfActors.Remove(actorID); }
 
 
         //prints details of array
@@ -293,18 +293,6 @@ namespace Next_Game.Cartographic
             if (Connector == true)
             { Console.WriteLine("CONNECTOR NODE"); }
             Console.WriteLine(LocName);
-            
-            //Console.WriteLine("Location at {0}:{1} on route {2}", locPos.PosX, locPos.PosY, locPos.CapitalRoute);
-            //Console.WriteLine("Connections: {0}, Routes TO Capital: {1}, Distance to Capital: {2}", Connections, routeToCapital.Count, DistanceToCapital);
-            //ShowRoute(routeToCapital, "To Capital");
-            //Console.WriteLine("Connections: {0}, Routes TO Connector: {1}, Distance to Connector: {2}", Connections, routeToConnector.Count, DistanceToConnector);
-            //ShowRoute(routeToConnector, "To Connector");
-            //Console.WriteLine("Connections: {0}, Routes FROM Capital: {1}, Distance from Capital: {2}", Connections, routeFromCapital.Count, DistanceToCapital);
-            //ShowRoute(routeFromCapital, "From Capital");
-            //Console.WriteLine("Connections: {0}, Routes FROM Connector: {1}, Distance from Connector: {2}", Connections, routeFromConnector.Count, DistanceToConnector);
-            //ShowRoute(routeFromConnector, "From Connector");
-            //foreach (Position pos in listOfNeighbours)
-            //{ Console.WriteLine("Neigbour at {0}:{1}, distance {2}", pos.PosX, pos.PosY, pos.Distance); }
         }
 
     }

@@ -434,7 +434,7 @@ namespace Next_Game
             if (lady.Fertile == true && lady.Age >= 13 && lady.Age <= 40)
             {
                 //birthing loop, once every 2 years
-                for (int i = lady.Married; i <= Game.gameYear; i += 2)
+                for (int year = lady.Married; year <= Game.gameYear; year += 2)
                 {
                     ActorSex sex = ActorSex.Male;
                     //new child (50/50 boy/girl)
@@ -443,8 +443,8 @@ namespace Next_Game
                     //get a random first name
                     string actorName = GetActorName(Game.world.GetGreatHouseName(lord.HouseID), sex);
                     Passive child = new Family(actorName, ActorTitle.None, sex);
-                    child.Age = Game.gameYear - i;
-                    child.Born = i;
+                    child.Age = Game.gameYear - year;
+                    child.Born = year;
                     child.LocID = lady.LocID;
                     child.RefID = lady.RefID;
                     child.BornRefID = lady.RefID;
@@ -461,34 +461,41 @@ namespace Next_Game
                     Location loc = Game.network.GetLocation(lord.LocID);
                     loc.AddActor(child.GetActorID());
                     //record event
-                    string descriptor = string.Format("{0} born at {1} to {2} {3} and {4} {5}", child.Name, Game.world.GetLocationName(lady.LocID), lord.Title, lord.Name, lady.Title, lady.Name);
-                    Record record_0 = new Record(descriptor, child.GetActorID(), child.LocID, child.RefID, i, HistEvent.Born);
+                    string descriptor = string.Format("{0}, Aid {1}, born at {2} to {3} {4} and {5} {6}",
+                        child.Name, child.GetActorID(), Game.world.GetLocationName(lady.LocID), lord.Title, lord.Name, lady.Title, lady.Name );
+                    Record record_0 = new Record(descriptor, child.GetActorID(), child.LocID, child.RefID, year, HistEvent.Born);
                     record_0.AddActor(lord.GetActorID());
                     record_0.AddActor(lady.GetActorID());
                     Game.world.SetRecord(record_0);
                     //over age?
-                    if (Game.gameYear - i > 40)
+                    if (Game.gameYear - year > 40)
                         { lady.Fertile = false; break; }
                     else
                     {
                         int num = rnd.Next(100);
-                        //mother died at childbirth (10%) but child survived
                         if (num < 10)
                         {
-                            lady.ReasonDied = ActorDied.Childbirth; 
+                            //mother died at childbirth (10%) but child survived
+                            lady.ReasonDied = ActorDied.Childbirth;
+                            lady.Died = year;
+                            lady.Age = lady.Age - (Game.gameYear - year);
                             lady.Status = ActorStatus.Dead;
-                            descriptor = string.Format("{0} died while giving birth to {1}", lady.Name, child.Name);
-                            Record record_1 = new Record(descriptor, lady.GetActorID(), lady.LocID, lady.RefID, i, HistEvent.Died);
+                            descriptor = string.Format("{0}, Aid {1}, died while giving birth to {2}, age {3}", lady.Name, lady.GetActorID(), child.Name, lady.Age);
+                            Record record_1 = new Record(descriptor, lady.GetActorID(), lady.LocID, lady.RefID, year, HistEvent.Died);
                             record_1.AddEvent(HistEvent.Birthing);
+                            record_1.AddActor(child.GetActorID());
                             Game.world.SetRecord(record_1);
+                            //remove actor from location
+                            Location loc_1 = Game.network.GetLocation(lady.LocID);
+                            loc_1.RemoveActor(lady.GetActorID());
                             break;
                         }
-                        //can no longer have children
                         else if (num < 30)
                         {
+                            //can no longer have children
                             lady.Fertile = false;
                             descriptor = string.Format("{0} suffered complications while giving birth to {1} and can no longer have children", lady.Name, child.Name);
-                            Record record_2 = new Record(descriptor, lady.GetActorID(), lady.LocID, lady.RefID, i, HistEvent.Birthing);
+                            Record record_2 = new Record(descriptor, lady.GetActorID(), lady.LocID, lady.RefID, year, HistEvent.Birthing);
                             Game.world.SetRecord(record_2);
                             break;
                         }

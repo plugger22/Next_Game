@@ -22,8 +22,8 @@ namespace Next_Game
         public int Speed { get; set; } = 2; //speed of travel throughout the world
         private int ActID; //Can only have a max of 9 characters (including player) due to map draw limitations (mapMarker based on lowest Party ID)
         public int Age { get; set; }
-        public int Born { get; set; }
-        public int Died { get; set; }
+        public int Born { get; set; } //year born
+        public int Died { get; set; } //year died
         public string Description { get; set; }
         public ActorStatus Status { get; set; } = 0;
         public ActorTitle Title { get; set; } = 0;
@@ -37,7 +37,7 @@ namespace Next_Game
         //default constructor 
         public Actor()
         {
-            Name = "Ser_Nobody";
+            Name = null;
             Status = ActorStatus.AtLocation;
             actorPos = new Position();
             ActID = characterIndex++;
