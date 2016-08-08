@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     //categories (can choose multiple)
-    public enum HistEvent {None, Born, Died, Married, Battle, Lordship}
+    public enum HistEvent {None, Born, Died, Married, Battle, Lordship, Birthing}
 
     //
     //tracks historical Information & Events ---
@@ -86,6 +86,9 @@ namespace Next_Game
             if (refID > 0)
             { listOfHouses.Add(refID); }
         }
+
+        public void AddEvent(HistEvent histEvent)
+        { listOfEvents.Add(histEvent); }
 
         public void AddItem(int itemID)
         {

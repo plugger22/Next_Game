@@ -102,7 +102,7 @@ namespace Next_Game
                         //insert into moveList
                         moveList.Add(moveObject);
                         //update character status to 'travelling'
-                        person.SetActorStatus(ActorStatus.Travelling);
+                        person.Status = ActorStatus.Travelling;
                         //update characterLocationID (now becomes destination)
                         int locID_Destination = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
                         person.LocID = locID_Destination;
@@ -146,7 +146,7 @@ namespace Next_Game
                             {
                                 Active person = new Active();
                                 person = dictActiveActors[charID];
-                                person.SetActorStatus(ActorStatus.AtLocation);
+                                person.Status = ActorStatus.AtLocation;
                                 person.SetActorPosition(posDestination);
                                 person.LocID = locID;
                                 Snippet snippet = new Snippet(string.Format(person.Name + " has arrived safely at " + loc.LocName));
@@ -238,7 +238,7 @@ namespace Next_Game
             string charString; //overall string
             foreach (KeyValuePair<int, Active> pair in dictActiveActors)
             {
-                status = (int)pair.Value.GetActorStatus();
+                status = (int)pair.Value.Status;
                 locID = pair.Value.LocID;
                 locName = GetLocationName(locID);
                 if (status == (int)ActorStatus.AtLocation)
@@ -272,9 +272,9 @@ namespace Next_Game
                 string name = string.Format("{0} {1}, Aid {2}", person.Title, person.Name, actorID);
                 RLColor color = RLColor.White;
                 string locString = "?";
-                if (person.GetActorStatus() == (int)ActorStatus.AtLocation)
+                if (person.Status == ActorStatus.AtLocation)
                 { locString = string.Format("Located at {0} {1}, Lid {2}", GetLocationName(locID), ShowLocationCoords(locID), locID );}
-                else if (person.GetActorStatus() == (int)ActorStatus.Travelling)
+                else if (person.Status == ActorStatus.Travelling)
                 {
                     Position pos = person.GetActorPosition();
                     locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}", pos.PosX, pos.PosY, GetLocationName(locID), ShowLocationCoords(locID), locID);
@@ -424,7 +424,6 @@ namespace Next_Game
                     locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
                     locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
                 }
-                
                 //correct location description
                 if (loc.HouseID == 99)
                 { description = "A homely Inn"; }
@@ -457,7 +456,7 @@ namespace Next_Game
                         {
                             Actor person = new Actor();
                             person = dictAllActors[charID];
-                            actorDetails = string.Format("Aid {0} {1} {2}", person.GetActorID(), person.Title, person.Name);
+                            actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.GetActorID(), person.Title, person.Name, person.Age);
                         }
                         else
                         {   actorDetails = string.Format("unknown ID " + Convert.ToString(charID)); }
@@ -531,7 +530,7 @@ namespace Next_Game
             if(dictActiveActors.ContainsKey(charID))
             {
                 person = dictActiveActors[charID];
-                if (person.GetActorStatus() != (int)ActorStatus.AtLocation)
+                if (person.Status != ActorStatus.AtLocation)
                 { Console.WriteLine("That Character isn't at a Location and can't be selected"); charID = 0; }
             }
             else
@@ -566,7 +565,7 @@ namespace Next_Game
             {
                 person = dictActiveActors[charID];
                 charReturn = person.Name;
-                if (person.GetActorStatus() != (int)ActorStatus.AtLocation)
+                if (person.Status != ActorStatus.AtLocation)
                 { charReturn += " isn't currently available"; }
                 else
                 {
@@ -815,6 +814,17 @@ namespace Next_Game
         {
             if (record != null)
             { dictRecords.Add(record.eventID, record); }
+        }
+
+
+        /// <summary>
+        /// Store a new actor (child) in relevant dictionaries
+        /// </summary>
+        /// <param name="actor"></param>
+        internal void SetPassiveActor(Passive actor)
+        {
+            dictPassiveActors.Add(actor.GetActorID(), actor);
+            dictAllActors.Add(actor.GetActorID(), actor);
         }
 
         //new Methods above here
