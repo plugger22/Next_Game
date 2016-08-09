@@ -11,6 +11,7 @@ namespace Next_Game
 {
     public enum MenuMode {Main, Actor, Debug} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi} //different console windows (Menu window handled independently by Menu.cs)
+    public enum SpecialInput {Normal, MultiKey, Scrolling} //special input modes
 
     public static class Game
     {
@@ -53,6 +54,7 @@ namespace Next_Game
         public static int gameTurn = 0; //each turn represents a day
         public static int gameStart = 1200; //starting year for 1st generation
         public static int gameYear = 1200; //current game year
+        //core objects
         public static Menu menu;
         public static MessageLog messageLog;
         public static Map map;
@@ -60,21 +62,21 @@ namespace Next_Game
         public static History history;
         public static World world;
         public static InfoChannel infoChannel;
-
         //flags
-        private static bool renderRequired = true; //redraw Console?
-        private static bool mouseOn = false; //receive mouse input?
-        private static bool multiInput = false; //flag to allow multiple key inputs
-        private static int multiCaller = 0; //each instance that calls multi key input has a unique ID which is > 0
-        private static string multiData = null; //multi key input is stored here
-        private static int inputState = 0; //used to differentiate suquential levels of input for individual commands
+        private static bool _renderRequired = true; //redraw Console?
+        private static bool _mouseOn = false; //receive mouse input?
+        private static int _multiCaller = 0; //each instance that calls multi key input has a unique ID which is > 0
+        private static string _multiData = null; //multi key input is stored here
+        private static int _inputState = 0; //used to differentiate suquential levels of input for individual commands
         private static MenuMode _menuMode = MenuMode.Main; //menu mode in operation (corresponds to enum above)
-
+        public static SpecialInput _inputMode = SpecialInput.Normal; //special input mode, default none
+        public static bool _fullConsole = false; //set to true by InfoChannel.DrawInfoConsole if multiConsole is maxxed out
+        public static string _scrollText = null; //text displayed at bottom of scrolling window
         //other
-        private static RLKeyPress keyLast = null; //last known keypress
-        private static Position posSelect1; //used for input of map positions
-        private static Position posSelect2;
-        private static int charIDSelected; //selected player character
+        private static RLKeyPress _keyLast = null; //last known keypress
+        private static Position _posSelect1; //used for input of map positions
+        private static Position _posSelect2;
+        private static int _charIDSelected; //selected player character
 
         public static void Main(string[] args)
         {
@@ -126,7 +128,7 @@ namespace Next_Game
            _rootConsole.Render += OnRootConsoleRender;
             // Begin RLNET's game loop
            _rootConsole.Run();
-            renderRequired = true;
+            _renderRequired = true;
         }
 
 
@@ -141,33 +143,52 @@ namespace Next_Game
             RLKeyPress keyPress =_rootConsole.Keyboard.GetKeyPress();
             //last used keypress
             if (keyPress != null)
-            { keyLast = keyPress; }
+            { _keyLast = keyPress; }
             RLMouse mouse = _rootConsole.Mouse;
             bool mouseLeft = _rootConsole.Mouse.GetLeftClick();
             bool mouseRight = _rootConsole.Mouse.GetRightClick();
+            bool complete = false;
             //
             // Multi Key input ---
             //
-            if (multiInput == true && keyPress != null)
+            if (_inputMode == SpecialInput.MultiKey && keyPress != null)
             {
-                bool complete = MultiKeyInput(keyPress);
-                renderRequired = true;
+                complete = MultiKeyInput(keyPress);
+                _renderRequired = true;
                 if (complete == true)
                 {
-                    switch(multiCaller)
+                    switch(_multiCaller)
                     {
                         case 1:
                             //Show Actor (input actorID)
-                            infoChannel.SetInfoList(world.ShowActorRL(Convert.ToInt32(multiData)), ConsoleDisplay.Multi);
+                            infoChannel.SetInfoList(world.ShowActorRL(Convert.ToInt32(_multiData)), ConsoleDisplay.Multi);
                             break;
-
                     }
                     //reset
-                    multiCaller = 0;
-                    multiData = null;
+                    _multiCaller = 0;
+                    _multiData = null;
                 }
             }
-            //normal mouse and keyboard input
+            //
+            // Scrolling mode in Multi Console ---
+            //
+            if (_fullConsole == true && keyPress != null && keyPress.Key != RLKey.Escape && _keyLast.Key != RLKey.Escape)
+            {
+                _inputMode = SpecialInput.Scrolling;
+                _scrollText = "[PGUP] and [PGDN] to scroll, [ESC] to exit";
+            }
+            //scrolling mode - hand off input to scrolling method
+            if (_inputMode == SpecialInput.Scrolling && keyPress != null)
+            {
+                complete = ScrollingKeyInput(keyPress);
+                _renderRequired = true;
+                //return to normal input mode?
+                if (complete == true)
+                { _inputMode = SpecialInput.Normal; _fullConsole = false; _scrollText = ""; }
+            }
+            //
+            //normal mouse and keyboard input ---
+            //
             else
             {
                 //
@@ -176,26 +197,26 @@ namespace Next_Game
                 if (mouseLeft == true || mouseRight == true)
                 {
                     //Mouse specific input OFF - generic location and party info
-                    if (mouseOn == false)
+                    if (_mouseOn == false)
                     {
                         int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                         infoChannel.SetInfoList(world.ShowLocationRL(locID), ConsoleDisplay.Multi);
-                        renderRequired = true;
+                        _renderRequired = true;
                     }
                     //Mouse specific input ON
-                    else if (mouseOn == true)
+                    else if (_mouseOn == true)
                     {
                         //last pressed key indicates context of mouse press
-                        switch (keyLast?.Key)
+                        switch (_keyLast?.Key)
                         {
                             case RLKey.D:
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Debug:
                                         //debug route between two points
-                                        renderRequired = true;
+                                        _renderRequired = true;
                                         //Origin location
-                                        if (inputState == 1)
+                                        if (_inputState == 1)
                                         {
                                             //valid location?
                                             int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
@@ -203,29 +224,29 @@ namespace Next_Game
                                             {
                                                 string locName = world.GetLocationName(locID);
                                                 infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
-                                                posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                _posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
                                                 infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
-                                                inputState = 2;
+                                                _inputState = 2;
                                             }
                                         }
                                         //Destination location
-                                        else if (inputState == 2)
+                                        else if (_inputState == 2)
                                         {
                                             //valid location?
                                             int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                             if (locID > 0)
                                             {
                                                 //process two positions to show on map.
-                                                posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                _posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
                                                 //check that the two coords aren't identical
-                                                if ((posSelect1 != null && posSelect2 != null) && (posSelect1.PosX != posSelect2.PosX || posSelect1.PosY != posSelect2.PosY))
+                                                if ((_posSelect1 != null && _posSelect2 != null) && (_posSelect1.PosX != _posSelect2.PosX || _posSelect1.PosY != _posSelect2.PosY))
                                                 {
-                                                    List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
+                                                    List<Route> listOfRoutes = network.GetRouteAnywhere(_posSelect1, _posSelect2);
                                                     map.DrawRouteDebug(listOfRoutes);
                                                     infoChannel.AppendInfoList(new Snippet(network.ShowRouteDetails(listOfRoutes)), ConsoleDisplay.Input);
                                                 }
-                                                inputState = 0;
-                                                mouseOn = false;
+                                                _inputState = 0;
+                                                _mouseOn = false;
                                             }
                                         }
                                         break;
@@ -235,9 +256,9 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Debug:
-                                        renderRequired = true;
+                                        _renderRequired = true;
                                         //Origin location
-                                        if (inputState == 1)
+                                        if (_inputState == 1)
                                         {
                                             //valid location?
                                             int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
@@ -245,28 +266,28 @@ namespace Next_Game
                                             {
                                                 string locName = world.GetLocationName(locID);
                                                 infoChannel.AppendInfoList(new Snippet(locName), ConsoleDisplay.Input);
-                                                posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                _posSelect1 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
                                                 infoChannel.AppendInfoList(new Snippet("Select DESTINATION Location by Mouse (press ESC to Exit)"), ConsoleDisplay.Input);
-                                                inputState = 2;
+                                                _inputState = 2;
                                             }
                                         }
                                         //Destination location
-                                        else if (inputState == 2)
+                                        else if (_inputState == 2)
                                         {
                                             //valid location?
                                             int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                             if (locID > 0)
                                             {
                                                 //process two positions to show on map.
-                                                posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                                if ((posSelect1 != null && posSelect2 != null) && (posSelect1.PosX != posSelect2.PosX || posSelect1.PosY != posSelect2.PosY))
+                                                _posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                if ((_posSelect1 != null && _posSelect2 != null) && (_posSelect1.PosX != _posSelect2.PosX || _posSelect1.PosY != _posSelect2.PosY))
                                                 {
-                                                    List<Route> listOfRoutes = network.GetRouteAnywhere(posSelect1, posSelect2);
+                                                    List<Route> listOfRoutes = network.GetRouteAnywhere(_posSelect1, _posSelect2);
                                                     map.DrawRouteRL(listOfRoutes);
                                                     infoChannel.AppendInfoList(new Snippet(network.ShowRouteDetails(listOfRoutes)), ConsoleDisplay.Input);
                                                 }
-                                                inputState = 0;
-                                                mouseOn = false;
+                                                _inputState = 0;
+                                                _mouseOn = false;
                                             }
                                         }
                                         break;
@@ -276,16 +297,16 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
-                                        renderRequired = true;
+                                        _renderRequired = true;
                                         //Show House Details
-                                        if (inputState == 1)
+                                        if (_inputState == 1)
                                         {
                                             //valid location?
                                             int houseID = map.GetMapInfo(MapLayer.Houses, mouse.X, mouse.Y, true);
                                             if (houseID > 0)
                                             { infoChannel.SetInfoList(world.ShowHouseRL(houseID), ConsoleDisplay.Multi); }
                                         }
-                                        mouseOn = false;
+                                        _mouseOn = false;
                                         break;
                                 }
                                 break;
@@ -294,36 +315,36 @@ namespace Next_Game
                                 {
                                     case MenuMode.Actor:
                                         //move Player character from A to B
-                                        renderRequired = true;
+                                        _renderRequired = true;
                                         //valid location?
-                                        if (inputState == 1)
+                                        if (_inputState == 1)
                                         {
                                             int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                             if (locID > 0)
                                             {
                                                 //process two positions to show on map.
-                                                posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
-                                                if (posSelect2 != null)
+                                                _posSelect2 = new Position(map.ConvertMouseCoords(mouse.X, mouse.Y));
+                                                if (_posSelect2 != null)
                                                 {
                                                     string infoString = string.Format("Journey from {0} to {1}? [Left Click] to confirm, [Right Click] to Cancel.",
-                                                        network.GetLocationName(posSelect1), network.GetLocationName(posSelect2));
+                                                        network.GetLocationName(_posSelect1), network.GetLocationName(_posSelect2));
                                                     infoChannel.AppendInfoList(new Snippet(infoString), ConsoleDisplay.Input);
-                                                    inputState = 2;
+                                                    _inputState = 2;
                                                 }
                                             }
                                             else
                                             {
                                                 //cancel journey
                                                 if (mouseRight == true)
-                                                { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!"), ConsoleDisplay.Input); inputState = 0; mouseOn = false; }
+                                                { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!"), ConsoleDisplay.Input); _inputState = 0; _mouseOn = false; }
                                             }
                                         }
-                                        else if (inputState == 2)
+                                        else if (_inputState == 2)
                                         {
                                             if (mouseLeft == true)
                                             {
-                                                List<Position> pathToTravel = network.GetPathAnywhere(posSelect1, posSelect2);
-                                                string infoText = world.InitiateMoveActors(charIDSelected, posSelect1, posSelect2, pathToTravel);
+                                                List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
+                                                string infoText = world.InitiateMoveActors(_charIDSelected, _posSelect1, _posSelect2, pathToTravel);
                                                 messageLog.Add(new Snippet(infoText), gameTurn);
                                                 infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
                                                 //show route
@@ -332,8 +353,8 @@ namespace Next_Game
                                             }
                                             else if (mouseRight == true)
                                             { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!"), ConsoleDisplay.Input); }
-                                            inputState = 0;
-                                            mouseOn = false;
+                                            _inputState = 0;
+                                            _mouseOn = false;
                                             //autoswitch back to Main menu
                                             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
                                         }
@@ -349,8 +370,8 @@ namespace Next_Game
                 else if (keyPress != null)
                 {
                     //turn off mouse specific input whenever a key is pressed
-                    renderRequired = true;
-                    mouseOn = false;
+                    _renderRequired = true;
+                    _mouseOn = false;
                     //which key pressed?
                     switch (keyPress.Key)
                     {
@@ -362,8 +383,8 @@ namespace Next_Game
                                     infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
                                     infoChannel.AppendInfoList(new Snippet("---Input Actor ID ", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
                                     infoChannel.AppendInfoList(new Snippet("Press ENTER when done, ESC to exit"), ConsoleDisplay.Input);
-                                    multiInput = true;
-                                    multiCaller = 1;
+                                    _inputMode = SpecialInput.MultiKey;
+                                    _multiCaller = 1;
                                     break;
                             }
                             break;
@@ -386,7 +407,7 @@ namespace Next_Game
                             break;
                         case RLKey.D:
                             //List<Route> listOfRoutes_2 = network.RouteInput("D"); map.DrawRouteDebug(listOfRoutes_2);
-                            renderRequired = true;
+                            _renderRequired = true;
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
@@ -399,8 +420,8 @@ namespace Next_Game
                                     inputList.Add(new Snippet("--- Show the Route between two Locations", RLColor.Magenta, RLColor.Black));
                                     inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
                                     infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
-                                    mouseOn = true;
-                                    inputState = 1;
+                                    _mouseOn = true;
+                                    _inputState = 1;
                                     break;
                             }
                             break;
@@ -415,8 +436,8 @@ namespace Next_Game
                                     inputList.Add(new Snippet("--- Show the Route between two Locations", RLColor.Magenta, RLColor.Black));
                                     inputList.Add(new Snippet("Select ORIGIN Location by Mouse (press ESC to Exit)"));
                                     infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
-                                    inputState = 1;
-                                    mouseOn = true;
+                                    _inputState = 1;
+                                    _mouseOn = true;
                                     break;
                             }
                             break;
@@ -429,8 +450,8 @@ namespace Next_Game
                                     inputList.Add(new Snippet("--- Show House Details", RLColor.Magenta, RLColor.Black));
                                     inputList.Add(new Snippet("Select Location by Mouse (press ESC to Exit)"));
                                     infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
-                                    inputState = 1;
-                                    mouseOn = true;
+                                    _inputState = 1;
+                                    _mouseOn = true;
                                     break;
                             }
                             break;
@@ -448,14 +469,14 @@ namespace Next_Game
                                 case MenuMode.Actor:
                                     //move Player characters around map
                                     List<Snippet> charList = new List<Snippet>();
-                                    charList.Add(world.GetActorStatusRL(charIDSelected));
-                                    posSelect1 = world.GetActiveActorLocationByPos(charIDSelected);
-                                    if (posSelect1 != null)
-                                    { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); mouseOn = true; }
+                                    charList.Add(world.GetActorStatusRL(_charIDSelected));
+                                    _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
+                                    if (_posSelect1 != null)
+                                    { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); _mouseOn = true; }
                                     else
-                                    { charList.Add(new Snippet("The character is not currently at your disposal")); mouseOn = false; }
+                                    { charList.Add(new Snippet("The character is not currently at your disposal")); _mouseOn = false; }
                                     infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
-                                    inputState = 1;
+                                    _inputState = 1;
                                     break;
                             }
                             break;
@@ -470,7 +491,7 @@ namespace Next_Game
                                 case MenuMode.Debug:
                                     //show debug route
                                     map.UpdateMap(true, false);
-                                    mouseOn = true;
+                                    _mouseOn = true;
                                     break;
                             }
                             break;
@@ -481,15 +502,18 @@ namespace Next_Game
                         case RLKey.Number4:
                         case RLKey.Number5:
                         case RLKey.Number6:
-                            switch (_menuMode)
+                            if (_inputMode == SpecialInput.Normal)
                             {
-                                case MenuMode.Main:
-                                    _menuMode = menu.SwitchMenuMode(MenuMode.Actor);
-                                    charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
-                                    List<Snippet> infoList = new List<Snippet>();
-                                    infoList.Add(world.ShowSelectedActor(charIDSelected));
-                                    infoChannel.SetInfoList(infoList, ConsoleDisplay.Input);
-                                    break;
+                                switch (_menuMode)
+                                {
+                                    case MenuMode.Main:
+                                        _menuMode = menu.SwitchMenuMode(MenuMode.Actor);
+                                        _charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
+                                        List<Snippet> infoList = new List<Snippet>();
+                                        infoList.Add(world.ShowSelectedActor(_charIDSelected));
+                                        infoChannel.SetInfoList(infoList, ConsoleDisplay.Input);
+                                        break;
+                                }
                             }
                             break;
                         case RLKey.Enter:
@@ -511,8 +535,8 @@ namespace Next_Game
                             //clear input console
                             infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
                             //exit mouse input 
-                            if (mouseOn == true)
-                            { mouseOn = false; }
+                            if (_mouseOn == true)
+                            { _mouseOn = false; }
                             //revert back to main menu
                             else
                             {
@@ -533,7 +557,7 @@ namespace Next_Game
         private static void OnRootConsoleRender(object sender, UpdateEventArgs e)
         {
             // Tell RLNET to draw the console that we set
-            if (renderRequired == true)
+            if (_renderRequired == true)
             {
                 //update status console
                 infoChannel.SetInfoList(world.ShowPlayerActorsRL(), ConsoleDisplay.Status);
@@ -554,7 +578,7 @@ namespace Next_Game
                 RLConsole.Blit(_multiConsole, 0, 0, _multiWidth, _multiHeight,_rootConsole, 100, 20);
                 RLConsole.Blit(_messageConsole, 0, 0, _messageWidth, _messageHeight,_rootConsole, 100, 120);
                _rootConsole.Draw();
-                renderRequired = false;
+                _renderRequired = false;
             }
         }
 
@@ -716,16 +740,16 @@ namespace Next_Game
                     break;
                 case RLKey.Enter:
                     //exit multi key input
-                    multiInput = false;
-                    multiData = multiData.Replace("?", "");
-                    Console.WriteLine("{0} input", multiData);
+                    _inputMode = SpecialInput.Normal;
+                    _multiData = _multiData.Replace("?", "");
+                    Console.WriteLine("{0} input", _multiData);
                     inputComplete = true;
                     break;
                 case RLKey.Escape:
                     //exit data input, exit calling routine
-                    multiInput = false;
+                    _inputMode = SpecialInput.Normal;
                     inputComplete = true;
-                    multiCaller = 0;
+                    _multiCaller = 0;
                     break;         
             }
             //add to global character string (exclude the final 'Enter')
@@ -733,17 +757,39 @@ namespace Next_Game
             {
                 //only accept valid input types
                 if ((numInput == true && inputType == 1) || (alphaInput == true && inputType == 2))
-                { multiData += data; }
+                { _multiData += data; }
                 else
-                { multiData += '?'; }
+                { _multiData += '?'; }
             }
             //clear input console before displaying input
             infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
-            infoChannel.AppendInfoList(new Snippet(string.Format("{0} input", multiData), RLColor.LightMagenta, RLColor.Black), ConsoleDisplay.Input);
-            infoChannel.AppendInfoList(new Snippet(string.Format("Press ENTER when done or ESC to exit", multiData)), ConsoleDisplay.Input);
+            infoChannel.AppendInfoList(new Snippet(string.Format("{0} input", _multiData), RLColor.LightMagenta, RLColor.Black), ConsoleDisplay.Input);
+            infoChannel.AppendInfoList(new Snippet(string.Format("Press ENTER when done or ESC to exit", _multiData)), ConsoleDisplay.Input);
             infoChannel.AppendInfoList(new Snippet("Any '?' will be automatically removed"), ConsoleDisplay.Input);
             return inputComplete;
         }
+
+        /// <summary>
+        /// Takes over keyboard input in the event of the multi console going into scrolling mode
+        /// </summary>
+        /// <param name="keyPress"></param>
+        /// <returns></returns>
+        private static bool ScrollingKeyInput(RLKeyPress keyPress)
+        {
+            bool inputComplete = false;
+            switch (keyPress.Key)
+            {
+                case RLKey.PageUp:
+                    break;
+                case RLKey.PageDown:
+                    break;
+                case RLKey.Escape:
+                    inputComplete = true;
+                    break;
+            }
+                return inputComplete;
+        }
+
 
         public static string ShowDate()
         {

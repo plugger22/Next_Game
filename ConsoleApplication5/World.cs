@@ -194,33 +194,7 @@ namespace Next_Game
             return dictMapMarkers;
         }
 
-        /// <summary>
-        /// Display Player Character Pool
-        /// </summary>
-        /// <param name="locationsOnly">If true only show those at Locations, default is show all</param>
-        /*public void ShowPlayerCharacters(bool locationsOnly = false)
-        {
-            Console.WriteLine();
-            Console.WriteLine("Player Characters");
-            int status;
-            int locID;
-            string locName;
-            string locStatus = "who knows?";
-            foreach (KeyValuePair<int, Character> pair in dictActiveActors)
-            {
-                status = (int)pair.Value.GetCharacterStatus();
-                locID = pair.Value.CharLocationID;
-                locName = GetLocationName(locID);
-                if(status == (int)CharStatus.Location)
-                { locStatus = "At " + locName; }
-                else if(status == (int)CharStatus.Travelling)
-                { locStatus = "Travelling to " + locName; }
-                //only show chosen characters (at Location or not depending on parameter)
-                if (locationsOnly == true && status == (int)CharStatus.Location || !locationsOnly)
-                { Console.WriteLine("ID {0,-2} {1,-15} Status: {2,-20}", pair.Key, pair.Value.GetCharacterName(), locStatus); }
-            }            
-        }*/
-
+      
         /// <summary>
         /// Returns a list of characters in string format to pass to InfoChannel to display in multi-Console
         /// </summary>
@@ -317,7 +291,7 @@ namespace Next_Game
                             if (relPerson.MaidenName != null)
                             { maidenName = string.Format(" (nee {0})", relPerson.MaidenName); }
                             int relAge = Game.gameYear - relPerson.Born;
-                            string text = string.Format("{0}, Aid {1}: {2} {3}{4} of House {5}, Age {6}", 
+                            string text = string.Format("{0} Aid {1}: {2} {3}{4} of House {5}, Age {6}", 
                                 kvp.Value, relPerson.ActID, relPerson.Title, relPerson.Name, maidenName, GetGreatHouseName(relPerson.HouseID), relAge);
                             listToDisplay.Add(new Snippet(text, familyColor, RLColor.Black));
                         }
