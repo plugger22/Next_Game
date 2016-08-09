@@ -71,6 +71,28 @@ namespace Next_Game
             }
         }
 
+
+        /// <summary>
+        /// clear out a console
+        /// </summary>
+        /// <param name="consoleDisplay"></param>
+        public void ClearConsole(ConsoleDisplay consoleDisplay)
+        {
+            switch (consoleDisplay)
+            {
+                case ConsoleDisplay.Input:
+                    inputList.Clear();
+                    break;
+                case ConsoleDisplay.Multi:
+                    multiList.Clear();
+                    break;
+                case ConsoleDisplay.Status:
+                    statusList.Clear();
+                    break;
+            }
+        }
+
+
         /// <summary>
         /// Inserts a snippet to the head of a list to be displayed - do so AFTER calling AppendInfoList as it clears the list
         /// </summary>
@@ -97,6 +119,7 @@ namespace Next_Game
         {
             List<Snippet> displayList = new List<Snippet>();
             int margin = 2;
+            int startIndex = 0;
             int dataLength = 10; //max lines of data allowed in console
             switch (consoleDisplay)
             {
@@ -110,7 +133,7 @@ namespace Next_Game
                 case ConsoleDisplay.Multi:
                     displayList = multiList;
                     margin = multiMargin;
-                    dataLength = 46;
+                    dataLength = Game._multiConsoleLength;
                     break;
                 case ConsoleDisplay.Status:
                     displayList = statusList;
@@ -119,12 +142,25 @@ namespace Next_Game
             }
             //max number of lines
             int maxLength = Math.Min(dataLength, displayList.Count);
-
             if (clearDisplay)
             { infoConsole.Clear(); }
             int lineCounter = 0;
             int listLength = displayList.Count;
-            for (int i = 0; i < maxLength; i++)
+            //keep _scrollIndex (set in Game.ScrollingKeyInput) within bounds
+            if (consoleDisplay == ConsoleDisplay.Multi && Game._scrollIndex > 0) 
+            {
+                startIndex = Math.Min(Game._scrollIndex, displayList.Count - Game._multiConsoleLength / 2);
+                startIndex = Math.Max(startIndex, 0);
+                maxLength = Math.Min(dataLength + Game._scrollIndex, displayList.Count);
+                //prevent _scrollIndex from escalating
+                if (startIndex < Game._scrollIndex)
+                {
+                    Game._scrollIndex = startIndex - Game._multiConsoleLength / 2;
+                    Game._scrollIndex = Math.Max(Game._scrollIndex, 0);
+                }
+            }
+            //Display data
+            for (int i = startIndex; i < maxLength; i++)
             {
                 Snippet snippet = displayList[i];
                 infoConsole.Print(margin, lineCounter * 2 + margin, snippet.GetText(), snippet.GetForeColor(), snippet.GetBackColor());

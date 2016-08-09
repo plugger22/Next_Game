@@ -71,7 +71,9 @@ namespace Next_Game
         private static MenuMode _menuMode = MenuMode.Main; //menu mode in operation (corresponds to enum above)
         public static SpecialInput _inputMode = SpecialInput.Normal; //special input mode, default none
         public static bool _fullConsole = false; //set to true by InfoChannel.DrawInfoConsole if multiConsole is maxxed out
-        public static string _scrollText = null; //text displayed at bottom of scrolling window
+        public static string _scrollText = "[PGDN] to scroll, [ESC] to exit"; //text displayed at bottom of scrolling window
+        public static int _scrollIndex = 0; //used by infoChannel.DrawConsole to handle scrolling up and down
+        public static int _multiConsoleLength = 46; //max length of data in multi Console (infochannel.drawInfoConsole)
         //other
         private static RLKeyPress _keyLast = null; //last known keypress
         private static Position _posSelect1; //used for input of map positions
@@ -172,24 +174,31 @@ namespace Next_Game
             //
             // Scrolling mode in Multi Console ---
             //
-            if (_fullConsole == true && keyPress != null && keyPress.Key != RLKey.Escape && _keyLast.Key != RLKey.Escape)
-            {
-                _inputMode = SpecialInput.Scrolling;
-                _scrollText = "[PGUP] and [PGDN] to scroll, [ESC] to exit";
-            }
             //scrolling mode - hand off input to scrolling method
-            if (_inputMode == SpecialInput.Scrolling && keyPress != null)
+            else if (_inputMode == SpecialInput.Scrolling && keyPress != null)
             {
                 complete = ScrollingKeyInput(keyPress);
-                _renderRequired = true;
                 //return to normal input mode?
                 if (complete == true)
-                { _inputMode = SpecialInput.Normal; _fullConsole = false; _scrollText = ""; }
+                {
+                    _inputMode = SpecialInput.Normal;
+                    _fullConsole = false;
+                    _scrollText = "[PGDN] to scroll, [ESC] to exit";
+                    _scrollIndex = 0;
+                    infoChannel.ClearConsole(ConsoleDisplay.Multi);
+                }
+            }
+            //activate scrolling mode?
+            else if (_fullConsole == true && keyPress != null && keyPress.Key != RLKey.Escape)
+            {
+                _inputMode = SpecialInput.Scrolling;
+                _scrollText = "[PGDN] to scroll, [ESC] to exit";
+                _renderRequired = true;
             }
             //
             //normal mouse and keyboard input ---
             //
-            else
+            else if (_inputMode == SpecialInput.Normal)
             {
                 //
                 // MOUSE input ---
@@ -380,7 +389,8 @@ namespace Next_Game
                             {
                                 case MenuMode.Main:
                                     //show Actor
-                                    infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+                                    //infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+                                    infoChannel.ClearConsole(ConsoleDisplay.Input);
                                     infoChannel.AppendInfoList(new Snippet("---Input Actor ID ", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
                                     infoChannel.AppendInfoList(new Snippet("Press ENTER when done, ESC to exit"), ConsoleDisplay.Input);
                                     _inputMode = SpecialInput.MultiKey;
@@ -519,7 +529,8 @@ namespace Next_Game
                         case RLKey.Enter:
                             map.UpdateMap();
                             map.UpdatePlayers(world.MoveActors());
-                            infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+                            //infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+                            infoChannel.ClearConsole(ConsoleDisplay.Input);
                             infoChannel.AppendInfoList(new Snippet(ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
                             gameTurn++;
                             break;
@@ -533,7 +544,8 @@ namespace Next_Game
                             break;
                         case RLKey.Escape:
                             //clear input console
-                            infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+                            //infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+                            infoChannel.ClearConsole(ConsoleDisplay.Input);
                             //exit mouse input 
                             if (_mouseOn == true)
                             { _mouseOn = false; }
@@ -762,7 +774,8 @@ namespace Next_Game
                 { _multiData += '?'; }
             }
             //clear input console before displaying input
-            infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+            //infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+            infoChannel.ClearConsole(ConsoleDisplay.Input);
             infoChannel.AppendInfoList(new Snippet(string.Format("{0} input", _multiData), RLColor.LightMagenta, RLColor.Black), ConsoleDisplay.Input);
             infoChannel.AppendInfoList(new Snippet(string.Format("Press ENTER when done or ESC to exit", _multiData)), ConsoleDisplay.Input);
             infoChannel.AppendInfoList(new Snippet("Any '?' will be automatically removed"), ConsoleDisplay.Input);
@@ -780,12 +793,18 @@ namespace Next_Game
             switch (keyPress.Key)
             {
                 case RLKey.PageUp:
+                    _scrollIndex -= _multiConsoleLength;
+                    _scrollIndex = Math.Max(_scrollIndex, 0);
+                    _renderRequired = true;
                     break;
                 case RLKey.PageDown:
+                    _scrollIndex += _multiConsoleLength;
+                    _renderRequired = true;
                     break;
                 case RLKey.Escape:
                     inputComplete = true;
-                    break;
+                    _renderRequired = true;
+                break;
             }
                 return inputComplete;
         }
