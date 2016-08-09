@@ -40,7 +40,6 @@ namespace Next_Game
             Name = null;
             Status = ActorStatus.AtLocation;
             actorPos = new Position();
-            ActID = characterIndex++;
             Description = "standard human";
             Age = 30;
             Title = ActorTitle.None;
@@ -56,13 +55,12 @@ namespace Next_Game
         {
             Status = ActorStatus.AtLocation;
             Name = name;
-            this.ActID = characterIndex++;
             actorPos = new Position();
             Description = "standard human";
             Age = 30;
             Title = title;
             Sex = sex;
-            
+            ActID = characterIndex++;
         }
 
         public void SetActorPosition(Position posLoc)

@@ -174,7 +174,7 @@ namespace Next_Game
                 Snippet blank = new Snippet("");
                 infoConsole.Print(margin, lineCounter * 2 + margin, blank.GetText(), blank.GetForeColor(), blank.GetBackColor());
                 lineCounter++;
-                Snippet instructions = new Snippet(Game._scrollText, RLColor.Magenta, RLColor.Black);
+                Snippet instructions = new Snippet("[PGDN] and [PGUP] to scroll, [ESC] to exit", RLColor.Magenta, RLColor.Black);
                 infoConsole.Print(margin, lineCounter * 2 + margin, instructions.GetText(), instructions.GetForeColor(), instructions.GetBackColor());
                 //set global var to trigger Scrolling mode
                 Game._fullConsole = true;

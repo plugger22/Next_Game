@@ -71,7 +71,6 @@ namespace Next_Game
         private static MenuMode _menuMode = MenuMode.Main; //menu mode in operation (corresponds to enum above)
         public static SpecialInput _inputMode = SpecialInput.Normal; //special input mode, default none
         public static bool _fullConsole = false; //set to true by InfoChannel.DrawInfoConsole if multiConsole is maxxed out
-        public static string _scrollText = "[PGDN] to scroll, [ESC] to exit"; //text displayed at bottom of scrolling window
         public static int _scrollIndex = 0; //used by infoChannel.DrawConsole to handle scrolling up and down
         public static int _multiConsoleLength = 46; //max length of data in multi Console (infochannel.drawInfoConsole)
         //other
@@ -183,16 +182,15 @@ namespace Next_Game
                 {
                     _inputMode = SpecialInput.Normal;
                     _fullConsole = false;
-                    _scrollText = "[PGDN] to scroll, [ESC] to exit";
                     _scrollIndex = 0;
                     infoChannel.ClearConsole(ConsoleDisplay.Multi);
                 }
             }
             //activate scrolling mode?
-            else if (_fullConsole == true && keyPress != null && keyPress.Key != RLKey.Escape)
+            //else if (_fullConsole == true && keyPress != null && keyPress.Key != RLKey.Escape)
+            else if (_fullConsole == true && keyPress != null)
             {
                 _inputMode = SpecialInput.Scrolling;
-                _scrollText = "[PGDN] to scroll, [ESC] to exit";
                 _renderRequired = true;
             }
             //
