@@ -536,7 +536,8 @@ namespace Next_Game
                         if (num < 10)
                         {
                             //mother died at childbirth (10%) but child survived
-                            lady.ReasonDied = ActorDied.Childbirth;
+                            PassiveActorFuneral(lady, year, ActorDied.Childbirth, child);
+                            /*lady.ReasonDied = ActorDied.Childbirth;
                             lady.Died = year;
                             lady.Age = lady.Age - (Game.gameYear - year);
                             lady.Status = ActorStatus.Dead;
@@ -547,7 +548,7 @@ namespace Next_Game
                             Game.world.SetRecord(record_1);
                             //remove actor from location
                             Location loc_1 = Game.network.GetLocation(lady.LocID);
-                            loc_1.RemoveActor(lady.ActID);
+                            loc_1.RemoveActor(lady.ActID);*/
                             break;
                         }
                         else if (num < 30)
@@ -590,8 +591,7 @@ namespace Next_Game
             return fullName;
         }
 
-        //CreateBannerLord
-
+        
         /// <summary>
         /// return list of Initial Player Characters
         /// </summary>
@@ -612,6 +612,36 @@ namespace Next_Game
         /// <returns></returns>
         internal List<House> GetMinorHouses()
         { return listOfMinorHouses; }
+
+        /// <summary>
+        /// Call this method whenever an NPC actor dies to handle all the housekeeping
+        /// </summary>
+        /// <param name="deceased"></param>
+        /// <param name="year"></param>
+        /// <param name="reason"></param>
+        /// <param name="perpetrator">The Actor who caused the death, if any</param>
+        internal void PassiveActorFuneral(Passive deceased, int year, ActorDied reason, Actor perpetrator = null)
+        {
+            deceased.Died = year;
+            deceased.Age = deceased.Age - (Game.gameYear - year);
+            deceased.Status = ActorStatus.Dead;
+            Record record = null;
+            switch(reason)
+            {
+                case ActorDied.Childbirth:
+                    deceased.ReasonDied = ActorDied.Childbirth;
+                    string descriptor = string.Format("{0}, Aid {1}, died while giving birth to {2}, age {3}", deceased.Name, deceased.ActID, perpetrator.Name, deceased.Age);
+                    record = new Record(descriptor, deceased.ActID, deceased.LocID, deceased.RefID, year, HistEvent.Died);
+                    record.AddEvent(HistEvent.Birthing);
+                    record.AddActor(perpetrator.ActID);
+                    break;
+            }
+            
+            Game.world?.SetRecord(record);
+            //remove actor from location
+            Location loc_1 = Game.network.GetLocation(deceased.LocID);
+            loc_1.RemoveActor(deceased.ActID);
+        }
 
         //add methods above
     }
