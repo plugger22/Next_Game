@@ -148,12 +148,13 @@ namespace Next_Game.Cartographic
         }
 
         /// <summary>
-        /// determines land and sea
+        /// determines land and sea, sets up Topography MapLayer.
         /// </summary>
         private void InitialiseGeography()
         {
             int chance;
             int decrement; //used to lower chance each cycle when doing a progress push along a row or column
+            int decrementBase = 5; //starting value for decrements
             //First loop - all city and route cells are set to land
             for (int row = 0; row < mapSize; row++)
             {
@@ -200,14 +201,13 @@ namespace Next_Game.Cartographic
                     }
                 }
             }
-            //3rd Loop - run along edges and push sea into grid
-            chance = 30; //% chance of an adjacent square being land
+            //3rd Loop - run along top edge of grid and push sea downwards
             for (int column = 0; column < mapSize; column++)
             {
                 int row = 0;
                 int cell = 0;
                 chance = 100;
-                decrement = 10; 
+                decrement = decrementBase;
                 bool keepGoing = true;
                 do
                 {
@@ -238,10 +238,137 @@ namespace Next_Game.Cartographic
                 }
                 while (row < mapSize);
             }
-
+            //4th loop - run along bottom edge of grid and push sea upwards
+            for (int column = 0; column < mapSize; column++)
+            {
+                int row = mapSize -1;
+                int cell = 0;
+                chance = 100;
+                decrement = decrementBase;
+                bool keepGoing = true;
+                do
+                {
+                    cell = mapGrid[(int)MapLayer.Topography, column, row];
+                    //first cell blank?
+                    if (cell == 0)
+                    {
+                        //rnd chance of being sea
+                        if (rnd.Next(100) < chance)
+                        {
+                            //change to sea
+                            mapGrid[(int)MapLayer.Topography, column, row] = 1;
+                            //decrease % chance for next roll
+                            chance -= decrement;
+                            chance = Math.Max(chance, 10);
+                        }
+                        else
+                        //missed roll, cease pushing down this column
+                        { keepGoing = false; }
+                    }
+                    else
+                    //land cell on edge, exit
+                    { keepGoing = false; }
+                    //exit?
+                    if (keepGoing == false)
+                    { break; }
+                    row--;
+                }
+                while (row > 0);
+            }
+            //5th loop - run along left edge of grid and push sea rightwards
+            for (int row = 0; row < mapSize; row++)
+            {
+                int column = 0;
+                int cell = 0;
+                chance = 100;
+                decrement = decrementBase;
+                bool keepGoing = true;
+                do
+                {
+                    cell = mapGrid[(int)MapLayer.Topography, column, row];
+                    //first cell blank?
+                    if (cell == 0)
+                    {
+                        //rnd chance of being sea
+                        if (rnd.Next(100) < chance)
+                        {
+                            //change to sea
+                            mapGrid[(int)MapLayer.Topography, column, row] = 1;
+                            //decrease % chance for next roll
+                            chance -= decrement;
+                            chance = Math.Max(chance, 10);
+                        }
+                        else
+                        //missed roll, cease pushing down this column
+                        { keepGoing = false; }
+                    }
+                    else
+                    //land cell on edge, exit
+                    { keepGoing = false; }
+                    //exit?
+                    if (keepGoing == false)
+                    { break; }
+                    column++;
+                }
+                while (column < mapSize);
+            }
+            //6th loop - run along right edge of grid and push sea rightwards
+            for (int row = 0; row < mapSize; row++)
+            {
+                int column = mapSize - 1;
+                int cell = 0;
+                chance = 100;
+                decrement = decrementBase;
+                bool keepGoing = true;
+                do
+                {
+                    cell = mapGrid[(int)MapLayer.Topography, column, row];
+                    //first cell blank?
+                    if (cell == 0)
+                    {
+                        //rnd chance of being sea
+                        if (rnd.Next(100) < chance)
+                        {
+                            //change to sea
+                            mapGrid[(int)MapLayer.Topography, column, row] = 1;
+                            //decrease % chance for next roll
+                            chance -= decrement;
+                            chance = Math.Max(chance, 10);
+                        }
+                        else
+                        //missed roll, cease pushing down this column
+                        { keepGoing = false; }
+                    }
+                    else
+                    //land cell on edge, exit
+                    { keepGoing = false; }
+                    //exit?
+                    if (keepGoing == false)
+                    { break; }
+                    column--;
+                }
+                while (column > 0);
+            }
+            //7th loop - turn all remaining blank cells into land
+            for (int row = 0; row < mapSize; row++)
+            {
+                for (int column = 0; column < mapSize; column++)
+                {
+                    //any blank cell becomes land
+                    if (mapGrid[(int)MapLayer.Topography, column, row] == 0)
+                    { mapGrid[(int)MapLayer.Topography, column, row] = 2; }
+                }
+            }
         }
 
-        //sets up terrain on the map. numMountains indicates the # of mountain ranges, sizeMountains is the size of the mountain range
+
+        /// <summary>
+        /// sets up terrain on the map. numMountains indicates the # of mountain ranges, sizeMountains is the size of the mountain range
+        /// </summary>
+        /// <param name="numMountains"></param>
+        /// <param name="sizeMountains"></param>
+        /// <param name="numForests"></param>
+        /// <param name="sizeForests"></param>
         private void InitialiseTerrain(int numMountains, int sizeMountains, int numForests, int sizeForests)
         {
             //error check input
@@ -540,6 +667,7 @@ namespace Next_Game.Cartographic
                     //draw base level
                     else
                     {
+                        //default values
                         backColor1 = RLColor.Brown;
                         backColor2 = RLColor.Brown;
                         backColor3 = RLColor.Brown;
@@ -549,6 +677,8 @@ namespace Next_Game.Cartographic
                         backColor7 = RLColor.Brown;
                         backColor8 = RLColor.Brown;
                         backColor9 = RLColor.Brown;
+                        for(int i = 1; i < 10; i++)
+                        { cell[i] = 32; }
                         //ordinary location
                         switch (mainLayer)
                         {
@@ -572,15 +702,22 @@ namespace Next_Game.Cartographic
                                 else if (topoLayer == 1)
                                 {
                                     //sea
-                                    cell[1] = 32; backColor1 = RLColor.LightBlue;
-                                    cell[2] = 32; backColor2 = RLColor.LightBlue;
-                                    cell[3] = 32; backColor3 = RLColor.LightBlue;
-                                    cell[4] = 32; backColor4 = RLColor.LightBlue;
+                                    backColor1 = RLColor.LightBlue;
+                                    backColor2 = RLColor.LightBlue;
+                                    backColor3 = RLColor.LightBlue;
+                                    backColor4 = RLColor.LightBlue;
                                     backColor5 = RLColor.LightBlue;
-                                    cell[6] = 32; backColor6 = RLColor.LightBlue;
-                                    cell[7] = 32; backColor7 = RLColor.LightBlue;
-                                    cell[8] = 32; backColor8 = RLColor.LightBlue;
-                                    cell[9] = 32; backColor9 = RLColor.LightBlue;
+                                    backColor6 = RLColor.LightBlue;
+                                    backColor7 = RLColor.LightBlue;
+                                    backColor8 = RLColor.LightBlue;
+                                    backColor9 = RLColor.LightBlue;
+                                    //random waves
+                                    for (int c = 1; c < 10; c++)
+                                    {
+                                        if (rnd.Next(100) < 5)
+                                        { cell[c] = 126; }
+                                        else { cell[c] = 32; }
+                                    }
                                 }
                                 else if (topoLayer == 2)
                                 {
