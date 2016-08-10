@@ -149,6 +149,12 @@ namespace Next_Game
             bool mouseLeft = _rootConsole.Mouse.GetLeftClick();
             bool mouseRight = _rootConsole.Mouse.GetRightClick();
             bool complete = false;
+            //activate scrolling mode?
+            if (_fullConsole == true && keyPress != null)
+            {
+                _inputMode = SpecialInput.Scrolling;
+                _renderRequired = true;
+            }
             //
             // Multi Key input ---
             //
@@ -163,6 +169,7 @@ namespace Next_Game
                         case 1:
                             //Show Actor (input actorID)
                             infoChannel.SetInfoList(world.ShowActorRL(Convert.ToInt32(_multiData)), ConsoleDisplay.Multi);
+                            keyPress = null; //to prevent Enter keypress from causing the date to tick up
                             break;
                     }
                     //reset
@@ -186,17 +193,10 @@ namespace Next_Game
                     infoChannel.ClearConsole(ConsoleDisplay.Multi);
                 }
             }
-            //activate scrolling mode?
-            //else if (_fullConsole == true && keyPress != null && keyPress.Key != RLKey.Escape)
-            else if (_fullConsole == true && keyPress != null)
-            {
-                _inputMode = SpecialInput.Scrolling;
-                _renderRequired = true;
-            }
             //
             //normal mouse and keyboard input ---
             //
-            else if (_inputMode == SpecialInput.Normal)
+            if (_inputMode == SpecialInput.Normal)
             {
                 //
                 // MOUSE input ---
@@ -527,10 +527,10 @@ namespace Next_Game
                         case RLKey.Enter:
                             map.UpdateMap();
                             map.UpdatePlayers(world.MoveActors());
-                            //infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
-                            infoChannel.AppendInfoList(new Snippet(ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
                             gameTurn++;
+                            infoChannel.AppendInfoList(new Snippet(ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
+                            
                             break;
                         case RLKey.X:
                             //exit application from Main Menu
