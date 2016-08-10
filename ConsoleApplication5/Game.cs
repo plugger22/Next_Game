@@ -390,7 +390,7 @@ namespace Next_Game
                                     //infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
                                     infoChannel.ClearConsole(ConsoleDisplay.Input);
                                     infoChannel.AppendInfoList(new Snippet("---Input Actor ID ", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
-                                    infoChannel.AppendInfoList(new Snippet("Press ENTER when done, ESC to exit"), ConsoleDisplay.Input);
+                                    infoChannel.AppendInfoList(new Snippet("Press ENTER when done, BACKSPACE to change, ESC to exit"), ConsoleDisplay.Input);
                                     _inputMode = SpecialInput.MultiKey;
                                     _multiCaller = 1;
                                     break;
@@ -601,7 +601,7 @@ namespace Next_Game
             {
             char data = '?';
             bool inputComplete = false;
-            int inputType = 0; //1 - numeric, 2 - alphabetic
+            int inputType = 0; //1 - numeric, 2 - alphabetic, 3 - Backspace
             switch(keyPress.Key)
             {
                 case RLKey.Number0:
@@ -748,6 +748,9 @@ namespace Next_Game
                     data = 'Z';
                     inputType = 2;
                     break;
+                case RLKey.BackSpace:
+                    inputType = 3;
+                    break;
                 case RLKey.Enter:
                     //exit multi key input
                     _inputMode = SpecialInput.Normal;
@@ -768,6 +771,12 @@ namespace Next_Game
                 //only accept valid input types
                 if ((numInput == true && inputType == 1) || (alphaInput == true && inputType == 2))
                 { _multiData += data; }
+                else if (inputType == 3)
+                {
+                    //backspace - delete last character
+                    if (_multiData.Length > 0)
+                    { _multiData = _multiData.Remove(_multiData.Length - 1); }
+                }
                 else
                 { _multiData += '?'; }
             }
@@ -775,7 +784,7 @@ namespace Next_Game
             //infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
             infoChannel.ClearConsole(ConsoleDisplay.Input);
             infoChannel.AppendInfoList(new Snippet(string.Format("{0} input", _multiData), RLColor.LightMagenta, RLColor.Black), ConsoleDisplay.Input);
-            infoChannel.AppendInfoList(new Snippet(string.Format("Press ENTER when done or ESC to exit", _multiData)), ConsoleDisplay.Input);
+            infoChannel.AppendInfoList(new Snippet(string.Format("Press ENTER when done, BACKSPACE to change, or ESC to exit", _multiData)), ConsoleDisplay.Input);
             infoChannel.AppendInfoList(new Snippet("Any '?' will be automatically removed"), ConsoleDisplay.Input);
             return inputComplete;
         }

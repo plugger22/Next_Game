@@ -555,7 +555,7 @@ namespace Next_Game
                         {
                             //can no longer have children
                             lady.Fertile = false;
-                            descriptor = string.Format("{0} suffered complications while giving birth to {1} and can no longer have children", lady.Name, child.Name);
+                            descriptor = string.Format("{0} suffered complications while giving birth to {1}", lady.Name, child.Name);
                             Record record_2 = new Record(descriptor, lady.ActID, lady.LocID, lady.RefID, year, HistEvent.Birthing);
                             Game.world.SetRecord(record_2);
                             break;
