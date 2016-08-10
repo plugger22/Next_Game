@@ -5,8 +5,10 @@ using RLNET;
 namespace Next_Game.Cartographic
 {
 
-    public enum MapLayer { Base, Player, NPC, LocID, Debug, Houses, Capitals, RefID, Count } //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
-
+    //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
+    //Topography - 1 is sea, 2 is land
+    public enum MapLayer { Base, Player, NPC, LocID, Debug, Houses, Capitals, RefID, Topography, Count } //Count must be last
+     
     //Main Map class (single instance, it's job is to set everything up at the start)
     public class Map
     {
@@ -143,6 +145,100 @@ namespace Next_Game.Cartographic
             }
             FindCapital();
             InitialiseRoads(4);
+        }
+
+        /// <summary>
+        /// determines land and sea
+        /// </summary>
+        private void InitialiseGeography()
+        {
+            int chance;
+            int decrement; //used to lower chance each cycle when doing a progress push along a row or column
+            //First loop - all city and route cells are set to land
+            for (int row = 0; row < mapSize; row++)
+            {
+                for (int column = 0; column < mapSize; column++)
+                {
+                    //if city or route, then must be land
+                    if (mapGrid[(int)MapLayer.Base, column, row] > 0)
+                    { mapGrid[(int)MapLayer.Topography, column, row] = 2; }
+                }
+            }
+            //2nd loop - chance of squares Orthagonally adjacent to land also being land
+            for (int row = 0; row < mapSize; row++)
+            {
+                chance = 30; //% chance of an adjacent square being land
+                for (int column = 0; column < mapSize; column++)
+                {
+                    //land cell?
+                    if (mapGrid[(int)MapLayer.Topography, column, row] == 2)
+                    {
+                        //check to east
+                        if ((column < mapSize - 1) && mapGrid[(int)MapLayer.Topography, column + 1, row] == 0)
+                        {
+                            if (rnd.Next(100) < chance)
+                            { mapGrid[(int)MapLayer.Topography, column + 1, row] = 2; }
+                        }
+                        //check to west
+                        if ((column > 0) && mapGrid[(int)MapLayer.Topography, column - 1, row] == 0)
+                        {
+                            if (rnd.Next(100) < chance)
+                            { mapGrid[(int)MapLayer.Topography, column - 1, row] = 2; }
+                        }
+                        //check to north
+                        if((row < mapSize - 1) && mapGrid[(int)MapLayer.Topography, column, row + 1] == 0)
+                        {
+                            if (rnd.Next(100) < chance)
+                            { mapGrid[(int)MapLayer.Topography, column, row + 1] = 2; }
+                        }
+                        //check to south
+                        if ((row > 0) && mapGrid[(int)MapLayer.Topography, column, row - 1] == 0)
+                        {
+                            if (rnd.Next(100) < chance)
+                            { mapGrid[(int)MapLayer.Topography, column, row - 1] = 2; }
+                        }
+                    }
+                }
+            }
+            //3rd Loop - run along edges and push sea into grid
+            chance = 30; //% chance of an adjacent square being land
+            for (int column = 0; column < mapSize; column++)
+            {
+                int row = 0;
+                int cell = 0;
+                chance = 100;
+                decrement = 10; 
+                bool keepGoing = true;
+                do
+                {
+                    cell = mapGrid[(int)MapLayer.Topography, column, row];
+                    //first cell blank?
+                    if (cell == 0)
+                    {
+                        //rnd chance of being sea
+                        if (rnd.Next(100) < chance)
+                        {
+                            //change to sea
+                            mapGrid[(int)MapLayer.Topography, column, row] = 1;
+                            //decrease % chance for next roll
+                            chance -= decrement;
+                            chance = Math.Max(chance, 10);
+                        }
+                        else
+                        //missed roll, cease pushing down this column
+                        { keepGoing = false; }
+                    }
+                    else
+                    //land cell on edge, exit
+                    { keepGoing = false; }
+                    //exit?
+                    if (keepGoing == false)
+                    { break; }
+                    row++;
+                }
+                while (row < mapSize);
+            }
+
         }
 
         //sets up terrain on the map. numMountains indicates the # of mountain ranges, sizeMountains is the size of the mountain range
@@ -382,8 +478,9 @@ namespace Next_Game.Cartographic
             RLColor backColor7 = RLColor.Black;
             RLColor backColor8 = RLColor.Black;
             RLColor backColor9 = RLColor.Black;
-            int playerLayer = 0;
             int mainLayer = 0;
+            int playerLayer = 0;
+            int topoLayer = 0;
             int[] cell = new int[10]; //cell array (character ALT code), 1 to 9 (ignore cell[0])
             int houseID; //House Id for houses layer
             //
@@ -424,6 +521,7 @@ namespace Next_Game.Cartographic
                     //Check Player layer first (overides base layer)
                     mainLayer = mapGrid[(int)MapLayer.Base, column, row];
                     playerLayer = mapGrid[(int)MapLayer.Player, column, row];
+                    topoLayer = mapGrid[(int)MapLayer.Topography, column, row];
                     //get cells above and below
                     //if (row > 0) { mainUp = mapGrid[(int)MapLayer.Base, column, row - 1];} else { mainUp = 0; }
                     //if (row < mapSize - 1) { mainDown = mapGrid[(int)MapLayer.Base, column, row + 1]; } else { mainDown = 0; }
@@ -442,14 +540,53 @@ namespace Next_Game.Cartographic
                     //draw base level
                     else
                     {
+                        backColor1 = RLColor.Brown;
+                        backColor2 = RLColor.Brown;
+                        backColor3 = RLColor.Brown;
+                        backColor4 = RLColor.Brown;
+                        backColor5 = RLColor.Brown;
+                        backColor6 = RLColor.Brown;
+                        backColor7 = RLColor.Brown;
+                        backColor8 = RLColor.Brown;
+                        backColor9 = RLColor.Brown;
                         //ordinary location
                         switch (mainLayer)
                         {
+                            
                             //empty cell - centred period
                             case 0:
-                                cell[4] = 219; foreColor4 = RLColor.Brown;
-                                cell[5] = 7; foreColor5 = RLColor.Gray; backColor5 = RLColor.Brown;
-                                cell[6] = 219; foreColor6 = RLColor.Brown;
+                                cell[5] = 7; foreColor5 = RLColor.Gray;
+                                if (topoLayer == 0)
+                                {
+                                    //clear
+                                    cell[1] = 32; backColor1 = RLColor.Black;
+                                    cell[2] = 32; backColor2 = RLColor.Black;
+                                    cell[3] = 32; backColor3 = RLColor.Black;
+                                    cell[4] = 32; backColor4 = RLColor.Black;
+                                    backColor5 = RLColor.Black;
+                                    cell[6] = 32; backColor6 = RLColor.Black;
+                                    cell[7] = 32; backColor7 = RLColor.Black;
+                                    cell[8] = 32; backColor8 = RLColor.Black;
+                                    cell[9] = 32; backColor9 = RLColor.Black;
+                                }
+                                else if (topoLayer == 1)
+                                {
+                                    //sea
+                                    cell[1] = 32; backColor1 = RLColor.LightBlue;
+                                    cell[2] = 32; backColor2 = RLColor.LightBlue;
+                                    cell[3] = 32; backColor3 = RLColor.LightBlue;
+                                    cell[4] = 32; backColor4 = RLColor.LightBlue;
+                                    backColor5 = RLColor.LightBlue;
+                                    cell[6] = 32; backColor6 = RLColor.LightBlue;
+                                    cell[7] = 32; backColor7 = RLColor.LightBlue;
+                                    cell[8] = 32; backColor8 = RLColor.LightBlue;
+                                    cell[9] = 32; backColor9 = RLColor.LightBlue;
+                                }
+                                else if (topoLayer == 2)
+                                {
+                                    //land
+                                    backColor5 = RLColor.Brown;
+                                }
                                 break;
                             //location -filled square
                             case 1:
@@ -459,13 +596,14 @@ namespace Next_Game.Cartographic
                                 houseID = mapGrid[(int)MapLayer.Houses, column, row];
                                 if (houseID > 0)
                                 {
+                                    
                                     if (houseID < 99) // house
                                     {
                                         cell[5] = houseID + 48;
-                                        foreColor5 = RLColor.Green;
+                                        foreColor5 = RLColor.Black;
                                         //if a house Capital show as different color
                                         if ( mapGrid[(int)MapLayer.Capitals, column, row] > 0)
-                                        { foreColor5 = RLColor.Yellow; }
+                                        { foreColor5 = RLColor.Yellow; backColor5 = RLColor.Black;}
                                     }
                                     else // special location
                                     { foreColor5 = RLColor.LightMagenta; }
@@ -474,7 +612,7 @@ namespace Next_Game.Cartographic
                             //kingdom capital - filled square (large)
                             case 2:
                                 cell[5] = 219;
-                                foreColor5 = RLColor.Yellow;
+                                foreColor5 = RLColor.Yellow; backColor5 = RLColor.Black;
                                 //check cells above and below and draw vertical bars if appropriae
                                 //if (mainUp == 10 || mainUp == 13 || mainUp == 15) { cell[2] = 179; }
                                 //if (mainDown == 10 || mainDown == 12 || mainDown == 14) { cell[8] = 179; }
@@ -824,7 +962,7 @@ namespace Next_Game.Cartographic
             InitialiseConnectors();
             InitialiseMapLayers();
             //ShowArrayOfConnectors();
-            //Console.ReadKey();
+            InitialiseGeography();
         }
 
         private void LocationSweeper()
