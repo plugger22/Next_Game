@@ -363,50 +363,64 @@ namespace Next_Game.Cartographic
         public void DrawMapRL(RLConsole mapConsole)
         {
             mapConsole.Clear();
-            RLColor foreground; //normal foreground color
-            //RLColor forVertical; //color used for vertical above and below connections
+            //cell colors, foreground and background
+            RLColor foreColor1 = RLColor.LightGray;
+            RLColor foreColor2 = RLColor.LightGray;
+            RLColor foreColor3 = RLColor.LightGray;
+            RLColor foreColor4 = RLColor.LightGray;
+            RLColor foreColor5 = RLColor.LightGray;
+            RLColor foreColor6 = RLColor.LightGray;
+            RLColor foreColor7 = RLColor.LightGray;
+            RLColor foreColor8 = RLColor.LightGray;
+            RLColor foreColor9 = RLColor.LightGray;
+            RLColor backColor1 = RLColor.Black;
+            RLColor backColor2 = RLColor.Black;
+            RLColor backColor3 = RLColor.Black;
+            RLColor backColor4 = RLColor.Black;
+            RLColor backColor5 = RLColor.Black;
+            RLColor backColor6 = RLColor.Black;
+            RLColor backColor7 = RLColor.Black;
+            RLColor backColor8 = RLColor.Black;
+            RLColor backColor9 = RLColor.Black;
             int playerLayer = 0;
             int mainLayer = 0;
-            int horizontal1; //ascii character as an alt code - 3 characters per cell to enlarge map (horizontal plane)
-            int horizontal2; 
-            int horizontal3;
-            int vertical1; //ascii character as an alt code (vertical plane above)
-            int vertical2; //(vertical plane below)
+            int[] cell = new int[10]; //cell array (character ALT code), 1 to 9 (ignore cell[0])
             int houseID; //House Id for houses layer
             //
             //margin and the vertical & horizontal offsets are class instances
             //
             //write header to screen (two rows, vertical 2 digit, spaced 3 apart)
-            //int mainUp; //cell immediately above the main one
-            //int mainDown; //cell immediately below the main one
-            foreground = RLColor.LightGray;
             for (int j = 0; j < mapSize; j++)
             {
                 //top row (10's)
-                mapConsole.Set(j * 3 + offsetHorizontal + margin, 0 + margin, foreground, RLColor.Black, 32);
-                mapConsole.Set(j * 3 + 1 + offsetHorizontal + margin, 0 + margin, foreground, RLColor.Black, j / 10 + 48);
-                mapConsole.Set(j * 3 + 2 + offsetHorizontal + margin, 0 + margin, foreground, RLColor.Black, 32);
+                mapConsole.Set(j * 3 + offsetHorizontal + margin, 0 + margin, RLColor.LightGray, RLColor.Black, 32);
+                mapConsole.Set(j * 3 + 1 + offsetHorizontal + margin, 0 + margin, RLColor.LightGray, RLColor.Black, j / 10 + 48);
+                mapConsole.Set(j * 3 + 2 + offsetHorizontal + margin, 0 + margin, RLColor.LightGray, RLColor.Black, 32);
                 //bottom row (1's)
-                mapConsole.Set(j * 3 + offsetHorizontal + margin, 1 + margin, foreground, RLColor.Black, 32);
-                mapConsole.Set(j * 3 + 1 + offsetHorizontal + margin, 1 + margin, foreground, RLColor.Black, j % 10 + 48);
-                mapConsole.Set(j * 3 + 2 + offsetHorizontal + margin, 1 + margin, foreground, RLColor.Black, 32);
+                mapConsole.Set(j * 3 + offsetHorizontal + margin, 1 + margin, RLColor.LightGray, RLColor.Black, 32);
+                mapConsole.Set(j * 3 + 1 + offsetHorizontal + margin, 1 + margin, RLColor.LightGray, RLColor.Black, j % 10 + 48);
+                mapConsole.Set(j * 3 + 2 + offsetHorizontal + margin, 1 + margin, RLColor.LightGray, RLColor.Black, 32);
             }
             //for route debugging
             for (int row = 0; row < mapSize; row++)
             {
                 //Right hand side vertical index
-                foreground = RLColor.LightGray;
-                mapConsole.Set(mapSize * 3 + 1 + offsetHorizontal + margin, row * 3 + 1 + offsetVertical, foreground, RLColor.Black, row / 10 + 48);
-                mapConsole.Set(mapSize * 3 + 2 + offsetHorizontal + margin, row * 3 + 1 + offsetVertical, foreground, RLColor.Black, row % 10 + 48);
-                foreground = RLColor.Gray;
+                mapConsole.Set(mapSize * 3 + 1 + offsetHorizontal + margin, row * 3 + 1 + offsetVertical, RLColor.LightGray, RLColor.Black, row / 10 + 48);
+                mapConsole.Set(mapSize * 3 + 2 + offsetHorizontal + margin, row * 3 + 1 + offsetVertical, RLColor.LightGray, RLColor.Black, row % 10 + 48);
+                foreColor4 = RLColor.Gray;
+                foreColor5 = RLColor.Gray;
+                foreColor6 = RLColor.Gray;
                 //forVertical = RLColor.White;
                 for (int column = 0; column < mapSize; column++)
                 {
-                    horizontal1 = 32; //default space
-                    horizontal2 = 32;
-                    horizontal3 = 32;
-                    vertical1 = 32;
-                    vertical2 = 32;
+                    cell[4] = 32; //default space
+                    cell[5] = 32;
+                    cell[6] = 32;
+                    cell[2] = 32;
+                    cell[8] = 32;
+                    backColor4 = RLColor.Black;
+                    backColor5 = RLColor.Black;
+                    backColor6 = RLColor.Black;
                     //Check Player layer first (overides base layer)
                     mainLayer = mapGrid[(int)MapLayer.Base, column, row];
                     playerLayer = mapGrid[(int)MapLayer.Player, column, row];
@@ -417,13 +431,13 @@ namespace Next_Game.Cartographic
                     if (playerLayer > 0)
                     {
                         //# represent group at location (static) or moving. Show yellow for capital, cyan for loc and green for enroute
-                        horizontal2 = playerLayer + 48;
+                        cell[5] = playerLayer + 48;
                         if (mainLayer == 2)
-                        { foreground = RLColor.Yellow; } //capital
+                        { foreColor5 = RLColor.Yellow; } //capital
                         else if (mainLayer == 1)
-                        { foreground = RLColor.Cyan; } //location
+                        { foreColor5 = RLColor.Cyan; } //location
                         else
-                        { foreground = RLColor.Brown; } //in enroute
+                        { foreColor5 = RLColor.Brown; } //in enroute
                     }
                     //draw base level
                     else
@@ -433,127 +447,155 @@ namespace Next_Game.Cartographic
                         {
                             //empty cell - centred period
                             case 0:
-                                horizontal2 = 7; foreground = RLColor.Gray;
+                                cell[4] = 219; foreColor4 = RLColor.Brown;
+                                cell[5] = 7; foreColor5 = RLColor.Gray; backColor5 = RLColor.Brown;
+                                cell[6] = 219; foreColor6 = RLColor.Brown;
                                 break;
                             //location -filled square
                             case 1:
-                                horizontal2 = 219;
-                                foreground = RLColor.Cyan;
+                                cell[5] = 219;
+                                foreColor5 = RLColor.Cyan;
                                 //override with a number if a house
                                 houseID = mapGrid[(int)MapLayer.Houses, column, row];
                                 if (houseID > 0)
                                 {
                                     if (houseID < 99) // house
                                     {
-                                        horizontal2 = houseID + 48;
-                                        foreground = RLColor.Green;
+                                        cell[5] = houseID + 48;
+                                        foreColor5 = RLColor.Green;
                                         //if a house Capital show as different color
                                         if ( mapGrid[(int)MapLayer.Capitals, column, row] > 0)
-                                        { foreground = RLColor.Yellow; }
+                                        { foreColor5 = RLColor.Yellow; }
                                     }
                                     else // special location
-                                    { foreground = RLColor.LightMagenta; }
+                                    { foreColor5 = RLColor.LightMagenta; }
                                 }
                                 break;
                             //kingdom capital - filled square (large)
                             case 2:
-                                horizontal2 = 219;
-                                foreground = RLColor.Yellow;
+                                cell[5] = 219;
+                                foreColor5 = RLColor.Yellow;
                                 //check cells above and below and draw vertical bars if appropriae
-                                //if (mainUp == 10 || mainUp == 13 || mainUp == 15) { vertical1 = 179; }
-                                //if (mainDown == 10 || mainDown == 12 || mainDown == 14) { vertical2 = 179; }
+                                //if (mainUp == 10 || mainUp == 13 || mainUp == 15) { cell[2] = 179; }
+                                //if (mainDown == 10 || mainDown == 12 || mainDown == 14) { cell[8] = 179; }
                                 break;
                             //road vertical - vertical line (should be 179 but uses 196 for some reason)
                             case 10:
-                                horizontal2 = 179;
-                                vertical1 = 179;
-                                vertical2 = 179;
-                                foreground = RLColor.White; 
+                                cell[2] = 179;
+                                cell[5] = 179;
+                                cell[8] = 179;
+                                foreColor2 = RLColor.White;
+                                foreColor5 = RLColor.White;
+                                foreColor8 = RLColor.White;
                                 break;
                             //road lateral - dash (should be 196 but uses 179 for some reason)
                             case 11:
-                                horizontal1 = 196;
-                                horizontal2 = 196;
-                                horizontal3 = 196;
-                                foreground = RLColor.White;
+                                cell[4] = 196;
+                                cell[5] = 196;
+                                cell[6] = 196;
+                                foreColor4 = RLColor.White;
+                                foreColor5 = RLColor.White;
+                                foreColor6 = RLColor.White;
                                 break;
                             //road right up (end of dogleg) or road down left (start of dogleg)
                             case 12:
-                                horizontal1 = 196;
-                                horizontal2 = 217;
-                                vertical1 = 179;
-                                foreground = RLColor.White;
+                                cell[2] = 179;
+                                cell[4] = 196;
+                                cell[5] = 217;
+                                foreColor2 = RLColor.White;
+                                foreColor4 = RLColor.White;
+                                foreColor5 = RLColor.White;
                                 break;
                             //road right down (end of dogleg) or up left (start of dogleg) (should be 191 but uses 192)
                             case 13:
-                                horizontal1 = 196;
-                                horizontal2 = 191;
-                                vertical2 = 179;
-                                foreground = RLColor.White;
+                                cell[4] = 196;
+                                cell[5] = 191;
+                                cell[8] = 179;
+                                foreColor4 = RLColor.White;
+                                foreColor5 = RLColor.White;
+                                foreColor8 = RLColor.White;
                                 break;
                             //road left up (end of dogleg) or down right (start of dogleg)
                             case 14:
-                                horizontal2 = 192;
-                                horizontal3 = 196;
-                                vertical1 = 179;
-                                foreground = RLColor.White;
+                                cell[2] = 179;
+                                cell[5] = 192;
+                                cell[6] = 196;
+                                foreColor2 = RLColor.White;
+                                foreColor5 = RLColor.White;
+                                foreColor6 = RLColor.White;
                                 break;
                             //road left down (end of dogleg) up right (start of dogleg)
                             case 15:
-                                horizontal2 = 218;
-                                horizontal3 = 196;
-                                vertical2 = 179;
-                                foreground = RLColor.White;
+                                cell[5] = 218;
+                                cell[6] = 196;
+                                cell[8] = 179;
+                                foreColor5 = RLColor.White;
+                                foreColor6 = RLColor.White;
+                                foreColor8 = RLColor.White;
                                 break;
                             //road vertical route ---
                             case 20:
-                                horizontal2 = 179;
-                                vertical1 = 179;
-                                vertical2 = 179;
-                                foreground = RLColor.LightRed;
+                                cell[2] = 179;
+                                cell[5] = 179;
+                                cell[8] = 179;
+                                foreColor2 = RLColor.LightRed;
+                                foreColor5 = RLColor.LightRed;
+                                foreColor8 = RLColor.LightRed;
                                 break;
                             //road lateral route
                             case 21:
-                                horizontal1 = 196;
-                                horizontal2 = 196;
-                                horizontal3 = 196;
-                                foreground = RLColor.LightRed;
+                                cell[4] = 196;
+                                cell[5] = 196;
+                                cell[6] = 196;
+                                foreColor4 = RLColor.LightRed;
+                                foreColor5 = RLColor.LightRed;
+                                foreColor6 = RLColor.LightRed;
                                 break;
                             //road right up (end of dogleg) or road down left (start of dogleg) route
                             case 22:
-                                horizontal1 = 196;
-                                horizontal2 = 217;
-                                vertical1 = 179;
-                                foreground = RLColor.LightRed;
+                                cell[2] = 179;
+                                cell[4] = 196;
+                                cell[5] = 217;
+                                foreColor2 = RLColor.LightRed;
+                                foreColor4 = RLColor.LightRed;
+                                foreColor5 = RLColor.LightRed;
                                 break;
                             //road right down (end of dogleg) or up left (start of dogleg) route
                             case 23:
-                                horizontal1 = 196;
-                                horizontal2 = 191;
-                                vertical2 = 179;
-                                foreground = RLColor.LightRed;
+                                cell[4] = 196;
+                                cell[5] = 191;
+                                cell[8] = 179;
+                                foreColor4 = RLColor.LightRed;
+                                foreColor5 = RLColor.LightRed;
+                                foreColor8 = RLColor.LightRed;
                                 break;
                             //road left up (end of dogleg) or down right (start of dogleg) route
                             case 24:
-                                horizontal2 = 192;
-                                horizontal3 = 196;
-                                vertical1 = 179;
-                                foreground = RLColor.LightRed;
+                                cell[2] = 179;
+                                cell[5] = 192;
+                                cell[6] = 196;
+                                foreColor2 = RLColor.LightRed;
+                                foreColor5 = RLColor.LightRed;
+                                foreColor6 = RLColor.LightRed;
                                 break;
                             //road left down (end of dogleg) up right (start of dogleg) route
                             case 25:
-                                horizontal2 = 218;
-                                horizontal3 = 196;
-                                vertical2 = 179;
-                                foreground = RLColor.LightRed;
+                                cell[5] = 218;
+                                cell[6] = 196;
+                                cell[8] = 179;
+                                foreColor5 = RLColor.LightRed;
+                                foreColor6 = RLColor.LightRed;
+                                foreColor8 = RLColor.LightRed;
                                 break;
                             //terrain, mountains - 'M'
                             case 30:
-                                horizontal2 = 77; foreground = RLColor.White;
+                                cell[5] = 77;
+                                foreColor5 = RLColor.White;
                                 break;
                             //terrain, forests '^'
                             case 31:
-                                horizontal2 = 94; foreground = RLColor.Green;
+                                cell[5] = 94;
+                                foreColor5 = RLColor.Green;
                                 break;
                             //for debug routes
                             case 40:
@@ -565,34 +607,39 @@ namespace Next_Game.Cartographic
                                 //keep numbers 0 to 9, different colours for each set of 10 = red -> yellow -> green -> magenta
                                 int num = mapGrid[(int)MapLayer.Debug, column, row];
                                 if (num < 10)
-                                { horizontal2 = num + 48; foreground = RLColor.Red; }
+                                { cell[5] = num + 48; foreColor5 = RLColor.Red; }
                                 else if (num >= 10 && num < 20)
-                                { num %= 10; horizontal2 = num + 48; foreground = RLColor.Yellow; }
+                                { num %= 10; cell[5] = num + 48; foreColor5 = RLColor.Yellow; }
                                 else if (num >= 20 && num < 30)
-                                { num %= 10; horizontal2 = num + 48; foreground = RLColor.Green; }
+                                { num %= 10; cell[5] = num + 48; foreColor5 = RLColor.Green; }
                                 else
-                                { num %= 10; horizontal2 = num + 48; foreground = RLColor.Magenta; }
+                                { num %= 10; cell[5] = num + 48; foreColor5 = RLColor.Magenta; }
                                 break;
                         }
                     }
-                    //horizontal
-                    mapConsole.Set(column * 3 + offsetHorizontal + margin, row * 3 + 1 + offsetVertical, foreground, RLColor.Black, horizontal1);
-                    mapConsole.Set(column * 3 + 1 + offsetHorizontal + margin, row * 3 + 1 + offsetVertical, foreground, RLColor.Black, horizontal2);
-                    mapConsole.Set(column * 3 + 2 + offsetHorizontal + margin, row * 3 + 1 + offsetVertical, foreground, RLColor.Black, horizontal3);
-                    //vertical
-                    mapConsole.Set(column * 3 + 1 + offsetHorizontal + margin, row * 3 + offsetVertical, foreground, RLColor.Black, vertical1);
-                    mapConsole.Set(column * 3 + 1 + offsetHorizontal + margin, row * 3 + 2 + offsetVertical, foreground, RLColor.Black, vertical2);
+                    //Cell 3 x 3 in format (top to bottom, left to right) 1-2-3 (top row) 4-5-6 (middle row) 7-8-9 (bottom row)
+                    mapConsole.Set(column * 3 + offsetHorizontal + margin, row * 3 + offsetVertical, foreColor1, backColor1, cell[1]);
+                    mapConsole.Set(column * 3 + 1 + offsetHorizontal + margin, row * 3 + offsetVertical, foreColor2, backColor2, cell[2]);
+                    mapConsole.Set(column * 3 + 2 + offsetHorizontal + margin, row * 3 + offsetVertical, foreColor3, backColor3, cell[3]);
+                    //horizontal middle row
+                    mapConsole.Set(column * 3 + offsetHorizontal + margin, row * 3 + 1 + offsetVertical, foreColor4, backColor4, cell[4]);
+                    mapConsole.Set(column * 3 + 1 + offsetHorizontal + margin, row * 3 + 1 + offsetVertical, foreColor5, backColor5, cell[5]);
+                    mapConsole.Set(column * 3 + 2 + offsetHorizontal + margin, row * 3 + 1 + offsetVertical, foreColor6, backColor6, cell[6]);
+                    //horizontal bottom row
+                    mapConsole.Set(column * 3 + offsetHorizontal + margin, row * 3 + 2 + offsetVertical, foreColor7, backColor7, cell[7]);
+                    mapConsole.Set(column * 3 + 1 + offsetHorizontal + margin, row * 3 + 2 + offsetVertical, foreColor8, backColor8, cell[8]);
+                    mapConsole.Set(column * 3 + 2 + offsetHorizontal + margin, row * 3 + 2 + offsetVertical, foreColor9, backColor9, cell[9]);
                 }
-                foreground = RLColor.LightGray;
-                mapConsole.Set(0 + margin, row * 3 + 1 + offsetVertical, foreground, RLColor.Black, row/10 + 48);
-                mapConsole.Set(1 + margin, row * 3 + 1 + offsetVertical, foreground, RLColor.Black, row % 10 + 48);
+                foreColor4 = RLColor.LightGray;
+                mapConsole.Set(0 + margin, row * 3 + 1 + offsetVertical, RLColor.LightGray, RLColor.Black, row/10 + 48);
+                mapConsole.Set(1 + margin, row * 3 + 1 + offsetVertical, RLColor.LightGray, RLColor.Black, row % 10 + 48);
             }
             //write footer to screen (two rows, vertical 2 digit, spaced 3 apart)
-            foreground = RLColor.LightGray;
+            foreColor4 = RLColor.LightGray;
             for (int j = 0; j < mapSize; j++)
             {
-                mapConsole.Set(j * 3 + 1 + offsetHorizontal + margin, mapSize * 3 + 1 + offsetVertical, foreground, RLColor.Black, j / 10 + 48);
-                mapConsole.Set(j * 3 + 1 + offsetHorizontal + margin, mapSize * 3 + 2 + offsetVertical, foreground, RLColor.Black, j % 10 + 48);
+                mapConsole.Set(j * 3 + 1 + offsetHorizontal + margin, mapSize * 3 + 1 + offsetVertical, RLColor.LightGray, RLColor.Black, j / 10 + 48);
+                mapConsole.Set(j * 3 + 1 + offsetHorizontal + margin, mapSize * 3 + 2 + offsetVertical, RLColor.LightGray, RLColor.Black, j % 10 + 48);
             }
         }
 

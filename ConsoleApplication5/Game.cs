@@ -781,7 +781,6 @@ namespace Next_Game
                 { _multiData += '?'; }
             }
             //clear input console before displaying input
-            //infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
             infoChannel.ClearConsole(ConsoleDisplay.Input);
             infoChannel.AppendInfoList(new Snippet(string.Format("{0} input", _multiData), RLColor.LightMagenta, RLColor.Black), ConsoleDisplay.Input);
             infoChannel.AppendInfoList(new Snippet(string.Format("Press ENTER when done, BACKSPACE to change, or ESC to exit", _multiData)), ConsoleDisplay.Input);
