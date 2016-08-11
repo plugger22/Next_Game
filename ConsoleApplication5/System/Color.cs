@@ -10,6 +10,15 @@ namespace Next_Game
         public static RLColor _house = Palette.latte;
         public static RLColor _bannerlord = Palette.ocean;
         public static RLColor _inn = Palette.salmon;
+        public static RLColor _mountainBase = Palette.khaki;
+        public static RLColor _mountain1 = Palette.mocha;
+        public static RLColor _mountain2 = Palette.latte;
+        public static RLColor _mountain3 = Palette.chocolate;
+        public static RLColor _forestBase = Palette.honeydew;
+        public static RLColor _forest1 = Palette.olive;
+        public static RLColor _forest2 = Palette.envy;
+        public static RLColor _forest3 = Palette.grass;
+        public static RLColor _forest4 = Palette.moss;
     }
 
     public static class Palette
@@ -19,6 +28,8 @@ namespace Next_Game
         public static RLColor coffee = new RLColor(154, 141, 107);
         public static RLColor latte = new RLColor(139, 95, 58);
         public static RLColor khaki = new RLColor(223, 210, 201);
+        public static RLColor mocha = new RLColor(198, 169, 137);
+        public static RLColor chocolate = new RLColor(95, 59, 25);
         //greens
         public static RLColor honeydew = new RLColor(197, 208, 140);
         public static RLColor jade = new RLColor(156, 203, 157);
