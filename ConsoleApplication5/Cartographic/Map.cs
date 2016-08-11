@@ -215,6 +215,9 @@ namespace Next_Game.Cartographic
                     //first cell blank?
                     if (cell == 0)
                     {
+                        //if adjacent cell is sea, increase chance
+                        if (column > 0 && mapGrid[(int)MapLayer.Topography, column - 1, row] == 1)
+                        { chance += decrement; }
                         //rnd chance of being sea
                         if (rnd.Next(100) < chance)
                         {
@@ -252,6 +255,9 @@ namespace Next_Game.Cartographic
                     //first cell blank?
                     if (cell == 0)
                     {
+                        //if adjacent cell is sea, increase chance
+                        if (column > 0 && mapGrid[(int)MapLayer.Topography, column - 1, row] == 1)
+                        { chance += decrement; }
                         //rnd chance of being sea
                         if (rnd.Next(100) < chance)
                         {
@@ -266,7 +272,7 @@ namespace Next_Game.Cartographic
                         { keepGoing = false; }
                     }
                     else
-                    //land cell on edge, exit
+                    //land cell or edge, exit
                     { keepGoing = false; }
                     //exit?
                     if (keepGoing == false)
@@ -289,6 +295,9 @@ namespace Next_Game.Cartographic
                     //first cell blank?
                     if (cell == 0)
                     {
+                        //if adjacent cell is sea, increase chance
+                        if (row > 0 && mapGrid[(int)MapLayer.Topography, column, row - 1] == 1)
+                        { chance += decrement; }
                         //rnd chance of being sea
                         if (rnd.Next(100) < chance)
                         {
@@ -326,6 +335,9 @@ namespace Next_Game.Cartographic
                     //first cell blank?
                     if (cell == 0)
                     {
+                        //if adjacent cell is sea, increase chance
+                        if (row > 0 && mapGrid[(int)MapLayer.Topography, column, row - 1] == 1)
+                        { chance += decrement; }
                         //rnd chance of being sea
                         if (rnd.Next(100) < chance)
                         {
@@ -749,7 +761,7 @@ namespace Next_Game.Cartographic
                             //kingdom capital - filled square (large)
                             case 2:
                                 cell[5] = 219;
-                                foreColor5 = Color._capital; backColor5 = Color._land;
+                                foreColor5 = RLColor.Black; backColor5 = Color._land;
                                 //check cells above and below and draw vertical bars if appropriae
                                 //if (mainUp == 10 || mainUp == 13 || mainUp == 15) { cell[2] = 179; }
                                 //if (mainDown == 10 || mainDown == 12 || mainDown == 14) { cell[8] = 179; }

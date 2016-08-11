@@ -10,7 +10,6 @@ namespace Next_Game
         public static RLColor _house = Palette.latte;
         public static RLColor _bannerlord = Palette.ocean;
         public static RLColor _inn = Palette.salmon;
-        public static RLColor _capital = Palette.vacation;
     }
 
     public static class Palette
