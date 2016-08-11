@@ -75,6 +75,7 @@
     <Compile Include="Record.cs" />
     <Compile Include="House.cs" />
     <Compile Include="History.cs" />
+    <Compile Include="System\Color.cs" />
     <Compile Include="System\InfoChannel.cs" />
     <Compile Include="Cartographic\Location.cs" />
     <Compile Include="Cartographic\Map.cs" />

@@ -668,15 +668,15 @@ namespace Next_Game.Cartographic
                     else
                     {
                         //default values
-                        backColor1 = RLColor.Brown;
-                        backColor2 = RLColor.Brown;
-                        backColor3 = RLColor.Brown;
-                        backColor4 = RLColor.Brown;
-                        backColor5 = RLColor.Brown;
-                        backColor6 = RLColor.Brown;
-                        backColor7 = RLColor.Brown;
-                        backColor8 = RLColor.Brown;
-                        backColor9 = RLColor.Brown;
+                        backColor1 = Color._land;
+                        backColor2 = Color._land;
+                        backColor3 = Color._land;
+                        backColor4 = Color._land;
+                        backColor5 = Color._land;
+                        backColor6 = Color._land;
+                        backColor7 = Color._land;
+                        backColor8 = Color._land;
+                        backColor9 = Color._land;
                         for(int i = 1; i < 10; i++)
                         { cell[i] = 32; }
                         //ordinary location
@@ -685,7 +685,7 @@ namespace Next_Game.Cartographic
                             
                             //empty cell - centred period
                             case 0:
-                                cell[5] = 7; foreColor5 = RLColor.Gray;
+                                cell[5] = 7; foreColor5 = Color._dot;
                                 if (topoLayer == 0)
                                 {
                                     //clear
@@ -702,15 +702,15 @@ namespace Next_Game.Cartographic
                                 else if (topoLayer == 1)
                                 {
                                     //sea
-                                    backColor1 = RLColor.LightBlue;
-                                    backColor2 = RLColor.LightBlue;
-                                    backColor3 = RLColor.LightBlue;
-                                    backColor4 = RLColor.LightBlue;
-                                    backColor5 = RLColor.LightBlue;
-                                    backColor6 = RLColor.LightBlue;
-                                    backColor7 = RLColor.LightBlue;
-                                    backColor8 = RLColor.LightBlue;
-                                    backColor9 = RLColor.LightBlue;
+                                    backColor1 = Color._sea;
+                                    backColor2 = Color._sea;
+                                    backColor3 = Color._sea;
+                                    backColor4 = Color._sea;
+                                    backColor5 = Color._sea;
+                                    backColor6 = Color._sea;
+                                    backColor7 = Color._sea;
+                                    backColor8 = Color._sea;
+                                    backColor9 = Color._sea;
                                     //random waves
                                     for (int c = 1; c < 10; c++)
                                     {
@@ -722,7 +722,7 @@ namespace Next_Game.Cartographic
                                 else if (topoLayer == 2)
                                 {
                                     //land
-                                    backColor5 = RLColor.Brown;
+                                    backColor5 = Color._land;
                                 }
                                 break;
                             //location -filled square
@@ -737,19 +737,19 @@ namespace Next_Game.Cartographic
                                     if (houseID < 99) // house
                                     {
                                         cell[5] = houseID + 48;
-                                        foreColor5 = RLColor.Black;
+                                        foreColor5 = Color._bannerlord;
                                         //if a house Capital show as different color
                                         if ( mapGrid[(int)MapLayer.Capitals, column, row] > 0)
-                                        { foreColor5 = RLColor.Yellow; backColor5 = RLColor.Black;}
+                                        { foreColor5 = Color._house; backColor5 = Color._land;}
                                     }
                                     else // special location
-                                    { foreColor5 = RLColor.LightMagenta; }
+                                    { foreColor5 = Color._inn; }
                                 }
                                 break;
                             //kingdom capital - filled square (large)
                             case 2:
                                 cell[5] = 219;
-                                foreColor5 = RLColor.Yellow; backColor5 = RLColor.Black;
+                                foreColor5 = Color._capital; backColor5 = Color._land;
                                 //check cells above and below and draw vertical bars if appropriae
                                 //if (mainUp == 10 || mainUp == 13 || mainUp == 15) { cell[2] = 179; }
                                 //if (mainDown == 10 || mainDown == 12 || mainDown == 14) { cell[8] = 179; }
