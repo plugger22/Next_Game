@@ -7,7 +7,7 @@ namespace Next_Game.Cartographic
 
     //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
     //Topography - 1 is sea, 2 is land
-    public enum MapLayer { Base, Player, NPC, LocID, Debug, Houses, Capitals, RefID, Topography, Count } //Count must be last
+    public enum MapLayer { Base, Player, NPC, LocID, Debug, Houses, Capitals, RefID, Topography, Terrain, Count } //Count must be last
      
     //Main Map class (single instance, it's job is to set everything up at the start)
     public class Map
@@ -45,8 +45,6 @@ namespace Next_Game.Cartographic
         /// <param name="spacing" is the minimum distance apart they should be></param>
         public void InitialiseMap(int frequency, int spacing = 1)
         {
-            //terrain first
-            //InitialiseTerrain(3, 4, 4, 3);
             //loop through map and randomly assign locations
             for (int row = 0; row < mapSize; row++)
             {
@@ -381,7 +379,7 @@ namespace Next_Game.Cartographic
         /// <param name="sizeMountains"></param>
         /// <param name="numForests"></param>
         /// <param name="sizeForests"></param>
-        private void InitialiseTerrain(int numMountains, int sizeMountains, int numForests, int sizeForests)
+        /*private void InitialiseTerrain(int numMountains, int sizeMountains, int numForests, int sizeForests)
         {
             //error check input
             if(sizeMountains > mapSize -2)
@@ -428,168 +426,79 @@ namespace Next_Game.Cartographic
                     { mapGrid[(int)MapLayer.Base, ranX, k + ranY] = 31; mapGrid[(int)MapLayer.Base, ranX + 1, k + ranY] = 31; }
                 }
             }
-        }
+        }*/
+
 
         /// <summary>
-        /// Draw Map Console version
+        /// sets up terrain on the map.
         /// </summary>
-        /*public void DrawMap()
+        /// <param name="numAttempts">How many random tries to initiate a terrain cluster</param>
+        /// <param name="freqForests">% chance a cluster will be forest (otherwise mountains)</param>
+        /// <param name="freqAdjacent">% chance of an orthagonally adjacent cell to have the same terrain</param>
+        private void InitialiseTerrain(int numAttempts, int freqForests, int freqAdjacent)
         {
-            //write header to screen (two rows, vertical 2 digit, spaced 3 apart)
-            Console.Write("   ");
-            for (int j = 0; j < mapSize; j++)
-            { Console.Write("{0,2} ", j / 10); }
-            int i = 10;
-            int counter = 0;
-            int playerLayer = 0;
-            int mainLayer = 0; //
-            Console.WriteLine(); Console.Write("   ");
-            do
+            //try 10 times
+            for (int i = 0; i < numAttempts; i++)
             {
-                Console.Write("{0,2} ", i % 10); counter++; i++;
-                if(i > 19) { i = 10; }
-            }
-            while (counter < mapSize);
-            Console.WriteLine(); Console.WriteLine();
-            //write row & grid to screen
-            Console.ForegroundColor = ConsoleColor.Gray;
-            //for route debugging
-            for (int row = 0; row < mapSize; row++)
-            {
-                Console.Write("{0,2} ", row);
-                for (int column = 0; column < mapSize; column++)
+                int terrainCode = 0;
+                //generate a random map location
+                int row = rnd.Next(1, mapSize);
+                int column = rnd.Next(1, mapSize);
+                //int cellBase = mapGrid[(int)MapLayer.Base, column, row];
+                int cellTopo = mapGrid[(int)MapLayer.Topography, column, row];
+                int cellTerrain = mapGrid[(int)MapLayer.Terrain, column, row];
+
+                //cell that's land & no existing terrain
+                if (cellTopo == 2 && cellTerrain == 0)
                 {
-                    string marker = "  ";
-                    //Check Player layer first (overides base layer)
-                    mainLayer = mapGrid[(int)MapLayer.Base, column, row];
-                    playerLayer = mapGrid[(int)MapLayer.Player, column, row];
-                    if (playerLayer > 0)
-                    {
-                        //# represent group at location (static) or moving. Show yellow for capital, cyan for loc and green for enroute
-                        marker = " " + Convert.ToString(playerLayer) + " ";
-                        if(mainLayer == 2)
-                        { Console.ForegroundColor = ConsoleColor.Yellow; } //capital
-                        else if(mainLayer == 1)
-                        { Console.ForegroundColor = ConsoleColor.Cyan; } //location
-                        else
-                        { Console.ForegroundColor = ConsoleColor.Green; } //in enroute
-                    }
-                    //draw base level
+                    if (rnd.Next(100) < freqForests)
+                    //Forest cluster
+                    { terrainCode = 2; }
                     else
+                    //Mountain cluster
+                    { terrainCode = 1; }
+                    //set cell to correct terrain type
+                    SetMapInfo(MapLayer.Terrain, column, row, terrainCode);
+                    //
+                    //random chance of orthagonally adjacent cells will have same terrain ---
+                    //
+                    //North
+                    if (rnd.Next(100) < freqAdjacent && row > 0)
                     {
-                        //ordinary location
-                        switch (mainLayer)
-                        {
-                            //empty cell
-                            case 0:
-                                marker = " . "; Console.ForegroundColor = ConsoleColor.DarkGray;
-                                break;
-                            //location ---
-                            case 1:
-                                marker = " ■"; Console.ForegroundColor = ConsoleColor.Cyan;
-                                break;
-                            //kingdom capital
-                            case 2:
-                                marker = " ■"; Console.ForegroundColor = ConsoleColor.Yellow;
-                                break;
-                            //road vertical ---
-                            case 10:
-                                marker = " │"; Console.ForegroundColor = ConsoleColor.White;
-                                break;
-                            //road lateral
-                            case 11:
-                                marker = "---"; Console.ForegroundColor = ConsoleColor.White;
-                                break;
-                            //road right up (end of dogleg) or road down left (start of dogleg)
-                            case 12:
-                                marker = "-┘ "; Console.ForegroundColor = ConsoleColor.Gray;
-                                break;
-                            //road right down (end of dogleg) or up left (start of dogleg)
-                            case 13:
-                                marker = "-┐ "; Console.ForegroundColor = ConsoleColor.Gray;
-                                break;
-                            //road left up (end of dogleg) or down right (start of dogleg)
-                            case 14:
-                                marker = " └-"; Console.ForegroundColor = ConsoleColor.Gray;
-                                break;
-                            //road left down (end of dogleg) up right (start of dogleg)
-                            case 15:
-                                marker = " ┌-"; Console.ForegroundColor = ConsoleColor.Gray;
-                                break;
-                            //road vertical route ---
-                            case 20:
-                                marker = " │"; Console.ForegroundColor = ConsoleColor.Red;
-                                break;
-                            //road lateral route
-                            case 21:
-                                marker = "---"; Console.ForegroundColor = ConsoleColor.Red;
-                                break;
-                            //road right up (end of dogleg) or road down left (start of dogleg) route
-                            case 22:
-                                marker = "-┘ "; Console.ForegroundColor = ConsoleColor.Red;
-                                break;
-                            //road right down (end of dogleg) or up left (start of dogleg) route
-                            case 23:
-                                marker = "-┐ "; Console.ForegroundColor = ConsoleColor.Red;
-                                break;
-                            //road left up (end of dogleg) or down right (start of dogleg) route
-                            case 24:
-                                marker = " └-"; Console.ForegroundColor = ConsoleColor.Red;
-                                break;
-                            //road left down (end of dogleg) up right (start of dogleg) route
-                            case 25:
-                                marker = " ┌-"; Console.ForegroundColor = ConsoleColor.Red;
-                                break;
-                            //terrain, mountains
-                            case 30:
-                                marker = " M "; Console.ForegroundColor = ConsoleColor.White;
-                                break;
-                            //terrain, forests
-                            case 31:
-                                marker = " ^ "; Console.ForegroundColor = ConsoleColor.Green;
-                                break;
-                            //for debug routes
-                            case 40:
-                            case 41:
-                            case 42:
-                            case 43:
-                            case 44:
-                            case 45:
-                                //keep numbers 0 to 9, different colours for each set of 10 = red -> yellow -> green -> magenta
-                                int num = mapGrid[(int)MapLayer.Debug, column, row];
-                                if (num < 10)
-                                { marker = " " + Convert.ToString(num); Console.ForegroundColor = ConsoleColor.Red; }
-                                else if (num >= 10 && num < 20)
-                                { num %= 10; marker = " " + Convert.ToString(num); Console.ForegroundColor = ConsoleColor.Yellow; }
-                                else if (num >= 20 && num < 30)
-                                { num %= 10; marker = " " + Convert.ToString(num); Console.ForegroundColor = ConsoleColor.Green; }
-                                else
-                                { num %= 10; marker = " " + Convert.ToString(num); Console.ForegroundColor = ConsoleColor.Magenta; }
-                                break;
-                        }
-                    } 
-                    Console.Write("{0,-3}", marker);
+                        cellTopo = mapGrid[(int)MapLayer.Topography, column, row - 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column, row - 1];
+                        if (cellTopo == 2 && cellTerrain == 0)
+                        { SetMapInfo(MapLayer.Terrain, column, row - 1, terrainCode); }
+                    }
+                    //South
+                    if (rnd.Next(100) < freqAdjacent && row < mapSize - 1)
+                    {
+                        cellTopo = mapGrid[(int)MapLayer.Topography, column, row + 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column, row + 1];
+                        if (cellTopo == 2 && cellTerrain == 0)
+                        { SetMapInfo(MapLayer.Terrain, column, row + 1, terrainCode); }
+                    }
+                    //East
+                    if (rnd.Next(100) < freqAdjacent && column > 0)
+                    {
+                        cellTopo = mapGrid[(int)MapLayer.Topography, column - 1, row];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column - 1, row];
+                        if (cellTopo == 2 && cellTerrain == 0)
+                        { SetMapInfo(MapLayer.Terrain, column - 1, row, terrainCode); }
+                    }
+                    //West
+                    if (rnd.Next(100) < freqAdjacent && column < mapSize - 1)
+                    {
+                        cellTopo = mapGrid[(int)MapLayer.Topography, column + 1, row];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column + 1, row];
+                        if (cellTopo == 2 && cellTerrain == 0)
+                        { SetMapInfo(MapLayer.Terrain, column + 1, row, terrainCode); }
+
+                    }
                 }
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Console.Write("{0,3} ", row);
-                Console.WriteLine();
             }
-            //write footer to screen (two rows, vertical 2 digit, spaced 3 apart)
-            Console.WriteLine(); 
-            Console.Write("   ");
-            for (int j = 0; j < mapSize; j++)
-            { Console.Write("{0,2} ", j / 10); }
-            i = 10;
-            counter = 0;
-            Console.WriteLine(); Console.Write("   ");
-            do
-            {
-                Console.Write("{0,2} ", i % 10); counter++; i++;
-                if (i > 19) { i = 10; }
-            }
-            while (counter < mapSize);
-            Console.WriteLine();
-        }*/
+        }
+
 
         /// <summary>
         /// Draw map RLNET version
@@ -1110,8 +1019,8 @@ namespace Next_Game.Cartographic
             //Connectors must be AFTER Routes
             InitialiseConnectors();
             InitialiseMapLayers();
-            //ShowArrayOfConnectors();
             InitialiseGeography();
+            InitialiseTerrain(10, 60, 40);
         }
 
         private void LocationSweeper()
