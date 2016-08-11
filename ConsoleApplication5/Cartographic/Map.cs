@@ -372,61 +372,6 @@ namespace Next_Game.Cartographic
         }
 
 
-        /// <summary>
-        /// sets up terrain on the map. numMountains indicates the # of mountain ranges, sizeMountains is the size of the mountain range
-        /// </summary>
-        /// <param name="numMountains"></param>
-        /// <param name="sizeMountains"></param>
-        /// <param name="numForests"></param>
-        /// <param name="sizeForests"></param>
-        /*private void InitialiseTerrain(int numMountains, int sizeMountains, int numForests, int sizeForests)
-        {
-            //error check input
-            if(sizeMountains > mapSize -2)
-            { sizeMountains = mapSize - 2; }
-            if (sizeForests > mapSize - 2)
-            { sizeForests = mapSize - 2; }
-            //Layout Mountains
-            for (int i = 0; i < numMountains; i++)
-            {
-                //generate a random map location
-                int ranX = rnd.Next(1, mapSize - sizeMountains - 2);
-                int ranY = rnd.Next(1, mapSize - sizeMountains - 2);
-                //determine direction
-                if (rnd.Next(10) <= 4)
-                {
-                    //horizontal
-                    for(int k = 0; k < sizeMountains; k++)
-                    { mapGrid[(int)MapLayer.Base, k + ranX, ranY] = 30; }
-                }
-                else 
-                {
-                    //vertical
-                    for (int k = 0; k < sizeMountains; k++)
-                    { mapGrid[(int)MapLayer.Base, ranX, k + ranY] = 30; }
-                }
-            }
-            //Layout Forest (doubled layout, eg. two lots side by side in appropriate direction
-            for (int i = 0; i < numForests; i++)
-            {
-                //generate a random map location
-                int ranX = rnd.Next(1, mapSize - sizeForests - 2);
-                int ranY = rnd.Next(1, mapSize - sizeForests - 2);
-                //determine direction
-                if (rnd.Next(10) <= 4)
-                {
-                    //horizontal
-                    for (int k = 0; k < sizeForests; k++)
-                    { mapGrid[(int)MapLayer.Base, k + ranX, ranY] = 31; mapGrid[(int)MapLayer.Base, k + ranX, ranY + 1] = 31; }
-                }
-                else
-                {
-                    //vertical
-                    for (int k = 0; k < sizeForests; k++)
-                    { mapGrid[(int)MapLayer.Base, ranX, k + ranY] = 31; mapGrid[(int)MapLayer.Base, ranX + 1, k + ranY] = 31; }
-                }
-            }
-        }*/
 
 
         /// <summary>
@@ -441,6 +386,7 @@ namespace Next_Game.Cartographic
             for (int i = 0; i < numAttempts; i++)
             {
                 int terrainCode = 0;
+                int halfChance = freqAdjacent / 2;
                 //generate a random map location
                 int row = rnd.Next(1, mapSize);
                 int column = rnd.Next(1, mapSize);
@@ -494,6 +440,38 @@ namespace Next_Game.Cartographic
                         if (cellTopo == 2 && cellTerrain == 0)
                         { SetMapInfo(MapLayer.Terrain, column + 1, row, terrainCode); }
 
+                    }
+                    //North East
+                    if (rnd.Next(100) < halfChance && row > 0 && column < mapSize - 1)
+                    {
+                        cellTopo = mapGrid[(int)MapLayer.Geography, column + 1, row - 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column + 1, row - 1];
+                        if (cellTopo == 2 && cellTerrain == 0)
+                        { SetMapInfo(MapLayer.Terrain, column + 1, row - 1, terrainCode); }
+                    }
+                    //North West
+                    if (rnd.Next(100) < halfChance && row > 0 && column > 0)
+                    {
+                        cellTopo = mapGrid[(int)MapLayer.Geography, column - 1, row - 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column - 1, row - 1];
+                        if (cellTopo == 2 && cellTerrain == 0)
+                        { SetMapInfo(MapLayer.Terrain, column - 1, row - 1, terrainCode); }
+                    }
+                    //South East
+                    if (rnd.Next(100) < halfChance && row < mapSize - 1 && column < mapSize - 1)
+                    {
+                        cellTopo = mapGrid[(int)MapLayer.Geography, column + 1, row + 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column + 1, row + 1];
+                        if (cellTopo == 2 && cellTerrain == 0)
+                        { SetMapInfo(MapLayer.Terrain, column + 1, row + 1, terrainCode); }
+                    }
+                    //South West
+                    if (rnd.Next(100) < halfChance && row < mapSize - 1 && column > 0)
+                    {
+                        cellTopo = mapGrid[(int)MapLayer.Geography, column - 1, row + 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column - 1, row + 1];
+                        if (cellTopo == 2 && cellTerrain == 0)
+                        { SetMapInfo(MapLayer.Terrain, column - 1, row + 1, terrainCode); }
                     }
                 }
             }
@@ -1120,7 +1098,7 @@ namespace Next_Game.Cartographic
             InitialiseConnectors();
             InitialiseMapLayers();
             InitialiseGeography();
-            InitialiseTerrain(60, 60, 40);
+            InitialiseTerrain(100, 70, 40);
         }
 
         private void LocationSweeper()
