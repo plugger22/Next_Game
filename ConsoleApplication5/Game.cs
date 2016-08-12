@@ -343,23 +343,31 @@ namespace Next_Game
                                             {
                                                 //cancel journey
                                                 if (mouseRight == true)
-                                                { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!"), ConsoleDisplay.Input); _inputState = 0; _mouseOn = false; }
+                                                {
+                                                    infoChannel.AppendInfoList(new Snippet("Journey Cancelled!", RLColor.Red, RLColor.Black), ConsoleDisplay.Input);
+                                                    _inputState = 0; _mouseOn = false;
+                                                }
                                             }
                                         }
                                         else if (_inputState == 2)
                                         {
                                             if (mouseLeft == true)
                                             {
-                                                List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
-                                                string infoText = world.InitiateMoveActors(_charIDSelected, _posSelect1, _posSelect2, pathToTravel);
-                                                messageLog.Add(new Snippet(infoText), gameTurn);
-                                                infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
-                                                //show route
-                                                map.UpdateMap();
-                                                map.DrawRoutePath(pathToTravel);
+                                                if ((_posSelect1 != null && _posSelect2 != null) && (_posSelect1.PosX != _posSelect2.PosX || _posSelect1.PosY != _posSelect2.PosY))
+                                                {
+                                                    List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
+                                                    string infoText = world.InitiateMoveActors(_charIDSelected, _posSelect1, _posSelect2, pathToTravel);
+                                                    messageLog.Add(new Snippet(infoText), gameTurn);
+                                                    infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
+                                                    //show route
+                                                    map.UpdateMap();
+                                                    map.DrawRoutePath(pathToTravel);
+                                                }
+                                                else
+                                                { infoChannel.AppendInfoList(new Snippet("Destination the same as Origin. Journey Cancelled!", RLColor.Red, RLColor.Black), ConsoleDisplay.Input); }
                                             }
                                             else if (mouseRight == true)
-                                            { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!"), ConsoleDisplay.Input); }
+                                            { infoChannel.AppendInfoList(new Snippet("Journey Cancelled!", RLColor.Red, RLColor.Black), ConsoleDisplay.Input); }
                                             _inputState = 0;
                                             _mouseOn = false;
                                             //autoswitch back to Main menu

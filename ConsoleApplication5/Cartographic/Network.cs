@@ -793,7 +793,7 @@ namespace Next_Game.Cartographic
                                 //find connector route
                                 foreach (Route route in ListOfConnectorRoutes)
                                 {
-                                    //NOTE changed this to GetLoc1() as the route was reversed (mapSeed 29938)
+                                    //NOTE changed 12thAug16 this to GetLoc1() as the route was reversed (mapSeed 29938)
                                     Position posEnd = route.GetLoc1();
                                     if (posEnd.PosX == pos.PosX && posEnd.PosY == pos.PosY)
                                     {
@@ -830,30 +830,36 @@ namespace Next_Game.Cartographic
                         locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
                         if (dictLocations.TryGetValue(locID, out loc))
                         {
-                            //get distance to Capital
-                            distanceAlternate = loc.DistanceToCapital;
-                            //check combined distance < Capital to Destination
-                            if (distanceToCapital > (distanceAlternate + distanceToConnector + distanceAcrossConnector))
+                            //get distance to Capital (need the far end of the connector for this)
+                            int farLocID = loc.ConnectorID;
+                            Location locFar = new Location();
+                            if (dictLocations.TryGetValue(farLocID, out locFar))
                             {
-                                //compile combined route (origin -> connector -> destination -> capital)
-                                listOfAlternateRoutes.AddRange(originLoc.GetRouteToConnector());
-                                //find connector route
-                                foreach (Route route in ListOfConnectorRoutes)
-                                { 
-                                    Position posStart = route.GetLoc1();
-                                    Position posEnd = route.GetLoc2();
-                                    if (posStart.PosX == pos.PosX && posStart.PosY == pos.PosY)
+                                //NOTE (12thAug16) needs loc at other side of connector. distance alternate taken from wrong end of connector.
+                                distanceAlternate = locFar.DistanceToCapital;
+                                //check combined distance < Capital to Destination
+                                if (distanceToCapital > (distanceAlternate + distanceToConnector + distanceAcrossConnector))
+                                {
+                                    //compile combined route (origin -> connector -> destination -> capital)
+                                    listOfAlternateRoutes.AddRange(originLoc.GetRouteToConnector());
+                                    //find connector route
+                                    foreach (Route route in ListOfConnectorRoutes)
                                     {
-                                        //add to combined route ('Add' because it's a single route, not a collection)
-                                        listOfAlternateRoutes.Add(route);
-                                        //get destination route to Capital
-                                        locID = Game.map.GetMapInfo(MapLayer.LocID, posEnd.PosX, posEnd.PosY);
-                                        if (dictLocations.TryGetValue(locID, out loc))
+                                        Position posStart = route.GetLoc1();
+                                        Position posEnd = route.GetLoc2();
+                                        if (posStart.PosX == pos.PosX && posStart.PosY == pos.PosY)
                                         {
-                                            //add to combined route
-                                            listOfAlternateRoutes.AddRange(loc.GetRouteToCapital());
+                                            //add to combined route ('Add' because it's a single route, not a collection)
+                                            listOfAlternateRoutes.Add(route);
+                                            //get destination route to Capital
+                                            locID = Game.map.GetMapInfo(MapLayer.LocID, posEnd.PosX, posEnd.PosY);
+                                            if (dictLocations.TryGetValue(locID, out loc))
+                                            {
+                                                //add to combined route
+                                                listOfAlternateRoutes.AddRange(loc.GetRouteToCapital());
+                                            }
+                                            break;
                                         }
-                                        break;
                                     }
                                 }
                             }

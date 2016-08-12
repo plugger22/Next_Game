@@ -2181,8 +2181,11 @@ namespace Next_Game.Cartographic
                     branches[direction1] = true;
                     branches[direction2] = true;
                     //set connector status
-                    loc1.SetConnector(true);
-                    loc2.SetConnector(true);
+                    loc1.Connector = true;
+                    loc2.Connector = true;
+                    //set opposite LocID for far end of connector
+                    loc1.ConnectorID = loc2.LocationID;
+                    loc2.ConnectorID = loc1.LocationID;
                     //Base node positions
                     Position pos1 = loc1.GetPosition();
                     Position pos2 = loc2.GetPosition();

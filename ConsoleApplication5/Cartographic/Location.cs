@@ -58,12 +58,13 @@ namespace Next_Game.Cartographic
         private static int locationIndex = 1;
         public string LocName { get; set; }
         private Position locPos;
+        public int LocationID { get; }
         public bool Capital { get; set; } //is capital?
         public bool Connector { get; set; } //has a connector to a different branch?
         public int Connections { get; set; } //number of connections to neighbouring nodes
+        public int ConnectorID { get; set; } = 0; //ID of location at the other end of the connection (if one exists)
         public int DistanceToCapital { get; set; } 
         public int DistanceToConnector { get; set; }
-        public int LocationID { get; }
         public int HouseID { get; set; }
         public int HouseRefID { get; set; }
         private List<Position> listOfNeighboursPos = new List<Position>(); //list of immediate neighbours, by Position
@@ -254,11 +255,6 @@ namespace Next_Game.Cartographic
         public List<int> GetActorList()
         { return listOfActors; }
        
-
-        //set Connector status (connector node to another branch?)
-        public void SetConnector(bool status)
-        { this.Connector = status; }
-
         //returns true if capital
         public bool IsCapital()
         {
