@@ -7,6 +7,7 @@ namespace Next_Game
         public static RLColor _land = Palette.nude;
         public static RLColor _dot = Palette.khaki;
         public static RLColor _sea = Palette.splash;
+        public static RLColor _wave = Palette.robinsegg;
         public static RLColor _house = Palette.latte;
         public static RLColor _bannerlord = Palette.ocean;
         public static RLColor _inn = Palette.salmon;
@@ -39,7 +40,7 @@ namespace Next_Game
         public static RLColor envy = new RLColor(27, 139, 67);
         public static RLColor olive = new RLColor(124, 132, 73);
         //blues
-        public static RLColor robinegg = new RLColor(191, 226, 248);
+        public static RLColor robinsegg = new RLColor(191, 226, 248);
         public static RLColor splash = new RLColor(82, 150, 197);
         public static RLColor ocean = new RLColor(14, 122, 148);
         public static RLColor miami = new RLColor(64, 183, 205);
