@@ -813,184 +813,6 @@ namespace Next_Game.Cartographic
                         //draw base level
                         else
                         {
-                            //default space
-                            /*subCell[4] = 32; 
-                            subCell[5] = 32;
-                            subCell[6] = 32;
-                            subCell[2] = 32;
-                            subCell[8] = 32;*/
-                            //default values
-                            /*backColor1 = Color._land;
-                            backColor2 = Color._land;
-                            backColor3 = Color._land;
-                            backColor4 = Color._land;
-                            backColor5 = Color._land;
-                            backColor6 = Color._land;
-                            backColor7 = Color._land;
-                            backColor8 = Color._land;
-                            backColor9 = Color._land;
-
-                            //sea
-                            if (geoLayer == 1)
-                            {
-                                //sea
-                                backColor1 = Color._sea;
-                                backColor2 = Color._sea;
-                                backColor3 = Color._sea;
-                                backColor4 = Color._sea;
-                                backColor5 = Color._sea;
-                                backColor6 = Color._sea;
-                                backColor7 = Color._sea;
-                                backColor8 = Color._sea;
-                                backColor9 = Color._sea;
-                                //waves
-                                for (int index = 1; index < 10; index++)
-                                {
-                                    subCell[index] = mapCell[column, row, index];
-                                    if (subCell[index] == 126)
-                                        switch (index)
-                                        {
-                                            case 1:
-                                                foreColor1 = Color._wave;
-                                                break;
-                                            case 2:
-                                                foreColor2 = Color._wave;
-                                                break;
-                                            case 3:
-                                                foreColor3 = Color._wave;
-                                                break;
-                                            case 4:
-                                                foreColor4 = Color._wave;
-                                                break;
-                                            case 5:
-                                                foreColor5 = Color._wave;
-                                                break;
-                                            case 6:
-                                                foreColor6 = Color._wave;
-                                                break;
-                                            case 7:
-                                                foreColor7 = Color._wave;
-                                                break;
-                                            case 8:
-                                                foreColor8 = Color._wave;
-                                                break;
-                                            case 9:
-                                                foreColor9 = Color._wave;
-                                                break;
-                                        }
-                                }
-                            }
-                            //Land
-                            else if (geoLayer == 2)
-                            {
-                                //backcolors depend on terrain type, default is Color._land
-                                if (terrainLayer == 1)
-                                {
-                                    //mountains
-                                    backColor1 = Color._mountainBase;
-                                    backColor2 = Color._mountainBase;
-                                    backColor3 = Color._mountainBase;
-                                    backColor4 = Color._mountainBase;
-                                    backColor5 = Color._mountainBase;
-                                    backColor6 = Color._mountainBase;
-                                    backColor7 = Color._mountainBase;
-                                    backColor8 = Color._mountainBase;
-                                    backColor9 = Color._mountainBase;
-                                    //cell data
-                                    for (int index = 1; index < 10; index++)
-                                    {
-                                        subCell[index] = mapCell[column, row, index];
-                                        //if a space or dot in cell then a chance of a terrain symbol being present
-                                        if (subCell[index] == 30)
-                                        {
-                                            //mountain symbol color
-                                            switch (index)
-                                            {
-                                                case 1:
-                                                    foreColor1 = Color._mountain1;
-                                                    break;
-                                                case 2:
-                                                    foreColor2 = Color._mountain2;
-                                                    break;
-                                                case 3:
-                                                    foreColor3 = Color._mountain3;
-                                                    break;
-                                                case 4:
-                                                    foreColor4 = Color._mountain2;
-                                                    break;
-                                                case 5:
-                                                    foreColor5 = Color._mountain3;
-                                                    break;
-                                                case 6:
-                                                    foreColor6 = Color._mountain1;
-                                                    break;
-                                                case 7:
-                                                    foreColor7 = Color._mountain3;
-                                                    break;
-                                                case 8:
-                                                    foreColor8 = Color._mountain1;
-                                                    break;
-                                                case 9:
-                                                    foreColor9 = Color._mountain2;
-                                                    break;
-                                            }
-                                        }
-                                    }
-                                }
-                                else if (terrainLayer == 2)
-                                {
-                                    //forest
-                                    backColor1 = Color._forestBase;
-                                    backColor2 = Color._forestBase;
-                                    backColor3 = Color._forestBase;
-                                    backColor4 = Color._forestBase;
-                                    backColor5 = Color._forestBase;
-                                    backColor6 = Color._forestBase;
-                                    backColor7 = Color._forestBase;
-                                    backColor8 = Color._forestBase;
-                                    backColor9 = Color._forestBase;
-                                    //cell data
-                                    for (int index = 1; index < 10; index++)
-                                    {
-                                        subCell[index] = mapCell[column, row, index];
-                                        //if a space or dot in cell then a chance of a terrain symbol being present
-                                        if (subCell[index] == 5)
-                                        {
-                                            //forest symbol color
-                                            switch (index)
-                                            {
-                                                case 1:
-                                                    foreColor1 = Color._forest1;
-                                                    break;
-                                                case 2:
-                                                    foreColor2 = Color._forest2;
-                                                    break;
-                                                case 3:
-                                                    foreColor3 = Color._forest3;
-                                                    break;
-                                                case 4:
-                                                    foreColor4 = Color._forest4;
-                                                    break;
-                                                case 5:
-                                                    foreColor5 = Color._forest1;
-                                                    break;
-                                                case 6:
-                                                    foreColor6 = Color._forest2;
-                                                    break;
-                                                case 7:
-                                                    foreColor7 = Color._forest3;
-                                                    break;
-                                                case 8:
-                                                    foreColor8 = Color._forest4;
-                                                    break;
-                                                case 9:
-                                                    foreColor9 = Color._forest1;
-                                                    break;
-                                            }
-                                        }
-                                    }
-                                }
-                            }*/
                             //ordinary location
                             switch (mainLayer)
                             {
@@ -999,166 +821,6 @@ namespace Next_Game.Cartographic
                                     //only place dot if no terrain present
                                     if (geoLayer == 2 && terrainLayer == 0)
                                     { subCell[5] = 7; foreColor5 = Color._dot; }
-                                    //geography (land/sea)
-                                    /*else if (geoLayer == 1)
-                                    {
-                                        //sea
-                                        backColor1 = Color._sea;
-                                        backColor2 = Color._sea;
-                                        backColor3 = Color._sea;
-                                        backColor4 = Color._sea;
-                                        backColor5 = Color._sea;
-                                        backColor6 = Color._sea;
-                                        backColor7 = Color._sea;
-                                        backColor8 = Color._sea;
-                                        backColor9 = Color._sea;
-                                        //waves
-                                        for (int index = 1; index < 10; index++)
-                                        {
-                                            subCell[index] = mapCell[column, row, index];
-                                            if (subCell[index] == 126)
-                                                switch (index)
-                                                {
-                                                    case 1:
-                                                        foreColor1 = Color._wave;
-                                                        break;
-                                                    case 2:
-                                                        foreColor2 = Color._wave;
-                                                        break;
-                                                    case 3:
-                                                        foreColor3 = Color._wave;
-                                                        break;
-                                                    case 4:
-                                                        foreColor4 = Color._wave;
-                                                        break;
-                                                    case 5:
-                                                        foreColor5 = Color._wave;
-                                                        break;
-                                                    case 6:
-                                                        foreColor6 = Color._wave;
-                                                        break;
-                                                    case 7:
-                                                        foreColor7 = Color._wave;
-                                                        break;
-                                                    case 8:
-                                                        foreColor8 = Color._wave;
-                                                        break;
-                                                    case 9:
-                                                        foreColor9 = Color._wave;
-                                                        break;
-                                                }
-                                        }
-                                    }*/
-                                    /*else if (geoLayer == 2)
-                                    {
-                                        //backcolors depend on terrain type, default is Color._land
-                                        if (terrainLayer == 1)
-                                        {
-                                            //mountains
-                                            backColor1 = Color._mountainBase;
-                                            backColor2 = Color._mountainBase;
-                                            backColor3 = Color._mountainBase;
-                                            backColor4 = Color._mountainBase;
-                                            backColor5 = Color._mountainBase;
-                                            backColor6 = Color._mountainBase;
-                                            backColor7 = Color._mountainBase;
-                                            backColor8 = Color._mountainBase;
-                                            backColor9 = Color._mountainBase;
-                                            //cell data
-                                            for (int index = 1; index < 10; index++)
-                                            {
-                                                subCell[index] = mapCell[column, row, index];
-                                                //if a space or dot in cell then a chance of a terrain symbol being present
-                                                if (subCell[index] == 30)
-                                                {
-                                                    //mountain symbol color
-                                                    switch (index)
-                                                    {
-                                                        case 1:
-                                                            foreColor1 = Color._mountain1;
-                                                            break;
-                                                        case 2:
-                                                            foreColor2 = Color._mountain2;
-                                                            break;
-                                                        case 3:
-                                                            foreColor3 = Color._mountain3;
-                                                            break;
-                                                        case 4:
-                                                            foreColor4 = Color._mountain2;
-                                                            break;
-                                                        case 5:
-                                                            foreColor5 = Color._mountain3;
-                                                            break;
-                                                        case 6:
-                                                            foreColor6 = Color._mountain1;
-                                                            break;
-                                                        case 7:
-                                                            foreColor7 = Color._mountain3;
-                                                            break;
-                                                        case 8:
-                                                            foreColor8 = Color._mountain1;
-                                                            break;
-                                                        case 9:
-                                                            foreColor9 = Color._mountain2;
-                                                            break;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        else if (terrainLayer == 2)
-                                        {
-                                            //forest
-                                            backColor1 = Color._forestBase;
-                                            backColor2 = Color._forestBase;
-                                            backColor3 = Color._forestBase;
-                                            backColor4 = Color._forestBase;
-                                            backColor5 = Color._forestBase;
-                                            backColor6 = Color._forestBase;
-                                            backColor7 = Color._forestBase;
-                                            backColor8 = Color._forestBase;
-                                            backColor9 = Color._forestBase;
-                                            //cell data
-                                            for (int index = 1; index < 10; index++)
-                                            {
-                                                subCell[index] = mapCell[column, row, index];
-                                                //if a space or dot in cell then a chance of a terrain symbol being present
-                                                if (subCell[index] == 5)
-                                                {
-                                                    //forest symbol color
-                                                    switch (index)
-                                                    {
-                                                        case 1:
-                                                            foreColor1 = Color._forest1;
-                                                            break;
-                                                        case 2:
-                                                            foreColor2 = Color._forest2;
-                                                            break;
-                                                        case 3:
-                                                            foreColor3 = Color._forest3;
-                                                            break;
-                                                        case 4:
-                                                            foreColor4 = Color._forest4;
-                                                            break;
-                                                        case 5:
-                                                            foreColor5 = Color._forest1;
-                                                            break;
-                                                        case 6:
-                                                            foreColor6 = Color._forest2;
-                                                            break;
-                                                        case 7:
-                                                            foreColor7 = Color._forest3;
-                                                            break;
-                                                        case 8:
-                                                            foreColor8 = Color._forest4;
-                                                            break;
-                                                        case 9:
-                                                            foreColor9 = Color._forest1;
-                                                            break;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }*/
                                     break;
                                 //location -filled square
                                 case 1:
@@ -1168,17 +830,23 @@ namespace Next_Game.Cartographic
                                     houseID = mapGrid[(int)MapLayer.Houses, column, row];
                                     if (houseID > 0)
                                     {
-
-                                        if (houseID < 99) // house
+                                        // house
+                                        if (houseID < 99) 
                                         {
                                             subCell[5] = houseID + 48;
                                             foreColor5 = Color._bannerlord;
-                                            //if a house Capital show as different color
+                                            //if a Noble house Capital show as different color
                                             if (mapGrid[(int)MapLayer.Capitals, column, row] > 0)
                                             { foreColor5 = Color._house; backColor5 = Color._land; }
                                         }
-                                        else // special location
+                                        else 
+                                        // special location
                                         { foreColor5 = Color._inn; }
+                                        //for any house clear out any terrain symbols orthangonally
+                                        subCell[2] = 32;
+                                        subCell[4] = 32;
+                                        subCell[6] = 32;
+                                        subCell[8] = 32;
                                     }
                                     break;
                                 //kingdom capital - filled square (large)
@@ -1188,6 +856,10 @@ namespace Next_Game.Cartographic
                                     //check cells above and below and draw vertical bars if appropriae
                                     //if (mainUp == 10 || mainUp == 13 || mainUp == 15) { cell[2] = 179; }
                                     //if (mainDown == 10 || mainDown == 12 || mainDown == 14) { cell[8] = 179; }
+                                    subCell[2] = 32;
+                                    subCell[4] = 32;
+                                    subCell[6] = 32;
+                                    subCell[8] = 32;
                                     break;
                                 //road vertical - vertical line (should be 179 but uses 196 for some reason)
                                 case 10:
@@ -1538,7 +1210,7 @@ namespace Next_Game.Cartographic
             InitialiseConnectors();
             InitialiseMapLayers();
             InitialiseGeography();
-            InitialiseTerrain(30, 70, 100);
+            InitialiseTerrain(60, 70, 80);
         }
 
         private void LocationSweeper()
