@@ -295,10 +295,15 @@ namespace Next_Game
                 listOfActorNames.RemoveAt(index);
                 //new character
                 ActorTitle title = ActorTitle.Loyal_Follower;
+                Active person = null;
                 //set player as ursuper
                 if (i == 0)
-                { title = ActorTitle.Ursuper; }
-                Active person = new Active(actorName, title);
+                {
+                    title = ActorTitle.Ursuper;
+                    person = new Player(actorName, title) as Player;
+                }
+                else
+                { person = new Active(actorName, title); }
                 listOfPlayerActors.Add(person);
                 
             }

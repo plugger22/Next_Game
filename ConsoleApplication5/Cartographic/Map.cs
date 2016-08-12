@@ -804,11 +804,25 @@ namespace Next_Game.Cartographic
                             //# represent group at location (static) or moving. Show yellow for capital, cyan for loc and green for enroute
                             subCell[5] = playerLayer + 48;
                             if (mainLayer == 2)
-                            { foreColor5 = RLColor.Yellow; } //capital
+                            { foreColor5 = RLColor.Black; } //capital
                             else if (mainLayer == 1)
-                            { foreColor5 = RLColor.Cyan; } //location
+                            { foreColor5 = Color._house; } //location
                             else
-                            { foreColor5 = RLColor.Brown; } //in enroute
+                            { foreColor5 = RLColor.LightRed; } //in enroute
+                            //place roads right next to player if present
+                            switch (mainLayer)
+                            {
+                                case 10:
+                                    //vertical road
+                                    subCell[2] = 179; foreColor2 = RLColor.White;
+                                    subCell[8] = 179; foreColor8 = RLColor.White;
+                                    break;
+                                case 11:
+                                    //lateral road
+                                    subCell[4] = 196; foreColor4 = RLColor.White;
+                                    subCell[6] = 196; foreColor6 = RLColor.White;
+                                    break;
+                            }
                         }
                         //draw base level
                         else

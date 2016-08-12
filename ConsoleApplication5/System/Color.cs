@@ -4,6 +4,7 @@ namespace Next_Game
 {
     public static class Color
     {
+        //map
         public static RLColor _land = Palette.nude;
         public static RLColor _dot = Palette.khaki;
         public static RLColor _sea = Palette.splash;
@@ -20,6 +21,9 @@ namespace Next_Game
         public static RLColor _forest2 = Palette.envy;
         public static RLColor _forest3 = Palette.grass;
         public static RLColor _forest4 = Palette.moss;
+        //text
+        public static RLColor _active = Palette.peony;
+        public static RLColor _player = Palette.salmon;
     }
 
     public static class Palette
@@ -46,6 +50,8 @@ namespace Next_Game
         public static RLColor miami = new RLColor(64, 183, 205);
         //reds
         public static RLColor salmon = new RLColor(234, 106, 103);
+        //pinks
+        public static RLColor peony = new RLColor(246, 204, 205);
         //yellos
         public static RLColor vacation = new RLColor(253, 202, 15);
 

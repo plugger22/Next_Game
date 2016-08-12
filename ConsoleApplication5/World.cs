@@ -432,6 +432,7 @@ namespace Next_Game
                 List<int> charList = loc.GetActorList();
                 if (charList.Count > 0)
                 {
+                    RLColor textColor = RLColor.White;
                     int row = 3;
                     locList.Add(new Snippet(string.Format("Characters at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
                     string actorDetails;
@@ -443,10 +444,18 @@ namespace Next_Game
                             Actor person = new Actor();
                             person = dictAllActors[charID];
                             actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, person.Title, person.Name, person.Age);
+                            //player controlled (change color of text)?
+                            if (person is Active)
+                            {
+                                if (person is Player)
+                                { textColor = Color._player; }
+                                else
+                                { textColor = Color._active; }
+                            }
                         }
                         else
                         {   actorDetails = string.Format("unknown ID " + Convert.ToString(charID)); }
-                        locList.Add(new Snippet(actorDetails));
+                        locList.Add(new Snippet(actorDetails, textColor, RLColor.Black));
                     }
                 }
             }
