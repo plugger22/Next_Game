@@ -788,12 +788,13 @@ namespace Next_Game.Cartographic
                             //check combined distance < Capital to Destination
                             if (distanceToCapital > (distanceAlternate + distanceToConnector + distanceAcrossConnector))
                             {
-                                //compile combined route (destination -> connector -> destination -> capital)
-                                listOfAlternateRoutes.AddRange(destinationLoc.GetRouteToConnector());
+                                //compile combined route (capital -> connector -> destination)
+                                listOfAlternateRoutes.AddRange(loc.GetRouteFromCapital());
                                 //find connector route
                                 foreach (Route route in ListOfConnectorRoutes)
                                 {
-                                    Position posEnd = route.GetLoc2();
+                                    //NOTE changed this to GetLoc1() as the route was reversed (mapSeed 29938)
+                                    Position posEnd = route.GetLoc1();
                                     if (posEnd.PosX == pos.PosX && posEnd.PosY == pos.PosY)
                                     {
                                         //add to combined route ('Add' because it's a single route, not a collection)
@@ -802,7 +803,7 @@ namespace Next_Game.Cartographic
                                     }
                                 }
                                 //add to combined route
-                                listOfAlternateRoutes.AddRange(loc.GetRouteToCapital());
+                                listOfAlternateRoutes.AddRange(destinationLoc.GetRouteFromConnector());
                             }
                         }
                     }
@@ -1163,7 +1164,7 @@ namespace Next_Game.Cartographic
             string originName = GetLocationName(posOrigin);
             string destinationName = GetLocationName(posDestination);
             Console.WriteLine();
-            Console.WriteLine("Route from {0} to {1} distance {2}", originName, destinationName, distance);)
+            Console.WriteLine("Route from {0} to {1} distance {2}", originName, destinationName, distance);
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();*/
