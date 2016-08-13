@@ -484,7 +484,7 @@ namespace Next_Game.Cartographic
                             case 4:
                                 //bottom right quadrant
                                 rowGrid = rnd.Next(mapSize / 2, mapSize);
-                                columnGrid = rnd.Next(mapSize / 2, mapSize / 2);
+                                columnGrid = rnd.Next(mapSize / 2, mapSize);
                                 break;
                         }
                     }
