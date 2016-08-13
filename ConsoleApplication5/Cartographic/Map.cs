@@ -386,6 +386,10 @@ namespace Next_Game.Cartographic
         private void InitialiseTerrain(int numAttempts, int freqForests, int freqAdjacent, bool smartGenerator = false)
         {
             int quadrant = 0;
+            int rowGrid = 0;
+            int columnGrid = 0;
+            
+            //smart terrain generation (terrain clusters are concentrated by type)
             if (smartGenerator == true)
             {
                 //generate a sorted array showing # of land cells in each quadrant
@@ -397,10 +401,10 @@ namespace Next_Game.Cartographic
                         //if city or route, then must be land
                         if (mapGrid[(int)MapLayer.Geography, column, row] == 2)
                         {
-                            if (column < mapSize)
+                            if (column < mapSize / 2)
                             {
                                 //1st quadrant (top left)
-                                if (row < mapSize)
+                                if (row < mapSize / 2)
                                 { tallyArray[1]++; }
                                 //3rd quadrant (bottom left)
                                 else
@@ -409,7 +413,7 @@ namespace Next_Game.Cartographic
                             else
                             {
                                 //2nd quandrant (top right)
-                                if (row < mapSize)
+                                if (row < mapSize / 2)
                                 { tallyArray[2]++; }
                                 //4th quadrant (bottom right)
                                 else
@@ -427,30 +431,39 @@ namespace Next_Game.Cartographic
                 }
             }
             //try 10 times
-            int rowGrid = 0;
-            int columnGrid = 0;
             for (int i = 0; i < numAttempts; i++)
             {
+                bool constrained = false; //if true, restrict terrain to cluster with highest land cell count
                 int terrainCode = 0;
                 //type of terrain
                 if (rnd.Next(100) < freqForests)
                 //Forest cluster
-                { terrainCode = 2; }
+                {
+                    terrainCode = 2;
+                    //can go in restricted quadrant on 15%, otherwise into anywhere except that quadrant
+                    if (rnd.Next(100) < 15)
+                    { constrained = true; }
+                }
                 else
                 //Mountain cluster
-                { terrainCode = 1; }
+                {
+                    terrainCode = 1;
+                    //place restricted quadrant 85%, otherwise into anywhere except that quadrant
+                    if (rnd.Next(100) < 85)
+                    { constrained = true; }
+                }
                 //generate a random map location
                 if (smartGenerator == false)
                 {
                     rowGrid = rnd.Next(1, mapSize);
                     columnGrid = rnd.Next(1, mapSize);
                 }
+                //smart generator
                 else
                 {
-                    //smart generator
-                    if (terrainCode == 1)
+                    //terrain concentrated in quadrant with highest land count
+                    if (constrained == true)
                     {
-                        //mountain - concentrated in quadrant with highest land count
                         switch (quadrant)
                         {
                             case 1:
@@ -465,19 +478,67 @@ namespace Next_Game.Cartographic
                                 break;
                             case 3:
                                 //bottom left quadrant
-                                rowGrid = rnd.Next(1, mapSize / 2);
+                                rowGrid = rnd.Next(mapSize / 2, mapSize);
                                 columnGrid = rnd.Next(1, mapSize / 2);
                                 break;
                             case 4:
-                                //top left quadrant
-                                rowGrid = rnd.Next(1, mapSize / 2);
-                                columnGrid = rnd.Next(1, mapSize / 2);
+                                //bottom right quadrant
+                                rowGrid = rnd.Next(mapSize / 2, mapSize);
+                                columnGrid = rnd.Next(mapSize / 2, mapSize / 2);
                                 break;
                         }
                     }
                     else
                     {
-                        //forest - spread around the rest
+                        //place terrain in any quadrant other than the specified one above
+                        int rowLower = 0;
+                        int rowUpper = 0;
+                        int colLower = 0;
+                        int colUpper = 0;
+                        switch (quadrant)
+                        {
+                            case 1:
+                                //exclude top left quadrant
+                                rowLower = 0;
+                                rowUpper = mapSize / 2;
+                                colLower = 0;
+                                colUpper = mapSize / 2;
+                                break;
+                            case 2:
+                                //exclude top right quadrant
+                                rowLower = 0;
+                                rowUpper = mapSize / 2;
+                                colLower = mapSize / 2;
+                                colUpper = mapSize;
+                                break;
+                            case 3:
+                                //exclude bottom left quadrant
+                                rowLower = mapSize / 2;
+                                rowUpper = mapSize;
+                                colLower = 0;
+                                colUpper = mapSize / 2;
+                                break;
+                            case 4:
+                                //exclude bottom right quadrant
+                                rowLower = mapSize / 2;
+                                rowUpper = mapSize;
+                                colLower = mapSize / 2;
+                                colUpper = mapSize;
+                                break;
+                        }
+                        //generate a fully random location and then check if it's in the wrong quadrant. Repeat until correct.
+                        bool success = true;
+                        int counter = 0; //prevents an endless loop
+                        do
+                        {
+                            success = true;
+                            counter++;
+                            rowGrid = rnd.Next(1, mapSize);
+                            columnGrid = rnd.Next(1, mapSize);
+                            if (rowGrid > rowLower && rowGrid < rowUpper && columnGrid > colLower && columnGrid < colUpper)
+                            { success = false; }
+                        }
+                        while (success == false && counter < 5);
                     }
                 }
                 //int cellBase = mapGrid[(int)MapLayer.Base, column, row];
@@ -591,7 +652,9 @@ namespace Next_Game.Cartographic
                     }
                 }
             }
-            //loop MapLayer.Terrain and set up subCells with randomly generated symbols, ready for DrawMapRL
+            //
+            //loop MapLayer.Terrain and set up subCells with randomly generated symbols, ready for DrawMapRL ---
+            //
             //allocate symbols randomly and have DrawMapRL override symbols, where necessary, for roads and cities, etc.
             int mapTerrain;
             int mapGeography;
@@ -1308,7 +1371,7 @@ namespace Next_Game.Cartographic
             InitialiseConnectors();
             InitialiseMapLayers();
             InitialiseGeography();
-            InitialiseTerrain(60, 70, 80);
+            InitialiseTerrain(60, 70, 80, true);
         }
 
         private void LocationSweeper()
