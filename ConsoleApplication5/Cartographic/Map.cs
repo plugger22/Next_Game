@@ -382,128 +382,212 @@ namespace Next_Game.Cartographic
         /// <param name="numAttempts">How many random tries to initiate a terrain cluster</param>
         /// <param name="freqForests">% chance a cluster will be forest (otherwise mountains)</param>
         /// <param name="freqAdjacent">% chance of an orthagonally adjacent cell to have the same terrain</param>
-        private void InitialiseTerrain(int numAttempts, int freqForests, int freqAdjacent)
+        /// <param name="smartGenerator">If true concentrates mountains in map quadrant with highest portion of land and forests in the rest otherwise random for all</param>
+        private void InitialiseTerrain(int numAttempts, int freqForests, int freqAdjacent, bool smartGenerator = false)
         {
+            int quadrant = 0;
+            if (smartGenerator == true)
+            {
+                //generate a sorted array showing # of land cells in each quadrant
+                int[] tallyArray = new int[5];
+                for (int row = 0; row < mapSize; row++)
+                {
+                    for (int column = 0; column < mapSize; column++)
+                    {
+                        //if city or route, then must be land
+                        if (mapGrid[(int)MapLayer.Geography, column, row] == 2)
+                        {
+                            if (column < mapSize)
+                            {
+                                //1st quadrant (top left)
+                                if (row < mapSize)
+                                { tallyArray[1]++; }
+                                //3rd quadrant (bottom left)
+                                else
+                                { tallyArray[3]++; }
+                            }
+                            else
+                            {
+                                //2nd quandrant (top right)
+                                if (row < mapSize)
+                                { tallyArray[2]++; }
+                                //4th quadrant (bottom right)
+                                else
+                                { tallyArray[4]++; }
+                            }
+                        }
+                    }
+                }
+                //find quadrant with the most land cells
+                int largestCells = 0;
+                for (int i = 1; i < tallyArray.Length; i++)
+                {
+                    if (tallyArray[i] > largestCells)
+                    { largestCells = tallyArray[i]; quadrant = i; }
+                }
+            }
             //try 10 times
+            int rowGrid = 0;
+            int columnGrid = 0;
             for (int i = 0; i < numAttempts; i++)
             {
                 int terrainCode = 0;
+                //type of terrain
+                if (rnd.Next(100) < freqForests)
+                //Forest cluster
+                { terrainCode = 2; }
+                else
+                //Mountain cluster
+                { terrainCode = 1; }
                 //generate a random map location
-                int row = rnd.Next(1, mapSize);
-                int column = rnd.Next(1, mapSize);
+                if (smartGenerator == false)
+                {
+                    rowGrid = rnd.Next(1, mapSize);
+                    columnGrid = rnd.Next(1, mapSize);
+                }
+                else
+                {
+                    //smart generator
+                    if (terrainCode == 1)
+                    {
+                        //mountain - concentrated in quadrant with highest land count
+                        switch (quadrant)
+                        {
+                            case 1:
+                                //top left quadrant
+                                rowGrid = rnd.Next(1, mapSize / 2);
+                                columnGrid = rnd.Next(1, mapSize / 2);
+                                break;
+                            case 2:
+                                //top right quadrant
+                                rowGrid = rnd.Next(1, mapSize / 2);
+                                columnGrid = rnd.Next(mapSize / 2, mapSize);
+                                break;
+                            case 3:
+                                //bottom left quadrant
+                                rowGrid = rnd.Next(1, mapSize / 2);
+                                columnGrid = rnd.Next(1, mapSize / 2);
+                                break;
+                            case 4:
+                                //top left quadrant
+                                rowGrid = rnd.Next(1, mapSize / 2);
+                                columnGrid = rnd.Next(1, mapSize / 2);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        //forest - spread around the rest
+                    }
+                }
                 //int cellBase = mapGrid[(int)MapLayer.Base, column, row];
-                int cellTopo = mapGrid[(int)MapLayer.Geography, column, row];
-                int cellTerrain = mapGrid[(int)MapLayer.Terrain, column, row];
+                int cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid, rowGrid];
+                int cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid, rowGrid];
 
                 //cell that's land & no existing terrain
                 if (cellTopo == 2 && cellTerrain == 0)
                 {
-                    if (rnd.Next(100) < freqForests)
-                    //Forest cluster
-                    { terrainCode = 2; }
-                    else
-                    //Mountain cluster
-                    { terrainCode = 1; }
+                    
                     //set cell to correct terrain type
-                    SetMapInfo(MapLayer.Terrain, column, row, terrainCode);
+                    SetMapInfo(MapLayer.Terrain, columnGrid, rowGrid, terrainCode);
                     //
                     //random chance of orthagonally adjacent cells will have same terrain ---
                     //
                     //North
-                    if (rnd.Next(100) < freqAdjacent && row > 0)
+                    if (rnd.Next(100) < freqAdjacent && rowGrid > 0)
                     {
-                        cellTopo = mapGrid[(int)MapLayer.Geography, column, row - 1];
-                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column, row - 1];
+                        cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid, rowGrid - 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid, rowGrid - 1];
                         if (cellTopo == 2 && cellTerrain == 0)
-                        { SetMapInfo(MapLayer.Terrain, column, row - 1, terrainCode); }
+                        { SetMapInfo(MapLayer.Terrain, columnGrid, rowGrid - 1, terrainCode); }
                         //North + 1 (conditional on north occuring)
-                        if (rnd.Next(100) < freqAdjacent && row > 1)
+                        if (rnd.Next(100) < freqAdjacent && rowGrid > 1)
                         {
-                            cellTopo = mapGrid[(int)MapLayer.Geography, column, row - 2];
-                            cellTerrain = mapGrid[(int)MapLayer.Terrain, column, row - 2];
+                            cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid, rowGrid - 2];
+                            cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid, rowGrid - 2];
                             if (cellTopo == 2 && cellTerrain == 0)
-                            { SetMapInfo(MapLayer.Terrain, column, row - 2, terrainCode); }
+                            { SetMapInfo(MapLayer.Terrain, columnGrid, rowGrid - 2, terrainCode); }
                         }
                     }
                     //South
-                    if (rnd.Next(100) < freqAdjacent && row < mapSize - 1)
+                    if (rnd.Next(100) < freqAdjacent && rowGrid < mapSize - 1)
                     {
-                        cellTopo = mapGrid[(int)MapLayer.Geography, column, row + 1];
-                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column, row + 1];
+                        cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid, rowGrid + 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid, rowGrid + 1];
                         if (cellTopo == 2 && cellTerrain == 0)
-                        { SetMapInfo(MapLayer.Terrain, column, row + 1, terrainCode); }
+                        { SetMapInfo(MapLayer.Terrain, columnGrid, rowGrid + 1, terrainCode); }
                         //South + 1 (conditional on South occuring)
-                        if (rnd.Next(100) < freqAdjacent && row < mapSize - 2)
+                        if (rnd.Next(100) < freqAdjacent && rowGrid < mapSize - 2)
                         {
-                            cellTopo = mapGrid[(int)MapLayer.Geography, column, row + 2];
-                            cellTerrain = mapGrid[(int)MapLayer.Terrain, column, row + 2];
+                            cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid, rowGrid + 2];
+                            cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid, rowGrid + 2];
                             if (cellTopo == 2 && cellTerrain == 0)
-                            { SetMapInfo(MapLayer.Terrain, column, row + 2, terrainCode); }
+                            { SetMapInfo(MapLayer.Terrain, columnGrid, rowGrid + 2, terrainCode); }
                         }
                     }
                     //West
-                    if (rnd.Next(100) < freqAdjacent && column > 0)
+                    if (rnd.Next(100) < freqAdjacent && columnGrid > 0)
                     {
-                        cellTopo = mapGrid[(int)MapLayer.Geography, column - 1, row];
-                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column - 1, row];
+                        cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid - 1, rowGrid];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid - 1, rowGrid];
                         if (cellTopo == 2 && cellTerrain == 0)
-                        { SetMapInfo(MapLayer.Terrain, column - 1, row, terrainCode); }
+                        { SetMapInfo(MapLayer.Terrain, columnGrid - 1, rowGrid, terrainCode); }
                         //Wast + 1 (conditional on Wast occuring)
-                        if (rnd.Next(100) < freqAdjacent && column > 1)
+                        if (rnd.Next(100) < freqAdjacent && columnGrid > 1)
                         {
-                            cellTopo = mapGrid[(int)MapLayer.Geography, column - 2, row];
-                            cellTerrain = mapGrid[(int)MapLayer.Terrain, column - 2, row];
+                            cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid - 2, rowGrid];
+                            cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid - 2, rowGrid];
                             if (cellTopo == 2 && cellTerrain == 0)
-                            { SetMapInfo(MapLayer.Terrain, column - 2, row, terrainCode); }
+                            { SetMapInfo(MapLayer.Terrain, columnGrid - 2, rowGrid, terrainCode); }
                         }
                     }
                     //East
-                    if (rnd.Next(100) < freqAdjacent && column < mapSize - 1)
+                    if (rnd.Next(100) < freqAdjacent && columnGrid < mapSize - 1)
                     {
-                        cellTopo = mapGrid[(int)MapLayer.Geography, column + 1, row];
-                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column + 1, row];
+                        cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid + 1, rowGrid];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid + 1, rowGrid];
                         if (cellTopo == 2 && cellTerrain == 0)
-                        { SetMapInfo(MapLayer.Terrain, column + 1, row, terrainCode); }
+                        { SetMapInfo(MapLayer.Terrain, columnGrid + 1, rowGrid, terrainCode); }
                         //East + 1 (conditional on East occuring)
-                        if (rnd.Next(100) < freqAdjacent && column < mapSize - 2)
+                        if (rnd.Next(100) < freqAdjacent && columnGrid < mapSize - 2)
                         {
-                            cellTopo = mapGrid[(int)MapLayer.Geography, column + 2, row];
-                            cellTerrain = mapGrid[(int)MapLayer.Terrain, column + 2, row];
+                            cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid + 2, rowGrid];
+                            cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid + 2, rowGrid];
                             if (cellTopo == 2 && cellTerrain == 0)
-                            { SetMapInfo(MapLayer.Terrain, column + 2, row, terrainCode); }
+                            { SetMapInfo(MapLayer.Terrain, columnGrid + 2, rowGrid, terrainCode); }
                         }
                     }
                     //North East
-                    if (rnd.Next(100) < freqAdjacent && row > 0 && column < mapSize - 1)
+                    if (rnd.Next(100) < freqAdjacent && rowGrid > 0 && columnGrid < mapSize - 1)
                     {
-                        cellTopo = mapGrid[(int)MapLayer.Geography, column + 1, row - 1];
-                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column + 1, row - 1];
+                        cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid + 1, rowGrid - 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid + 1, rowGrid - 1];
                         if (cellTopo == 2 && cellTerrain == 0)
-                        { SetMapInfo(MapLayer.Terrain, column + 1, row - 1, terrainCode); }
+                        { SetMapInfo(MapLayer.Terrain, columnGrid + 1, rowGrid - 1, terrainCode); }
                     }
                     //North West
-                    if (rnd.Next(100) < freqAdjacent && row > 0 && column > 0)
+                    if (rnd.Next(100) < freqAdjacent && rowGrid > 0 && columnGrid > 0)
                     {
-                        cellTopo = mapGrid[(int)MapLayer.Geography, column - 1, row - 1];
-                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column - 1, row - 1];
+                        cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid - 1, rowGrid - 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid - 1, rowGrid - 1];
                         if (cellTopo == 2 && cellTerrain == 0)
-                        { SetMapInfo(MapLayer.Terrain, column - 1, row - 1, terrainCode); }
+                        { SetMapInfo(MapLayer.Terrain, columnGrid - 1, rowGrid - 1, terrainCode); }
                     }
                     //South East
-                    if (rnd.Next(100) < freqAdjacent && row < mapSize - 1 && column < mapSize - 1)
+                    if (rnd.Next(100) < freqAdjacent && rowGrid < mapSize - 1 && columnGrid < mapSize - 1)
                     {
-                        cellTopo = mapGrid[(int)MapLayer.Geography, column + 1, row + 1];
-                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column + 1, row + 1];
+                        cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid + 1, rowGrid + 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid + 1, rowGrid + 1];
                         if (cellTopo == 2 && cellTerrain == 0)
-                        { SetMapInfo(MapLayer.Terrain, column + 1, row + 1, terrainCode); }
+                        { SetMapInfo(MapLayer.Terrain, columnGrid + 1, rowGrid + 1, terrainCode); }
                     }
                     //South West
-                    if (rnd.Next(100) < freqAdjacent && row < mapSize - 1 && column > 0)
+                    if (rnd.Next(100) < freqAdjacent && rowGrid < mapSize - 1 && columnGrid > 0)
                     {
-                        cellTopo = mapGrid[(int)MapLayer.Geography, column - 1, row + 1];
-                        cellTerrain = mapGrid[(int)MapLayer.Terrain, column - 1, row + 1];
+                        cellTopo = mapGrid[(int)MapLayer.Geography, columnGrid - 1, rowGrid + 1];
+                        cellTerrain = mapGrid[(int)MapLayer.Terrain, columnGrid - 1, rowGrid + 1];
                         if (cellTopo == 2 && cellTerrain == 0)
-                        { SetMapInfo(MapLayer.Terrain, column - 1, row + 1, terrainCode); }
+                        { SetMapInfo(MapLayer.Terrain, columnGrid - 1, rowGrid + 1, terrainCode); }
                     }
                 }
             }

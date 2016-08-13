@@ -428,6 +428,7 @@ namespace Next_Game
             CreateChildren(lord, lady);
         }
 
+
         /// <summary>
         /// Keep producing children until a limit is reached
         /// </summary>
