@@ -7,7 +7,7 @@ namespace Next_Game.Cartographic
 
     //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
     //Topography - 1 is sea, 2 is land
-    public enum MapLayer { Base, Player, NPC, LocID, Debug, Houses, Capitals, RefID, Geography, Terrain, Count } //Count must be last
+    public enum MapLayer { Base, Player, NPC, LocID, Debug, Houses, Capitals, RefID, Geography, Terrain, GeoID, Count } //Count must be last
      
     //Main Map class (single instance, it's job is to set everything up at the start)
     public class Map
@@ -700,6 +700,59 @@ namespace Next_Game.Cartographic
                                 }
                             }
                             break;
+                    }
+                }
+            }
+            //
+            // identify unique terrain and sea zone clusters ---
+            //
+            int geoIDCounter = 1;
+            int cellID = 0;
+            int adjacentID = 0;
+            bool cluster; //true if a sea zone or terrain cluster present
+            for (int row = 0; row < mapSize; row++)
+            {
+                for (int column = 0; column < mapSize; column++)
+                {
+                    mapTerrain = mapGrid[(int)MapLayer.Terrain, column, row];
+                    mapGeography = mapGrid[(int)MapLayer.Geography, column, row];
+                    cellID = mapGrid[(int)MapLayer.GeoID, column, row];
+                    adjacentID = 0;
+                    cluster = false;
+                    //cell shouldn't have a geoID value
+                    if (cellID == 0)
+                    {
+                        //SEA zone
+                        if (mapGeography == 1)
+                        {
+                            cluster = true;
+                            //check North West for an existing GeoID
+                            if (row > 0 && column > 0)
+                            {
+                                adjacentID = mapGrid[(int)MapLayer.GeoID, column - 1, row - 1];
+                                if (adjacentID > 0)
+                                { cellID = adjacentID; }
+                            }
+
+                            //check N, NE, W
+
+                            
+                        }
+                        else if (mapGeography == 2)
+                        {
+                            //Land
+                            if (mapTerrain > 0)
+                            {
+                                //terrain cluster present of some form
+                                cluster = true;
+                                int clusterType = mapTerrain; //type of terrain to check for in adjacent cells
+
+                                //check NW, N, NE, W
+                            }
+                        }
+                        //if no viable geoID found then create a new one in the cell
+                        if (cluster == true && cellID == 0)
+                        { SetMapInfo(MapLayer.GeoID, column, row, geoIDCounter++); }
                     }
                 }
             }
