@@ -704,11 +704,14 @@ namespace Next_Game.Cartographic
                 }
             }
             //
-            // identify unique terrain and sea zone clusters ---
+            // identify unique GeoID terrain and sea zone clusters ---
             //
             int geoIDCounter = 1;
             int cellID = 0;
-            int adjacentID = 0;
+            int adjDataID = 0;
+            int adjGeography = 0;
+            int adjTerrain = 0;
+            bool changed; //true if data changed
             bool cluster; //true if a sea zone or terrain cluster present
             for (int row = 0; row < mapSize; row++)
             {
@@ -717,43 +720,171 @@ namespace Next_Game.Cartographic
                     mapTerrain = mapGrid[(int)MapLayer.Terrain, column, row];
                     mapGeography = mapGrid[(int)MapLayer.Geography, column, row];
                     cellID = mapGrid[(int)MapLayer.GeoID, column, row];
-                    adjacentID = 0;
+                    adjDataID = 0;
+                    changed = false;
                     cluster = false;
-                    //cell shouldn't have a geoID value
-                    if (cellID == 0)
+
+                    //SEA zone
+                    if (mapGeography == 1)
                     {
-                        //SEA zone
-                        if (mapGeography == 1)
+                        cluster = true;
+                        if (cellID == 0)
                         {
-                            cluster = true;
                             //check North West for an existing GeoID
                             if (row > 0 && column > 0)
                             {
-                                adjacentID = mapGrid[(int)MapLayer.GeoID, column - 1, row - 1];
-                                if (adjacentID > 0)
-                                { cellID = adjacentID; }
+                                adjDataID = mapGrid[(int)MapLayer.GeoID, column - 1, row - 1];
+                                adjGeography = mapGrid[(int)MapLayer.Geography, column - 1, row - 1];
+                                if (adjDataID > 0 && adjGeography == 1)
+                                { cellID = adjDataID; changed = true; }
                             }
-
-                            //check N, NE, W
-
-                            
-                        }
-                        else if (mapGeography == 2)
-                        {
-                            //Land
-                            if (mapTerrain > 0)
+                            //check North for an existing GeoID (ignore if already have one)
+                            if (changed == false && row > 0)
                             {
-                                //terrain cluster present of some form
-                                cluster = true;
-                                int clusterType = mapTerrain; //type of terrain to check for in adjacent cells
-
-                                //check NW, N, NE, W
+                                adjDataID = mapGrid[(int)MapLayer.GeoID, column, row - 1];
+                                adjGeography = mapGrid[(int)MapLayer.Geography, column, row - 1];
+                                if (adjDataID > 0 && adjGeography == 1)
+                                { cellID = adjDataID; changed = true; }
+                            }
+                            //check North East for an existing GeoID (ignore if already have one)
+                            if (changed == false && row > 0 && column < mapSize - 1)
+                            {
+                                adjDataID = mapGrid[(int)MapLayer.GeoID, column + 1, row - 1];
+                                adjGeography = mapGrid[(int)MapLayer.Geography, column + 1, row - 1];
+                                if (adjDataID > 0 && adjGeography == 1)
+                                { cellID = adjDataID; changed = true; }
+                            }
+                            //check West for an existing GeoID (ignore if already have one)
+                            if (changed == false && column > 0)
+                            {
+                                adjDataID = mapGrid[(int)MapLayer.GeoID, column - 1, row];
+                                adjGeography = mapGrid[(int)MapLayer.Geography, column - 1, row];
+                                if (adjDataID > 0 && adjGeography == 1)
+                                { cellID = adjDataID; changed = true; }
                             }
                         }
-                        //if no viable geoID found then create a new one in the cell
-                        if (cluster == true && cellID == 0)
-                        { SetMapInfo(MapLayer.GeoID, column, row, geoIDCounter++); }
+                        //check all remaining adjacent cells (looking for a viable geoID or to update the adjacent cells with an existing geoID)
+                        //east
+                        if (column < mapSize - 1)
+                        {
+                            adjDataID = mapGrid[(int)MapLayer.GeoID, column + 1, row];
+                            adjGeography = mapGrid[(int)MapLayer.Geography, column + 1, row];
+                            //part of same cluster
+                            if (cellID == 0)
+                            {
+                                if (adjDataID > 0 && adjGeography == 1)
+                                { cellID = adjDataID; }
+                            }
+                            //update adjacent cell with geoID if unassigned and same geo type
+                            else if (cellID > 0)
+                            {
+                                if (adjDataID == 0 && adjGeography == 1)
+                                { SetMapInfo(MapLayer.GeoID, column + 1, row, cellID); }
+                            }
+                        }
+                        //south west
+                        if (column > 0 && row < mapSize - 1)
+                        {
+                            adjDataID = mapGrid[(int)MapLayer.GeoID, column - 1, row + 1];
+                            adjGeography = mapGrid[(int)MapLayer.Geography, column - 1, row + 1];
+                            //part of same cluster
+                            if (cellID == 0)
+                            {
+                                if (adjDataID > 0 && adjGeography == 1)
+                                { cellID = adjDataID; }
+                            }
+                            //update adjacent cell with geoID if unassigned and same geo type
+                            else if (cellID > 0)
+                            {
+                                if (adjDataID == 0 && adjGeography == 1)
+                                { SetMapInfo(MapLayer.GeoID, column - 1, row + 1, cellID); }
+                            }
+                        }
+                        //south
+                        if (row < mapSize - 1)
+                        {
+                            adjDataID = mapGrid[(int)MapLayer.GeoID, column, row + 1];
+                            adjGeography = mapGrid[(int)MapLayer.Geography, column, row + 1];
+                            //part of same cluster
+                            if (cellID == 0)
+                            {
+                                if (adjDataID > 0 && adjGeography == 1)
+                                { cellID = adjDataID; }
+                            }
+                            //update adjacent cell with geoID if unassigned and same geo type
+                            else if (cellID > 0)
+                            {
+                                if (adjDataID == 0 && adjGeography == 1)
+                                { SetMapInfo(MapLayer.GeoID, column, row + 1, cellID); }
+                            }
+                        }
+                        //south east
+                        if (column < mapSize - 1 && row < mapSize - 1)
+                        {
+                            adjDataID = mapGrid[(int)MapLayer.GeoID, column + 1, row + 1];
+                            adjGeography = mapGrid[(int)MapLayer.Geography, column + 1, row + 1];
+                            //part of same cluster
+                            if (cellID == 0)
+                            {
+                                if (adjDataID > 0 && adjGeography == 1)
+                                { cellID = adjDataID; }
+                            }
+                            //update adjacent cell with geoID if unassigned and same geo type
+                            else if (cellID > 0)
+                            {
+                                if (adjDataID == 0 && adjGeography == 1)
+                                { SetMapInfo(MapLayer.GeoID, column + 1, row + 1, cellID); }
+                            }
+                        }
                     }
+                    else if (mapGeography == 2)
+                    {
+                        //Land
+                        if (mapTerrain > 0)
+                        {
+                            //terrain cluster present of some form
+                            cluster = true;
+                            int clusterType = mapTerrain; //type of terrain to check for in adjacent cells
+                                                          //check North West for an existing GeoID
+                            if (row > 0 && column > 0)
+                            {
+                                adjDataID = mapGrid[(int)MapLayer.GeoID, column - 1, row - 1];
+                                adjTerrain = mapGrid[(int)MapLayer.Geography, column - 1, row - 1];
+                                if (adjDataID > 0 && adjTerrain == clusterType)
+                                { cellID = adjDataID; changed = true; }
+                            }
+                            //check North for an existing GeoID (ignore if already have one)
+                            if (changed == false && row > 0)
+                            {
+                                adjDataID = mapGrid[(int)MapLayer.GeoID, column, row - 1];
+                                adjTerrain = mapGrid[(int)MapLayer.Geography, column, row - 1];
+                                if (adjDataID > 0 && adjTerrain == clusterType)
+                                { cellID = adjDataID; changed = true; }
+                            }
+                            //check North East for an existing GeoID (ignore if already have one)
+                            if (changed == false && row > 0 && column < mapSize - 1)
+                            {
+                                adjDataID = mapGrid[(int)MapLayer.GeoID, column + 1, row - 1];
+                                adjTerrain = mapGrid[(int)MapLayer.Geography, column + 1, row - 1];
+                                if (adjDataID > 0 && adjTerrain == clusterType)
+                                { cellID = adjDataID; changed = true; }
+                            }
+                            //check West for an existing GeoID (ignore if already have one)
+                            if (changed == false && column > 0)
+                            {
+                                adjDataID = mapGrid[(int)MapLayer.GeoID, column - 1, row];
+                                adjTerrain = mapGrid[(int)MapLayer.Geography, column - 1, row];
+                                if (adjDataID > 0 && adjTerrain == clusterType)
+                                { cellID = adjDataID; changed = true; }
+                            }
+                            //no need to check east, south east, south and south west as they are ahead of the map scan, not behind
+                        }
+                    }
+                    //if no viable geoID found then create a new one in the cell
+                    if (cluster == true && cellID == 0)
+                    { SetMapInfo(MapLayer.GeoID, column, row, geoIDCounter++); }
+                    else if (cluster == true && cellID > 0)
+                    { SetMapInfo(MapLayer.GeoID, column, row, cellID); }
                 }
             }
         }

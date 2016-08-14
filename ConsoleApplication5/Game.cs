@@ -207,7 +207,7 @@ namespace Next_Game
                     if (_mouseOn == false)
                     {
                         int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                        infoChannel.SetInfoList(world.ShowLocationRL(locID), ConsoleDisplay.Multi);
+                        infoChannel.SetInfoList(world.ShowLocationRL(locID, mouse.X, mouse.Y), ConsoleDisplay.Multi);
                         _renderRequired = true;
                     }
                     //Mouse specific input ON

@@ -388,7 +388,7 @@ namespace Next_Game
         /// click on a location to get info
         /// </summary>
         /// <param name="pos"></param>
-        internal List<Snippet> ShowLocationRL(int locID)
+        internal List<Snippet> ShowLocationRL(int locID, int mouseX, int mouseY)
         {
             List<Snippet> locList = new List<Snippet>();
             //Location display
@@ -460,7 +460,16 @@ namespace Next_Game
                 }
             }
             else if (locID == 0)
-            { locList.Add(new Snippet("ERROR: There is no Location present here", RLColor.Red, RLColor.Black)); }
+            {
+                int geoID = Game.map.GetMapInfo(MapLayer.GeoID, mouseX, mouseY, true);
+                //geo sea zone or terrain cluster present?
+                if (geoID > 0)
+                { locList.Add(new Snippet(string.Format("Geo Feature geoID {0}", geoID), RLColor.White, RLColor.Black)); }
+                //nothing there apart from plains
+                else
+                { locList.Add(new Snippet("ERROR: There is no Location present here", RLColor.Red, RLColor.Black)); }
+                
+            }
             else
             { locList.Add(new Snippet("ERROR: Please click on the map", RLColor.Red, RLColor.Black)); }
             return locList;
