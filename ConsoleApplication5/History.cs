@@ -37,6 +37,15 @@ namespace Next_Game
         private List<House> listOfGreatHouses;
         private List<House> listOfMinorHouses;
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
+        private List<string> listOfLargeMountains;
+        private List<string> listOfMediumMountains;
+        private List<string> listOfSmallMountains;
+        private List<string> listOfLargeForests;
+        private List<string> listOfMediumForests;
+        private List<string> listOfSmallForests;
+        private List<string> listOfLargeOceans;
+        private List<string> listOfMediumOceans;
+        private List<string> listOfSmallOceans;
         static Random rnd;
 
         /// <summary>
@@ -52,7 +61,16 @@ namespace Next_Game
             listOfFemaleFirstNames = new List<string>();
             listOfGreatHouses = new List<House>();
             listOfMinorHouses = new List<House>();
-            listHousePool = new List<HouseStruct>(); 
+            listHousePool = new List<HouseStruct>();
+            listOfLargeMountains = new List<string>();
+            listOfMediumMountains = new List<string>();
+            listOfSmallMountains = new List<string>();
+            listOfLargeForests = new List<string>();
+            listOfMediumForests = new List<string>();
+            listOfSmallForests = new List<string>();
+            listOfLargeOceans = new List<string>();
+            listOfMediumOceans = new List<string>();
+            listOfSmallOceans = new List<string>();
         }
 
         /// <summary>
@@ -244,6 +262,14 @@ namespace Next_Game
                 }
                 else
                 { newHouse = false; }
+            }
+            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/GeoNames.txt";
+            string[] arrayOfGeoNames = File.ReadAllLines(filePath);
+            //read location names from array into list
+            for (int i = 0; i < arrayOfGeoNames.Length; i++)
+            {
+                if (arrayOfGeoNames[i] != "")
+                { listOfLargeMountains.Add(arrayOfGeoNames[i]); }
             }
         }
 
