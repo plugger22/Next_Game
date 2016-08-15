@@ -708,7 +708,9 @@ namespace Next_Game.Cartographic
             //
             int cellID = 0;
             int geoID = 0;
-            int geoCluster = 1; //unique ID
+            int northID = 0;
+            int westID = 0;
+            int clusterID = 1; //unique ID
             for (int row = 0; row < mapSize; row++)
             {
                 for (int column = 0; column < mapSize; column++)
@@ -719,8 +721,9 @@ namespace Next_Game.Cartographic
                     //empty cell and correct type
                     if (cellID == 0 && mapGeography == 1)
                     {
-                        FloodFill(column, row, 1, mapGeography, cellID, geoCluster);
-                        geoCluster++;
+                        //Console.WriteLine("-----------------------------------------New Cell");
+                        FloodFill(column, row, 1, mapGeography, cellID, clusterID);
+                        clusterID++;
                     }
                 }
             }
@@ -910,14 +913,16 @@ namespace Next_Game.Cartographic
         /// <summary>
         /// flood fill algorithim - simple, stack based
         /// </summary>
-        /// <param name="coordX"></param>
-        /// <param name="coordY"></param>
+        /// <param name="_coordX"></param>
+        /// <param name="_coordY"></param>
         /// <param name="clusterType"> required type: sea, mtn, forest</param>
         /// <param name= "cellType">actual type of cell</param>
         /// <param name="clusterID">geoID for cluster</param>
-        /// <param name="cellID">current cell geoID</param>
+        /// <param name="_cellID">current cell geoID</param>
         private void FloodFill(int coordX, int coordY, int clusterType, int cellType, int cellID, int clusterID)
         {
+            //Console.WriteLine("--- Flood Fill");
+            //Console.WriteLine("coords {0}:{1}, cluster type {2} cell Type {3}, cell_ID {4}, clusterID {5}", coordX, coordY, clusterType, cellType, cellID, clusterID);
             if (cellID == clusterID)
             { return; }
             if (cellType != clusterType )
@@ -927,37 +932,33 @@ namespace Next_Game.Cartographic
                 //set cell to same cluster
                 SetMapInfo(MapLayer.GeoID, coordX, coordY, clusterID);
                 //recursive calls to flood fill for all orthagonally adjacent cells
-                //North
-                if (coordY > 0)
-                {
-                    coordY -= 1;
-                    cellID = mapGrid[(int)MapLayer.GeoID, coordX, coordY];
-                    cellType = mapGrid[(int)MapLayer.Geography, coordX, coordY];
-                    FloodFill(coordX, coordY, clusterType, cellType, cellID, clusterID);
-                }
                 //South
                 if (coordY < mapSize - 1)
                 {
-                    coordY += 1;
-                    cellID = mapGrid[(int)MapLayer.GeoID, coordX, coordY];
-                    cellType = mapGrid[(int)MapLayer.Geography, coordX, coordY];
-                    FloodFill(coordX, coordY, clusterType, cellType, cellID, clusterID);
+                    cellID = mapGrid[(int)MapLayer.GeoID, coordX, coordY + 1];
+                    cellType = mapGrid[(int)MapLayer.Geography, coordX, coordY + 1];
+                    FloodFill(coordX, coordY + 1, clusterType, cellType, cellID, clusterID);
                 }
-                //East
-                if (coordX < mapSize - 1)
+                //North
+                if (coordY > 0)
                 {
-                    coordX += 1;
-                    cellID = mapGrid[(int)MapLayer.GeoID, coordX, coordY];
-                    cellType = mapGrid[(int)MapLayer.Geography, coordX, coordY];
-                    FloodFill(coordX, coordY, clusterType, cellType, cellID, clusterID);
+                    cellID = mapGrid[(int)MapLayer.GeoID, coordX, coordY - 1];
+                    cellType = mapGrid[(int)MapLayer.Geography, coordX, coordY - 1];
+                    FloodFill(coordX, coordY - 1, clusterType, cellType, cellID, clusterID);
                 }
                 //West
                 if (coordX > 0)
                 {
-                    coordX -= 1;
-                    cellID = mapGrid[(int)MapLayer.GeoID, coordX, coordY];
-                    cellType = mapGrid[(int)MapLayer.Geography, coordX, coordY];
-                    FloodFill(coordX, coordY, clusterType, cellType, cellID, clusterID);
+                    cellID = mapGrid[(int)MapLayer.GeoID, coordX - 1, coordY];
+                    cellType = mapGrid[(int)MapLayer.Geography, coordX - 1, coordY];
+                    FloodFill(coordX - 1, coordY, clusterType, cellType, cellID, clusterID);
+                }
+                //East
+                if (coordX < mapSize - 1)
+                {
+                    cellID = mapGrid[(int)MapLayer.GeoID, coordX + 1, coordY];
+                    cellType = mapGrid[(int)MapLayer.Geography, coordX + 1, coordY];
+                    FloodFill(coordX + 1, coordY, clusterType, cellType, cellID, clusterID);
                 }
             }
         }
