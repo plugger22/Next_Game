@@ -18,6 +18,7 @@ namespace Next_Game
         private Dictionary<int, int> dictGreatID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
         private Dictionary<int, int> dictHousePower; // list of Great Houses, Sorted (key is House ID, value is # of bannerlords (power))
         private Dictionary<int, Record> dictRecords; //all historical records in a central collection (key is eventID)
+        private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         //public int GameTurn { get; set; } = 1;
 
         //default constructor
@@ -32,6 +33,7 @@ namespace Next_Game
             dictGreatID = new Dictionary<int, int>();
             dictHousePower = new Dictionary<int, int>();
             dictRecords = new Dictionary<int, Record>();
+            dictGeoClusters = new Dictionary<int, GeoCluster>(Game.map.GetClusters());
         }
 
 
@@ -464,7 +466,16 @@ namespace Next_Game
                 int geoID = Game.map.GetMapInfo(MapLayer.GeoID, mouseX, mouseY, true);
                 //geo sea zone or terrain cluster present?
                 if (geoID > 0)
-                { locList.Add(new Snippet(string.Format("Geo Feature geoID {0}", geoID), RLColor.White, RLColor.Black)); }
+                {
+                    GeoCluster cluster = GetGeoCluster(geoID);
+                    if (cluster != null)
+                    {
+                        locList.Add(new Snippet(string.Format("geoID {0}, {1}", cluster.GeoID, cluster.Name)));
+                        locList.Add(new Snippet(string.Format("Size {0}, Type {1}", cluster.Size, cluster.ClusterType)));
+                    }
+                    else
+                    { locList.Add(new Snippet(string.Format("ERROR: GeoCluster couldn't be found for geoID {0}", geoID), RLColor.Red, RLColor.Black)); }
+                }
                 //nothing there apart from plains
                 else
                 { locList.Add(new Snippet("ERROR: There is no Location present here", RLColor.Red, RLColor.Black)); }
@@ -853,6 +864,14 @@ namespace Next_Game
             if (dictGreatHouses.TryGetValue(houseID, out house))
             { return house.RefID; }
             return 0;
+        }
+
+        internal GeoCluster GetGeoCluster(int geoID)
+        {
+            GeoCluster cluster = new GeoCluster();
+            if (dictGeoClusters.TryGetValue(geoID, out cluster))
+            { return cluster; }
+            return null;
         }
 
         internal void SetRecord(Record record)
