@@ -22,12 +22,12 @@ namespace Next_Game.Cartographic
         private List<Route> listOfRoutes = new List<Route>(); //list of all routes (excludes Connectors)
         private List<Route> listOfConnectors = new List<Route>(); //list of all special branch Connector routes
         private List<Location> listOfLocations = new List<Location>(); //list of all locations
+        private List<GeoCluster> listOfGeoClusters = new List<GeoCluster>(); //list of all geolocations (sea, mtn and forest clusters)
         //DrawMapRL coords (need to be class instances in order to convert mouse coords)
         private int margin; //spacing on all sides for whole map (used for top and left sides)
         private int offsetVertical; //number of rows to allow for header at top 
         private int offsetHorizontal; //number of rows to allow for indexes at left
-        //terrain clusters (passed onto world.cs)
-        private Dictionary<int, GeoCluster> dictClusters = new Dictionary<int, GeoCluster>();
+        
 
         //default constructor assumes a square map/grid & random seed
         public Map(int mapSize, int seed)
@@ -747,17 +747,11 @@ namespace Next_Game.Cartographic
                     }
                 }
             }
-            //debug
-            /*Console.WriteLine();
-            Console.WriteLine("--- arrayGeoData");
-            for (int i = 1; i < clusterID; i++)
-            { Console.WriteLine("Geo ID {0}  Type {1}  Size {2}", i, arrayGeoData[i, 0], arrayGeoData[i, 1]); }*/
-
             //loop GeoData, create GeoCluster objects for each and store in world.cs dictGeoCluster
             for (int i = 1; i < clusterID; i++)
             {
                 GeoCluster cluster = new GeoCluster (i, arrayGeoData[i, 0], arrayGeoData[i, 1]);
-                dictClusters.Add(cluster.GeoID, cluster);
+                listOfGeoClusters.Add(cluster);
             }
         }
 
@@ -2647,8 +2641,8 @@ namespace Next_Game.Cartographic
             return pos;
         }
 
-        internal Dictionary<int, GeoCluster> GetClusters()
-        { return dictClusters; }
+        internal List<GeoCluster> GetGeoCluster()
+        { return listOfGeoClusters; }
 
         //--- place new method above---
     }

@@ -37,6 +37,7 @@ namespace Next_Game
         private List<House> listOfGreatHouses;
         private List<House> listOfMinorHouses;
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
+        private List<GeoCluster> listOfGeoClusters; 
         //geo names
         private List<string> listOfLargeSeas;
         private List<string> listOfMediumSeas;
@@ -64,6 +65,7 @@ namespace Next_Game
             listOfGreatHouses = new List<House>();
             listOfMinorHouses = new List<House>();
             listHousePool = new List<HouseStruct>();
+            listOfGeoClusters = new List<GeoCluster>();
             listOfLargeMountains = new List<string>();
             listOfMediumMountains = new List<string>();
             listOfSmallMountains = new List<string>();
@@ -332,7 +334,10 @@ namespace Next_Game
                     }
                 }
             }
+            //assign names
+            InitialiseGeoClusters();
         }
+
 
         /// <summary>
         /// called by Network.UpdateHouses(), it randomly chooses a minor house from list and initiliases it
@@ -362,7 +367,59 @@ namespace Next_Game
             loc.LocName = house.LocName;
             loc.HouseRefID = house.RefID;
         }
-            
+
+
+        /// <summary>
+        /// add names and any historical data to GeoClusters
+        /// </summary>
+        public void InitialiseGeoClusters()
+        {
+            listOfGeoClusters = Game.map.GetGeoCluster();
+            List<string> tempList = new List<string>();
+            int randomNum;
+            //assign a random name
+            for (int i = 0; i < listOfGeoClusters.Count; i++)
+            {
+                GeoCluster cluster = listOfGeoClusters[i];
+                if (cluster != null)
+                {
+                    switch (cluster.ClusterType)
+                    {
+                        case Cluster.Sea:
+                            if(cluster.Size == 1)
+                            { tempList = listOfSmallSeas; }
+                            else if (cluster.Size >= 20)
+                            { tempList = listOfLargeSeas; }
+                            else
+                            { tempList = listOfMediumSeas; }
+                            break;
+                        case Cluster.Mountain:
+                            if (cluster.Size == 1)
+                            { tempList = listOfSmallMountains; }
+                            else if (cluster.Size >= 20)
+                            { tempList = listOfLargeMountains; }
+                            else
+                            { tempList = listOfMediumMountains; }
+                            break;
+                        case Cluster.Forest:
+                            if (cluster.Size == 1)
+                            { tempList = listOfSmallForests; }
+                            else if (cluster.Size >= 20)
+                            { tempList = listOfLargeForests; }
+                            else
+                            { tempList = listOfMediumForests; }
+                            break;
+                            
+                    }
+                    //choose a random name
+                    randomNum = rnd.Next(0, tempList.Count);
+                    cluster.Name = tempList[randomNum];
+                    //delete from list to prevent reuse
+                    tempList.RemoveAt(randomNum);
+                }
+            }
+        }
+
 
         /// <summary>
         /// create a base list of Player controlled Characters
@@ -705,6 +762,9 @@ namespace Next_Game
         /// <returns></returns>
         internal List<House> GetMinorHouses()
         { return listOfMinorHouses; }
+
+        internal List<GeoCluster> GetGeoClusters()
+        { return listOfGeoClusters; }
 
         /// <summary>
         /// Call this method whenever an NPC actor dies to handle all the housekeeping

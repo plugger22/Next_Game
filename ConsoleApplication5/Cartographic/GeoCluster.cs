@@ -12,6 +12,7 @@ namespace Next_Game.Cartographic
     class GeoCluster
     {
         public string Name { get; set; } = "Unknown";
+        public string Description { get; set; } = "No description provided";
         public int Size { get; }
         public int GeoID { get; }
         public Cluster ClusterType { get; }

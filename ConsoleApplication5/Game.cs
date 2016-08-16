@@ -93,9 +93,10 @@ namespace Next_Game
             history.InitialiseHistory(network.GetNumUniqueHouses());
             history.CreatePlayerActors(6);
             world = new World();
-            world.InitiatePlayerActors(history.GetPlayerActors(), 1);
-            network.UpdateHouses(history.GetGreatHouses());
-            world.InitialiseHouses();
+            world.InitialiseWorld();
+            //world.InitiatePlayerActors(history.GetPlayerActors(), 1);
+            //network.UpdateHouses(history.GetGreatHouses());
+            //world.InitialiseHouses();
             //---interim history.cs step needed to update History of houses
             infoChannel = new InfoChannel();
             world.ShowGeneratorStatsRL();

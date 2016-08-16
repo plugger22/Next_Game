@@ -33,7 +33,7 @@ namespace Next_Game
             dictGreatID = new Dictionary<int, int>();
             dictHousePower = new Dictionary<int, int>();
             dictRecords = new Dictionary<int, Record>();
-            dictGeoClusters = new Dictionary<int, GeoCluster>(Game.map.GetClusters());
+            dictGeoClusters = new Dictionary<int, GeoCluster>(); ;
         }
 
 
@@ -57,6 +57,17 @@ namespace Next_Game
                 Location loc = Game.network.GetLocation(locID);
                 loc.AddActor(person.ActID);
             }
+        }
+
+
+        /// <summary>
+        /// main method to initialise all world collections
+        /// </summary>
+        public void InitialiseWorld()
+        {
+            InitialiseGeoClusters();
+            InitiatePlayerActors(Game.history.GetPlayerActors(), 1);
+            InitialiseHouses();
         }
 
         /// <summary>
@@ -470,7 +481,8 @@ namespace Next_Game
                     GeoCluster cluster = GetGeoCluster(geoID);
                     if (cluster != null)
                     {
-                        locList.Add(new Snippet(string.Format("geoID {0}, {1}", cluster.GeoID, cluster.Name)));
+                        locList.Add(new Snippet(string.Format("geoID {0}  {1}", cluster.GeoID, cluster.Name)));
+                        locList.Add(new Snippet(cluster.Description));
                         locList.Add(new Snippet(string.Format("Size {0}, Type {1}", cluster.Size, cluster.ClusterType)));
                     }
                     else
@@ -667,6 +679,7 @@ namespace Next_Game
         /// <param name="listOfHouses"></param>
         internal void InitialiseHouses()
         {
+            Game.network.UpdateHouses(Game.history.GetGreatHouses());
             //great houses
             List<House> listOfGreatHouses = Game.history.GetGreatHouses();
             foreach(MajorHouse house in listOfGreatHouses)
@@ -743,6 +756,17 @@ namespace Next_Game
                 }
             }
         }
+
+        /// <summary>
+        /// populates dictionary of GeoLocations
+        /// </summary>
+        private void InitialiseGeoClusters()
+        {
+            List<GeoCluster> tempList = Game.history.GetGeoClusters();
+            foreach (GeoCluster cluster in tempList)
+            { dictGeoClusters.Add(cluster.GeoID, cluster); }
+        }
+
 
         /// <summary>
         /// places a message in info panel detailing all relevant data for a single generation
