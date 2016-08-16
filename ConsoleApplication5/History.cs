@@ -37,15 +37,17 @@ namespace Next_Game
         private List<House> listOfGreatHouses;
         private List<House> listOfMinorHouses;
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
+        //geo names
+        private List<string> listOfLargeSeas;
+        private List<string> listOfMediumSeas;
+        private List<string> listOfSmallSeas;
         private List<string> listOfLargeMountains;
         private List<string> listOfMediumMountains;
         private List<string> listOfSmallMountains;
         private List<string> listOfLargeForests;
         private List<string> listOfMediumForests;
         private List<string> listOfSmallForests;
-        private List<string> listOfLargeOceans;
-        private List<string> listOfMediumOceans;
-        private List<string> listOfSmallOceans;
+        
         static Random rnd;
 
         /// <summary>
@@ -68,9 +70,9 @@ namespace Next_Game
             listOfLargeForests = new List<string>();
             listOfMediumForests = new List<string>();
             listOfSmallForests = new List<string>();
-            listOfLargeOceans = new List<string>();
-            listOfMediumOceans = new List<string>();
-            listOfSmallOceans = new List<string>();
+            listOfLargeSeas = new List<string>();
+            listOfMediumSeas = new List<string>();
+            listOfSmallSeas = new List<string>();
         }
 
         /// <summary>
@@ -84,20 +86,31 @@ namespace Next_Game
             //
             string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/FirstMale.txt";
             string[] arrayOfCharacterNames = File.ReadAllLines(filePath);
-            //read location names from array into list
+            string tempString = null;
+            //read male names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
             {
                 if (arrayOfCharacterNames[i] != "")
-                { listOfMaleFirstNames.Add(arrayOfCharacterNames[i]); }
+                {
+                    //trim off leading and trailing whitespace
+                    tempString = arrayOfCharacterNames[i];
+                    tempString = tempString.Trim();
+                    listOfMaleFirstNames.Add(tempString);
+                }
             }
             //female
             filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/FirstFemale.txt";
             arrayOfCharacterNames = File.ReadAllLines(filePath);
-            //read location names from array into list
+            //read female names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
             {
                 if (arrayOfCharacterNames[i] != "")
-                { listOfFemaleFirstNames.Add(arrayOfCharacterNames[i]); }
+                {
+                    //trim off leading and trailing whitespace
+                    tempString = arrayOfCharacterNames[i];
+                    tempString = tempString.Trim();
+                    listOfFemaleFirstNames.Add(tempString);
+                }
             }
             //
             // read in Player Names ---
@@ -106,7 +119,12 @@ namespace Next_Game
             arrayOfCharacterNames = File.ReadAllLines(filePath);
             //read location names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
-            { listOfActorNames.Add(arrayOfCharacterNames[i]); }
+            {
+                //trim off leading and trailing whitespace
+                tempString = arrayOfCharacterNames[i];
+                tempString = tempString.Trim();
+                listOfActorNames.Add(tempString);
+            }
             //
             //read in house pool for GreatHouses ---
             //
@@ -266,10 +284,53 @@ namespace Next_Game
             filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/GeoNames.txt";
             string[] arrayOfGeoNames = File.ReadAllLines(filePath);
             //read location names from array into list
+            string nameType = null;
+            char[] charsToTrim = { '[', ']' };
             for (int i = 0; i < arrayOfGeoNames.Length; i++)
             {
                 if (arrayOfGeoNames[i] != "")
-                { listOfLargeMountains.Add(arrayOfGeoNames[i]); }
+                {
+                    //which sublist are we dealing with
+                    tempString = arrayOfGeoNames[i];
+                    //trim off leading and trailing whitespace
+                    tempString = tempString.Trim();
+                    if (tempString.Contains("["))
+                    { nameType = tempString.Trim(charsToTrim); }
+                    else if (nameType != null)
+                    {
+                        //place in the correct list
+                        switch (nameType)
+                        {
+                            case "Large Seas":
+                                listOfLargeSeas.Add(tempString);
+                                break;
+                            case "Medium Seas":
+                                listOfMediumSeas.Add(tempString);
+                                break;
+                            case "Small Seas":
+                                listOfSmallSeas.Add(tempString);
+                                break;
+                            case "Large Mountains":
+                                listOfLargeMountains.Add(tempString);
+                                break;
+                            case "Medium Mountains":
+                                listOfMediumMountains.Add(tempString);
+                                break;
+                            case "Small Mountains":
+                                listOfSmallMountains.Add(tempString);
+                                break;
+                            case "Large Forests":
+                                listOfLargeForests.Add(tempString);
+                                break;
+                            case "Medium Forests":
+                                listOfMediumForests.Add(tempString);
+                                break;
+                            case "Small Forests":
+                                listOfSmallForests.Add(tempString);
+                                break;
+                        }
+                    }
+                }
             }
         }
 

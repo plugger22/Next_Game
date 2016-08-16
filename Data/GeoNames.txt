@@ -81,6 +81,9 @@ The Burning Heights
 The Dark Heights
 The Coloured Peaks
 The Charmed Highlands
+The Moaning Peaks
+The Shimmering Highlands
+Desolate Heights
 
 
 [Small Mountains]
@@ -88,10 +91,10 @@ The Withered Hills
 The Grim Summit
 The Sharp Peaked Mountain
 Prynn Pinnacle
-Karst Rise
-Qant Bluff
+King Rise
+Queen Bluff
 The Fractured Pinnacle
-Kes Bluff
+Kessel Bluff
 Slug Crag
 
 [Large Forests]
@@ -128,6 +131,9 @@ Thin Man Woods
 Whimsical Woods
 Maple Woods
 Peach Woods
+Locust Woods
+Treefrog Woods
+Laughing Jack Woods
 
 [Small Forests]
 Anteater Grove
