@@ -92,7 +92,7 @@ namespace Next_Game
             history = new History(seed);
             history.InitialiseHistory(network.GetNumUniqueHouses());
             history.CreatePlayerActors(6);
-            world = new World();
+            world = new World(seed);
             world.InitialiseWorld();
             //world.InitiatePlayerActors(history.GetPlayerActors(), 1);
             //network.UpdateHouses(history.GetGreatHouses());

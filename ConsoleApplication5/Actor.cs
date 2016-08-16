@@ -10,6 +10,7 @@ namespace Next_Game
     public enum ActorRealm {None, Head_of_Noble_House, Head_of_House}
     public enum ActorSex {Male, Female};
     public enum ActorDied {None, Childbirth} //how died?
+    public enum WifeStatus {None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife}
     public enum Relation {None, Wife, Husband, Son, Daughter, Bastard, Father, Mother, Brother, Sister}
 
     internal class Actor
@@ -117,6 +118,7 @@ namespace Next_Game
         public int Lordship { get; set; } = 0; //year made lord (Great House/Bannerlord)
         public bool Fertile { get; set; } = false; //females - can have children?
         public string MaidenName { get; set; } = null; //used to store a wife's maiden name prior to marriage
+        public WifeStatus WifeNumber { get; set; } = WifeStatus.None;
         private SortedDictionary<int, Relation> dictFamily; //stores list of all relations (keyed off actorID)
 
         public Passive()

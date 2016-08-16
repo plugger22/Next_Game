@@ -463,7 +463,7 @@ namespace Next_Game
         /// <param name="refID"></param>
         /// <param name="sex"></param>
         /// <returns></returns>
-        internal Passive CreatePassiveActor(string lastName, ActorTitle title, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male )
+        internal Passive CreatePassiveActor(string lastName, ActorTitle title, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male, WifeStatus wifeStatus = WifeStatus.None )
         {
             Passive actor = null;
             //get a random first name
@@ -489,6 +489,7 @@ namespace Next_Game
             actor.RefID = refID;
             actor.HouseID = houseID;
             actor.GenID = 1;
+            actor.WifeNumber = wifeStatus;
             //house at birth (males the same, females from an adjacent house)
             actor.BornRefID = refID;
             int wifeHouseID = refID;
@@ -559,8 +560,8 @@ namespace Next_Game
             lord.Married = yearMarried;
             int lordAgeMarried = yearMarried - lord.Born;
             //record event - single record tagged to both characters and houses
-            string descriptor = string.Format("{0}, age {1}, and {2} (nee {3}, age {4}) married at {5}", 
-                lord.Name, lordAgeMarried, lady.Name, lady.MaidenName, ageLadyMarried, Game.world.GetLocationName(lady.LocID));
+            string descriptor = string.Format("{0}, age {1}, and {2} (nee {3}, age {4}) married ({5}) at {6}", 
+                lord.Name, lordAgeMarried, lady.Name, lady.MaidenName, ageLadyMarried, lady.WifeNumber, Game.world.GetLocationName(lady.LocID));
             Record recordLord = new Record(descriptor, lord.ActID, lord.LocID, lord.RefID, lord.Married, HistEvent.Married);
             recordLord.AddHouse(lady.BornRefID);
             recordLord.AddActor(lady.ActID);
@@ -687,18 +688,6 @@ namespace Next_Game
                         {
                             //mother died at childbirth (10%) but child survived
                             PassiveActorFuneral(lady, year, ActorDied.Childbirth, child);
-                            /*lady.ReasonDied = ActorDied.Childbirth;
-                            lady.Died = year;
-                            lady.Age = lady.Age - (Game.gameYear - year);
-                            lady.Status = ActorStatus.Dead;
-                            descriptor = string.Format("{0}, Aid {1}, died while giving birth to {2}, age {3}", lady.Name, lady.ActID, child.Name, lady.Age);
-                            Record record_1 = new Record(descriptor, lady.ActID, lady.LocID, lady.RefID, year, HistEvent.Died);
-                            record_1.AddEvent(HistEvent.Birthing);
-                            record_1.AddActor(child.ActID);
-                            Game.world.SetRecord(record_1);
-                            //remove actor from location
-                            Location loc_1 = Game.network.GetLocation(lady.LocID);
-                            loc_1.RemoveActor(lady.ActID);*/
                             break;
                         }
                         else if (num < 30)
