@@ -606,28 +606,69 @@ namespace Next_Game
                     child.AddRelation(lady.ActID, Relation.Mother);
                     //get Lord's family
                     SortedDictionary<int, Relation> dictTempFamily = lord.GetFamily();
+                    int motherID;
                     //new child is DAUGHTER
                     if (sex == ActorSex.Female)
                     {
                         child.MaidenName = Game.world.GetGreatHouseName(lord.HouseID);
                         child.Fertile = true;
                         child.Title = ActorTitle.lady;
+
                         //loop list of lord's family
-                        foreach(KeyValuePair<int, Relation> kvp in dictTempFamily)
+                        foreach (KeyValuePair<int, Relation> kvp in dictTempFamily)
                         {
                             if (kvp.Value == Relation.Son)
                             {
                                 Passive son = Game.world.GetPassiveActor(kvp.Key);
+                                //son's family tree
+                                SortedDictionary<int, Relation> dictTempSon = son.GetFamily();
+                                motherID = lady.ActID;
+                                foreach (KeyValuePair<int, Relation> keyVP in dictTempSon)
+                                {
+                                    //find ID of mother
+                                    if (keyVP.Value == Relation.Mother)
+                                    { motherID = keyVP.Key; break; }
+
+                                }
                                 //relations
-                                son.AddRelation(child.ActID, Relation.Sister);
-                                child.AddRelation(son.ActID, Relation.Brother);
+                                if (motherID == lady.ActID)
+                                {
+                                    //natural brothers and sisters
+                                    son.AddRelation(child.ActID, Relation.Sister);
+                                    child.AddRelation(son.ActID, Relation.Brother);
+                                }
+                                else if (motherID != lady.ActID)
+                                {
+                                    //half brothers and sister
+                                    son.AddRelation(child.ActID, Relation.Half_Sister);
+                                    child.AddRelation(son.ActID, Relation.Half_Brother);
+                                }
                             }
                             else if (kvp.Value == Relation.Daughter)
                             {
                                 Passive daughter = Game.world.GetPassiveActor(kvp.Key);
+                                //daughter's family tree
+                                SortedDictionary<int, Relation> dictTempDaughter = daughter.GetFamily();
+                                motherID = lady.ActID;
+                                foreach (KeyValuePair<int, Relation> keyVP in dictTempDaughter)
+                                {
+                                    //find ID of mother
+                                    if (keyVP.Value == Relation.Mother)
+                                    { motherID = keyVP.Key; break; }
+                                }
                                 //relations
-                                daughter.AddRelation(child.ActID, Relation.Sister);
-                                child.AddRelation(daughter.ActID, Relation.Sister);
+                                if (motherID == lady.ActID)
+                                {
+                                    //natural sisters
+                                    daughter.AddRelation(child.ActID, Relation.Sister);
+                                    child.AddRelation(daughter.ActID, Relation.Sister);
+                                }
+                                else if (motherID != lady.ActID)
+                                {
+                                    //half sisters
+                                    daughter.AddRelation(child.ActID, Relation.Half_Sister);
+                                    child.AddRelation(daughter.ActID, Relation.Half_Sister);
+                                }
                             }
                         }
                         //update parent relations
@@ -638,30 +679,78 @@ namespace Next_Game
                     else if (sex == ActorSex.Male)
                     {
                         int sonCounter = 0;
+                        //there could be sons from a previous marriage
+                        if (lady.WifeNumber != WifeStatus.First_Wife)
+                        {
+                            foreach (KeyValuePair<int, Relation> kvp in dictTempFamily)
+                            {
+                                if (kvp.Value == Relation.Son)
+                                //NOTE: if previous son is dead then the count won't be correct
+                                { sonCounter++; }
+                            }
+                        }
                         //loop list of lord's family
                         foreach (KeyValuePair<int, Relation> kvp in dictTempFamily)
                         {
                             if (kvp.Value == Relation.Son)
                             {
                                 Passive son = Game.world.GetPassiveActor(kvp.Key);
+                                //son's family tree
+                                SortedDictionary<int, Relation> dictTempSon = son.GetFamily();
+                                motherID = lady.ActID;
+                                foreach (KeyValuePair<int, Relation> keyVP in dictTempSon)
+                                {
+                                    //find ID of mother
+                                    if (keyVP.Value == Relation.Mother)
+                                    { motherID = keyVP.Key; break; }
+                                }
                                 //relations
-                                son.AddRelation(child.ActID, Relation.Brother);
-                                child.AddRelation(son.ActID, Relation.Brother);
+                                if (motherID == lady.ActID)
+                                {
+                                    //natural born brothers
+                                    son.AddRelation(child.ActID, Relation.Brother);
+                                    child.AddRelation(son.ActID, Relation.Brother);
+                                }
+                                else if (motherID != lady.ActID)
+                                {
+                                    //half brothers
+                                    son.AddRelation(child.ActID, Relation.Half_Brother);
+                                    child.AddRelation(son.ActID, Relation.Half_Brother);
+                                }
                                 sonCounter++;
                             }
                             else if (kvp.Value == Relation.Daughter)
                             {
                                 Passive daughter = Game.world.GetPassiveActor(kvp.Key);
+                                //daughter's family tree
+                                SortedDictionary<int, Relation> dictTempDaughter = daughter.GetFamily();
+                                motherID = lady.ActID;
+                                foreach (KeyValuePair<int, Relation> keyVP in dictTempDaughter)
+                                {
+                                    //find ID of mother
+                                    if (keyVP.Value == Relation.Mother)
+                                    { motherID = keyVP.Key; break; }
+                                }
                                 //relations
-                                daughter.AddRelation(child.ActID, Relation.Brother);
-                                child.AddRelation(daughter.ActID, Relation.Sister);
+                                if (motherID == lady.ActID)
+                                {
+                                    //natural born brother and sister
+                                    daughter.AddRelation(child.ActID, Relation.Brother);
+                                    child.AddRelation(daughter.ActID, Relation.Sister);
+                                }
+                                else if (motherID != lady.ActID)
+                                {
+                                    //half brother and sister
+                                    daughter.AddRelation(child.ActID, Relation.Half_Brother);
+                                    child.AddRelation(daughter.ActID, Relation.Half_Sister);
+                                }
                             }
                         }
                         //status (males - who is in line to inherit?)
                         if (sonCounter == 0)
                         { child.Title = ActorTitle.Heir; child.InLine = 1; }
                         else
-                        { child.Title = ActorTitle.lord;  child.InLine = sonCounter; }
+                        { child.Title = ActorTitle.lord; child.InLine = sonCounter; }
                         //update parent relations
                         lord.AddRelation(child.ActID, Relation.Son);
                         lady.AddRelation(child.ActID, Relation.Son);
@@ -673,21 +762,21 @@ namespace Next_Game
                     loc.AddActor(child.ActID);
                     //record event
                     string descriptor = string.Format("{0}, Aid {1}, born at {2} to {3} {4} and {5} {6}",
-                        child.Name, child.ActID, Game.world.GetLocationName(lady.LocID), lord.Title, lord.Name, lady.Title, lady.Name );
+                        child.Name, child.ActID, Game.world.GetLocationName(lady.LocID), lord.Title, lord.Name, lady.Title, lady.Name);
                     Record record_0 = new Record(descriptor, child.ActID, child.LocID, child.RefID, year, HistEvent.Born);
                     record_0.AddActor(lord.ActID);
                     record_0.AddActor(lady.ActID);
                     Game.world.SetRecord(record_0);
                     //over age?
                     if (Game.gameYear - year > 40)
-                        { lady.Fertile = false; break; }
+                    { lady.Fertile = false; break; }
                     else
                     {
                         int num = rnd.Next(100);
                         if (num < 10)
                         {
                             //mother died at childbirth (10%) but child survived
-                            PassiveActorFuneral(lady, year, ActorDied.Childbirth, child);
+                            PassiveActorFuneral(lady, year, ActorDied.Childbirth, child, lord);
                             break;
                         }
                         else if (num < 30)
@@ -703,6 +792,7 @@ namespace Next_Game
                 }
             }
         }
+        
 
         /// <summary>
         /// takes a surname and a sex and returns a full name, eg. 'Edward Stark'
@@ -761,8 +851,9 @@ namespace Next_Game
         /// <param name="deceased"></param>
         /// <param name="year"></param>
         /// <param name="reason"></param>
-        /// <param name="perpetrator">The Actor who caused the death, if any</param>
-        internal void PassiveActorFuneral(Passive deceased, int year, ActorDied reason, Actor perpetrator = null)
+        /// <param name="perpetrator">The Actor who caused the death (optional)</param>
+        /// <param name="secondary">An additional actor who is affected by the death (optional)</param>
+        internal void PassiveActorFuneral(Passive deceased, int year, ActorDied reason, Actor perpetrator = null, Actor secondary = null)
         {
             deceased.Died = year;
             deceased.Age = deceased.Age - (Game.gameYear - year);
@@ -776,6 +867,7 @@ namespace Next_Game
                     record = new Record(descriptor, deceased.ActID, deceased.LocID, deceased.RefID, year, HistEvent.Died);
                     record.AddEvent(HistEvent.Birthing);
                     record.AddActor(perpetrator.ActID);
+                    record.AddActor(secondary.ActID);
                     break;
             }
             
