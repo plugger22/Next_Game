@@ -737,7 +737,7 @@ namespace Next_Game
                 //create family
                 Game.history.CreatePassiveFamily(actorLord, actorLady);
                 //check if lady died in childbirth
-                if (actorLady.Status == ActorStatus.Dead)
+               /* if (actorLady.Status == ActorStatus.Dead)
                 {
                     int yearWifeDied = actorLady.Died;
                     //40% chance of remarrying
@@ -761,7 +761,7 @@ namespace Next_Game
                         //create family
                         Game.history.CreatePassiveFamily(actorLord, actor2ndWife);
                     }
-                }
+                }*/
             }
             //fill minor houses with BannerLords
             foreach(KeyValuePair<int, House> kvp in dictAllHouses)

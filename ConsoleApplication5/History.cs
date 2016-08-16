@@ -396,7 +396,7 @@ namespace Next_Game
                         case Cluster.Mountain:
                             if (cluster.Size == 1)
                             { tempList = listOfSmallMountains; }
-                            else if (cluster.Size >= 20)
+                            else if (cluster.Size >= 10)
                             { tempList = listOfLargeMountains; }
                             else
                             { tempList = listOfMediumMountains; }
@@ -404,7 +404,7 @@ namespace Next_Game
                         case Cluster.Forest:
                             if (cluster.Size == 1)
                             { tempList = listOfSmallForests; }
-                            else if (cluster.Size >= 20)
+                            else if (cluster.Size >= 10)
                             { tempList = listOfLargeForests; }
                             else
                             { tempList = listOfMediumForests; }
