@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Next_Game
 {
-    public enum TraitType {None, Combat, Wits, Charm, Treachery, Leadership, Administration}
+    public enum TraitType {None, Combat, Wits, Charm, Treachery, Leadership, Administration, Count} //Note: Count should be last, None should be first
     public enum TraitSex {All, Male, Female}
 
     //Actor Traits

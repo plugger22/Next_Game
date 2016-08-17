@@ -289,9 +289,13 @@ namespace Next_Game
                 listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
                 //stats - natural
+                RLColor traitColor = Color._goodTrait; //green for good traits, red for bad
                 listToDisplay.Add(new Snippet("Abilities (natural)", RLColor.Brown, RLColor.Black));
                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
-                listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Combat)), Color._star, RLColor.Black));
+                listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Combat)), Color._star, RLColor.Black, false));
+                if (person.Combat < 3)
+                { traitColor = Color._badTrait; }
+                listToDisplay.Add(new Snippet(string.Format("{0}", person.arrayOfTraitNames[(int)TraitType.Combat]), traitColor, RLColor.Black));
                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), false));
                 listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Wits)), Color._star, RLColor.Black));
                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), false));

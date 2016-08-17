@@ -40,7 +40,9 @@ namespace Next_Game
         public int Treachery { get; set; } = 3;
         public int Administration { get; set; } = 3;
         public int Leadership { get; set; } = 3;
-        
+        public int[] arrayOfTraitID { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
+        public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
+
 
         //default constructor 
         public Actor()
@@ -53,6 +55,8 @@ namespace Next_Game
             Title = ActorTitle.None;
             Sex = ActorSex.Male;
             Handle = null;
+            arrayOfTraitID = new int[(int)TraitType.Count - 1];
+            arrayOfTraitNames = new string[(int)TraitType.Count - 1];
         }
 
         /// <summary>
@@ -69,6 +73,8 @@ namespace Next_Game
             Title = title;
             Sex = sex;
             ActID = characterIndex++;
+            arrayOfTraitID = new int[(int)TraitType.Count - 1];
+            arrayOfTraitNames = new string[(int)TraitType.Count - 1];
         }
 
         public void SetActorPosition(Position posLoc)

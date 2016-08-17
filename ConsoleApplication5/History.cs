@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Next_Game.Cartographic;
+using System.Linq;
 
 namespace Next_Game
 {
@@ -33,7 +34,6 @@ namespace Next_Game
         public TraitSex Sex { get; set; }
         public string Name { get; set; }
         public int Effect { get; set; }
-        private List<string> Nicknames;
     }
 
     //history class handles living world procedural generation at game start. Once created, data is passed to World for game use.
@@ -609,9 +609,55 @@ namespace Next_Game
                 Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, actor.Lordship, HistEvent.Lordship);
                 Game.world.SetRecord(record);
             }
-            //return
+            //assign traits
+            GetActorTraits(actor);
             return actor;
         }
+
+
+        /// <summary>
+        /// Assigns traits to actors
+        /// </summary>
+        /// <param name="person"></param>
+        private void GetActorTraits(Actor person)
+        {
+            if (person.Sex == ActorSex.Male)
+            {
+                List<Trait> tempTraits = new List<Trait>();
+                //query - combat & male
+                IEnumerable<Trait> enumTraits =
+                    from trait in listOfTraits
+                    where trait.Type == TraitType.Combat && trait.Sex == TraitSex.Male
+                    select trait;
+                tempTraits = enumTraits.ToList();
+                //choose a random trait
+                Trait rndTrait = tempTraits[rnd.Next(tempTraits.Count)];
+                //if effect (abs) = 1, then 50% chance, otherwise for effect 2 (abs) then 25%
+                int chanceOfTrait = 50;
+                if (Math.Abs(rndTrait.Effect) == 2)
+                { chanceOfTrait = 25; }
+                //trait roll
+                if (rnd.Next(100) < chanceOfTrait)
+                {
+                    string name = rndTrait.Name;
+                    int effect = rndTrait.Effect;
+                    int traitID = rndTrait.TraitID;
+                    Console.WriteLine("{0}, ID {1} Effect {2}", name, traitID, effect);
+                    //adjust actor combat skill
+                    int combat = person.Combat;
+                    combat += effect;
+                    //within limits of 1 to 5
+                    combat = Math.Min(combat, 5);
+                    combat = Math.Max(combat, 1);
+                    person.Combat = combat;
+                    //update trait arrays
+                    person.arrayOfTraitID[(int)TraitType.Combat] = traitID;
+                    person.arrayOfTraitNames[(int)TraitType.Combat] = name;
+                }
+
+            }
+        }
+
 
         /// <summary>
         /// Game start - Great Family, marry the lord and lady and have kids

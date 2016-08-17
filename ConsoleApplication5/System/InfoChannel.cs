@@ -169,7 +169,7 @@ namespace Next_Game
                 if (snippet.GetNewLine() == true)
                 { lineCounter++; length = 0; }
                 else
-                { length = snippet.GetText().Length; }
+                { length += snippet.GetText().Length; }
 
             }
             //multi console interface texts at bottom
