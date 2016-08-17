@@ -290,8 +290,8 @@ namespace Next_Game
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
                 //stats - natural
                 listToDisplay.Add(new Snippet("Abilities (natural)", RLColor.Brown, RLColor.Black));
-                listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Strength"), false));
-                listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Strength)), Color._star, RLColor.Black));
+                listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
+                listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Combat)), Color._star, RLColor.Black));
                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), false));
                 listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Wits)), Color._star, RLColor.Black));
                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), false));
@@ -300,8 +300,8 @@ namespace Next_Game
                 if (person.Age >= 15)
                 {
                     listToDisplay.Add(new Snippet("Abilities (learned, age 15+)", RLColor.Brown, RLColor.Black));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Combat)), Color._star, RLColor.Black));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), false));
+                    listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Treachery)), Color._star, RLColor.Black));
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), false));
                     listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Leadership)), Color._star, RLColor.Black));
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Administration"), false));

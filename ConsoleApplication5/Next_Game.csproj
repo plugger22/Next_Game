@@ -73,6 +73,7 @@
     <Compile Include="Actor.cs" />
     <Compile Include="Archive.cs" />
     <Compile Include="Cartographic\GeoCluster.cs" />
+    <Compile Include="Trait.cs" />
     <Compile Include="Record.cs" />
     <Compile Include="House.cs" />
     <Compile Include="History.cs" />

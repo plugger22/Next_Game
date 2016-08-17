@@ -30,15 +30,17 @@ namespace Next_Game
     //Location data flow: create in Map => Network to generate routes => History to generate names and data => World for current state and future changes
     public class History
     {
+        //actor names
         private List<Active> listOfPlayerActors;
         private List<string> listOfActorNames;
         private List<string> listOfMaleFirstNames;
         private List<string> listOfFemaleFirstNames;
+        //house names
         private List<House> listOfGreatHouses;
         private List<House> listOfMinorHouses;
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
-        private List<GeoCluster> listOfGeoClusters; 
         //geo names
+        private List<GeoCluster> listOfGeoClusters;
         private List<string> listOfLargeSeas;
         private List<string> listOfMediumSeas;
         private List<string> listOfSmallSeas;
@@ -48,7 +50,9 @@ namespace Next_Game
         private List<string> listOfLargeForests;
         private List<string> listOfMediumForests;
         private List<string> listOfSmallForests;
-        
+        //traits
+        private List<Trait> listOfTraits;
+
         static Random rnd;
 
         /// <summary>
@@ -75,6 +79,7 @@ namespace Next_Game
             listOfLargeSeas = new List<string>();
             listOfMediumSeas = new List<string>();
             listOfSmallSeas = new List<string>();
+            listOfTraits = new List<Trait>();
         }
 
         /// <summary>
@@ -178,12 +183,7 @@ namespace Next_Game
                             houseStruct.Capital = cleanToken;
                             //last datapoint - save structure to list
                             if (dataCounter > 0)
-                            {
-                                //add to housePool
-                                listHousePool.Add(houseStruct);
-                                //debug
-                                //houseStruct.ShowHouseStruct();
-                            }
+                            { listHousePool.Add(houseStruct); }
                             break;
                     }
                 }
@@ -336,6 +336,81 @@ namespace Next_Game
             }
             //assign names
             InitialiseGeoClusters();
+            //
+            // Traits ---
+            //
+            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Traits_Male.txt";
+            string[] arrayOfTraits = File.ReadAllLines(filePath);
+            bool newTrait = false;
+            dataCounter = 0; //number of traits
+            Trait trait = new Trait();
+            for (int i = 0; i < arrayOfTraits.Length; i++)
+            {
+                if (arrayOfTraits[i] != "")
+                {
+                    //set up for a new house
+                    if (newTrait == false)
+                    {
+                        newTrait = true;
+                        //Console.WriteLine();
+                        dataCounter++;
+                        //new Trait object
+                        trait = new Trait();
+                    }
+                    string[] tokens = arrayOfTraits[i].Split(':');
+                    //strip out leading spaces
+                    cleanTag = tokens[0].Trim();
+                    cleanToken = tokens[1].Trim();
+                    switch (cleanTag)
+                    {
+                        case "Name":
+                            trait.Name = cleanToken;
+                            break;
+                        case "Skill":
+                            switch (cleanToken)
+                            {
+                                case "Combat":
+                                    trait.Type = TraitType.Combat;
+                                    break;
+                                case "Wits":
+                                    trait.Type = TraitType.Wits;
+                                    break;
+                                case "Charm":
+                                    trait.Type = TraitType.Charm;
+                                    break;
+                                case "Treachery":
+                                    trait.Type = TraitType.Treachery;
+                                    break;
+                                case "Leadership":
+                                    trait.Type = TraitType.Leadership;
+                                    break;
+                                case "Administration":
+                                    trait.Type = TraitType.Administration;
+                                    break;
+                            }
+                            break;
+                        case "Effect":
+                            trait.Effect = Convert.ToInt32(cleanToken);
+                            break;
+                        case "Nickname":
+                            //get list of nicknames
+                            string[] arrayOfNames = cleanToken.Split(',');
+                            List<string> tempList = new List<string>();
+                            //loop nickname array and add all to list
+                            for (int k = 0; k < arrayOfNames.Length; k++)
+                            { tempList.Add(arrayOfNames[k].Trim()); }
+                            //give to trait instance
+                            trait.SetNicknames(tempList);
+                            //last datapoint - save object to list
+                            if (dataCounter > 0)
+                            {
+                                trait.Sex = TraitSex.Male;
+                                listOfTraits.Add(trait);
+                            }
+                            break;
+                    }
+                }
+            }
         }
 
 
