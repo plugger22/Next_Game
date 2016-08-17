@@ -29,7 +29,7 @@ namespace Next_Game
         /// <param name="textString"></param>
         /// <param name="foreColor"></param>
         /// <param name="backColor"></param>
-        /// <param name="newLine"></param>
+        /// <param name="newLine">Set as false if you want the NEXT snippet to be on the same line</param>
         public Snippet(string textString, RLColor foreColor, RLColor backColor, bool newLine = true)
         {
             this.textString = textString;

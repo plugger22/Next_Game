@@ -24,6 +24,8 @@ namespace Next_Game
         //text
         public static RLColor _active = Palette.peony;
         public static RLColor _player = Palette.salmon;
+        //other
+        public static RLColor _star = Palette.golden;
     }
 
     public static class Palette
@@ -54,6 +56,7 @@ namespace Next_Game
         public static RLColor peony = new RLColor(246, 204, 205);
         //yellos
         public static RLColor vacation = new RLColor(253, 202, 15);
+        public static RLColor golden = new RLColor(241, 217, 121);
 
 
     }

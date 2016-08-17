@@ -288,13 +288,25 @@ namespace Next_Game
                 listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
                 listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
-                //stats
+                //stats - natural
                 listToDisplay.Add(new Snippet("Abilities (natural)", RLColor.Brown, RLColor.Black));
-                string stars = "o o o";
-                string skill = "Strength";
-                listToDisplay.Add(new Snippet(string.Format("{0,-10}", "Strength"), false));
-                listToDisplay.Add(new Snippet(string.Format("{0}", stars), RLColor.Yellow, RLColor.Black));
-                
+                listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Strength"), false));
+                listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Strength)), Color._star, RLColor.Black));
+                listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), false));
+                listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Wits)), Color._star, RLColor.Black));
+                listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), false));
+                listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Charm)), Color._star, RLColor.Black));
+                //stats - learned (Age 15+)
+                if (person.Age >= 15)
+                {
+                    listToDisplay.Add(new Snippet("Abilities (learned, age 15+)", RLColor.Brown, RLColor.Black));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
+                    listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Combat)), Color._star, RLColor.Black));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), false));
+                    listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Leadership)), Color._star, RLColor.Black));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Administration"), false));
+                    listToDisplay.Add(new Snippet(string.Format("{0}", GetSkillStars(person.Administration)), Color._star, RLColor.Black));
+                }
                 //family
                 if (person is Passive)
                 {
@@ -337,17 +349,26 @@ namespace Next_Game
         }
 
 
-    // The example displays the following output:
-    //      'T': UppercaseLetter
-    //      'h': LowercaseLetter
-    //      'e': LowercaseLetter
+        /// <summary>
+        /// creates a string showing the number of skill stars for ShowActorRL above
+        /// </summary>
+        /// <param name="num">number of stars</param>
+        /// <returns></returns>
+        private string GetSkillStars(int num)
+        {
+            string stars = null;
+            for (int i = 0; i < num; i++)
+            { stars += "o "; }
+            return stars;
+        }
 
-            /// <summary>
-            /// used to display character data when first selected by a # key in main menu
-            /// </summary>
-            /// <param name="inputConsole"></param>
-            /// <param name="consoleDisplay"></param>
-            /// <param name="charID"></param>
+
+        /// <summary>
+        /// used to display character data when first selected by a # key in main menu
+        /// </summary>
+        /// <param name="inputConsole"></param>
+        /// <param name="consoleDisplay"></param>
+        /// <param name="charID"></param>
         public Snippet ShowSelectedActor(int charID)
         {
             string returnText = "Character NOT KNOWN";

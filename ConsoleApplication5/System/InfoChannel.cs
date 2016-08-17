@@ -160,13 +160,16 @@ namespace Next_Game
                 }
             }
             //Display data
+            int length = 0; //allows for sequential snippets on the same line
             for (int i = startIndex; i < maxLength; i++)
             {
                 Snippet snippet = displayList[i];
-                infoConsole.Print(margin, lineCounter * 2 + margin, snippet.GetText(), snippet.GetForeColor(), snippet.GetBackColor());
+                infoConsole.Print(margin + length, lineCounter * 2 + margin, snippet.GetText(), snippet.GetForeColor(), snippet.GetBackColor());
                 //new line
                 if (snippet.GetNewLine() == true)
-                { lineCounter++; }
+                { lineCounter++; length = 0; }
+                else
+                { length = snippet.GetText().Length; }
 
             }
             //multi console interface texts at bottom
