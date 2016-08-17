@@ -164,9 +164,10 @@ namespace Next_Game
             {
                 Snippet snippet = displayList[i];
                 infoConsole.Print(margin, lineCounter * 2 + margin, snippet.GetText(), snippet.GetForeColor(), snippet.GetBackColor());
-                //new line or on existing line?
+                //new line
                 if (snippet.GetNewLine() == true)
                 { lineCounter++; }
+
             }
             //multi console interface texts at bottom
             if (consoleDisplay == ConsoleDisplay.Multi && lineCounter == dataLength)

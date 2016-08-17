@@ -246,12 +246,13 @@ namespace Next_Game
             return listToDisplay;
         }
 
+
         /// <summary>
         /// Display a single Actor in detail
         /// </summary>
         /// <param name="ActID"></param>
         /// <returns></returns>
-        public List<Snippet> ShowActorRL(int actorID)
+            public List<Snippet> ShowActorRL(int actorID)
         {
             List<Snippet> listToDisplay = new List<Snippet>();
             Actor person = new Actor();
@@ -287,6 +288,13 @@ namespace Next_Game
                 listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
                 listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
+                //stats
+                listToDisplay.Add(new Snippet("Abilities (natural)", RLColor.Brown, RLColor.Black));
+                string stars = "o o o";
+                string skill = "Strength";
+                listToDisplay.Add(new Snippet(string.Format("{0,-10}", "Strength"), false));
+                listToDisplay.Add(new Snippet(string.Format("{0}", stars), RLColor.Yellow, RLColor.Black));
+                
                 //family
                 if (person is Passive)
                 {
@@ -328,12 +336,18 @@ namespace Next_Game
             return listToDisplay;
         }
 
-        /// <summary>
-        /// used to display character data when first selected by a # key in main menu
-        /// </summary>
-        /// <param name="inputConsole"></param>
-        /// <param name="consoleDisplay"></param>
-        /// <param name="charID"></param>
+
+    // The example displays the following output:
+    //      'T': UppercaseLetter
+    //      'h': LowercaseLetter
+    //      'e': LowercaseLetter
+
+            /// <summary>
+            /// used to display character data when first selected by a # key in main menu
+            /// </summary>
+            /// <param name="inputConsole"></param>
+            /// <param name="consoleDisplay"></param>
+            /// <param name="charID"></param>
         public Snippet ShowSelectedActor(int charID)
         {
             string returnText = "Character NOT KNOWN";

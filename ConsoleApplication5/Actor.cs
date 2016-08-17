@@ -33,6 +33,14 @@ namespace Next_Game
         public ActorSex Sex { get; set; }
         public ActorDied ReasonDied { get; set; } = 0;
         public string Handle { get; set; } //eg. Nickname
+        //stats - born
+        public int Strength { get; set; } = 3;
+        public int Wits { get; set; } = 3;
+        public int Charm { get; set; } = 3;
+        //stats - derived
+        public int Combat { get; set; } = 3;
+        public int Administration { get; set; } = 3;
+        public int Leadership { get; set; } = 3;
         
 
         //default constructor 
