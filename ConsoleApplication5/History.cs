@@ -296,7 +296,7 @@ namespace Next_Game
                     tempString = arrayOfGeoNames[i];
                     //trim off leading and trailing whitespace
                     tempString = tempString.Trim();
-                    if (tempString.Contains("["))
+                    if (tempString.StartsWith("["))
                     { nameType = tempString.Trim(charsToTrim); }
                     else if (nameType != null)
                     {

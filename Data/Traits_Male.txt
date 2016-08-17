@@ -1,0 +1,113 @@
+Name: Giant
+Skill: Strength
+Effect: 2
+Chance: 25
+NickNames: The Mountain, The Gargantuan, The Enormous, The Hulking, The Mammoth
+
+Name: Dwarf
+Skill: Strength
+Effect: -2
+Chance: 25
+NickNames: The Dwarf, The Stunted, The Imp, The Runt, The Half
+
+Name: Short
+Skill: Strength
+Effect: -1
+Chance: 50
+NickNames: The Small, The Short, Shorty, The Stunted
+
+Name: Tall
+Skill: Strength
+Effect: 1
+Chance: 50
+NickNames: Lofty, The Towering, The Imposing, The Soaring
+
+Name: Club Foot
+Skill: Strength
+Effect: -1
+Chance: 50
+NickNames: The Hobbled, Crooked Foot, Twisted Foot, Crooked Walk
+
+Name: Blind
+Skill: Strength
+Effect: -2
+Chance: 25
+NickNames: The Unseeing, No Eyes, The Eyeless, The Unsighted
+
+Name: Myopic
+Skill: Strength
+Effect: -1
+Chance: 50
+NickNames: The Nearsighted, The Shortsighted, The Halfsighted
+
+Name: Eagle Eyed
+Skill: Strength
+Effect: 1
+Chance: 50
+NickNames: Sharp Eyes, Eagle Eyes, Hawk Eyes, Falcon Eyes, The Farsighted
+
+Name: Delicate
+Skill: Strength
+Effect: -1
+Chance: 50
+NickNames: The Weak, The Feeble, The Delicate
+
+Name: Strong
+Skill: Strength
+Effect: 1
+Chance: 50
+NickNames: The Strong, The Mighty, Rock Breaker, The Muscled
+
+Name: Seizures
+Skill: Strength
+Effect: -2
+Chance: 25
+NickNames: The Fitter, The Thrasher, The Wild
+
+Name: Obese
+Skill: Strength
+Effect: -2
+Chance: 25
+NickNames: The Massive, The Impressive, BlubberFaced, The Bouncy, The Corpulent, The Paunchy, The Porcine
+
+Name: Meditator
+Skill: Strength
+Effect: 2
+Chance: 25
+NickNames: The Focused, The Meditator, The Directed
+
+Name: Skinny
+Skill: Strength
+Effect: -1
+Chance: 50
+NickNames: The Thin, The Angular, The Scrawny, The Gaunt
+
+Name: Overweight
+Skill: Strength
+Effect: 1
+Chance: 50
+NickNames: The Plump, The Fat, The Heavy, The Chubby, The Large
+
+Name: Athletic
+Skill: Strength
+Effect: 1
+Chance: 50
+NickNames: The Able, The Dexterous, The Fleet, The Frisky, The Lithe, The Agile
+
+Name: Energetic
+Skill: Strength
+Effect: 1
+Chance: 50
+NickNames: The Active, The Dynamic, The Lively, The Spirited, The Spry, The Tireless, The Vigorous
+
+Name: Lethargic
+Skill: Strength
+Effect: -1
+Chance: 50
+NickNames: The Sluggish, The Apathetic, The Languid, The Listless, The Sleepy, The Comatose, The Dormant
+
+Name:
+Skill: Strength
+Effect:
+Chance:
+NickNames:

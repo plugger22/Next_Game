@@ -518,7 +518,7 @@ namespace Next_Game
                     GeoCluster cluster = GetGeoCluster(geoID);
                     if (cluster != null)
                     {
-                        locList.Add(new Snippet(string.Format("geoID {0}  {1}", cluster.GeoID, cluster.Name)));
+                        locList.Add(new Snippet(string.Format("{0}, geoID {1}", cluster.Name, cluster.GeoID), RLColor.Yellow, RLColor.Black));
                         locList.Add(new Snippet(cluster.Description));
                         locList.Add(new Snippet(string.Format("Size {0}, Type {1}", cluster.Size, cluster.ClusterType)));
                     }
