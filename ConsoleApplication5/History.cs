@@ -26,6 +26,16 @@ namespace Next_Game
         }
     }
 
+    //holds trait structure (need a structure to pass by value to avoid heap class objects all referring to each other)
+    struct TraitStruct
+    {
+        public TraitType Type { get; set; }
+        public TraitSex Sex { get; set; }
+        public string Name { get; set; }
+        public int Effect { get; set; }
+        private List<string> Nicknames;
+    }
+
     //history class handles living world procedural generation at game start. Once created, data is passed to World for game use.
     //Location data flow: create in Map => Network to generate routes => History to generate names and data => World for current state and future changes
     public class History
@@ -271,12 +281,7 @@ namespace Next_Game
                             houseStruct.Capital = cleanToken;
                             //last datapoint - save structure to list
                             if (dataCounter > 0)
-                            {
-                                //add to housePool
-                                listHousePool.Add(houseStruct);
-                                //debug
-                                //houseStruct.ShowHouseStruct();
-                            }
+                            { listHousePool.Add(houseStruct); }
                             break;
                     }
                 }
@@ -343,7 +348,7 @@ namespace Next_Game
             string[] arrayOfTraits = File.ReadAllLines(filePath);
             bool newTrait = false;
             dataCounter = 0; //number of traits
-            Trait trait = new Trait();
+            TraitStruct structTrait = new TraitStruct();
             for (int i = 0; i < arrayOfTraits.Length; i++)
             {
                 if (arrayOfTraits[i] != "")
@@ -355,7 +360,8 @@ namespace Next_Game
                         //Console.WriteLine();
                         dataCounter++;
                         //new Trait object
-                        trait = new Trait();
+                        structTrait = new TraitStruct();
+                        structTrait.Sex = TraitSex.Male;
                     }
                     string[] tokens = arrayOfTraits[i].Split(':');
                     //strip out leading spaces
@@ -364,49 +370,46 @@ namespace Next_Game
                     switch (cleanTag)
                     {
                         case "Name":
-                            trait.Name = cleanToken;
+                            structTrait.Name = cleanToken;
                             break;
                         case "Skill":
                             switch (cleanToken)
                             {
                                 case "Combat":
-                                    trait.Type = TraitType.Combat;
+                                    structTrait.Type = TraitType.Combat;
                                     break;
                                 case "Wits":
-                                    trait.Type = TraitType.Wits;
+                                    structTrait.Type = TraitType.Wits;
                                     break;
                                 case "Charm":
-                                    trait.Type = TraitType.Charm;
+                                    structTrait.Type = TraitType.Charm;
                                     break;
                                 case "Treachery":
-                                    trait.Type = TraitType.Treachery;
+                                    structTrait.Type = TraitType.Treachery;
                                     break;
                                 case "Leadership":
-                                    trait.Type = TraitType.Leadership;
+                                    structTrait.Type = TraitType.Leadership;
                                     break;
                                 case "Administration":
-                                    trait.Type = TraitType.Administration;
+                                    structTrait.Type = TraitType.Administration;
                                     break;
                             }
                             break;
                         case "Effect":
-                            trait.Effect = Convert.ToInt32(cleanToken);
+                            structTrait.Effect = Convert.ToInt32(cleanToken);
                             break;
-                        case "Nickname":
+                        case "Nicknames":
                             //get list of nicknames
                             string[] arrayOfNames = cleanToken.Split(',');
                             List<string> tempList = new List<string>();
                             //loop nickname array and add all to list
                             for (int k = 0; k < arrayOfNames.Length; k++)
                             { tempList.Add(arrayOfNames[k].Trim()); }
-                            //give to trait instance
-                            trait.SetNicknames(tempList);
+                            //pass info over to a class instance
+                            Trait classTrait = new Trait(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, tempList);
                             //last datapoint - save object to list
                             if (dataCounter > 0)
-                            {
-                                trait.Sex = TraitSex.Male;
-                                listOfTraits.Add(trait);
-                            }
+                            { listOfTraits.Add(classTrait); }
                             break;
                     }
                 }

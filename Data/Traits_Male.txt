@@ -6,7 +6,7 @@ Nicknames: The Mountain, The Gargantuan, The Enormous, The Hulking, The Mammoth
 Name: Dwarf
 Skill: Combat
 Effect: -2
-Nicknames: The Dwarf, The Stunted, The Imp, The Runt, The Half
+Nicknames: The Dwarf, The Stunted, The Imp, The Runt, The HalfMan
 
 Name: Short
 Skill: Combat
@@ -42,6 +42,11 @@ Name: Delicate
 Skill: Combat
 Effect: -1
 Nicknames: The Weak, The Feeble, The Delicate
+
+Name: Gimpy Leg
+Skill: Combat
+Effect: -1
+Nicknames: The Hobbler, The Limper, The Clumper
 
 Name: Strong 
 Skill: Combat
@@ -94,6 +99,11 @@ Skill: Combat
 Effect: -1
 Nicknames: The Pained, The Hurt, The Suffering
 
+Name: Fierce
+Skill: Combat
+Effect: 1
+Nicknames: The Savage, The Ferocious, The Dangerous, The Fiery, The Murderous, The Raging
+
 Name: Upset Stomach
 Skill: Combat
 Effect: -1
@@ -103,6 +113,11 @@ Name: Deaf
 Skill: Charm
 Effect: -2
 Nicknames: The Deafened, The Quiet, The Soundless
+
+Name: Hunchback
+Skill: Charm
+Effect: -1
+Nicknames: The Bowed, The Crippled, The Gnarled, The Misshapen, The Twisted
 
 Name: Albino
 Skill: Charm
@@ -127,7 +142,7 @@ Nicknames: Fish Tongue, The Hisser, Frog Tongue
 Name: Stutters
 Skill: Charm
 Effect: -1
-Nicknames: The Stammerer, The Hesitant, The Sputterer
+Nicknames: The Stammerer, Duck Voice, The Sputterer
 
 Name: Drools
 Skill: Charm
@@ -165,6 +180,127 @@ Effect: -1
 Nicknames: The Shaky, The Bothered, The Jittery, The Timid
 
 Name: Paranoid
-Skill: Wits
+Skill: Treachery
+Effect: 2
+Nicknames: The Distrustful, The Mistrustful, The Watchful
+
+Name: Trustworthy
+Skill: Treachery
 Effect: -2
-Nicknames: The Suspicious, The Distrustful, The Mistrustful, The Watchful
+Nicknames: The Trusting, The Dependable, The Responsible
+
+Name: Honest
+Skill: Treachery
+Effect: -1
+Nicknames: The Authentic, The Decent, The Genuine, The Impartial
+
+Name: Honourable
+Skill: Treachery
+Effect: -1
+Nicknames: The Illustrious, The Principled, The Respectable
+
+Name: Innocent
+Skill: Treachery
+Effect: -2 
+Nicknames: The Pure, The Virtuous, The Upright, The Good
+
+Name: Cunning
+Skill: Treachery
+Effect: 1
+Nicknames: The Smooth, The Smart, The Knowing, The Sly, The Crafty, The Slippery
+
+Name: Suspicious
+Skill: Treachery
+Effect: 1
+Nicknames: The Cautious, The Doubtful, The Wary, The Careful
+
+Name: Psychopath
+Skill: Treachery
+Effect: 2
+Nicknames: The Mad, The Crazy, The Devil, The Evil, The Unstable, The Insane
+
+Name: Timid
+Skill: Leadership
+Effect: -1
+Nicknames: The Averse, The Halting, The Hesitant, The Reluctant
+
+Name: Bold
+Skill: Leadership
+Effect: 1
+Nicknames: The Audacious, The Adventurous, The Fearless
+
+Name: Speech Giver
+Skill: Leadership
+Effect: 1
+Nicknames: The Motivator, The Orator, The Preacher
+
+Name: Born To Lead
+Skill: Leadership
+Effect: 2
+Nicknames: The Great, The Marvellous, The Heroic
+
+Name: Battle Hardened
+Skill: Leadership
+Effect: 1
+Nicknames: The Fighter, The Slayer, The Tough
+
+Name: Despotic
+Skill: Leadership
+Effect: -2
+Nicknames: The Imperious, The Absolute, The Disciplinarian, The Severe
+
+Name: Learned (can Read and Write)
+Skill: Administration
+Effect: 1
+Nicknames: The Erudite, The Educated, The Scholar
+
+Name: Maester Trained
+Skill: Administration
+Effect: 2
+Nicknames: The Accomplished, The Studied, The Book Reader
+
+Name: Organiser
+Skill: Administration
+Effect: 1
+Nicknames: The Coordinator, The Custodian, The Controller
+
+Name: Bureaucratic
+Skill: Administration
+Effect: 1
+Nicknames: The Presider, The Authoritative, The Managerial
+
+Name: Disorganised
+Skill: Administration
+Effect: -1
+Nicknames: The Confused, The Muddled, The Turbulent
+
+Name: Chaotic
+Skill: Administration
+Effect: -2
+Nicknames: The Anarchic, The Tumultuous, The Deranged, The Purposeless
+
+Name: Illiterate
+Skill: Administration
+Effect: -1
+Nicknames: The Ignorant, The Uneducated, The UnRead
+
+Name: Rigid Beliefs
+Skill: Administration
+Effect: -1
+Nicknames: The Stiff, The Unbending, The Inflexible
+
+Name: Erratic
+Skill: Administration
+Effect: -1
+Nicknames: The Haphazard, The Whimsical, The Mercurial, The Unstable
+
+Name: Quirky
+Skill: Administration
+Effect: -1
+Nicknames: The Capricious, The Fickle, The Flighty, The Wayward
+
+Name: Fickle
+Skill: Administration
+Effect: -1
+Nicknames: The Temperamental, The Unpredictable, The Untrue
+

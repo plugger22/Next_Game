@@ -15,19 +15,21 @@ namespace Next_Game
         public TraitSex Sex { get; set; } = TraitSex.All; //applies to males or females?
         public string Name { get; set; } = "Unknown";
         public int Effect { get; set; } = 0;
-        private List<string> Nicknames;
+        private List<string> listOfNicknames;
 
         public Trait()
         {
             TraitID = traitIndex++;
-            Nicknames = new List<string>();
+            listOfNicknames = new List<string>();
         }
 
-        /// <summary>
-        /// add nicknames to list of possibles
-        /// </summary>
-        /// <param name="listOfNames"></param>
-        public void SetNicknames(List<string> listOfNames)
-        { Nicknames.AddRange(listOfNames); }
+        public Trait(string name, TraitType skill, int effect, TraitSex sex, List<string> nicknames)
+        {
+            this.Name = name;
+            Type = skill;
+            this.Effect = effect;
+            this.Sex = sex;
+            listOfNicknames = new List<string>(nicknames);
+        }
     }
 }
