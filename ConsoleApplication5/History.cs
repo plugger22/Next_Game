@@ -108,7 +108,7 @@ namespace Next_Game
             //read male names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
             {
-                if (arrayOfCharacterNames[i] != "")
+                if (arrayOfCharacterNames[i] != "" && !arrayOfCharacterNames[i].StartsWith("#"))
                 {
                     //trim off leading and trailing whitespace
                     tempString = arrayOfCharacterNames[i];
@@ -122,7 +122,7 @@ namespace Next_Game
             //read female names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
             {
-                if (arrayOfCharacterNames[i] != "")
+                if (arrayOfCharacterNames[i] != "" && !arrayOfCharacterNames[i].StartsWith("#"))
                 {
                     //trim off leading and trailing whitespace
                     tempString = arrayOfCharacterNames[i];
@@ -138,10 +138,13 @@ namespace Next_Game
             //read location names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
             {
-                //trim off leading and trailing whitespace
-                tempString = arrayOfCharacterNames[i];
-                tempString = tempString.Trim();
-                listOfActorNames.Add(tempString);
+                if (arrayOfCharacterNames[i] != "" && !arrayOfCharacterNames[i].StartsWith("#"))
+                {
+                    //trim off leading and trailing whitespace
+                    tempString = arrayOfCharacterNames[i];
+                    tempString = tempString.Trim();
+                    listOfActorNames.Add(tempString);
+                }
             }
             //
             //read in house pool for GreatHouses ---
@@ -157,7 +160,7 @@ namespace Next_Game
             string cleanTag;
             for (int i = 0; i < arrayOfHouseNames.Length; i++)
             {
-                if (arrayOfHouseNames[i] != "")
+                if (arrayOfHouseNames[i] != "" && !arrayOfHouseNames[i].StartsWith("#"))
                 {
                     //set up for a new house
                     if(newHouse == false)
@@ -245,7 +248,7 @@ namespace Next_Game
             //HouseStruct houseStruct = new HouseStruct();
             for (int i = 0; i < arrayOfHouseNames.Length; i++)
             {
-                if (arrayOfHouseNames[i] != "")
+                if (arrayOfHouseNames[i] != "" && !arrayOfHouseNames[i].StartsWith("#"))
                 {
                     //set up for a new house
                     if (newHouse == false)
@@ -296,7 +299,7 @@ namespace Next_Game
             char[] charsToTrim = { '[', ']' };
             for (int i = 0; i < arrayOfGeoNames.Length; i++)
             {
-                if (arrayOfGeoNames[i] != "")
+                if (arrayOfGeoNames[i] != "" && !arrayOfGeoNames[i].StartsWith("#"))
                 {
                     //which sublist are we dealing with
                     tempString = arrayOfGeoNames[i];
@@ -352,7 +355,7 @@ namespace Next_Game
             TraitStruct structTrait = new TraitStruct();
             for (int i = 0; i < arrayOfTraits.Length; i++)
             {
-                if (arrayOfTraits[i] != "")
+                if (arrayOfTraits[i] != "" && !arrayOfTraits[i].StartsWith("#"))
                 {
                     //set up for a new house
                     if (newTrait == false)

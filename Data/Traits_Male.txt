@@ -1,80 +1,10 @@
+# Combat --- +2
+
 Name: Giant 
 Skill: Combat
 Effect: 2
 Chance: 25
 Nicknames: The Mountain, The Gargantuan, The Enormous, The Hulking, The Mammoth
-
-Name: Dwarf
-Skill: Combat
-Effect: -2
-Chance: 25
-Nicknames: The Dwarf, The Stunted, The Imp, The Runt, The HalfMan
-
-Name: Short
-Skill: Combat
-Effect: -1
-Chance: 50
-Nicknames: The Small, The Short, Shorty, The Stunted
-
-Name: Tall
-Skill: Combat
-Effect: 1
-Chance: 50
-Nicknames: Lofty, The Towering, The Imposing, The Soaring
-
-Name: Club Foot
-Skill: Combat
-Effect: -1
-Chance: 50
-Nicknames: The Hobbled, Crooked Foot, Twisted Foot, Crooked Walk
-
-Name: Blind
-Skill: Combat
-Effect: -2
-Chance: 25
-Nicknames: The Unseeing, No Eyes, The Eyeless, The Unsighted
-
-Name: Myopic
-Skill: Combat
-Effect: -1
-Chance: 50
-Nicknames: The Near Sighted, The Short Sighted, The Half Sighted
-
-Name: Eagle Eyed 
-Skill: Combat
-Effect: 1
-Chance: 50
-Nicknames: Sharp Eyes, Eagle Eyes, Hawk Eyes, Falcon Eyes, The Farsighted
-
-Name: Delicate 
-Skill: Combat
-Effect: -1
-Chance: 50
-Nicknames: The Weak, The Feeble, The Delicate
-
-Name: Gimpy Leg
-Skill: Combat
-Effect: -1
-Chance: 50
-Nicknames: The Hobbler, The Limper, The Clumper
-
-Name: Strong 
-Skill: Combat
-Effect: 1
-Chance: 50
-Nicknames: The Strong, The Mighty, Rock Breaker, The Muscled
-
-Name: Seizures
-Skill: Combat
-Effect: -2
-Chance: 25
-Nicknames: The Fitter, The Thrasher, The Wild
-
-Name: Obese
-Skill: Combat
-Effect: -2
-Chance: 25
-Nicknames: The Massive, The Impressive, BlubberFaced, The Bouncy, The Corpulent, The Paunchy, The Porcine
 
 Name: Analgesia (Ignores Pain) 
 Skill: Combat
@@ -82,12 +12,25 @@ Effect: 2
 Chance: 25
 Nicknames: The Focused, The Meditative, The Directed, The Painless
 
-Name: Skinny
-Description: 
+# Combat --- +1
+
+Name: Tall
 Skill: Combat
-Effect: -1
+Effect: 1
 Chance: 50
-Nicknames: The Thin, The Angular, The Scrawny, The Gaunt
+Nicknames: Lofty, The Towering, The Imposing, The Soaring
+
+Name: Eagle Eyed 
+Skill: Combat
+Effect: 1
+Chance: 50
+Nicknames: Sharp Eyes, Eagle Eyes, Hawk Eyes, Falcon Eyes, The Farsighted
+
+Name: Strong 
+Skill: Combat
+Effect: 1
+Chance: 50
+Nicknames: The Strong, The Mighty, Rock Breaker, The Muscled, The Bull, The Ox
 
 Name: Overweight
 Skill: Combat
@@ -107,6 +50,52 @@ Effect: 1
 Chance: 50
 Nicknames: The Active, The Dynamic, The Lively, The Spirited, The Spry, The Tireless, The Vigorous
 
+Name: Fierce
+Skill: Combat
+Effect: 1
+Chance: 50
+Nicknames: The Savage, The Ferocious, The Dangerous, The Fiery, The Murderous, The Raging
+
+# Combat --- -1
+
+Name: Short
+Skill: Combat
+Effect: -1
+Chance: 50
+Nicknames: The Small, The Short, Shorty, The Stunted
+
+Name: Club Foot
+Skill: Combat
+Effect: -1
+Chance: 50
+Nicknames: The Hobbled, Crooked Foot, Twisted Foot, Crooked Walk
+
+Name: Myopic
+Skill: Combat
+Effect: -1
+Chance: 50
+Nicknames: The Near Sighted, The Short Sighted, The Half Sighted
+
+Name: Fragile 
+Skill: Combat
+Effect: -1
+Chance: 50
+Nicknames: The Weak, The Feeble, The Delicate
+
+Name: Gimpy Leg
+Skill: Combat
+Effect: -1
+Chance: 50
+Nicknames: The Hobbler, The Limper, The Clumper
+
+Name: Skinny
+Description: 
+Skill: Combat
+Effect: -1
+Chance: 50
+Nicknames: The Thin, The Angular, The Scrawny, The Gaunt
+
+
 Name: Lethargic
 Skill: Combat
 Effect: -1
@@ -119,17 +108,40 @@ Effect: -1
 Chance: 50
 Nicknames: The Pained, The Hurt, The Suffering
 
-Name: Fierce
-Skill: Combat
-Effect: 1
-Chance: 50
-Nicknames: The Savage, The Ferocious, The Dangerous, The Fiery, The Murderous, The Raging
-
 Name: Upset Stomach
 Skill: Combat
 Effect: -1
 Chance: 50
 Nicknames: The Crapper, The Sh*tter, The Squatter
+
+# Combat --- -2
+
+Name: Dwarf
+Skill: Combat
+Effect: -2
+Chance: 25
+Nicknames: The Dwarf, The Stunted, The Imp, The Runt, The HalfMan
+
+Name: Blind
+Skill: Combat
+Effect: -2
+Chance: 25
+Nicknames: The Unseeing, No Eyes, The Eyeless, The Unsighted
+
+Name: Seizures
+Skill: Combat
+Effect: -2
+Chance: 25
+Nicknames: The Fitter, The Thrasher, The Wild
+
+Name: Obese
+Skill: Combat
+Effect: -2
+Chance: 25
+Nicknames: The Massive, The Impressive, BlubberFaced, The Bouncy, The Corpulent, The Paunchy, The Porcine
+
+
+# Charm --- +2 -------------------------- Charm
 
 Name: Deaf
 Skill: Charm
