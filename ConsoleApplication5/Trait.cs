@@ -31,5 +31,8 @@ namespace Next_Game
             this.Chance = chance;
             listOfNicknames = new List<string>(nicknames);
         }
+
+        public List<string> GetNickNames()
+        { return listOfNicknames; }
     }
 }

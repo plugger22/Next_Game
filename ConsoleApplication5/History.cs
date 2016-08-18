@@ -614,9 +614,7 @@ namespace Next_Game
                 Game.world.SetRecord(record);
             }
             //assign traits
-            GetActorEarlyTraits(actor);
-            if (actor.Age >= 15)
-            { GetActorLateTraits(actor); }
+            GetActorTraits(actor);
             return actor;
         }
 
@@ -625,18 +623,21 @@ namespace Next_Game
         /// Assigns traits to actors (early, under 15 y.0 - Combat, Wits, Charm)
         /// </summary>
         /// <param name="person"></param>
-        private void GetActorEarlyTraits(Actor person)
+        private void GetActorTraits(Actor person)
         {
-            TraitSex sex = TraitSex.Male;
+            //you want the OPPOSITE sex to the actor for the query
+            TraitSex sex = TraitSex.Female;
             if (person.Sex == ActorSex.Female)
-            { sex = TraitSex.Female; }
+            { sex = TraitSex.Male; }
             List<Trait> tempTraits = new List<Trait>();
+            //nicknames from all assigned traits kept here and one is randomly chosen to be given the actor (their 'handle')
+            List<string> tempHandles = new List<string>();
             //
             //query - Combat ---
             //
             IEnumerable<Trait> enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Combat && trait.Sex == sex
+                where trait.Type == TraitType.Combat && trait.Sex != sex
                 select trait;
             tempTraits = enumTraits.ToList();
             Trait rndTrait;
@@ -652,7 +653,7 @@ namespace Next_Game
                     string name = rndTrait.Name;
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
-                    Console.WriteLine("{0}, ID {1} Effect {2} Actor {3}", name, traitID, effect, person.ActID);
+                    Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor combat skill
                     int data = person.Combat;
                     data += effect;
@@ -664,6 +665,7 @@ namespace Next_Game
                     person.arrayOfTraitID[(int)TraitType.Combat] = traitID;
                     person.arrayOfTraitEffects[(int)TraitType.Combat] = effect;
                     person.arrayOfTraitNames[(int)TraitType.Combat] = name;
+                    tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
             //
@@ -672,7 +674,7 @@ namespace Next_Game
             tempTraits.Clear();
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Wits && trait.Sex != TraitSex.Female
+                where trait.Type == TraitType.Wits && trait.Sex != sex
                 select trait;
             tempTraits = enumTraits.ToList();
             if (tempTraits.Count > 0)
@@ -686,7 +688,7 @@ namespace Next_Game
                     string name = rndTrait.Name;
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
-                    Console.WriteLine("Wits {0}, ID {1} Effect {2} Actor ID {3}", name, traitID, effect, person.ActID);
+                    Console.WriteLine("Wits {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor combat skill
                     int data = person.Wits;
                     data += effect;
@@ -698,6 +700,7 @@ namespace Next_Game
                     person.arrayOfTraitID[(int)TraitType.Wits] = traitID;
                     person.arrayOfTraitEffects[(int)TraitType.Wits] = effect;
                     person.arrayOfTraitNames[(int)TraitType.Wits] = name;
+                    tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
             //
@@ -706,7 +709,7 @@ namespace Next_Game
             tempTraits.Clear();
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Charm && trait.Sex != TraitSex.Female
+                where trait.Type == TraitType.Charm && trait.Sex != sex
                 select trait;
             tempTraits = enumTraits.ToList();
             if (tempTraits.Count > 0)
@@ -720,7 +723,7 @@ namespace Next_Game
                     string name = rndTrait.Name;
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
-                    Console.WriteLine("Charm {0}, ID {1} Effect {2} Actor ID {3}", name, traitID, effect, person.ActID);
+                    Console.WriteLine("Charm {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor combat skill
                     int data = person.Charm;
                     data += effect;
@@ -732,31 +735,17 @@ namespace Next_Game
                     person.arrayOfTraitID[(int)TraitType.Charm] = traitID;
                     person.arrayOfTraitEffects[(int)TraitType.Charm] = effect;
                     person.arrayOfTraitNames[(int)TraitType.Charm] = name;
+                    tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
-        }
-
-
-        /// <summary>
-        /// Assigns traits to actors (late, 15+ y.0 - Treachery, Leadership, Administration)
-        /// </summary>
-        /// <param name="person"></param>
-        private void GetActorLateTraits(Actor person)
-        {
-            TraitSex sex = TraitSex.Male;
-            if (person.Sex == ActorSex.Female)
-            { sex = TraitSex.Female; }
-            List<Trait> tempTraits = new List<Trait>();
             //
             //query - Treachery ---
             //
-            IEnumerable<Trait> enumTraits =
+            enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Treachery && trait.Sex == sex
+                where trait.Type == TraitType.Treachery && trait.Sex != sex
                 select trait;
             tempTraits = enumTraits.ToList();
-            Trait rndTrait;
-            int chanceOfTrait;
             if (tempTraits.Count > 0)
             {
                 //choose a random trait
@@ -768,7 +757,7 @@ namespace Next_Game
                     string name = rndTrait.Name;
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
-                    Console.WriteLine("{0}, ID {1} Effect {2} Actor {3}", name, traitID, effect, person.ActID);
+                    Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor Treachery skill
                     int data = person.Treachery;
                     data += effect;
@@ -780,6 +769,7 @@ namespace Next_Game
                     person.arrayOfTraitID[(int)TraitType.Treachery] = traitID;
                     person.arrayOfTraitEffects[(int)TraitType.Treachery] = effect;
                     person.arrayOfTraitNames[(int)TraitType.Treachery] = name;
+                    tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
             //
@@ -788,7 +778,7 @@ namespace Next_Game
             tempTraits.Clear();
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Leadership && trait.Sex != TraitSex.Female
+                where trait.Type == TraitType.Leadership && trait.Sex != sex
                 select trait;
             tempTraits = enumTraits.ToList();
             if (tempTraits.Count > 0)
@@ -802,7 +792,7 @@ namespace Next_Game
                     string name = rndTrait.Name;
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
-                    Console.WriteLine("Leadership {0}, ID {1} Effect {2} Actor ID {3}", name, traitID, effect, person.ActID);
+                    Console.WriteLine("Leadership {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor combat skill
                     int data = person.Leadership;
                     data += effect;
@@ -814,6 +804,7 @@ namespace Next_Game
                     person.arrayOfTraitID[(int)TraitType.Leadership] = traitID;
                     person.arrayOfTraitEffects[(int)TraitType.Leadership] = effect;
                     person.arrayOfTraitNames[(int)TraitType.Leadership] = name;
+                    tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
             //
@@ -822,7 +813,7 @@ namespace Next_Game
             tempTraits.Clear();
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Administration && trait.Sex != TraitSex.Female
+                where trait.Type == TraitType.Administration && trait.Sex != sex
                 select trait;
             tempTraits = enumTraits.ToList();
             if (tempTraits.Count > 0)
@@ -836,7 +827,7 @@ namespace Next_Game
                     string name = rndTrait.Name;
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
-                    Console.WriteLine("Administration {0}, ID {1} Effect {2} Actor ID {3}", name, traitID, effect, person.ActID);
+                    Console.WriteLine("Administration {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor combat skill
                     int data = person.Administration;
                     data += effect;
@@ -848,8 +839,12 @@ namespace Next_Game
                     person.arrayOfTraitID[(int)TraitType.Administration] = traitID;
                     person.arrayOfTraitEffects[(int)TraitType.Administration] = effect;
                     person.arrayOfTraitNames[(int)TraitType.Administration] = name;
+                    tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
+            //choose NickName (handle)
+            if (tempHandles.Count > 0)
+            { person.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
         }
 
         /// <summary>
@@ -1072,6 +1067,8 @@ namespace Next_Game
                         lord.AddRelation(child.ActID, Relation.Son);
                         lady.AddRelation(child.ActID, Relation.Son);
                     }
+                    //assign traits
+                    GetActorTraits(child);
                     //add to dictionaries
                     Game.world.SetPassiveActor(child);
                     //store at location

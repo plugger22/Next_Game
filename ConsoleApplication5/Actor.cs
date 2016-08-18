@@ -32,7 +32,7 @@ namespace Next_Game
         public ActorRealm Realm { get; set; } = 0; //local house title, if any
         public ActorSex Sex { get; set; }
         public ActorDied ReasonDied { get; set; } = 0;
-        public string Handle { get; set; } //eg. Nickname
+        public string Handle { get; set; } = null; //eg. Nickname
         //stats 
         public int Combat { get; set; } = 3;
         public int Wits { get; set; } = 3;
@@ -55,7 +55,6 @@ namespace Next_Game
             Age = 30;
             Title = ActorTitle.None;
             Sex = ActorSex.Male;
-            Handle = null;
             arrayOfTraitID = new int[(int)TraitType.Count];
             arrayOfTraitEffects = new int[(int)TraitType.Count];
             arrayOfTraitNames = new string[(int)TraitType.Count];

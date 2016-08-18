@@ -259,7 +259,15 @@ namespace Next_Game
             if (dictAllActors.TryGetValue(actorID, out person))
             {
                 int locID = person.LocID;
-                string name = string.Format("{0} {1}, Aid {2}", person.Title, person.Name, actorID);
+                string name = string.Format("{0} {1}", person.Title, person.Name);
+                string handle = null;
+                bool newLine = true;
+                //nickname
+                if (person.Handle != null && person.Age >= 15)
+                {
+                    newLine = false;
+                    handle = string.Format(" \"{0}\"", person.Handle);
+                }
                 RLColor color = RLColor.White;
                 RLColor locColor = RLColor.White;
                 string locString = "?";
@@ -278,13 +286,18 @@ namespace Next_Game
                         locColor = RLColor.Red;
                         break;
                 }
-                listToDisplay.Add(new Snippet(name, RLColor.Yellow, RLColor.Black));
+                listToDisplay.Add(new Snippet(name, RLColor.Yellow, RLColor.Black, false));
+                //nickname (show as White)?
+                if (handle != null)
+                { listToDisplay.Add(new Snippet(handle, Color._star, RLColor.Black, false)); }
+                //actorID
+                listToDisplay.Add(new Snippet(string.Format(", Aid {0}", actorID), RLColor.Yellow, RLColor.Black));
+                //realm?
                 if ((int)person.Realm > 0)
                 { listToDisplay.Add(new Snippet(string.Format("Realm Title: {0}", person.Realm))); }
+                //office?
                 if ((int)person.Office > 0)
                 { listToDisplay.Add(new Snippet(string.Format("Office: {0}", person.Office), RLColor.Yellow, RLColor.Black)); }
-                if (person.Handle != null)
-                { listToDisplay.Add(new Snippet(string.Format("\"{0}\"", person.Handle))); }
                 listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
                 listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
@@ -293,7 +306,7 @@ namespace Next_Game
                 //
                 listToDisplay.Add(new Snippet("Abilities (natural)", RLColor.Brown, RLColor.Black));
                 //combat
-                bool newLine = true;
+                newLine = true;
                 if (person.Combat != 3)
                 { newLine = false; }
                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
@@ -328,47 +341,42 @@ namespace Next_Game
                 else if (person.Charm > 3)
                 { listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Charm], person.arrayOfTraitEffects[(int)TraitType.Charm]),
                         Color._goodTrait, RLColor.Black)); }
-                //stats - learned (Age 15+)
-                if (person.Age >= 15)
-                {
-                    listToDisplay.Add(new Snippet("Abilities (learned, age 15+)", RLColor.Brown, RLColor.Black));
-                    //treachery
-                    newLine = true;
-                    if (person.Treachery != 3)
-                    { newLine = false; }
-                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Treachery)), Color._star, RLColor.Black, newLine));
-                    if (person.Treachery < 3)
-                    { listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Treachery], person.arrayOfTraitEffects[(int)TraitType.Treachery]),
-                          Color._badTrait, RLColor.Black)); }
-                    else if (person.Treachery > 3)
-                    { listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Treachery], person.arrayOfTraitEffects[(int)TraitType.Treachery]),
-                            Color._goodTrait, RLColor.Black)); }
-                    //leadership
-                    newLine = true;
-                    if (person.Leadership != 3)
-                    { newLine = false; }
-                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Leadership)), Color._star, RLColor.Black, newLine));
-                    if (person.Leadership < 3)
-                    { listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Leadership], person.arrayOfTraitEffects[(int)TraitType.Leadership]),
-                          Color._badTrait, RLColor.Black)); }
-                    else if (person.Leadership > 3)
-                    { listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Leadership], person.arrayOfTraitEffects[(int)TraitType.Leadership]),
-                            Color._goodTrait, RLColor.Black)); }
-                    //administration
-                    newLine = true;
-                    if (person.Administration != 3)
-                    { newLine = false; }
-                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Administration"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Administration)), Color._star, RLColor.Black, newLine));
-                    if (person.Administration < 3)
-                    { listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Administration], person.arrayOfTraitEffects[(int)TraitType.Administration]),
-                          Color._badTrait, RLColor.Black)); }
-                    else if (person.Administration > 3)
-                    { listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Administration], person.arrayOfTraitEffects[(int)TraitType.Administration]),
-                            Color._goodTrait, RLColor.Black)); }
-                }
+                //treachery
+                newLine = true;
+                if (person.Treachery != 3)
+                { newLine = false; }
+                listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), false));
+                listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Treachery)), Color._star, RLColor.Black, newLine));
+                if (person.Treachery < 3)
+                { listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Treachery], person.arrayOfTraitEffects[(int)TraitType.Treachery]),
+                        Color._badTrait, RLColor.Black)); }
+                else if (person.Treachery > 3)
+                { listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Treachery], person.arrayOfTraitEffects[(int)TraitType.Treachery]),
+                        Color._goodTrait, RLColor.Black)); }
+                //leadership
+                newLine = true;
+                if (person.Leadership != 3)
+                { newLine = false; }
+                listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), false));
+                listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Leadership)), Color._star, RLColor.Black, newLine));
+                if (person.Leadership < 3)
+                { listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Leadership], person.arrayOfTraitEffects[(int)TraitType.Leadership]),
+                        Color._badTrait, RLColor.Black)); }
+                else if (person.Leadership > 3)
+                { listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Leadership], person.arrayOfTraitEffects[(int)TraitType.Leadership]),
+                        Color._goodTrait, RLColor.Black)); }
+                //administration
+                newLine = true;
+                if (person.Administration != 3)
+                { newLine = false; }
+                listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Administration"), false));
+                listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Administration)), Color._star, RLColor.Black, newLine));
+                if (person.Administration < 3)
+                { listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Administration], person.arrayOfTraitEffects[(int)TraitType.Administration]),
+                        Color._badTrait, RLColor.Black)); }
+                else if (person.Administration > 3)
+                { listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Administration], person.arrayOfTraitEffects[(int)TraitType.Administration]),
+                        Color._goodTrait, RLColor.Black)); }
                 //family
                 if (person is Passive)
                 {
