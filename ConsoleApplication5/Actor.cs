@@ -41,7 +41,7 @@ namespace Next_Game
         public int Administration { get; set; } = 3;
         public int Leadership { get; set; } = 3;
         public int[] arrayOfTraitID { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
-        public int[] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
+        public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
 
 
@@ -56,7 +56,7 @@ namespace Next_Game
             Title = ActorTitle.None;
             Sex = ActorSex.Male;
             arrayOfTraitID = new int[(int)TraitType.Count];
-            arrayOfTraitEffects = new int[(int)TraitType.Count];
+            arrayOfTraitEffects = new int[(int)TraitAge.Count, (int)TraitType.Count];
             arrayOfTraitNames = new string[(int)TraitType.Count];
         }
 
@@ -75,7 +75,7 @@ namespace Next_Game
             Sex = sex;
             ActID = characterIndex++;
             arrayOfTraitID = new int[(int)TraitType.Count];
-            arrayOfTraitEffects = new int[(int)TraitType.Count];
+            arrayOfTraitEffects = new int[(int)TraitAge.Count, (int)TraitType.Count];
             arrayOfTraitNames = new string[(int)TraitType.Count];
         }
 
