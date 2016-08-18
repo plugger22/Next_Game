@@ -26,7 +26,7 @@ namespace Next_Game
         public static RLColor _player = Palette.salmon;
         //other
         public static RLColor _star = Palette.golden;
-        public static RLColor _goodTrait = Palette.grass;
+        public static RLColor _goodTrait = Palette.jade;
         public static RLColor _badTrait = Palette.salmon;
     }
 
