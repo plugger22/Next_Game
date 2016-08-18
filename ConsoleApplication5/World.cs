@@ -20,6 +20,7 @@ namespace Next_Game
         private Dictionary<int, int> dictHousePower; // list of Great Houses, Sorted (key is House ID, value is # of bannerlords (power))
         private Dictionary<int, Record> dictRecords; //all historical records in a central collection (key is eventID)
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
+        private Dictionary<int, Trait> dictTraits; //all triats (key is traitID)
         //public int GameTurn { get; set; } = 1;
 
         //default constructor
@@ -35,7 +36,8 @@ namespace Next_Game
             dictGreatID = new Dictionary<int, int>();
             dictHousePower = new Dictionary<int, int>();
             dictRecords = new Dictionary<int, Record>();
-            dictGeoClusters = new Dictionary<int, GeoCluster>(); ;
+            dictGeoClusters = new Dictionary<int, GeoCluster>();
+            dictTraits = new Dictionary<int, Trait>();
         }
 
 
@@ -70,6 +72,7 @@ namespace Next_Game
             InitialiseGeoClusters();
             InitiatePlayerActors(Game.history.GetPlayerActors(), 1);
             InitialiseHouses();
+            InitialiseTraits();
         }
 
         /// <summary>
@@ -1076,6 +1079,15 @@ namespace Next_Game
             { dictGeoClusters.Add(cluster.GeoID, cluster); }
         }
 
+        /// <summary>
+        /// populates dictionary of Traits
+        /// </summary>
+        private void InitialiseTraits()
+        {
+            List<Trait> tempList = Game.history.GetTraits();
+            foreach (Trait trait in tempList)
+            { dictTraits.Add(trait.TraitID, trait); }
+        }
 
         /// <summary>
         /// places a message in info panel detailing all relevant data for a single generation

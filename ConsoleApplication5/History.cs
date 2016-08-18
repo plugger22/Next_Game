@@ -625,7 +625,7 @@ namespace Next_Game
                 Game.world.SetRecord(record);
             }
             //assign traits
-            GetActorTraits(actor);
+            InitialiseActorTraits(actor);
             return actor;
         }
 
@@ -634,7 +634,7 @@ namespace Next_Game
         /// Assigns traits to actors (early, under 15 y.0 - Combat, Wits, Charm)
         /// </summary>
         /// <param name="person"></param>
-        private void GetActorTraits(Actor person)
+        private void InitialiseActorTraits(Actor person)
         {
             //you want the OPPOSITE sex to the actor for the query
             TraitSex sex = TraitSex.Female;
@@ -676,6 +676,7 @@ namespace Next_Game
                     //update trait arrays
                     person.arrayOfTraitID[(int)TraitType.Combat] = traitID;
                     person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] = effect;
+                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat] = effect; //any age 5 effect also needs to set for age 15
                     person.arrayOfTraitNames[(int)TraitType.Combat] = name;
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
@@ -712,6 +713,7 @@ namespace Next_Game
                     //update trait arrays
                     person.arrayOfTraitID[(int)TraitType.Wits] = traitID;
                     person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits] = effect;
+                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Wits] = effect; //any age 5 effect also needs to set for age 15
                     person.arrayOfTraitNames[(int)TraitType.Wits] = name;
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
@@ -748,6 +750,7 @@ namespace Next_Game
                     //update trait arrays
                     person.arrayOfTraitID[(int)TraitType.Charm] = traitID;
                     person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] = effect;
+                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Charm] = effect; //any age 5 effect also needs to set for age 15
                     person.arrayOfTraitNames[(int)TraitType.Charm] = name;
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
@@ -783,6 +786,7 @@ namespace Next_Game
                     //update trait arrays
                     person.arrayOfTraitID[(int)TraitType.Treachery] = traitID;
                     person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] = effect;
+                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Treachery] = effect; //any age 5 effect also needs to set for age 15
                     person.arrayOfTraitNames[(int)TraitType.Treachery] = name;
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
@@ -819,6 +823,7 @@ namespace Next_Game
                     //update trait arrays
                     person.arrayOfTraitID[(int)TraitType.Leadership] = traitID;
                     person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] = effect;
+                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Leadership] = effect; //any age 5 effect also needs to set for age 15
                     person.arrayOfTraitNames[(int)TraitType.Leadership] = name;
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
@@ -855,6 +860,7 @@ namespace Next_Game
                     //update trait arrays
                     person.arrayOfTraitID[(int)TraitType.Administration] = traitID;
                     person.arrayOfTraitEffects[(int)age, (int)TraitType.Administration] = effect;
+                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Administration] = effect; //any age 5 effect also needs to set for age 15
                     person.arrayOfTraitNames[(int)TraitType.Administration] = name;
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
@@ -1085,7 +1091,7 @@ namespace Next_Game
                         lady.AddRelation(child.ActID, Relation.Son);
                     }
                     //assign traits
-                    GetActorTraits(child);
+                    InitialiseActorTraits(child);
                     //add to dictionaries
                     Game.world.SetPassiveActor(child);
                     //store at location
@@ -1175,6 +1181,9 @@ namespace Next_Game
 
         internal List<GeoCluster> GetGeoClusters()
         { return listOfGeoClusters; }
+
+        internal List<Trait> GetTraits()
+        { return listOfTraits; }
 
         /// <summary>
         /// Call this method whenever an NPC actor dies to handle all the housekeeping
