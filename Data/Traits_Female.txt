@@ -1,0 +1,59 @@
+# Traits_Female
+# Notes: Age is either 5 or 15, Skill is one of 'Combat/Wits/Charm/Treachery/Leadership/Administration', Chance is % roll or less
+# Notes: Effect is +/- 1 or 2
+
+
+Name: 
+Skill: 
+Effect: 
+Chance: 
+Age: 
+Nicknames:
+
+# Combat --- +2 ------------------------- Combat
+
+# Combat --- +1
+
+# Combat --- -1
+
+# Combat --- -2
+
+# Wits --- +2 ------------------------------- Wits
+
+# Wits --- +1
+
+# Wits --- -1
+
+# Wits --- -2
+
+# Charm --- +2 ------------------------------- Charm
+
+# Charm --- +1
+
+# Charm --- -1
+
+# Charm --- -2
+
+# Treachery --- +2 ------------------------------- Treachery
+
+# Treachery --- +1
+
+# Treachery --- -1
+
+# Treachery --- -2
+
+# Leadership --- +2 ------------------------------- Leadership
+
+# Leadership --- +1
+
+# Leadership --- -1
+
+# Leadership --- -2
+
+# Administration --- +2 ------------------------------- Administration
+
+# Administration --- +1
+
+# Administration --- -1
+
+# Administration --- -2
