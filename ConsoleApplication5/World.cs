@@ -581,7 +581,7 @@ namespace Next_Game
         /// return a List of Snippets, sorted by year (ascending)
         /// </summary>
         /// <returns></returns>
-        public List<Snippet> ShowRecordsRL()
+        /*public List<Snippet> ShowRecordsRL()
         {
             List<Snippet> listOfHistory = new List<Snippet>();
             listOfHistory.Add(new Snippet("--- All Records", RLColor.Yellow, RLColor.Black));
@@ -594,8 +594,8 @@ namespace Next_Game
             foreach(string text in listOfSortedRecords)
             { listOfHistory.Add(new Snippet(text)); }
             return listOfHistory;
-        }
-
+        }*/
+        
         internal string GetLocationName(int locID)
         {
             string locName = "unknown";
@@ -1060,6 +1060,7 @@ namespace Next_Game
             int numGreatHouses = dictGreatHouses.Count;
             int numSpecialLocs = Game.network.GetNumSpecialLocations();
             int numBannerLords = dictAllHouses.Count - numGreatHouses;
+            int numActors = dictAllActors.Count;
             //data
             listStats.Add(new Snippet("--- Generation Statistics", RLColor.Yellow, RLColor.Black));
             listStats.Add(new Snippet(string.Format("{0} Locations", numLocs )));
@@ -1067,6 +1068,7 @@ namespace Next_Game
             listStats.Add(new Snippet(string.Format("{0} Banner Lords", numBannerLords)));
             listStats.Add(new Snippet(string.Format("{0} Special Locations", numSpecialLocs)));
             listStats.Add(new Snippet("1 Capital"));
+            listStats.Add(new Snippet(string.Format("{0} Actors", numActors)));
             //checksum
             if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
                 listStats.Add(new Snippet("Error: Locations don't tally", RLColor.Red, RLColor.Black));
@@ -1213,7 +1215,17 @@ namespace Next_Game
                     recordList =
                         from record in dictRecords
                         orderby record.Value.Year, record.Value.eventID
-                        select record.Value.Text;
+                        select Convert.ToString(record.Value.Year + " " + record.Value.Text);
+                    tempList = recordList.ToList();
+                    break;
+                case RLKey.C:
+                    //CUSTOM (debugging purposes)
+                    recordList =
+                        from record in dictRecords
+                        from eventType in record.Value.listOfEvents
+                        where eventType == HistEvent.Born
+                        orderby record.Value.Year
+                        select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
                     break;
                 case RLKey.D:
@@ -1223,7 +1235,17 @@ namespace Next_Game
                         from eventType in record.Value.listOfEvents
                         where eventType == HistEvent.Died
                         orderby record.Value.Year
-                        select record.Value.Text;
+                        select Convert.ToString(record.Value.Year + " " + record.Value.Text);
+                    tempList = recordList.ToList();
+                    break;
+                case RLKey.G:
+                    //Marriages
+                    recordList =
+                        from record in dictRecords
+                        from eventType in record.Value.listOfEvents
+                        where eventType == HistEvent.Married
+                        orderby record.Value.Year
+                        select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
                     break;
             }

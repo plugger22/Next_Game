@@ -192,6 +192,7 @@ namespace Next_Game
                     _fullConsole = false;
                     _scrollIndex = 0;
                     infoChannel.ClearConsole(ConsoleDisplay.Multi);
+                    keyPress = null;
                 }
             }
             //
@@ -425,6 +426,11 @@ namespace Next_Game
                             {
                                 case MenuMode.Main:
                                     break;
+                                case MenuMode.Record:
+                                    //Custom report (debugging)
+                                    infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- CUSTOM", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
                             }
                             break;
                         case RLKey.D:
@@ -457,6 +463,11 @@ namespace Next_Game
                             {
                                 case MenuMode.Main:
                                     world.ShowGeneratorStatsRL();
+                                    break;
+                                case MenuMode.Record:
+                                    //Marriages
+                                    infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- all MARRIAGES", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Debug:
                                     List<Snippet> inputList = new List<Snippet>();

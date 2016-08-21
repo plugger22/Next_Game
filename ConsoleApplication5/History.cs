@@ -673,7 +673,7 @@ namespace Next_Game
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
                     TraitAge age = rndTrait.Age;
-                    Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                    //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor combat skill
                     /*int data = person.Combat;
                     data += effect;
@@ -710,7 +710,7 @@ namespace Next_Game
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
                     TraitAge age = rndTrait.Age;
-                    Console.WriteLine("Wits {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                    //Console.WriteLine("Wits {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor combat skill
                     /*int data = person.Wits;
                     data += effect;
@@ -747,7 +747,7 @@ namespace Next_Game
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
                     TraitAge age = rndTrait.Age;
-                    Console.WriteLine("Charm {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                    //Console.WriteLine("Charm {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor combat skill
                     /*int data = person.Charm;
                     data += effect;
@@ -783,7 +783,7 @@ namespace Next_Game
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
                     TraitAge age = rndTrait.Age;
-                    Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                    //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor Treachery skill
                     /*int data = person.Treachery;
                     data += effect;
@@ -820,7 +820,7 @@ namespace Next_Game
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
                     TraitAge age = rndTrait.Age;
-                    Console.WriteLine("Leadership {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                    //Console.WriteLine("Leadership {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor combat skill
                     /*int data = person.Leadership;
                     data += effect;
@@ -857,7 +857,7 @@ namespace Next_Game
                     int effect = rndTrait.Effect;
                     int traitID = rndTrait.TraitID;
                     TraitAge age = rndTrait.Age;
-                    Console.WriteLine("Administration {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                    //Console.WriteLine("Administration {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                     //adjust actor combat skill
                     /*int data = person.Administration;
                     data += effect;

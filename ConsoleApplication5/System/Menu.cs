@@ -88,7 +88,7 @@ namespace Next_Game
                     //Switch Menu category commands
                     menuArrayText[3, 0] = "[1..6] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
-                    menuArrayText[3, 2] = "[R] Records MENU"
+                    menuArrayText[3, 2] = "[R] Records MENU";
                     menuArrayText[3, 3] = "[ENTER] End Turn";
                     menuArrayText[3, 4] = "[X] Quit";
                     break;
@@ -112,7 +112,9 @@ namespace Next_Game
                     menuArrayCategories[3] = "Switch ---";
                     //Record menu commands
                     menuArrayText[0, 0] = "[A] All";
-                    menuArrayText[0, 1] = "[D] Dead Actors";
+                    menuArrayText[0, 1] = "[C] Custom";
+                    menuArrayText[0, 2] = "[D] Dead Actors";
+                    menuArrayText[0, 3] = "[G] Marriages";
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
