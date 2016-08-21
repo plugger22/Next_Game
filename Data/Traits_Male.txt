@@ -30,23 +30,79 @@ Skill: Combat
 Effect: 2
 Chance: 25
 Age: 5
-Nicknames: The Two Handed, 
+Nicknames: The Two Handed, The Versatile, The Dextrous
 
 Name: Cobra-Like Reflexes
 Skill: Combat
 Effect: 2
 Chance: 25
 Age: 15
-Nicknames: 
+Nicknames: The Swift, The Blue Streak, The Red Flash, The Lightning Flash
 
 Name: Weapon Master
 Skill: Combat
 Effect: 2
 Chance: 25
 Age: 15
-Nicknames: 
+Nicknames: The Sword Arm, The Thruster, The Sword Master. The Mace Master, The Axe Master
 
 # Combat --- +1
+
+Name: Sharp Reflexes
+Skill: Combat
+Effect: 1
+Chance: 50
+Age: 5
+Nicknames: The Agile, The Winged, The Quick, The Fox
+
+Name: Acrobatic
+Skill: Combat
+Effect: 1
+Chance: 50
+Age: 5
+Nicknames: The Tumbler, The Balancer, The Twister
+
+Name: Alert
+Skill: Combat
+Effect: 1
+Chance: 50
+Age: 15
+Nicknames: The Ready, The Watchful, The Perceptive, The Vigilant, The Observant
+
+Name: Athletic
+Skill: Combat
+Effect: 1
+Chance: 50
+Age: 5
+Nicknames: The Vigorous, The Energetic, The Active
+
+Name: Brawny
+Skill: Combat
+Effect: 1
+Chance: 50
+Age: 15
+Nicknames: The Beefy, The Bulky, The Solid, The Burly, The Strapping, The Hefty
+
+Name: Castellan Trained
+Skill: Combat
+Effect: 1
+Chance: 50
+Age: 15
+Nicknames: The Sword Man, The Mace Man, The Axe Man
+
+Name:  Fleet of Foot
+Skill: Combat
+Effect: 1
+Chance: 50
+Age: 5
+Nicknames: The Breakneck, The Brisk, The Hasty, The Flying, The Leopard, The Deer
+
+Name: Double Jointed
+Skill: Combat
+Effect: 1
+Chance: 50
+Age: 5
+Nicknames: The Bendy, The Adjustable, The Bending, The Lithe, The Limber, The Springy, The Stretchy, The Supple
 
 Name: Tall
 Skill: Combat
@@ -68,8 +124,6 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Strong, The Mighty, Rock Breaker, The Muscled, The Bull, The Ox
-
-
 
 Name: Athletic
 Skill: Combat
@@ -165,6 +219,41 @@ Chance: 50
 Age: 15
 Nicknames: The Crapper, The Sh*tter, The Squatter
 
+Name: Anemic
+Skill: Combat
+Effect: -1
+Chance: 50
+Age: 5
+Nicknames: The Bleeder, The Feeble, The Frail, The Sickly, The Bloodless, The Pallid, The Wan
+
+Name: Lame
+Skill: Combat
+Effect: -1
+Chance: 50
+Age: 5
+Nicknames: The Sore, The Bruised, The Stiff, The Gimped
+
+Name: One Eyed
+Skill: Combat
+Effect: -1
+Chance: 50
+Age: 5
+Nicknames: The Pirate, The Cyclops, The Basilisk, The Draken, The Evil Eye, 
+
+Name: Clumsy
+Skill: Combat
+Effect: -1
+Chance: 50
+Age: 5
+Nicknames: The Inept, The Ungainly, The Unwieldy, The Blundering, The Bumbling, The Clown, The Graceless
+
+Name: Ponderous
+Skill: Combat
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Weighty, The Elephant, The Cow, The Laborious, The Lumbering, The Oxen
+
 # Combat --- -2
 
 Name: Dwarf
@@ -195,8 +284,21 @@ Chance: 25
 Age: 15
 Nicknames: The Massive, The Impressive, BlubberFaced, The Bouncy, The Corpulent, The Paunchy, The Porcine
 
+Name: Pacifist
+Skill: Combat
+Effect: -2
+Chance: 25
+Age: 15
+Nicknames: The Peaceful, The Peacemaker, The Dove, The Non Violent, The Passive
+
 # Wits --- +2 --------------------------- Wits
 
+Name: Sixth Sense
+Skill: Wits
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Instinctive, The Clairvoyant, The Perceptive
 
 # Wits --- +1
 
@@ -225,7 +327,19 @@ Nicknames: The Fool, The Unknowing, The Idiot, The Simpleton
 
 # Charm --- +2 -------------------------- Charm
 
+Name: Godlike Handsome
+Skill: Charm
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Beautiful, The Dapper, The Graceful, The Majestic, The Virile, The Magnificent
 
+Name: Charismatic
+Skill: Charm
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Appealing, The Alluring, The Hypnotic, The Magnetic, The Mesmerising
 
 # Charm --- +1
 
@@ -235,6 +349,20 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Womaniser, The Charmer, The Prodigious
+
+Name: Handsome
+Skill: Charm
+Effect: 1
+Chance: 50
+Age: 15
+Nicknames: The Elegant, The Graceful, The Smooth, The Stylish, The Suave, The Well-Dressed
+
+Name: Imposing
+Skill: Charm
+Effect: 1
+Chance: 50
+Age: 15
+Nicknames: The Grand, The Imperial, The Magnificent, The Ominous, The Monumental, The Towering, The Dignified
 
 # Charm --- -1
 
@@ -287,26 +415,151 @@ Chance: 50
 Age: 5
 Nicknames: The Slobberer, The Dribbler, The Spitter
 
+Name: Dubious Personal Hygiene
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Stinky, The Smelly, The Malodorous, The Rancid, The Foul, The Putrid, The Reeking, The Whiffy
+
+Name: Nervous Twitch
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Squirmer, The Twitcher, The Jiggler, The Wiggler, The Spooked, The Nervous
+
+Name: Nose Picker
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Excavator, The Nasal Explorer, The Disgusting, The Gross
+
+Name: Nail Biter
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Apprehensive, The Tense, The Uneasy, The Weak, The Bothered, The Fidgety, The Flustered, The Timorous, The Worried
+
+Name: Mumbles
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Whisperer, The Hard to Hear, The Quiet
+
+Name: Boring
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Tedious, The Lifeless, The Monotonous, The Mundane, The Stale, The Stodgy, The Stuffy, The Repetitious, The Wearisome, The Flat, The Unexciting
+
+Name: Arrogant
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Haughty, The Aloof, The Cavalier, The Cocky, The Imperious, The Pretentious, The Smug, The Vain, The Puffed Up, The Swaggering
+
+Name: Lecherous
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Carnal, The Lascivious, The Libertine, The Licentious, The Salacious, The Unchaste, The Wanton
+
+Name: Sadist
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Beast, The Animal, The Creature, The Degenerate, The Devil, The Fiend, The Monster, The Ogre, The Savage, The Swine
+
+Name: Mean
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Mingy, The Miserly, The Parsimonious, The Rapacious, The Stingy, The Tight, The Selfish
+
+Name: Brutal
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Barbarous, The Callous, The Harsh, The Merciless, The Severe, The Vicious, The Heartless, The Pitiless, The Remorseless, The Unmerciful
+
+Name: Hypochondriac
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Ill, The Imaginary, The Distraught, The Never Well
+
 # Charm --- -2
 
+Name: Beast Lover
+Skill: Charm 
+Effect: -2
+Chance: 25
+Age: 15
+Nicknames: The Animal Lover, The Sheep Humper, The Ox Humper, The Cow Humper, The Donkey Humper
 
+Name: Repulsive
+Skill: Charm 
+Effect: -2
+Chance: 25
+Age: 15
+Nicknames: The Abhorrent, The Creepy, The Distasteful, The Hideous, The Revolting, The Odious, The Horrid, The Repellent, The Abominable
 
 # Treachery --- +2 ----------------------------- Treachery
 
-
+Name: Predator
+Skill: Treachery
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Hunter, The Stalker, The Deer Stalker, The Falconer, The Trapper
 
 # Treachery --- +1
 
-
+Name: Morals of a Sewer Rat
+Skill: Treachery
+Effect: 1
+Chance: 50
+Age: 15
+Nicknames: The Stygian Rat, The Insipid Rodent, The Black Rat, The Dark Rodent
 
 # Treachery --- -1
 
+Name: Noble
+Skill: Treachery
+Effect: -1
+Chance: 75
+Age: 15
+Nicknames: The Kingly, The Aristocrat, The Patrician, The Wellborn, The Titled, The Dignified, The August, The Distinguished, The Regal, The Solemn
 
+Name: Strong Moral Code
+Skill: Treachery
+Effect: -1
+Chance: 75
+Age: 15
+Nicknames: The Straight, The Upstanding, The Reliable, The Saintly, The Laudable
+
+Name: Gullible
+Skill: Treachery
+Effect: -1
+Chance: 75
+Age: 15
+Nicknames: The Unsuspecting, The Foolish, The Believing, The Simple
 
 Name: Honourable
 Skill: Treachery
 Effect: -1
-Chance: 50
+Chance: 75
 Age: 15
 Nicknames: The Illustrious, The Principled, The Respectable
 
@@ -321,7 +574,21 @@ Skill: Leadership
 Effect: 2
 Chance: 25
 Age: 15
-Nicknames: The Great, The Marvellous, The Heroic
+Nicknames: The Great, The One, The Commanding, The Intrepid, The Valorous
+
+Name: Heroic
+Skill: Leadership
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Bold, The Courageous, The Daring, The Epic, The Fearless, The Gallant, The Lion Hearted
+
+Name: Inspirational
+Skill: Leadership
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Enricher, The Influential, The Stimulating, The Uplifting, The Ennobling
 
 # Leadership --- +1
 
@@ -360,6 +627,41 @@ Chance: 50
 Age: 15
 Nicknames: The Determined, The Dogged, The Persistent, The Resolute
 
+Name: Booming Voice
+Skill: Leadership
+Effect: 1
+Chance: 50
+Age: 15
+Nicknames: The Loud, The Fog Horn, The Boisterous, The Deafening, The Raucous, The Roaring, The Thundering, The Ear Piercing, The Resonant, The Sonorous
+
+Name: Steadfast
+Skill: Leadership
+Effect: 1
+Chance: 50
+Age: 15
+Nicknames: The Abiding, The Unflinching, The Dedicated, The Persevering, The Unfaltering, The Unmovable
+
+Name: Level Headed
+Skill: Leadership
+Effect: 1
+Chance: 50
+Age: 15
+Nicknames: The Balanced, The Collected, The Composed, The Even Tempered, The Reasonable, The Steady, The Sane
+
+Name: Nerves of Steel
+Skill: Leadership
+Effect: 1
+Chance: 50
+Age: 15
+Nicknames: The Serene, The Mild, The Smooth, The Even, The Tranquil, The Unruffled, The Undisturbed
+
+Name: Competent
+Skill: Leadership
+Effect: 1
+Chance: 50
+Age: 15
+Nicknames: The Proficient, The Capable, The Skilled, The Talented
+
 # Leadership --- -1
 
 Name: Timid
@@ -383,6 +685,34 @@ Chance: 50
 Age: 15
 Nicknames: The Shaky, The Bothered, The Jittery, The Timid
 
+Name: Impulsive
+Skill: Leadership
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Impetuous, The Hasty, The Instinctive, The Careless, The Headstrong, The Rash, The Unconsidered, The Sudden, The Swift
+
+Name: Stubborn
+Skill: Leadership
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Firm, The Fixed, The Hardheaded, The Pigheaded, The Recalcitrant, The Stiff Necked, The Rigid
+
+Name: Overconfident
+Skill: Leadership
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Brash, The Careless, The Reckless, The Heedless, The Imprudent, The Foolhardy
+
+Name: Impatient
+Skill: Leadership
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Restless, The Testy, The Anxious, The Itchy, The Impetuous, The Headlong, The Eager
+
 # Leadership --- -2
 
 Name: Chicken-Hearted
@@ -398,21 +728,6 @@ Effect: -2
 Chance: 25
 Age: 15
 Nicknames: The Imperious, The Absolute, The Disciplinarian, The Severe
-
-
-# Administrator --- +2 --------------------------- Administrator
-
-
-
-# Administrator --- +1
-
-
-
-# Administrator --- -1
-
-
-
-# Administrator --- -2
 
 
 

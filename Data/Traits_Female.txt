@@ -2,15 +2,14 @@
 # Notes: Age is either 5 or 15, Skill is one of 'Combat/Wits/Charm/Treachery/Leadership/Administration', Chance is % roll or less
 # Notes: Effect is +/- 1 or 2
 
-
-Name: 
-Skill: 
-Effect: 
-Chance: 
-Age: 
-Nicknames:
-
 # Combat --- +2 ------------------------- Combat
+
+Name: Amazon
+Skill: Combat
+Effect: 2
+Chance: 4
+Age: 15
+Nicknames: The Dragon, The Fire Eater, The Ogress, The She-Devil, The Tigress, The Hell Cat, The She-Wolf
 
 # Combat --- +1
 
@@ -18,31 +17,276 @@ Nicknames:
 
 # Combat --- -2
 
+Name: Delicate Disposition
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 5
+Nicknames: The Petal, The Fragile Rose, The Porcelain Rose
+
+Name: Knitter
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Sewer, The Purled, The Woven
+
+Name: Quilter
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Patched, The Plaid, The Stitcher
+
+Name: Humane
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Benevolent, The Gracious, The Caring
+
+Name: Gentle
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Kind, The Soft, The Tender, The Soft Hearted
+
+Name: Dancer
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Hoofer, The Danseur, The Figurante
+
+Name: Warm Hearted
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Jolly, The Jovial, The Sunny, The Glad
+
+Name: Embroiderer
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Lacer, The Cross-Stitch, The Sampler, The Brocader
+
+Name: Harp Player
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Troubadour, The Bard, The Player
+
+Name: Flute Player
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Minstrel, The Musician, The Performer
+
+Name: Lute Player
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Jongleur, The Poet, The Ingenue
+
+Name: Lyre Player
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Dove, The Pigeon, The Nightingale
+
+Name: Crumhorn Player
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Blower, The Dramatic, The Vivid
+
+Name: Fiddle Player
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Breathtaking, The Startling, The Thrilling
+
+Name: Timbrel Player
+Skill: Combat
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames: The Astounding, The Sparrow, The White Falcon
+
 # Wits --- +2 ------------------------------- Wits
+
+Name: Woman's Intuition
+Skill: Wits
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Diviner, The Second Sight, The Savvy
 
 # Wits --- +1
 
 # Wits --- -1
 
+Name: Tipsy
+Skill: Wits
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Addled, The Dazed, The Unsteady, The Woozy, The Fuddled, The Mellow, The Merry, The Stewed
+
 # Wits --- -2
 
 # Charm --- +2 ------------------------------- Charm
 
+Name: Stunning
+Skill: Charm
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Sensational, The Dazzling, The Gorgeous
+
+Name: Beautiful
+Skill: Charm
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Lovely, The Striking, The Ravishing, The Fair, The Beauteous, The Heavenly, The Pretty
+
+Name: Womanly Wiles
+Skill: Charm
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Crafty, The Trickster, The Misleading, The Tempting, The Alluring, The Temptress
+
+Name: Desirable
+Skill: Charm
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Enticing, The Fascinating, The Adorable, The Fetching, The Goddess
+
+Name: Seductive
+Skill: Charm 
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Provocative, The Captivating, The Siren, The Beguiling, The Irresistible, The Flirtatious, The Attractive
+
 # Charm --- +1
 
+Name: Becoming
+Skill: Charm
+Effect: 1
+Chance: 75
+Age: 15
+Nicknames: The Supple, The Fair, The Attractive, The Comely, The Tasteful, The Slender
+
+Name: Glamorous
+Skill: Charm
+Effect: 1
+Chance: 75
+Age: 15
+Nicknames: The Captivating, The Charming, The Elegant, The Glittering, The Exciting, The Refined
+
+Name: Voice of an Angel
+Skill: Charm
+Effect: 1
+Chance: 75
+Age: 15
+Nicknames: The Dulcet, The Honey Tongued, The Lyre Bird
+
+Name: Bewitching
+Skill: Charm
+Effect: 1
+Chance: 75
+Age: 15
+Nicknames: The Fascinating, The Winsome, The Desirable, The Lovely, The Enticing, The Entrancing
+
+Name: Graceful
+Skill: Charm
+Effect: 1
+Chance: 75
+Age: 15
+Nicknames: The Rhythmic, The Tasteful, The Flowing, The Lissome, The Poised, The Statuesque
+
+Name: Alluring
+Skill: Charm
+Effect: 1
+Chance: 75
+Age: 15
+Nicknames: The Agreeable, The Appealing, The Angelic, The Pleasing, The Radiant, The Sublime
+
 # Charm --- -1
+
+Name: Homely
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Plain, The Dour, The Severe, The Spartan, The Unembellished, The Bleak, The Austere
+
+Name: Unrefined
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Crude, The Crass, The Boorish, The Rough, The Rude, The Uncivilised, The Uncultivated, The Unpolished, The Vulgar
+
+Name: Self-Centred
+Skill: Charm 
+Effect: -1
+Chance: 50
+Age: 15
+Nicknames: The Narcissistic, The Self-Absorbed, The Self-Serving, The Selfish, The Self-Indulgent, The Self-Interested, The Vainglorious
 
 # Charm --- -2
 
 # Treachery --- +2 ------------------------------- Treachery
 
+Name: Sexual Predator
+Skill: Treachery
+Effect: 2
+Chance: 25
+Age: 15
+Nicknames: The Huntress, The Black Widow Spider, The Maneater, The Devourer of Men
+
 # Treachery --- +1
 
 # Treachery --- -1
 
+Name: Unworldly
+Skill: Treachery
+Effect: -1
+Chance: 75
+Age: 15
+Nicknames: The Dreamy, The Day Dreamer, The Unreal, The Celestial, The Ethereal
+
+Name: Compassionate
+Skill: Treachery
+Effect: -1
+Chance: 75
+Age: 15
+Nicknames: The Tender, The Pitying, The Understanding, The Softhearted, The Kindhearted, The Humane
+
 # Treachery --- -2
 
 # Leadership --- +2 ------------------------------- Leadership
+
+Name: Boudicca
+Skill: Leadership
+Effect: 2
+Chance: 4
+Age: 15
+Nicknames: Queen of the Battlefield, Demon Killer, Queen of Men, Goddess of War
 
 # Leadership --- +1
 
@@ -50,10 +294,11 @@ Nicknames:
 
 # Leadership --- -2
 
-# Administration --- +2 ------------------------------- Administration
+Name: Womanly
+Skill: Leadership
+Effect: -2
+Chance: 100
+Age: 15
+Nicknames:
 
-# Administration --- +1
-
-# Administration --- -1
-
-# Administration --- -2
+# NOTE: Womanly has no nicknames

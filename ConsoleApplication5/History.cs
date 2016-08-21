@@ -349,83 +349,91 @@ namespace Next_Game
             //
             // Traits ---
             //
-            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Traits_Male.txt";
-            string[] arrayOfTraits = File.ReadAllLines(filePath);
-            bool newTrait = false;
-            dataCounter = 0; //number of traits
-            TraitStruct structTrait = new TraitStruct();
-            for (int i = 0; i < arrayOfTraits.Length; i++)
+            for (int fileIndex = 0; fileIndex < (int)TraitSex.Count; fileIndex++)
             {
-                if (arrayOfTraits[i] != "" && !arrayOfTraits[i].StartsWith("#"))
+                if (fileIndex == 0)
+                { filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Traits_All.txt"; }
+                else if (fileIndex == 1)
+                { filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Traits_Male.txt"; }
+                else if (fileIndex == 2)
+                { filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Traits_Female.txt"; }
+                else
+                { break; }
+                string[] arrayOfTraits = File.ReadAllLines(filePath);
+                bool newTrait = false;
+                dataCounter = 0; //number of traits
+                TraitStruct structTrait = new TraitStruct();
+                for (int i = 0; i < arrayOfTraits.Length; i++)
                 {
-                    //set up for a new house
-                    if (newTrait == false)
+                    if (arrayOfTraits[i] != "" && !arrayOfTraits[i].StartsWith("#"))
                     {
-                        newTrait = true;
-                        //Console.WriteLine();
-                        dataCounter++;
-                        //new Trait object
-                        structTrait = new TraitStruct();
-                        structTrait.Sex = TraitSex.Male;
-                    }
-                    string[] tokens = arrayOfTraits[i].Split(':');
-                    //strip out leading spaces
-                    cleanTag = tokens[0].Trim();
-                    cleanToken = tokens[1].Trim();
-                    switch (cleanTag)
-                    {
-                        case "Name":
-                            structTrait.Name = cleanToken;
-                            break;
-                        case "Skill":
-                            switch (cleanToken)
-                            {
-                                case "Combat":
-                                    structTrait.Type = TraitType.Combat;
-                                    break;
-                                case "Wits":
-                                    structTrait.Type = TraitType.Wits;
-                                    break;
-                                case "Charm":
-                                    structTrait.Type = TraitType.Charm;
-                                    break;
-                                case "Treachery":
-                                    structTrait.Type = TraitType.Treachery;
-                                    break;
-                                case "Leadership":
-                                    structTrait.Type = TraitType.Leadership;
-                                    break;
-                                case "Administration":
-                                    structTrait.Type = TraitType.Administration;
-                                    break;
-                            }
-                            break;
-                        case "Effect":
-                            structTrait.Effect = Convert.ToInt32(cleanToken);
-                            break;
-                        case "Chance":
-                            structTrait.Chance = Convert.ToInt32(cleanToken);
-                            break;
-                        case "Age":
-                            int tempNum = Convert.ToInt32(cleanToken);
-                            if (tempNum == 5)
-                            { structTrait.Age = TraitAge.Five; }
-                            else
-                            { structTrait.Age = TraitAge.Fifteen; }
-                            break;
-                        case "Nicknames":
-                            //get list of nicknames
-                            string[] arrayOfNames = cleanToken.Split(',');
-                            List<string> tempList = new List<string>();
-                            //loop nickname array and add all to list
-                            for (int k = 0; k < arrayOfNames.Length; k++)
-                            { tempList.Add(arrayOfNames[k].Trim()); }
-                            //pass info over to a class instance
-                            Trait classTrait = new Trait(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, structTrait.Chance, tempList);
-                            //last datapoint - save object to list
-                            if (dataCounter > 0)
-                            { listOfTraits.Add(classTrait); }
-                            break;
+                        //set up for a new house
+                        if (newTrait == false)
+                        {
+                            newTrait = true;
+                            //Console.WriteLine();
+                            dataCounter++;
+                            //new Trait object
+                            structTrait = new TraitStruct();
+                            //sex
+                            structTrait.Sex = (TraitSex)fileIndex;
+                        }
+                        string[] tokens = arrayOfTraits[i].Split(':');
+                        //strip out leading spaces
+                        cleanTag = tokens[0].Trim();
+                        cleanToken = tokens[1].Trim();
+                        switch (cleanTag)
+                        {
+                            case "Name":
+                                structTrait.Name = cleanToken;
+                                break;
+                            case "Skill":
+                                switch (cleanToken)
+                                {
+                                    case "Combat":
+                                        structTrait.Type = TraitType.Combat;
+                                        break;
+                                    case "Wits":
+                                        structTrait.Type = TraitType.Wits;
+                                        break;
+                                    case "Charm":
+                                        structTrait.Type = TraitType.Charm;
+                                        break;
+                                    case "Treachery":
+                                        structTrait.Type = TraitType.Treachery;
+                                        break;
+                                    case "Leadership":
+                                        structTrait.Type = TraitType.Leadership;
+                                        break;
+                                }
+                                break;
+                            case "Effect":
+                                structTrait.Effect = Convert.ToInt32(cleanToken);
+                                break;
+                            case "Chance":
+                                structTrait.Chance = Convert.ToInt32(cleanToken);
+                                break;
+                            case "Age":
+                                int tempNum = Convert.ToInt32(cleanToken);
+                                if (tempNum == 5)
+                                { structTrait.Age = TraitAge.Five; }
+                                else
+                                { structTrait.Age = TraitAge.Fifteen; }
+                                break;
+                            case "Nicknames":
+                                //get list of nicknames
+                                string[] arrayOfNames = cleanToken.Split(',');
+                                List<string> tempList = new List<string>();
+                                //loop nickname array and add all to list
+                                for (int k = 0; k < arrayOfNames.Length; k++)
+                                { tempList.Add(arrayOfNames[k].Trim()); }
+                                //pass info over to a class instance
+                                Trait classTrait = new Trait(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, structTrait.Chance, tempList);
+                                //last datapoint - save object to list
+                                if (dataCounter > 0)
+                                { listOfTraits.Add(classTrait); }
+                                break;
+                        }
                     }
                 }
             }

@@ -311,8 +311,8 @@ namespace Next_Game
                 TraitAge age = TraitAge.Fifteen;
                 if (person.Age >= 5 && person.Age <= 15)
                 { age = TraitAge.Five; }
-                //only show abilities if age >= 5
-                if (person.Age >= 5)
+                //only show abilities if age >= 5 & not dead
+                if (person.Age >= 5 && person.Status != ActorStatus.Dead)
                 {
                     //header
                     listToDisplay.Add(new Snippet("Abilities (some at 5 y.o, all at 15 y.o)", RLColor.Brown, RLColor.Black));
