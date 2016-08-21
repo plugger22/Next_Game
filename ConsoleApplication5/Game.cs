@@ -9,7 +9,7 @@ using Next_Game.Cartographic;
 
 namespace Next_Game
 {
-    public enum MenuMode {Main, Actor, Debug} //distinct menu sets (Menu.cs)
+    public enum MenuMode {Main, Actor, Debug, Record} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi} //different console windows (Menu window handled independently by Menu.cs)
     public enum SpecialInput {Normal, MultiKey, Scrolling} //special input modes
 
@@ -403,6 +403,11 @@ namespace Next_Game
                                     _inputMode = SpecialInput.MultiKey;
                                     _multiCaller = 1;
                                     break;
+                                case MenuMode.Record:
+                                    //All Actors
+                                    infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- ALL RECORDS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
                             }
                             break;
                         case RLKey.E:
@@ -430,6 +435,11 @@ namespace Next_Game
                                 case MenuMode.Main:
                                     //switch to Debug menu
                                     _menuMode = menu.SwitchMenuMode(MenuMode.Debug);
+                                    break;
+                                case MenuMode.Record:
+                                    //Dead Actors
+                                    infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- all DEATHS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Debug:
                                     //show debug route
@@ -502,8 +512,9 @@ namespace Next_Game
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
-                                    //show all historical Records
-                                    infoChannel.SetInfoList(world.ShowRecordsRL(), ConsoleDisplay.Multi);
+                                    //infoChannel.SetInfoList(world.ShowRecordsRL(), ConsoleDisplay.Multi);
+                                    //switch to Debug menu
+                                    _menuMode = menu.SwitchMenuMode(MenuMode.Record);
                                     break;
                                 case MenuMode.Debug:
                                     //show debug route

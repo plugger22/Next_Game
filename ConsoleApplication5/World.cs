@@ -498,47 +498,7 @@ namespace Next_Game
                             }
                         }
                     }
-
-                    //administration
-                    /*newLine = true;
-                    if (person.Administration != 3)
-                    { newLine = false; }
-                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Administration"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Administration)), Color._star, RLColor.Black, newLine));
-                    if (person.Administration < 3)
-                    {
-                        listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Administration], 
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Administration]), Color._badTrait, RLColor.Black));
-                    }
-                    else if (person.Administration > 3)
-                    {
-                        listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Administration], 
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Administration]), Color._goodTrait, RLColor.Black));
-                    }*/
-                    //Administration
-                    abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Administration] + person.Administration;
-                    newLine = true;
-                    if (abilityStars != 3)
-                    { newLine = false; }
-                    if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
-                    {
-                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Administration"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3)
-                        {
-                            if (abilityStars < 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Administration],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Administration]), Color._badTrait, RLColor.Black));
-                            }
-                            else if (abilityStars > 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Administration],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Administration]), Color._goodTrait, RLColor.Black));
-                            }
-                        }
-                    }
-
+                                      
                 }
                 //family
                 if (person is Passive)
@@ -1235,6 +1195,43 @@ namespace Next_Game
             dictPassiveActors.Add(actor.ActID, actor);
             dictAllActors.Add(actor.ActID, actor);
         }
+
+        /// <summary>
+        /// Returns a filtered set of Historical Records
+        /// </summary>
+        /// <param name="keyPress"></param>
+        /// <returns></returns>
+        internal List<Snippet> GetRecordSet(RLKeyPress keyPress)
+        {
+            List<string> tempList = new List<string>();
+            List<Snippet> snippetList = new List<Snippet>();
+            IEnumerable<string> recordList;
+            switch (keyPress.Key)
+            {
+                case RLKey.A:
+                    //All records
+                    recordList =
+                        from record in dictRecords
+                        orderby record.Value.Year, record.Value.eventID
+                        select record.Value.Text;
+                    tempList = recordList.ToList();
+                    break;
+                case RLKey.D:
+                    //deaths
+                    recordList =
+                        from record in dictRecords
+                        from eventType in record.Value.listOfEvents
+                        where eventType == HistEvent.Died
+                        orderby record.Value.Year
+                        select record.Value.Text;
+                    tempList = recordList.ToList();
+                    break;
+            }
+            foreach (string text in tempList)
+            { snippetList.Add(new Snippet(text)); }
+            return snippetList;
+        }
+
 
         //new Methods above here
     }

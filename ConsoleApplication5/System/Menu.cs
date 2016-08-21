@@ -85,12 +85,12 @@ namespace Next_Game
                     menuArrayText[1, 2] = "[H] Show House";
                     menuArrayText[1, 3] = "[G] Show Generator Stats";
                     menuArrayText[1, 4] = "[A] Show Actor";
-                    menuArrayText[1, 5] = "[R] Show Records";
                     //Switch Menu category commands
                     menuArrayText[3, 0] = "[1..6] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
-                    menuArrayText[3, 2] = "[ENTER] End Turn";
-                    menuArrayText[3, 3] = "[X] Quit";
+                    menuArrayText[3, 2] = "[R] Records MENU"
+                    menuArrayText[3, 3] = "[ENTER] End Turn";
+                    menuArrayText[3, 4] = "[X] Quit";
                     break;
                 case MenuMode.Actor:
                     menuColorFore = RLColor.Blue;
@@ -101,6 +101,18 @@ namespace Next_Game
                     //Character menu commands
                     menuArrayText[0, 0] = "[M] Map";
                     menuArrayText[0, 1] = "[P] Move Player Character";
+                    menuArrayText[3, 0] = "[ESC] Main Menu";
+                    menuArrayText[3, 1] = "[ENTER] End Turn";
+                    break;
+                case MenuMode.Record:
+                    menuColorFore = RLColor.Yellow;
+                    menuColorBack = RLColor.LightGray;
+                    //input categories
+                    menuArrayCategories[0] = "Records MENU ---";
+                    menuArrayCategories[3] = "Switch ---";
+                    //Record menu commands
+                    menuArrayText[0, 0] = "[A] All";
+                    menuArrayText[0, 1] = "[D] Dead Actors";
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
