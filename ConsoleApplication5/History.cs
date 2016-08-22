@@ -577,7 +577,7 @@ namespace Next_Game
         {
             Passive actor = null;
             //get a random first name
-            string actorName = GetActorName(lastName, sex, houseID);
+            string actorName = GetActorName(lastName, sex, refID);
             //create actor
             if (title == ActorTitle.BannerLord)
             { actor = new BannerLord(actorName, title, sex); actor.Realm = ActorRealm.Head_of_House; }
@@ -930,7 +930,7 @@ namespace Next_Game
                     if (rnd.Next(100) < 50)
                     { sex = ActorSex.Female; }
                     //get a random first name
-                    string actorName = GetActorName(Game.world.GetGreatHouseName(lord.HouseID), sex);
+                    string actorName = GetActorName(Game.world.GetGreatHouseName(lord.HouseID), sex, lord.RefID);
                     Passive child = new Family(actorName, ActorTitle.None, sex);
                     child.Age = Game.gameYear - year;
                     child.Born = year;
@@ -1140,7 +1140,7 @@ namespace Next_Game
         /// <param name="lastName"></param>
         /// <param name="sex"></param>
         /// <returns></returns>
-        private string GetActorName(string lastName, ActorSex sex, int houseID = 0)
+        private string GetActorName(string lastName, ActorSex sex, int refID = 0)
         {
             string fullName = null;
             List<string> listOfNames = new List<string>();
@@ -1152,11 +1152,20 @@ namespace Next_Game
                 index = rnd.Next(0, numRecords);
                 fullName = listOfMaleFirstNames[index] + " " + lastName;
                 //check name not already used
-                if (houseID > 0)
+                if (refID > 0)
                 {
-                    House house = Game.world.GetHouse(houseID);
+                    House house = Game.world.GetHouse(refID);
                     if (house != null)
-                    { }
+                    {
+                        //add index ID to list of names
+                        int numOfLikeNames = house.AddName(index);
+                        if (numOfLikeNames > 1)
+                        {
+                            //same name repeated - add the 'II', etc., the returned actor name
+                            fullName += " " + new String('I', numOfLikeNames);
+                            Console.WriteLine("Repeating Name in house {0}", house.HouseID);
+                        }
+                    }
                 }
             }
             else

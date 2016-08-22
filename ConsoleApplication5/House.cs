@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace Next_Game
@@ -13,17 +14,30 @@ namespace Next_Game
         public string Motto { get; set; }
         public string Banner { get; set; }
         public string LocName { get; set; }
-        public int HouseID { get; set; } //unique to Great House (allocated by Network.cs)
+        public int HouseID { get; set; } = 0; //unique to Great House (allocated by Network.cs)
         public int LocID { get; set; } //unique to location
         public int RefID { get; set; } //unique to house (great or minor)
         public int ArchetypeID { get; set; }
         public int Branch { get; set; }
         private List<int> listOfFirstNames; //contains ID #'s (listOfMaleFirstNames index) of all first names used by males within the house (eg. 'Eddard Stark II')
 
+
         public House()
+        { listOfFirstNames = new List<int>(); }
+
+        /// <summary>
+        /// adds ID to list of names and returns # of like names in list
+        /// </summary>
+        /// <param name="nameID"></param>
+        /// <returns></returns>
+        public int AddName(int nameID)
         {
-            listOfFirstNames = new List<int>();
-        }        
+            int numOfLikeNames = 1;
+            listOfFirstNames.Add(nameID);
+            numOfLikeNames = listOfFirstNames.Count(i => i.Equals(nameID));
+            return numOfLikeNames;
+        }
+
     }
 
     //
@@ -34,12 +48,14 @@ namespace Next_Game
         private List<int> listLordLocations;
         private List<int> listHousesToCapital; //unique houses (HID), ignoring special locations
         private List<int> listHousesToConnector; //unique houses (HID), ignoring special locations
+        
 
         public MajorHouse()
         {
             listLordLocations = new List<int>();
             listHousesToCapital = new List<int>();
             listHousesToConnector = new List<int>();
+            
         }
 
         public int GetNumBannerLords()
@@ -66,6 +82,8 @@ namespace Next_Game
             }
         }
 
+        
+
         /// <summary>
         /// returns list of Lords (subsidary bannerlord locations)
         /// </summary>
@@ -82,5 +100,6 @@ namespace Next_Game
     {
         public MinorHouse()
         { }
+
     }
 }
