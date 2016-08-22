@@ -424,9 +424,14 @@ namespace Next_Game
                                 //get list of nicknames
                                 string[] arrayOfNames = cleanToken.Split(',');
                                 List<string> tempList = new List<string>();
-                                //loop nickname array and add all to list
+                                //loop nickname array and add all to lists
+                                string tempHandle = null;
                                 for (int k = 0; k < arrayOfNames.Length; k++)
-                                { tempList.Add(arrayOfNames[k].Trim()); }
+                                {
+                                    tempHandle = arrayOfNames[k].Trim();
+                                    if (String.IsNullOrEmpty(tempHandle) == false)
+                                    {  tempList.Add(tempHandle); }
+                                }
                                 //pass info over to a class instance
                                 Trait classTrait = new Trait(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, structTrait.Chance, tempList);
                                 //last datapoint - save object to list
@@ -674,13 +679,6 @@ namespace Next_Game
                     int traitID = rndTrait.TraitID;
                     TraitAge age = rndTrait.Age;
                     //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                    //adjust actor combat skill
-                    /*int data = person.Combat;
-                    data += effect;
-                    //within limits of 1 to 5
-                    data = Math.Min(data, 5);
-                    data = Math.Max(data, 1);
-                    person.Combat = data;*/
                     //update trait arrays
                     person.arrayOfTraitID[(int)TraitType.Combat] = traitID;
                     person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] = effect;
@@ -711,13 +709,6 @@ namespace Next_Game
                     int traitID = rndTrait.TraitID;
                     TraitAge age = rndTrait.Age;
                     //Console.WriteLine("Wits {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                    //adjust actor combat skill
-                    /*int data = person.Wits;
-                    data += effect;
-                    //within limits of 1 to 5
-                    data = Math.Min(data, 5);
-                    data = Math.Max(data, 1);
-                    person.Wits = data;*/
                     //update trait arrays
                     person.arrayOfTraitID[(int)TraitType.Wits] = traitID;
                     person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits] = effect;
@@ -748,13 +739,6 @@ namespace Next_Game
                     int traitID = rndTrait.TraitID;
                     TraitAge age = rndTrait.Age;
                     //Console.WriteLine("Charm {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                    //adjust actor combat skill
-                    /*int data = person.Charm;
-                    data += effect;
-                    //within limits of 1 to 5
-                    data = Math.Min(data, 5);
-                    data = Math.Max(data, 1);
-                    person.Charm = data;*/
                     //update trait arrays
                     person.arrayOfTraitID[(int)TraitType.Charm] = traitID;
                     person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] = effect;
@@ -784,13 +768,6 @@ namespace Next_Game
                     int traitID = rndTrait.TraitID;
                     TraitAge age = rndTrait.Age;
                     //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                    //adjust actor Treachery skill
-                    /*int data = person.Treachery;
-                    data += effect;
-                    //within limits of 1 to 5
-                    data = Math.Min(data, 5);
-                    data = Math.Max(data, 1);
-                    person.Treachery = data;*/
                     //update trait arrays
                     person.arrayOfTraitID[(int)TraitType.Treachery] = traitID;
                     person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] = effect;
@@ -821,55 +798,11 @@ namespace Next_Game
                     int traitID = rndTrait.TraitID;
                     TraitAge age = rndTrait.Age;
                     //Console.WriteLine("Leadership {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                    //adjust actor combat skill
-                    /*int data = person.Leadership;
-                    data += effect;
-                    //within limits of 1 to 5
-                    data = Math.Min(data, 5);
-                    data = Math.Max(data, 1);
-                    person.Leadership = data;*/
                     //update trait arrays
                     person.arrayOfTraitID[(int)TraitType.Leadership] = traitID;
                     person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] = effect;
                     person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Leadership] = effect; //any age 5 effect also needs to set for age 15
                     person.arrayOfTraitNames[(int)TraitType.Leadership] = name;
-                    tempHandles.AddRange(rndTrait.GetNickNames());
-                }
-            }
-            //
-            //query - Adminstration ---
-            //
-            tempTraits.Clear();
-            enumTraits =
-                from trait in listOfTraits
-                where trait.Type == TraitType.Administration && trait.Sex != sex
-                select trait;
-            tempTraits = enumTraits.ToList();
-            if (tempTraits.Count > 0)
-            {
-                //choose a random trait
-                rndTrait = tempTraits[rnd.Next(tempTraits.Count)];
-                //trait roll (trait only assigned if passes roll, otherwise no trait)
-                chanceOfTrait = rndTrait.Chance;
-                if (rnd.Next(100) < chanceOfTrait)
-                {
-                    string name = rndTrait.Name;
-                    int effect = rndTrait.Effect;
-                    int traitID = rndTrait.TraitID;
-                    TraitAge age = rndTrait.Age;
-                    //Console.WriteLine("Administration {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                    //adjust actor combat skill
-                    /*int data = person.Administration;
-                    data += effect;
-                    //within limits of 1 to 5
-                    data = Math.Min(data, 5);
-                    data = Math.Max(data, 1);
-                    person.Administration = data;*/
-                    //update trait arrays
-                    person.arrayOfTraitID[(int)TraitType.Administration] = traitID;
-                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Administration] = effect;
-                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Administration] = effect; //any age 5 effect also needs to set for age 15
-                    person.arrayOfTraitNames[(int)TraitType.Administration] = name;
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }

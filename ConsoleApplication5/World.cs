@@ -1183,8 +1183,8 @@ namespace Next_Game
 
         internal void SetRecord(Record record)
         {
-            if (record != null)
-            { dictRecords.Add(record.eventID, record); }
+            //if (record != null)
+            dictRecords?.Add(record.eventID, record);
         }
 
 
