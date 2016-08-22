@@ -63,8 +63,9 @@ namespace Next_Game
         private List<string> listOfMediumForests;
         private List<string> listOfSmallForests;
         //traits
-        private List<Trait> listOfTraits;
-
+        private List<Trait> listOfTraits; //main
+        Trait[,][] arrayOfTraits;
+        
         static Random rnd;
 
         /// <summary>
@@ -92,6 +93,7 @@ namespace Next_Game
             listOfMediumSeas = new List<string>();
             listOfSmallSeas = new List<string>();
             listOfTraits = new List<Trait>();
+            arrayOfTraits = new Trait[(int)TraitType.Count, (int)ActorSex.Count][];
         }
 
         /// <summary>
@@ -442,6 +444,8 @@ namespace Next_Game
                     }
                 }
             }
+            //set up filtered sets of traits ready for random access by newly created actors
+            InitialiseTraits();
         }
 
 
@@ -644,32 +648,21 @@ namespace Next_Game
 
 
         /// <summary>
-        /// Assigns traits to actors (early, under 15 y.0 - Combat, Wits, Charm)
+        /// Assigns traits to actors (early, under 15 y.0 - Combat, Wits, Charm, Treachery, Leadership)
         /// </summary>
         /// <param name="person"></param>
         private void InitialiseActorTraits(Actor person)
         {
-            //you want the OPPOSITE sex to the actor for the query
-            TraitSex sex = TraitSex.Female;
-            if (person.Sex == ActorSex.Female)
-            { sex = TraitSex.Male; }
-            List<Trait> tempTraits = new List<Trait>();
             //nicknames from all assigned traits kept here and one is randomly chosen to be given the actor (their 'handle')
             List<string> tempHandles = new List<string>();
-            //
-            //query - Combat ---
-            //
-            IEnumerable<Trait> enumTraits =
-                from trait in listOfTraits
-                where trait.Type == TraitType.Combat && trait.Sex != sex
-                select trait;
-            tempTraits = enumTraits.ToList();
+            //Combat ---
             Trait rndTrait;
             int chanceOfTrait;
-            if (tempTraits.Count > 0)
+            int rndRange = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex].Length;
+            if (rndRange > 0)
             { 
-                //choose a random trait
-                rndTrait = tempTraits[rnd.Next(tempTraits.Count)];
+                //random trait
+                rndTrait = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex][rnd.Next(rndRange)];
                 //trait roll (trait only assigned if passes roll, otherwise no trait)
                 chanceOfTrait = rndTrait.Chance;
                 if (rnd.Next(100) < chanceOfTrait)
@@ -687,19 +680,12 @@ namespace Next_Game
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
-            //
-            //query - Wits ---
-            //
-            tempTraits.Clear();
-            enumTraits =
-                from trait in listOfTraits
-                where trait.Type == TraitType.Wits && trait.Sex != sex
-                select trait;
-            tempTraits = enumTraits.ToList();
-            if (tempTraits.Count > 0)
+            //Wits ---
+            rndRange = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex].Length;
+            if (rndRange > 0)
             {
-                //choose a random trait
-                rndTrait = tempTraits[rnd.Next(tempTraits.Count)];
+                //random trait
+                rndTrait = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex][rnd.Next(rndRange)];
                 //trait roll (trait only assigned if passes roll, otherwise no trait)
                 chanceOfTrait = rndTrait.Chance;
                 if (rnd.Next(100) < chanceOfTrait)
@@ -717,19 +703,12 @@ namespace Next_Game
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
-            //
-            //query - charm ---
-            //
-            tempTraits.Clear();
-            enumTraits =
-                from trait in listOfTraits
-                where trait.Type == TraitType.Charm && trait.Sex != sex
-                select trait;
-            tempTraits = enumTraits.ToList();
-            if (tempTraits.Count > 0)
+            //Charm ---
+            rndRange = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex].Length;
+            if (rndRange > 0)
             {
-                //choose a random trait
-                rndTrait = tempTraits[rnd.Next(tempTraits.Count)];
+                //random trait
+                rndTrait = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex][rnd.Next(rndRange)];
                 //trait roll (trait only assigned if passes roll, otherwise no trait)
                 chanceOfTrait = rndTrait.Chance;
                 if (rnd.Next(100) < chanceOfTrait)
@@ -747,18 +726,12 @@ namespace Next_Game
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
-            //
-            //query - Treachery ---
-            //
-            enumTraits =
-                from trait in listOfTraits
-                where trait.Type == TraitType.Treachery && trait.Sex != sex
-                select trait;
-            tempTraits = enumTraits.ToList();
-            if (tempTraits.Count > 0)
+            //Treachery ---
+            rndRange = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex].Length;
+            if (rndRange > 0)
             {
-                //choose a random trait
-                rndTrait = tempTraits[rnd.Next(tempTraits.Count)];
+                //random trait
+                rndTrait = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex][rnd.Next(rndRange)];
                 //trait roll (trait only assigned if passes roll, otherwise no trait)
                 chanceOfTrait = rndTrait.Chance;
                 if (rnd.Next(100) < chanceOfTrait)
@@ -776,19 +749,12 @@ namespace Next_Game
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
-            //
-            //query - Leadership ---
-            //
-            tempTraits.Clear();
-            enumTraits =
-                from trait in listOfTraits
-                where trait.Type == TraitType.Leadership && trait.Sex != sex
-                select trait;
-            tempTraits = enumTraits.ToList();
-            if (tempTraits.Count > 0)
+            //Leadership ---
+            rndRange = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex].Length;
+            if (rndRange > 0)
             {
-                //choose a random trait
-                rndTrait = tempTraits[rnd.Next(tempTraits.Count)];
+                //random trait
+                rndTrait = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex][rnd.Next(rndRange)];
                 //trait roll (trait only assigned if passes roll, otherwise no trait)
                 chanceOfTrait = rndTrait.Chance;
                 if (rnd.Next(100) < chanceOfTrait)
@@ -810,6 +776,102 @@ namespace Next_Game
             if (tempHandles.Count > 0)
             { person.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
         }
+
+
+
+        /// <summary>
+        /// sets up a bunch of list with filtered Male + All or Female + All traits to enable quick random access (rather than having to run a query each time)
+        /// </summary>
+        private void InitialiseTraits()
+        {
+            //
+            //Combat male
+            IEnumerable<Trait> enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Combat && trait.Sex != TraitSex.Female
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Male] = enumTraits.ToArray();
+            //Combat female
+            enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Combat && trait.Sex != TraitSex.Male
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Female] = enumTraits.ToArray();
+            //
+            //Wits male
+            enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Wits && trait.Sex != TraitSex.Female
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Male] = enumTraits.ToArray();
+            //Wits female
+            enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Wits && trait.Sex != TraitSex.Male
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Female] = enumTraits.ToArray();
+            //
+            //Charm male
+            enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Charm && trait.Sex != TraitSex.Female
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Male] = enumTraits.ToArray();
+            //Charm female
+            enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Charm && trait.Sex != TraitSex.Male
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Female] = enumTraits.ToArray();
+            //
+            //Treachery male
+            enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Treachery && trait.Sex != TraitSex.Female
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Male] = enumTraits.ToArray();
+            //Treachery female
+            enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Treachery && trait.Sex != TraitSex.Male
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Female] = enumTraits.ToArray();
+            //
+            //Leadership male
+            enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Leadership && trait.Sex != TraitSex.Female
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Male] = enumTraits.ToArray();
+            //Leadership female
+            enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Leadership && trait.Sex != TraitSex.Male
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Female] = enumTraits.ToArray();
+        }
+
+
 
         /// <summary>
         /// Game start - Great Family, marry the lord and lady and have kids

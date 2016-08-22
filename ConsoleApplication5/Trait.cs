@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Next_Game
 {
-    public enum TraitType {None, Combat, Wits, Charm, Treachery, Leadership, Administration, Count} //Note: Count should be last, None should be first
+    public enum TraitType {None, Combat, Wits, Charm, Treachery, Leadership, Touched, Count} //Note: Count should be last, None should be first
     public enum TraitSex {All, Male, Female, Count} //who does it affect? Either Male or Female plus All for everybody
     public enum TraitAge {Five, Fifteen, Count} //what age the trait is revealed and has an effect, Note: Count should be at end
 
