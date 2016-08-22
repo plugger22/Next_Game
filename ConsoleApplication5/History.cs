@@ -64,7 +64,7 @@ namespace Next_Game
         private List<string> listOfSmallForests;
         //traits
         private List<Trait> listOfTraits; //main
-        Trait[,][] arrayOfTraits;
+        Trait[,][] arrayOfTraits; //filtered sets for fast random access
         
         static Random rnd;
 
@@ -577,7 +577,7 @@ namespace Next_Game
         {
             Passive actor = null;
             //get a random first name
-            string actorName = GetActorName(lastName, sex);
+            string actorName = GetActorName(lastName, sex, houseID);
             //create actor
             if (title == ActorTitle.BannerLord)
             { actor = new BannerLord(actorName, title, sex); actor.Realm = ActorRealm.Head_of_House; }
@@ -1140,21 +1140,29 @@ namespace Next_Game
         /// <param name="lastName"></param>
         /// <param name="sex"></param>
         /// <returns></returns>
-        private string GetActorName(string lastName, ActorSex sex)
+        private string GetActorName(string lastName, ActorSex sex, int houseID = 0)
         {
             string fullName = null;
             List<string> listOfNames = new List<string>();
             int numRecords = 0;
+            int index = 0;
             if (sex == ActorSex.Male)
             {
                 numRecords = listOfMaleFirstNames.Count;
-                int index = rnd.Next(0, numRecords);
+                index = rnd.Next(0, numRecords);
                 fullName = listOfMaleFirstNames[index] + " " + lastName;
+                //check name not already used
+                if (houseID > 0)
+                {
+                    House house = Game.world.GetHouse(houseID);
+                    if (house != null)
+                    { }
+                }
             }
             else
             {
                 numRecords = listOfFemaleFirstNames.Count;
-                int index = rnd.Next(0, numRecords);
+                index = rnd.Next(0, numRecords);
                 fullName = listOfFemaleFirstNames[index] + " " + lastName;
             }
             return fullName;

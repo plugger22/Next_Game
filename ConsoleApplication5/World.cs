@@ -1061,6 +1061,7 @@ namespace Next_Game
             int numSpecialLocs = Game.network.GetNumSpecialLocations();
             int numBannerLords = dictAllHouses.Count - numGreatHouses;
             int numActors = dictAllActors.Count;
+            int numChildren = numActors - (numGreatHouses * 2) - numBannerLords;
             //data
             listStats.Add(new Snippet("--- Generation Statistics", RLColor.Yellow, RLColor.Black));
             listStats.Add(new Snippet(string.Format("{0} Locations", numLocs )));
@@ -1068,7 +1069,7 @@ namespace Next_Game
             listStats.Add(new Snippet(string.Format("{0} Banner Lords", numBannerLords)));
             listStats.Add(new Snippet(string.Format("{0} Special Locations", numSpecialLocs)));
             listStats.Add(new Snippet("1 Capital"));
-            listStats.Add(new Snippet(string.Format("{0} Actors", numActors)));
+            listStats.Add(new Snippet(string.Format("{0} Actors ({1} Children)", numActors, numChildren)));
             //checksum
             if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
                 listStats.Add(new Snippet("Error: Locations don't tally", RLColor.Red, RLColor.Black));
@@ -1117,7 +1118,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="refID"></param>
         /// <returns></returns>
-        private House GetHouse(int refID)
+        internal House GetHouse(int refID)
         {
             House house = new House();
             if (dictAllHouses.TryGetValue(refID, out house))
