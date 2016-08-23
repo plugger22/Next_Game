@@ -8,7 +8,7 @@ namespace Next_Game
     public enum TraitAge {Five, Fifteen, Count} //what age the trait is revealed and has an effect, Note: Count should be at end
 
     //Actor Traits
-    class Trait
+    class Trait : IEquatable<Trait>
     {
         private static int traitIndex = 1;
         public int TraitID { get; set; }
@@ -34,6 +34,37 @@ namespace Next_Game
             this.Age = age;
             this.Chance = chance;
             listOfNicknames = new List<string>(nicknames);
+        }
+
+        /// <summary>
+        /// IEquatable
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            Trait trait = obj as Trait;
+            if (trait == null) return false;
+            else return Equals(trait);
+        }
+
+        /// <summary>
+        /// IEquatable
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        { return TraitID; }
+
+        /// <summary>
+        /// IEquatable (match on Trait ID)
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals (Trait other)
+        {
+            if (other == null) return false;
+            return (this.TraitID.Equals(other.TraitID));
         }
 
         public List<string> GetNickNames()

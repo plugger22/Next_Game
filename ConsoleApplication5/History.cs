@@ -675,27 +675,31 @@ namespace Next_Game
                 { parent = mother; }
                     //does parent have a combat trait?
                     traitID = parent.arrayOfTraitID[(int)TraitType.Combat];
-                    if (traitID != 0)
+                if (traitID != 0)
+                {
+                    //random % of trait being passed on
+                    if (rnd.Next(100) < 40)
                     {
-                        //random % of trait being passed on
-                        if (rnd.Next(100) < 50)
+                        //find trait
+                        Trait trait = GetTrait(traitID);
+                        if (trait != null)
                         {
-                            //find trait
-                            Trait trait = Game.world.GetTrait(traitID);
-                            if (trait != null)
-                            {
-                                //same trait passed on
-                                TraitAge age = trait.Age;
-                                person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Combat];
-                                person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat];
-                                person.arrayOfTraitID[(int)TraitType.Combat] = parent.arrayOfTraitID[(int)TraitType.Combat];
-                                person.arrayOfTraitNames[(int)TraitType.Combat] = parent.arrayOfTraitNames[(int)TraitType.Combat];
-                                //add trait nicknames to list of possible handles
-                                tempHandles.AddRange(trait.GetNickNames());
-                                needRandomTrait = false;
-                            }
+                            //same trait passed on
+                            TraitAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Combat];
+                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat];
+                            person.arrayOfTraitID[(int)TraitType.Combat] = parent.arrayOfTraitID[(int)TraitType.Combat];
+                            person.arrayOfTraitNames[(int)TraitType.Combat] = parent.arrayOfTraitNames[(int)TraitType.Combat];
+                            //add trait nicknames to list of possible handles
+                            tempHandles.AddRange(trait.GetNickNames());
+                            needRandomTrait = false;
+
+                            Console.WriteLine("Inherited Combat trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
                         }
                     }
+                    else
+                    { needRandomTrait = true; }
+                }
             }
             else
             { needRandomTrait = true; }
@@ -834,7 +838,7 @@ namespace Next_Game
         /// </summary>
         private void InitialiseTraits()
         {
-            //
+            
             //Combat male
             IEnumerable<Trait> enumTraits =
                 from trait in listOfTraits
@@ -851,7 +855,7 @@ namespace Next_Game
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
             arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Female] = enumTraits.ToArray();
-            //
+            
             //Wits male
             enumTraits =
                 from trait in listOfTraits
@@ -868,7 +872,7 @@ namespace Next_Game
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
             arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Female] = enumTraits.ToArray();
-            //
+            
             //Charm male
             enumTraits =
                 from trait in listOfTraits
@@ -885,7 +889,7 @@ namespace Next_Game
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
             arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Female] = enumTraits.ToArray();
-            //
+            
             //Treachery male
             enumTraits =
                 from trait in listOfTraits
@@ -902,7 +906,7 @@ namespace Next_Game
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
             arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Female] = enumTraits.ToArray();
-            //
+            
             //Leadership male
             enumTraits =
                 from trait in listOfTraits
@@ -1254,6 +1258,17 @@ namespace Next_Game
 
         internal List<Trait> GetTraits()
         { return listOfTraits; }
+
+        /// <summary>
+        /// returns a Trait from the list of Traits from a provided TraitID
+        /// </summary>
+        /// <param name="traitID"></param>
+        /// <returns></returns>
+        private Trait GetTrait(int traitID)
+        {
+            Trait trait = listOfTraits.Find(x => x.TraitID == traitID);
+            return trait;
+        }
 
         /// <summary>
         /// Call this method whenever an NPC actor dies to handle all the housekeeping
