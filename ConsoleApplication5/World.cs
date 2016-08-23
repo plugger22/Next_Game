@@ -1182,6 +1182,14 @@ namespace Next_Game
             return null;
         }
 
+        internal Trait GetTrait(int traitID)
+        {
+            Trait trait = new Trait();
+            if (dictTraits.TryGetValue(traitID, out trait))
+            { return trait; }
+            return null;
+        }
+
         internal void SetRecord(Record record)
         {
             //if (record != null)

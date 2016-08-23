@@ -651,35 +651,81 @@ namespace Next_Game
         /// Assigns traits to actors (early, under 15 y.0 - Combat, Wits, Charm, Treachery, Leadership)
         /// </summary>
         /// <param name="person"></param>
-        private void InitialiseActorTraits(Actor person)
+        /// <param name="father">supply for when parental genetics come into play</param>
+        /// <param name="mother">supply for when parental genetics come into play</param>
+        private void InitialiseActorTraits(Actor person, Passive father = null, Passive mother = null)
         {
             //nicknames from all assigned traits kept here and one is randomly chosen to be given the actor (their 'handle')
             List<string> tempHandles = new List<string>();
-            //Combat ---
+            bool needRandomTrait = true;
+            int rndRange;
             Trait rndTrait;
             int chanceOfTrait;
-            int rndRange = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex].Length;
-            if (rndRange > 0)
-            { 
-                //random trait
-                rndTrait = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex][rnd.Next(rndRange)];
-                //trait roll (trait only assigned if passes roll, otherwise no trait)
-                chanceOfTrait = rndTrait.Chance;
-                if (rnd.Next(100) < chanceOfTrait)
+
+            //Combat ---
+            if (person.Age == 0 && father != null && mother != null)
+            {
+                //parental combat trait (if any)
+                int traitID = 0;
+                Passive parent = new Passive();
+                //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
+                if (person.Sex == ActorSex.Male)
+                { parent = father; }
+                else
+                { parent = mother; }
+                    //does parent have a combat trait?
+                    traitID = parent.arrayOfTraitID[(int)TraitType.Combat];
+                    if (traitID != 0)
+                    {
+                        //random % of trait being passed on
+                        if (rnd.Next(100) < 50)
+                        {
+                            //find trait
+                            Trait trait = Game.world.GetTrait(traitID);
+                            if (trait != null)
+                            {
+                                //same trait passed on
+                                TraitAge age = trait.Age;
+                                person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Combat];
+                                person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat];
+                                person.arrayOfTraitID[(int)TraitType.Combat] = parent.arrayOfTraitID[(int)TraitType.Combat];
+                                person.arrayOfTraitNames[(int)TraitType.Combat] = parent.arrayOfTraitNames[(int)TraitType.Combat];
+                                //add trait nicknames to list of possible handles
+                                tempHandles.AddRange(trait.GetNickNames());
+                                needRandomTrait = false;
+                            }
+                        }
+                    }
+            }
+            else
+            { needRandomTrait = true; }
+            //Random Trait (no genetics apply, either no parents or genetic roll failed)
+            if (needRandomTrait == true)
+            {
+                rndRange = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex].Length;
+                if (rndRange > 0)
                 {
-                    string name = rndTrait.Name;
-                    int effect = rndTrait.Effect;
-                    int traitID = rndTrait.TraitID;
-                    TraitAge age = rndTrait.Age;
-                    //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                    //update trait arrays
-                    person.arrayOfTraitID[(int)TraitType.Combat] = traitID;
-                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] = effect;
-                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat] = effect; //any age 5 effect also needs to set for age 15
-                    person.arrayOfTraitNames[(int)TraitType.Combat] = name;
-                    tempHandles.AddRange(rndTrait.GetNickNames());
+                    //random trait
+                    rndTrait = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex][rnd.Next(rndRange)];
+                    //trait roll (trait only assigned if passes roll, otherwise no trait)
+                    chanceOfTrait = rndTrait.Chance;
+                    if (rnd.Next(100) < chanceOfTrait)
+                    {
+                        string name = rndTrait.Name;
+                        int effect = rndTrait.Effect;
+                        int traitID = rndTrait.TraitID;
+                        TraitAge age = rndTrait.Age;
+                        //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                        //update trait arrays
+                        person.arrayOfTraitID[(int)TraitType.Combat] = traitID;
+                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] = effect;
+                        person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat] = effect; //any age 5 effect also needs to set for age 15
+                        person.arrayOfTraitNames[(int)TraitType.Combat] = name;
+                        tempHandles.AddRange(rndTrait.GetNickNames());
+                    }
                 }
             }
+            
             //Wits ---
             rndRange = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex].Length;
             if (rndRange > 0)
@@ -703,6 +749,7 @@ namespace Next_Game
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
+            
             //Charm ---
             rndRange = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex].Length;
             if (rndRange > 0)
@@ -726,6 +773,7 @@ namespace Next_Game
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
+            
             //Treachery ---
             rndRange = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex].Length;
             if (rndRange > 0)
@@ -749,6 +797,7 @@ namespace Next_Game
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
+            
             //Leadership ---
             rndRange = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex].Length;
             if (rndRange > 0)
@@ -772,6 +821,7 @@ namespace Next_Game
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }
+            
             //choose NickName (handle)
             if (tempHandles.Count > 0)
             { person.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
@@ -1094,7 +1144,7 @@ namespace Next_Game
                         lady.AddRelation(child.ActID, Relation.Son);
                     }
                     //assign traits
-                    InitialiseActorTraits(child);
+                    InitialiseActorTraits(child, lord, lady);
                     //add to dictionaries
                     Game.world.SetPassiveActor(child);
                     //store at location
