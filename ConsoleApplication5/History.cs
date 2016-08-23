@@ -669,12 +669,10 @@ namespace Next_Game
                 int traitID = 0;
                 Passive parent = new Passive();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
-                if (person.Sex == ActorSex.Male)
-                { parent = father; }
-                else
-                { parent = mother; }
-                    //does parent have a combat trait?
-                    traitID = parent.arrayOfTraitID[(int)TraitType.Combat];
+                if (person.Sex == ActorSex.Male)  { parent = father; }
+                else { parent = mother; }
+                //does parent have a combat trait?
+                traitID = parent.arrayOfTraitID[(int)TraitType.Combat];
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
@@ -697,12 +695,10 @@ namespace Next_Game
                             Console.WriteLine("Inherited Combat trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
                         }
                     }
-                    else
-                    { needRandomTrait = true; }
+                    else { needRandomTrait = true; }
                 }
             }
-            else
-            { needRandomTrait = true; }
+            else { needRandomTrait = true; }
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
             if (needRandomTrait == true)
             {
@@ -729,100 +725,261 @@ namespace Next_Game
                     }
                 }
             }
-            
+
             //Wits ---
-            rndRange = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex].Length;
-            if (rndRange > 0)
+            if (person.Age == 0 && father != null && mother != null)
             {
-                //random trait
-                rndTrait = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex][rnd.Next(rndRange)];
-                //trait roll (trait only assigned if passes roll, otherwise no trait)
-                chanceOfTrait = rndTrait.Chance;
-                if (rnd.Next(100) < chanceOfTrait)
+                //parental wits trait (if any)
+                int traitID = 0;
+                Passive parent = new Passive();
+                //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
+                if (person.Sex == ActorSex.Male)
+                { parent = father; }
+                else { parent = mother;  }
+                //does parent have a Wits trait?
+                traitID = parent.arrayOfTraitID[(int)TraitType.Wits];
+                if (traitID != 0)
                 {
-                    string name = rndTrait.Name;
-                    int effect = rndTrait.Effect;
-                    int traitID = rndTrait.TraitID;
-                    TraitAge age = rndTrait.Age;
-                    //Console.WriteLine("Wits {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                    //update trait arrays
-                    person.arrayOfTraitID[(int)TraitType.Wits] = traitID;
-                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits] = effect;
-                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Wits] = effect; //any age 5 effect also needs to set for age 15
-                    person.arrayOfTraitNames[(int)TraitType.Wits] = name;
-                    tempHandles.AddRange(rndTrait.GetNickNames());
+                    //random % of trait being passed on
+                    if (rnd.Next(100) < 40)
+                    {
+                        //find trait
+                        Trait trait = GetTrait(traitID);
+                        if (trait != null)
+                        {
+                            //same trait passed on
+                            TraitAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Wits];
+                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Wits] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Wits];
+                            person.arrayOfTraitID[(int)TraitType.Wits] = parent.arrayOfTraitID[(int)TraitType.Wits];
+                            person.arrayOfTraitNames[(int)TraitType.Wits] = parent.arrayOfTraitNames[(int)TraitType.Wits];
+                            //add trait nicknames to list of possible handles
+                            tempHandles.AddRange(trait.GetNickNames());
+                            needRandomTrait = false;
+
+                            Console.WriteLine("Inherited Wits trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
+                        }
+                    }
+                    else { needRandomTrait = true; }
                 }
             }
-            
+            else { needRandomTrait = true; }
+            //Random Trait (no genetics apply, either no parents or genetic roll failed)
+            if (needRandomTrait == true)
+            {
+                rndRange = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex].Length;
+                if (rndRange > 0)
+                {
+                    //random trait
+                    rndTrait = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex][rnd.Next(rndRange)];
+                    //trait roll (trait only assigned if passes roll, otherwise no trait)
+                    chanceOfTrait = rndTrait.Chance;
+                    if (rnd.Next(100) < chanceOfTrait)
+                    {
+                        string name = rndTrait.Name;
+                        int effect = rndTrait.Effect;
+                        int traitID = rndTrait.TraitID;
+                        TraitAge age = rndTrait.Age;
+                        //Console.WriteLine("Wits {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                        //update trait arrays
+                        person.arrayOfTraitID[(int)TraitType.Wits] = traitID;
+                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits] = effect;
+                        person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Wits] = effect; //any age 5 effect also needs to set for age 15
+                        person.arrayOfTraitNames[(int)TraitType.Wits] = name;
+                        tempHandles.AddRange(rndTrait.GetNickNames());
+                    }
+                }
+            }
+
             //Charm ---
-            rndRange = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex].Length;
-            if (rndRange > 0)
+            if (person.Age == 0 && father != null && mother != null)
             {
-                //random trait
-                rndTrait = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex][rnd.Next(rndRange)];
-                //trait roll (trait only assigned if passes roll, otherwise no trait)
-                chanceOfTrait = rndTrait.Chance;
-                if (rnd.Next(100) < chanceOfTrait)
+                //parental Charm trait (if any)
+                int traitID = 0;
+                Passive parent = new Passive();
+                //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
+                if (person.Sex == ActorSex.Male) { parent = father; }
+                else  { parent = mother; }
+                //does parent have a Charm trait?
+                traitID = parent.arrayOfTraitID[(int)TraitType.Charm];
+                if (traitID != 0)
                 {
-                    string name = rndTrait.Name;
-                    int effect = rndTrait.Effect;
-                    int traitID = rndTrait.TraitID;
-                    TraitAge age = rndTrait.Age;
-                    //Console.WriteLine("Charm {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                    //update trait arrays
-                    person.arrayOfTraitID[(int)TraitType.Charm] = traitID;
-                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] = effect;
-                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Charm] = effect; //any age 5 effect also needs to set for age 15
-                    person.arrayOfTraitNames[(int)TraitType.Charm] = name;
-                    tempHandles.AddRange(rndTrait.GetNickNames());
+                    //random % of trait being passed on
+                    if (rnd.Next(100) < 40)
+                    {
+                        //find trait
+                        Trait trait = GetTrait(traitID);
+                        if (trait != null)
+                        {
+                            //same trait passed on
+                            TraitAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Charm];
+                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Charm] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Charm];
+                            person.arrayOfTraitID[(int)TraitType.Charm] = parent.arrayOfTraitID[(int)TraitType.Charm];
+                            person.arrayOfTraitNames[(int)TraitType.Charm] = parent.arrayOfTraitNames[(int)TraitType.Charm];
+                            //add trait nicknames to list of possible handles
+                            tempHandles.AddRange(trait.GetNickNames());
+                            needRandomTrait = false;
+
+                            Console.WriteLine("Inherited Charm trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
+                        }
+                    }
+                    else { needRandomTrait = true; }
                 }
             }
-            
+            else  { needRandomTrait = true; }
+            //Random Trait (no genetics apply, either no parents or genetic roll failed)
+            if (needRandomTrait == true)
+            {
+                rndRange = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex].Length;
+                if (rndRange > 0)
+                {
+                    //random trait
+                    rndTrait = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex][rnd.Next(rndRange)];
+                    //trait roll (trait only assigned if passes roll, otherwise no trait)
+                    chanceOfTrait = rndTrait.Chance;
+                    if (rnd.Next(100) < chanceOfTrait)
+                    {
+                        string name = rndTrait.Name;
+                        int effect = rndTrait.Effect;
+                        int traitID = rndTrait.TraitID;
+                        TraitAge age = rndTrait.Age;
+                        //Console.WriteLine("Charm {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                        //update trait arrays
+                        person.arrayOfTraitID[(int)TraitType.Charm] = traitID;
+                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] = effect;
+                        person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Charm] = effect; //any age 5 effect also needs to set for age 15
+                        person.arrayOfTraitNames[(int)TraitType.Charm] = name;
+                        tempHandles.AddRange(rndTrait.GetNickNames());
+                    }
+                }
+            }
+
             //Treachery ---
-            rndRange = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex].Length;
-            if (rndRange > 0)
+            if (person.Age == 0 && father != null && mother != null)
             {
-                //random trait
-                rndTrait = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex][rnd.Next(rndRange)];
-                //trait roll (trait only assigned if passes roll, otherwise no trait)
-                chanceOfTrait = rndTrait.Chance;
-                if (rnd.Next(100) < chanceOfTrait)
+                //parental Treachery trait (if any)
+                int traitID = 0;
+                Passive parent = new Passive();
+                //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
+                if (person.Sex == ActorSex.Male) { parent = father; }
+                else { parent = mother; }
+                //does parent have a Treachery trait?
+                traitID = parent.arrayOfTraitID[(int)TraitType.Treachery];
+                if (traitID != 0)
                 {
-                    string name = rndTrait.Name;
-                    int effect = rndTrait.Effect;
-                    int traitID = rndTrait.TraitID;
-                    TraitAge age = rndTrait.Age;
-                    //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                    //update trait arrays
-                    person.arrayOfTraitID[(int)TraitType.Treachery] = traitID;
-                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] = effect;
-                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Treachery] = effect; //any age 5 effect also needs to set for age 15
-                    person.arrayOfTraitNames[(int)TraitType.Treachery] = name;
-                    tempHandles.AddRange(rndTrait.GetNickNames());
+                    //random % of trait being passed on
+                    if (rnd.Next(100) < 40)
+                    {
+                        //find trait
+                        Trait trait = GetTrait(traitID);
+                        if (trait != null)
+                        {
+                            //same trait passed on
+                            TraitAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery];
+                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Treachery] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Treachery];
+                            person.arrayOfTraitID[(int)TraitType.Treachery] = parent.arrayOfTraitID[(int)TraitType.Treachery];
+                            person.arrayOfTraitNames[(int)TraitType.Treachery] = parent.arrayOfTraitNames[(int)TraitType.Treachery];
+                            //add trait nicknames to list of possible handles
+                            tempHandles.AddRange(trait.GetNickNames());
+                            needRandomTrait = false;
+
+                            Console.WriteLine("Inherited Treachery trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
+                        }
+                    }
+                    else { needRandomTrait = true; }
                 }
             }
-            
-            //Leadership ---
-            rndRange = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex].Length;
-            if (rndRange > 0)
+            else { needRandomTrait = true; }
+            //Random Trait (no genetics apply, either no parents or genetic roll failed)
+            if (needRandomTrait == true)
             {
-                //random trait
-                rndTrait = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex][rnd.Next(rndRange)];
-                //trait roll (trait only assigned if passes roll, otherwise no trait)
-                chanceOfTrait = rndTrait.Chance;
-                if (rnd.Next(100) < chanceOfTrait)
+                rndRange = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex].Length;
+                if (rndRange > 0)
                 {
-                    string name = rndTrait.Name;
-                    int effect = rndTrait.Effect;
-                    int traitID = rndTrait.TraitID;
-                    TraitAge age = rndTrait.Age;
-                    //Console.WriteLine("Leadership {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                    //update trait arrays
-                    person.arrayOfTraitID[(int)TraitType.Leadership] = traitID;
-                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] = effect;
-                    person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Leadership] = effect; //any age 5 effect also needs to set for age 15
-                    person.arrayOfTraitNames[(int)TraitType.Leadership] = name;
-                    tempHandles.AddRange(rndTrait.GetNickNames());
+                    //random trait
+                    rndTrait = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex][rnd.Next(rndRange)];
+                    //trait roll (trait only assigned if passes roll, otherwise no trait)
+                    chanceOfTrait = rndTrait.Chance;
+                    if (rnd.Next(100) < chanceOfTrait)
+                    {
+                        string name = rndTrait.Name;
+                        int effect = rndTrait.Effect;
+                        int traitID = rndTrait.TraitID;
+                        TraitAge age = rndTrait.Age;
+                        //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                        //update trait arrays
+                        person.arrayOfTraitID[(int)TraitType.Treachery] = traitID;
+                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] = effect;
+                        person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Treachery] = effect; //any age 5 effect also needs to set for age 15
+                        person.arrayOfTraitNames[(int)TraitType.Treachery] = name;
+                        tempHandles.AddRange(rndTrait.GetNickNames());
+                    }
+                }
+            }
+
+            //Leadership ---
+            if (person.Age == 0 && father != null && mother != null)
+            {
+                //parental Leadership trait (if any)
+                int traitID = 0;
+                Passive parent = new Passive();
+                //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
+                if (person.Sex == ActorSex.Male) { parent = father; }
+                else { parent = mother; }
+                //does parent have a Leadership trait?
+                traitID = parent.arrayOfTraitID[(int)TraitType.Leadership];
+                if (traitID != 0)
+                {
+                    //random % of trait being passed on
+                    if (rnd.Next(100) < 40)
+                    {
+                        //find trait
+                        Trait trait = GetTrait(traitID);
+                        if (trait != null)
+                        {
+                            //same trait passed on
+                            TraitAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership];
+                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Leadership] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Leadership];
+                            person.arrayOfTraitID[(int)TraitType.Leadership] = parent.arrayOfTraitID[(int)TraitType.Leadership];
+                            person.arrayOfTraitNames[(int)TraitType.Leadership] = parent.arrayOfTraitNames[(int)TraitType.Leadership];
+                            //add trait nicknames to list of possible handles
+                            tempHandles.AddRange(trait.GetNickNames());
+                            needRandomTrait = false;
+
+                            Console.WriteLine("Inherited Leadership trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
+                        }
+                    }
+                    else { needRandomTrait = true; }
+                }
+            }
+            else { needRandomTrait = true; }
+            //Random Trait (no genetics apply, either no parents or genetic roll failed)
+            if (needRandomTrait == true)
+            {
+                rndRange = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex].Length;
+                if (rndRange > 0)
+                {
+                    //random trait
+                    rndTrait = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex][rnd.Next(rndRange)];
+                    //trait roll (trait only assigned if passes roll, otherwise no trait)
+                    chanceOfTrait = rndTrait.Chance;
+                    if (rnd.Next(100) < chanceOfTrait)
+                    {
+                        string name = rndTrait.Name;
+                        int effect = rndTrait.Effect;
+                        int traitID = rndTrait.TraitID;
+                        TraitAge age = rndTrait.Age;
+                        //Console.WriteLine("Leadership {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                        //update trait arrays
+                        person.arrayOfTraitID[(int)TraitType.Leadership] = traitID;
+                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] = effect;
+                        person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Leadership] = effect; //any age 5 effect also needs to set for age 15
+                        person.arrayOfTraitNames[(int)TraitType.Leadership] = name;
+                        tempHandles.AddRange(rndTrait.GetNickNames());
+                    }
                 }
             }
             
