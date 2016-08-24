@@ -571,6 +571,16 @@ namespace Next_Game
             listOfGeoClusters = Game.map.GetGeoCluster();
             List<string> tempList = new List<string>();
             int randomNum;
+            //convert array data to lists (not very elegant but it'll do the job)
+            List<string> listOfLargeSeas = new List<string>(arrayOfGeoNames[(int)GeoType.Large_Sea].ToList());
+            List<string> listOfMediumSeas = new List<string>(arrayOfGeoNames[(int)GeoType.Medium_Sea].ToList()); ;
+            List<string> listOfSmallSeas = new List<string>(arrayOfGeoNames[(int)GeoType.Small_Sea].ToList()); ;
+            List<string> listOfLargeMountains = new List<string>(arrayOfGeoNames[(int)GeoType.Large_Mtn].ToList()); ;
+            List<string> listOfMediumMountains = new List<string>(arrayOfGeoNames[(int)GeoType.Medium_Mtn].ToList()); ;
+            List<string> listOfSmallMountains = new List<string>(arrayOfGeoNames[(int)GeoType.Small_Mtn].ToList()); ;
+            List<string> listOfLargeForests = new List<string>(arrayOfGeoNames[(int)GeoType.Large_Forest].ToList()); ;
+            List<string> listOfMediumForests = new List<string>(arrayOfGeoNames[(int)GeoType.Medium_Forest].ToList()); ;
+            List<string> listOfSmallForests = new List<string>(arrayOfGeoNames[(int)GeoType.Small_Forest].ToList()); ;
             //assign a random name
             for (int i = 0; i < listOfGeoClusters.Count; i++)
             {
@@ -581,27 +591,27 @@ namespace Next_Game
                     {
                         case Cluster.Sea:
                             if(cluster.Size == 1)
-                            { tempList = arrayOfGeoNames[(int)GeoType.Small_Sea].ToList(); }
+                            { tempList = listOfSmallSeas; }
                             else if (cluster.Size >= 20)
-                            { tempList = arrayOfGeoNames[(int)GeoType.Large_Sea].ToList(); }
+                            { tempList = listOfLargeSeas; }
                             else
-                            { tempList = arrayOfGeoNames[(int)GeoType.Medium_Sea].ToList(); }
+                            { tempList = listOfMediumSeas; }
                             break;
                         case Cluster.Mountain:
                             if (cluster.Size == 1)
-                            { tempList = arrayOfGeoNames[(int)GeoType.Small_Mtn].ToList(); }
+                            { tempList = listOfSmallMountains; }
                             else if (cluster.Size >= 10)
-                            { tempList = arrayOfGeoNames[(int)GeoType.Large_Mtn].ToList(); }
+                            { tempList = listOfLargeMountains; }
                             else
-                            { tempList = arrayOfGeoNames[(int)GeoType.Medium_Mtn].ToList(); }
+                            { tempList = listOfMediumMountains; }
                             break;
                         case Cluster.Forest:
                             if (cluster.Size == 1)
-                            { tempList = arrayOfGeoNames[(int)GeoType.Small_Forest].ToList(); }
+                            { tempList = listOfSmallForests; }
                             else if (cluster.Size >= 10)
-                            { tempList = arrayOfGeoNames[(int)GeoType.Large_Forest].ToList(); }
+                            { tempList = listOfLargeForests; }
                             else
-                            { tempList = arrayOfGeoNames[(int)GeoType.Medium_Forest].ToList(); }
+                            { tempList = listOfMediumForests; }
                             break;
                             
                     }
