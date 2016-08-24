@@ -1,0 +1,16 @@
+<NotepadPlus>
+    <Session activeView="0">
+        <mainView activeIndex="8">
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1029" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\FirstFemale.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\FirstMale.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\GeoNames.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\GreatHouses.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\MinorHouses.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\PlayerNames.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_All.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_Female.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1029" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_Male.txt" />
+        </mainView>
+        <subView activeIndex="0" />
+    </Session>
+</NotepadPlus>

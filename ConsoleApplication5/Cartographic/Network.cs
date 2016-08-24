@@ -1887,8 +1887,8 @@ namespace Next_Game.Cartographic
             //group LocID's by houses
             if (uniqueHouses > 0)
             {
-                Console.WriteLine();
-                Console.WriteLine("Unique Houses: {0}", uniqueHouses);
+                //Console.WriteLine();
+                //Console.WriteLine("Unique Houses: {0}", uniqueHouses);
                 //Set up subLists, one for each unique house, access by house #
                 for (int i = 0; i < uniqueHouses + 1; i++)
                 {
@@ -1968,7 +1968,7 @@ namespace Next_Game.Cartographic
                     }
                 }
             }
-
+            /*
             //debug list contents
             Console.WriteLine();
             Console.WriteLine("--- listOfAllHouses");
@@ -1982,6 +1982,7 @@ namespace Next_Game.Cartographic
             Console.WriteLine("--- House Capitals");
             for(int i = 0; i < arrayOfCapitals.Length; i++)
             { Console.WriteLine("House {0} has ID {1} as it's capital", i, arrayOfCapitals[i]); }
+            */
         }
 
         /// <summary>
@@ -2015,14 +2016,14 @@ namespace Next_Game.Cartographic
                 randomIndex = rnd.Next(1, randomList.Count + 1);
                 house.HouseID = randomList[randomIndex - 1];
                 randomList.RemoveAt(randomIndex - 1);
-                Console.WriteLine("House {0} has LocID {1} and HouseID {2}", house.Name, house.LocID, house.HouseID);
+                //Console.WriteLine("House {0} has LocID {1} and HouseID {2}", house.Name, house.LocID, house.HouseID);
             }
             //loop houses and update data
             int houseID;
             int capitalLocID;
             int locID;
             int minorHouseID;
-            Console.WriteLine();
+            //Console.WriteLine();
             for(int i = 0; i < listOfHouses.Count; i++)
             {
                 MajorHouse house = new MajorHouse();
@@ -2051,7 +2052,7 @@ namespace Next_Game.Cartographic
                 }
                 //Work out unique Loc's from house capital to kingdom capital
                 List<Route> tempListOfRoutes = loc.GetRouteToCapital();
-                Console.WriteLine("--- House {0}", houseID);
+                //Console.WriteLine("--- House {0}", houseID);
                 foreach(Route route in tempListOfRoutes)
                 {
                     //route.PrintRoute();
@@ -2060,7 +2061,7 @@ namespace Next_Game.Cartographic
                     //called method checks for locID = 0 & duplicate houseID's
                     if (minorHouseID != houseID && minorHouseID != 99)
                     { house.AddHousesToCapital(minorHouseID); }
-                    Console.WriteLine("House {0}", minorHouseID);
+                    //Console.WriteLine("House {0}", minorHouseID);
                 }
             }
         }

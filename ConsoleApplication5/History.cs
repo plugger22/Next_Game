@@ -166,7 +166,7 @@ namespace Next_Game
                 if (arrayOfHouseNames[i] != "" && !arrayOfHouseNames[i].StartsWith("#"))
                 {
                     //set up for a new house
-                    if(newHouse == false)
+                    if (newHouse == false)
                     {
                         newHouse = true;
                         //Console.WriteLine();
@@ -179,7 +179,7 @@ namespace Next_Game
                     cleanTag = tokens[0].Trim();
                     cleanToken = tokens[1].Trim();
                     //Console.WriteLine("{0}: {1}", tokens[0], tokens[1]);
-                    switch(cleanTag)
+                    switch (cleanTag)
                     {
                         case "House":
                             houseStruct.Name = cleanToken;
@@ -213,7 +213,7 @@ namespace Next_Game
             //remove surplus houses from pool
             int count = listHousePool.Count;
             int index = 0;
-            while(count > numHousesRequired)
+            while (count > numHousesRequired)
             {
                 index = rnd.Next(0, count);
                 Console.WriteLine("Great House {0} removed", listHousePool[index].Name);
@@ -222,7 +222,7 @@ namespace Next_Game
             }
             Console.WriteLine();
             //loop through structures and initialise House classes
-            for(int i = 0; i < listHousePool.Count; i++)
+            for (int i = 0; i < listHousePool.Count; i++)
             {
                 MajorHouse house = new MajorHouse();
                 //copy data from House pool structures
@@ -234,7 +234,7 @@ namespace Next_Game
                 house.LocName = listHousePool[i].Capital;
                 //add house to listOfHouses
                 listOfGreatHouses.Add(house);
-                Console.WriteLine("House {0} added to listOfGreatHouses", house.Name);
+                //Console.WriteLine("House {0} added to listOfGreatHouses", house.Name);
             }
             //
             // Minor bannerlord Houses ---
@@ -432,7 +432,7 @@ namespace Next_Game
                                 {
                                     tempHandle = arrayOfNames[k].Trim();
                                     if (String.IsNullOrEmpty(tempHandle) == false)
-                                    {  tempList.Add(tempHandle); }
+                                    { tempList.Add(tempHandle); }
                                 }
                                 //pass info over to a class instance
                                 Trait classTrait = new Trait(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, structTrait.Chance, tempList);
@@ -444,6 +444,37 @@ namespace Next_Game
                     }
                 }
             }
+            //
+            //read in Constants ---
+            //
+            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Constants.txt";
+            string[] arrayOfFileInput = File.ReadAllLines(filePath);
+            Console.WriteLine();
+            Console.WriteLine("--- Constants");
+            dataCounter = 0; //number of constants
+            cleanToken = null;
+            cleanTag = null;
+            index = 0;
+            int value = 0;
+            Global enumTag = Global.None;
+            for (int i = 0; i < arrayOfFileInput.Length; i++)
+            {
+                if (arrayOfFileInput[i] != "" && !arrayOfFileInput[i].StartsWith("#"))
+                {
+                    string[] tokens = arrayOfFileInput[i].Split(':');
+                    //strip out leading spaces
+                    cleanTag = tokens[0].Trim();
+                    cleanToken = tokens[1].Trim();
+                    //convert to #'s
+                    index = Convert.ToInt32(cleanTag);
+                    value = Convert.ToInt32(cleanToken);
+                    //get correct enum from Global array
+                    enumTag = Game.constant.GetGlobal(index);
+                    //initialise data in Constants array
+                    Game.constant.SetData(enumTag, value);
+                }
+            }
+
             //set up filtered sets of traits ready for random access by newly created actors
             InitialiseTraits();
         }
@@ -676,7 +707,7 @@ namespace Next_Game
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
-                    if (rnd.Next(100) < 40)
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT))
                     {
                         //find trait
                         Trait trait = GetTrait(traitID);
@@ -741,7 +772,7 @@ namespace Next_Game
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
-                    if (rnd.Next(100) < 40)
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT))
                     {
                         //find trait
                         Trait trait = GetTrait(traitID);
@@ -805,7 +836,7 @@ namespace Next_Game
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
-                    if (rnd.Next(100) < 40)
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT))
                     {
                         //find trait
                         Trait trait = GetTrait(traitID);
@@ -869,7 +900,7 @@ namespace Next_Game
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
-                    if (rnd.Next(100) < 40)
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT))
                     {
                         //find trait
                         Trait trait = GetTrait(traitID);
@@ -933,7 +964,7 @@ namespace Next_Game
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
-                    if (rnd.Next(100) < 40)
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT))
                     {
                         //find trait
                         Trait trait = GetTrait(traitID);

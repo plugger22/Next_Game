@@ -304,15 +304,15 @@ namespace Next_Game
                 listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
                 listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
-                //
+                
                 //stats - natural ---
-                //
+
                 //age of actor
                 TraitAge age = TraitAge.Fifteen;
                 if (person.Age >= 5 && person.Age <= 15)
                 { age = TraitAge.Five; }
                 //only show abilities if age >= 5 & not dead
-                if (person.Age >= 0)
+                if (person.Age >= 5)
                 {
                     //header
                     listToDisplay.Add(new Snippet("Abilities (some at 5 y.o, all at 15 y.o)", RLColor.Brown, RLColor.Black));
@@ -339,22 +339,7 @@ namespace Next_Game
                             }
                         }
                     }
-                    //wits
-                    /*newLine = true;
-                    if (person.Wits != 3)
-                    { newLine = false; }
-                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Wits)), Color._star, RLColor.Black, newLine));
-                    if (person.Wits < 3)
-                    {
-                        listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Wits], 
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits]), Color._badTrait, RLColor.Black));
-                    }
-                    else if (person.Wits > 3)
-                    {
-                        listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Wits], 
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits]), Color._goodTrait, RLColor.Black));
-                    }*/
+
                     //wits
                     abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits] + person.Wits;
                     newLine = true;
@@ -380,22 +365,6 @@ namespace Next_Game
                     }
 
                     //charm
-                    /*newLine = true;
-                    if (person.Charm != 3)
-                    { newLine = false; }
-                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Charm)), Color._star, RLColor.Black, newLine));
-                    if (person.Charm < 3)
-                    {
-                        listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Charm], 
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm]), Color._badTrait, RLColor.Black));
-                    }
-                    else if (person.Charm > 3)
-                    {
-                        listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Charm], 
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm]), Color._goodTrait, RLColor.Black));
-                    }*/
-                    //charm
                     abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] + person.Charm;
                     newLine = true;
                     if (abilityStars != 3)
@@ -420,22 +389,6 @@ namespace Next_Game
                     }
 
                     //treachery
-                    /*newLine = true;
-                    if (person.Treachery != 3)
-                    { newLine = false; }
-                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Treachery)), Color._star, RLColor.Black, newLine));
-                    if (person.Treachery < 3)
-                    {
-                        listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Treachery], 
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery]), Color._badTrait, RLColor.Black));
-                    }
-                    else if (person.Treachery > 3)
-                    {
-                        listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Treachery], 
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery]), Color._goodTrait, RLColor.Black));
-                    }*/
-                    //treachery
                     abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] + person.Treachery;
                     newLine = true;
                     if (abilityStars != 3)
@@ -459,22 +412,6 @@ namespace Next_Game
                         }
                     }
 
-                    //leadership
-                    /*newLine = true;
-                    if (person.Leadership != 3)
-                    { newLine = false; }
-                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(person.Leadership)), Color._star, RLColor.Black, newLine));
-                    if (person.Leadership < 3)
-                    {
-                        listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Leadership], 
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership]), Color._badTrait, RLColor.Black));
-                    }
-                    else if (person.Leadership > 3)
-                    {
-                        listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Leadership], 
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership]), Color._goodTrait, RLColor.Black));
-                    }*/
                     //Leadership
                     abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] + person.Leadership;
                     newLine = true;
@@ -498,7 +435,6 @@ namespace Next_Game
                             }
                         }
                     }
-                                      
                 }
                 //family
                 if (person is Passive)
@@ -533,7 +469,6 @@ namespace Next_Game
                     foreach (string text in actorHistory)
                     { listToDisplay.Add(new Snippet(text)); }
                 }
-                
             }
             else
             { listToDisplay.Add(new Snippet("No Character with this ID exists", RLColor.Red, RLColor.Black)); }
@@ -936,6 +871,7 @@ namespace Next_Game
                 Game.map.SetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY(), refID);
             }
             //fill Great Houses with Lords and Ladies
+            Console.WriteLine("--- Genetics");
             foreach (KeyValuePair<int, MajorHouse> kvp in dictGreatHouses)
             {
                 //create Lord and Lady for house

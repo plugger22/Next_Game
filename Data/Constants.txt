@@ -1,0 +1,9 @@
+# Constants.txt
+# use format - first line '# Explanation', second line 'x : y' where x is the index code (DON'T CHANGE) and y is the value (integer)
+# blank lines and spaces are ignored
+
+# Actors ---
+
+# INHERIT -> % chance of traits being inherited. Sons inherit from fathers, daughters from mothers
+1: 40
+

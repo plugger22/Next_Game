@@ -62,6 +62,7 @@ namespace Next_Game
         public static History history;
         public static World world;
         public static InfoChannel infoChannel;
+        public static Constant constant;
         //flags
         private static bool _renderRequired = true; //redraw Console?
         private static bool _mouseOn = false; //receive mouse input?
@@ -84,6 +85,7 @@ namespace Next_Game
             Console.SetWindowSize(100, 80);
             Console.WriteLine("Seed: {0}", seed);
             //initialise game objects
+            constant = new Constant();
             messageLog = new MessageLog();
             map = new Map(mapSize, seed);
             map.InitialiseMap(4, 2);
