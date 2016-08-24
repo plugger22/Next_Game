@@ -309,7 +309,7 @@ namespace Next_Game
 
                 //age of actor
                 TraitAge age = TraitAge.Fifteen;
-                if (person.Age >= 5 && person.Age <= 15)
+                if (person.Age >= 5 && person.Age < 15)
                 { age = TraitAge.Five; }
                 //only show abilities if age >= 5 & not dead
                 if (person.Age >= 5)

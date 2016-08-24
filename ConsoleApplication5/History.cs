@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Next_Game
 {
+    /*
     //holds data read in from house.txt. Used for pool of houses.
     struct HouseStruct
     {
@@ -26,6 +27,7 @@ namespace Next_Game
             Console.WriteLine("Seat: {0}", Capital);
         }
     }
+    */
 
     //holds trait structure (need a structure to pass by value to avoid heap class objects all referring to each other)
     struct TraitStruct
@@ -44,7 +46,7 @@ namespace Next_Game
     {
         //actor names
         private List<Active> listOfPlayerActors;
-        private List<string> listOfActorNames;
+        private List<string> listOfPlayerNames;
         private List<string> listOfMaleFirstNames;
         private List<string> listOfFemaleFirstNames;
         //house names
@@ -76,7 +78,7 @@ namespace Next_Game
         {
             rnd = new Random(seed);
             listOfPlayerActors = new List<Active>();
-            listOfActorNames = new List<string>();
+            listOfPlayerNames = new List<string>();
             listOfMaleFirstNames = new List<string>();
             listOfFemaleFirstNames = new List<string>();
             listOfGreatHouses = new List<House>();
@@ -105,8 +107,9 @@ namespace Next_Game
             //
             // read in lists of First Male and Female names ---
             //
-            string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/FirstMale.txt";
-            string[] arrayOfCharacterNames = File.ReadAllLines(filePath);
+            /*string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/FirstMale.txt";
+            //string[] arrayOfCharacterNames = File.ReadAllLines(filePath);
+            string[] arrayOfCharacterNames = FileImport("FirstMale.txt");
             string tempString = null;
             //read male names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
@@ -118,10 +121,16 @@ namespace Next_Game
                     tempString = tempString.Trim();
                     listOfMaleFirstNames.Add(tempString);
                 }
-            }
+            }*/
+
+            listOfMaleFirstNames.AddRange(Game.file.GetNames("FirstMale.txt"));
+            listOfFemaleFirstNames.AddRange(Game.file.GetNames("FirstFemale.txt"));
+            listOfPlayerNames.AddRange(Game.file.GetNames("PlayerNames.txt"));
+
             //female
-            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/FirstFemale.txt";
-            arrayOfCharacterNames = File.ReadAllLines(filePath);
+            /*string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/FirstFemale.txt";
+            string[] arrayOfCharacterNames = File.ReadAllLines(filePath);
+            string tempString;
             //read female names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
             {
@@ -136,8 +145,9 @@ namespace Next_Game
             //
             // read in Player Names ---
             //
-            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/PlayerNames.txt";
-            arrayOfCharacterNames = File.ReadAllLines(filePath);
+            string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/PlayerNames.txt";
+            string tempString;
+            string[] arrayOfCharacterNames = File.ReadAllLines(filePath);
             //read location names from array into list
             for (int i = 0; i < arrayOfCharacterNames.Length; i++)
             {
@@ -146,13 +156,14 @@ namespace Next_Game
                     //trim off leading and trailing whitespace
                     tempString = arrayOfCharacterNames[i];
                     tempString = tempString.Trim();
-                    listOfActorNames.Add(tempString);
+                    listOfPlayerNames.Add(tempString);
                 }
-            }
+            }*/
             //
             //read in house pool for GreatHouses ---
             //
-            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/GreatHouses.txt";
+            /*string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/GreatHouses.txt";
+            string tempString;
             string[] arrayOfHouseNames = File.ReadAllLines(filePath);
             Console.WriteLine();
             //Console.WriteLine("--- House Names Import");
@@ -206,9 +217,12 @@ namespace Next_Game
                 }
                 else
                 { newHouse = false; }
-            }
+            }*/
             //Console.WriteLine();
-            Console.WriteLine("{0} Great Houses imported, {1} Houses required", dataCounter, numHousesRequired);
+
+            listHousePool.AddRange(Game.file.GetHouses("GreatHouses.txt"));
+
+            Console.WriteLine("{0} Great Houses imported, {1} Houses required", listHousePool.Count, numHousesRequired);
             Console.WriteLine();
             //remove surplus houses from pool
             int count = listHousePool.Count;
@@ -240,13 +254,17 @@ namespace Next_Game
             // Minor bannerlord Houses ---
             //
             //read in house pool
-            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/MinorHouses.txt";
-            arrayOfHouseNames = null;
+            string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/MinorHouses.txt";
+            string[] arrayOfHouseNames = null;
             arrayOfHouseNames = File.ReadAllLines(filePath);
+            HouseStruct houseStruct = new HouseStruct();
+            string cleanTag;
+            string cleanToken;
+            string tempString;
             //Console.WriteLine();
             //Console.WriteLine("--- Minor House Names Import");
-            newHouse = false;
-            dataCounter = 0; //number of houses
+            bool newHouse = false;
+            int dataCounter = 0; //number of houses
             listHousePool.Clear();
             //HouseStruct houseStruct = new HouseStruct();
             for (int i = 0; i < arrayOfHouseNames.Length; i++)
@@ -573,11 +591,11 @@ namespace Next_Game
             for (int i = 0; i < numCharacters; i++)
             {
                 int index;
-                index = rnd.Next(0, listOfActorNames.Count);
+                index = rnd.Next(0, listOfPlayerNames.Count);
                 //get name
-                actorName = listOfActorNames[index];
+                actorName = listOfPlayerNames[index];
                 //delete record in list to prevent duplicate names
-                listOfActorNames.RemoveAt(index);
+                listOfPlayerNames.RemoveAt(index);
                 //new character
                 ActorTitle title = ActorTitle.Loyal_Follower;
                 Active person = null;
@@ -1489,6 +1507,9 @@ namespace Next_Game
             Location loc_1 = Game.network.GetLocation(deceased.LocID);
             loc_1.RemoveActor(deceased.ActID);
         }
+
+
+
 
         //add methods above
     }

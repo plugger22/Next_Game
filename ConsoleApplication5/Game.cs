@@ -63,6 +63,7 @@ namespace Next_Game
         public static World world;
         public static InfoChannel infoChannel;
         public static Constant constant;
+        public static FileImport file;
         //flags
         private static bool _renderRequired = true; //redraw Console?
         private static bool _mouseOn = false; //receive mouse input?
@@ -86,6 +87,7 @@ namespace Next_Game
             Console.WriteLine("Seed: {0}", seed);
             //initialise game objects
             constant = new Constant();
+            file = new FileImport("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/");
             messageLog = new MessageLog();
             map = new Map(mapSize, seed);
             map.InitialiseMap(4, 2);
