@@ -220,7 +220,7 @@ namespace Next_Game
             }*/
             //Console.WriteLine();
 
-            listHousePool.AddRange(Game.file.GetHouses("GreatHouses.txt"));
+            listHousePool.AddRange(Game.file.GetHouses("MajorHouses.txt"));
 
             Console.WriteLine("{0} Great Houses imported, {1} Houses required", listHousePool.Count, numHousesRequired);
             Console.WriteLine();
@@ -254,6 +254,11 @@ namespace Next_Game
             // Minor bannerlord Houses ---
             //
             //read in house pool
+
+            listHousePool.Clear();
+            listHousePool.AddRange(Game.file.GetHouses("MinorHouses.txt"));
+
+            /*
             string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/MinorHouses.txt";
             string[] arrayOfHouseNames = null;
             arrayOfHouseNames = File.ReadAllLines(filePath);
@@ -265,7 +270,7 @@ namespace Next_Game
             //Console.WriteLine("--- Minor House Names Import");
             bool newHouse = false;
             int dataCounter = 0; //number of houses
-            listHousePool.Clear();
+            
             //HouseStruct houseStruct = new HouseStruct();
             for (int i = 0; i < arrayOfHouseNames.Length; i++)
             {
@@ -312,8 +317,13 @@ namespace Next_Game
                 }
                 else
                 { newHouse = false; }
-            }
-            filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/GeoNames.txt";
+            }*/
+
+            //
+            //Geonames ---
+            //
+            string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/GeoNames.txt";
+            string tempString;
             string[] arrayOfGeoNames = File.ReadAllLines(filePath);
             //read location names from array into list
             string nameType = null;
@@ -369,6 +379,10 @@ namespace Next_Game
             //
             // Traits ---
             //
+            
+            int dataCounter;
+            string cleanTag;
+            string cleanToken;
             for (int fileIndex = 0; fileIndex < (int)TraitSex.Count; fileIndex++)
             {
                 if (fileIndex == 0)
@@ -465,6 +479,10 @@ namespace Next_Game
             //
             //read in Constants ---
             //
+
+            Game.file.InitialiseConstants("Constants.txt");
+
+            /*
             filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Constants.txt";
             string[] arrayOfFileInput = File.ReadAllLines(filePath);
             Console.WriteLine();
@@ -491,7 +509,7 @@ namespace Next_Game
                     //initialise data in Constants array
                     Game.constant.SetData(enumTag, value);
                 }
-            }
+            }*/
 
             //set up filtered sets of traits ready for random access by newly created actors
             InitialiseTraits();

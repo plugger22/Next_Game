@@ -594,7 +594,7 @@ namespace Next_Game
                 else if (loc.LocationID == 1)
                 { description = loc.LocName + ": the Home of the King"; }
                 else if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) == 0)
-                { description = "Banner Lord of House"; }
+                { description = "BannerLord of House"; }
                 //bannerlord details if applicable
                 if (houseCapital == false)
                 {
@@ -1002,7 +1002,7 @@ namespace Next_Game
             listStats.Add(new Snippet("--- Generation Statistics", RLColor.Yellow, RLColor.Black));
             listStats.Add(new Snippet(string.Format("{0} Locations", numLocs )));
             listStats.Add(new Snippet(string.Format("{0} Great Houses", numGreatHouses )));
-            listStats.Add(new Snippet(string.Format("{0} Banner Lords", numBannerLords)));
+            listStats.Add(new Snippet(string.Format("{0} BannerLords", numBannerLords)));
             listStats.Add(new Snippet(string.Format("{0} Special Locations", numSpecialLocs)));
             listStats.Add(new Snippet("1 Capital"));
             listStats.Add(new Snippet(string.Format("{0} Actors ({1} Children)", numActors, numChildren)));

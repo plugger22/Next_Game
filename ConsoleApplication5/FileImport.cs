@@ -116,7 +116,13 @@ namespace Next_Game
                         case "ReferenceID":
                             houseStruct.RefID = Convert.ToInt32(cleanToken);
                             break;
-                        case "Capital":
+                        case "Capital": //Major Houses
+                            houseStruct.Capital = cleanToken;
+                            //last datapoint - save structure to list
+                            if (dataCounter > 0)
+                            { listHouses.Add(houseStruct); }
+                            break;
+                        case "Seat": //Minor Houses
                             houseStruct.Capital = cleanToken;
                             //last datapoint - save structure to list
                             if (dataCounter > 0)
@@ -128,6 +134,39 @@ namespace Next_Game
                 { newHouse = false; }
             }
             return listHouses;
+        }
+
+        /// <summary>
+        /// read in an initialise Constants
+        /// </summary>
+        /// <param name="fileName"></param>
+        public void InitialiseConstants(string fileName)
+        {
+            string[] arrayOfFileInput = ImportFileData(fileName); ;
+            Console.WriteLine();
+            Console.WriteLine("--- Constants");
+            string cleanToken = null;
+            string cleanTag = null;
+            int index = 0;
+            int value = 0;
+            Global enumTag = Global.None;
+            for (int i = 0; i < arrayOfFileInput.Length; i++)
+            {
+                if (arrayOfFileInput[i] != "" && !arrayOfFileInput[i].StartsWith("#"))
+                {
+                    string[] tokens = arrayOfFileInput[i].Split(':');
+                    //strip out leading spaces
+                    cleanTag = tokens[0].Trim();
+                    cleanToken = tokens[1].Trim();
+                    //convert to #'s
+                    index = Convert.ToInt32(cleanTag);
+                    value = Convert.ToInt32(cleanToken);
+                    //get correct enum from Global array
+                    enumTag = Game.constant.GetGlobal(index);
+                    //initialise data in Constants array
+                    Game.constant.SetData(enumTag, value);
+                }
+            }
         }
 
         //methods above here
