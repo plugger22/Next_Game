@@ -380,12 +380,14 @@ namespace Next_Game
             // Traits ---
             //
             
+            
+            /*
             int dataCounter;
             string cleanTag;
             string cleanToken;
-            for (int fileIndex = 0; fileIndex < (int)TraitSex.Count; fileIndex++)
-            {
-                if (fileIndex == 0)
+            List<Trait> listOfTraits = new List<Trait>();
+            //for (int fileIndex = 0; fileIndex < (int)TraitSex.Count; fileIndex++)
+                /*if (fileIndex == 0)
                 { filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Traits_All.txt"; }
                 else if (fileIndex == 1)
                 { filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Traits_Male.txt"; }
@@ -410,7 +412,7 @@ namespace Next_Game
                             //new Trait object
                             structTrait = new TraitStruct();
                             //sex
-                            structTrait.Sex = (TraitSex)fileIndex;
+                            structTrait.Sex = sex;
                         }
                         string[] tokens = arrayOfTraits[i].Split(':');
                         //strip out leading spaces
@@ -474,8 +476,9 @@ namespace Next_Game
                                 break;
                         }
                     }
-                }
-            }
+            }*/
+
+
             //
             //read in Constants ---
             //
@@ -511,6 +514,10 @@ namespace Next_Game
                 }
             }*/
 
+            //traits
+            listOfTraits?.AddRange(Game.file.GetTraits("Traits_All.txt", TraitSex.All));
+            listOfTraits?.AddRange(Game.file.GetTraits("Traits_Male.txt", TraitSex.Male));
+            listOfTraits?.AddRange(Game.file.GetTraits("Traits_Female.txt", TraitSex.Female));
             //set up filtered sets of traits ready for random access by newly created actors
             InitialiseTraits();
         }

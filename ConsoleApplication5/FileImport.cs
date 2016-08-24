@@ -169,6 +169,97 @@ namespace Next_Game
             }
         }
 
+        internal List<Trait> GetTraits(string fileName, TraitSex sex)
+        {
+            int dataCounter = 0;
+            string cleanTag;
+            string cleanToken;
+            bool newTrait = false;
+            List<Trait> listOfTraits = new List<Trait>();
+            string[] arrayOfTraits = ImportFileData(fileName); ;
+            TraitStruct structTrait = new TraitStruct();
+            //loop imported array of strings
+            for (int i = 0; i < arrayOfTraits.Length; i++)
+            {
+                if (arrayOfTraits[i] != "" && !arrayOfTraits[i].StartsWith("#"))
+                {
+                    //set up for a new house
+                    if (newTrait == false)
+                    {
+                        newTrait = true;
+                        //Console.WriteLine();
+                        dataCounter++;
+                        //new Trait object
+                        structTrait = new TraitStruct();
+                        //sex
+                        structTrait.Sex = sex;
+                    }
+                    string[] tokens = arrayOfTraits[i].Split(':');
+                    //strip out leading spaces
+                    cleanTag = tokens[0].Trim();
+                    cleanToken = tokens[1].Trim();
+                    switch (cleanTag)
+                    {
+                        case "Name":
+                            structTrait.Name = cleanToken;
+                            break;
+                        case "Skill":
+                            switch (cleanToken)
+                            {
+                                case "Combat":
+                                    structTrait.Type = TraitType.Combat;
+                                    break;
+                                case "Wits":
+                                    structTrait.Type = TraitType.Wits;
+                                    break;
+                                case "Charm":
+                                    structTrait.Type = TraitType.Charm;
+                                    break;
+                                case "Treachery":
+                                    structTrait.Type = TraitType.Treachery;
+                                    break;
+                                case "Leadership":
+                                    structTrait.Type = TraitType.Leadership;
+                                    break;
+                            }
+                            break;
+                        case "Effect":
+                            structTrait.Effect = Convert.ToInt32(cleanToken);
+                            break;
+                        case "Chance":
+                            structTrait.Chance = Convert.ToInt32(cleanToken);
+                            break;
+                        case "Age":
+                            int tempNum = Convert.ToInt32(cleanToken);
+                            if (tempNum == 5)
+                            { structTrait.Age = TraitAge.Five; }
+                            else
+                            { structTrait.Age = TraitAge.Fifteen; }
+                            break;
+                        case "Nicknames":
+                            //get list of nicknames
+                            string[] arrayOfNames = cleanToken.Split(',');
+                            List<string> tempList = new List<string>();
+                            //loop nickname array and add all to lists
+                            string tempHandle = null;
+                            for (int k = 0; k < arrayOfNames.Length; k++)
+                            {
+                                tempHandle = arrayOfNames[k].Trim();
+                                if (String.IsNullOrEmpty(tempHandle) == false)
+                                { tempList.Add(tempHandle); }
+                            }
+                            //pass info over to a class instance
+                            Trait classTrait = new Trait(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, structTrait.Chance, tempList);
+                            //last datapoint - save object to list
+                            if (dataCounter > 0)
+                            { listOfTraits.Add(classTrait); }
+                            break;
+                    }
+                }
+            }
+            return listOfTraits;
+        }
+
         //methods above here
     }
 }

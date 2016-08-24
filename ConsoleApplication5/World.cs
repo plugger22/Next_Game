@@ -73,6 +73,8 @@ namespace Next_Game
             InitiatePlayerActors(Game.history.GetPlayerActors(), 1);
             InitialiseHouses();
             InitialiseTraits();
+
+            Console.WriteLine(Environment.NewLine + "--- Game Input");
         }
 
         /// <summary>
