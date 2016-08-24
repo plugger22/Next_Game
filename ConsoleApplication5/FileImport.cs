@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Next_Game.Cartographic;
 using System.IO;
 
 
@@ -16,6 +17,16 @@ namespace Next_Game
         public string Capital { get; set; }
     }
 
+    //holds data for Traits (best to use stack, not heap for this)
+    struct TraitStruct
+    {
+        public TraitType Type { get; set; }
+        public TraitSex Sex { get; set; }
+        public TraitAge Age { get; set; }
+        public string Name { get; set; }
+        public int Effect { get; set; }
+        public int Chance { get; set; }
+    }
 
 
     public class FileImport
@@ -169,6 +180,12 @@ namespace Next_Game
             }
         }
 
+        /// <summary>
+        /// get traits from all a trait file, return a list of traits
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="sex"></param>
+        /// <returns></returns>
         internal List<Trait> GetTraits(string fileName, TraitSex sex)
         {
             int dataCounter = 0;
@@ -176,7 +193,7 @@ namespace Next_Game
             string cleanToken;
             bool newTrait = false;
             List<Trait> listOfTraits = new List<Trait>();
-            string[] arrayOfTraits = ImportFileData(fileName); ;
+            string[] arrayOfTraits = ImportFileData(fileName);
             TraitStruct structTrait = new TraitStruct();
             //loop imported array of strings
             for (int i = 0; i < arrayOfTraits.Length; i++)
@@ -258,6 +275,97 @@ namespace Next_Game
                 }
             }
             return listOfTraits;
+        }
+
+        internal string[][] GetGeoNames(string fileName)
+        {
+            //master jagged array which will be returned
+            string[][] arrayOfNames = new string[(int)GeoType.Count][];
+            string tempString;
+            //temporary sub lists for each category of geoNames
+            List<string> listOfLargeMountains = new List<string>();
+            List<string> listOfMediumMountains = new List<string>();
+            List<string> listOfSmallMountains = new List<string>();
+            List<string> listOfLargeForests = new List<string>();
+            List<string> listOfMediumForests = new List<string>();
+            List<string> listOfSmallForests = new List<string>();
+            List<string> listOfLargeSeas = new List<string>();
+            List<string> listOfMediumSeas = new List<string>();
+            List<string> listOfSmallSeas = new List<string>();
+            //import data from file
+            string[] arrayOfGeoNames = ImportFileData(fileName);
+
+            //read location names from array into list
+            string nameType = null;
+            char[] charsToTrim = { '[', ']' };
+            for (int i = 0; i < arrayOfGeoNames.Length; i++)
+            {
+                if (arrayOfGeoNames[i] != "" && !arrayOfGeoNames[i].StartsWith("#"))
+                {
+                    //which sublist are we dealing with
+                    tempString = arrayOfGeoNames[i];
+                    //trim off leading and trailing whitespace
+                    tempString = tempString.Trim();
+                    if (tempString.StartsWith("["))
+                    { nameType = tempString.Trim(charsToTrim); }
+                    else if (nameType != null)
+                    {
+                        //place in the correct list
+                        switch (nameType)
+                        {
+                            case "Large Seas":
+                                listOfLargeSeas.Add(tempString);
+                                break;
+                            case "Medium Seas":
+                                listOfMediumSeas.Add(tempString);
+                                break;
+                            case "Small Seas":
+                                listOfSmallSeas.Add(tempString);
+                                break;
+                            case "Large Mountains":
+                                listOfLargeMountains.Add(tempString);
+                                break;
+                            case "Medium Mountains":
+                                listOfMediumMountains.Add(tempString);
+                                break;
+                            case "Small Mountains":
+                                listOfSmallMountains.Add(tempString);
+                                break;
+                            case "Large Forests":
+                                listOfLargeForests.Add(tempString);
+                                break;
+                            case "Medium Forests":
+                                listOfMediumForests.Add(tempString);
+                                break;
+                            case "Small Forests":
+                                listOfSmallForests.Add(tempString);
+                                break;
+                        }
+                    }
+                }
+            }
+            //size jagged array
+            arrayOfNames[(int)GeoType.Large_Mtn] = new string[listOfLargeMountains.Count];
+            arrayOfNames[(int)GeoType.Medium_Mtn] = new string[listOfMediumMountains.Count];
+            arrayOfNames[(int)GeoType.Small_Mtn] = new string[listOfSmallMountains.Count];
+            arrayOfNames[(int)GeoType.Large_Forest] = new string[listOfLargeForests.Count];
+            arrayOfNames[(int)GeoType.Medium_Forest] = new string[listOfMediumForests.Count];
+            arrayOfNames[(int)GeoType.Small_Forest] = new string[listOfSmallForests.Count];
+            arrayOfNames[(int)GeoType.Large_Sea] = new string[listOfLargeSeas.Count];
+            arrayOfNames[(int)GeoType.Medium_Sea] = new string[listOfMediumSeas.Count];
+            arrayOfNames[(int)GeoType.Small_Sea] = new string[listOfSmallSeas.Count];
+            //populate from lists
+            arrayOfNames[(int)GeoType.Large_Mtn] = listOfLargeMountains.ToArray();
+            arrayOfNames[(int)GeoType.Medium_Mtn] = listOfMediumMountains.ToArray();
+            arrayOfNames[(int)GeoType.Small_Mtn] = listOfMediumMountains.ToArray();
+            arrayOfNames[(int)GeoType.Large_Forest] = listOfLargeForests.ToArray();
+            arrayOfNames[(int)GeoType.Medium_Forest] = listOfMediumForests.ToArray();
+            arrayOfNames[(int)GeoType.Small_Forest] = listOfMediumForests.ToArray();
+            arrayOfNames[(int)GeoType.Large_Sea] = listOfLargeSeas.ToArray();
+            arrayOfNames[(int)GeoType.Medium_Sea] = listOfMediumSeas.ToArray();
+            arrayOfNames[(int)GeoType.Small_Sea] = listOfMediumSeas.ToArray();
+
+            return arrayOfNames;
         }
 
         //methods above here

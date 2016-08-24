@@ -27,7 +27,7 @@ namespace Next_Game
             Console.WriteLine("Seat: {0}", Capital);
         }
     }
-    */
+    
 
     //holds trait structure (need a structure to pass by value to avoid heap class objects all referring to each other)
     struct TraitStruct
@@ -38,7 +38,8 @@ namespace Next_Game
         public string Name { get; set; }
         public int Effect { get; set; }
         public int Chance { get; set; }
-    }
+    }*/
+
 
     //history class handles living world procedural generation at game start. Once created, data is passed to World for game use.
     //Location data flow: create in Map => Network to generate routes => History to generate names and data => World for current state and future changes
@@ -55,7 +56,9 @@ namespace Next_Game
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
         //geo names
         private List<GeoCluster> listOfGeoClusters;
-        private List<string> listOfLargeSeas;
+        private string[][] arrayOfGeoNames;
+
+        /*private List<string> listOfLargeSeas;
         private List<string> listOfMediumSeas;
         private List<string> listOfSmallSeas;
         private List<string> listOfLargeMountains;
@@ -63,10 +66,11 @@ namespace Next_Game
         private List<string> listOfSmallMountains;
         private List<string> listOfLargeForests;
         private List<string> listOfMediumForests;
-        private List<string> listOfSmallForests;
+        private List<string> listOfSmallForests;*/
+
         //traits
         private List<Trait> listOfTraits; //main
-        Trait[,][] arrayOfTraits; //filtered sets for fast random access
+        private Trait[,][] arrayOfTraits; //filtered sets for fast random access
         
         static Random rnd;
 
@@ -85,7 +89,9 @@ namespace Next_Game
             listOfMinorHouses = new List<House>();
             listHousePool = new List<HouseStruct>();
             listOfGeoClusters = new List<GeoCluster>();
-            listOfLargeMountains = new List<string>();
+            arrayOfGeoNames = new string[(int)GeoType.Count][];
+
+            /*listOfLargeMountains = new List<string>();
             listOfMediumMountains = new List<string>();
             listOfSmallMountains = new List<string>();
             listOfLargeForests = new List<string>();
@@ -93,7 +99,8 @@ namespace Next_Game
             listOfSmallForests = new List<string>();
             listOfLargeSeas = new List<string>();
             listOfMediumSeas = new List<string>();
-            listOfSmallSeas = new List<string>();
+            listOfSmallSeas = new List<string>();*/
+
             listOfTraits = new List<Trait>();
             arrayOfTraits = new Trait[(int)TraitType.Count, (int)ActorSex.Count][];
         }
@@ -322,6 +329,7 @@ namespace Next_Game
             //
             //Geonames ---
             //
+            /*
             string filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/GeoNames.txt";
             string tempString;
             string[] arrayOfGeoNames = File.ReadAllLines(filePath);
@@ -373,14 +381,15 @@ namespace Next_Game
                         }
                     }
                 }
-            }
-            //assign names
+            }*/
+            //GeoNames
+            arrayOfGeoNames = Game.file.GetGeoNames("GeoNames.txt");
             InitialiseGeoClusters();
             //
             // Traits ---
             //
-            
-            
+
+
             /*
             int dataCounter;
             string cleanTag;
@@ -483,7 +492,7 @@ namespace Next_Game
             //read in Constants ---
             //
 
-            Game.file.InitialiseConstants("Constants.txt");
+
 
             /*
             filePath = "c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Constants.txt";
@@ -513,7 +522,8 @@ namespace Next_Game
                     Game.constant.SetData(enumTag, value);
                 }
             }*/
-
+            //game constants
+            Game.file.InitialiseConstants("Constants.txt");
             //traits
             listOfTraits?.AddRange(Game.file.GetTraits("Traits_All.txt", TraitSex.All));
             listOfTraits?.AddRange(Game.file.GetTraits("Traits_Male.txt", TraitSex.Male));
@@ -571,27 +581,27 @@ namespace Next_Game
                     {
                         case Cluster.Sea:
                             if(cluster.Size == 1)
-                            { tempList = listOfSmallSeas; }
+                            { tempList = arrayOfGeoNames[(int)GeoType.Small_Sea].ToList(); }
                             else if (cluster.Size >= 20)
-                            { tempList = listOfLargeSeas; }
+                            { tempList = arrayOfGeoNames[(int)GeoType.Large_Sea].ToList(); }
                             else
-                            { tempList = listOfMediumSeas; }
+                            { tempList = arrayOfGeoNames[(int)GeoType.Medium_Sea].ToList(); }
                             break;
                         case Cluster.Mountain:
                             if (cluster.Size == 1)
-                            { tempList = listOfSmallMountains; }
+                            { tempList = arrayOfGeoNames[(int)GeoType.Small_Mtn].ToList(); }
                             else if (cluster.Size >= 10)
-                            { tempList = listOfLargeMountains; }
+                            { tempList = arrayOfGeoNames[(int)GeoType.Large_Mtn].ToList(); }
                             else
-                            { tempList = listOfMediumMountains; }
+                            { tempList = arrayOfGeoNames[(int)GeoType.Medium_Mtn].ToList(); }
                             break;
                         case Cluster.Forest:
                             if (cluster.Size == 1)
-                            { tempList = listOfSmallForests; }
+                            { tempList = arrayOfGeoNames[(int)GeoType.Small_Forest].ToList(); }
                             else if (cluster.Size >= 10)
-                            { tempList = listOfLargeForests; }
+                            { tempList = arrayOfGeoNames[(int)GeoType.Large_Forest].ToList(); }
                             else
-                            { tempList = listOfMediumForests; }
+                            { tempList = arrayOfGeoNames[(int)GeoType.Medium_Forest].ToList(); }
                             break;
                             
                     }

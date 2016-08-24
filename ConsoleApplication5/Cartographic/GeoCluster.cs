@@ -5,6 +5,7 @@ namespace Next_Game.Cartographic
 {
 
     public enum Cluster {Sea, Mountain, Forest} //NOTE: don't change order as ties in with data from map.InitialiseTerrain
+    public enum GeoType {Large_Mtn, Medium_Mtn, Small_Mtn, Large_Forest, Medium_Forest, Small_Forest, Large_Sea, Medium_Sea, Small_Sea, Count}
 
     /// <summary>
     /// Clusters of geo objects such as sea, mountain or forest zones (orthagonol clusters)
