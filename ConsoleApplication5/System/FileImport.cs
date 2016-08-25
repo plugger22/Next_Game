@@ -281,6 +281,11 @@ namespace Next_Game
             return listOfTraits;
         }
 
+        /// <summary>
+        /// Import GeoNames
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         internal string[][] GetGeoNames(string fileName)
         {
             //master jagged array which will be returned
@@ -361,13 +366,13 @@ namespace Next_Game
             //populate from lists
             arrayOfNames[(int)GeoType.Large_Mtn] = listOfLargeMountains.ToArray();
             arrayOfNames[(int)GeoType.Medium_Mtn] = listOfMediumMountains.ToArray();
-            arrayOfNames[(int)GeoType.Small_Mtn] = listOfMediumMountains.ToArray();
+            arrayOfNames[(int)GeoType.Small_Mtn] = listOfSmallMountains.ToArray();
             arrayOfNames[(int)GeoType.Large_Forest] = listOfLargeForests.ToArray();
             arrayOfNames[(int)GeoType.Medium_Forest] = listOfMediumForests.ToArray();
-            arrayOfNames[(int)GeoType.Small_Forest] = listOfMediumForests.ToArray();
+            arrayOfNames[(int)GeoType.Small_Forest] = listOfSmallForests.ToArray();
             arrayOfNames[(int)GeoType.Large_Sea] = listOfLargeSeas.ToArray();
             arrayOfNames[(int)GeoType.Medium_Sea] = listOfMediumSeas.ToArray();
-            arrayOfNames[(int)GeoType.Small_Sea] = listOfMediumSeas.ToArray();
+            arrayOfNames[(int)GeoType.Small_Sea] = listOfSmallSeas.ToArray();
 
             return arrayOfNames;
         }
