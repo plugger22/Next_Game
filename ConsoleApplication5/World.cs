@@ -853,8 +853,8 @@ namespace Next_Game
                 //create Lord and Lady for house
                 Location loc = Game.network.GetLocation(kvp.Value.LocID);
                 Position pos = loc.GetPosition();
-                Passive actorLord = Game.history.CreatePassiveActor(kvp.Value.Name, ActorTitle.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
-                Passive actorLady = Game.history.CreatePassiveActor(kvp.Value.Name, ActorTitle.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
+                Passive actorLord = Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                Passive actorLady = Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
                     ActorSex.Female, WifeStatus.First_Wife);
                 //add to dictionaries of actors
                 dictPassiveActors.Add(actorLord.ActID, actorLord);
@@ -912,7 +912,7 @@ namespace Next_Game
                     //create BannerLord for house
                     Location loc = Game.network.GetLocation(kvp.Value.LocID);
                     Position pos = loc.GetPosition();
-                    Passive bannerLord = Game.history.CreatePassiveActor(kvp.Value.Name, ActorTitle.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                    Passive bannerLord = Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
                     //add to dictionaries of actors
                     dictPassiveActors.Add(bannerLord.ActID, bannerLord);
                     dictAllActors.Add(bannerLord.ActID, bannerLord);
@@ -935,7 +935,7 @@ namespace Next_Game
             foreach(KeyValuePair<int, Passive> kvp in dictPassiveActors)
             {
                 //lord?
-                if (kvp.Value.Title == ActorTitle.Lord && kvp.Value.Status != ActorStatus.Dead)
+                if (kvp.Value.Title == ActorType.Lord && kvp.Value.Status != ActorStatus.Dead)
                 { }
             }
         }

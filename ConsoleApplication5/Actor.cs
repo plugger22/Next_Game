@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Next_Game
 {
     public enum ActorStatus {AtLocation, Travelling, Dead};
-    public enum ActorTitle {None, Ursuper, Loyal_Follower, Lord, Lady, BannerLord, Prince, Princess, Heir, lord, lady }; //lord and lady are children of Lords, Heir is first in line to inherit
+    public enum ActorType {None, Ursuper, Loyal_Follower, Lord, Lady, BannerLord, Prince, Princess, Heir, lord, lady, Knight, Official }; //lord and lady are children of Lords, Heir is first in line to inherit
     public enum ActorOffice {None, King, Queen, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch, Master_of_Coin, Master_of_Whisperers, Master_of_Laws,
                              Master_of_Ships, Warden_of_the_North, Warden_of_the_East, Warden_of_the_South, Warden_of_the_West }
     public enum ActorRealm {None, Head_of_Noble_House, Head_of_House}
@@ -27,7 +27,7 @@ namespace Next_Game
         public int Died { get; set; } //year died
         public string Description { get; set; }
         public ActorStatus Status { get; set; } = 0;
-        public ActorTitle Title { get; set; } = 0;
+        public ActorType Title { get; set; } = 0;
         public ActorOffice Office { get; set; } = 0; //official title, if any
         public ActorRealm Realm { get; set; } = 0; //local house title, if any
         public ActorSex Sex { get; set; }
@@ -53,7 +53,7 @@ namespace Next_Game
             actorPos = new Position();
             Description = "standard human";
             Age = 30;
-            Title = ActorTitle.None;
+            Title = ActorType.None;
             Sex = ActorSex.Male;
             arrayOfTraitID = new int[(int)TraitType.Count];
             arrayOfTraitEffects = new int[(int)TraitAge.Count, (int)TraitType.Count];
@@ -64,7 +64,7 @@ namespace Next_Game
         /// main constructor
         /// </summary>
         /// <param name="name"></param>
-        public Actor(string name, ActorTitle title, ActorSex sex = ActorSex.Male)
+        public Actor(string name, ActorType title, ActorSex sex = ActorSex.Male)
         {
             Status = ActorStatus.AtLocation;
             Name = name;
@@ -99,21 +99,21 @@ namespace Next_Game
         public Active()
         { }
 
-        public Active(string name, ActorTitle title, ActorSex sex = ActorSex.Male) : base (name, title, sex)
+        public Active(string name, ActorType title, ActorSex sex = ActorSex.Male) : base (name, title, sex)
         { }
     }
 
     //Player avatar
     class Player : Active
     {
-        public Player(string name, ActorTitle title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
+        public Player(string name, ActorType title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
         { }
     }
 
     //Player controlled Minions
     class Minion : Active
     {
-        public Minion(string name, ActorTitle title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
+        public Minion(string name, ActorType title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
         { }
     }
 
@@ -141,7 +141,7 @@ namespace Next_Game
             dictFamily = new SortedDictionary<int, Relation>();
         }
 
-        public Passive(string name, ActorTitle title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
+        public Passive(string name, ActorType title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
         {
             dictFamily = new SortedDictionary<int, Relation>();
         }
@@ -168,28 +168,28 @@ namespace Next_Game
     //Great House Family members
     class Family : Passive
     {
-        public Family (string name, ActorTitle title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
+        public Family (string name, ActorType title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
         { }
     }
 
     //BannerLords
     class BannerLord : Passive
     {
-        public BannerLord (string name, ActorTitle title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
+        public BannerLord (string name, ActorType title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
         { }
     }
 
     //Kings Council Members
     class Advisor : Passive
     {
-        public Advisor (string name, ActorTitle title, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, title, sex)
+        public Advisor (string name, ActorType title, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, title, sex)
         { }
     }
 
     //Special NPC's
     class Special : Passive
     {
-        public Special (string name, ActorTitle title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
+        public Special (string name, ActorType title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
         { }
     }
 }

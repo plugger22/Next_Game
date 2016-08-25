@@ -221,12 +221,12 @@ namespace Next_Game
                 //delete record in list to prevent duplicate names
                 listOfPlayerNames.RemoveAt(index);
                 //new character
-                ActorTitle title = ActorTitle.Loyal_Follower;
+                ActorType title = ActorType.Loyal_Follower;
                 Active person = null;
                 //set player as ursuper
                 if (i == 0)
                 {
-                    title = ActorTitle.Ursuper;
+                    title = ActorType.Ursuper;
                     person = new Player(actorName, title) as Player;
                 }
                 else
@@ -246,17 +246,17 @@ namespace Next_Game
         /// <param name="refID"></param>
         /// <param name="sex"></param>
         /// <returns></returns>
-        internal Passive CreatePassiveActor(string lastName, ActorTitle title, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male, WifeStatus wifeStatus = WifeStatus.None )
+        internal Passive CreatePassiveActor(string lastName, ActorType title, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male, WifeStatus wifeStatus = WifeStatus.None )
         {
             Passive actor = null;
             //get a random first name
             string actorName = GetActorName(lastName, sex, refID);
             //create actor
-            if (title == ActorTitle.BannerLord)
+            if (title == ActorType.BannerLord)
             { actor = new BannerLord(actorName, title, sex); actor.Realm = ActorRealm.Head_of_House; }
-            else if (title == ActorTitle.Lord)
+            else if (title == ActorType.Lord)
             { actor = new Family (actorName, title, sex); actor.Realm = ActorRealm.Head_of_Noble_House; }
-            else if (title == ActorTitle.Lady)
+            else if (title == ActorType.Lady)
             { actor = new Family(actorName, title, sex); }
             //age (older men, younger wives
             int age = 0;
@@ -307,9 +307,9 @@ namespace Next_Game
                 int lordshipAge = rnd.Next(20, age - 2);
                 actor.Lordship = actor.Born + lordshipAge;
                 string descriptor = "unknown";
-                if (actor.Title == ActorTitle.Lord)
+                if (actor.Title == ActorType.Lord)
                 { descriptor = string.Format("{0} assumes Lordship of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge); }
-                else if (actor.Title == ActorTitle.BannerLord)
+                else if (actor.Title == ActorType.BannerLord)
                 { descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge); }
                 Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, actor.Lordship, HistEvent.Lordship);
                 Game.world.SetRecord(record);
@@ -815,7 +815,7 @@ namespace Next_Game
                     { sex = ActorSex.Female; }
                     //get a random first name
                     string actorName = GetActorName(Game.world.GetGreatHouseName(lord.HouseID), sex, lord.RefID);
-                    Passive child = new Family(actorName, ActorTitle.None, sex);
+                    Passive child = new Family(actorName, ActorType.None, sex);
                     child.Age = Game.gameYear - year;
                     child.Born = year;
                     child.LocID = lady.LocID;
@@ -834,7 +834,7 @@ namespace Next_Game
                     {
                         child.MaidenName = Game.world.GetGreatHouseName(lord.HouseID);
                         child.Fertile = true;
-                        child.Title = ActorTitle.lady;
+                        child.Title = ActorType.lady;
 
                         //loop list of lord's family
                         foreach (KeyValuePair<int, Relation> kvp in dictTempFamily)
@@ -970,9 +970,9 @@ namespace Next_Game
                         }
                         //status (males - who is in line to inherit?)
                         if (sonCounter == 0)
-                        { child.Title = ActorTitle.Heir; child.InLine = 1; }
+                        { child.Title = ActorType.Heir; child.InLine = 1; }
                         else
-                        { child.Title = ActorTitle.lord; child.InLine = sonCounter; }
+                        { child.Title = ActorType.lord; child.InLine = sonCounter; }
                         //update parent relations
                         lord.AddRelation(child.ActID, Relation.Son);
                         lady.AddRelation(child.ActID, Relation.Son);
