@@ -73,10 +73,10 @@
     <Compile Include="Actor.cs" />
     <Compile Include="Archive.cs" />
     <Compile Include="Cartographic\GeoCluster.cs" />
-    <Compile Include="FileImport.cs" />
-    <Compile Include="Constant.cs" />
+    <Compile Include="System\FileImport.cs" />
+    <Compile Include="System\Constant.cs" />
     <Compile Include="Trait.cs" />
-    <Compile Include="Record.cs" />
+    <Compile Include="System\Record.cs" />
     <Compile Include="House.cs" />
     <Compile Include="History.cs" />
     <Compile Include="System\Color.cs" />

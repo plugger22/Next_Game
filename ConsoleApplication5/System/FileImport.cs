@@ -82,7 +82,11 @@ namespace Next_Game
             return listOfNames;
         }
 
-
+        /// <summary>
+        /// handles major and minor houses and returns a list of house Structs
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public List<HouseStruct> GetHouses(string fileName)
         {
             string[] arrayOfHouseNames = ImportFileData(fileName);

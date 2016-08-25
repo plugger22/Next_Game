@@ -228,8 +228,9 @@ namespace Next_Game
             //Console.WriteLine();
 
             listHousePool.AddRange(Game.file.GetHouses("MajorHouses.txt"));
+            InitialiseMajorHouses(numHousesRequired);
 
-            Console.WriteLine("{0} Great Houses imported, {1} Houses required", listHousePool.Count, numHousesRequired);
+            /*Console.WriteLine("{0} Great Houses imported, {1} Houses required", listHousePool.Count, numHousesRequired);
             Console.WriteLine();
             //remove surplus houses from pool
             int count = listHousePool.Count;
@@ -256,12 +257,13 @@ namespace Next_Game
                 //add house to listOfHouses
                 listOfGreatHouses.Add(house);
                 //Console.WriteLine("House {0} added to listOfGreatHouses", house.Name);
-            }
+            }*/
             //
             // Minor bannerlord Houses ---
             //
             //read in house pool
 
+            //minor houses, run AFTER major houses
             listHousePool.Clear();
             listHousePool.AddRange(Game.file.GetHouses("MinorHouses.txt"));
 
@@ -532,6 +534,39 @@ namespace Next_Game
             InitialiseTraits();
         }
 
+        /// <summary>
+        /// Sets up Great Houses, assumes listHousePool<houseStruct> already populated
+        /// </summary>
+        /// <param name="numHousesRequired">Will thin out surplus houses if required</param>
+        private void InitialiseMajorHouses(int numHousesRequired)
+        {
+            //remove surplus houses from pool
+            int count = listHousePool.Count;
+            int index = 0;
+            while (count > numHousesRequired)
+            {
+                index = rnd.Next(0, count);
+                Console.WriteLine("Great House {0} removed", listHousePool[index].Name);
+                listHousePool.RemoveAt(index);
+                count = listHousePool.Count;
+            }
+            Console.WriteLine();
+            //loop through structures and initialise House classes
+            for (int i = 0; i < listHousePool.Count; i++)
+            {
+                MajorHouse house = new MajorHouse();
+                //copy data from House pool structures
+                house.Name = listHousePool[i].Name;
+                house.Motto = listHousePool[i].Motto;
+                house.Banner = listHousePool[i].Banner;
+                house.ArchetypeID = listHousePool[i].Archetype;
+                house.RefID = listHousePool[i].RefID;
+                house.LocName = listHousePool[i].Capital;
+                //add house to listOfHouses
+                listOfGreatHouses.Add(house);
+                //Console.WriteLine("House {0} added to listOfGreatHouses", house.Name);
+            }
+        }
 
         /// <summary>
         /// called by Network.UpdateHouses(), it randomly chooses a minor house from list and initiliases it
@@ -571,7 +606,7 @@ namespace Next_Game
             listOfGeoClusters = Game.map.GetGeoCluster();
             List<string> tempList = new List<string>();
             int randomNum;
-            //convert array data to lists (not very elegant but it'll do the job)
+            //convert array data to lists (not very elegant but it'll do the job) - needs to be in list to prevent duplicate names
             List<string> listOfLargeSeas = new List<string>(arrayOfGeoNames[(int)GeoType.Large_Sea].ToList());
             List<string> listOfMediumSeas = new List<string>(arrayOfGeoNames[(int)GeoType.Medium_Sea].ToList()); ;
             List<string> listOfSmallSeas = new List<string>(arrayOfGeoNames[(int)GeoType.Small_Sea].ToList()); ;
