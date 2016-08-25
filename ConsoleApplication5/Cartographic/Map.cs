@@ -2406,11 +2406,13 @@ namespace Next_Game.Cartographic
             int outer = 0;
             int inner = 0;
             int x1; int y1; int x2; int y2;
+            int[] arrayTemp = new int[5]; //tallies single connector locs by branch. Sets any branch with no remaining connectors to true in bool 'branches'
             //loop through entire process a number of times to ensure close connections are made before distant ones (making i larger enables smaller connections)
             for (int i = 8; i > 0; i--)
             {
-                //clear list
+                //clear temp collections
                 listOfSingleConnectionLocs.Clear();
+                Array.Clear(arrayTemp, 0, arrayTemp.Length);
                 //loop all loc's and store those with a single connection (end of branch)
                 foreach (Location loc in listOfLocations)
                 {
@@ -2419,8 +2421,18 @@ namespace Next_Game.Cartographic
                         //add to list only if the locations branch is false (hasn't yet had a connector assigned)
                         int dir = loc.GetCapitalRouteDirection();
                         if (branches[dir] == false)
-                        { listOfSingleConnectionLocs.Add(loc); }
+                        {
+                            listOfSingleConnectionLocs.Add(loc);
+                            //tally # of valid loc's on each branch
+                            arrayTemp[dir]++;
+                        }
                     }
+                }
+                //loop tally of valid loc's by branch. If any have '0' then set branch to true to remove it from calculations
+                for (int k = 1; k < arrayTemp.Length; k++)
+                {
+                    if (arrayTemp[k] == 0)
+                    { branches[k] = true; }
                 }
                 //OUTER loop list of single Connectors (find an origin)
                 for(outer = 0; outer < listOfSingleConnectionLocs.Count; outer++ )
