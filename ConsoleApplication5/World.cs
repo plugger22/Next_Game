@@ -104,13 +104,6 @@ namespace Next_Game
                     string originLocation = GetLocationName(posOrigin);
                     string destinationLocation = GetLocationName(posDestination);
                     returnText = string.Format("It will take {0} days for {1} to travel from {2} to {3}. The Journey has commenced.", time, name, originLocation, destinationLocation);
-
-                    //are you sure?
-                    /*Console.WriteLine("Are you sure [Y] Yes, [N] No?");
-                    ConsoleKeyInfo cki;
-                    cki = Console.ReadKey(true);
-                    if (cki.Key == ConsoleKey.Y)*/
-
                     //remove character from current location 
                     int locID_Origin = Game.map.GetMapInfo(MapLayer.LocID, posOrigin.PosX, posOrigin.PosY);
                     Location loc = Game.network.GetLocation(locID_Origin);
@@ -514,25 +507,6 @@ namespace Next_Game
             return new Snippet(returnText);
         }
 
-        /// <summary>
-        /// return a List of Snippets, sorted by year (ascending)
-        /// </summary>
-        /// <returns></returns>
-        /*public List<Snippet> ShowRecordsRL()
-        {
-            List<Snippet> listOfHistory = new List<Snippet>();
-            listOfHistory.Add(new Snippet("--- All Records", RLColor.Yellow, RLColor.Black));
-            //sort in ascending order
-            IEnumerable<string> allHistory =
-                from rec in dictRecords
-                orderby rec.Value.Year
-                select Convert.ToString(rec.Value.Year + " " + rec.Value.Text);
-            List <string> listOfSortedRecords = allHistory.ToList();
-            foreach(string text in listOfSortedRecords)
-            { listOfHistory.Add(new Snippet(text)); }
-            return listOfHistory;
-        }*/
-        
         internal string GetLocationName(int locID)
         {
             string locName = "unknown";

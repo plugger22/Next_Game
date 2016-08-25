@@ -23,17 +23,6 @@ namespace Next_Game
         //geo names
         private List<GeoCluster> listOfGeoClusters;
         private string[][] arrayOfGeoNames;
-
-        /*private List<string> listOfLargeSeas;
-        private List<string> listOfMediumSeas;
-        private List<string> listOfSmallSeas;
-        private List<string> listOfLargeMountains;
-        private List<string> listOfMediumMountains;
-        private List<string> listOfSmallMountains;
-        private List<string> listOfLargeForests;
-        private List<string> listOfMediumForests;
-        private List<string> listOfSmallForests;*/
-
         //traits
         private List<Trait> listOfTraits; //main
         private Trait[,][] arrayOfTraits; //filtered sets for fast random access
