@@ -8,10 +8,11 @@ namespace Next_Game
     public enum ActorOffice {None, King, Queen, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch, Master_of_Coin, Master_of_Whisperers, Master_of_Laws,
                              Master_of_Ships, Warden_of_the_North, Warden_of_the_East, Warden_of_the_South, Warden_of_the_West }
     public enum ActorRealm {None, Head_of_Noble_House, Head_of_House}
-    public enum ActorSex {Male, Female, Count};
+    public enum ActorSex {None, Male, Female, Count};
+    public enum ActorParents {Normal, Bastard, Adopted};
     public enum ActorDied {None, Childbirth} //how died?
     public enum WifeStatus {None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife}
-    public enum Relation {None, Wife, Husband, Son, Daughter, Bastard, Father, Mother, Brother, Sister, Half_Brother, Half_Sister}
+    public enum Relation {None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister}
 
     internal class Actor
     {
@@ -31,6 +32,7 @@ namespace Next_Game
         public ActorOffice Office { get; set; } = 0; //official title, if any
         public ActorRealm Realm { get; set; } = 0; //local house title, if any
         public ActorSex Sex { get; set; }
+        public ActorParents Parents { get; set; } = 0; //normal family, bastard or adopted
         public ActorDied ReasonDied { get; set; } = 0;
         public string Handle { get; set; } = null; //eg. Nickname
         //stats 
@@ -127,7 +129,7 @@ namespace Next_Game
         public int RefID { get; set; } = 0; //house assignment, eg. Lannister (not HouseID).
         public int HouseID { get; set; } = 0; //dynamically assigned great house alignment 
         public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
-        public int GenID { get; set; } = 1; //generation (1st, 2nd etc.
+        public int GenID { get; set; } = Game.gameGeneration; //generation (1st, 2nd etc.
         public int InLine { get; set; } = 0; //number in line to inherit (males only)
         public int Married { get; set; } = 0; //year married, 0 if not
         public int Lordship { get; set; } = 0; //year made lord (Great House/Bannerlord)

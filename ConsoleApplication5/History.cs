@@ -69,7 +69,7 @@ namespace Next_Game
             arrayOfGeoNames = Game.file.GetGeoNames("GeoNames.txt");
             InitialiseGeoClusters();
             //Constants
-            Game.file.InitialiseConstants("Constants.txt");
+            Game.file.GetConstants("Constants.txt");
             //Traits
             listOfTraits?.AddRange(Game.file.GetTraits("Traits_All.txt", TraitSex.All));
             listOfTraits?.AddRange(Game.file.GetTraits("Traits_Male.txt", TraitSex.Male));
@@ -792,16 +792,16 @@ namespace Next_Game
             lord.AddRelation(lady.ActID, Relation.Wife);
             lady.AddRelation(lord.ActID, Relation.Husband);
             // kids
-            CreateChildren(lord, lady);
+            CreateStartingChildren(lord, lady);
         }
 
 
         /// <summary>
-        /// Keep producing children until a limit is reached
+        /// Keep producing children until a limit is reached (game start)
         /// </summary>
         /// <param name="lord"></param>
         /// <param name="lady"></param>
-        private void CreateChildren(Passive lord, Passive lady)
+        private void CreateStartingChildren(Passive lord, Passive lady)
         {
             //is woman fertile and within age range?
             if (lady.Fertile == true && lady.Age >= 13 && lady.Age <= 40)
@@ -1017,6 +1017,208 @@ namespace Next_Game
             }
         }
         
+        /// <summary>
+        /// General purpose method to create a new child, born in current year with current generation
+        /// </summary>
+        /// <param name="Lord">Provide a Great lord as an official father regardless of status</param>
+        /// <param name="Lady">Provide a Great Lady as an official mother regardless of status</param>
+        /// <param name="sex">You can specify a type</param>
+        /// <param name="parents">Natural,Bastard or Adopted? (Bastard could be sired by either Mother or Father</param>
+        internal void CreateChild(Passive Lord, Passive Lady, ActorSex childSex = ActorSex.None, ActorParents parents = ActorParents.Normal)
+        {
+            ActorSex sex;
+            //determine sex
+            if (childSex == ActorSex.Male || childSex == ActorSex.Female)
+            { sex = childSex;  }
+            else
+            {
+                //new child (50/50 boy/girl)
+                sex = ActorSex.Male;
+                if (rnd.Next(100) < 50)
+                { sex = ActorSex.Female; }
+            }
+            //get a random first name
+            string actorName = GetActorName(Game.world.GetGreatHouseName(Lord.HouseID), sex, Lady.RefID);
+            Passive child = new Family(actorName, ActorType.None, sex);
+            child.Age = 0;
+            child.Born = Game.gameYear;
+            child.LocID = Lady.LocID;
+            child.RefID = Lady.RefID;
+            child.BornRefID = Lord.RefID;
+            child.HouseID = Lady.HouseID;
+            child.GenID = Game.gameGeneration;
+            //family relations
+            child.AddRelation(Lord.ActID, Relation.Father);
+            child.AddRelation(Lady.ActID, Relation.Mother);
+            //normal, bastard or adopted?
+            child.Parents = parents;
+            //get Lord's family
+            SortedDictionary<int, Relation> dictTempFamily = Lord.GetFamily();
+            int motherID;
+            //new child is DAUGHTER
+            if (sex == ActorSex.Female)
+            {
+                child.MaidenName = Game.world.GetGreatHouseName(Lord.HouseID);
+                child.Fertile = true;
+                child.Title = ActorType.Lady;
+
+                //loop list of Lord's family
+                foreach (KeyValuePair<int, Relation> kvp in dictTempFamily)
+                {
+                    if (kvp.Value == Relation.Son)
+                    {
+                        Passive son = Game.world.GetPassiveActor(kvp.Key);
+                        //son's family tree
+                        SortedDictionary<int, Relation> dictTempSon = son.GetFamily();
+                        motherID = Lady.ActID;
+                        foreach (KeyValuePair<int, Relation> keyVP in dictTempSon)
+                        {
+                            //find ID of mother
+                            if (keyVP.Value == Relation.Mother)
+                            { motherID = keyVP.Key; break; }
+
+                        }
+                        //relations
+                        if (motherID == Lady.ActID)
+                        {
+                            //natural brothers and sisters
+                            son.AddRelation(child.ActID, Relation.Sister);
+                            child.AddRelation(son.ActID, Relation.Brother);
+                        }
+                        else if (motherID != Lady.ActID)
+                        {
+                            //half brothers and sister
+                            son.AddRelation(child.ActID, Relation.Half_Sister);
+                            child.AddRelation(son.ActID, Relation.Half_Brother);
+                        }
+                    }
+                    else if (kvp.Value == Relation.Daughter)
+                    {
+                        Passive daughter = Game.world.GetPassiveActor(kvp.Key);
+                        //daughter's family tree
+                        SortedDictionary<int, Relation> dictTempDaughter = daughter.GetFamily();
+                        motherID = Lady.ActID;
+                        foreach (KeyValuePair<int, Relation> keyVP in dictTempDaughter)
+                        {
+                            //find ID of mother
+                            if (keyVP.Value == Relation.Mother)
+                            { motherID = keyVP.Key; break; }
+                        }
+                        //relations
+                        if (motherID == Lady.ActID)
+                        {
+                            //natural sisters
+                            daughter.AddRelation(child.ActID, Relation.Sister);
+                            child.AddRelation(daughter.ActID, Relation.Sister);
+                        }
+                        else if (motherID != Lady.ActID)
+                        {
+                            //half sisters
+                            daughter.AddRelation(child.ActID, Relation.Half_Sister);
+                            child.AddRelation(daughter.ActID, Relation.Half_Sister);
+                        }
+                    }
+                }
+                //update parent relations
+                Lord.AddRelation(child.ActID, Relation.Daughter);
+                Lady.AddRelation(child.ActID, Relation.Daughter);
+            }
+            //new child is SON
+            else if (sex == ActorSex.Male)
+            {
+                int sonCounter = 0;
+                //there could be sons from a previous marriage
+                if (Lady.WifeNumber != WifeStatus.First_Wife)
+                {
+                    foreach (KeyValuePair<int, Relation> kvp in dictTempFamily)
+                    {
+                        if (kvp.Value == Relation.Son)
+                        //NOTE: if previous son is dead then the count won't be correct
+                        { sonCounter++; }
+                    }
+                }
+                //loop list of Lord's family
+                foreach (KeyValuePair<int, Relation> kvp in dictTempFamily)
+                {
+                    if (kvp.Value == Relation.Son)
+                    {
+                        Passive son = Game.world.GetPassiveActor(kvp.Key);
+                        //son's family tree
+                        SortedDictionary<int, Relation> dictTempSon = son.GetFamily();
+                        motherID = Lady.ActID;
+                        foreach (KeyValuePair<int, Relation> keyVP in dictTempSon)
+                        {
+                            //find ID of mother
+                            if (keyVP.Value == Relation.Mother)
+                            { motherID = keyVP.Key; break; }
+                        }
+                        //relations
+                        if (motherID == Lady.ActID)
+                        {
+                            //natural born brothers
+                            son.AddRelation(child.ActID, Relation.Brother);
+                            child.AddRelation(son.ActID, Relation.Brother);
+                        }
+                        else if (motherID != Lady.ActID)
+                        {
+                            //half brothers
+                            son.AddRelation(child.ActID, Relation.Half_Brother);
+                            child.AddRelation(son.ActID, Relation.Half_Brother);
+                        }
+                        sonCounter++;
+                    }
+                    else if (kvp.Value == Relation.Daughter)
+                    {
+                        Passive daughter = Game.world.GetPassiveActor(kvp.Key);
+                        //daughter's family tree
+                        SortedDictionary<int, Relation> dictTempDaughter = daughter.GetFamily();
+                        motherID = Lady.ActID;
+                        foreach (KeyValuePair<int, Relation> keyVP in dictTempDaughter)
+                        {
+                            //find ID of mother
+                            if (keyVP.Value == Relation.Mother)
+                            { motherID = keyVP.Key; break; }
+                        }
+                        //relations
+                        if (motherID == Lady.ActID)
+                        {
+                            //natural born brother and sister
+                            daughter.AddRelation(child.ActID, Relation.Brother);
+                            child.AddRelation(daughter.ActID, Relation.Sister);
+                        }
+                        else if (motherID != Lady.ActID)
+                        {
+                            //half brother and sister
+                            daughter.AddRelation(child.ActID, Relation.Half_Brother);
+                            child.AddRelation(daughter.ActID, Relation.Half_Sister);
+                        }
+                    }
+                }
+                //status (males - who is in line to inherit?)
+                if (sonCounter == 0)
+                { child.Title = ActorType.Heir; child.InLine = 1; }
+                else
+                { child.Title = ActorType.Lord; child.InLine = sonCounter; }
+                //update parent relations
+                Lord.AddRelation(child.ActID, Relation.Son);
+                Lady.AddRelation(child.ActID, Relation.Son);
+                //assign traits
+                InitialiseActorTraits(child, Lord, Lady);
+                //add to dictionaries
+                Game.world.SetPassiveActor(child);
+                //store at location
+                Location loc = Game.network.GetLocation(Lord.LocID);
+                loc.AddActor(child.ActID);
+                //record event
+                string descriptor = string.Format("{0}, Aid {1}, born at {2} to {3} {4} and {5} {6}",
+                    child.Name, child.ActID, Game.world.GetLocationName(Lady.LocID), Lord.Title, Lord.Name, Lady.Title, Lady.Name);
+                Record record_0 = new Record(descriptor, child.ActID, child.LocID, child.RefID, Game.gameYear, HistEvent.Born);
+                record_0.AddActor(Lord.ActID);
+                record_0.AddActor(Lady.ActID);
+                Game.world.SetRecord(record_0);
+            }
+        }
+
 
         /// <summary>
         /// takes a surname and a sex and returns a full name, eg. 'Edward Stark'

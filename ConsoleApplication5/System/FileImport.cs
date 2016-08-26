@@ -155,7 +155,7 @@ namespace Next_Game
         /// read in an initialise Constants
         /// </summary>
         /// <param name="fileName"></param>
-        public void InitialiseConstants(string fileName)
+        public void GetConstants(string fileName)
         {
             string[] arrayOfFileInput = ImportFileData(fileName); ;
             Console.WriteLine();

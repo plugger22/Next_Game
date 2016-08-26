@@ -1866,7 +1866,7 @@ namespace Next_Game.Cartographic
             for(int outer = 1; outer < numBranches; outer++)
             {
                 int arrayLength = masterStatus[outer].GetUpperBound(0);
-                Console.WriteLine("- Branch {0} upperBound {1}", outer, arrayLength);
+                //Console.WriteLine("- Branch {0} upperBound {1}", outer, arrayLength);
                 //only if branch isn't empty
                 if (arrayLength > -1)
                 {

@@ -54,6 +54,7 @@ namespace Next_Game
         public static int gameTurn = 0; //each turn represents a day
         public static int gameStart = 1200; //starting year for 1st generation
         public static int gameYear = 1200; //current game year
+        public static int gameGeneration = 1; //current generation (25 years each)
         //core objects
         public static Menu menu;
         public static MessageLog messageLog;
