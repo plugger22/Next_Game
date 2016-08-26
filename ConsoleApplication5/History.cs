@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Next_Game
 {
-   
+
     //history class handles living world procedural generation at game start. Once created, data is passed to World for game use.
     //Location data flow: create in Map => Network to generate routes => History to generate names and data => World for current state and future changes
     public class History
@@ -26,7 +26,7 @@ namespace Next_Game
         //traits
         private List<Trait> listOfTraits; //main
         private Trait[,][] arrayOfTraits; //filtered sets for fast random access
-        
+
         static Random rnd;
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Next_Game
                     switch (cluster.ClusterType)
                     {
                         case Cluster.Sea:
-                            if(cluster.Size == 1)
+                            if (cluster.Size == 1)
                             { tempList = listOfSmallSeas; }
                             else if (cluster.Size >= 20)
                             { tempList = listOfLargeSeas; }
@@ -192,7 +192,7 @@ namespace Next_Game
                             else
                             { tempList = listOfMediumForests; }
                             break;
-                            
+
                     }
                     //choose a random name
                     randomNum = rnd.Next(0, tempList.Count);
@@ -232,7 +232,7 @@ namespace Next_Game
                 else
                 { person = new Active(actorName, title); }
                 listOfPlayerActors.Add(person);
-                
+
             }
         }
 
@@ -246,7 +246,7 @@ namespace Next_Game
         /// <param name="refID"></param>
         /// <param name="sex"></param>
         /// <returns></returns>
-        internal Passive CreatePassiveActor(string lastName, ActorType title, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male, WifeStatus wifeStatus = WifeStatus.None )
+        internal Passive CreatePassiveActor(string lastName, ActorType title, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male, WifeStatus wifeStatus = WifeStatus.None)
         {
             Passive actor = null;
             //get a random first name
@@ -255,7 +255,7 @@ namespace Next_Game
             if (title == ActorType.BannerLord)
             { actor = new BannerLord(actorName, title, sex); actor.Realm = ActorRealm.Head_of_House; }
             else if (title == ActorType.Lord)
-            { actor = new Family (actorName, title, sex); actor.Realm = ActorRealm.Head_of_Noble_House; }
+            { actor = new Family(actorName, title, sex); actor.Realm = ActorRealm.Head_of_Noble_House; }
             else if (title == ActorType.Lady)
             { actor = new Family(actorName, title, sex); }
             //age (older men, younger wives
@@ -342,14 +342,14 @@ namespace Next_Game
                 int traitID = 0;
                 Passive parent = new Passive();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
-                if (person.Sex == ActorSex.Male)  { parent = father; }
+                if (person.Sex == ActorSex.Male) { parent = father; }
                 else { parent = mother; }
                 //does parent have a combat trait?
                 traitID = parent.arrayOfTraitID[(int)TraitType.Combat];
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
-                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT))
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT_TRAIT))
                     {
                         //find trait
                         Trait trait = GetTrait(traitID);
@@ -405,16 +405,16 @@ namespace Next_Game
                 //parental wits trait (if any)
                 int traitID = 0;
                 Passive parent = new Passive();
-                //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
+                //genetics can apply (sons have a chance to Inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male)
                 { parent = father; }
-                else { parent = mother;  }
+                else { parent = mother; }
                 //does parent have a Wits trait?
                 traitID = parent.arrayOfTraitID[(int)TraitType.Wits];
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
-                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT))
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT_TRAIT))
                     {
                         //find trait
                         Trait trait = GetTrait(traitID);
@@ -472,13 +472,13 @@ namespace Next_Game
                 Passive parent = new Passive();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male) { parent = father; }
-                else  { parent = mother; }
+                else { parent = mother; }
                 //does parent have a Charm trait?
                 traitID = parent.arrayOfTraitID[(int)TraitType.Charm];
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
-                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT))
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT_TRAIT))
                     {
                         //find trait
                         Trait trait = GetTrait(traitID);
@@ -500,7 +500,7 @@ namespace Next_Game
                     else { needRandomTrait = true; }
                 }
             }
-            else  { needRandomTrait = true; }
+            else { needRandomTrait = true; }
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
             if (needRandomTrait == true)
             {
@@ -542,7 +542,7 @@ namespace Next_Game
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
-                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT))
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT_TRAIT))
                     {
                         //find trait
                         Trait trait = GetTrait(traitID);
@@ -606,7 +606,7 @@ namespace Next_Game
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
-                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT))
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT_TRAIT))
                     {
                         //find trait
                         Trait trait = GetTrait(traitID);
@@ -655,7 +655,7 @@ namespace Next_Game
                     }
                 }
             }
-            
+
             //choose NickName (handle)
             if (tempHandles.Count > 0)
             { person.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
@@ -668,7 +668,7 @@ namespace Next_Game
         /// </summary>
         private void InitialiseTraits()
         {
-            
+
             //Combat male
             IEnumerable<Trait> enumTraits =
                 from trait in listOfTraits
@@ -685,7 +685,7 @@ namespace Next_Game
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
             arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Female] = enumTraits.ToArray();
-            
+
             //Wits male
             enumTraits =
                 from trait in listOfTraits
@@ -702,7 +702,7 @@ namespace Next_Game
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
             arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Female] = enumTraits.ToArray();
-            
+
             //Charm male
             enumTraits =
                 from trait in listOfTraits
@@ -719,7 +719,7 @@ namespace Next_Game
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
             arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Female] = enumTraits.ToArray();
-            
+
             //Treachery male
             enumTraits =
                 from trait in listOfTraits
@@ -736,7 +736,7 @@ namespace Next_Game
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
             arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Female] = enumTraits.ToArray();
-            
+
             //Leadership male
             enumTraits =
                 from trait in listOfTraits
@@ -782,7 +782,7 @@ namespace Next_Game
             lord.Married = yearMarried;
             int lordAgeMarried = yearMarried - lord.Born;
             //record event - single record tagged to both characters and houses
-            string descriptor = string.Format("{0}, age {1}, and {2} (nee {3}, age {4}) married ({5}) at {6}", 
+            string descriptor = string.Format("{0}, age {1}, and {2} (nee {3}, age {4}) married ({5}) at {6}",
                 lord.Name, lordAgeMarried, lady.Name, lady.MaidenName, ageLadyMarried, lady.WifeNumber, Game.world.GetLocationName(lady.LocID));
             Record recordLord = new Record(descriptor, lord.ActID, lord.LocID, lord.RefID, lord.Married, HistEvent.Married);
             recordLord.AddHouse(lady.BornRefID);
@@ -809,15 +809,18 @@ namespace Next_Game
                 //birthing loop, once every 2 years
                 for (int year = lady.Married; year <= Game.gameYear; year += 2)
                 {
+                    /*
                     ActorSex sex = ActorSex.Male;
                     //new child (50/50 boy/girl)
                     if (rnd.Next(100) < 50)
                     { sex = ActorSex.Female; }
+                    
                     //get a random first name
                     string actorName = GetActorName(Game.world.GetGreatHouseName(lord.HouseID), sex, lord.RefID);
                     Passive child = new Family(actorName, ActorType.None, sex);
-                    child.Age = Game.gameYear - year;
-                    child.Born = year;
+                    */
+                    Passive child = CreateChild(lord, lady, year);
+                    /*
                     child.LocID = lady.LocID;
                     child.RefID = lady.RefID;
                     child.BornRefID = lady.RefID;
@@ -991,13 +994,14 @@ namespace Next_Game
                     record_0.AddActor(lord.ActID);
                     record_0.AddActor(lady.ActID);
                     Game.world.SetRecord(record_0);
+                    */
                     //over age?
                     if (Game.gameYear - year > 40)
                     { lady.Fertile = false; break; }
                     else
                     {
                         int num = rnd.Next(100);
-                        if (num < 10)
+                        if (num < (int)Global.CHILDBIRTH_DEATH)
                         {
                             //mother died at childbirth (10%) but child survived
                             PassiveActorFuneral(lady, year, ActorDied.Childbirth, child, lord);
@@ -1007,7 +1011,7 @@ namespace Next_Game
                         {
                             //can no longer have children
                             lady.Fertile = false;
-                            descriptor = string.Format("{0} suffered complications while giving birth to {1}", lady.Name, child.Name);
+                            string descriptor = string.Format("{0} suffered complications while giving birth to {1}", lady.Name, child.Name);
                             Record record_2 = new Record(descriptor, lady.ActID, lady.LocID, lady.RefID, year, HistEvent.Birthing);
                             Game.world.SetRecord(record_2);
                             break;
@@ -1016,20 +1020,21 @@ namespace Next_Game
                 }
             }
         }
-        
+
         /// <summary>
-        /// General purpose method to create a new child, born in current year with current generation
+        /// General purpose method to create a new child, born in current year with current generation.
         /// </summary>
         /// <param name="Lord">Provide a Great lord as an official father regardless of status</param>
         /// <param name="Lady">Provide a Great Lady as an official mother regardless of status</param>
         /// <param name="sex">You can specify a type</param>
         /// <param name="parents">Natural,Bastard or Adopted? (Bastard could be sired by either Mother or Father</param>
-        internal void CreateChild(Passive Lord, Passive Lady, ActorSex childSex = ActorSex.None, ActorParents parents = ActorParents.Normal)
+        /// <returns>Returns child object but this can be ignored unless required</returns>
+        internal Passive CreateChild(Passive Lord, Passive Lady, int year, ActorSex childSex = ActorSex.None, ActorParents parents = ActorParents.Normal)
         {
             ActorSex sex;
             //determine sex
             if (childSex == ActorSex.Male || childSex == ActorSex.Female)
-            { sex = childSex;  }
+            { sex = childSex; }
             else
             {
                 //new child (50/50 boy/girl)
@@ -1040,13 +1045,15 @@ namespace Next_Game
             //get a random first name
             string actorName = GetActorName(Game.world.GetGreatHouseName(Lord.HouseID), sex, Lady.RefID);
             Passive child = new Family(actorName, ActorType.None, sex);
-            child.Age = 0;
-            child.Born = Game.gameYear;
+            int age = Game.gameYear - year;
+            age = Math.Max(age, 0);
+            child.Age = age;
+            child.Born = year;
             child.LocID = Lady.LocID;
             child.RefID = Lady.RefID;
             child.BornRefID = Lord.RefID;
             child.HouseID = Lady.HouseID;
-            child.GenID = Game.gameGeneration;
+            child.GenID = Game.gameGeneration + 1;
             //family relations
             child.AddRelation(Lord.ActID, Relation.Father);
             child.AddRelation(Lady.ActID, Relation.Mother);
@@ -1060,7 +1067,7 @@ namespace Next_Game
             {
                 child.MaidenName = Game.world.GetGreatHouseName(Lord.HouseID);
                 child.Fertile = true;
-                child.Title = ActorType.Lady;
+                child.Title = ActorType.lady;
 
                 //loop list of Lord's family
                 foreach (KeyValuePair<int, Relation> kvp in dictTempFamily)
@@ -1194,30 +1201,48 @@ namespace Next_Game
                         }
                     }
                 }
+
                 //status (males - who is in line to inherit?)
                 if (sonCounter == 0)
                 { child.Title = ActorType.Heir; child.InLine = 1; }
                 else
-                { child.Title = ActorType.Lord; child.InLine = sonCounter; }
+                { child.Title = ActorType.lord; child.InLine = sonCounter; }
                 //update parent relations
                 Lord.AddRelation(child.ActID, Relation.Son);
                 Lady.AddRelation(child.ActID, Relation.Son);
-                //assign traits
-                InitialiseActorTraits(child, Lord, Lady);
-                //add to dictionaries
-                Game.world.SetPassiveActor(child);
-                //store at location
-                Location loc = Game.network.GetLocation(Lord.LocID);
-                loc.AddActor(child.ActID);
-                //record event
-                string descriptor = string.Format("{0}, Aid {1}, born at {2} to {3} {4} and {5} {6}",
-                    child.Name, child.ActID, Game.world.GetLocationName(Lady.LocID), Lord.Title, Lord.Name, Lady.Title, Lady.Name);
-                Record record_0 = new Record(descriptor, child.ActID, child.LocID, child.RefID, Game.gameYear, HistEvent.Born);
-                record_0.AddActor(Lord.ActID);
-                record_0.AddActor(Lady.ActID);
-                Game.world.SetRecord(record_0);
             }
+            //assign traits
+            InitialiseActorTraits(child, Lord, Lady);
+            //add to dictionaries
+            Game.world.SetPassiveActor(child);
+            //store at location
+            Location loc = Game.network.GetLocation(Lord.LocID);
+            loc.AddActor(child.ActID);
+            //record event
+            string secretText = null;
+            bool actualEvent = true;
+            string descriptor = string.Format("{0}, Aid {1}, born at {2} to {3} {4} and {5} {6}",
+                    child.Name, child.ActID, Game.world.GetLocationName(Lady.LocID), Lord.Title, Lord.Name, Lady.Title, Lady.Name);
+            if (child.Parents == ActorParents.Adopted)
+            {
+                secretText = string.Format("{0}, Aid {1}, adopted at {2} by {3} {4} and {5} {6}",
+                    child.Name, child.ActID, Game.world.GetLocationName(Lady.LocID), Lord.Title, Lord.Name, Lady.Title, Lady.Name);
+                actualEvent = false;
+            }
+            else if (child.Parents == ActorParents.Bastard)
+            {
+                secretText = string.Format("Bastard {0}, Aid {1}, born at {2} outside of the marriage of {3} {4} and {5} {6}",
+                    child.Name, child.ActID, Game.world.GetLocationName(Lady.LocID), Lord.Title, Lord.Name, Lady.Title, Lady.Name);
+                actualEvent = false;
+            }
+            Record record_0 = new Record(descriptor, child.ActID, child.LocID, child.RefID, child.Born, HistEvent.Born, actualEvent);
+            record_0.AddActor(Lord.ActID);
+            record_0.AddActor(Lady.ActID);
+            Game.world.SetRecord(record_0);
+            return child;
         }
+            
+        
 
 
         /// <summary>

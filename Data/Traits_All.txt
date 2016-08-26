@@ -299,7 +299,7 @@ Chance: 25
 Age: 15
 Nicknames: The Hideous, The Grotesque, The Unlovely, The Shocking, The Repulsive, The Repugnant, The Ogress
 
-Name: Screeching Chalkboard Voice
+Name: Annoying Voice
 Skill: Charm 
 Effect: -2
 Chance: 25

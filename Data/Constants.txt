@@ -4,6 +4,7 @@
 
 # Actors ---
 
-# INHERIT -> % chance of traits being inherited. Sons inherit from fathers, daughters from mothers
+# INHERIT_TRAIT -> % chance of traits being inherited. Sons inherit from fathers, daughters from mothers
 1: 40
-
+# CHILDBIRTH_DEATH
+2: 10

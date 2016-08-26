@@ -20,6 +20,7 @@ namespace Next_Game
         public int Year { get; set; }
         public int Turn { get; set; } = 0; //pre-game start events don't need this, hence '0'
         public string Text { get; set; } //descriptor
+        public bool Actual { get; set; } = true; //Is the record a true representation of actual events or a false one?
         public List<int> listOfActors; //actorID
         public List<int> listOfLocs; //locID
         public List<int> listOfHouses; //refID
@@ -30,7 +31,7 @@ namespace Next_Game
         {
             eventID = eventIndex++;
             Year = Game.gameYear;
-            Turn = Game.gameTurn;
+            //Turn = Game.gameTurn;
             //initialise lists
             listOfActors = new List<int>();
             listOfLocs = new List<int>();
@@ -39,7 +40,7 @@ namespace Next_Game
             listOfEvents = new List<HistEvent>();
         }
 
-        public Record(string description, int actorID, int locID, int refID, int year, HistEvent histEvent = 0, int itemID = 0)
+        public Record(string description, int actorID, int locID, int refID, int year, HistEvent histEvent = 0, bool actualEvent = true, int itemID = 0)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
@@ -47,6 +48,7 @@ namespace Next_Game
                 eventID = eventIndex++;
                 this.Year = year;
                 Turn = Game.gameTurn;
+                Actual = actualEvent;
                 //initialise lists
                 listOfActors = new List<int>();
                 listOfLocs = new List<int>();

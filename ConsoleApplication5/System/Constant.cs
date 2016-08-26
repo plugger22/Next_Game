@@ -6,7 +6,8 @@ namespace Next_Game
     public enum Global
     {
         None, //keep as first
-        INHERIT,
+        INHERIT_TRAIT,
+        CHILDBIRTH_DEATH,
         Count //keep as last
     }
 
@@ -20,7 +21,8 @@ namespace Next_Game
             arrayOfGlobals = new Global[(int)Global.Count];
             arrayOfConstants = new int[(int)Global.Count];
             //set up array of Globals
-            arrayOfGlobals[1] = Global.INHERIT;
+            arrayOfGlobals[1] = Global.INHERIT_TRAIT;
+            arrayOfGlobals[2] = Global.CHILDBIRTH_DEATH;
             }
 
         /// <summary>
