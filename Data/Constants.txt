@@ -6,5 +6,7 @@
 
 # INHERIT_TRAIT -> % chance of traits being inherited. Sons inherit from fathers, daughters from mothers
 1: 40
-# CHILDBIRTH_DEATH
+# CHILDBIRTH_DEATH -> % chance of Mother dying at the birth of her child
 2: 10
+# CHILDBIRTH_INFERTILE -> % chance of the Mother becoming infertile at the birth of her child
+3: 30

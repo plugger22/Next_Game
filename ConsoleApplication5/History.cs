@@ -820,6 +820,8 @@ namespace Next_Game
                     Passive child = new Family(actorName, ActorType.None, sex);
                     */
                     Passive child = CreateChild(lord, lady, year);
+                    if (lady.Status == ActorStatus.Dead && lady.Fertile == false)
+                    { break; }
                     /*
                     child.LocID = lady.LocID;
                     child.RefID = lady.RefID;
@@ -998,16 +1000,17 @@ namespace Next_Game
                     //over age?
                     if (Game.gameYear - year > 40)
                     { lady.Fertile = false; break; }
+                    /*
                     else
                     {
                         int num = rnd.Next(100);
                         if (num < (int)Global.CHILDBIRTH_DEATH)
                         {
-                            //mother died at childbirth (10%) but child survived
+                            //mother died at childbirth but child survived
                             PassiveActorFuneral(lady, year, ActorDied.Childbirth, child, lord);
                             break;
                         }
-                        else if (num < 30)
+                        else if (num < (int)Global.CHILDBIRTH_INFERTILE)
                         {
                             //can no longer have children
                             lady.Fertile = false;
@@ -1017,6 +1020,7 @@ namespace Next_Game
                             break;
                         }
                     }
+                    */
                 }
             }
         }
@@ -1239,6 +1243,23 @@ namespace Next_Game
             record_0.AddActor(Lord.ActID);
             record_0.AddActor(Lady.ActID);
             Game.world.SetRecord(record_0);
+            //childbirth issues
+            {
+                int num = rnd.Next(100);
+                if (num < (int)Global.CHILDBIRTH_DEATH)
+                {
+                    //Mother died at childbirth but child survived
+                    PassiveActorFuneral(Lady, year, ActorDied.Childbirth, child, Lord);
+                }
+                else if (num < (int)Global.CHILDBIRTH_INFERTILE)
+                {
+                    //Complications -> Mother can no longer have children
+                    Lady.Fertile = false;
+                    descriptor = string.Format("{0} suffered complications while giving birth to {1}", Lady.Name, child.Name);
+                    Record record_2 = new Record(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistEvent.Birthing);
+                    Game.world.SetRecord(record_2);
+                }
+            }
             return child;
         }
             

@@ -416,16 +416,6 @@ namespace Next_Game
                                     break;
                             }
                             break;
-                        case RLKey.E:
-                            switch (_menuMode)
-                            {
-                                case MenuMode.Main:
-                                    //Show Full message log
-                                    infoChannel.SetInfoList(messageLog.GetMessageList(), ConsoleDisplay.Multi);
-                                    infoChannel.InsertHeader(new Snippet("--- Message Log ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
-                                    break;
-                            }
-                            break;
                         case RLKey.C:
                             switch (_menuMode)
                             {
@@ -460,6 +450,16 @@ namespace Next_Game
                                     infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                     _mouseOn = true;
                                     _inputState = 1;
+                                    break;
+                            }
+                            break;
+                        case RLKey.E:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    //Show Full message log
+                                    infoChannel.SetInfoList(messageLog.GetMessageList(), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- Message Log ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                             }
                             break;

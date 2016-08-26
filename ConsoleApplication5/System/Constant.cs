@@ -8,6 +8,7 @@ namespace Next_Game
         None, //keep as first
         INHERIT_TRAIT,
         CHILDBIRTH_DEATH,
+        CHILDBIRTH_INFERTILE,
         Count //keep as last
     }
 
@@ -23,6 +24,7 @@ namespace Next_Game
             //set up array of Globals
             arrayOfGlobals[1] = Global.INHERIT_TRAIT;
             arrayOfGlobals[2] = Global.CHILDBIRTH_DEATH;
+            arrayOfGlobals[3] = Global.CHILDBIRTH_INFERTILE;
             }
 
         /// <summary>

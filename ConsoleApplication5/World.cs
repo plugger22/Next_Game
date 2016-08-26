@@ -1144,7 +1144,7 @@ namespace Next_Game
                     recordList =
                         from record in dictRecords
                         from eventType in record.Value.listOfEvents
-                        where eventType == HistEvent.Born
+                        where eventType == HistEvent.Birthing
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
