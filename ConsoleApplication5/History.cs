@@ -820,7 +820,7 @@ namespace Next_Game
                     Passive child = new Family(actorName, ActorType.None, sex);
                     */
                     Passive child = CreateChild(lord, lady, year);
-                    if (lady.Status == ActorStatus.Dead && lady.Fertile == false)
+                    if (lady.Status == ActorStatus.Dead || lady.Fertile == false)
                     { break; }
                     /*
                     child.LocID = lady.LocID;
@@ -1255,7 +1255,7 @@ namespace Next_Game
                 {
                     //Complications -> Mother can no longer have children
                     Lady.Fertile = false;
-                    descriptor = string.Format("{0} suffered complications while giving birth to {1}", Lady.Name, child.Name);
+                    descriptor = string.Format("{0}, Aid {1} suffered complications while giving birth to {2}", Lady.Name, Lady.ActID, child.Name);
                     Record record_2 = new Record(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistEvent.Birthing);
                     Game.world.SetRecord(record_2);
                 }
