@@ -26,7 +26,8 @@ namespace Next_Game
         //traits
         private List<Trait> listOfTraits; //main
         private Trait[,][] arrayOfTraits; //filtered sets for fast random access
-
+        //secrets
+        private List<Secret> listOfSecrets;
         static Random rnd;
 
         /// <summary>
@@ -47,6 +48,7 @@ namespace Next_Game
             arrayOfGeoNames = new string[(int)GeoType.Count][];
             listOfTraits = new List<Trait>();
             arrayOfTraits = new Trait[(int)TraitType.Count, (int)ActorSex.Count][];
+            listOfSecrets = new List<Secret>();
         }
 
         /// <summary>
@@ -1223,8 +1225,9 @@ namespace Next_Game
             Location loc = Game.network.GetLocation(Lord.LocID);
             loc.AddActor(child.ActID);
             //record event
-            string secretText = null;
             bool actualEvent = true;
+            string secretText = null;
+            int secretStrength = 3; //for both being a bastard and adopted
             string descriptor = string.Format("{0}, Aid {1}, born at {2} to {3} {4} and {5} {6}",
                     child.Name, child.ActID, Game.world.GetLocationName(Lady.LocID), Lord.Title, Lord.Name, Lady.Title, Lady.Name);
             if (child.Parents == ActorParents.Adopted)
@@ -1243,6 +1246,13 @@ namespace Next_Game
             record_0.AddActor(Lord.ActID);
             record_0.AddActor(Lady.ActID);
             Game.world.SetRecord(record_0);
+            //secret present?
+            if (secretText != null)
+            {
+                Secret secret = new Secret(SecretType.Parents, year, secretText, secretStrength);
+                listOfSecrets.Add(secret);
+            }
+           
             //childbirth issues
             {
                 int num = rnd.Next(100);
