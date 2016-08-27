@@ -406,6 +406,7 @@ namespace Next_Game
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
+                                case MenuMode.Actor_Passive:
                                     //show Actor
                                     //infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
                                     infoChannel.ClearConsole(ConsoleDisplay.Input);
