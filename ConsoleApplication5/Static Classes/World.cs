@@ -75,7 +75,7 @@ namespace Next_Game
             InitiatePlayerActors(Game.history.GetPlayerActors(), 1);
             InitialiseHouses();
             InitialiseTraits();
-            
+            InitialiseSecrets();
             Console.WriteLine(Environment.NewLine + "--- Game Input");
         }
 
@@ -950,45 +950,56 @@ namespace Next_Game
         /// </summary>
         private void CheckGreatLords()
         {
-
             //loop all passive actors
-            bool foundSon = false;
+            bool foundSon;
             int wifeID = 0;
             int yearUpper; //upper and lower bounds for determining what year child is born
             int yearLower;
             int yearBorn;
-            foreach(KeyValuePair<int, Passive> kvp in dictPassiveActors)
+            List<int> listOfLords = new List<int>(); //ActID of lords who are in need of a son
+            List<int> listOfLadies = new List<int>(); //ActID of ladies who are in need of a son (lord and lady have identical indexes)
+            foreach (KeyValuePair<int, Passive> kvp in dictPassiveActors)
             {
+                foundSon = false;
                 //lord?
                 if (kvp.Value.Title == ActorType.Lord && kvp.Value.Status != ActorStatus.Dead)
                 {
                     //Loop family looking for a son
                     SortedDictionary<int, ActorRelation> tempDictFamily = kvp.Value.GetFamily();
-                    foreach(KeyValuePair<int, ActorRelation> family_kvp in tempDictFamily)
+                    foreach (KeyValuePair<int, ActorRelation> family_kvp in tempDictFamily)
                     {
                         if (family_kvp.Value == ActorRelation.Son)
                         { foundSon = true;}
-                        else if (family_kvp.Value == ActorRelation.Wife)
+                        else if(family_kvp.Value == ActorRelation.Wife)
                         { wifeID = family_kvp.Key; }
                     }
-                //if no son provide one
-                if (foundSon == false)
+                    //if no son provide one
+                    if (foundSon == false)
                     {
-                        //50/50 bastard or adopted
-                        ActorParents parents = ActorParents.Bastard;
-                        if (rnd.Next(100) < 50)
-                        { parents = ActorParents.Adopted; }
-                        //create a child
-                        Passive Lord = kvp.Value;
-                        Passive Lady = GetPassiveActor(wifeID);
-                        //get year
-                        yearUpper = 1200;
-                        if (Lady.Status == ActorStatus.Dead)
-                        { yearUpper = Lady.Died; }
-                        yearLower = Lady.Married;
-                        yearBorn = rnd.Next(yearLower, yearUpper);
-                        Game.history.CreateChild(Lord, Lady, yearBorn, ActorSex.Male, parents);
+                        listOfLords.Add(kvp.Value.ActID);
+                        listOfLadies.Add(wifeID);
                     }
+                }
+            }
+            //who needs a son?
+            if (listOfLords.Count > 0)
+            {
+                foreach (int lordID in listOfLords)
+                {
+                    //50/50 bastard or adopted
+                    ActorParents parents = ActorParents.Bastard;
+                    if (rnd.Next(100) < 50)
+                    { parents = ActorParents.Adopted; }
+                    //create a child
+                    Passive Lord = GetPassiveActor(lordID);
+                    Passive Lady = GetPassiveActor(wifeID);
+                    //get year
+                    yearUpper = 1200;
+                    if (Lady.Status == ActorStatus.Dead)
+                    { yearUpper = Lady.Died; }
+                    yearLower = Lady.Married;
+                    yearBorn = rnd.Next(yearLower, yearUpper);
+                    Game.history.CreateChild(Lord, Lady, yearBorn, ActorSex.Male, parents);
                 }
             }
         }
@@ -1017,7 +1028,7 @@ namespace Next_Game
         /// <summary>
         /// populates dictionary of Secrets
         /// </summary>
-        private void IntialiseSecrets()
+        private void InitialiseSecrets()
         {
             List<Secret> tempList = Game.history.GetSecrets();
             foreach (Secret secret in tempList)
@@ -1037,6 +1048,7 @@ namespace Next_Game
             int numBannerLords = dictAllHouses.Count - numGreatHouses;
             int numActors = dictAllActors.Count;
             int numChildren = numActors - (numGreatHouses * 2) - numBannerLords;
+            int numSecrets = dictSecrets.Count;
             //data
             listStats.Add(new Snippet("--- Generation Statistics", RLColor.Yellow, RLColor.Black));
             listStats.Add(new Snippet(string.Format("{0} Locations", numLocs )));
@@ -1045,6 +1057,7 @@ namespace Next_Game
             listStats.Add(new Snippet(string.Format("{0} Special Locations", numSpecialLocs)));
             listStats.Add(new Snippet("1 Capital"));
             listStats.Add(new Snippet(string.Format("{0} Actors ({1} Children)", numActors, numChildren)));
+            listStats.Add(new Snippet(string.Format("{0} Secrets", numSecrets)));
             //checksum
             if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
                 listStats.Add(new Snippet("Error: Locations don't tally", RLColor.Red, RLColor.Black));
@@ -1247,7 +1260,11 @@ namespace Next_Game
             return snippetList;
         }
 
-        public void ShowSecretsRL()
+        /// <summary>
+        /// Generate a list of All Secrets
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowSecretsRL()
         {
             List<string> tempList = new List<string>();
             IEnumerable<string> secretList =
@@ -1259,6 +1276,7 @@ namespace Next_Game
             List<Snippet> listData = new List<Snippet>();
             foreach(string data in tempList)
             { listData.Add(new Snippet(data)); }
+            return listData;
         }
         //new Methods above here
     }

@@ -1045,7 +1045,7 @@ namespace Next_Game
             {
                 //new child (50/50 boy/girl)
                 sex = ActorSex.Male;
-                if (rnd.Next(100) < 50)
+                if (rnd.Next(100) < 90)
                 { sex = ActorSex.Female; }
             }
             //get a random first name
@@ -1255,22 +1255,25 @@ namespace Next_Game
                 Lady.AddSecret(secret.SecretID);
                 child.AddSecret(secret.SecretID);
             }
-           
             //childbirth issues
             {
-                int num = rnd.Next(100);
-                if (num < (int)Global.CHILDBIRTH_DEATH)
+                //only if a normal birth
+                if (parents == ActorParents.Normal)
                 {
-                    //Mother died at childbirth but child survived
-                    PassiveActorFuneral(Lady, year, ActorDied.Childbirth, child, Lord);
-                }
-                else if (num < (int)Global.CHILDBIRTH_INFERTILE)
-                {
-                    //Complications -> Mother can no longer have children
-                    Lady.Fertile = false;
-                    descriptor = string.Format("{0}, Aid {1} suffered complications while giving birth to {2}", Lady.Name, Lady.ActID, child.Name);
-                    Record record_2 = new Record(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistEvent.Birthing);
-                    Game.world.SetRecord(record_2);
+                    int num = rnd.Next(100);
+                    if (num < (int)Global.CHILDBIRTH_DEATH)
+                    {
+                        //Mother died at childbirth but child survived
+                        PassiveActorFuneral(Lady, year, ActorDied.Childbirth, child, Lord);
+                    }
+                    else if (num < (int)Global.CHILDBIRTH_INFERTILE)
+                    {
+                        //Complications -> Mother can no longer have children
+                        Lady.Fertile = false;
+                        descriptor = string.Format("{0}, Aid {1} suffered complications while giving birth to {2}", Lady.Name, Lady.ActID, child.Name);
+                        Record record_2 = new Record(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistEvent.Birthing);
+                        Game.world.SetRecord(record_2);
+                    }
                 }
             }
             return child;

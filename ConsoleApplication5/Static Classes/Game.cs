@@ -550,7 +550,7 @@ namespace Next_Game
                             {
                                 case MenuMode.Debug:
                                     //Show All Secrets log
-                                    infoChannel.SetInfoList(messageLog.GetMessageList(), ConsoleDisplay.Multi);
+                                    infoChannel.SetInfoList(world.ShowSecretsRL(), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- Secrets ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                             }
