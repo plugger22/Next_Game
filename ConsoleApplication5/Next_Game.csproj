@@ -70,15 +70,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actor.cs" />
+    <Compile Include="Game World\Actor.cs" />
     <Compile Include="Archive.cs" />
     <Compile Include="Cartographic\GeoCluster.cs" />
-    <Compile Include="Secret.cs" />
+    <Compile Include="Game World\Secret.cs" />
     <Compile Include="System\FileImport.cs" />
     <Compile Include="System\Constant.cs" />
     <Compile Include="Static Classes\Trait.cs" />
     <Compile Include="System\Record.cs" />
-    <Compile Include="House.cs" />
+    <Compile Include="Game World\House.cs" />
     <Compile Include="Static Classes\History.cs" />
     <Compile Include="System\Color.cs" />
     <Compile Include="System\InfoChannel.cs" />

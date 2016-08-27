@@ -1247,7 +1247,19 @@ namespace Next_Game
             return snippetList;
         }
 
-
+        public void ShowSecretsRL()
+        {
+            List<string> tempList = new List<string>();
+            IEnumerable<string> secretList =
+                from secret in dictSecrets
+                orderby secret.Value.Year
+                select Convert.ToString(secret.Value.Year + " " + secret.Value.Description);
+            tempList = secretList.ToList();
+            //snippet list
+            List<Snippet> listData = new List<Snippet>();
+            foreach(string data in tempList)
+            { listData.Add(new Snippet(data)); }
+        }
         //new Methods above here
     }
 }

@@ -545,6 +545,16 @@ namespace Next_Game
                                     break;
                             }
                             break;
+                        case RLKey.S:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Debug:
+                                    //Show All Secrets log
+                                    infoChannel.SetInfoList(messageLog.GetMessageList(), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- Secrets ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
                         //Player controlled character selected
                         case RLKey.Number1:
                         case RLKey.Number2:
