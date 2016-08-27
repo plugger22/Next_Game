@@ -600,7 +600,7 @@ namespace Next_Game
                             if (_menuMode == MenuMode.Main)
                             {
                                 _rootConsole.Close();
-                                Environment.Exit(1);
+                                //Environment.Exit(1); - not needed and causes OpenTK error
                             }
                             break;
                         case RLKey.Escape:
