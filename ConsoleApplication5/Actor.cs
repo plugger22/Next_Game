@@ -1,4 +1,5 @@
 ﻿using Next_Game.Cartographic;
+using System;
 using System.Collections.Generic;
 
 namespace Next_Game
@@ -45,6 +46,8 @@ namespace Next_Game
         public int[] arrayOfTraitID { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
+        //secrets
+        private List<int> listOfSecrets;
 
 
         //default constructor 
@@ -60,6 +63,7 @@ namespace Next_Game
             arrayOfTraitID = new int[(int)TraitType.Count];
             arrayOfTraitEffects = new int[(int)TraitAge.Count, (int)TraitType.Count];
             arrayOfTraitNames = new string[(int)TraitType.Count];
+            listOfSecrets = new List<int>();
         }
 
         /// <summary>
@@ -79,6 +83,7 @@ namespace Next_Game
             arrayOfTraitID = new int[(int)TraitType.Count];
             arrayOfTraitEffects = new int[(int)TraitAge.Count, (int)TraitType.Count];
             arrayOfTraitNames = new string[(int)TraitType.Count];
+            listOfSecrets = new List<int>();
         }
 
         public void SetActorPosition(Position posLoc)
@@ -87,8 +92,17 @@ namespace Next_Game
         public Position GetActorPosition()
         { return actorPos; }
 
-        /*public int GetActorID()
-        { return ActID; }*/
+        public void AddSecret(int secretID)
+        {
+            if (secretID > 0)
+            { listOfSecrets.Add(secretID); }
+            else
+            { Console.WriteLine("Error: Actor.AddSecret: invalid Secret ID {0}", secretID); }
+        }
+
+        public List<int> GetSecrets()
+        { return listOfSecrets; }
+
     }
 
 

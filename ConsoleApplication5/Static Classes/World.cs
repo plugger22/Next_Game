@@ -21,6 +21,7 @@ namespace Next_Game
         private Dictionary<int, Record> dictRecords; //all historical records in a central collection (key is eventID)
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         private Dictionary<int, Trait> dictTraits; //all triats (key is traitID)
+        private Dictionary<int, Secret> dictSecrets; //all secrets (key is secretID)
         //public int GameTurn { get; set; } = 1;
 
         //default constructor
@@ -38,6 +39,7 @@ namespace Next_Game
             dictRecords = new Dictionary<int, Record>();
             dictGeoClusters = new Dictionary<int, GeoCluster>();
             dictTraits = new Dictionary<int, Trait>();
+            dictSecrets = new Dictionary<int, Secret>();
         }
 
 
@@ -431,6 +433,7 @@ namespace Next_Game
                         }
                     }
                 }
+
                 //family
                 if (person is Passive)
                 {
@@ -456,6 +459,20 @@ namespace Next_Game
                         }
                     }
                 }
+
+                //secrets
+                List<int> listOfSecrets = person.GetSecrets();
+                if (listOfSecrets.Count > 0)
+                {
+                    listToDisplay.Add(new Snippet("Secrets", RLColor.Brown, RLColor.Black));
+                    foreach (int secretID in listOfSecrets)
+                    {
+                        Secret secret = GetSecret(secretID);
+                        if (secret != null)
+                        { listToDisplay.Add(new Snippet(secret.Description)); }
+                    }
+                }
+
                 //personal history
                 List<string> actorHistory = GetActorRecords(person.ActID);
                 if (actorHistory.Count > 0)
@@ -962,6 +979,16 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// populates dictionary of Secrets
+        /// </summary>
+        private void IntialiseSecrets()
+        {
+            List<Secret> tempList = Game.history.GetSecrets();
+            foreach (Secret secret in tempList)
+            { dictSecrets.Add(secret.SecretID, secret); }
+        }
+
+        /// <summary>
         /// places a message in info panel detailing all relevant data for a single generation
         /// </summary>
         public void ShowGeneratorStatsRL()
@@ -1101,6 +1128,15 @@ namespace Next_Game
             { return trait; }
             return null;
         }
+
+        internal Secret GetSecret(int secretID)
+        {
+            Secret secret = new Secret();
+            if (dictSecrets.TryGetValue(secretID, out secret))
+            { return secret; }
+            return null;
+        }
+            
 
         internal void SetRecord(Record record)
         {

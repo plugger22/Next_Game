@@ -1249,8 +1249,11 @@ namespace Next_Game
             //secret present?
             if (secretText != null)
             {
-                Secret secret = new Secret(SecretType.Parents, year, secretText, secretStrength);
+                Secret_Actor secret = new Secret_Actor(SecretType.Parents, year, secretText, secretStrength, child.ActID);
                 listOfSecrets.Add(secret);
+                Lord.AddSecret(secret.SecretID);
+                Lady.AddSecret(secret.SecretID);
+                child.AddSecret(secret.SecretID);
             }
            
             //childbirth issues
@@ -1346,6 +1349,9 @@ namespace Next_Game
 
         internal List<Trait> GetTraits()
         { return listOfTraits; }
+
+        internal List<Secret> GetSecrets()
+        { return listOfSecrets; }
 
         /// <summary>
         /// returns a Trait from the list of Traits from a provided TraitID
