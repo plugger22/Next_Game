@@ -178,7 +178,7 @@ namespace Next_Game
                             _actorID = Convert.ToInt32(_multiData);
                             infoChannel.SetInfoList(world.ShowActorRL(_actorID), ConsoleDisplay.Multi);
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
-                            infoChannel.AppendInfoList(new Snippet("Press LEFT or RIGHT ARROWS to change Actors, ESC to exit", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
+                            infoChannel.AppendInfoList(new Snippet("Press LEFT or RIGHT ARROWS to change Actors, ENTER or ESC to exit", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
                             keyPress = null; //to prevent Enter keypress from causing the date to tick up
                             _menuMode = MenuMode.Actor_Passive;
                             break;
