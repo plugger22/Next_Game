@@ -13,7 +13,7 @@ namespace Next_Game
     public enum ActorParents {Normal, Bastard, Adopted};
     public enum ActorDied {None, Childbirth} //how died?
     public enum WifeStatus {None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife}
-    public enum Relation {None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister}
+    public enum ActorRelation {None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister}
 
     internal class Actor
     {
@@ -150,16 +150,16 @@ namespace Next_Game
         public bool Fertile { get; set; } = false; //females - can have children?
         public string MaidenName { get; set; } = null; //used to store a wife's maiden name prior to marriage
         public WifeStatus WifeNumber { get; set; } = WifeStatus.None;
-        private SortedDictionary<int, Relation> dictFamily; //stores list of all relations (keyed off actorID)
+        private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
 
         public Passive()
         {
-            dictFamily = new SortedDictionary<int, Relation>();
+            dictFamily = new SortedDictionary<int, ActorRelation>();
         }
 
         public Passive(string name, ActorType title, ActorSex sex = ActorSex.Male) : base(name, title, sex)
         {
-            dictFamily = new SortedDictionary<int, Relation>();
+            dictFamily = new SortedDictionary<int, ActorRelation>();
         }
 
         /// <summary>
@@ -167,9 +167,9 @@ namespace Next_Game
         /// </summary>
         /// <param name="actorID"></param>
         /// <param name="relation">enum Actor.cs</param>
-        public void AddRelation(int actorID, Relation relation)
+        public void AddRelation(int actorID, ActorRelation relation)
         {
-            if (actorID > 0 && relation != Relation.None)
+            if (actorID > 0 && relation != ActorRelation.None)
             { dictFamily.Add(actorID, relation); }
         }
 
@@ -177,7 +177,7 @@ namespace Next_Game
         /// returns sorted dict of Family members (sorted by enum Actor.cs Relation order)
         /// </summary>
         /// <returns></returns>
-        public SortedDictionary<int, Relation> GetFamily()
+        public SortedDictionary<int, ActorRelation> GetFamily()
         { return dictFamily; }
     }
 

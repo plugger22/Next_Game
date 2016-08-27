@@ -75,7 +75,7 @@ namespace Next_Game
             InitiatePlayerActors(Game.history.GetPlayerActors(), 1);
             InitialiseHouses();
             InitialiseTraits();
-
+            
             Console.WriteLine(Environment.NewLine + "--- Game Input");
         }
 
@@ -438,12 +438,12 @@ namespace Next_Game
                 if (person is Passive)
                 {
                     Passive tempPerson = person as Passive;
-                    SortedDictionary<int, Relation> dictTempFamily = tempPerson.GetFamily();
+                    SortedDictionary<int, ActorRelation> dictTempFamily = tempPerson.GetFamily();
                     if (dictTempFamily.Count > 0)
                     {
                         listToDisplay.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
                         string maidenName;
-                        foreach(KeyValuePair<int, Relation> kvp in dictTempFamily)
+                        foreach(KeyValuePair<int, ActorRelation> kvp in dictTempFamily)
                         {
                             Passive relPerson = GetPassiveActor(kvp.Key);
                             RLColor familyColor = RLColor.White;
@@ -920,6 +920,8 @@ namespace Next_Game
                     }
                 }*/
             }
+            //hand out bastards and adopted sons to lords with no heirs
+            CheckGreatLords();
             //fill minor houses with BannerLords
             foreach(KeyValuePair<int, House> kvp in dictAllHouses)
             {
@@ -944,16 +946,50 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// checks lords for various conditions
+        /// checks GreatLords for having no sons at Game Start
         /// </summary>
         private void CheckGreatLords()
         {
+
             //loop all passive actors
+            bool foundSon = false;
+            int wifeID = 0;
+            int yearUpper; //upper and lower bounds for determining what year child is born
+            int yearLower;
+            int yearBorn;
             foreach(KeyValuePair<int, Passive> kvp in dictPassiveActors)
             {
                 //lord?
                 if (kvp.Value.Title == ActorType.Lord && kvp.Value.Status != ActorStatus.Dead)
-                { }
+                {
+                    //Loop family looking for a son
+                    SortedDictionary<int, ActorRelation> tempDictFamily = kvp.Value.GetFamily();
+                    foreach(KeyValuePair<int, ActorRelation> family_kvp in tempDictFamily)
+                    {
+                        if (family_kvp.Value == ActorRelation.Son)
+                        { foundSon = true;}
+                        else if (family_kvp.Value == ActorRelation.Wife)
+                        { wifeID = family_kvp.Key; }
+                    }
+                //if no son provide one
+                if (foundSon == false)
+                    {
+                        //50/50 bastard or adopted
+                        ActorParents parents = ActorParents.Bastard;
+                        if (rnd.Next(100) < 50)
+                        { parents = ActorParents.Adopted; }
+                        //create a child
+                        Passive Lord = kvp.Value;
+                        Passive Lady = GetPassiveActor(wifeID);
+                        //get year
+                        yearUpper = 1200;
+                        if (Lady.Status == ActorStatus.Dead)
+                        { yearUpper = Lady.Died; }
+                        yearLower = Lady.Married;
+                        yearBorn = rnd.Next(yearLower, yearUpper);
+                        Game.history.CreateChild(Lord, Lady, yearBorn, ActorSex.Male, parents);
+                    }
+                }
             }
         }
 

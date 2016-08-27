@@ -123,12 +123,14 @@ namespace Next_Game
                     menuColorBack = RLColor.LightGray;
                     //input categories
                     menuArrayCategories[0] = "Debug Map ---";
+                    menuArrayCategories[1] = "Info ---";
                     menuArrayCategories[3] = "Switch ---";
                     //Debug menu commands
                     menuArrayText[0, 0] = "[G] Draw Route";
                     menuArrayText[0, 1] = "[D] Route Debug";
                     menuArrayText[0, 2] = "[R] Routes";
                     menuArrayText[0, 3] = "[M] Map";
+                    menuArrayText[1, 0] = "[S] Show Secrets";
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
