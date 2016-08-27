@@ -9,7 +9,7 @@ using Next_Game.Cartographic;
 
 namespace Next_Game
 {
-    public enum MenuMode {Main, Actor, Debug, Record} //distinct menu sets (Menu.cs)
+    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record } //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi} //different console windows (Menu window handled independently by Menu.cs)
     public enum SpecialInput {Normal, MultiKey, Scrolling} //special input modes
 
@@ -71,6 +71,7 @@ namespace Next_Game
         private static int _multiCaller = 0; //each instance that calls multi key input has a unique ID which is > 0
         private static string _multiData = null; //multi key input is stored here
         private static int _inputState = 0; //used to differentiate suquential levels of input for individual commands
+        private static int _actorID = 0; //used for special MenuMode.Actor_Passive to flip between actors using <- & ->
         private static MenuMode _menuMode = MenuMode.Main; //menu mode in operation (corresponds to enum above)
         public static SpecialInput _inputMode = SpecialInput.Normal; //special input mode, default none
         public static bool _fullConsole = false; //set to true by InfoChannel.DrawInfoConsole if multiConsole is maxxed out
@@ -174,8 +175,12 @@ namespace Next_Game
                     {
                         case 1:
                             //Show Actor (input actorID)
-                            infoChannel.SetInfoList(world.ShowActorRL(Convert.ToInt32(_multiData)), ConsoleDisplay.Multi);
+                            _actorID = Convert.ToInt32(_multiData);
+                            infoChannel.SetInfoList(world.ShowActorRL(_actorID), ConsoleDisplay.Multi);
+                            infoChannel.ClearConsole(ConsoleDisplay.Input);
+                            infoChannel.AppendInfoList(new Snippet("Press LEFT or RIGHT ARROWS to change Actors, ESC to exit", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
                             keyPress = null; //to prevent Enter keypress from causing the date to tick up
+                            _menuMode = MenuMode.Actor_Passive;
                             break;
                     }
                     //reset
@@ -327,7 +332,7 @@ namespace Next_Game
                             case RLKey.P:
                                 switch (_menuMode)
                                 {
-                                    case MenuMode.Actor:
+                                    case MenuMode.Actor_Active:
                                         //move Player character from A to B
                                         _renderRequired = true;
                                         //valid location?
@@ -509,7 +514,7 @@ namespace Next_Game
                                     //Show Player Characters
                                     infoChannel.SetInfoList(world.ShowPlayerActorsRL(), ConsoleDisplay.Multi);
                                     break;
-                                case MenuMode.Actor:
+                                case MenuMode.Actor_Active:
                                     //move Player characters around map
                                     List<Snippet> charList = new List<Snippet>();
                                     charList.Add(world.GetActorStatusRL(_charIDSelected));
@@ -551,7 +556,7 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
-                                        _menuMode = menu.SwitchMenuMode(MenuMode.Actor);
+                                        _menuMode = menu.SwitchMenuMode(MenuMode.Actor_Active);
                                         _charIDSelected = (int)keyPress.Key - 109; //based on a system where '1' is '110'
                                         List<Snippet> infoList = new List<Snippet>();
                                         infoList.Add(world.ShowSelectedActor(_charIDSelected));
@@ -560,13 +565,35 @@ namespace Next_Game
                                 }
                             }
                             break;
+                        case RLKey.Left:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Actor_Passive:
+                                    //Left Arrow -> show Actor with ID--
+                                    _actorID--;
+                                    _actorID = Math.Max(_actorID, 1);
+                                    infoChannel.SetInfoList(world.ShowActorRL(_actorID), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
+                        case RLKey.Right:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Actor_Passive:
+                                    //Right Arrow -> show Actor with ID--
+                                    _actorID++;
+                                    infoChannel.SetInfoList(world.ShowActorRL(_actorID), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
                         case RLKey.Enter:
                             map.UpdateMap();
                             map.UpdatePlayers(world.MoveActors());
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
                             gameTurn++;
                             infoChannel.AppendInfoList(new Snippet(ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
-                            
+                            if (_menuMode == MenuMode.Actor_Passive)
+                            { _menuMode = MenuMode.Main; }
                             break;
                         case RLKey.X:
                             //exit application from Main Menu
