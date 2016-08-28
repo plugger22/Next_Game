@@ -299,7 +299,7 @@ namespace Next_Game
                 if ((int)person.Office > 0)
                 { listToDisplay.Add(new Snippet(string.Format("Office: {0}", person.Office), RLColor.Yellow, RLColor.Black)); }
                 listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
-                listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
+                //listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
                 
                 //stats - natural ---

@@ -5,7 +5,8 @@ using System.Collections.Generic;
 namespace Next_Game
 {
     public enum ActorStatus {AtLocation, Travelling, Dead};
-    public enum ActorType {None, Ursuper, Loyal_Follower, Lord, Lady, BannerLord, Prince, Princess, Heir, lord, lady, Knight, Advisor, Special }; //lord and lady are children of Lords, Heir is first in line to inherit
+    //lord and lady are children of Lords, Heir is first in line to inherit. Note: keep Knight immediately after Bannerlord with Advisor and Special behind Knight.
+    public enum ActorType {None, Ursuper, Loyal_Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special }; 
     public enum ActorOffice {None, King, Queen, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch, Master_of_Coin, Master_of_Whisperers, Master_of_Laws,
                              Master_of_Ships, Warden_of_the_North, Warden_of_the_East, Warden_of_the_South, Warden_of_the_West }
     public enum ActorRealm {None, Head_of_Noble_House, Head_of_House}
@@ -191,6 +192,7 @@ namespace Next_Game
         { return dictFamily; }
     }
 
+
     //BannerLords
     class BannerLord : Passive
     {
@@ -200,12 +202,14 @@ namespace Next_Game
         { }
     }
 
+
     //Knights - attached to a noble house
     class Knight : Passive
     {
         public Knight(string name, ActorType type = ActorType.Knight, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }
     }
+
 
     //Kings Council Members
     class Advisor : Passive

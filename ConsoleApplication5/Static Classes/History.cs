@@ -239,7 +239,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Initialise Passive Actors at game start (populate world)
+        /// Initialise Passive Actors at game start (populate world) - Nobles, Bannerlords and Knights only
         /// </summary>
         /// <param name="lastName"></param>
         /// <param name="type"></param>
@@ -250,19 +250,22 @@ namespace Next_Game
         /// <returns></returns>
         internal Passive CreatePassiveActor(string lastName, ActorType type, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male, WifeStatus wifeStatus = WifeStatus.None)
         {
-            Passive actor = null;
             //get a random first name
             string actorName = GetActorName(lastName, sex, refID);
 
-            //create actor
+            Passive actor = null;
+            //Lord or lady
             if (type == ActorType.Lady || type == ActorType.Lord )
             { actor = new Noble(actorName, type, sex); actor.Realm = ActorRealm.Head_of_House; }
+            //bannerlord
             else if (type == ActorType.BannerLord)
             { actor = new BannerLord(actorName, type, sex); actor.Realm = ActorRealm.Head_of_House; }
-            else if (type == ActorType.Lord)
-            { actor = new Knight(actorName, type, sex); actor.Realm = ActorRealm.Head_of_Noble_House; }
-            else if (type == ActorType.Lady)
-            { actor = new Knight(actorName, type, sex); }
+            //knight
+            else if (type == ActorType.Knight)
+            { actor = new Knight(actorName, type, sex); actor.Realm = ActorRealm.None; }
+            //illegal actor type
+            else
+            { Console.WriteLine("Error: History.CreatePassiveActor: invalid ActorType"); return actor; }
 
             //age (older men, younger wives
             int age = 0;
