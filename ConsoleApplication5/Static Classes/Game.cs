@@ -511,6 +511,7 @@ namespace Next_Game
                         case RLKey.M:
                             //Draw Map: applies to all menu modes
                             map.UpdateMap(false, true);
+                            map.ShowHouses();
                             break;
                         case RLKey.P:
                             switch (_menuMode)

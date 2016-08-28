@@ -27,6 +27,7 @@ namespace Next_Game.Cartographic
         private int margin; //spacing on all sides for whole map (used for top and left sides)
         private int offsetVertical; //number of rows to allow for header at top 
         private int offsetHorizontal; //number of rows to allow for indexes at left
+        private bool _houses = false; //toggle, show house #'s (true) or location squares (false)
         
 
         //default constructor assumes a square map/grid & random seed
@@ -1140,19 +1141,25 @@ namespace Next_Game.Cartographic
                                 //location -filled square
                                 case 1:
                                     subCell[5] = 219;
-                                    foreColor5 = RLColor.Cyan;
-                                    //override with a number if a house
+                                    foreColor5 = RLColor.Brown;
                                     houseID = mapGrid[(int)MapLayer.Houses, column, row];
                                     if (houseID > 0)
                                     {
                                         // house
                                         if (houseID < 99) 
                                         {
-                                            subCell[5] = houseID + 48;
-                                            foreColor5 = Color._bannerlord;
+                                            //override with a number if a house
+                                            if (_houses == true)
+                                            { subCell[5] = houseID + 48; foreColor5 = Color._bannerlord;}
+                                            
                                             //if a Noble house Capital show as different color
                                             if (mapGrid[(int)MapLayer.Capitals, column, row] > 0)
-                                            { foreColor5 = Color._house; backColor5 = Color._land; }
+                                            {
+                                                if (_houses == true)
+                                                { foreColor5 = RLColor.Red; backColor5 = Color._land; }
+                                                else
+                                                { foreColor5 = RLColor.Magenta; }
+                                            }
                                         }
                                         else 
                                         // special location
@@ -2655,6 +2662,15 @@ namespace Next_Game.Cartographic
 
         internal List<GeoCluster> GetGeoCluster()
         { return listOfGeoClusters; }
+
+        /// <summary>
+        /// toggle map display of houses between #'s and squares
+        /// </summary>
+        public void ShowHouses()
+        {
+            if (_houses == true) { _houses = false; }
+            else { _houses = true; }
+        }
 
         //--- place new method above---
     }
