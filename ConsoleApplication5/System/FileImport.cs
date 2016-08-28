@@ -28,7 +28,9 @@ namespace Next_Game
         public int Chance { get; set; }
     }
 
-
+    /// <summary>
+    /// Handles all file Import duties
+    /// </summary>
     public class FileImport
     {
         string fileDirectory;
@@ -62,9 +64,7 @@ namespace Next_Game
         /// <returns></returns>
         public List<string> GetNames(string fileName)
         {
-            //
-            // read in lists of First Male and Female names ---
-            //
+            // read in lists of First Male, Female & Surnames
             string[] arrayOfCharacterNames = ImportFileData(fileName);
             List<string> listOfNames = new List<string>();
             string tempString = null;

@@ -16,6 +16,7 @@ namespace Next_Game
         private List<string> listOfPlayerNames;
         private List<string> listOfMaleFirstNames;
         private List<string> listOfFemaleFirstNames;
+        private List<string> listOfSurnames;
         //house names
         private List<House> listOfGreatHouses;
         private List<House> listOfMinorHouses;
@@ -41,6 +42,7 @@ namespace Next_Game
             listOfPlayerNames = new List<string>();
             listOfMaleFirstNames = new List<string>();
             listOfFemaleFirstNames = new List<string>();
+            listOfSurnames = new List<string>();
             listOfGreatHouses = new List<House>();
             listOfMinorHouses = new List<House>();
             listHousePool = new List<HouseStruct>();
@@ -61,6 +63,7 @@ namespace Next_Game
             listOfMaleFirstNames.AddRange(Game.file.GetNames("FirstMale.txt"));
             listOfFemaleFirstNames.AddRange(Game.file.GetNames("FirstFemale.txt"));
             listOfPlayerNames.AddRange(Game.file.GetNames("PlayerNames.txt"));
+            listOfSurnames.AddRange(Game.file.GetNames("Surnames.txt"));
             //Major houses
             listHousePool.AddRange(Game.file.GetHouses("MajorHouses.txt"));
             InitialiseMajorHouses(numHousesRequired);
