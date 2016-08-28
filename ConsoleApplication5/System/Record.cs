@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     //categories (can choose multiple)
-    public enum HistEvent {None, Born, Died, Married, Battle, Lordship, Birthing}
+    public enum HistEvent {None, Born, Died, Married, Battle, Lordship, Birthing, Knighthood}
 
     //
     //tracks historical Information & Events ---

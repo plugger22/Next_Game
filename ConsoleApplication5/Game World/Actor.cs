@@ -206,6 +206,8 @@ namespace Next_Game
     //Knights - attached to a noble house
     class Knight : Passive
     {
+        public int Knighthood { get; set; } //year knighted
+
         public Knight(string name, ActorType type = ActorType.Knight, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }
     }

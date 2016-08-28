@@ -359,11 +359,16 @@ namespace Next_Game
         {
             ActorType type = ActorType.Knight;
             string name = "Ser " + GetActorName();
+            
             Knight knight = new Knight(name, type, ActorSex.Male);
             //age (older men, younger wives
             int age = rnd.Next(25, 60);
             knight.Born = Game.gameYear - age;
             knight.Age = age;
+            //when knighted (age 18 - 27)
+            int knighted = rnd.Next(18, 28);
+            knight.Knighthood = Game.gameYear - (age - knighted);
+
             //data
             knight.SetActorPosition(pos);
             knight.LocID = locID;
@@ -372,6 +377,10 @@ namespace Next_Game
             knight.Type = ActorType.Knight;
             knight.Realm = ActorRealm.None;
             InitialiseActorTraits(knight);
+            //record
+            string descriptor = string.Format("{0} knighted and swears allegiance to House {1}, age {2}", knight.Name, Game.world.GetGreatHouseName(knight.HouseID), knighted);
+            Record record = new Record(descriptor, knight.ActID, knight.LocID, knight.RefID, knight.Knighthood, HistEvent.Knighthood);
+            Game.world.SetRecord(record);
             return knight;
         }
 

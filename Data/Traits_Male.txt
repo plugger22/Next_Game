@@ -37,7 +37,7 @@ Skill: Combat
 Effect: 2
 Chance: 25
 Age: 15
-Nicknames: The Swift, The Blue Streak, The Red Flash, The Lightning Flash
+Nicknames: The Swift, The Blue Streak, The Red Flash, The Lightning Flash, The Red Viper, The Black Viper, The Red Cobra, The Blue Cobra, The Green Viper
 
 Name: Weapon Master
 Skill: Combat
