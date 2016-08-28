@@ -1045,7 +1045,7 @@ namespace Next_Game
             {
                 //new child (50/50 boy/girl)
                 sex = ActorSex.Male;
-                if (rnd.Next(100) < 90)
+                if (rnd.Next(100) < 50)
                 { sex = ActorSex.Female; }
             }
             //get a random first name
@@ -1238,8 +1238,8 @@ namespace Next_Game
             }
             else if (child.Parents == ActorParents.Bastard)
             {
-                secretText = string.Format("Bastard {0}, Aid {1}, born at {2} outside of the marriage of {3} {4} and {5} {6}",
-                    child.Name, child.ActID, Game.world.GetLocationName(Lady.LocID), Lord.Title, Lord.Name, Lady.Title, Lady.Name);
+                secretText = string.Format("{0}, Aid {1}, a bastard of {2} {3} and {4} {5}",
+                    child.Name, child.ActID, Lord.Title, Lord.Name, Lady.Title, Lady.Name);
                 actualEvent = false;
             }
             Record record_0 = new Record(descriptor, child.ActID, child.LocID, child.RefID, child.Born, HistEvent.Born, actualEvent);

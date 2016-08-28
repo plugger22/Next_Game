@@ -469,7 +469,7 @@ namespace Next_Game
                     {
                         Secret secret = GetSecret(secretID);
                         if (secret != null)
-                        { listToDisplay.Add(new Snippet(secret.Description)); }
+                        { listToDisplay.Add(new Snippet(string.Format("{0} {1}", secret.Year, secret.Description))); }
                     }
                 }
 
@@ -984,15 +984,15 @@ namespace Next_Game
             //who needs a son?
             if (listOfLords.Count > 0)
             {
-                foreach (int lordID in listOfLords)
+                for (int i = 0; i < listOfLords.Count; i++)
                 {
                     //50/50 bastard or adopted
                     ActorParents parents = ActorParents.Bastard;
                     if (rnd.Next(100) < 50)
                     { parents = ActorParents.Adopted; }
                     //create a child
-                    Passive Lord = GetPassiveActor(lordID);
-                    Passive Lady = GetPassiveActor(wifeID);
+                    Passive Lord = GetPassiveActor(listOfLords[i]);
+                    Passive Lady = GetPassiveActor(listOfLadies[i]);
                     //get year
                     yearUpper = 1200;
                     if (Lady.Status == ActorStatus.Dead)
