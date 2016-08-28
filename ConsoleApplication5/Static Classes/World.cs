@@ -252,14 +252,14 @@ namespace Next_Game
         /// </summary>
         /// <param name="ActID"></param>
         /// <returns></returns>
-            public List<Snippet> ShowActorRL(int actorID)
+        public List<Snippet> ShowActorRL(int actorID)
         {
             List<Snippet> listToDisplay = new List<Snippet>();
             Actor person = new Actor();
             if (dictAllActors.TryGetValue(actorID, out person))
             {
                 int locID = person.LocID;
-                string name = string.Format("{0} {1}", person.Title, person.Name);
+                string name = string.Format("{0} {1}", person.Type, person.Name);
                 string handle = null;
                 bool newLine = true;
                 //nickname
@@ -435,9 +435,9 @@ namespace Next_Game
                 }
 
                 //family
-                if (person is Passive)
+                if (person is Noble)
                 {
-                    Passive tempPerson = person as Passive;
+                    Noble tempPerson = person as Noble;
                     SortedDictionary<int, ActorRelation> dictTempFamily = tempPerson.GetFamily();
                     if (dictTempFamily.Count > 0)
                     {
@@ -445,7 +445,7 @@ namespace Next_Game
                         string maidenName;
                         foreach(KeyValuePair<int, ActorRelation> kvp in dictTempFamily)
                         {
-                            Passive relPerson = GetPassiveActor(kvp.Key);
+                            Noble relPerson = (Noble)GetPassiveActor(kvp.Key);
                             RLColor familyColor = RLColor.White;
                             if (relPerson.Status == ActorStatus.Dead)
                             { familyColor = RLColor.LightGray; }
@@ -454,7 +454,7 @@ namespace Next_Game
                             { maidenName = string.Format(" (nee {0})", relPerson.MaidenName); }
                             int relAge = Game.gameYear - relPerson.Born;
                             string text = string.Format("{0} Aid {1}: {2} {3}{4} of House {5}, Age {6}", 
-                                kvp.Value, relPerson.ActID, relPerson.Title, relPerson.Name, maidenName, GetGreatHouseName(relPerson.HouseID), relAge);
+                                kvp.Value, relPerson.ActID, relPerson.Type, relPerson.Name, maidenName, GetGreatHouseName(relPerson.HouseID), relAge);
                             listToDisplay.Add(new Snippet(text, familyColor, RLColor.Black));
                         }
                     }
@@ -614,7 +614,7 @@ namespace Next_Game
                         {
                             Actor person = new Actor();
                             person = dictAllActors[charID];
-                            actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, person.Title, person.Name, person.Age);
+                            actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, person.Type, person.Name, person.Age);
                             //player controlled (change color of text)?
                             if (person is Active)
                             {
@@ -705,7 +705,7 @@ namespace Next_Game
                 foreach(int actorID in listOfFamily)
                 {
                     Passive person = GetPassiveActor(actorID);
-                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, person.Title, person.Name, person.Age);
+                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, person.Type, person.Name, person.Age);
                     //valid actor?
                     if (person.Name != null)
                     {
@@ -870,8 +870,8 @@ namespace Next_Game
                 //create Lord and Lady for house
                 Location loc = Game.network.GetLocation(kvp.Value.LocID);
                 Position pos = loc.GetPosition();
-                Passive actorLord = Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
-                Passive actorLady = Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
+                Noble actorLord = (Noble)Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                Noble actorLady = (Noble)Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
                     ActorSex.Female, WifeStatus.First_Wife);
                 //add to dictionaries of actors
                 dictPassiveActors.Add(actorLord.ActID, actorLord);
@@ -931,7 +931,7 @@ namespace Next_Game
                     //create BannerLord for house
                     Location loc = Game.network.GetLocation(kvp.Value.LocID);
                     Position pos = loc.GetPosition();
-                    Passive bannerLord = Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                    BannerLord bannerLord = (BannerLord)Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
                     //add to dictionaries of actors
                     dictPassiveActors.Add(bannerLord.ActID, bannerLord);
                     dictAllActors.Add(bannerLord.ActID, bannerLord);
@@ -962,10 +962,11 @@ namespace Next_Game
             {
                 foundSon = false;
                 //lord?
-                if (kvp.Value.Title == ActorType.Lord && kvp.Value.Status != ActorStatus.Dead)
+                if (kvp.Value.Type == ActorType.Lord && kvp.Value.Status != ActorStatus.Dead)
                 {
                     //Loop family looking for a son
-                    SortedDictionary<int, ActorRelation> tempDictFamily = kvp.Value.GetFamily();
+                    Noble noble = kvp.Value as Noble;
+                    SortedDictionary<int, ActorRelation> tempDictFamily = noble.GetFamily();
                     foreach (KeyValuePair<int, ActorRelation> family_kvp in tempDictFamily)
                     {
                         if (family_kvp.Value == ActorRelation.Son)
@@ -991,8 +992,8 @@ namespace Next_Game
                     if (rnd.Next(100) < 50)
                     { parents = ActorParents.Adopted; }
                     //create a child
-                    Passive Lord = GetPassiveActor(listOfLords[i]);
-                    Passive Lady = GetPassiveActor(listOfLadies[i]);
+                    Noble Lord = (Noble)GetPassiveActor(listOfLords[i]);
+                    Noble Lady = (Noble)GetPassiveActor(listOfLadies[i]);
                     //get year
                     yearUpper = 1200;
                     if (Lady.Status == ActorStatus.Dead)
