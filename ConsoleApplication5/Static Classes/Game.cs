@@ -181,6 +181,7 @@ namespace Next_Game
                             infoChannel.AppendInfoList(new Snippet("Press LEFT or RIGHT ARROWS to change Actors, ENTER or ESC to exit", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
                             keyPress = null; //to prevent Enter keypress from causing the date to tick up
                             _menuMode = MenuMode.Actor_Passive;
+                            //_mouseOn = false;
                             break;
                     }
                     //reset
@@ -218,9 +219,12 @@ namespace Next_Game
                     //Mouse specific input OFF - generic location and party info
                     if (_mouseOn == false)
                     {
-                        int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
-                        infoChannel.SetInfoList(world.ShowLocationRL(locID, mouse.X, mouse.Y), ConsoleDisplay.Multi);
-                        _renderRequired = true;
+                        if (_menuMode != MenuMode.Actor_Passive)
+                        {
+                            int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
+                            infoChannel.SetInfoList(world.ShowLocationRL(locID, mouse.X, mouse.Y), ConsoleDisplay.Multi);
+                            _renderRequired = true;
+                        }
                     }
                     //Mouse specific input ON
                     else if (_mouseOn == true)

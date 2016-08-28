@@ -1155,17 +1155,15 @@ namespace Next_Game
             string surname = null;
             int numRecords = 0;
             int index = 0;
-            List<string> listOfNames = listOfSurnames;
 
             //surname
             if (lastName != null)
             { surname = lastName; }
             else
             {
-                //provide a random surname (All SURNAMES are SINGLE USE only)
-                index = rnd.Next(0, listOfNames.Count);
-                surname = listOfNames[index];
-                listOfNames.RemoveAt(index);
+                //provide a random surname (multiple actors can have the same surname)
+                index = rnd.Next(0, listOfSurnames.Count);
+                surname = listOfSurnames[index];
             }
             if (sex == ActorSex.Male)
             {
