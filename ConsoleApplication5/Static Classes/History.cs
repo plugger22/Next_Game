@@ -242,7 +242,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Initialise Passive Actors at game start (populate world) - Nobles, Bannerlords and Knights only
+        /// Initialise Passive Actors at game start (populate world) - Nobles, Bannerlords only
         /// </summary>
         /// <param name="lastName"></param>
         /// <param name="type"></param>
@@ -251,7 +251,7 @@ namespace Next_Game
         /// <param name="refID"></param>
         /// <param name="sex"></param>
         /// <returns></returns>
-        internal Passive CreatePassiveActor(string lastName, ActorType type, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male, WifeStatus wifeStatus = WifeStatus.None)
+        internal Passive CreateHouseActor(string lastName, ActorType type, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male, WifeStatus wifeStatus = WifeStatus.None)
         {
             //get a random first name
             string actorName = GetActorName(lastName, sex, refID);
@@ -263,13 +263,9 @@ namespace Next_Game
             //bannerlord
             else if (type == ActorType.BannerLord)
             { actor = new BannerLord(actorName, type, sex); actor.Realm = ActorRealm.Head_of_House; }
-            //knight
-            else if (type == ActorType.Knight)
-            { actor = new Knight(actorName, type, sex); actor.Realm = ActorRealm.None; }
             //illegal actor type
             else
             { Console.WriteLine("Error: History.CreatePassiveActor: invalid ActorType"); return actor; }
-
             //age (older men, younger wives
             int age = 0;
             if (sex == ActorSex.Male)
@@ -350,6 +346,34 @@ namespace Next_Game
             return actor;
         }
 
+
+        /// <summary>
+        /// Create a Knight
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="locID"></param>
+        /// <param name="refID"></param>
+        /// <param name="houseID"></param>
+        /// <returns></returns>
+        internal Knight CreateKnight(Position pos, int locID, int refID, int houseID)
+        {
+            ActorType type = ActorType.Knight;
+            string name = "Ser " + GetActorName();
+            Knight knight = new Knight(name, type, ActorSex.Male);
+            //age (older men, younger wives
+            int age = rnd.Next(25, 60);
+            knight.Born = Game.gameYear - age;
+            knight.Age = age;
+            //data
+            knight.SetActorPosition(pos);
+            knight.LocID = locID;
+            knight.RefID = refID;
+            knight.HouseID = houseID;
+            knight.Type = ActorType.Knight;
+            knight.Realm = ActorRealm.None;
+            InitialiseActorTraits(knight);
+            return knight;
+        }
 
         /// <summary>
         /// Assigns traits to actors (early, under 15 y.0 - Combat, Wits, Charm, Treachery, Leadership)
@@ -1110,22 +1134,35 @@ namespace Next_Game
 
 
         /// <summary>
-        /// takes a surname and a sex and returns a full name, eg. 'Edward Stark'
+        /// takes an optional surname and a sex and returns a full name, eg. 'Edward Stark'
         /// </summary>
-        /// <param name="lastName"></param>
+        /// <param name="lastName">if not provided a randomly generated surname will be used</param>
         /// <param name="sex"></param>
         /// <returns></returns>
-        private string GetActorName(string lastName, ActorSex sex, int refID = 0)
+        private string GetActorName(string lastName = null, ActorSex sex = ActorSex.Male, int refID = 0)
         {
             string fullName = null;
-            List<string> listOfNames = new List<string>();
+            string firstName = null;
+            string surname = null;
             int numRecords = 0;
             int index = 0;
+            List<string> listOfNames = listOfSurnames;
+
+            //surname
+            if (lastName != null)
+            { surname = lastName; }
+            else
+            {
+                //provide a random surname (All SURNAMES are SINGLE USE only)
+                index = rnd.Next(0, listOfNames.Count);
+                surname = listOfNames[index];
+                listOfNames.RemoveAt(index);
+            }
             if (sex == ActorSex.Male)
             {
                 numRecords = listOfMaleFirstNames.Count;
                 index = rnd.Next(0, numRecords);
-                fullName = listOfMaleFirstNames[index] + " " + lastName;
+                firstName = listOfMaleFirstNames[index];
                 //check name not already used
                 if (refID > 0)
                 {
@@ -1143,12 +1180,13 @@ namespace Next_Game
                     }
                 }
             }
-            else
+            else if (sex == ActorSex.Female)
             {
                 numRecords = listOfFemaleFirstNames.Count;
                 index = rnd.Next(0, numRecords);
-                fullName = listOfFemaleFirstNames[index] + " " + lastName;
+                firstName = listOfFemaleFirstNames[index];
             }
+            fullName = firstName + " " + surname;
             return fullName;
         }
 

@@ -870,14 +870,15 @@ namespace Next_Game
                 //create Lord and Lady for house
                 Location loc = Game.network.GetLocation(kvp.Value.LocID);
                 Position pos = loc.GetPosition();
-                Noble actorLord = (Noble)Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
-                Noble actorLady = (Noble)Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
+                Noble actorLord = (Noble)Game.history.CreateHouseActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                Noble actorLady = (Noble)Game.history.CreateHouseActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
                     ActorSex.Female, WifeStatus.First_Wife);
+                //create a knight for each Major house
+                Knight actorKnight = Game.history.CreateKnight(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
                 //add to dictionaries of actors
-                dictPassiveActors.Add(actorLord.ActID, actorLord);
-                dictPassiveActors.Add(actorLady.ActID, actorLady);
-                dictAllActors.Add(actorLord.ActID, actorLord);
-                dictAllActors.Add(actorLady.ActID, actorLady);
+                SetPassiveActor(actorLord);
+                SetPassiveActor(actorLady);
+                SetPassiveActor(actorKnight);
                 //create records of being born
                 string descriptor = string.Format("{0} born, Aid {1}, at {2}", actorLord.Name, actorLord.ActID, loc.LocName);
                 Record recordLord = new Record(descriptor, actorLord.ActID, loc.LocationID, kvp.Value.RefID, actorLord.Born, HistEvent.Born);
@@ -891,6 +892,7 @@ namespace Next_Game
                 //store actors in location
                 loc.AddActor(actorLord.ActID);
                 loc.AddActor(actorLady.ActID);
+                loc.AddActor(actorKnight.ActID);
                 //create family
                 Game.history.CreatePassiveFamily(actorLord, actorLady);
                 //check if lady died in childbirth
@@ -931,7 +933,7 @@ namespace Next_Game
                     //create BannerLord for house
                     Location loc = Game.network.GetLocation(kvp.Value.LocID);
                     Position pos = loc.GetPosition();
-                    BannerLord bannerLord = (BannerLord)Game.history.CreatePassiveActor(kvp.Value.Name, ActorType.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                    BannerLord bannerLord = (BannerLord)Game.history.CreateHouseActor(kvp.Value.Name, ActorType.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
                     //add to dictionaries of actors
                     dictPassiveActors.Add(bannerLord.ActID, bannerLord);
                     dictAllActors.Add(bannerLord.ActID, bannerLord);
