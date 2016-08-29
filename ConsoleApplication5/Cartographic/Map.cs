@@ -1764,8 +1764,8 @@ namespace Next_Game.Cartographic
         private void SetRouteRight(int x1, int y1, int x2, int y2, int direction = 0)
         {
             int limit = x2;
-            if(y1 == y2)
-                { limit--; } //orthogonal
+            if (y1 == y2)
+            { limit--; } //orthogonal
             for (int i = x1 + 1; i <= limit; i++)
             {
                 if (mapGrid[(int)MapLayer.Base, i, y1] == 0)
@@ -1777,7 +1777,7 @@ namespace Next_Game.Cartographic
                         else if (direction == -1) { mapGrid[(int)MapLayer.Base, i, y1] = 13; } //dogleg Down
                     }
                 }
-                else { Console.WriteLine("Debug: ERROR in SET route to the RIGHT mapGrid[{0},{1}] = {2}", i , y1, mapGrid[(int)MapLayer.Base, i, y1]); }
+                else { Game.world.SetError(new Error(1, string.Format("SET route to the RIGHT mapGrid[{0},{1}] = {2}", i, y1, mapGrid[(int)MapLayer.Base, i, y1]))); }
             }
         }
 
@@ -1798,7 +1798,7 @@ namespace Next_Game.Cartographic
                         else if (direction == -1) { mapGrid[(int)MapLayer.Base, i, y1] = 15; } //dogleg Down
                     } 
                 }
-                else { Console.WriteLine("Debug: ERROR in SET route to the LEFT mapGrid[{0},{1}] = {2}", i, y1, mapGrid[(int)MapLayer.Base, i, y1]); }
+                else { Game.world.SetError(new Error(1, string.Format("SET route to the LEFT mapGrid[{0},{1}] = {2}", i, y1, mapGrid[(int)MapLayer.Base, i, y1]))); }
             }
         }
 
@@ -1819,7 +1819,7 @@ namespace Next_Game.Cartographic
                         else if (direction == -1) { mapGrid[(int)MapLayer.Base, x1, i] = 13; } //dogleg up left
                     } 
                 }
-                else { Console.WriteLine("Debug: ERROR in SET route UP mapGrid[{0},{1}] = {2}, limit: {3}", x1, i, mapGrid[(int)MapLayer.Base, x1, i], limit); }
+                else { Game.world.SetError(new Error(1, string.Format("SET route UP mapGrid[{0},{1}] = {2}, limit: {3}", x1, i, mapGrid[(int)MapLayer.Base, x1, i], limit))); }
             }
         }
 
@@ -1840,7 +1840,7 @@ namespace Next_Game.Cartographic
                         else if (direction == -1) { mapGrid[(int)MapLayer.Base, x1, i] = 12; } //dogleg down left
                     }
                 }
-                else { Console.WriteLine("Debug: ERROR in SET Map route DOWN mapGrid[{0},{1}] = {2}, limit: {3}", x1, i, mapGrid[(int)MapLayer.Base, x1, i], limit); }
+                else { Game.world.SetError(new Error(1, string.Format("SET route DOWN mapGrid[{0},{1}] = {2}, limit: {3}", x1, i, mapGrid[(int)MapLayer.Base, x1, i], limit))); }
             }
         }
 
@@ -2097,7 +2097,7 @@ namespace Next_Game.Cartographic
                     if (pathPrevious.Count > 0)
                     { newPos = pathPrevious[0]; }
                     else
-                    { Console.WriteLine("ERROR: Map.InitialiseRoutes  pathPrevious.Count == 0, CapDirection {0}, newPos {1}:{2}", capDirection, newPos.PosX, newPos.PosY); }
+                    { Game.world.SetError(new Error(2, string.Format("pathPrevious.Count == 0, CapDirection {0}, newPos {1}:{2}", capDirection, newPos.PosX, newPos.PosY))); }
                 }
                 //check if at capital
                 while (newPos.PosX != capitalX || newPos.PosY != capitalY);
@@ -2125,7 +2125,7 @@ namespace Next_Game.Cartographic
                 if((pos.PosX != posStart.PosX || pos.PosY != posStart.PosY) && (pos.PosX == posEnd.PosX && pos.PosY == posEnd.PosY))
                 { return path; }
             }
-            Console.WriteLine("Debug: ERROR in GetPreviousNode - no suitable route found");
+            Game.world.SetError(new Error(3, "no suitable route found"));
             return path;
         }
 
@@ -2323,7 +2323,7 @@ namespace Next_Game.Cartographic
                         break;
                     default:
                         //error catcher: bad data
-                        Console.WriteLine("Debug: ERROR 1 in FollowRoute");
+                        Game.world.SetError(new Error(4, "Invalid case"));
                         break;
                 }
                 //get new cell contents

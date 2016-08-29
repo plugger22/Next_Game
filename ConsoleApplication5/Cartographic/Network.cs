@@ -440,7 +440,7 @@ namespace Next_Game.Cartographic
                             //no more directions to search from origin, all over
                             else
                             {
-                                Console.WriteLine("ERROR - originNeighbours EMPTY");
+                                Game.world.SetError(new Error(5, "originNeighbours EMPTY"));
                                 keepLooking = false;
                             }
                         }
@@ -1271,7 +1271,7 @@ namespace Next_Game.Cartographic
                     { listOfRoutes = GetRouteAnywhere(pos1, pos2); }
                 }
                 else
-                { Console.WriteLine("ERROR: You've input an identical Origin and Destination or the inputs are Not valid Locations"); }
+                { Game.world.SetError(new Error(6, "identical Origin and Destination or the inputs are Not valid Loc's")); }
             }
                 return listOfRoutes;
         }

@@ -258,14 +258,14 @@ namespace Next_Game
 
             Passive actor = null;
             //Lord or lady
-            if (type == ActorType.Lady || type == ActorType.Lord )
+            if (type == ActorType.Lady || type == ActorType.Lord)
             { actor = new Noble(actorName, type, sex); actor.Realm = ActorRealm.Head_of_House; }
             //bannerlord
             else if (type == ActorType.BannerLord)
             { actor = new BannerLord(actorName, type, sex); actor.Realm = ActorRealm.Head_of_House; }
             //illegal actor type
             else
-            { Console.WriteLine("Error: History.CreatePassiveActor: invalid ActorType"); return actor; }
+            { Game.world.SetError(new Error(8, "invalid ActorType")); }
             //age (older men, younger wives
             int age = 0;
             if (sex == ActorSex.Male)
@@ -1249,9 +1249,6 @@ namespace Next_Game
         /// <param name="secondary">An additional actor who is affected by the death (optional)</param>
         internal void PassiveActorFuneral(Passive deceased, int year, ActorDied reason, Actor perpetrator = null, Actor secondary = null)
         {
-            //debug
-            Game.world.SetError(new Error(2, "Somebody died out of place. Whoops!"));
-
             deceased.Died = year;
             deceased.Age = deceased.Age - (Game.gameYear - year);
             deceased.Status = ActorStatus.Dead;

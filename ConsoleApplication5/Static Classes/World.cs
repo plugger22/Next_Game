@@ -844,9 +844,6 @@ namespace Next_Game
         /// <param name="listOfHouses"></param>
         internal void InitialiseHouses()
         {
-            //debug
-            SetError(new Error(1, "This is a test error"));
-
             Game.network.UpdateHouses(Game.history.GetGreatHouses());
             //great houses
             List<House> listOfGreatHouses = Game.history.GetGreatHouses();
@@ -1212,8 +1209,16 @@ namespace Next_Game
         internal void SetRecord(Record record)
         { dictRecords?.Add(record.eventID, record); }
 
+        /// <summary>
+        /// Adds error to dictionary and spits it out to console as a back up
+        /// </summary>
+        /// <param name="error"></param>
         internal void SetError(Error error)
-        { dictErrors?.Add(error.errorID, error); }
+        {
+            dictErrors?.Add(error.errorID, error);
+            Console.WriteLine(Environment.NewLine + "--- Error");
+            Console.WriteLine("E_{0} Text: {1} Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
+        }
 
 
         /// <summary>
