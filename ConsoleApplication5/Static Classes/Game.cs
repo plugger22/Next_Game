@@ -84,7 +84,7 @@ namespace Next_Game
         private static Position _posSelect2;
         private static int _charIDSelected; //selected player character
         private static long _totalTime; //Stopwatch total time elasped for all timed sections
-        //error logs
+        //logs
         private static Dictionary<int, Error> dictErrors = new Dictionary<int, Error>(); //all errors (key is errorID)
         private static List<string> listOfTimers = new List<string>(); //all timer tests
 
