@@ -65,6 +65,7 @@ namespace Next_Game
         public static InfoChannel infoChannel;
         public static Constant constant;
         public static FileImport file;
+        
         //flags
         private static bool _renderRequired = true; //redraw Console?
         private static bool _mouseOn = false; //receive mouse input?

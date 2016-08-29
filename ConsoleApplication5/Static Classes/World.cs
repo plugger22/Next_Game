@@ -22,6 +22,7 @@ namespace Next_Game
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         private Dictionary<int, Trait> dictTraits; //all triats (key is traitID)
         private Dictionary<int, Secret> dictSecrets; //all secrets (key is secretID)
+        private Dictionary<int, Error> dictErrors; //all errors (key is errorID)
         //public int GameTurn { get; set; } = 1;
 
         //default constructor
@@ -40,6 +41,7 @@ namespace Next_Game
             dictGeoClusters = new Dictionary<int, GeoCluster>();
             dictTraits = new Dictionary<int, Trait>();
             dictSecrets = new Dictionary<int, Secret>();
+            dictErrors = new Dictionary<int, Error>();
         }
 
 
@@ -1194,12 +1196,19 @@ namespace Next_Game
             return null;
         }
             
+        internal Error GetError(int errorID)
+        {
+            Error error = new Error();
+            if (dictErrors.TryGetValue(errorID, out error))
+            { return error; }
+            return null;
+        }
 
         internal void SetRecord(Record record)
-        {
-            //if (record != null)
-            dictRecords?.Add(record.eventID, record);
-        }
+        { dictRecords?.Add(record.eventID, record); }
+
+        internal void SetError(Error error)
+        { dictErrors?.Add(error.errorID, error); }
 
 
         /// <summary>

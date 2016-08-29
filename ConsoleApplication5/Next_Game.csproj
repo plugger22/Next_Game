@@ -74,6 +74,7 @@
     <Compile Include="Archive.cs" />
     <Compile Include="Cartographic\GeoCluster.cs" />
     <Compile Include="Game World\Secret.cs" />
+    <Compile Include="System\Error.cs" />
     <Compile Include="System\FileImport.cs" />
     <Compile Include="System\Constant.cs" />
     <Compile Include="Static Classes\Trait.cs" />
