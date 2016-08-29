@@ -11,6 +11,12 @@ namespace Next_Game
         private bool newLine; //if true a newline is inserted after this snippet, false it continues on the same line
 
         /// <summary>
+        /// add a blank line
+        /// </summary>
+        public Snippet()
+        { textString = null; newLine = true; }
+
+        /// <summary>
         /// Simple Construstor that takes a string only and converts to a default gray on black, newline, snippet
         /// </summary>
         /// <param name="textString"></param>

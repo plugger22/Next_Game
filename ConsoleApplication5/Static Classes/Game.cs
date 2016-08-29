@@ -83,29 +83,41 @@ namespace Next_Game
         private static Position _posSelect1; //used for input of map positions
         private static Position _posSelect2;
         private static int _charIDSelected; //selected player character
+        private static long _totalTime; //Stopwatch total time elasped for all timed sections
         //error logs
         private static Dictionary<int, Error> dictErrors = new Dictionary<int, Error>(); //all errors (key is errorID)
+        private static List<string> listOfTimers = new List<string>(); //all timer tests
 
+        /// <summary>
+        /// Main Game Loop
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             Console.SetWindowSize(100, 80);
             Console.WriteLine("Seed: {0}", seed);
             //initialise game objects
+            Stopwatch timer = new Stopwatch();
             constant = new Constant();
             file = new FileImport("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/");
             messageLog = new MessageLog();
+            timer.Start();
             map = new Map(mapSize, seed);
             map.InitialiseMap(4, 2);
+            StopTimer(timer, "Map Initialisation");
+            timer.Start();
             network = new Network(seed);
             network.InitialiseNetwork();
+            StopTimer(timer, "Network Initialisation");
+            timer.Start();
             history = new History(seed);
             history.InitialiseHistory(network.GetNumUniqueHouses());
             history.CreatePlayerActors(6);
+            StopTimer(timer, "History Initialisation");
+            timer.Start();
             world = new World(seed);
             world.InitialiseWorld();
-            //world.InitiatePlayerActors(history.GetPlayerActors(), 1);
-            //network.UpdateHouses(history.GetGreatHouses());
-            //world.InitialiseHouses();
+            StopTimer(timer, "World Initialisation");
             //---interim history.cs step needed to update History of houses
             infoChannel = new InfoChannel();
             world.ShowGeneratorStatsRL();
@@ -568,6 +580,16 @@ namespace Next_Game
                                     break;
                             }
                             break;
+                        case RLKey.T:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Debug:
+                                    //Show Timer log
+                                    infoChannel.SetInfoList(ShowTimersRL(), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- Timers ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
                         //Player controlled character selected
                         case RLKey.Number1:
                         case RLKey.Number2:
@@ -971,5 +993,34 @@ namespace Next_Game
         /// <returns></returns>
         internal static int GetErrorCount()
         { return dictErrors.Count; }
+
+        /// <summary>
+        /// adds a timer record to the list and resets stopwatch
+        /// </summary>
+        /// <param name="timer"></param>
+        /// <param name="description"></param>
+        internal static void StopTimer(Stopwatch timer, string description)
+        {
+            timer.Stop();
+            TimeSpan ts = timer.Elapsed;
+            _totalTime += ts.Milliseconds;
+            string elapsedTime = String.Format("{0, -30}time elapsed {1} ms", description, ts.Milliseconds);
+            listOfTimers.Add(elapsedTime);
+            timer.Reset();
+        }
+
+        /// <summary>
+        ///Generate a list of all Timers
+        /// </summary>
+        /// <returns></returns>
+        internal static List<Snippet> ShowTimersRL()
+        {
+            List<Snippet> listOfData = new List<Snippet>();
+            foreach (string text in listOfTimers)
+            { listOfData.Add(new Snippet(text)); }
+            listOfData.Add(new Snippet(""));
+            listOfData.Add(new Snippet(string.Format("{0, -30}time Elapsed {1} ms", "Total (measured)", _totalTime)));
+            return listOfData;
+        }
     }
 }
