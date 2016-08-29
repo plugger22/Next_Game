@@ -13,9 +13,14 @@ namespace Next_Game
     {
         private static int errorIndex = 1;
         public int errorID { get; }
+        public int Code { get; } //3 digit error code
         public string Text { get; } //description
         public string Method { get; } //calling method
         public int Line { get; } //line of code
+
+
+        public Error()
+        { }
 
         /// <summary>
         /// default constructor
@@ -23,11 +28,12 @@ namespace Next_Game
         /// <param name="text"></param>
         /// <param name="memberName"></param>
         /// <param name="sourceLineNumber"></param>
-        public Error(string text = "not specified",
+        public Error(int errorCode, string text = "not specified",
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
             errorID = errorIndex++;
+            Code = errorCode;
             this.Text = text;
             Method = memberName;
             Line = sourceLineNumber;

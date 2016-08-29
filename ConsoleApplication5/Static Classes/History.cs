@@ -1249,6 +1249,9 @@ namespace Next_Game
         /// <param name="secondary">An additional actor who is affected by the death (optional)</param>
         internal void PassiveActorFuneral(Passive deceased, int year, ActorDied reason, Actor perpetrator = null, Actor secondary = null)
         {
+            //debug
+            Game.world.SetError(new Error(2, "Somebody died out of place. Whoops!"));
+
             deceased.Died = year;
             deceased.Age = deceased.Age - (Game.gameYear - year);
             deceased.Status = ActorStatus.Dead;

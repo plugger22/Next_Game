@@ -472,6 +472,11 @@ namespace Next_Game
                                     infoChannel.SetInfoList(messageLog.GetMessageList(), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- Message Log ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
+                                case MenuMode.Debug:
+                                    //Show ALL Errors
+                                    infoChannel.SetInfoList(world.ShowErrorsRL(), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- Errors ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
                             }
                             break;
                         case RLKey.G:

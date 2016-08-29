@@ -844,6 +844,9 @@ namespace Next_Game
         /// <param name="listOfHouses"></param>
         internal void InitialiseHouses()
         {
+            //debug
+            SetError(new Error(1, "This is a test error"));
+
             Game.network.UpdateHouses(Game.history.GetGreatHouses());
             //great houses
             List<House> listOfGreatHouses = Game.history.GetGreatHouses();
@@ -1059,6 +1062,7 @@ namespace Next_Game
             int numActors = dictAllActors.Count;
             int numChildren = numActors - (numGreatHouses * 2) - numBannerLords;
             int numSecrets = dictSecrets.Count;
+            int numErrors = dictErrors.Count;
             //data
             listStats.Add(new Snippet("--- Generation Statistics", RLColor.Yellow, RLColor.Black));
             listStats.Add(new Snippet(string.Format("{0} Locations", numLocs )));
@@ -1067,7 +1071,8 @@ namespace Next_Game
             listStats.Add(new Snippet(string.Format("{0} Special Locations", numSpecialLocs)));
             listStats.Add(new Snippet("1 Capital"));
             listStats.Add(new Snippet(string.Format("{0} Actors ({1} Children)", numActors, numChildren)));
-            listStats.Add(new Snippet(string.Format("{0} Secrets", numSecrets)));
+            if (numSecrets > 0) { listStats.Add(new Snippet(string.Format("{0} Secrets", numSecrets))); }
+            if (numErrors > 0) { listStats.Add(new Snippet(string.Format("{0} Errors", numErrors), RLColor.Red, RLColor.Black)); }
             //checksum
             if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
                 listStats.Add(new Snippet("Error: Locations don't tally", RLColor.Red, RLColor.Black));
@@ -1295,6 +1300,26 @@ namespace Next_Game
             { listData.Add(new Snippet(data)); }
             return listData;
         }
+
+        /// <summary>
+        /// Generate a list of ALL Errors
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowErrorsRL()
+        {
+            List<string> tempList = new List<string>();
+            IEnumerable<string> errorList =
+                from error in dictErrors
+                orderby error.Value.errorID
+                select Convert.ToString("E_" + error.Value.Code + " " + error.Value.Text + " (M:" + error.Value.Method + " L:" + error.Value.Line + ")");
+            tempList = errorList.ToList();
+            //snippet list
+            List<Snippet> listData = new List<Snippet>();
+            foreach (string data in tempList)
+            { listData.Add(new Snippet(data)); }
+            return listData;
+        }
+
         //new Methods above here
     }
 }

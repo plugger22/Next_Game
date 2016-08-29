@@ -131,6 +131,7 @@ namespace Next_Game
                     menuArrayText[0, 2] = "[R] Routes";
                     menuArrayText[0, 3] = "[M] Map";
                     menuArrayText[1, 0] = "[S] Show Secrets";
+                    menuArrayText[1, 1] = "[E] Show Errors";
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
