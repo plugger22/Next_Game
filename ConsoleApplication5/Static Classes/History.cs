@@ -265,7 +265,7 @@ namespace Next_Game
             { actor = new BannerLord(actorName, type, sex); actor.Realm = ActorRealm.Head_of_House; }
             //illegal actor type
             else
-            { Game.world.SetError(new Error(8, "invalid ActorType")); }
+            { Game.SetError(new Error(8, "invalid ActorType")); }
             //age (older men, younger wives
             int age = 0;
             if (sex == ActorSex.Male)

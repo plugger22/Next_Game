@@ -83,6 +83,8 @@ namespace Next_Game
         private static Position _posSelect1; //used for input of map positions
         private static Position _posSelect2;
         private static int _charIDSelected; //selected player character
+        //error logs
+        private static Dictionary<int, Error> dictErrors = new Dictionary<int, Error>(); //all errors (key is errorID)
 
         public static void Main(string[] args)
         {
@@ -474,7 +476,7 @@ namespace Next_Game
                                     break;
                                 case MenuMode.Debug:
                                     //Show ALL Errors
-                                    infoChannel.SetInfoList(world.ShowErrorsRL(), ConsoleDisplay.Multi);
+                                    infoChannel.SetInfoList(ShowErrorsRL(), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- Errors ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                             }
@@ -916,5 +918,46 @@ namespace Next_Game
             dateReturn = string.Format("Day {0} of the {1}{2} Moon in the Year of our Gods {3}  (Turn {4})", moonDay, moonCycle, moonSuffix, gameYear, gameTurn + 1);
             return dateReturn;
         }
+
+        /// <summary>
+        /// Generate a list of ALL Errors
+        /// </summary>
+        /// <returns></returns>
+        internal static List<Snippet> ShowErrorsRL()
+        {
+            List<string> tempList = new List<string>();
+            IEnumerable<string> errorList =
+                from error in dictErrors
+                orderby error.Value.errorID
+                select Convert.ToString("E_" + error.Value.Code + " " + error.Value.Text + " (M:" + error.Value.Method + " L:" + error.Value.Line + ")");
+            tempList = errorList.ToList();
+            //snippet list
+            List<Snippet> listData = new List<Snippet>();
+            foreach (string data in tempList)
+            { listData.Add(new Snippet(data)); }
+            return listData;
+        }
+
+        /// <summary>
+        /// Adds error to dictionary and spits it out to console as a back up
+        /// </summary>
+        /// <param name="error"></param>
+        internal static void SetError(Error error)
+        {
+            dictErrors?.Add(error.errorID, error);
+            Console.WriteLine(Environment.NewLine + "--- Error");
+            Console.WriteLine("E_{0} Text: {1} Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
+        }
+
+        internal static Error GetError(int errorID)
+        {
+            Error error = new Error();
+            if (dictErrors.TryGetValue(errorID, out error))
+            { return error; }
+            return null;
+        }
+
+        internal static int GetErrorCount()
+        { return dictErrors.Count; }
     }
 }

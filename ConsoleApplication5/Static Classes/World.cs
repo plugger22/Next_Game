@@ -22,7 +22,7 @@ namespace Next_Game
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         private Dictionary<int, Trait> dictTraits; //all triats (key is traitID)
         private Dictionary<int, Secret> dictSecrets; //all secrets (key is secretID)
-        private Dictionary<int, Error> dictErrors; //all errors (key is errorID)
+        //private Dictionary<int, Error> dictErrors; //all errors (key is errorID)
         //public int GameTurn { get; set; } = 1;
 
         //default constructor
@@ -41,7 +41,7 @@ namespace Next_Game
             dictGeoClusters = new Dictionary<int, GeoCluster>();
             dictTraits = new Dictionary<int, Trait>();
             dictSecrets = new Dictionary<int, Secret>();
-            dictErrors = new Dictionary<int, Error>();
+            //dictErrors = new Dictionary<int, Error>();
         }
 
 
@@ -1059,7 +1059,7 @@ namespace Next_Game
             int numActors = dictAllActors.Count;
             int numChildren = numActors - (numGreatHouses * 2) - numBannerLords;
             int numSecrets = dictSecrets.Count;
-            int numErrors = dictErrors.Count;
+            int numErrors = Game.GetErrorCount();
             //data
             listStats.Add(new Snippet("--- Generation Statistics", RLColor.Yellow, RLColor.Black));
             listStats.Add(new Snippet(string.Format("{0} Locations", numLocs )));
@@ -1198,13 +1198,13 @@ namespace Next_Game
             return null;
         }
             
-        internal Error GetError(int errorID)
+        /*internal Error GetError(int errorID)
         {
             Error error = new Error();
             if (dictErrors.TryGetValue(errorID, out error))
             { return error; }
             return null;
-        }
+        }*/
 
         internal void SetRecord(Record record)
         { dictRecords?.Add(record.eventID, record); }
@@ -1213,12 +1213,12 @@ namespace Next_Game
         /// Adds error to dictionary and spits it out to console as a back up
         /// </summary>
         /// <param name="error"></param>
-        internal void SetError(Error error)
+        /*internal void SetError(Error error)
         {
             dictErrors?.Add(error.errorID, error);
             Console.WriteLine(Environment.NewLine + "--- Error");
             Console.WriteLine("E_{0} Text: {1} Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
-        }
+        }*/
 
 
         /// <summary>
@@ -1310,7 +1310,7 @@ namespace Next_Game
         /// Generate a list of ALL Errors
         /// </summary>
         /// <returns></returns>
-        public List<Snippet> ShowErrorsRL()
+        /*public List<Snippet> ShowErrorsRL()
         {
             List<string> tempList = new List<string>();
             IEnumerable<string> errorList =
@@ -1323,7 +1323,7 @@ namespace Next_Game
             foreach (string data in tempList)
             { listData.Add(new Snippet(data)); }
             return listData;
-        }
+        }*/
 
         //new Methods above here
     }

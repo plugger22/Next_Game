@@ -46,14 +46,14 @@ namespace Next_Game
         /// </summary>
         /// <param name="name">"filename.txt"</param>
         /// <returns></returns>
-        private string[] ImportFileData(string fileName)
+        private string[] ImportDataFile(string fileName)
         {
             string[] importedText = null;
             string path = fileDirectory + fileName;
             if (File.Exists(path))
             { importedText = File.ReadAllLines(path); }
             else
-            { Console.WriteLine("ERROR: History.cs, FileImport failed, file name {0}", fileName); }
+            { Game.SetError(new Error(10, string.Format("FileImport failed, file name {0}", fileName))); }
             return importedText;
         }
 
@@ -65,7 +65,7 @@ namespace Next_Game
         public List<string> GetNames(string fileName)
         {
             // read in lists of First Male, Female & Surnames
-            string[] arrayOfCharacterNames = ImportFileData(fileName);
+            string[] arrayOfCharacterNames = ImportDataFile(fileName);
             List<string> listOfNames = new List<string>();
             string tempString = null;
             //read male names from array into list
@@ -89,7 +89,7 @@ namespace Next_Game
         /// <returns></returns>
         public List<HouseStruct> GetHouses(string fileName)
         {
-            string[] arrayOfHouseNames = ImportFileData(fileName);
+            string[] arrayOfHouseNames = ImportDataFile(fileName);
             List<HouseStruct> listHouses = new List<HouseStruct>();
             bool newHouse = false;
             int dataCounter = 0; //number of houses
@@ -157,7 +157,7 @@ namespace Next_Game
         /// <param name="fileName"></param>
         public void GetConstants(string fileName)
         {
-            string[] arrayOfFileInput = ImportFileData(fileName); ;
+            string[] arrayOfFileInput = ImportDataFile(fileName); ;
             Console.WriteLine();
             Console.WriteLine("--- Constants");
             string cleanToken = null;
@@ -197,7 +197,7 @@ namespace Next_Game
             string cleanToken;
             bool newTrait = false;
             List<Trait> listOfTraits = new List<Trait>();
-            string[] arrayOfTraits = ImportFileData(fileName);
+            string[] arrayOfTraits = ImportDataFile(fileName);
             TraitStruct structTrait = new TraitStruct();
             //loop imported array of strings
             for (int i = 0; i < arrayOfTraits.Length; i++)
@@ -302,7 +302,7 @@ namespace Next_Game
             List<string> listOfMediumSeas = new List<string>();
             List<string> listOfSmallSeas = new List<string>();
             //import data from file
-            string[] arrayOfGeoNames = ImportFileData(fileName);
+            string[] arrayOfGeoNames = ImportDataFile(fileName);
 
             //read location names from array into list
             string nameType = null;

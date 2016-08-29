@@ -98,7 +98,7 @@ namespace Next_Game
             if (secretID > 0)
             { listOfSecrets.Add(secretID); }
             else
-            { Game.world.SetError(new Error(7, "invalid Secret ID")); }
+            { Game.SetError(new Error(7, "invalid Secret ID")); }
         }
 
         public List<int> GetSecrets()

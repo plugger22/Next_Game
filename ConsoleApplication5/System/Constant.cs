@@ -61,7 +61,7 @@ namespace Next_Game
                 Console.WriteLine("{0} {1} initialised", index, data);
             }
             else
-            { Console.WriteLine("ERROR: Constant.cs, {0} out of range, data {1}", index, data); }
+            { Game.SetError(new Error(9, string.Format("{0} out of range, data {1}", index, data))); }
         }
     }
 }
