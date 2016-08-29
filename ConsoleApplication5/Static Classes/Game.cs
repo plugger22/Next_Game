@@ -628,9 +628,9 @@ namespace Next_Game
                             }
                             break;
                         case RLKey.Escape:
-                            //clear input console
-                            //infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
+                            //clear input & multi consoles
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
+                            infoChannel.ClearConsole(ConsoleDisplay.Multi);
                             //exit mouse input 
                             if (_mouseOn == true)
                             { _mouseOn = false; }
@@ -902,7 +902,10 @@ namespace Next_Game
                 return inputComplete;
         }
 
-
+        /// <summary>
+        /// utility function
+        /// </summary>
+        /// <returns></returns>
         public static string ShowDate()
         {
             string dateReturn = "Unknown";
@@ -948,7 +951,12 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- Error");
             Console.WriteLine("E_{0} Text: {1} Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
         }
-
+        
+        /// <summary>
+        /// unused at present
+        /// </summary>
+        /// <param name="errorID"></param>
+        /// <returns></returns>
         internal static Error GetError(int errorID)
         {
             Error error = new Error();
@@ -957,6 +965,10 @@ namespace Next_Game
             return null;
         }
 
+        /// <summary>
+        /// return a count of errors
+        /// </summary>
+        /// <returns></returns>
         internal static int GetErrorCount()
         { return dictErrors.Count; }
     }
