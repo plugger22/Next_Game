@@ -400,38 +400,41 @@ namespace Next_Game
         {
             int advisorCheck = (int)advisorRoyal + (int)advisorNoble + (int)advisorReligious;
             //must be one type of advisor
-            if (advisorCheck == 0)
+            if (advisorCheck == 3)
             { Game.SetError(new Error(11, "No valid advisor type provided")); return null;  }
             //can only be a single type of advisor
-            else if (advisorCheck > 1)
+            else if (advisorCheck > 2)
             { Game.SetError(new Error(12, "Only a single advisor type is allowed")); return null; }
             else
             {
                 string name = GetActorName();
-                Advisor advisor = new Advisor(name, ActorType.Advisor, sex);
+                Advisor advisor = new Advisor(name, ActorType.Advisor, locID, sex);
                 advisor.SetActorPosition(pos);
                 advisor.LocID = locID;
                 advisor.RefID = refID;
                 advisor.HouseID = houseID;
+                ActorTrait preferredTrait = ActorTrait.None;
                 if ((int)advisorRoyal > 0)
                 {
-                    switch(advisorRoyal)
-                    {
-                        case AdvisorRoyal.Master_of_Coin:
-                            break;
-                    }
+                    advisor.advisorRoyal = advisorRoyal;
+                    if (advisorRoyal == AdvisorRoyal.Master_of_Whisperers) { preferredTrait = ActorTrait.Treachery; }
+                    else { preferredTrait = ActorTrait.Wits; }
                 }
                 else if ((int)advisorNoble > 0)
                 {
-
+                    advisor.advisorNoble = advisorNoble;
+                    if (advisorNoble == AdvisorNoble.Castellan) { preferredTrait = ActorTrait.Combat; }
+                    else { preferredTrait = ActorTrait.Wits; }
                 }
                 else if ((int)advisorReligious > 0)
                 {
-
+                    advisor.advisorReligious = advisorReligious;
+                    preferredTrait = ActorTrait.Charm;
                 }
                 else
                 { Game.SetError(new Error(11, "No valid advisor type provided")); return null; }
-
+                //assign traits & return
+                InitialiseActorTraits(advisor, null, null, preferredTrait);
                 return advisor;
             }
         }
@@ -517,6 +520,8 @@ namespace Next_Game
                         tempHandles.AddRange(rndTrait.GetNickNames());
                     }
                 }
+                else
+                { Game.SetError(new Error(13, "Invalid Range")); }
             }
 
             //Wits ---
@@ -585,6 +590,8 @@ namespace Next_Game
                         tempHandles.AddRange(rndTrait.GetNickNames());
                     }
                 }
+                else
+                { Game.SetError(new Error(13, "Invalid Range")); }
             }
 
             //Charm ---
@@ -652,6 +659,8 @@ namespace Next_Game
                         tempHandles.AddRange(rndTrait.GetNickNames());
                     }
                 }
+                else
+                { Game.SetError(new Error(13, "Invalid Range")); }
             }
 
             //Treachery ---
@@ -719,6 +728,8 @@ namespace Next_Game
                         tempHandles.AddRange(rndTrait.GetNickNames());
                     }
                 }
+                else
+                { Game.SetError(new Error(13, "Invalid Range")); }
             }
 
             //Leadership ---
@@ -786,6 +797,8 @@ namespace Next_Game
                         tempHandles.AddRange(rndTrait.GetNickNames());
                     }
                 }
+                else
+                { Game.SetError(new Error(13, "Invalid Range")); }
             }
 
             //choose NickName (handle)

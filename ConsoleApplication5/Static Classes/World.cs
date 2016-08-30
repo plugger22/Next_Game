@@ -614,6 +614,7 @@ namespace Next_Game
                     int row = 3;
                     locList.Add(new Snippet(string.Format("Characters at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
                     string actorDetails;
+                    string actorType;
                     foreach (int charID in charList)
                     {
                         row++;
@@ -621,7 +622,15 @@ namespace Next_Game
                         {
                             Actor person = new Actor();
                             person = dictAllActors[charID];
-                            actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, person.Type, person.Name, person.Age);
+                            //advisors can be one of three different categories
+                            if (person is Advisor)
+                            {
+                                actorType = GetAdvisorType((Advisor)person);
+                                actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, actorType , person.Name, person.Age);
+                            }
+                            //everyone else
+                            else
+                            { actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, person.Type, person.Name, person.Age); }
                             //player controlled (change color of text)?
                             if (person is Active)
                             {
@@ -880,12 +889,16 @@ namespace Next_Game
                 Noble actorLord = (Noble)Game.history.CreateHouseActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
                 Noble actorLady = (Noble)Game.history.CreateHouseActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
                     ActorSex.Female, WifeStatus.First_Wife);
-                //create a knight for each Major house
+                //create a knight, castellan and maester for each Major house
                 Knight actorKnight = Game.history.CreateKnight(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                Advisor actorCastellan = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Castellan);
+                Advisor actorMaester = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Maester);
                 //add to dictionaries of actors
                 SetPassiveActor(actorLord);
                 SetPassiveActor(actorLady);
                 SetPassiveActor(actorKnight);
+                SetPassiveActor(actorCastellan);
+                SetPassiveActor(actorMaester);
                 //create records of being born
                 string descriptor = string.Format("{0} born, Aid {1}, at {2}", actorLord.Name, actorLord.ActID, loc.LocName);
                 Record recordLord = new Record(descriptor, actorLord.ActID, loc.LocationID, kvp.Value.RefID, actorLord.Born, HistEvent.Born);
@@ -900,6 +913,8 @@ namespace Next_Game
                 loc.AddActor(actorLord.ActID);
                 loc.AddActor(actorLady.ActID);
                 loc.AddActor(actorKnight.ActID);
+                loc.AddActor(actorCastellan.ActID);
+                loc.AddActor(actorMaester.ActID);
                 //create family
                 Game.history.CreatePassiveFamily(actorLord, actorLady);
                 //check if lady died in childbirth
@@ -1198,27 +1213,9 @@ namespace Next_Game
             return null;
         }
             
-        /*internal Error GetError(int errorID)
-        {
-            Error error = new Error();
-            if (dictErrors.TryGetValue(errorID, out error))
-            { return error; }
-            return null;
-        }*/
 
         internal void SetRecord(Record record)
         { dictRecords?.Add(record.eventID, record); }
-
-        /// <summary>
-        /// Adds error to dictionary and spits it out to console as a back up
-        /// </summary>
-        /// <param name="error"></param>
-        /*internal void SetError(Error error)
-        {
-            dictErrors?.Add(error.errorID, error);
-            Console.WriteLine(Environment.NewLine + "--- Error");
-            Console.WriteLine("E_{0} Text: {1} Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
-        }*/
 
 
         /// <summary>
@@ -1306,24 +1303,23 @@ namespace Next_Game
             return listData;
         }
 
+
         /// <summary>
-        /// Generate a list of ALL Errors
+        /// gets the correct advisor type and returns as a string for display purposes
         /// </summary>
+        /// <param name="advisor"></param>
         /// <returns></returns>
-        /*public List<Snippet> ShowErrorsRL()
+        private string GetAdvisorType(Advisor advisor)
         {
-            List<string> tempList = new List<string>();
-            IEnumerable<string> errorList =
-                from error in dictErrors
-                orderby error.Value.errorID
-                select Convert.ToString("E_" + error.Value.Code + " " + error.Value.Text + " (M:" + error.Value.Method + " L:" + error.Value.Line + ")");
-            tempList = errorList.ToList();
-            //snippet list
-            List<Snippet> listData = new List<Snippet>();
-            foreach (string data in tempList)
-            { listData.Add(new Snippet(data)); }
-            return listData;
-        }*/
+            string type = "unknown";
+            if (advisor.advisorRoyal > 0)
+            { type = Convert.ToString(advisor.advisorRoyal); }
+            else if (advisor.advisorNoble > 0)
+            { type = Convert.ToString(advisor.advisorNoble); }
+            else if (advisor.advisorReligious > 0)
+            { type = Convert.ToString(advisor.advisorReligious); }
+            return type;
+        }
 
         //new Methods above here
     }

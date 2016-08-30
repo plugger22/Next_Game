@@ -647,6 +647,7 @@ namespace Next_Game
                             {
                                 _rootConsole.Close();
                                 //Environment.Exit(1); - not needed and causes OpenTK error
+                                break;
                             }
                             break;
                         case RLKey.Escape:
