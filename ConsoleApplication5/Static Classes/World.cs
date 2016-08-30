@@ -711,24 +711,20 @@ namespace Next_Game
                 refID = majorHouse.RefID;
                 IEnumerable<int> familyMembers =
                     from person in dictPassiveActors
-                    where person.Value.RefID == refID
+                    where person.Value.RefID == refID && person.Value is Noble
                     orderby person.Value.ActID
                     select person.Value.ActID;
                 listOfFamily = familyMembers.ToList();
                 //loop list and display each actor appropriately (dead in Lt.Gray)
                 string personText;
-                string actorType;
+                
                 foreach(int actorID in listOfFamily)
                 {
                     Passive person = GetPassiveActor(actorID);
-                    //advisors can be one of three different categories
-                    if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
-                    else { actorType = Convert.ToString(person.Type); }
-                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, actorType, person.Name, person.Age);
+                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, person.Type, person.Name, person.Age);
                     //valid actor?
                     if (person.Name != null)
                     {
-
                         RLColor locColor = RLColor.White;
                         string locString = "?";
                         //location descriptor
@@ -740,6 +736,48 @@ namespace Next_Game
                             case ActorStatus.Travelling:
                                 Position pos = person.GetActorPosition();
                                 locString = string.Format("travelling to {0} {1}",  GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
+                                break;
+                            case ActorStatus.Dead:
+                                locString = string.Format("Passed away ({0}) in {1}", person.ReasonDied, person.Died);
+                                locColor = RLColor.LightGray;
+                                break;
+                        }
+                        houseList.Add(new Snippet(personText + locString, locColor, RLColor.Black));
+                    }
+                }
+                //House Retainers - get list of all actorID's
+                houseList.Add(new Snippet("Retainers", RLColor.Brown, RLColor.Black));
+                List<int> listOfRetainers = new List<int>();
+                refID = majorHouse.RefID;
+                IEnumerable<int> Retainers =
+                    from person in dictPassiveActors
+                    where person.Value.RefID == refID && !(person.Value is Noble)
+                    orderby person.Value.ActID
+                    select person.Value.ActID;
+                listOfRetainers = Retainers.ToList();
+                // loop list and display each actor appropriately (dead in Lt.Gray)
+                string actorType;
+                foreach (int actorID in listOfRetainers)
+                {
+                    Passive person = GetPassiveActor(actorID);
+                    //advisors can be one of three different categories
+                    if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
+                    else { actorType = Convert.ToString(person.Type); }
+                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, actorType, person.Name, person.Age);
+                    //valid actor?
+                    if (person.Name != null)
+                    {
+                        RLColor locColor = RLColor.White;
+                        string locString = "?";
+                        //location descriptor
+                        switch (person.Status)
+                        {
+                            case ActorStatus.AtLocation:
+                                locString = string.Format("at {0} {1}", GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
+                                break;
+                            case ActorStatus.Travelling:
+                                Position pos = person.GetActorPosition();
+                                locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
                                 break;
                             case ActorStatus.Dead:
                                 locString = string.Format("Passed away ({0}) in {1}", person.ReasonDied, person.Died);
