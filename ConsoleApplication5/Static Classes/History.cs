@@ -359,7 +359,6 @@ namespace Next_Game
         {
             ActorType type = ActorType.Knight;
             string name = "Ser " + GetActorName();
-            
             Knight knight = new Knight(name, type, ActorSex.Male);
             //age (older men, younger wives
             int age = rnd.Next(25, 60);
@@ -396,14 +395,13 @@ namespace Next_Game
         /// <param name="advisorReligious"></param>
         /// <returns></returns>
         internal Advisor CreateAdvisor(Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male,
-            AdvisorNoble advisorNoble = AdvisorNoble.None, AdvisorRoyal advisorRoyal = AdvisorRoyal.None, AdvisorReligious advisorReligious = AdvisorReligious.None )
+            AdvisorNoble advisorNoble = AdvisorNoble.None, AdvisorRoyal advisorRoyal = AdvisorRoyal.None)
         {
-            int advisorCheck = (int)advisorRoyal + (int)advisorNoble + (int)advisorReligious;
             //must be one type of advisor
-            if (advisorCheck == 3)
+            if ((int)advisorRoyal == 1 && (int)advisorNoble == 1)
             { Game.SetError(new Error(11, "No valid advisor type provided")); return null;  }
             //can only be a single type of advisor
-            else if (advisorCheck > 2)
+            else if ((int)advisorRoyal > 1 && (int)advisorNoble > 1)
             { Game.SetError(new Error(12, "Only a single advisor type is allowed")); return null; }
             else
             {
@@ -413,6 +411,11 @@ namespace Next_Game
                 advisor.LocID = locID;
                 advisor.RefID = refID;
                 advisor.HouseID = houseID;
+                //age
+                int age = rnd.Next(25, 60);
+                advisor.Born = Game.gameYear - age;
+                advisor.Age = age;
+                //traits
                 TraitType positiveTrait = TraitType.None;
                 TraitType negativeTrait = TraitType.None;
                 if ((int)advisorRoyal > 0)
@@ -420,18 +423,15 @@ namespace Next_Game
                     advisor.advisorRoyal = advisorRoyal;
                     negativeTrait = TraitType.Combat;
                     if (advisorRoyal == AdvisorRoyal.Master_of_Whisperers) { positiveTrait = TraitType.Treachery; }
+                    else if (advisorRoyal == AdvisorRoyal.High_Septon) { positiveTrait = TraitType.Charm; negativeTrait = TraitType.Treachery; }
                     else { positiveTrait = TraitType.Wits;  }
                 }
                 else if ((int)advisorNoble > 0)
                 {
                     advisor.advisorNoble = advisorNoble;
                     if (advisorNoble == AdvisorNoble.Castellan) { positiveTrait = TraitType.Leadership; negativeTrait = TraitType.Treachery; }
+                    else if (advisorNoble == AdvisorNoble.Septon) { positiveTrait = TraitType.Charm; negativeTrait = TraitType.Treachery; }
                     else { positiveTrait = TraitType.Wits; negativeTrait = TraitType.Combat; }
-                }
-                else if ((int)advisorReligious > 0)
-                {
-                    advisor.advisorReligious = advisorReligious;
-                    positiveTrait = TraitType.Charm; negativeTrait = TraitType.Treachery;
                 }
                 else
                 { Game.SetError(new Error(11, "No valid advisor type provided")); return null; }

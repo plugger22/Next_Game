@@ -896,12 +896,14 @@ namespace Next_Game
                 Knight actorKnight = Game.history.CreateKnight(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
                 Advisor actorCastellan = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Castellan);
                 Advisor actorMaester = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Maester);
+                Advisor actorSepton = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Septon);
                 //add to dictionaries of actors
                 SetPassiveActor(actorLord);
                 SetPassiveActor(actorLady);
                 SetPassiveActor(actorKnight);
                 SetPassiveActor(actorCastellan);
                 SetPassiveActor(actorMaester);
+                SetPassiveActor(actorSepton);
                 //create records of being born
                 string descriptor = string.Format("{0} born, Aid {1}, at {2}", actorLord.Name, actorLord.ActID, loc.LocName);
                 Record recordLord = new Record(descriptor, actorLord.ActID, loc.LocationID, kvp.Value.RefID, actorLord.Born, HistEvent.Born);
@@ -918,6 +920,7 @@ namespace Next_Game
                 loc.AddActor(actorKnight.ActID);
                 loc.AddActor(actorCastellan.ActID);
                 loc.AddActor(actorMaester.ActID);
+                loc.AddActor(actorSepton.ActID);
                 //create family
                 Game.history.CreatePassiveFamily(actorLord, actorLady);
                 //check if lady died in childbirth
@@ -1319,8 +1322,6 @@ namespace Next_Game
             { type = Convert.ToString(advisor.advisorRoyal); }
             else if (advisor.advisorNoble > 0)
             { type = Convert.ToString(advisor.advisorNoble); }
-            else if (advisor.advisorReligious > 0)
-            { type = Convert.ToString(advisor.advisorReligious); }
             return type;
         }
 

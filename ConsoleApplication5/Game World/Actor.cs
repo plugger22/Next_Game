@@ -9,9 +9,8 @@ namespace Next_Game
     public enum ActorType {None, Ursuper, Loyal_Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special }; 
     public enum ActorOffice {None, King, Queen, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch, Lord_of_the_North, Lord_of_the_East, Lord_of_the_South, Lord_of_the_West }
     public enum ActorRealm {None, Head_of_Noble_House, Head_of_House}
-    public enum AdvisorRoyal {None, Master_of_Coin, Master_of_Whisperers, Master_of_Laws, Master_of_Ships}
-    public enum AdvisorNoble {None, Maester, Castellan}
-    public enum AdvisorReligious {None, Septon, Priest, Priestess}
+    public enum AdvisorRoyal {None, Master_of_Coin, Master_of_Whisperers, Master_of_Laws, Master_of_Ships, High_Septon}
+    public enum AdvisorNoble {None, Maester, Castellan, Septon}
     public enum ActorSex {None, Male, Female, Count};
     public enum ActorParents {Normal, Bastard, Adopted};
     public enum ActorDied {None, Childbirth} //how died?
@@ -219,7 +218,6 @@ namespace Next_Game
     {
         public AdvisorRoyal advisorRoyal { get; set; } = AdvisorRoyal.None;
         public AdvisorNoble advisorNoble { get; set; } = AdvisorNoble.None;
-        public AdvisorReligious advisorReligious { get; set; } = AdvisorReligious.None;
 
         public Advisor (string name, ActorType type = ActorType.Advisor, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }
