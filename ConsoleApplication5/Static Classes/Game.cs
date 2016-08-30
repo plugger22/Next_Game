@@ -17,9 +17,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        //private static int seed = 37591;
+        private static int seed = 12602;
         
 
         private static readonly int _rootWidth = 230;
@@ -114,10 +114,10 @@ namespace Next_Game
             history.InitialiseHistory(network.GetNumUniqueHouses());
             history.CreatePlayerActors(6);
             StopTimer(timer, "History Initialisation");
-            timer.Start();
+            //timer.Start();
             world = new World(seed);
             world.InitialiseWorld();
-            StopTimer(timer, "World Initialisation");
+            //StopTimer(timer, "World Initialisation");
             //---interim history.cs step needed to update History of houses
             infoChannel = new InfoChannel();
             world.ShowGeneratorStatsRL();

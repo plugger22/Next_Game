@@ -368,6 +368,7 @@ namespace Next_Game
                 Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, bannerlord.Lordship, HistEvent.Lordship);
                 Game.world.SetRecord(record);
             }
+
             //assign traits
             InitialiseActorTraits(actor);
             return actor;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Next_Game.Cartographic;
 using System.Linq;
 using RLNET;
+using System.Diagnostics;
 
 namespace Next_Game
 {
@@ -73,11 +74,22 @@ namespace Next_Game
         /// </summary>
         public void InitialiseWorld()
         {
+            Stopwatch timer_2 = new Stopwatch();
+            timer_2.Start();
             InitialiseGeoClusters();
+            Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
+            timer_2.Start();
             InitiatePlayerActors(Game.history.GetPlayerActors(), 1);
+            Game.StopTimer(timer_2, "W: InitiatePlayerActors");
+            timer_2.Start();
             InitialiseHouses();
+            Game.StopTimer(timer_2, "W: InitialiseHouses");
+            timer_2.Start();
             InitialiseTraits();
+            Game.StopTimer(timer_2, "W: InitialiseTraits");
+            timer_2.Start();
             InitialiseSecrets();
+            Game.StopTimer(timer_2, "W: InitialiseSecrets");
             Console.WriteLine(Environment.NewLine + "--- Game Input");
         }
 
@@ -942,16 +954,6 @@ namespace Next_Game
                 SetPassiveActor(actorCastellan);
                 SetPassiveActor(actorMaester);
                 SetPassiveActor(actorSepton);
-                //create records of being born
-                /*string descriptor = string.Format("{0} born, Aid {1}, at {2}", actorLord.Name, actorLord.ActID, loc.LocName);
-                Record recordLord = new Record(descriptor, actorLord.ActID, loc.LocationID, kvp.Value.RefID, actorLord.Born, HistEvent.Born);
-                SetRecord(recordLord);
-                //location born (different for lady)
-                House ladyHouse = GetHouse(actorLady.BornRefID);
-                Location locLady = Game.network.GetLocation(ladyHouse.LocID);
-                descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", actorLady.Name, actorLady.MaidenName, actorLady.ActID, locLady.LocName);
-                Record recordLady = new Record(descriptor, actorLady.ActID, locLady.LocationID, actorLady.BornRefID, actorLady.Born, HistEvent.Born);
-                SetRecord(recordLady);*/
                 //store actors in location
                 loc.AddActor(actorLord.ActID);
                 loc.AddActor(actorLady.ActID);
@@ -1003,10 +1005,6 @@ namespace Next_Game
                     //add to dictionaries of actors
                     dictPassiveActors.Add(bannerLord.ActID, bannerLord);
                     dictAllActors.Add(bannerLord.ActID, bannerLord);
-                    /*create records of being born
-                    //string descriptor = string.Format("{0}, Aid {1}, born at {2}", bannerLord.Name, bannerLord.ActID, loc.LocName);
-                    //Record recordLord = new Record(descriptor, bannerLord.ActID, loc.LocationID, kvp.Value.RefID, bannerLord.Born, HistEvent.Born);
-                    SetRecord(recordLord);*/
                     //store actors in location
                     loc.AddActor(bannerLord.ActID);
                 }
