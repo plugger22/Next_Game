@@ -1223,12 +1223,12 @@ namespace Next_Game
                 if (parents == ActorParents.Normal)
                 {
                     int num = rnd.Next(100);
-                    if (num < (int)Global.CHILDBIRTH_DEATH)
+                    if (num < Game.constant.GetValue(Global.CHILDBIRTH_DEATH))
                     {
                         //Mother died at childbirth but child survived
                         PassiveActorFuneral(Lady, year, ActorDied.Childbirth, child, Lord);
                     }
-                    else if (num < (int)Global.CHILDBIRTH_INFERTILE)
+                    else if (num < Game.constant.GetValue(Global.CHILDBIRTH_INFERTILE))
                     {
                         //Complications -> Mother can no longer have children
                         Lady.Fertile = false;
