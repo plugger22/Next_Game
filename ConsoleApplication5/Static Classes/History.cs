@@ -385,12 +385,65 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Create a Royal or Noble House Advisor
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="locID"></param>
+        /// <param name="refID"></param>
+        /// <param name="houseID"></param>
+        /// <param name="advisorNoble"></param>
+        /// <param name="advisorRoyal"></param>
+        /// <param name="advisorReligious"></param>
+        /// <returns></returns>
+        internal Advisor CreateAdvisor(Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male,
+            AdvisorNoble advisorNoble = AdvisorNoble.None, AdvisorRoyal advisorRoyal = AdvisorRoyal.None, AdvisorReligious advisorReligious = AdvisorReligious.None )
+        {
+            int advisorCheck = (int)advisorRoyal + (int)advisorNoble + (int)advisorReligious;
+            //must be one type of advisor
+            if (advisorCheck == 0)
+            { Game.SetError(new Error(11, "No valid advisor type provided")); return null;  }
+            //can only be a single type of advisor
+            else if (advisorCheck > 1)
+            { Game.SetError(new Error(12, "Only a single advisor type is allowed")); return null; }
+            else
+            {
+                string name = GetActorName();
+                Advisor advisor = new Advisor(name, ActorType.Advisor, sex);
+                advisor.SetActorPosition(pos);
+                advisor.LocID = locID;
+                advisor.RefID = refID;
+                advisor.HouseID = houseID;
+                if ((int)advisorRoyal > 0)
+                {
+                    switch(advisorRoyal)
+                    {
+                        case AdvisorRoyal.Master_of_Coin:
+                            break;
+                    }
+                }
+                else if ((int)advisorNoble > 0)
+                {
+
+                }
+                else if ((int)advisorReligious > 0)
+                {
+
+                }
+                else
+                { Game.SetError(new Error(11, "No valid advisor type provided")); return null; }
+
+                return advisor;
+            }
+        }
+
+        /// <summary>
         /// Assigns traits to actors (early, under 15 y.0 - Combat, Wits, Charm, Treachery, Leadership)
         /// </summary>
         /// <param name="person"></param>
         /// <param name="father">supply for when parental genetics come into play</param>
         /// <param name="mother">supply for when parental genetics come into play</param>
-        private void InitialiseActorTraits(Actor person, Passive father = null, Passive mother = null)
+        /// <param name="traitPreference">if present this trait will be given preference (high values more likely, but no guaranteed)</param>
+        private void InitialiseActorTraits(Actor person, Passive father = null, Passive mother = null, ActorTrait traitPreference = ActorTrait.None)
         {
             //nicknames from all assigned traits kept here and one is randomly chosen to be given the actor (their 'handle')
             List<string> tempHandles = new List<string>();
@@ -398,7 +451,7 @@ namespace Next_Game
             int rndRange;
             Trait rndTrait;
             int chanceOfTrait;
-
+            
             //Combat ---
             if (person.Age == 0 && father != null && mother != null)
             {
@@ -442,8 +495,11 @@ namespace Next_Game
                 rndRange = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex].Length;
                 if (rndRange > 0)
                 {
-                    //random trait
-                    rndTrait = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex][rnd.Next(rndRange)];
+                    //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
+                    if (traitPreference == ActorTrait.Combat)
+                    { rndTrait = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex][rnd.Next(rndRange / 2)]; }
+                    else
+                    { rndTrait = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex][rnd.Next(rndRange)]; }
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
@@ -507,8 +563,11 @@ namespace Next_Game
                 rndRange = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex].Length;
                 if (rndRange > 0)
                 {
-                    //random trait
-                    rndTrait = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex][rnd.Next(rndRange)];
+                    //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
+                    if (traitPreference == ActorTrait.Wits)
+                    { rndTrait = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex][rnd.Next(rndRange / 2)]; }
+                    else
+                    { rndTrait = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex][rnd.Next(rndRange)]; }
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
@@ -571,8 +630,11 @@ namespace Next_Game
                 rndRange = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex].Length;
                 if (rndRange > 0)
                 {
-                    //random trait
-                    rndTrait = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex][rnd.Next(rndRange)];
+                    //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
+                    if (traitPreference == ActorTrait.Charm)
+                    { rndTrait = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex][rnd.Next(rndRange / 2)]; }
+                    else
+                    { rndTrait = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex][rnd.Next(rndRange)]; }
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
@@ -635,8 +697,11 @@ namespace Next_Game
                 rndRange = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex].Length;
                 if (rndRange > 0)
                 {
-                    //random trait
-                    rndTrait = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex][rnd.Next(rndRange)];
+                    //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
+                    if (traitPreference == ActorTrait.Treachery)
+                    { rndTrait = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex][rnd.Next(rndRange / 2)]; }
+                    else
+                    { rndTrait = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex][rnd.Next(rndRange)]; }
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
@@ -699,8 +764,11 @@ namespace Next_Game
                 rndRange = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex].Length;
                 if (rndRange > 0)
                 {
-                    //random trait
-                    rndTrait = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex][rnd.Next(rndRange)];
+                    //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
+                    if (traitPreference == ActorTrait.Leadership)
+                    { rndTrait = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex][rnd.Next(rndRange / 2)]; }
+                    else
+                    { rndTrait = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex][rnd.Next(rndRange)]; }
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
