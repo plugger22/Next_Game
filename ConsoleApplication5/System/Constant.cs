@@ -9,6 +9,7 @@ namespace Next_Game
         INHERIT_TRAIT,
         CHILDBIRTH_DEATH,
         CHILDBIRTH_INFERTILE,
+        PREGNANT,
         Count //keep as last
     }
 
@@ -25,6 +26,7 @@ namespace Next_Game
             arrayOfGlobals[1] = Global.INHERIT_TRAIT;
             arrayOfGlobals[2] = Global.CHILDBIRTH_DEATH;
             arrayOfGlobals[3] = Global.CHILDBIRTH_INFERTILE;
+            arrayOfGlobals[4] = Global.PREGNANT;
             }
 
         /// <summary>

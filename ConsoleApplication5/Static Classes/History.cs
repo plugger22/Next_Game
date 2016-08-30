@@ -255,7 +255,7 @@ namespace Next_Game
         {
             //get a random first name
             string actorName = GetActorName(lastName, sex, refID);
-
+            string descriptor;
             Passive actor = null;
             //Lord or lady
             if (type == ActorType.Lady || type == ActorType.Lord)
@@ -265,7 +265,7 @@ namespace Next_Game
             { actor = new BannerLord(actorName, type, sex); actor.Realm = ActorRealm.Head_of_House; }
             //illegal actor type
             else
-            { Game.SetError(new Error(8, "invalid ActorType")); }
+            { Game.SetError(new Error(8, "invalid ActorType")); return actor; }
             //age (older men, younger wives
             int age = 0;
             if (sex == ActorSex.Male)
@@ -317,13 +317,40 @@ namespace Next_Game
                     { noble.Fertile = true; }
                 }
             }
+
+            //create records of being born
+            if (type == ActorType.Lord)
+            {
+                descriptor = string.Format("{0} born, Aid {1}, at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
+                Record recordLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistEvent.Born);
+                Game.world.SetRecord(recordLord);
+            }
+            else if (type == ActorType.Lady)
+            {
+                //location born (different for lady)
+                House ladyHouse = Game.world.GetHouse(actor.BornRefID);
+                Location locLady = Game.network.GetLocation(ladyHouse.LocID);
+                Noble lady = actor as Noble;
+                descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", lady.Name, lady.MaidenName, actor.ActID, locLady.LocName);
+                Record recordLady = new Record(descriptor, lady.ActID, locLady.LocationID, lady.BornRefID, lady.Born, HistEvent.Born);
+                Game.world.SetRecord(recordLady);
+            }
+            else if (type == ActorType.BannerLord)
+            {
+                //create records of being born
+                BannerLord bannerLord = actor as BannerLord;
+                descriptor = string.Format("{0}, Aid {1}, born at {2}", bannerLord.Name, bannerLord.ActID, Game.world.GetLocationName(locID));
+                Record recordBannerLord = new Record(descriptor, bannerLord.ActID, locID, refID, bannerLord.Born, HistEvent.Born);
+                Game.world.SetRecord(recordBannerLord);
+            }
+
             //date Noble Lord attained lordship of House
             if (sex == ActorSex.Male && actor is Noble)
             {
                 Noble noble = actor as Noble;
                 int lordshipAge = rnd.Next(20, age - 2);
                 noble.Lordship = actor.Born + lordshipAge;
-                string descriptor = "unknown";
+                descriptor = "unknown";
                 if (actor.Type == ActorType.Lord)
                 { descriptor = string.Format("{0} assumes Lordship of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge); }
                 else if (actor.Type == ActorType.BannerLord)
@@ -337,7 +364,7 @@ namespace Next_Game
                 BannerLord bannerlord = actor as BannerLord;
                 int lordshipAge = rnd.Next(20, age - 2);
                 bannerlord.Lordship = actor.Born + lordshipAge;
-                string descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge);
+                descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge);
                 Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, bannerlord.Lordship, HistEvent.Lordship);
                 Game.world.SetRecord(record);
             }
@@ -976,7 +1003,7 @@ namespace Next_Game
                 for (int year = lady.Married; year <= Game.gameYear; year += 2)
                 {
                     //chance of a child every 2 years
-                    if (rnd.Next(100) < 75)
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.PREGNANT) )
                     {
                         Noble child = CreateChild(lord, lady, year);
                         if (lady.Status == ActorStatus.Dead || lady.Fertile == false)

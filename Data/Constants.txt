@@ -10,3 +10,5 @@
 2: 10
 # CHILDBIRTH_INFERTILE -> % chance of the Mother becoming infertile at the birth of her child
 3: 30
+# PREGNANT -> % chance of a child arriving every 2 years
+4: 75

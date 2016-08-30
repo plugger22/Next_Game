@@ -943,7 +943,7 @@ namespace Next_Game
                 SetPassiveActor(actorMaester);
                 SetPassiveActor(actorSepton);
                 //create records of being born
-                string descriptor = string.Format("{0} born, Aid {1}, at {2}", actorLord.Name, actorLord.ActID, loc.LocName);
+                /*string descriptor = string.Format("{0} born, Aid {1}, at {2}", actorLord.Name, actorLord.ActID, loc.LocName);
                 Record recordLord = new Record(descriptor, actorLord.ActID, loc.LocationID, kvp.Value.RefID, actorLord.Born, HistEvent.Born);
                 SetRecord(recordLord);
                 //location born (different for lady)
@@ -951,7 +951,7 @@ namespace Next_Game
                 Location locLady = Game.network.GetLocation(ladyHouse.LocID);
                 descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", actorLady.Name, actorLady.MaidenName, actorLady.ActID, locLady.LocName);
                 Record recordLady = new Record(descriptor, actorLady.ActID, locLady.LocationID, actorLady.BornRefID, actorLady.Born, HistEvent.Born);
-                SetRecord(recordLady);
+                SetRecord(recordLady);*/
                 //store actors in location
                 loc.AddActor(actorLord.ActID);
                 loc.AddActor(actorLady.ActID);
@@ -1003,10 +1003,10 @@ namespace Next_Game
                     //add to dictionaries of actors
                     dictPassiveActors.Add(bannerLord.ActID, bannerLord);
                     dictAllActors.Add(bannerLord.ActID, bannerLord);
-                    //create records of being born
-                    string descriptor = string.Format("{0}, Aid {1}, born at {2}", bannerLord.Name, bannerLord.ActID, loc.LocName);
-                    Record recordLord = new Record(descriptor, bannerLord.ActID, loc.LocationID, kvp.Value.RefID, bannerLord.Born, HistEvent.Born);
-                    SetRecord(recordLord);
+                    /*create records of being born
+                    //string descriptor = string.Format("{0}, Aid {1}, born at {2}", bannerLord.Name, bannerLord.ActID, loc.LocName);
+                    //Record recordLord = new Record(descriptor, bannerLord.ActID, loc.LocationID, kvp.Value.RefID, bannerLord.Born, HistEvent.Born);
+                    SetRecord(recordLord);*/
                     //store actors in location
                     loc.AddActor(bannerLord.ActID);
                 }
