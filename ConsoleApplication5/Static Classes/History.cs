@@ -376,7 +376,7 @@ namespace Next_Game
             knight.HouseID = houseID;
             knight.Type = ActorType.Knight;
             knight.Realm = ActorRealm.None;
-            InitialiseActorTraits(knight);
+            InitialiseActorTraits(knight, null, null, TraitType.Combat, TraitType.Treachery);
             //record
             string descriptor = string.Format("{0} knighted and swears allegiance to House {1}, age {2}", knight.Name, Game.world.GetGreatHouseName(knight.HouseID), knighted);
             Record record = new Record(descriptor, knight.ActID, knight.LocID, knight.RefID, knight.Knighthood, HistEvent.Knighthood);
@@ -413,28 +413,30 @@ namespace Next_Game
                 advisor.LocID = locID;
                 advisor.RefID = refID;
                 advisor.HouseID = houseID;
-                ActorTrait preferredTrait = ActorTrait.None;
+                TraitType positiveTrait = TraitType.None;
+                TraitType negativeTrait = TraitType.None;
                 if ((int)advisorRoyal > 0)
                 {
                     advisor.advisorRoyal = advisorRoyal;
-                    if (advisorRoyal == AdvisorRoyal.Master_of_Whisperers) { preferredTrait = ActorTrait.Treachery; }
-                    else { preferredTrait = ActorTrait.Wits; }
+                    negativeTrait = TraitType.Combat;
+                    if (advisorRoyal == AdvisorRoyal.Master_of_Whisperers) { positiveTrait = TraitType.Treachery; }
+                    else { positiveTrait = TraitType.Wits;  }
                 }
                 else if ((int)advisorNoble > 0)
                 {
                     advisor.advisorNoble = advisorNoble;
-                    if (advisorNoble == AdvisorNoble.Castellan) { preferredTrait = ActorTrait.Combat; }
-                    else { preferredTrait = ActorTrait.Wits; }
+                    if (advisorNoble == AdvisorNoble.Castellan) { positiveTrait = TraitType.Leadership; negativeTrait = TraitType.Treachery; }
+                    else { positiveTrait = TraitType.Wits; negativeTrait = TraitType.Combat; }
                 }
                 else if ((int)advisorReligious > 0)
                 {
                     advisor.advisorReligious = advisorReligious;
-                    preferredTrait = ActorTrait.Charm;
+                    positiveTrait = TraitType.Charm; negativeTrait = TraitType.Treachery;
                 }
                 else
                 { Game.SetError(new Error(11, "No valid advisor type provided")); return null; }
                 //assign traits & return
-                InitialiseActorTraits(advisor, null, null, preferredTrait);
+                InitialiseActorTraits(advisor, null, null, positiveTrait, negativeTrait);
                 return advisor;
             }
         }
@@ -445,13 +447,16 @@ namespace Next_Game
         /// <param name="person"></param>
         /// <param name="father">supply for when parental genetics come into play</param>
         /// <param name="mother">supply for when parental genetics come into play</param>
-        /// <param name="traitPreference">if present this trait will be given preference (high values more likely, but no guaranteed)</param>
-        private void InitialiseActorTraits(Actor person, Passive father = null, Passive mother = null, ActorTrait traitPreference = ActorTrait.None)
+        /// <param name="traitPositive">if present this trait will be given preference (high values more likely, but not guaranteed)</param>
+        /// <param name="traitNegative">if present this trait will be given malus (low values more likely, but not guaranteed)</param>
+        private void InitialiseActorTraits(Actor person, Passive father = null, Passive mother = null, TraitType traitPositive = TraitType.None, TraitType traitNegative = TraitType.None)
         {
             //nicknames from all assigned traits kept here and one is randomly chosen to be given the actor (their 'handle')
             List<string> tempHandles = new List<string>();
             bool needRandomTrait = true;
             int rndRange;
+            int startRange = 0; //used for random selection of traits
+            int endRange = 0;
             Trait rndTrait;
             int chanceOfTrait;
             
@@ -496,13 +501,15 @@ namespace Next_Game
             if (needRandomTrait == true)
             {
                 rndRange = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex].Length;
+                //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
+                if (traitPositive == TraitType.Combat) { startRange = 0; endRange = rndRange / 2; }
+                else if (traitNegative == TraitType.Combat) { startRange = rndRange / 2; endRange = rndRange; }
+                else { startRange = 0; endRange = rndRange; }
+
                 if (rndRange > 0)
                 {
-                    //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
-                    if (traitPreference == ActorTrait.Combat)
-                    { rndTrait = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex][rnd.Next(rndRange / 2)]; }
-                    else
-                    { rndTrait = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex][rnd.Next(rndRange)]; }
+                    
+                    rndTrait = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex][rnd.Next(startRange, endRange)];
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
@@ -566,13 +573,14 @@ namespace Next_Game
             if (needRandomTrait == true)
             {
                 rndRange = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex].Length;
+                //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
+                if (traitPositive == TraitType.Wits) { startRange = 0; endRange = rndRange / 2; }
+                else if (traitNegative == TraitType.Wits) { startRange = rndRange / 2; endRange = rndRange; }
+                else { startRange = 0; endRange = rndRange; }
+
                 if (rndRange > 0)
                 {
-                    //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
-                    if (traitPreference == ActorTrait.Wits)
-                    { rndTrait = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex][rnd.Next(rndRange / 2)]; }
-                    else
-                    { rndTrait = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex][rnd.Next(rndRange)]; }
+                    rndTrait = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex][rnd.Next(startRange, endRange)];
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
@@ -635,13 +643,14 @@ namespace Next_Game
             if (needRandomTrait == true)
             {
                 rndRange = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex].Length;
+                //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
+                if (traitPositive == TraitType.Charm) { startRange = 0; endRange = rndRange / 2; }
+                else if (traitNegative == TraitType.Charm) { startRange = rndRange / 2; endRange = rndRange; }
+                else { startRange = 0; endRange = rndRange; }
+
                 if (rndRange > 0)
                 {
-                    //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
-                    if (traitPreference == ActorTrait.Charm)
-                    { rndTrait = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex][rnd.Next(rndRange / 2)]; }
-                    else
-                    { rndTrait = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex][rnd.Next(rndRange)]; }
+                    rndTrait = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex][rnd.Next(startRange, endRange)];
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
@@ -704,13 +713,14 @@ namespace Next_Game
             if (needRandomTrait == true)
             {
                 rndRange = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex].Length;
+                //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
+                if (traitPositive == TraitType.Treachery) { startRange = 0; endRange = rndRange / 2; }
+                else if (traitNegative == TraitType.Treachery) { startRange = rndRange / 2; endRange = rndRange; }
+                else { startRange = 0; endRange = rndRange; }
+                
                 if (rndRange > 0)
                 {
-                    //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
-                    if (traitPreference == ActorTrait.Treachery)
-                    { rndTrait = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex][rnd.Next(rndRange / 2)]; }
-                    else
-                    { rndTrait = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex][rnd.Next(rndRange)]; }
+                    rndTrait = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex][rnd.Next(startRange, endRange)];
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
@@ -773,13 +783,14 @@ namespace Next_Game
             if (needRandomTrait == true)
             {
                 rndRange = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex].Length;
+                //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
+                if (traitPositive == TraitType.Leadership) { startRange = 0; endRange = rndRange / 2; }
+                else if (traitNegative == TraitType.Leadership) { startRange = rndRange / 2; endRange = rndRange; }
+                else { startRange = 0; endRange = rndRange; }
+
                 if (rndRange > 0)
                 {
-                    //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
-                    if (traitPreference == ActorTrait.Leadership)
-                    { rndTrait = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex][rnd.Next(rndRange / 2)]; }
-                    else
-                    { rndTrait = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex][rnd.Next(rndRange)]; }
+                    rndTrait = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex][rnd.Next(startRange, endRange)];
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
@@ -818,6 +829,7 @@ namespace Next_Game
             IEnumerable<Trait> enumTraits =
                 from trait in listOfTraits
                 where trait.Type == TraitType.Combat && trait.Sex != TraitSex.Female
+                orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
@@ -826,6 +838,7 @@ namespace Next_Game
             enumTraits =
                 from trait in listOfTraits
                 where trait.Type == TraitType.Combat && trait.Sex != TraitSex.Male
+                orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
@@ -835,6 +848,7 @@ namespace Next_Game
             enumTraits =
                 from trait in listOfTraits
                 where trait.Type == TraitType.Wits && trait.Sex != TraitSex.Female
+                orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
@@ -843,6 +857,7 @@ namespace Next_Game
             enumTraits =
                 from trait in listOfTraits
                 where trait.Type == TraitType.Wits && trait.Sex != TraitSex.Male
+                orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
@@ -852,6 +867,7 @@ namespace Next_Game
             enumTraits =
                 from trait in listOfTraits
                 where trait.Type == TraitType.Charm && trait.Sex != TraitSex.Female
+                orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
@@ -860,6 +876,7 @@ namespace Next_Game
             enumTraits =
                 from trait in listOfTraits
                 where trait.Type == TraitType.Charm && trait.Sex != TraitSex.Male
+                orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
@@ -869,6 +886,7 @@ namespace Next_Game
             enumTraits =
                 from trait in listOfTraits
                 where trait.Type == TraitType.Treachery && trait.Sex != TraitSex.Female
+                orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
@@ -877,6 +895,7 @@ namespace Next_Game
             enumTraits =
                 from trait in listOfTraits
                 where trait.Type == TraitType.Treachery && trait.Sex != TraitSex.Male
+                orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
@@ -886,6 +905,7 @@ namespace Next_Game
             enumTraits =
                 from trait in listOfTraits
                 where trait.Type == TraitType.Leadership && trait.Sex != TraitSex.Female
+                orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
@@ -894,6 +914,7 @@ namespace Next_Game
             enumTraits =
                 from trait in listOfTraits
                 where trait.Type == TraitType.Leadership && trait.Sex != TraitSex.Male
+                orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Female] = new Trait[enumTraits.Count()];

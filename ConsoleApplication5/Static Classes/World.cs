@@ -258,10 +258,14 @@ namespace Next_Game
         {
             List<Snippet> listToDisplay = new List<Snippet>();
             Actor person = new Actor();
+            string actorType;
             if (dictAllActors.TryGetValue(actorID, out person))
             {
                 int locID = person.LocID;
-                string name = string.Format("{0} {1}", person.Type, person.Name);
+                //advisors can be one of three different categories
+                if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
+                else { actorType = Convert.ToString(person.Type); }
+                string name = string.Format("{0} {1}", actorType, person.Name);
                 string handle = null;
                 bool newLine = true;
                 //nickname
@@ -623,14 +627,9 @@ namespace Next_Game
                             Actor person = new Actor();
                             person = dictAllActors[charID];
                             //advisors can be one of three different categories
-                            if (person is Advisor)
-                            {
-                                actorType = GetAdvisorType((Advisor)person);
-                                actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, actorType , person.Name, person.Age);
-                            }
-                            //everyone else
-                            else
-                            { actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, person.Type, person.Name, person.Age); }
+                            if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
+                            else { actorType = Convert.ToString(person.Type); }
+                            actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, actorType, person.Name, person.Age);
                             //player controlled (change color of text)?
                             if (person is Active)
                             {
@@ -718,10 +717,14 @@ namespace Next_Game
                 listOfFamily = familyMembers.ToList();
                 //loop list and display each actor appropriately (dead in Lt.Gray)
                 string personText;
+                string actorType;
                 foreach(int actorID in listOfFamily)
                 {
                     Passive person = GetPassiveActor(actorID);
-                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, person.Type, person.Name, person.Age);
+                    //advisors can be one of three different categories
+                    if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
+                    else { actorType = Convert.ToString(person.Type); }
+                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, actorType, person.Name, person.Age);
                     //valid actor?
                     if (person.Name != null)
                     {

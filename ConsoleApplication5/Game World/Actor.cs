@@ -17,7 +17,6 @@ namespace Next_Game
     public enum ActorDied {None, Childbirth} //how died?
     public enum WifeStatus {None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife}
     public enum ActorRelation {None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister}
-    public enum ActorTrait {None, Combat, Wits, Charm, Treachery, Leadership} //used solely for history.InitialiseActorTraits to provide the ability to favour a particular stat
 
     internal class Actor
     {
