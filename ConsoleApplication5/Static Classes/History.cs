@@ -924,6 +924,14 @@ namespace Next_Game
                     { Game.SetError(new Error(13, "Invalid Range")); }
                 }
             }
+            //if touched create a secret
+            if (person.Touched != 0)
+            {
+                string description = string.Format("{0} was born under a Dark Moon (Touched)", person.Name);
+                Secret_Actor secret = new Secret_Actor(SecretType.Touched, person.Born, description, person.Touched, person.ActID);
+                listOfSecrets.Add(secret);
+                person.AddSecret(secret.SecretID);
+            }
 
             //choose NickName (handle)
             if (tempHandles.Count > 0)
@@ -1358,7 +1366,7 @@ namespace Next_Game
                     if (num < Game.constant.GetValue(Global.CHILDBIRTH_DEATH))
                     {
                         //Mother died at childbirth but child survived
-                        PassiveActorFuneral(Lady, year, ActorDied.Childbirth, child, Lord);
+                        CreatePassiveFuneral(Lady, year, ActorDied.Childbirth, child, Lord);
                     }
                     else if (num < Game.constant.GetValue(Global.CHILDBIRTH_INFERTILE))
                     {
@@ -1481,7 +1489,7 @@ namespace Next_Game
         /// <param name="reason"></param>
         /// <param name="perpetrator">The Actor who caused the death (optional)</param>
         /// <param name="secondary">An additional actor who is affected by the death (optional)</param>
-        internal void PassiveActorFuneral(Passive deceased, int year, ActorDied reason, Actor perpetrator = null, Actor secondary = null)
+        internal void CreatePassiveFuneral(Passive deceased, int year, ActorDied reason, Actor perpetrator = null, Actor secondary = null)
         {
             deceased.Died = year;
             deceased.Age = deceased.Age - (Game.gameYear - year);

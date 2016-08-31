@@ -50,102 +50,116 @@ namespace Next_Game.Cartographic
         /// <param name="spacing" is the minimum distance apart they should be></param>
         public void InitialiseMap(int frequency, int spacing = 1)
         {
-            //loop through map and randomly assign locations
-            for (int row = 0; row < mapSize; row++)
+            int locations = 0;
+            //parameters of map generation (number of locations)
+            int lowerLimit = 20;
+            int upperLimit = 40;
+            
+            do
             {
-                for (int column = 0; column < mapSize; column++)
+                //loop through map and randomly assign locations
+                for (int row = 0; row < mapSize; row++)
                 {
-                    //random hit and no terrain in location
-                    if (rnd.Next(0, 100) < frequency && mapGrid[(int)MapLayer.Base, column, row] == 0)
+                    if (locations >= upperLimit) { break; }
+                    for (int column = 0; column < mapSize; column++)
                     {
-                        //check not adjacent (distance equal to spacing) to an existing location
-                        int nearX = column;
-                        int nearY = row;
-                        int temp = 0;
-                        bool neighbour = false;
-                        //check adjacent left column
-                        if (nearX > 0)
+                        //random hit and no terrain in location
+                        if (rnd.Next(0, 100) < frequency && mapGrid[(int)MapLayer.Base, column, row] == 0)
                         {
-                            for (int i = 1; i <= spacing; i++)
+                            //check not adjacent (distance equal to spacing) to an existing location
+                            int nearX = column;
+                            int nearY = row;
+                            int temp = 0;
+                            bool neighbour = false;
+                            //check adjacent left column
+                            if (nearX > 0)
                             {
-                                temp = nearX - 1;
-                                if (temp >= 0)
+                                for (int i = 1; i <= spacing; i++)
                                 {
-                                    if (mapGrid[(int)MapLayer.Base, temp, row] > 0)
-                                    { neighbour = true; }
+                                    temp = nearX - 1;
+                                    if (temp >= 0)
+                                    {
+                                        if (mapGrid[(int)MapLayer.Base, temp, row] > 0)
+                                        { neighbour = true; }
+                                    }
                                 }
                             }
-                        }
-                        //check adjacent right column
-                        if (nearX < mapSize)
-                        {
-                            for (int i = 1; i <= spacing; i++)
+                            //check adjacent right column
+                            if (nearX < mapSize)
                             {
-                                temp = nearX + 1;
-                                if (temp < mapSize)
+                                for (int i = 1; i <= spacing; i++)
                                 {
-                                    if (mapGrid[(int)MapLayer.Base, temp, row] > 0)
-                                    { neighbour = true; }
+                                    temp = nearX + 1;
+                                    if (temp < mapSize)
+                                    {
+                                        if (mapGrid[(int)MapLayer.Base, temp, row] > 0)
+                                        { neighbour = true; }
+                                    }
                                 }
                             }
-                        }
-                        //check adjacent top row
-                        if (nearY > 0)
-                        {
-                            for (int i = 1; i <= spacing; i++)
+                            //check adjacent top row
+                            if (nearY > 0)
                             {
-                                temp = nearY - 1;
-                                if (temp >= 0)
+                                for (int i = 1; i <= spacing; i++)
                                 {
-                                    if (mapGrid[(int)MapLayer.Base, column, temp] > 0)
-                                    { neighbour = true; }
+                                    temp = nearY - 1;
+                                    if (temp >= 0)
+                                    {
+                                        if (mapGrid[(int)MapLayer.Base, column, temp] > 0)
+                                        { neighbour = true; }
+                                    }
                                 }
                             }
-                        }
-                        //check adjacent bottom row
-                        if (nearY < mapSize)
-                        {
-                            for (int i = 1; i <= spacing; i++)
+                            //check adjacent bottom row
+                            if (nearY < mapSize)
                             {
-                                temp = nearY + 1;
-                                if (temp < mapSize)
+                                for (int i = 1; i <= spacing; i++)
                                 {
-                                    if( mapGrid[(int)MapLayer.Base, column, temp] > 0)
-                                    { neighbour = true; }
-                                }   
+                                    temp = nearY + 1;
+                                    if (temp < mapSize)
+                                    {
+                                        if (mapGrid[(int)MapLayer.Base, column, temp] > 0)
+                                        { neighbour = true; }
+                                    }
+                                }
                             }
-                        }
 
-                        //can't be immediately diagonally adjacent, regardless of spacing
-                        if (nearX > 0 && nearY > 0)
-                        {
-                            if (mapGrid[(int)MapLayer.Base, nearX - 1, nearY - 1] > 0)
-                            { neighbour = true; }
-                        }
-                        if (nearX > 0 && nearY < mapSize - 1)
-                        {
-                            if (mapGrid[(int)MapLayer.Base, nearX - 1, nearY + 1] > 0)
-                            { neighbour = true; }
-                        }
-                        if (nearX < mapSize - 1 && nearY > 0)
-                        {
-                            if (mapGrid[(int)MapLayer.Base, nearX + 1, nearY - 1] > 0)
-                            { neighbour = true; }
-                        }
-                        if (nearX < mapSize - 1 && nearY < mapSize - 1)
-                        {
-                            if (mapGrid[(int)MapLayer.Base, nearX + 1, nearY + 1] > 0)
-                            { neighbour = true; }
-                        }
+                            //can't be immediately diagonally adjacent, regardless of spacing
+                            if (nearX > 0 && nearY > 0)
+                            {
+                                if (mapGrid[(int)MapLayer.Base, nearX - 1, nearY - 1] > 0)
+                                { neighbour = true; }
+                            }
+                            if (nearX > 0 && nearY < mapSize - 1)
+                            {
+                                if (mapGrid[(int)MapLayer.Base, nearX - 1, nearY + 1] > 0)
+                                { neighbour = true; }
+                            }
+                            if (nearX < mapSize - 1 && nearY > 0)
+                            {
+                                if (mapGrid[(int)MapLayer.Base, nearX + 1, nearY - 1] > 0)
+                                { neighbour = true; }
+                            }
+                            if (nearX < mapSize - 1 && nearY < mapSize - 1)
+                            {
+                                if (mapGrid[(int)MapLayer.Base, nearX + 1, nearY + 1] > 0)
+                                { neighbour = true; }
+                            }
 
-                        //valid location site
-                        if (neighbour == false)
-                        { mapGrid[(int)MapLayer.Base, column, row] = 1; }
-                        else
-                        { mapGrid[(int)MapLayer.Base, column, row] = 0; }
+                            //valid location site
+                            if (neighbour == false)
+                            {
+                                mapGrid[(int)MapLayer.Base, column, row] = 1;
+                                locations++;
+                                if (locations >= upperLimit) { break; }
+                            }
+                            else
+                            { mapGrid[(int)MapLayer.Base, column, row] = 0; }
+                        }
                     }
                 }
             }
+            while (locations < lowerLimit);
             FindCapital();
             InitialiseRoads(4);
         }

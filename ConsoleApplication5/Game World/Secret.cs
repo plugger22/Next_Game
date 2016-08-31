@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    public enum SecretType {Parents };
+    public enum SecretType {Parents, Touched };
     public enum SecretRef { Actor, House, GeoCluster, Location, Item }
 
     public class Secret
