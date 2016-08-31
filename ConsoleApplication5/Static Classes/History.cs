@@ -495,12 +495,12 @@ namespace Next_Game
             int endRange = 0;
             Trait rndTrait;
             int chanceOfTrait;
+            int traitID;
+            int effect;
             
             //Combat ---
-            if (person.Age == 0 && father != null && mother != null)
+            if (father != null && mother != null)
             {
-                //parental combat trait (if any)
-                int traitID = 0;
                 Noble parent = new Noble();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male) { parent = father; }
@@ -551,8 +551,8 @@ namespace Next_Game
                     if (rnd.Next(100) < chanceOfTrait)
                     {
                         string name = rndTrait.Name;
-                        int effect = rndTrait.Effect;
-                        int traitID = rndTrait.TraitID;
+                        effect = rndTrait.Effect;
+                        traitID = rndTrait.TraitID;
                         TraitAge age = rndTrait.Age;
                         //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                         //update trait arrays
@@ -568,10 +568,10 @@ namespace Next_Game
             }
 
             //Wits ---
-            if (person.Age == 0 && father != null && mother != null)
+            if (father != null && mother != null)
             {
                 //parental wits trait (if any)
-                int traitID = 0;
+                traitID = 0;
                 Noble parent = new Noble();
                 //genetics can apply (sons have a chance to Inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male)
@@ -622,8 +622,8 @@ namespace Next_Game
                     if (rnd.Next(100) < chanceOfTrait)
                     {
                         string name = rndTrait.Name;
-                        int effect = rndTrait.Effect;
-                        int traitID = rndTrait.TraitID;
+                        effect = rndTrait.Effect;
+                        traitID = rndTrait.TraitID;
                         TraitAge age = rndTrait.Age;
                         //Console.WriteLine("Wits {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                         //update trait arrays
@@ -639,10 +639,10 @@ namespace Next_Game
             }
 
             //Charm ---
-            if (person.Age == 0 && father != null && mother != null)
+            if (father != null && mother != null)
             {
                 //parental Charm trait (if any)
-                int traitID = 0;
+                traitID = 0;
                 Noble parent = new Noble();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male) { parent = father; }
@@ -692,8 +692,8 @@ namespace Next_Game
                     if (rnd.Next(100) < chanceOfTrait)
                     {
                         string name = rndTrait.Name;
-                        int effect = rndTrait.Effect;
-                        int traitID = rndTrait.TraitID;
+                        effect = rndTrait.Effect;
+                        traitID = rndTrait.TraitID;
                         TraitAge age = rndTrait.Age;
                         //Console.WriteLine("Charm {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                         //update trait arrays
@@ -709,10 +709,10 @@ namespace Next_Game
             }
 
             //Treachery ---
-            if (person.Age == 0 && father != null && mother != null)
+            if (father != null && mother != null)
             {
                 //parental Treachery trait (if any)
-                int traitID = 0;
+                traitID = 0;
                 Noble parent = new Noble();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male) { parent = father; }
@@ -762,8 +762,8 @@ namespace Next_Game
                     if (rnd.Next(100) < chanceOfTrait)
                     {
                         string name = rndTrait.Name;
-                        int effect = rndTrait.Effect;
-                        int traitID = rndTrait.TraitID;
+                        effect = rndTrait.Effect;
+                        traitID = rndTrait.TraitID;
                         TraitAge age = rndTrait.Age;
                         //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                         //update trait arrays
@@ -779,10 +779,10 @@ namespace Next_Game
             }
 
             //Leadership ---
-            if (person.Age == 0 && father != null && mother != null)
+            if (father != null && mother != null)
             {
                 //parental Leadership trait (if any)
-                int traitID = 0;
+                traitID = 0;
                 Noble parent = new Noble();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male) { parent = father; }
@@ -832,8 +832,8 @@ namespace Next_Game
                     if (rnd.Next(100) < chanceOfTrait)
                     {
                         string name = rndTrait.Name;
-                        int effect = rndTrait.Effect;
-                        int traitID = rndTrait.TraitID;
+                        effect = rndTrait.Effect;
+                        traitID = rndTrait.TraitID;
                         TraitAge age = rndTrait.Age;
                         //Console.WriteLine("Leadership {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                         //update trait arrays
@@ -849,10 +849,10 @@ namespace Next_Game
             }
 
             //Touched ---
-            if (person.Age == 0 && father != null && mother != null)
+            if (father != null && mother != null)
             {
                 //parental Touched trait (if any)
-                int traitID = 0;
+                traitID = 0;
                 Noble parent = new Noble();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male) { parent = father; }
@@ -894,7 +894,7 @@ namespace Next_Game
                 {
                     //give base strength of 3 (prior to any traits)
                     person.Touched = 3;
-                    Console.WriteLine("{0} is Touched", person.Name);
+                    Console.WriteLine("{0}, Aid {1} is Touched", person.Name, person.ActID);
                     rndRange = arrayOfTraits[(int)TraitType.Touched, (int)person.Sex].Length;
                     //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
                     if (traitPositive == TraitType.Touched) { startRange = 0; endRange = rndRange / 2; }
@@ -909,8 +909,8 @@ namespace Next_Game
                         if (rnd.Next(100) < chanceOfTrait)
                         {
                             string name = rndTrait.Name;
-                            int effect = rndTrait.Effect;
-                            int traitID = rndTrait.TraitID;
+                            effect = rndTrait.Effect;
+                            traitID = rndTrait.TraitID;
                             TraitAge age = rndTrait.Age;
                             //Console.WriteLine("Touched {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                             //update trait arrays
