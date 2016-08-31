@@ -44,6 +44,7 @@ namespace Next_Game
         public int Charm { get; set; } = 3;
         public int Treachery { get; set; } = 3;
         public int Leadership { get; set; } = 3;
+        public int Touched { get; set; } = 0;
         public int[] arrayOfTraitID { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
@@ -169,6 +170,9 @@ namespace Next_Game
         public string MaidenName { get; set; } = null; //used to store a wife's maiden name prior to marriage
         public WifeStatus WifeNumber { get; set; } = WifeStatus.None;
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
+
+        public Noble()
+        { }
 
         public Noble (string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { dictFamily = new SortedDictionary<int, ActorRelation>(); }

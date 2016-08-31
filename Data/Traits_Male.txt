@@ -728,7 +728,39 @@ Chance: 25
 Age: 15
 Nicknames: The Imperious, The Absolute, The Disciplinarian, The Severe
 
+# Touched --- +2
 
+Name: Warlock
+Skill: Touched
+Effect: +2
+Chance: 30
+Age: 5
+Nicknames:
 
+# Touched --- +1
 
+Name: Wizard
+Skill: Touched
+Effect: +1
+Chance: 60
+Age: 5
+Nicknames:
+
+# Touched --- -1
+
+Name: Mage
+Skill: Touched
+Effect: -1
+Chance: 60
+Age: 5
+Nicknames:
+
+# Touched --- -2
+
+Name: Acolyte
+Skill: Touched
+Effect: -2
+Chance: 30
+Age: 5
+Nicknames:
 

@@ -302,3 +302,39 @@ Age: 15
 Nicknames:
 
 # NOTE: Womanly has no nicknames
+
+# Touched --- +2
+
+Name: Witch
+Skill: Touched
+Effect: +2
+Chance: 30
+Age: 5
+Nicknames:
+
+# Touched --- +1
+
+Name: Sorceress
+Skill: Touched
+Effect: +1
+Chance: 60
+Age: 5
+Nicknames:
+
+# Touched --- -1
+
+Name: Enchantress
+Skill: Touched
+Effect: -1
+Chance: 60
+Age: 5
+Nicknames:
+
+# Touched --- -2
+
+Name: Medium
+Skill: Touched
+Effect: -2
+Chance: 30
+Age: 5
+Nicknames:

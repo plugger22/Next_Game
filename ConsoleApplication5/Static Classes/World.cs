@@ -455,6 +455,33 @@ namespace Next_Game
                             }
                         }
                     }
+
+                    //Touched
+                    if (person.Touched > 0)
+                    {
+                        abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched] + person.Touched;
+                        newLine = true;
+                        if (abilityStars != 3)
+                        { newLine = false; }
+                        if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
+                        {
+                            listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Touched"), Color._touched, RLColor.Black, false));
+                            listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._touched, RLColor.Black, newLine));
+                            if (abilityStars != 3)
+                            {
+                                if (abilityStars < 3)
+                                {
+                                    listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Touched],
+                                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched]), Color._badTrait, RLColor.Black));
+                                }
+                                else if (abilityStars > 3)
+                                {
+                                    listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Touched],
+                                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched]), Color._goodTrait, RLColor.Black));
+                                }
+                            }
+                        }
+                    }
                 }
 
                 //family
@@ -962,7 +989,7 @@ namespace Next_Game
                 loc.AddActor(actorMaester.ActID);
                 loc.AddActor(actorSepton.ActID);
                 //create family
-                Game.history.CreatePassiveFamily(actorLord, actorLady);
+                Game.history.CreateFamily(actorLord, actorLady);
                 //check if lady died in childbirth
                /* if (actorLady.Status == ActorStatus.Dead)
                 {

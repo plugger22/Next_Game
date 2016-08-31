@@ -242,7 +242,7 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     cleanToken = tokens[1].Trim();
-                    if (cleanToken.Length == 0)
+                    if (cleanToken.Length == 0 && cleanTag != "Nicknames")
                     { Game.SetError(new Error(20, string.Format("Empty data field, record {0}, {1}", i, fileName))); validData = false;  }
                     else
                     {
@@ -268,6 +268,9 @@ namespace Next_Game
                                         break;
                                     case "Leadership":
                                         structTrait.Type = TraitType.Leadership;
+                                        break;
+                                    case "Touched":
+                                        structTrait.Type = TraitType.Touched;
                                         break;
                                 }
                                 break;
@@ -305,7 +308,11 @@ namespace Next_Game
                                     if (String.IsNullOrEmpty(tempHandle) == false)
                                     { tempList.Add(tempHandle); }
                                     //dodgy Nickname is ignored, it doesn't invalidate the record (some records deliberately don't have nicknames)
-                                    else { Game.SetError(new Error(21, string.Format("Invalid Nickname for {0}, {1}", structTrait.Name, fileName))); }
+                                    else
+                                    {
+                                        if (arrayOfNames.Length > 1)
+                                        { Game.SetError(new Error(21, string.Format("Invalid Nickname for {0}, {1}", structTrait.Name, fileName))); }
+                                    }
                                 }
                                 if (validData == true)
                                 {

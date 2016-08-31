@@ -10,6 +10,7 @@ namespace Next_Game
         CHILDBIRTH_DEATH,
         CHILDBIRTH_INFERTILE,
         PREGNANT,
+        TOUCHED,
         Count //keep as last
     }
 
@@ -27,6 +28,7 @@ namespace Next_Game
             arrayOfGlobals[2] = Global.CHILDBIRTH_DEATH;
             arrayOfGlobals[3] = Global.CHILDBIRTH_INFERTILE;
             arrayOfGlobals[4] = Global.PREGNANT;
+            arrayOfGlobals[5] = Global.TOUCHED;
             }
 
         /// <summary>

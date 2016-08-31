@@ -485,7 +485,7 @@ namespace Next_Game
         /// <param name="mother">supply for when parental genetics come into play</param>
         /// <param name="traitPositive">if present this trait will be given preference (high values more likely, but not guaranteed)</param>
         /// <param name="traitNegative">if present this trait will be given malus (low values more likely, but not guaranteed)</param>
-        private void InitialiseActorTraits(Actor person, Passive father = null, Passive mother = null, TraitType traitPositive = TraitType.None, TraitType traitNegative = TraitType.None)
+        private void InitialiseActorTraits(Actor person, Noble father = null, Noble mother = null, TraitType traitPositive = TraitType.None, TraitType traitNegative = TraitType.None)
         {
             //nicknames from all assigned traits kept here and one is randomly chosen to be given the actor (their 'handle')
             List<string> tempHandles = new List<string>();
@@ -501,7 +501,7 @@ namespace Next_Game
             {
                 //parental combat trait (if any)
                 int traitID = 0;
-                Passive parent = new Passive();
+                Noble parent = new Noble();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male) { parent = father; }
                 else { parent = mother; }
@@ -572,7 +572,7 @@ namespace Next_Game
             {
                 //parental wits trait (if any)
                 int traitID = 0;
-                Passive parent = new Passive();
+                Noble parent = new Noble();
                 //genetics can apply (sons have a chance to Inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male)
                 { parent = father; }
@@ -643,7 +643,7 @@ namespace Next_Game
             {
                 //parental Charm trait (if any)
                 int traitID = 0;
-                Passive parent = new Passive();
+                Noble parent = new Noble();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male) { parent = father; }
                 else { parent = mother; }
@@ -713,7 +713,7 @@ namespace Next_Game
             {
                 //parental Treachery trait (if any)
                 int traitID = 0;
-                Passive parent = new Passive();
+                Noble parent = new Noble();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male) { parent = father; }
                 else { parent = mother; }
@@ -783,7 +783,7 @@ namespace Next_Game
             {
                 //parental Leadership trait (if any)
                 int traitID = 0;
-                Passive parent = new Passive();
+                Noble parent = new Noble();
                 //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
                 if (person.Sex == ActorSex.Male) { parent = father; }
                 else { parent = mother; }
@@ -846,6 +846,83 @@ namespace Next_Game
                 }
                 else
                 { Game.SetError(new Error(13, "Invalid Range")); }
+            }
+
+            //Touched ---
+            if (person.Age == 0 && father != null && mother != null)
+            {
+                //parental Touched trait (if any)
+                int traitID = 0;
+                Noble parent = new Noble();
+                //genetics can apply (sons have a chance to inherit father's trait, daughters from their mothers)
+                if (person.Sex == ActorSex.Male) { parent = father; }
+                else { parent = mother; }
+                //does parent have a Touched trait?
+                traitID = parent.arrayOfTraitID[(int)TraitType.Touched];
+                if (traitID != 0)
+                {
+                    //random % of trait being passed on
+                    if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT_TRAIT))
+                    {
+                        //give base strength of 3 (prior to any traits)
+                        person.Touched = 3;
+                        //find trait
+                        Trait trait = GetTrait(traitID);
+                        if (trait != null)
+                        {
+                            //same trait passed on
+                            TraitAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Touched];
+                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Touched] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Touched];
+                            person.arrayOfTraitID[(int)TraitType.Touched] = parent.arrayOfTraitID[(int)TraitType.Touched];
+                            person.arrayOfTraitNames[(int)TraitType.Touched] = parent.arrayOfTraitNames[(int)TraitType.Touched];
+                            //add trait nicknames to list of possible handles
+                            tempHandles.AddRange(trait.GetNickNames());
+                            needRandomTrait = false;
+
+                            Console.WriteLine("Inherited Touched trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
+                        }
+                    }
+                    else { needRandomTrait = true; }
+                }
+            }
+            //Random Trait (no genetics apply, either no parents or genetic roll failed)
+            if (needRandomTrait == true)
+            {
+                //This is a special attribute that is normally not present ( value 0).
+                if (rnd.Next(100) < Game.constant.GetValue(Global.TOUCHED))
+                {
+                    //give base strength of 3 (prior to any traits)
+                    person.Touched = 3;
+                    Console.WriteLine("{0} is Touched", person.Name);
+                    rndRange = arrayOfTraits[(int)TraitType.Touched, (int)person.Sex].Length;
+                    //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
+                    if (traitPositive == TraitType.Touched) { startRange = 0; endRange = rndRange / 2; }
+                    else if (traitNegative == TraitType.Touched) { startRange = rndRange / 2; endRange = rndRange; }
+                    else { startRange = 0; endRange = rndRange; }
+
+                    if (rndRange > 0)
+                    {
+                        rndTrait = arrayOfTraits[(int)TraitType.Touched, (int)person.Sex][rnd.Next(startRange, endRange)];
+                        //trait roll (trait only assigned if passes roll, otherwise no trait)
+                        chanceOfTrait = rndTrait.Chance;
+                        if (rnd.Next(100) < chanceOfTrait)
+                        {
+                            string name = rndTrait.Name;
+                            int effect = rndTrait.Effect;
+                            int traitID = rndTrait.TraitID;
+                            TraitAge age = rndTrait.Age;
+                            //Console.WriteLine("Touched {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                            //update trait arrays
+                            person.arrayOfTraitID[(int)TraitType.Touched] = traitID;
+                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched] = effect;
+                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Touched] = effect; //any age 5 effect also needs to set for age 15
+                            person.arrayOfTraitNames[(int)TraitType.Touched] = name;
+                        }
+                    }
+                    else
+                    { Game.SetError(new Error(13, "Invalid Range")); }
+                }
             }
 
             //choose NickName (handle)
@@ -955,6 +1032,25 @@ namespace Next_Game
             //drop filtered set into the appropriate array slot
             arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
             arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Female] = enumTraits.ToArray();
+
+            //Touched male
+            enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Touched && trait.Sex != TraitSex.Female
+                orderby trait.Effect descending
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Touched, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Touched, (int)ActorSex.Male] = enumTraits.ToArray();
+            //Touched female
+            enumTraits =
+                from trait in listOfTraits
+                where trait.Type == TraitType.Touched && trait.Sex != TraitSex.Male
+                orderby trait.Effect descending
+                select trait;
+            //drop filtered set into the appropriate array slot
+            arrayOfTraits[(int)TraitType.Touched, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
+            arrayOfTraits[(int)TraitType.Touched, (int)ActorSex.Female] = enumTraits.ToArray();
         }
 
 
@@ -962,7 +1058,7 @@ namespace Next_Game
         /// <summary>
         /// Game start - Great Family, marry the lord and lady and have kids
         /// </summary>
-        internal void CreatePassiveFamily(Noble lord, Noble lady)
+        internal void CreateFamily(Noble lord, Noble lady)
         {
             int ladyAge = lady.Age;
             int ageLadyMarried = rnd.Next(13, 22);

@@ -1,14 +1,16 @@
-# Constants.txt
+# Constants
 # use format - first line '# Explanation', second line 'x : y' where x is the index code (DON'T CHANGE) and y is the value (integer)
 # blank lines and spaces are ignored
 
 # Actors ---
 
 # INHERIT_TRAIT -> % chance of traits being inherited. Sons inherit from fathers, daughters from mothers
-1: 40
+1: 90
 # CHILDBIRTH_DEATH -> % chance of Mother dying at the birth of her child
 2: 15
 # CHILDBIRTH_INFERTILE -> % chance of the Mother becoming infertile at the birth of her child
 3: 30
 # PREGNANT -> % chance of a child arriving every 2 years
 4: 75
+# TOUCHED -> % chance of an actor having the touched trait
+5: 20
