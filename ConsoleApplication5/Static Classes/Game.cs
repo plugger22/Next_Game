@@ -972,7 +972,7 @@ namespace Next_Game
         {
             dictErrors?.Add(error.errorID, error);
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("ERROR: E_{0} Text: {1} Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
+            Console.WriteLine("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
             Console.ForegroundColor = ConsoleColor.Gray;
         }
         

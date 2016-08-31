@@ -134,21 +134,25 @@ namespace Next_Game
                                 houseStruct.Banner = cleanToken;
                                 break;
                             case "ArchetypeID":
-                                houseStruct.Archetype = Convert.ToInt32(cleanToken);
+                                try { houseStruct.Archetype = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(18, e.Message)); validData = false; }
                                 break;
                             case "ReferenceID":
-                                houseStruct.RefID = Convert.ToInt32(cleanToken);
+                                try { houseStruct.RefID = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(18, e.Message)); validData = false; }
                                 break;
                             case "Capital": //Major Houses
                                 houseStruct.Capital = cleanToken;
                                 //last datapoint - save structure to list
-                                if (dataCounter > 0 )
+                                if (dataCounter > 0 && validData == true )
                                 { listHouses.Add(houseStruct); }
                                 break;
                             case "Seat": //Minor Houses
                                 houseStruct.Capital = cleanToken;
                                 //last datapoint - save structure to list
-                                if (dataCounter > 0 )
+                                if (dataCounter > 0  && validData == true)
                                 { listHouses.Add(houseStruct); }
                                 break;
                             default:
@@ -186,12 +190,17 @@ namespace Next_Game
                     cleanTag = tokens[0].Trim();
                     cleanToken = tokens[1].Trim();
                     //convert to #'s
-                    index = Convert.ToInt32(cleanTag);
-                    value = Convert.ToInt32(cleanToken);
-                    //get correct enum from Global array
-                    enumTag = Game.constant.GetGlobal(index);
-                    //initialise data in Constants array
-                    Game.constant.SetData(enumTag, value);
+                    try
+                    {
+                        index = Convert.ToInt32(cleanTag);
+                        value = Convert.ToInt32(cleanToken);
+                        //get correct enum from Global array
+                        enumTag = Game.constant.GetGlobal(index);
+                        //initialise data in Constants array
+                        Game.constant.SetData(enumTag, value);
+                    }
+                    catch (Exception e)
+                    { Game.SetError(new Error(17, e.Message)); }
                 }
             }
         }
