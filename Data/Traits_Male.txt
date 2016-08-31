@@ -9,7 +9,7 @@ Skill: Combat
 Effect: 2
 Chance: 25
 Age: 15
-Nicknames: The Mountain, The Gargantuan, , The Enormous, The Hulking, The Mammoth
+Nicknames: The Mountain, The Gargantuan, The Enormous, The Hulking, The Mammoth
 
 Name: Analgesia (Ignores Pain) 
 Skill: Combat

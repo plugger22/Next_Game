@@ -200,10 +200,18 @@ namespace Next_Game
 
                     }
                     //choose a random name
-                    randomNum = rnd.Next(0, tempList.Count);
-                    cluster.Name = tempList[randomNum];
-                    //delete from list to prevent reuse
-                    tempList.RemoveAt(randomNum);
+                    if (tempList.Count > 0)
+                    {
+                        randomNum = rnd.Next(0, tempList.Count);
+                        cluster.Name = tempList[randomNum];
+                        //delete from list to prevent reuse
+                        tempList.RemoveAt(randomNum);
+                    }
+                    else
+                    {
+                        cluster.Name = "Unknown";
+                        Game.SetError(new Error(24, string.Format("Cluster {0} tempList has no records, index {1}", cluster.ClusterType, i)));
+                    }
                 }
             }
         }

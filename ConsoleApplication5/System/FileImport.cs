@@ -394,6 +394,9 @@ namespace Next_Game
                             case "Small Forests":
                                 listOfSmallForests.Add(tempString);
                                 break;
+                            default:
+                                Game.SetError(new Error(23, string.Format("Invalid Category {0}, record {1}", nameType, i)));
+                                break;
                         }
                     }
                 }
