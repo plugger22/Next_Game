@@ -17,9 +17,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        private static int seed = 12602;
+        //private static int seed = 12602;
         
 
         private static readonly int _rootWidth = 230;
@@ -97,23 +97,23 @@ namespace Next_Game
             Console.SetWindowSize(100, 80);
             Console.WriteLine("Seed: {0}", seed);
             //initialise game objects
-            Stopwatch timer = new Stopwatch();
+            Stopwatch timer_1 = new Stopwatch();
             constant = new Constant();
             file = new FileImport("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/");
             messageLog = new MessageLog();
-            timer.Start();
+            timer_1.Start();
             map = new Map(mapSize, seed);
             map.InitialiseMap(4, 2);
-            StopTimer(timer, "Map Initialisation");
-            timer.Start();
+            StopTimer(timer_1, "Map Initialisation");
+            timer_1.Start();
             network = new Network(seed);
             network.InitialiseNetwork();
-            StopTimer(timer, "Network Initialisation");
-            timer.Start();
+            StopTimer(timer_1, "Network Initialisation");
+            timer_1.Start();
             history = new History(seed);
             history.InitialiseHistory(network.GetNumUniqueHouses());
             history.CreatePlayerActors(6);
-            StopTimer(timer, "History Initialisation");
+            StopTimer(timer_1, "History Initialisation");
             //timer.Start();
             world = new World(seed);
             world.InitialiseWorld();
@@ -971,8 +971,9 @@ namespace Next_Game
         internal static void SetError(Error error)
         {
             dictErrors?.Add(error.errorID, error);
-            Console.WriteLine(Environment.NewLine + "--- Error");
-            Console.WriteLine("E_{0} Text: {1} Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("ERROR: E_{0} Text: {1} Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
         
         /// <summary>

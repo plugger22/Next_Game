@@ -54,6 +54,8 @@ namespace Next_Game
             { importedText = File.ReadAllLines(path); }
             else
             { Game.SetError(new Error(10, string.Format("FileImport failed, file name {0}", fileName))); }
+            if (importedText.Length == 0)
+            { Game.SetError(new Error(14, string.Format("No data in file {0}", fileName))); }
             return importedText;
         }
 
@@ -92,6 +94,7 @@ namespace Next_Game
             string[] arrayOfHouseNames = ImportDataFile(fileName);
             List<HouseStruct> listHouses = new List<HouseStruct>();
             bool newHouse = false;
+            bool validData = true;
             int dataCounter = 0; //number of houses
             HouseStruct houseStruct = new HouseStruct();
             string cleanToken;
@@ -104,6 +107,7 @@ namespace Next_Game
                     if (newHouse == false)
                     {
                         newHouse = true;
+                        validData = true;
                         //Console.WriteLine();
                         dataCounter++;
                         //new structure
@@ -113,36 +117,44 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     cleanToken = tokens[1].Trim();
-                    //Console.WriteLine("{0}: {1}", tokens[0], tokens[1]);
-                    switch (cleanTag)
+                    if (cleanToken.Length == 0)
+                    { validData = false; Game.SetError(new Error(16, "Empty data field")); }
+                    else
                     {
-                        case "House":
-                            houseStruct.Name = cleanToken;
-                            break;
-                        case "Motto":
-                            houseStruct.Motto = cleanToken;
-                            break;
-                        case "Banner":
-                            houseStruct.Banner = cleanToken;
-                            break;
-                        case "ArchetypeID":
-                            houseStruct.Archetype = Convert.ToInt32(cleanToken);
-                            break;
-                        case "ReferenceID":
-                            houseStruct.RefID = Convert.ToInt32(cleanToken);
-                            break;
-                        case "Capital": //Major Houses
-                            houseStruct.Capital = cleanToken;
-                            //last datapoint - save structure to list
-                            if (dataCounter > 0)
-                            { listHouses.Add(houseStruct); }
-                            break;
-                        case "Seat": //Minor Houses
-                            houseStruct.Capital = cleanToken;
-                            //last datapoint - save structure to list
-                            if (dataCounter > 0)
-                            { listHouses.Add(houseStruct); }
-                            break;
+                        //Console.WriteLine("{0}: {1}", tokens[0], tokens[1]);
+                        switch (cleanTag)
+                        {
+                            case "House":
+                                houseStruct.Name = cleanToken;
+                                break;
+                            case "Motto":
+                                houseStruct.Motto = cleanToken;
+                                break;
+                            case "Banner":
+                                houseStruct.Banner = cleanToken;
+                                break;
+                            case "ArchetypeID":
+                                houseStruct.Archetype = Convert.ToInt32(cleanToken);
+                                break;
+                            case "ReferenceID":
+                                houseStruct.RefID = Convert.ToInt32(cleanToken);
+                                break;
+                            case "Capital": //Major Houses
+                                houseStruct.Capital = cleanToken;
+                                //last datapoint - save structure to list
+                                if (dataCounter > 0 )
+                                { listHouses.Add(houseStruct); }
+                                break;
+                            case "Seat": //Minor Houses
+                                houseStruct.Capital = cleanToken;
+                                //last datapoint - save structure to list
+                                if (dataCounter > 0 )
+                                { listHouses.Add(houseStruct); }
+                                break;
+                            default:
+                                Game.SetError(new Error(15, "Invalid Data in House Input"));
+                                break;
+                        }
                     }
                 }
                 else
