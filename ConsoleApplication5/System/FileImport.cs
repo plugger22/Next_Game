@@ -217,6 +217,7 @@ namespace Next_Game
             string cleanTag;
             string cleanToken;
             bool newTrait = false;
+            bool validData = true;
             List<Trait> listOfTraits = new List<Trait>();
             string[] arrayOfTraits = ImportDataFile(fileName);
             TraitStruct structTrait = new TraitStruct();
@@ -229,6 +230,7 @@ namespace Next_Game
                     if (newTrait == false)
                     {
                         newTrait = true;
+                        validData = true;
                         //Console.WriteLine();
                         dataCounter++;
                         //new Trait object
@@ -240,62 +242,84 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     cleanToken = tokens[1].Trim();
-                    switch (cleanTag)
+                    if (cleanToken.Length == 0)
+                    { Game.SetError(new Error(20, string.Format("Empty data field, record {0}, {1}", i, fileName))); validData = false;  }
+                    else
                     {
-                        case "Name":
-                            structTrait.Name = cleanToken;
-                            break;
-                        case "Skill":
-                            switch (cleanToken)
-                            {
-                                case "Combat":
-                                    structTrait.Type = TraitType.Combat;
-                                    break;
-                                case "Wits":
-                                    structTrait.Type = TraitType.Wits;
-                                    break;
-                                case "Charm":
-                                    structTrait.Type = TraitType.Charm;
-                                    break;
-                                case "Treachery":
-                                    structTrait.Type = TraitType.Treachery;
-                                    break;
-                                case "Leadership":
-                                    structTrait.Type = TraitType.Leadership;
-                                    break;
-                            }
-                            break;
-                        case "Effect":
-                            structTrait.Effect = Convert.ToInt32(cleanToken);
-                            break;
-                        case "Chance":
-                            structTrait.Chance = Convert.ToInt32(cleanToken);
-                            break;
-                        case "Age":
-                            int tempNum = Convert.ToInt32(cleanToken);
-                            if (tempNum == 5)
-                            { structTrait.Age = TraitAge.Five; }
-                            else
-                            { structTrait.Age = TraitAge.Fifteen; }
-                            break;
-                        case "Nicknames":
-                            //get list of nicknames
-                            string[] arrayOfNames = cleanToken.Split(',');
-                            List<string> tempList = new List<string>();
-                            //loop nickname array and add all to lists
-                            string tempHandle = null;
-                            for (int k = 0; k < arrayOfNames.Length; k++)
-                            {
-                                tempHandle = arrayOfNames[k].Trim();
-                                if (String.IsNullOrEmpty(tempHandle) == false)
-                                { tempList.Add(tempHandle); }
-                            }
-                            //pass info over to a class instance
-                            Trait classTrait = new Trait(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, structTrait.Chance, tempList);
-                            //last datapoint - save object to list
-                            if (dataCounter > 0)
-                            { listOfTraits.Add(classTrait); }
-                            break;
+                        switch (cleanTag)
+                        {
+                            case "Name":
+                                structTrait.Name = cleanToken;
+                                break;
+                            case "Skill":
+                                switch (cleanToken)
+                                {
+                                    case "Combat":
+                                        structTrait.Type = TraitType.Combat;
+                                        break;
+                                    case "Wits":
+                                        structTrait.Type = TraitType.Wits;
+                                        break;
+                                    case "Charm":
+                                        structTrait.Type = TraitType.Charm;
+                                        break;
+                                    case "Treachery":
+                                        structTrait.Type = TraitType.Treachery;
+                                        break;
+                                    case "Leadership":
+                                        structTrait.Type = TraitType.Leadership;
+                                        break;
+                                }
+                                break;
+                            case "Effect":
+                                try { structTrait.Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(20, e.Message)); validData = false; }
+                                break;
+                            case "Chance":
+                                try { structTrait.Chance = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(20, e.Message)); validData = false; }
+                                break;
+                            case "Age":
+                                try
+                                {
+                                    int tempNum = Convert.ToInt32(cleanToken);
+                                    if (tempNum == 5)
+                                    { structTrait.Age = TraitAge.Five; }
+                                    else
+                                    { structTrait.Age = TraitAge.Fifteen; }
+                                }
+                                catch (Exception e)
+                                { Game.SetError(new Error(20, e.Message)); validData = false; }
+                                break;
+                            case "Nicknames":
+                                //get list of nicknames
+                                string[] arrayOfNames = cleanToken.Split(',');
+                                List<string> tempList = new List<string>();
+                                //loop nickname array and add all to lists
+                                string tempHandle = null;
+                                for (int k = 0; k < arrayOfNames.Length; k++)
+                                {
+                                    tempHandle = arrayOfNames[k].Trim();
+                                    if (String.IsNullOrEmpty(tempHandle) == false)
+                                    { tempList.Add(tempHandle); }
+                                    //dodgy Nickname is ignored, it doesn't invalidate the record (some records deliberately don't have nicknames)
+                                    else { Game.SetError(new Error(21, string.Format("Invalid Nickname for {0}, {1}", structTrait.Name, fileName))); }
+                                }
+                                if (validData == true)
+                                {
+                                    //pass info over to a class instance
+                                    Trait classTrait = new Trait(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, structTrait.Chance, tempList);
+                                    //last datapoint - save object to list
+                                    if (dataCounter > 0)
+                                    { listOfTraits.Add(classTrait); }
+                                }
+                                break;
+                            default:
+                                Game.SetError(new Error(22, string.Format("Invalid Data, record {0}, {1}", i, fileName)));
+                                break;
+                        }
                     }
                 }
             }

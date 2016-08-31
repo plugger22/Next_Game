@@ -1,7 +1,7 @@
 House: Lannister
 Motto: Hear Me Roar!
 Banner: Roaring Lion
-ArchetypeID: x
+ArchetypeID: 1
 ReferenceID: 2
 Capital: Casterly Rock
 

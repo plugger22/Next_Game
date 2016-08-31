@@ -9,7 +9,7 @@ Skill: Combat
 Effect: 2
 Chance: 25
 Age: 15
-Nicknames: The Mountain, The Gargantuan, The Enormous, The Hulking, The Mammoth
+Nicknames: The Mountain, The Gargantuan, , The Enormous, The Hulking, The Mammoth
 
 Name: Analgesia (Ignores Pain) 
 Skill: Combat
@@ -184,7 +184,6 @@ Age: 5
 Nicknames: The Hobbler, The Limper, The Clumper
 
 Name: Skinny
-Description: 
 Skill: Combat
 Effect: -1
 Chance: 50
@@ -238,7 +237,7 @@ Skill: Combat
 Effect: -1
 Chance: 50
 Age: 5
-Nicknames: The Pirate, The Cyclops, The Basilisk, The Draken, The Evil Eye, 
+Nicknames: The Pirate, The Cyclops, The Basilisk, The Draken, The Evil Eye
 
 Name: Clumsy
 Skill: Combat
