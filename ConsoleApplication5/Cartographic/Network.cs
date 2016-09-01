@@ -1997,7 +1997,7 @@ namespace Next_Game.Cartographic
         /// Takes basic house objects from History and assigns them to HouseID's
         /// </summary>
         /// <param name="listOfHouses"></param>
-        internal void UpdateHouses(List<House> listOfHouses)
+        internal void UpdateHouses(List<MajorHouse> listOfHouses)
         {
             //List<House> returnListOfHouses = listOfHouses;
             Console.WriteLine();
@@ -2027,7 +2027,7 @@ namespace Next_Game.Cartographic
             for(int i = 0; i < listOfHouses.Count; i++)
             {
                 MajorHouse house = new MajorHouse();
-                house = listOfHouses[i] as MajorHouse;
+                house = listOfHouses[i];
                 //MajorHouse majorHouse = house as MajorHouse;
                 houseID = house.HouseID;
                 //change name of Location to house name

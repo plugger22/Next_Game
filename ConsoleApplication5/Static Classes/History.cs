@@ -18,7 +18,7 @@ namespace Next_Game
         private List<string> listOfFemaleFirstNames;
         private List<string> listOfSurnames;
         //house names
-        private List<House> listOfGreatHouses;
+        private List<MajorHouse> listOfGreatHouses;
         private List<House> listOfMinorHouses;
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
         //geo names
@@ -43,7 +43,7 @@ namespace Next_Game
             listOfMaleFirstNames = new List<string>();
             listOfFemaleFirstNames = new List<string>();
             listOfSurnames = new List<string>();
-            listOfGreatHouses = new List<House>();
+            listOfGreatHouses = new List<MajorHouse>();
             listOfMinorHouses = new List<House>();
             listHousePool = new List<HouseStruct>();
             listOfGeoClusters = new List<GeoCluster>();
@@ -1451,7 +1451,7 @@ namespace Next_Game
         ///return list of Great Houses (one house for each houseID)
         /// </summary>
         /// <returns></returns>
-        internal List<House> GetGreatHouses()
+        internal List<MajorHouse> GetGreatHouses()
         { return listOfGreatHouses; }
 
         /// <summary>
@@ -1514,6 +1514,19 @@ namespace Next_Game
         }
 
 
+        internal void InitialiseOverthrow()
+        {
+            List<MajorHouse> listOfHousesByPower = new List<MajorHouse>();
+            IEnumerable<MajorHouse> sortedHouses =
+                from house in listOfGreatHouses
+                let numLocs = house.GetNumBannerLords()
+                orderby numLocs descending
+                select house;
+            listOfHousesByPower = sortedHouses.ToList();
+
+
+
+        }
 
 
         //add methods above

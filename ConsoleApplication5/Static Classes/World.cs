@@ -90,6 +90,9 @@ namespace Next_Game
             timer_2.Start();
             InitialiseSecrets();
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
+            timer_2.Start();
+            InitialiseWorldHistory();
+            Game.StopTimer(timer_2, "W: InitialiseWorldHistory");
             Console.WriteLine(Environment.NewLine + "--- Game Input");
         }
 
@@ -935,7 +938,7 @@ namespace Next_Game
         {
             Game.network.UpdateHouses(Game.history.GetGreatHouses());
             //great houses
-            List<House> listOfGreatHouses = Game.history.GetGreatHouses();
+            List<MajorHouse> listOfGreatHouses = Game.history.GetGreatHouses();
             foreach(MajorHouse house in listOfGreatHouses)
             {
                 dictGreatHouses.Add(house.HouseID, house);
@@ -1135,6 +1138,7 @@ namespace Next_Game
         public void ShowGeneratorStatsRL()
         {
             List<Snippet> listStats = new List<Snippet>();
+            
             //calcs
             int numLocs = Game.network.GetNumLocations();
             int numGreatHouses = dictGreatHouses.Count;
@@ -1143,6 +1147,9 @@ namespace Next_Game
             int numActors = dictAllActors.Count;
             int numChildren = numActors - (numGreatHouses * 2) - numBannerLords;
             int numSecrets = dictSecrets.Count;
+            //checksum
+            if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
+            { Game.SetError(new Error(25, "Locations don't tally")); }
             int numErrors = Game.GetErrorCount();
             //data
             listStats.Add(new Snippet("--- Generation Statistics", RLColor.Yellow, RLColor.Black));
@@ -1154,9 +1161,6 @@ namespace Next_Game
             listStats.Add(new Snippet(string.Format("{0} Actors ({1} Children)", numActors, numChildren)));
             if (numSecrets > 0) { listStats.Add(new Snippet(string.Format("{0} Secrets", numSecrets))); }
             if (numErrors > 0) { listStats.Add(new Snippet(string.Format("{0} Errors", numErrors), RLColor.Red, RLColor.Black)); }
-            //checksum
-            if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
-                listStats.Add(new Snippet("Error: Locations don't tally", RLColor.Red, RLColor.Black));
             //list of all Greathouses by power
             listStats.Add(new Snippet("Great Houses", RLColor.Yellow, RLColor.Black));
             string housePower;
@@ -1386,6 +1390,12 @@ namespace Next_Game
             else if (advisor.advisorNoble > 0)
             { type = Convert.ToString(advisor.advisorNoble); }
             return type;
+        }
+
+        public void InitialiseWorldHistory()
+        {
+            //Generate History
+            Game.history.InitialiseOverthrow();
         }
 
         //new Methods above here
