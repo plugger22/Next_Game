@@ -270,11 +270,11 @@ namespace Next_Game.Cartographic
             { route.ShowPath(routeName); }
         }
 
-        //add character to location
+        //add character to location (goes with RemoveActor)
         public void AddActor(int actorID)
         { listOfActors.Add(actorID); }
 
-        //remove character from location
+        ///remove character from location (goes with AddActor)
         public void RemoveActor(int actorID)
         { listOfActors.Remove(actorID); }
 

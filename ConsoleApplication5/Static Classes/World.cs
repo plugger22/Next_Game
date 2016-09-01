@@ -280,6 +280,8 @@ namespace Next_Game
                 //advisors can be one of three different categories
                 if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
                 else { actorType = Convert.ToString(person.Type); }
+                if ((int)person.Office > 0)
+                { actorType = Convert.ToString(person.Office); }
                 string name = string.Format("{0} {1}", actorType, person.Name);
                 string handle = null;
                 bool newLine = true;
@@ -666,11 +668,14 @@ namespace Next_Game
                         row++;
                         if (dictAllActors.ContainsKey(charID))
                         {
+                            textColor = RLColor.White;
                             Actor person = new Actor();
                             person = dictAllActors[charID];
                             //advisors can be one of three different categories
                             if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
                             else { actorType = Convert.ToString(person.Type); }
+                            if ((int)person.Office > 0)
+                            { actorType = Convert.ToString(person.Office); }
                             actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, actorType, person.Name, person.Age);
                             //player controlled (change color of text)?
                             if (person is Active)
@@ -759,11 +764,13 @@ namespace Next_Game
                 listOfFamily = familyMembers.ToList();
                 //loop list and display each actor appropriately (dead in Lt.Gray)
                 string personText;
-                
+                string actorType;
                 foreach(int actorID in listOfFamily)
                 {
                     Passive person = GetPassiveActor(actorID);
-                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, person.Type, person.Name, person.Age);
+                    if ((int)person.Office > 0) { actorType = Convert.ToString(person.Office); }
+                    else { actorType = Convert.ToString(person.Type); }
+                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, actorType, person.Name, person.Age);
                     //valid actor?
                     if (person.Name != null)
                     {
@@ -798,14 +805,14 @@ namespace Next_Game
                     select person.Value.ActID;
                 listOfRetainers = Retainers.ToList();
                 // loop list and display each actor appropriately (dead in Lt.Gray)
-                string actorType;
+                string type;
                 foreach (int actorID in listOfRetainers)
                 {
                     Passive person = GetPassiveActor(actorID);
                     //advisors can be one of three different categories
-                    if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
-                    else { actorType = Convert.ToString(person.Type); }
-                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, actorType, person.Name, person.Age);
+                    if (person is Advisor) { type = GetAdvisorType((Advisor)person); }
+                    else { type = Convert.ToString(person.Type); }
+                    personText = string.Format("Aid {0} {1} {2}, age {3}, ", person.ActID, type, person.Name, person.Age);
                     //valid actor?
                     if (person.Name != null)
                     {
@@ -1091,7 +1098,7 @@ namespace Next_Game
                     Noble Lord = (Noble)GetPassiveActor(listOfLords[i]);
                     Noble Lady = (Noble)GetPassiveActor(listOfLadies[i]);
                     //get year
-                    yearUpper = 1200;
+                    yearUpper = Game.gameStart;
                     if (Lady.Status == ActorStatus.Dead)
                     { yearUpper = Lady.Died; }
                     yearLower = Lady.Married;

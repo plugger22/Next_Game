@@ -1527,7 +1527,7 @@ namespace Next_Game
                 select house;
             listOfHousesByPower = sortedHouses.ToList();
             //seperate into two camps (royalists and rebels)
-            bool rebel = false;
+            bool rebel = true;
             for (int i = 0; i < listOfHousesByPower.Count; i++)
             {
                 if (rebel == false)
@@ -1587,9 +1587,11 @@ namespace Next_Game
             Location kingsKeep = Game.network.GetLocation(1);
             foreach(Noble royal in listOfRoyalNobles)
             {
-                //change location
-                royal.LocID = 1;
+                //change location (all)
                 kingsKeep.AddActor(royal.ActID);
+                Location oldLoc = Game.network.GetLocation(royal.LocID);
+                oldLoc.RemoveActor(royal.ActID);
+                royal.LocID = 1;
                 //specific roles
                 switch (royal.Type)
                 {
@@ -1615,6 +1617,20 @@ namespace Next_Game
                         break;
                 }
             }
+            //Coronation for king
+            if (OldKing == null)
+            { Game.SetError(new Error(28, "No King Present")); }
+            else
+            {
+
+                Record record_1;
+                int year = rnd.Next(OldKing.Lordship, Game.gameStart);
+                int age = OldKing.Age - (Game.gameStart - year);
+                string descriptor = string.Format("{0}, Aid {1}, crowned as King at a coronation ceremony at Kingskeep, age {2}", OldKing.Name, OldKing.ActID, age);
+                record_1 = new Record(descriptor, OldKing.ActID, OldKing.LocID, OldKing.RefID, year, HistActorEvent.Coronation);
+                Game.world?.SetRecord(record_1);
+            }
+            //
         }
 
 
