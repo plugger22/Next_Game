@@ -1514,7 +1514,7 @@ namespace Next_Game
         }
 
 
-        internal void InitialiseOverthrow()
+        internal void InitialiseOverthrow(Dictionary<int, Passive> dictPassiveActors)
         {
             List<MajorHouse> listOfRoyalists = new List<MajorHouse>();
             List<MajorHouse> listOfRebels = new List<MajorHouse>();
@@ -1544,9 +1544,77 @@ namespace Next_Game
                 }
             }
             //King is the largest Royal Family
-
-
-
+            MajorHouse royalHouse = listOfRoyalists[0];
+            MajorHouse rebelHouse = listOfRebels[0];
+            Game.lore.RoyalHouseOld = royalHouse.HouseID;
+            Game.lore.RoyalHouseNew = rebelHouse.HouseID;
+            int royalHouseID = royalHouse.HouseID;
+            int rebelHouseID = rebelHouse.HouseID;
+            //get all actors in Royal House
+            List<Passive> listOfRoyals = new List<Passive>();
+            IEnumerable<Passive> royalActors =
+                from actor in dictPassiveActors
+                where actor.Value.HouseID == royalHouseID
+                orderby actor.Value.ActID
+                select actor.Value;
+            listOfRoyals = royalActors.ToList();
+            //hive off Royals into separate lists
+            List<Noble> listOfRoyalNobles = new List<Noble>();
+            List<BannerLord> listOfRoyalBannerLords = new List<BannerLord>();
+            List<Knight> listOfRoyalKnights = new List<Knight>();
+            List<Advisor> listOfRoyalAdvisors = new List<Advisor>();
+            foreach(Passive royal in listOfRoyals)
+            {
+                if (royal is Noble)
+                { listOfRoyalNobles.Add((Noble)royal); }
+                else if (royal is BannerLord)
+                { listOfRoyalBannerLords.Add((BannerLord)royal); }
+                else if (royal is Knight)
+                { listOfRoyalKnights.Add((Knight)royal); }
+                else if (royal is Advisor)
+                { listOfRoyalAdvisors.Add((Advisor)royal); }
+                else
+                { Game.SetError(new Error(26, "Invalid Royal in listOfRoyals")); }
+            }
+            //update lore family list
+            if (listOfRoyalNobles.Count > 0)
+            { Game.lore.SetListOfOldRoyals(listOfRoyalNobles); }
+            else { Game.SetError(new Error(27, "listOfRoyalNobles is empty")); }
+            //find key characters
+            Noble OldKing = null;
+            Noble OldQueen = null;
+            Noble OldHeir = null;
+            Location kingsKeep = Game.network.GetLocation(1);
+            foreach(Noble royal in listOfRoyalNobles)
+            {
+                //change location
+                royal.LocID = 1;
+                kingsKeep.AddActor(royal.ActID);
+                //specific roles
+                switch (royal.Type)
+                {
+                    case ActorType.Lord:
+                        Game.lore.OldKing = royal;
+                        OldKing = royal;
+                        OldKing.Office = ActorOffice.King;
+                        break;
+                    case ActorType.Lady:
+                        Game.lore.OldQueen = royal;
+                        OldQueen = royal;
+                        OldQueen.Office = ActorOffice.Queen;
+                        break;
+                    case ActorType.Heir:
+                        Game.lore.OldHeir = royal;
+                        OldHeir = royal;
+                        break;
+                    case ActorType.lord:
+                        royal.Type = ActorType.Prince;
+                        break;
+                    case ActorType.lady:
+                        royal.Type = ActorType.Princess;
+                        break;
+                }
+            }
         }
 
 

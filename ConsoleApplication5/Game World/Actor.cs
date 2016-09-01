@@ -17,7 +17,7 @@ namespace Next_Game
     public enum WifeStatus {None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife}
     public enum ActorRelation {None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister}
 
-    internal class Actor
+    public class Actor
     {
         private static int characterIndex = 1; //provides  a unique ID to each character (first characters should always be the player controlled ones with ID's < 10)
         private Position actorPos;
@@ -112,7 +112,7 @@ namespace Next_Game
     //Active actors - player controlled ---
     //
 
-    class Active : Actor
+    public class Active : Actor
     {
         public Active()
         { }
@@ -122,14 +122,14 @@ namespace Next_Game
     }
 
     //Player avatar
-    class Player : Active
+    public class Player : Active
     {
         public Player(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }
     }
 
     //Player controlled Minions
-    class Follower : Active
+    public class Follower : Active
     {
         public Follower(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }
@@ -140,7 +140,7 @@ namespace Next_Game
     //Passive actors - all NPC's ---
     //
 
-    class Passive : Actor
+    public class Passive : Actor
     {
         public int RefID { get; set; } = 0; //house assignment, eg. Lannister (not HouseID).
         public int HouseID { get; set; } = 0; //dynamically assigned great house alignment 
@@ -160,7 +160,7 @@ namespace Next_Game
 
 
     //Great House Family members
-    class Noble : Passive
+    public class Noble : Passive
     {
         public int GenID { get; set; } = Game.gameGeneration; //generation (1st, 2nd etc.
         public int InLine { get; set; } = 0; //number in line to inherit (males only)
@@ -198,7 +198,7 @@ namespace Next_Game
 
 
     //BannerLords
-    class BannerLord : Passive
+    public class BannerLord : Passive
     {
         public int Lordship { get; set; } = 0; //year made lord (Bannerlord)
 
@@ -208,7 +208,7 @@ namespace Next_Game
 
 
     //Knights - attached to a noble house
-    class Knight : Passive
+    public class Knight : Passive
     {
         public int Knighthood { get; set; } //year knighted
 
@@ -218,7 +218,7 @@ namespace Next_Game
 
 
     //Advisors - either Royal (King's Council) or Noble (Great House). Both can have Religious advisors.
-    class Advisor : Passive
+    public class Advisor : Passive
     {
         public AdvisorRoyal advisorRoyal { get; set; } = AdvisorRoyal.None;
         public AdvisorNoble advisorNoble { get; set; } = AdvisorNoble.None;
@@ -228,7 +228,7 @@ namespace Next_Game
     }
 
     //Special NPC's
-    class Special : Passive
+    public class Special : Passive
     {
         public Special (string name, ActorType type = ActorType.Special, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }

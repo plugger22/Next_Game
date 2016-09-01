@@ -62,6 +62,7 @@ namespace Next_Game
         public static Network network;
         public static History history;
         public static World world;
+        public static Lore lore;
         public static InfoChannel infoChannel;
         public static Constant constant;
         public static FileImport file;
@@ -109,6 +110,7 @@ namespace Next_Game
             network = new Network(seed);
             network.InitialiseNetwork();
             StopTimer(timer_1, "Network Initialisation");
+            lore = new Lore();
             timer_1.Start();
             history = new History(seed);
             history.InitialiseHistory(network.GetNumUniqueHouses());

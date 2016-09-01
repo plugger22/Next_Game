@@ -1392,10 +1392,10 @@ namespace Next_Game
             return type;
         }
 
-        public void InitialiseWorldHistory()
+        internal void InitialiseWorldHistory()
         {
             //Generate History
-            Game.history.InitialiseOverthrow();
+            Game.history.InitialiseOverthrow(dictPassiveActors);
         }
 
         //new Methods above here
