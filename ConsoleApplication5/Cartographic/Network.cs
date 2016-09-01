@@ -1499,6 +1499,8 @@ namespace Next_Game.Cartographic
             int[][] masterStatus = new int[numBranches][];
             int[][] masterLocID = new int[numBranches][];
             arrayOfCapitals = new int[0]; //locID of all house capitals
+            //Initialise Capital as House 1 (Royal Household)
+            //Game.map.SetMapInfo(MapLayer.Houses, capitalX, capitalY, 1);
             //
             //loop through each branch ---
             //
@@ -2016,7 +2018,7 @@ namespace Next_Game.Cartographic
                 randomIndex = rnd.Next(1, randomList.Count + 1);
                 house.HouseID = randomList[randomIndex - 1];
                 randomList.RemoveAt(randomIndex - 1);
-                //Console.WriteLine("House {0} has LocID {1} and HouseID {2}", house.Name, house.LocID, house.HouseID);
+                Console.WriteLine("House {0} has LocID {1} and HouseID {2}", house.Name, house.LocID, house.HouseID);
             }
             //loop houses and update data
             int houseID;
