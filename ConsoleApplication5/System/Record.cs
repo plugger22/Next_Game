@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     //categories (can choose multiple)
-    public enum HistEvent {None, Born, Died, Married, Battle, Lordship, Birthing, Knighthood}
-
+    public enum HistActorEvent {None, Born, Died, Married, Battle, Lordship, Birthing, Knighthood}
+    public enum HistHouseEvent {None, Allegiance}
     //
     //tracks historical Information & Events ---
     //
@@ -25,7 +25,9 @@ namespace Next_Game
         public List<int> listOfLocs; //locID
         public List<int> listOfHouses; //refID
         public List<int> listOfItems; //itemID
-        public List<HistEvent> listOfEvents; //categories
+        public List<HistActorEvent> listOfActorEvents; //categories
+        public List<HistHouseEvent> listOfHouseEvents;
+
 
         public Record()
         {
@@ -37,10 +39,12 @@ namespace Next_Game
             listOfLocs = new List<int>();
             listOfHouses = new List<int>();
             listOfItems = new List<int>();
-            listOfEvents = new List<HistEvent>();
+            listOfActorEvents = new List<HistActorEvent>();
+            listOfHouseEvents = new List<HistHouseEvent>();
         }
 
-        public Record(string description, int actorID, int locID, int refID, int year, HistEvent histEvent = 0, bool actualEvent = true, int itemID = 0)
+        public Record(string description, int actorID, int locID, int refID, int year, HistActorEvent histActorEvent = HistActorEvent.None, HistHouseEvent histHouseEvent = HistHouseEvent.None,
+            bool actualEvent = true, int itemID = 0)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
@@ -54,7 +58,7 @@ namespace Next_Game
                 listOfLocs = new List<int>();
                 listOfHouses = new List<int>();
                 listOfItems = new List<int>();
-                listOfEvents = new List<HistEvent>();
+                listOfActorEvents = new List<HistActorEvent>();
                 //lists
                 Text = description;
                 if (actorID > 0)
@@ -65,8 +69,8 @@ namespace Next_Game
                 { listOfHouses.Add(refID); }
                 if (itemID > 0)
                 { listOfItems.Add(itemID); }
-                if (histEvent > 0)
-                { listOfEvents.Add(histEvent); }
+                if (histActorEvent > 0)
+                { listOfActorEvents.Add(histActorEvent); }
 
             }
         }
@@ -89,8 +93,8 @@ namespace Next_Game
             { listOfHouses.Add(refID); }
         }
 
-        public void AddEvent(HistEvent histEvent)
-        { listOfEvents.Add(histEvent); }
+        public void AddActorEvent(HistActorEvent histEvent)
+        { listOfActorEvents.Add(histEvent); }
 
         public void AddItem(int itemID)
         {

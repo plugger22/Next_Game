@@ -330,7 +330,7 @@ namespace Next_Game
             if (type == ActorType.Lord)
             {
                 descriptor = string.Format("{0} born, Aid {1}, at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
-                Record recordLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistEvent.Born);
+                Record recordLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
                 Game.world.SetRecord(recordLord);
             }
             else if (type == ActorType.Lady)
@@ -340,7 +340,7 @@ namespace Next_Game
                 Location locLady = Game.network.GetLocation(ladyHouse.LocID);
                 Noble lady = actor as Noble;
                 descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", lady.Name, lady.MaidenName, actor.ActID, locLady.LocName);
-                Record recordLady = new Record(descriptor, lady.ActID, locLady.LocationID, lady.BornRefID, lady.Born, HistEvent.Born);
+                Record recordLady = new Record(descriptor, lady.ActID, locLady.LocationID, lady.BornRefID, lady.Born, HistActorEvent.Born);
                 Game.world.SetRecord(recordLady);
             }
             else if (type == ActorType.BannerLord)
@@ -348,7 +348,7 @@ namespace Next_Game
                 //create records of being born
                 BannerLord bannerLord = actor as BannerLord;
                 descriptor = string.Format("{0}, Aid {1}, born at {2}", bannerLord.Name, bannerLord.ActID, Game.world.GetLocationName(locID));
-                Record recordBannerLord = new Record(descriptor, bannerLord.ActID, locID, refID, bannerLord.Born, HistEvent.Born);
+                Record recordBannerLord = new Record(descriptor, bannerLord.ActID, locID, refID, bannerLord.Born, HistActorEvent.Born);
                 Game.world.SetRecord(recordBannerLord);
             }
 
@@ -363,7 +363,7 @@ namespace Next_Game
                 { descriptor = string.Format("{0} assumes Lordship of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge); }
                 else if (actor.Type == ActorType.BannerLord)
                 { descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge); }
-                Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, noble.Lordship, HistEvent.Lordship);
+                Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, noble.Lordship, HistActorEvent.Lordship);
                 Game.world.SetRecord(record);
             }
             //date Bannerlord attained lordship of House
@@ -373,7 +373,7 @@ namespace Next_Game
                 int lordshipAge = rnd.Next(20, age - 2);
                 bannerlord.Lordship = actor.Born + lordshipAge;
                 descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge);
-                Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, bannerlord.Lordship, HistEvent.Lordship);
+                Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, bannerlord.Lordship, HistActorEvent.Lordship);
                 Game.world.SetRecord(record);
             }
 
@@ -414,7 +414,7 @@ namespace Next_Game
             InitialiseActorTraits(knight, null, null, TraitType.Combat, TraitType.Treachery);
             //record
             string descriptor = string.Format("{0} knighted and swears allegiance to House {1}, age {2}", knight.Name, Game.world.GetGreatHouseName(knight.HouseID), knighted);
-            Record record = new Record(descriptor, knight.ActID, knight.LocID, knight.RefID, knight.Knighthood, HistEvent.Knighthood);
+            Record record = new Record(descriptor, knight.ActID, knight.LocID, knight.RefID, knight.Knighthood, HistActorEvent.Knighthood);
             Game.world.SetRecord(record);
             return knight;
         }
@@ -1090,7 +1090,7 @@ namespace Next_Game
             //record event - single record tagged to both characters and houses
             string descriptor = string.Format("{0}, age {1}, and {2} (nee {3}, age {4}) married ({5}) at {6}",
                 lord.Name, lordAgeMarried, lady.Name, lady.MaidenName, ageLadyMarried, lady.WifeNumber, Game.world.GetLocationName(lady.LocID));
-            Record recordLord = new Record(descriptor, lord.ActID, lord.LocID, lord.RefID, lord.Married, HistEvent.Married);
+            Record recordLord = new Record(descriptor, lord.ActID, lord.LocID, lord.RefID, lord.Married, HistActorEvent.Married);
             recordLord.AddHouse(lady.BornRefID);
             recordLord.AddActor(lady.ActID);
             Game.world.SetRecord(recordLord);
@@ -1344,7 +1344,7 @@ namespace Next_Game
                     child.Name, child.ActID, Lord.Type, Lord.Name, Lady.Type, Lady.Name);
                 actualEvent = false;
             }
-            Record record_0 = new Record(descriptor, child.ActID, child.LocID, child.RefID, child.Born, HistEvent.Born, actualEvent);
+            Record record_0 = new Record(descriptor, child.ActID, child.LocID, child.RefID, child.Born, HistActorEvent.Born, HistHouseEvent.None, actualEvent);
             record_0.AddActor(Lord.ActID);
             record_0.AddActor(Lady.ActID);
             Game.world.SetRecord(record_0);
@@ -1373,7 +1373,7 @@ namespace Next_Game
                         //Complications -> Mother can no longer have children
                         Lady.Fertile = false;
                         descriptor = string.Format("{0}, Aid {1} suffered complications while giving birth to {2}", Lady.Name, Lady.ActID, child.Name);
-                        Record record_2 = new Record(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistEvent.Birthing);
+                        Record record_2 = new Record(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistActorEvent.Birthing);
                         Game.world.SetRecord(record_2);
                     }
                 }
@@ -1500,8 +1500,8 @@ namespace Next_Game
                 case ActorDied.Childbirth:
                     deceased.ReasonDied = ActorDied.Childbirth;
                     string descriptor = string.Format("{0}, Aid {1}, died while giving birth to {2}, age {3}", deceased.Name, deceased.ActID, perpetrator.Name, deceased.Age);
-                    record = new Record(descriptor, deceased.ActID, deceased.LocID, deceased.RefID, year, HistEvent.Died);
-                    record.AddEvent(HistEvent.Birthing);
+                    record = new Record(descriptor, deceased.ActID, deceased.LocID, deceased.RefID, year, HistActorEvent.Died);
+                    record.AddActorEvent(HistActorEvent.Birthing);
                     record.AddActor(perpetrator.ActID);
                     record.AddActor(secondary.ActID);
                     break;
@@ -1516,13 +1516,34 @@ namespace Next_Game
 
         internal void InitialiseOverthrow()
         {
+            List<MajorHouse> listOfRoyalists = new List<MajorHouse>();
+            List<MajorHouse> listOfRebels = new List<MajorHouse>();
             List<MajorHouse> listOfHousesByPower = new List<MajorHouse>();
+            //sorted list of houses by Power (# of locations, largest at the top)
             IEnumerable<MajorHouse> sortedHouses =
                 from house in listOfGreatHouses
                 let numLocs = house.GetNumBannerLords()
                 orderby numLocs descending
                 select house;
             listOfHousesByPower = sortedHouses.ToList();
+            //seperate into two camps (royalists and rebels)
+            bool rebel = false;
+            for (int i = 0; i < listOfHousesByPower.Count; i++)
+            {
+                if (rebel == false)
+                {
+                    //Royalist
+                    listOfRoyalists.Add(listOfHousesByPower[i]);
+                    rebel = true;
+                }
+                else
+                {
+                    //Rebels
+                    listOfRebels.Add(listOfHousesByPower[i]);
+                    rebel = false;
+                }
+            }
+            //King is the largest Royal Family
 
 
 

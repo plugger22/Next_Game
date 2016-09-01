@@ -1325,8 +1325,8 @@ namespace Next_Game
                     //CUSTOM (debugging purposes)
                     recordList =
                         from record in dictRecords
-                        from eventType in record.Value.listOfEvents
-                        where eventType == HistEvent.Birthing
+                        from eventType in record.Value.listOfActorEvents
+                        where eventType == HistActorEvent.Birthing
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
@@ -1335,8 +1335,8 @@ namespace Next_Game
                     //deaths
                     recordList =
                         from record in dictRecords
-                        from eventType in record.Value.listOfEvents
-                        where eventType == HistEvent.Died
+                        from eventType in record.Value.listOfActorEvents
+                        where eventType == HistActorEvent.Died
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
@@ -1345,8 +1345,8 @@ namespace Next_Game
                     //Marriages
                     recordList =
                         from record in dictRecords
-                        from eventType in record.Value.listOfEvents
-                        where eventType == HistEvent.Married
+                        from eventType in record.Value.listOfActorEvents
+                        where eventType == HistActorEvent.Married
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
