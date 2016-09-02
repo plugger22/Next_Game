@@ -343,8 +343,11 @@ namespace Next_Game
                                         {
                                             //valid location?
                                             int houseID = map.GetMapInfo(MapLayer.Houses, mouse.X, mouse.Y, true);
+                                            int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                             if (houseID > 0)
                                             { infoChannel.SetInfoList(world.ShowHouseRL(houseID), ConsoleDisplay.Multi); }
+                                            else if (locID == 1)
+                                            { infoChannel.SetInfoList(world.ShowCapitalRL(), ConsoleDisplay.Multi); }
                                         }
                                         _mouseOn = false;
                                         break;

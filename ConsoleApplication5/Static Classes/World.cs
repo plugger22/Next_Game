@@ -23,8 +23,7 @@ namespace Next_Game
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         private Dictionary<int, Trait> dictTraits; //all triats (key is traitID)
         private Dictionary<int, Secret> dictSecrets; //all secrets (key is secretID)
-        //private Dictionary<int, Error> dictErrors; //all errors (key is errorID)
-        //public int GameTurn { get; set; } = 1;
+        private Dictionary<int, Passive> dictRoyalCourt; //advisors and royal retainers (assumed to always be at Kingskeep) excludes family
 
         //default constructor
         public World(int seed)
@@ -42,7 +41,7 @@ namespace Next_Game
             dictGeoClusters = new Dictionary<int, GeoCluster>();
             dictTraits = new Dictionary<int, Trait>();
             dictSecrets = new Dictionary<int, Secret>();
-            //dictErrors = new Dictionary<int, Error>();
+            dictRoyalCourt = new Dictionary<int, Passive>();
         }
 
 
@@ -848,6 +847,33 @@ namespace Next_Game
             return houseList;
         }
 
+
+        /// <summary>
+        /// display Royal Court, retainers and others at Kingskeep
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowCapitalRL()
+        {
+            List<Snippet> capitalList = new List<Snippet>();
+            capitalList.Add(new Snippet(string.Format("Kingskeep, Supreme Capital {0}", ShowLocationCoords(1)), RLColor.Yellow, RLColor.Black));
+            capitalList.Add(new Snippet("Royal Family", RLColor.Brown, RLColor.Black));
+            capitalList.Add(new Snippet("Royal Court", RLColor.Brown, RLColor.Black));
+            //loop dictionary
+            string actorOffice;
+            foreach (KeyValuePair<int, Passive> kvp in dictRoyalCourt)
+            {
+                if (kvp.Value is Advisor)
+                {
+                    Advisor advisor = kvp.Value as Advisor;
+                    actorOffice = Convert.ToString(advisor.advisorRoyal);
+                }
+                else { actorOffice = Convert.ToString(kvp.Value.Office); }
+                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", kvp.Value.ActID, actorOffice, kvp.Value.Name, kvp.Value.Age, ShowLocationCoords(1))));
+            }
+            capitalList.Add(new Snippet("Others", RLColor.Brown, RLColor.Black));
+            return capitalList;
+        }
+
         /// <summary>
         /// Select a Player Character from the displayed list
         /// </summary>
@@ -1307,6 +1333,9 @@ namespace Next_Game
             dictPassiveActors.Add(actor.ActID, actor);
             dictAllActors.Add(actor.ActID, actor);
         }
+
+        internal void SetRoyalCourt(Passive actor)
+        { dictRoyalCourt.Add(actor.ActID, actor); }
 
         /// <summary>
         /// Returns a filtered set of Historical Records

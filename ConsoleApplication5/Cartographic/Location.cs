@@ -20,6 +20,7 @@ namespace Next_Game.Cartographic
 
         public Position(Position pos)
         { PosX = pos.PosX; PosY = pos.PosY; }
+
     }
 
     //enables dictionary key comparisons for the Position class

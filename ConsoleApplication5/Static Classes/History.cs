@@ -1559,7 +1559,7 @@ namespace Next_Game
                 select actor.Value;
             listOfRoyals = royalActors.ToList();
             //hive off Royals into separate lists
-            List<Noble> listOfRoyalNobles = new List<Noble>();
+            List<Passive> listOfRoyalNobles = new List<Passive>();
             List<BannerLord> listOfRoyalBannerLords = new List<BannerLord>();
             List<Knight> listOfRoyalKnights = new List<Knight>();
             List<Advisor> listOfRoyalAdvisors = new List<Advisor>();
@@ -1626,12 +1626,29 @@ namespace Next_Game
                 Record record_1;
                 int year = rnd.Next(OldKing.Lordship, Game.gameStart);
                 int age = OldKing.Age - (Game.gameStart - year);
-                string descriptor = string.Format("{0}, Aid {1}, crowned as King at a coronation ceremony at Kingskeep, age {2}", OldKing.Name, OldKing.ActID, age);
+                string descriptor = string.Format("{0}, Aid {1}, crowned as King during a royal coronation ceremony at Kingskeep, age {2}", OldKing.Name, OldKing.ActID, age);
                 record_1 = new Record(descriptor, OldKing.ActID, OldKing.LocID, OldKing.RefID, year, HistActorEvent.Coronation);
                 Game.world?.SetRecord(record_1);
             }
-            //
+            //create advisors
+            Position pos = Game.map.GetCapital();
+            Advisor royalSepton = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.High_Septon);
+            Advisor royalCoin = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Coin);
+            Advisor royalLaw = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Laws);
+            Advisor royalShip = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Ships);
+            Advisor royalWhisper = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Whisperers);
+            Game.world.SetRoyalCourt(royalSepton);
+            Game.world.SetRoyalCourt(royalCoin);
+            Game.world.SetRoyalCourt(royalLaw);
+            Game.world.SetRoyalCourt(royalShip);
+            Game.world.SetRoyalCourt(royalWhisper);
+            Game.world.SetPassiveActor(royalSepton);
+            Game.world.SetPassiveActor(royalCoin);
+            Game.world.SetPassiveActor(royalLaw);
+            Game.world.SetPassiveActor(royalShip);
+            Game.world.SetPassiveActor(royalWhisper);
         }
+
 
 
         //add methods above

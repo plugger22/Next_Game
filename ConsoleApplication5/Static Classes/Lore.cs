@@ -15,7 +15,7 @@ namespace Next_Game
         public int RoyalHouseOld { get; set; }
         public int RoyalHouseNew { get; set; }
         //Royal Family and retainers
-        private List<Noble> listOfOldRoyals;
+        private List<Passive> listOfOldRoyals;
         public Noble OldKing { get; set; }
         public Noble OldQueen { get; set; }
         public Noble OldHeir { get; set; }
@@ -29,7 +29,7 @@ namespace Next_Game
 
         public Lore()
         {
-            listOfOldRoyals = new List<Noble>();
+            listOfOldRoyals = new List<Passive>();
             listOldKingRule = new List<string>();
             listRevoltBackStory = new List<string>();
             listUprising = new List<string>();
@@ -38,7 +38,7 @@ namespace Next_Game
             listChanges = new List<string>();
         }
 
-        internal void SetListOfOldRoyals(List<Noble> listRoyals)
+        internal void SetListOfOldRoyals(List<Passive> listRoyals)
         { listOfOldRoyals.AddRange(listRoyals); }
     }
 }
