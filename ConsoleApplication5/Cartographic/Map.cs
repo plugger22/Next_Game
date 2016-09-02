@@ -1535,7 +1535,7 @@ namespace Next_Game.Cartographic
             //first round completed (capital connected to nearest loc's. 
             //then...
             //Recursively attempt to connect to all remaining loc's
-            while (LocationRoads(mapSize / 3) == false) ;
+            while (LocationRoads(mapSize / 2) == false) ;
             //sweeper method to find any unconnected locations and delete them
             LocationSweeper();
             //set up routes
@@ -1551,7 +1551,6 @@ namespace Next_Game.Cartographic
 
         private void LocationSweeper()
         {
-            //Console.WriteLine("Debug: LocationSweeper ---");
             int numConnections = 0;
             //Loop all locations
             for (int row = 0; row < mapSize; row++)
@@ -1565,8 +1564,8 @@ namespace Next_Game.Cartographic
                         if (numConnections == 0)
                         {
                             //delete location
-                            mapGrid[(int)MapLayer.Base, column, row] = 0;      
-                            //Console.WriteLine("Debug: Location DELETED {0}:{1}", column, row);
+                            mapGrid[(int)MapLayer.Base, column, row] = 0;
+                            Game.SetError(new Error(29, string.Format("Location Deleted {0}:{1}", column, row)));
                         }
                     }
                 }

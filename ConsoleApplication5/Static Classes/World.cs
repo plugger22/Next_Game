@@ -87,11 +87,11 @@ namespace Next_Game
             InitialiseTraits();
             Game.StopTimer(timer_2, "W: InitialiseTraits");
             timer_2.Start();
-            InitialiseSecrets();
-            Game.StopTimer(timer_2, "W: InitialiseSecrets");
-            timer_2.Start();
             InitialiseWorldHistory();
             Game.StopTimer(timer_2, "W: InitialiseWorldHistory");
+            timer_2.Start();
+            InitialiseSecrets();
+            Game.StopTimer(timer_2, "W: InitialiseSecrets");
             Console.WriteLine(Environment.NewLine + "--- Game Input");
         }
 
@@ -650,7 +650,7 @@ namespace Next_Game
                 }
                 
                 if (loc.IsCapital() == true)
-                { locList.Add(new Snippet("CAPITAL", RLColor.Yellow, RLColor.Black)); }
+                { locList.Add(new Snippet("KINGDOM CAPITAL", RLColor.Yellow, RLColor.Black)); }
                 if (loc.Connector == true)
                 { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
                 //characters at location
@@ -855,7 +855,7 @@ namespace Next_Game
         public List<Snippet> ShowCapitalRL()
         {
             List<Snippet> capitalList = new List<Snippet>();
-            capitalList.Add(new Snippet(string.Format("Kingskeep, Supreme Capital {0}", ShowLocationCoords(1)), RLColor.Yellow, RLColor.Black));
+            capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", ShowLocationCoords(1)), RLColor.Yellow, RLColor.Black));
             capitalList.Add(new Snippet("Royal Family", RLColor.Brown, RLColor.Black));
             capitalList.Add(new Snippet("Royal Court", RLColor.Brown, RLColor.Black));
             //loop dictionary

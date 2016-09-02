@@ -460,6 +460,9 @@ namespace Next_Game
                     negativeTrait = TraitType.Combat;
                     if (advisorRoyal == AdvisorRoyal.Master_of_Whisperers) { positiveTrait = TraitType.Treachery; }
                     else if (advisorRoyal == AdvisorRoyal.High_Septon) { positiveTrait = TraitType.Charm; negativeTrait = TraitType.Treachery; }
+                    else if (advisorRoyal == AdvisorRoyal.Commander_of_Kings_Guard) { positiveTrait = TraitType.Combat; negativeTrait = TraitType.Treachery; }
+                    else if (advisorRoyal == AdvisorRoyal.Commander_of_City_Watch) { positiveTrait = TraitType.Leadership; negativeTrait = TraitType.Treachery; }
+                    else if (advisorRoyal == AdvisorRoyal.Hand_of_the_King) { positiveTrait = TraitType.Wits; negativeTrait = TraitType.Treachery; }
                     else { positiveTrait = TraitType.Wits;  }
                 }
                 else if ((int)advisorNoble > 0)
@@ -1622,7 +1625,6 @@ namespace Next_Game
             { Game.SetError(new Error(28, "No King Present")); }
             else
             {
-
                 Record record_1;
                 int year = rnd.Next(OldKing.Lordship, Game.gameStart);
                 int age = OldKing.Age - (Game.gameStart - year);
@@ -1632,21 +1634,42 @@ namespace Next_Game
             }
             //create advisors
             Position pos = Game.map.GetCapital();
+            Location loc = Game.network.GetLocation(1);
             Advisor royalSepton = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.High_Septon);
             Advisor royalCoin = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Coin);
             Advisor royalLaw = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Laws);
             Advisor royalShip = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Ships);
             Advisor royalWhisper = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Whisperers);
+            Advisor royalHand = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Hand_of_the_King);
+            Advisor royalGuard = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Commander_of_Kings_Guard);
+            Advisor royalWatch = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Commander_of_City_Watch);
+            //add to list of Royal Court (these charactes never leave Kingskeep)
             Game.world.SetRoyalCourt(royalSepton);
             Game.world.SetRoyalCourt(royalCoin);
             Game.world.SetRoyalCourt(royalLaw);
             Game.world.SetRoyalCourt(royalShip);
             Game.world.SetRoyalCourt(royalWhisper);
+            Game.world.SetRoyalCourt(royalHand);
+            Game.world.SetRoyalCourt(royalGuard);
+            Game.world.SetRoyalCourt(royalWatch);
+            //add to dictionaries of actors
             Game.world.SetPassiveActor(royalSepton);
             Game.world.SetPassiveActor(royalCoin);
             Game.world.SetPassiveActor(royalLaw);
             Game.world.SetPassiveActor(royalShip);
             Game.world.SetPassiveActor(royalWhisper);
+            Game.world.SetPassiveActor(royalHand);
+            Game.world.SetPassiveActor(royalGuard);
+            Game.world.SetPassiveActor(royalWatch);
+            //add to location
+            loc.AddActor(royalSepton.ActID);
+            loc.AddActor(royalCoin.ActID);
+            loc.AddActor(royalLaw.ActID);
+            loc.AddActor(royalShip.ActID);
+            loc.AddActor(royalWhisper.ActID);
+            loc.AddActor(royalHand.ActID);
+            loc.AddActor(royalGuard.ActID);
+            loc.AddActor(royalWatch.ActID);
         }
 
 
