@@ -14,6 +14,7 @@ namespace Next_Game
         //HouseID's
         public int RoyalHouseOld { get; set; }
         public int RoyalHouseNew { get; set; }
+        public int RoyalHouseCurrent { get; set; }
         //Royal Family and retainers
         private List<Passive> listOfOldRoyals;
         public Noble OldKing { get; set; }

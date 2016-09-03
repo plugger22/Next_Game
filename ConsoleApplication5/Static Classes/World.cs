@@ -857,9 +857,27 @@ namespace Next_Game
             List<Snippet> capitalList = new List<Snippet>();
             capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", ShowLocationCoords(1)), RLColor.Yellow, RLColor.Black));
             capitalList.Add(new Snippet("Royal Family", RLColor.Brown, RLColor.Black));
+            int royalHouse = Game.lore.RoyalHouseCurrent;
+            //query royal family members at capital
+            List<Passive> royalFamily = new List<Passive>();
+            IEnumerable<Passive> listOfNobles =
+                from actor in dictPassiveActors
+                where actor.Value.LocID == 1 && actor.Value.HouseID == royalHouse && actor.Value is Noble
+                orderby actor.Value.ActID
+                select actor.Value;
+            royalFamily = listOfNobles.ToList();
+            //add to list
+            string actorOffice;
+            foreach(Passive actor in royalFamily)
+            {
+                Noble noble = actor as Noble;
+                if (noble.Office > ActorOffice.None)
+                { actorOffice = Convert.ToString(noble.Office); }
+                else { actorOffice = Convert.ToString(noble.Type); }
+                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", noble.ActID, actorOffice, noble.Name, noble.Age, ShowLocationCoords(1))));
+            }
             capitalList.Add(new Snippet("Royal Court", RLColor.Brown, RLColor.Black));
             //loop dictionary
-            string actorOffice;
             foreach (KeyValuePair<int, Passive> kvp in dictRoyalCourt)
             {
                 if (kvp.Value is Advisor)
@@ -871,6 +889,21 @@ namespace Next_Game
                 capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", kvp.Value.ActID, actorOffice, kvp.Value.Name, kvp.Value.Age, ShowLocationCoords(1))));
             }
             capitalList.Add(new Snippet("Others", RLColor.Brown, RLColor.Black));
+            List<Actor> assortedActors = new List<Actor>();
+            IEnumerable<Actor> listOfActors =
+                from actor in dictActiveActors
+                where actor.Value.LocID == 1 && !(actor.Value is Noble) && !(actor.Value is Advisor)
+                orderby actor.Value.ActID
+                select actor.Value;
+            assortedActors = listOfActors.ToList();
+            //add to list
+            foreach (Actor actor in assortedActors)
+            {
+                if (actor.Office > ActorOffice.None)
+                { actorOffice = Convert.ToString(actor.Office); }
+                else { actorOffice = Convert.ToString(actor.Type); }
+                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", actor.ActID, actorOffice, actor.Name, actor.Age, ShowLocationCoords(1))));
+            }
             return capitalList;
         }
 

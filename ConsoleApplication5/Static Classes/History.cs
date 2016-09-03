@@ -1551,6 +1551,7 @@ namespace Next_Game
             MajorHouse rebelHouse = listOfRebels[0];
             Game.lore.RoyalHouseOld = royalHouse.HouseID;
             Game.lore.RoyalHouseNew = rebelHouse.HouseID;
+            Game.lore.RoyalHouseCurrent = royalHouse.HouseID;
             int royalHouseID = royalHouse.HouseID;
             int rebelHouseID = rebelHouse.HouseID;
             //get all actors in Royal House
