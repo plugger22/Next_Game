@@ -20,10 +20,14 @@ namespace Next_Game
         public int ArchetypeID { get; set; }
         public int Branch { get; set; }
         private List<int> listOfFirstNames; //contains ID #'s (listOfMaleFirstNames index) of all first names used by males within the house (eg. 'Eddard Stark II')
+        private List<int> listOfSecrets;
 
 
         public House()
-        { listOfFirstNames = new List<int>(); }
+        {
+            listOfFirstNames = new List<int>();
+            listOfSecrets = new List<int>();
+        }
 
         /// <summary>
         /// adds ID to list of names and returns # of like names in list

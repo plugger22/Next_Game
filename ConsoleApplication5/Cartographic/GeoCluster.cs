@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace Next_Game.Cartographic
 {
@@ -17,13 +17,15 @@ namespace Next_Game.Cartographic
         public int Size { get; }
         public int GeoID { get; }
         public Cluster ClusterType { get; }
+        private List<int> listOfSecrets;
 
         public GeoCluster()
-        { }
+        { listOfSecrets = new List<int>(); }
 
         //default constructor
         public GeoCluster(int geoID, int type, int size)
         {
+            listOfSecrets = new List<int>();
             this.GeoID = geoID;
             ClusterType = (Cluster)type;
             this.Size = size;

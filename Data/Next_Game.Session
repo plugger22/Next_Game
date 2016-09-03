@@ -1,15 +1,17 @@
 <NotepadPlus>
     <Session activeView="0">
-        <mainView activeIndex="8">
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1029" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\FirstFemale.txt" />
+        <mainView activeIndex="4">
             <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\FirstMale.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\GeoNames.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\GreatHouses.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\MinorHouses.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\PlayerNames.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_All.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_Female.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1029" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_Male.txt" />
+            <File firstVisibleLine="57" xOffset="0" scrollWidth="924" startPos="1161" endPos="1161" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\FirstFemale.txt" />
+            <File firstVisibleLine="91" xOffset="0" scrollWidth="924" startPos="1279" endPos="1279" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Surnames.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1071" startPos="332" endPos="332" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\GeoNames.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="273" startPos="209" endPos="209" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\MajorHouses.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1071" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\MinorHouses.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="98" startPos="555" endPos="555" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\PlayerNames.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1071" startPos="6795" endPos="6795" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_All.txt" />
+            <File firstVisibleLine="280" xOffset="0" scrollWidth="1071" startPos="6231" endPos="6231" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_Female.txt" />
+            <File firstVisibleLine="705" xOffset="0" scrollWidth="1071" startPos="15645" endPos="15645" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_Male.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="924" startPos="630" endPos="630" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Constants.txt" />
         </mainView>
         <subView activeIndex="0" />
     </Session>
