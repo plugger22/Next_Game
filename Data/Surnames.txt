@@ -10,7 +10,6 @@ Hodgkin
 Timm
 Godelot
 Rolandus
-Rotgerius
 Tybout
 Bartolomeus
 Tolly
@@ -28,7 +27,6 @@ Jeacock
 Wyon
 Francis
 Hugelin
-Isemberd
 Artus
 Alainon
 Gill
@@ -43,7 +41,6 @@ Engerran
 Jeff
 Thomassin
 Ansure
-Teodric
 Sansum
 Jehan
 Warnerus
@@ -77,10 +74,8 @@ Colley
 Wilkin
 Raaf
 Heimart
-Reyner
 Reignolde
 Mikael
-Colinus
 Lambard
 Althalos
 Willcock
@@ -88,7 +83,6 @@ Harry
 Anselet
 Jame
 Oudin
-Ancelmus
 Bertol
 Tyon
 Daw
@@ -99,7 +93,6 @@ Fulchard
 Vauquelin
 Tankard
 Ebrardus
-Henry
 Hamelin
 Houdoin
 Digory
@@ -108,7 +101,6 @@ Saunsum
 Roley
 Jankin
 Ademar
-Hervy
 Gaiallard
 Galeran
 Teodric

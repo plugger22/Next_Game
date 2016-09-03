@@ -557,6 +557,11 @@ namespace Next_Game
                                     infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
                                     _inputState = 1;
                                     break;
+                                case MenuMode.Debug:
+                                    //Show Duplicates (imported files)
+                                    infoChannel.SetInfoList(world.ShowDuplicatesRL(), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- Duplicates (Imported Files)", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
                             }
                             break;
                         case RLKey.R:

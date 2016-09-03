@@ -930,7 +930,7 @@ namespace Next_Game
             //if touched create a secret
             if (person.Touched != 0)
             {
-                string description = string.Format("{0} was born under a Dark Moon (Touched)", person.Name);
+                string description = string.Format("{0}, Aid {1}, was born under a Dark Moon (Touched)", person.Name, person.ActID);
                 Secret_Actor secret = new Secret_Actor(SecretType.Touched, person.Born, description, person.Touched, person.ActID);
                 listOfSecrets.Add(secret);
                 person.AddSecret(secret.SecretID);
@@ -1673,6 +1673,48 @@ namespace Next_Game
             loc.AddActor(royalWatch.ActID);
         }
 
+        /// <summary>
+        /// checks all name files for duplicates
+        /// </summary>
+        /// <returns></returns>
+        internal List<string> GetDuplicatesNames()
+        {
+            List<string> listOfTempDuplicates = new List<string>();
+            List<string> listOfAllDuplicates = new List<string>();
+            //player names
+            IEnumerable<string> tempDuplicates =
+                from name in listOfPlayerNames
+                group name by name into grouped
+                where grouped.Count() > 1
+                select "PlayerNames: " + grouped.Key;
+            listOfTempDuplicates = tempDuplicates.ToList();
+            listOfAllDuplicates.AddRange(listOfTempDuplicates);
+            //male first names
+            tempDuplicates =
+                from name in listOfMaleFirstNames
+                group name by name into grouped
+                where grouped.Count() > 1
+                select "MaleNames: " + grouped.Key;
+            listOfTempDuplicates = tempDuplicates.ToList();
+            listOfAllDuplicates.AddRange(listOfTempDuplicates);
+            //female first names
+            tempDuplicates =
+                from name in listOfFemaleFirstNames
+                group name by name into grouped
+                where grouped.Count() > 1
+                select "FemaleNames: " + grouped.Key;
+            listOfTempDuplicates = tempDuplicates.ToList();
+            listOfAllDuplicates.AddRange(listOfTempDuplicates);
+            //surnames
+            tempDuplicates =
+                from name in listOfSurnames
+                group name by name into grouped
+                where grouped.Count() > 1
+                select "Surnames: " + grouped.Key;
+            listOfTempDuplicates = tempDuplicates.ToList();
+            listOfAllDuplicates.AddRange(listOfTempDuplicates);
+            return listOfAllDuplicates;
+        }
 
 
         //add methods above

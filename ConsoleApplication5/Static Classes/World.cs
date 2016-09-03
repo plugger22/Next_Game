@@ -1467,6 +1467,22 @@ namespace Next_Game
             Game.history.InitialiseOverthrow(dictPassiveActors);
         }
 
+        /// <summary>
+        /// debug: highlights duplicate names in imported files
+        /// </summary>
+        /// <returns></returns>
+        internal List<Snippet> ShowDuplicatesRL()
+        {
+            
+            //get duplicates
+            List<string> listOfStrings = new List<string>(Game.history.GetDuplicatesNames());
+            List<Snippet> listOfDuplicates = new List<Snippet>();
+            //convert to snippets
+            foreach(string name in listOfStrings)
+            { listOfDuplicates.Add(new Snippet(name)); }
+            return listOfDuplicates;
+        }
+
         //new Methods above here
     }
 }

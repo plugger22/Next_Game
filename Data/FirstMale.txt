@@ -6,18 +6,15 @@ Davos
 Mace
 Theon
 Jaime
-Samwell
 Aeron
 Areo
 Victarion
-Quentyn
 Barristan
 Will
 Chett
 Merrett
 Pate
 Varamyr
-Kevan
 Elyes
 Andry
 Jarvis
@@ -34,7 +31,6 @@ Aldis
 Rainald
 Druet
 Peter
-Beuves
 Harding
 Anderewe
 Gerbertus
@@ -65,7 +61,6 @@ Gerbod
 Dreu
 Ferri
 Frederick
-Warnerus
 Rowan
 Galot
 Azer
@@ -104,7 +99,6 @@ Druettus
 Renly
 Stannis
 Petyr
-Barristan
 Varys
 Ilyn
 Lancel
@@ -114,7 +108,6 @@ Vayon
 Luwin
 Benjen
 Brandon
-Theon
 Hullen
 Jory
 Wyman
@@ -138,7 +131,6 @@ Farlen
 Desmond
 Jack
 Aerys
-Areo
 Aegon
 Quentyn
 Trystane
@@ -184,7 +176,6 @@ Gerion
 Stafford
 Daven
 Addam
-Davos
 Leo
 Gregor
 Harys

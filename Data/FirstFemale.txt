@@ -2,7 +2,6 @@ Catelyn
 Daenerys
 Arya
 Sansa
-Cersei
 Brienne
 Asha
 Arys
@@ -33,7 +32,6 @@ Auelin
 Grizzel
 Imania
 Phrowenia
-Gynuara
 Izot
 Ysmeina
 Jacquelyn
@@ -57,14 +55,12 @@ Nina
 Emme
 Tiffan
 Cristene
-Emelina
 Egelina
 Ymanie
 Esclamonde
 Auisia
 Ozanne
 Mahault
-Cristene
 Rechemay
 Belet
 Ade
@@ -79,11 +75,9 @@ Gaynore
 Mylecent
 Murienne
 Mirielis
-Ysabella
 Adelina
 Molt
 Elizabetha
-Mylle
 Isopel
 Emylyna
 Yvonne
@@ -106,12 +100,10 @@ Linyeve
 Wentiliana
 Sapphire
 Arwyn
-Arianne
 Anya
 Elia
 Mellario
 Rhaenys
-Daenerys
 Alerie
 Argaery
 Mina
@@ -134,7 +126,6 @@ Dorna
 Janei
 Genna
 Mordane
-Beth
 Maege
 Lyanna
 Selyse
