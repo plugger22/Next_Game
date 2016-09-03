@@ -653,6 +653,7 @@ namespace Next_Game
                 { locList.Add(new Snippet("KINGDOM CAPITAL", RLColor.Yellow, RLColor.Black)); }
                 if (loc.Connector == true)
                 { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
+
                 //characters at location
                 List<int> charList = loc.GetActorList();
                 if (charList.Count > 0)
@@ -856,6 +857,7 @@ namespace Next_Game
         {
             List<Snippet> capitalList = new List<Snippet>();
             capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", ShowLocationCoords(1)), RLColor.Yellow, RLColor.Black));
+            //ROYAL FAMILY
             capitalList.Add(new Snippet("Royal Family", RLColor.Brown, RLColor.Black));
             int royalHouse = Game.lore.RoyalHouseCurrent;
             //query royal family members at capital
@@ -876,8 +878,8 @@ namespace Next_Game
                 else { actorOffice = Convert.ToString(noble.Type); }
                 capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", noble.ActID, actorOffice, noble.Name, noble.Age, ShowLocationCoords(1))));
             }
+            //ROYAL COURT
             capitalList.Add(new Snippet("Royal Court", RLColor.Brown, RLColor.Black));
-            //loop dictionary
             foreach (KeyValuePair<int, Passive> kvp in dictRoyalCourt)
             {
                 if (kvp.Value is Advisor)
@@ -888,6 +890,7 @@ namespace Next_Game
                 else { actorOffice = Convert.ToString(kvp.Value.Office); }
                 capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", kvp.Value.ActID, actorOffice, kvp.Value.Name, kvp.Value.Age, ShowLocationCoords(1))));
             }
+            //OTHERS
             capitalList.Add(new Snippet("Others", RLColor.Brown, RLColor.Black));
             List<Actor> assortedActors = new List<Actor>();
             IEnumerable<Actor> listOfActors =
@@ -897,12 +900,23 @@ namespace Next_Game
                 select actor.Value;
             assortedActors = listOfActors.ToList();
             //add to list
+            RLColor textColor;
             foreach (Actor actor in assortedActors)
             {
                 if (actor.Office > ActorOffice.None)
                 { actorOffice = Convert.ToString(actor.Office); }
                 else { actorOffice = Convert.ToString(actor.Type); }
-                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", actor.ActID, actorOffice, actor.Name, actor.Age, ShowLocationCoords(1))));
+                //highlight active players
+                textColor = RLColor.White;
+                if (actor is Active)
+                {
+                    if (actor is Player)
+                    { textColor = Color._player; }
+                    else
+                    { textColor = Color._active; }
+                }
+                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", actor.ActID, actorOffice, actor.Name, actor.Age, ShowLocationCoords(1)), 
+                    textColor, RLColor.Black));
             }
             return capitalList;
         }
@@ -1473,7 +1487,6 @@ namespace Next_Game
         /// <returns></returns>
         internal List<Snippet> ShowDuplicatesRL()
         {
-            
             //get duplicates
             List<string> listOfStrings = new List<string>(Game.history.GetDuplicatesNames());
             List<Snippet> listOfDuplicates = new List<Snippet>();
