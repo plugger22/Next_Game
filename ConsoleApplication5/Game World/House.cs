@@ -6,7 +6,7 @@ using System.Linq;
 namespace Next_Game
 {
     //
-    // Base class ---
+    // Base class
     //
     class House
     {

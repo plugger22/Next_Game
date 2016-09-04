@@ -931,7 +931,7 @@ namespace Next_Game
             if (person.Touched != 0)
             {
                 string description = string.Format("{0}, Aid {1}, was born under a Dark Moon (Touched)", person.Name, person.ActID);
-                Secret_Actor secret = new Secret_Actor(SecretType.Touched, person.Born, description, person.Touched, person.ActID);
+                Secret_Actor secret = new Secret_Actor(SecretType.Trait, person.Born, description, person.Touched, person.ActID);
                 listOfSecrets.Add(secret);
                 person.AddSecret(secret.SecretID);
             }
@@ -1633,6 +1633,7 @@ namespace Next_Game
                 record_1 = new Record(descriptor, OldKing.ActID, OldKing.LocID, OldKing.RefID, year, HistActorEvent.Coronation);
                 Game.world?.SetRecord(record_1);
             }
+
             //create advisors
             Position pos = Game.map.GetCapital();
             Location loc = Game.network.GetLocation(1);
@@ -1671,6 +1672,9 @@ namespace Next_Game
             loc.AddActor(royalHand.ActID);
             loc.AddActor(royalGuard.ActID);
             loc.AddActor(royalWatch.ActID);
+
+            //Generate BackStory
+            Game.lore.CreateOldKingBackStory();
         }
 
         /// <summary>

@@ -75,6 +75,7 @@ namespace Next_Game.Cartographic
         private readonly List<Route> routeFromCapital = new List<Route>(); //Capital -> Loc
         private readonly List<Route> routeFromConnector = new List<Route>(); //Connector -> Loc
         private List<int> listOfActors = new List<int>(); //list of characters (actorID's) currently at Location
+        private List<int> listOfSecrets = new List<int>();
 
         public Location()
         { LocName = "testville"; Capital = false; locPos = new Position(); LocationID = locationIndex++; }
