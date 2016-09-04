@@ -167,6 +167,8 @@ namespace Next_Game
         public int Married { get; set; } = 0; //year married, 0 if not
         public int Lordship { get; set; } = 0; //year made lord (Great House)
         public bool Fertile { get; set; } = false; //females - can have children?
+        public int AdjustedWits { get; set; } //applies only to Lords only and reflect possible influence their wifes have over them if they are smarter than their husbands
+        public int AdjustedTreachery { get; set; } //applies only to Lords only and reflect possible influence their wifes have over them if they are smarter than their husbands
         public string MaidenName { get; set; } = null; //used to store a wife's maiden name prior to marriage
         public WifeStatus WifeNumber { get; set; } = WifeStatus.None;
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)

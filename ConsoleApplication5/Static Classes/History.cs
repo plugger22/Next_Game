@@ -1102,6 +1102,8 @@ namespace Next_Game
             lady.AddRelation(lord.ActID, ActorRelation.Husband);
             // kids
             CreateStartingChildren(lord, lady);
+            //wife has influence over husband (only if smarter)
+            SetWifeInfluence(lord, lady);
         }
 
 
@@ -1713,35 +1715,35 @@ namespace Next_Game
             Noble NewKing = null;
             Noble NewQueen = null;
             Noble NewHeir = null;
-            foreach (Noble royal in listOfRoyalNobles)
+            foreach (Noble rebelActor in listOfRebelNobles)
             {
                 //change location (all)
-                kingsKeep.AddActor(royal.ActID);
-                Location oldLoc = Game.network.GetLocation(royal.LocID);
-                oldLoc.RemoveActor(royal.ActID);
-                royal.LocID = 1;
+                kingsKeep.AddActor(rebelActor.ActID);
+                Location oldLoc = Game.network.GetLocation(rebelActor.LocID);
+                oldLoc.RemoveActor(rebelActor.ActID);
+                rebelActor.LocID = 1;
                 //specific roles
-                switch (royal.Type)
+                switch (rebelActor.Type)
                 {
                     case ActorType.Lord:
-                        Game.lore.NewKing = royal;
-                        OldKing = royal;
-                        OldKing.Office = ActorOffice.King;
+                        Game.lore.NewKing = rebelActor;
+                        NewKing = rebelActor;
+                        NewKing.Office = ActorOffice.King;
                         break;
                     case ActorType.Lady:
-                        Game.lore.NewQueen = royal;
-                        OldQueen = royal;
-                        OldQueen.Office = ActorOffice.Queen;
+                        Game.lore.NewQueen = rebelActor;
+                        NewQueen = rebelActor;
+                        NewQueen.Office = ActorOffice.Queen;
                         break;
                     case ActorType.Heir:
-                        Game.lore.NewHeir = royal;
-                        OldHeir = royal;
+                        Game.lore.NewHeir = rebelActor;
+                        NewHeir = rebelActor;
                         break;
                     case ActorType.lord:
-                        royal.Type = ActorType.Prince;
+                        rebelActor.Type = ActorType.Prince;
                         break;
                     case ActorType.lady:
-                        royal.Type = ActorType.Princess;
+                        rebelActor.Type = ActorType.Princess;
                         break;
                 }
             }
@@ -1792,6 +1794,38 @@ namespace Next_Game
             return listOfAllDuplicates;
         }
 
+        /// <summary>
+        /// A smarter wife will influence her lord/king husband
+        /// </summary>
+        private void SetWifeInfluence(Noble lord, Noble lady)
+        {
+            if (lady.Wits > lord.Wits)
+            {
+                int lordWits = lord.Wits;
+                int lordTreachery = lord.Treachery;
+                int ladyWits = lady.Wits;
+                int ladyTreachery = lady.Treachery;
+                int influenceLevel = ladyWits - lordWits;
+                //adjust lord wits towards lady wits (smarter)
+                lordWits += influenceLevel;
+                //capped at wife's wit level
+                lordWits = Math.Min(lordWits, ladyWits);
+                //adjust lord Treachery wits towards lady treachery (could go either way)
+                if (ladyTreachery > lordTreachery)
+                { lordTreachery += influenceLevel; lordTreachery = Math.Min(lordTreachery, ladyTreachery); }
+                else if (ladyTreachery < lordTreachery)
+                { lordTreachery -= influenceLevel; lordTreachery = Math.Max(lordTreachery, ladyTreachery); }
+                //Update adjusted stats (applies when lord and lady are at the same location and lady isn't dead
+                lord.AdjustedWits = lordWits;
+                lord.AdjustedTreachery = lordTreachery;
+            }
+            else
+            {
+                //no influence, wife not smart enough
+                lord.AdjustedWits = lord.Wits;
+                lord.AdjustedTreachery = lord.Treachery;
+            }
+        }
 
         //add methods above
     }

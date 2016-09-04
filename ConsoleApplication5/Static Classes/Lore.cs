@@ -15,7 +15,7 @@ namespace Next_Game
         public int RoyalHouseOld { get; set; }
         public int RoyalHouseNew { get; set; }
         public int RoyalHouseCurrent { get; set; }
-        //Royal Family and retainers
+        //Royal & Rebel Family and retainers
         private List<Passive> listOfOldRoyals; //at time of revolt
         private List<Passive> listOfNewRoyals; //at time of taking power
         public Noble OldKing { get; set; }
@@ -35,6 +35,7 @@ namespace Next_Game
         public Lore()
         {
             listOfOldRoyals = new List<Passive>();
+            listOfNewRoyals = new List<Passive>();
             listOldKingRule = new List<string>();
             listRevoltBackStory = new List<string>();
             listUprising = new List<string>();
@@ -44,16 +45,24 @@ namespace Next_Game
         }
 
         internal void SetListOfOldRoyals(List<Passive> listRoyals)
-        { listOfOldRoyals.AddRange(listRoyals); }
+        { listOfOldRoyals?.AddRange(listRoyals); }
 
         internal void SetListOfNewRoyals(List<Passive> listRebels)
-        { listOfNewRoyals.AddRange(listRebels); }
+        { listOfNewRoyals?.AddRange(listRebels); }
+
+
         /// <summary>
         /// generates reason and populates lore lists
         /// </summary>
         internal void CreateOldKingBackStory()
         {
-
+            //Old King was a dud?
+            if (OldKing.Wits < 3)
+            {
+                //does wife have more brains
+                if (OldQueen.Wits > 3)
+                { }
+            }
         }
     }
 }
