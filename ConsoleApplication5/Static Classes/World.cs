@@ -283,11 +283,12 @@ namespace Next_Game
                 { actorType = Convert.ToString(person.Office); }
                 string name = string.Format("{0} {1}", actorType, person.Name);
                 string handle = null;
-                bool newLine = true;
+                bool newLine_1 = true;
+                bool newLine_2 = true; //used to accomodate adjusted traits
                 //nickname
                 if (person.Handle != null && person.Age >= 15)
                 {
-                    newLine = false;
+                    newLine_1 = false;
                     handle = string.Format(" \"{0}\"", person.Handle);
                 }
                 RLColor color = RLColor.White;
@@ -342,13 +343,13 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet("Abilities (some at 5 y.o, all at 15 y.o)", RLColor.Brown, RLColor.Black));
                     //combat
                     int abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] + person.Combat;
-                    newLine = true;
+                    newLine_1 = true;
                     if (abilityStars != 3)
-                    { newLine = false; }
+                    { newLine_1 = false; }
                     if ((age == TraitAge.Five && abilityStars !=3) || age == TraitAge.Fifteen)
                     { 
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine_1));
                         if (abilityStars != 3)
                         {
                             if (abilityStars < 3)
@@ -366,13 +367,13 @@ namespace Next_Game
 
                     //wits
                     abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits] + person.Wits;
-                    newLine = true;
+                    newLine_1 = true;
                     if (abilityStars != 3)
-                    { newLine = false; }
+                    { newLine_1 = false; }
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine_1));
                         if (abilityStars != 3)
                         {
                             if (abilityStars < 3)
@@ -390,13 +391,13 @@ namespace Next_Game
 
                     //charm
                     abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] + person.Charm;
-                    newLine = true;
+                    newLine_1 = true;
                     if (abilityStars != 3)
-                    { newLine = false; }
+                    { newLine_1 = false; }
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine_1));
                         if (abilityStars != 3)
                         {
                             if (abilityStars < 3)
@@ -414,13 +415,13 @@ namespace Next_Game
 
                     //treachery
                     abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] + person.Treachery;
-                    newLine = true;
+                    newLine_1 = true;
                     if (abilityStars != 3)
-                    { newLine = false; }
+                    { newLine_1 = false; }
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine_1));
                         if (abilityStars != 3)
                         {
                             if (abilityStars < 3)
@@ -438,13 +439,13 @@ namespace Next_Game
 
                     //Leadership
                     abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] + person.Leadership;
-                    newLine = true;
+                    newLine_1 = true;
                     if (abilityStars != 3)
-                    { newLine = false; }
+                    { newLine_1 = false; }
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine_1));
                         if (abilityStars != 3)
                         {
                             if (abilityStars < 3)
@@ -464,13 +465,13 @@ namespace Next_Game
                     if (person.Touched > 0)
                     {
                         abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched] + person.Touched;
-                        newLine = true;
+                        newLine_1 = true;
                         if (abilityStars != 3)
-                        { newLine = false; }
+                        { newLine_1 = false; }
                         if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                         {
                             listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Touched"), Color._touched, RLColor.Black, false));
-                            listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._touched, RLColor.Black, newLine));
+                            listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._touched, RLColor.Black, newLine_1));
                             if (abilityStars != 3)
                             {
                                 if (abilityStars < 3)
@@ -1494,6 +1495,18 @@ namespace Next_Game
             foreach(string name in listOfStrings)
             { listOfDuplicates.Add(new Snippet(name)); }
             return listOfDuplicates;
+        }
+
+        /// <summary>
+        /// if specified actor present at location then True
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <param name="locID"></param>
+        /// <returns></returns>
+        public bool CheckActorPresent(int actorID, int locID)
+        {
+            Location loc = Game.network.GetLocation(locID);
+            return loc.CheckActorStatus(actorID);
         }
 
         //new Methods above here

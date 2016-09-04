@@ -1796,15 +1796,17 @@ namespace Next_Game
 
         /// <summary>
         /// A smarter wife will influence her lord/king husband
+        /// net adjusted wits and treachery stored in Lord's AdjustedWits etc. stats. Only applies if wife present at same location.
+        /// default value for AdjustedWits & AdjustedTreachery is '0'
         /// </summary>
         private void SetWifeInfluence(Noble lord, Noble lady)
         {
-            if (lady.Wits > lord.Wits)
+            int lordWits = lord.GetTrait(TraitType.Wits);
+            int ladyWits = lady.GetTrait(TraitType.Wits);
+            if (ladyWits > lordWits)
             {
-                int lordWits = lord.Wits;
-                int lordTreachery = lord.Treachery;
-                int ladyWits = lady.Wits;
-                int ladyTreachery = lady.Treachery;
+                int lordTreachery = lord.GetTrait(TraitType.Treachery);
+                int ladyTreachery = lady.GetTrait(TraitType.Treachery);
                 int influenceLevel = ladyWits - lordWits;
                 //adjust lord wits towards lady wits (smarter)
                 lordWits += influenceLevel;
@@ -1815,17 +1817,11 @@ namespace Next_Game
                 { lordTreachery += influenceLevel; lordTreachery = Math.Min(lordTreachery, ladyTreachery); }
                 else if (ladyTreachery < lordTreachery)
                 { lordTreachery -= influenceLevel; lordTreachery = Math.Max(lordTreachery, ladyTreachery); }
-                //Update adjusted stats (applies when lord and lady are at the same location and lady isn't dead
+                //Update adjusted stats (default '0') - show net adjusted stat
                 lord.AdjustedWits = lordWits;
                 lord.AdjustedTreachery = lordTreachery;
                 //debug
                 Console.WriteLine("Aid {0}, {1} has adjusted Traits due to his wife's influence", lord.ActID, lord.Name);
-            }
-            else
-            {
-                //no influence, wife not smart enough
-                lord.AdjustedWits = lord.Wits;
-                lord.AdjustedTreachery = lord.Treachery;
             }
         }
 

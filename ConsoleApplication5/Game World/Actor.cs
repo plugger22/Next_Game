@@ -45,6 +45,9 @@ namespace Next_Game
         public int Treachery { get; set; } = 3;
         public int Leadership { get; set; } = 3;
         public int Touched { get; set; } = 0;
+        public int AdjustedWits { get; set; } = 0; //net value when trait is influenced by AdjustedActor being in the same Location
+        public int AdjustedTreachery { get; set; } = 0; //net value when trait is influenced by AdjustedActor being in the same Location
+        public int AdjustedActor { get; set; } = 0; //ActorID of person who is influencing traits (can only be one)
         public int[] arrayOfTraitID { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
@@ -93,6 +96,17 @@ namespace Next_Game
 
         public Position GetActorPosition()
         { return actorPos; }
+
+        /// <summary>
+        /// returns net value of a specified trait
+        /// </summary>
+        /// <param name="trait"></param>
+        /// <returns></returns>
+        public int GetTrait(TraitType trait)
+        {
+            int traitValue = 3 + arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)trait];
+            return traitValue;
+        }
 
         public void AddSecret(int secretID)
         {
@@ -167,8 +181,6 @@ namespace Next_Game
         public int Married { get; set; } = 0; //year married, 0 if not
         public int Lordship { get; set; } = 0; //year made lord (Great House)
         public bool Fertile { get; set; } = false; //females - can have children?
-        public int AdjustedWits { get; set; } //applies only to Lords only and reflect possible influence their wifes have over them if they are smarter than their husbands
-        public int AdjustedTreachery { get; set; } //applies only to Lords only and reflect possible influence their wifes have over them if they are smarter than their husbands
         public string MaidenName { get; set; } = null; //used to store a wife's maiden name prior to marriage
         public WifeStatus WifeNumber { get; set; } = WifeStatus.None;
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)

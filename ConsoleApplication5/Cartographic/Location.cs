@@ -256,6 +256,18 @@ namespace Next_Game.Cartographic
 
         public List<int> GetActorList()
         { return listOfActors; }
+
+        /// <summary>
+        /// returns true if the actor is present at the location
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <returns></returns>
+        public bool CheckActorStatus(int actorID)
+        {
+            if (listOfActors.Find(x => x == actorID) > 0)
+            { return true; }
+            return false;
+        }
        
         //returns true if capital
         public bool IsCapital()
