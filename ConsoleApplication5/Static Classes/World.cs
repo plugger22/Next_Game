@@ -342,7 +342,8 @@ namespace Next_Game
                     //header
                     listToDisplay.Add(new Snippet("Abilities (some at 5 y.o, all at 15 y.o)", RLColor.Brown, RLColor.Black));
                     //combat
-                    int abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] + person.Combat;
+                    //int abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] + person.Combat;
+                    int abilityStars = person.GetTrait(TraitType.Combat);
                     newLine_1 = true;
                     if (abilityStars != 3)
                     { newLine_1 = false; }
@@ -366,7 +367,8 @@ namespace Next_Game
                     }
 
                     //wits
-                    abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits] + person.Wits;
+                    //abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits] + person.Wits;
+                    abilityStars = person.GetTrait(TraitType.Wits);
                     newLine_1 = true;
                     if (abilityStars != 3)
                     { newLine_1 = false; }
@@ -390,7 +392,8 @@ namespace Next_Game
                     }
 
                     //charm
-                    abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] + person.Charm;
+                    //abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] + person.Charm;
+                    abilityStars = person.GetTrait(TraitType.Charm);
                     newLine_1 = true;
                     if (abilityStars != 3)
                     { newLine_1 = false; }
@@ -414,7 +417,8 @@ namespace Next_Game
                     }
 
                     //treachery
-                    abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] + person.Treachery;
+                    //abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] + person.Treachery;
+                    abilityStars = person.GetTrait(TraitType.Treachery);
                     newLine_1 = true;
                     if (abilityStars != 3)
                     { newLine_1 = false; }
@@ -438,7 +442,8 @@ namespace Next_Game
                     }
 
                     //Leadership
-                    abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] + person.Leadership;
+                    //abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] + person.Leadership;
+                    abilityStars = person.GetTrait(TraitType.Leadership);
                     newLine_1 = true;
                     if (abilityStars != 3)
                     { newLine_1 = false; }
@@ -464,7 +469,8 @@ namespace Next_Game
                     //Touched
                     if (person.Touched > 0)
                     {
-                        abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched] + person.Touched;
+                        //abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched] + person.Touched;
+                        abilityStars = person.GetTrait(TraitType.Touched);
                         newLine_1 = true;
                         if (abilityStars != 3)
                         { newLine_1 = false; }

@@ -897,7 +897,7 @@ namespace Next_Game
                 {
                     //give base strength of 3 (prior to any traits)
                     person.Touched = 3;
-                    Console.WriteLine("{0}, Aid {1} is Touched", person.Name, person.ActID);
+                    Console.WriteLine("- {0}, Aid {1} is Touched", person.Name, person.ActID);
                     rndRange = arrayOfTraits[(int)TraitType.Touched, (int)person.Sex].Length;
                     //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
                     if (traitPositive == TraitType.Touched) { startRange = 0; endRange = rndRange / 2; }
@@ -1796,7 +1796,7 @@ namespace Next_Game
 
         /// <summary>
         /// A smarter wife will influence her lord/king husband
-        /// net adjusted wits and treachery stored in Lord's AdjustedWits etc. stats. Only applies if wife present at same location.
+        /// effect on wits and treachery stored in Lord's arrayOfInfluences etc. stats. Only applies if wife present at same location.
         /// default value for AdjustedWits & AdjustedTreachery is '0'
         /// </summary>
         private void SetWifeInfluence(Noble lord, Noble lady)
@@ -1807,21 +1807,16 @@ namespace Next_Game
             {
                 int lordTreachery = lord.GetTrait(TraitType.Treachery);
                 int ladyTreachery = lady.GetTrait(TraitType.Treachery);
-                int influenceLevel = ladyWits - lordWits;
-                //adjust lord wits towards lady wits (smarter)
-                lordWits += influenceLevel;
-                //capped at wife's wit level
-                lordWits = Math.Min(lordWits, ladyWits);
-                //adjust lord Treachery wits towards lady treachery (could go either way)
-                if (ladyTreachery > lordTreachery)
-                { lordTreachery += influenceLevel; lordTreachery = Math.Min(lordTreachery, ladyTreachery); }
-                else if (ladyTreachery < lordTreachery)
-                { lordTreachery -= influenceLevel; lordTreachery = Math.Max(lordTreachery, ladyTreachery); }
+                //wits
+                int influenceWits = ladyWits - lordWits;
+                lord.arrayOfTraitInfluences[(int)TraitType.Wits] = influenceWits;
+                //treachery
+                int influenceTreachery = ladyTreachery - lordTreachery;
+                lord.arrayOfTraitInfluences[(int)TraitType.Treachery] = influenceTreachery;
                 //Update adjusted stats (default '0') - show net adjusted stat
-                lord.AdjustedWits = lordWits;
-                lord.AdjustedTreachery = lordTreachery;
+                lord.Influencer = lady.ActID;
                 //debug
-                Console.WriteLine("Aid {0}, {1} has adjusted Traits due to his wife's influence", lord.ActID, lord.Name);
+                Console.WriteLine("- {0}, Aid {1} has adjusted Traits due to his wife's influence", lord.Name, lord.ActID);
             }
         }
 

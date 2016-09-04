@@ -45,12 +45,13 @@ namespace Next_Game
         public int Treachery { get; set; } = 3;
         public int Leadership { get; set; } = 3;
         public int Touched { get; set; } = 0;
-        public int AdjustedWits { get; set; } = 0; //net value when trait is influenced by AdjustedActor being in the same Location
-        public int AdjustedTreachery { get; set; } = 0; //net value when trait is influenced by AdjustedActor being in the same Location
-        public int AdjustedActor { get; set; } = 0; //ActorID of person who is influencing traits (can only be one)
+        //public int AdjustedWits { get; set; } = 0; //net value when trait is influenced by AdjustedActor being in the same Location
+        //public int AdjustedTreachery { get; set; } = 0; //net value when trait is influenced by AdjustedActor being in the same Location
+        public int Influencer { get; set; } = 0; //ActorID of person who is influencing traits (can only be one)
         public int[] arrayOfTraitID { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
+        public int[] arrayOfTraitInfluences { get; set; } //effects due to person influencing (default 0)
         //secrets
         private List<int> listOfSecrets;
 
@@ -68,6 +69,7 @@ namespace Next_Game
             arrayOfTraitID = new int[(int)TraitType.Count];
             arrayOfTraitEffects = new int[(int)TraitAge.Count, (int)TraitType.Count];
             arrayOfTraitNames = new string[(int)TraitType.Count];
+            arrayOfTraitInfluences = new int[(int)TraitType.Count];
             listOfSecrets = new List<int>();
         }
 
@@ -88,6 +90,7 @@ namespace Next_Game
             arrayOfTraitID = new int[(int)TraitType.Count];
             arrayOfTraitEffects = new int[(int)TraitAge.Count, (int)TraitType.Count];
             arrayOfTraitNames = new string[(int)TraitType.Count];
+            arrayOfTraitInfluences = new int[(int)TraitType.Count];
             listOfSecrets = new List<int>();
         }
 
