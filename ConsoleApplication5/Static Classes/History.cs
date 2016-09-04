@@ -1428,8 +1428,8 @@ namespace Next_Game
                         if (numOfLikeNames > 1)
                         {
                             //same name repeated - add the 'II', etc., the returned actor name
-                            fullName += " " + new String('I', numOfLikeNames);
-                            Console.WriteLine("Repeating Name in house {0}", house.HouseID);
+                            surname += " " + new String('I', numOfLikeNames);
+                            Console.WriteLine("- Repeating Name in house {0}: {1} {2}", house.HouseID, firstName, surname);
                         }
                     }
                 }
@@ -1818,6 +1818,8 @@ namespace Next_Game
                 //Update adjusted stats (applies when lord and lady are at the same location and lady isn't dead
                 lord.AdjustedWits = lordWits;
                 lord.AdjustedTreachery = lordTreachery;
+                //debug
+                Console.WriteLine("Aid {0}, {1} has adjusted Traits due to his wife's influence", lord.ActID, lord.Name);
             }
             else
             {
