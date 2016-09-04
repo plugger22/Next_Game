@@ -46,6 +46,8 @@ namespace Next_Game
         internal void SetListOfOldRoyals(List<Passive> listRoyals)
         { listOfOldRoyals.AddRange(listRoyals); }
 
+        internal void SetListOfNewRoyals(List<Passive> listRebels)
+        { listOfNewRoyals.AddRange(listRebels); }
         /// <summary>
         /// generates reason and populates lore lists
         /// </summary>

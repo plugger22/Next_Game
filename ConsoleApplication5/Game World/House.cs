@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace Next_Game
 {
+    public enum HouseLoyalty {Old_King, Neutral, New_King}
+
     //
     // Base class
     //
@@ -19,6 +21,7 @@ namespace Next_Game
         public int RefID { get; set; } //unique to house (great or minor)
         public int ArchetypeID { get; set; }
         public int Branch { get; set; }
+        public HouseLoyalty Loyalty { get; set; }
         private List<int> listOfFirstNames; //contains ID #'s (listOfMaleFirstNames index) of all first names used by males within the house (eg. 'Eddard Stark II')
         private List<int> listOfSecrets;
 

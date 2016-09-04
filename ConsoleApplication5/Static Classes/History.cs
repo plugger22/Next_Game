@@ -1516,7 +1516,10 @@ namespace Next_Game
             loc_1.RemoveActor(deceased.ActID);
         }
 
-
+        /// <summary>
+        /// Determine the starting Rebellion that is the foundation of the Backstory
+        /// </summary>
+        /// <param name="dictPassiveActors"></param>
         internal void InitialiseOverthrow(Dictionary<int, Passive> dictPassiveActors)
         {
             List<MajorHouse> listOfRoyalists = new List<MajorHouse>();
@@ -1533,16 +1536,19 @@ namespace Next_Game
             bool rebel = true;
             for (int i = 0; i < listOfHousesByPower.Count; i++)
             {
+                MajorHouse house = listOfHousesByPower[i];
                 if (rebel == false)
                 {
                     //Royalist
                     listOfRoyalists.Add(listOfHousesByPower[i]);
+                    house.Loyalty = HouseLoyalty.Old_King;
                     rebel = true;
                 }
                 else
                 {
                     //Rebels
                     listOfRebels.Add(listOfHousesByPower[i]);
+                    house.Loyalty = HouseLoyalty.New_King;
                     rebel = false;
                 }
             }
@@ -1673,6 +1679,72 @@ namespace Next_Game
             loc.AddActor(royalGuard.ActID);
             loc.AddActor(royalWatch.ActID);
 
+            //get all actors in Rebel House
+            List<Passive> listOfRebelActors = new List<Passive>();
+            IEnumerable<Passive> rebelActors =
+                from actor in dictPassiveActors
+                where actor.Value.HouseID == rebelHouseID
+                orderby actor.Value.ActID
+                select actor.Value;
+            listOfRebelActors = rebelActors.ToList();
+            //hive off Rebels into separate lists
+            List<Passive> listOfRebelNobles = new List<Passive>();
+            List<BannerLord> listOfRebelBannerLords = new List<BannerLord>();
+            List<Knight> listOfRebelKnights = new List<Knight>();
+            List<Advisor> listOfRebelAdvisors = new List<Advisor>();
+            foreach (Passive rebelActor in listOfRebelActors)
+            {
+                if (rebelActor is Noble)
+                { listOfRebelNobles.Add((Noble)rebelActor); }
+                else if (rebelActor is BannerLord)
+                { listOfRebelBannerLords.Add((BannerLord)rebelActor); }
+                else if (rebelActor is Knight)
+                { listOfRebelKnights.Add((Knight)rebelActor); }
+                else if (rebelActor is Advisor)
+                { listOfRebelAdvisors.Add((Advisor)rebelActor); }
+                else
+                { Game.SetError(new Error(26, "Invalid Rebel in listOfRebelActors")); }
+            }
+            //update lore family list
+            if (listOfRoyalNobles.Count > 0)
+            { Game.lore.SetListOfNewRoyals(listOfRebelNobles); }
+            else { Game.SetError(new Error(27, "listOfRoyalNobles is empty")); }
+            //find key characters
+            Noble NewKing = null;
+            Noble NewQueen = null;
+            Noble NewHeir = null;
+            foreach (Noble royal in listOfRoyalNobles)
+            {
+                //change location (all)
+                kingsKeep.AddActor(royal.ActID);
+                Location oldLoc = Game.network.GetLocation(royal.LocID);
+                oldLoc.RemoveActor(royal.ActID);
+                royal.LocID = 1;
+                //specific roles
+                switch (royal.Type)
+                {
+                    case ActorType.Lord:
+                        Game.lore.NewKing = royal;
+                        OldKing = royal;
+                        OldKing.Office = ActorOffice.King;
+                        break;
+                    case ActorType.Lady:
+                        Game.lore.NewQueen = royal;
+                        OldQueen = royal;
+                        OldQueen.Office = ActorOffice.Queen;
+                        break;
+                    case ActorType.Heir:
+                        Game.lore.NewHeir = royal;
+                        OldHeir = royal;
+                        break;
+                    case ActorType.lord:
+                        royal.Type = ActorType.Prince;
+                        break;
+                    case ActorType.lady:
+                        royal.Type = ActorType.Princess;
+                        break;
+                }
+            }
             //Generate BackStory
             Game.lore.CreateOldKingBackStory();
         }

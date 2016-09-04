@@ -895,7 +895,7 @@ namespace Next_Game
             List<Actor> assortedActors = new List<Actor>();
             IEnumerable<Actor> listOfActors =
                 from actor in dictActiveActors
-                where actor.Value.LocID == 1 && !(actor.Value is Noble) && !(actor.Value is Advisor)
+                where actor.Value.LocID == 1
                 orderby actor.Value.ActID
                 select actor.Value;
             assortedActors = listOfActors.ToList();
