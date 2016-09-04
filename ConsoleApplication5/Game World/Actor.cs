@@ -101,13 +101,24 @@ namespace Next_Game
         { return actorPos; }
 
         /// <summary>
-        /// returns net value of a specified trait
+        /// returns net value of a specified trait (assumes no influence)
         /// </summary>
         /// <param name="trait"></param>
         /// <returns></returns>
-        public int GetTrait(TraitType trait)
+        public int GetTrait(TraitAge age, TraitType trait)
         {
-            int traitValue = 3 + arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)trait];
+            int traitValue = 3 + arrayOfTraitEffects[(int)age, (int)trait];
+            return traitValue;
+        }
+
+        /// <summary>
+        /// returns influence value of trait (normal effect + plus influence)
+        /// </summary>
+        /// <param name="trait"></param>
+        /// <returns></returns>
+        public int GetInfluencedTrait(TraitAge age, TraitType trait)
+        {
+            int traitValue = 3 + arrayOfTraitEffects[(int)age, (int)trait] + arrayOfTraitInfluences[(int)trait];
             return traitValue;
         }
 
