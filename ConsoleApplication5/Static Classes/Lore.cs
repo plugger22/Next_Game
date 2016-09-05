@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    public enum RevoltReason {None, Stupid_OldKing, Treacherous_NewKing, Incapacity_OldKing, Internal_Dispute, External_Event}
+    public enum RevoltReason {None, Stupid_OldKing, Treacherous_NewKing, Incapacited_OldKing, Dead_OldKing, Internal_Dispute, External_Event}
 
     /// <summary>
     /// Keeps track of all key game lore (backstory)
@@ -62,17 +62,46 @@ namespace Next_Game
         /// </summary>
         internal void CreateOldKingBackStory()
         {
+            //list of possible reasons - weighted entries, one chosen at completion
+            List<RevoltReason> listWhyPool = new List<RevoltReason>();
+
             //check how smart old king was (takes into account wife's possible influence)
             int oldKing_Wits;
             int influencer = OldKing.Influencer;
             if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1) && OldKing.CheckTraitInfluenced(TraitType.Wits))
             { oldKing_Wits = OldKing.GetTrait(TraitAge.Fifteen, TraitType.Wits, true); }
             else { oldKing_Wits = OldKing.GetTrait(TraitAge.Fifteen, TraitType.Wits); }
-            //dumb king (25% chance if wits 2 and 100% if wits 1)
-            if (oldKing_Wits == 2)
-            { if (rnd.Next(100) < 25) { WhyRevolt = RevoltReason.Stupid_OldKing; } }
-            else if (oldKing_Wits == 1) { WhyRevolt = RevoltReason.Stupid_OldKing; }
-            
+            //dumb king (1 pool entry if wits 2 stars and 4 entries if wits 1 star)
+            if (oldKing_Wits == 2) { listWhyPool.Add(RevoltReason.Stupid_OldKing); } 
+            else if (oldKing_Wits == 1) { for (int i = 0; i < 4; i++) { listWhyPool.Add(RevoltReason.Stupid_OldKing); } }
+
+            //check new king treachery
+            int newKing_Treachery;
+            influencer = NewKing.Influencer;
+            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1) && NewKing.CheckTraitInfluenced(TraitType.Treachery))
+            { newKing_Treachery = NewKing.GetTrait(TraitAge.Fifteen, TraitType.Treachery, true); }
+            else { newKing_Treachery = NewKing.GetTrait(TraitAge.Fifteen, TraitType.Treachery); }
+            //treacherous new king grabs power (1 pool entry if 4 starts, 4 entries if treachery 5 stars)
+            if (newKing_Treachery == 4)
+            { listWhyPool.Add(RevoltReason.Treacherous_NewKing); } 
+            else if (newKing_Treachery == 5) { for (int i = 0; i < 4; i++) { listWhyPool.Add(RevoltReason.Treacherous_NewKing); } }
+
+            //3 entries for old king being incapacitated
+            for (int i = 0; i < 3; i++) { listWhyPool.Add(RevoltReason.Incapacited_OldKing); }
+            //2 entries for old king dying
+            for (int i = 0; i < 2; i++) { listWhyPool.Add(RevoltReason.Dead_OldKing); }
+            //3 entries for an internal dispute
+            for (int i = 0; i < 3; i++) { listWhyPool.Add(RevoltReason.Internal_Dispute); }
+            //4 entries for an external event
+            for (int i = 0; i < 3; i++) { listWhyPool.Add(RevoltReason.External_Event); }
+
+            //choose a random reason from the pool
+            WhyRevolt = listWhyPool[rnd.Next(0, listWhyPool.Count)];
+
+            Console.WriteLine(Environment.NewLine + "--- Create BackStory");
+            Console.WriteLine("Old King Wits {0} Aid {1}, {2}", oldKing_Wits, OldKing.ActID, OldKing.Name);
+            Console.WriteLine("New King Treachery {0} Aid {1}, {2}", newKing_Treachery, NewKing.ActID, NewKing.Name);
+            Console.WriteLine("WhyRevolt: {0}", WhyRevolt);
         }
     }
 }
