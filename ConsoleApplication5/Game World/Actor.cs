@@ -101,6 +101,18 @@ namespace Next_Game
         { return actorPos; }
 
         /// <summary>
+        /// checks whether particular trait has any influence effect, True if so.
+        /// </summary>
+        /// <param name="trait"></param>
+        /// <returns></returns>
+        public bool CheckTraitInfluenced(TraitType trait)
+        {
+            if (arrayOfTraitInfluences[(int)trait] != 0)
+            { return true; }
+            return false;
+        }
+
+        /// <summary>
         /// returns net value of a specified trait (assumes no influence)
         /// </summary>
         /// <param name="trait"></param>

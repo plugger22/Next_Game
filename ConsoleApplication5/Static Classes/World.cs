@@ -335,6 +335,7 @@ namespace Next_Game
                 string influenceActor = null;
                 string influenceText = null;
                 bool influenceDisplay = false;
+                int abilityStars;
                 RLColor traitColor;
                 TraitType trait;
                 if (influencer > 0)
@@ -350,34 +351,35 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet("Abilities (some at 5 y.o, all at 15 y.o)", RLColor.Brown, RLColor.Black));
 
                     //combat
-                    //int abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] + person.Combat;
-                    int abilityStars = person.GetTrait(age, TraitType.Combat);
+                    trait = TraitType.Combat;
+                    effectText = person.GetTraitEffectText(age, trait);
+                    if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
+                    {
+                        abilityStars = person.GetTrait(age, trait, true);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
+                        influenceDisplay = true;
+                    }
+                    else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
+                    effectText += influenceText;
+                    if (abilityStars < 3) { traitColor = Color._badTrait; }
+                    else if (abilityStars == 3) { traitColor = Color._star; }
+                    else { traitColor = Color._goodTrait; }
+                    //display
                     newLine = true;
-                    if (abilityStars != 3)
+                    if (abilityStars != 3 || influenceDisplay == true)
                     { newLine = false; }
-                    if ((age == TraitAge.Five && abilityStars !=3) || age == TraitAge.Fifteen)
-                    { 
-                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3)
-                        {
-                            if (abilityStars < 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Combat],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat]), Color._badTrait, RLColor.Black));
-                            }
-                            else if (abilityStars > 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Combat],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat]), Color._goodTrait, RLColor.Black));
-                            }
-                        }
+                    if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
+                    {
+                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        if (abilityStars != 3 || influenceDisplay == true)
+                        { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
 
                     //Wits
                     trait = TraitType.Wits;
                     effectText = person.GetTraitEffectText(age, trait);
-                    if (influencer > 0 && CheckActorPresent(influencer, locID))
+                    if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                     {
                         abilityStars = person.GetTrait(age, trait, true);
                         influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
@@ -401,105 +403,110 @@ namespace Next_Game
                     }
 
                     //charm
-                    //abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] + person.Charm;
-                    abilityStars = person.GetTrait(age, TraitType.Charm);
+                    trait = TraitType.Charm;
+                    effectText = person.GetTraitEffectText(age, trait);
+                    if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
+                    {
+                        abilityStars = person.GetTrait(age, trait, true);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
+                        influenceDisplay = true;
+                    }
+                    else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
+                    effectText += influenceText;
+                    if (abilityStars < 3) { traitColor = Color._badTrait; }
+                    else if (abilityStars == 3) { traitColor = Color._star; }
+                    else { traitColor = Color._goodTrait; }
+                    //display
                     newLine = true;
-                    if (abilityStars != 3)
+                    if (abilityStars != 3 || influenceDisplay == true)
                     { newLine = false; }
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3)
-                        {
-                            if (abilityStars < 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Charm],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm]), Color._badTrait, RLColor.Black));
-                            }
-                            else if (abilityStars > 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Charm],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm]), Color._goodTrait, RLColor.Black));
-                            }
-                        }
+                        if (abilityStars != 3 || influenceDisplay == true)
+                        { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
 
+
                     //treachery
-                    //abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] + person.Treachery;
-                    abilityStars = person.GetTrait(age, TraitType.Treachery);
+                    trait = TraitType.Treachery;
+                    effectText = person.GetTraitEffectText(age, trait);
+                    if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
+                    {
+                        abilityStars = person.GetTrait(age, trait, true);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
+                        influenceDisplay = true;
+                    }
+                    else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
+                    effectText += influenceText;
+                    if (abilityStars < 3) { traitColor = Color._badTrait; }
+                    else if (abilityStars == 3) { traitColor = Color._star; }
+                    else { traitColor = Color._goodTrait; }
+                    //display
                     newLine = true;
-                    if (abilityStars != 3)
+                    if (abilityStars != 3 || influenceDisplay == true)
                     { newLine = false; }
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3)
-                        {
-                            if (abilityStars < 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Treachery],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery]), Color._badTrait, RLColor.Black));
-                            }
-                            else if (abilityStars > 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Treachery],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery]), Color._goodTrait, RLColor.Black));
-                            }
-                        }
+                        if (abilityStars != 3 || influenceDisplay == true)
+                        { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
 
                     //Leadership
-                    //abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] + person.Leadership;
-                    abilityStars = person.GetTrait(age, TraitType.Leadership);
+                    trait = TraitType.Leadership;
+                    effectText = person.GetTraitEffectText(age, trait);
+                    if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
+                    {
+                        abilityStars = person.GetTrait(age, trait, true);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
+                        influenceDisplay = true;
+                    }
+                    else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
+                    effectText += influenceText;
+                    if (abilityStars < 3) { traitColor = Color._badTrait; }
+                    else if (abilityStars == 3) { traitColor = Color._star; }
+                    else { traitColor = Color._goodTrait; }
+                    //display
                     newLine = true;
-                    if (abilityStars != 3)
+                    if (abilityStars != 3 || influenceDisplay == true)
                     { newLine = false; }
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3)
-                        {
-                            if (abilityStars < 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Leadership],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership]), Color._badTrait, RLColor.Black));
-                            }
-                            else if (abilityStars > 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Leadership],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership]), Color._goodTrait, RLColor.Black));
-                            }
-                        }
+                        if (abilityStars != 3 || influenceDisplay == true)
+                        { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
 
                     //Touched
                     if (person.Touched > 0)
                     {
-                        //abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched] + person.Touched;
-                        abilityStars = person.GetTrait(age, TraitType.Touched);
+                        trait = TraitType.Touched;
+                        effectText = person.GetTraitEffectText(age, trait);
+                        if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
+                        {
+                            abilityStars = person.GetTrait(age, trait, true);
+                            influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
+                            influenceDisplay = true;
+                        }
+                        else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
+                        effectText += influenceText;
+                        if (abilityStars < 3) { traitColor = Color._badTrait; }
+                        else if (abilityStars == 3) { traitColor = Color._star; }
+                        else { traitColor = Color._goodTrait; }
+                        //display
                         newLine = true;
-                        if (abilityStars != 3)
+                        if (abilityStars != 3 || influenceDisplay == true)
                         { newLine = false; }
                         if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                         {
-                            listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Touched"), Color._touched, RLColor.Black, false));
-                            listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._touched, RLColor.Black, newLine));
-                            if (abilityStars != 3)
-                            {
-                                if (abilityStars < 3)
-                                {
-                                    listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Touched],
-                                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched]), Color._badTrait, RLColor.Black));
-                                }
-                                else if (abilityStars > 3)
-                                {
-                                    listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Touched],
-                                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched]), Color._goodTrait, RLColor.Black));
-                                }
-                            }
+                            listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Touched"), false));
+                            listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                            if (abilityStars != 3 || influenceDisplay == true)
+                            { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                         }
                     }
                 }

@@ -1799,7 +1799,7 @@ namespace Next_Game
 
         /// <summary>
         /// A smarter wife will influence her lord/king husband
-        /// effect on wits and treachery stored in Lord's arrayOfInfluences etc. stats. Only applies if wife present at same location.
+        /// effect on wits stored in Lord's arrayOfInfluences etc. stats. Only applies if wife present at same location.
         /// default value for AdjustedWits & AdjustedTreachery is '0'
         /// </summary>
         private void SetWifeInfluence(Noble lord, Noble lady)
@@ -1808,14 +1808,9 @@ namespace Next_Game
             int ladyWits = lady.GetTrait(TraitAge.Fifteen, TraitType.Wits);
             if (ladyWits > lordWits)
             {
-                int lordTreachery = lord.GetTrait(TraitAge.Fifteen, TraitType.Treachery);
-                int ladyTreachery = lady.GetTrait(TraitAge.Fifteen, TraitType.Treachery);
                 //wits
                 int influenceWits = ladyWits - lordWits;
                 lord.arrayOfTraitInfluences[(int)TraitType.Wits] = influenceWits;
-                //treachery
-                int influenceTreachery = ladyTreachery - lordTreachery;
-                lord.arrayOfTraitInfluences[(int)TraitType.Treachery] = influenceTreachery;
                 //Update adjusted stats (default '0') - show net adjusted stat
                 lord.Influencer = lady.ActID;
                 //debug
