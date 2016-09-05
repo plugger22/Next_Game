@@ -1514,8 +1514,9 @@ namespace Next_Game
             
             Game.world?.SetRecord(record);
             //remove actor from location
-            Location loc_1 = Game.network.GetLocation(deceased.LocID);
-            loc_1.RemoveActor(deceased.ActID);
+            Location loc = Game.network.GetLocation(deceased.LocID);
+            loc.RemoveActor(deceased.ActID);
+            deceased.LocID = 0;
         }
 
         /// <summary>
@@ -1801,16 +1802,12 @@ namespace Next_Game
         /// </summary>
         private void SetWifeInfluence(Noble lord, Noble lady)
         {
-            TraitAge lordAge = TraitAge.Fifteen;
-            TraitAge ladyAge = TraitAge.Fifteen;
-            if (lord.Age < 15) { lordAge = TraitAge.Five; }
-            if (lady.Age < 15) { ladyAge = TraitAge.Five; }
-            int lordWits = lord.GetTrait(lordAge, TraitType.Wits);
-            int ladyWits = lady.GetTrait(ladyAge, TraitType.Wits);
+            int lordWits = lord.GetTrait(TraitAge.Fifteen, TraitType.Wits);
+            int ladyWits = lady.GetTrait(TraitAge.Fifteen, TraitType.Wits);
             if (ladyWits > lordWits)
             {
-                int lordTreachery = lord.GetTrait(lordAge, TraitType.Treachery);
-                int ladyTreachery = lady.GetTrait(ladyAge, TraitType.Treachery);
+                int lordTreachery = lord.GetTrait(TraitAge.Fifteen, TraitType.Treachery);
+                int ladyTreachery = lady.GetTrait(TraitAge.Fifteen, TraitType.Treachery);
                 //wits
                 int influenceWits = ladyWits - lordWits;
                 lord.arrayOfTraitInfluences[(int)TraitType.Wits] = influenceWits;

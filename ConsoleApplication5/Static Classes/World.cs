@@ -330,8 +330,10 @@ namespace Next_Game
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
 
                 //stats - natural ---
+                string effectText = null;
                 int influencer = person.Influencer;
                 string influenceActor = null;
+                string influenceText = null;
                 if (influencer > 0)
                 { Passive infl_actor = GetPassiveActor(influencer); influenceActor = infl_actor.Name; }
                 //age of actor
@@ -343,6 +345,7 @@ namespace Next_Game
                 {
                     //header
                     listToDisplay.Add(new Snippet("Abilities (some at 5 y.o, all at 15 y.o)", RLColor.Brown, RLColor.Black));
+
                     //combat
                     //int abilityStars = person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] + person.Combat;
                     int abilityStars = person.GetTrait(age, TraitType.Combat);
@@ -369,30 +372,24 @@ namespace Next_Game
                     }
 
                     //Wits
+                    effectText = person.GetTraitEffectText(age, TraitType.Wits);
                     if (influencer > 0 && CheckActorPresent(influencer, locID))
-                    { abilityStars = person.GetInfluencedTrait(age, TraitType.Wits); }
-                    else { abilityStars = person.GetTrait(age, TraitType.Wits); }
+                    {
+                        abilityStars = person.GetInfluencedTrait(age, TraitType.Wits);
+                        influenceText = string.Format(" , influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, TraitType.Wits, true));
+                    }
+                    else { abilityStars = person.GetTrait(age, TraitType.Wits); influenceText = null; }
+                    effectText += influenceText;
 
                     newLine = true;
-                    if (abilityStars != 3)
+                    if (abilityStars != 3 || influenceText != null)
                     { newLine = false; }
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
                         if (abilityStars != 3)
-                        {
-                            if (abilityStars < 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Wits],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits]), Color._badTrait, RLColor.Black));
-                            }
-                            else if (abilityStars > 3)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} (+{1})", person.arrayOfTraitNames[(int)TraitType.Wits],
-                                    person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits]), Color._goodTrait, RLColor.Black));
-                            }
-                        }
+                        {  listToDisplay.Add(new Snippet(string.Format("{0} ({1})", person.arrayOfTraitNames[(int)TraitType.Wits], effectText), Color._badTrait, RLColor.Black)); }
                     }
 
                     //charm

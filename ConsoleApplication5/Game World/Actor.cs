@@ -23,12 +23,12 @@ namespace Next_Game
         private Position actorPos;
         
         public string Name { get; set; }
-        public int LocID { get; set; } //current location (if travelling then destination)
+        public int LocID { get; set; } //current location (if travelling then destination) -> if dead then '0'
         public int Speed { get; set; } = 2; //speed of travel throughout the world
         public int ActID { get; } //set in constructor
         public int Age { get; set; }
         public int Born { get; set; } //year born
-        public int Died { get; set; } //year died
+        public int Died { get; set; } = 0; //year died
         public string Description { get; set; }
         public ActorStatus Status { get; set; } = 0;
         public ActorType Type { get; set; } = 0;
@@ -120,6 +120,26 @@ namespace Next_Game
         {
             int traitValue = 3 + arrayOfTraitEffects[(int)age, (int)trait] + arrayOfTraitInfluences[(int)trait];
             return traitValue;
+        }
+
+        /// <summary>
+        /// returns string showing trait effect, eg. '+2' or '-1'
+        /// </summary>
+        /// <param name="age"></param>
+        /// <param name="trait"></param>
+        /// <param name="influenceEffect">True if you want the influenced trait</param>
+        /// <returns></returns>
+        public string GetTraitEffectText(TraitAge age, TraitType trait, bool influenceEffect = false)
+        {
+            string text = null;
+            int effect = 0;
+            if (influenceEffect == true)
+            { effect = arrayOfTraitInfluences[(int)trait]; }
+            else { effect = arrayOfTraitEffects[(int)age, (int)trait]; }
+            if (effect > 0) { text = "+"; }
+            else if (effect == 0) { return text; }
+            text += Convert.ToString(effect);
+            return text;
         }
 
         public void AddSecret(int secretID)
