@@ -760,6 +760,8 @@ namespace Next_Game
                 houseList.Add(new Snippet(banner));
                 string seat = string.Format("Seated at {0} {1} ", majorHouse.LocName, ShowLocationCoords(majorHouse.LocID));
                 houseList.Add(new Snippet(seat));
+                string loyalty = string.Format("Loyal to the {0}", majorHouse.Loyalty);
+                houseList.Add(new Snippet(loyalty));
                 //bannerlords
                 List<int> listLordLocations = majorHouse.GetLords();
                 if (listLordLocations.Count > 0)

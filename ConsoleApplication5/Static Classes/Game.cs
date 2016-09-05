@@ -17,9 +17,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        private static int seed = 23281;
+        //private static int seed = 23281;
         
 
         private static readonly int _rootWidth = 230;
@@ -110,7 +110,7 @@ namespace Next_Game
             network = new Network(seed);
             network.InitialiseNetwork();
             StopTimer(timer_1, "Network Initialisation");
-            lore = new Lore();
+            lore = new Lore(seed);
             timer_1.Start();
             history = new History(seed);
             history.InitialiseHistory(network.GetNumUniqueHouses());

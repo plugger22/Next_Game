@@ -113,7 +113,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// returns net value of a specified trait (assumes no influence)
+        /// returns net value of a specified trait (with/without influence) Need to check if influence applies first
         /// </summary>
         /// <param name="trait"></param>
         /// <param name="influenceEffect">True if you want the influenced trait</param>
