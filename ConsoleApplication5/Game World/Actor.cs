@@ -104,26 +104,18 @@ namespace Next_Game
         /// returns net value of a specified trait (assumes no influence)
         /// </summary>
         /// <param name="trait"></param>
+        /// <param name="influenceEffect">True if you want the influenced trait</param>
         /// <returns></returns>
-        public int GetTrait(TraitAge age, TraitType trait)
+        public int GetTrait(TraitAge age, TraitType trait, bool influenceEffect = false)
         {
-            int traitValue = 3 + arrayOfTraitEffects[(int)age, (int)trait];
+            int traitValue = 3 + arrayOfTraitEffects[(int)age, (int)trait];;
+            if (influenceEffect == true)
+            { traitValue += arrayOfTraitInfluences[(int)trait]; }
             return traitValue;
         }
 
         /// <summary>
-        /// returns influence value of trait (normal effect + plus influence)
-        /// </summary>
-        /// <param name="trait"></param>
-        /// <returns></returns>
-        public int GetInfluencedTrait(TraitAge age, TraitType trait)
-        {
-            int traitValue = 3 + arrayOfTraitEffects[(int)age, (int)trait] + arrayOfTraitInfluences[(int)trait];
-            return traitValue;
-        }
-
-        /// <summary>
-        /// returns string showing trait effect, eg. '+2' or '-1'
+        /// returns string showing trait effect, eg. '(+2)' or '(-1)' or null if no effect
         /// </summary>
         /// <param name="age"></param>
         /// <param name="trait"></param>
@@ -132,13 +124,14 @@ namespace Next_Game
         public string GetTraitEffectText(TraitAge age, TraitType trait, bool influenceEffect = false)
         {
             string text = null;
+            string plus = null;
             int effect = 0;
             if (influenceEffect == true)
             { effect = arrayOfTraitInfluences[(int)trait]; }
             else { effect = arrayOfTraitEffects[(int)age, (int)trait]; }
-            if (effect > 0) { text = "+"; }
+            if (effect > 0) { plus = "+"; }
             else if (effect == 0) { return text; }
-            text += Convert.ToString(effect);
+            text = "(" + plus + Convert.ToString(effect) + ")";
             return text;
         }
 
