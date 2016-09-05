@@ -264,7 +264,8 @@ namespace Next_Game.Cartographic
         /// <returns></returns>
         public bool CheckActorStatus(int actorID)
         {
-            if (listOfActors.Find(x => x == actorID) > 0)
+            //if (listOfActors.Find(x => x == actorID) > 0)
+            if (listOfActors.Contains(actorID) == true)
             { return true; }
             return false;
         }

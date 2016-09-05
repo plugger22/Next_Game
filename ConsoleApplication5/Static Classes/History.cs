@@ -1719,10 +1719,12 @@ namespace Next_Game
             foreach (Noble rebelActor in listOfRebelNobles)
             {
                 //change location (all)
-                kingsKeep.AddActor(rebelActor.ActID);
+
+                /*kingsKeep.AddActor(rebelActor.ActID);
                 Location oldLoc = Game.network.GetLocation(rebelActor.LocID);
                 oldLoc.RemoveActor(rebelActor.ActID);
-                rebelActor.LocID = 1;
+                rebelActor.LocID = 1;*/
+
                 //specific roles
                 switch (rebelActor.Type)
                 {

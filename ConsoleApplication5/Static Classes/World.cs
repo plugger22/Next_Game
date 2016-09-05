@@ -386,7 +386,7 @@ namespace Next_Game
                     else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
                     effectText += influenceText;
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
-                    else if (abilityStars == 3) { traitColor = RLColor.White; }
+                    else if (abilityStars == 3) { traitColor = Color._star; }
                     else { traitColor = Color._goodTrait; }
                     //display
                     newLine = true;
