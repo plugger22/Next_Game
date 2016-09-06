@@ -753,17 +753,22 @@ namespace Next_Game
             int refID;
             if (majorHouse != null)
             {
+                List<int> listLordLocations = majorHouse.GetLords();
+                //details
                 houseList.Add(new Snippet("House " + majorHouse.Name, RLColor.Yellow, RLColor.Black));
                 string motto = string.Format("Motto \"{0}\"", majorHouse.Motto);
                 houseList.Add(new Snippet(motto));
                 string banner = string.Format("Banner \"{0}\"", majorHouse.Banner);
                 houseList.Add(new Snippet(banner));
-                string seat = string.Format("Seated at {0} {1} ", majorHouse.LocName, ShowLocationCoords(majorHouse.LocID));
+                string seat = string.Format("Seated at {0} {1}", majorHouse.LocName, ShowLocationCoords(majorHouse.LocID));
                 houseList.Add(new Snippet(seat));
                 string loyalty = string.Format("Loyal to the {0}", majorHouse.Loyalty);
                 houseList.Add(new Snippet(loyalty));
+                int bannerTotal = listLordLocations.Count * Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
+                int armyTotal = bannerTotal + majorHouse.MenAtArms;
+                string army = string.Format("Can call upon {0:N0} Men At Arms in Total ({1:N0} from Lord, {2:N0} from Bannerlords)", armyTotal, majorHouse.MenAtArms, bannerTotal);
+                houseList.Add(new Snippet(army));
                 //bannerlords
-                List<int> listLordLocations = majorHouse.GetLords();
                 if (listLordLocations.Count > 0)
                 {
                     houseList.Add(new Snippet("BannerLords", RLColor.Yellow, RLColor.Black));

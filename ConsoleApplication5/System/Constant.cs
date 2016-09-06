@@ -11,6 +11,7 @@ namespace Next_Game
         CHILDBIRTH_INFERTILE,
         PREGNANT,
         TOUCHED,
+        MEN_AT_ARMS,
         Count //keep as last
     }
 
@@ -29,6 +30,7 @@ namespace Next_Game
             arrayOfGlobals[3] = Global.CHILDBIRTH_INFERTILE;
             arrayOfGlobals[4] = Global.PREGNANT;
             arrayOfGlobals[5] = Global.TOUCHED;
+            arrayOfGlobals[6] = Global.MEN_AT_ARMS;
             }
 
         /// <summary>

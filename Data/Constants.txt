@@ -14,3 +14,8 @@
 4: 75
 # TOUCHED -> % chance of an actor having the touched trait
 5: 2
+
+# Houses ---
+
+# MEN_AT_ARMS -> number of men of arms a Major house starts with. Bannerlords have half this number.
+6: 10000

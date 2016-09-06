@@ -58,7 +58,8 @@ namespace Next_Game
         /// </summary>
         /// <param name="numHousesRequired">uniqueHouses from Network.InitialiseHouses</param>
         public void InitialiseHistory(int numHousesRequired)
-        {
+        {   //Constants
+            Game.file.GetConstants("Constants.txt");
             // First Male and Female names
             listOfMaleFirstNames.AddRange(Game.file.GetNames("FirstMale.txt"));
             listOfFemaleFirstNames.AddRange(Game.file.GetNames("FirstFemale.txt"));
@@ -73,8 +74,6 @@ namespace Next_Game
             //GeoNames
             arrayOfGeoNames = Game.file.GetGeoNames("GeoNames.txt");
             InitialiseGeoClusters();
-            //Constants
-            Game.file.GetConstants("Constants.txt");
             //Traits
             listOfTraits?.AddRange(Game.file.GetTraits("Traits_All.txt", TraitSex.All));
             listOfTraits?.AddRange(Game.file.GetTraits("Traits_Male.txt", TraitSex.Male));
@@ -111,6 +110,7 @@ namespace Next_Game
                 house.ArchetypeID = listHousePool[i].Archetype;
                 house.RefID = listHousePool[i].RefID;
                 house.LocName = listHousePool[i].Capital;
+                house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
                 //add house to listOfHouses
                 listOfGreatHouses.Add(house);
                 //Console.WriteLine("House {0} added to listOfGreatHouses", house.Name);
@@ -136,6 +136,7 @@ namespace Next_Game
             house.RefID = listHousePool[index].RefID;
             house.LocID = LocID;
             house.HouseID = houseID;
+            house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
             //add house to listOfHouses
             listOfMinorHouses.Add(house);
             //remove minorhouse from pool list to avoid being chosen again
