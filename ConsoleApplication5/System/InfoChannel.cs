@@ -194,9 +194,12 @@ namespace Next_Game
         {
             //text data
             List<Snippet> listOfSnippets = new List<Snippet>();
-            listOfSnippets.Add(new Snippet("This is the most amazing house I've lived in"));
-            listOfSnippets.Add(new Snippet("Hey, I'm not so sure about that?"));
-            listOfSnippets.Add(new Snippet("Yes I am!"));
+            listOfSnippets.Add(new Snippet("This is the most amazing house I've lived in", RLColor.Black, RLColor.Black));
+            listOfSnippets.Add(new Snippet());
+            listOfSnippets.Add(new Snippet("Hey, I'm not so sure about that?", RLColor.Black, RLColor.Black));
+            listOfSnippets.Add(new Snippet());
+            listOfSnippets.Add(new Snippet("Yes I am!", RLColor.Black, RLColor.Black));
+            listOfSnippets.Add(new Snippet());
             listOfSnippets.Add(new Snippet());
             listOfSnippets.Add(new Snippet("Choose [Y] Yes or {N] No", RLColor.Red, RLColor.Black));
             eventBox.SetText(listOfSnippets);

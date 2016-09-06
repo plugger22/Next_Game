@@ -61,14 +61,16 @@ namespace Next_Game
             for (int i = 0; i < outerLimit; i++)
             {
                 text = listOfText[i].GetText();
-                textLength = text.Length;
+                if (text == null) { textLength = 0; }
+                else { textLength = text.Length; }
+
                 offset = (Width - textLength) / 2;
-                offset = Math.Max(offset, 0);
+                offset = Math.Max(offset, 1);
                 foreColor = listOfText[i].GetForeColor();
-                textCounter = 1;
-                innerLimit = Math.Min(Width - 1, textLength);
+                textCounter = 0;
+                innerLimit = offset + textLength;
                 //place text characters in array, one by one, for this line
-                for (int k = 1 + offset; k < innerLimit - 1; k++)
+                for (int k = offset; k < innerLimit; k++)
                 {
                     arrayOfCells[k, i + 1] = text[textCounter++];
                     arrayOfColors[k, i + 1] = foreColor;
