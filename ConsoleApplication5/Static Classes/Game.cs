@@ -9,7 +9,7 @@ using Next_Game.Cartographic;
 
 namespace Next_Game
 {
-    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record } //distinct menu sets (Menu.cs)
+    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record, Special} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi} //different console windows (Menu window handled independently by Menu.cs)
     public enum SpecialInput {Normal, MultiKey, Scrolling} //special input modes
 
@@ -19,7 +19,7 @@ namespace Next_Game
 
         private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        //private static int seed = 23281;
+        //private static int seed = 54971;
         
 
         private static readonly int _rootWidth = 230;
@@ -432,7 +432,6 @@ namespace Next_Game
                                 case MenuMode.Main:
                                 case MenuMode.Actor_Passive:
                                     //show Actor
-                                    //infoChannel.SetInfoList(new List<Snippet>(), ConsoleDisplay.Input);
                                     infoChannel.ClearConsole(ConsoleDisplay.Input);
                                     infoChannel.AppendInfoList(new Snippet("---Input Actor ID ", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
                                     infoChannel.AppendInfoList(new Snippet("Press ENTER when done, BACKSPACE to change, ESC to exit"), ConsoleDisplay.Input);
@@ -583,6 +582,9 @@ namespace Next_Game
                         case RLKey.S:
                             switch (_menuMode)
                             {
+                                case MenuMode.Main:
+                                    _menuMode = MenuMode.Special;
+                                    break;
                                 case MenuMode.Debug:
                                     //Show All Secrets log
                                     infoChannel.SetInfoList(world.ShowSecretsRL(), ConsoleDisplay.Multi);
@@ -697,7 +699,8 @@ namespace Next_Game
                 messageLog.DrawMessageQueue(_messageConsole);
                 menu.DrawMenuRL(_menuConsole);
                 infoChannel.DrawInfoConsole(_inputConsole, ConsoleDisplay.Input);
-                infoChannel.DrawInfoConsole(_multiConsole, ConsoleDisplay.Multi);
+                if (_menuMode != MenuMode.Special) { infoChannel.DrawInfoConsole(_multiConsole, ConsoleDisplay.Multi);}
+                else { infoChannel.DrawSpecial(_multiConsole); }
                 infoChannel.DrawInfoConsole(_statusConsole, ConsoleDisplay.Status);
 
                 //Blit to root Console

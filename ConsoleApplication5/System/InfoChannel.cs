@@ -13,6 +13,7 @@ namespace Next_Game
         private List<Snippet> multiList; //list of strings to display in the multi Console
         private List<Snippet> inputList; //list of strings to display in the input Console
         private List<Snippet> statusList; //list of strings to display in the Status Console
+        private Box eventBox;
 
 
         public InfoChannel()
@@ -23,8 +24,12 @@ namespace Next_Game
             multiMargin = 2;
             inputMargin = 2;
             statusMargin = 1;
+            RLColor backColor = Color._background1;
+            eventBox = new Box(110, 40, 10, 10, backColor, RLColor.Black);
         }
 
+        
+        
         /// <summary>
         /// Create a list of snippets to display
         /// </summary>
@@ -185,6 +190,18 @@ namespace Next_Game
             }
         }
 
-
+        public void DrawSpecial(RLConsole multiConsole)
+        {
+            //text data
+            List<Snippet> listOfSnippets = new List<Snippet>();
+            listOfSnippets.Add(new Snippet("This is the most amazing house I've lived in"));
+            listOfSnippets.Add(new Snippet("Hey, I'm not so sure about that?"));
+            listOfSnippets.Add(new Snippet("Yes I am!"));
+            listOfSnippets.Add(new Snippet());
+            listOfSnippets.Add(new Snippet("Choose [Y] Yes or {N] No", RLColor.Red, RLColor.Black));
+            eventBox.SetText(listOfSnippets);
+            //draw box
+            eventBox.Draw(multiConsole);
+        }
     }
 }

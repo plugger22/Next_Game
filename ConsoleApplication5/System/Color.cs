@@ -29,6 +29,9 @@ namespace Next_Game
         public static RLColor _goodTrait = Palette.jade;
         public static RLColor _badTrait = Palette.salmon;
         public static RLColor _touched = Palette.tulip;
+        //box backgrounds
+        public static RLColor _background1 = Palette.pinacolada;
+        public static RLColor _background2 = Palette.robinsegg;
     }
 
     public static class Palette
@@ -62,6 +65,7 @@ namespace Next_Game
         //yellows
         public static RLColor vacation = new RLColor(253, 202, 15);
         public static RLColor golden = new RLColor(241, 217, 121);
+        public static RLColor pinacolada = new RLColor(251, 245, 213);
 
 
     }
