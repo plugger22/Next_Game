@@ -25,7 +25,7 @@ namespace Next_Game
             inputMargin = 2;
             statusMargin = 1;
             RLColor backColor = Color._background1;
-            eventBox = new Box(110, 40, 10, 10, backColor, RLColor.Black);
+            eventBox = new Box(100, 10, 5, 10, backColor, RLColor.Black);
         }
 
         
