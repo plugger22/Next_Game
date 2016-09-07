@@ -11,7 +11,8 @@ namespace Next_Game
 {
     public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record, Special} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi} //different console windows (Menu window handled independently by Menu.cs)
-    public enum SpecialInput {Normal, MultiKey, Scrolling} //special input modes
+    public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
+    public enum SpecialMode {None, Event, Conflict} //if MenuMode.Special then this is the type of special
 
     public static class Game
     {
@@ -75,7 +76,8 @@ namespace Next_Game
         private static int _inputState = 0; //used to differentiate suquential levels of input for individual commands
         private static int _actorID = 0; //used for special MenuMode.Actor_Passive to flip between actors using <- & ->
         private static MenuMode _menuMode = MenuMode.Main; //menu mode in operation (corresponds to enum above)
-        public static SpecialInput _inputMode = SpecialInput.Normal; //special input mode, default none
+        public static InputMode _inputMode = InputMode.Normal; //non-standard input modes, default none
+        public static SpecialMode _specialMode = SpecialMode.None; //special, multiConsole display modes
         public static bool _fullConsole = false; //set to true by InfoChannel.DrawInfoConsole if multiConsole is maxxed out
         public static int _scrollIndex = 0; //used by infoChannel.DrawConsole to handle scrolling up and down
         public static int _multiConsoleLength = 46; //max length of data in multi Console (infochannel.drawInfoConsole)
@@ -173,16 +175,20 @@ namespace Next_Game
             bool mouseLeft = _rootConsole.Mouse.GetLeftClick();
             bool mouseRight = _rootConsole.Mouse.GetRightClick();
             bool complete = false;
+
+            //special display mode?
+            if (_specialMode > 0 && keyPress != null)
+            { SpecialModeInput(keyPress, _specialMode); }
+
             //activate scrolling mode?
             if (_fullConsole == true && keyPress != null)
             {
-                _inputMode = SpecialInput.Scrolling;
+                _inputMode = InputMode.Scrolling;
                 _renderRequired = true;
             }
-            //
+            
             // Multi Key input ---
-            //
-            if (_inputMode == SpecialInput.MultiKey && keyPress != null)
+            if (_inputMode == InputMode.MultiKey && keyPress != null)
             {
                 complete = MultiKeyInput(keyPress);
                 _renderRequired = true;
@@ -206,17 +212,16 @@ namespace Next_Game
                     _multiData = null;
                 }
             }
-            //
+            
             // Scrolling mode in Multi Console ---
-            //
             //scrolling mode - hand off input to scrolling method
-            else if (_inputMode == SpecialInput.Scrolling && keyPress != null)
+            else if (_inputMode == InputMode.Scrolling && keyPress != null)
             {
                 complete = ScrollingKeyInput(keyPress);
                 //return to normal input mode?
                 if (complete == true)
                 {
-                    _inputMode = SpecialInput.Normal;
+                    _inputMode = InputMode.Normal;
                     _fullConsole = false;
                     _scrollIndex = 0;
                     infoChannel.ClearConsole(ConsoleDisplay.Multi);
@@ -226,7 +231,7 @@ namespace Next_Game
             //
             //normal mouse and keyboard input ---
             //
-            if (_inputMode == SpecialInput.Normal)
+            if (_inputMode == InputMode.Normal)
             {
                 //
                 // MOUSE input ---
@@ -435,7 +440,7 @@ namespace Next_Game
                                     infoChannel.ClearConsole(ConsoleDisplay.Input);
                                     infoChannel.AppendInfoList(new Snippet("---Input Actor ID ", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
                                     infoChannel.AppendInfoList(new Snippet("Press ENTER when done, BACKSPACE to change, ESC to exit"), ConsoleDisplay.Input);
-                                    _inputMode = SpecialInput.MultiKey;
+                                    _inputMode = InputMode.MultiKey;
                                     _multiCaller = 1;
                                     break;
                                 case MenuMode.Record:
@@ -584,6 +589,7 @@ namespace Next_Game
                             {
                                 case MenuMode.Main:
                                     _menuMode = MenuMode.Special;
+                                    _specialMode = SpecialMode.Conflict; 
                                     break;
                                 case MenuMode.Debug:
                                     //Show All Secrets log
@@ -609,7 +615,7 @@ namespace Next_Game
                         case RLKey.Number4:
                         case RLKey.Number5:
                         case RLKey.Number6:
-                            if (_inputMode == SpecialInput.Normal)
+                            if (_inputMode == InputMode.Normal)
                             {
                                 switch (_menuMode)
                                 {
@@ -666,6 +672,8 @@ namespace Next_Game
                             //clear input & multi consoles
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
                             infoChannel.ClearConsole(ConsoleDisplay.Multi);
+                            //exit special display mode
+                            _specialMode = SpecialMode.None;
                             //exit mouse input 
                             if (_mouseOn == true)
                             { _mouseOn = false; }
@@ -699,8 +707,11 @@ namespace Next_Game
                 messageLog.DrawMessageQueue(_messageConsole);
                 menu.DrawMenuRL(_menuConsole);
                 infoChannel.DrawInfoConsole(_inputConsole, ConsoleDisplay.Input);
-                if (_menuMode != MenuMode.Special) { infoChannel.DrawInfoConsole(_multiConsole, ConsoleDisplay.Multi);}
-                else { infoChannel.DrawSpecial(_multiConsole); }
+
+                //if (_menuMode != MenuMode.Special) { infoChannel.DrawInfoConsole(_multiConsole, ConsoleDisplay.Multi);}
+                //else { infoChannel.DrawSpecial(_multiConsole, SpecialMode.Event); }
+                infoChannel.DrawInfoConsole(_multiConsole, ConsoleDisplay.Multi, _specialMode);
+
                 infoChannel.DrawInfoConsole(_statusConsole, ConsoleDisplay.Status);
 
                 //Blit to root Console
@@ -876,14 +887,14 @@ namespace Next_Game
                     break;
                 case RLKey.Enter:
                     //exit multi key input
-                    _inputMode = SpecialInput.Normal;
+                    _inputMode = InputMode.Normal;
                     _multiData = _multiData.Replace("?", "");
                     Console.WriteLine("{0} input", _multiData);
                     inputComplete = true;
                     break;
                 case RLKey.Escape:
                     //exit data input, exit calling routine
-                    _inputMode = SpecialInput.Normal;
+                    _inputMode = InputMode.Normal;
                     inputComplete = true;
                     _multiCaller = 0;
                     break;         
@@ -936,6 +947,44 @@ namespace Next_Game
                 break;
             }
                 return inputComplete;
+        }
+
+        /// <summary>
+        /// Handles input for Special Display modes (based around function key inputs)
+        /// </summary>
+        /// <param name="keyPress"></param>
+        /// <param name="mode"></param>
+        private static void SpecialModeInput(RLKeyPress keyPress, SpecialMode mode)
+        {
+            switch (keyPress.Key)
+            {
+                case RLKey.F1:
+                    //test
+                    _specialMode = SpecialMode.Event;
+                    break;
+                case RLKey.F2:
+                    infoChannel.ChangeBoxColor(Color._background2, BoxType.Card);
+                    break;
+                case RLKey.Escape:
+                    //Exit out of Special Display mode
+                    _specialMode = SpecialMode.None;
+                    //clear input & multi consoles
+                    infoChannel.ClearConsole(ConsoleDisplay.Input);
+                    infoChannel.ClearConsole(ConsoleDisplay.Multi);
+                    //exit mouse input 
+                    if (_mouseOn == true)
+                    { _mouseOn = false; }
+                    //revert back to main menu
+                    else
+                    {
+                        if (_menuMode != MenuMode.Main)
+                        {
+                            //return to main menu from sub menus
+                            _menuMode = menu.SwitchMenuMode(MenuMode.Main);
+                        }
+                    }
+                    break;
+            }
         }
 
         /// <summary>

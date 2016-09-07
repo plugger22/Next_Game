@@ -46,6 +46,13 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Change background color
+        /// </summary>
+        /// <param name="color"></param>
+        public void SetBackColor(RLColor color)
+        { backColor = color; }
+
+        /// <summary>
         /// Populate arrayOfCells with centred text of the correct color
         /// </summary>
         /// <param name="listOfText"></param>
@@ -78,6 +85,10 @@ namespace Next_Game
             }
         }
 
+        /// <summary>
+        /// Draw box to multiConsole
+        /// </summary>
+        /// <param name="multiConsole"></param>
         public void Draw(RLConsole multiConsole)
         {
             multiConsole.Clear();
@@ -88,5 +99,7 @@ namespace Next_Game
             }
             
         }
+
+
     }
 }
