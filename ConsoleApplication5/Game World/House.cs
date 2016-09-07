@@ -22,6 +22,7 @@ namespace Next_Game
         public int ArchetypeID { get; set; }
         public int Branch { get; set; }
         public int MenAtArms { get; set; }
+        public int LordID { get; set; } //actorID of noble Lord currently in charge of house
         public HouseLoyalty Loyalty { get; set; }
         private List<int> listOfFirstNames; //contains ID #'s (listOfMaleFirstNames index) of all first names used by males within the house (eg. 'Eddard Stark II')
         private List<int> listOfSecrets;

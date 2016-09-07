@@ -1752,7 +1752,7 @@ namespace Next_Game
                 }
             }
             //Generate BackStory
-            Game.lore.CreateOldKingBackStory();
+            Game.lore.CreateOldKingBackStory(listOfRoyalists, listOfRebels);
         }
 
         /// <summary>

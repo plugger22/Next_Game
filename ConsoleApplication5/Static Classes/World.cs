@@ -1082,6 +1082,8 @@ namespace Next_Game
                 Noble actorLord = (Noble)Game.history.CreateHouseActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
                 Noble actorLady = (Noble)Game.history.CreateHouseActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
                     ActorSex.Female, WifeStatus.First_Wife);
+                //add Lord to House
+                kvp.Value.LordID = actorLord.ActID;
                 //create a knight, castellan and maester for each Major house
                 Knight actorKnight = Game.history.CreateKnight(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
                 Advisor actorCastellan = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Castellan);
