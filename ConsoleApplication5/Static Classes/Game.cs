@@ -965,6 +965,9 @@ namespace Next_Game
                 case RLKey.F2:
                     infoChannel.ChangeBoxColor(Color._background2, BoxType.Card);
                     break;
+                case RLKey.F3:
+                    infoChannel.ChangeBoxColor(Color._background3, BoxType.Card);
+                    break;
                 case RLKey.Escape:
                     //Exit out of Special Display mode
                     _specialMode = SpecialMode.None;

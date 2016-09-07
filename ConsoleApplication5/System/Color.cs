@@ -30,8 +30,9 @@ namespace Next_Game
         public static RLColor _badTrait = Palette.salmon;
         public static RLColor _touched = Palette.tulip;
         //box backgrounds
-        public static RLColor _background1 = Palette.pinacolada;
-        public static RLColor _background2 = Palette.robinsegg;
+        public static RLColor _background1 = Palette.pinacolada; //neutral
+        public static RLColor _background2 = Palette.stem; //good
+        public static RLColor _background3 = Palette.salmon; //bad
     }
 
     public static class Palette
@@ -51,6 +52,7 @@ namespace Next_Game
         public static RLColor grass = new RLColor(108, 181, 73);
         public static RLColor envy = new RLColor(27, 139, 67);
         public static RLColor olive = new RLColor(124, 132, 73);
+        public static RLColor stem = new RLColor(186, 216, 58);
         //blues
         public static RLColor robinsegg = new RLColor(191, 226, 248);
         public static RLColor splash = new RLColor(82, 150, 197);

@@ -17,7 +17,7 @@ namespace Next_Game
         private List<Snippet> inputList; //list of strings to display in the input Console
         private List<Snippet> statusList; //list of strings to display in the Status Console
         //special multiConsole display objects
-        private Box dynamicBox; //automatically adjusts it's height to text
+        private Box fixedBox; //automatically adjusts it's height to text
         private Box cardBox; //standard card
 
 
@@ -30,8 +30,8 @@ namespace Next_Game
             inputMargin = 2;
             statusMargin = 1;
             RLColor backColor = Color._background1;
-            dynamicBox = new Box(100, 10, 5, 10, backColor, RLColor.Black);
-            cardBox = new Box(50, 50, 4, 10, backColor, RLColor.Black);
+            fixedBox = new Box(100, 10, 10, backColor, RLColor.Black);
+            cardBox = new Box(50, 50, 10, backColor, RLColor.Black);
         }
 
         
@@ -220,7 +220,7 @@ namespace Next_Game
                 switch (type)
                 {
                     case BoxType.Dynamic:
-                        dynamicBox?.SetBackColor(color);
+                        fixedBox?.SetBackColor(color);
                         break;
                     case BoxType.Card:
                         cardBox?.SetBackColor(color);
@@ -253,9 +253,9 @@ namespace Next_Game
             switch (mode)
             {
                 case SpecialMode.Event:
-                    dynamicBox.SetText(listOfSnippets);
+                    fixedBox.SetText(listOfSnippets);
                     //draw box
-                    dynamicBox.Draw(multiConsole);
+                    fixedBox.Draw(multiConsole);
                     break;
                 case SpecialMode.Conflict:
                     cardBox.SetText(listOfSnippets);

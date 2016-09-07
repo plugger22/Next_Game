@@ -5,6 +5,9 @@ using RLNET;
 
 namespace Next_Game
 {
+    /// <summary>
+    /// Special Display boxes -> all centred at top of screen with text possible underneath (not yet implemented)
+    /// </summary>
     class Box
     {
         public int Width { get; set; }
@@ -15,20 +18,28 @@ namespace Next_Game
         private int[,] arrayOfCells; //cell array for box and text
         private RLColor[,] arrayOfColors; //foreground color for cell contents
 
-        public Box(int width, int height, int offset_x, int offset_y, RLColor backColor, RLColor borderColor)
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="offset_y"></param>
+        /// <param name="backColor"></param>
+        /// <param name="borderColor"></param>
+        public Box(int width, int height, int offset_y, RLColor backColor, RLColor borderColor)
         {
             this.Width = width;
             this.Height = height;
-            this.Offset_x = offset_x;
             this.Offset_y = offset_y;
             this.backColor = backColor;
-
+           
+            //work out X offset to have box centred
+            Offset_x = (130 - Width) / 2;
             //error check dimensions to see that they'll fit into the multi-console (130 x 100) -> Boxes are assumed to be centred horizontally in the multiconsole
-            if (Width + Offset_x * 2 > 130) { Width = 130 - (Offset_x * 2); }
-            if (Height + Offset_y * 2 > 100) { Height = 100 - (Offset_y * 2); }
-            Width = Math.Max(Width, 8);
-            Height = Math.Max(Height, 8);
-
+            if (Width > 130) { Width = 130; Offset_x = 0; }
+            if (Height > 100) { Height = 100; Offset_y = 0; }
+            
+            //initialise border and colors
             arrayOfCells = new int[Width, Height];
             arrayOfColors = new RLColor[Width, Height];
             //populate array - corners
@@ -84,6 +95,7 @@ namespace Next_Game
                 }
             }
         }
+
 
         /// <summary>
         /// Draw box to multiConsole
