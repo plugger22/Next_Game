@@ -1805,8 +1805,8 @@ namespace Next_Game
         /// </summary>
         private void SetWifeInfluence(Noble lord, Noble lady)
         {
-            int lordWits = lord.GetTrait(TraitAge.Fifteen, TraitType.Wits);
-            int ladyWits = lady.GetTrait(TraitAge.Fifteen, TraitType.Wits);
+            int lordWits = lord.GetTrait(TraitType.Wits);
+            int ladyWits = lady.GetTrait(TraitType.Wits);
             if (ladyWits > lordWits)
             {
                 //wits

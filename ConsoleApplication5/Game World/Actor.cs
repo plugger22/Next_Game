@@ -118,7 +118,7 @@ namespace Next_Game
         /// <param name="trait"></param>
         /// <param name="influenceEffect">True if you want the influenced trait</param>
         /// <returns></returns>
-        public int GetTrait(TraitAge age, TraitType trait, bool influenceEffect = false)
+        public int GetTrait(TraitType trait, TraitAge age = TraitAge.Fifteen, bool influenceEffect = false)
         {
             int traitValue = 3 + arrayOfTraitEffects[(int)age, (int)trait];;
             if (influenceEffect == true)
@@ -133,7 +133,7 @@ namespace Next_Game
         /// <param name="trait"></param>
         /// <param name="influenceEffect">True if you want the influenced trait</param>
         /// <returns></returns>
-        public string GetTraitEffectText(TraitAge age, TraitType trait, bool influenceEffect = false)
+        public string GetTraitEffectText(TraitType trait, TraitAge age = TraitAge.Fifteen, bool influenceEffect = false)
         {
             string text = null;
             string plus = null;

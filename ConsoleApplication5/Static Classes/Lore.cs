@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum RevoltReason {None, Stupid_OldKing, Treacherous_NewKing, Incapacited_OldKing, Dead_OldKing, Internal_Dispute, External_Event}
-    public enum Popularity {Hated_by, Disliked_by, Tolerated_by, Popular_with, Loved_with}
+    public enum Popularity {Hated_by, Disliked_by, Tolerated_by, Liked_by, Loved_by}
 
     /// <summary>
     /// Keeps track of all key game lore (backstory)
@@ -75,8 +75,8 @@ namespace Next_Game
             int oldKing_Wits;
             int influencer = OldKing.Influencer;
             if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1) && OldKing.CheckTraitInfluenced(TraitType.Wits))
-            { oldKing_Wits = OldKing.GetTrait(TraitAge.Fifteen, TraitType.Wits, true); }
-            else { oldKing_Wits = OldKing.GetTrait(TraitAge.Fifteen, TraitType.Wits); }
+            { oldKing_Wits = OldKing.GetTrait(TraitType.Wits, TraitAge.Fifteen, true); }
+            else { oldKing_Wits = OldKing.GetTrait(TraitType.Wits); }
             //dumb king (2 pool entries if wits 2 stars and 5 entries if wits 1 star)
             if (oldKing_Wits == 2) { for (int i = 0; i < 2; i++) { listWhyPool.Add(RevoltReason.Stupid_OldKing); } } 
             else if (oldKing_Wits == 1) { for (int i = 0; i < 5; i++) { listWhyPool.Add(RevoltReason.Stupid_OldKing); } }
@@ -85,8 +85,8 @@ namespace Next_Game
             int newKing_Treachery;
             influencer = NewKing.Influencer;
             if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1) && NewKing.CheckTraitInfluenced(TraitType.Treachery))
-            { newKing_Treachery = NewKing.GetTrait(TraitAge.Fifteen, TraitType.Treachery, true); }
-            else { newKing_Treachery = NewKing.GetTrait(TraitAge.Fifteen, TraitType.Treachery); }
+            { newKing_Treachery = NewKing.GetTrait(TraitType.Treachery, TraitAge.Fifteen, true); }
+            else { newKing_Treachery = NewKing.GetTrait(TraitType.Treachery); }
             //treacherous new king grabs power (2 pool entries if 4 starts, 5 entries if treachery 5 stars)
             if (newKing_Treachery == 4) { for (int i = 0; i < 2; i++) { listWhyPool.Add(RevoltReason.Treacherous_NewKing); } }
             else if (newKing_Treachery == 5) { for (int i = 0; i < 5; i++) { listWhyPool.Add(RevoltReason.Treacherous_NewKing); } }
@@ -109,10 +109,10 @@ namespace Next_Game
             Console.WriteLine("WhyRevolt: {0}", WhyRevolt);
 
             //get old & new king and Queen's charm (can't be influenced)
-            int oldKing_Charm = OldKing.GetTrait(TraitAge.Fifteen, TraitType.Charm);
-            int newKing_Charm = NewKing.GetTrait(TraitAge.Fifteen, TraitType.Charm);
-            int oldQueen_Charm = OldQueen.GetTrait(TraitAge.Fifteen, TraitType.Charm);
-            int newQueen_Charm = NewQueen.GetTrait(TraitAge.Fifteen, TraitType.Charm);
+            int oldKing_Charm = OldKing.GetTrait(TraitType.Charm);
+            int newKing_Charm = NewKing.GetTrait(TraitType.Charm);
+            int oldQueen_Charm = OldQueen.GetTrait(TraitType.Charm);
+            int newQueen_Charm = NewQueen.GetTrait(TraitType.Charm);
             OldKing_Popularity = (Popularity)oldKing_Charm;
             NewKing_Popularity = (Popularity)newKing_Charm;
             OldQueen_Popularity = (Popularity)oldQueen_Charm;
@@ -120,10 +120,11 @@ namespace Next_Game
 
             Console.WriteLine("King {0} was {1} by his people", OldKing.Name, OldKing_Popularity);
             Console.WriteLine("His Queen, {0}, was {1} with the common folk", OldQueen.Name, OldQueen_Popularity);
-            Console.WriteLine("In {0} there was a great Revolt", Game.gameYear);
+            Console.WriteLine(Environment.NewLine + "In {0} there was a great Revolt", Game.gameYear);
 
-            //How many men could the king field?
+            //How many men could the Old king field?
             int royalArmy = 0;
+            Console.WriteLine(Environment.NewLine + "--- Royalist Army");
             foreach (MajorHouse house in listOfRoyalists)
             {
                 //Great houses
@@ -139,10 +140,29 @@ namespace Next_Game
                     }
                 }
             }
-
-            Console.WriteLine("King {0} was {1} his people", NewKing.Name, NewKing_Popularity);
-            Console.WriteLine("His Queen, {0}, was {1} the common folk", NewQueen.Name, NewQueen_Popularity);
             Console.WriteLine(Environment.NewLine + "The Royalists fielded {0:N0} Men At Arms", royalArmy);
+            //How many men could the New king field?
+            int rebelArmy = 0;
+            Console.WriteLine(Environment.NewLine + "--- Rebel Army");
+            foreach (MajorHouse house in listOfRebels)
+            {
+                //Great houses
+                rebelArmy += GetMenAtArms(house);
+                //bannerLords
+                List<int> bannerLords = house.GetBannerLords();
+                if (bannerLords.Count > 0)
+                {
+                    foreach (int minorRefID in bannerLords)
+                    {
+                        House minorHouse = Game.world.GetHouse(minorRefID);
+                        rebelArmy += GetMenAtArms(minorHouse);
+                    }
+                }
+            }
+            Console.WriteLine(Environment.NewLine + "The Rebels fielded {0:N0} Men At Arms", rebelArmy);
+            Console.WriteLine(Environment.NewLine + "King {0} was {1} his people", NewKing.Name, NewKing_Popularity);
+            Console.WriteLine("His Queen, {0}, was {1} the common folk", NewQueen.Name, NewQueen_Popularity);
+            
         }
 
         /// <summary>
@@ -152,12 +172,13 @@ namespace Next_Game
         /// <returns></returns>
         internal int GetMenAtArms(House house)
         {
-            int menAtArms = 0;
+            float menAtArms = 0;
             //get Lord's treachery (adjusts number fielded) low treachery -> many, high treachery -> few
             int lordID = house.LordID;
             Passive lord = Game.world.GetPassiveActor(lordID);
-            menAtArms = (6 - lord.Treachery) / 5 * house.MenAtArms;
-            return menAtArms;
+            menAtArms = (float)(6 - lord.GetTrait(TraitType.Treachery, TraitAge.Fifteen, true)) / 5 * (float)house.MenAtArms;
+            Console.WriteLine("Aid {0}, {1} has provided {2} men", lord.ActID, lord.Name, menAtArms);
+            return Convert.ToInt32(menAtArms);
         }
     }
 }

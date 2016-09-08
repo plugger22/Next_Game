@@ -352,14 +352,14 @@ namespace Next_Game
 
                     //combat
                     trait = TraitType.Combat;
-                    effectText = person.GetTraitEffectText(age, trait);
+                    effectText = person.GetTraitEffectText(trait, age);
                     if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                     {
-                        abilityStars = person.GetTrait(age, trait, true);
-                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
+                        abilityStars = person.GetTrait(trait, age, true);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
                         influenceDisplay = true;
                     }
-                    else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
+                    else { abilityStars = person.GetTrait(trait, age); influenceText = null; influenceDisplay = false; }
                     effectText += influenceText;
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
@@ -378,14 +378,14 @@ namespace Next_Game
 
                     //Wits
                     trait = TraitType.Wits;
-                    effectText = person.GetTraitEffectText(age, trait);
+                    effectText = person.GetTraitEffectText(trait, age);
                     if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                     {
-                        abilityStars = person.GetTrait(age, trait, true);
-                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
+                        abilityStars = person.GetTrait(trait, age, true);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
                         influenceDisplay = true;
                     }
-                    else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
+                    else { abilityStars = person.GetTrait(trait, age); influenceText = null; influenceDisplay = false; }
                     effectText += influenceText;
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
@@ -404,14 +404,14 @@ namespace Next_Game
 
                     //charm
                     trait = TraitType.Charm;
-                    effectText = person.GetTraitEffectText(age, trait);
+                    effectText = person.GetTraitEffectText(trait, age);
                     if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                     {
-                        abilityStars = person.GetTrait(age, trait, true);
-                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
+                        abilityStars = person.GetTrait(trait, age, true);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
                         influenceDisplay = true;
                     }
-                    else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
+                    else { abilityStars = person.GetTrait(trait, age); influenceText = null; influenceDisplay = false; }
                     effectText += influenceText;
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
@@ -431,14 +431,14 @@ namespace Next_Game
 
                     //treachery
                     trait = TraitType.Treachery;
-                    effectText = person.GetTraitEffectText(age, trait);
+                    effectText = person.GetTraitEffectText(trait, age);
                     if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                     {
-                        abilityStars = person.GetTrait(age, trait, true);
-                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
+                        abilityStars = person.GetTrait(trait, age, true);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
                         influenceDisplay = true;
                     }
-                    else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
+                    else { abilityStars = person.GetTrait(trait, age); influenceText = null; influenceDisplay = false; }
                     effectText += influenceText;
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
@@ -457,14 +457,14 @@ namespace Next_Game
 
                     //Leadership
                     trait = TraitType.Leadership;
-                    effectText = person.GetTraitEffectText(age, trait);
+                    effectText = person.GetTraitEffectText(trait, age);
                     if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                     {
-                        abilityStars = person.GetTrait(age, trait, true);
-                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
+                        abilityStars = person.GetTrait(trait, age, true);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
                         influenceDisplay = true;
                     }
-                    else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
+                    else { abilityStars = person.GetTrait(trait, age); influenceText = null; influenceDisplay = false; }
                     effectText += influenceText;
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
@@ -485,14 +485,14 @@ namespace Next_Game
                     if (person.Touched > 0)
                     {
                         trait = TraitType.Touched;
-                        effectText = person.GetTraitEffectText(age, trait);
+                        effectText = person.GetTraitEffectText(trait, age);
                         if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                         {
-                            abilityStars = person.GetTrait(age, trait, true);
-                            influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(age, trait, true));
+                            abilityStars = person.GetTrait(trait, age, true);
+                            influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
                             influenceDisplay = true;
                         }
-                        else { abilityStars = person.GetTrait(age, trait); influenceText = null; influenceDisplay = false; }
+                        else { abilityStars = person.GetTrait(trait, age); influenceText = null; influenceDisplay = false; }
                         effectText += influenceText;
                         if (abilityStars < 3) { traitColor = Color._badTrait; }
                         else if (abilityStars == 3) { traitColor = Color._star; }
