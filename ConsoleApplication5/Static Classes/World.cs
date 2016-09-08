@@ -753,7 +753,7 @@ namespace Next_Game
             int refID;
             if (majorHouse != null)
             {
-                List<int> listLordLocations = majorHouse.GetLords();
+                List<int> listLordLocations = majorHouse.GetBannerLordLocations();
                 //details
                 houseList.Add(new Snippet("House " + majorHouse.Name, RLColor.Yellow, RLColor.Black));
                 string motto = string.Format("Motto \"{0}\"", majorHouse.Motto);
@@ -1072,6 +1072,21 @@ namespace Next_Game
                 Location loc = Game.network.GetLocation(locID);
                 Game.map.SetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY(), refID);
             }
+            //populate list of Bannerlord RefID's in Great Houses
+            foreach (MajorHouse house in listOfGreatHouses)
+            {
+                List<int> bannerLords = house.GetBannerLordLocations();
+                int minorRefID;
+                if (bannerLords.Count > 0)
+                {
+                    foreach (int minorLocID in bannerLords)
+                    {
+                        Location loc = Game.network.GetLocation(minorLocID);
+                        minorRefID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
+                        house.AddBannerLord(minorRefID);
+                    }
+                }
+            }
             //fill Great Houses with Lords and Ladies
             Console.WriteLine("--- Genetics");
             foreach (KeyValuePair<int, MajorHouse> kvp in dictGreatHouses)
@@ -1147,6 +1162,8 @@ namespace Next_Game
                     //add to dictionaries of actors
                     dictPassiveActors.Add(bannerLord.ActID, bannerLord);
                     dictAllActors.Add(bannerLord.ActID, bannerLord);
+                    //add Lord to house
+                    kvp.Value.LordID = bannerLord.ActID;
                     //store actors in location
                     loc.AddActor(bannerLord.ActID);
                 }

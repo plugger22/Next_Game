@@ -124,15 +124,25 @@ namespace Next_Game
 
             //How many men could the king field?
             int royalArmy = 0;
-            foreach(MajorHouse house in listOfRoyalists)
+            foreach (MajorHouse house in listOfRoyalists)
             {
                 //Great houses
                 royalArmy += GetMenAtArms(house);
                 //bannerLords
+                List<int> bannerLords = house.GetBannerLords();
+                if (bannerLords.Count > 0)
+                {
+                    foreach (int minorRefID in bannerLords)
+                    {
+                        House minorHouse = Game.world.GetHouse(minorRefID);
+                        royalArmy += GetMenAtArms(minorHouse);
+                    }
+                }
             }
 
             Console.WriteLine("King {0} was {1} his people", NewKing.Name, NewKing_Popularity);
             Console.WriteLine("His Queen, {0}, was {1} the common folk", NewQueen.Name, NewQueen_Popularity);
+            Console.WriteLine(Environment.NewLine + "The Royalists fielded {0:N0} Men At Arms", royalArmy);
         }
 
         /// <summary>

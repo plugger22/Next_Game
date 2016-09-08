@@ -2047,7 +2047,7 @@ namespace Next_Game.Cartographic
                     //if not capital, add to house list
                     if( locID != capitalLocID && locID > 0)
                     {
-                        house.AddLordLocations(locID);
+                        house.AddBannerLordLocation(locID);
                         //assign a Minor House (bannerlord)
                         Game.history.InitialiseMinorHouse(locID, houseID);
                     }

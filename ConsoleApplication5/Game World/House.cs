@@ -54,7 +54,8 @@ namespace Next_Game
     //
     class MajorHouse : House
     {
-        private List<int> listLordLocations;
+        private List<int> listLordLocations; //locID of all bannerlords
+        private List<int> listBannerLords; //refID of all bannerlords
         private List<int> listHousesToCapital; //unique houses (HID), ignoring special locations
         private List<int> listHousesToConnector; //unique houses (HID), ignoring special locations
         
@@ -64,6 +65,7 @@ namespace Next_Game
             listLordLocations = new List<int>();
             listHousesToCapital = new List<int>();
             listHousesToConnector = new List<int>();
+            listBannerLords = new List<int>();
         }
 
         public int GetNumBannerLords()
@@ -73,8 +75,11 @@ namespace Next_Game
         /// add a location to list of house controlled locations
         /// </summary>
         /// <param name="locID"></param>
-        public void AddLordLocations(int locID)
-        { listLordLocations.Add(locID); }
+        public void AddBannerLordLocation(int locID)
+        { listLordLocations?.Add(locID); }
+
+        public void AddBannerLord(int refID)
+        { listBannerLords?.Add(refID); }
 
         /// <summary>
         /// add a house ID to list of unique houses to capital
@@ -96,9 +101,11 @@ namespace Next_Game
         /// returns list of Lords (subsidary bannerlord locations)
         /// </summary>
         /// <returns></returns>
-        public List<int> GetLords()
+        public List<int> GetBannerLordLocations()
         { return listLordLocations; }
 
+        public List<int> GetBannerLords()
+        { return listBannerLords; }
     }
 
     //
