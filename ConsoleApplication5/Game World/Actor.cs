@@ -13,7 +13,7 @@ namespace Next_Game
     public enum AdvisorNoble {None, Maester, Castellan, Septon}
     public enum ActorSex {None, Male, Female, Count};
     public enum ActorParents {Normal, Bastard, Adopted};
-    public enum ActorDied {None, Childbirth} //how died?
+    public enum ActorDied {None, Childbirth, Battle, Executed, Murdered} //how died?
     public enum WifeStatus {None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife}
     public enum ActorRelation {None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister}
 

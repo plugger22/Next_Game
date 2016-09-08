@@ -163,6 +163,9 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "King {0} was {1} his people", NewKing.Name, NewKing_Popularity);
             Console.WriteLine("His Queen, {0}, was {1} the common folk", NewQueen.Name, NewQueen_Popularity);
             
+            //Battle Resolution module - multiple battles, sieges, to and fro
+
+
         }
 
         /// <summary>

@@ -9,10 +9,10 @@ namespace Next_Game
     //categories (can choose multiple)
     public enum HistActorEvent {None, Born, Died, Married, Battle, Lordship, Birthing, Knighthood, Coronation}
     public enum HistHouseEvent {None, Allegiance}
-    //
-    //tracks historical Information & Events ---
-    //
 
+    ///
+    ///tracks historical Information & Events ---
+    ///
     class Record
     {
         private static int eventIndex = 1;

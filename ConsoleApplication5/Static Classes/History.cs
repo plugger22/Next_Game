@@ -1500,19 +1500,25 @@ namespace Next_Game
             deceased.Died = year;
             deceased.Age = deceased.Age - (Game.gameYear - year);
             deceased.Status = ActorStatus.Dead;
+            deceased.ReasonDied = reason;
             Record record = null;
-            switch(reason)
+            string descriptor = string.Format("{0} {1}, Aid {2}, ", deceased.Type, deceased.Name, deceased.ActID);
+            switch (reason)
             {
                 case ActorDied.Childbirth:
-                    deceased.ReasonDied = ActorDied.Childbirth;
-                    string descriptor = string.Format("{0}, Aid {1}, died while giving birth to {2}, age {3}", deceased.Name, deceased.ActID, perpetrator.Name, deceased.Age);
+                    descriptor += string.Format("died while giving birth to {0}, age {1}", perpetrator.Name, deceased.Age);
                     record = new Record(descriptor, deceased.ActID, deceased.LocID, deceased.RefID, year, HistActorEvent.Died);
                     record.AddActorEvent(HistActorEvent.Birthing);
-                    record.AddActor(perpetrator.ActID);
-                    record.AddActor(secondary.ActID);
+                    break;
+                case ActorDied.Battle:
+                    descriptor += string.Format("died in Battle to {0}, age {1}", perpetrator.Name, deceased.Age);
+                    record = new Record(descriptor, deceased.ActID, deceased.LocID, deceased.RefID, year, HistActorEvent.Died);
+                    record.AddActorEvent(HistActorEvent.Birthing);
                     break;
             }
-            
+            //add any secondary actors
+            record?.AddActor(perpetrator.ActID);
+            record?.AddActor(secondary.ActID);
             Game.world?.SetRecord(record);
             //remove actor from location
             Location loc = Game.network.GetLocation(deceased.LocID);
@@ -1806,7 +1812,8 @@ namespace Next_Game
         private void SetWifeInfluence(Noble lord, Noble lady)
         {
             int lordWits = lord.GetTrait(TraitType.Wits);
-            int ladyWits = lady.GetTrait(TraitType.Wits);
+            int ladyWits = lady.GetTrait(
+                TraitType.Wits);
             if (ladyWits > lordWits)
             {
                 //wits
