@@ -1,0 +1,15 @@
+# Lore
+# assorted flavour text collections
+
+# ActorDied -> Reason, Sex (Male/Female/All) who did the act, Text -> Flavour description
+
+# --- Murdered 
+
+Reason: Murdered
+Sex: Female
+Text: Poisoned
+
+# --- Executed
+
+
+# --- Battle

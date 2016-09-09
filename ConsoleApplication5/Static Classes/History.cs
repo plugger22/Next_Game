@@ -1511,7 +1511,7 @@ namespace Next_Game
                     record.AddActorEvent(HistActorEvent.Birthing);
                     break;
                 case ActorDied.Battle:
-                    descriptor += string.Format("died in Battle to {0}, age {1}", perpetrator.Name, deceased.Age);
+                    descriptor += string.Format("was killed in Battle by {0}, age {1}", perpetrator.Name, deceased.Age);
                     record = new Record(descriptor, deceased.ActID, deceased.LocID, deceased.RefID, year, HistActorEvent.Died);
                     record.AddActorEvent(HistActorEvent.Birthing);
                     break;
