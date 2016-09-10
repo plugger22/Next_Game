@@ -1495,7 +1495,8 @@ namespace Next_Game
         /// <param name="reason"></param>
         /// <param name="perpetrator">The Actor who caused the death (optional)</param>
         /// <param name="secondary">An additional actor who is affected by the death (optional)</param>
-        internal void CreatePassiveFuneral(Passive deceased, int year, ActorDied reason, Actor perpetrator = null, Actor secondary = null)
+        /// <param name="text">varies depending on type of death, eg. Battle name</param>
+        internal void CreatePassiveFuneral(Passive deceased, int year, ActorDied reason, Actor perpetrator = null, Actor secondary = null, string text = null)
         {
             deceased.Died = year;
             deceased.Age = deceased.Age - (Game.gameYear - year);
@@ -1511,9 +1512,15 @@ namespace Next_Game
                     record.AddActorEvent(HistActorEvent.Birthing);
                     break;
                 case ActorDied.Battle:
-                    descriptor += string.Format("was killed in Battle by {0}, age {1}", perpetrator.Name, deceased.Age);
+                    //requires text to be the name of the battle, eg. Battle of 'xxxx'
+                    if (perpetrator != null)
+                    //killed by a specific actor
+                    { descriptor += string.Format("was killed in Battle of {0} by {1} {2}, age {3}", text, perpetrator.Type, perpetrator.Name, deceased.Age); }
+                    else
+                    //random battle death
+                    { descriptor += string.Format("died during the Battle of {0}, age {1}", text, deceased.Age); }
                     record = new Record(descriptor, deceased.ActID, deceased.LocID, deceased.RefID, year, HistActorEvent.Died);
-                    record.AddActorEvent(HistActorEvent.Birthing);
+                    record.AddActorEvent(HistActorEvent.Battle);
                     break;
             }
             //add any secondary actors
