@@ -192,7 +192,32 @@ namespace Next_Game
                 string locName = loc.LocName;
                 Console.WriteLine("{0} -> {1}, distance {2}", houseName, locName, loc.DistanceToCapital);
             }
-
+            Console.WriteLine(Environment.NewLine + "--- Battles");
+            //random number of battles/sieges (two to four)
+            int numBattles = rnd.Next(2, 5);
+            HistKingdomEvent kingdomEvent;
+            string descriptor = null;
+            int index;
+            int year = Game.gameStart - 1; //all conflict assumed to be one year prior to start of the new King's rule
+            List<string> listOfBattles = new List<string>();
+            for(int i = 0; i < numBattles; i++)
+            {
+                //choose from the closest to the Capital half of the royalist locations
+                index = rnd.Next(0, orderedLocs.Count / 2);
+                Location loc = orderedLocs[index];
+                //40% chance of a siege, otherwise a battle
+                if (rnd.Next(100) < 40)
+                { kingdomEvent = HistKingdomEvent.Siege; descriptor = string.Format("The Siege of {0}", loc.LocName); }
+                else
+                { kingdomEvent = HistKingdomEvent.Battle; descriptor = string.Format("The Battle of {0}", loc.LocName); }
+                //create record
+                Record record = new Record(descriptor, loc.LocationID, loc.HouseRefID, year, kingdomEvent);
+                Game.world.SetRecord(record);
+                //add to list of battles to enable actor events to be fleshed out
+                listOfBattles.Add(descriptor);
+                //debug
+                Console.WriteLine("{0} {1}", year, descriptor);
+            }
 
 
         }

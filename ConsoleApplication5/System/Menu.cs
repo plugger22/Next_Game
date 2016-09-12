@@ -115,6 +115,7 @@ namespace Next_Game
                     menuArrayText[0, 1] = "[C] Custom";
                     menuArrayText[0, 2] = "[D] Dead Actors";
                     menuArrayText[0, 3] = "[G] Marriages";
+                    menuArrayText[0, 4] = "[K] Kingdom Events";
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;

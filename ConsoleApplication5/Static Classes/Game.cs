@@ -537,6 +537,16 @@ namespace Next_Game
                                     break;
                             }
                             break;
+                        case RLKey.K:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Record:
+                                    //Kingdom Events
+                                    infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- all KINGDOM EVENTS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
                         case RLKey.M:
                             //Draw Map: applies to all menu modes
                             map.UpdateMap(false, true);

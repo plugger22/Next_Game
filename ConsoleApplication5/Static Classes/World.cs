@@ -1483,6 +1483,16 @@ namespace Next_Game
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
                     break;
+                case RLKey.K:
+                    //Kingdom events
+                    recordList =
+                        from record in dictRecords
+                        from eventType in record.Value.listOfKingdomEvents
+                        where eventType == HistKingdomEvent.Battle && eventType == HistKingdomEvent.Siege
+                        orderby record.Value.Year
+                        select Convert.ToString(record.Value.Year + " " + record.Value.Text);
+                    tempList = recordList.ToList();
+                    break;
             }
             foreach (string text in tempList)
             { snippetList.Add(new Snippet(text)); }

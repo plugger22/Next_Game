@@ -1350,7 +1350,7 @@ namespace Next_Game
                     child.Name, child.ActID, Lord.Type, Lord.Name, Lady.Type, Lady.Name);
                 actualEvent = false;
             }
-            Record record_0 = new Record(descriptor, child.ActID, child.LocID, child.RefID, child.Born, HistActorEvent.Born, HistHouseEvent.None, actualEvent);
+            Record record_0 = new Record(descriptor, child.ActID, child.LocID, child.RefID, child.Born, HistActorEvent.Born, actualEvent);
             record_0.AddActor(Lord.ActID);
             record_0.AddActor(Lady.ActID);
             Game.world.SetRecord(record_0);
@@ -1520,7 +1520,7 @@ namespace Next_Game
                     //random battle death
                     { descriptor += string.Format("died during the Battle of {0}, age {1}", text, deceased.Age); }
                     record = new Record(descriptor, deceased.ActID, deceased.LocID, deceased.RefID, year, HistActorEvent.Died);
-                    record.AddActorEvent(HistActorEvent.Battle);
+                    record.AddActorEvent(HistActorEvent.Conflict);
                     break;
             }
             //add any secondary actors
