@@ -71,6 +71,8 @@ namespace Next_Game
                 listOfHouses = new List<int>();
                 listOfItems = new List<int>();
                 listOfActorEvents = new List<HistActorEvent>();
+                listOfHouseEvents = new List<HistHouseEvent>();
+                listOfKingdomEvents = new List<HistKingdomEvent>();
                 //lists
                 Text = description;
                 if (actorID > 0)
@@ -108,6 +110,8 @@ namespace Next_Game
                 listOfLocs = new List<int>();
                 listOfHouses = new List<int>();
                 listOfItems = new List<int>();
+                listOfActorEvents = new List<HistActorEvent>();
+                listOfHouseEvents = new List<HistHouseEvent>();
                 listOfKingdomEvents = new List<HistKingdomEvent>();
                 //lists
                 Text = description;

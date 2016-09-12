@@ -1488,7 +1488,7 @@ namespace Next_Game
                     recordList =
                         from record in dictRecords
                         from eventType in record.Value.listOfKingdomEvents
-                        where eventType == HistKingdomEvent.Battle && eventType == HistKingdomEvent.Siege
+                        where eventType == HistKingdomEvent.Battle || eventType == HistKingdomEvent.Siege
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
