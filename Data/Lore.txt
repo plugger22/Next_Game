@@ -6,10 +6,11 @@
 # --- Murdered 
 
 Reason: Murdered
-Sex: Female
 Text: Poisoned
 
 # --- Executed
 
 
 # --- Battle
+
+# --- Accident

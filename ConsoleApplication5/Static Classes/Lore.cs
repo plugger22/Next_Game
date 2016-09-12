@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Next_Game.Cartographic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -162,8 +163,36 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "The Rebels fielded {0:N0} Men At Arms", rebelArmy);
             Console.WriteLine(Environment.NewLine + "King {0} was {1} his people", NewKing.Name, NewKing_Popularity);
             Console.WriteLine("His Queen, {0}, was {1} the common folk", NewQueen.Name, NewQueen_Popularity);
-            
+
             //Battle Resolution module - multiple battles, sieges, to and fro
+
+            //get list of royalist Locations
+            List<Location> royalistLocs = new List<Location>();
+            //add kingskeep as first record
+            royalistLocs.Add(Game.network.GetLocation(1));
+            foreach(MajorHouse house in listOfRoyalists)
+            {
+                royalistLocs.Add(Game.network.GetLocation(house.LocID));
+                List<int> bannerLordLocs = house.GetBannerLordLocations();
+                foreach(int locID in bannerLordLocs)
+                { royalistLocs.Add(Game.network.GetLocation(locID)); }
+            }
+            //order by distance from capital
+            List<Location> orderedLocs = new List<Location>();
+            IEnumerable<Location> tempLocs =
+                from loc in royalistLocs
+                orderby loc.DistanceToCapital
+                select loc;
+            orderedLocs = tempLocs.ToList();
+            //debug
+            Console.WriteLine(Environment.NewLine + "--- Royalist Locations (Battle site pool");
+            foreach(Location loc in orderedLocs)
+            {
+                string houseName = Game.world.GetGreatHouseName(loc.HouseID);
+                string locName = loc.LocName;
+                Console.WriteLine("{0} -> {1}, distance {2}", houseName, locName, loc.DistanceToCapital);
+            }
+
 
 
         }

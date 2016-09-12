@@ -68,8 +68,6 @@ namespace Next_Game
             listBannerLords = new List<int>();
         }
 
-        public int GetNumBannerLords()
-        { return listLordLocations.Count; }
 
         /// <summary>
         /// add a location to list of house controlled locations
@@ -106,6 +104,9 @@ namespace Next_Game
 
         public List<int> GetBannerLords()
         { return listBannerLords; }
+
+        public int GetNumBannerLords()
+        { return listLordLocations.Count; }
     }
 
     //
