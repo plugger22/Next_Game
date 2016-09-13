@@ -1500,6 +1500,27 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Returns a filtered set of Lore records
+        /// </summary>
+        /// <param name="keyPress"></param>
+        /// <returns></returns>
+        internal List<Snippet> GetLoreSet(RLKeyPress keyPress)
+        {
+            List<string> tempList = new List<string>();
+            List<Snippet> snippetList = new List<Snippet>();
+            switch (keyPress.Key)
+            {
+                case RLKey.A:
+                    tempList.Add("--- Uprising");
+                    tempList.AddRange(Game.lore.GetUprising());
+                    break;
+            }
+            foreach (string text in tempList)
+            { snippetList.Add(new Snippet(text)); }
+            return snippetList;
+        }
+
+        /// <summary>
         /// Generate a list of All Secrets
         /// </summary>
         /// <returns></returns>

@@ -9,7 +9,7 @@ using Next_Game.Cartographic;
 
 namespace Next_Game
 {
-    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record, Special} //distinct menu sets (Menu.cs)
+    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record, Special, Lore} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi} //different console windows (Menu window handled independently by Menu.cs)
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, Event, Conflict} //if MenuMode.Special then this is the type of special
@@ -448,6 +448,11 @@ namespace Next_Game
                                     infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- ALL RECORDS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
+                                case MenuMode.Lore:
+                                    //All Lore
+                                    infoChannel.SetInfoList(world.GetLoreSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- ALL LORE", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
                             }
                             break;
                         case RLKey.C:
@@ -544,6 +549,15 @@ namespace Next_Game
                                     //Kingdom Events
                                     infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- all KINGDOM EVENTS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
+                        case RLKey.L:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    //witch to Lore Menu
+                                    _menuMode = menu.SwitchMenuMode(MenuMode.Lore);
                                     break;
                             }
                             break;

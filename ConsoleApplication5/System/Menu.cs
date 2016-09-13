@@ -79,6 +79,7 @@ namespace Next_Game
                     menuArrayCategories[3] = "Switch ---";
                     //Main menu commands
                     menuArrayText[0, 0] = "[M] Map";
+                    menuArrayText[0, 1] = "[ENTER] End Turn";
                     //Info category commands
                     menuArrayText[1, 0] = "[P] Show Player Actors";
                     menuArrayText[1, 1] = "[E] Show Events";
@@ -89,7 +90,7 @@ namespace Next_Game
                     menuArrayText[3, 0] = "[1..6] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
                     menuArrayText[3, 2] = "[R] Records MENU";
-                    menuArrayText[3, 3] = "[ENTER] End Turn";
+                    menuArrayText[3, 3] = "[L] Lore MENU";
                     menuArrayText[3, 4] = "[X] Quit";
                     break;
                 case MenuMode.Actor_Active:
@@ -116,6 +117,17 @@ namespace Next_Game
                     menuArrayText[0, 2] = "[D] Dead Actors";
                     menuArrayText[0, 3] = "[G] Marriages";
                     menuArrayText[0, 4] = "[K] Kingdom Events";
+                    menuArrayText[3, 0] = "[ESC] Main Menu";
+                    menuArrayText[3, 1] = "[ENTER] End Turn";
+                    break;
+                case MenuMode.Lore:
+                    menuColorFore = RLColor.Brown;
+                    menuColorBack = RLColor.LightGray;
+                    //input categories
+                    menuArrayCategories[0] = "Lore MENU ---";
+                    menuArrayCategories[3] = "Switch ---";
+                    //Lore menu commands
+                    menuArrayText[0, 0] = "[A] All";
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;

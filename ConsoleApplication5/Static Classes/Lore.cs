@@ -63,14 +63,26 @@ namespace Next_Game
         internal void SetListOfNewRoyals(List<Passive> listRebels)
         { listOfNewRoyals?.AddRange(listRebels); }
 
+        internal List<string> GetUprising()
+        { return listUprising; }
+
+        internal List<string> GetOldKingRule()
+        { return listOldKingRule; }
+
+        internal List<string> GetRevoltBackStory()
+        { return listRevoltBackStory; }
+
+        internal List<string> GetRoyalFamilyFate()
+        { return listRoyalFamilyFate; }
+
+        internal List<string> GetNewKingRule()
+        { return listNewKingRule; }
 
         /// <summary>
         /// generates reason and populates lore lists
         /// </summary>
         internal void CreateOldKingBackStory(List<MajorHouse> listOfRoyalists, List<MajorHouse> listOfRebels)
         {
-            
-
             //list of possible reasons - weighted entries, one chosen at completion
             List<RevoltReason> listWhyPool = new List<RevoltReason>();
 
@@ -231,7 +243,7 @@ namespace Next_Game
             string[] array_Fought = new string[] { "ferociously", "tenanciously", " savagely", "with unaccustomed ferocity", "like a man possessed"};
             string[] array_LostCause = new string[] { "to no avail", "a lost cause", "a vain attempt", "a wasted effort", "an exercise in futility", "a dark day of infamy", "inexorably ground down" };
             string[] array_Kingskeep = new string[] { "slaughtering all those he deemed unworthy", "beheading Royalists wherever he found them", "burning at the stake hundreds of royal sympathisers",
-            "drowning multitudes of loyal royalists like rats thrown in the ocean", "impaling anyone who refused to swear fealty to him"};
+            "drowning multitudes of loyal royalists like rats thrown into the ocean", "impaling anyone who refused to swear fealty to him"};
             string[] array_Inbetween = new string[] { "a day best forgotten by the Royalists", "an ignomious defeat of the King's forces", "resulted in an inconclusive outcome with heavy losses on both sides",
                 " a hard fought draw but at a heavy cost", "a turning point with the defeat of the Royalists", "a defeat of the King forces that extinguished any hope of a victory" };
             string[] array_TurnOfTide = new string[] { "was thrown onto the defensive", "would never more dream of taking the fight to the Rebels", "could only hope to survive", "foreswore all chance of victory",
@@ -303,7 +315,7 @@ namespace Next_Game
                     text_1 += string.Format("Like {0}, Lord {1} {2} a Royalist force {3:N0} strong straight at them.", array_LastAssault[rnd.Next(0, array_LastAssault.Length)],
                         NewKing.Name, array_LastAction[rnd.Next(0, array_LastAction.Length)], rebelForces);
                     //outcome text
-                    text_2 = string.Format("King {0} fought {1} but it was {2}. ", OldKing.Name, array_Fought[rnd.Next(0, array_Fought.Length)], array_LostCause[rnd.Next(0, array_LostCause.Length)]);
+                    text_2 = string.Format("The King fought {0} but it was {1}. ", array_Fought[rnd.Next(0, array_Fought.Length)], array_LostCause[rnd.Next(0, array_LostCause.Length)]);
                     text_2 += string.Format("The rebel Lord {0} entered Kingskeep, {1}, before proclaiming himself King of the Iron Throne and ruler of the Seven Kingdoms. Long live the King!",
                         NewKing.Name, array_Kingskeep[rnd.Next(0, array_Kingskeep.Length)]);
                 }
@@ -317,6 +329,11 @@ namespace Next_Game
                 //debug
                 Console.WriteLine(Environment.NewLine + text_1);
                 Console.WriteLine(Environment.NewLine + text_2 + Environment.NewLine);
+                //add to text list
+                listUprising.Add(text_1 + text_2 + "\n");
+                //listUprising.Add(text_2);
+                //listUprising.Add("\n");
+
             }
 
 
