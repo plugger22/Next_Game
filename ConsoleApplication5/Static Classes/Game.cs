@@ -67,6 +67,7 @@ namespace Next_Game
         public static InfoChannel infoChannel;
         public static Constant constant;
         public static FileImport file;
+        public static Utility utility;
         
         //flags
         private static bool _renderRequired = true; //redraw Console?
@@ -102,6 +103,7 @@ namespace Next_Game
             //initialise game objects
             Stopwatch timer_1 = new Stopwatch();
             constant = new Constant();
+            utility = new Utility();
             file = new FileImport("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/");
             messageLog = new MessageLog();
             timer_1.Start();
@@ -679,7 +681,7 @@ namespace Next_Game
                             map.UpdatePlayers(world.MoveActors());
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
                             gameTurn++;
-                            infoChannel.AppendInfoList(new Snippet(ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
+                            infoChannel.AppendInfoList(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
                             if (_menuMode == MenuMode.Actor_Passive)
                             { _menuMode = MenuMode.Main; }
                             break;
@@ -1014,25 +1016,7 @@ namespace Next_Game
             }
         }
 
-        /// <summary>
-        /// utility function
-        /// </summary>
-        /// <returns></returns>
-        public static string ShowDate()
-        {
-            string dateReturn = "Unknown";
-            int moonDay = (gameTurn % 30) + 1;
-            int moonCycle = (gameTurn / 30) + 1;
-            string moonSuffix = "th";
-            if (moonCycle == 1)
-            { moonSuffix = "st"; }
-            else if (moonCycle == 2)
-            { moonSuffix = "nd"; }
-            else if (moonCycle == 3)
-            { moonSuffix = "rd"; }
-            dateReturn = string.Format("Day {0} of the {1}{2} Moon in the Year of our Gods {3}  (Turn {4})", moonDay, moonCycle, moonSuffix, gameYear, gameTurn + 1);
-            return dateReturn;
-        }
+        
 
         /// <summary>
         /// Generate a list of ALL Errors
