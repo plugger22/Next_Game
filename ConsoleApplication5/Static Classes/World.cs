@@ -1510,8 +1510,7 @@ namespace Next_Game
             List<Snippet> snippetList = new List<Snippet>();
             switch (keyPress.Key)
             {
-                case RLKey.A:
-                    tempList.Add("--- Uprising");
+                case RLKey.U:
                     tempList.AddRange(Game.lore.GetUprising());
                     break;
             }

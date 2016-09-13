@@ -279,9 +279,9 @@ namespace Next_Game
                     text_1 = string.Format("Under the {0} leadership of the Rebel {1} {2} his {3:N0} men at arms", array_LeadershipNew[newKing_Leadership], NewKing.Type, NewKing.Name, rebelForces);
                     //first
                     if (kingdomEvent == HistKingdomEvent.Battle)
-                    { text_1 += string.Format(" {0} a Royalist force of {1:N0} at {2}.", array_Battle[rnd.Next(0, array_Battle.Length)], royalForces, descriptor); }
+                    { text_1 += string.Format(" {0} a Royalist force of {1:N0} at {2}. ", array_Battle[rnd.Next(0, array_Battle.Length)], royalForces, descriptor); }
                     else
-                    { text_1 += string.Format(" {0} a Royalist stronghold at {1}.", array_Siege[rnd.Next(0, array_Siege.Length)], descriptor); }
+                    { text_1 += string.Format(" {0} a Royalist stronghold at {1}. ", array_Siege[rnd.Next(0, array_Siege.Length)], descriptor); }
                     //outcome text
                     if (kingdomEvent == HistKingdomEvent.Battle)
                     {
@@ -312,7 +312,7 @@ namespace Next_Game
                     int royalForces = royalArmy / rnd.Next(2, 6);
                     text_1 = string.Format("King {0}, {1}, made a last stand with his remaining {2:N0} loyal men at arms at {3}. ", OldKing.Name, 
                         array_LastStand[rnd.Next(0, array_LastStand.Length)], royalForces, descriptor);
-                    text_1 += string.Format("Like {0}, Lord {1} {2} a Royalist force {3:N0} strong straight at them.", array_LastAssault[rnd.Next(0, array_LastAssault.Length)],
+                    text_1 += string.Format("Like {0}, Lord {1} {2} a Royalist force {3:N0} strong straight at them. ", array_LastAssault[rnd.Next(0, array_LastAssault.Length)],
                         NewKing.Name, array_LastAction[rnd.Next(0, array_LastAction.Length)], rebelForces);
                     //outcome text
                     text_2 = string.Format("The King fought {0} but it was {1}. ", array_Fought[rnd.Next(0, array_Fought.Length)], array_LostCause[rnd.Next(0, array_LostCause.Length)]);
@@ -331,9 +331,10 @@ namespace Next_Game
                 Console.WriteLine(Environment.NewLine + text_2 + Environment.NewLine);
 
                 //add to text list (run through word wrap first)
+                listUprising.Add("");
                 string textToWrap = text_1 + text_2;
                 listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
-                listUprising.Add("");
+                
             }
 
 

@@ -450,11 +450,7 @@ namespace Next_Game
                                     infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- ALL RECORDS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
-                                case MenuMode.Lore:
-                                    //All Lore
-                                    infoChannel.SetInfoList(world.GetLoreSet(keyPress), ConsoleDisplay.Multi);
-                                    infoChannel.InsertHeader(new Snippet("--- ALL LORE", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
-                                    break;
+                                
                             }
                             break;
                         case RLKey.C:
@@ -631,6 +627,16 @@ namespace Next_Game
                                     //Show Timer log
                                     infoChannel.SetInfoList(ShowTimersRL(), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- Timers ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
+                        case RLKey.U:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Lore:
+                                    //Uprising Lore
+                                    infoChannel.SetInfoList(world.GetLoreSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- Uprising LORE", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                             }
                             break;
