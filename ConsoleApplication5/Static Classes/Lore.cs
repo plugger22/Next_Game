@@ -324,16 +324,16 @@ namespace Next_Game
                 else
                 {
                     text_1 = string.Format("{0}, {1}. ", descriptor, array_Inbetween[rnd.Next(0, array_Inbetween.Length)]);
-                    text_2 = string.Format("King {0} {1} from this day forward", OldKing.Name, array_TurnOfTide[rnd.Next(0, array_TurnOfTide.Length)]);
+                    text_2 = string.Format("King {0} {1} from this day forward.", OldKing.Name, array_TurnOfTide[rnd.Next(0, array_TurnOfTide.Length)]);
                 }
                 //debug
                 Console.WriteLine(Environment.NewLine + text_1);
                 Console.WriteLine(Environment.NewLine + text_2 + Environment.NewLine);
-                //add to text list
-                listUprising.Add(text_1 + text_2 + "\n");
-                //listUprising.Add(text_2);
-                //listUprising.Add("\n");
 
+                //add to text list (run through word wrap first)
+                string textToWrap = text_1 + text_2;
+                listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
+                listUprising.Add("");
             }
 
 
