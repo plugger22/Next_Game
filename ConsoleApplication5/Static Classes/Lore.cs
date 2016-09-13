@@ -216,6 +216,12 @@ namespace Next_Game
             string[] array_OutcomeBattleGood = new string[] { "wasn't enough to hold the line but managed to retreat in good order", "failed to overcome the royalist's poor position but kept losses to a minimum",
             "enabled a strong counter attack that halted the rebels sufficiently for the bulk of the royalist forces to escape", "fended off a succession of rebel assaults and withdrew the royalist forces largely intact"};
             string[] array_OutcomeBattleNeutral = new string[] { "defeated","given a bloody nose","forced to retreat from the field of battle", "unable to hold their ground", "pushed back against their will" };
+            string[] array_OutcomeSiegeBad = new string[] { "led to the subsequent slaughter of most within the stronghold", "goaded the rebels into burning every flammable structure in the stronghold",
+            "turned an impregnable stronghold into an open invitation for destruction of all within", "resulted in a useless sortie that served only to leave the gates open for the enemy"};
+            string[] array_OutcomeSiegeGood = new string[] { "saw the stronghold stand firm and the rebels repulsed", "led to a great victory over the besieging forces",
+            "inflicted heavy losses on the besieging rebels", "threw back continual attempts by the rebels to breach the walls"};
+            string[] array_OutcomeSiegeNeutral = new string[] { "loss of the stronghold", "pillaging of the stronghold", "surrender of the garrison", "destruction of the stronghold" };
+
             for (int i = 0; i < numBattles; i++)
             {
                 //choose from the closest to the Capital half of the royalist locations (battle of KingsKeep is always the last)
@@ -237,7 +243,8 @@ namespace Next_Game
                 Console.WriteLine("{0} {1}", year, descriptor);
 
                 //Battle descriptions - first (rebels always prevail, battle is smallest, rebel forces larger than royalists)
-                string text_1, text_2; 
+                string text_1 = null;
+                string text_2 = null;
                 if (i == 0)
                 {
                     //string handle = NewKing.Handle; if (handle == null) { handle = "The Untested"; }
@@ -250,17 +257,30 @@ namespace Next_Game
                     else
                     { text_1 += string.Format(" {0} a Royalist stronghold at {1}.", array_Siege[rnd.Next(0, array_Siege.Length)], descriptor); }
                     //outcome text
-                    if (oldKing_Leadership > 3)
-                    { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleGood[rnd.Next(0, array_OutcomeBattleGood.Length)]); }
-                    else if (oldKing_Leadership < 3)
-                    { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleBad[rnd.Next(0, array_OutcomeBattleBad.Length)]); }
+                    if (kingdomEvent == HistKingdomEvent.Battle)
+                    {
+                        //battle
+                        if (oldKing_Leadership > 3)
+                        { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleGood[rnd.Next(0, array_OutcomeBattleGood.Length)]); }
+                        else if (oldKing_Leadership < 3)
+                        { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleBad[rnd.Next(0, array_OutcomeBattleBad.Length)]); }
+                        else
+                        { text_2 = string.Format("King {0}'s {1} leadership resulted in his royalist forces being {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleNeutral[rnd.Next(0, array_OutcomeBattleNeutral.Length)]); }
+                    }
                     else
-                    { text_2 = string.Format("King {0}'s {1} leadership resulted in his royalist forces being {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleNeutral[rnd.Next(0, array_OutcomeBattleNeutral.Length)]);
+                    {
+                        //siege
+                        if (oldKing_Leadership > 3)
+                        { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeSiegeGood[rnd.Next(0, array_OutcomeSiegeGood.Length)]); }
+                        else if (oldKing_Leadership < 3)
+                        { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeSiegeBad[rnd.Next(0, array_OutcomeSiegeBad.Length)]); }
+                        else
+                        { text_2 = string.Format("King {0}'s {1} leadership resulted in the {2} although the King and his guard managed to flee.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeSiegeNeutral[rnd.Next(0, array_OutcomeSiegeNeutral.Length)]); }
+                    }
                 }
                 //debug
                 Console.WriteLine(Environment.NewLine + text_1);
-                    Console.WriteLine(Environment.NewLine + text_2 + Environment.NewLine);
-                }
+                Console.WriteLine(Environment.NewLine + text_2 + Environment.NewLine);
             }
 
 
