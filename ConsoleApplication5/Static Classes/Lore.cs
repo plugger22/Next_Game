@@ -199,8 +199,8 @@ namespace Next_Game
                 Console.WriteLine("{0} -> {1}, distance {2}", houseName, locName, loc.DistanceToCapital);
             }
             Console.WriteLine(Environment.NewLine + "--- Battles");
-            //random number of battles/sieges (two to four)
-            int numBattles = rnd.Next(2, 5);
+            //fixed # of battles -> first, last and one inbetween
+            int numBattles = 3;
             HistKingdomEvent kingdomEvent;
             string descriptor = null;
             int index;
@@ -226,12 +226,16 @@ namespace Next_Game
             string[] array_LastStand = new string[] { "with his back to the wall", "desperate and dangerous", "with a failing kingdom before him", "with an air of desperation",
             "with nothing left to lose", "with naught but hope remaining", "displaying an hitherto unknown reservoir of fortitude"};
             string[] array_LastAssault = new string[] { "a vengeful wraith", "an unstoppable force of change", "a rabid, howling hyena", "a roaring, blood-crazed, demon", "the hand of the Devil", "voice of doom",
-                "an evil angel of fire", "thunder roaring down from the sky", "a lightning apostole from above", "the son of satan", "a fiery dragon", "the hand of destiny"};
+                "an evil angel of fire", "thunder roaring down from the sky", "a lightning apostole from above", "the hell raised Son of Satan", "a fiery dragon", "the hand of destiny"};
             string[] array_LastAction = new string[] { "threw", "launched", "hurled", "surged", "thrust", "flung", "stormed", "pounded" };
             string[] array_Fought = new string[] { "ferociously", "tenanciously", " savagely", "with unaccustomed ferocity", "like a man possessed"};
             string[] array_LostCause = new string[] { "to no avail", "a lost cause", "a vain attempt", "a wasted effort", "an exercise in futility", "a dark day of infamy", "inexorably ground down" };
             string[] array_Kingskeep = new string[] { "slaughtering all those he deemed unworthy", "beheading Royalists wherever he found them", "burning at the stake hundreds of royal sympathisers",
             "drowning multitudes of loyal royalists like rats thrown in the ocean", "impaling anyone who refused to swear fealty to him"};
+            string[] array_Inbetween = new string[] { "a day best forgotten by the Royalists", "an ignomious defeat of the King's forces", "resulted in an inconclusive outcome with heavy losses on both sides",
+                " a hard fought draw but at a heavy cost", "a turning point with the defeat of the Royalists", "a defeat of the King forces that extinguished any hope of a victory" };
+            string[] array_TurnOfTide = new string[] { "was thrown onto the defensive", "would never more dream of taking the fight to the Rebels", "could only hope to survive", "foreswore all chance of victory",
+                "girded himself for the inevitable", "could only wait and pray" };
 
             for (int i = 0; i < numBattles; i++)
             {
@@ -307,7 +311,8 @@ namespace Next_Game
                 //inbetween battles
                 else
                 {
-
+                    text_1 = string.Format("{0}, {1}. ", descriptor, array_Inbetween[rnd.Next(0, array_Inbetween.Length)]);
+                    text_2 = string.Format("King {0} {1} from this day forward", OldKing.Name, array_TurnOfTide[rnd.Next(0, array_TurnOfTide.Length)]);
                 }
                 //debug
                 Console.WriteLine(Environment.NewLine + text_1);
