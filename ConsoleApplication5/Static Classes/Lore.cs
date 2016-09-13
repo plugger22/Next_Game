@@ -221,6 +221,17 @@ namespace Next_Game
             string[] array_OutcomeSiegeGood = new string[] { "saw the stronghold stand firm and the rebels repulsed", "led to a great victory over the besieging forces",
             "inflicted heavy losses on the besieging rebels", "threw back continual attempts by the rebels to breach the walls"};
             string[] array_OutcomeSiegeNeutral = new string[] { "loss of the stronghold", "pillaging of the stronghold", "surrender of the garrison", "destruction of the stronghold" };
+            string[] array_FinalBattle = new string[] { "loss of the stronghold", "pillaging of the stronghold", "surrender of the garrison", "destruction of the stronghold" };
+            string[] array_FinalSiege = new string[] { "loss of the stronghold", "pillaging of the stronghold", "surrender of the garrison", "destruction of the stronghold" };
+            string[] array_LastStand = new string[] { "with his back to the wall", "desperate and dangerous", "with a failing kingdom before him", "with an air of desperation",
+            "with nothing left to lose", "with naught but hope remaining", "displaying an hitherto unknown reservoir of fortitude"};
+            string[] array_LastAssault = new string[] { "a vengeful wraith", "an unstoppable force of change", "a rabid, howling hyena", "a roaring, blood-crazed, demon", "the hand of the Devil", "voice of doom",
+                "an evil angel of fire", "thunder roaring down from the sky", "a lightning apostole from above", "the son of satan", "a fiery dragon", "the hand of destiny"};
+            string[] array_LastAction = new string[] { "threw", "launched", "hurled", "surged", "thrust", "flung", "stormed", "pounded" };
+            string[] array_Fought = new string[] { "ferociously", "tenanciously", " savagely", "with unaccustomed ferocity", "like a man possessed"};
+            string[] array_LostCause = new string[] { "to no avail", "a lost cause", "a vain attempt", "a wasted effort", "an exercise in futility", "a dark day of infamy", "inexorably ground down" };
+            string[] array_Kingskeep = new string[] { "slaughtering all those he deemed unworthy", "beheading Royalists wherever he found them", "burning at the stake hundreds of royal sympathisers",
+            "drowning multitudes of loyal royalists like rats thrown in the ocean", "impaling anyone who refused to swear fealty to him"};
 
             for (int i = 0; i < numBattles; i++)
             {
@@ -247,7 +258,6 @@ namespace Next_Game
                 string text_2 = null;
                 if (i == 0)
                 {
-                    //string handle = NewKing.Handle; if (handle == null) { handle = "The Untested"; }
                     int rebelForces = rebelArmy / 2;
                     int royalForces = royalArmy / rnd.Next(3, 5);
                     text_1 = string.Format("Under the {0} leadership of the Rebel {1} {2} his {3:N0} men at arms", array_LeadershipNew[newKing_Leadership], NewKing.Type, NewKing.Name, rebelForces);
@@ -278,6 +288,27 @@ namespace Next_Game
                         { text_2 = string.Format("King {0}'s {1} leadership resulted in the {2} although the King and his guard managed to flee.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeSiegeNeutral[rnd.Next(0, array_OutcomeSiegeNeutral.Length)]); }
                     }
                 }
+
+                //final climatic battle
+                else if (i == numBattles - 1)
+                {
+                    int rebelForces = rebelArmy;
+                    int royalForces = royalArmy / rnd.Next(2, 6);
+                    text_1 = string.Format("King {0}, {1}, made a last stand with his remaining {2:N0} loyal men at arms at {3}. ", OldKing.Name, 
+                        array_LastStand[rnd.Next(0, array_LastStand.Length)], royalForces, descriptor);
+                    text_1 += string.Format("Like {0}, Lord {1} {2} a Royalist force {3:N0} strong straight at them.", array_LastAssault[rnd.Next(0, array_LastAssault.Length)],
+                        NewKing.Name, array_LastAction[rnd.Next(0, array_LastAction.Length)], rebelForces);
+                    //outcome text
+                    text_2 = string.Format("King {0} fought {1} but it was {2}. ", OldKing.Name, array_Fought[rnd.Next(0, array_Fought.Length)], array_LostCause[rnd.Next(0, array_LostCause.Length)]);
+                    text_2 += string.Format("The rebel Lord {0} entered Kingskeep, {1}, before proclaiming himself King of the Iron Throne and ruler of the Seven Kingdoms. Long live the King!",
+                        NewKing.Name, array_Kingskeep[rnd.Next(0, array_Kingskeep.Length)]);
+                }
+
+                //inbetween battles
+                else
+                {
+
+                }
                 //debug
                 Console.WriteLine(Environment.NewLine + text_1);
                 Console.WriteLine(Environment.NewLine + text_2 + Environment.NewLine);
@@ -285,53 +316,6 @@ namespace Next_Game
 
 
         }
-
-        /// <summary>
-        /// Textual representation of battles
-        /// </summary>
-        /// <param name="order"></param>
-        /// <param name="numOfBattles"></param>
-        /// <param name="type"></param>
-        internal void BattleResolution( int order, int numOfBattles, HistKingdomEvent type)
-        {
-            if (order == 0)
-            {
-                //first
-                if (type == HistKingdomEvent.Battle)
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-            else if (order == numOfBattles - 1)
-            {
-                //last
-                if (type == HistKingdomEvent.Battle)
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                //in-between
-                if (type == HistKingdomEvent.Battle)
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-        }
-
 
         /// <summary>
         /// Determines how many men the Lord of House will put into the field when the call to arms comes (varies with treachery)
