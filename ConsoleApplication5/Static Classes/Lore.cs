@@ -69,6 +69,8 @@ namespace Next_Game
         /// </summary>
         internal void CreateOldKingBackStory(List<MajorHouse> listOfRoyalists, List<MajorHouse> listOfRebels)
         {
+            
+
             //list of possible reasons - weighted entries, one chosen at completion
             List<RevoltReason> listWhyPool = new List<RevoltReason>();
 
@@ -91,6 +93,10 @@ namespace Next_Game
             //treacherous new king grabs power (2 pool entries if 4 starts, 5 entries if treachery 5 stars)
             if (newKing_Treachery == 4) { for (int i = 0; i < 2; i++) { listWhyPool.Add(RevoltReason.Treacherous_NewKing); } }
             else if (newKing_Treachery == 5) { for (int i = 0; i < 5; i++) { listWhyPool.Add(RevoltReason.Treacherous_NewKing); } }
+
+            //both kings leadership
+            int oldKing_Leadership = OldKing.GetTrait(TraitType.Leadership);
+            int newKing_Leadership = NewKing.GetTrait(TraitType.Leadership);
 
             //3 entries for old king being incapacitated
             for (int i = 0; i < 3; i++) { listWhyPool.Add(RevoltReason.Incapacited_OldKing); }
@@ -200,11 +206,23 @@ namespace Next_Game
             int index;
             int year = Game.gameStart - 1; //all conflict assumed to be one year prior to start of the new King's rule
             List<string> listOfBattles = new List<string>();
-            for(int i = 0; i < numBattles; i++)
+
+            string[] array_LeadershipNew = new string[] { "None", "woeful", "dubious", "unexpectional", "strong", "commanding" };
+            string[] array_LeadershipOld = new string[] { "None", "blundering", "insipid and uninspiring", "unremarkable", "firm", "decisive" };
+            string[] array_Battle = new string[] { "met", "surprised", "marched on", "launched themselves at", "unexpectedly encountered", "threw themselves at" };
+            string[] array_Siege = new string[] { "invested", "surrounded", "encircled", "cut-off", "isolated" };
+            string[] array_OutcomeBattleBad = new string[] { "was unable to rally his men and suffered heavy losses", "and poor preperation led to a humilitating defeat", "lost control of the battle and suffered grevious losses",
+            "and disregard of advice from his Lords led to a lost cause on the field of battle", "succeeded only in issuing a succession of fumbled orders that added to the confusion and the inevitable defeat" };
+            string[] array_OutcomeBattleGood = new string[] { "wasn't enough to hold the line but managed to retreat in good order", "failed to overcome the royalist's poor position but kept losses to a minimum",
+            "enabled a strong counter attack that halted the rebels sufficiently for the bulk of the royalist forces to escape", "fended off a succession of rebel assaults and withdrew the royalist forces largely intact"};
+            string[] array_OutcomeBattleNeutral = new string[] { "defeated","given a bloody nose","forced to retreat from the field of battle", "unable to hold their ground", "pushed back against their will" };
+            for (int i = 0; i < numBattles; i++)
             {
-                //choose from the closest to the Capital half of the royalist locations
-                index = rnd.Next(0, orderedLocs.Count / 2);
+                //choose from the closest to the Capital half of the royalist locations (battle of KingsKeep is always the last)
+                if (i == numBattles - 1) { index = 0; }
+                else { index = rnd.Next(1, orderedLocs.Count / 2); }
                 Location loc = orderedLocs[index];
+                orderedLocs.RemoveAt(index);
                 //40% chance of a siege, otherwise a battle
                 if (rnd.Next(100) < 40)
                 { kingdomEvent = HistKingdomEvent.Siege; descriptor = string.Format("The Siege of {0}", loc.LocName); }
@@ -217,10 +235,83 @@ namespace Next_Game
                 listOfBattles.Add(descriptor);
                 //debug
                 Console.WriteLine("{0} {1}", year, descriptor);
+
+                //Battle descriptions - first (rebels always prevail, battle is smallest, rebel forces larger than royalists)
+                string text_1, text_2; 
+                if (i == 0)
+                {
+                    //string handle = NewKing.Handle; if (handle == null) { handle = "The Untested"; }
+                    int rebelForces = rebelArmy / 2;
+                    int royalForces = royalArmy / rnd.Next(3, 5);
+                    text_1 = string.Format("Under the {0} leadership of the Rebel {1} {2} his {3:N0} men at arms", array_LeadershipNew[newKing_Leadership], NewKing.Type, NewKing.Name, rebelForces);
+                    //first
+                    if (kingdomEvent == HistKingdomEvent.Battle)
+                    { text_1 += string.Format(" {0} a Royalist force of {1:N0} at {2}.", array_Battle[rnd.Next(0, array_Battle.Length)], royalForces, descriptor); }
+                    else
+                    { text_1 += string.Format(" {0} a Royalist stronghold at {1}.", array_Siege[rnd.Next(0, array_Siege.Length)], descriptor); }
+                    //outcome text
+                    if (oldKing_Leadership > 3)
+                    { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleGood[rnd.Next(0, array_OutcomeBattleGood.Length)]); }
+                    else if (oldKing_Leadership < 3)
+                    { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleBad[rnd.Next(0, array_OutcomeBattleBad.Length)]); }
+                    else
+                    { text_2 = string.Format("King {0}'s {1} leadership resulted in his royalist forces being {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleNeutral[rnd.Next(0, array_OutcomeBattleNeutral.Length)]);
+                }
+                //debug
+                Console.WriteLine(Environment.NewLine + text_1);
+                    Console.WriteLine(Environment.NewLine + text_2 + Environment.NewLine);
+                }
             }
 
 
         }
+
+        /// <summary>
+        /// Textual representation of battles
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="numOfBattles"></param>
+        /// <param name="type"></param>
+        internal void BattleResolution( int order, int numOfBattles, HistKingdomEvent type)
+        {
+            if (order == 0)
+            {
+                //first
+                if (type == HistKingdomEvent.Battle)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+            else if (order == numOfBattles - 1)
+            {
+                //last
+                if (type == HistKingdomEvent.Battle)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                //in-between
+                if (type == HistKingdomEvent.Battle)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+        }
+
 
         /// <summary>
         /// Determines how many men the Lord of House will put into the field when the call to arms comes (varies with treachery)
