@@ -417,13 +417,13 @@ namespace Next_Game
                     case 7:
                         eventText += "allowed to slowly rot to his death in the dungeons";
                         actorEvent = HistActorEvent.Died;
-                        Game.history.CreatePassiveFuneral(actor, Game.gameStart, ActorDied.Murdered);
+                        Game.history.RemoveDeadActor(actor, Game.gameStart, ActorDied.Murdered);
                         break;
                     case 8:
                     case 9:
                         eventText += "summarily executed after a period of captivity";
                         actorEvent = HistActorEvent.Died;
-                        Game.history.CreatePassiveFuneral(actor, Game.gameStart, ActorDied.Executed);
+                        Game.history.RemoveDeadActor(actor, Game.gameStart, ActorDied.Executed);
                         break;
                 }
                 //store record

@@ -1372,7 +1372,14 @@ namespace Next_Game
                     if (num < Game.constant.GetValue(Global.CHILDBIRTH_DEATH))
                     {
                         //Mother died at childbirth but child survived
-                        CreatePassiveFuneral(Lady, year, ActorDied.Childbirth, child, Lord);
+                        //CreatePassiveFuneral(Lady, year, ActorDied.Childbirth, child, Lord);
+                        descriptor = string.Format("{0} {1}, Aid {2} died while giving birth to {3}, age {4}", Lady.Type, Lady.Name, Lady.ActID, child.Name, Lady.Age);
+                        Record record = new Record(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistActorEvent.Died);
+                        record.AddActorEvent(HistActorEvent.Birthing);
+                        record.AddActor(Lord.ActID);
+                        record.AddActor(child.ActID);
+                        Game.world.SetRecord(record);
+                        RemoveDeadActor(Lady, year, ActorDied.Childbirth);
                     }
                     else if (num < Game.constant.GetValue(Global.CHILDBIRTH_INFERTILE))
                     {
@@ -1496,6 +1503,7 @@ namespace Next_Game
         /// <param name="perpetrator">The Actor who caused the death (optional)</param>
         /// <param name="secondary">An additional actor who is affected by the death (optional)</param>
         /// <param name="text">varies depending on type of death, eg. Battle name</param>
+        /*
         internal void CreatePassiveFuneral(Passive deceased, int year, ActorDied reason, Actor perpetrator = null, Actor secondary = null, string text = null)
         {
             deceased.Died = year;
@@ -1531,6 +1539,24 @@ namespace Next_Game
                 record?.AddActor(secondary.ActID);
                 Game.world?.SetRecord(record);
             }
+            //remove actor from location
+            Location loc = Game.network.GetLocation(deceased.LocID);
+            loc.RemoveActor(deceased.ActID);
+            deceased.LocID = 0;
+        } */
+
+        /// <summary>
+        /// clean up after actor death
+        /// </summary>
+        /// <param name="deceased"></param>
+        /// <param name="year"></param>
+        /// <param name="reason"></param>
+        internal void RemoveDeadActor(Passive deceased, int year, ActorDied reason)
+        {
+            deceased.Died = year;
+            deceased.Age = deceased.Age - (Game.gameYear - year);
+            deceased.Status = ActorStatus.Dead;
+            deceased.ReasonDied = reason;
             //remove actor from location
             Location loc = Game.network.GetLocation(deceased.LocID);
             loc.RemoveActor(deceased.ActID);
