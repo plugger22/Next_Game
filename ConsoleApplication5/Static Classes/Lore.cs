@@ -370,7 +370,6 @@ namespace Next_Game
                             case 0:
                             case 1:
                             case 2:
-                            case 3:
                                 //knight captured
                                 listOfCapturedKnights.Add(knightID);
                                 listOfTempKnights.RemoveAt(listIndex);
@@ -378,10 +377,27 @@ namespace Next_Game
                                 Console.WriteLine(string.Format("Knight {0}, Aid {1}, was captured by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
                                 record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Captured);
                                 break;
-
-                            //knight killed
-
-                            //knight wounded
+                            case 3:
+                            case 4:
+                                //knight killed
+                                listOfTempKnights.RemoveAt(listIndex);
+                                eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", knight.Name, knight.ActID, descriptor, Friends, knight.Age);
+                                Console.WriteLine(string.Format("Knight {0}, Aid {1}, was killed by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
+                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Died);
+                                Game.history.RemoveDeadActor(knight, year, ActorDied.Battle);
+                                break;
+                            case 5:
+                            case 6:
+                            case 7:
+                                //knight wounded
+                                eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", knight.Name, knight.ActID, descriptor, Friends);
+                                Console.WriteLine(string.Format("Knight {0}, Aid {1}, was wounded by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
+                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Wounded);
+                                break;
+                            case 8:
+                            case 9:
+                                //heroic deed
+                                break;
                             default:
                                 Console.WriteLine("default");
                                 break;
