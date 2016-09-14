@@ -1587,6 +1587,21 @@ namespace Next_Game
             return loc.CheckActorStatus(actorID);
         }
 
+        /// <summary>
+        /// returns all availabe living Knights
+        /// </summary>
+        /// <returns></returns>
+        public List<int> GetKnights()
+        {
+            List<int> listOfKnights = new List<int>();
+            IEnumerable<int> knights =
+                from person in dictPassiveActors
+                where person.Value.Type == ActorType.Knight && person.Value.Status != ActorStatus.Dead
+                orderby person.Value.ActID
+                select person.Value.ActID;
+            listOfKnights = knights.ToList();
+            return listOfKnights;
+        }
         //new Methods above here
     }
 }

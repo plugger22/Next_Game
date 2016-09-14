@@ -12,6 +12,7 @@ namespace Next_Game
         PREGNANT,
         TOUCHED,
         MEN_AT_ARMS,
+        BATTLE_EVENTS,
         Count //keep as last
     }
 
@@ -31,6 +32,7 @@ namespace Next_Game
             arrayOfGlobals[4] = Global.PREGNANT;
             arrayOfGlobals[5] = Global.TOUCHED;
             arrayOfGlobals[6] = Global.MEN_AT_ARMS;
+            arrayOfGlobals[7] = Global.BATTLE_EVENTS;
             }
 
         /// <summary>

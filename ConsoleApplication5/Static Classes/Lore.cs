@@ -85,6 +85,9 @@ namespace Next_Game
         {
             //list of possible reasons - weighted entries, one chosen at completion
             List<RevoltReason> listWhyPool = new List<RevoltReason>();
+            List<int> listOfTempRoyals = new List<int>();
+            List<int> listOfTempRebels = new List<int>();
+            List<int> listOfTempKnights = Game.world.GetKnights();
 
             //check how smart old king was (takes into account wife's possible influence)
             int oldKing_Wits;
@@ -148,6 +151,7 @@ namespace Next_Game
             {
                 //Great houses
                 royalArmy += GetMenAtArms(house);
+                listOfTempRoyals.Add(house.LordID);
                 //bannerLords
                 List<int> bannerLords = house.GetBannerLords();
                 if (bannerLords.Count > 0)
@@ -156,6 +160,7 @@ namespace Next_Game
                     {
                         House minorHouse = Game.world.GetHouse(minorRefID);
                         royalArmy += GetMenAtArms(minorHouse);
+                        listOfTempRoyals.Add(minorHouse.LordID);
                     }
                 }
             }
@@ -167,6 +172,7 @@ namespace Next_Game
             {
                 //Great houses
                 rebelArmy += GetMenAtArms(house);
+                listOfTempRebels.Add(house.LordID);
                 //bannerLords
                 List<int> bannerLords = house.GetBannerLords();
                 if (bannerLords.Count > 0)
@@ -175,6 +181,7 @@ namespace Next_Game
                     {
                         House minorHouse = Game.world.GetHouse(minorRefID);
                         rebelArmy += GetMenAtArms(minorHouse);
+                        listOfTempRebels.Add(minorHouse.LordID);
                     }
                 }
             }
@@ -243,7 +250,7 @@ namespace Next_Game
             string[] array_Fought = new string[] { "ferociously", "tenanciously", " savagely", "with unaccustomed ferocity", "like a man possessed"};
             string[] array_LostCause = new string[] { "to no avail", "a lost cause", "a vain attempt", "a wasted effort", "an exercise in futility", "a dark day of infamy", "inexorably ground down" };
             string[] array_Kingskeep = new string[] { "slaughtering all those he deemed unworthy", "beheading Royalists wherever he found them", "burning at the stake hundreds of royal sympathisers",
-            "drowning multitudes of loyal royalists like rats thrown into the ocean", "impaling anyone who refused to swear fealty to him"};
+            "drowning multitudes of loyal royalists like bagged rats thrown into the river", "impaling anyone who refused to swear fealty to him"};
             string[] array_Inbetween = new string[] { "a day best forgotten by the Royalists", "an ignomious defeat of the King's forces", "resulted in an inconclusive outcome with heavy losses on both sides",
                 " a hard fought draw but at a heavy cost", "a turning point with the defeat of the Royalists", "a defeat of the King forces that extinguished any hope of a victory" };
             string[] array_TurnOfTide = new string[] { "was thrown onto the defensive", "would never more dream of taking the fight to the Rebels", "could only hope to survive", "foreswore all chance of victory",
@@ -287,21 +294,21 @@ namespace Next_Game
                     {
                         //battle
                         if (oldKing_Leadership > 3)
-                        { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleGood[rnd.Next(0, array_OutcomeBattleGood.Length)]); }
+                        { text_2 = string.Format("King {0}'s {1} direction {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleGood[rnd.Next(0, array_OutcomeBattleGood.Length)]); }
                         else if (oldKing_Leadership < 3)
-                        { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleBad[rnd.Next(0, array_OutcomeBattleBad.Length)]); }
+                        { text_2 = string.Format("King {0}'s {1} direction {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleBad[rnd.Next(0, array_OutcomeBattleBad.Length)]); }
                         else
-                        { text_2 = string.Format("King {0}'s {1} leadership resulted in his royalist forces being {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleNeutral[rnd.Next(0, array_OutcomeBattleNeutral.Length)]); }
+                        { text_2 = string.Format("King {0}'s {1} direction resulted in his royalist forces being {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeBattleNeutral[rnd.Next(0, array_OutcomeBattleNeutral.Length)]); }
                     }
                     else
                     {
                         //siege
                         if (oldKing_Leadership > 3)
-                        { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeSiegeGood[rnd.Next(0, array_OutcomeSiegeGood.Length)]); }
+                        { text_2 = string.Format("King {0}'s {1} direction {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeSiegeGood[rnd.Next(0, array_OutcomeSiegeGood.Length)]); }
                         else if (oldKing_Leadership < 3)
-                        { text_2 = string.Format("King {0}'s {1} leadership {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeSiegeBad[rnd.Next(0, array_OutcomeSiegeBad.Length)]); }
+                        { text_2 = string.Format("King {0}'s {1} direction {2}.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeSiegeBad[rnd.Next(0, array_OutcomeSiegeBad.Length)]); }
                         else
-                        { text_2 = string.Format("King {0}'s {1} leadership resulted in the {2} although the King and his guard managed to flee.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeSiegeNeutral[rnd.Next(0, array_OutcomeSiegeNeutral.Length)]); }
+                        { text_2 = string.Format("King {0}'s {1} direction resulted in the {2} although the King and his guard managed to flee.", OldKing.Name, array_LeadershipOld[oldKing_Leadership], array_OutcomeSiegeNeutral[rnd.Next(0, array_OutcomeSiegeNeutral.Length)]); }
                     }
                 }
 
@@ -334,7 +341,40 @@ namespace Next_Game
                 listUprising.Add("");
                 string textToWrap = text_1 + text_2;
                 listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
-                
+
+                //events
+                List<int> listOfCaptured = new List<int>();
+                //debug
+                //Console.WriteLine(Environment.NewLine + "--- Knights");
+                for(int k = 0; k < Game.constant.GetValue(Global.BATTLE_EVENTS); k++)
+                {
+                    int rndNum = rnd.Next(100) / 10;
+                    //knights
+                    int listIndex = rnd.Next(0, listOfTempKnights.Count);
+                    int knightID = listOfTempKnights[listIndex];
+                    Passive knight = Game.world.GetPassiveActor(knightID);
+                    //what happened?
+                    switch(rndNum)
+                    {
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                            //knight captured
+                            listOfCaptured.Add(knightID);
+                            listOfTempKnights.RemoveAt(listIndex);
+                            //Console.WriteLine(string.Format("Knight {0}, Aid {1}, was captured during {2}", knight.Name, knight.ActID, descriptor));
+                            break;
+
+                        //knight killed
+
+                        //knight wounded
+                        default:
+                            Console.WriteLine("default");
+                            break;
+                    }
+                }
+                   
             }
 
 
