@@ -353,6 +353,11 @@ namespace Next_Game
                     int listIndex = rnd.Next(0, listOfTempKnights.Count);
                     int knightID = listOfTempKnights[listIndex];
                     Passive knight = Game.world.GetPassiveActor(knightID);
+                    string whichSide = "Royalists";
+                    string eventText;
+                    Record record_knight = null;
+                    int knightHouse = knight.HouseID;
+                    if (listOfRebels.Contains(knightHouse)) { whichSide = "Rebels"; }
                     //what happened?
                     switch(rndNum)
                     {
@@ -363,7 +368,9 @@ namespace Next_Game
                             //knight captured
                             listOfCaptured.Add(knightID);
                             listOfTempKnights.RemoveAt(listIndex);
-                            //Console.WriteLine(string.Format("Knight {0}, Aid {1}, was captured during {2}", knight.Name, knight.ActID, descriptor));
+                            eventText = string.Format("{0}, Aid {1}, was captured during {2}", knight.Name, knight.ActID, descriptor);
+                            Console.WriteLine(string.Format("Knight {0} was captured during {1}", knight.Name, descriptor));
+                            record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Captured);
                             break;
 
                         //knight killed
@@ -373,6 +380,7 @@ namespace Next_Game
                             Console.WriteLine("default");
                             break;
                     }
+                    if (record_knight != null) { Game.world.SetRecord(record_knight); }
                 }
                    
             }

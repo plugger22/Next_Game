@@ -1,0 +1,13 @@
+Hi Chris,
+
+I've dipped back into the game to see how it was going. I offer the following feedback with good intentions.
+
+If you have a game mechanic/system within the game you need to, at a minimum, make it crystal clear to the Player how that mechanic works. Systems with obscure underlying mechanics that you can't understand because the game doesn't give you the necessary feedback are really annoying and make any related decision meaningless as if you don't understand how the system works how can you make an informed decision?
+
+Sure, you can go with the general "I'm an Emperor" vibe and ignore the details but that runs into the probem, pretty quickly, that without the details there isn't actually much of a game there.
+
+I counted well over two dozen separate systems in your game and none of them are providing adequate feedback. You've got bits of feedback everywhere but it's like trying to put a jigsaw together where most of the pieces are missing entirely or scattered all over the floor 'cause the cats been playing with them.
+
+You've got a good game here but unless you can do a major overhaul of how the game provides, and presents (UI - won't even mention it),  the necessary information of how the individual systems work (basic stuff like 'what effect does this have?') players are just going to bounce of it.
+
+I'd strongly suggest that you find a couple of people who have never played the game before and sit down and watch how they interact with your game.
