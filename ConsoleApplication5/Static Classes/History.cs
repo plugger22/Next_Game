@@ -1504,6 +1504,7 @@ namespace Next_Game
             deceased.ReasonDied = reason;
             Record record = null;
             string descriptor = string.Format("{0} {1}, Aid {2}, ", deceased.Type, deceased.Name, deceased.ActID);
+            //ignore reason if you don't want an automatic record created for that death type
             switch (reason)
             {
                 case ActorDied.Childbirth:
@@ -1523,10 +1524,13 @@ namespace Next_Game
                     record.AddActorEvent(HistActorEvent.Conflict);
                     break;
             }
-            //add any secondary actors
-            record?.AddActor(perpetrator.ActID);
-            record?.AddActor(secondary.ActID);
-            Game.world?.SetRecord(record);
+            if (record != null)
+            {
+                //add any secondary actors
+                record?.AddActor(perpetrator.ActID);
+                record?.AddActor(secondary.ActID);
+                Game.world?.SetRecord(record);
+            }
             //remove actor from location
             Location loc = Game.network.GetLocation(deceased.LocID);
             loc.RemoveActor(deceased.ActID);

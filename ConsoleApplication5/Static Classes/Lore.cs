@@ -88,6 +88,7 @@ namespace Next_Game
             List<int> listOfTempRoyals = new List<int>();
             List<int> listOfTempRebels = new List<int>();
             List<int> listOfTempKnights = Game.world.GetKnights();
+            List<int> listOfCapturedKnights = new List<int>();
 
             //check how smart old king was (takes into account wife's possible influence)
             int oldKing_Wits;
@@ -256,6 +257,7 @@ namespace Next_Game
             string[] array_TurnOfTide = new string[] { "was thrown onto the defensive", "would never more dream of taking the fight to the Rebels", "could only hope to survive", "foreswore all chance of victory",
                 "girded himself for the inevitable", "could only wait and pray" };
 
+
             for (int i = 0; i < numBattles; i++)
             {
                 //choose from the closest to the Capital half of the royalist locations (battle of KingsKeep is always the last)
@@ -343,50 +345,92 @@ namespace Next_Game
                 listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
 
                 //events
-                List<int> listOfCaptured = new List<int>();
+                
                 //debug
                 //Console.WriteLine(Environment.NewLine + "--- Knights");
                 for(int k = 0; k < Game.constant.GetValue(Global.BATTLE_EVENTS); k++)
                 {
-                    int rndNum = rnd.Next(100) / 10;
-                    //knights
-                    int listIndex = rnd.Next(0, listOfTempKnights.Count);
-                    int knightID = listOfTempKnights[listIndex];
-                    Passive knight = Game.world.GetPassiveActor(knightID);
-                    string Friends = "Royalists";
-                    string Enemies = "Rebels";
-                    string eventText;
-                    Record record_knight = null;
-                    int knightHouse = knight.HouseID;
-                    foreach(MajorHouse majorHouse in listOfRebels)
-                    { if (majorHouse.HouseID == knightHouse) { Friends = "Rebels"; Enemies = "Royalists"; break; } }
-                    //what happened?
-                    switch(rndNum)
+                    if (listOfTempKnights.Count > 0)
                     {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                            //knight captured
-                            listOfCaptured.Add(knightID);
-                            listOfTempKnights.RemoveAt(listIndex);
-                            eventText = string.Format("{0}, Aid {1}, was captured during {2}", knight.Name, knight.ActID, descriptor);
-                            Console.WriteLine(string.Format("Knight {0} was captured by the {1} during {2}", knight.Name, Enemies, descriptor));
-                            record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Captured);
-                            break;
+                        int rndNum = rnd.Next(10);
+                        //knights
+                        int listIndex = rnd.Next(0, listOfTempKnights.Count);
+                        int knightID = listOfTempKnights[listIndex];
+                        Passive knight = Game.world.GetPassiveActor(knightID);
+                        string Friends = "Royalists";
+                        string Enemies = "Rebels";
+                        string eventText;
+                        Record record_knight = null;
+                        int knightHouse = knight.HouseID;
+                        foreach (MajorHouse majorHouse in listOfRebels)
+                        { if (majorHouse.HouseID == knightHouse) { Friends = "Rebels"; Enemies = "Royalists"; break; } }
+                        //what happened?
+                        switch (rndNum)
+                        {
+                            case 0:
+                            case 1:
+                            case 2:
+                            case 3:
+                                //knight captured
+                                listOfCapturedKnights.Add(knightID);
+                                listOfTempKnights.RemoveAt(listIndex);
+                                eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor);
+                                Console.WriteLine(string.Format("Knight {0}, Aid {1}, was captured by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
+                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Captured);
+                                break;
 
-                        //knight killed
+                            //knight killed
 
-                        //knight wounded
-                        default:
-                            Console.WriteLine("default");
-                            break;
+                            //knight wounded
+                            default:
+                                Console.WriteLine("default");
+                                break;
+                        }
+                        if (record_knight != null) { Game.world.SetRecord(record_knight); }
                     }
-                    if (record_knight != null) { Game.world.SetRecord(record_knight); }
-                    
-                    //work out what happened to Captured knights
                 }
-                   
+            }
+
+            //work out what happened to Captured actors
+            foreach (int knightID in listOfCapturedKnights)
+            {
+                int rndNum = rnd.Next(10);
+                Passive actor = Game.world.GetPassiveActor(knightID);
+                string eventText = string.Format("{0}, Aid {1}, was ", actor.Name, actor.ActID);
+                HistActorEvent actorEvent = HistActorEvent.None;
+                switch (rndNum)
+                {
+                    case 0:
+                    case 1:
+                        eventText += "ransomed and released by his captors";
+                        break;
+                    case 2:
+                    case 3:
+                        eventText += "released unharmed by his captors";
+                        break;
+                    case 4:
+                    case 5:
+                        //tortured
+                        eventText += "released unharmed by his captors";
+                        break;
+                    case 6:  
+                    case 7:
+                        eventText += "allowed to slowly rot to his death in the dungeons";
+                        actorEvent = HistActorEvent.Died;
+                        Game.history.CreatePassiveFuneral(actor, Game.gameStart, ActorDied.Murdered);
+                        break;
+                    case 8:
+                    case 9:
+                        eventText += "summarily executed after a period of captivity";
+                        actorEvent = HistActorEvent.Died;
+                        Game.history.CreatePassiveFuneral(actor, Game.gameStart, ActorDied.Executed);
+                        break;
+                }
+                //store record
+                Record record_actor = new Record(eventText, actor.ActID, 0, actor.RefID, Game.gameStart, HistActorEvent.Captured);
+                if (actorEvent == HistActorEvent.Died)
+                { record_actor.AddActorEvent(HistActorEvent.Died); }
+                Game.world.SetRecord(record_actor);
             }
 
 
