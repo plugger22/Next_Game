@@ -66,11 +66,11 @@ namespace Next_Game
         /// <returns></returns>
         public List<string> GetStrings(string fileName)
         {
-            // read in lists of First Male, Female & Surnames
+            // read in lists of strings
             string[] arrayOfStrings = ImportDataFile(fileName);
             List<string> listOfStrings = new List<string>();
             string tempString = null;
-            //read male names from array into list
+            //read straigth strings from array into list (handles blank lines & '#')
             for (int i = 0; i < arrayOfStrings.Length; i++)
             {
                 if (arrayOfStrings[i] != "" && !arrayOfStrings[i].StartsWith("#"))

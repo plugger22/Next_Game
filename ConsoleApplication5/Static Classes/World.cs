@@ -371,7 +371,7 @@ namespace Next_Game
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
                         if (abilityStars != 3 || influenceDisplay == true)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -397,7 +397,7 @@ namespace Next_Game
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
                         if (abilityStars != 3 || influenceDisplay == true)
                         {  listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -423,7 +423,7 @@ namespace Next_Game
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
                         if (abilityStars != 3 || influenceDisplay == true)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -450,7 +450,7 @@ namespace Next_Game
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
                         if (abilityStars != 3 || influenceDisplay == true)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -476,7 +476,7 @@ namespace Next_Game
                     if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
                         if (abilityStars != 3 || influenceDisplay == true)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -504,7 +504,7 @@ namespace Next_Game
                         if ((age == TraitAge.Five && abilityStars != 3) || age == TraitAge.Fifteen)
                         {
                             listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Touched"), false));
-                            listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetSkillStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                            listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
                             if (abilityStars != 3 || influenceDisplay == true)
                             { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                         }
@@ -546,7 +546,10 @@ namespace Next_Game
                     {
                         Secret secret = GetSecret(secretID);
                         if (secret != null)
-                        { listToDisplay.Add(new Snippet(string.Format("{0} {1}", secret.Year, secret.Description))); }
+                        {
+                            listToDisplay.Add(new Snippet(string.Format("{0} {1} ", secret.Year, secret.Description), false));
+                            listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(secret.Strength)), RLColor.LightRed, RLColor.Black));
+                        }
                     }
                 }
 
@@ -567,11 +570,11 @@ namespace Next_Game
 
 
         /// <summary>
-        /// creates a string showing the number of skill stars for ShowActorRL above
+        /// creates a string showing the number of stars for traits, secrets, etc.
         /// </summary>
         /// <param name="num">number of stars</param>
         /// <returns></returns>
-        private string GetSkillStars(int num)
+        private string GetStars(int num)
         {
             string stars = null;
             for (int i = 0; i < num; i++)
@@ -623,7 +626,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="locID"></param>
         /// <returns>returns '(loc 20:4)' format string</returns>
-        private string ShowLocationCoords(int locID)
+        public string ShowLocationCoords(int locID)
         {
             Location loc = Game.network.GetLocation(locID);
             string coords = string.Format("(loc {0}:{1})", loc.GetPosX(), loc.GetPosY());
@@ -1534,7 +1537,9 @@ namespace Next_Game
             //snippet list
             List<Snippet> listData = new List<Snippet>();
             foreach(string data in tempList)
-            { listData.Add(new Snippet(data)); }
+            {
+                listData.Add(new Snippet(data));
+            }
             return listData;
         }
 
