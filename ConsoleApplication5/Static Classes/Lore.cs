@@ -268,16 +268,17 @@ namespace Next_Game
                 orderedLocs.RemoveAt(index);
                 //40% chance of a siege, otherwise a battle
                 if (rnd.Next(100) < 40)
-                { kingdomEvent = HistKingdomEvent.Siege; descriptor = string.Format("The Siege of {0} {1}", loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
+                { kingdomEvent = HistKingdomEvent.Siege; descriptor = string.Format("The Siege of {0}", loc.LocName); }
                 else
-                { kingdomEvent = HistKingdomEvent.Battle; descriptor = string.Format("The Battle of {0} {1}", loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
+                { kingdomEvent = HistKingdomEvent.Battle; descriptor = string.Format("The Battle of {0}", loc.LocName); }
                 //create record
-                Record record = new Record(descriptor, loc.LocationID, loc.HouseRefID, year, kingdomEvent);
+                string details = string.Format("{0} {1}", descriptor, Game.world.ShowLocationCoords(loc.LocationID));
+                Record record = new Record(details, loc.LocationID, loc.HouseRefID, year, kingdomEvent);
                 Game.world.SetRecord(record);
                 //add to list of battles to enable actor events to be fleshed out
                 listOfBattles.Add(descriptor);
                 //debug
-                Console.WriteLine("{0} {1}", year, descriptor);
+                Console.WriteLine("{0} {1} {2}", year, descriptor, Game.world.ShowLocationCoords(loc.LocationID));
 
                 //Battle descriptions - first (rebels always prevail, battle is smallest, rebel forces larger than royalists)
                 string text_1 = null;
@@ -389,15 +390,19 @@ namespace Next_Game
                             case 5:
                             case 6:
                             case 7:
-                                //knight wounded -> record & secret (all wounds create a secret of random strength 1 to 4)
+                                //knight wounded -> record
                                 eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", knight.Name, knight.ActID, descriptor, Friends);
                                 Console.WriteLine(string.Format("Knight {0}, Aid {1}, was wounded by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
                                 record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Wounded);
-                                string wound = listOfWounds[rnd.Next(0, listOfWounds.Count)];
-                                secretText = string.Format("{0}, Aid {1}, {2}", knight.Name, knight.ActID, wound);
-                                Secret_Actor secret = new Secret_Actor(SecretType.Wound, year, secretText, rnd.Next(1, 5), knight.ActID);
-                                Game.history.SetSecret(secret);
-                                knight.AddSecret(secret.SecretID);
+                                //50% chance of wound causing an ongoing issue => Secret (random strength 1 to 4)
+                                if (rnd.Next(100) < 50)
+                                {
+                                    string wound = listOfWounds[rnd.Next(0, listOfWounds.Count)];
+                                    secretText = string.Format("{0}, Aid {1}, {2}", knight.Name, knight.ActID, wound);
+                                    Secret_Actor secret = new Secret_Actor(SecretType.Wound, year, secretText, rnd.Next(1, 5), knight.ActID);
+                                    Game.history.SetSecret(secret);
+                                    knight.AddSecret(secret.SecretID);
+                                }
                                 break;
                             case 8:
                             case 9:
@@ -418,6 +423,7 @@ namespace Next_Game
                 int rndNum = rnd.Next(10);
                 Passive actor = Game.world.GetPassiveActor(knightID);
                 string eventText = string.Format("{0}, Aid {1}, was ", actor.Name, actor.ActID);
+                string secretText;
                 HistActorEvent actorEvent = HistActorEvent.None;
                 switch (rndNum)
                 {
@@ -433,6 +439,10 @@ namespace Next_Game
                     case 5:
                         //tortured
                         eventText += "released unharmed by his captors";
+                        secretText = string.Format("{0}, Aid {1}, was tortured during captivity (mentally scarred)", actor.Name, actor.ActID);
+                        Secret_Actor secret = new Secret_Actor(SecretType.Torture, year, secretText, 2, actor.ActID);
+                        Game.history.SetSecret(secret);
+                        actor.AddSecret(secret.SecretID);
                         break;
                     case 6:  
                     case 7:

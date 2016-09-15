@@ -198,6 +198,7 @@ namespace Next_Game
         public int RefID { get; set; } = 0; //house assignment, eg. Lannister (not HouseID).
         public int HouseID { get; set; } = 0; //dynamically assigned great house alignment 
         public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
+        public HouseLoyalty Loyalty { get; set; } //loyalty (prior to uprising) 
 
         public Passive()
         { }
