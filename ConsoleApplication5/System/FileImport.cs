@@ -60,28 +60,28 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// handles lists of Names
+        /// handles simple string lists
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public List<string> GetNames(string fileName)
+        public List<string> GetStrings(string fileName)
         {
             // read in lists of First Male, Female & Surnames
-            string[] arrayOfCharacterNames = ImportDataFile(fileName);
-            List<string> listOfNames = new List<string>();
+            string[] arrayOfStrings = ImportDataFile(fileName);
+            List<string> listOfStrings = new List<string>();
             string tempString = null;
             //read male names from array into list
-            for (int i = 0; i < arrayOfCharacterNames.Length; i++)
+            for (int i = 0; i < arrayOfStrings.Length; i++)
             {
-                if (arrayOfCharacterNames[i] != "" && !arrayOfCharacterNames[i].StartsWith("#"))
+                if (arrayOfStrings[i] != "" && !arrayOfStrings[i].StartsWith("#"))
                 {
                     //trim off leading and trailing whitespace
-                    tempString = arrayOfCharacterNames[i];
+                    tempString = arrayOfStrings[i];
                     tempString = tempString.Trim();
-                    listOfNames.Add(tempString);
+                    listOfStrings.Add(tempString);
                 }
             }
-            return listOfNames;
+            return listOfStrings;
         }
 
         /// <summary>

@@ -257,6 +257,7 @@ namespace Next_Game
             string[] array_TurnOfTide = new string[] { "was thrown onto the defensive", "would never more dream of taking the fight to the Rebels", "could only hope to survive", "foreswore all chance of victory",
                 "girded himself for the inevitable", "could only wait and pray" };
 
+            //Conflict Loop ---
 
             for (int i = 0; i < numBattles; i++)
             {
@@ -344,16 +345,14 @@ namespace Next_Game
                 string textToWrap = text_1 + text_2;
                 listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
 
-                //events
+                //events ---
                 
-                //debug
-                //Console.WriteLine(Environment.NewLine + "--- Knights");
                 for(int k = 0; k < Game.constant.GetValue(Global.BATTLE_EVENTS); k++)
                 {
+                    //knights
                     if (listOfTempKnights.Count > 0)
                     {
                         int rndNum = rnd.Next(10);
-                        //knights
                         int listIndex = rnd.Next(0, listOfTempKnights.Count);
                         int knightID = listOfTempKnights[listIndex];
                         Passive knight = Game.world.GetPassiveActor(knightID);

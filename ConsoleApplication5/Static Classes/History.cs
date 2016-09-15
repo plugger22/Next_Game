@@ -29,6 +29,10 @@ namespace Next_Game
         private Trait[,][] arrayOfTraits; //filtered sets for fast random access
         //secrets
         private List<Secret> listOfSecrets;
+        //Mishaps
+        private List<string> listOfWounds;
+        private List<string> listOfInjuries;
+        private List<string> listOfDiseases;
         static Random rnd;
 
         /// <summary>
@@ -51,6 +55,9 @@ namespace Next_Game
             listOfTraits = new List<Trait>();
             arrayOfTraits = new Trait[(int)TraitType.Count, (int)ActorSex.Count][];
             listOfSecrets = new List<Secret>();
+            listOfWounds = new List<string>();
+            listOfInjuries = new List<string>();
+            listOfDiseases = new List<string>();
         }
 
         /// <summary>
@@ -61,16 +68,16 @@ namespace Next_Game
         {   //Constants
             Game.file.GetConstants("Constants.txt");
             // First Male and Female names
-            listOfMaleFirstNames.AddRange(Game.file.GetNames("FirstMale.txt"));
-            listOfFemaleFirstNames.AddRange(Game.file.GetNames("FirstFemale.txt"));
-            listOfPlayerNames.AddRange(Game.file.GetNames("PlayerNames.txt"));
-            listOfSurnames.AddRange(Game.file.GetNames("Surnames.txt"));
+            listOfMaleFirstNames?.AddRange(Game.file.GetStrings("FirstMale.txt"));
+            listOfFemaleFirstNames?.AddRange(Game.file.GetStrings("FirstFemale.txt"));
+            listOfPlayerNames?.AddRange(Game.file.GetStrings("PlayerNames.txt"));
+            listOfSurnames?.AddRange(Game.file.GetStrings("Surnames.txt"));
             //Major houses
-            listHousePool.AddRange(Game.file.GetHouses("MajorHouses.txt"));
+            listHousePool?.AddRange(Game.file.GetHouses("MajorHouses.txt"));
             InitialiseMajorHouses(numHousesRequired);
             //Minor houses, run AFTER major houses
             listHousePool.Clear();
-            listHousePool.AddRange(Game.file.GetHouses("MinorHouses.txt"));
+            listHousePool?.AddRange(Game.file.GetHouses("MinorHouses.txt"));
             //GeoNames
             arrayOfGeoNames = Game.file.GetGeoNames("GeoNames.txt");
             InitialiseGeoClusters();
@@ -78,6 +85,8 @@ namespace Next_Game
             listOfTraits?.AddRange(Game.file.GetTraits("Traits_All.txt", TraitSex.All));
             listOfTraits?.AddRange(Game.file.GetTraits("Traits_Male.txt", TraitSex.Male));
             listOfTraits?.AddRange(Game.file.GetTraits("Traits_Female.txt", TraitSex.Female));
+            //mishaps
+            listOfWounds?.AddRange(Game.file.GetStrings("Wounds.txt"));
             //set up filtered sets of traits ready for random access by newly created actors
             InitialiseTraits();
         }
