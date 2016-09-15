@@ -1414,7 +1414,7 @@ namespace Next_Game
             { return secret; }
             return null;
         }
-            
+
 
         internal void SetRecord(Record record)
         { dictRecords?.Add(record.eventID, record); }

@@ -81,7 +81,7 @@ namespace Next_Game
         /// <summary>
         /// generates reason and populates lore lists
         /// </summary>
-        internal void CreateOldKingBackStory(List<MajorHouse> listOfRoyalists, List<MajorHouse> listOfRebels)
+        internal void CreateOldKingBackStory(List<MajorHouse> listOfRoyalists, List<MajorHouse> listOfRebels, List<string> listOfWounds)
         {
             //list of possible reasons - weighted entries, one chosen at completion
             List<RevoltReason> listWhyPool = new List<RevoltReason>();
@@ -359,6 +359,7 @@ namespace Next_Game
                         string Friends = "Royalists";
                         string Enemies = "Rebels";
                         string eventText;
+                        string secretText;
                         Record record_knight = null;
                         int knightHouse = knight.HouseID;
                         foreach (MajorHouse majorHouse in listOfRebels)
@@ -388,10 +389,14 @@ namespace Next_Game
                             case 5:
                             case 6:
                             case 7:
-                                //knight wounded
+                                //knight wounded -> record & secret
                                 eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", knight.Name, knight.ActID, descriptor, Friends);
                                 Console.WriteLine(string.Format("Knight {0}, Aid {1}, was wounded by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
                                 record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Wounded);
+                                string wound = listOfWounds[rnd.Next(0, listOfWounds.Count)];
+                                secretText = string.Format("{0}, Aid {1}, was wounded when {2}", knight.Name, knight.ActID, wound);
+                                Secret_Actor secret = new Secret_Actor(SecretType.Wound, year, secretText, rnd.Next(1, 6), knight.ActID);
+                                Game.history.SetSecret(secret);
                                 break;
                             case 8:
                             case 9:

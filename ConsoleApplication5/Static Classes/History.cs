@@ -1804,7 +1804,7 @@ namespace Next_Game
                 }
             }
             //Generate BackStory
-            Game.lore.CreateOldKingBackStory(listOfRoyalists, listOfRebels);
+            Game.lore.CreateOldKingBackStory(listOfRoyalists, listOfRebels, listOfWounds);
         }
 
         /// <summary>
@@ -1871,6 +1871,13 @@ namespace Next_Game
                 Console.WriteLine("- {0}, Aid {1} has adjusted Traits due to his wife's influence", lord.Name, lord.ActID);
             }
         }
+
+        /// <summary>
+        /// only used by lore backstory as will be out of synch with world dictOfSecrets otherwise
+        /// </summary>
+        /// <param name="secret"></param>
+        public void SetSecret(Secret secret)
+        { if (secret != null) { listOfSecrets.Add(secret); } }
 
         //add methods above
     }
