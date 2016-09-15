@@ -390,12 +390,12 @@ namespace Next_Game
                             case 5:
                             case 6:
                             case 7:
-                                //knight wounded -> record
+                                //knight wounded
                                 eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", knight.Name, knight.ActID, descriptor, Friends);
                                 Console.WriteLine(string.Format("Knight {0}, Aid {1}, was wounded by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
                                 record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Wounded);
-                                //50% chance of wound causing an ongoing issue => Secret (random strength 1 to 4)
-                                if (rnd.Next(100) < 50)
+                                //60% chance of wound causing an ongoing issue -> Secret (random strength 1 to 4)
+                                if (rnd.Next(100) < 60)
                                 {
                                     string wound = listOfWounds[rnd.Next(0, listOfWounds.Count)];
                                     secretText = string.Format("{0}, Aid {1}, {2}", knight.Name, knight.ActID, wound);
