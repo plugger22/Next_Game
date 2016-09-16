@@ -435,14 +435,14 @@ namespace Next_Game
                                 //captured
                                 listOfCapturedActors.Add(royalID);
                                 listOfTempRoyals.RemoveAt(listIndex);
-                                eventText = string.Format("{0} {1}, Aid {2}, was captured by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor);
+                                eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", royal.Name, royal.ActID, Enemies, descriptor);
                                 Console.WriteLine(string.Format("{0} {1}, Aid {1}, was captured by the {2} during {3}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Captured);
                                 break;
                             case 2:
                                 //killed
                                 listOfTempRoyals.RemoveAt(listIndex);
-                                eventText = string.Format("{0} {1}, Aid {2}, was killed during {3} while fighting for the {4}, age {5}", royal.Type, royal.Name, royal.ActID, descriptor, Friends, royal.Age);
+                                eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", royal.Name, royal.ActID, descriptor, Friends, royal.Age);
                                 Console.WriteLine(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Died);
                                 Game.history.RemoveDeadActor(royal, year, ActorDied.Battle);
@@ -451,7 +451,7 @@ namespace Next_Game
                             case 4:
                             case 5:
                                 //wounded
-                                eventText = string.Format("{0} {1}, Aid {2}, was wounded during {3} while fighting for the {4}", royal.Type, royal.Name, royal.ActID, descriptor, Friends);
+                                eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", royal.Name, royal.ActID, descriptor, Friends);
                                 Console.WriteLine(string.Format("{0} {1}, Aid {2}, was wounded by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Wounded);
                                 //60% chance of wound causing an ongoing issue -> Secret (random strength 1 to 4)
@@ -471,6 +471,7 @@ namespace Next_Game
                             case 8:
                             case 9:
                             //outstanding leadership
+                            break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
                                 break;
@@ -485,7 +486,7 @@ namespace Next_Game
             {
                 int rndNum = rnd.Next(10);
                 Passive actor = Game.world.GetPassiveActor(actorID);
-                eventText = string.Format("{0} {1}, Aid {2}, was ", actor.Type, actor.Name, actor.ActID);
+                eventText = string.Format("{0}, Aid {1}, was ", actor.Name, actor.ActID);
                 HistActorEvent actorEvent = HistActorEvent.None;
                 Friends = "Royalist";
                 Enemies = "Rebel";
