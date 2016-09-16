@@ -470,13 +470,76 @@ namespace Next_Game
                                 break;
                             case 8:
                             case 9:
-                            //outstanding leadership
-                            break;
+                                //outstanding leadership
+                                break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
                                 break;
                         }
                         if (record_royal != null) { Game.world.SetRecord(record_royal); }
+                    }
+                    //Rebel Lords
+                    if (listOfTempRebels.Count > 0)
+                    {
+                        int rndNum = rnd.Next(10);
+                        int listIndex = rnd.Next(1, listOfTempRebels.Count); //don't pick King (index 0)
+                        int rebelID = listOfTempRebels[listIndex];
+                        Passive rebel = Game.world.GetPassiveActor(rebelID);
+                        Friends = "Royalists";
+                        Enemies = "Rebels";
+                        Record record_rebel = null;
+                        int rebelHouse = rebel.HouseID;
+                        if (rebel.Loyalty_Current == KingLoyalty.New_King) { Friends = "Rebels"; Enemies = "Royalists"; }
+                        //what happened?
+                        switch (rndNum)
+                        {
+                            case 0:
+                            case 1:
+                                //captured
+                                listOfCapturedActors.Add(rebelID);
+                                listOfTempRebels.RemoveAt(listIndex);
+                                eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", rebel.Name, rebel.ActID, Enemies, descriptor);
+                                Console.WriteLine(string.Format("{0} {1}, Aid {1}, was captured by the {2} during {3}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
+                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Captured);
+                                break;
+                            case 2:
+                                //killed
+                                listOfTempRebels.RemoveAt(listIndex);
+                                eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", rebel.Name, rebel.ActID, descriptor, Friends, rebel.Age);
+                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
+                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Died);
+                                Game.history.RemoveDeadActor(rebel, year, ActorDied.Battle);
+                                break;
+                            case 3:
+                            case 4:
+                            case 5:
+                                //wounded
+                                eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", rebel.Name, rebel.ActID, descriptor, Friends);
+                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was wounded by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
+                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Wounded);
+                                //60% chance of wound causing an ongoing issue -> Secret (random strength 1 to 4)
+                                if (rnd.Next(100) < 60)
+                                {
+                                    string wound = listOfWounds[rnd.Next(0, listOfWounds.Count)];
+                                    secretText = string.Format("{0}, Aid {1}, {2}", rebel.Name, rebel.ActID, wound);
+                                    Secret_Actor secret = new Secret_Actor(SecretType.Wound, year, secretText, rnd.Next(1, 5), rebel.ActID);
+                                    Game.history.SetSecret(secret);
+                                    rebel.AddSecret(secret.SecretID);
+                                }
+                                break;
+                            case 6:
+                            case 7:
+                                //faulty leadership
+                                break;
+                            case 8:
+                            case 9:
+                                //outstanding leadership
+                                break;
+                            default:
+                                Game.SetError(new Error(31, "Invalid case"));
+                                break;
+                        }
+                        if (record_rebel != null) { Game.world.SetRecord(record_rebel); }
                     }
                 }
             }
