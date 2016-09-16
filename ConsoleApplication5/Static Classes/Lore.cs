@@ -88,7 +88,7 @@ namespace Next_Game
             List<int> listOfTempRoyals = new List<int>();
             List<int> listOfTempRebels = new List<int>();
             List<int> listOfTempKnights = Game.world.GetKnights();
-            List<int> listOfCapturedKnights = new List<int>();
+            List<int> listOfCapturedActors = new List<int>();
 
             //check how smart old king was (takes into account wife's possible influence)
             int oldKing_Wits;
@@ -322,7 +322,7 @@ namespace Next_Game
                 {
                     int rebelForces = rebelArmy;
                     int royalForces = royalArmy / rnd.Next(2, 6);
-                    text_1 = string.Format("King {0}, {1}, made a last stand with his remaining {2:N0} loyal men at arms at {3}. ", OldKing.Name, 
+                    text_1 = string.Format("King {0}, {1}, made a last stand with his remaining {2:N0} loyal men at arms at {3}. ", OldKing.Name,
                         array_LastStand[rnd.Next(0, array_LastStand.Length)], royalForces, descriptor);
                     text_1 += string.Format("Like {0}, Lord {1} {2} a Royalist force {3:N0} strong straight at them. ", array_LastAssault[rnd.Next(0, array_LastAssault.Length)],
                         NewKing.Name, array_LastAction[rnd.Next(0, array_LastAction.Length)], rebelForces);
@@ -348,8 +348,8 @@ namespace Next_Game
                 listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
 
                 //events ---
-                
-                for(int k = 0; k < Game.constant.GetValue(Global.BATTLE_EVENTS); k++)
+
+                for (int k = 0; k < Game.constant.GetValue(Global.BATTLE_EVENTS); k++)
                 {
                     //knights
                     if (listOfTempKnights.Count > 0)
@@ -362,8 +362,6 @@ namespace Next_Game
                         Enemies = "Rebels";
                         Record record_knight = null;
                         int knightHouse = knight.HouseID;
-                        //foreach (MajorHouse majorHouse in listOfRebels)
-                        //{ if (majorHouse.HouseID == knightHouse) { Friends = "Rebels"; Enemies = "Royalists"; break; } }
                         if (knight.Loyalty_Current == KingLoyalty.New_King) { Friends = "Rebels"; Enemies = "Royalists"; }
                         //what happened?
                         switch (rndNum)
@@ -372,7 +370,7 @@ namespace Next_Game
                             case 1:
                             case 2:
                                 //knight captured
-                                listOfCapturedKnights.Add(knightID);
+                                listOfCapturedActors.Add(knightID);
                                 listOfTempKnights.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor);
                                 Console.WriteLine(string.Format("Knight {0}, Aid {1}, was captured by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
@@ -405,24 +403,89 @@ namespace Next_Game
                                 }
                                 break;
                             case 8:
+                                //had a moment (50% chance of being framed)
+                                break;
                             case 9:
-                                //heroic deed
+                                //heroic deed (50% chance of taking somebody else's glory)
                                 break;
                             default:
-                                Console.WriteLine("default");
+                                Game.SetError(new Error(31, "Invalid case"));
                                 break;
                         }
                         if (record_knight != null) { Game.world.SetRecord(record_knight); }
+                    }
+
+                    //Royalist Lords
+                    if (listOfTempRoyals.Count > 0)
+                    {
+                        int rndNum = rnd.Next(10);
+                        int listIndex = rnd.Next(1, listOfTempRoyals.Count); //don't pick King (index 0)
+                        int royalID = listOfTempRoyals[listIndex];
+                        Passive royal = Game.world.GetPassiveActor(royalID);
+                        Friends = "Royalists";
+                        Enemies = "Rebels";
+                        Record record_royal = null;
+                        int royalHouse = royal.HouseID;
+                        if (royal.Loyalty_Current == KingLoyalty.New_King) { Friends = "Rebels"; Enemies = "Royalists"; }
+                        //what happened?
+                        switch (rndNum)
+                        {
+                            case 0:
+                            case 1:
+                                //captured
+                                listOfCapturedActors.Add(royalID);
+                                listOfTempRoyals.RemoveAt(listIndex);
+                                eventText = string.Format("{0} {1}, Aid {2}, was captured by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor);
+                                Console.WriteLine(string.Format("{0} {1}, Aid {1}, was captured by the {2} during {3}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Captured);
+                                break;
+                            case 2:
+                                //killed
+                                listOfTempRoyals.RemoveAt(listIndex);
+                                eventText = string.Format("{0} {1}, Aid {2}, was killed during {3} while fighting for the {4}, age {5}", royal.Type, royal.Name, royal.ActID, descriptor, Friends, royal.Age);
+                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Died);
+                                Game.history.RemoveDeadActor(royal, year, ActorDied.Battle);
+                                break;
+                            case 3:
+                            case 4:
+                            case 5:
+                                //wounded
+                                eventText = string.Format("{0} {1}, Aid {2}, was wounded during {3} while fighting for the {4}", royal.Type, royal.Name, royal.ActID, descriptor, Friends);
+                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was wounded by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Wounded);
+                                //60% chance of wound causing an ongoing issue -> Secret (random strength 1 to 4)
+                                if (rnd.Next(100) < 60)
+                                {
+                                    string wound = listOfWounds[rnd.Next(0, listOfWounds.Count)];
+                                    secretText = string.Format("{0}, Aid {1}, {2}", royal.Name, royal.ActID, wound);
+                                    Secret_Actor secret = new Secret_Actor(SecretType.Wound, year, secretText, rnd.Next(1, 5), royal.ActID);
+                                    Game.history.SetSecret(secret);
+                                    royal.AddSecret(secret.SecretID);
+                                }
+                                break;
+                            case 6:
+                            case 7:
+                                //faulty leadership
+                                break;
+                            case 8:
+                            case 9:
+                            //outstanding leadership
+                            default:
+                                Game.SetError(new Error(31, "Invalid case"));
+                                break;
+                        }
+                        if (record_royal != null) { Game.world.SetRecord(record_royal); }
                     }
                 }
             }
 
             //work out what happened to Captured actors
-            foreach (int knightID in listOfCapturedKnights)
+            foreach (int actorID in listOfCapturedActors)
             {
                 int rndNum = rnd.Next(10);
-                Passive actor = Game.world.GetPassiveActor(knightID);
-                eventText = string.Format("{0}, Aid {1}, was ", actor.Name, actor.ActID);
+                Passive actor = Game.world.GetPassiveActor(actorID);
+                eventText = string.Format("{0} {1}, Aid {2}, was ", actor.Type, actor.Name, actor.ActID);
                 HistActorEvent actorEvent = HistActorEvent.None;
                 Friends = "Royalist";
                 Enemies = "Rebel";
@@ -466,9 +529,13 @@ namespace Next_Game
                         break;
                     case 8:
                     case 9:
+                        //executed
                         eventText += string.Format("summarily executed by the {0}s after a period of captivity", Enemies);
                         actorEvent = HistActorEvent.Died;
                         Game.history.RemoveDeadActor(actor, Game.gameStart, ActorDied.Executed);
+                        break;
+                    default:
+                        Game.SetError(new Error(31, "Invalid case"));
                         break;
                 }
                 //store record
@@ -477,8 +544,6 @@ namespace Next_Game
                 { record_actor.AddActorEvent(HistActorEvent.Died); }
                 Game.world.SetRecord(record_actor);
             }
-
-
         }
 
         /// <summary>
