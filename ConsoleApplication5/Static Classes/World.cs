@@ -326,6 +326,8 @@ namespace Next_Game
                     Knight knight = person as Knight;
                     listToDisplay.Add(new Snippet(string.Format("Has sworn allegiance to House {0}", GetGreatHouseName(knight.HouseID))));
                 }
+                //Loyalty
+                listToDisplay.Add(new Snippet(string.Format("Loyal to the {0} (originally {1})", person.Loyalty_Current, person.Loyalty_AtStart)));
                 //listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
 
@@ -765,7 +767,7 @@ namespace Next_Game
                 houseList.Add(new Snippet(banner));
                 string seat = string.Format("Seated at {0} {1}", majorHouse.LocName, ShowLocationCoords(majorHouse.LocID));
                 houseList.Add(new Snippet(seat));
-                string loyalty = string.Format("Loyal to the {0}", majorHouse.Loyalty);
+                string loyalty = string.Format("Loyal to the {0} (originally: {1})", majorHouse.Loyalty_Current, majorHouse.Loyalty_AtStart);
                 houseList.Add(new Snippet(loyalty));
                 int bannerTotal = listLordLocations.Count * Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
                 int armyTotal = bannerTotal + majorHouse.MenAtArms;

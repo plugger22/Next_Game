@@ -37,6 +37,8 @@ namespace Next_Game
         public ActorSex Sex { get; set; }
         public ActorParents Parents { get; set; } = 0; //normal family, bastard or adopted
         public ActorDied ReasonDied { get; set; } = 0;
+        public KingLoyalty Loyalty_AtStart { get; set; } = KingLoyalty.None; //loyalty (prior to uprising)
+        public KingLoyalty Loyalty_Current { get; set; } = KingLoyalty.None; //current loyalty
         public string Handle { get; set; } = null; //eg. Nickname
         //stats 
         public int Combat { get; set; } = 3;
@@ -198,7 +200,7 @@ namespace Next_Game
         public int RefID { get; set; } = 0; //house assignment, eg. Lannister (not HouseID).
         public int HouseID { get; set; } = 0; //dynamically assigned great house alignment 
         public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
-        public HouseLoyalty Loyalty { get; set; } //loyalty (prior to uprising) 
+         
 
         public Passive()
         { }

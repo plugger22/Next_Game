@@ -1597,14 +1597,14 @@ namespace Next_Game
                 {
                     //Royalist
                     listOfRoyalists.Add(listOfHousesByPower[i]);
-                    house.Loyalty = HouseLoyalty.Old_King;
+                    house.Loyalty_AtStart = KingLoyalty.Old_King;
                     rebel = true;
                 }
                 else
                 {
                     //Rebels
                     listOfRebels.Add(listOfHousesByPower[i]);
-                    house.Loyalty = HouseLoyalty.New_King;
+                    house.Loyalty_AtStart = KingLoyalty.New_King;
                     rebel = false;
                 }
             }
@@ -1624,6 +1624,24 @@ namespace Next_Game
                 orderby actor.Value.ActID
                 select actor.Value;
             listOfRoyals = royalActors.ToList();
+
+            //assign starting loyalties to actors
+            for(int i = 0; i < listOfHousesByPower.Count; i++)
+            {
+                MajorHouse house = listOfHousesByPower[i];
+                KingLoyalty loyalty = house.Loyalty_AtStart;
+                //get all actors in that house (includes bannerlords)
+                List<Passive> listOfActors = new List<Passive>();
+                IEnumerable<Passive> tempActors =
+                    from actor in dictPassiveActors
+                    where actor.Value.HouseID == house.HouseID
+                    select actor.Value;
+                listOfActors = tempActors.ToList();
+                //set loyalty
+                foreach(Passive actor in listOfActors)
+                { actor.Loyalty_AtStart = loyalty; actor.Loyalty_Current = loyalty; }
+            }
+
             //hive off Royals into separate lists
             List<Passive> listOfRoyalNobles = new List<Passive>();
             List<BannerLord> listOfRoyalBannerLords = new List<BannerLord>();

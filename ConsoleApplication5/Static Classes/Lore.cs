@@ -259,6 +259,7 @@ namespace Next_Game
 
             //Conflict Loop ---
 
+            string Friends, Enemies, eventText, secretText;
             for (int i = 0; i < numBattles; i++)
             {
                 //choose from the closest to the Capital half of the royalist locations (battle of KingsKeep is always the last)
@@ -357,14 +358,13 @@ namespace Next_Game
                         int listIndex = rnd.Next(0, listOfTempKnights.Count);
                         int knightID = listOfTempKnights[listIndex];
                         Passive knight = Game.world.GetPassiveActor(knightID);
-                        string Friends = "Royalists";
-                        string Enemies = "Rebels";
-                        string eventText;
-                        string secretText;
+                        Friends = "Royalists";
+                        Enemies = "Rebels";
                         Record record_knight = null;
                         int knightHouse = knight.HouseID;
-                        foreach (MajorHouse majorHouse in listOfRebels)
-                        { if (majorHouse.HouseID == knightHouse) { Friends = "Rebels"; Enemies = "Royalists"; break; } }
+                        //foreach (MajorHouse majorHouse in listOfRebels)
+                        //{ if (majorHouse.HouseID == knightHouse) { Friends = "Rebels"; Enemies = "Royalists"; break; } }
+                        if (knight.Loyalty_Current == KingLoyalty.New_King) { Friends = "Rebels"; Enemies = "Royalists"; }
                         //what happened?
                         switch (rndNum)
                         {
@@ -422,37 +422,39 @@ namespace Next_Game
             {
                 int rndNum = rnd.Next(10);
                 Passive actor = Game.world.GetPassiveActor(knightID);
-                string eventText = string.Format("{0}, Aid {1}, was ", actor.Name, actor.ActID);
-                string secretText;
+                eventText = string.Format("{0}, Aid {1}, was ", actor.Name, actor.ActID);
                 HistActorEvent actorEvent = HistActorEvent.None;
+                Friends = "Royalist";
+                Enemies = "Rebel";
+                if (actor.Loyalty_Current == KingLoyalty.New_King) { Friends = "Rebel"; Enemies = "Royalist"; }
                 switch (rndNum)
                 {
                     case 0:
                     case 1:
-                        eventText += "ransomed and released by his captors";
+                        eventText += string.Format("ransomed and released by his {0} captors", Enemies);
                         break;
                     case 2:
                     case 3:
-                        eventText += "released unharmed by his captors";
+                        eventText += string.Format("released unharmed by his {0} captors", Enemies);
                         break;
                     case 4:
                     case 5:
                         //tortured
-                        eventText += "released unharmed by his captors";
-                        secretText = string.Format("{0}, Aid {1}, was tortured during captivity (mentally scarred)", actor.Name, actor.ActID);
+                        eventText += string.Format("released unharmed by his {0} captors", Enemies);
+                        secretText = string.Format("{0}, Aid {1}, was tortured by the {2}s during captivity (mentally scarred)", actor.Name, actor.ActID, Enemies);
                         Secret_Actor secret = new Secret_Actor(SecretType.Torture, year, secretText, 2, actor.ActID);
                         Game.history.SetSecret(secret);
                         actor.AddSecret(secret.SecretID);
                         break;
                     case 6:  
                     case 7:
-                        eventText += "allowed to slowly rot to his death in the dungeons";
+                        eventText += string.Format("allowed to slowly rot to his death in the {0} dungeons", Enemies);
                         actorEvent = HistActorEvent.Died;
                         Game.history.RemoveDeadActor(actor, Game.gameStart, ActorDied.Murdered);
                         break;
                     case 8:
                     case 9:
-                        eventText += "summarily executed after a period of captivity";
+                        eventText += string.Format("summarily executed by the {0}s after a period of captivity", Enemies);
                         actorEvent = HistActorEvent.Died;
                         Game.history.RemoveDeadActor(actor, Game.gameStart, ActorDied.Executed);
                         break;
