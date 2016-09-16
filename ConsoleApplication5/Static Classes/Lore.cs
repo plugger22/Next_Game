@@ -426,6 +426,7 @@ namespace Next_Game
                 HistActorEvent actorEvent = HistActorEvent.None;
                 Friends = "Royalist";
                 Enemies = "Rebel";
+                bool truth = true;
                 if (actor.Loyalty_Current == KingLoyalty.New_King) { Friends = "Rebel"; Enemies = "Royalist"; }
                 switch (rndNum)
                 {
@@ -439,18 +440,29 @@ namespace Next_Game
                         break;
                     case 4:
                     case 5:
-                        //tortured
+                        //tortured -> secret
                         eventText += string.Format("released unharmed by his {0} captors", Enemies);
                         secretText = string.Format("{0}, Aid {1}, was tortured by the {2}s during captivity (mentally scarred)", actor.Name, actor.ActID, Enemies);
                         Secret_Actor secret = new Secret_Actor(SecretType.Torture, year, secretText, 2, actor.ActID);
                         Game.history.SetSecret(secret);
                         actor.AddSecret(secret.SecretID);
+                        truth = false;
                         break;
                     case 6:  
                     case 7:
-                        eventText += string.Format("allowed to slowly rot to his death in the {0} dungeons", Enemies);
+                        //eventText += string.Format("allowed to slowly rot to his death in the {0} dungeons", Enemies);
+                        eventText += string.Format("died of his wounds while held in the {0} dungeons", Enemies);
                         actorEvent = HistActorEvent.Died;
-                        Game.history.RemoveDeadActor(actor, Game.gameStart, ActorDied.Murdered);
+                        Game.history.RemoveDeadActor(actor, Game.gameStart, ActorDied.Injuries);
+                        //50% chance he was tortured to death -> secret
+                        if (rnd.Next(100) < 50)
+                        {
+                            secretText = string.Format("{0}, Aid {1}, was tortured and died in the {2} dungeons", actor.Name, actor.ActID, Enemies);
+                            Secret_Actor secret_1 = new Secret_Actor(SecretType.Murder, year, secretText, 2, actor.ActID);
+                            Game.history.SetSecret(secret_1);
+                            actor.AddSecret(secret_1.SecretID);
+                            truth = false;
+                        }
                         break;
                     case 8:
                     case 9:
@@ -460,7 +472,7 @@ namespace Next_Game
                         break;
                 }
                 //store record
-                Record record_actor = new Record(eventText, actor.ActID, 0, actor.RefID, Game.gameStart, HistActorEvent.Captured);
+                Record record_actor = new Record(eventText, actor.ActID, 0, actor.RefID, Game.gameStart, HistActorEvent.Captured, truth);
                 if (actorEvent == HistActorEvent.Died)
                 { record_actor.AddActorEvent(HistActorEvent.Died); }
                 Game.world.SetRecord(record_actor);
