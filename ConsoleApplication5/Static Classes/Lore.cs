@@ -256,8 +256,10 @@ namespace Next_Game
                 " a hard fought draw but at a heavy cost", "a turning point with the defeat of the Royalists", "a defeat of the King forces that extinguished any hope of a victory" };
             string[] array_TurnOfTide = new string[] { "was thrown onto the defensive", "would never more dream of taking the fight to the Rebels", "could only hope to survive", "foreswore all chance of victory",
                 "girded himself for the inevitable", "could only wait and pray" };
-            string[] array_AbsentLeadership = new string[] { "after a time was nowhere to be seen", "became absent from the field", " inexplicably stood off and refused to participate", "went missing, along with his men," };
-            string[] array_EnemyLeadership = new string[] {"was captured and forced to fight for the enemy", "had his family held hostage and was forced to change sides", "was compelled to swap sides at the point of a spear" };
+            string[] array_AbsentLeadership = new string[] { "after a time was nowhere to be seen", "became absent from the field", " inexplicably stood off and refused to participate", "went missing, along with his men,"};
+            string[] array_EnemyLeadership = new string[] { "was captured and forced to fight for the enemy", "had his family held hostage and was forced to change sides", "was compelled to swap sides at the point of a spear"};
+            string[] array_GoodLeadership = new string[] { "led his men with valour and distinction", "shored up a crumbling line with his presence", "exhibited outstanding leadership", "led from the front and set a fine example",
+            "bravely held an outnumbered flank until help arrived", "managed to stand firm with his men and hold the line", "charged with his men in a ferocious counterattack", "stiffened the resolve of all around him with his bravery"};
 
             //Conflict Loop ---
 
@@ -452,7 +454,7 @@ namespace Next_Game
                                 break;
                             case 3:
                             case 4:
-                            
+                            case 5:
                                 //wounded
                                 eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", royal.Name, royal.ActID, descriptor, Friends);
                                 Console.WriteLine(string.Format("{0} {1}, Aid {2}, was wounded by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
@@ -467,16 +469,30 @@ namespace Next_Game
                                     royal.AddSecret(secret.SecretID);
                                 }
                                 break;
-                            case 5:
                             case 6:
                             case 7:
-                            case 8:
-                                //bad leadership
-                                index = rnd.Next(0, array_AbsentLeadership.Length);
-                                eventText = string.Format("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_AbsentLeadership[index], descriptor);
-                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, {3} during {4}", royal.Type, royal.Name, royal.ActID, array_AbsentLeadership[index], descriptor));
+                                //Bad leadership
+                                bool changedSides = false;
+                                //absent leadership, possible traitor
+                                if (rnd.Next(100) < 60)
+                                {
+                                    index = rnd.Next(0, array_AbsentLeadership.Length);
+                                    eventText = string.Format("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_AbsentLeadership[index], descriptor);
+                                    Console.WriteLine(string.Format("{0} {1}, Aid {2}, {3} during {4}", royal.Type, royal.Name, royal.ActID, array_AbsentLeadership[index], descriptor));
+                                }
+                                else
+                                {
+                                    //changed sides against their will
+                                    index = rnd.Next(0, array_EnemyLeadership.Length);
+                                    eventText = string.Format("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_EnemyLeadership[index], descriptor);
+                                    Console.WriteLine(string.Format("{0} {1}, Aid {2}, {3} during {4}", royal.Type, royal.Name, royal.ActID, array_EnemyLeadership[index], descriptor));
+                                    //change loyalty and swap lord from royalist to rebel list for any future battles
+                                    royal.Loyalty_Current = KingLoyalty.New_King;
+                                    listOfTempRoyals.RemoveAt(listIndex);
+                                    listOfTempRebels.Add(royalID);
+                                    changedSides = true;
+                                }
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Leadership);
-                                
                                 //was it because they were a traitor? -> secret
                                 int lordTreachery = royal.GetTrait(TraitType.Treachery);
                                 if (rnd.Next(0,6) < lordTreachery)
@@ -485,16 +501,33 @@ namespace Next_Game
                                     Secret_Actor secret = new Secret_Actor(SecretType.Loyalty, year, secretText, lordTreachery, royal.ActID);
                                     Game.history.SetSecret(secret);
                                     royal.AddSecret(secret.SecretID);
-                                    //change loyalty and swap lord from royalist to rebel list for any future battles
-                                    royal.Loyalty_Current = KingLoyalty.New_King;
-                                    listOfTempRoyals.RemoveAt(listIndex);
-                                    listOfTempRebels.Add(royalID);
-                                    Console.WriteLine("Moved to Rebel List");
+                                    if (changedSides == false)
+                                    {
+                                        //change loyalty and swap lord from royalist to rebel list for any future battles
+                                        royal.Loyalty_Current = KingLoyalty.New_King;
+                                        listOfTempRoyals.RemoveAt(listIndex);
+                                        listOfTempRebels.Add(royalID);
+                                        Console.WriteLine("Moved to Rebel List");
+                                    }
                                 }
                                 break;
-                            
+                            case 8:
                             case 9:
-                                //bad leadership
+                                //Good leadership
+                                index = rnd.Next(0, array_GoodLeadership.Length);
+                                eventText = string.Format("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_GoodLeadership[index], descriptor);
+                                Console.WriteLine("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_GoodLeadership[index], descriptor);
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Leadership);
+                                int lordLeadership = royal.GetTrait(TraitType.Leadership);
+                                if (rnd.Next(1, 6) > lordLeadership)
+                                {
+                                    //poor leadership, took somebody else's glory -> secret
+                                    secretText = string.Format("{0}, Aid {1}, {2} {3}", royal.Name, royal.ActID, "cowardly stole somebody else's glory during", descriptor);
+                                    Console.WriteLine("{0}, Aid {1}, {2} {3}", royal.Name, royal.ActID, "cowardly stole somebody else's glory during", descriptor);
+                                    Secret_Actor secret = new Secret_Actor(SecretType.Loyalty, year, secretText, lordLeadership, royal.ActID);
+                                    Game.history.SetSecret(secret);
+                                    royal.AddSecret(secret.SecretID);
+                                }
                                 break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
@@ -524,7 +557,7 @@ namespace Next_Game
                                 listOfCapturedActors.Add(rebelID);
                                 listOfTempRebels.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", rebel.Name, rebel.ActID, Enemies, descriptor);
-                                Console.WriteLine(string.Format("{0} {1}, Aid {1}, was captured by the {2} during {3}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
+                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was captured by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
                                 record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Captured);
                                 break;
                             case 2:
