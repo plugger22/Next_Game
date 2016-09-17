@@ -227,13 +227,14 @@ namespace Next_Game
             int year = Game.gameStart - 1; //all conflict assumed to be one year prior to start of the new King's rule
             List<string> listOfBattles = new List<string>();
 
+            //hard coded data sets
             string[] array_LeadershipNew = new string[] { "None", "woeful", "dubious", "unexpectional", "strong", "commanding" };
             string[] array_LeadershipOld = new string[] { "None", "blundering", "insipid and uninspiring", "unremarkable", "firm", "decisive" };
             string[] array_Battle = new string[] { "met", "surprised", "marched on", "launched themselves at", "unexpectedly encountered", "threw themselves at" };
             string[] array_Siege = new string[] { "invested", "surrounded", "encircled", "cut-off", "isolated" };
             string[] array_OutcomeBattleBad = new string[] { "was unable to rally his men and suffered heavy losses", "and poor preperation led to a humilitating defeat", "lost control of the battle and suffered grevious losses",
             "and disregard of advice from his Lords led to a lost cause on the field of battle", "succeeded only in issuing a succession of fumbled orders that added to the confusion and the inevitable defeat" };
-            string[] array_OutcomeBattleGood = new string[] { "wasn't enough to hold the line but managed to retreat in good order", "failed to overcome the royalist's poor position but kept losses to a minimum",
+            string[] array_OutcomeBattleGood = new string[] { "wasn't enough to hold the line but he managed to retreat in good order", "failed to overcome the royalist's poor position but kept losses to a minimum",
             "enabled a strong counter attack that halted the rebels sufficiently for the bulk of the royalist forces to escape", "fended off a succession of rebel assaults and withdrew the royalist forces largely intact"};
             string[] array_OutcomeBattleNeutral = new string[] { "defeated","given a bloody nose","forced to retreat from the field of battle", "unable to hold their ground", "pushed back against their will" };
             string[] array_OutcomeSiegeBad = new string[] { "led to the subsequent slaughter of most within the stronghold", "goaded the rebels into burning every flammable structure in the stronghold",
@@ -256,10 +257,14 @@ namespace Next_Game
                 " a hard fought draw but at a heavy cost", "a turning point with the defeat of the Royalists", "a defeat of the King forces that extinguished any hope of a victory" };
             string[] array_TurnOfTide = new string[] { "was thrown onto the defensive", "would never more dream of taking the fight to the Rebels", "could only hope to survive", "foreswore all chance of victory",
                 "girded himself for the inevitable", "could only wait and pray" };
-            string[] array_AbsentLeadership = new string[] { "after a time was nowhere to be seen", "became absent from the field", " inexplicably stood off and refused to participate", "went missing, along with his men,"};
+            string[] array_AbsentLeadership = new string[] { "after a time was nowhere to be seen", "was absent when needed", " inexplicably stood off and refused to participate", "went missing, along with his men,"};
             string[] array_EnemyLeadership = new string[] { "was captured and forced to fight for the enemy", "had his family held hostage and was forced to change sides", "was compelled to swap sides at the point of a spear"};
             string[] array_GoodLeadership = new string[] { "led his men with valour and distinction", "shored up a crumbling line with his presence", "exhibited outstanding leadership", "led from the front and set a fine example",
             "bravely held an outnumbered flank until help arrived", "managed to stand firm with his men and hold the line", "charged with his men in a ferocious counterattack", "stiffened the resolve of all around him with his bravery"};
+            string[] array_HeroicDeeds = new string[] {"slew so many enemies that nobody dared come near him", "singlehandedly halted an enemy assault with cold steel", "recklessly risked his life to save others",
+            "fought with great honour and heroism", "slaughtered untold enemies in a frenzied attack", "stood firm when all those around him had fled"};
+            string[] array_BadDeeds = new string[] {"failed to rise to the occassion when under pressure", "disappointed those around him with his lacklustre swordsmanship", "Reigned in his horse and shied away from combat",
+            "was seen to turn and gallop away from the enemy", "managed to soil his armour and loose his sword", "forgot that he was a knight and refused to engage with the enemy"};
 
             //Conflict Loop ---
 
@@ -408,10 +413,41 @@ namespace Next_Game
                                 }
                                 break;
                             case 8:
-                                //had a moment (50% chance of being framed)
-                                break;
                             case 9:
-                                //heroic deed (50% chance of taking somebody else's glory)
+                                int knightCombat = knight.GetTrait(TraitType.Combat);
+                                int knightTreachery = knight.GetTrait(TraitType.Treachery);
+                                //special deed, good or bad
+                                if (rnd.Next(0, 6) < knightCombat)
+                                {
+                                    //heroic deed
+                                    index = rnd.Next(0, array_HeroicDeeds.Length);
+                                    eventText = string.Format("{0}, Aid {1}, {2} during {3}", knight.Name, knight.ActID, array_HeroicDeeds[index], descriptor);
+                                    Console.WriteLine("{0}, Aid {1}, {2} during {3}", knight.Name, knight.ActID, array_HeroicDeeds[index], descriptor);
+                                    //did he take somebody else's glory? -> secret
+                                    if (rnd.Next(1, 6) < knightTreachery)
+                                    {
+                                        secretText = string.Format("{0}, Aid {1}, {2} {3}", knight.Name, knight.ActID, "falsely claimed heroic deeds that belonged to another", descriptor);
+                                        Secret_Actor secret = new Secret_Actor(SecretType.Glory, year, secretText, knightTreachery, knight.ActID);
+                                        Game.history.SetSecret(secret);
+                                        knight.AddSecret(secret.SecretID);
+                                    }
+                                }
+                                else
+                                {
+                                    //bad deed
+                                    index = rnd.Next(0, array_BadDeeds.Length);
+                                    eventText = string.Format("{0}, Aid {1}, {2} during {3}", knight.Name, knight.ActID, array_BadDeeds[index], descriptor);
+                                    Console.WriteLine("{0}, Aid {1}, {2} during {3}", knight.Name, knight.ActID, array_BadDeeds[index], descriptor);
+                                    //was falsely accused by another? -> secret
+                                    if (rnd.Next(1, 6) > knightTreachery)
+                                    {
+                                        secretText = string.Format("{0}, Aid {1}, {2} {3}", knight.Name, knight.ActID, "was falsely accused by another of something he didn't do", descriptor);
+                                        Secret_Actor secret = new Secret_Actor(SecretType.Glory, year, secretText, knightTreachery, knight.ActID);
+                                        Game.history.SetSecret(secret);
+                                        knight.AddSecret(secret.SecretID);
+                                    }
+                                }
+                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Deed);
                                 break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
