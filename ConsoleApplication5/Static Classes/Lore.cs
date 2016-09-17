@@ -416,6 +416,7 @@ namespace Next_Game
                             case 9:
                                 int knightCombat = knight.GetTrait(TraitType.Combat);
                                 int knightTreachery = knight.GetTrait(TraitType.Treachery);
+                                bool trueEvent = true;
                                 //special deed, good or bad
                                 if (rnd.Next(0, 6) < knightCombat)
                                 {
@@ -430,6 +431,7 @@ namespace Next_Game
                                         Secret_Actor secret = new Secret_Actor(SecretType.Glory, year, secretText, knightTreachery, knight.ActID);
                                         Game.history.SetSecret(secret);
                                         knight.AddSecret(secret.SecretID);
+                                        trueEvent = false;
                                     }
                                 }
                                 else
@@ -445,9 +447,10 @@ namespace Next_Game
                                         Secret_Actor secret = new Secret_Actor(SecretType.Glory, year, secretText, knightTreachery, knight.ActID);
                                         Game.history.SetSecret(secret);
                                         knight.AddSecret(secret.SecretID);
+                                        trueEvent = false;
                                     }
                                 }
-                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Deed);
+                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Deed, trueEvent);
                                 break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
@@ -468,6 +471,7 @@ namespace Next_Game
                         Record record_royal = null;
                         int royalHouse = royal.HouseID;
                         if (royal.Loyalty_Current == KingLoyalty.New_King) { Friends = "Rebels"; Enemies = "Royalists"; }
+                        bool truth = true;
                         //what happened?
                         switch (rndNum)
                         {
@@ -528,7 +532,6 @@ namespace Next_Game
                                     listOfTempRebels.Add(royalID);
                                     changedSides = true;
                                 }
-                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Leadership);
                                 //was it because they were a traitor? -> secret
                                 int lordTreachery = royal.GetTrait(TraitType.Treachery);
                                 if (rnd.Next(0,6) < lordTreachery)
@@ -537,6 +540,7 @@ namespace Next_Game
                                     Secret_Actor secret = new Secret_Actor(SecretType.Loyalty, year, secretText, lordTreachery, royal.ActID);
                                     Game.history.SetSecret(secret);
                                     royal.AddSecret(secret.SecretID);
+                                    truth = false;
                                     if (changedSides == false)
                                     {
                                         //change loyalty and swap lord from royalist to rebel list for any future battles
@@ -546,6 +550,7 @@ namespace Next_Game
                                         Console.WriteLine("Moved to Rebel List");
                                     }
                                 }
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Leadership, truth);
                                 break;
                             case 8:
                             case 9:
@@ -553,7 +558,6 @@ namespace Next_Game
                                 index = rnd.Next(0, array_GoodLeadership.Length);
                                 eventText = string.Format("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_GoodLeadership[index], descriptor);
                                 Console.WriteLine("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_GoodLeadership[index], descriptor);
-                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Leadership);
                                 int lordLeadership = royal.GetTrait(TraitType.Leadership);
                                 if (rnd.Next(1, 6) > lordLeadership)
                                 {
@@ -563,7 +567,9 @@ namespace Next_Game
                                     Secret_Actor secret = new Secret_Actor(SecretType.Loyalty, year, secretText, lordLeadership, royal.ActID);
                                     Game.history.SetSecret(secret);
                                     royal.AddSecret(secret.SecretID);
+                                    truth = false;
                                 }
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Leadership);
                                 break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
@@ -584,6 +590,7 @@ namespace Next_Game
                         Record record_rebel = null;
                         int rebelHouse = rebel.HouseID;
                         if (rebel.Loyalty_Current == KingLoyalty.New_King) { Friends = "Rebels"; Enemies = "Royalists"; }
+                        bool truth = true;
                         //what happened?
                         switch (rndNum)
                         {
@@ -643,7 +650,7 @@ namespace Next_Game
                                     listOfTempRoyals.Add(rebelID);
                                     changedSides = true;
                                 }
-                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Leadership);
+                                
                                 //was it because they were a traitor? -> secret
                                 int lordTreachery = rebel.GetTrait(TraitType.Treachery);
                                 if (rnd.Next(0, 6) < lordTreachery)
@@ -652,6 +659,7 @@ namespace Next_Game
                                     Secret_Actor secret = new Secret_Actor(SecretType.Loyalty, year, secretText, lordTreachery, rebel.ActID);
                                     Game.history.SetSecret(secret);
                                     rebel.AddSecret(secret.SecretID);
+                                    truth = false;
                                     if (changedSides == false)
                                     {
                                         //change loyalty and swap lord from rebel list to royalist list for any future battles
@@ -661,6 +669,7 @@ namespace Next_Game
                                         Console.WriteLine("Moved to Rebel List");
                                     }
                                 }
+                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Leadership, truth);
                                 break;
                             case 7:
                             case 8:
@@ -669,7 +678,6 @@ namespace Next_Game
                                 index = rnd.Next(0, array_GoodLeadership.Length);
                                 eventText = string.Format("{0}, Aid {1}, {2} during {3}", rebel.Name, rebel.ActID, array_GoodLeadership[index], descriptor);
                                 Console.WriteLine("{0}, Aid {1}, {2} during {3}", rebel.Name, rebel.ActID, array_GoodLeadership[index], descriptor);
-                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Leadership);
                                 int lordLeadership = rebel.GetTrait(TraitType.Leadership);
                                 if (rnd.Next(1, 6) > lordLeadership)
                                 {
@@ -679,7 +687,9 @@ namespace Next_Game
                                     Secret_Actor secret = new Secret_Actor(SecretType.Loyalty, year, secretText, lordLeadership, rebel.ActID);
                                     Game.history.SetSecret(secret);
                                     rebel.AddSecret(secret.SecretID);
+                                    truth = false;
                                 }
+                                record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Leadership, truth);
                                 break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
