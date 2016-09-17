@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Next_Game
 {
-    public enum KingLoyalty {None, Old_King, Neutral, New_King}
+    public enum KingLoyalty {None, Old_King, New_King}
 
     //
     // Base class

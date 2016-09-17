@@ -256,6 +256,8 @@ namespace Next_Game
                 " a hard fought draw but at a heavy cost", "a turning point with the defeat of the Royalists", "a defeat of the King forces that extinguished any hope of a victory" };
             string[] array_TurnOfTide = new string[] { "was thrown onto the defensive", "would never more dream of taking the fight to the Rebels", "could only hope to survive", "foreswore all chance of victory",
                 "girded himself for the inevitable", "could only wait and pray" };
+            string[] array_AbsentLeadership = new string[] { "after a time was nowhere to be seen", "became absent from the field", " inexplicably stood off and refused to participate", "went missing, along with his men," };
+            string[] array_EnemyLeadership = new string[] {"was captured and forced to fight for the enemy", "had his family held hostage and was forced to change sides", "was compelled to swap sides at the point of a spear" };
 
             //Conflict Loop ---
 
@@ -351,6 +353,7 @@ namespace Next_Game
 
                 for (int k = 0; k < Game.constant.GetValue(Global.BATTLE_EVENTS); k++)
                 {
+
                     //knights
                     if (listOfTempKnights.Count > 0)
                     {
@@ -412,7 +415,7 @@ namespace Next_Game
                                 Game.SetError(new Error(31, "Invalid case"));
                                 break;
                         }
-                        if (record_knight != null) { Game.world.SetRecord(record_knight); }
+                        if (record_knight != null) { record_knight.AddActorEvent(HistActorEvent.Conflict); Game.world.SetRecord(record_knight); }
                     }
 
                     //Royalist Lords
@@ -436,7 +439,7 @@ namespace Next_Game
                                 listOfCapturedActors.Add(royalID);
                                 listOfTempRoyals.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", royal.Name, royal.ActID, Enemies, descriptor);
-                                Console.WriteLine(string.Format("{0} {1}, Aid {1}, was captured by the {2} during {3}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
+                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was captured by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Captured);
                                 break;
                             case 2:
@@ -449,7 +452,7 @@ namespace Next_Game
                                 break;
                             case 3:
                             case 4:
-                            case 5:
+                            
                                 //wounded
                                 eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", royal.Name, royal.ActID, descriptor, Friends);
                                 Console.WriteLine(string.Format("{0} {1}, Aid {2}, was wounded by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
@@ -464,20 +467,42 @@ namespace Next_Game
                                     royal.AddSecret(secret.SecretID);
                                 }
                                 break;
+                            case 5:
                             case 6:
                             case 7:
-                                //faulty leadership
-                                break;
                             case 8:
+                                //bad leadership
+                                index = rnd.Next(0, array_AbsentLeadership.Length);
+                                eventText = string.Format("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_AbsentLeadership[index], descriptor);
+                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, {3} during {4}", royal.Type, royal.Name, royal.ActID, array_AbsentLeadership[index], descriptor));
+                                record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Leadership);
+                                
+                                //was it because they were a traitor? -> secret
+                                int lordTreachery = royal.GetTrait(TraitType.Treachery);
+                                if (rnd.Next(0,6) < lordTreachery)
+                                {
+                                    secretText = string.Format("{0}, Aid {1}, {2} {3}", royal.Name, royal.ActID, "was a traitor who deliberately changed sides during", descriptor);
+                                    Secret_Actor secret = new Secret_Actor(SecretType.Loyalty, year, secretText, lordTreachery, royal.ActID);
+                                    Game.history.SetSecret(secret);
+                                    royal.AddSecret(secret.SecretID);
+                                    //change loyalty and swap lord from royalist to rebel list for any future battles
+                                    royal.Loyalty_Current = KingLoyalty.New_King;
+                                    listOfTempRoyals.RemoveAt(listIndex);
+                                    listOfTempRebels.Add(royalID);
+                                    Console.WriteLine("Moved to Rebel List");
+                                }
+                                break;
+                            
                             case 9:
-                                //outstanding leadership
+                                //bad leadership
                                 break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
                                 break;
                         }
-                        if (record_royal != null) { Game.world.SetRecord(record_royal); }
+                        if (record_royal != null) { record_royal.AddActorEvent(HistActorEvent.Conflict); Game.world.SetRecord(record_royal); }
                     }
+
                     //Rebel Lords
                     if (listOfTempRebels.Count > 0)
                     {
@@ -539,7 +564,7 @@ namespace Next_Game
                                 Game.SetError(new Error(31, "Invalid case"));
                                 break;
                         }
-                        if (record_rebel != null) { Game.world.SetRecord(record_rebel); }
+                        if (record_rebel != null) { record_rebel.AddActorEvent(HistActorEvent.Conflict); Game.world.SetRecord(record_rebel); }
                     }
                 }
             }
