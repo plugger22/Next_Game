@@ -1172,7 +1172,8 @@ namespace Next_Game
             age = Math.Max(age, 0);
             child.Age = age;
             child.Born = year;
-            child.LocID = Lady.LocID;
+            if (Lady.LocID == 0) { child.LocID = Lord.LocID; }
+            else { child.LocID = Lady.LocID; }
             child.RefID = Lady.RefID;
             child.BornRefID = Lord.RefID;
             child.HouseID = Lady.HouseID;
@@ -1345,12 +1346,14 @@ namespace Next_Game
             bool actualEvent = true;
             string secretText = null;
             int secretStrength = 3; //for both being a bastard and adopted
+            int locID = Lady.LocID;
+            if (locID == 0) { locID = Lord.LocID; } //covers case of wife who died at time of birth when adding heirs in world.CheckGreatLords()
             string descriptor = string.Format("{0}, Aid {1}, born at {2} to {3} {4} and {5} {6}",
-                    child.Name, child.ActID, Game.world.GetLocationName(Lady.LocID), Lord.Type, Lord.Name, Lady.Type, Lady.Name);
+                    child.Name, child.ActID, Game.world.GetLocationName(locID), Lord.Type, Lord.Name, Lady.Type, Lady.Name);
             if (child.Parents == ActorParents.Adopted)
             {
                 secretText = string.Format("{0}, Aid {1}, adopted at {2} by {3} {4} and {5} {6}",
-                    child.Name, child.ActID, Game.world.GetLocationName(Lady.LocID), Lord.Type, Lord.Name, Lady.Type, Lady.Name);
+                    child.Name, child.ActID, Game.world.GetLocationName(locID), Lord.Type, Lord.Name, Lady.Type, Lady.Name);
                 actualEvent = false;
             }
             else if (child.Parents == ActorParents.Bastard)
