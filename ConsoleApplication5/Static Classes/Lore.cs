@@ -781,5 +781,29 @@ namespace Next_Game
             Console.WriteLine("Aid {0}, {1} has provided {2} men", lord.ActID, lord.Name, menAtArms);
             return Convert.ToInt32(menAtArms);
         }
+
+        /// <summary>
+        /// determines fate of Advisors (Royal and Noble) when required
+        /// </summary>
+        /// <param name="advisor"></param>
+        /// <returns>true if Advisor died</returns>
+        internal bool FateOfAdvisor(Advisor advisor, Passive liege)
+        {
+            bool advisorDied = false;
+            if (advisor.advisorNoble > AdvisorNoble.None)
+            {
+                //Noble advisor
+            }
+            else if (advisor.advisorRoyal > AdvisorRoyal.None)
+            {
+                //Royal advisor
+                advisor.Loyalty_Current = KingLoyalty.New_King;
+                //advisor retained
+                string descriptor = string.Format("{0} {1}, Aid {2}, swears allegiance to King {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
+                Record record = new Record(descriptor, advisor.ActID, 1, 9999, Game.gameStart, HistActorEvent.Service);
+                Game.world.SetRecord(record);
+            }
+            return advisorDied;
+        }
     }
 }
