@@ -14,6 +14,7 @@ namespace Next_Game
         MEN_AT_ARMS,
         BATTLE_EVENTS,
         ADVISOR_REFUSAL,
+        SIBLING_ESCAPE,
         Count //keep as last
     }
 
@@ -35,6 +36,7 @@ namespace Next_Game
             arrayOfGlobals[6] = Global.MEN_AT_ARMS;
             arrayOfGlobals[7] = Global.BATTLE_EVENTS;
             arrayOfGlobals[8] = Global.ADVISOR_REFUSAL;
+            arrayOfGlobals[9] = Global.SIBLING_ESCAPE;
             }
 
         /// <summary>

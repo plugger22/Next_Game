@@ -25,4 +25,6 @@
 # BATTLE_EVENTS -> number of random rolls on battle events table for each battle
 7: 4
 # ADVISOR_REFUSAL -> chance of advisor refusing to serve under new king
-8: 50
+8: 20
+# SIBLING_ESCAPE -> chance of any of Player's brothers or sisters escaping to the free cities
+9: 50

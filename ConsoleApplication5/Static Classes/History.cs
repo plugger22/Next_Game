@@ -1708,25 +1708,61 @@ namespace Next_Game
                         Game.lore.OldKing = royal;
                         OldKing = royal;
                         OldKing.Office = ActorOffice.King;
+                        //fate
+                        eventText = string.Format("King {0}, Aid {1}, has been convicted of treason and publicly beheaded, age {2}", royal.Name, royal.ActID, royal.Age);
+                        record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
+                        RemoveActor(royal, yearChanged, ActorGone.Executed);
                         break;
                     case ActorType.Lady:
                         Game.lore.OldQueen = royal;
                         OldQueen = royal;
                         OldQueen.Office = ActorOffice.Queen;
+                        //fate
+                        eventText = string.Format("Queen {0}, Aid {1}, has been convicted of treason and publicly beheaded, age {2}", royal.Name, royal.ActID, royal.Age);
+                        record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
+                        RemoveActor(royal, yearChanged, ActorGone.Executed);
                         break;
                     case ActorType.Heir:
                         Game.lore.OldHeir = royal;
                         OldHeir = royal;
                         //fate
-                        eventText = string.Format("{0} {1}, Aid {2}, was spirited away to the Free Cities by unknown actors", royal.Type, royal.Name, royal.ActID);
+                        eventText = string.Format("Heir {0}, Aid {1}, was spirited away to the Free Cities by unknown actors, age {2}", royal.Name, royal.ActID, royal.Age);
                         record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Conflict);
                         RemoveActor(royal, yearChanged, ActorGone.Missing);
                         break;
                     case ActorType.lord:
                         royal.Type = ActorType.Prince;
+                        if (rnd.Next(100) < Game.constant.GetValue(Global.SIBLING_ESCAPE))
+                        {
+                            //sibling escapes to the free cities
+                            eventText = string.Format("Prince {0}, Aid {1}, was spirited away to the Free Cities by unknown actors, age {2}", royal.Name, royal.ActID, royal.Age);
+                            record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Conflict);
+                            RemoveActor(royal, yearChanged, ActorGone.Missing);
+                        }
+                        else
+                        {
+                            //sibling murdered
+                            eventText = string.Format("Prince {0}, Aid {1}, has been butchered on orders of the New King, age {2}", royal.Name, royal.ActID, royal.Age);
+                            record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
+                            RemoveActor(royal, yearChanged, ActorGone.Murdered);
+                        }
                         break;
                     case ActorType.lady:
                         royal.Type = ActorType.Princess;
+                        if (rnd.Next(100) < Game.constant.GetValue(Global.SIBLING_ESCAPE))
+                        {
+                            //sibling escapes to the free cities
+                            eventText = string.Format("Princess {0}, Aid {1}, was spirited away to the Free Cities by unknown actors, age {2}", royal.Name, royal.ActID, royal.Age);
+                            record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Conflict);
+                            RemoveActor(royal, yearChanged, ActorGone.Missing);
+                        }
+                        else
+                        {
+                            //sibling murdered
+                            eventText = string.Format("Princess {0}, Aid {1}, has been butchered on orders of the New King, age {2}", royal.Name, royal.ActID, royal.Age);
+                            record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
+                            RemoveActor(royal, yearChanged, ActorGone.Murdered);
+                        }
                         break;
                 }
                 Game.world?.SetRecord(record);
