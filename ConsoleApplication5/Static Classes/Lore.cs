@@ -11,7 +11,7 @@ namespace Next_Game
     public enum Popularity {Hated_by, Disliked_by, Tolerated_by, Liked_by, Loved_by}
 
     /// <summary>
-    /// Keeps track of all key game lore (backstory)
+    /// Keeps track of all key game lore (backstory) DO NOT USE METHODS FOR ANY OTHER USE
     /// </summary>
     public class Lore
     {
@@ -144,6 +144,10 @@ namespace Next_Game
             Console.WriteLine("King {0} was {1} by his people", OldKing.Name, OldKing_Popularity);
             Console.WriteLine("His Queen, {0}, was {1} with the common folk", OldQueen.Name, OldQueen_Popularity);
             Console.WriteLine(Environment.NewLine + "In {0} there was a great Revolt", Game.gameYear);
+
+            //loyalties of Kings
+            OldKing.Loyalty_Current = KingLoyalty.Old_King;
+            NewKing.Loyalty_Current = KingLoyalty.New_King;
 
             //How many men could the Old king field?
             int royalArmy = 0;
@@ -790,7 +794,7 @@ namespace Next_Game
         internal bool FateOfAdvisor(Advisor advisor, Passive liege)
         {
             bool advisorDied = false;
-            string[] evilFate = new string[] { "buried alive", "fed to the pigs", "burnt at the stake","eaten alive by rats", "drowned in the well", "buried alive in excrement" };
+            string[] evilFate = new string[] { "buried alive", "fed to the swine", "burnt at the stake","eaten alive by rats", "drowned in the well", "choked on excrement" };
             if (advisor.advisorNoble > AdvisorNoble.None)
             {
                 //Noble advisor
@@ -809,15 +813,15 @@ namespace Next_Game
                     advisorDied = true;
                     eventText = string.Format("{0} {1}, Aid {2}, refused to swear allegiance to King {3} and was dismissed", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
                     record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameStart, HistActorEvent.Service);
+                    advisor.LocID = 0;
                     //chance of advisor being killed as a result -> secret (depends on New Kings treachery)
                     int liegeTreachery = liege.GetTrait(TraitType.Treachery);
                     string fate = evilFate[rnd.Next(0, evilFate.Length)];
                     if (rnd.Next(0, 6) < liegeTreachery )
                     {
-                        secretText = string.Format("{0} {1}, Aid {2}, after denying King {3} they were {4}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name, fate);
+                        secretText = string.Format("{0} {1}, Aid {2}, defied King {3} and was {4}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name, fate);
                         secret = new Secret_Actor(SecretType.Murder, Game.gameStart, secretText, liegeTreachery, advisor.ActID);
                         advisor.AddSecret(secret.SecretID); liege.AddSecret(secret.SecretID);
-                        Game.history.SetSecret(secret);
                     }
                 }
                 else
@@ -825,7 +829,15 @@ namespace Next_Game
                     //advisor retained
                     eventText = string.Format("{0} {1}, Aid {2}, swears allegiance to King {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
                     record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameStart, HistActorEvent.Service);
-                    //chance of advisor being a secret sympathiser to the Old King, a fifth Column
+                    //chance of advisor being a secret sympathiser to the Old King, a fifth Column -> secret (depends on Advisors treachery)
+                    int advisorTreachery = liege.GetTrait(TraitType.Treachery);
+                    string fate = evilFate[rnd.Next(0, evilFate.Length)];
+                    if (rnd.Next(100) < (advisorTreachery * 5))
+                    {
+                        secretText = string.Format("{0} {1}, Aid {2}, is a fifth column who secretly despises King {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
+                        secret = new Secret_Actor(SecretType.Murder, Game.gameStart, secretText, advisorTreachery, advisor.ActID);
+                        advisor.AddSecret(secret.SecretID);
+                    }
                 }
                 //save record & secret if applicable
                 Game.world?.SetRecord(record);

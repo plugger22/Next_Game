@@ -1618,6 +1618,7 @@ namespace Next_Game
                     //Royalist
                     listOfRoyalists.Add(listOfHousesByPower[i]);
                     house.Loyalty_AtStart = KingLoyalty.Old_King;
+                    house.Loyalty_Current = KingLoyalty.New_King;
                     rebel = true;
                 }
                 else
@@ -1625,6 +1626,7 @@ namespace Next_Game
                     //Rebels
                     listOfRebels.Add(listOfHousesByPower[i]);
                     house.Loyalty_AtStart = KingLoyalty.New_King;
+                    house.Loyalty_Current = KingLoyalty.New_King;
                     rebel = false;
                 }
             }
@@ -1721,7 +1723,7 @@ namespace Next_Game
                         break;
                 }
             }
-            //Coronation for king
+            //Coronation for New king
             if (OldKing == null)
             { Game.SetError(new Error(28, "No King Present")); }
             else

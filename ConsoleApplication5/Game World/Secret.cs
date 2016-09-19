@@ -37,6 +37,7 @@ namespace Next_Game
             this.Description = description;
             this.Strength = strength;
             this.Active = true;
+            
         }
 
     }
