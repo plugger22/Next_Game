@@ -1840,10 +1840,12 @@ namespace Next_Game
                 Advisor courtAdvisor = advisor;
                 if (Game.lore.FateOfAdvisor(advisor, NewKing) == true)
                 {
-                    AdvisorRoyal courtPosition = advisor.advisorRoyal;
                     //advisor dismissed and is replaced
+                    AdvisorRoyal courtPosition = advisor.advisorRoyal;
                     Advisor newAdvisor = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, courtPosition, 1200);
-                    advisor.Loyalty_AtStart = KingLoyalty.New_King;
+                    newAdvisor.Loyalty_AtStart = KingLoyalty.New_King;
+                    newAdvisor.Loyalty_Current = KingLoyalty.New_King;
+                    Game.world.SetPassiveActor(newAdvisor);
                     courtAdvisor = newAdvisor;
                 }
                 //add to Royal court

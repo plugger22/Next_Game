@@ -802,15 +802,18 @@ namespace Next_Game
             else if (advisor.advisorRoyal > AdvisorRoyal.None)
             {
                 //Royal advisor
-                advisor.Loyalty_Current = KingLoyalty.New_King;
                 Record record = null;
                 Secret_Actor secret = null;
                 string secretText;
                 string eventText;
-                if (rnd.Next(100) < Game.constant.GetValue(Global.ADVISOR_REFUSAL))
+                int range = 100;
+                //the kings guard and the hand are automatically dismissed
+                if (advisor.advisorRoyal == AdvisorRoyal.Commander_of_Kings_Guard || advisor.advisorRoyal == AdvisorRoyal.Hand_of_the_King) { range = 1; }
+                if (rnd.Next(range) < Game.constant.GetValue(Global.ADVISOR_REFUSAL))
                 {
                     //advisor dismissed
                     advisorDied = true;
+                    advisor.Loyalty_Current = KingLoyalty.Old_King;
                     eventText = string.Format("{0} {1}, Aid {2}, refused to swear allegiance to King {3} and was dismissed", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
                     record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameStart, HistActorEvent.Service);
                     Game.history.RemoveActor(advisor, Game.gameStart, ActorGone.Missing);
@@ -827,6 +830,7 @@ namespace Next_Game
                 else
                 {
                     //advisor retained
+                    advisor.Loyalty_Current = KingLoyalty.New_King;
                     eventText = string.Format("{0} {1}, Aid {2}, swears allegiance to King {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
                     record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameStart, HistActorEvent.Service);
                     //chance of advisor being a secret sympathiser to the Old King, a fifth Column -> secret (depends on Advisors treachery)
