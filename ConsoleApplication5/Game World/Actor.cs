@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Next_Game
 {
-    public enum ActorStatus {AtLocation, Travelling, Dead};
+    public enum ActorStatus {AtLocation, Travelling, Gone}; //'Gone' encompasses dead and missing
     //lord and lady are children of Lords, Heir is first in line to inherit. Note: keep Knight immediately after Bannerlord with Advisor and Special behind Knight.
     public enum ActorType {None, Ursuper, Loyal_Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special }; 
     public enum ActorOffice {None, King, Queen, Lord_of_the_North, Lord_of_the_East, Lord_of_the_South, Lord_of_the_West }
@@ -13,7 +13,7 @@ namespace Next_Game
     public enum AdvisorNoble {None, Maester, Castellan, Septon}
     public enum ActorSex {None, Male, Female, Count};
     public enum ActorParents {Normal, Bastard, Adopted};
-    public enum ActorDied {None, Childbirth, Battle, Executed, Murdered, Accident, Disease, Injuries} //how died?
+    public enum ActorGone {None, Missing, Childbirth, Battle, Executed, Murdered, Accident, Disease, Injuries} //how died (or gone missing)?
     public enum WifeStatus {None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife}
     public enum ActorRelation {None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister}
 
@@ -28,7 +28,7 @@ namespace Next_Game
         public int ActID { get; } //set in constructor
         public int Age { get; set; }
         public int Born { get; set; } //year born
-        public int Died { get; set; } = 0; //year died
+        public int Gone { get; set; } = 0; //year died or missing
         public string Description { get; set; }
         public ActorStatus Status { get; set; } = 0;
         public ActorType Type { get; set; } = 0;
@@ -36,7 +36,7 @@ namespace Next_Game
         public ActorRealm Realm { get; set; } = 0; //local house title, if any
         public ActorSex Sex { get; set; }
         public ActorParents Parents { get; set; } = 0; //normal family, bastard or adopted
-        public ActorDied ReasonDied { get; set; } = 0;
+        public ActorGone ReasonGone { get; set; } = 0; //reason gone or missing
         public KingLoyalty Loyalty_AtStart { get; set; } = KingLoyalty.None; //loyalty (prior to uprising)
         public KingLoyalty Loyalty_Current { get; set; } = KingLoyalty.None; //current loyalty
         public string Handle { get; set; } = null; //eg. Nickname

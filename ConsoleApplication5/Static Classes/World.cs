@@ -303,8 +303,8 @@ namespace Next_Game
                         Position pos = person.GetActorPosition();
                         locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}", pos.PosX, pos.PosY, GetLocationName(locID), ShowLocationCoords(locID), locID);
                         break;
-                    case ActorStatus.Dead:
-                        locString = string.Format("Passed away ({0}) in {1}", person.ReasonDied, person.Died);
+                    case ActorStatus.Gone:
+                        locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
                         locColor = RLColor.Red;
                         break;
                 }
@@ -526,7 +526,7 @@ namespace Next_Game
                         {
                             Noble relPerson = (Noble)GetPassiveActor(kvp.Key);
                             RLColor familyColor = RLColor.White;
-                            if (relPerson.Status == ActorStatus.Dead)
+                            if (relPerson.Status == ActorStatus.Gone)
                             { familyColor = RLColor.LightGray; }
                             maidenName = "";
                             if (relPerson.MaidenName != null)
@@ -821,8 +821,8 @@ namespace Next_Game
                                 Position pos = person.GetActorPosition();
                                 locString = string.Format("travelling to {0} {1}",  GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
                                 break;
-                            case ActorStatus.Dead:
-                                locString = string.Format("Passed away ({0}) in {1}", person.ReasonDied, person.Died);
+                            case ActorStatus.Gone:
+                                locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
                                 locColor = RLColor.LightGray;
                                 break;
                         }
@@ -863,8 +863,8 @@ namespace Next_Game
                                 Position pos = person.GetActorPosition();
                                 locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
                                 break;
-                            case ActorStatus.Dead:
-                                locString = string.Format("Passed away ({0}) in {1}", person.ReasonDied, person.Died);
+                            case ActorStatus.Gone:
+                                locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
                                 locColor = RLColor.LightGray;
                                 break;
                         }
@@ -1192,7 +1192,7 @@ namespace Next_Game
             {
                 foundSon = false;
                 //lord?
-                if (kvp.Value.Type == ActorType.Lord && kvp.Value.Status != ActorStatus.Dead)
+                if (kvp.Value.Type == ActorType.Lord && kvp.Value.Status != ActorStatus.Gone)
                 {
                     //Loop family looking for a son
                     Noble noble = kvp.Value as Noble;
@@ -1226,8 +1226,8 @@ namespace Next_Game
                     Noble Lady = (Noble)GetPassiveActor(listOfLadies[i]);
                     //get year
                     yearUpper = Game.gameStart;
-                    if (Lady.Status == ActorStatus.Dead)
-                    { yearUpper = Lady.Died; }
+                    if (Lady.Status == ActorStatus.Gone)
+                    { yearUpper = Lady.Gone; }
                     yearLower = Lady.Married;
                     yearBorn = rnd.Next(yearLower, yearUpper);
                     Game.history.CreateChild(Lord, Lady, yearBorn, ActorSex.Male, parents);
@@ -1422,7 +1422,7 @@ namespace Next_Game
 
 
         internal void SetRecord(Record record)
-        { dictRecords?.Add(record.eventID, record); }
+        { if (record != null) { dictRecords.Add(record.eventID, record); } }
 
 
         /// <summary>
@@ -1604,7 +1604,7 @@ namespace Next_Game
             List<int> listOfKnights = new List<int>();
             IEnumerable<int> knights =
                 from person in dictPassiveActors
-                where person.Value.Type == ActorType.Knight && person.Value.Status != ActorStatus.Dead
+                where person.Value.Type == ActorType.Knight && person.Value.Status != ActorStatus.Gone
                 orderby person.Value.ActID
                 select person.Value.ActID;
             listOfKnights = knights.ToList();

@@ -1151,7 +1151,7 @@ namespace Next_Game
                     if (rnd.Next(100) < Game.constant.GetValue(Global.PREGNANT) )
                     {
                         Noble child = CreateChild(lord, lady, year);
-                        if (lady.Status == ActorStatus.Dead || lady.Fertile == false)
+                        if (lady.Status == ActorStatus.Gone || lady.Fertile == false)
                         { break; }
                     }
                     //over age?
@@ -1408,7 +1408,7 @@ namespace Next_Game
                         record.AddActor(Lord.ActID);
                         record.AddActor(child.ActID);
                         Game.world.SetRecord(record);
-                        RemoveDeadActor(Lady, year, ActorDied.Childbirth);
+                        RemoveActor(Lady, year, ActorGone.Childbirth);
                     }
                     else if (num < Game.constant.GetValue(Global.CHILDBIRTH_INFERTILE))
                     {
@@ -1526,7 +1526,7 @@ namespace Next_Game
         /// <summary>
         /// Call this method whenever an NPC actor dies to handle all the housekeeping
         /// </summary>
-        /// <param name="deceased"></param>
+        /// <param name="actor"></param>
         /// <param name="year"></param>
         /// <param name="reason"></param>
         /// <param name="perpetrator">The Actor who caused the death (optional)</param>
@@ -1575,21 +1575,21 @@ namespace Next_Game
         } */
 
         /// <summary>
-        /// clean up after actor death
+        /// clean up after actor death (or missing & gone from game)
         /// </summary>
-        /// <param name="deceased"></param>
+        /// <param name="actor"></param>
         /// <param name="year"></param>
         /// <param name="reason"></param>
-        internal void RemoveDeadActor(Passive deceased, int year, ActorDied reason)
+        internal void RemoveActor(Passive actor, int year, ActorGone reason)
         {
-            deceased.Died = year;
-            deceased.Age = deceased.Age - (Game.gameYear - year);
-            deceased.Status = ActorStatus.Dead;
-            deceased.ReasonDied = reason;
+            actor.Gone = year;
+            actor.Age = actor.Age - (Game.gameYear - year);
+            actor.Status = ActorStatus.Gone;
+            actor.ReasonGone = reason;
             //remove actor from location
-            Location loc = Game.network.GetLocation(deceased.LocID);
-            loc.RemoveActor(deceased.ActID);
-            deceased.LocID = 0;
+            Location loc = Game.network.GetLocation(actor.LocID);
+            loc.RemoveActor(actor.ActID);
+            actor.LocID = 0;
         }
 
         /// <summary>
@@ -1691,6 +1691,8 @@ namespace Next_Game
             Noble OldQueen = null;
             Noble OldHeir = null;
             Location kingsKeep = Game.network.GetLocation(1);
+            string eventText;
+            int yearChanged = Game.gameStart;
             foreach(Noble royal in listOfRoyalNobles)
             {
                 //change location (all)
@@ -1698,7 +1700,8 @@ namespace Next_Game
                 Location oldLoc = Game.network.GetLocation(royal.LocID);
                 oldLoc.RemoveActor(royal.ActID);
                 royal.LocID = 1;
-                //specific roles
+                Record record = null;
+                //specific roles & also handle fate of royal family
                 switch (royal.Type)
                 {
                     case ActorType.Lord:
@@ -1714,6 +1717,10 @@ namespace Next_Game
                     case ActorType.Heir:
                         Game.lore.OldHeir = royal;
                         OldHeir = royal;
+                        //fate
+                        eventText = string.Format("{0} {1}, Aid {2}, was spirited away to the Free Cities by unknown actors", royal.Type, royal.Name, royal.ActID);
+                        record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Conflict);
+                        RemoveActor(royal, yearChanged, ActorGone.Missing);
                         break;
                     case ActorType.lord:
                         royal.Type = ActorType.Prince;
@@ -1722,6 +1729,7 @@ namespace Next_Game
                         royal.Type = ActorType.Princess;
                         break;
                 }
+                Game.world?.SetRecord(record);
             }
             //Coronation for New king
             if (OldKing == null)
@@ -1841,7 +1849,6 @@ namespace Next_Game
                 //add to Royal court
                 Game.world.SetRoyalCourt(courtAdvisor);
             }
-
         }
 
         /// <summary>

@@ -397,7 +397,7 @@ namespace Next_Game
                                 eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", knight.Name, knight.ActID, descriptor, Friends, knight.Age);
                                 Console.WriteLine(string.Format("Knight {0}, Aid {1}, was killed by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
                                 record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Died);
-                                Game.history.RemoveDeadActor(knight, year, ActorDied.Battle);
+                                Game.history.RemoveActor(knight, year, ActorGone.Battle);
                                 break;
                             case 5:
                             case 6:
@@ -494,7 +494,7 @@ namespace Next_Game
                                 eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", royal.Name, royal.ActID, descriptor, Friends, royal.Age);
                                 Console.WriteLine(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Died);
-                                Game.history.RemoveDeadActor(royal, year, ActorDied.Battle);
+                                Game.history.RemoveActor(royal, year, ActorGone.Battle);
                                 break;
                             case 3:
                             case 4:
@@ -613,7 +613,7 @@ namespace Next_Game
                                 eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", rebel.Name, rebel.ActID, descriptor, Friends, rebel.Age);
                                 Console.WriteLine(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
                                 record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Died);
-                                Game.history.RemoveDeadActor(rebel, year, ActorDied.Battle);
+                                Game.history.RemoveActor(rebel, year, ActorGone.Battle);
                                 break;
                             case 3:
                             case 4:
@@ -740,7 +740,7 @@ namespace Next_Game
                         //eventText += string.Format("allowed to slowly rot to his death in the {0} dungeons", Enemies);
                         eventText += string.Format("died of his wounds while held in the {0} dungeons", Enemies);
                         actorEvent = HistActorEvent.Died;
-                        Game.history.RemoveDeadActor(actor, Game.gameStart, ActorDied.Injuries);
+                        Game.history.RemoveActor(actor, Game.gameStart, ActorGone.Injuries);
                         //50% chance he was tortured to death -> secret
                         if (rnd.Next(100) < 50)
                         {
@@ -756,7 +756,7 @@ namespace Next_Game
                         //executed
                         eventText += string.Format("summarily executed by the {0}s after a period of captivity", Enemies);
                         actorEvent = HistActorEvent.Died;
-                        Game.history.RemoveDeadActor(actor, Game.gameStart, ActorDied.Executed);
+                        Game.history.RemoveActor(actor, Game.gameStart, ActorGone.Executed);
                         break;
                     default:
                         Game.SetError(new Error(31, "Invalid case"));
@@ -813,7 +813,7 @@ namespace Next_Game
                     advisorDied = true;
                     eventText = string.Format("{0} {1}, Aid {2}, refused to swear allegiance to King {3} and was dismissed", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
                     record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameStart, HistActorEvent.Service);
-                    advisor.LocID = 0;
+                    Game.history.RemoveActor(advisor, Game.gameStart, ActorGone.Missing);
                     //chance of advisor being killed as a result -> secret (depends on New Kings treachery)
                     int liegeTreachery = liege.GetTrait(TraitType.Treachery);
                     string fate = evilFate[rnd.Next(0, evilFate.Length)];
