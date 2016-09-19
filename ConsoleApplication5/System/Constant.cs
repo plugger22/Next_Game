@@ -13,6 +13,7 @@ namespace Next_Game
         TOUCHED,
         MEN_AT_ARMS,
         BATTLE_EVENTS,
+        ADVISOR_REFUSAL,
         Count //keep as last
     }
 
@@ -33,6 +34,7 @@ namespace Next_Game
             arrayOfGlobals[5] = Global.TOUCHED;
             arrayOfGlobals[6] = Global.MEN_AT_ARMS;
             arrayOfGlobals[7] = Global.BATTLE_EVENTS;
+            arrayOfGlobals[8] = Global.ADVISOR_REFUSAL;
             }
 
         /// <summary>

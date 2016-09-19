@@ -18,9 +18,11 @@
 # Houses ---
 
 # MEN_AT_ARMS -> number of men of arms a Major house starts with. Bannerlords have half this number.
-6: 10000
+6: 12000
 
 # History ---
 
 # BATTLE_EVENTS -> number of random rolls on battle events table for each battle
 7: 4
+# ADVISOR_REFUSAL -> chance of advisor refusing to serve under new king
+8: 50

@@ -786,10 +786,11 @@ namespace Next_Game
         /// determines fate of Advisors (Royal and Noble) when required
         /// </summary>
         /// <param name="advisor"></param>
-        /// <returns>true if Advisor died</returns>
+        /// <returns>true if Advisor dismissed</returns>
         internal bool FateOfAdvisor(Advisor advisor, Passive liege)
         {
             bool advisorDied = false;
+            string[] evilFate = new string[] { "buried alive", "fed to the pigs", "burnt at the stake","eaten alive by rats", "drowned in the well", "buried alive in excrement" };
             if (advisor.advisorNoble > AdvisorNoble.None)
             {
                 //Noble advisor
@@ -798,10 +799,37 @@ namespace Next_Game
             {
                 //Royal advisor
                 advisor.Loyalty_Current = KingLoyalty.New_King;
-                //advisor retained
-                string descriptor = string.Format("{0} {1}, Aid {2}, swears allegiance to King {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
-                Record record = new Record(descriptor, advisor.ActID, 1, 9999, Game.gameStart, HistActorEvent.Service);
-                Game.world.SetRecord(record);
+                Record record = null;
+                Secret_Actor secret = null;
+                string secretText;
+                string eventText;
+                if (rnd.Next(100) < Game.constant.GetValue(Global.ADVISOR_REFUSAL))
+                {
+                    //advisor dismissed
+                    advisorDied = true;
+                    eventText = string.Format("{0} {1}, Aid {2}, refused to swear allegiance to King {3} and was dismissed", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
+                    record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameStart, HistActorEvent.Service);
+                    //chance of advisor being killed as a result -> secret (depends on New Kings treachery)
+                    int liegeTreachery = liege.GetTrait(TraitType.Treachery);
+                    string fate = evilFate[rnd.Next(0, evilFate.Length)];
+                    if (rnd.Next(0, 6) < liegeTreachery )
+                    {
+                        secretText = string.Format("{0} {1}, Aid {2}, after denying King {3} they were {4}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name, fate);
+                        secret = new Secret_Actor(SecretType.Murder, Game.gameStart, secretText, liegeTreachery, advisor.ActID);
+                        advisor.AddSecret(secret.SecretID); liege.AddSecret(secret.SecretID);
+                        Game.history.SetSecret(secret);
+                    }
+                }
+                else
+                {
+                    //advisor retained
+                    eventText = string.Format("{0} {1}, Aid {2}, swears allegiance to King {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
+                    record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameStart, HistActorEvent.Service);
+                    //chance of advisor being a secret sympathiser to the Old King, a fifth Column
+                }
+                //save record & secret if applicable
+                Game.world?.SetRecord(record);
+                Game.history?.SetSecret(secret);
             }
             return advisorDied;
         }

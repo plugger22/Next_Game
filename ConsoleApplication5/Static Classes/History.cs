@@ -1831,7 +1831,7 @@ namespace Next_Game
                 if (Game.lore.FateOfAdvisor(advisor, NewKing) == true)
                 {
                     AdvisorRoyal courtPosition = advisor.advisorRoyal;
-                    //advisor died and is replaced
+                    //advisor dismissed and is replaced
                     Advisor newAdvisor = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, courtPosition, 1200);
                     advisor.Loyalty_AtStart = KingLoyalty.New_King;
                     courtAdvisor = newAdvisor;
