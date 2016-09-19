@@ -1462,9 +1462,9 @@ namespace Next_Game
                     //CUSTOM (debugging purposes)
                     recordList =
                         from record in dictRecords
-                        //from eventType in record.Value.listOfActorEvents
-                        //where eventType == HistActorEvent.Captured
-                        where record.Value.Actual == false
+                        from eventType in record.Value.listOfActorEvents
+                        where eventType == HistActorEvent.Service
+                        //where record.Value.Actual == false
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();

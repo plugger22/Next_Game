@@ -439,9 +439,10 @@ namespace Next_Game
         /// <param name="advisorNoble"></param>
         /// <param name="advisorRoyal"></param>
         /// <param name="advisorReligious"></param>
+        /// <param name="yearCommenced">If default 0 then will calculate a commencement based on age (pre-Uprising), otherwise it should be specified year</param>
         /// <returns></returns>
         internal Advisor CreateAdvisor(Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male,
-            AdvisorNoble advisorNoble = AdvisorNoble.None, AdvisorRoyal advisorRoyal = AdvisorRoyal.None)
+            AdvisorNoble advisorNoble = AdvisorNoble.None, AdvisorRoyal advisorRoyal = AdvisorRoyal.None, int yearCommenced = 0)
         {
             //must be one type of advisor
             if ((int)advisorRoyal == 1 && (int)advisorNoble == 1)
@@ -451,6 +452,7 @@ namespace Next_Game
             { Game.SetError(new Error(12, "Only a single advisor type is allowed")); return null; }
             else
             {
+                string descriptor;
                 string name = GetActorName();
                 Advisor advisor = new Advisor(name, ActorType.Advisor, locID, sex);
                 advisor.SetActorPosition(pos);
@@ -458,9 +460,16 @@ namespace Next_Game
                 advisor.RefID = refID;
                 advisor.HouseID = houseID;
                 //age
-                int age = rnd.Next(25, 60);
+                int minAge = 20; int maxAge = 60;
+                int age = rnd.Next(minAge, maxAge);
                 advisor.Born = Game.gameYear - age;
+                int startAge = yearCommenced - advisor.Born;
                 advisor.Age = age;
+                //auto calc's start of service if no year provided. Can't be before minAge of advisor)
+                if (yearCommenced == 0)
+                { int diff = age - minAge; startAge = minAge + rnd.Next(0, diff / 2); ; yearCommenced = advisor.Born + startAge; }
+                //startAge = Math.Max(minAge, age - startAge) - temp, about to remove
+                advisor.CommenceService = yearCommenced;
                 //traits
                 TraitType positiveTrait = TraitType.None;
                 TraitType negativeTrait = TraitType.None;
@@ -474,6 +483,10 @@ namespace Next_Game
                     else if (advisorRoyal == AdvisorRoyal.Commander_of_City_Watch) { positiveTrait = TraitType.Leadership; negativeTrait = TraitType.Treachery; }
                     else if (advisorRoyal == AdvisorRoyal.Hand_of_the_King) { positiveTrait = TraitType.Wits; negativeTrait = TraitType.Treachery; }
                     else { positiveTrait = TraitType.Wits;  }
+                    //record
+                    descriptor = string.Format("{0} {1}, Aid {2}, commenced serving on the Royal Council, age {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, startAge);
+                    Record record = new Record(descriptor, advisor.ActID, locID, refID, yearCommenced, HistActorEvent.Service);
+                    Game.world.SetRecord(record);
                 }
                 else if ((int)advisorNoble > 0)
                 {
@@ -481,6 +494,10 @@ namespace Next_Game
                     if (advisorNoble == AdvisorNoble.Castellan) { positiveTrait = TraitType.Leadership; negativeTrait = TraitType.Treachery; }
                     else if (advisorNoble == AdvisorNoble.Septon) { positiveTrait = TraitType.Charm; negativeTrait = TraitType.Treachery; }
                     else { positiveTrait = TraitType.Wits; negativeTrait = TraitType.Combat; }
+                    //record
+                    descriptor = string.Format("{0} {1}, Aid {2}, entered the service of House {3}, age {4}", advisor.advisorNoble, advisor.Name, advisor.ActID, Game.world.GetGreatHouseName(houseID), startAge);
+                    Record record = new Record(descriptor, advisor.ActID, locID, refID, yearCommenced, HistActorEvent.Service );
+                    Game.world.SetRecord(record);
                 }
                 else
                 { Game.SetError(new Error(11, "No valid advisor type provided")); return null; }

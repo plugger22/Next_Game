@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     //categories (can choose multiple)
-    public enum HistActorEvent {None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Deed} //conflict -> actor involved in a battle/siege
+    public enum HistActorEvent {None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Deed, Service} //conflict -> actor involved in a battle/siege
     public enum HistHouseEvent {None, Allegiance}
     public enum HistKingdomEvent { None, Battle, Siege}
 
