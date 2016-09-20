@@ -1819,7 +1819,7 @@ namespace Next_Game
             //Generate BackStory
             Game.lore.CreateOldKingBackStory(listOfRoyalists, listOfRebels, listOfWounds);
             Game.lore.CreateRoyalFamilyFate();
-            Game.lore.CreateNewMajorHouse();
+            Game.lore.CreateNewMajorHouse(listHousePool);
 
             //Royal Court housekeeping and fate during transition
             foreach (Advisor advisor in tempListOfAdvisors)

@@ -888,7 +888,7 @@ namespace Next_Game
         /// <summary>
         /// swaps Old King's major house for a promoted bannerlord from his stable (turned traitor and is being rewarded)
         /// </summary>
-        internal void CreateNewMajorHouse()
+        internal void CreateNewMajorHouse(List<HouseStruct> listUnusedMinorHouses)
         {
             /*House house = Game.world.GetHouse(RoyalHouseOld);
             MajorHouse majorHouse = Game.world.GetGreatHouse(house.RefID);
@@ -909,7 +909,7 @@ namespace Next_Game
                 int houseID = Game.network.GetNumUniqueHouses() + 1;
                 house.HouseID = houseID;
                 //set up new house
-                //house.Name = turncoatHouse.Name; -> stays the same
+                house.Name = turncoatHouse.Name;
                 house.Motto = turncoatHouse.Motto;
                 house.Banner = turncoatHouse.Banner;
                 house.ArchetypeID = turncoatHouse.ArchetypeID;
@@ -936,12 +936,27 @@ namespace Next_Game
                     bannerHouse.HouseID = houseID;
                 }
 
-                //add house to world dictionaries
-                Game.world.AddMajorHouse(house);
+                
                 //update Map with refID and houseID for loc
                 Location loc = Game.network.GetLocation(house.LocID);
                 Game.map.SetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY(), houseID);
                 //replacement bannerlord for promoted guy
+                int index = rnd.Next(0, listUnusedMinorHouses.Count);
+                HouseStruct minorStruct = listUnusedMinorHouses[index];
+                turncoatHouse.Name = minorStruct.Name;
+                turncoatHouse.RefID = minorStruct.RefID;
+                turncoatHouse.Motto = minorStruct.Motto;
+                turncoatHouse.Banner = minorStruct.Banner;
+
+                listUnusedMinorHouses.RemoveAt(index);
+                
+                //need a new Bannerlord
+                //need to update house.ListOfBannerLords
+                //need to change original Bannerlord actor details
+                //need to change actors in Locations
+                
+                //add house to world dictionaries (do after turncoatHouse update otherwise two identical houses in world.dictAllHouses)
+                Game.world.AddMajorHouse(house);
 
                 //wife for new lord?
 
