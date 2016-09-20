@@ -361,7 +361,7 @@ namespace Next_Game
                 string textToWrap = text_1 + text_2;
                 listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
 
-                //find a turncoat bannerlord right at start
+                //find a turncoat bannerlord right at start -> take him out to avoid any battle events prior to his use
                 if (listOfTempRoyals.Count > 0)
                 {
                     Passive turncoatActor = null;
@@ -371,9 +371,10 @@ namespace Next_Game
                         int turncoatID = listOfTempRoyals[tempIndex];
                         Passive actor = Game.world.GetPassiveActor(turncoatID);
                         if (actor.Type == ActorType.BannerLord)
-                        { turncoatActor = actor; TurnCoat = actor.ActID; }
+                        { turncoatActor = actor; TurnCoat = actor.ActID; listOfTempRoyals.RemoveAt(tempIndex); }
                     }
                     while (turncoatActor == null);
+                    
                 }
                 else { Game.SetError(new Error(32, "No data in listOfTempRoyals")); }
 
@@ -889,10 +890,27 @@ namespace Next_Game
         /// </summary>
         internal void CreateNewMajorHouse()
         {
-            House house = Game.world.GetHouse(RoyalHouseOld);
+            /*House house = Game.world.GetHouse(RoyalHouseOld);
             MajorHouse majorHouse = Game.world.GetGreatHouse(house.RefID);
             List<int> tempListOfBannerLords = new List<int>(majorHouse.GetBannerLords());
-            int refID = tempListOfBannerLords[rnd.Next(0, tempListOfBannerLords.Count)];
+            int refID = tempListOfBannerLords[rnd.Next(0, tempListOfBannerLords.Count)];*/
+            Passive turncoatActor = Game.world.GetPassiveActor(TurnCoat);
+           
+            if (turncoatActor != null && turncoatActor.Status == ActorStatus.AtLocation)
+            {
+                //turncoat details
+                int turncoatRefID = turncoatActor.RefID;
+                House turncoatHouse = Game.world.GetHouse(turncoatRefID);
+                //old king's house
+                House oldkingHouse = Game.world.GetHouse(RoyalHouseOld);
+                
+                //replacement bannerlord for promoted guy
+
+                //record of events
+                
+            }
+            else
+            { Game.SetError(new Error(33, "Invalid TurnCoat.ActorID")); }
         }
 
         //methods above here
