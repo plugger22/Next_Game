@@ -97,7 +97,6 @@ namespace Next_Game
         /// <param name="numHousesRequired">Will thin out surplus houses if required</param>
         private void InitialiseMajorHouses(int numHousesRequired)
         {
-            List<int> excessHouses = new List<int>();
             //remove surplus houses from pool
             int count = listHousePool.Count;
             int index = 0;
@@ -105,13 +104,9 @@ namespace Next_Game
             {
                 index = rnd.Next(0, count);
                 Console.WriteLine("Great House {0} removed", listHousePool[index].Name);
-                excessHouses.Add(listHousePool[index].RefID);
                 listHousePool.RemoveAt(index);
                 count = listHousePool.Count;
             }
-            //randomly choose a surplus great house to be the replacement house for the Old King's lands (give RefID)
-            index = rnd.Next(0, excessHouses.Count);
-            Game.lore.ReplacementHouse = excessHouses[index];
             Console.WriteLine();
             //loop through structures and initialise House classes
             for (int i = 0; i < listHousePool.Count; i++)
@@ -1850,6 +1845,8 @@ namespace Next_Game
 
             //change Royal house to that of New King
             Game.lore.RoyalHouseCurrent = Game.lore.RoyalHouseNew;
+            //replace Royal lands with that of the Replacement Great House
+
             
 
         }

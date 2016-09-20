@@ -20,7 +20,7 @@ namespace Next_Game
         public int RoyalHouseOld { get; set; } // refID
         public int RoyalHouseNew { get; set; } // refID
         public int RoyalHouseCurrent { get; set; } // refID
-        public int ReplacementHouse { get; set; } //Great house that takes over Old King's lands -> refID
+        public int TurnCoat { get; set; } //actID of Turncoat Bannerlord who takes over lands of old king
         //Royal & Rebel Family and retainers
         private List<Passive> listOfOldRoyals; //at time of revolt
         private List<Passive> listOfNewRoyals; //at time of taking power
@@ -361,6 +361,22 @@ namespace Next_Game
                 string textToWrap = text_1 + text_2;
                 listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
 
+                //find a turncoat bannerlord right at start
+                if (listOfTempRoyals.Count > 0)
+                {
+                    Passive turncoatActor = null;
+                    do
+                    {
+                        int tempIndex = rnd.Next(1, listOfTempRoyals.Count);
+                        int turncoatID = listOfTempRoyals[tempIndex];
+                        Passive actor = Game.world.GetPassiveActor(turncoatID);
+                        if (actor.Type == ActorType.BannerLord)
+                        { turncoatActor = actor; TurnCoat = actor.ActID; }
+                    }
+                    while (turncoatActor == null);
+                }
+                else { Game.SetError(new Error(32, "No data in listOfTempRoyals")); }
+
                 //events ---
 
                 for (int k = 0; k < Game.constant.GetValue(Global.BATTLE_EVENTS); k++)
@@ -467,6 +483,8 @@ namespace Next_Game
                     //Royalist Lords
                     if (listOfTempRoyals.Count > 0)
                     {
+                        
+
                         int rndNum = rnd.Next(10);
                         int listIndex = rnd.Next(1, listOfTempRoyals.Count); //don't pick King (index 0)
                         int royalID = listOfTempRoyals[listIndex];
@@ -865,5 +883,18 @@ namespace Next_Game
             }
             return advisorDied;
         }
+
+        /// <summary>
+        /// swaps Old King's major house for a promoted bannerlord from his stable (turned traitor and is being rewarded)
+        /// </summary>
+        internal void CreateNewMajorHouse()
+        {
+            House house = Game.world.GetHouse(RoyalHouseOld);
+            MajorHouse majorHouse = Game.world.GetGreatHouse(house.RefID);
+            List<int> tempListOfBannerLords = new List<int>(majorHouse.GetBannerLords());
+            int refID = tempListOfBannerLords[rnd.Next(0, tempListOfBannerLords.Count)];
+        }
+
+        //methods above here
     }
 }

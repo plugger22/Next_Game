@@ -1319,7 +1319,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="houseID"></param>
         /// <returns></returns>
-        private MajorHouse GetGreatHouse(int houseID)
+        internal MajorHouse GetGreatHouse(int houseID)
         {
             MajorHouse house = new MajorHouse();
             if (dictGreatHouses.TryGetValue(houseID, out house))
