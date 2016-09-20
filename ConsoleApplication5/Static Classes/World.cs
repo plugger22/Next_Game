@@ -1511,6 +1511,9 @@ namespace Next_Game
                 case RLKey.U:
                     tempList.AddRange(Game.lore.GetUprising());
                     break;
+                case RLKey.F:
+                    tempList.AddRange(Game.lore.GetRoyalFamilyFate());
+                    break;
             }
             foreach (string text in tempList)
             { snippetList.Add(new Snippet(text)); }

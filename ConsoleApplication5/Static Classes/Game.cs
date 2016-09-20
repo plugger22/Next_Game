@@ -505,6 +505,16 @@ namespace Next_Game
                                     break;
                             }
                             break;
+                        case RLKey.F:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Lore:
+                                    //Fate of Royal Family Lore
+                                    infoChannel.SetInfoList(world.GetLoreSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- Fate of Royal Family LORE", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
                         case RLKey.G:
                             switch (_menuMode)
                             {

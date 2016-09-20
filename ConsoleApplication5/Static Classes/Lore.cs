@@ -771,6 +771,21 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// creates text description of fate of royal family
+        /// </summary>
+        internal void CreateRoyalFamilyFate()
+        {
+            listRoyalFamilyFate.Add("");
+            string text_1 = string.Format("King {0} publicly paraded and beheaded the traitor {1} and his wife, {2}. ", NewKing.Name, OldKing.Name, OldQueen.Name);
+            string text_2 = "Their children were ruthlessly hunted down and killed. Blood shall not linger.";
+            string textToWrap = text_1 + text_2;
+            listRoyalFamilyFate.AddRange(Game.utility.WordWrap(textToWrap, 120));
+            string text_3 = string.Format("Unfortunately the heir, {0}, managed to flee across the ocean. He shall not be forgotten...", OldHeir.Name);
+            listRoyalFamilyFate.Add("");
+            listRoyalFamilyFate.Add(text_3);
+        }
+
+        /// <summary>
         /// Determines how many men the Lord of House will put into the field when the call to arms comes (varies with treachery)
         /// </summary>
         /// <param name="house"></param>
@@ -844,8 +859,8 @@ namespace Next_Game
                     }
                 }
                 //save record & secret if applicable
-                Game.world?.SetRecord(record);
-                Game.history?.SetSecret(secret);
+                Game.world.SetRecord(record);
+                Game.history.SetSecret(secret);
             }
             return advisorDied;
         }

@@ -1818,6 +1818,7 @@ namespace Next_Game
             }
             //Generate BackStory
             Game.lore.CreateOldKingBackStory(listOfRoyalists, listOfRebels, listOfWounds);
+            Game.lore.CreateRoyalFamilyFate();
 
             //Royal Court housekeeping and fate during transition
             foreach (Advisor advisor in tempListOfAdvisors)
@@ -1844,6 +1845,7 @@ namespace Next_Game
 
             //change Royal house to that of New King
             Game.lore.RoyalHouseCurrent = Game.lore.RoyalHouseNew;
+            
 
         }
 

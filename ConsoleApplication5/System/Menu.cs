@@ -128,6 +128,7 @@ namespace Next_Game
                     menuArrayCategories[3] = "Switch ---";
                     //Lore menu commands
                     menuArrayText[0, 0] = "[U] Uprising";
+                    menuArrayText[0, 1] = "[F] Fate of Royals";
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
