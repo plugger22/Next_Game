@@ -27,4 +27,4 @@
 # ADVISOR_REFUSAL -> chance of advisor refusing to serve under new king
 8: 20
 # SIBLING_ESCAPE -> chance of any of Player's brothers or sisters escaping to the free cities
-9: 50
+9: 25

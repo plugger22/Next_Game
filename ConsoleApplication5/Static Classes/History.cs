@@ -260,7 +260,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Initialise Passive Actors at game start (populate world) - Nobles, Bannerlords only
+        /// Initialise Passive Actors at game start (populate world) - Nobles, Bannerlords only & add to location
         /// </summary>
         /// <param name="lastName"></param>
         /// <param name="type"></param>
@@ -303,6 +303,9 @@ namespace Next_Game
                 noble.GenID = 1;
                 noble.WifeNumber = wifeStatus;
             }
+            //add to Location
+            Location loc = Game.network.GetLocation(locID);
+            loc.AddActor(actor.ActID);
             //house at birth (males the same, females from an adjacent house)
             actor.BornRefID = refID;
             int wifeHouseID = refID;
@@ -394,7 +397,7 @@ namespace Next_Game
 
 
         /// <summary>
-        /// Create a Knight
+        /// Create a Knight & add to Location
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="locID"></param>
@@ -413,7 +416,9 @@ namespace Next_Game
             //when knighted (age 18 - 27)
             int knighted = rnd.Next(18, 28);
             knight.Knighthood = Game.gameYear - (age - knighted);
-
+            //add to Location
+            Location loc = Game.network.GetLocation(locID);
+            loc.AddActor(knight.ActID);
             //data
             knight.SetActorPosition(pos);
             knight.LocID = locID;
@@ -430,7 +435,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Create a Royal or Noble House Advisor
+        /// Create a Royal or Noble House Advisor & Add to Location
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="locID"></param>
@@ -470,6 +475,9 @@ namespace Next_Game
                 { int diff = age - minAge; startAge = minAge + rnd.Next(0, diff / 2); ; yearCommenced = advisor.Born + startAge; }
                 //startAge = Math.Max(minAge, age - startAge) - temp, about to remove
                 advisor.CommenceService = yearCommenced;
+                //add to Location
+                Location loc = Game.network.GetLocation(locID);
+                loc.AddActor(advisor.ActID);
                 //traits
                 TraitType positiveTrait = TraitType.None;
                 TraitType negativeTrait = TraitType.None;
@@ -1162,7 +1170,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// General purpose method to create a new child, born in current year with current generation.
+        /// General purpose method to create a new child, born in current year with current generation & add to location
         /// </summary>
         /// <param name="Lord">Provide a Great lord as an official father regardless of status</param>
         /// <param name="Lady">Provide a Great Lady as an official mother regardless of status</param>
@@ -1524,57 +1532,6 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Call this method whenever an NPC actor dies to handle all the housekeeping
-        /// </summary>
-        /// <param name="actor"></param>
-        /// <param name="year"></param>
-        /// <param name="reason"></param>
-        /// <param name="perpetrator">The Actor who caused the death (optional)</param>
-        /// <param name="secondary">An additional actor who is affected by the death (optional)</param>
-        /// <param name="text">varies depending on type of death, eg. Battle name</param>
-        /*
-        internal void CreatePassiveFuneral(Passive deceased, int year, ActorDied reason, Actor perpetrator = null, Actor secondary = null, string text = null)
-        {
-            deceased.Died = year;
-            deceased.Age = deceased.Age - (Game.gameYear - year);
-            deceased.Status = ActorStatus.Dead;
-            deceased.ReasonDied = reason;
-            Record record = null;
-            string descriptor = string.Format("{0} {1}, Aid {2}, ", deceased.Type, deceased.Name, deceased.ActID);
-            //ignore reason if you don't want an automatic record created for that death type
-            switch (reason)
-            {
-                case ActorDied.Childbirth:
-                    descriptor += string.Format("died while giving birth to {0}, age {1}", perpetrator.Name, deceased.Age);
-                    record = new Record(descriptor, deceased.ActID, deceased.LocID, deceased.RefID, year, HistActorEvent.Died);
-                    record.AddActorEvent(HistActorEvent.Birthing);
-                    break;
-                case ActorDied.Battle:
-                    //requires text to be the name of the battle, eg. Battle of 'xxxx'
-                    if (perpetrator != null)
-                    //killed by a specific actor
-                    { descriptor += string.Format("was killed in Battle of {0} by {1} {2}, age {3}", text, perpetrator.Type, perpetrator.Name, deceased.Age); }
-                    else
-                    //random battle death
-                    { descriptor += string.Format("died during the Battle of {0}, age {1}", text, deceased.Age); }
-                    record = new Record(descriptor, deceased.ActID, deceased.LocID, deceased.RefID, year, HistActorEvent.Died);
-                    record.AddActorEvent(HistActorEvent.Conflict);
-                    break;
-            }
-            if (record != null)
-            {
-                //add any secondary actors
-                record?.AddActor(perpetrator.ActID);
-                record?.AddActor(secondary.ActID);
-                Game.world?.SetRecord(record);
-            }
-            //remove actor from location
-            Location loc = Game.network.GetLocation(deceased.LocID);
-            loc.RemoveActor(deceased.ActID);
-            deceased.LocID = 0;
-        } */
-
-        /// <summary>
         /// clean up after actor death (or missing & gone from game)
         /// </summary>
         /// <param name="actor"></param>
@@ -1782,7 +1739,6 @@ namespace Next_Game
 
             //create advisors
             Position pos = Game.map.GetCapital();
-            Location loc = Game.network.GetLocation(1);
             List<Advisor> tempListOfAdvisors = new List<Advisor>();
             Advisor royalSepton = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.High_Septon); tempListOfAdvisors.Add(royalSepton);
             Advisor royalCoin = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Coin); tempListOfAdvisors.Add(royalCoin);
@@ -1830,11 +1786,10 @@ namespace Next_Game
             foreach (Noble rebelActor in listOfRebelNobles)
             {
                 //change location (all)
-
-                /*kingsKeep.AddActor(rebelActor.ActID);
+                kingsKeep.AddActor(rebelActor.ActID);
                 Location oldLoc = Game.network.GetLocation(rebelActor.LocID);
                 oldLoc.RemoveActor(rebelActor.ActID);
-                rebelActor.LocID = 1;*/
+                rebelActor.LocID = 1;
 
                 //specific roles
                 switch (rebelActor.Type)
@@ -1871,7 +1826,6 @@ namespace Next_Game
                 advisor.Loyalty_AtStart = KingLoyalty.Old_King;
                 //add to dictionary and location
                 Game.world.SetPassiveActor(advisor);
-                loc.AddActor(advisor.ActID);
                 //fate of Royal Court
                 Advisor courtAdvisor = advisor;
                 if (Game.lore.FateOfAdvisor(advisor, NewKing) == true)
@@ -1887,6 +1841,10 @@ namespace Next_Game
                 //add to Royal court
                 Game.world.SetRoyalCourt(courtAdvisor);
             }
+
+            //change Royal house to that of New King
+            Game.lore.RoyalHouseCurrent = Game.lore.RoyalHouseNew;
+
         }
 
         /// <summary>

@@ -684,6 +684,7 @@ namespace Next_Game
 
                 //characters at location
                 List<int> charList = loc.GetActorList();
+                charList.Sort();
                 if (charList.Count > 0)
                 {
                     RLColor textColor = RLColor.White;
@@ -797,7 +798,7 @@ namespace Next_Game
                     orderby person.Value.ActID
                     select person.Value.ActID;
                 listOfFamily = familyMembers.ToList();
-                //loop list and display each actor appropriately (dead in Lt.Gray)
+                //loop list and display each actor appropriately (dead, or missing, in Lt.Gray)
                 string personText;
                 string actorType;
                 foreach(int actorID in listOfFamily)
@@ -864,7 +865,7 @@ namespace Next_Game
                                 locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
                                 break;
                             case ActorStatus.Gone:
-                                locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
+                                locString = string.Format("passed away ({0}) in {1}", person.ReasonGone, person.Gone);
                                 locColor = RLColor.LightGray;
                                 break;
                         }
@@ -1116,13 +1117,6 @@ namespace Next_Game
                 SetPassiveActor(actorCastellan);
                 SetPassiveActor(actorMaester);
                 SetPassiveActor(actorSepton);
-                //store actors in location
-                loc.AddActor(actorLord.ActID);
-                loc.AddActor(actorLady.ActID);
-                loc.AddActor(actorKnight.ActID);
-                loc.AddActor(actorCastellan.ActID);
-                loc.AddActor(actorMaester.ActID);
-                loc.AddActor(actorSepton.ActID);
                 //create family
                 Game.history.CreateFamily(actorLord, actorLady);
                 //check if lady died in childbirth
@@ -1169,8 +1163,6 @@ namespace Next_Game
                     dictAllActors.Add(bannerLord.ActID, bannerLord);
                     //add Lord to house
                     kvp.Value.LordID = bannerLord.ActID;
-                    //store actors in location
-                    loc.AddActor(bannerLord.ActID);
                 }
             }
         }

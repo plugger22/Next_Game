@@ -709,7 +709,7 @@ namespace Next_Game
             {
                 int rndNum = rnd.Next(10);
                 Passive actor = Game.world.GetPassiveActor(actorID);
-                eventText = string.Format("{0}, Aid {1}, was ", actor.Name, actor.ActID);
+                eventText = string.Format("{0}, Aid {1}, ", actor.Name, actor.ActID);
                 HistActorEvent actorEvent = HistActorEvent.None;
                 Friends = "Royalist";
                 Enemies = "Rebel";
@@ -719,16 +719,16 @@ namespace Next_Game
                 {
                     case 0:
                     case 1:
-                        eventText += string.Format("ransomed and released by his {0} captors", Enemies);
+                        eventText += string.Format("was ransomed and released by his {0} captors", Enemies);
                         break;
                     case 2:
                     case 3:
-                        eventText += string.Format("released unharmed by his {0} captors", Enemies);
+                        eventText += string.Format("was released unharmed by his {0} captors", Enemies);
                         break;
                     case 4:
                     case 5:
                         //tortured -> secret
-                        eventText += string.Format("released unharmed by his {0} captors", Enemies);
+                        eventText += string.Format("was released unharmed by his {0} captors", Enemies);
                         secretText = string.Format("{0}, Aid {1}, was tortured by the {2}s during captivity (mentally scarred)", actor.Name, actor.ActID, Enemies);
                         Secret_Actor secret = new Secret_Actor(SecretType.Torture, year, secretText, 2, actor.ActID);
                         Game.history.SetSecret(secret);
@@ -754,7 +754,7 @@ namespace Next_Game
                     case 8:
                     case 9:
                         //executed
-                        eventText += string.Format("summarily executed by the {0}s after a period of captivity", Enemies);
+                        eventText += string.Format("was summarily executed by the {0}s after a period of captivity", Enemies);
                         actorEvent = HistActorEvent.Died;
                         Game.history.RemoveActor(actor, Game.gameStart, ActorGone.Executed);
                         break;
