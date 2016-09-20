@@ -17,9 +17,10 @@ namespace Next_Game
     {
         static Random rnd;
         //HouseID's
-        public int RoyalHouseOld { get; set; }
-        public int RoyalHouseNew { get; set; }
-        public int RoyalHouseCurrent { get; set; }
+        public int RoyalHouseOld { get; set; } // refID
+        public int RoyalHouseNew { get; set; } // refID
+        public int RoyalHouseCurrent { get; set; } // refID
+        public int ReplacementHouse { get; set; } //Great house that takes over Old King's lands -> refID
         //Royal & Rebel Family and retainers
         private List<Passive> listOfOldRoyals; //at time of revolt
         private List<Passive> listOfNewRoyals; //at time of taking power

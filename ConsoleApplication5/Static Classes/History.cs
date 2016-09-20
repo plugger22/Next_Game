@@ -68,25 +68,25 @@ namespace Next_Game
         {   //Constants
             Game.file.GetConstants("Constants.txt");
             // First Male and Female names
-            listOfMaleFirstNames?.AddRange(Game.file.GetStrings("FirstMale.txt"));
-            listOfFemaleFirstNames?.AddRange(Game.file.GetStrings("FirstFemale.txt"));
-            listOfPlayerNames?.AddRange(Game.file.GetStrings("PlayerNames.txt"));
-            listOfSurnames?.AddRange(Game.file.GetStrings("Surnames.txt"));
+            listOfMaleFirstNames.AddRange(Game.file.GetStrings("FirstMale.txt"));
+            listOfFemaleFirstNames.AddRange(Game.file.GetStrings("FirstFemale.txt"));
+            listOfPlayerNames.AddRange(Game.file.GetStrings("PlayerNames.txt"));
+            listOfSurnames.AddRange(Game.file.GetStrings("Surnames.txt"));
             //Major houses
-            listHousePool?.AddRange(Game.file.GetHouses("MajorHouses.txt"));
+            listHousePool.AddRange(Game.file.GetHouses("MajorHouses.txt"));
             InitialiseMajorHouses(numHousesRequired);
             //Minor houses, run AFTER major houses
             listHousePool.Clear();
-            listHousePool?.AddRange(Game.file.GetHouses("MinorHouses.txt"));
+            listHousePool.AddRange(Game.file.GetHouses("MinorHouses.txt"));
             //GeoNames
             arrayOfGeoNames = Game.file.GetGeoNames("GeoNames.txt");
             InitialiseGeoClusters();
             //Traits
-            listOfTraits?.AddRange(Game.file.GetTraits("Traits_All.txt", TraitSex.All));
-            listOfTraits?.AddRange(Game.file.GetTraits("Traits_Male.txt", TraitSex.Male));
-            listOfTraits?.AddRange(Game.file.GetTraits("Traits_Female.txt", TraitSex.Female));
+            listOfTraits.AddRange(Game.file.GetTraits("Traits_All.txt", TraitSex.All));
+            listOfTraits.AddRange(Game.file.GetTraits("Traits_Male.txt", TraitSex.Male));
+            listOfTraits.AddRange(Game.file.GetTraits("Traits_Female.txt", TraitSex.Female));
             //mishaps
-            listOfWounds?.AddRange(Game.file.GetStrings("Wounds.txt"));
+            listOfWounds.AddRange(Game.file.GetStrings("Wounds.txt"));
             //set up filtered sets of traits ready for random access by newly created actors
             InitialiseTraits();
         }
@@ -97,6 +97,7 @@ namespace Next_Game
         /// <param name="numHousesRequired">Will thin out surplus houses if required</param>
         private void InitialiseMajorHouses(int numHousesRequired)
         {
+            List<int> excessHouses = new List<int>();
             //remove surplus houses from pool
             int count = listHousePool.Count;
             int index = 0;
@@ -104,9 +105,13 @@ namespace Next_Game
             {
                 index = rnd.Next(0, count);
                 Console.WriteLine("Great House {0} removed", listHousePool[index].Name);
+                excessHouses.Add(listHousePool[index].RefID);
                 listHousePool.RemoveAt(index);
                 count = listHousePool.Count;
             }
+            //randomly choose a surplus great house to be the replacement house for the Old King's lands (give RefID)
+            index = rnd.Next(0, excessHouses.Count);
+            Game.lore.ReplacementHouse = excessHouses[index];
             Console.WriteLine();
             //loop through structures and initialise House classes
             for (int i = 0; i < listHousePool.Count; i++)
@@ -1590,9 +1595,9 @@ namespace Next_Game
             //King is the largest Royal Family
             MajorHouse royalHouse = listOfRoyalists[0];
             MajorHouse rebelHouse = listOfRebels[0];
-            Game.lore.RoyalHouseOld = royalHouse.HouseID;
-            Game.lore.RoyalHouseNew = rebelHouse.HouseID;
-            Game.lore.RoyalHouseCurrent = royalHouse.HouseID;
+            Game.lore.RoyalHouseOld = royalHouse.RefID;
+            Game.lore.RoyalHouseNew = rebelHouse.RefID;
+            Game.lore.RoyalHouseCurrent = royalHouse.RefID;
             int royalHouseID = royalHouse.HouseID;
             int rebelHouseID = rebelHouse.HouseID;
             //get all actors in Royal House
