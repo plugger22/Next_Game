@@ -349,7 +349,7 @@ namespace Next_Game
                                         if (_inputState == 1)
                                         {
                                             //valid location?
-                                            int houseID = map.GetMapInfo(MapLayer.Houses, mouse.X, mouse.Y, true);
+                                            int houseID = map.GetMapInfo(MapLayer.HouseID, mouse.X, mouse.Y, true);
                                             int locID = map.GetMapInfo(MapLayer.LocID, mouse.X, mouse.Y, true);
                                             if (houseID > 0)
                                             { infoChannel.SetInfoList(world.ShowHouseRL(houseID), ConsoleDisplay.Multi); }

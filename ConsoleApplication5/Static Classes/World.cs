@@ -1056,11 +1056,7 @@ namespace Next_Game
             //great houses
             List<MajorHouse> listOfGreatHouses = Game.history.GetGreatHouses();
             foreach(MajorHouse house in listOfGreatHouses)
-            {
-                dictGreatHouses.Add(house.HouseID, house);
-                dictAllHouses.Add(house.RefID, house);
-                dictGreatID.Add(house.HouseID, house.GetNumBannerLords());
-            }
+            { AddMajorHouse(house); }
             //populate sorted dictionary (descending) of house ID's by Power (# of BannerLords)
             foreach (KeyValuePair<int, int> kvp in dictGreatID.OrderByDescending(key => key.Value))
             { dictHousePower.Add(kvp.Key, kvp.Value); }
@@ -1167,6 +1163,22 @@ namespace Next_Game
             }
         }
 
+        /// <summary>
+        /// adds a Major House to all relevant dictionaries
+        /// </summary>
+        /// <param name="house"></param>
+        internal void AddMajorHouse(MajorHouse house)
+        {
+            try
+            {
+                dictGreatHouses.Add(house.HouseID, house);
+                dictAllHouses.Add(house.RefID, house);
+                dictGreatID.Add(house.HouseID, house.GetNumBannerLords());
+            }
+            catch (Exception e)
+            { Game.SetError(new Error(34, e.Message)); }
+        }
+            
         /// <summary>
         /// checks GreatLords for having no sons at Game Start
         /// </summary>

@@ -48,6 +48,12 @@ namespace Next_Game
             return numOfLikeNames;
         }
 
+        internal List<int> GetSecrets()
+        { return listOfSecrets; }
+
+        internal void SetSecrets(List<int> tempSecrets)
+        { if (tempSecrets != null) { listOfSecrets.Clear();  listOfSecrets.AddRange(tempSecrets); } }
+
     }
 
     //
@@ -75,10 +81,10 @@ namespace Next_Game
         /// </summary>
         /// <param name="locID"></param>
         public void AddBannerLordLocation(int locID)
-        { listLordLocations?.Add(locID); }
+        { listLordLocations.Add(locID); }
 
         public void AddBannerLord(int refID)
-        { listBannerLords?.Add(refID); }
+        { listBannerLords.Add(refID); }
 
         /// <summary>
         /// add a house ID to list of unique houses to capital

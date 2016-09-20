@@ -909,19 +909,23 @@ namespace Next_Game
                 int houseID = Game.network.GetNumUniqueHouses() + 1;
                 house.HouseID = houseID;
                 //set up new house
-                house.Name = turncoatHouse.Name;
+                //house.Name = turncoatHouse.Name; -> stays the same
                 house.Motto = turncoatHouse.Motto;
                 house.Banner = turncoatHouse.Banner;
                 house.ArchetypeID = turncoatHouse.ArchetypeID;
                 house.RefID = turncoatHouse.RefID;
                 house.LocName = oldkingHouse.LocName;
                 house.MenAtArms = oldkingHouse.MenAtArms;
+                house.Branch = oldkingHouse.Branch;
+                house.LordID = turncoatActor.ActID;
                 house.Loyalty_AtStart = KingLoyalty.New_King;
                 house.Loyalty_Current = KingLoyalty.New_King;
                 house.SetBannerLords(oldkingHouse.GetBannerLords());
                 house.SetLordLocations(oldkingHouse.GetBannerLordLocations());
                 house.SetHousesToCapital(oldkingHouse.GetHousesToCapital());
                 house.SetHousesToConnector(oldkingHouse.GetHousesToConnector());
+                house.SetSecrets(turncoatHouse.GetSecrets());
+
                 //update bannerlords of Great House 
                 List<int> tempBannerLords = oldkingHouse.GetBannerLords();
                 foreach (int lordID in tempBannerLords)
@@ -932,9 +936,14 @@ namespace Next_Game
                     bannerHouse.HouseID = houseID;
                 }
 
-                //add house to listOfHouses
-                
+                //add house to world dictionaries
+                Game.world.AddMajorHouse(house);
+                //update Map with refID and houseID for loc
+                Location loc = Game.network.GetLocation(house.LocID);
+                Game.map.SetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY(), houseID);
                 //replacement bannerlord for promoted guy
+
+                //wife for new lord?
 
                 //record of events
 
