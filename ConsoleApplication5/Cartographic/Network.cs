@@ -1525,8 +1525,6 @@ namespace Next_Game.Cartographic
                         branchList.AddRange(listWestBranch);
                         break;
                 }
-                //Console.WriteLine();
-                //Console.WriteLine("Branch {0} ---", branch);
                 int countLocs = branchList.Count;
                 //create array to mark which loc's have been used (0 - unassigned, 99 - special, 1+ house ID)
                 int[] arrayStatus = new int[countLocs];
@@ -1970,7 +1968,7 @@ namespace Next_Game.Cartographic
                     }
                 }
             }
-            /*
+            
             //debug list contents
             Console.WriteLine();
             Console.WriteLine("--- listOfAllHouses");
@@ -1984,7 +1982,7 @@ namespace Next_Game.Cartographic
             Console.WriteLine("--- House Capitals");
             for(int i = 0; i < arrayOfCapitals.Length; i++)
             { Console.WriteLine("House {0} has ID {1} as it's capital", i, arrayOfCapitals[i]); }
-            */
+            
         }
 
         /// <summary>

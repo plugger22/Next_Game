@@ -902,12 +902,42 @@ namespace Next_Game
                 int turncoatRefID = turncoatActor.RefID;
                 House turncoatHouse = Game.world.GetHouse(turncoatRefID);
                 //old king's house
-                House oldkingHouse = Game.world.GetHouse(RoyalHouseOld);
+                House tempHouse = Game.world.GetHouse(RoyalHouseOld);
+                MajorHouse oldkingHouse = tempHouse as MajorHouse;
+                //new MajorHouse
+                MajorHouse house = new MajorHouse();
+                int houseID = Game.network.GetNumUniqueHouses() + 1;
+                house.HouseID = houseID;
+                //set up new house
+                house.Name = turncoatHouse.Name;
+                house.Motto = turncoatHouse.Motto;
+                house.Banner = turncoatHouse.Banner;
+                house.ArchetypeID = turncoatHouse.ArchetypeID;
+                house.RefID = turncoatHouse.RefID;
+                house.LocName = oldkingHouse.LocName;
+                house.MenAtArms = oldkingHouse.MenAtArms;
+                house.Loyalty_AtStart = KingLoyalty.New_King;
+                house.Loyalty_Current = KingLoyalty.New_King;
+                house.SetBannerLords(oldkingHouse.GetBannerLords());
+                house.SetLordLocations(oldkingHouse.GetBannerLordLocations());
+                house.SetHousesToCapital(oldkingHouse.GetHousesToCapital());
+                house.SetHousesToConnector(oldkingHouse.GetHousesToConnector());
+                //update bannerlords of Great House 
+                List<int> tempBannerLords = oldkingHouse.GetBannerLords();
+                foreach (int lordID in tempBannerLords)
+                {
+                    Passive actor = Game.world.GetPassiveActor(lordID);
+                    House tempbannerHouse = Game.world.GetHouse(actor.RefID);
+                    MinorHouse bannerHouse = tempbannerHouse as MinorHouse;
+                    bannerHouse.HouseID = houseID;
+                }
+
+                //add house to listOfHouses
                 
                 //replacement bannerlord for promoted guy
 
                 //record of events
-                
+
             }
             else
             { Game.SetError(new Error(33, "Invalid TurnCoat.ActorID")); }

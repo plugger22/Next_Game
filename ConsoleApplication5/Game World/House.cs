@@ -16,7 +16,7 @@ namespace Next_Game
         public string Motto { get; set; }
         public string Banner { get; set; }
         public string LocName { get; set; }
-        public int HouseID { get; set; } = 0; //unique to Great House (allocated by Network.cs)
+        public int HouseID { get; set; } = 0; //unique to Great House (allocated by Network.UpdateHouses)
         public int LocID { get; set; } //unique to location
         public int RefID { get; set; } //unique to house (great or minor)
         public int ArchetypeID { get; set; }
@@ -108,6 +108,26 @@ namespace Next_Game
 
         public int GetNumBannerLords()
         { return listLordLocations.Count; }
+
+        public List<int> GetHousesToCapital()
+        { return listHousesToCapital; }
+
+        public List<int> GetHousesToConnector()
+        { return listHousesToConnector; }
+
+        public void SetBannerLords(List<int> tempList)
+        { listBannerLords.Clear();  listBannerLords.AddRange(tempList); }
+
+        public void SetHousesToCapital(List<int> tempList)
+        { listHousesToCapital.Clear(); listHousesToCapital.AddRange(tempList); }
+
+        public void SetHousesToConnector(List<int> tempList)
+        { listHousesToConnector.Clear(); listHousesToConnector.AddRange(tempList); }
+
+        public void SetLordLocations(List<int> tempList)
+        { listLordLocations.Clear(); listLordLocations.AddRange(tempList); }
+
+
     }
 
     //
