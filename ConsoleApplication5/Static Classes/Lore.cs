@@ -891,7 +891,8 @@ namespace Next_Game
         internal void CreateNewMajorHouse(List<HouseStruct> listUnusedMinorHouses)
         {
             Console.WriteLine(Environment.NewLine + "--- CreateNewMajorHouse");
-            Passive turncoatActor = Game.world.GetPassiveActor(TurnCoat);
+            Passive tempActor = Game.world.GetPassiveActor(TurnCoat);
+            Noble turncoatActor = tempActor as Noble;
             Console.WriteLine("turncoatActor {0}, {1}, ActID: {2} RefID: {3} Loc: {4}", turncoatActor.Name, turncoatActor.Handle, turncoatActor.ActID, turncoatActor.RefID, 
                 Game.world.GetLocationName(turncoatActor.LocID));
            
@@ -1023,7 +1024,19 @@ namespace Next_Game
 
                 //wife for new lord?
                 //advisors - castellan, in oldkings house need replacing
-                //record of events
+
+                //record - new bannerlord
+                string descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", newBannerLord.Name, Game.world.GetGreatHouseName(newBannerLord.HouseID), newBannerLord.Age);
+                Record record = new Record(descriptor, newBannerLord.ActID, newBannerLord.LocID, newBannerLord.RefID, newBannerLord.Lordship, HistActorEvent.Lordship);
+                Game.world.SetRecord(record);
+                //record - old bannerlord promoted
+                descriptor = string.Format("{0} has been granted Lordship, of House {1}, by King {2}", turncoatActor.Name, Game.world.GetGreatHouseName(turncoatActor.HouseID), turncoatActor.Age, NewKing.Name);
+                Record record_1 = new Record(descriptor, turncoatActor.ActID, turncoatActor.LocID, turncoatActor.RefID, turncoatActor.Lordship, HistActorEvent.Lordship);
+                Game.world.SetRecord(record_1);
+                //record - new GreatLord
+                descriptor = string.Format("{0} assumes Lordship, of House {1}, age {2}", turncoatActor.Name, Game.world.GetGreatHouseName(turncoatActor.HouseID), turncoatActor.Age);
+                Record record_2 = new Record(descriptor, turncoatActor.ActID, turncoatActor.LocID, turncoatActor.RefID, turncoatActor.Lordship, HistActorEvent.Lordship);
+                Game.world.SetRecord(record_2);
 
                 //turncoat a traitor who handed over the old king at final battle
 
