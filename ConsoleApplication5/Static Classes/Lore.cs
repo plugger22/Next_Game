@@ -960,7 +960,7 @@ namespace Next_Game
                 Location locBannerLord = Game.network.GetLocation(bannerLocID); 
                 Console.WriteLine("bannerlord comes from {0}, LocID: {1} ({2}:{3})", Game.world.GetLocationName(bannerLocID), bannerLocID, locBannerLord.GetPosX(), locBannerLord.GetPosY());
                 Position pos = locBannerLord.GetPosition();
-                Passive newBannerLord = Game.history.CreateHouseActor(minorStruct.Name, ActorType.BannerLord, pos, bannerLocID, minorStruct.RefID, houseID);
+                Passive newBannerLord = Game.history.CreateStartingHouseActor(minorStruct.Name, ActorType.BannerLord, pos, bannerLocID, minorStruct.RefID, houseID);
                 Game.world.SetPassiveActor(newBannerLord);
                 Console.WriteLine("new Bannerlord {0}, ActID: {1}", newBannerLord.Name, newBannerLord.ActID);
                 newBannerLord.Loyalty_AtStart = KingLoyalty.New_King;

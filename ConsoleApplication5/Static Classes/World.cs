@@ -1096,8 +1096,8 @@ namespace Next_Game
                 //create Lord and Lady for house
                 Location loc = Game.network.GetLocation(kvp.Value.LocID);
                 Position pos = loc.GetPosition();
-                Noble actorLord = (Noble)Game.history.CreateHouseActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
-                Noble actorLady = (Noble)Game.history.CreateHouseActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
+                Noble actorLord = (Noble)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                Noble actorLady = (Noble)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
                     ActorSex.Female, WifeStatus.First_Wife);
                 //add Lord to House
                 kvp.Value.LordID = actorLord.ActID;
@@ -1153,7 +1153,7 @@ namespace Next_Game
                     //create BannerLord for house
                     Location loc = Game.network.GetLocation(kvp.Value.LocID);
                     Position pos = loc.GetPosition();
-                    BannerLord bannerLord = (BannerLord)Game.history.CreateHouseActor(kvp.Value.Name, ActorType.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                    BannerLord bannerLord = (BannerLord)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
                     //add to dictionaries of actors
                     dictPassiveActors.Add(bannerLord.ActID, bannerLord);
                     dictAllActors.Add(bannerLord.ActID, bannerLord);

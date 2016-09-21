@@ -269,7 +269,7 @@ namespace Next_Game
         /// <param name="refID"></param>
         /// <param name="sex"></param>
         /// <returns></returns>
-        internal Passive CreateHouseActor(string lastName, ActorType type, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male, WifeStatus wifeStatus = WifeStatus.None)
+        internal Passive CreateStartingHouseActor(string lastName, ActorType type, Position pos, int locID, int refID, int houseID, ActorSex sex = ActorSex.Male, WifeStatus wifeStatus = WifeStatus.None)
         {
             //get a random first name
             string actorName = GetActorName(lastName, sex, refID);
