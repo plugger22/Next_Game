@@ -1178,12 +1178,19 @@ namespace Next_Game
             catch (Exception e)
             { Game.SetError(new Error(34, e.Message)); }
         }
+
+        /// <summary>
+        /// Add non-Major house to the only relevant dictionary
+        /// </summary>
+        /// <param name="house"></param>
+        internal void AddHouse(House house)
+        { dictAllHouses.Add(house.RefID, house); }
             
         /// <summary>
         /// find entry with same RefID in dictAllHouses and removes it if present, then add the new House (used by lore.cs CreateNewMajorHouse)
         /// </summary>
         /// <param name="refID"></param>
-        internal void RemoveMajorHouse(int refID)
+        internal void RemoveHouse(int refID)
         {
             if (!dictAllHouses.Remove(refID))
             { Game.SetError(new Error(35, "House not found")); }
