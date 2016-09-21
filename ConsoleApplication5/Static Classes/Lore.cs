@@ -908,6 +908,7 @@ namespace Next_Game
                 MajorHouse house = new MajorHouse();
                 int houseID = Game.network.GetNumUniqueHouses() + 1;
                 house.HouseID = houseID;
+
                 //set up new house
                 house.Name = turncoatHouse.Name;
                 house.Motto = turncoatHouse.Motto;
@@ -926,17 +927,6 @@ namespace Next_Game
                 house.SetHousesToConnector(oldkingHouse.GetHousesToConnector());
                 house.SetSecrets(turncoatHouse.GetSecrets());
 
-                //update bannerlords of Great House 
-                List<int> tempBannerLords = oldkingHouse.GetBannerLords();
-                foreach (int lordID in tempBannerLords)
-                {
-                    Passive actor = Game.world.GetPassiveActor(lordID);
-                    House tempbannerHouse = Game.world.GetHouse(actor.RefID);
-                    MinorHouse bannerHouse = tempbannerHouse as MinorHouse;
-                    bannerHouse.HouseID = houseID;
-                }
-
-                
                 //update Map with refID and houseID for loc
                 Location loc = Game.network.GetLocation(house.LocID);
                 Game.map.SetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY(), houseID);
@@ -947,19 +937,45 @@ namespace Next_Game
                 turncoatHouse.RefID = minorStruct.RefID;
                 turncoatHouse.Motto = minorStruct.Motto;
                 turncoatHouse.Banner = minorStruct.Banner;
-
+                //remove from list to prevent future use
                 listUnusedMinorHouses.RemoveAt(index);
-                
+
                 //need a new Bannerlord
-                //need to update house.ListOfBannerLords
-                //need to change original Bannerlord actor details
-                //need to change actors in Locations
+                int bannerLocID = turncoatHouse.LocID;
+                Location locBannerLord = Game.network.GetLocation(bannerLocID);
+                Position pos = locBannerLord.GetPosition();
+                Passive newBannerLord = Game.history.CreateHouseActor(minorStruct.Name, ActorType.BannerLord, pos, bannerLocID, minorStruct.RefID, houseID);
+                Game.world.SetPassiveActor(newBannerLord);
+
+                //need to update house.ListOfBannerLords (remove old refID, add new)
+                List<int> tempLords = house.GetBannerLords();
+                index = tempLords.FindIndex(a => a == turncoatRefID);
+                tempLords.RemoveAt(index);
+                tempLords.Add(minorStruct.RefID);
                 
+                //need to change original Bannerlord actor (now Lord) details
+                turncoatActor.Type = ActorType.Lord;
+                turncoatActor.Realm = ActorRealm.Head_of_Noble_House;
+                turncoatActor.LocID = loc.LocationID;
+                turncoatActor.Status = ActorStatus.AtLocation;
+                turncoatActor.HouseID = houseID;
+                loc.AddActor(turncoatActor.ActID);
+
+                //update bannerlords of Great House 
+                List<int> tempBannerLords = oldkingHouse.GetBannerLords();
+                foreach (int lordID in tempBannerLords)
+                {
+                    Passive actor = Game.world.GetPassiveActor(lordID);
+                    House tempbannerHouse = Game.world.GetHouse(actor.RefID);
+                    MinorHouse bannerHouse = tempbannerHouse as MinorHouse;
+                    bannerHouse.HouseID = houseID;
+                }
+
                 //add house to world dictionaries (do after turncoatHouse update otherwise two identical houses in world.dictAllHouses)
                 Game.world.AddMajorHouse(house);
 
                 //wife for new lord?
-
+                //advisors - castellan, in oldkings house need replacing
                 //record of events
 
             }
