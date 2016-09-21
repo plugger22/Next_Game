@@ -965,6 +965,7 @@ namespace Next_Game
                 Console.WriteLine("new Bannerlord {0}, ActID: {1}", newBannerLord.Name, newBannerLord.ActID);
                 newBannerLord.Loyalty_AtStart = KingLoyalty.New_King;
                 newBannerLord.Loyalty_Current = KingLoyalty.New_King;
+                newBannerLord.Lordship = Game.gameStart;
                 newMinorHouse.LordID = newBannerLord.ActID;
 
                 //need to update house.ListOfBannerLords (remove old refID, add new)

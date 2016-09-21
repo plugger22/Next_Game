@@ -396,7 +396,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// create a Bannerlord and add to Location (any time)
+        /// create a Bannerlord and add to Location (any time) -> no record created, or data for time of attaining Lordship
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="locID"></param>
