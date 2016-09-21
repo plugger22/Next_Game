@@ -395,6 +395,43 @@ namespace Next_Game
             return actor;
         }
 
+        /// <summary>
+        /// create a Bannerlord and add to Location (any time)
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="locID"></param>
+        /// <param name="refID"></param>
+        /// <param name="houseID"></param>
+        /// <returns></returns>
+        internal BannerLord CreateBannerLord(string lastName, Position pos, int locID, int refID, int houseID)
+        {
+            //get a random first name
+            string actorName = GetActorName(lastName, ActorSex.Male, refID);
+            BannerLord actor = new BannerLord(actorName);
+            actor.Realm = ActorRealm.Head_of_House;
+            //age (older men, younger wives
+            int age = rnd.Next(25, 60);
+            actor.Born = Game.gameYear - age;
+            actor.Age = age;
+            //data
+            actor.SetActorPosition(pos);
+            actor.LocID = locID;
+            actor.RefID = refID;
+            actor.HouseID = houseID;
+            //add to Location
+            Location loc = Game.network.GetLocation(locID);
+            loc.AddActor(actor.ActID);
+            //house at birth (males the same)
+            actor.BornRefID = refID;
+            //create records of being born
+            string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
+            Record recordBannerLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
+            Game.world.SetRecord(recordBannerLord);
+            //assign traits
+            InitialiseActorTraits(actor);
+            return actor;
+        }
+
 
         /// <summary>
         /// Create a Knight & add to Location
