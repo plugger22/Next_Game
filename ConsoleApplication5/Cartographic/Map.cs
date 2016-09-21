@@ -2110,7 +2110,7 @@ namespace Next_Game.Cartographic
                     if (pathPrevious.Count > 0)
                     { newPos = pathPrevious[0]; }
                     else
-                    { Game.SetError(new Error(2, string.Format("pathPrevious.Count == 0, CapDirection {0}, newPos {1}:{2}", capDirection, newPos.PosX, newPos.PosY))); }
+                    { /*Game.SetError(new Error(2, string.Format("pathPrevious.Count == 0, CapDirection {0}, newPos {1}:{2}", capDirection, newPos.PosX, newPos.PosY)));*/ }
                 }
                 //check if at capital
                 while (newPos.PosX != capitalX || newPos.PosY != capitalY);
@@ -2138,7 +2138,7 @@ namespace Next_Game.Cartographic
                 if((pos.PosX != posStart.PosX || pos.PosY != posStart.PosY) && (pos.PosX == posEnd.PosX && pos.PosY == posEnd.PosY))
                 { return path; }
             }
-            Game.SetError(new Error(3, "no suitable route found"));
+            //Game.SetError(new Error(3, "no suitable route found"));
             return path;
         }
 

@@ -1180,6 +1180,16 @@ namespace Next_Game
         }
             
         /// <summary>
+        /// find entry with same RefID in dictAllHouses and removes it if present, then add the new House (used by lore.cs CreateNewMajorHouse)
+        /// </summary>
+        /// <param name="refID"></param>
+        internal void RemoveMajorHouse(int refID)
+        {
+            if (!dictAllHouses.Remove(refID))
+            { Game.SetError(new Error(35, "House not found")); }
+        }
+
+        /// <summary>
         /// checks GreatLords for having no sons at Game Start
         /// </summary>
         private void CheckGreatLords()
