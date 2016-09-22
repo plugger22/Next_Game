@@ -1046,14 +1046,13 @@ namespace Next_Game
 
                 //remove oldking House from relevant dictionaries
                 Game.world.RemoveMajorHouse(oldkingHouse);
+                //remove old bannerlord house, add new from dictAllHouses
+                Game.world.RemoveMinorHouse(oldBannerLordRefID);
+                Game.world.AddHouse(newMinorHouse);
                 //add house to world dictionaries (do after turncoatHouse update otherwise two identical houses in world.dictAllHouses)
                 Game.world.AddMajorHouse(newMajorhouse);
                 //sort list Of GreatHouses by Power
                 Game.world.SortMajorHouses();
-
-                //remove old bannerlord house, add new from dictAllHouses
-                Game.world.RemoveMinorHouse(oldBannerLordRefID);
-                Game.world.AddHouse(newMinorHouse);
 
                 //update Map with refID and houseID for loc
                 Game.map.SetMapInfo(MapLayer.RefID, locBannerLord.GetPosX(), locBannerLord.GetPosY(), newMinorHouse.RefID);
