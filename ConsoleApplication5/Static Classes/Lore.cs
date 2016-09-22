@@ -21,7 +21,7 @@ namespace Next_Game
         public int RoyalHouseNew { get; set; } // refID
         public int RoyalHouseCurrent { get; set; } // refID
         public int TurnCoat { get; set; } //actID of Turncoat Bannerlord who takes over lands of old king
-        //Royal & Rebel Family and retainers
+        //Royal & Rebel Family Nobles
         private List<Passive> listOfOldRoyals; //at time of revolt
         private List<Passive> listOfNewRoyals; //at time of taking power
         public Noble OldKing { get; set; }
@@ -473,7 +473,7 @@ namespace Next_Game
                                         trueEvent = false;
                                     }
                                 }
-                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Deed, trueEvent);
+                                record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorEvent.Heroic_Deed, trueEvent);
                                 break;
                             default:
                                 Game.SetError(new Error(31, "Invalid case"));
@@ -889,7 +889,7 @@ namespace Next_Game
         /// <summary>
         /// swaps Old King's major house for a promoted bannerlord from his stable (turned traitor and is being rewarded)
         /// </summary>
-        internal void CreateNewMajorHouse(List<HouseStruct> listUnusedMinorHouses)
+        internal void CreateNewMajorHouse(List<HouseStruct> listUnusedMinorHouses, List<Advisor> listOfRoyalAdvisors)
         {
             Console.WriteLine(Environment.NewLine + "--- CreateNewMajorHouse");
             Passive oldBannerLord = Game.world.GetPassiveActor(TurnCoat);
@@ -898,7 +898,7 @@ namespace Next_Game
            
             if (oldBannerLord != null && oldBannerLord.Status == ActorStatus.AtLocation)
             {
-                
+                string descriptor;
                 //turncoat details
                 int oldBannerLordRefID = oldBannerLord.RefID;
                 House turncoatHouse = Game.world.GetHouse(oldBannerLordRefID);
@@ -937,7 +937,6 @@ namespace Next_Game
                 //update Loc details
                 loc.HouseID = houseID;
                 loc.HouseRefID = oldBannerLordRefID;
-                
 
                 //new MinorHouse
                 MinorHouse newMinorHouse = new MinorHouse();
@@ -1062,12 +1061,35 @@ namespace Next_Game
                 //update Loc details
                 locBannerLord.HouseRefID = newMinorHouse.RefID;
 
-
                 //wife for new lord?
+
+
                 //advisors - castellan, in oldkings house need replacing
+                foreach( Advisor advisor in listOfRoyalAdvisors)
+                {
+                    string fate = "dismissed";
+                    if (rnd.Next(100) < 40)
+                    {
+                        fate = "beheaded";
+                        Game.history.RemoveActor(advisor, Game.gameStart, ActorGone.Executed);
+                        //record - fate of old king advisor
+                        descriptor = string.Format("{0} {1}, Aid {2} was {3} on orders of the new Lord {4}", advisor.advisorNoble, advisor.Name, advisor.ActID, fate, newLord.Name);
+                        Record record_6 = new Record(descriptor, advisor.ActID, advisor.LocID, advisor.RefID, Game.gameStart, HistActorEvent.Service);
+                        record_6.AddActorEvent(HistActorEvent.Died);
+                        Game.world.SetRecord(record_6);
+                    }
+                    else
+                    {
+                        Game.history.RemoveActor(advisor, Game.gameStart, ActorGone.Missing);
+                        //record - fate of old king advisor
+                        descriptor = string.Format("{0} {1}, Aid {2} was {3} on orders of the new Lord {4}", advisor.advisorNoble, advisor.Name, advisor.ActID, fate, newLord.Name);
+                        Record record_6 = new Record(descriptor, advisor.ActID, advisor.LocID, advisor.RefID, Game.gameStart, HistActorEvent.Service);
+                        Game.world.SetRecord(record_6);
+                    }
+                }
 
                 //record - new bannerlord
-                string descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", newBannerLord.Name, Game.world.GetGreatHouseName(newBannerLord.HouseID), newBannerLord.Age);
+                descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", newBannerLord.Name, Game.world.GetGreatHouseName(newBannerLord.HouseID), newBannerLord.Age);
                 Record record_0 = new Record(descriptor, newBannerLord.ActID, newBannerLord.LocID, newBannerLord.RefID, newBannerLord.Lordship, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_0);
                 //record - old bannerlord does the dirty (public knowledge, hence no secret)

@@ -1642,7 +1642,7 @@ namespace Next_Game
             listOfRoyals = royalActors.ToList();
 
             //assign starting loyalties to actors
-            for(int i = 0; i < listOfHousesByPower.Count; i++)
+            for (int i = 0; i < listOfHousesByPower.Count; i++)
             {
                 MajorHouse house = listOfHousesByPower[i];
                 KingLoyalty loyalty = house.Loyalty_AtStart;
@@ -1654,7 +1654,7 @@ namespace Next_Game
                     select actor.Value;
                 listOfActors = tempActors.ToList();
                 //set loyalty
-                foreach(Passive actor in listOfActors)
+                foreach (Passive actor in listOfActors)
                 { actor.Loyalty_AtStart = loyalty; actor.Loyalty_Current = loyalty; }
             }
 
@@ -1663,7 +1663,7 @@ namespace Next_Game
             List<BannerLord> listOfRoyalBannerLords = new List<BannerLord>();
             List<Knight> listOfRoyalKnights = new List<Knight>();
             List<Advisor> listOfRoyalAdvisors = new List<Advisor>();
-            foreach(Passive royal in listOfRoyals)
+            foreach (Passive royal in listOfRoyals)
             {
                 if (royal is Noble)
                 { listOfRoyalNobles.Add((Noble)royal); }
@@ -1678,7 +1678,7 @@ namespace Next_Game
             }
             //update lore family list
             if (listOfRoyalNobles.Count > 0)
-            { Game.lore.SetListOfOldRoyals(listOfRoyalNobles); }
+            { Game.lore.SetListOfOldRoyals(listOfRoyalNobles);}
             else { Game.SetError(new Error(27, "listOfRoyalNobles is empty")); }
             //find key characters
             Noble OldKing = null;
@@ -1856,7 +1856,7 @@ namespace Next_Game
             //Generate BackStory
             Game.lore.CreateOldKingBackStory(listOfRoyalists, listOfRebels, listOfWounds);
             Game.lore.CreateRoyalFamilyFate();
-            Game.lore.CreateNewMajorHouse(listHousePool);
+            Game.lore.CreateNewMajorHouse(listHousePool, listOfRoyalAdvisors);
 
             //Royal Court housekeeping and fate during transition
             foreach (Advisor advisor in tempListOfAdvisors)
