@@ -20,7 +20,7 @@ namespace Next_Game
 
         private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        //private static int seed = 48956;
+        //private static int seed = 22089;
         
 
         private static readonly int _rootWidth = 230;

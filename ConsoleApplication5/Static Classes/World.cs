@@ -1331,7 +1331,7 @@ namespace Next_Game
             int numLocs = Game.network.GetNumLocations();
             int numGreatHouses = dictMajorHouses.Count;
             int numSpecialLocs = Game.network.GetNumSpecialLocations();
-            int numBannerLords = dictAllHouses.Count - numGreatHouses;
+            int numBannerLords = dictAllHouses.Count - numGreatHouses - 1;
             int numActors = dictAllActors.Count;
             int numChildren = numActors - (numGreatHouses * 2) - numBannerLords;
             int numSecrets = dictSecrets.Count;
