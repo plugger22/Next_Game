@@ -748,15 +748,22 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Display House data to main infoConsole
+        /// Display House data to main infoConsole (input either houseID or refID, will check houseID first)
         /// </summary>
         /// <param name="houseID"></param>
+        /// <param name="refID"></param>
         /// <returns></returns>
-        internal List<Snippet> ShowHouseRL(int houseID)
+        internal List<Snippet> ShowHouseRL(int houseID, int refID = 0)
         {
-            MajorHouse majorHouse = GetGreatHouse(houseID);
+            MajorHouse majorHouse = null;
+            //check input type
+            if (houseID > 0)
+            { majorHouse = GetGreatHouse(houseID); }
+            else if (refID > 0)
+            { House house = GetHouse(refID); majorHouse = house as MajorHouse; }
+            else
+            { Game.SetError(new Error(36, "Invalid input data")); return null; }
             List<Snippet> houseList = new List<Snippet>();
-            int refID;
             if (majorHouse != null)
             {
                 List<int> listLordLocations = majorHouse.GetBannerLordLocations();

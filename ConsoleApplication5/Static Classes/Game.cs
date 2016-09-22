@@ -559,7 +559,7 @@ namespace Next_Game
                                     infoChannel.InsertHeader(new Snippet("--- all KINGDOM EVENTS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Debug:
-                                    infoChannel.SetInfoList(world.ShowHouseRL(lore.OldKing.HouseID), ConsoleDisplay.Multi);
+                                    infoChannel.SetInfoList(world.ShowHouseRL(0, lore.OldKing.RefID), ConsoleDisplay.Multi);
                                     break;
                             }
                             break;
