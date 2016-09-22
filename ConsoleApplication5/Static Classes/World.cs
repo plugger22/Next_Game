@@ -998,6 +998,7 @@ namespace Next_Game
             return person;
         }
 
+      
         /// <summary>
         /// returns string showing character name and status (at 'x' loc, travelling)
         /// </summary>
@@ -1649,6 +1650,32 @@ namespace Next_Game
         {
             Location loc = Game.network.GetLocation(locID);
             return loc.CheckActorStatus(actorID);
+        }
+
+        /// <summary>
+        /// permanently remove an actor from relevant dictionaries
+        /// </summary>
+        /// <param name="actorID"></param>
+        public void RemovePassiveActor(int actorID)
+        {
+            if (!dictAllActors.Remove(actorID))
+            { Game.SetError(new Error(37, "ActorID not found")); }
+            if (!dictPassiveActors.Remove(actorID))
+            { Game.SetError(new Error(37, "ActorID not found")); }
+        }
+
+        /// <summary>
+        /// add a new actor to relevant dictionaries
+        /// </summary>
+        /// <param name="actor"></param>
+        public void AddPassiveActor(Passive actor)
+        {
+            if (actor != null)
+            {
+                dictAllActors.Add(actor.ActID, actor);
+                dictPassiveActors.Add(actor.ActID, actor);
+            }
+            else { Game.SetError(new Error(38, "null Actor input")); }
         }
 
         /// <summary>
