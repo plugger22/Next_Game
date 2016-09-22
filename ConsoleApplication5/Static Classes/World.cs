@@ -1354,7 +1354,7 @@ namespace Next_Game
             foreach (KeyValuePair<int, int> kvp in dictHousePower)
             {
                 MajorHouse house = GetGreatHouse(kvp.Key);
-                housePower = string.Format("Hid {0} House {1} has {2} BannerLords", house.HouseID, house.Name, house.GetNumBannerLords());
+                housePower = string.Format("Hid {0} House {1} has {2} BannerLords  {3}", house.HouseID, house.Name, house.GetNumBannerLords(), ShowLocationCoords(house.LocID));
                 listStats.Add(new Snippet(housePower));
             }
             //display data

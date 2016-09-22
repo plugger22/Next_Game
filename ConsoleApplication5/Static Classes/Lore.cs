@@ -44,6 +44,7 @@ namespace Next_Game
         private List<string> listRoyalFamilyFate;
         private List<string> listNewKingRule;
         private List<string> listChanges; //location's, bannerlords etc.
+        private List<string> listOfUprisingBattles;
 
         public Lore(int seed)
         {
@@ -56,6 +57,7 @@ namespace Next_Game
             listRoyalFamilyFate = new List<string>();
             listNewKingRule = new List<string>();
             listChanges = new List<string>();
+            listOfUprisingBattles = new List<string>();
         }
 
         internal void SetListOfOldRoyals(List<Passive> listRoyals)
@@ -230,7 +232,6 @@ namespace Next_Game
             string descriptor = null;
             int index;
             int year = Game.gameStart - 1; //all conflict assumed to be one year prior to start of the new King's rule
-            List<string> listOfBattles = new List<string>();
 
             //hard coded data sets
             string[] array_LeadershipNew = new string[] { "None", "woeful", "dubious", "unexpectional", "strong", "commanding" };
@@ -291,7 +292,7 @@ namespace Next_Game
                 Record record = new Record(details, loc.LocationID, loc.HouseRefID, year, kingdomEvent);
                 Game.world.SetRecord(record);
                 //add to list of battles to enable actor events to be fleshed out
-                listOfBattles.Add(descriptor);
+                listOfUprisingBattles.Add(descriptor);
                 //debug
                 Console.WriteLine("{0} {1} {2}", year, descriptor, Game.world.ShowLocationCoords(loc.LocationID));
 
@@ -891,51 +892,51 @@ namespace Next_Game
         internal void CreateNewMajorHouse(List<HouseStruct> listUnusedMinorHouses)
         {
             Console.WriteLine(Environment.NewLine + "--- CreateNewMajorHouse");
-            Passive turncoatActor = Game.world.GetPassiveActor(TurnCoat);
-            Console.WriteLine("turncoatActor {0}, {1}, ActID: {2} RefID: {3} Loc: {4}", turncoatActor.Name, turncoatActor.Handle, turncoatActor.ActID, turncoatActor.RefID, 
-                Game.world.GetLocationName(turncoatActor.LocID));
+            Passive oldBannerLord = Game.world.GetPassiveActor(TurnCoat);
+            Console.WriteLine("turncoatActor {0}, {1}, ActID: {2} RefID: {3} Loc: {4}", oldBannerLord.Name, oldBannerLord.Handle, oldBannerLord.ActID, oldBannerLord.RefID, 
+                Game.world.GetLocationName(oldBannerLord.LocID));
            
-            if (turncoatActor != null && turncoatActor.Status == ActorStatus.AtLocation)
+            if (oldBannerLord != null && oldBannerLord.Status == ActorStatus.AtLocation)
             {
                 
                 //turncoat details
-                int turncoatRefID = turncoatActor.RefID;
-                House turncoatHouse = Game.world.GetHouse(turncoatRefID);
+                int oldBannerLordRefID = oldBannerLord.RefID;
+                House turncoatHouse = Game.world.GetHouse(oldBannerLordRefID);
                 //old king's house
                 House tempHouse = Game.world.GetHouse(RoyalHouseOld);
                 MajorHouse oldkingHouse = tempHouse as MajorHouse;
                 //new MajorHouse
-                MajorHouse house = new MajorHouse();
+                MajorHouse newMajorhouse = new MajorHouse();
                 int houseID = Game.network.GetNumUniqueHouses() + 1;
-                house.HouseID = houseID;
+                newMajorhouse.HouseID = houseID;
                 Console.WriteLine("Old King House {0}, {1}", oldkingHouse.Name, oldkingHouse.Motto);
 
                 //set up new house
-                house.Name = turncoatHouse.Name;
-                house.Motto = turncoatHouse.Motto;
-                house.Banner = turncoatHouse.Banner;
-                house.ArchetypeID = turncoatHouse.ArchetypeID;
-                house.RefID = turncoatHouse.RefID;
-                house.LocName = oldkingHouse.LocName;
-                house.MenAtArms = oldkingHouse.MenAtArms;
-                house.Branch = oldkingHouse.Branch;
-                house.LordID = turncoatActor.ActID;
-                house.LocID = oldkingHouse.LocID;
-                house.Loyalty_Current = KingLoyalty.New_King;
-                house.Loyalty_AtStart = KingLoyalty.Old_King;
-                house.SetBannerLords(oldkingHouse.GetBannerLords());
-                house.SetLordLocations(oldkingHouse.GetBannerLordLocations());
-                house.SetHousesToCapital(oldkingHouse.GetHousesToCapital());
-                house.SetHousesToConnector(oldkingHouse.GetHousesToConnector());
-                house.SetSecrets(turncoatHouse.GetSecrets());
+                newMajorhouse.Name = turncoatHouse.Name;
+                newMajorhouse.Motto = turncoatHouse.Motto;
+                newMajorhouse.Banner = turncoatHouse.Banner;
+                newMajorhouse.ArchetypeID = turncoatHouse.ArchetypeID;
+                newMajorhouse.RefID = turncoatHouse.RefID;
+                newMajorhouse.LocName = oldkingHouse.LocName;
+                newMajorhouse.MenAtArms = oldkingHouse.MenAtArms;
+                newMajorhouse.Branch = oldkingHouse.Branch;
+                newMajorhouse.LordID = oldBannerLord.ActID;
+                newMajorhouse.LocID = oldkingHouse.LocID;
+                newMajorhouse.Loyalty_Current = KingLoyalty.New_King;
+                newMajorhouse.Loyalty_AtStart = KingLoyalty.Old_King;
+                newMajorhouse.SetBannerLords(oldkingHouse.GetBannerLords());
+                newMajorhouse.SetLordLocations(oldkingHouse.GetBannerLordLocations());
+                newMajorhouse.SetHousesToCapital(oldkingHouse.GetHousesToCapital());
+                newMajorhouse.SetHousesToConnector(oldkingHouse.GetHousesToConnector());
+                newMajorhouse.SetSecrets(turncoatHouse.GetSecrets());
 
                 //update Map with refID and houseID for loc
-                Location loc = Game.network.GetLocation(house.LocID);
+                Location loc = Game.network.GetLocation(newMajorhouse.LocID);
                 Game.map.SetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY(), houseID);
                 Console.WriteLine("loc {0}:{1}, houseID: {2}", loc.GetPosX(), loc.GetPosY(), houseID);
                 //update Loc details
                 loc.HouseID = houseID;
-                loc.HouseRefID = turncoatRefID;
+                loc.HouseRefID = oldBannerLordRefID;
                 
 
                 //new MinorHouse
@@ -971,11 +972,11 @@ namespace Next_Game
                 newMinorHouse.LordID = newBannerLord.ActID;
 
                 //need to update house.ListOfBannerLords (remove old refID, add new)
-                int turncoatHouseID = turncoatActor.HouseID;
-                MajorHouse liegeLordHouse = Game.world.GetGreatHouse(turncoatHouseID);
+                int oldBannerLordHouseID = oldBannerLord.HouseID;
+                MajorHouse liegeLordHouse = Game.world.GetGreatHouse(oldBannerLordHouseID);
                 Console.WriteLine("Liege Lord House {0}", liegeLordHouse.Name);
                 List<int> tempLords = liegeLordHouse.GetBannerLords();
-                index = tempLords.FindIndex(a => a == turncoatRefID);
+                index = tempLords.FindIndex(a => a == oldBannerLordRefID);
                 if (index > -1)
                 {
                     tempLords.RemoveAt(index);
@@ -986,7 +987,7 @@ namespace Next_Game
                 else { Console.WriteLine("Not found in listOfBannerLords"); }
 
                 //loop through turncoat bannerlords and update loc details
-                List<int> tempList = house.GetBannerLordLocations();
+                List<int> tempList = newMajorhouse.GetBannerLordLocations();
                 foreach( int locID in tempList)
                 {
                     Location locTemp = Game.network.GetLocation(locID);
@@ -997,19 +998,19 @@ namespace Next_Game
                 }
 
                 //need to update original Bannerlord actor (now Lord) details
-                turncoatActor.Type = ActorType.Lord;
-                turncoatActor.Realm = ActorRealm.Head_of_Noble_House;
-                turncoatActor.LocID = loc.LocationID;
-                turncoatActor.Status = ActorStatus.AtLocation;
-                turncoatActor.HouseID = houseID;
-                turncoatActor.Loyalty_Current = KingLoyalty.New_King;
+                oldBannerLord.Type = ActorType.Lord;
+                oldBannerLord.Realm = ActorRealm.Head_of_Noble_House;
+                oldBannerLord.LocID = loc.LocationID;
+                oldBannerLord.Status = ActorStatus.AtLocation;
+                oldBannerLord.HouseID = houseID;
+                oldBannerLord.Loyalty_Current = KingLoyalty.New_King;
 
                 //update actors for different locations
-                loc.AddActor(turncoatActor.ActID);
-                locBannerLord.RemoveActor(turncoatActor.ActID);
+                loc.AddActor(oldBannerLord.ActID);
+                locBannerLord.RemoveActor(oldBannerLord.ActID);
 
                 //remove old Bannerlord house from dictAllHouses
-                Game.world.RemoveMinorHouse(turncoatRefID);
+                Game.world.RemoveMinorHouse(oldBannerLordRefID);
 
                 //update bannerlords of Great House 
                 List<int> tempBannerLords = oldkingHouse.GetBannerLords();
@@ -1023,21 +1024,19 @@ namespace Next_Game
                 //remove oldking House from relevant dictionaries
                 Game.world.RemoveMajorHouse(oldkingHouse);
                 //add house to world dictionaries (do after turncoatHouse update otherwise two identical houses in world.dictAllHouses)
-                Game.world.AddMajorHouse(house);
+                Game.world.AddMajorHouse(newMajorhouse);
                 //sort list Of GreatHouses by Power
                 Game.world.SortMajorHouses();
 
                 //remove old bannerlord house, add new from dictAllHouses
-                Game.world.RemoveMinorHouse(turncoatRefID);
+                Game.world.RemoveMinorHouse(oldBannerLordRefID);
                 Game.world.AddHouse(newMinorHouse);
 
                 //update Map with refID and houseID for loc
-                
                 Game.map.SetMapInfo(MapLayer.RefID, locBannerLord.GetPosX(), locBannerLord.GetPosY(), newMinorHouse.RefID);
                 Console.WriteLine("Updating MapLayer -> loc {0}:{1}, refID: {2}", locBannerLord.GetPosX(), locBannerLord.GetPosY(), newMinorHouse.RefID);
                 //update Loc details
                 locBannerLord.HouseRefID = newMinorHouse.RefID;
-
 
 
                 //wife for new lord?
@@ -1045,22 +1044,33 @@ namespace Next_Game
 
                 //record - new bannerlord
                 string descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", newBannerLord.Name, Game.world.GetGreatHouseName(newBannerLord.HouseID), newBannerLord.Age);
-                Record record = new Record(descriptor, newBannerLord.ActID, newBannerLord.LocID, newBannerLord.RefID, newBannerLord.Lordship, HistActorEvent.Lordship);
-                Game.world.SetRecord(record);
+                Record record_0 = new Record(descriptor, newBannerLord.ActID, newBannerLord.LocID, newBannerLord.RefID, newBannerLord.Lordship, HistActorEvent.Lordship);
+                Game.world.SetRecord(record_0);
+                //record - old bannerlord does the dirty (public knowledge, hence no secret)
+                descriptor = string.Format("{0} dramatically changed sides during {1} and captured Old King {2} ", oldBannerLord.Name, listOfUprisingBattles[listOfUprisingBattles.Count - 1], OldKing.Name);
+                Record record_5 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameStart, HistActorEvent.Lordship);
+                Game.world.SetRecord(record_5);
                 //record - old bannerlord promoted
-                descriptor = string.Format("Bannerlord {0} has been gifted Lordship, of Noble House {1}, by King {2}", turncoatActor.Name, Game.world.GetGreatHouseName(turncoatActor.HouseID), NewKing.Name);
-                Record record_1 = new Record(descriptor, turncoatActor.ActID, turncoatActor.LocID, turncoatActor.RefID, Game.gameStart, HistActorEvent.Lordship);
+                descriptor = string.Format("Bannerlord {0} has been elevated to a Noble Lord by King {1}", oldBannerLord.Name, NewKing.Name);
+                Record record_1 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameStart, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_1);
+                //House record - new House created
+                descriptor = string.Format("King {0} has gifted all property and lands belonging to House {1} to House {2}", NewKing.Name, oldkingHouse.Name, newMajorhouse.Name);
+                Record record_4 = new Record(descriptor, newMajorhouse.LocID, newMajorhouse.RefID, Game.gameStart, HistHouseEvent.Ownership);
+                Game.world.SetRecord(record_4);
                 //record - new GreatLord
-                descriptor = string.Format("{0} assumes Lordship, of House {1}, age {2}", turncoatActor.Name, Game.world.GetGreatHouseName(turncoatActor.HouseID), turncoatActor.Age);
-                Record record_2 = new Record(descriptor, turncoatActor.ActID, turncoatActor.LocID, turncoatActor.RefID, Game.gameStart, HistActorEvent.Lordship);
+                descriptor = string.Format("{0} assumes Lordship, of House {1}, age {2}", oldBannerLord.Name, Game.world.GetGreatHouseName(oldBannerLord.HouseID), oldBannerLord.Age);
+                Record record_2 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameStart, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_2);
-                //record - heir lost lands
+                //House record - old King's house stolen
                 descriptor = string.Format("The false King {0} has stolen all property and lands belonging to House {1}", NewKing.Name, oldkingHouse.Name);
                 Record record_3 = new Record(descriptor, OldKing.LocID, OldKing.RefID, Game.gameStart, HistHouseEvent.Ownership);
                 Game.world.SetRecord(record_3);
 
+                
+
                 //turncoat a traitor who handed over the old king at final battle
+                //resentment of other new king loyal noble lords at promotion of bannerlord
 
             }
             else
