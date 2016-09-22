@@ -1055,6 +1055,10 @@ namespace Next_Game
                 descriptor = string.Format("{0} assumes Lordship, of House {1}, age {2}", turncoatActor.Name, Game.world.GetGreatHouseName(turncoatActor.HouseID), turncoatActor.Age);
                 Record record_2 = new Record(descriptor, turncoatActor.ActID, turncoatActor.LocID, turncoatActor.RefID, Game.gameStart, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_2);
+                //record - heir lost lands
+                descriptor = string.Format("The false King {0} has stolen all property and lands belonging to House {1}", NewKing.Name, oldkingHouse.Name);
+                Record record_3 = new Record(descriptor, OldKing.LocID, OldKing.RefID, Game.gameStart, HistHouseEvent.Ownership);
+                Game.world.SetRecord(record_3);
 
                 //turncoat a traitor who handed over the old king at final battle
 

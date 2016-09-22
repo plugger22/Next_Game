@@ -8,7 +8,7 @@ namespace Next_Game
 {
     //categories (can choose multiple)
     public enum HistActorEvent {None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Deed, Service} //conflict -> actor involved in a battle/siege
-    public enum HistHouseEvent {None, Allegiance}
+    public enum HistHouseEvent {None, Allegiance, Ownership}
     public enum HistKingdomEvent { None, Battle, Siege}
 
     ///
@@ -83,6 +83,44 @@ namespace Next_Game
                 { listOfHouses.Add(refID); }
                 if (histActorEvent > 0)
                 { listOfActorEvents.Add(histActorEvent); }
+
+            }
+        }
+
+        /// <summary>
+        /// House Event
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="locID"></param>
+        /// <param name="refID"></param>
+        /// <param name="year"></param>
+        /// <param name="histHouseEvent"></param>
+        /// <param name="actualEvent"></param>
+        public Record(string description, int locID, int refID, int year, HistHouseEvent histHouseEvent = HistHouseEvent.None, bool actualEvent = true)
+        {
+            //it's a valid record only if there is a descriptive text
+            if (description != null)
+            {
+                eventID = eventIndex++;
+                this.Year = year;
+                Turn = Game.gameTurn;
+                Actual = actualEvent;
+                //initialise lists
+                listOfActors = new List<int>();
+                listOfLocs = new List<int>();
+                listOfHouses = new List<int>();
+                listOfItems = new List<int>();
+                listOfActorEvents = new List<HistActorEvent>();
+                listOfHouseEvents = new List<HistHouseEvent>();
+                listOfKingdomEvents = new List<HistKingdomEvent>();
+                //lists
+                Text = description;
+                if (locID > 0)
+                { listOfLocs.Add(locID); }
+                if (refID > 0)
+                { listOfHouses.Add(refID); }
+                if (histHouseEvent > 0)
+                { listOfHouseEvents.Add(histHouseEvent); }
 
             }
         }

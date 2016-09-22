@@ -1213,7 +1213,7 @@ namespace Next_Game
         /// <param name="refID"></param>
         internal void RemoveMajorHouse(House house)
         {
-            //if (!dictAllHouses.Remove(house.RefID))
+            //if (!dictAllHouses.Remove(house.RefID)) -> leave this as it doesn't affect major house calculations and retains house records
             //{ Game.SetError(new Error(35, "House not found")); }
             if (!dictMajorHouses.Remove(house.HouseID))
             { Game.SetError(new Error(35, "House not found")); }
