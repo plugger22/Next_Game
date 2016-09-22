@@ -754,7 +754,7 @@ namespace Next_Game
         /// <returns></returns>
         internal List<Snippet> ShowHouseRL(int houseID)
         {
-            MajorHouse majorHouse = GetGreatHouse(houseID) as MajorHouse;
+            MajorHouse majorHouse = GetGreatHouse(houseID);
             List<Snippet> houseList = new List<Snippet>();
             int refID;
             if (majorHouse != null)

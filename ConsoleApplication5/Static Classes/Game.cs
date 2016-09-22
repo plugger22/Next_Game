@@ -558,6 +558,9 @@ namespace Next_Game
                                     infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- all KINGDOM EVENTS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
+                                case MenuMode.Debug:
+                                    infoChannel.SetInfoList(world.ShowHouseRL(lore.OldKing.HouseID), ConsoleDisplay.Multi);
+                                    break;
                             }
                             break;
                         case RLKey.L:

@@ -86,7 +86,7 @@ namespace Next_Game
                     menuArrayText[1, 2] = "[H] Show House";
                     menuArrayText[1, 3] = "[G] Show Generator Stats";
                     menuArrayText[1, 4] = "[A] Show Actor";
-                    //Switch Menu category commands
+                    //sub Menu commands
                     menuArrayText[3, 0] = "[1..6] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
                     menuArrayText[3, 2] = "[R] Records MENU";
@@ -102,6 +102,7 @@ namespace Next_Game
                     //Character menu commands
                     menuArrayText[0, 0] = "[M] Map";
                     menuArrayText[0, 1] = "[P] Move Player Character";
+
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
@@ -117,6 +118,7 @@ namespace Next_Game
                     menuArrayText[0, 2] = "[D] Dead Actors";
                     menuArrayText[0, 3] = "[G] Marriages";
                     menuArrayText[0, 4] = "[K] Kingdom Events";
+
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
@@ -129,6 +131,7 @@ namespace Next_Game
                     //Lore menu commands
                     menuArrayText[0, 0] = "[U] Uprising";
                     menuArrayText[0, 1] = "[F] Fate of Royals";
+
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
@@ -144,10 +147,13 @@ namespace Next_Game
                     menuArrayText[0, 1] = "[D] Route Debug";
                     menuArrayText[0, 2] = "[R] Routes";
                     menuArrayText[0, 3] = "[M] Map";
+
                     menuArrayText[1, 0] = "[S] Show Secrets";
                     menuArrayText[1, 1] = "[E] Show Errors";
                     menuArrayText[1, 2] = "[T] Show Timers";
                     menuArrayText[1, 3] = "[P] Show Duplicates";
+                    menuArrayText[1, 4] = "[K] Show Old King's House";
+
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
