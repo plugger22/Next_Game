@@ -1087,6 +1087,16 @@ namespace Next_Game
                         Game.world.SetRecord(record_6);
                     }
                 }
+                //create three new advisors
+                Advisor castellan = Game.history.CreateAdvisor(loc.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Castellan, AdvisorRoyal.None);
+                castellan.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; castellan.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                Game.world.SetPassiveActor(castellan);
+                Advisor maester = Game.history.CreateAdvisor(loc.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Maester, AdvisorRoyal.None);
+                maester.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; maester.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                Game.world.SetPassiveActor(maester);
+                Advisor septon = Game.history.CreateAdvisor(loc.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Septon, AdvisorRoyal.None);
+                septon.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; septon.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                Game.world.SetPassiveActor(septon);
 
                 //record - new bannerlord
                 descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", newBannerLord.Name, Game.world.GetGreatHouseName(newBannerLord.HouseID), newBannerLord.Age);
