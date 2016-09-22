@@ -15,6 +15,7 @@ namespace Next_Game
         BATTLE_EVENTS,
         ADVISOR_REFUSAL,
         SIBLING_ESCAPE,
+        MOVE_SPEED,
         Count //keep as last
     }
 
@@ -37,6 +38,7 @@ namespace Next_Game
             arrayOfGlobals[7] = Global.BATTLE_EVENTS;
             arrayOfGlobals[8] = Global.ADVISOR_REFUSAL;
             arrayOfGlobals[9] = Global.SIBLING_ESCAPE;
+            arrayOfGlobals[10] = Global.MOVE_SPEED;
             }
 
         /// <summary>

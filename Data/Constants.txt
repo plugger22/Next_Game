@@ -14,6 +14,8 @@
 4: 75
 # TOUCHED -> % chance of an actor having the touched trait
 5: 2
+# SPEED -> movement speed of actors on map, per turn
+10: 2
 
 # Houses ---
 
