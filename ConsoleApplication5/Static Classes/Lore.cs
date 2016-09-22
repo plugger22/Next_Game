@@ -997,16 +997,40 @@ namespace Next_Game
                     locTemp.HouseID = houseID;
                 }
 
+                //need to create a new Noble actor with details of old BannerLord (must have same ActID)
+                Noble newLord = new Noble();
+
                 //need to update original Bannerlord actor (now Lord) details
-                oldBannerLord.Type = ActorType.Lord;
-                oldBannerLord.Realm = ActorRealm.Head_of_Noble_House;
-                oldBannerLord.LocID = loc.LocationID;
-                oldBannerLord.Status = ActorStatus.AtLocation;
-                oldBannerLord.HouseID = houseID;
-                oldBannerLord.Loyalty_Current = KingLoyalty.New_King;
+                newLord.ActID = oldBannerLord.ActID;
+                newLord.RefID = oldBannerLord.RefID;
+                newLord.HouseID = oldBannerLord.HouseID;
+                newLord.Name = oldBannerLord.Name;
+                newLord.Handle = oldBannerLord.Handle;
+                newLord.arrayOfTraitID = oldBannerLord.arrayOfTraitID;
+                newLord.arrayOfTraitEffects = oldBannerLord.arrayOfTraitEffects;
+                newLord.arrayOfTraitInfluences = oldBannerLord.arrayOfTraitInfluences;
+                newLord.arrayOfTraitNames = oldBannerLord.arrayOfTraitNames;
+                newLord.Type = ActorType.Lord;
+                newLord.Realm = ActorRealm.Head_of_Noble_House;
+                newLord.LocID = loc.LocationID;
+                newLord.Status = ActorStatus.AtLocation;
+                newLord.HouseID = houseID;
+                newLord.Loyalty_Current = KingLoyalty.New_King;
+                newLord.Loyalty_AtStart = KingLoyalty.Old_King;
+                newLord.GenID = 1;
+                newLord.Lordship = Game.gameStart;
+                newLord.Age = oldBannerLord.Age;
+                newLord.Born = oldBannerLord.Born;
+                newLord.BornRefID = oldBannerLord.BornRefID;
+                newLord.Sex = oldBannerLord.Sex;
+                newLord.SetSecrets(oldBannerLord.GetSecrets());
+
+                //remove oldBannerLord from dictionaries and add newLord
+                Game.world.RemovePassiveActor(oldBannerLord.ActID);
+                Game.world.AddPassiveActor(newLord);
 
                 //update actors for different locations
-                loc.AddActor(oldBannerLord.ActID);
+                loc.AddActor(newLord.ActID);
                 locBannerLord.RemoveActor(oldBannerLord.ActID);
 
                 //remove old Bannerlord house from dictAllHouses
@@ -1051,7 +1075,7 @@ namespace Next_Game
                 Record record_5 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameStart, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_5);
                 //record - old bannerlord promoted
-                descriptor = string.Format("Bannerlord {0} has been elevated to a Noble Lord by King {1}", oldBannerLord.Name, NewKing.Name);
+                descriptor = string.Format("{0} has been elevated to a Noble Lord by decree of King {1}", oldBannerLord.Name, NewKing.Name);
                 Record record_1 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameStart, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_1);
                 //House record - new House created

@@ -518,7 +518,7 @@ namespace Next_Game
                 {
                     Noble tempPerson = person as Noble;
                     SortedDictionary<int, ActorRelation> dictTempFamily = tempPerson.GetFamily();
-                    if (dictTempFamily.Count > 0)
+                    if (dictTempFamily?.Count > 0)
                     {
                         listToDisplay.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
                         string maidenName;

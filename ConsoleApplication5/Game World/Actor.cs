@@ -25,7 +25,7 @@ namespace Next_Game
         public string Name { get; set; }
         public int LocID { get; set; } //current location (if travelling then destination) -> if dead then '0'
         public int Speed { get; set; } = 2; //speed of travel throughout the world
-        public int ActID { get; } //set in constructor
+        public int ActID { get; set; } //set in constructor except in special circumstances (eg, copying actors over in Lore.cs)
         public int Age { get; set; }
         public int Born { get; set; } //year born
         public int Gone { get; set; } = 0; //year died or missing
@@ -47,8 +47,6 @@ namespace Next_Game
         public int Treachery { get; set; } = 3;
         public int Leadership { get; set; } = 3;
         public int Touched { get; set; } = 0;
-        //public int AdjustedWits { get; set; } = 0; //net value when trait is influenced by AdjustedActor being in the same Location
-        //public int AdjustedTreachery { get; set; } = 0; //net value when trait is influenced by AdjustedActor being in the same Location
         public int Influencer { get; set; } = 0; //ActorID of person who is influencing traits (can only be one)
         public int[] arrayOfTraitID { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
@@ -160,6 +158,8 @@ namespace Next_Game
         public List<int> GetSecrets()
         { return listOfSecrets; }
 
+        public void SetSecrets(List<int> secrets)
+        { if (secrets != null) { listOfSecrets.Clear(); listOfSecrets.AddRange(secrets); } }
     }
 
 
