@@ -1471,13 +1471,21 @@ namespace Next_Game
                         Game.world.SetRecord(record);
                         RemoveActor(Lady, year, ActorGone.Childbirth);
                     }
-                    else if (num < Game.constant.GetValue(Global.CHILDBIRTH_INFERTILE))
+                    else if (num < Game.constant.GetValue(Global.CHILDBIRTH_COMPLICATIONS))
                     {
-                        //Complications -> Mother can no longer have children
-                        Lady.Fertile = false;
+                        //Complications
                         descriptor = string.Format("{0}, Aid {1} suffered complications while giving birth to {2}", Lady.Name, Lady.ActID, child.Name);
                         Record record_2 = new Record(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistActorEvent.Birthing);
                         Game.world.SetRecord(record_2);
+                        //chance of infertility
+                        if (rnd.Next(100) < Game.constant.GetValue(Global.CHILDBIRTH_INFERTILE))
+                        {
+                            Lady.Fertile = false;
+                            descriptor = string.Format("{0}, Aid {1} suffered complications during birth and is unable to have anymore children", Lady.Name, Lady.ActID);
+                            Secret_Actor secret = new Secret_Actor(SecretType.Fertility, year, descriptor, 2, Lady.ActID);
+                            listOfSecrets.Add(secret);
+                            Lady.AddSecret(secret.SecretID);
+                        }
                     }
                 }
             }

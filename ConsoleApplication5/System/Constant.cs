@@ -16,6 +16,7 @@ namespace Next_Game
         ADVISOR_REFUSAL,
         SIBLING_ESCAPE,
         MOVE_SPEED,
+        CHILDBIRTH_COMPLICATIONS,
         Count //keep as last
     }
 
@@ -39,6 +40,7 @@ namespace Next_Game
             arrayOfGlobals[8] = Global.ADVISOR_REFUSAL;
             arrayOfGlobals[9] = Global.SIBLING_ESCAPE;
             arrayOfGlobals[10] = Global.MOVE_SPEED;
+            arrayOfGlobals[11] = Global.CHILDBIRTH_COMPLICATIONS;
             }
 
         /// <summary>
