@@ -932,12 +932,12 @@ namespace Next_Game
                 newMajorhouse.SetSecrets(turncoatHouse.GetSecrets());
 
                 //update Map with refID and houseID for loc
-                Location loc = Game.network.GetLocation(newMajorhouse.LocID);
-                Game.map.SetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY(), houseID);
-                Console.WriteLine("loc {0}:{1}, houseID: {2}", loc.GetPosX(), loc.GetPosY(), houseID);
+                Location locLord = Game.network.GetLocation(newMajorhouse.LocID);
+                Game.map.SetMapInfo(MapLayer.HouseID, locLord.GetPosX(), locLord.GetPosY(), houseID);
+                Console.WriteLine("loc {0}:{1}, houseID: {2}", locLord.GetPosX(), locLord.GetPosY(), houseID);
                 //update Loc details
-                loc.HouseID = houseID;
-                loc.HouseRefID = oldBannerLordRefID;
+                locLord.HouseID = houseID;
+                locLord.HouseRefID = oldBannerLordRefID;
 
                 //new MinorHouse
                 MinorHouse newMinorHouse = new MinorHouse();
@@ -948,6 +948,7 @@ namespace Next_Game
                 newMinorHouse.RefID = minorStruct.RefID;
                 newMinorHouse.Motto = minorStruct.Motto;
                 newMinorHouse.Banner = minorStruct.Banner;
+                newMinorHouse.LocName = minorStruct.Capital;
                 newMinorHouse.ArchetypeID = minorStruct.Archetype;
                 newMinorHouse.Loyalty_AtStart = KingLoyalty.Old_King;
                 newMinorHouse.Loyalty_Current = KingLoyalty.New_King;
@@ -1012,7 +1013,7 @@ namespace Next_Game
                 newLord.arrayOfTraitNames = oldBannerLord.arrayOfTraitNames;
                 newLord.Type = ActorType.Lord;
                 newLord.Realm = ActorRealm.Head_of_Noble_House;
-                newLord.LocID = loc.LocationID;
+                newLord.LocID = locLord.LocationID;
                 newLord.Status = ActorStatus.AtLocation;
                 newLord.HouseID = houseID;
                 newLord.Loyalty_Current = KingLoyalty.New_King;
@@ -1030,7 +1031,7 @@ namespace Next_Game
                 Game.world.AddPassiveActor(newLord);
 
                 //update actors for different locations
-                loc.AddActor(newLord.ActID);
+                locLord.AddActor(newLord.ActID);
                 locBannerLord.RemoveActor(oldBannerLord.ActID);
 
                 //remove old Bannerlord house from dictAllHouses
@@ -1087,23 +1088,31 @@ namespace Next_Game
                         Game.world.SetRecord(record_6);
                     }
                 }
-                //create three new advisors
-                Advisor castellan = Game.history.CreateAdvisor(loc.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Castellan, AdvisorRoyal.None);
+                //create castellan
+                Advisor castellan = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Castellan, AdvisorRoyal.None);
                 castellan.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; castellan.Loyalty_Current = newMajorhouse.Loyalty_Current;
                 Game.world.SetPassiveActor(castellan);
-                Advisor maester = Game.history.CreateAdvisor(loc.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Maester, AdvisorRoyal.None);
+                //create maester
+                Advisor maester = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Maester, AdvisorRoyal.None);
                 maester.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; maester.Loyalty_Current = newMajorhouse.Loyalty_Current;
                 Game.world.SetPassiveActor(maester);
-                Advisor septon = Game.history.CreateAdvisor(loc.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Septon, AdvisorRoyal.None);
+                //create septon
+                Advisor septon = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Septon, AdvisorRoyal.None);
                 septon.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; septon.Loyalty_Current = newMajorhouse.Loyalty_Current;
                 Game.world.SetPassiveActor(septon);
                 //create new Knight
-                Knight knight = Game.history.CreateKnight(loc.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID);
+                Knight knight = Game.history.CreateKnight(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID);
                 knight.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; knight.Loyalty_Current = newMajorhouse.Loyalty_Current;
                 Game.world.SetPassiveActor(knight);
+                //create new wife
+                Noble wife = (Noble)Game.history.CreateStartingHouseActor(newMajorhouse.Name, ActorType.Lady, locLord.GetPosition(), locLord.LocationID, newMajorhouse.RefID, houseID, ActorSex.Female, WifeStatus.First_Wife);
+                wife.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; wife.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                Game.world.SetPassiveActor(wife);
+                //create family
+                Game.history.CreateFamily(newLord, wife, newMinorHouse.LocName);
 
                 //record - new bannerlord
-                descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", newBannerLord.Name, Game.world.GetGreatHouseName(newBannerLord.HouseID), newBannerLord.Age);
+                descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", newBannerLord.Name, newMinorHouse.Name, newBannerLord.Age);
                 Record record_0 = new Record(descriptor, newBannerLord.ActID, newBannerLord.LocID, newBannerLord.RefID, newBannerLord.Lordship, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_0);
                 //record - old bannerlord does the dirty (public knowledge, hence no secret)
@@ -1119,7 +1128,7 @@ namespace Next_Game
                 Record record_4 = new Record(descriptor, newMajorhouse.LocID, newMajorhouse.RefID, Game.gameStart, HistHouseEvent.Ownership);
                 Game.world.SetRecord(record_4);
                 //record - new GreatLord
-                descriptor = string.Format("{0} assumes Lordship, of House {1}, age {2}", oldBannerLord.Name, Game.world.GetGreatHouseName(oldBannerLord.HouseID), oldBannerLord.Age);
+                descriptor = string.Format("{0} assumes Lordship of House {1}, age {2}", oldBannerLord.Name, newMajorhouse.Name, oldBannerLord.Age);
                 Record record_2 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameStart, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_2);
                 //House record - old King's house stolen

@@ -1141,8 +1141,13 @@ namespace Next_Game
         /// <summary>
         /// Game start - Great Family, marry the lord and lady and have kids
         /// </summary>
-        internal void CreateFamily(Noble lord, Noble lady)
+        /// <param name="place">put house name if not the default house of lord and lady</param>
+        internal void CreateFamily(Noble lord, Noble lady, string place = null)
         {
+            //different house? (case of newLord in Lore.cs)
+            string houseName = Game.world.GetLocationName(lady.LocID);
+            if (!String.IsNullOrEmpty(place)) { houseName = place; }
+            //age
             int ladyAge = lady.Age;
             int ageLadyMarried = rnd.Next(13, 22);
             //check ageMarried is less than ladies Age
@@ -1164,7 +1169,7 @@ namespace Next_Game
             int lordAgeMarried = yearMarried - lord.Born;
             //record event - single record tagged to both characters and houses
             string descriptor = string.Format("{0}, age {1}, and {2} (nee {3}, age {4}) married ({5}) at {6}",
-                lord.Name, lordAgeMarried, lady.Name, lady.MaidenName, ageLadyMarried, lady.WifeNumber, Game.world.GetLocationName(lady.LocID));
+                lord.Name, lordAgeMarried, lady.Name, lady.MaidenName, ageLadyMarried, lady.WifeNumber, houseName);
             Record recordLord = new Record(descriptor, lord.ActID, lord.LocID, lord.RefID, lord.Married, HistActorEvent.Married);
             recordLord.AddHouse(lady.BornRefID);
             recordLord.AddActor(lady.ActID);
@@ -1173,7 +1178,7 @@ namespace Next_Game
             lord.AddRelation(lady.ActID, ActorRelation.Wife);
             lady.AddRelation(lord.ActID, ActorRelation.Husband);
             // kids
-            CreateStartingChildren(lord, lady);
+            CreateStartingChildren(lord, lady, place);
             //wife has influence over husband (only if smarter)
             SetWifeInfluence(lord, lady);
         }
@@ -1184,18 +1189,19 @@ namespace Next_Game
         /// </summary>
         /// <param name="lord"></param>
         /// <param name="lady"></param>
-        private void CreateStartingChildren(Noble lord, Noble lady)
+        private void CreateStartingChildren(Noble lord, Noble lady, string place = null)
         {
             //is woman fertile and within age range?
             if (lady.Fertile == true && lady.Age >= 13 && lady.Age <= 40)
             {
+                
                 //birthing loop, once every 2 years
                 for (int year = lady.Married; year <= Game.gameYear; year += 2)
                 {
                     //chance of a child every 2 years
                     if (rnd.Next(100) < Game.constant.GetValue(Global.PREGNANT) )
                     {
-                        Noble child = CreateChild(lord, lady, year);
+                        Noble child = CreateChild(lord, lady, year, ActorSex.None, ActorParents.Normal, place);
                         if (lady.Status == ActorStatus.Gone || lady.Fertile == false)
                         { break; }
                     }
@@ -1214,9 +1220,12 @@ namespace Next_Game
         /// <param name="sex">You can specify a type</param>
         /// <param name="parents">Natural,Bastard or Adopted? (Bastard could be sired by either Mother or Father</param>
         /// <returns>Returns child object but this can be ignored unless required</returns>
-        internal Noble CreateChild(Noble Lord, Noble Lady, int year, ActorSex childSex = ActorSex.None, ActorParents parents = ActorParents.Normal)
+        internal Noble CreateChild(Noble Lord, Noble Lady, int year, ActorSex childSex = ActorSex.None, ActorParents parents = ActorParents.Normal, string place = null)
         {
+
             ActorSex sex;
+            string houseName;
+            
             //determine sex
             if (childSex == ActorSex.Male || childSex == ActorSex.Female)
             { sex = childSex; }
@@ -1240,6 +1249,8 @@ namespace Next_Game
             child.BornRefID = Lord.RefID;
             child.HouseID = Lady.HouseID;
             child.GenID = Game.gameGeneration + 1;
+            child.Loyalty_AtStart = Lord.Loyalty_AtStart;
+            child.Loyalty_Current = Lord.Loyalty_Current;
             //family relations
             child.AddRelation(Lord.ActID, ActorRelation.Father);
             child.AddRelation(Lady.ActID, ActorRelation.Mother);
@@ -1408,14 +1419,19 @@ namespace Next_Game
             bool actualEvent = true;
             string secretText = null;
             int secretStrength = 3; //for both being a bastard and adopted
-            int locID = Lady.LocID;
-            if (locID == 0) { locID = Lord.LocID; } //covers case of wife who died at time of birth when adding heirs in world.CheckGreatLords()
+
+            houseName = Game.world.GetLocationName(Lady.LocID);
+            //covers case of wife who died at time of birth when adding heirs in world.CheckGreatLords()
+            if (Lady.LocID == 0 && String.IsNullOrEmpty(place)) { houseName = Game.world.GetLocationName(Lord.LocID); }
+            //child born in specified place, not home of lord or lady
+            else if (!String.IsNullOrEmpty(place)) { houseName = place; }
+
             string descriptor = string.Format("{0}, Aid {1}, born at {2} to {3} {4} and {5} {6}",
-                    child.Name, child.ActID, Game.world.GetLocationName(locID), Lord.Type, Lord.Name, Lady.Type, Lady.Name);
+                    child.Name, child.ActID, houseName, Lord.Type, Lord.Name, Lady.Type, Lady.Name);
             if (child.Parents == ActorParents.Adopted)
             {
                 secretText = string.Format("{0}, Aid {1}, adopted at {2} by {3} {4} and {5} {6}",
-                    child.Name, child.ActID, Game.world.GetLocationName(locID), Lord.Type, Lord.Name, Lady.Type, Lady.Name);
+                    child.Name, child.ActID, houseName, Lord.Type, Lord.Name, Lady.Type, Lady.Name);
                 actualEvent = false;
             }
             else if (child.Parents == ActorParents.Bastard)

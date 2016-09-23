@@ -228,7 +228,7 @@ namespace Next_Game
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
 
         public Noble()
-        { }
+        { dictFamily = new SortedDictionary<int, ActorRelation>(); }
 
         public Noble (string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { dictFamily = new SortedDictionary<int, ActorRelation>(); }
