@@ -1097,6 +1097,10 @@ namespace Next_Game
                 Advisor septon = Game.history.CreateAdvisor(loc.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Septon, AdvisorRoyal.None);
                 septon.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; septon.Loyalty_Current = newMajorhouse.Loyalty_Current;
                 Game.world.SetPassiveActor(septon);
+                //create new Knight
+                Knight knight = Game.history.CreateKnight(loc.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID);
+                knight.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; knight.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                Game.world.SetPassiveActor(knight);
 
                 //record - new bannerlord
                 descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", newBannerLord.Name, Game.world.GetGreatHouseName(newBannerLord.HouseID), newBannerLord.Age);
