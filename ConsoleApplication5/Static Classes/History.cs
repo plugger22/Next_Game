@@ -1630,6 +1630,7 @@ namespace Next_Game
             Game.lore.RoyalHouseOld = royalHouse.RefID;
             Game.lore.RoyalHouseNew = rebelHouse.RefID;
             Game.lore.RoyalHouseCurrent = royalHouse.RefID;
+            Game.lore.OldHouseName = royalHouse.Name;
             int royalHouseID = royalHouse.HouseID;
             int rebelHouseID = rebelHouse.HouseID;
             //get all actors in Royal House
@@ -1853,6 +1854,20 @@ namespace Next_Game
                         break;
                 }
             }
+
+            //fate of Royal household Knight
+            if (listOfRoyalKnights.Count > 0)
+            {
+                Knight knight = listOfRoyalKnights[0];
+                if (knight.Status == ActorStatus.AtLocation)
+                {
+                    eventText = string.Format("{0}, Aid {1}, was hung upside down and gutted on orders of King {2}", knight.Name, knight.ActID, NewKing.Name);
+                    Record record = new Record(eventText, knight.ActID, knight.LocID, knight.RefID, Game.gameStart, HistActorEvent.Died);
+                    Game.world.SetRecord(record);
+                    Game.history.RemoveActor(knight, Game.gameStart, ActorGone.Murdered);
+                }
+            }
+
             //Generate BackStory
             Game.lore.CreateOldKingBackStory(listOfRoyalists, listOfRebels, listOfWounds);
             Game.lore.CreateRoyalFamilyFate();
@@ -1880,6 +1895,7 @@ namespace Next_Game
                 //add to Royal court
                 Game.world.SetRoyalCourt(courtAdvisor);
             }
+
 
             //change Royal house to that of New King
             Game.lore.RoyalHouseCurrent = Game.lore.RoyalHouseNew;

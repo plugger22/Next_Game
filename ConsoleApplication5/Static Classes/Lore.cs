@@ -16,11 +16,12 @@ namespace Next_Game
     public class Lore
     {
         static Random rnd;
-        //HouseID's
+        //House RefID's
         public int RoyalHouseOld { get; set; } // refID
         public int RoyalHouseNew { get; set; } // refID
         public int RoyalHouseCurrent { get; set; } // refID
         public int TurnCoat { get; set; } //actID of Turncoat Bannerlord who takes over lands of old king
+        public string OldHouseName { get; set; } //House name of old King
         //Royal & Rebel Family Nobles
         private List<Passive> listOfOldRoyals; //at time of revolt
         private List<Passive> listOfNewRoyals; //at time of taking power

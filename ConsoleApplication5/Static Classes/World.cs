@@ -324,7 +324,11 @@ namespace Next_Game
                 if (person is Knight)
                 {
                     Knight knight = person as Knight;
-                    listToDisplay.Add(new Snippet(string.Format("Has sworn allegiance to House {0}", GetGreatHouseName(knight.HouseID))));
+                    string houseName = GetGreatHouseName(knight.HouseID);
+                    //deals with case of knight belonging to old King (he's been deleted from dictMajorHouses)
+                    if (String.IsNullOrEmpty(houseName) )
+                    { houseName = Game.lore.OldHouseName; }
+                    listToDisplay.Add(new Snippet(string.Format("Has sworn allegiance to House {0}", houseName )));
                 }
                 //Loyalty
                 listToDisplay.Add(new Snippet(string.Format("Loyal to the {0} (originally {1})", person.Loyalty_Current, person.Loyalty_AtStart)));
