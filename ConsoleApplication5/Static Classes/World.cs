@@ -1607,6 +1607,7 @@ namespace Next_Game
             return listData;
         }
 
+        
 
         /// <summary>
         /// gets the correct advisor type and returns as a string for display purposes
@@ -1697,6 +1698,9 @@ namespace Next_Game
             listOfKnights = knights.ToList();
             return listOfKnights;
         }
+
+
+
         //new Methods above here
     }
 }

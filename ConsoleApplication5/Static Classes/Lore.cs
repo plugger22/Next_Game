@@ -1061,10 +1061,7 @@ namespace Next_Game
                 Console.WriteLine("Updating MapLayer -> loc {0}:{1}, refID: {2}", locBannerLord.GetPosX(), locBannerLord.GetPosY(), newMinorHouse.RefID);
                 //update Loc details
                 locBannerLord.HouseRefID = newMinorHouse.RefID;
-
-                //wife for new lord?
-
-
+                
                 //advisors - castellan, in oldkings house need replacing
                 foreach( Advisor advisor in listOfRoyalAdvisors)
                 {
@@ -1136,15 +1133,14 @@ namespace Next_Game
                 Record record_3 = new Record(descriptor, OldKing.LocID, OldKing.RefID, Game.gameStart, HistHouseEvent.Ownership);
                 Game.world.SetRecord(record_3);
 
-                
-
-                //turncoat a traitor who handed over the old king at final battle
                 //resentment of other new king loyal noble lords at promotion of bannerlord
 
             }
             else
             { Game.SetError(new Error(33, "Invalid TurnCoat.ActorID")); }
         }
+
+        
 
         //methods above here
     }

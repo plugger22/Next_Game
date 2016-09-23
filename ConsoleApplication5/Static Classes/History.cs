@@ -1896,6 +1896,7 @@ namespace Next_Game
             Game.lore.CreateOldKingBackStory(listOfRoyalists, listOfRebels, listOfWounds);
             Game.lore.CreateRoyalFamilyFate();
             Game.lore.CreateNewMajorHouse(listHousePool, listOfRoyalAdvisors);
+            
 
             //Royal Court housekeeping and fate during transition
             foreach (Advisor advisor in tempListOfAdvisors)
@@ -1925,8 +1926,21 @@ namespace Next_Game
             Game.lore.RoyalHouseCurrent = Game.lore.RoyalHouseNew;
             //replace Royal lands with that of the Replacement Great House
 
-            
+        }
 
+
+        internal void ReplaceDeadLords(Dictionary<int, House> dictHouses)
+        {
+            int lordID;
+            Console.WriteLine(Environment.NewLine + "--- Dead Lords");
+            //loop all houses
+            foreach (KeyValuePair<int, House> kvp in dictHouses)
+            {
+                lordID = kvp.Value.LordID;
+                Passive lord = Game.world.GetPassiveActor(lordID);
+                if (lord.Status == ActorStatus.Gone)
+                { Console.WriteLine("{0} {1}, Aid {2}, is {3} from House {4}", lord.Type, lord.Name, lord.ActID, lord.Gone, kvp.Value.Name); }
+            }
         }
 
         /// <summary>
