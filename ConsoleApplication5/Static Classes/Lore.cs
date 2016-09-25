@@ -1140,7 +1140,31 @@ namespace Next_Game
             { Game.SetError(new Error(33, "Invalid TurnCoat.ActorID")); }
         }
 
-        
+        /// <summary>
+        /// Replace a Bannerlord that has died (use this instead as it calls the history method)
+        /// </summary>
+        /// <param name="oldBannerLord"></param>
+        /// <param name="surname"></param>
+        internal void ReplaceBannerLord(BannerLord oldBannerLord, string surname = null)
+        {
+            //if no surname provided then a brother of the same house steps forward
+            if (surname == null)
+            {
+                House house = Game.world.GetHouse(oldBannerLord.RefID);
+                surname = house.Name;
+            }
+            Location loc = Game.network.GetLocation(oldBannerLord.LocID);
+            BannerLord newLord = Game.history.CreateBannerLord(surname, loc.GetPosition(), oldBannerLord.LocID, oldBannerLord.RefID, oldBannerLord.HouseID);
+
+            newLord.Status = ActorStatus.AtLocation;
+            newLord.Loyalty_Current = KingLoyalty.New_King;
+            newLord.Loyalty_AtStart = oldBannerLord.Loyalty_AtStart;
+            newLord.Lordship = Game.gameStart;
+           
+            //add to Location
+
+            //record of lordship & taking over
+        }
 
         //methods above here
     }
