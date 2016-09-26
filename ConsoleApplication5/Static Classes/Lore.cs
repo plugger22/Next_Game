@@ -1177,6 +1177,8 @@ namespace Next_Game
             Console.WriteLine("New Bannerlord for House {0} -> {1}, Aid {2}", house.Name, newLord.Name, newLord.ActID);
         }
 
+
+        internal void 
         //methods above here
     }
 }
