@@ -1155,30 +1155,101 @@ namespace Next_Game
         /// <param name="surname"></param>
         internal void ReplaceBannerLord(BannerLord deadLord, string surname = null)
         {
-            House house = Game.world.GetHouse(deadLord.RefID);
-            //if no surname provided then a brother of the same house steps forward
-            if (surname == null)
-            { surname = house.Name; }
-            Location loc = Game.network.GetLocation(deadLord.LocID);
-            BannerLord newLord = Game.history.CreateBannerLord(surname, loc.GetPosition(), deadLord.LocID, deadLord.RefID, deadLord.HouseID);
-            newLord.Loyalty_Current = KingLoyalty.New_King;
-            newLord.Loyalty_AtStart = deadLord.Loyalty_AtStart;
-            newLord.Lordship = Game.gameStart - 1;
-            Game.world.SetPassiveActor(newLord);
-            //update house
-            house.LordID = newLord.ActID;
+            try
+            {
+                House house = Game.world.GetHouse(deadLord.RefID);
+                //if no surname provided then a brother of the same house steps forward
+                if (surname == null)
+                { surname = house.Name; }
+                Location loc = Game.network.GetLocation(deadLord.LocID);
+                BannerLord newLord = Game.history.CreateBannerLord(surname, loc.GetPosition(), deadLord.LocID, deadLord.RefID, deadLord.HouseID);
+                newLord.Loyalty_Current = KingLoyalty.New_King;
+                newLord.Loyalty_AtStart = deadLord.Loyalty_AtStart;
+                newLord.Lordship = Game.gameStart - 1;
+                Game.world.SetPassiveActor(newLord);
+                //update house
+                house.LordID = newLord.ActID;
 
-            //record of lordship & taking over
-            string descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Lordship of House {3}, age {4}", newLord.Name, newLord.ActID, deadLord.Name, house.Name, newLord.Age);
-            Record record_0 = new Record(descriptor, newLord.ActID, newLord.LocID, newLord.RefID, newLord.Lordship, HistActorEvent.Lordship);
-            Game.world.SetRecord(record_0);
+                //record of lordship & taking over
+                string descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Lordship of House {3}, age {4}", newLord.Name, newLord.ActID, deadLord.Name, house.Name, newLord.Age);
+                Record record_0 = new Record(descriptor, newLord.ActID, newLord.LocID, newLord.RefID, newLord.Lordship, HistActorEvent.Lordship);
+                Game.world.SetRecord(record_0);
 
-            //debug
-            Console.WriteLine("New Bannerlord for House {0} -> {1}, Aid {2}", house.Name, newLord.Name, newLord.ActID);
+                //debug
+                Console.WriteLine("New Bannerlord for House {0} -> {1}, Aid {2}", house.Name, newLord.Name, newLord.ActID);
+            }
+            catch (Exception e)
+            { Game.SetError(new Error(39, e.Message)); }
         }
 
 
-        internal void 
+        internal void ReplaceNobleLord(Noble deadLord)
+        {
+            string descriptor;
+
+            try
+            { 
+                House house = Game.world.GetHouse(deadLord.RefID);
+                //find Heir
+                SortedDictionary<int, ActorRelation> dictFamily = deadLord.GetFamily();
+                Noble heir = null;
+                Noble wife = null;
+                //loop family of dead lord
+                foreach(KeyValuePair<int, ActorRelation> kvp in dictFamily)
+                {
+                    if (kvp.Value == ActorRelation.Son)
+                    {
+                        Noble son = (Noble)Game.world.GetPassiveActor(kvp.Key);
+                        if (son.InLine == 1)
+                        { heir = son; }
+                    }
+                    if (kvp.Value == ActorRelation.Wife)
+                    { wife = (Noble)Game.world.GetPassiveActor(kvp.Key); }
+                }
+                //son of Age?
+                if (heir != null)
+                {
+                    //heir assumes Lordship
+                    heir.Type = ActorType.Lord;
+                    heir.Realm = ActorRealm.Head_of_House;
+                    house.LordID = heir.ActID;
+                    //heir is off age to take control
+                    if (heir.Age >= 15)
+                    {
+                        //record
+                        descriptor = string.Format("{0}, Aid {1}, son of {2}, assumes Lordship of House {3}, age {4}", heir.Name, heir.ActID, deadLord.Name, house.Name, heir.Age);
+                        Record record_0 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorEvent.Lordship);
+                        Game.world.SetRecord(record_0);
+                    }
+                    //underage heir, his mother becomes Regent
+                    else if (wife != null)
+                    {
+                        //record
+                        descriptor = string.Format("{0}, Aid {1}, assumes Lordship (under a Regent) of House {2}, age {3}", heir.Name, heir.ActID, house.Name, heir.Age);
+                        Record record_1 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorEvent.Lordship);
+                        Game.world.SetRecord(record_1);
+                        //wife as regent
+                        wife.Realm = ActorRealm.Regent;
+                        //record
+                        descriptor = string.Format("{0}, Aid {1}, wife of {2}, assumes Regency of House {3}, age {4}", wife.Name, wife.ActID, deadLord.Name, house.Name, wife.Age);
+                        Record record_2 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorEvent.Lordship);
+                        Game.world.SetRecord(record_2);
+
+                    }
+                    //deadlord's brother steps in, as wife is dead, to become regent
+                    else if (wife == null)
+                    {
+                        
+                    }
+                }
+                else
+                { Game.SetError(new Error(41, "First-in-Line to inherit isn't present")); }
+            }
+            catch (Exception e)
+            { Game.SetError(new Error(40, e.Message)); }
+        }
+
+
         //methods above here
     }
 }
