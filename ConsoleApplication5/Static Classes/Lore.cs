@@ -766,6 +766,8 @@ namespace Next_Game
                         //eventText += string.Format("allowed to slowly rot to his death in the {0} dungeons", Enemies);
                         eventText += string.Format("died of his wounds while held in the {0} dungeons", Enemies);
                         actorEvent = HistActorEvent.Died;
+                        //replace Bannerlord
+                        if (actor is BannerLord) { ReplaceBannerLord((BannerLord)actor); }
                         Game.history.RemoveActor(actor, Game.gameStart, ActorGone.Injuries);
                         //50% chance he was tortured to death -> secret
                         if (rnd.Next(100) < 50)
@@ -782,6 +784,8 @@ namespace Next_Game
                         //executed
                         eventText += string.Format("was summarily executed by the {0}s after a period of captivity", Enemies);
                         actorEvent = HistActorEvent.Died;
+                        //replace Bannerlord
+                        if (actor is BannerLord) { ReplaceBannerLord((BannerLord)actor); }
                         Game.history.RemoveActor(actor, Game.gameStart, ActorGone.Executed);
                         break;
                     default:
@@ -1113,15 +1117,15 @@ namespace Next_Game
                 Game.history.CreateFamily(newLord, wife, newMinorHouse.LocName);
 
                 //record - new bannerlord
-                descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", newBannerLord.Name, newMinorHouse.Name, newBannerLord.Age);
+                descriptor = string.Format("{0}, Aid {1}, assumes Lordship, BannerLord of House {2}, age {3}", newBannerLord.Name, newBannerLord.ActID, newMinorHouse.Name, newBannerLord.Age);
                 Record record_0 = new Record(descriptor, newBannerLord.ActID, newBannerLord.LocID, newBannerLord.RefID, newBannerLord.Lordship, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_0);
                 //record - old bannerlord does the dirty (public knowledge, hence no secret)
-                descriptor = string.Format("{0} dramatically changed sides during {1} and captured Old King {2} ", oldBannerLord.Name, listOfUprisingBattles[listOfUprisingBattles.Count - 1], OldKing.Name);
+                descriptor = string.Format("{0}, Aid {1}, dramatically changed sides during {2} and captured Old King {3} ", oldBannerLord.Name, oldBannerLord.ActID, listOfUprisingBattles[listOfUprisingBattles.Count - 1], OldKing.Name);
                 Record record_5 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameStart, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_5);
                 //record - old bannerlord promoted
-                descriptor = string.Format("{0} has been elevated to a Noble Lord by decree of King {1}", oldBannerLord.Name, NewKing.Name);
+                descriptor = string.Format("{0}, Aid {1}, has been elevated to a Noble Lord by decree of King {2}", oldBannerLord.Name, oldBannerLord.ActID, NewKing.Name);
                 Record record_1 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameStart, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_1);
                 //House record - new House created
@@ -1129,7 +1133,7 @@ namespace Next_Game
                 Record record_4 = new Record(descriptor, newMajorhouse.LocID, newMajorhouse.RefID, Game.gameStart, HistHouseEvent.Ownership);
                 Game.world.SetRecord(record_4);
                 //record - new GreatLord
-                descriptor = string.Format("{0} assumes Lordship of House {1}, age {2}", oldBannerLord.Name, newMajorhouse.Name, oldBannerLord.Age);
+                descriptor = string.Format("{0}, Aid {1}, assumes Lordship of House {2}, age {3}", oldBannerLord.Name, oldBannerLord.ActID, newMajorhouse.Name, oldBannerLord.Age);
                 Record record_2 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameStart, HistActorEvent.Lordship);
                 Game.world.SetRecord(record_2);
                 //House record - old King's house stolen
