@@ -516,6 +516,8 @@ namespace Next_Game
                                 eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", royal.Name, royal.ActID, descriptor, Friends, royal.Age);
                                 Console.WriteLine(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Died);
+                                //replace Bannerlord
+                                if (royal is BannerLord) { ReplaceBannerLord((BannerLord)royal); }
                                 Game.history.RemoveActor(royal, year, ActorGone.Battle);
                                 break;
                             case 3:
@@ -635,6 +637,8 @@ namespace Next_Game
                                 eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", rebel.Name, rebel.ActID, descriptor, Friends, rebel.Age);
                                 Console.WriteLine(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
                                 record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Died);
+                                //replace Bannerlord
+                                if (rebel is BannerLord ) { ReplaceBannerLord((BannerLord)rebel); }
                                 Game.history.RemoveActor(rebel, year, ActorGone.Battle);
                                 break;
                             case 3:
@@ -1143,27 +1147,30 @@ namespace Next_Game
         /// <summary>
         /// Replace a Bannerlord that has died (use this instead as it calls the history method)
         /// </summary>
-        /// <param name="oldBannerLord"></param>
+        /// <param name="deadLord"></param>
         /// <param name="surname"></param>
-        internal void ReplaceBannerLord(BannerLord oldBannerLord, string surname = null)
+        internal void ReplaceBannerLord(BannerLord deadLord, string surname = null)
         {
+            House house = Game.world.GetHouse(deadLord.RefID);
             //if no surname provided then a brother of the same house steps forward
             if (surname == null)
-            {
-                House house = Game.world.GetHouse(oldBannerLord.RefID);
-                surname = house.Name;
-            }
-            Location loc = Game.network.GetLocation(oldBannerLord.LocID);
-            BannerLord newLord = Game.history.CreateBannerLord(surname, loc.GetPosition(), oldBannerLord.LocID, oldBannerLord.RefID, oldBannerLord.HouseID);
-
-            newLord.Status = ActorStatus.AtLocation;
+            { surname = house.Name; }
+            Location loc = Game.network.GetLocation(deadLord.LocID);
+            BannerLord newLord = Game.history.CreateBannerLord(surname, loc.GetPosition(), deadLord.LocID, deadLord.RefID, deadLord.HouseID);
             newLord.Loyalty_Current = KingLoyalty.New_King;
-            newLord.Loyalty_AtStart = oldBannerLord.Loyalty_AtStart;
-            newLord.Lordship = Game.gameStart;
-           
-            //add to Location
+            newLord.Loyalty_AtStart = deadLord.Loyalty_AtStart;
+            newLord.Lordship = Game.gameStart - 1;
+            Game.world.SetPassiveActor(newLord);
+            //update house
+            house.LordID = newLord.ActID;
 
             //record of lordship & taking over
+            string descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Lordship of House {3}, age {4}", newLord.Name, newLord.ActID, deadLord.Name, house.Name, newLord.Age);
+            Record record_0 = new Record(descriptor, newLord.ActID, newLord.LocID, newLord.RefID, newLord.Lordship, HistActorEvent.Lordship);
+            Game.world.SetRecord(record_0);
+
+            //debug
+            Console.WriteLine("New Bannerlord for House {0} -> {1}, Aid {2}", house.Name, newLord.Name, newLord.ActID);
         }
 
         //methods above here
