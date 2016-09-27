@@ -432,6 +432,43 @@ namespace Next_Game
             return actor;
         }
 
+        /// <summary>
+        /// Creates a Regent noble lord (not Head of House, eg. brother to head of house who has died)
+        /// </summary>
+        /// <param name="lastName"></param>
+        /// <param name="pos"></param>
+        /// <param name="locID"></param>
+        /// <param name="refID"></param>
+        /// <param name="houseID"></param>
+        /// <returns></returns>
+        internal Noble CreateRegent(string lastName, Position pos, int locID, int refID, int houseID)
+        {
+            //get a random first name
+            string actorName = GetActorName(lastName, ActorSex.Male, refID);
+            Noble actor = new Noble(actorName, ActorType.lord);
+            actor.Realm = ActorRealm.Regent;
+            //age (older men, younger wives
+            int age = rnd.Next(25, 60);
+            actor.Born = Game.gameYear - age;
+            actor.Age = age;
+            //data
+            actor.SetActorPosition(pos);
+            actor.LocID = locID;
+            actor.RefID = refID;
+            actor.HouseID = houseID;
+            //add to Location
+            Location loc = Game.network.GetLocation(locID);
+            loc.AddActor(actor.ActID);
+            //house at birth (males the same)
+            actor.BornRefID = refID;
+            //create records of being born
+            string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
+            Record recordBannerLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
+            Game.world.SetRecord(recordBannerLord);
+            //assign traits
+            InitialiseActorTraits(actor);
+            return actor;
+        }
 
         /// <summary>
         /// Create a Knight & add to Location
@@ -1987,28 +2024,7 @@ namespace Next_Game
             return listOfAllDuplicates;
         }
 
-        /*Console.WriteLine("- {0}, Aid {1} has adjusted Traits due to {2}'s, Aid {3}, influence", minion.Name, minion.ActID, master.Name, master.ActID);
-        /// <summary>
-        /// A smarter wife will influence her lord/king husband
-        /// effect on wits stored in Lord's arrayOfInfluences etc. stats. Only applies if wife present at same location.
-        /// default value for AdjustedWits & AdjustedTreachery is '0'
-        /// </summary>
-        private void SetWifeInfluence(Noble lord, Noble lady)
-        {
-            int lordWits = lord.GetTrait(TraitType.Wits);
-            int ladyWits = lady.GetTrait(
-                TraitType.Wits);
-            if (ladyWits > lordWits)
-            {
-                //wits
-                int influenceWits = ladyWits - lordWits;
-                lord.arrayOfTraitInfluences[(int)TraitType.Wits] = influenceWits;
-                //Update adjusted stats (default '0') - show net adjusted stat
-                lord.Influencer = lady.ActID;
-                //debug
-                Console.WriteLine("- {0}, Aid {1} has adjusted Traits due to his wife's influence", lord.Name, lord.ActID);
-            }
-        }*/
+
 
         /// <summary>
         /// Generic function for one actor to influence another

@@ -518,6 +518,7 @@ namespace Next_Game
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorEvent.Died);
                                 //replace Bannerlord
                                 if (royal is BannerLord) { ReplaceBannerLord((BannerLord)royal); }
+                                else if (royal is Noble) { ReplaceNobleLord((Noble)royal); }
                                 Game.history.RemoveActor(royal, year, ActorGone.Battle);
                                 break;
                             case 3:
@@ -639,6 +640,7 @@ namespace Next_Game
                                 record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorEvent.Died);
                                 //replace Bannerlord
                                 if (rebel is BannerLord ) { ReplaceBannerLord((BannerLord)rebel); }
+                                else if (rebel is Noble) { ReplaceNobleLord((Noble)rebel); }
                                 Game.history.RemoveActor(rebel, year, ActorGone.Battle);
                                 break;
                             case 3:
@@ -768,6 +770,7 @@ namespace Next_Game
                         actorEvent = HistActorEvent.Died;
                         //replace Bannerlord
                         if (actor is BannerLord) { ReplaceBannerLord((BannerLord)actor); }
+                        else if (actor is Noble) { ReplaceNobleLord((Noble)actor); }
                         Game.history.RemoveActor(actor, Game.gameStart, ActorGone.Injuries);
                         //50% chance he was tortured to death -> secret
                         if (rnd.Next(100) < 50)
@@ -786,6 +789,7 @@ namespace Next_Game
                         actorEvent = HistActorEvent.Died;
                         //replace Bannerlord
                         if (actor is BannerLord) { ReplaceBannerLord((BannerLord)actor); }
+                        else if (actor is Noble) { ReplaceNobleLord((Noble)actor); }
                         Game.history.RemoveActor(actor, Game.gameStart, ActorGone.Executed);
                         break;
                     default:
@@ -1197,6 +1201,7 @@ namespace Next_Game
                 SortedDictionary<int, ActorRelation> dictFamily = deadLord.GetFamily();
                 Noble heir = null;
                 Noble wife = null;
+                int year = Game.gameStart;
                 //loop family of dead lord
                 foreach(KeyValuePair<int, ActorRelation> kvp in dictFamily)
                 {
@@ -1215,6 +1220,7 @@ namespace Next_Game
                     //heir assumes Lordship
                     heir.Type = ActorType.Lord;
                     heir.Realm = ActorRealm.Head_of_House;
+                    heir.Lordship = year;
                     house.LordID = heir.ActID;
                     //heir is off age to take control
                     if (heir.Age >= 15)
@@ -1233,15 +1239,36 @@ namespace Next_Game
                         Game.world.SetRecord(record_1);
                         //wife as regent
                         wife.Realm = ActorRealm.Regent;
+                        Game.history.SetInfluence(heir, wife, TraitType.Combat);
+                        Game.history.SetInfluence(heir, wife, TraitType.Wits);
+                        Game.history.SetInfluence(heir, wife, TraitType.Charm);
+                        Game.history.SetInfluence(heir, wife, TraitType.Leadership);
+                        Game.history.SetInfluence(heir, wife, TraitType.Treachery);
                         //record
                         descriptor = string.Format("{0}, Aid {1}, wife of {2}, assumes Regency of House {3}, age {4}", wife.Name, wife.ActID, deadLord.Name, house.Name, wife.Age);
                         Record record_2 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorEvent.Lordship);
+                        record_2.AddActor(wife.ActID);
                         Game.world.SetRecord(record_2);
+
+                        
                     }
                     //deadlord's brother steps in, as wife is dead, to become regent
                     else if (wife == null)
                     {
-                        
+                        Location loc = Game.network.GetLocation(house.LocID);
+                        Position pos = loc.GetPosition();
+                        //create new lord
+                        Noble brother = (Noble)Game.history.CreateRegent(house.Name, pos, house.LocID, house.RefID, house.HouseID);
+                        Game.history.SetInfluence(heir, brother, TraitType.Combat);
+                        Game.history.SetInfluence(heir, brother, TraitType.Wits);
+                        Game.history.SetInfluence(heir, brother, TraitType.Charm);
+                        Game.history.SetInfluence(heir, brother, TraitType.Leadership);
+                        Game.history.SetInfluence(heir, brother, TraitType.Treachery);
+                        //record
+                        descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Regency of House {3}, age {4}", brother.Name, brother.ActID, deadLord.Name, house.Name, brother.Age);
+                        Record record_3 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorEvent.Lordship);
+                        record_3.AddActor(brother.ActID);
+                        Game.world.SetRecord(record_3);
                     }
                 }
                 else
