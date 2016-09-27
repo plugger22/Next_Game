@@ -984,11 +984,16 @@ namespace Next_Game
                 newBannerLord.Lordship = Game.gameStart;
                 newMinorHouse.LordID = newBannerLord.ActID;
 
+                
                 //need to update house.ListOfBannerLords (remove old refID, add new)
-                int oldBannerLordHouseID = oldBannerLord.HouseID;
-                MajorHouse liegeLordHouse = Game.world.GetGreatHouse(oldBannerLordHouseID);
+                List<int> tempLords = new List<int>();
+                MajorHouse liegeLordHouse = null;
+                if (oldBannerLord.HouseID == oldkingHouse.HouseID)
+                { liegeLordHouse = newMajorhouse;  }
+                else
+                { liegeLordHouse = Game.world.GetGreatHouse(oldBannerLord.HouseID); }
                 Console.WriteLine("Liege Lord House {0}", liegeLordHouse.Name);
-                List<int> tempLords = liegeLordHouse.GetBannerLords();
+                tempLords.AddRange(liegeLordHouse.GetBannerLords());
                 index = tempLords.FindIndex(a => a == oldBannerLordRefID);
                 if (index > -1)
                 {
@@ -1062,7 +1067,7 @@ namespace Next_Game
                 Game.world.RemoveMajorHouse(oldkingHouse);
                 //remove old bannerlord house, add new from dictAllHouses
                 //Game.world.RemoveMinorHouse(oldBannerLordRefID);
-                Game.world.AddHouse(newMinorHouse);
+                Game.world.AddMinorHouse(newMinorHouse);
                 //add house to world dictionaries (do after turncoatHouse update otherwise two identical houses in world.dictAllHouses)
                 Game.world.AddMajorHouse(newMajorhouse);
                 //sort list Of GreatHouses by Power

@@ -1206,7 +1206,7 @@ namespace Next_Game
         /// Add non-Major house to the only relevant dictionary
         /// </summary>
         /// <param name="house"></param>
-        internal void AddHouse(House house)
+        internal void AddMinorHouse(House house)
         { dictAllHouses.Add(house.RefID, house); }
             
         /// <summary>
