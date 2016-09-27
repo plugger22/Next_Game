@@ -17,9 +17,9 @@ namespace Next_Game
     {
         static Random rnd;
         //House RefID's
-        public int RoyalHouseOld { get; set; } // refID
-        public int RoyalHouseNew { get; set; } // refID
-        public int RoyalHouseCurrent { get; set; } // refID
+        public int RoyalRefIDOld { get; set; } // refID
+        public int RoyalRefIDNew { get; set; } // refID
+        public int RoyalRefIDCurrent { get; set; } // refID
         public int TurnCoat { get; set; } //actID of Turncoat Bannerlord who takes over lands of old king
         public string OldHouseName { get; set; } //House name of old King
         //Royal & Rebel Family Nobles
@@ -916,7 +916,7 @@ namespace Next_Game
                 int oldBannerLordRefID = oldBannerLord.RefID;
                 House turncoatHouse = Game.world.GetHouse(oldBannerLordRefID);
                 //old king's house
-                House tempHouse = Game.world.GetHouse(RoyalHouseOld);
+                House tempHouse = Game.world.GetHouse(RoyalRefIDOld);
                 MajorHouse oldkingHouse = tempHouse as MajorHouse;
                 //new MajorHouse
                 MajorHouse newMajorhouse = new MajorHouse();

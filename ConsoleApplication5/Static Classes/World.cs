@@ -702,8 +702,8 @@ namespace Next_Game
                         if (dictAllActors.ContainsKey(charID))
                         {
                             textColor = RLColor.White;
-                            Actor person = new Actor();
-                            person = dictAllActors[charID];
+                            //Actor person = new Actor();
+                            Actor person = dictAllActors[charID];
                             //advisors can be one of three different categories
                             if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
                             else { actorType = Convert.ToString(person.Type); }
@@ -906,12 +906,12 @@ namespace Next_Game
             capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", ShowLocationCoords(1)), RLColor.Yellow, RLColor.Black));
             //ROYAL FAMILY
             capitalList.Add(new Snippet("Royal Family", RLColor.Brown, RLColor.Black));
-            int royalHouse = Game.lore.RoyalHouseCurrent;
+            int royalRefID = Game.lore.RoyalRefIDCurrent;
             //query royal family members at capital
             List<Passive> royalFamily = new List<Passive>();
             IEnumerable<Passive> listOfNobles =
                 from actor in dictPassiveActors
-                where actor.Value.LocID == 1 && actor.Value.HouseID == royalHouse && actor.Value is Noble && actor.Value.Status == ActorStatus.AtLocation
+                where actor.Value.LocID == 1 && actor.Value.RefID == royalRefID && actor.Value is Noble && actor.Value.Status == ActorStatus.AtLocation
                 orderby actor.Value.ActID
                 select actor.Value;
             royalFamily = listOfNobles.ToList();

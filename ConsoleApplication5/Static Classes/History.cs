@@ -1699,9 +1699,9 @@ namespace Next_Game
             //King is the largest Royal Family
             MajorHouse royalHouse = listOfRoyalists[0];
             MajorHouse rebelHouse = listOfRebels[0];
-            Game.lore.RoyalHouseOld = royalHouse.RefID;
-            Game.lore.RoyalHouseNew = rebelHouse.RefID;
-            Game.lore.RoyalHouseCurrent = royalHouse.RefID;
+            Game.lore.RoyalRefIDOld = royalHouse.RefID;
+            Game.lore.RoyalRefIDNew = rebelHouse.RefID;
+            Game.lore.RoyalRefIDCurrent = royalHouse.RefID;
             Game.lore.OldHouseName = royalHouse.Name;
             int royalHouseID = royalHouse.HouseID;
             int rebelHouseID = rebelHouse.HouseID;
@@ -1971,7 +1971,7 @@ namespace Next_Game
 
 
             //change Royal house to that of New King
-            Game.lore.RoyalHouseCurrent = Game.lore.RoyalHouseNew;
+            Game.lore.RoyalRefIDCurrent = Game.lore.RoyalRefIDNew;
             //replace Royal lands with that of the Replacement Great House
 
         }
