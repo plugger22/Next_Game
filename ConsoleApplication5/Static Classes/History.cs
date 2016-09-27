@@ -1180,7 +1180,8 @@ namespace Next_Game
             // kids
             CreateStartingChildren(lord, lady, place);
             //wife has influence over husband (only if smarter)
-            SetWifeInfluence(lord, lady);
+            //SetWifeInfluence(lord, lady);
+            SetInfluence(lord, lady, TraitType.Wits);
         }
 
 
@@ -1986,6 +1987,7 @@ namespace Next_Game
             return listOfAllDuplicates;
         }
 
+        /*Console.WriteLine("- {0}, Aid {1} has adjusted Traits due to {2}'s, Aid {3}, influence", minion.Name, minion.ActID, master.Name, master.ActID);
         /// <summary>
         /// A smarter wife will influence her lord/king husband
         /// effect on wits stored in Lord's arrayOfInfluences etc. stats. Only applies if wife present at same location.
@@ -2006,6 +2008,42 @@ namespace Next_Game
                 //debug
                 Console.WriteLine("- {0}, Aid {1} has adjusted Traits due to his wife's influence", lord.Name, lord.ActID);
             }
+        }*/
+
+        /// <summary>
+        /// Generic function for one actor to influence another
+        /// </summary>
+        /// <param name="minion"></param>
+        /// <param name="master"></param>
+        /// <param name="trait"></param>
+        /// <param name="positiveOnly">if true the influence only applies if the master has a higher trait level than the minion</param>
+        internal void SetInfluence(Passive minion, Passive master, TraitType trait, bool positiveOnly = false)
+        {
+            int minionTrait = minion.GetTrait(trait);
+            int masterTrait = master.GetTrait(trait);
+            if (masterTrait != minionTrait)
+            {
+                //trait only affected if master trait > minion trait
+                if (masterTrait > minionTrait)
+                {
+                    int influenceAmount = masterTrait - minionTrait;
+                    minion.arrayOfTraitInfluences[(int)trait] = influenceAmount;
+                    minion.Influencer = master.ActID;
+                    //debug
+                    Console.WriteLine("- {0}, Aid {1} has adjusted {3} ({4}) due to {4}'s, Aid {5}, influence", minion.Name, minion.ActID, trait, influenceAmount, master.Name, master.ActID);
+                }
+                //trait affected if master trait < minion trait and not positiveOnly
+                if (masterTrait < minionTrait && positiveOnly == false)
+                {
+                    int influenceAmount = masterTrait - minionTrait;
+                    minion.arrayOfTraitInfluences[(int)trait] = influenceAmount;
+                    minion.Influencer = master.ActID;
+                    //debug
+                    Console.WriteLine("- {0}, Aid {1} has adjusted {2} ({3}) due to {4}'s, Aid {5}, influence", minion.Name, minion.ActID, trait, influenceAmount, master.Name, master.ActID);
+                }
+            }
+            else
+            { Console.WriteLine("- {0}, Aid {1} has NO adjusted {2} due to {3}'s, Aid {4}, influence (same value)", minion.Name, minion.ActID, trait, master.Name, master.ActID); }
         }
 
         /// <summary>

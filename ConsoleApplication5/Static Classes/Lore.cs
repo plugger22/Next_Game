@@ -1182,7 +1182,10 @@ namespace Next_Game
             { Game.SetError(new Error(39, e.Message)); }
         }
 
-
+        /// <summary>
+        /// Replace a Great Lord with heir (plus Regent if needed) if he has died during the Uprising
+        /// </summary>
+        /// <param name="deadLord"></param>
         internal void ReplaceNobleLord(Noble deadLord)
         {
             string descriptor;
@@ -1225,7 +1228,7 @@ namespace Next_Game
                     else if (wife != null)
                     {
                         //record
-                        descriptor = string.Format("{0}, Aid {1}, assumes Lordship (under a Regent) of House {2}, age {3}", heir.Name, heir.ActID, house.Name, heir.Age);
+                        descriptor = string.Format("{0}, Aid {1}, assumes Lordship (with a Regent) of House {2}, age {3}", heir.Name, heir.ActID, house.Name, heir.Age);
                         Record record_1 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorEvent.Lordship);
                         Game.world.SetRecord(record_1);
                         //wife as regent
@@ -1234,7 +1237,6 @@ namespace Next_Game
                         descriptor = string.Format("{0}, Aid {1}, wife of {2}, assumes Regency of House {3}, age {4}", wife.Name, wife.ActID, deadLord.Name, house.Name, wife.Age);
                         Record record_2 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorEvent.Lordship);
                         Game.world.SetRecord(record_2);
-
                     }
                     //deadlord's brother steps in, as wife is dead, to become regent
                     else if (wife == null)
