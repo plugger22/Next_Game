@@ -1054,15 +1054,6 @@ namespace Next_Game
                 //remove old Bannerlord house from dictAllHouses
                 Game.world.RemoveMinorHouse(oldBannerLordRefID);
 
-                //update bannerlords of Great House 
-                List<int> tempBannerLords = oldkingHouse.GetBannerLords();
-                foreach (int lordRefID in tempBannerLords)
-                {
-                    House tempbannerHouse = Game.world.GetHouse(lordRefID);
-                    MinorHouse bannerHouse = tempbannerHouse as MinorHouse;
-                    bannerHouse.HouseID = houseID;
-                }
-
                 //remove oldking House from relevant dictionaries
                 Game.world.RemoveMajorHouse(oldkingHouse);
                 //remove old bannerlord house, add new from dictAllHouses
@@ -1072,6 +1063,15 @@ namespace Next_Game
                 Game.world.AddMajorHouse(newMajorhouse);
                 //sort list Of GreatHouses by Power
                 Game.world.SortMajorHouses();
+
+                //update bannerlords of Great House 
+                List<int> tempBannerLords = newMajorhouse.GetBannerLords();
+                foreach (int lordRefID in tempBannerLords)
+                {
+                    House bannerHouse = (MinorHouse)Game.world.GetHouse(lordRefID);
+                    //MinorHouse bannerHouse = tempbannerHouse as MinorHouse;
+                    bannerHouse.HouseID = newMajorhouse.HouseID;
+                }
 
                 //update Map with refID and houseID for loc
                 Game.map.SetMapInfo(MapLayer.RefID, locBannerLord.GetPosX(), locBannerLord.GetPosY(), newMinorHouse.RefID);

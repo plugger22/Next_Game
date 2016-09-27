@@ -308,11 +308,11 @@ namespace Next_Game
             loc.AddActor(actor.ActID);
             //house at birth (males the same, females from an adjacent house)
             actor.BornRefID = refID;
-            int wifeHouseID = refID;
+            int wifeHouseID = houseID;
             int highestHouseID = listOfGreatHouses.Count;
             if (sex == ActorSex.Female && highestHouseID >= 2)
             {
-                if (rnd.Next(100) < 50)
+                /*if (rnd.Next(100) < 50)
                 {
                     //wife was born in Great House with lower HouseID
                     wifeHouseID = houseID - 1;
@@ -328,7 +328,17 @@ namespace Next_Game
                     { wifeHouseID = highestHouseID - 2; }
                 }
                 int bornRefID = Game.world.GetGreatHouseRefID(wifeHouseID);
-                actor.BornRefID = bornRefID;
+                */
+                int counter = 0;
+                MajorHouse wifeHome = null;
+                do
+                {
+                    wifeHome = listOfGreatHouses[rnd.Next(0, highestHouseID)];
+                    counter++;
+                }
+                while (wifeHome.RefID == refID && counter < 4);
+                //actor.BornRefID = bornRefID;
+                actor.BornRefID = wifeHome.RefID;
                 if (actor is Noble)
                 {
                     Noble noble = actor as Noble;

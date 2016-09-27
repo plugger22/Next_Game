@@ -911,7 +911,7 @@ namespace Next_Game
             List<Passive> royalFamily = new List<Passive>();
             IEnumerable<Passive> listOfNobles =
                 from actor in dictPassiveActors
-                where actor.Value.LocID == 1 && actor.Value.HouseID == royalHouse && actor.Value is Noble
+                where actor.Value.LocID == 1 && actor.Value.HouseID == royalHouse && actor.Value is Noble && actor.Value.Status == ActorStatus.AtLocation
                 orderby actor.Value.ActID
                 select actor.Value;
             royalFamily = listOfNobles.ToList();
