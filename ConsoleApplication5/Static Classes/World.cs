@@ -1733,17 +1733,28 @@ namespace Next_Game
         public List<Snippet> SendCrow(int actorID)
         {
             List<Snippet> listSnippet = new List<Snippet>();
-            string description = null;
+            string description;
             Snippet snippet = new Snippet("Crow Sent");
             listSnippet.Add(snippet);
             return listSnippet;
         }
 
+        /// <summary>
+        /// handles all end of turn stuff
+        /// </summary>
         public void ProcessEndTurn()
         {
             Game.map.UpdateMap();
             Game.map.UpdatePlayers(MoveActors());
             Game.gameTurn++;
+        }
+
+        /// <summary>
+        /// handles all pre-turn stuff
+        /// </summary>
+        public void ProcessStartTurn()
+        {
+
         }
 
         //new Methods above here

@@ -708,11 +708,8 @@ namespace Next_Game
                             }
                             break;
                         case RLKey.Enter:
-                            /*
-                            map.UpdateMap();
-                            map.UpdatePlayers(world.MoveActors());
-                            gameTurn++;*/
                             world.ProcessEndTurn();
+                            world.ProcessStartTurn();
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
                             infoChannel.AppendInfoList(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
                             if (_menuMode == MenuMode.Actor_Passive)
