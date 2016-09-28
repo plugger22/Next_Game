@@ -1727,7 +1727,24 @@ namespace Next_Game
             return listOfKnights;
         }
 
+        /// <summary>
+        /// Send a crow to a loyal follower
+        /// </summary>
+        public List<Snippet> SendCrow(int actorID)
+        {
+            List<Snippet> listSnippet = new List<Snippet>();
+            string description = null;
+            Snippet snippet = new Snippet("Crow Sent");
+            listSnippet.Add(snippet);
+            return listSnippet;
+        }
 
+        public void ProcessEndTurn()
+        {
+            Game.map.UpdateMap();
+            Game.map.UpdatePlayers(MoveActors());
+            Game.gameTurn++;
+        }
 
         //new Methods above here
     }

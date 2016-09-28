@@ -204,12 +204,18 @@ namespace Next_Game
                             infoChannel.SetInfoList(world.ShowActorRL(_actorID), ConsoleDisplay.Multi);
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
                             infoChannel.AppendInfoList(new Snippet("Press LEFT or RIGHT ARROWS to change Actors, ENTER or ESC to exit", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
-                            keyPress = null; //to prevent Enter keypress from causing the date to tick up
                             _menuMode = MenuMode.Actor_Passive;
                             //_mouseOn = false;
                             break;
+                        case 2:
+                            //Select Loyal Follower as a Crow destination
+                            int playerID = Convert.ToInt32(_multiData);
+                            infoChannel.SetInfoList(world.SendCrow(playerID), ConsoleDisplay.Multi);
+                            infoChannel.ClearConsole(ConsoleDisplay.Input);
+                            break;
                     }
                     //reset
+                    keyPress = null; //to prevent Enter keypress from causing the date to tick up
                     _multiCaller = 0;
                     _multiData = null;
                 }
@@ -457,6 +463,12 @@ namespace Next_Game
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
+                                    List<Snippet> inputList = new List<Snippet>();
+                                    inputList.Add(new Snippet("--- Send a Crow to a Loyal Follower", RLColor.Magenta, RLColor.Black));
+                                    inputList.Add(new Snippet("Select Follower (input #)"));
+                                    infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
+                                    _inputMode = InputMode.MultiKey;
+                                    _multiCaller = 2;
                                     break;
                                 case MenuMode.Record:
                                     //Custom report (debugging)
@@ -696,10 +708,12 @@ namespace Next_Game
                             }
                             break;
                         case RLKey.Enter:
+                            /*
                             map.UpdateMap();
                             map.UpdatePlayers(world.MoveActors());
+                            gameTurn++;*/
+                            world.ProcessEndTurn();
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
-                            gameTurn++;
                             infoChannel.AppendInfoList(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
                             if (_menuMode == MenuMode.Actor_Passive)
                             { _menuMode = MenuMode.Main; }

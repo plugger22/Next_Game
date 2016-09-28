@@ -79,7 +79,8 @@ namespace Next_Game
                     menuArrayCategories[3] = "Switch ---";
                     //Main menu commands
                     menuArrayText[0, 0] = "[M] Map";
-                    menuArrayText[0, 1] = "[ENTER] End Turn";
+                    menuArrayText[0, 1] = "[C] Crow";
+                    menuArrayText[0, 2] = "[ENTER] End Turn";
                     //Info category commands
                     menuArrayText[1, 0] = "[P] Show Player Actors";
                     menuArrayText[1, 1] = "[E] Show Events";
