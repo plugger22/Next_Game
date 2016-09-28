@@ -237,10 +237,17 @@ namespace Next_Game
             //listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}", RLColor.Yellow, RLColor.Black));
             listToDisplay.Add(new Snippet("--- Player Characters", RLColor.Brown, RLColor.Black));
             int status;
+            int distance;
             int locID;
             string locName;
             string locStatus = "who knows?";
             string charString; //overall string
+            RLColor textColor = RLColor.White;
+
+            //Player is assumed to be the first record in dictActiveActors
+            Player player = (Player)dictActiveActors[1];
+            Location locPlayer = Game.network.GetLocation(player.LocID);
+
             foreach (KeyValuePair<int, Active> pair in dictActiveActors)
             {
                 status = (int)pair.Value.Status;
@@ -255,8 +262,20 @@ namespace Next_Game
                 //only show chosen characters (at Location or not depending on parameter)
                 if (locationsOnly == true && status == (int)ActorStatus.AtLocation || !locationsOnly)
                 {
-                    charString = string.Format("Aid {0,-2} {1,-25} Status: {2,-40} (Loc {3}:{4})", pair.Key, pair.Value.Name, locStatus, loc.GetPosX(), loc.GetPosY());
-                    listToDisplay.Add(new Snippet(charString));
+                    if (pair.Value is Player)
+                    {
+                        //player (no distance display)
+                        textColor = Color._player;
+                        charString = string.Format("Aid {0,-2} {1,-25} {2} (Loc {3}:{4})", pair.Key, pair.Value.Name, locStatus, loc.GetPosX(), loc.GetPosY());
+                    }
+                    else
+                    {
+                        //loyal follower, get distance
+                        textColor = Color._active;
+                        distance = Game.utility.GetDistance(locPlayer.GetPosX(), locPlayer.GetPosY(), loc.GetPosX(), loc.GetPosY());
+                        charString = string.Format("Aid {0,-2} {1,-25} {2} (Loc {3}:{4})   distance {5}", pair.Key, pair.Value.Name, locStatus, loc.GetPosX(), loc.GetPosY(), distance);
+                    }
+                    listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                 }
             }
             return listToDisplay;

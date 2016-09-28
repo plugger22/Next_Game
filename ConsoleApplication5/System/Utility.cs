@@ -67,6 +67,22 @@ namespace Next_Game
             return lines;
         }
 
+        /// <summary>
+        /// Gives 2D distance between two coordinates
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="y1"></param>
+        /// <param name="x2"></param>
+        /// <param name="y2"></param>
+        /// <returns></returns>
+        public int GetDistance(int x1, int y1, int x2, int y2)
+        {
+            double dX = x1 - x2;
+            double dY = y1 - y2;
+            double multi = dX * dX + dY * dY;
+            double distance = Math.Sqrt(multi);
+            return (int)distance;
+        }
 
         //methods above here
     }

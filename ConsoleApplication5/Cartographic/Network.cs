@@ -2066,6 +2066,15 @@ namespace Next_Game.Cartographic
             }
         }
 
+        /// <summary>
+        /// used to randomly place player characters at start (debug)
+        /// </summary>
+        /// <returns></returns>
+        public Location GetRandomLocation()
+        {
+            return null;
+        }
+
         //methods above here
     }
 }
