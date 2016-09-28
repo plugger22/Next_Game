@@ -168,11 +168,20 @@ namespace Next_Game
 
     public class Active : Actor
     {
+        public int CrowChance { get; set; } //chance of crow getting through
+        public int CrowDistance { get; set; } //distance between player and follower
+        public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
+        public bool Activated { get; set; } = false; //follower activated or not
+        private List<string> crowTooltip { get; set; } //explanation of factors influencing crow chance
+
         public Active()
-        { }
+        { crowTooltip = new List<string>(); }
 
         public Active(string name, ActorType type, ActorSex sex = ActorSex.Male) : base (name, type, sex)
-        { }
+        { crowTooltip = new List<string>(); }
+
+        public void AddTooltip(string tooltip)
+        { if (tooltip != null) { crowTooltip.Add(tooltip); } }
     }
 
     //Player avatar

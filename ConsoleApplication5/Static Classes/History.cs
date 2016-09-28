@@ -253,7 +253,7 @@ namespace Next_Game
                     person = new Player(actorName, type) as Player;
                 }
                 else
-                { person = new Active(actorName, type); }
+                { person = new Follower(actorName, type); }
                 listOfPlayerActors.Add(person);
 
             }

@@ -238,8 +238,8 @@ namespace Next_Game
             //listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}", RLColor.Yellow, RLColor.Black));
             listToDisplay.Add(new Snippet("--- Player Characters", RLColor.Brown, RLColor.Black));
             int status;
-            int crowChance;
-            int distance;
+            //int crowChance;
+            //int distance;
             int locID;
             string locName;
             string coordinates, distText, crowText;
@@ -248,41 +248,41 @@ namespace Next_Game
             RLColor textColor = RLColor.White;
 
             //Player is assumed to be the first record in dictActiveActors
-            Player player = (Player)dictActiveActors[1];
-            Position posPlayer = player.GetActorPosition();
+            //Player player = (Player)dictActiveActors[1];
+            //Position posPlayer = player.GetActorPosition();
 
-            foreach (KeyValuePair<int, Active> pair in dictActiveActors)
+            foreach (var actor in dictActiveActors)
             {
-                status = (int)pair.Value.Status;
-                locID = pair.Value.LocID;
+                status = (int)actor.Value.Status;
+                locID = actor.Value.LocID;
                 locName = GetLocationName(locID);
                 if (status == (int)ActorStatus.AtLocation)
                 { locStatus = "At " + locName; }
                 else if (status == (int)ActorStatus.Travelling)
-                { locStatus = "Travelling to " + locName; }
+                { locStatus = "Moving to " + locName; }
                 //get location coords
                 Location loc = Game.network.GetLocation(locID);
                 //only show chosen characters (at Location or not depending on parameter)
                 if (locationsOnly == true && status == (int)ActorStatus.AtLocation || !locationsOnly)
                 {
-                    Position pos = pair.Value.GetActorPosition();
+                    Position pos = actor.Value.GetActorPosition();
                     coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
-                    if (pair.Value is Player)
+                    if (actor.Value is Player)
                     {
                         //player (no distance display)
                         textColor = Color._player;
-                        charString = string.Format("Aid {0,-2} {1,-25} {2,-20}{3,-10}", pair.Key, pair.Value.Name, locStatus, coordinates);
+                        charString = string.Format("Aid {0,-2} {1,-18} {2,-20}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
                     }
                     else
                     {
                         //loyal follower, get distance
                         
                         textColor = Color._active;
-                        distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
-                        distText = string.Format("{0} {1}", "dist:", distance);
-                        crowChance = 100 - (distance * 2);
-                        crowText = string.Format("{0} {1}{2}", "crow:", crowChance, "%");
-                        charString = string.Format("Aid {0,-2} {1,-25} {2,-20}{3,-12} {4,-9} {5,-9}", pair.Key, pair.Value.Name, locStatus, coordinates, distText, crowText);
+                        //distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
+                        distText = string.Format("{0} {1}", "dist:", actor.Value.CrowDistance);
+                        //crowChance = 100 - (distance * 2);
+                        crowText = string.Format("{0} {1}{2}", "crow:", actor.Value.CrowChance, "%");
+                        charString = string.Format("Aid {0,-2} {1,-18} {2,-20}{3,-15} {4,-9} {5,-9}", actor.Key, actor.Value.Name, locStatus, coordinates, distText, crowText);
                     }
                     listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                 }
@@ -1754,7 +1754,61 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartTurn()
         {
+            CalculateCrows(); 
+        }
 
+        /// <summary>
+        /// Calculates crow %'s at start of trun
+        /// </summary>
+        private void CalculateCrows()
+        {
+            int distance, chance;
+            string description;
+            //Player is assumed to be the first record in dictActiveActors
+            Player player = (Player)dictActiveActors[1];
+            Position posPlayer = player.GetActorPosition();
+            //loop through active players
+            foreach (var actor in dictActiveActors)
+            {
+                if (actor.Value is Follower)
+                {
+                    Position pos = actor.Value.GetActorPosition();
+                    distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
+                    chance = 100 - (distance * 2) + actor.Value.CrowBonus;
+                    chance = Math.Min(100, chance);
+
+                    if (player.Status != ActorStatus.AtLocation)
+                    {
+                        //no crows can be sent if Player isn't at a Location
+                        actor.Value.CrowChance = 0;
+                        actor.Value.CrowDistance = distance;
+                        actor.Value.CrowBonus = 0;
+                        actor.Value.AddTooltip("No crows can be sent, or received, if the Player is travelling");
+                    }
+                    else
+                    {
+                        if (actor.Value.Status == ActorStatus.AtLocation)
+                        {
+                            //Normal operations -> Player and Follower both at a Location
+                            actor.Value.CrowChance = chance;
+                            actor.Value.CrowDistance = distance;
+                            actor.Value.CrowBonus = 0;
+                            description = string.Format("Chance is 100 less distance doubled (net chance of {0})", chance);
+                            if (actor.Value.CrowBonus > 0)
+                            { actor.Value.AddTooltip("A crow will automatically arrive this turn if sent"); }
+                        }
+                        else
+                        {
+                            //no crows can be sent if Follower isn't at a Location
+                            actor.Value.CrowChance = 0;
+                            actor.Value.CrowDistance = distance;
+                            actor.Value.CrowBonus = 0;
+                            actor.Value.AddTooltip("No crows can be sent to the Follower if they are travelling");
+                        }
+                    }
+                    actor.Value.AddTooltip(string.Format("Distance to Follower {0}", distance));
+                }
+            }
         }
 
         //new Methods above here
