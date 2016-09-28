@@ -544,6 +544,18 @@ namespace Next_Game
                         }
                     }
                 }
+                //crow explanation for loyal followers
+                if (person is Follower)
+                {
+                    Active tempPerson = person as Active;
+                    List<string> tempList = tempPerson.GetCrowTooltips();
+                    if (tempList.Count > 0)
+                    {
+                        listToDisplay.Add(new Snippet("Crow Explanation", RLColor.Brown, RLColor.Black));
+                        foreach (string tip in tempList)
+                        { listToDisplay.Add(new Snippet(tip)); }
+                    }
+                }
 
                 //family
                 if (person is Noble)
@@ -1763,7 +1775,6 @@ namespace Next_Game
         private void CalculateCrows()
         {
             int distance, chance;
-            string description;
             //Player is assumed to be the first record in dictActiveActors
             Player player = (Player)dictActiveActors[1];
             Position posPlayer = player.GetActorPosition();
@@ -1783,7 +1794,7 @@ namespace Next_Game
                         actor.Value.CrowChance = 0;
                         actor.Value.CrowDistance = distance;
                         actor.Value.CrowBonus = 0;
-                        actor.Value.AddTooltip("No crows can be sent, or received, if the Player is travelling");
+                        actor.Value.AddCrowTooltip("No crows can be sent, or received, if the Player is travelling");
                     }
                     else
                     {
@@ -1793,9 +1804,9 @@ namespace Next_Game
                             actor.Value.CrowChance = chance;
                             actor.Value.CrowDistance = distance;
                             actor.Value.CrowBonus = 0;
-                            description = string.Format("Chance is 100 less distance doubled (net chance of {0})", chance);
+                            actor.Value.AddCrowTooltip(string.Format("Chance is {0}%  (One hundred less distance doubled)", chance));
                             if (actor.Value.CrowBonus > 0)
-                            { actor.Value.AddTooltip("A crow will automatically arrive this turn if sent"); }
+                            { actor.Value.AddCrowTooltip("A crow will automatically arrive this turn if sent"); }
                         }
                         else
                         {
@@ -1803,10 +1814,10 @@ namespace Next_Game
                             actor.Value.CrowChance = 0;
                             actor.Value.CrowDistance = distance;
                             actor.Value.CrowBonus = 0;
-                            actor.Value.AddTooltip("No crows can be sent to the Follower if they are travelling");
+                            actor.Value.AddCrowTooltip("No crows can be sent to the Follower if they are travelling");
                         }
                     }
-                    actor.Value.AddTooltip(string.Format("Distance to Follower {0}", distance));
+                    actor.Value.AddCrowTooltip(string.Format("Distance from Player is {0} leagues, as the crow flies", distance));
                 }
             }
         }

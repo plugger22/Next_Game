@@ -180,8 +180,11 @@ namespace Next_Game
         public Active(string name, ActorType type, ActorSex sex = ActorSex.Male) : base (name, type, sex)
         { crowTooltip = new List<string>(); }
 
-        public void AddTooltip(string tooltip)
+        public void AddCrowTooltip(string tooltip)
         { if (tooltip != null) { crowTooltip.Add(tooltip); } }
+
+        public List<string> GetCrowTooltips()
+        { return crowTooltip; }
     }
 
     //Player avatar
