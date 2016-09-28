@@ -2069,10 +2069,12 @@ namespace Next_Game.Cartographic
         /// <summary>
         /// used to randomly place player characters at start (debug)
         /// </summary>
-        /// <returns></returns>
-        public Location GetRandomLocation()
+        /// <returns>LocID</returns>
+        internal int GetRandomLocation()
         {
-            return null;
+            List<int> listOfKeys = new List<int>(dictLocations.Keys);
+            int randomKey = listOfKeys[rnd.Next(0, listOfKeys.Count)];
+            return listOfKeys[randomKey];
         }
 
         //methods above here

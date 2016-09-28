@@ -50,19 +50,20 @@ namespace Next_Game
         /// </summary>
         /// <param name="listPlayerCharacters"></param>
         /// <param name="locID"></param>
-        internal void InitiatePlayerActors(List<Active> listPlayerCharacters, int locID)
+        internal void InitiatePlayerActors(List<Active> listPlayerCharacters)
         {
-            //int locID = 
+            int locID;
             //loop list and transfer characters to dictionary
             foreach (Active person in listPlayerCharacters)
             {
+                locID = Game.network.GetRandomLocation();
+                Location loc = Game.network.GetLocation(locID);
                 //place characters at Location
                 person.LocID = locID;
-                person.SetActorPosition(Game.map.GetCapital());
+                person.SetActorPosition(loc.GetPosition());
                 dictActiveActors.Add(person.ActID, person);
                 dictAllActors.Add(person.ActID, person);
                 //add to Location list of Characters
-                Location loc = Game.network.GetLocation(locID);
                 loc.AddActor(person.ActID);
             }
         }
@@ -78,7 +79,7 @@ namespace Next_Game
             InitialiseGeoClusters();
             Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
             timer_2.Start();
-            InitiatePlayerActors(Game.history.GetPlayerActors(), 1);
+            InitiatePlayerActors(Game.history.GetPlayerActors());
             Game.StopTimer(timer_2, "W: InitiatePlayerActors");
             timer_2.Start();
             InitialiseHouses();
