@@ -2073,7 +2073,7 @@ namespace Next_Game.Cartographic
         internal int GetRandomLocation()
         {
             List<int> listOfKeys = new List<int>(dictLocations.Keys);
-            int randomKey = listOfKeys[rnd.Next(0, listOfKeys.Count)];
+            int randomKey = rnd.Next(0, listOfKeys.Count);
             return listOfKeys[randomKey];
         }
 

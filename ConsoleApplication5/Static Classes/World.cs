@@ -238,16 +238,18 @@ namespace Next_Game
             //listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}", RLColor.Yellow, RLColor.Black));
             listToDisplay.Add(new Snippet("--- Player Characters", RLColor.Brown, RLColor.Black));
             int status;
+            int crowChance;
             int distance;
             int locID;
             string locName;
+            string coordinates, distText, crowText;
             string locStatus = "who knows?";
             string charString; //overall string
             RLColor textColor = RLColor.White;
 
             //Player is assumed to be the first record in dictActiveActors
             Player player = (Player)dictActiveActors[1];
-            Location locPlayer = Game.network.GetLocation(player.LocID);
+            Position posPlayer = player.GetActorPosition();
 
             foreach (KeyValuePair<int, Active> pair in dictActiveActors)
             {
@@ -263,18 +265,24 @@ namespace Next_Game
                 //only show chosen characters (at Location or not depending on parameter)
                 if (locationsOnly == true && status == (int)ActorStatus.AtLocation || !locationsOnly)
                 {
+                    Position pos = pair.Value.GetActorPosition();
+                    coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
                     if (pair.Value is Player)
                     {
                         //player (no distance display)
                         textColor = Color._player;
-                        charString = string.Format("Aid {0,-2} {1,-25} {2} (Loc {3}:{4})", pair.Key, pair.Value.Name, locStatus, loc.GetPosX(), loc.GetPosY());
+                        charString = string.Format("Aid {0,-2} {1,-25} {2,-20}{3,-10}", pair.Key, pair.Value.Name, locStatus, coordinates);
                     }
                     else
                     {
                         //loyal follower, get distance
+                        
                         textColor = Color._active;
-                        distance = Game.utility.GetDistance(locPlayer.GetPosX(), locPlayer.GetPosY(), loc.GetPosX(), loc.GetPosY());
-                        charString = string.Format("Aid {0,-2} {1,-25} {2} (Loc {3}:{4})   distance {5}", pair.Key, pair.Value.Name, locStatus, loc.GetPosX(), loc.GetPosY(), distance);
+                        distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
+                        distText = string.Format("{0} {1}", "dist:", distance);
+                        crowChance = 100 - (distance * 2);
+                        crowText = string.Format("{0} {1}{2}", "crow:", crowChance, "%");
+                        charString = string.Format("Aid {0,-2} {1,-25} {2,-20}{3,-12} {4,-9} {5,-9}", pair.Key, pair.Value.Name, locStatus, coordinates, distText, crowText);
                     }
                     listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                 }

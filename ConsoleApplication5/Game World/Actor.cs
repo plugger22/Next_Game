@@ -21,7 +21,6 @@ namespace Next_Game
     {
         private static int characterIndex = 1; //provides  a unique ID to each character (first characters should always be the player controlled ones with ID's < 10)
         private Position actorPos;
-        
         public string Name { get; set; }
         public int LocID { get; set; } //current location (if travelling then destination) -> if dead then '0'
         public int Speed { get; set; } = Game.constant.GetValue(Global.MOVE_SPEED); //speed of travel throughout the world
