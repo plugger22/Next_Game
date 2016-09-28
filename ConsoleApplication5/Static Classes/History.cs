@@ -1510,7 +1510,6 @@ namespace Next_Game
                     if (num < Game.constant.GetValue(Global.CHILDBIRTH_DEATH))
                     {
                         //Mother died at childbirth but child survived
-                        //CreatePassiveFuneral(Lady, year, ActorDied.Childbirth, child, Lord);
                         descriptor = string.Format("{0} {1}, Aid {2} died while giving birth to {3}, age {4}", Lady.Type, Lady.Name, Lady.ActID, child.Name, Lady.Age);
                         Record record = new Record(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistActorEvent.Died);
                         record.AddActorEvent(HistActorEvent.Birthing);
@@ -1896,10 +1895,13 @@ namespace Next_Game
             foreach (Noble rebelActor in listOfRebelNobles)
             {
                 //change location (all)
-                kingsKeep.AddActor(rebelActor.ActID);
-                Location oldLoc = Game.network.GetLocation(rebelActor.LocID);
-                oldLoc.RemoveActor(rebelActor.ActID);
-                rebelActor.LocID = 1;
+                if (rebelActor.Status != ActorStatus.Gone)
+                {
+                    kingsKeep.AddActor(rebelActor.ActID);
+                    Location oldLoc = Game.network.GetLocation(rebelActor.LocID);
+                    oldLoc.RemoveActor(rebelActor.ActID);
+                    rebelActor.LocID = 1;
+                }
 
                 //specific roles
                 switch (rebelActor.Type)
