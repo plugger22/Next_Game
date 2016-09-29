@@ -32,3 +32,10 @@
 8: 20
 # SIBLING_ESCAPE -> chance of any of Player's brothers or sisters escaping to the free cities
 9: 25
+
+# Crows ---
+
+# CROW_NUMBER -> number of crows available per turn
+12: 3
+# CROW_BONUS -> bonus to crow chance following a failed crow (cumulative while ever follower remains at the same location)
+13: 20

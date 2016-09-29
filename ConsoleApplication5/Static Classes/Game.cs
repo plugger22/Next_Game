@@ -665,6 +665,15 @@ namespace Next_Game
                                     break;
                             }
                             break;
+                        case RLKey.X:
+                            //exit application from Main Menu
+                            if (_menuMode == MenuMode.Main)
+                            {
+                                _rootConsole.Close();
+                                //Environment.Exit(1); - not needed and causes OpenTK error
+                                break;
+                            }
+                            break;
                         //Player controlled character selected
                         case RLKey.Number1:
                         case RLKey.Number2:
@@ -711,18 +720,10 @@ namespace Next_Game
                             world.ProcessEndTurn();
                             world.ProcessStartTurn();
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
+                            infoChannel.ClearConsole(ConsoleDisplay.Multi);
                             infoChannel.AppendInfoList(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
                             if (_menuMode == MenuMode.Actor_Passive)
                             { _menuMode = MenuMode.Main; }
-                            break;
-                        case RLKey.X:
-                            //exit application from Main Menu
-                            if (_menuMode == MenuMode.Main)
-                            {
-                                _rootConsole.Close();
-                                //Environment.Exit(1); - not needed and causes OpenTK error
-                                break;
-                            }
                             break;
                         case RLKey.Escape:
                             //clear input & multi consoles

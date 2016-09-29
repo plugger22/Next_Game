@@ -237,19 +237,13 @@ namespace Next_Game
             List<Snippet> listToDisplay = new List<Snippet>();
             //listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}", RLColor.Yellow, RLColor.Black));
             listToDisplay.Add(new Snippet("--- Player Characters", RLColor.Brown, RLColor.Black));
-            int status;
-            //int crowChance;
-            //int distance;
+            int status, chance;
             int locID;
             string locName;
             string coordinates, distText, crowText;
             string locStatus = "who knows?";
             string charString; //overall string
             RLColor textColor = RLColor.White;
-
-            //Player is assumed to be the first record in dictActiveActors
-            //Player player = (Player)dictActiveActors[1];
-            //Position posPlayer = player.GetActorPosition();
 
             foreach (var actor in dictActiveActors)
             {
@@ -279,8 +273,9 @@ namespace Next_Game
                         else { textColor = RLColor.White; }
                         //distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
                         distText = string.Format("{0} {1}", "dist:", actor.Value.CrowDistance);
-                        //crowChance = 100 - (distance * 2);
-                        crowText = string.Format("{0} {1}{2}", "crow:", actor.Value.CrowChance, "%");
+                        chance = actor.Value.CrowChance + actor.Value.CrowBonus;
+                        chance = Math.Min(100, chance);
+                        crowText = string.Format("{0} {1}{2}", "crow:", chance, "%");
                         charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-9} {5,-9}", actor.Key, actor.Value.Name, locStatus, coordinates, distText, crowText);
                     }
                     listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
@@ -1089,6 +1084,11 @@ namespace Next_Game
 
         }
 
+        /// <summary>
+        /// selects an active actor for movement orders if at a location and activated
+        /// </summary>
+        /// <param name="charID"></param>
+        /// <returns></returns>
         internal Position GetActiveActorLocationByPos(int charID)
         {
             Position pos = new Position();
@@ -1803,7 +1803,7 @@ namespace Next_Game
                         //no crows can be sent if Player isn't at a Location
                         actor.Value.CrowChance = 0;
                         actor.Value.CrowDistance = distance;
-                        actor.Value.CrowBonus = 0;
+                        //actor.Value.CrowBonus = 0;
                         actor.Value.AddCrowTooltip("No crows can be sent, or received, if the Player is travelling");
                     }
                     else
@@ -1813,10 +1813,11 @@ namespace Next_Game
                             //Normal operations -> Player and Follower both at a Location
                             actor.Value.CrowChance = chance;
                             actor.Value.CrowDistance = distance;
-                            actor.Value.CrowBonus = 0;
-                            actor.Value.AddCrowTooltip(string.Format("Chance is {0}%  (One hundred less distance doubled)", chance));
+                            //actor.Value.CrowBonus = 0;
+                            actor.Value.AddCrowTooltip(string.Format("Chance is {0}%  (One hundred less distance doubled plus any bonus)", chance));
                             if (actor.Value.CrowBonus > 0)
-                            { actor.Value.AddCrowTooltip("A crow will automatically arrive this turn if sent"); }
+                            { actor.Value.AddCrowTooltip(string.Format("Includes a cumulative bonus of +{0}% from previous failed crows that might be delayed applies while at this location", 
+                                Game.constant.GetValue(Global.CROW_BONUS))); }
                         }
                         else
                         {
@@ -1840,7 +1841,7 @@ namespace Next_Game
             List<Snippet> listSnippet = new List<Snippet>();
             string description;
             Active actor = GetActiveActor(actorID);
-
+            int bonus = Game.constant.GetValue(Global.CROW_BONUS);
             if (actor != null)
             {
                 if (actor.Status == ActorStatus.AtLocation)
@@ -1848,18 +1849,23 @@ namespace Next_Game
                     if (actor.Activated == false)
                     {
                         int num = rnd.Next(100);
-                        description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", actor.CrowChance, num);
+                        description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", actor.CrowChance + actor.CrowBonus, num);
                         listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0} at {1} (distance {2} leagues)", actor.Name, GetLocationName(actor.LocID), actor.CrowDistance)));
 
-                        if (num < actor.CrowChance)
+                        if (num < (actor.CrowChance + actor.CrowBonus))
                         {
                             //success!
                             actor.Activated = true;
+                            actor.CrowBonus = 0;
                             listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
                         }
                         else
-                        //failed the roll
-                        { actor.Activated = false; listSnippet.Add(new Snippet(string.Format("The Crow failed to arrive ({0})", description))); }
+                        //failed the roll, apply bonus
+                        {
+                            actor.Activated = false; listSnippet.Add(new Snippet(string.Format("The Crow failed to arrive ({0})", description)));
+                            actor.CrowBonus += bonus;
+                            actor.AddCrowTooltip(string.Format("An additional bonus of +{0}% applies from a previous failed crow that might have been delayed", bonus));
+                        }
                     }
                     else
                     //already activated

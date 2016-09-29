@@ -171,7 +171,7 @@ namespace Next_Game
         public int CrowChance { get; set; } //chance of crow getting through
         public int CrowDistance { get; set; } //distance between player and follower
         public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
-        public bool Activated { get; set; } = false; //follower activated or not
+        public bool Activated { get; set; } //can move/be given orders this turn, or not
         private List<string> crowTooltip { get; set; } //explanation of factors influencing crow chance
 
         public Active()
@@ -194,14 +194,14 @@ namespace Next_Game
     public class Player : Active
     {
         public Player(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { }
+        { Activated = true; }
     }
 
     //Player controlled Minions
     public class Follower : Active
     {
         public Follower(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { }
+        { Activated = false; }
     }
 
 

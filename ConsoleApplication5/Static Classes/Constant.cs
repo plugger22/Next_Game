@@ -17,6 +17,8 @@ namespace Next_Game
         SIBLING_ESCAPE,
         MOVE_SPEED,
         CHILDBIRTH_COMPLICATIONS,
+        CROW_NUMBER,
+        CROW_BONUS,
         Count //keep as last
     }
 
@@ -41,6 +43,8 @@ namespace Next_Game
             arrayOfGlobals[9] = Global.SIBLING_ESCAPE;
             arrayOfGlobals[10] = Global.MOVE_SPEED;
             arrayOfGlobals[11] = Global.CHILDBIRTH_COMPLICATIONS;
+            arrayOfGlobals[12] = Global.CROW_NUMBER;
+            arrayOfGlobals[13] = Global.CROW_BONUS;
             }
 
         /// <summary>
