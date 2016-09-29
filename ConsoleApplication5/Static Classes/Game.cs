@@ -464,11 +464,18 @@ namespace Next_Game
                             {
                                 case MenuMode.Main:
                                     List<Snippet> inputList = new List<Snippet>();
-                                    inputList.Add(new Snippet("--- Send a Crow to a Loyal Follower", RLColor.Magenta, RLColor.Black));
-                                    inputList.Add(new Snippet("Select Follower (input #)"));
+                                    int numCrows = world.GetCrowsAvailable();
+                                    if (numCrows > 0)
+                                    {
+                                        inputList.Add(new Snippet("--- Send a Crow to a Loyal Follower", RLColor.Magenta, RLColor.Black));
+                                        inputList.Add(new Snippet(string.Format("You have {0} {1} remaining", numCrows, numCrows == 1 ? "Crow" : "Crows")));
+                                        inputList.Add(new Snippet("Select Follower (input #)"));
+                                        _inputMode = InputMode.MultiKey;
+                                        _multiCaller = 2;
+                                    }
+                                    else
+                                    { inputList.Add(new Snippet("You have run out of crows!", RLColor.Red, RLColor.Black)); }
                                     infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
-                                    _inputMode = InputMode.MultiKey;
-                                    _multiCaller = 2;
                                     break;
                                 case MenuMode.Record:
                                     //Custom report (debugging)

@@ -193,6 +193,8 @@ namespace Next_Game
     //Player avatar
     public class Player : Active
     {
+        public int CrowsNumber { get; set; }
+
         public Player(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { Activated = true; }
     }
