@@ -19,7 +19,7 @@ namespace Next_Game
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
         private Dictionary<int, int> dictMajorHouseID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
         private Dictionary<int, int> dictHousePower; // list of Great Houses, Sorted (key is House ID, value is # of bannerlords (power))
-        private Dictionary<int, Record> dictRecords; //all historical records in a central collection (key is eventID)
+        private Dictionary<int, Event> dictRecords; //all historical records in a central collection (key is eventID)
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         private Dictionary<int, Trait> dictTraits; //all triats (key is traitID)
         private Dictionary<int, Secret> dictSecrets; //all secrets (key is secretID)
@@ -37,7 +37,7 @@ namespace Next_Game
             dictAllHouses = new Dictionary<int, House>();
             dictMajorHouseID = new Dictionary<int, int>();
             dictHousePower = new Dictionary<int, int>();
-            dictRecords = new Dictionary<int, Record>();
+            dictRecords = new Dictionary<int, Event>();
             dictGeoClusters = new Dictionary<int, GeoCluster>();
             dictTraits = new Dictionary<int, Trait>();
             dictSecrets = new Dictionary<int, Secret>();
@@ -185,11 +185,11 @@ namespace Next_Game
                                 Game.messageLog.Add(snippet, Game.gameTurn);
                             }
                             else
-                            { Game.messageLog.Add(new Snippet("Error in World.MoveCharacters(): Character not found"), Game.gameTurn); }
+                            { Game.SetError(new Error(42, "Character not found")); }
                         }
                     }
                     else
-                    { Game.messageLog.Add(new Snippet("Error in World.MoveCharacters(): Location not found"), Game.gameTurn); }
+                    { Game.SetError(new Error(42, "Character not found")); }
                     //update Party status to enable deletion of moveObject from list (below)
                     moveObject.SetPartyStatus(PartyStatus.Done);
                 }
@@ -1539,7 +1539,7 @@ namespace Next_Game
         }
 
 
-        internal void SetRecord(Record record)
+        internal void SetRecord(Event record)
         { if (record != null) { dictRecords.Add(record.eventID, record); } }
 
 

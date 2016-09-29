@@ -81,7 +81,7 @@
     <Compile Include="Static Classes\FileImport.cs" />
     <Compile Include="Static Classes\Constant.cs" />
     <Compile Include="System\Trait.cs" />
-    <Compile Include="System\Record.cs" />
+    <Compile Include="System\Event.cs" />
     <Compile Include="Game World\House.cs" />
     <Compile Include="Static Classes\History.cs" />
     <Compile Include="System\Color.cs" />

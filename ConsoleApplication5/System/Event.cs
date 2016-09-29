@@ -14,7 +14,7 @@ namespace Next_Game
     ///
     ///tracks historical Information & Events ---
     ///
-    class Record
+    class Event
     {
         private static int eventIndex = 1;
         public int eventID { get; }
@@ -31,7 +31,7 @@ namespace Next_Game
         public List<HistKingdomEvent> listOfKingdomEvents;
 
 
-        public Record()
+        public Event()
         {
             eventID = eventIndex++;
             Year = Game.gameYear;
@@ -56,7 +56,7 @@ namespace Next_Game
         /// <param name="year"></param>
         /// <param name="histActorEvent"></param>
         /// <param name="actualEvent"></param>
-        public Record(string description, int actorID, int locID, int refID, int year, HistActorEvent histActorEvent = HistActorEvent.None, bool actualEvent = true)
+        public Event(string description, int actorID, int locID, int refID, int year, HistActorEvent histActorEvent = HistActorEvent.None, bool actualEvent = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
@@ -96,7 +96,7 @@ namespace Next_Game
         /// <param name="year"></param>
         /// <param name="histHouseEvent"></param>
         /// <param name="actualEvent"></param>
-        public Record(string description, int locID, int refID, int year, HistHouseEvent histHouseEvent = HistHouseEvent.None, bool actualEvent = true)
+        public Event(string description, int locID, int refID, int year, HistHouseEvent histHouseEvent = HistHouseEvent.None, bool actualEvent = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
@@ -134,7 +134,7 @@ namespace Next_Game
         /// <param name="year"></param>
         /// <param name="histActorEvent"></param>
         /// <param name="actualEvent"></param>
-        public Record(string description, int locID, int refID, int year, HistKingdomEvent histKingdomEvent = HistKingdomEvent.None, bool actualEvent = true)
+        public Event(string description, int locID, int refID, int year, HistKingdomEvent histKingdomEvent = HistKingdomEvent.None, bool actualEvent = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
