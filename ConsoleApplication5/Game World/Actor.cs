@@ -185,6 +185,9 @@ namespace Next_Game
 
         public List<string> GetCrowTooltips()
         { return crowTooltip; }
+
+        public void ClearCrowTooltips()
+        { crowTooltip.Clear(); }
     }
 
     //Player avatar

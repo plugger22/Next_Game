@@ -271,18 +271,17 @@ namespace Next_Game
                     {
                         //player (no distance display)
                         textColor = Color._player;
-                        charString = string.Format("Aid {0,-2} {1,-18} {2,-20}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
+                        charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
                     }
                     else
                     {
-                        //loyal follower, get distance
-                        
-                        textColor = Color._active;
+                        if (actor.Value.Activated == true) { textColor = Color._active; }
+                        else { textColor = RLColor.White; }
                         //distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
                         distText = string.Format("{0} {1}", "dist:", actor.Value.CrowDistance);
                         //crowChance = 100 - (distance * 2);
                         crowText = string.Format("{0} {1}{2}", "crow:", actor.Value.CrowChance, "%");
-                        charString = string.Format("Aid {0,-2} {1,-18} {2,-20}{3,-15} {4,-9} {5,-9}", actor.Key, actor.Value.Name, locStatus, coordinates, distText, crowText);
+                        charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-9} {5,-9}", actor.Key, actor.Value.Name, locStatus, coordinates, distText, crowText);
                     }
                     listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                 }
@@ -554,6 +553,11 @@ namespace Next_Game
                         listToDisplay.Add(new Snippet("Crow Explanation", RLColor.Brown, RLColor.Black));
                         foreach (string tip in tempList)
                         { listToDisplay.Add(new Snippet(tip)); }
+                        if (tempPerson.Activated == true)
+                        { listToDisplay.Add(new Snippet("Activated", RLColor.Yellow, RLColor.Black)); }
+                        else
+                        { listToDisplay.Add(new Snippet("Not activated", RLColor.Red, RLColor.Black)); }
+
                     }
                 }
 
@@ -1042,6 +1046,20 @@ namespace Next_Game
             return person;
         }
 
+        /// <summary>
+        /// return an Active actor from dictActiveActors
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <returns></returns>
+        internal Active GetActiveActor(int actorID)
+        {
+            Active person = new Active();
+            if (dictActiveActors.ContainsKey(actorID))
+            { person = dictActiveActors[actorID]; }
+            else { person = null; }
+            return person;
+        }
+
       
         /// <summary>
         /// returns string showing character name and status (at 'x' loc, travelling)
@@ -1079,6 +1097,8 @@ namespace Next_Game
             {
                 Active person = dictActiveActors[charID];
                 pos = person.GetActorPosition();
+                //can't be selected if not activated
+                if (person.Activated == false) { pos = null; }
             }
             else
             { pos = null; }
@@ -1740,18 +1760,6 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Send a crow to a loyal follower
-        /// </summary>
-        public List<Snippet> SendCrow(int actorID)
-        {
-            List<Snippet> listSnippet = new List<Snippet>();
-            string description;
-            Snippet snippet = new Snippet("Crow Sent");
-            listSnippet.Add(snippet);
-            return listSnippet;
-        }
-
-        /// <summary>
         /// handles all end of turn stuff
         /// </summary>
         public void ProcessEndTurn()
@@ -1783,6 +1791,8 @@ namespace Next_Game
             {
                 if (actor.Value is Follower)
                 {
+                    actor.Value.ClearCrowTooltips();
+                    actor.Value.Activated = false;
                     Position pos = actor.Value.GetActorPosition();
                     distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
                     chance = 100 - (distance * 2) + actor.Value.CrowBonus;
@@ -1820,6 +1830,51 @@ namespace Next_Game
                     actor.Value.AddCrowTooltip(string.Format("Distance from Player is {0} leagues, as the crow flies", distance));
                 }
             }
+        }
+
+        /// <summary>
+        /// Send a crow to a loyal follower
+        /// </summary>
+        public List<Snippet> SendCrow(int actorID)
+        {
+            List<Snippet> listSnippet = new List<Snippet>();
+            string description;
+            Active actor = GetActiveActor(actorID);
+
+            if (actor != null)
+            {
+                if (actor.Status == ActorStatus.AtLocation)
+                {
+                    if (actor.Activated == false)
+                    {
+                        int num = rnd.Next(100);
+                        description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", actor.CrowChance, num);
+                        listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0} at {1} (distance {2} leagues)", actor.Name, GetLocationName(actor.LocID), actor.CrowDistance)));
+
+                        if (num < actor.CrowChance)
+                        {
+                            //success!
+                            actor.Activated = true;
+                            listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
+                        }
+                        else
+                        //failed the roll
+                        { actor.Activated = false; listSnippet.Add(new Snippet(string.Format("The Crow failed to arrive ({0})", description))); }
+                    }
+                    else
+                    //already activated
+                    { listSnippet.Add(new Snippet(string.Format("{0} is already activated and awaiting your orders!", actor.Name))); }
+                }
+                else
+                //actor not at a location
+                { listSnippet.Add(new Snippet(string.Format("Crow can NOT be dispatched to {0} as they aren't at a location", actor.Name))); }
+            }
+            else
+            //invalid actor
+            { listSnippet.Add(new Snippet("Unknown Actor. No crow sent.")); }
+
+
+            return listSnippet;
         }
 
         //new Methods above here

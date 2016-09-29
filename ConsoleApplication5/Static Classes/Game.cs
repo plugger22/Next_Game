@@ -604,7 +604,7 @@ namespace Next_Game
                                     if (_posSelect1 != null)
                                     { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); _mouseOn = true; }
                                     else
-                                    { charList.Add(new Snippet("The character is not currently at your disposal")); _mouseOn = false; }
+                                    { charList.Add(new Snippet("The character is not currently at your disposal", RLColor.Red, RLColor.Black)); _mouseOn = false; }
                                     infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
                                     _inputState = 1;
                                     break;
