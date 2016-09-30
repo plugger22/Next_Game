@@ -13,9 +13,11 @@ namespace Next_Game
         int multiMargin; //margin offset from left of page and top for info display on console
         int inputMargin;
         int statusMargin;
+        int messageMargin;
         private List<Snippet> multiList; //list of strings to display in the multi Console
         private List<Snippet> inputList; //list of strings to display in the input Console
         private List<Snippet> statusList; //list of strings to display in the Status Console
+        private List<Snippet> messageList; //list of strings to display in the Message Console
         //special multiConsole display objects
         private Box fixedBox; //automatically adjusts it's height to text
         private Box cardBox; //standard card
@@ -26,9 +28,11 @@ namespace Next_Game
             multiList = new List<Snippet>();
             inputList = new List<Snippet>();
             statusList = new List<Snippet>();
+            messageList = new List<Snippet>();
             multiMargin = 2;
             inputMargin = 2;
             statusMargin = 1;
+            messageMargin = 2;
             RLColor backColor = Color._background1;
             fixedBox = new Box(100, 10, 10, backColor, RLColor.Black);
             cardBox = new Box(50, 50, 10, backColor, RLColor.Black);
@@ -57,6 +61,10 @@ namespace Next_Game
                     statusList.Clear();
                     statusList.AddRange(listToDisplay);
                     break;
+                case ConsoleDisplay.Message:
+                    messageList.Clear();
+                    messageList.AddRange(listToDisplay);
+                    break;
             }
         }
 
@@ -79,6 +87,9 @@ namespace Next_Game
                 case ConsoleDisplay.Status:
                     statusList.Add(appendSnippet);
                     break;
+                case ConsoleDisplay.Message:
+                    messageList.Add(appendSnippet);
+                    break;
             }
         }
 
@@ -99,6 +110,9 @@ namespace Next_Game
                     break;
                 case ConsoleDisplay.Status:
                     statusList.Clear();
+                    break;
+                case ConsoleDisplay.Message:
+                    messageList.Clear();
                     break;
             }
         }
@@ -121,6 +135,9 @@ namespace Next_Game
                     break;
                 case ConsoleDisplay.Status:
                     statusList.Insert(0, snippet);
+                    break;
+                case ConsoleDisplay.Message:
+                    messageList.Insert(0, snippet);
                     break;
             }
         }
@@ -160,6 +177,10 @@ namespace Next_Game
                     case ConsoleDisplay.Status:
                         displayList = statusList;
                         margin = statusMargin;
+                        break;
+                    case ConsoleDisplay.Message:
+                        displayList = messageList;
+                        margin = messageMargin;
                         break;
                 }
                 //max number of lines

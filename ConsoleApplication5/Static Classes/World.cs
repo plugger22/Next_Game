@@ -12,6 +12,7 @@ namespace Next_Game
     {
         static Random rnd;
         private List<Move> moveList; //list of characters moving through the world
+        private readonly Queue<Snippet> messageQueue; //short term queue to display recent messages
         private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID
         private Dictionary<int, Passive> dictPassiveActors; //list of all NPC actors keyed of actorID
         private Dictionary<int, Actor> dictAllActors; //list of all Actors keyed of actorID
@@ -31,6 +32,7 @@ namespace Next_Game
         {
             rnd = new Random(seed);
             moveList = new List<Move>();
+            messageQueue = new Queue<Snippet>();
             dictActiveActors = new Dictionary<int, Active>();
             dictPassiveActors = new Dictionary<int, Passive>();
             dictAllActors = new Dictionary<int, Actor>();
@@ -1547,9 +1549,25 @@ namespace Next_Game
         internal void SetRecord(Record record)
         { if (record != null) { dictRecords.Add(record.eventID, record); } }
 
-
+        /// <summary>
+        /// handle a new message appropriately
+        /// </summary>
+        /// <param name="message"></param>
         internal void SetMessage(Message message)
-        { if (message != null) { dictMessages.Add(message.eventID, message); } }
+        {
+            if (message != null)
+            {
+                dictMessages.Add(message.eventID, message);
+                //debug
+                Console.WriteLine("Day {0}, {1}, {2} [{3}]", message.Day, message.Year, message.Text, message.Type);
+                //queue for the most recent messages to display at bottom right console window
+                Snippet snippet = new Snippet(string.Format("Day {0}, {1}, {2}", message.Day, message.Year, message.Text));
+                messageQueue.Enqueue(snippet);
+                //max 8 entries in queue at any one time
+                if (messageQueue.Count > 8)
+                { messageQueue.Dequeue(); }
+            }
+        }
 
 
         /// <summary>
@@ -1670,12 +1688,33 @@ namespace Next_Game
             //snippet list
             List<Snippet> listData = new List<Snippet>();
             foreach(string data in tempList)
-            {
-                listData.Add(new Snippet(data));
-            }
+            { listData.Add(new Snippet(data)); }
             return listData;
         }
 
+        /// <summary>
+        /// Generate a list of All Messages
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowMessagesRL()
+        {
+            List<Snippet> tempList = new List<Snippet>();
+            foreach(var message in dictMessages)
+            { tempList.Add(new Snippet(string.Format("Day {0}, {1}, {2}", message.Value.Day, message.Value.Year, message.Value.Text))); }
+            return tempList;
+        }
+
+        /// <summary>
+        /// return 8 most recent messages to display at bottom right console window
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowRecentMessagesRL()
+        {
+            List<Snippet> tempList = new List<Snippet>();
+            tempList.Add(new Snippet("--- Message Log Recent", RLColor.Yellow, RLColor.Black));
+            tempList.AddRange(messageQueue.ToList());
+            return tempList;
+        }
         
 
         /// <summary>

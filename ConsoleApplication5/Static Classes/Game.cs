@@ -10,7 +10,7 @@ using Next_Game.Cartographic;
 namespace Next_Game
 {
     public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record, Special, Lore} //distinct menu sets (Menu.cs)
-    public enum ConsoleDisplay {Status, Input, Multi} //different console windows (Menu window handled independently by Menu.cs)
+    public enum ConsoleDisplay {Status, Input, Multi, Message} //different console windows (Menu window handled independently by Menu.cs)
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, Event, Conflict} //if MenuMode.Special then this is the type of special
 
@@ -99,13 +99,13 @@ namespace Next_Game
         public static void Main(string[] args)
         {
             Console.SetWindowSize(100, 80);
-            Console.WriteLine("Seed: {0}", seed);
+            //Console.WriteLine("Seed: {0}", seed);
             //initialise game objects
             Stopwatch timer_1 = new Stopwatch();
             constant = new Constant();
             utility = new Utility();
             file = new FileImport("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/");
-            messageLog = new MessageLog();
+            //messageLog = new MessageLog();
             timer_1.Start();
             map = new Map(mapSize, seed);
             map.InitialiseMap(4, 2);
@@ -127,7 +127,7 @@ namespace Next_Game
             //---interim history.cs step needed to update History of houses
             infoChannel = new InfoChannel();
             world.ShowGeneratorStatsRL();
-            messageLog.Add(new Snippet($"Game world created with seed {seed}"), gameTurn);
+            //messageLog.Add(new Snippet($"Game world created with seed {seed}"), gameTurn);
             Message message = new Message($"Game world created with seed {seed}", MessageType.System);
             world.SetMessage(message);
             //set up menu
@@ -516,7 +516,7 @@ namespace Next_Game
                             {
                                 case MenuMode.Main:
                                     //Show Full message log
-                                    infoChannel.SetInfoList(messageLog.GetMessageList(), ConsoleDisplay.Multi);
+                                    infoChannel.SetInfoList(world.ShowMessagesRL(), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- Message Log ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Debug:
@@ -767,12 +767,14 @@ namespace Next_Game
             {
                 //update status console
                 infoChannel.SetInfoList(world.ShowPlayerActorsRL(), ConsoleDisplay.Status);
-
+                infoChannel.SetInfoList(world.ShowRecentMessagesRL(), ConsoleDisplay.Message);
                 //draw to consoles
                 map.DrawMapRL(_mapConsole);
-                messageLog.DrawMessageQueue(_messageConsole);
+                //messageLog.DrawMessageQueue(_messageConsole);
+                
                 menu.DrawMenuRL(_menuConsole);
                 infoChannel.DrawInfoConsole(_inputConsole, ConsoleDisplay.Input);
+                infoChannel.DrawInfoConsole(_messageConsole, ConsoleDisplay.Message);
 
                 //if (_menuMode != MenuMode.Special) { infoChannel.DrawInfoConsole(_multiConsole, ConsoleDisplay.Multi);}
                 //else { infoChannel.DrawSpecial(_multiConsole, SpecialMode.Event); }
