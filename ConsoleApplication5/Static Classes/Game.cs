@@ -128,6 +128,8 @@ namespace Next_Game
             infoChannel = new InfoChannel();
             world.ShowGeneratorStatsRL();
             messageLog.Add(new Snippet($"Game world created with seed {seed}"), gameTurn);
+            Message message = new Message($"Game world created with seed {seed}", MessageType.System);
+            world.SetMessage(message);
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);

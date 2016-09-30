@@ -183,8 +183,11 @@ namespace Next_Game
                                 person.Status = ActorStatus.AtLocation;
                                 person.SetActorPosition(posDestination);
                                 person.LocID = locID;
-                                Snippet snippet = new Snippet(string.Format(person.Name + " has arrived safely at " + loc.LocName));
-                                Game.messageLog.Add(snippet, Game.gameTurn);
+                                //Snippet snippet = new Snippet(string.Format(person.Name + " has arrived safely at " + loc.LocName));
+                                //Game.messageLog.Add(snippet, Game.gameTurn);
+                                Message message = new Message(string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, loc.LocName), person.ActID, 
+                                    loc.LocationID, MessageType.Move);
+                                SetMessage(message);
                             }
                             else
                             { Game.SetError(new Error(42, "Character not found")); }
@@ -1886,7 +1889,7 @@ namespace Next_Game
                                     player.CrowsNumber--;
                                     messageText = string.Format("Crow sent to {0} at {1} ({2}% chance of arriving, roll {3}, {4})", actor.Name, locName, chance, 
                                         num, num < chance ? "Arrived" : "Failed" );
-                                    Game.messageLog.Add(new Snippet(messageText));
+                                    //Game.messageLog.Add(new Snippet(messageText));
                                     Message message = new Message(messageText, actor.ActID, actor.LocID, MessageType.Crow);
                                         SetMessage(message);
                                     if (num < chance)
@@ -1895,7 +1898,7 @@ namespace Next_Game
                                         actor.Activated = true;
                                         actor.CrowBonus = 0;
                                         listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
-                                        Game.messageLog.Add(new Snippet(string.Format("Crow arrived, {0} activated", actor.Name)));
+                                        //Game.messageLog.Add(new Snippet(string.Format("Crow arrived, {0} activated", actor.Name)));
                                         Message message_1 = new Message(string.Format("{0} has been Activated", actor.Name), MessageType.Activation);
                                         SetMessage(message_1);
                                     }
