@@ -83,7 +83,7 @@ namespace Next_Game
                     menuArrayText[0, 2] = "[ENTER] End Turn";
                     //Info category commands
                     menuArrayText[1, 0] = "[P] Show Player Actors";
-                    menuArrayText[1, 1] = "[E] Show Events";
+                    menuArrayText[1, 1] = "[E] Show Messages";
                     menuArrayText[1, 2] = "[H] Show House";
                     menuArrayText[1, 3] = "[G] Show Generator Stats";
                     menuArrayText[1, 4] = "[A] Show Actor";

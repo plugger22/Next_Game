@@ -31,7 +31,7 @@ namespace Next_Game
             messageList = new List<Snippet>();
             multiMargin = 2;
             inputMargin = 2;
-            statusMargin = 1;
+            statusMargin = 2;
             messageMargin = 2;
             RLColor backColor = Color._background1;
             fixedBox = new Box(100, 10, 10, backColor, RLColor.Black);

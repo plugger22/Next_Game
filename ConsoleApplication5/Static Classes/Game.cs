@@ -58,7 +58,7 @@ namespace Next_Game
         public static int gameGeneration = 1; //current generation (25 years each)
         //core objects
         public static Menu menu;
-        public static MessageLog messageLog;
+        //public static MessageLog messageLog;
         public static Map map;
         public static Network network;
         public static History history;
@@ -408,7 +408,9 @@ namespace Next_Game
                                                 {
                                                     List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
                                                     string infoText = world.InitiateMoveActors(_charIDSelected, _posSelect1, _posSelect2, pathToTravel);
-                                                    messageLog.Add(new Snippet(infoText), gameTurn);
+                                                    Message message = new Message(infoText, _charIDSelected, map.GetMapInfo(MapLayer.LocID, _posSelect2.PosX, _posSelect2.PosY), MessageType.Move);
+                                                    world.SetMessage(message);
+                                                    //messageLog.Add(new Snippet(infoText), gameTurn);
                                                     infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
                                                     //show route
                                                     map.UpdateMap();

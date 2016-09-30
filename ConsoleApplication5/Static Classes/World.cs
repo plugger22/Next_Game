@@ -243,7 +243,7 @@ namespace Next_Game
         {
             List<Snippet> listToDisplay = new List<Snippet>();
             //listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}", RLColor.Yellow, RLColor.Black));
-            listToDisplay.Add(new Snippet("--- Player Characters", RLColor.Brown, RLColor.Black));
+            listToDisplay.Add(new Snippet("--- Player Characters", RLColor.Yellow, RLColor.Black));
             int status, chance;
             int locID;
             string locName;
@@ -1557,15 +1557,18 @@ namespace Next_Game
         {
             if (message != null)
             {
-                dictMessages.Add(message.eventID, message);
-                //debug
-                Console.WriteLine("Day {0}, {1}, {2} [{3}]", message.Day, message.Year, message.Text, message.Type);
+                RLColor color = RLColor.White;
+                if (message.Type == MessageType.Activation) { color = Color._active; }
                 //queue for the most recent messages to display at bottom right console window
-                Snippet snippet = new Snippet(string.Format("Day {0}, {1}, {2}", message.Day, message.Year, message.Text));
+                Snippet snippet = new Snippet(string.Format("Day {0}, {1}, {2}", message.Day, message.Year, message.Text), color, RLColor.Black);
                 messageQueue.Enqueue(snippet);
                 //max 8 entries in queue at any one time
                 if (messageQueue.Count > 8)
                 { messageQueue.Dequeue(); }
+                //add to dictionary
+                dictMessages.Add(message.eventID, message);
+                //debug
+                Console.WriteLine("Day {0}, {1}, {2} [{3}]", message.Day, message.Year, message.Text, message.Type);
             }
         }
 
@@ -1699,8 +1702,13 @@ namespace Next_Game
         public List<Snippet> ShowMessagesRL()
         {
             List<Snippet> tempList = new List<Snippet>();
+            RLColor color = RLColor.White;
             foreach(var message in dictMessages)
-            { tempList.Add(new Snippet(string.Format("Day {0}, {1}, {2}", message.Value.Day, message.Value.Year, message.Value.Text))); }
+            {
+                if (message.Value.Type == MessageType.Activation) { color = Color._active; }
+                else { color = RLColor.White; }
+                tempList.Add(new Snippet(string.Format("Day {0}, {1}, {2}", message.Value.Day, message.Value.Year, message.Value.Text), color, RLColor.Black));
+            }
             return tempList;
         }
 
