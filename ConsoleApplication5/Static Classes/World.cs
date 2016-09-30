@@ -20,6 +20,7 @@ namespace Next_Game
         private Dictionary<int, int> dictMajorHouseID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
         private Dictionary<int, int> dictHousePower; // list of Great Houses, Sorted (key is House ID, value is # of bannerlords (power))
         private Dictionary<int, Record> dictRecords; //all historical records in a central collection (key is eventID)
+        private Dictionary<int, Message> dictMessages; //all Player to Game & Game to Player messages
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         private Dictionary<int, Trait> dictTraits; //all triats (key is traitID)
         private Dictionary<int, Secret> dictSecrets; //all secrets (key is secretID)
@@ -38,6 +39,7 @@ namespace Next_Game
             dictMajorHouseID = new Dictionary<int, int>();
             dictHousePower = new Dictionary<int, int>();
             dictRecords = new Dictionary<int, Record>();
+            dictMessages = new Dictionary<int, Message>();
             dictGeoClusters = new Dictionary<int, GeoCluster>();
             dictTraits = new Dictionary<int, Trait>();
             dictSecrets = new Dictionary<int, Secret>();
@@ -1543,6 +1545,10 @@ namespace Next_Game
         { if (record != null) { dictRecords.Add(record.eventID, record); } }
 
 
+        internal void SetMessage(Message message)
+        { if (message != null) { dictMessages.Add(message.eventID, message); } }
+
+
         /// <summary>
         /// Store a new actor (child) in relevant dictionaries
         /// </summary>
@@ -1855,7 +1861,8 @@ namespace Next_Game
         public List<Snippet> SendCrow(int actorID)
         {
             List<Snippet> listSnippet = new List<Snippet>();
-            string description;
+            string description, messageText, locName;
+            int chance, num;
             Active actor = GetActiveActor(actorID);
             Player player = (Player)GetActiveActor(1);
             int bonus = Game.constant.GetValue(Global.CROW_BONUS);
@@ -1871,19 +1878,26 @@ namespace Next_Game
                             {
                                 if (actor.Activated == false)
                                 {
-                                    string locName = GetLocationName(actor.LocID);
-                                    int num = rnd.Next(100);
-                                    description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", actor.CrowChance + actor.CrowBonus, num);
+                                    locName = GetLocationName(actor.LocID);
+                                    num = rnd.Next(100);
+                                    chance = actor.CrowChance + actor.CrowBonus;
+                                    description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", chance, num);
                                     listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0} at {1} (distance {2} leagues)", actor.Name, locName, actor.CrowDistance)));
                                     player.CrowsNumber--;
-                                    Game.messageLog.Add(new Snippet(string.Format("Crow sent to {0} at {1} ({2}% chance of arriving)", actor.Name, locName, actor.CrowChance + actor.CrowBonus)));
-                                    if (num < (actor.CrowChance + actor.CrowBonus))
+                                    messageText = string.Format("Crow sent to {0} at {1} ({2}% chance of arriving, roll {3}, {4})", actor.Name, locName, chance, 
+                                        num, num < chance ? "Arrived" : "Failed" );
+                                    Game.messageLog.Add(new Snippet(messageText));
+                                    Message message = new Message(messageText, actor.ActID, actor.LocID, MessageType.Crow);
+                                        SetMessage(message);
+                                    if (num < chance)
                                     {
                                         //success!
                                         actor.Activated = true;
                                         actor.CrowBonus = 0;
                                         listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
                                         Game.messageLog.Add(new Snippet(string.Format("Crow arrived, {0} activated", actor.Name)));
+                                        Message message_1 = new Message(string.Format("{0} has been Activated", actor.Name), MessageType.Activation);
+                                        SetMessage(message_1);
                                     }
                                     else
                                     //failed the roll, apply bonus

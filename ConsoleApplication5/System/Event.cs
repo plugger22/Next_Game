@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    //categories (can choose multiple)
+    //categories (can choose multiple) -> Used for Records
     public enum HistActorEvent {None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service} //conflict -> actor involved in a battle/siege
     public enum HistHouseEvent {None, Allegiance, Ownership}
     public enum HistKingdomEvent { None, Battle, Siege}
 
-    ///
-    ///tracks historical Information & Events ---
-    ///
+    //categorires -> Used for Messages
+    public enum MessageType {None, System, Move, Crow, Activation}
+
+   /// <summary>
+   /// Base class (not used directly)
+   /// </summary>
     public class Event
     {
         private static int eventIndex = 1;
@@ -41,11 +44,6 @@ namespace Next_Game
             listOfItems = new List<int>();
             
         }
-
-
-
-
-
 
 
         public void AddActor(int actorID)
@@ -76,6 +74,10 @@ namespace Next_Game
 
     }
 
+    
+    /// <summary>
+    /// Historical Game Records
+    /// </summary>
     public class Record : Event
     {
         public bool Actual { get; set; } = true; //Is the record a true representation of actual events or a false one?
@@ -106,9 +108,7 @@ namespace Next_Game
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                //eventID = eventIndex++;
                 this.Year = year;
-                //Day = Game.gameTurn + 1;
                 Actual = actualEvent;
                 //initialise lists
                 listOfActors = new List<int>();
@@ -128,7 +128,6 @@ namespace Next_Game
                 { listOfHouses.Add(refID); }
                 if (histActorEvent > 0)
                 { listOfActorEvents.Add(histActorEvent); }
-
             }
 
         }
@@ -147,10 +146,7 @@ namespace Next_Game
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                //eventID = eventIndex++;
                 this.Year = year;
-                //Day = Game.gameTurn + 1;
-                //Actual = actualEvent;
                 //initialise lists
                 listOfActors = new List<int>();
                 listOfLocs = new List<int>();
@@ -185,9 +181,7 @@ namespace Next_Game
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                //eventID = eventIndex++;
                 this.Year = year;
-                //Day = Game.gameTurn + 1;
                 Actual = actualEvent;
                 //initialise lists
                 listOfActors = new List<int>();
@@ -210,6 +204,60 @@ namespace Next_Game
 
         public void AddActorEvent(HistActorEvent histEvent)
         { listOfActorEvents.Add(histEvent); }
+    }
+
+
+    /// <summary>
+    /// Handles all messages from Player to Game and vice versa
+    /// </summary>
+    public class Message : Event
+    {
+        public MessageType Type { get; set; }
+
+        /// <summary>
+        /// Active player Message
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="actorID"></param>
+        /// <param name="locID"></param>
+        /// <param name="type"></param>
+        public Message(string description, int actorID, int locID, MessageType type = MessageType.None)
+        {
+            //it's a valid record only if there is a descriptive text
+            if (description != null)
+            {
+                this.Year = Game.gameYear;
+                this.Type = type;
+                //initialise lists
+                listOfActors = new List<int>();
+                listOfLocs = new List<int>();
+                listOfHouses = new List<int>();
+                listOfItems = new List<int>();
+                //lists
+                Text = description;
+                if (actorID > 0)
+                { listOfActors.Add(actorID); }
+                if (locID > 0)
+                { listOfLocs.Add(locID); }
+            }
+        }
+
+        /// <summary>
+        /// Simple message, eg. System type
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="type"></param>
+        public Message(string description, MessageType type)
+        {
+            //it's a valid record only if there is a descriptive text
+            if (description != null)
+            {
+                this.Year = Game.gameYear;
+                this.Type = type;
+                Text = description;
+            }
+        }
+
     }
 }
  
