@@ -353,7 +353,7 @@ namespace Next_Game
             if (type == ActorType.Lord)
             {
                 descriptor = string.Format("{0} born, Aid {1}, at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
-                Event recordLord = new Event(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
+                Record recordLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
                 Game.world.SetRecord(recordLord);
             }
             else if (type == ActorType.Lady)
@@ -363,7 +363,7 @@ namespace Next_Game
                 Location locLady = Game.network.GetLocation(ladyHouse.LocID);
                 Noble lady = actor as Noble;
                 descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", lady.Name, lady.MaidenName, actor.ActID, locLady.LocName);
-                Event recordLady = new Event(descriptor, lady.ActID, locLady.LocationID, lady.BornRefID, lady.Born, HistActorEvent.Born);
+                Record recordLady = new Record(descriptor, lady.ActID, locLady.LocationID, lady.BornRefID, lady.Born, HistActorEvent.Born);
                 Game.world.SetRecord(recordLady);
             }
             else if (type == ActorType.BannerLord)
@@ -371,7 +371,7 @@ namespace Next_Game
                 //create records of being born
                 BannerLord bannerLord = actor as BannerLord;
                 descriptor = string.Format("{0}, Aid {1}, born at {2}", bannerLord.Name, bannerLord.ActID, Game.world.GetLocationName(locID));
-                Event recordBannerLord = new Event(descriptor, bannerLord.ActID, locID, refID, bannerLord.Born, HistActorEvent.Born);
+                Record recordBannerLord = new Record(descriptor, bannerLord.ActID, locID, refID, bannerLord.Born, HistActorEvent.Born);
                 Game.world.SetRecord(recordBannerLord);
             }
 
@@ -386,7 +386,7 @@ namespace Next_Game
                 { descriptor = string.Format("{0} assumes Lordship of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge); }
                 else if (actor.Type == ActorType.BannerLord)
                 { descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge); }
-                Event record = new Event(descriptor, actor.ActID, actor.LocID, actor.RefID, noble.Lordship, HistActorEvent.Lordship);
+                Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, noble.Lordship, HistActorEvent.Lordship);
                 Game.world.SetRecord(record);
             }
             //date Bannerlord attained lordship of House
@@ -396,7 +396,7 @@ namespace Next_Game
                 int lordshipAge = rnd.Next(20, age - 2);
                 bannerlord.Lordship = actor.Born + lordshipAge;
                 descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge);
-                Event record = new Event(descriptor, actor.ActID, actor.LocID, actor.RefID, bannerlord.Lordship, HistActorEvent.Lordship);
+                Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, bannerlord.Lordship, HistActorEvent.Lordship);
                 Game.world.SetRecord(record);
             }
 
@@ -435,7 +435,7 @@ namespace Next_Game
             actor.BornRefID = refID;
             //create records of being born
             string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
-            Event recordBannerLord = new Event(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
+            Record recordBannerLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
             Game.world.SetRecord(recordBannerLord);
             //assign traits
             InitialiseActorTraits(actor);
@@ -473,7 +473,7 @@ namespace Next_Game
             actor.BornRefID = refID;
             //create records of being born
             string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
-            Event recordBannerLord = new Event(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
+            Record recordBannerLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorEvent.Born);
             Game.world.SetRecord(recordBannerLord);
             //assign traits
             InitialiseActorTraits(actor);
@@ -513,7 +513,7 @@ namespace Next_Game
             InitialiseActorTraits(knight, null, null, TraitType.Combat, TraitType.Treachery);
             //record
             string descriptor = string.Format("{0} knighted and swears allegiance to House {1}, age {2}", knight.Name, Game.world.GetGreatHouseName(knight.HouseID), knighted);
-            Event record = new Event(descriptor, knight.ActID, knight.LocID, knight.RefID, knight.Knighthood, HistActorEvent.Knighthood);
+            Record record = new Record(descriptor, knight.ActID, knight.LocID, knight.RefID, knight.Knighthood, HistActorEvent.Knighthood);
             Game.world.SetRecord(record);
             return knight;
         }
@@ -577,7 +577,7 @@ namespace Next_Game
                     else { positiveTrait = TraitType.Wits;  }
                     //record
                     descriptor = string.Format("{0} {1}, Aid {2}, commenced serving on the Royal Council, age {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, startAge);
-                    Event record = new Event(descriptor, advisor.ActID, locID, refID, yearCommenced, HistActorEvent.Service);
+                    Record record = new Record(descriptor, advisor.ActID, locID, refID, yearCommenced, HistActorEvent.Service);
                     Game.world.SetRecord(record);
                 }
                 else if ((int)advisorNoble > 0)
@@ -588,7 +588,7 @@ namespace Next_Game
                     else { positiveTrait = TraitType.Wits; negativeTrait = TraitType.Combat; }
                     //record
                     descriptor = string.Format("{0} {1}, Aid {2}, entered the service of House {3}, age {4}", advisor.advisorNoble, advisor.Name, advisor.ActID, Game.world.GetGreatHouseName(houseID), startAge);
-                    Event record = new Event(descriptor, advisor.ActID, locID, refID, yearCommenced, HistActorEvent.Service );
+                    Record record = new Record(descriptor, advisor.ActID, locID, refID, yearCommenced, HistActorEvent.Service );
                     Game.world.SetRecord(record);
                 }
                 else
@@ -1217,7 +1217,7 @@ namespace Next_Game
             //record event - single record tagged to both characters and houses
             string descriptor = string.Format("{0}, age {1}, and {2} (nee {3}, age {4}) married ({5}) at {6}",
                 lord.Name, lordAgeMarried, lady.Name, lady.MaidenName, ageLadyMarried, lady.WifeNumber, houseName);
-            Event recordLord = new Event(descriptor, lord.ActID, lord.LocID, lord.RefID, lord.Married, HistActorEvent.Married);
+            Record recordLord = new Record(descriptor, lord.ActID, lord.LocID, lord.RefID, lord.Married, HistActorEvent.Married);
             recordLord.AddHouse(lady.BornRefID);
             recordLord.AddActor(lady.ActID);
             Game.world.SetRecord(recordLord);
@@ -1488,7 +1488,7 @@ namespace Next_Game
                     child.Name, child.ActID, Lord.Type, Lord.Name, Lady.Type, Lady.Name);
                 actualEvent = false;
             }
-            Event record_0 = new Event(descriptor, child.ActID, child.LocID, child.RefID, child.Born, HistActorEvent.Born, actualEvent);
+            Record record_0 = new Record(descriptor, child.ActID, child.LocID, child.RefID, child.Born, HistActorEvent.Born, actualEvent);
             record_0.AddActor(Lord.ActID);
             record_0.AddActor(Lady.ActID);
             Game.world.SetRecord(record_0);
@@ -1511,7 +1511,7 @@ namespace Next_Game
                     {
                         //Mother died at childbirth but child survived
                         descriptor = string.Format("{0} {1}, Aid {2} died while giving birth to {3}, age {4}", Lady.Type, Lady.Name, Lady.ActID, child.Name, Lady.Age);
-                        Event record = new Event(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistActorEvent.Died);
+                        Record record = new Record(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistActorEvent.Died);
                         record.AddActorEvent(HistActorEvent.Birthing);
                         record.AddActor(Lord.ActID);
                         record.AddActor(child.ActID);
@@ -1522,7 +1522,7 @@ namespace Next_Game
                     {
                         //Complications
                         descriptor = string.Format("{0}, Aid {1} suffered complications while giving birth to {2}", Lady.Name, Lady.ActID, child.Name);
-                        Event record_2 = new Event(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistActorEvent.Birthing);
+                        Record record_2 = new Record(descriptor, Lady.ActID, Lady.LocID, Lady.RefID, year, HistActorEvent.Birthing);
                         Game.world.SetRecord(record_2);
                         //chance of infertility
                         if (rnd.Next(100) < Game.constant.GetValue(Global.CHILDBIRTH_INFERTILE))
@@ -1766,7 +1766,7 @@ namespace Next_Game
                 Location oldLoc = Game.network.GetLocation(royal.LocID);
                 oldLoc.RemoveActor(royal.ActID);
                 royal.LocID = 1;
-                Event record = null;
+                Record record = null;
                 //specific roles & also handle fate of royal family
                 switch (royal.Type)
                 {
@@ -1776,7 +1776,7 @@ namespace Next_Game
                         OldKing.Office = ActorOffice.King;
                         //fate
                         eventText = string.Format("King {0}, Aid {1}, has been convicted of treason and publicly beheaded, age {2}", royal.Name, royal.ActID, royal.Age);
-                        record = new Event(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
+                        record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
                         RemoveActor(royal, yearChanged, ActorGone.Executed);
                         break;
                     case ActorType.Lady:
@@ -1785,7 +1785,7 @@ namespace Next_Game
                         OldQueen.Office = ActorOffice.Queen;
                         //fate
                         eventText = string.Format("Queen {0}, Aid {1}, has been convicted of treason and publicly beheaded, age {2}", royal.Name, royal.ActID, royal.Age);
-                        record = new Event(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
+                        record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
                         RemoveActor(royal, yearChanged, ActorGone.Executed);
                         break;
                     case ActorType.Heir:
@@ -1793,7 +1793,7 @@ namespace Next_Game
                         OldHeir = royal;
                         //fate
                         eventText = string.Format("Heir {0}, Aid {1}, was spirited away to the Free Cities by unknown actors, age {2}", royal.Name, royal.ActID, royal.Age);
-                        record = new Event(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Conflict);
+                        record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Conflict);
                         RemoveActor(royal, yearChanged, ActorGone.Missing);
                         break;
                     case ActorType.lord:
@@ -1802,14 +1802,14 @@ namespace Next_Game
                         {
                             //sibling escapes to the free cities
                             eventText = string.Format("Prince {0}, Aid {1}, was spirited away to the Free Cities by unknown actors, age {2}", royal.Name, royal.ActID, royal.Age);
-                            record = new Event(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Conflict);
+                            record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Conflict);
                             RemoveActor(royal, yearChanged, ActorGone.Missing);
                         }
                         else
                         {
                             //sibling murdered
                             eventText = string.Format("Prince {0}, Aid {1}, has been butchered on orders of the New King, age {2}", royal.Name, royal.ActID, royal.Age);
-                            record = new Event(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
+                            record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
                             RemoveActor(royal, yearChanged, ActorGone.Murdered);
                         }
                         break;
@@ -1819,14 +1819,14 @@ namespace Next_Game
                         {
                             //sibling escapes to the free cities
                             eventText = string.Format("Princess {0}, Aid {1}, was spirited away to the Free Cities by unknown actors, age {2}", royal.Name, royal.ActID, royal.Age);
-                            record = new Event(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Conflict);
+                            record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Conflict);
                             RemoveActor(royal, yearChanged, ActorGone.Missing);
                         }
                         else
                         {
                             //sibling murdered
                             eventText = string.Format("Princess {0}, Aid {1}, has been butchered on orders of the New King, age {2}", royal.Name, royal.ActID, royal.Age);
-                            record = new Event(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
+                            record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorEvent.Died);
                             RemoveActor(royal, yearChanged, ActorGone.Murdered);
                         }
                         break;
@@ -1838,11 +1838,11 @@ namespace Next_Game
             { Game.SetError(new Error(28, "No King Present")); }
             else
             {
-                Event record_1;
+                Record record_1;
                 int year = rnd.Next(OldKing.Lordship, Game.gameStart);
                 int age = OldKing.Age - (Game.gameStart - year);
                 string descriptor = string.Format("{0}, Aid {1}, crowned as King during a royal coronation ceremony at Kingskeep, age {2}", OldKing.Name, OldKing.ActID, age);
-                record_1 = new Event(descriptor, OldKing.ActID, OldKing.LocID, OldKing.RefID, year, HistActorEvent.Coronation);
+                record_1 = new Record(descriptor, OldKing.ActID, OldKing.LocID, OldKing.RefID, year, HistActorEvent.Coronation);
                 Game.world?.SetRecord(record_1);
             }
 
@@ -1936,7 +1936,7 @@ namespace Next_Game
                 if (knight.Status == ActorStatus.AtLocation)
                 {
                     eventText = string.Format("{0}, Aid {1}, was hung upside down and gutted on orders of King {2}", knight.Name, knight.ActID, NewKing.Name);
-                    Event record = new Event(eventText, knight.ActID, knight.LocID, knight.RefID, Game.gameStart, HistActorEvent.Died);
+                    Record record = new Record(eventText, knight.ActID, knight.LocID, knight.RefID, Game.gameStart, HistActorEvent.Died);
                     Game.world.SetRecord(record);
                     Game.history.RemoveActor(knight, Game.gameStart, ActorGone.Murdered);
                 }

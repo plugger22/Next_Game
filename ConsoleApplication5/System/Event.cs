@@ -14,33 +14,78 @@ namespace Next_Game
     ///
     ///tracks historical Information & Events ---
     ///
-    class Event
+    public class Event
     {
         private static int eventIndex = 1;
         public int eventID { get; }
         public int Year { get; set; }
         public int Day { get; set; } = 0; //pre-game start events don't need this, hence '0'
         public string Text { get; set; } //descriptor
-        public bool Actual { get; set; } = true; //Is the record a true representation of actual events or a false one?
+        
         public List<int> listOfActors; //actorID
         public List<int> listOfLocs; //locID
         public List<int> listOfHouses; //refID
         public List<int> listOfItems; //itemID
-        public List<HistActorEvent> listOfActorEvents; //categories
-        public List<HistHouseEvent> listOfHouseEvents;
-        public List<HistKingdomEvent> listOfKingdomEvents;
+        
 
 
         public Event()
         {
             eventID = eventIndex++;
-            Year = Game.gameYear;
-            //Turn = Game.gameTurn;
+            //Year = Game.gameYear;
+            Day = Game.gameTurn + 1;
             //initialise lists
             listOfActors = new List<int>();
             listOfLocs = new List<int>();
             listOfHouses = new List<int>();
             listOfItems = new List<int>();
+            
+        }
+
+
+
+
+
+
+
+        public void AddActor(int actorID)
+        {
+            if (actorID > 0)
+            { listOfActors.Add(actorID); }
+        }
+
+        public void AddLoc(int locID)
+        {
+            if (locID > 0)
+            { listOfLocs.Add(locID); }
+        }
+
+        public void AddHouse(int refID)
+        {
+            if (refID > 0)
+            { listOfHouses.Add(refID); }
+        }
+
+
+
+        public void AddItem(int itemID)
+        {
+            if (itemID > 0)
+            { listOfItems.Add(itemID); }
+        }
+
+    }
+
+    public class Record : Event
+    {
+        public bool Actual { get; set; } = true; //Is the record a true representation of actual events or a false one?
+        public List<HistActorEvent> listOfActorEvents; //categories
+        public List<HistHouseEvent> listOfHouseEvents;
+        public List<HistKingdomEvent> listOfKingdomEvents;
+
+
+        public Record()
+        {
             listOfActorEvents = new List<HistActorEvent>();
             listOfHouseEvents = new List<HistHouseEvent>();
             listOfKingdomEvents = new List<HistKingdomEvent>();
@@ -56,14 +101,14 @@ namespace Next_Game
         /// <param name="year"></param>
         /// <param name="histActorEvent"></param>
         /// <param name="actualEvent"></param>
-        public Event(string description, int actorID, int locID, int refID, int year, HistActorEvent histActorEvent = HistActorEvent.None, bool actualEvent = true)
+        public Record(string description, int actorID, int locID, int refID, int year, HistActorEvent histActorEvent = HistActorEvent.None, bool actualEvent = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                eventID = eventIndex++;
+                //eventID = eventIndex++;
                 this.Year = year;
-                Day = Game.gameTurn + 1;
+                //Day = Game.gameTurn + 1;
                 Actual = actualEvent;
                 //initialise lists
                 listOfActors = new List<int>();
@@ -85,6 +130,7 @@ namespace Next_Game
                 { listOfActorEvents.Add(histActorEvent); }
 
             }
+
         }
 
         /// <summary>
@@ -96,15 +142,15 @@ namespace Next_Game
         /// <param name="year"></param>
         /// <param name="histHouseEvent"></param>
         /// <param name="actualEvent"></param>
-        public Event(string description, int locID, int refID, int year, HistHouseEvent histHouseEvent = HistHouseEvent.None, bool actualEvent = true)
+        public Record(string description, int locID, int refID, int year, HistHouseEvent histHouseEvent = HistHouseEvent.None, bool actualEvent = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                eventID = eventIndex++;
+                //eventID = eventIndex++;
                 this.Year = year;
-                Day = Game.gameTurn + 1;
-                Actual = actualEvent;
+                //Day = Game.gameTurn + 1;
+                //Actual = actualEvent;
                 //initialise lists
                 listOfActors = new List<int>();
                 listOfLocs = new List<int>();
@@ -134,14 +180,14 @@ namespace Next_Game
         /// <param name="year"></param>
         /// <param name="histActorEvent"></param>
         /// <param name="actualEvent"></param>
-        public Event(string description, int locID, int refID, int year, HistKingdomEvent histKingdomEvent = HistKingdomEvent.None, bool actualEvent = true)
+        public Record(string description, int locID, int refID, int year, HistKingdomEvent histKingdomEvent = HistKingdomEvent.None, bool actualEvent = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                eventID = eventIndex++;
+                //eventID = eventIndex++;
                 this.Year = year;
-                Day = Game.gameTurn + 1;
+                //Day = Game.gameTurn + 1;
                 Actual = actualEvent;
                 //initialise lists
                 listOfActors = new List<int>();
@@ -162,32 +208,8 @@ namespace Next_Game
             }
         }
 
-        public void AddActor(int actorID)
-        {
-            if (actorID > 0)
-            { listOfActors.Add(actorID); }
-        }
-
-        public void AddLoc(int locID)
-        {
-            if (locID > 0)
-            { listOfLocs.Add(locID); }
-        }
-
-        public void AddHouse(int refID)
-        {
-            if (refID > 0)
-            { listOfHouses.Add(refID); }
-        }
-
         public void AddActorEvent(HistActorEvent histEvent)
         { listOfActorEvents.Add(histEvent); }
-
-        public void AddItem(int itemID)
-        {
-            if (itemID > 0)
-            { listOfItems.Add(itemID); }
-        }
-
     }
 }
+ 
