@@ -1816,13 +1816,11 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// handles all end of turn stuff
+        /// handles all start (day 0) Game stuff
         /// </summary>
-        public void ProcessEndTurn()
+        public void ProcessStartGame()
         {
-            Game.map.UpdateMap();
-            Game.map.UpdatePlayers(MoveActors());
-            Game.gameTurn++;
+            CalculateCrows();
         }
 
         /// <summary>
@@ -1831,6 +1829,16 @@ namespace Next_Game
         public void ProcessStartTurn()
         {
             CalculateCrows(); 
+        }
+
+        /// <summary>
+        /// handles all end of turn stuff
+        /// </summary>
+        public void ProcessEndTurn()
+        {
+            Game.map.UpdateMap();
+            Game.map.UpdatePlayers(MoveActors());
+            Game.gameTurn++;
         }
 
         /// <summary>
@@ -1932,9 +1940,9 @@ namespace Next_Game
                                     num = rnd.Next(100);
                                     chance = actor.CrowChance + actor.CrowBonus;
                                     description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", chance, num);
-                                    listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0} at {1} (distance {2} leagues)", actor.Name, locName, actor.CrowDistance)));
+                                    listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0}, Aid {1}, at {2} (distance {3} leagues)", actor.Name, actor.ActID, locName, actor.CrowDistance)));
                                     player.CrowsNumber--;
-                                    messageText = string.Format("Crow sent to {0} at {1} ({2}% chance of arriving, roll {3}, {4})", actor.Name, locName, chance, 
+                                    messageText = string.Format("Crow sent to {0}, Aid {1}, at {2} ({3}% chance of arriving, roll {4}, {5})", actor.Name, actor.ActID, locName, chance, 
                                         num, num < chance ? "Arrived" : "Failed" );
                                     //Game.messageLog.Add(new Snippet(messageText));
                                     Message message = new Message(messageText, actor.ActID, actor.LocID, MessageType.Crow);
@@ -1946,7 +1954,7 @@ namespace Next_Game
                                         actor.CrowBonus = 0;
                                         listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
                                         //Game.messageLog.Add(new Snippet(string.Format("Crow arrived, {0} activated", actor.Name)));
-                                        Message message_1 = new Message(string.Format("{0} has been Activated", actor.Name), MessageType.Activation);
+                                        Message message_1 = new Message(string.Format("{0}, Aid {1}, has been Activated", actor.Name, actor.ActID), MessageType.Activation);
                                         SetMessage(message_1);
                                     }
                                     else

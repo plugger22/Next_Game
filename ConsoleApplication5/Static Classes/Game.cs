@@ -155,11 +155,14 @@ namespace Next_Game
             _messageConsole.SetBackColor(0, 0, _messageWidth, _messageHeight, RLColor.Gray);*/
 
             // Set up handlers for RLNET's Update & Render events
-           _rootConsole.Update += OnRootConsoleUpdate;
-           _rootConsole.Render += OnRootConsoleRender;
+            _rootConsole.Update += OnRootConsoleUpdate;
+            _rootConsole.Render += OnRootConsoleRender;
+            //Start Game setups
+            world.ProcessStartGame();
             // Begin RLNET's game loop
-           _rootConsole.Run();
+            _rootConsole.Run();
             _renderRequired = true;
+           
         }
 
 
