@@ -19,8 +19,14 @@ namespace Next_Game
             //messageList.Add(new Snippet("--- Message Log Full"));
         }
 
-        public void Add(Snippet message, int turn)
+        /// <summary>
+        /// add Message log, use default turn 0 to auto get Game.gameTurn
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="turn"></param>
+        public void Add(Snippet message, int turn = 0)
         {
+            if (turn == 0) { turn = Game.gameTurn + 1; }
             //add a turn time stamp
             string snippetText = message.GetText();
             snippetText = "Day " + turn + " " + snippetText;

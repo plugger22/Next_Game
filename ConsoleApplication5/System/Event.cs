@@ -19,7 +19,7 @@ namespace Next_Game
         private static int eventIndex = 1;
         public int eventID { get; }
         public int Year { get; set; }
-        public int Turn { get; set; } = 0; //pre-game start events don't need this, hence '0'
+        public int Day { get; set; } = 0; //pre-game start events don't need this, hence '0'
         public string Text { get; set; } //descriptor
         public bool Actual { get; set; } = true; //Is the record a true representation of actual events or a false one?
         public List<int> listOfActors; //actorID
@@ -63,7 +63,7 @@ namespace Next_Game
             {
                 eventID = eventIndex++;
                 this.Year = year;
-                Turn = Game.gameTurn;
+                Day = Game.gameTurn + 1;
                 Actual = actualEvent;
                 //initialise lists
                 listOfActors = new List<int>();
@@ -103,7 +103,7 @@ namespace Next_Game
             {
                 eventID = eventIndex++;
                 this.Year = year;
-                Turn = Game.gameTurn;
+                Day = Game.gameTurn + 1;
                 Actual = actualEvent;
                 //initialise lists
                 listOfActors = new List<int>();
@@ -141,7 +141,7 @@ namespace Next_Game
             {
                 eventID = eventIndex++;
                 this.Year = year;
-                Turn = Game.gameTurn;
+                Day = Game.gameTurn + 1;
                 Actual = actualEvent;
                 //initialise lists
                 listOfActors = new List<int>();

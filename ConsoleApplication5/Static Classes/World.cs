@@ -1871,16 +1871,19 @@ namespace Next_Game
                             {
                                 if (actor.Activated == false)
                                 {
+                                    string locName = GetLocationName(actor.LocID);
                                     int num = rnd.Next(100);
                                     description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", actor.CrowChance + actor.CrowBonus, num);
-                                    listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0} at {1} (distance {2} leagues)", actor.Name, GetLocationName(actor.LocID), actor.CrowDistance)));
+                                    listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0} at {1} (distance {2} leagues)", actor.Name, locName, actor.CrowDistance)));
                                     player.CrowsNumber--;
+                                    Game.messageLog.Add(new Snippet(string.Format("Crow sent to {0} at {1} ({2}% chance of arriving)", actor.Name, locName, actor.CrowChance + actor.CrowBonus)));
                                     if (num < (actor.CrowChance + actor.CrowBonus))
                                     {
                                         //success!
                                         actor.Activated = true;
                                         actor.CrowBonus = 0;
                                         listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
+                                        Game.messageLog.Add(new Snippet(string.Format("Crow arrived, {0} activated", actor.Name)));
                                     }
                                     else
                                     //failed the roll, apply bonus
