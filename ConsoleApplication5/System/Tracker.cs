@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     //categories (can choose multiple) -> Used for Records
-    public enum HistActorEvent {None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service} //conflict -> actor involved in a battle/siege
-    public enum HistHouseEvent {None, Allegiance, Ownership}
-    public enum HistKingdomEvent { None, Battle, Siege}
+    public enum HistActorIncident {None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service} //conflict -> actor involved in a battle/siege
+    public enum HistHouseIncident {None, Allegiance, Ownership}
+    public enum HistKingdomIncident { None, Battle, Siege}
 
     //categorires -> Used for Messages
     public enum MessageType {None, System, Move, Crow, Activation}
@@ -17,12 +17,12 @@ namespace Next_Game
    /// <summary>
    /// Base class (not used directly)
    /// </summary>
-    public class Event
+    public class Tracker
     {
-        private static int eventIndex = 1;
-        public int eventID { get; }
+        private static int trackerIndex = 1;
+        public int trackerID { get; }
         public int Year { get; set; }
-        public int Day { get; set; } = 0; //pre-game start events don't need this, hence '0'
+        public int Day { get; set; } = 0; //pre-game start incidents don't need this, hence '0'
         public string Text { get; set; } //descriptor
         
         public List<int> listOfActors; //actorID
@@ -32,9 +32,9 @@ namespace Next_Game
         
 
 
-        public Event()
+        public Tracker()
         {
-            eventID = eventIndex++;
+            trackerID = trackerIndex++;
             //Year = Game.gameYear;
             Day = Game.gameTurn + 1;
             //initialise lists
@@ -78,46 +78,46 @@ namespace Next_Game
     /// <summary>
     /// Historical Game Records
     /// </summary>
-    public class Record : Event
+    public class Record : Tracker
     {
-        public bool Actual { get; set; } = true; //Is the record a true representation of actual events or a false one?
-        public List<HistActorEvent> listOfActorEvents; //categories
-        public List<HistHouseEvent> listOfHouseEvents;
-        public List<HistKingdomEvent> listOfKingdomEvents;
+        public bool Actual { get; set; } = true; //Is the record a true representation of actual incidents or a false one?
+        public List<HistActorIncident> listOfActorIncidents; //categories
+        public List<HistHouseIncident> listOfHouseIncidents;
+        public List<HistKingdomIncident> listOfKingdomIncidents;
 
 
         public Record()
         {
-            listOfActorEvents = new List<HistActorEvent>();
-            listOfHouseEvents = new List<HistHouseEvent>();
-            listOfKingdomEvents = new List<HistKingdomEvent>();
+            listOfActorIncidents = new List<HistActorIncident>();
+            listOfHouseIncidents = new List<HistHouseIncident>();
+            listOfKingdomIncidents = new List<HistKingdomIncident>();
         }
 
         /// <summary>
-        /// Actor Event
+        /// Actor Incident
         /// </summary>
         /// <param name="description"></param>
         /// <param name="actorID"></param>
         /// <param name="locID"></param>
         /// <param name="refID"></param>
         /// <param name="year"></param>
-        /// <param name="histActorEvent"></param>
-        /// <param name="actualEvent"></param>
-        public Record(string description, int actorID, int locID, int refID, int year, HistActorEvent histActorEvent = HistActorEvent.None, bool actualEvent = true)
+        /// <param name="histActorIncident"></param>
+        /// <param name="happened"></param>
+        public Record(string description, int actorID, int locID, int refID, int year, HistActorIncident histActorIncident = HistActorIncident.None, bool happened = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
                 this.Year = year;
-                Actual = actualEvent;
+                Actual = happened;
                 //initialise lists
                 listOfActors = new List<int>();
                 listOfLocs = new List<int>();
                 listOfHouses = new List<int>();
                 listOfItems = new List<int>();
-                listOfActorEvents = new List<HistActorEvent>();
-                listOfHouseEvents = new List<HistHouseEvent>();
-                listOfKingdomEvents = new List<HistKingdomEvent>();
+                listOfActorIncidents = new List<HistActorIncident>();
+                listOfHouseIncidents = new List<HistHouseIncident>();
+                listOfKingdomIncidents = new List<HistKingdomIncident>();
                 //lists
                 Text = description;
                 if (actorID > 0)
@@ -126,22 +126,22 @@ namespace Next_Game
                 { listOfLocs.Add(locID); }
                 if (refID > 0)
                 { listOfHouses.Add(refID); }
-                if (histActorEvent > 0)
-                { listOfActorEvents.Add(histActorEvent); }
+                if (histActorIncident > 0)
+                { listOfActorIncidents.Add(histActorIncident); }
             }
 
         }
 
         /// <summary>
-        /// House Event
+        /// House Incident
         /// </summary>
         /// <param name="description"></param>
         /// <param name="locID"></param>
         /// <param name="refID"></param>
         /// <param name="year"></param>
-        /// <param name="histHouseEvent"></param>
-        /// <param name="actualEvent"></param>
-        public Record(string description, int locID, int refID, int year, HistHouseEvent histHouseEvent = HistHouseEvent.None, bool actualEvent = true)
+        /// <param name="histHouseIncident"></param>
+        /// <param name="happened"></param>
+        public Record(string description, int locID, int refID, int year, HistHouseIncident histHouseIncident = HistHouseIncident.None, bool happened = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
@@ -152,65 +152,65 @@ namespace Next_Game
                 listOfLocs = new List<int>();
                 listOfHouses = new List<int>();
                 listOfItems = new List<int>();
-                listOfActorEvents = new List<HistActorEvent>();
-                listOfHouseEvents = new List<HistHouseEvent>();
-                listOfKingdomEvents = new List<HistKingdomEvent>();
+                listOfActorIncidents = new List<HistActorIncident>();
+                listOfHouseIncidents = new List<HistHouseIncident>();
+                listOfKingdomIncidents = new List<HistKingdomIncident>();
                 //lists
                 Text = description;
                 if (locID > 0)
                 { listOfLocs.Add(locID); }
                 if (refID > 0)
                 { listOfHouses.Add(refID); }
-                if (histHouseEvent > 0)
-                { listOfHouseEvents.Add(histHouseEvent); }
+                if (histHouseIncident > 0)
+                { listOfHouseIncidents.Add(histHouseIncident); }
 
             }
         }
 
         /// <summary>
-        /// Kingdom Event
+        /// Kingdom Incident
         /// </summary>
         /// <param name="description"></param>
         /// <param name="locID"></param>
         /// <param name="refID"></param>
         /// <param name="year"></param>
-        /// <param name="histActorEvent"></param>
-        /// <param name="actualEvent"></param>
-        public Record(string description, int locID, int refID, int year, HistKingdomEvent histKingdomEvent = HistKingdomEvent.None, bool actualEvent = true)
+        /// <param name="happened"></param>
+        /// <param name="happened"></param>
+        public Record(string description, int locID, int refID, int year, HistKingdomIncident histKingdomIncident = HistKingdomIncident.None, bool happened = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
                 this.Year = year;
-                Actual = actualEvent;
+                Actual = happened;
                 //initialise lists
                 listOfActors = new List<int>();
                 listOfLocs = new List<int>();
                 listOfHouses = new List<int>();
                 listOfItems = new List<int>();
-                listOfActorEvents = new List<HistActorEvent>();
-                listOfHouseEvents = new List<HistHouseEvent>();
-                listOfKingdomEvents = new List<HistKingdomEvent>();
+                listOfActorIncidents = new List<HistActorIncident>();
+                listOfHouseIncidents = new List<HistHouseIncident>();
+                listOfKingdomIncidents = new List<HistKingdomIncident>();
                 //lists
                 Text = description;
                 if (locID > 0)
                 { listOfLocs.Add(locID); }
                 if (refID > 0)
                 { listOfHouses.Add(refID); }
-                if (histKingdomEvent > 0)
-                { listOfKingdomEvents.Add(histKingdomEvent); }
+                if (histKingdomIncident > 0)
+                { listOfKingdomIncidents.Add(histKingdomIncident); }
             }
         }
 
-        public void AddActorEvent(HistActorEvent histEvent)
-        { listOfActorEvents.Add(histEvent); }
+        public void AddActorIncident(HistActorIncident histIncident)
+        { listOfActorIncidents.Add(histIncident); }
     }
 
 
     /// <summary>
     /// Handles all messages from Player to Game and vice versa
     /// </summary>
-    public class Message : Event
+    public class Message : Tracker
     {
         public MessageType Type { get; set; }
 
