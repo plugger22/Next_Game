@@ -276,6 +276,8 @@ namespace Next_Game
             //find a turncoat bannerlord right at start -> take him out to avoid any battle events prior to his use
             if (listOfTempRoyals.Count > 1)
             {
+                int count = 0;
+                int limit = listOfTempRoyals.Count;
                 Passive turncoatActor = null;
                 do
                 {
@@ -284,6 +286,13 @@ namespace Next_Game
                     Passive actor = Game.world.GetPassiveActor(turncoatID);
                     if (actor.Type == ActorType.BannerLord)
                     { turncoatActor = actor; TurnCoat = actor.ActID; listOfTempRoyals.RemoveAt(tempIndex); }
+                    else
+                    {
+                        //prevent an endless loop
+                        count++;
+                        if (count >= limit)
+                        { Game.SetError(new Error(44, "Endless loop")); break; }
+                    }
                 }
                 while (turncoatActor == null);
             }
