@@ -273,6 +273,22 @@ namespace Next_Game
             string[] array_BadDeeds = new string[] {"failed to rise to the occassion when under pressure", "disappointed those around him with his lacklustre swordsmanship", "Reigned in his horse and shied away from combat",
             "was seen to turn and gallop away from the enemy", "managed to soil his armour and loose his sword", "forgot that he was a knight and refused to engage with the enemy"};
 
+            //find a turncoat bannerlord right at start -> take him out to avoid any battle events prior to his use
+            if (listOfTempRoyals.Count > 1)
+            {
+                Passive turncoatActor = null;
+                do
+                {
+                    int tempIndex = rnd.Next(1, listOfTempRoyals.Count);
+                    int turncoatID = listOfTempRoyals[tempIndex];
+                    Passive actor = Game.world.GetPassiveActor(turncoatID);
+                    if (actor.Type == ActorType.BannerLord)
+                    { turncoatActor = actor; TurnCoat = actor.ActID; listOfTempRoyals.RemoveAt(tempIndex); }
+                }
+                while (turncoatActor == null);
+            }
+            else { Game.SetError(new Error(32, "No data in listOfTempRoyals")); }
+
             //Conflict Loop ---
 
             string Friends, Enemies, eventText, secretText;
@@ -363,22 +379,7 @@ namespace Next_Game
                 string textToWrap = text_1 + text_2;
                 listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
 
-                //find a turncoat bannerlord right at start -> take him out to avoid any battle events prior to his use
-                if (listOfTempRoyals.Count > 1)
-                {
-                    Passive turncoatActor = null;
-                    do
-                    {
-                        int tempIndex = rnd.Next(1, listOfTempRoyals.Count);
-                        int turncoatID = listOfTempRoyals[tempIndex];
-                        Passive actor = Game.world.GetPassiveActor(turncoatID);
-                        if (actor.Type == ActorType.BannerLord)
-                        { turncoatActor = actor; TurnCoat = actor.ActID; listOfTempRoyals.RemoveAt(tempIndex); }
-                    }
-                    while (turncoatActor == null);
-                    
-                }
-                else { Game.SetError(new Error(32, "No data in listOfTempRoyals")); }
+                
 
                 //events ---
 
