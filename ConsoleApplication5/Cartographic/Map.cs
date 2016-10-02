@@ -1564,6 +1564,7 @@ namespace Next_Game.Cartographic
         //max connections can only be 4 if it's a square cell (N/E/S/W)
         private void InitialiseRoads(int maxConnections = 4)
         {
+            float divisor = 2.5f; //determines map size
             //first take capital and attempt to connect to the maxConnections # of locs nearest.
             //Console.WriteLine("Debug: CapitalRoads ---");
             //can't have more than 4 connections
@@ -1597,7 +1598,7 @@ namespace Next_Game.Cartographic
             //first round completed (capital connected to nearest loc's. 
             //then...
             //Recursively attempt to connect to all remaining loc's
-            while (LocationRoads(mapSize / 2) == false) ;
+            while (LocationRoads(mapSize / divisor) == false) ;
             //sweeper method to find any unconnected locations and delete them
             LocationSweeper();
             //set up routes
