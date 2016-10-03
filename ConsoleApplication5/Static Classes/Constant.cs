@@ -27,6 +27,8 @@ namespace Next_Game
         GAME_YEAR,
         GAME_START,
         MAP_DIVISOR,
+        CONNECTOR_MIN,
+        CONNECTOR_MAX,
         Count //keep as last
     }
 
@@ -61,6 +63,8 @@ namespace Next_Game
             arrayOfGlobals[19] = Global.GAME_YEAR;
             arrayOfGlobals[20] = Global.GAME_START;
             arrayOfGlobals[21] = Global.MAP_DIVISOR;
+            arrayOfGlobals[22] = Global.CONNECTOR_MIN;
+            arrayOfGlobals[23] = Global.CONNECTOR_MAX;
             }
 
         /// <summary>

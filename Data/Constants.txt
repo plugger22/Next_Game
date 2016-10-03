@@ -1,6 +1,7 @@
 # Constants
 # use format - first line '# Explanation', second line 'x : y' where x is the index code (DON'T CHANGE) and y is the value (integer)
 # blank lines and spaces are ignored
+# all values are 1+ (a zero value is invalid)
 
 # Actors ---
 
@@ -54,6 +55,10 @@
 18: 30
 # MAP_DIVISOR -> maximum length of roads (higher the # less the length, max dist = mapSize/divisor
 21: 3
+# CONNECTOR_MIN -> minimum length of connector (higher # gives enables connector, eg. MapSize / CONNECTOR_MIN <= dist).  Range (Max value+1) - 9
+22: 8
+# CONNECTOR_MAX -> maximum length of connector (lower # enables longer connector, eg. MapSize / CONNECTOR_MAX <= dist). Range 1 - 3
+23: 1
 
 # Game ---
 

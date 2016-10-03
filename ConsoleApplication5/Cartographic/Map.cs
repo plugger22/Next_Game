@@ -1568,7 +1568,7 @@ namespace Next_Game.Cartographic
             //first take capital and attempt to connect to the maxConnections # of locs nearest.
             //Console.WriteLine("Debug: CapitalRoads ---");
             //can't have more than 4 connections
-            if(maxConnections > 4) { maxConnections = 4; }
+            if (maxConnections > 4) { maxConnections = 4; }
             //find nearest location to capital
             Position pos = new Position();
             pos = FindNearestLocation(capitalX, capitalY);
@@ -1578,7 +1578,7 @@ namespace Next_Game.Cartographic
             float minDistance;
             int roadCount = 0;
             //check further if last couple of roads aren't valid
-            for(int i = 0; i < 6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 minDistance = pos.Distance;
                 pos = FindNearestLocation(capitalX, capitalY, minDistance);
@@ -1598,7 +1598,7 @@ namespace Next_Game.Cartographic
             //first round completed (capital connected to nearest loc's. 
             //then...
             //Recursively attempt to connect to all remaining loc's
-            while (LocationRoads(mapSize / divisor) == false) ;
+            while (LocationRoads(mapSize / divisor) == false);
             //sweeper method to find any unconnected locations and delete them
             LocationSweeper();
             //set up routes
@@ -2482,6 +2482,16 @@ namespace Next_Game.Cartographic
         private void InitialiseConnectors()
         {
             List<Location> listOfSingleConnectionLocs = new List<Location>();
+            int connectorMin = Game.constant.GetValue(Global.CONNECTOR_MIN);
+            int connectorMax = Game.constant.GetValue(Global.CONNECTOR_MAX);
+            //error check
+            if (connectorMax >= connectorMin || connectorMax < 0 || connectorMin < 0 || connectorMin > 9 || connectorMax > 3)
+            {
+                //default values instead
+                connectorMin = 8; connectorMax = 0;
+                Game.SetError(new Error(47, "Inconsistent values for CONNECTOR MIN & MAX"));
+            }
+
             int capitalDirection = 0;
             float distance = 0f;
             bool foundMatch = false;
@@ -2491,7 +2501,7 @@ namespace Next_Game.Cartographic
             int x1; int y1; int x2; int y2;
             int[] arrayTemp = new int[5]; //tallies single connector locs by branch. Sets any branch with no remaining connectors to true in bool 'branches'
             //loop through entire process a number of times to ensure close connections are made before distant ones (making i larger enables smaller connections)
-            for (int i = 8; i > 0; i--)
+            for (int i = connectorMin; i > connectorMax - 1; i--)
             {
                 //clear temp collections
                 listOfSingleConnectionLocs.Clear();
