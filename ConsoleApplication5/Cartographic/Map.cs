@@ -1564,7 +1564,7 @@ namespace Next_Game.Cartographic
         //max connections can only be 4 if it's a square cell (N/E/S/W)
         private void InitialiseRoads(int maxConnections = 4)
         {
-            float divisor = 2.5f; //determines map size
+            float divisor = (float)Game.constant.GetValue(Global.MAP_DIVISOR); //determines max length of roads
             //first take capital and attempt to connect to the maxConnections # of locs nearest.
             //Console.WriteLine("Debug: CapitalRoads ---");
             //can't have more than 4 connections

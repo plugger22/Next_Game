@@ -203,6 +203,8 @@ namespace Next_Game
                     { Game.SetError(new Error(17, e.Message)); }
                 }
             }
+            //check all required data has been successfully imported
+            Game.constant.ErrorCheck();
         }
 
         /// <summary>

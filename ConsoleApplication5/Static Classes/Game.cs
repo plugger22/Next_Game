@@ -51,11 +51,8 @@ namespace Next_Game
         private static readonly int _messageHeight = 20;
         private static RLConsole _messageConsole; //bottom right
 
-        private static int mapSize = 30;
-        public static int gameTurn = 0; //each turn represents a day
-        public static int gameStart = 1200; //starting year for 1st generation
-        public static int gameYear = 1200; //current game year
-        public static int gameGeneration = 1; //current generation (25 years each)
+        public static int gameTurn, gameGeneration, gameStart, gameYear, mapSize;
+
         //core objects
         public static Menu menu;
         //public static MessageLog messageLog;
@@ -99,17 +96,16 @@ namespace Next_Game
         public static void Main(string[] args)
         {
             Console.SetWindowSize(100, 80);
-            //Console.WriteLine("Seed: {0}", seed);
             //initialise game objects
             Stopwatch timer_1 = new Stopwatch();
             constant = new Constant();
             utility = new Utility();
             file = new FileImport("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/");
             file.GetConstants("Constants.txt");
-            //messageLog = new MessageLog();
+            InitialiseGameVariables();
             timer_1.Start();
             map = new Map(mapSize, seed);
-            map.InitialiseMap(4, 2);
+            map.InitialiseMap(constant.GetValue(Global.MAP_FREQUENCY), constant.GetValue(Global.MAP_SPACING));
             StopTimer(timer_1, "Map Initialisation");
             timer_1.Start();
             network = new Network(seed);
@@ -121,14 +117,10 @@ namespace Next_Game
             history.InitialiseHistory(network.GetNumUniqueHouses());
             history.CreatePlayerActors(6);
             StopTimer(timer_1, "History Initialisation");
-            //timer.Start();
             world = new World(seed);
             world.InitialiseWorld();
-            //StopTimer(timer, "World Initialisation");
-            //---interim history.cs step needed to update History of houses
             infoChannel = new InfoChannel();
             world.ShowGeneratorStatsRL();
-            //messageLog.Add(new Snippet($"Game world created with seed {seed}"), gameTurn);
             Message message = new Message($"Game world created with seed {seed}", MessageType.System);
             world.SetMessage(message);
             world.ProcessStartGame();
@@ -1143,5 +1135,15 @@ namespace Next_Game
             listOfData.Add(new Snippet(string.Format("{0, -30}time Elapsed {1} ms", "Total (measured)", _totalTime)));
             return listOfData;
         }
+
+        private static void InitialiseGameVariables()
+        {
+            gameTurn = 0; //each turn represents a day
+            gameStart = constant.GetValue(Global.GAME_START);
+            gameYear = constant.GetValue(Global.GAME_YEAR);
+            gameGeneration = 1; //current generation (25 years each)
+            mapSize = constant.GetValue(Global.MAP_SIZE);
+        }
+
     }
 }

@@ -21,13 +21,19 @@ namespace Next_Game
         CROW_BONUS,
         MAP_LOCATIONS_MIN,
         MAP_LOCATIONS_MAX,
+        MAP_FREQUENCY,
+        MAP_SPACING,
+        MAP_SIZE,
+        GAME_YEAR,
+        GAME_START,
+        MAP_DIVISOR,
         Count //keep as last
     }
 
     public class Constant
     {
         private readonly Global[] arrayOfGlobals; //holds enums which provide indexes for arrayOfConstants
-        private readonly int[] arrayOfConstants; //what's used in code, index is a Global enum
+        private readonly int[] arrayOfConstants; //data which that's used in code, index is a Global enum
 
         public Constant()
             {
@@ -49,6 +55,12 @@ namespace Next_Game
             arrayOfGlobals[13] = Global.CROW_BONUS;
             arrayOfGlobals[14] = Global.MAP_LOCATIONS_MIN;
             arrayOfGlobals[15] = Global.MAP_LOCATIONS_MAX;
+            arrayOfGlobals[16] = Global.MAP_FREQUENCY;
+            arrayOfGlobals[17] = Global.MAP_SPACING;
+            arrayOfGlobals[18] = Global.MAP_SIZE;
+            arrayOfGlobals[19] = Global.GAME_YEAR;
+            arrayOfGlobals[20] = Global.GAME_START;
+            arrayOfGlobals[21] = Global.MAP_DIVISOR;
             }
 
         /// <summary>
@@ -86,6 +98,18 @@ namespace Next_Game
             }
             else
             { Game.SetError(new Error(9, string.Format("{0} out of range, data {1}", index, data))); }
+        }
+
+        /// <summary>
+        /// loops Global enums and checks all have valid data that has been imported from 'Constants.txt' (invalid if data = 0)
+        /// </summary>
+        public void ErrorCheck()
+        {
+            for(int index = 1; index < (int)Global.Count; index++)
+            {
+                if (arrayOfConstants[index] == 0)
+                { Game.SetError(new Error(46, string.Format("{0} is missing data. Check Constants.txt is correct", (Global)index))); }
+            }
         }
     }
 }

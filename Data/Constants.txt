@@ -46,3 +46,18 @@
 14: 20
 # MAP_LOCATIONS_MAX -> maximum # of locations on map
 15: 40
+# MAP_FREQUENCY -> % chance of a cell having a location
+16: 4
+# MAP_SPACING -> minimum spacing between locations
+17: 2
+# MAP_SIZE -> length and breadth of the map
+18: 30
+# MAP_DIVISOR -> maximum length of roads (higher the # less the length, max dist = mapSize/divisor
+21: 3
+
+# Game ---
+
+# GAME_YEAR -> current game year starting value
+19: 1200
+# GAME_START -> baseline year for 1st generation
+20: 1200
