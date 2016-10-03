@@ -881,6 +881,7 @@ namespace Next_Game.Cartographic
         /// <param name="mapConsole"></param>
         public void DrawMapRL(RLConsole mapConsole)
         {
+            RLColor color;
             mapConsole.Clear();
             //cell colors, foreground and background
             RLColor foreColor1 = RLColor.LightGray;
@@ -909,9 +910,9 @@ namespace Next_Game.Cartographic
             int[] subCell = new int[10]; //cell array (character ALT code), 1 to 9 (ignore cell[0])
             int houseID; //House Id for houses layer
             
-            //
+            
             //margin and the vertical & horizontal offsets are class instances
-            //
+            
             //write header to screen (two rows, vertical 2 digit, spaced 3 apart)
             for (int j = 0; j < mapSize; j++)
             {
@@ -933,6 +934,7 @@ namespace Next_Game.Cartographic
                 foreColor4 = RLColor.Gray;
                 foreColor5 = RLColor.Gray;
                 foreColor6 = RLColor.Gray;
+                color = RLColor.Gray;
                 for (int column = 0; column < mapSize; column++)
                 {
 
@@ -1132,43 +1134,19 @@ namespace Next_Game.Cartographic
                             {
                                 case 10:
                                     //vertical road
-                                    if (roadLayer == 0)
-                                    {
-                                        subCell[2] = 179; foreColor2 = RLColor.White;
-                                        subCell[8] = 179; foreColor8 = RLColor.White;
-                                    }
-                                    else if (roadLayer == 1)
-                                    {
-                                        //royal road
-                                        subCell[2] = 179; foreColor2 = RLColor.Blue;
-                                        subCell[8] = 179; foreColor8 = RLColor.Blue;
-                                    }
-                                    else if (roadLayer == 2)
-                                    {
-                                        //connector road
-                                        subCell[2] = 179; foreColor2 = RLColor.LightRed;
-                                        subCell[8] = 179; foreColor8 = RLColor.LightRed;
-                                    }
+                                    if (roadLayer == 0) { color = RLColor.White; }
+                                    else if (roadLayer == 1) { color = RLColor.Blue; }
+                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    subCell[2] = 179; foreColor2 = color;
+                                    subCell[8] = 179; foreColor8 = color;
                                     break;
                                 case 11:
                                     //lateral road
-                                    if (roadLayer == 0)
-                                    {
-                                        subCell[4] = 196; foreColor4 = RLColor.White;
-                                        subCell[6] = 196; foreColor6 = RLColor.White;
-                                    }
-                                    else if (roadLayer == 1)
-                                    {
-                                        //royal road
-                                        subCell[4] = 196; foreColor4 = RLColor.Blue;
-                                        subCell[6] = 196; foreColor6 = RLColor.Blue;
-                                    }
-                                    else if (roadLayer == 2)
-                                    {
-                                        //connector road
-                                        subCell[4] = 196; foreColor4 = RLColor.LightRed;
-                                        subCell[6] = 196; foreColor6 = RLColor.LightRed;
-                                    }
+                                    if (roadLayer == 0) { color = RLColor.White; }
+                                    else if (roadLayer == 1) { color = RLColor.Blue; }
+                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    subCell[4] = 196; foreColor4 = color;
+                                    subCell[6] = 196; foreColor6 = color;
                                     break;
                             }
                         }
@@ -1234,210 +1212,126 @@ namespace Next_Game.Cartographic
                                     subCell[2] = 179;
                                     subCell[5] = 179;
                                     subCell[8] = 179;
-                                    if (roadLayer == 0)
-                                    {
-                                        foreColor2 = RLColor.White;
-                                        foreColor5 = RLColor.White;
-                                        foreColor8 = RLColor.White;
-                                    }
-                                    else if (roadLayer == 1)
-                                    {
-                                        //kings road
-                                        foreColor2 = RLColor.Blue;
-                                        foreColor5 = RLColor.Blue;
-                                        foreColor8 = RLColor.Blue;
-                                    }
-                                    else if (roadLayer == 2)
-                                    {
-                                        //connector road
-                                        foreColor2 = RLColor.LightRed;
-                                        foreColor5 = RLColor.LightRed;
-                                        foreColor8 = RLColor.LightRed;
-                                    }
+                                    if (roadLayer == 0) { color = RLColor.White; }
+                                    else if (roadLayer == 1) { color = RLColor.Blue; }
+                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    foreColor2 = color;
+                                    foreColor5 = color;
+                                    foreColor8 = color;
                                     break;
                                 //road lateral - dash (should be 196 but uses 179 for some reason)
                                 case 11:
                                     subCell[4] = 196;
                                     subCell[5] = 196;
                                     subCell[6] = 196;
-                                    if (roadLayer == 0)
-                                    {
-                                        foreColor4 = RLColor.White;
-                                        foreColor5 = RLColor.White;
-                                        foreColor6 = RLColor.White;
-                                    }
-                                    else if (roadLayer == 1)
-                                    {
-                                        //kings road
-                                        foreColor4 = RLColor.Blue;
-                                        foreColor5 = RLColor.Blue;
-                                        foreColor6 = RLColor.Blue;
-                                    }
-                                    else if (roadLayer == 2)
-                                    {
-                                        //connector road
-                                        foreColor4 = RLColor.LightRed;
-                                        foreColor5 = RLColor.LightRed;
-                                        foreColor6 = RLColor.LightRed;
-                                    }
+                                    if (roadLayer == 0) { color = RLColor.White; }
+                                    else if (roadLayer == 1) { color = RLColor.Blue; }
+                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    foreColor4 = color;
+                                    foreColor5 = color;
+                                    foreColor6 = color;
                                     break;
                                 //road right up (end of dogleg) or road down left (start of dogleg)
                                 case 12:
                                     subCell[2] = 179;
                                     subCell[4] = 196;
                                     subCell[5] = 217;
-                                    if (roadLayer == 0)
-                                    {
-                                        foreColor2 = RLColor.White;
-                                        foreColor4 = RLColor.White;
-                                        foreColor5 = RLColor.White;
-                                    }
-                                    else if (roadLayer == 1)
-                                    {
-                                        //kings road
-                                        foreColor2 = RLColor.Blue;
-                                        foreColor4 = RLColor.Blue;
-                                        foreColor5 = RLColor.Blue;
-                                    }
-                                    else if (roadLayer == 1)
-                                    {
-                                        //connector road
-                                        foreColor2 = RLColor.LightRed;
-                                        foreColor4 = RLColor.LightRed;
-                                        foreColor5 = RLColor.LightRed;
-                                    }
+                                    if (roadLayer == 0) { color = RLColor.White; }
+                                    else if (roadLayer == 1) { color = RLColor.Blue; }
+                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    foreColor2 = color;
+                                    foreColor4 = color;
+                                    foreColor5 = color;
                                     break;
                                 //road right down (end of dogleg) or up left (start of dogleg) (should be 191 but uses 192)
                                 case 13:
                                     subCell[4] = 196;
                                     subCell[5] = 191;
                                     subCell[8] = 179;
-                                    if (roadLayer == 0)
-                                    {
-                                        foreColor4 = RLColor.White;
-                                        foreColor5 = RLColor.White;
-                                        foreColor8 = RLColor.White;
-                                    }
-                                    else if (roadLayer == 1)
-                                    {
-                                        //kings road
-                                        foreColor4 = RLColor.Blue;
-                                        foreColor5 = RLColor.Blue;
-                                        foreColor8 = RLColor.Blue;
-                                    }
-                                    else if (roadLayer == 2)
-                                    {
-                                        //connector road
-                                        foreColor4 = RLColor.Red;
-                                        foreColor5 = RLColor.Red;
-                                        foreColor8 = RLColor.Red;
-                                    }
+                                    if (roadLayer == 0) { color = RLColor.White; }
+                                    else if (roadLayer == 1) { color = RLColor.Blue; }
+                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    foreColor4 = color;
+                                    foreColor5 = color;
+                                    foreColor8 = color;
                                     break;
                                 //road left up (end of dogleg) or down right (start of dogleg)
                                 case 14:
                                     subCell[2] = 179;
                                     subCell[5] = 192;
                                     subCell[6] = 196;
-                                    if (roadLayer == 0)
-                                    {
-                                        foreColor2 = RLColor.White;
-                                        foreColor5 = RLColor.White;
-                                        foreColor6 = RLColor.White;
-                                    }
-                                    else if (roadLayer == 1)
-                                    {
-                                        //kings road
-                                        foreColor2 = RLColor.Blue;
-                                        foreColor5 = RLColor.Blue;
-                                        foreColor6 = RLColor.Blue;
-                                    }
-                                    else if (roadLayer == 2)
-                                    {
-                                        //connector road
-                                        foreColor2 = RLColor.LightRed;
-                                        foreColor5 = RLColor.LightRed;
-                                        foreColor6 = RLColor.LightRed;
-                                    }
+                                    if (roadLayer == 0) { color = RLColor.White; }
+                                    else if (roadLayer == 1) { color = RLColor.Blue; }
+                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    foreColor2 = color;
+                                    foreColor5 = color;
+                                    foreColor6 = color;
                                     break;
                                 //road left down (end of dogleg) up right (start of dogleg)
                                 case 15:
                                     subCell[5] = 218;
                                     subCell[6] = 196;
                                     subCell[8] = 179;
-                                    if (roadLayer == 0)
-                                    {
-                                        foreColor5 = RLColor.White;
-                                        foreColor6 = RLColor.White;
-                                        foreColor8 = RLColor.White;
-                                    }
-                                    else if (roadLayer == 1)
-                                    {
-                                        //kings road
-                                        foreColor5 = RLColor.Blue;
-                                        foreColor6 = RLColor.Blue;
-                                        foreColor8 = RLColor.Blue;
-                                    }
-                                    else if (roadLayer == 2)
-                                    {
-                                        //connector road
-                                        foreColor5 = RLColor.LightRed;
-                                        foreColor6 = RLColor.LightRed;
-                                        foreColor8 = RLColor.LightRed;
-                                    }
+                                    if (roadLayer == 0) { color = RLColor.White; }
+                                    else if (roadLayer == 1) { color = RLColor.Blue; }
+                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    foreColor5 = color;
+                                    foreColor6 = color;
+                                    foreColor8 = color;
                                     break;
                                 //road vertical route ---
                                 case 20:
                                     subCell[2] = 179;
                                     subCell[5] = 179;
                                     subCell[8] = 179;
-                                    foreColor2 = RLColor.LightRed;
-                                    foreColor5 = RLColor.LightRed;
-                                    foreColor8 = RLColor.LightRed;
+                                    foreColor2 = RLColor.LightMagenta;
+                                    foreColor5 = RLColor.LightMagenta;
+                                    foreColor8 = RLColor.LightMagenta;
                                     break;
                                 //road lateral route
                                 case 21:
                                     subCell[4] = 196;
                                     subCell[5] = 196;
                                     subCell[6] = 196;
-                                    foreColor4 = RLColor.LightRed;
-                                    foreColor5 = RLColor.LightRed;
-                                    foreColor6 = RLColor.LightRed;
+                                    foreColor4 = RLColor.LightMagenta;
+                                    foreColor5 = RLColor.LightMagenta;
+                                    foreColor6 = RLColor.LightMagenta;
                                     break;
                                 //road right up (end of dogleg) or road down left (start of dogleg) route
                                 case 22:
                                     subCell[2] = 179;
                                     subCell[4] = 196;
                                     subCell[5] = 217;
-                                    foreColor2 = RLColor.LightRed;
-                                    foreColor4 = RLColor.LightRed;
-                                    foreColor5 = RLColor.LightRed;
+                                    foreColor2 = RLColor.LightMagenta;
+                                    foreColor4 = RLColor.LightMagenta;
+                                    foreColor5 = RLColor.LightMagenta;
                                     break;
                                 //road right down (end of dogleg) or up left (start of dogleg) route
                                 case 23:
                                     subCell[4] = 196;
                                     subCell[5] = 191;
                                     subCell[8] = 179;
-                                    foreColor4 = RLColor.LightRed;
-                                    foreColor5 = RLColor.LightRed;
-                                    foreColor8 = RLColor.LightRed;
+                                    foreColor4 = RLColor.LightMagenta;
+                                    foreColor5 = RLColor.LightMagenta;
+                                    foreColor8 = RLColor.LightMagenta;
                                     break;
                                 //road left up (end of dogleg) or down right (start of dogleg) route
                                 case 24:
                                     subCell[2] = 179;
                                     subCell[5] = 192;
                                     subCell[6] = 196;
-                                    foreColor2 = RLColor.LightRed;
-                                    foreColor5 = RLColor.LightRed;
-                                    foreColor6 = RLColor.LightRed;
+                                    foreColor2 = RLColor.LightMagenta;
+                                    foreColor5 = RLColor.LightMagenta;
+                                    foreColor6 = RLColor.LightMagenta;
                                     break;
                                 //road left down (end of dogleg) up right (start of dogleg) route
                                 case 25:
                                     subCell[5] = 218;
                                     subCell[6] = 196;
                                     subCell[8] = 179;
-                                    foreColor5 = RLColor.LightRed;
-                                    foreColor6 = RLColor.LightRed;
-                                    foreColor8 = RLColor.LightRed;
+                                    foreColor5 = RLColor.LightMagenta;
+                                    foreColor6 = RLColor.LightMagenta;
+                                    foreColor8 = RLColor.LightMagenta;
                                     break;
                                 //terrain, mountains - 'M'
                                 case 30:
@@ -2797,10 +2691,15 @@ namespace Next_Game.Cartographic
             { mapGrid[(int)MapLayer.Player, entry.Key.PosX, entry.Key.PosY] = entry.Value; }
         }
 
+        /// <summary>
+        /// press 'M'
+        /// </summary>
+        /// <param name="showRoutes"></param>
+        /// <param name="showConnectors"></param>
         public void UpdateMap(bool showRoutes = false, bool showConnectors = false)
         {
             ShowRoutes(showRoutes);
-            ShowConnectorRoutes(showConnectors);
+            //ShowConnectorRoutes(showConnectors);
         }
 
         /// <summary>
