@@ -949,6 +949,18 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(45, "Invalid Old King LocID")); }
 
+                //Set up Connector Roads
+                List<Route> listConnectors = Game.map.GetConnectors();
+                if (listConnectors.Count > 0)
+                {
+                    foreach (Route route in listConnectors)
+                    {
+                        List<Position> pathList = route.GetPath();
+                        foreach (Position posRoad in pathList)
+                        { Game.map.SetMapInfo(MapLayer.Road, posRoad.PosX, posRoad.PosY, 2); }
+                    }
+                }
+
                 //set up new house
                 newMajorhouse.Name = turncoatHouse.Name;
                 newMajorhouse.Motto = turncoatHouse.Motto;

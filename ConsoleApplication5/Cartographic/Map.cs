@@ -936,7 +936,7 @@ namespace Next_Game.Cartographic
                 for (int column = 0; column < mapSize; column++)
                 {
 
-                    //Check Player layer first (overides base layer)
+                    //get layer data
                     mainLayer = mapGrid[(int)MapLayer.Base, column, row];
                     playerLayer = mapGrid[(int)MapLayer.Player, column, row];
                     geoLayer = mapGrid[(int)MapLayer.Geography, column, row];
@@ -1132,13 +1132,43 @@ namespace Next_Game.Cartographic
                             {
                                 case 10:
                                     //vertical road
-                                    subCell[2] = 179; foreColor2 = RLColor.White;
-                                    subCell[8] = 179; foreColor8 = RLColor.White;
+                                    if (roadLayer == 0)
+                                    {
+                                        subCell[2] = 179; foreColor2 = RLColor.White;
+                                        subCell[8] = 179; foreColor8 = RLColor.White;
+                                    }
+                                    else if (roadLayer == 1)
+                                    {
+                                        //royal road
+                                        subCell[2] = 179; foreColor2 = RLColor.Blue;
+                                        subCell[8] = 179; foreColor8 = RLColor.Blue;
+                                    }
+                                    else if (roadLayer == 2)
+                                    {
+                                        //connector road
+                                        subCell[2] = 179; foreColor2 = RLColor.LightRed;
+                                        subCell[8] = 179; foreColor8 = RLColor.LightRed;
+                                    }
                                     break;
                                 case 11:
                                     //lateral road
-                                    subCell[4] = 196; foreColor4 = RLColor.White;
-                                    subCell[6] = 196; foreColor6 = RLColor.White;
+                                    if (roadLayer == 0)
+                                    {
+                                        subCell[4] = 196; foreColor4 = RLColor.White;
+                                        subCell[6] = 196; foreColor6 = RLColor.White;
+                                    }
+                                    else if (roadLayer == 1)
+                                    {
+                                        //royal road
+                                        subCell[4] = 196; foreColor4 = RLColor.Blue;
+                                        subCell[6] = 196; foreColor6 = RLColor.Blue;
+                                    }
+                                    else if (roadLayer == 2)
+                                    {
+                                        //connector road
+                                        subCell[4] = 196; foreColor4 = RLColor.LightRed;
+                                        subCell[6] = 196; foreColor6 = RLColor.LightRed;
+                                    }
                                     break;
                             }
                         }
@@ -1217,6 +1247,13 @@ namespace Next_Game.Cartographic
                                         foreColor5 = RLColor.Blue;
                                         foreColor8 = RLColor.Blue;
                                     }
+                                    else if (roadLayer == 2)
+                                    {
+                                        //connector road
+                                        foreColor2 = RLColor.LightRed;
+                                        foreColor5 = RLColor.LightRed;
+                                        foreColor8 = RLColor.LightRed;
+                                    }
                                     break;
                                 //road lateral - dash (should be 196 but uses 179 for some reason)
                                 case 11:
@@ -1235,6 +1272,13 @@ namespace Next_Game.Cartographic
                                         foreColor4 = RLColor.Blue;
                                         foreColor5 = RLColor.Blue;
                                         foreColor6 = RLColor.Blue;
+                                    }
+                                    else if (roadLayer == 2)
+                                    {
+                                        //connector road
+                                        foreColor4 = RLColor.LightRed;
+                                        foreColor5 = RLColor.LightRed;
+                                        foreColor6 = RLColor.LightRed;
                                     }
                                     break;
                                 //road right up (end of dogleg) or road down left (start of dogleg)
@@ -1255,6 +1299,13 @@ namespace Next_Game.Cartographic
                                         foreColor4 = RLColor.Blue;
                                         foreColor5 = RLColor.Blue;
                                     }
+                                    else if (roadLayer == 1)
+                                    {
+                                        //connector road
+                                        foreColor2 = RLColor.LightRed;
+                                        foreColor4 = RLColor.LightRed;
+                                        foreColor5 = RLColor.LightRed;
+                                    }
                                     break;
                                 //road right down (end of dogleg) or up left (start of dogleg) (should be 191 but uses 192)
                                 case 13:
@@ -1273,6 +1324,13 @@ namespace Next_Game.Cartographic
                                         foreColor4 = RLColor.Blue;
                                         foreColor5 = RLColor.Blue;
                                         foreColor8 = RLColor.Blue;
+                                    }
+                                    else if (roadLayer == 2)
+                                    {
+                                        //connector road
+                                        foreColor4 = RLColor.Red;
+                                        foreColor5 = RLColor.Red;
+                                        foreColor8 = RLColor.Red;
                                     }
                                     break;
                                 //road left up (end of dogleg) or down right (start of dogleg)
@@ -1293,6 +1351,13 @@ namespace Next_Game.Cartographic
                                         foreColor5 = RLColor.Blue;
                                         foreColor6 = RLColor.Blue;
                                     }
+                                    else if (roadLayer == 2)
+                                    {
+                                        //connector road
+                                        foreColor2 = RLColor.LightRed;
+                                        foreColor5 = RLColor.LightRed;
+                                        foreColor6 = RLColor.LightRed;
+                                    }
                                     break;
                                 //road left down (end of dogleg) up right (start of dogleg)
                                 case 15:
@@ -1311,6 +1376,13 @@ namespace Next_Game.Cartographic
                                         foreColor5 = RLColor.Blue;
                                         foreColor6 = RLColor.Blue;
                                         foreColor8 = RLColor.Blue;
+                                    }
+                                    else if (roadLayer == 2)
+                                    {
+                                        //connector road
+                                        foreColor5 = RLColor.LightRed;
+                                        foreColor6 = RLColor.LightRed;
+                                        foreColor8 = RLColor.LightRed;
                                     }
                                     break;
                                 //road vertical route ---
