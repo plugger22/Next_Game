@@ -19,6 +19,8 @@ namespace Next_Game
         CHILDBIRTH_COMPLICATIONS,
         CROW_NUMBER,
         CROW_BONUS,
+        MAP_LOCATIONS_MIN,
+        MAP_LOCATIONS_MAX,
         Count //keep as last
     }
 
@@ -45,6 +47,8 @@ namespace Next_Game
             arrayOfGlobals[11] = Global.CHILDBIRTH_COMPLICATIONS;
             arrayOfGlobals[12] = Global.CROW_NUMBER;
             arrayOfGlobals[13] = Global.CROW_BONUS;
+            arrayOfGlobals[14] = Global.MAP_LOCATIONS_MIN;
+            arrayOfGlobals[15] = Global.MAP_LOCATIONS_MAX;
             }
 
         /// <summary>
@@ -78,7 +82,7 @@ namespace Next_Game
             if ((int)index < arrayOfConstants.Length)
             {
                 arrayOfConstants[(int)index] = data;
-                Console.WriteLine("{0} {1} initialised", index, data);
+                Console.WriteLine("{0} -> {1}", index, data);
             }
             else
             { Game.SetError(new Error(9, string.Format("{0} out of range, data {1}", index, data))); }

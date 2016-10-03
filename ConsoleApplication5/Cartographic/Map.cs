@@ -52,8 +52,8 @@ namespace Next_Game.Cartographic
         {
             int locations = 0;
             //parameters of map generation (number of locations)
-            int lowerLimit = 20;
-            int upperLimit = 40;
+            int lowerLimit = Game.constant.GetValue(Global.MAP_LOCATIONS_MIN);
+            int upperLimit = Game.constant.GetValue(Global.MAP_LOCATIONS_MAX);
             
             do
             {

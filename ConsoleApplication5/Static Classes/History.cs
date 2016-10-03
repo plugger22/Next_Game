@@ -60,13 +60,13 @@ namespace Next_Game
             listOfDiseases = new List<string>();
         }
 
+
         /// <summary>
         /// Set up history by importing text files and initilaising various data collections
         /// </summary>
         /// <param name="numHousesRequired">uniqueHouses from Network.InitialiseHouses</param>
         public void InitialiseHistory(int numHousesRequired)
-        {   //Constants
-            Game.file.GetConstants("Constants.txt");
+        {   
             // First Male and Female names
             listOfMaleFirstNames.AddRange(Game.file.GetStrings("FirstMale.txt"));
             listOfFemaleFirstNames.AddRange(Game.file.GetStrings("FirstFemale.txt"));

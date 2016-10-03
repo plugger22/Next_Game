@@ -175,7 +175,7 @@ namespace Next_Game
         {
             string[] arrayOfFileInput = ImportDataFile(fileName); ;
             Console.WriteLine();
-            Console.WriteLine("--- Constants");
+            Console.WriteLine("--- Initialise Constants");
             string cleanToken = null;
             string cleanTag = null;
             int index = 0;

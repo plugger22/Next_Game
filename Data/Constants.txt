@@ -39,3 +39,10 @@
 12: 3
 # CROW_BONUS -> bonus to crow chance following a failed crow (cumulative while ever follower remains at the same location)
 13: 20
+
+# Map Generation ---
+
+# MAP_LOCATIONS_MIN -> minimum # of locations on map
+14: 20
+# MAP_LOCATIONS_MAX -> maximum # of locations on map
+15: 40

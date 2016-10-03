@@ -105,6 +105,7 @@ namespace Next_Game
             constant = new Constant();
             utility = new Utility();
             file = new FileImport("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/");
+            file.GetConstants("Constants.txt");
             //messageLog = new MessageLog();
             timer_1.Start();
             map = new Map(mapSize, seed);
@@ -130,6 +131,7 @@ namespace Next_Game
             //messageLog.Add(new Snippet($"Game world created with seed {seed}"), gameTurn);
             Message message = new Message($"Game world created with seed {seed}", MessageType.System);
             world.SetMessage(message);
+            world.ProcessStartGame();
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
@@ -157,8 +159,6 @@ namespace Next_Game
             // Set up handlers for RLNET's Update & Render events
             _rootConsole.Update += OnRootConsoleUpdate;
             _rootConsole.Render += OnRootConsoleRender;
-            //Start Game setups
-            world.ProcessStartGame();
             // Begin RLNET's game loop
             _rootConsole.Run();
             _renderRequired = true;
