@@ -126,6 +126,7 @@ namespace Next_Game
             world.SetMessage(message);
             world.ProcessStartGame();
             story = new Story();
+            story.InitialiseStory();
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);

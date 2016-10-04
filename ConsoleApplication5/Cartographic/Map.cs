@@ -2784,7 +2784,22 @@ namespace Next_Game.Cartographic
         public List<int> GetActiveGeoClusters()
         {
             List<int> tempList = new List<int>();
-
+            int geoCell, roadCell;
+            for (int row = 0; row < mapSize; row++)
+            {
+                for (int column = 0; column < mapSize; column++)
+                {
+                    geoCell = mapGrid[(int)MapLayer.GeoID, column, row];
+                    roadCell = mapGrid[(int)MapLayer.Road, column, row];
+                    //normal road present
+                    if (roadCell > 0 && geoCell > 0)
+                    { 
+                        //already in list? add if not
+                        if (!tempList.Contains(geoCell))
+                        { tempList.Add(geoCell); }
+                    }
+                }
+            }
             return tempList;
         }
 

@@ -1,0 +1,8 @@
+# Events -> contains all events. 
+# assign each a TempID (should be unique but not critical)
+
+# Follower Events --- (type 'Follower')
+
+TempID:
+Name:
+Type: Follower

@@ -17,5 +17,10 @@ namespace Next_Game
         {
             listOfActiveGeoClusters = new List<int>();
         }
+
+        public void InitialiseStory()
+        {
+            listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters());
+        }
     }
 }

@@ -1,0 +1,9 @@
+# Archetypes
+
+# Geoclusters (terrain) -> Type is either Mountain or Forest ---
+
+ArchID: 1
+Name:
+Type:
+
+# Roads -> Type is either Main, Royal or Special ---
