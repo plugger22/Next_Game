@@ -1134,17 +1134,17 @@ namespace Next_Game.Cartographic
                             {
                                 case 10:
                                     //vertical road
-                                    if (roadLayer == 0) { color = RLColor.White; }
-                                    else if (roadLayer == 1) { color = RLColor.Blue; }
-                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    if (roadLayer == 1) { color = RLColor.White; }
+                                    else if (roadLayer == 2) { color = RLColor.Blue; }
+                                    else if (roadLayer == 3) { color = RLColor.LightRed; }
                                     subCell[2] = 179; foreColor2 = color;
                                     subCell[8] = 179; foreColor8 = color;
                                     break;
                                 case 11:
                                     //lateral road
-                                    if (roadLayer == 0) { color = RLColor.White; }
-                                    else if (roadLayer == 1) { color = RLColor.Blue; }
-                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    if (roadLayer == 1) { color = RLColor.White; }
+                                    else if (roadLayer == 2) { color = RLColor.Blue; }
+                                    else if (roadLayer == 3) { color = RLColor.LightRed; }
                                     subCell[4] = 196; foreColor4 = color;
                                     subCell[6] = 196; foreColor6 = color;
                                     break;
@@ -1212,9 +1212,9 @@ namespace Next_Game.Cartographic
                                     subCell[2] = 179;
                                     subCell[5] = 179;
                                     subCell[8] = 179;
-                                    if (roadLayer == 0) { color = RLColor.White; }
-                                    else if (roadLayer == 1) { color = RLColor.Blue; }
-                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    if (roadLayer == 1) { color = RLColor.White; }
+                                    else if (roadLayer == 2) { color = RLColor.Blue; }
+                                    else if (roadLayer == 3) { color = RLColor.LightRed; }
                                     foreColor2 = color;
                                     foreColor5 = color;
                                     foreColor8 = color;
@@ -1224,9 +1224,9 @@ namespace Next_Game.Cartographic
                                     subCell[4] = 196;
                                     subCell[5] = 196;
                                     subCell[6] = 196;
-                                    if (roadLayer == 0) { color = RLColor.White; }
-                                    else if (roadLayer == 1) { color = RLColor.Blue; }
-                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    if (roadLayer == 1) { color = RLColor.White; }
+                                    else if (roadLayer == 2) { color = RLColor.Blue; }
+                                    else if (roadLayer == 3) { color = RLColor.LightRed; }
                                     foreColor4 = color;
                                     foreColor5 = color;
                                     foreColor6 = color;
@@ -1236,9 +1236,9 @@ namespace Next_Game.Cartographic
                                     subCell[2] = 179;
                                     subCell[4] = 196;
                                     subCell[5] = 217;
-                                    if (roadLayer == 0) { color = RLColor.White; }
-                                    else if (roadLayer == 1) { color = RLColor.Blue; }
-                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    if (roadLayer == 1) { color = RLColor.White; }
+                                    else if (roadLayer == 2) { color = RLColor.Blue; }
+                                    else if (roadLayer == 3) { color = RLColor.LightRed; }
                                     foreColor2 = color;
                                     foreColor4 = color;
                                     foreColor5 = color;
@@ -1248,9 +1248,9 @@ namespace Next_Game.Cartographic
                                     subCell[4] = 196;
                                     subCell[5] = 191;
                                     subCell[8] = 179;
-                                    if (roadLayer == 0) { color = RLColor.White; }
-                                    else if (roadLayer == 1) { color = RLColor.Blue; }
-                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    if (roadLayer == 1) { color = RLColor.White; }
+                                    else if (roadLayer == 2) { color = RLColor.Blue; }
+                                    else if (roadLayer == 3) { color = RLColor.LightRed; }
                                     foreColor4 = color;
                                     foreColor5 = color;
                                     foreColor8 = color;
@@ -1260,9 +1260,9 @@ namespace Next_Game.Cartographic
                                     subCell[2] = 179;
                                     subCell[5] = 192;
                                     subCell[6] = 196;
-                                    if (roadLayer == 0) { color = RLColor.White; }
-                                    else if (roadLayer == 1) { color = RLColor.Blue; }
-                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    if (roadLayer == 1) { color = RLColor.White; }
+                                    else if (roadLayer == 2) { color = RLColor.Blue; }
+                                    else if (roadLayer == 3) { color = RLColor.LightRed; }
                                     foreColor2 = color;
                                     foreColor5 = color;
                                     foreColor6 = color;
@@ -1272,9 +1272,9 @@ namespace Next_Game.Cartographic
                                     subCell[5] = 218;
                                     subCell[6] = 196;
                                     subCell[8] = 179;
-                                    if (roadLayer == 0) { color = RLColor.White; }
-                                    else if (roadLayer == 1) { color = RLColor.Blue; }
-                                    else if (roadLayer == 2) { color = RLColor.LightRed; }
+                                    if (roadLayer == 1) { color = RLColor.White; }
+                                    else if (roadLayer == 2) { color = RLColor.Blue; }
+                                    else if (roadLayer == 3) { color = RLColor.LightRed; }
                                     foreColor5 = color;
                                     foreColor6 = color;
                                     foreColor8 = color;
@@ -2730,12 +2730,12 @@ namespace Next_Game.Cartographic
         }
 
         /// <summary>
-        /// set up the Road maplayer
+        /// set up the Road maplayer (run from lore.cs)
         /// </summary>
         /// <param name="locID"></param>
         public void InitialiseRoadLayer(int locID)
         {
-            //Set up kings road from capital to old king's house
+            //Set up kings road from capital to old king's house -> Road layer '2'
             int oldkingLocID = locID;
             if (oldkingLocID > 0)
             {
@@ -2745,12 +2745,12 @@ namespace Next_Game.Cartographic
                 {
                     List<Position> pathList = route.GetPath();
                     foreach (Position posRoad in pathList)
-                    { Game.map.SetMapInfo(MapLayer.Road, posRoad.PosX, posRoad.PosY, 1); }
+                    { Game.map.SetMapInfo(MapLayer.Road, posRoad.PosX, posRoad.PosY, 2); }
                 }
             }
             else { Game.SetError(new Error(45, "Invalid Old King LocID")); }
 
-            //Set up Connector Roads
+            //Set up Connector Roads -> Road layer '3'
             List<Route> listConnectors = Game.map.GetConnectors();
             if (listConnectors.Count > 0)
             {
@@ -2758,19 +2758,23 @@ namespace Next_Game.Cartographic
                 {
                     List<Position> pathList = route.GetPath();
                     foreach (Position posRoad in pathList)
-                    { Game.map.SetMapInfo(MapLayer.Road, posRoad.PosX, posRoad.PosY, 2); }
+                    { Game.map.SetMapInfo(MapLayer.Road, posRoad.PosX, posRoad.PosY, 3); }
                 }
             }
 
-            //Set up normal Roads
+            //Set up normal Roads -> Road layer '1'
+            int baseCell, roadCell;
             for (int row = 0; row < mapSize; row++)
             {
                 for (int column = 0; column < mapSize; column++)
                 {
-
+                    baseCell = mapGrid[(int)MapLayer.Base, column, row];
+                    roadCell = mapGrid[(int)MapLayer.Road, column, row];
+                    //normal road present
+                    if (baseCell >= 10 && baseCell <= 15 && roadCell == 0)
+                    { mapGrid[(int)MapLayer.Road, column, row] = 1; }
                 }
             }
-
         }
 
         //--- place new method above---
