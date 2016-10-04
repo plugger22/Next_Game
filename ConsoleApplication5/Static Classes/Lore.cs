@@ -934,32 +934,8 @@ namespace Next_Game
                 newMajorhouse.HouseID = houseID;
                 Console.WriteLine("Old King House {0}, {1}", oldkingHouse.Name, oldkingHouse.Motto);
 
-                //Set up kings road from capital to old king's house
-                int oldkingLocID = oldkingHouse.LocID;
-                if (oldkingLocID > 0)
-                {
-                    Location oldkingLoc = Game.network.GetLocation(oldkingLocID);
-                    List<Route> listRoute = oldkingLoc.GetRouteFromCapital();
-                    foreach (Route route in listRoute)
-                    {
-                        List<Position> pathList = route.GetPath();
-                        foreach (Position posRoad in pathList)
-                        { Game.map.SetMapInfo(MapLayer.Road, posRoad.PosX, posRoad.PosY, 1); }
-                    }
-                }
-                else { Game.SetError(new Error(45, "Invalid Old King LocID")); }
-
-                //Set up Connector Roads
-                List<Route> listConnectors = Game.map.GetConnectors();
-                if (listConnectors.Count > 0)
-                {
-                    foreach (Route route in listConnectors)
-                    {
-                        List<Position> pathList = route.GetPath();
-                        foreach (Position posRoad in pathList)
-                        { Game.map.SetMapInfo(MapLayer.Road, posRoad.PosX, posRoad.PosY, 2); }
-                    }
-                }
+                //set up road mapLayer
+                Game.map.InitialiseRoadLayer(oldkingHouse.LocID);
 
                 //set up new house
                 newMajorhouse.Name = turncoatHouse.Name;

@@ -2729,6 +2729,50 @@ namespace Next_Game.Cartographic
             else { _houses = true; }
         }
 
+        /// <summary>
+        /// set up the Road maplayer
+        /// </summary>
+        /// <param name="locID"></param>
+        public void InitialiseRoadLayer(int locID)
+        {
+            //Set up kings road from capital to old king's house
+            int oldkingLocID = locID;
+            if (oldkingLocID > 0)
+            {
+                Location oldkingLoc = Game.network.GetLocation(oldkingLocID);
+                List<Route> listRoute = oldkingLoc.GetRouteFromCapital();
+                foreach (Route route in listRoute)
+                {
+                    List<Position> pathList = route.GetPath();
+                    foreach (Position posRoad in pathList)
+                    { Game.map.SetMapInfo(MapLayer.Road, posRoad.PosX, posRoad.PosY, 1); }
+                }
+            }
+            else { Game.SetError(new Error(45, "Invalid Old King LocID")); }
+
+            //Set up Connector Roads
+            List<Route> listConnectors = Game.map.GetConnectors();
+            if (listConnectors.Count > 0)
+            {
+                foreach (Route route in listConnectors)
+                {
+                    List<Position> pathList = route.GetPath();
+                    foreach (Position posRoad in pathList)
+                    { Game.map.SetMapInfo(MapLayer.Road, posRoad.PosX, posRoad.PosY, 2); }
+                }
+            }
+
+            //Set up normal Roads
+            for (int row = 0; row < mapSize; row++)
+            {
+                for (int column = 0; column < mapSize; column++)
+                {
+
+                }
+            }
+
+        }
+
         //--- place new method above---
     }
 }
