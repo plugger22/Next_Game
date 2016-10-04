@@ -2777,6 +2777,17 @@ namespace Next_Game.Cartographic
             }
         }
 
+        /// <summary>
+        /// returns a list of all geocluster ID's (unique ones only) that are in the same cell as a road (any type)
+        /// </summary>
+        /// <returns></returns>
+        public List<int> GetActiveGeoClusters()
+        {
+            List<int> tempList = new List<int>();
+
+            return tempList;
+        }
+
         //--- place new method above---
     }
 }
