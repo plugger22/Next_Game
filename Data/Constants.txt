@@ -59,6 +59,14 @@
 22: 8
 # CONNECTOR_MAX -> maximum length of connector (lower # enables longer connector, eg. MapSize / CONNECTOR_MAX <= dist). Range 1 - 3
 23: 1
+# TERRAIN_SMALL -> all terrain (sea, mountain, forest) is small if size <= this
+24: 1
+# SEA_LARGE -> sea is large if size if >= this
+25: 20
+# MOUNTAIN_LARGE -> mountain is large if size is >= this
+26: 10
+# FOREST_LARGE -> forest is large if size is >= this
+27: 10
 
 # Game ---
 

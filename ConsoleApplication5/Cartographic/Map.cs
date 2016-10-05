@@ -568,9 +568,9 @@ namespace Next_Game.Cartographic
 
                     //set cell to correct terrain type
                     SetMapInfo(MapLayer.Terrain, columnGrid, rowGrid, terrainCode);
-                    //
+                    
                     //random chance of orthagonally adjacent cells will have same terrain ---
-                    //
+                    
                     //North
                     if (rnd.Next(100) < freqAdjacent && rowGrid > 0)
                     {
@@ -669,9 +669,9 @@ namespace Next_Game.Cartographic
                     }
                 }
             }
-            //
+            
             //loop MapLayer.Terrain and set up subCells with randomly generated symbols, ready for DrawMapRL ---
-            //
+            
             //allocate symbols randomly and have DrawMapRL override symbols, where necessary, for roads and cities, etc.
             int mapTerrain;
             int mapGeography;
@@ -720,9 +720,9 @@ namespace Next_Game.Cartographic
                     }
                 }
             }
-            //
+            
             // identify unique GeoID terrain and sea zone clusters ---
-            //
+
             int cellID = 0;
             int clusterID = 1; //unique ID
             for (int row = 0; row < mapSize; row++)

@@ -181,28 +181,28 @@ namespace Next_Game
                 GeoCluster cluster = listOfGeoClusters[i];
                 if (cluster != null)
                 {
-                    switch (cluster.ClusterType)
+                    switch (cluster.Terrain)
                     {
                         case Cluster.Sea:
-                            if (cluster.Size == 1)
-                            { tempList = listOfSmallSeas; }
-                            else if (cluster.Size >= 20)
+                            if (cluster.Type == GeoType.Small_Sea)
+                            { tempList = listOfSmallSeas;}
+                            else if (cluster.Type == GeoType.Large_Sea)
                             { tempList = listOfLargeSeas; }
                             else
                             { tempList = listOfMediumSeas; }
                             break;
                         case Cluster.Mountain:
-                            if (cluster.Size == 1)
+                            if (cluster.Type == GeoType.Small_Mtn)
                             { tempList = listOfSmallMountains; }
-                            else if (cluster.Size >= 10)
+                            else if (cluster.Type == GeoType.Large_Mtn)
                             { tempList = listOfLargeMountains; }
                             else
                             { tempList = listOfMediumMountains; }
                             break;
                         case Cluster.Forest:
-                            if (cluster.Size == 1)
+                            if (cluster.Type == GeoType.Small_Forest)
                             { tempList = listOfSmallForests; }
-                            else if (cluster.Size >= 10)
+                            else if (cluster.Type == GeoType.Large_Forest)
                             { tempList = listOfLargeForests; }
                             else
                             { tempList = listOfMediumForests; }
@@ -220,7 +220,7 @@ namespace Next_Game
                     else
                     {
                         cluster.Name = "Unknown";
-                        Game.SetError(new Error(24, string.Format("Cluster {0} tempList has no records, index {1}", cluster.ClusterType, i)));
+                        Game.SetError(new Error(24, string.Format("Cluster {0} tempList has no records, index {1}", cluster.Terrain, i)));
                     }
                 }
             }

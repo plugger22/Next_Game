@@ -782,7 +782,7 @@ namespace Next_Game
                     {
                         locList.Add(new Snippet(string.Format("{0}, geoID {1}", cluster.Name, cluster.GeoID), RLColor.Yellow, RLColor.Black));
                         locList.Add(new Snippet(cluster.Description));
-                        locList.Add(new Snippet(string.Format("Size {0}, Type {1}", cluster.Size, cluster.ClusterType)));
+                        locList.Add(new Snippet(string.Format("Size {0}, Terrain {1}, Type {2}", cluster.Size, cluster.Terrain, cluster.Type)));
                     }
                     else
                     { locList.Add(new Snippet(string.Format("ERROR: GeoCluster couldn't be found for geoID {0}", geoID), RLColor.Red, RLColor.Black)); }

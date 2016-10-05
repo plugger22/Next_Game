@@ -29,6 +29,10 @@ namespace Next_Game
         MAP_DIVISOR,
         CONNECTOR_MIN,
         CONNECTOR_MAX,
+        TERRAIN_SMALL,
+        SEA_LARGE,
+        MOUNTAIN_LARGE,
+        FOREST_LARGE,
         Count //keep as last
     }
 
@@ -65,6 +69,10 @@ namespace Next_Game
             arrayOfGlobals[21] = Global.MAP_DIVISOR;
             arrayOfGlobals[22] = Global.CONNECTOR_MIN;
             arrayOfGlobals[23] = Global.CONNECTOR_MAX;
+            arrayOfGlobals[24] = Global.TERRAIN_SMALL;
+            arrayOfGlobals[25] = Global.SEA_LARGE;
+            arrayOfGlobals[26] = Global.MOUNTAIN_LARGE;
+            arrayOfGlobals[27] = Global.FOREST_LARGE;
             }
 
         /// <summary>
