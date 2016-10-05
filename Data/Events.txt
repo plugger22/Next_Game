@@ -2,8 +2,49 @@
 # assign each a TempID (should be unique but not critical)
 # subType: (GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Royal/Connector
 
+Name: descriptive
+TempID:
+Type: GeoCluster/Location/Road
+subType:
+Frequency: Rare/Low/Normal/High/Common
+EventText:
+SucceedText: [follower's name] ....text
+FailText: [follower's name] ....text
+Trait: (test against) Combat / Wits / Charm / Treachery / Leadership  (touched acts as a DM bonus)
+Delay: number of turns
+
+Name:
+TempID:
+Type:
+subType:
+EventText:
+SucceedText:
+FailText:
+Trait:
+Delay:
 
 # GeoClusters -> subType is Sea/Mountain/Forest ---
+
+Name: Spiders
+TempID: 1
+Type: GeoCluster
+subType: Forest
+Frequency: Low
+Text: A dense, almost invisible, web has been woven across the trail. Nobody is sure but there are rumours of Giant Spiders in the woods.
+SucceedText: hacks their way clear and hastily departs before anything comes to investigate.
+FailText:
+Trait: Wits
+Delay: 2
+
+Name: Wolves
+TempID: 2
+Type: GeoCluster
+subType: Forest
+Text: A pack of wolves close in at dusk. They flit from tree to tree in the fading light. Large, powerful beasts. The howling is all around.
+SucceedText:
+FailText:
+Trait: Combat
+Delay:
 
 # Roads -> subType is Normal/Royal/Connector ---  
 
