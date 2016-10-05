@@ -10,6 +10,7 @@ namespace Next_Game
 
     /// <summary>
     /// Base Event class
+    /// NOTE: 'event' is a C# keyword -> use 'eventObject' instead. 'Event' is O.K
     /// </summary>
     public class Event
     {
@@ -52,7 +53,7 @@ namespace Next_Game
     public class EventGeneric : Event
     {
         public string EventText { get; set; }
-        public string SuccessText { get; set; } //text to display if follower succeeds test
+        public string SucceedText { get; set; } //text to display if follower succeeds test
         public string FailText { get; set; } //text to display if follower fails test
         public TraitType Trait { get; set; } //trait type to test against
         public int Delay { get; set; } //# of days delayed if fail test

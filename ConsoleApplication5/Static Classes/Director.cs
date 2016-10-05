@@ -15,15 +15,18 @@ namespace Next_Game
     {
         Story story;
         List<int> listOfActiveGeoClusters; //clusters that have a road through them
+        Dictionary<int, Event> dictEvents;
 
         public Director()
         {
             listOfActiveGeoClusters = new List<int>();
+            dictEvents = new Dictionary<int, Event>();
         }
 
         public void InitialiseDirector()
         {
             listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters());
+            dictEvents = Game.file.GetEvents("Events.txt");
         }
     }
 }

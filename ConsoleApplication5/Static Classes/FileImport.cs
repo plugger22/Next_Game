@@ -28,6 +28,24 @@ namespace Next_Game
         public int Chance { get; set; }
     }
 
+    //holds data for Events
+    struct EventStruct
+    {
+        public string Name { get; set; }
+        public string EventText { get; set; }
+        public string SucceedText { get; set; }
+        public string FailText { get; set; }
+        public int TempID { get; set; }
+        public ArcType Type { get; set; }
+        public ArcGeo Geo { get; set; }
+        public ArcRoad Road { get; set; }
+        public ArcLoc Loc { get; set; }
+        public ArcCat Cat { get; set; }
+        public EventFrequency Frequency { get; set; }
+        public TraitType Trait { get; set; }
+        public int Delay { get; set; }
+    }
+
     /// <summary>
     /// Handles all file Import duties
     /// </summary>
@@ -334,6 +352,258 @@ namespace Next_Game
             }
             return listOfTraits;
         }
+
+
+        /// <summary>
+        /// Import Events
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        internal Dictionary<int, Event> GetEvents(string fileName)
+        {
+            int dataCounter = 0;
+            string cleanTag;
+            string cleanToken;
+            bool newEvent = false;
+            bool validData = true;
+            int dataInt;
+            Dictionary<int, Event> dictOfEvents = new Dictionary<int, Event>();
+            string[] arrayOfEvents = ImportDataFile(fileName);
+            EventStruct structEvent = new EventStruct();
+            //loop imported array of strings
+            for (int i = 0; i < arrayOfEvents.Length; i++)
+            {
+                if (arrayOfEvents[i] != "" && !arrayOfEvents[i].StartsWith("#"))
+                {
+                    //set up for a new house
+                    if (newEvent == false)
+                    {
+                        newEvent = true;
+                        validData = true;
+                        //Console.WriteLine();
+                        dataCounter++;
+                        //new Trait object
+                        structEvent = new EventStruct();
+                    }
+                    string[] tokens = arrayOfEvents[i].Split(':');
+                    //strip out leading spaces
+                    cleanTag = tokens[0].Trim();
+                    cleanToken = tokens[1].Trim();
+                    if (cleanToken.Length == 0)
+                    { Game.SetError(new Error(20, string.Format("Empty data field, record {0}, {1}", i, fileName))); validData = false; }
+                    else
+                    {
+                        switch (cleanTag)
+                        {
+                            case "Name":
+                                structEvent.Name = cleanToken;
+                                break;
+                            case "TempID":
+                                structEvent.TempID = Convert.ToInt32(cleanToken);
+                                break;
+                            case "Type":
+                                switch (cleanToken)
+                                {
+                                    case "GeoCluster":
+                                        structEvent.Type = ArcType.GeoCluster;
+                                        break;
+                                    case "Location":
+                                        structEvent.Type = ArcType.Location;
+                                        break;
+                                    case "Road":
+                                        structEvent.Type = ArcType.Road;
+                                        break;
+                                }
+                                break;
+                            case "subType":
+                                //NOTE: subType needs to be AFTER Type in text file
+                                switch (structEvent.Type)
+                                {
+                                    case ArcType.GeoCluster:
+                                        switch (cleanToken)
+                                        {
+                                            case "Sea":
+                                                structEvent.Geo = ArcGeo.Sea;
+                                                break;
+                                            case "Mountain":
+                                                structEvent.Geo = ArcGeo.Mountain;
+                                                break;
+                                            case "Forest":
+                                                structEvent.Geo = ArcGeo.Forest;
+                                                break;
+                                            default:
+                                                structEvent.Geo = ArcGeo.None;
+                                                Game.SetError(new Error(49, "Invalid Input, GeoCluster Type"));
+                                                validData = false;
+                                                break;
+                                        }
+                                        break;
+                                    case ArcType.Location:
+                                        switch (cleanToken)
+                                        {
+                                            case "Capital":
+                                                structEvent.Loc = ArcLoc.Capital;
+                                                break;
+                                            case "Major":
+                                                structEvent.Loc = ArcLoc.Major;
+                                                break;
+                                            case "Minor":
+                                                structEvent.Loc = ArcLoc.Minor;
+                                                break;
+                                            case "Inn":
+                                                structEvent.Loc = ArcLoc.Inn;
+                                                break;
+                                            default:
+                                                Game.SetError(new Error(49, "Invalid Input, Location Type"));
+                                                validData = false;
+                                                break;
+                                        }
+                                        break;
+                                    case ArcType.Road:
+                                        switch (cleanToken)
+                                        {
+                                            case "Normal":
+                                                structEvent.Road = ArcRoad.Normal;
+                                                break;
+                                            case "Royal":
+                                                structEvent.Road = ArcRoad.Royal;
+                                                break;
+                                            case "Connector":
+                                                structEvent.Road = ArcRoad.Connector;
+                                                break;
+                                            default:
+                                                Game.SetError(new Error(49, "Invalid Input, Road Type"));
+                                                validData = false;
+                                                break;
+                                        }
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, "Invalid Input, Type"));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "Category":
+                                switch (cleanToken)
+                                {
+                                    case "Generic":
+                                        structEvent.Cat = ArcCat.Generic;
+                                        break;
+                                    case "Special":
+                                        structEvent.Cat = ArcCat.Special;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, "Invalid Input, Category"));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "Frequency":
+                                switch (cleanToken)
+                                {
+                                    case "Rare":
+                                        structEvent.Frequency = EventFrequency.Rare;
+                                        break;
+                                    case "Low":
+                                        structEvent.Frequency = EventFrequency.Low;
+                                        break;
+                                    case "Normal":
+                                        structEvent.Frequency = EventFrequency.Normal;
+                                        break;
+                                    case "High":
+                                        structEvent.Frequency = EventFrequency.High;
+                                        break;
+                                    case "Common":
+                                        structEvent.Frequency = EventFrequency.Common;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, "Invalid Input, Frequency"));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "EventText":
+                                structEvent.EventText = cleanToken;
+                                break;
+                            case "SucceedText":
+                                structEvent.EventText = cleanToken;
+                                break;
+                            case "FailText":
+                                structEvent.EventText = cleanToken;
+                                break;
+                            case "Trait":
+                                switch (cleanToken)
+                                {
+                                    case "Combat":
+                                        structEvent.Trait = TraitType.Combat;
+                                        break;
+                                    case "Wits":
+                                        structEvent.Trait = TraitType.Wits;
+                                        break;
+                                    case "Charm":
+                                        structEvent.Trait = TraitType.Charm;
+                                        break;
+                                    case "Treachery":
+                                        structEvent.Trait = TraitType.Treachery;
+                                        break;
+                                    case "Leadership":
+                                        structEvent.Trait = TraitType.Leadership;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, "Invalid Input, Trait"));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "Delay":
+                                dataInt = Convert.ToInt32(cleanToken);
+                                if (dataInt > 0)
+                                { structEvent.Delay = dataInt; }
+                                else
+                                { Game.SetError(new Error(49, "Invalid Input, Delay")); validData = false; }
+                                //write record
+                                if (validData == true)
+                                {
+                                    //pass info over to a class instance
+                                    Event eventObject = null;
+                                    switch (structEvent.Type)
+                                    {
+                                        case ArcType.GeoCluster:
+                                            eventObject = new EventGeo(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Geo);
+                                            break;
+                                        case ArcType.Location:
+                                            eventObject = new EventLoc(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Loc);
+                                            break;
+                                        case ArcType.Road:
+                                            eventObject = new EventRoad(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Road);
+                                            break;
+                                    }
+                                    if (eventObject != null)
+                                    {
+                                        EventGeneric eventTemp = eventObject as EventGeneric;
+                                        eventTemp.EventText = structEvent.EventText;
+                                        eventTemp.SucceedText = structEvent.SucceedText;
+                                        eventTemp.FailText = structEvent.FailText;
+                                        eventTemp.Trait = structEvent.Trait;
+                                        eventTemp.Delay = structEvent.Delay;
+                                        eventTemp.Category = structEvent.Cat;
+                                        //last datapoint - save object to list
+                                        if (dataCounter > 0)
+                                        { dictOfEvents.Add(eventTemp.EventID, eventTemp); }
+                                    }
+                                    else { Game.SetError(new Error(49, "Invalid Input, eventObject")); }
+                                }
+                                break;
+                            default:
+                                Game.SetError(new Error(49, "Invalid Input, CleanTag"));
+                                break;
+                        }
+                    }
+                }
+            }
+            return dictOfEvents;
+        }
+
 
         /// <summary>
         /// Import GeoNames
