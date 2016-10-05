@@ -61,7 +61,7 @@ namespace Next_Game
         public static History history;
         public static World world;
         public static Lore lore;
-        public static Story story;
+        public static Director director;
         public static InfoChannel infoChannel;
         public static Constant constant;
         public static FileImport file;
@@ -125,8 +125,8 @@ namespace Next_Game
             Message message = new Message($"Game world created with seed {seed}", MessageType.System);
             world.SetMessage(message);
             world.ProcessStartGame();
-            story = new Story();
-            story.InitialiseStory();
+            director = new Director();
+            director.InitialiseDirector();
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);

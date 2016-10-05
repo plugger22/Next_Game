@@ -1,9 +1,8 @@
 # Archetypes
 
-# Geoclusters (terrain) -> Type is either Mountain or Forest ---
+# Name: descriptive title for archetype
+# Events: eventID's comma separated, eg. 2, 33, 47, 48
+# Type: (enum ArcType) GeoCluster, Location, Road
 
-ArchID: 1
-Name:
-Type:
 
-# Roads -> Type is either Main, Royal or Special ---
+

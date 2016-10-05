@@ -6,23 +6,22 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-
-    public enum StoryGeneral {Good, Neutral, Bad}
-    public enum StorySpecific {Tricky}
-
+    public enum StoryAI {None, Benevolent, Balanced, Evil, Tricky}
+    
     /// <summary>
-    /// Story AI class that manages the game world
+    /// Director that manages the game world according to a Story AI personality
     /// </summary>
-    public class Story
+    public class Director
     {
+        Story story;
         List<int> listOfActiveGeoClusters; //clusters that have a road through them
 
-        public Story()
+        public Director()
         {
             listOfActiveGeoClusters = new List<int>();
         }
 
-        public void InitialiseStory()
+        public void InitialiseDirector()
         {
             listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters());
         }

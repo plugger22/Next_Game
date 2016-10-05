@@ -1,8 +1,10 @@
-# Events -> contains all events. 
+# Events -> contains all Generic events. 
 # assign each a TempID (should be unique but not critical)
+# subType: (GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Royal/Connector
 
-# Follower Events --- (type 'Follower')
 
-TempID:
-Name:
-Type: Follower
+# GeoClusters -> subType is Sea/Mountain/Forest ---
+
+# Roads -> subType is Normal/Royal/Connector ---  
+
+# Locations -> subType is Capital/Major/Minor/Inn ---
