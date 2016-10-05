@@ -23,6 +23,7 @@ namespace Next_Game
         public ArcGeo GeoType { get; set; } = ArcGeo.None;
         public ArcLoc LocType { get; set; } = ArcLoc.None;
         public ArcRoad RoadType { get; set; } = ArcRoad.None;
+        public ArcCat Category { get; set; } = ArcCat.None;
 
         public Event()
         { }
