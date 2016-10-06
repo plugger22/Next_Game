@@ -1,10 +1,10 @@
 # Archetypes
 
-# TempID: unique number (not critical)
+# TempID: unique number 
 # Name: descriptive title for archetype
-# Events: eventID's comma separated, eg. 2, 33, 47, 48
 # Type: (enum ArcType) GeoCluster / Location / Road
-# Category: Generic / Special (Automatically -> Special)
+# subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Royal/Connector) 
+# Events: tempID's comma separated, eg. 2, 33, 47, 48
 
 # GeoClusters ---
 
@@ -12,7 +12,8 @@ TempID:
 Name: Dire Wolf Forest
 Type: GeoCluster
 subType: Forest
-Frequency: Low
+Events: 5, 6
+
 
 
 

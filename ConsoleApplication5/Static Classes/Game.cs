@@ -121,7 +121,7 @@ namespace Next_Game
             world = new World(seed);
             world.InitialiseWorld();
             infoChannel = new InfoChannel();
-            director = new Director();
+            director = new Director(seed);
             director.InitialiseDirector();
             world.ShowGeneratorStatsRL();
             Message message = new Message($"Game world created with seed {seed}", MessageType.System);

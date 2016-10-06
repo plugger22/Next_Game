@@ -3,7 +3,7 @@
 # NOTE: Keep order for individual events as shown. Sequence is important for file import routine.
 
 # Name: descriptive
-# TempID:
+# TempID: unique number
 # Type: GeoCluster/Location/Road
 # subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Royal/Connector
 # Category: Generic/Special
@@ -75,7 +75,7 @@ FailText: is knocked off the side of the mountain by the Shadow Cat landing heav
 Trait: Combat
 Delay: 2
 
-Name: Dire Wolves
+Name: Dire Wolf Tracks
 TempID: 5
 Type: GeoCluster
 subType: Forest
@@ -86,6 +86,18 @@ SucceedText: checks the tracks and notices that they are moving away from the tr
 FailText: lights a fire to fend off any nearby Dire Wolves and only succeeds in attracting them. While the wolves are reluctant to attack a full day is lost waiting for them to leave.
 Trait: Wits
 Delay: 1
+
+Name: Dire Wolves Attack
+TempID: 6
+Type: GeoCluster
+subType: Forest
+Category: Special
+Frequency: Low
+EventText: A Dire Wolf lunges out of the dense undergrowth without warning.
+SucceedText: manages to duck under the Dire Wolf, draw their sword and fend off the beast.
+FailText: is wounded by the beast and is forced to spend several days recovering before they can continue onwards.
+Trait: Combat
+Delay: 2
 
 # Roads -> subType is Normal/Royal/Connector ---  
 

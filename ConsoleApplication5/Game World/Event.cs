@@ -22,7 +22,7 @@ namespace Next_Game
         public bool Active { get; set; } = true; //can only be used if active
         public EventFrequency Frequency { get; set; }
         public EventCategory Category { get; set; } = EventCategory.None;
-        public ArcType AppliesTo { get; set; } = ArcType.None;
+        public ArcType Type { get; set; } = ArcType.None;
         public ArcGeo GeoType { get; set; } = ArcGeo.None;
         public ArcLoc LocType { get; set; } = ArcLoc.None;
         public ArcRoad RoadType { get; set; } = ArcRoad.None;
@@ -81,7 +81,7 @@ namespace Next_Game
 
         public EventGeo (int tempID, string name, EventFrequency frequency, ArcGeo subtype) : base (tempID, name, frequency)
         {
-            AppliesTo = ArcType.GeoCluster;
+            Type = ArcType.GeoCluster;
             GeoType = subtype;
         }
     }
@@ -94,7 +94,7 @@ namespace Next_Game
 
         public EventLoc(int tempID, string name, EventFrequency frequency, ArcLoc subtype) : base(tempID, name, frequency)
         {
-            AppliesTo = ArcType.Location;
+            Type = ArcType.Location;
             LocType = subtype;
         }
     }
@@ -107,7 +107,7 @@ namespace Next_Game
 
         public EventRoad(int tempID, string name, EventFrequency frequency, ArcRoad subtype) : base(tempID, name, frequency)
         {
-            AppliesTo = ArcType.Road;
+            Type = ArcType.Road;
             RoadType = subtype;
         }
     }

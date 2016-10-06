@@ -17,7 +17,7 @@ namespace Next_Game
         private static int arcIndex = 1;
         public string Name { get; set; }
         public int arcID { get; }
-        public ArcType AppliesTo { get; set; } //which class of object it applies to
+        public ArcType Type { get; set; } //which class of object it applies to
         private List<int> listOfEvents; //Event ID list
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Next_Game
         {
             arcID = arcIndex++;
             this.Name = name;
-            AppliesTo = type;
+            Type = type;
             if (events != null) { listOfEvents = new List<int>(events); }
             else { Game.SetError(new Error(48, "Invalid list of Events")); }
         }

@@ -12,6 +12,8 @@ namespace Next_Game
     class Story
     {
         public string Name { get; set; }
+        public int EventLocation { get; set; } // chance of an active character experiencing a random event when at a Location
+        public int EventTravelling { get; set; } // chance of an active character experiencing a random event when travelling
         public StoryAI AI { get; set; }
 
         public Story(string name)

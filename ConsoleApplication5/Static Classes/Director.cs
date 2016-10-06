@@ -13,6 +13,7 @@ namespace Next_Game
     /// </summary>
     public class Director
     {
+        static Random rnd;
         Story story;
         List<int> listOfActiveGeoClusters; //clusters that have a road through them
         List<int> listGenEventsForest; //generic events for forests
@@ -27,8 +28,16 @@ namespace Next_Game
         List<int> listGenEventsInn;
         Dictionary<int, Event> dictEvents;
 
-        public Director()
+        public Director(int seed)
         {
+            rnd = new Random(seed);
+
+            //debug
+            story.Name = "Steady Eddy";
+            story.AI = StoryAI.Balanced;
+            story.EventLocation = 10;
+            story.EventTravelling = 20;
+
             listOfActiveGeoClusters = new List<int>();
             listGenEventsForest = new List<int>();
             listGenEventsMountain = new List<int>();
@@ -66,7 +75,7 @@ namespace Next_Game
                 if (eventObject.Value.Category == EventCategory.Generic)
                 {
                     eventID = eventObject.Value.EventID;
-                    switch(eventObject.Value.AppliesTo)
+                    switch(eventObject.Value.Type)
                     {
                         case ArcType.GeoCluster:
                             switch(eventObject.Value.GeoType)
@@ -126,5 +135,42 @@ namespace Next_Game
                 }
             }
         }
+
+        
+        /// <summary>
+        /// check active characters for random events
+        /// </summary>
+        public void CheckActivePlayerEvents(Dictionary<int, Active> dictActiveActors)
+        {
+            //loop all active players
+            foreach (var actor in dictActiveActors)
+            {
+                //not delayed or gone?
+                if (actor.Value.Status != ActorStatus.Gone && actor.Value.Delay == 0)
+                {
+                    if (actor.Value.Status == ActorStatus.AtLocation)
+                    {
+                        //Location event
+                        if (rnd.Next(100) <= story.EventLocation)
+                        {
+                            Console.WriteLine("{0}, Aid {1} at {2}, has experienced a Location event", actor.Value.Name, actor.Value.ActID, Game.world.GetLocationName(actor.Value.LocID));
+                        }
+                    }
+                    else if (actor.Value.Status == ActorStatus.Travelling)
+                    {
+                        //travelling event
+                        if (rnd.Next(100) <= story.EventTravelling)
+                        {
+                            Console.WriteLine("{0}, Aid {1} {2} has experienced a travel event", actor.Value.Name, actor.Value.ActID, Game.world.ShowLocationCoords(actor.Value.LocID));
+                        }
+
+                    }
+                }
+            }
+        }
+
+       
+
+        //place Director methods above here
     }
 }

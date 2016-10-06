@@ -1829,7 +1829,8 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartTurn()
         {
-            CalculateCrows(); 
+            CalculateCrows();
+            Game.director.CheckActivePlayerEvents(dictActiveActors);
         }
 
         /// <summary>
