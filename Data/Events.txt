@@ -5,7 +5,7 @@
 # Name: descriptive
 # TempID: unique number
 # Type: GeoCluster/Location/Road
-# subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Royal/Connector
+# subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Royal/Connector)
 # Category: Generic/Special
 # Frequency: Rare/Low/Normal/High/Common
 # EventText:

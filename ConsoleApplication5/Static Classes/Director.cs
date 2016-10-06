@@ -33,7 +33,7 @@ namespace Next_Game
             rnd = new Random(seed);
 
             //debug
-            story.Name = "Steady Eddy";
+            story = new Story("Steady Eddy");
             story.AI = StoryAI.Balanced;
             story.EventLocation = 10;
             story.EventTravelling = 20;
@@ -154,6 +154,9 @@ namespace Next_Game
                         if (rnd.Next(100) <= story.EventLocation)
                         {
                             Console.WriteLine("{0}, Aid {1} at {2}, has experienced a Location event", actor.Value.Name, actor.Value.ActID, Game.world.GetLocationName(actor.Value.LocID));
+                            Message message = new Message(string.Format("{0}, Aid {1} at {2}, has experienced a Location event", actor.Value.Name, actor.Value.ActID, 
+                                Game.world.GetLocationName(actor.Value.LocID)), MessageType.Event);
+                            Game.world.SetMessage(message);
                         }
                     }
                     else if (actor.Value.Status == ActorStatus.Travelling)
@@ -162,6 +165,8 @@ namespace Next_Game
                         if (rnd.Next(100) <= story.EventTravelling)
                         {
                             Console.WriteLine("{0}, Aid {1} {2} has experienced a travel event", actor.Value.Name, actor.Value.ActID, Game.world.ShowLocationCoords(actor.Value.LocID));
+                            Message message = new Message(string.Format("{0}, Aid {1} {2} has experienced a travel event", actor.Value.Name, actor.Value.ActID, Game.world.ShowLocationCoords(actor.Value.LocID)), MessageType.Event);
+                            Game.world.SetMessage(message);
                         }
 
                     }

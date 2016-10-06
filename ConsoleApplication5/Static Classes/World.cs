@@ -1397,7 +1397,7 @@ namespace Next_Game
         public void ShowGeneratorStatsRL()
         {
             List<Snippet> listStats = new List<Snippet>();
-            
+
             //calcs
             int numLocs = Game.network.GetNumLocations();
             int numGreatHouses = dictMajorHouses.Count;
@@ -1412,8 +1412,8 @@ namespace Next_Game
             int numErrors = Game.GetErrorCount();
             //data
             listStats.Add(new Snippet("--- Generation Statistics", RLColor.Yellow, RLColor.Black));
-            listStats.Add(new Snippet(string.Format("{0} Locations", numLocs )));
-            listStats.Add(new Snippet(string.Format("{0} Great Houses", numGreatHouses )));
+            listStats.Add(new Snippet(string.Format("{0} Locations", numLocs)));
+            listStats.Add(new Snippet(string.Format("{0} Great Houses", numGreatHouses)));
             listStats.Add(new Snippet(string.Format("{0} BannerLords", numBannerLords)));
             listStats.Add(new Snippet(string.Format("{0} Special Locations", numSpecialLocs)));
             listStats.Add(new Snippet("1 Capital"));
@@ -1429,6 +1429,21 @@ namespace Next_Game
                 housePower = string.Format("Hid {0} House {1} has {2} BannerLords  {3}", house.HouseID, house.Name, house.GetNumBannerLords(), ShowLocationCoords(house.LocID));
                 listStats.Add(new Snippet(housePower));
             }
+
+            //if start of game also show Errors
+            if (Game.gameTurn == 0)
+            {
+                List<Snippet> tempList = Game.ShowErrorsRL();
+                if (tempList.Count > 0)
+                {
+                    listStats.Add(new Snippet(""));
+                    listStats.Add(new Snippet(""));
+                    listStats.Add(new Snippet(""));
+                    listStats.Add(new Snippet("--- Errors ALL", RLColor.LightRed, RLColor.Black));
+                    listStats.AddRange(tempList);
+                }
+            }
+
             //display data
             Game.infoChannel.SetInfoList(listStats, ConsoleDisplay.Multi);
         }
