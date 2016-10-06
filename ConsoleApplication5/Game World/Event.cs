@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    public enum EventFrequency { Rare, Low, Normal, High, Common }
+    public enum EventFrequency { Rare, Low, Normal, High, Common } //determines how many entries are placed in the event pool
+    public enum EventCategory { None, Generic, Special } //specials are used by archetypes, generics apply to all
 
     /// <summary>
     /// Base Event class
@@ -20,11 +21,12 @@ namespace Next_Game
         public int TempID { get; set; }
         public bool Active { get; set; } = true; //can only be used if active
         public EventFrequency Frequency { get; set; }
+        public EventCategory Category { get; set; } = EventCategory.None;
         public ArcType AppliesTo { get; set; } = ArcType.None;
         public ArcGeo GeoType { get; set; } = ArcGeo.None;
         public ArcLoc LocType { get; set; } = ArcLoc.None;
         public ArcRoad RoadType { get; set; } = ArcRoad.None;
-        public ArcCat Category { get; set; } = ArcCat.None;
+        
 
         public Event()
         { }

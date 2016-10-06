@@ -63,17 +63,29 @@ FailText: is unable to find a way past and must laboriously clear the rockfall b
 Trait: Wits
 Delay: 2
 
-Name: Rock Tiger
+Name: Shadow Cat
 TempID: 4
 Type: GeoCluster
 subType: Mountain
 Category: Generic
 Frequency: Normal
-EventText: A low growl indicates the presence of a stalking rock tiger. Blending in with the mountain they are a deadly predator
-SucceedText: manages to wound the Tiger as it launches itself at them. No more is seen of the bleeding Tiger.
-FailText: is knocked off the side of the mountain by the Tiger landing on their back. Luckily they land on a nearby ledge.
+EventText: A low growl indicates the presence of a stalking Shadow Cat. Blending in with the mountain they are a deadly predator
+SucceedText: manages to wound the Shadow Cat as it launches itself at them. No more is seen of the bleeding predator.
+FailText: is knocked off the side of the mountain by the Shadow Cat landing heavily on their back. Luckily they land on a nearby ledge but are in sore need of rest and recovery.
 Trait: Combat
 Delay: 2
+
+Name: Dire Wolves
+TempID: 5
+Type: GeoCluster
+subType: Forest
+Category: Special
+Frequency: Low
+EventText: Fresh Dire Wolf tracks are seen nearby. These big, powerful animals are dangerous and best avoided.
+SucceedText: checks the tracks and notices that they are moving away from the trail. The danger is in the past.
+FailText: lights a fire to fend off any nearby Dire Wolves and only succeeds in attracting them. While the wolves are reluctant to attack a full day is lost waiting for them to leave.
+Trait: Wits
+Delay: 1
 
 # Roads -> subType is Normal/Royal/Connector ---  
 

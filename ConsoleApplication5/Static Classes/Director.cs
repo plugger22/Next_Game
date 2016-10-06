@@ -63,7 +63,7 @@ namespace Next_Game
             int eventID;
             foreach(var eventObject in dictEvents)
             {
-                if (eventObject.Value.Category == ArcCat.Generic)
+                if (eventObject.Value.Category == EventCategory.Generic)
                 {
                     eventID = eventObject.Value.EventID;
                     switch(eventObject.Value.AppliesTo)

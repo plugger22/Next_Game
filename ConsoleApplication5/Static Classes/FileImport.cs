@@ -40,7 +40,7 @@ namespace Next_Game
         public ArcGeo Geo { get; set; }
         public ArcRoad Road { get; set; }
         public ArcLoc Loc { get; set; }
-        public ArcCat Cat { get; set; }
+        public EventCategory Cat { get; set; }
         public EventFrequency Frequency { get; set; }
         public TraitType Trait { get; set; }
         public int Delay { get; set; }
@@ -433,7 +433,7 @@ namespace Next_Game
                                                 break;
                                             default:
                                                 structEvent.Geo = ArcGeo.None;
-                                                Game.SetError(new Error(49, "Invalid Input, GeoCluster Type"));
+                                                Game.SetError(new Error(49, string.Format("Invalid Input, GeoCluster Type, (\"{0}\")", arrayOfEvents[i])));
                                                 validData = false;
                                                 break;
                                         }
@@ -454,7 +454,7 @@ namespace Next_Game
                                                 structEvent.Loc = ArcLoc.Inn;
                                                 break;
                                             default:
-                                                Game.SetError(new Error(49, "Invalid Input, Location Type"));
+                                                Game.SetError(new Error(49, string.Format("Invalid Input, Location Type, (\"{0}\")", arrayOfEvents[i])));
                                                 validData = false;
                                                 break;
                                         }
@@ -472,13 +472,13 @@ namespace Next_Game
                                                 structEvent.Road = ArcRoad.Connector;
                                                 break;
                                             default:
-                                                Game.SetError(new Error(49, "Invalid Input, Road Type"));
+                                                Game.SetError(new Error(49, string.Format("Invalid Input, Road Type, (\"{0}\")", arrayOfEvents[i])));
                                                 validData = false;
                                                 break;
                                         }
                                         break;
                                     default:
-                                        Game.SetError(new Error(49, "Invalid Input, Type"));
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfEvents[i])));
                                         validData = false;
                                         break;
                                 }
@@ -487,13 +487,13 @@ namespace Next_Game
                                 switch (cleanToken)
                                 {
                                     case "Generic":
-                                        structEvent.Cat = ArcCat.Generic;
+                                        structEvent.Cat = EventCategory.Generic;
                                         break;
                                     case "Special":
-                                        structEvent.Cat = ArcCat.Special;
+                                        structEvent.Cat = EventCategory.Special;
                                         break;
                                     default:
-                                        Game.SetError(new Error(49, "Invalid Input, Category"));
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Category, (\"{0}\")", arrayOfEvents[i])));
                                         validData = false;
                                         break;
                                 }
@@ -517,7 +517,7 @@ namespace Next_Game
                                         structEvent.Frequency = EventFrequency.Common;
                                         break;
                                     default:
-                                        Game.SetError(new Error(49, "Invalid Input, Frequency"));
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Frequency, (\"{0}\")", arrayOfEvents[i])));
                                         validData = false;
                                         break;
                                 }
@@ -550,7 +550,7 @@ namespace Next_Game
                                         structEvent.Trait = TraitType.Leadership;
                                         break;
                                     default:
-                                        Game.SetError(new Error(49, "Invalid Input, Trait"));
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Trait, (\"{0}\")", arrayOfEvents[i])));
                                         validData = false;
                                         break;
                                 }
@@ -560,7 +560,7 @@ namespace Next_Game
                                 if (dataInt > 0)
                                 { structEvent.Delay = dataInt; }
                                 else
-                                { Game.SetError(new Error(49, "Invalid Input, Delay")); validData = false; }
+                                { Game.SetError(new Error(49, string.Format("Invalid Input, Delay, (\"{0}\")", arrayOfEvents[i]))); validData = false; }
                                 //write record
                                 if (validData == true)
                                 {
