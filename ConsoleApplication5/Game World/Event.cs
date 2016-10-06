@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    public enum EventFrequency { Rare, Low, Normal, High, Common } //determines how many entries are placed in the event pool
+    public enum EventFrequency { None, Very_Rare, Rare, Low, Normal, High, Common, Very_Common } //determines how many entries are placed in the event pool -> (int)EventFrequency (1 to 7)
     public enum EventCategory { None, Generic, Special } //specials are used by archetypes, generics apply to all
 
     /// <summary>

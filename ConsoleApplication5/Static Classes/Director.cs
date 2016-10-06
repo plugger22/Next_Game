@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum StoryAI {None, Benevolent, Balanced, Evil, Tricky}
+    public enum EventType { None, Location, Travelling}
     
     /// <summary>
     /// Director that manages the game world according to a Story AI personality
@@ -157,6 +158,7 @@ namespace Next_Game
                             Message message = new Message(string.Format("{0}, Aid {1} at {2}, has experienced a Location event", actor.Value.Name, actor.Value.ActID, 
                                 Game.world.GetLocationName(actor.Value.LocID)), MessageType.Event);
                             Game.world.SetMessage(message);
+                            ResolveEvent(actor.Value, EventType.Location);
                         }
                     }
                     else if (actor.Value.Status == ActorStatus.Travelling)
@@ -167,13 +169,75 @@ namespace Next_Game
                             Console.WriteLine("{0}, Aid {1} {2} has experienced a travel event", actor.Value.Name, actor.Value.ActID, Game.world.ShowLocationCoords(actor.Value.LocID));
                             Message message = new Message(string.Format("{0}, Aid {1} {2} has experienced a travel event", actor.Value.Name, actor.Value.ActID, Game.world.ShowLocationCoords(actor.Value.LocID)), MessageType.Event);
                             Game.world.SetMessage(message);
+                            ResolveEvent(actor.Value, EventType.Travelling);
                         }
-
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Resolve an event for an active actor
+        /// </summary>
+        /// <param name="actor"></param>
+        private void ResolveEvent(Active actor, EventType type)
+        {
+            int geoID, terrain, road, frequency;
+            Cartographic.Position pos = actor.GetActorPosition();
+            List<Event> listEventPool = new List<Event>();
+            //Location event
+            if (type == EventType.Location)
+            { }
+            //Travelling event
+            else if (type == EventType.Travelling)
+            {
+                //Get map data for actor's current location
+                geoID = Game.map.GetMapInfo(Cartographic.MapLayer.GeoID, pos.PosX, pos.PosY);
+                terrain = Game.map.GetMapInfo(Cartographic.MapLayer.Terrain, pos.PosX, pos.PosY);
+                road = Game.map.GetMapInfo(Cartographic.MapLayer.Road, pos.PosX, pos.PosY);
+                //get generic terrain & road events
+                if (terrain == 1)
+                {
+                    //mountains
+                    foreach (int eventID in listGenEventsMountain)
+                    {
+                        Event eventObject = dictEvents[eventID];
+                        if (eventObject != null && eventObject.Active == true)
+                        {
+                            frequency = (int)eventObject.Frequency;
+                            //add # of events to pool equal to (int)EventFrequency
+                            for (int i = 0; i < frequency; i++)
+                            { listEventPool.Add(eventObject); }
+                        }
+                    }
+                }
+                else if (terrain == 2)
+                {
+                    //forests
+                    foreach(int eventID in listGenEventsForest)
+                    {
+                        Event eventObject = dictEvents[eventID];
+                        if (eventObject != null && eventObject.Active == true)
+                        {
+                            frequency = (int)eventObject.Frequency;
+                            //add # of events to pool equal to (int)EventFrequency
+                            for(int i = 0; i < frequency; i++)
+                            { listEventPool.Add(eventObject); }
+                        }
+                    }
+                }
+            }
+            //choose an event
+            if (listEventPool.Count > 0)
+            {
+                int rndNum = rnd.Next(0, listEventPool.Count);
+                Event eventTemp = listEventPool[rndNum];
+                EventGeneric eventChosen = eventTemp as EventGeneric;
+                Message message = new Message(string.Format("{0}, Aid {1}, [Event] {2}", actor.Name, actor.ActID, eventChosen.EventText), MessageType.Event);
+                Game.world.SetMessage(message);
+            }
+            
+        }
        
 
         //place Director methods above here
