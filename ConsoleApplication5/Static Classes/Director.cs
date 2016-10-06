@@ -26,6 +26,7 @@ namespace Next_Game
         public void InitialiseDirector()
         {
             listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters());
+            Console.WriteLine(Environment.NewLine + "--- Import Events");
             dictEvents = Game.file.GetEvents("Events.txt");
         }
     }

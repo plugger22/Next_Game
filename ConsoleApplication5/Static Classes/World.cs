@@ -97,7 +97,7 @@ namespace Next_Game
             timer_2.Start();
             InitialiseSecrets();
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
-            Console.WriteLine(Environment.NewLine + "--- Game Input");
+            
         }
 
         /// <summary>
@@ -1821,6 +1821,7 @@ namespace Next_Game
         public void ProcessStartGame()
         {
             CalculateCrows();
+            Console.WriteLine(Environment.NewLine + "--- Game Input");
         }
 
         /// <summary>

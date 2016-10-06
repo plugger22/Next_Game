@@ -14,16 +14,16 @@
 # Trait: (test against) Combat / Wits / Charm / Treachery / Leadership  (touched acts as a DM bonus)
 # Delay: number of turns
 
-Name:
-TempID:
-Type:
-subType:
-Category:
-EventText:
-SucceedText:
-FailText:
-Trait:
-Delay:
+# Name:
+# TempID:
+# Type:
+# subType:
+# Category:
+# EventText:
+# SucceedText:
+# FailText:
+# Trait:
+# Delay:
 
 # GeoClusters -> subType is Sea/Mountain/Forest ---
 
@@ -35,7 +35,7 @@ Category: Generic
 Frequency: Low
 EventText: A dense, almost invisible, web has been woven across the trail. Nobody is sure but there are rumours of Giant Spiders in the woods.
 SucceedText: hacks their way clear and hastily departs before anything comes to investigate.
-FailText:
+FailText: becomes entangled within the sticky web and wakes several days later with no memory of events.
 Trait: Wits
 Delay: 2
 

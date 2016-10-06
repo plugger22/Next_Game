@@ -390,7 +390,7 @@ namespace Next_Game
                     cleanTag = tokens[0].Trim();
                     cleanToken = tokens[1].Trim();
                     if (cleanToken.Length == 0)
-                    { Game.SetError(new Error(20, string.Format("Empty data field, record {0}, {1}", i, fileName))); validData = false; }
+                    { Game.SetError(new Error(20, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                     else
                     {
                         switch (cleanTag)
@@ -526,10 +526,10 @@ namespace Next_Game
                                 structEvent.EventText = cleanToken;
                                 break;
                             case "SucceedText":
-                                structEvent.EventText = cleanToken;
+                                structEvent.SucceedText = cleanToken;
                                 break;
                             case "FailText":
-                                structEvent.EventText = cleanToken;
+                                structEvent.FailText = cleanToken;
                                 break;
                             case "Trait":
                                 switch (cleanToken)
@@ -600,6 +600,7 @@ namespace Next_Game
                         }
                     }
                 }
+                else { newEvent = false; }
             }
             return dictOfEvents;
         }

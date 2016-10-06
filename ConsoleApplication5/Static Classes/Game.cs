@@ -121,12 +121,12 @@ namespace Next_Game
             world = new World(seed);
             world.InitialiseWorld();
             infoChannel = new InfoChannel();
+            director = new Director();
+            director.InitialiseDirector();
             world.ShowGeneratorStatsRL();
             Message message = new Message($"Game world created with seed {seed}", MessageType.System);
             world.SetMessage(message);
             world.ProcessStartGame();
-            director = new Director();
-            director.InitialiseDirector();
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);

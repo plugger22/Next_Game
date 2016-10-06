@@ -42,7 +42,7 @@ namespace Next_Game
             this.Name = name;
             this.Frequency = frequency;
             //debug
-            Console.WriteLine("EventID {0], {1} Frequency {2} TempID {3}", EventID, Name, Frequency, TempID);
+            Console.WriteLine("EventID {0}, {1}, Frequency {2} -> TempID {3}", EventID, Name, Frequency, TempID);
         }
     }
 
