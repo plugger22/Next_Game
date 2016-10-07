@@ -36,7 +36,7 @@ namespace Next_Game
             statusMargin = 2;
             messageMargin = 2;
             RLColor backColor = Color._background1;
-            dynamicBox = new Box(100, 10, 10, backColor, RLColor.Black);
+            dynamicBox = new Box(124, 10, 10, backColor, RLColor.Black);
             cardBox = new Box(50, 50, 10, backColor, RLColor.Black);
         }
 
@@ -289,9 +289,13 @@ namespace Next_Game
             switch (mode)
             {
                 case SpecialMode.Event:
-                    dynamicBox.SetText(eventList);
-                    //draw box
-                    dynamicBox.Draw(multiConsole);
+                    //ignore if nothing to display
+                    if (eventList.Count > 0)
+                    {
+                        dynamicBox.SetText(eventList);
+                        //draw box
+                        dynamicBox.Draw(multiConsole);
+                    }
                     break;
                 case SpecialMode.Conflict:
                     cardBox.SetText(listOfSnippets);

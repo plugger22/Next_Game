@@ -180,8 +180,12 @@ namespace Next_Game
 
             //special display mode?
             if (_specialMode > 0 && keyPress != null)
+            //if (_specialMode > 0)
             {
                 SpecialModeInput(keyPress, _specialMode);
+                //any events that need dealing with?
+                if (director.ProcessCurrentEvents()) { }
+                else { _specialMode = SpecialMode.None; }
             }
 
             //activate scrolling mode?
@@ -1037,6 +1041,11 @@ namespace Next_Game
                     break;
                 case RLKey.F3:
                     infoChannel.ChangeBoxColor(Color._background3, BoxType.Card);
+                    break;
+                case RLKey.Enter:
+                    //clear input & multi consoles
+                    infoChannel.ClearConsole(ConsoleDisplay.Input);
+                    infoChannel.ClearConsole(ConsoleDisplay.Multi);
                     break;
                 case RLKey.Escape:
                     //Exit out of Special Display mode

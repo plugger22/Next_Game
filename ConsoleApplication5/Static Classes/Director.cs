@@ -15,7 +15,8 @@ namespace Next_Game
     public struct Eventstruct
     {
         public Active actor;
-        public EventGeneric eventObject; 
+        public EventGeneric eventObject;
+        public bool done; //true if already processed this turn
     }
     
     /// <summary>
@@ -47,7 +48,7 @@ namespace Next_Game
             story = new Story("Steady Eddy");
             story.AI = StoryAI.Balanced;
             story.EventLocation = 10;
-            story.EventTravelling = 20;
+            story.EventTravelling = 80;
 
             listOfActiveGeoClusters = new List<int>();
             listGenEventsForest = new List<int>();
@@ -249,26 +250,56 @@ namespace Next_Game
                 Eventstruct current = new Eventstruct();
                 current.actor = actor;
                 current.eventObject = eventChosen;
+                current.done = false;
                 listCurrentEvents.Add(current);
             }
             
         }
        
         /// <summary>
-        /// Process current events
+        /// Process current events one at a time. Returns true if event present to be processed, false otherwise.
         /// </summary>
-        public void ProcessCurrentEvents()
+        public bool ProcessCurrentEvents()
         {
+            List<Snippet> eventList = new List<Snippet>();
             //loop all triggered events for this turn
-            foreach(Eventstruct current in listCurrentEvents)
+            for (int i = 0; i < listCurrentEvents.Count; i++)
             {
-                EventGeneric eventObject = current.eventObject;
-                Active actor = current.actor;
+                Eventstruct eventStruct = listCurrentEvents[i];
+                if (eventStruct.done == false)
+                {
+                    EventGeneric eventObject = eventStruct.eventObject;
+                    Active actor = eventStruct.actor;
+                    //create event description
+                    eventList.Add(new Snippet(string.Format("{0} {1}, Aid {2}, travelling towards {3}", actor.Name, Game.world.ShowLocationCoords(actor.LocID), actor.ActID,
+                        Game.world.GetLocationName(actor.LocID))));
+                    eventList.Add(new Snippet("- o -"));
+                    eventList.Add(new Snippet(eventObject.EventText));
+                    eventList.Add(new Snippet("- o -"));
+                    eventList.Add(new Snippet("Press ENTER to continue"));
+
+                    //resolve event and add to description (add delay to actor if needed)
+
+                    Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
+                    //mark event as done
+                    eventStruct.done = true;
+                    return true;
+                }
                 
             }
-            //empty out list, ready for next turn
+            //empty out Current Events ready for next turn
             listCurrentEvents.Clear();
+            return false;
         }
+
+
+        /// <summary>
+        /// returns the # of current events for the turn
+        /// </summary>
+        /// <returns></returns>
+        public int GetNumCurrentEvents()
+        { return listCurrentEvents.Count(); }
+
         //place Director methods above here
     }
 }
