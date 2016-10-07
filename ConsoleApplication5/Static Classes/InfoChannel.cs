@@ -71,6 +71,8 @@ namespace Next_Game
                     break;
                 case ConsoleDisplay.Event:
                     eventList.Clear();
+                    //add blank line to start
+                    eventList.Add(new Snippet(""));
                     //add snippets individually, word wrapping when needed
                     for (int i = 0; i < listToDisplay.Count; i++)
                     {
@@ -84,11 +86,19 @@ namespace Next_Game
                         {
                             //overlength -> word wrap
                             List<string> tempList = Game.utility.WordWrap(tempString, maxWidth);
-                            foreach (string text in tempList)
-                            { eventList.Add(new Snippet(text, tempSnippet.GetForeColor(), tempSnippet.GetBackColor())); }
+                            string text;
+                            for (int k = 0; k < tempList.Count; k++)
+                            {
+                                text = tempList[k];
+                                eventList.Add(new Snippet(text, tempSnippet.GetForeColor(), tempSnippet.GetBackColor()));
+                                //spacer line if required
+                                if (k > 0 && k < tempList.Count)
+                                { eventList.Add(new Snippet("")); }
+                            }
                         }
-                       
                     }
+                    //add blank line to end
+                    eventList.Add(new Snippet(""));
                     break;
             }
         }

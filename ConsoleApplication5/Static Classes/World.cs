@@ -626,7 +626,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="num">number of stars</param>
         /// <returns></returns>
-        private string GetStars(int num)
+        internal string GetStars(int num)
         {
             string stars = null;
             for (int i = 0; i < num; i++)

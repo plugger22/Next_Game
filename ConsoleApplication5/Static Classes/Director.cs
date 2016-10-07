@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    public enum StoryAI {None, Benevolent, Balanced, Evil, Tricky}
-    public enum EventType { None, Location, Travelling}
+    public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
+    public enum EventType { None, Location, Travelling }
 
     /// <summary>
     /// used to store all triggered events for the current turn
     /// </summary>
-    public struct Eventstruct
+    public class EventPackage
     {
-        public Active actor;
-        public EventGeneric eventObject;
+        public Active Person { get; set; }
+        public EventGeneric EventObject { get; set; }
+        public bool Done { get; set; }
     }
     
     /// <summary>
@@ -37,7 +38,7 @@ namespace Next_Game
         List<int> listGenEventsMajor;
         List<int> listGenEventsMinor;
         List<int> listGenEventsInn;
-        List<Eventstruct> listCurrentEvents;
+        List<EventPackage> listCurrentEvents;
         Dictionary<int, Event> dictEvents;
 
         public Director(int seed)
@@ -61,7 +62,7 @@ namespace Next_Game
             listGenEventsMajor = new List<int>();
             listGenEventsMinor = new List<int>();
             listGenEventsInn = new List<int>();
-            listCurrentEvents = new List<Eventstruct>();
+            listCurrentEvents = new List<EventPackage>();
             dictEvents = new Dictionary<int, Event>();
         }
 
@@ -247,12 +248,12 @@ namespace Next_Game
                 Message message = new Message(string.Format("{0}, Aid {1}, [Event] {2}", actor.Name, actor.ActID, eventChosen.EventText), MessageType.Event);
                 Game.world.SetMessage(message);
                 //store in list of Current Events
-                Eventstruct current = new Eventstruct();
-                current.actor = actor;
-                current.eventObject = eventChosen;
+                EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
+                //current.actor = actor;
+                //current.eventObject = eventChosen;
                 listCurrentEvents.Add(current);
             }
-            
+             
         }
        
         /// <summary>
@@ -261,35 +262,82 @@ namespace Next_Game
         public bool ProcessCurrentEvents()
         {
             bool returnValue = false;
+            int ability, rndNum, success;
+            string effectText;
             List<Snippet> eventList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
             RLColor backColor = Color._background1;
+            RLColor traitColor;
             //loop all triggered events for this turn
             for (int i = 0; i < listCurrentEvents.Count; i++)
             {
-                Eventstruct eventStruct = listCurrentEvents[i];
-
-                EventGeneric eventObject = eventStruct.eventObject;
-                Active actor = eventStruct.actor;
-                //create event description
-                Cartographic.Position pos = actor.GetActorPosition();
-                eventList.Add(new Snippet(string.Format("{0} at {1}:{2}, Aid {3}, travelling towards {4}", actor.Name, pos.PosX, pos.PosY, actor.ActID,
-                    Game.world.GetLocationName(actor.LocID)), RLColor.Gray, backColor));
-                eventList.Add(new Snippet("", foreColor, backColor));
-                eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                eventList.Add(new Snippet("", foreColor, backColor));
-                eventList.Add(new Snippet(eventObject.EventText, foreColor, backColor));
-                eventList.Add(new Snippet("", foreColor, backColor));
-                eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                eventList.Add(new Snippet("", foreColor, backColor));
-                eventList.Add(new Snippet("Press ENTER or ESC to continue", RLColor.Gray, backColor));
-
-                //resolve event and add to description (add delay to actor if needed)
-
-                Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
-                returnValue = true;
-                listCurrentEvents.RemoveAt(i);
-                break;
+                EventPackage package = listCurrentEvents[i];
+                if (package.Done == false)
+                {
+                    EventGeneric eventObject = package.EventObject;
+                    Active actor = package.Person;
+                    //create event description
+                    Cartographic.Position pos = actor.GetActorPosition();
+                    eventList.Add(new Snippet(string.Format("{0} at Loc {1}:{2}, Aid {3}, travelling towards {4}", actor.Name, pos.PosX, pos.PosY, actor.ActID,
+                        Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
+                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet(eventObject.EventText, foreColor, backColor));
+                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                    eventList.Add(new Snippet("", foreColor, backColor));
+                    //resolve event and add to description (add delay to actor if needed)
+                    eventList.Add(new Snippet(string.Format("A test of {0}", eventObject.Trait), RLColor.Gray, backColor));
+                    eventList.Add(new Snippet("", foreColor, backColor));
+                    effectText = actor.GetTraitEffectText(eventObject.Trait);
+                    ability = actor.GetTrait(eventObject.Trait);
+                    rndNum = rnd.Next(100);
+                    success = ability * 20;
+                    //trait stars
+                    if (ability < 3) { traitColor = Color._badTrait; }
+                    else if (ability == 3) { traitColor = RLColor.Gray; }
+                    else { traitColor = Color._goodTrait; }
+                    //enables stars to be centred
+                    if (ability != 3)
+                    { eventList.Add(new Snippet(string.Format("{0} {1} {2}", Game.world.GetStars(ability), actor.arrayOfTraitNames[(int)eventObject.Trait], effectText), traitColor, backColor)); }
+                    else
+                    { eventList.Add(new Snippet(string.Format("{0}", Game.world.GetStars(ability)), traitColor, backColor)); }
+                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet(string.Format("Success on {0}%, or less", success), RLColor.Gray, backColor));
+                    eventList.Add(new Snippet("", foreColor, backColor));
+                    if (rndNum < success)
+                    {
+                        //success
+                        eventList.Add(new Snippet(string.Format("Roll {0}", rndNum), RLColor.Gray, backColor));
+                        eventList.Add(new Snippet("", foreColor, backColor));
+                        eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet("", foreColor, backColor));
+                        eventList.Add(new Snippet(string.Format("{0} {1}", actor.Name, eventObject.SucceedText), RLColor.Black, backColor));
+                    }
+                    else
+                    {
+                        //failure
+                        eventList.Add(new Snippet(string.Format("Roll {0}", rndNum), RLColor.LightRed, backColor));
+                        eventList.Add(new Snippet("", foreColor, backColor));
+                        eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet("", foreColor, backColor));
+                        eventList.Add(new Snippet(string.Format("{0} {1}", actor.Name, eventObject.FailText), RLColor.Black, backColor));
+                        //delay
+                        eventList.Add(new Snippet("", foreColor, backColor));
+                        eventList.Add(new Snippet(string.Format("{0} has been delayed for {1} {2}", actor.Name, eventObject.Delay, eventObject.Delay == 1 ? "Day" : "Day's"), 
+                            RLColor.LightRed, backColor));
+                        eventList.Add(new Snippet("", foreColor, backColor));
+                    }
+                    
+                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet("Press ENTER or ESC to continue", RLColor.LightGray, backColor));
+                    //housekeeping
+                    Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
+                    returnValue = true;
+                    package.Done = true;
+                    break;
+                }
             }
             //empty out Current Events ready for next turn
             listCurrentEvents.Clear();
