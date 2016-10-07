@@ -10,7 +10,7 @@ using Next_Game.Cartographic;
 namespace Next_Game
 {
     public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record, Special, Lore} //distinct menu sets (Menu.cs)
-    public enum ConsoleDisplay {Status, Input, Multi, Message} //different console windows (Menu window handled independently by Menu.cs)
+    public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, Event, Conflict} //if MenuMode.Special then this is the type of special
 
@@ -180,7 +180,9 @@ namespace Next_Game
 
             //special display mode?
             if (_specialMode > 0 && keyPress != null)
-            { SpecialModeInput(keyPress, _specialMode); }
+            {
+                SpecialModeInput(keyPress, _specialMode);
+            }
 
             //activate scrolling mode?
             if (_fullConsole == true && keyPress != null)

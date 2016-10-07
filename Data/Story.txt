@@ -1,6 +1,5 @@
 # Story
 
-
 # Name: description
 # StoryAI: Personality -> Benevolent, Balanced, Evil, Tricky
 # EventLocation:  number (1 to 100) -> chance of an active character experiencing a random event while at a location

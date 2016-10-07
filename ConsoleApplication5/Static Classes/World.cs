@@ -1846,6 +1846,7 @@ namespace Next_Game
         {
             CalculateCrows();
             Game.director.CheckActivePlayerEvents(dictActiveActors);
+            Game.director.ProcessCurrentEvents();
         }
 
         /// <summary>

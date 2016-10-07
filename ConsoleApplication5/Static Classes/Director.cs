@@ -8,6 +8,15 @@ namespace Next_Game
 {
     public enum StoryAI {None, Benevolent, Balanced, Evil, Tricky}
     public enum EventType { None, Location, Travelling}
+
+    /// <summary>
+    /// used to store all triggered events for the current turn
+    /// </summary>
+    public struct Eventstruct
+    {
+        public Active actor;
+        public EventGeneric eventObject; 
+    }
     
     /// <summary>
     /// Director that manages the game world according to a Story AI personality
@@ -27,6 +36,7 @@ namespace Next_Game
         List<int> listGenEventsMajor;
         List<int> listGenEventsMinor;
         List<int> listGenEventsInn;
+        List<Eventstruct> listCurrentEvents;
         Dictionary<int, Event> dictEvents;
 
         public Director(int seed)
@@ -50,7 +60,7 @@ namespace Next_Game
             listGenEventsMajor = new List<int>();
             listGenEventsMinor = new List<int>();
             listGenEventsInn = new List<int>();
-
+            listCurrentEvents = new List<Eventstruct>();
             dictEvents = new Dictionary<int, Event>();
         }
 
@@ -235,11 +245,30 @@ namespace Next_Game
                 EventGeneric eventChosen = eventTemp as EventGeneric;
                 Message message = new Message(string.Format("{0}, Aid {1}, [Event] {2}", actor.Name, actor.ActID, eventChosen.EventText), MessageType.Event);
                 Game.world.SetMessage(message);
+                //store in list of Current Events
+                Eventstruct current = new Eventstruct();
+                current.actor = actor;
+                current.eventObject = eventChosen;
+                listCurrentEvents.Add(current);
             }
             
         }
        
-
+        /// <summary>
+        /// Process current events
+        /// </summary>
+        public void ProcessCurrentEvents()
+        {
+            //loop all triggered events for this turn
+            foreach(Eventstruct current in listCurrentEvents)
+            {
+                EventGeneric eventObject = current.eventObject;
+                Active actor = current.actor;
+                
+            }
+            //empty out list, ready for next turn
+            listCurrentEvents.Clear();
+        }
         //place Director methods above here
     }
 }

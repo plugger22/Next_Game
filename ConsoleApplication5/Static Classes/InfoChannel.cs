@@ -5,7 +5,7 @@ using RLNET;
 namespace Next_Game
 {
 
-    public enum BoxType {None, Dynamic, Card}
+    public enum BoxType {None, Dynamic, Card} //dynamic is for events and it's a dynamically sizing box in the vertical dimension
 
     //Handles display of information to the multi / input / status / spare Consoles
     public class InfoChannel
@@ -18,8 +18,9 @@ namespace Next_Game
         private List<Snippet> inputList; //list of strings to display in the input Console
         private List<Snippet> statusList; //list of strings to display in the Status Console
         private List<Snippet> messageList; //list of strings to display in the Message Console
+        private List<Snippet> eventList; //list of strings to display in an Event box
         //special multiConsole display objects
-        private Box fixedBox; //automatically adjusts it's height to text
+        private Box dynamicBox; //automatically adjusts it's height to text
         private Box cardBox; //standard card
 
 
@@ -29,12 +30,13 @@ namespace Next_Game
             inputList = new List<Snippet>();
             statusList = new List<Snippet>();
             messageList = new List<Snippet>();
+            eventList = new List<Snippet>();
             multiMargin = 2;
             inputMargin = 2;
             statusMargin = 2;
             messageMargin = 2;
             RLColor backColor = Color._background1;
-            fixedBox = new Box(100, 10, 10, backColor, RLColor.Black);
+            dynamicBox = new Box(100, 10, 10, backColor, RLColor.Black);
             cardBox = new Box(50, 50, 10, backColor, RLColor.Black);
         }
 
@@ -65,6 +67,10 @@ namespace Next_Game
                     messageList.Clear();
                     messageList.AddRange(listToDisplay);
                     break;
+                case ConsoleDisplay.Event:
+                    eventList.Clear();
+                    eventList.AddRange(listToDisplay);
+                    break;
             }
         }
 
@@ -90,6 +96,9 @@ namespace Next_Game
                 case ConsoleDisplay.Message:
                     messageList.Add(appendSnippet);
                     break;
+                case ConsoleDisplay.Event:
+                    eventList.Add(appendSnippet);
+                    break;
             }
         }
 
@@ -113,6 +122,9 @@ namespace Next_Game
                     break;
                 case ConsoleDisplay.Message:
                     messageList.Clear();
+                    break;
+                case ConsoleDisplay.Event:
+                    eventList.Clear();
                     break;
             }
         }
@@ -138,6 +150,9 @@ namespace Next_Game
                     break;
                 case ConsoleDisplay.Message:
                     messageList.Insert(0, snippet);
+                    break;
+                case ConsoleDisplay.Event:
+                    eventList.Insert(0, snippet);
                     break;
             }
         }
@@ -241,7 +256,7 @@ namespace Next_Game
                 switch (type)
                 {
                     case BoxType.Dynamic:
-                        fixedBox?.SetBackColor(color);
+                        dynamicBox?.SetBackColor(color);
                         break;
                     case BoxType.Card:
                         cardBox?.SetBackColor(color);
@@ -274,9 +289,9 @@ namespace Next_Game
             switch (mode)
             {
                 case SpecialMode.Event:
-                    fixedBox.SetText(listOfSnippets);
+                    dynamicBox.SetText(eventList);
                     //draw box
-                    fixedBox.Draw(multiConsole);
+                    dynamicBox.Draw(multiConsole);
                     break;
                 case SpecialMode.Conflict:
                     cardBox.SetText(listOfSnippets);
