@@ -17,7 +17,6 @@ namespace Next_Game
     {
         public Active actor;
         public EventGeneric eventObject;
-        public bool done; //true if already processed this turn
     }
     
     /// <summary>
@@ -251,7 +250,6 @@ namespace Next_Game
                 Eventstruct current = new Eventstruct();
                 current.actor = actor;
                 current.eventObject = eventChosen;
-                current.done = false;
                 listCurrentEvents.Add(current);
             }
             
@@ -262,6 +260,7 @@ namespace Next_Game
         /// </summary>
         public bool ProcessCurrentEvents()
         {
+            bool returnValue = false;
             List<Snippet> eventList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
             RLColor backColor = Color._background1;
@@ -269,35 +268,32 @@ namespace Next_Game
             for (int i = 0; i < listCurrentEvents.Count; i++)
             {
                 Eventstruct eventStruct = listCurrentEvents[i];
-                if (eventStruct.done == false)
-                {
-                    EventGeneric eventObject = eventStruct.eventObject;
-                    Active actor = eventStruct.actor;
-                    //create event description
-                    Cartographic.Position pos = actor.GetActorPosition();
-                    eventList.Add(new Snippet(string.Format("{0} at {1}:{2}, Aid {3}, travelling towards {4}", actor.Name, pos.PosX, pos.PosY , actor.ActID,
-                        Game.world.GetLocationName(actor.LocID)), RLColor.Gray, backColor));
-                    eventList.Add(new Snippet("", foreColor, backColor));
-                    eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                    eventList.Add(new Snippet("", foreColor, backColor));
-                    eventList.Add(new Snippet(eventObject.EventText, foreColor, backColor));
-                    eventList.Add(new Snippet("", foreColor, backColor));
-                    eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                    eventList.Add(new Snippet("", foreColor, backColor));
-                    eventList.Add(new Snippet("Press ENTER or ESC to continue", RLColor.Gray, backColor));
 
-                    //resolve event and add to description (add delay to actor if needed)
+                EventGeneric eventObject = eventStruct.eventObject;
+                Active actor = eventStruct.actor;
+                //create event description
+                Cartographic.Position pos = actor.GetActorPosition();
+                eventList.Add(new Snippet(string.Format("{0} at {1}:{2}, Aid {3}, travelling towards {4}", actor.Name, pos.PosX, pos.PosY, actor.ActID,
+                    Game.world.GetLocationName(actor.LocID)), RLColor.Gray, backColor));
+                eventList.Add(new Snippet("", foreColor, backColor));
+                eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                eventList.Add(new Snippet("", foreColor, backColor));
+                eventList.Add(new Snippet(eventObject.EventText, foreColor, backColor));
+                eventList.Add(new Snippet("", foreColor, backColor));
+                eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                eventList.Add(new Snippet("", foreColor, backColor));
+                eventList.Add(new Snippet("Press ENTER or ESC to continue", RLColor.Gray, backColor));
 
-                    Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
-                    //mark event as done
-                    eventStruct.done = true;
-                    return true;
-                }
-                
+                //resolve event and add to description (add delay to actor if needed)
+
+                Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
+                returnValue = true;
+                listCurrentEvents.RemoveAt(i);
+                break;
             }
             //empty out Current Events ready for next turn
             listCurrentEvents.Clear();
-            return false;
+            return returnValue;
         }
 
 
