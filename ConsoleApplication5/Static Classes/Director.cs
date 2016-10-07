@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RLNET;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -262,6 +263,8 @@ namespace Next_Game
         public bool ProcessCurrentEvents()
         {
             List<Snippet> eventList = new List<Snippet>();
+            RLColor foreColor = RLColor.Black;
+            RLColor backColor = Color._background1;
             //loop all triggered events for this turn
             for (int i = 0; i < listCurrentEvents.Count; i++)
             {
@@ -272,11 +275,11 @@ namespace Next_Game
                     Active actor = eventStruct.actor;
                     //create event description
                     eventList.Add(new Snippet(string.Format("{0} {1}, Aid {2}, travelling towards {3}", actor.Name, Game.world.ShowLocationCoords(actor.LocID), actor.ActID,
-                        Game.world.GetLocationName(actor.LocID))));
-                    eventList.Add(new Snippet("- o -"));
-                    eventList.Add(new Snippet(eventObject.EventText));
-                    eventList.Add(new Snippet("- o -"));
-                    eventList.Add(new Snippet("Press ENTER to continue"));
+                        Game.world.GetLocationName(actor.LocID)), foreColor, backColor));
+                    eventList.Add(new Snippet("- o -", foreColor, backColor));
+                    eventList.Add(new Snippet(eventObject.EventText, foreColor, backColor));
+                    eventList.Add(new Snippet("- o -", foreColor, backColor));
+                    eventList.Add(new Snippet("Press ENTER to continue", foreColor, backColor));
 
                     //resolve event and add to description (add delay to actor if needed)
 

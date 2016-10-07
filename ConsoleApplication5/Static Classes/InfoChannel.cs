@@ -14,6 +14,7 @@ namespace Next_Game
         int inputMargin;
         int statusMargin;
         int messageMargin;
+        int boxWidth;
         private List<Snippet> multiList; //list of strings to display in the multi Console
         private List<Snippet> inputList; //list of strings to display in the input Console
         private List<Snippet> statusList; //list of strings to display in the Status Console
@@ -35,8 +36,9 @@ namespace Next_Game
             inputMargin = 2;
             statusMargin = 2;
             messageMargin = 2;
+            boxWidth = 100;
             RLColor backColor = Color._background1;
-            dynamicBox = new Box(124, 10, 10, backColor, RLColor.Black);
+            dynamicBox = new Box(boxWidth, 10, 10, backColor, RLColor.Black);
             cardBox = new Box(50, 50, 10, backColor, RLColor.Black);
         }
 
@@ -69,7 +71,24 @@ namespace Next_Game
                     break;
                 case ConsoleDisplay.Event:
                     eventList.Clear();
-                    eventList.AddRange(listToDisplay);
+                    //add snippets individually, word wrapping when needed
+                    for (int i = 0; i < listToDisplay.Count; i++)
+                    {
+                        Snippet tempSnippet = listToDisplay[i];
+                        string tempString = tempSnippet.GetText();
+                        int maxWidth = boxWidth - 4;
+                        //length O.K
+                        if (tempString.Length < maxWidth)
+                        { eventList.Add(tempSnippet); }
+                        else
+                        {
+                            //overlength -> word wrap
+                            List<string> tempList = Game.utility.WordWrap(tempString, maxWidth);
+                            foreach (string text in tempList)
+                            { eventList.Add(new Snippet(text, tempSnippet.GetForeColor(), tempSnippet.GetBackColor())); }
+                        }
+                       
+                    }
                     break;
             }
         }
@@ -98,6 +117,7 @@ namespace Next_Game
                     break;
                 case ConsoleDisplay.Event:
                     eventList.Add(appendSnippet);
+
                     break;
             }
         }
