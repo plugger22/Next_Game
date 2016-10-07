@@ -21,7 +21,7 @@ namespace Next_Game
         private List<Snippet> messageList; //list of strings to display in the Message Console
         private List<Snippet> eventList; //list of strings to display in an Event box
         //special multiConsole display objects
-        private Box dynamicBox; //automatically adjusts it's height to text
+        private Box dynamicBox; //automatically adjusts it's height to text -> box initialised at time of drawing because of this
         private Box cardBox; //standard card
 
 
@@ -38,7 +38,7 @@ namespace Next_Game
             messageMargin = 2;
             boxWidth = 100;
             RLColor backColor = Color._background1;
-            dynamicBox = new Box(boxWidth, 10, 10, backColor, RLColor.Black);
+            //dynamicBox = new Box(boxWidth, 10, 10, backColor, RLColor.Black);
             cardBox = new Box(50, 50, 10, backColor, RLColor.Black);
         }
 
@@ -312,6 +312,7 @@ namespace Next_Game
                     //ignore if nothing to display
                     if (eventList.Count > 0)
                     {
+                        dynamicBox = new Box(boxWidth, eventList.Count +2, 10, Color._background1, RLColor.Black);
                         dynamicBox.SetText(eventList);
                         //draw box
                         dynamicBox.Draw(multiConsole);

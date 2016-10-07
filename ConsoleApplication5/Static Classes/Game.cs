@@ -178,17 +178,29 @@ namespace Next_Game
             bool mouseRight = _rootConsole.Mouse.GetRightClick();
             bool complete = false;
 
-            //special display mode?
+            //special display mode (Events and Conflicts)
             if (_specialMode > 0 && keyPress != null)
-            //if (_specialMode > 0)
             {
                 SpecialModeInput(keyPress, _specialMode);
                 //any events that need dealing with?
                 if (director.ProcessCurrentEvents()) { }
-                else { _specialMode = SpecialMode.None; }
+                else
+                {
+                    _specialMode = SpecialMode.None;
+                    //exit mouse input 
+                    if (_mouseOn == true)
+                    { _mouseOn = false; }
+                    //revert back to main menu
+                    else
+                    {
+                        //return to main menu from sub menus
+                        if (_menuMode != MenuMode.Main)
+                        { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
+                    }
+                }
             }
 
-            //activate scrolling mode?
+            //activate scrolling mode
             if (_fullConsole == true && keyPress != null)
             {
                 _inputMode = InputMode.Scrolling;
@@ -1043,16 +1055,13 @@ namespace Next_Game
                     infoChannel.ChangeBoxColor(Color._background3, BoxType.Card);
                     break;
                 case RLKey.Enter:
-                    //clear input & multi consoles
-                    infoChannel.ClearConsole(ConsoleDisplay.Input);
-                    infoChannel.ClearConsole(ConsoleDisplay.Multi);
-                    break;
                 case RLKey.Escape:
                     //Exit out of Special Display mode
                     _specialMode = SpecialMode.None;
                     //clear input & multi consoles
                     infoChannel.ClearConsole(ConsoleDisplay.Input);
                     infoChannel.ClearConsole(ConsoleDisplay.Multi);
+                    /*
                     //exit mouse input 
                     if (_mouseOn == true)
                     { _mouseOn = false; }
@@ -1065,6 +1074,7 @@ namespace Next_Game
                             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
                         }
                     }
+                    */
                     break;
             }
         }

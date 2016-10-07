@@ -274,12 +274,17 @@ namespace Next_Game
                     EventGeneric eventObject = eventStruct.eventObject;
                     Active actor = eventStruct.actor;
                     //create event description
-                    eventList.Add(new Snippet(string.Format("{0} {1}, Aid {2}, travelling towards {3}", actor.Name, Game.world.ShowLocationCoords(actor.LocID), actor.ActID,
-                        Game.world.GetLocationName(actor.LocID)), foreColor, backColor));
-                    eventList.Add(new Snippet("- o -", foreColor, backColor));
+                    Cartographic.Position pos = actor.GetActorPosition();
+                    eventList.Add(new Snippet(string.Format("{0} at {1}:{2}, Aid {3}, travelling towards {4}", actor.Name, pos.PosX, pos.PosY , actor.ActID,
+                        Game.world.GetLocationName(actor.LocID)), RLColor.Gray, backColor));
+                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                    eventList.Add(new Snippet("", foreColor, backColor));
                     eventList.Add(new Snippet(eventObject.EventText, foreColor, backColor));
-                    eventList.Add(new Snippet("- o -", foreColor, backColor));
-                    eventList.Add(new Snippet("Press ENTER to continue", foreColor, backColor));
+                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet("Press ENTER or ESC to continue", RLColor.Gray, backColor));
 
                     //resolve event and add to description (add delay to actor if needed)
 
