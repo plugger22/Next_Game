@@ -325,6 +325,10 @@ namespace Next_Game
                         //update actor 
                         actor.Delay = eventObject.Delay;
                         actor.DelayReason = eventObject.Name;
+                        //message
+                        Message message = new Message(string.Format("{0} has been delayed (\"{1}\") for {2} {3}", actor.Name, actor.DelayReason, eventObject.Delay,
+                            eventObject.Delay == 1 ? "Day" : "Day's"), MessageType.Move);
+                        Game.world.SetMessage(message);
                     }
                     
                     eventList.Add(new Snippet(""));

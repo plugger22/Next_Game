@@ -164,69 +164,73 @@ namespace Next_Game
                 //move speed clicks down list of positions (ignore locations at present)
                 Move moveObject = new Move();
                 moveObject = moveList[i];
-                if (moveObject.MoveParty() == true)
+                moveObject.UpdatePartyStatus();
+                if (moveObject.Status == PartyStatus.Active)
                 {
-                    //update location list at destination
-                    Position posDestination = moveObject.GetCurrentPosition();
-                    int locID = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
-                    Location loc = Game.network.GetLocation(locID);
-                    List<int> charListMoveObject = new List<int>(moveObject.GetCharacterList());
-                    //find location, get list, update for each character
-                    if (loc != null)
+                    if (moveObject.MoveParty() == true)
                     {
-                        foreach(int charID in charListMoveObject)
+                        //update location list at destination
+                        Position posDestination = moveObject.GetCurrentPosition();
+                        int locID = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
+                        Location loc = Game.network.GetLocation(locID);
+                        List<int> charListMoveObject = new List<int>(moveObject.GetCharacterList());
+                        //find location, get list, update for each character
+                        if (loc != null)
                         {
-                            loc.AddActor(charID);
-                            //find character and update details
-                            if (dictActiveActors.ContainsKey(charID))
+                            foreach (int charID in charListMoveObject)
                             {
-                                Active person = new Active();
-                                person = dictActiveActors[charID];
-                                person.Status = ActorStatus.AtLocation;
-                                person.SetActorPosition(posDestination);
-                                person.LocID = locID;
-                                //Snippet snippet = new Snippet(string.Format(person.Name + " has arrived safely at " + loc.LocName));
-                                //Game.messageLog.Add(snippet, Game.gameTurn);
-                                Message message = new Message(string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, loc.LocName), person.ActID, 
-                                    loc.LocationID, MessageType.Move);
-                                SetMessage(message);
+                                loc.AddActor(charID);
+                                //find character and update details
+                                if (dictActiveActors.ContainsKey(charID))
+                                {
+                                    Active person = new Active();
+                                    person = dictActiveActors[charID];
+                                    person.Status = ActorStatus.AtLocation;
+                                    person.SetActorPosition(posDestination);
+                                    person.LocID = locID;
+                                    Message message = new Message(string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, loc.LocName), person.ActID,
+                                        loc.LocationID, MessageType.Move);
+                                    SetMessage(message);
+                                }
+                                else
+                                { Game.SetError(new Error(42, "Character not found")); }
                             }
-                            else
-                            { Game.SetError(new Error(42, "Character not found")); }
                         }
+                        else
+                        { Game.SetError(new Error(42, "Character not found")); }
+                        //update Party status to enable deletion of moveObject from list (below)
+                        moveObject.Status = PartyStatus.Done;
                     }
                     else
-                    { Game.SetError(new Error(42, "Character not found")); }
-                    //update Party status to enable deletion of moveObject from list (below)
-                    moveObject.SetPartyStatus(PartyStatus.Done);
-                }
-                else
-                //still enroute
-                {
-                    //update dictionary
-                    dictMapMarkers.Add(moveObject.GetCurrentPosition(), moveObject.MapMarker);
-                    //update Characters in list (charPos)
-                    Position pos = moveObject.GetCurrentPosition();
-                    List<int> characterList = new List<int>(moveObject.GetCharacterList());
-                    for (int j = 0; j < characterList.Count; j++)
+                    //still enroute
                     {
-                        int charID = characterList[j];
-                        //find in dictionary
-                        if (dictActiveActors.ContainsKey(charID))
+                        //update dictionary
+                        dictMapMarkers.Add(moveObject.GetCurrentPosition(), moveObject.MapMarker);
+                        //update Characters in list (charPos)
+                        Position pos = moveObject.GetCurrentPosition();
+                        List<int> characterList = new List<int>(moveObject.GetCharacterList());
+                        for (int j = 0; j < characterList.Count; j++)
                         {
-                            Active person = dictActiveActors[charID];
-                            person.SetActorPosition(pos);
+                            int charID = characterList[j];
+                            //find in dictionary
+                            if (dictActiveActors.ContainsKey(charID))
+                            {
+                                Active person = dictActiveActors[charID];
+                                person.SetActorPosition(pos);
+                            }
                         }
                     }
                 }
+                else if (moveObject.Status == PartyStatus.Delayed)
+                {
+                    /*message about delay?*/
+                    dictMapMarkers.Add(moveObject.GetCurrentPosition(), moveObject.MapMarker);
+                }
             }
-            //need to put player markers into mapGrid player layer for drawing. (return collection to Game which passes it onto map object)
-            //need to update move objects, characters (locID), status
-
             //reverse loop through list of Moveobjects and delete any that are marked as 'Done'
             for(int i = moveList.Count; i > 0; i--)
             {
-                if (moveList[i - 1].GetPartyStatus() == PartyStatus.Done)
+                if (moveList[i - 1].Status == PartyStatus.Done)
                 { moveList.RemoveAt(i - 1); }
             }
             //pass dictionary of markers back to map object via Game
@@ -1068,6 +1072,20 @@ namespace Next_Game
             return person;
         }
 
+        /// <summary>
+        /// returns any actor -> Passive or Active
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <returns></returns>
+        internal Actor GetAnyActor(int actorID)
+        {
+            Actor person = new Actor();
+            if (dictAllActors.ContainsKey(actorID))
+            { person = dictAllActors[actorID]; }
+            else { person = null; }
+            return person;
+        }
+
       
         /// <summary>
         /// returns string showing character name and status (at 'x' loc, travelling)
@@ -1865,6 +1883,7 @@ namespace Next_Game
             Game.map.UpdateMap();
             Game.map.UpdatePlayers(MoveActors());
             Game.director.ClearCurrentEvents();
+            UpdateActiveActors();
             Game.gameTurn++;
         }
 
@@ -1961,42 +1980,50 @@ namespace Next_Game
                         {
                             if (actor.LocID != player.LocID)
                             {
-                                if (actor.Activated == false)
+                                if (actor.Delay == 0)
                                 {
-                                    locName = GetLocationName(actor.LocID);
-                                    num = rnd.Next(100);
-                                    chance = actor.CrowChance + actor.CrowBonus;
-                                    description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", chance, num);
-                                    listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0}, Aid {1}, at {2} (distance {3} leagues)", actor.Name, actor.ActID, locName, actor.CrowDistance)));
-                                    player.CrowsNumber--;
-                                    messageText = string.Format("Crow sent to {0}, Aid {1}, at {2} ({3}% chance of arriving, roll {4}, {5})", actor.Name, actor.ActID, locName, chance, 
-                                        num, num < chance ? "Arrived" : "Failed" );
-                                    //Game.messageLog.Add(new Snippet(messageText));
-                                    Message message = new Message(messageText, actor.ActID, actor.LocID, MessageType.Crow);
-                                        SetMessage(message);
-                                    if (num < chance)
+                                    if (actor.Activated == false)
                                     {
-                                        //success!
-                                        actor.Activated = true;
-                                        actor.CrowBonus = 0;
-                                        listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
-                                        //Game.messageLog.Add(new Snippet(string.Format("Crow arrived, {0} activated", actor.Name)));
-                                        Message message_1 = new Message(string.Format("{0}, Aid {1}, has been Activated", actor.Name, actor.ActID), MessageType.Activation);
-                                        SetMessage(message_1);
+                                        locName = GetLocationName(actor.LocID);
+                                        num = rnd.Next(100);
+                                        chance = actor.CrowChance + actor.CrowBonus;
+                                        description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", chance, num);
+                                        listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0}, Aid {1}, at {2} (distance {3} leagues)", actor.Name, actor.ActID, locName, actor.CrowDistance)));
+                                        player.CrowsNumber--;
+                                        messageText = string.Format("Crow sent to {0}, Aid {1}, at {2} ({3}% chance of arriving, roll {4}, {5})", actor.Name, actor.ActID, locName, chance,
+                                            num, num < chance ? "Arrived" : "Failed");
+                                        //Game.messageLog.Add(new Snippet(messageText));
+                                        Message message = new Message(messageText, actor.ActID, actor.LocID, MessageType.Crow);
+                                        SetMessage(message);
+                                        if (num < chance)
+                                        {
+                                            //success!
+                                            actor.Activated = true;
+                                            actor.CrowBonus = 0;
+                                            listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
+                                            //Game.messageLog.Add(new Snippet(string.Format("Crow arrived, {0} activated", actor.Name)));
+                                            Message message_1 = new Message(string.Format("{0}, Aid {1}, has been Activated", actor.Name, actor.ActID), MessageType.Activation);
+                                            SetMessage(message_1);
+                                        }
+                                        else
+                                        //failed the roll, apply bonus
+                                        {
+                                            actor.Activated = false;
+                                            listSnippet.Add(new Snippet(string.Format("The Crow failed to arrive ({0})", description)));
+                                            actor.CrowBonus += bonus;
+                                            actor.AddCrowTooltip(string.Format("An additional bonus of +{0}% applies from a previous failed crow that might have been delayed", bonus));
+                                        }
+                                        listSnippet.Add(new Snippet(string.Format("You have {0} {1} remaining", player.CrowsNumber, player.CrowsNumber == 1 ? "Crow" : "Crows")));
                                     }
                                     else
-                                    //failed the roll, apply bonus
-                                    {
-                                        actor.Activated = false;
-                                        listSnippet.Add(new Snippet(string.Format("The Crow failed to arrive ({0})", description)));
-                                        actor.CrowBonus += bonus;
-                                        actor.AddCrowTooltip(string.Format("An additional bonus of +{0}% applies from a previous failed crow that might have been delayed", bonus));
-                                    }
-                                    listSnippet.Add(new Snippet(string.Format("You have {0} {1} remaining", player.CrowsNumber, player.CrowsNumber == 1 ? "Crow" : "Crows")));
+                                    //already activated
+                                    { listSnippet.Add(new Snippet(string.Format("{0} is already activated and awaiting your orders!", actor.Name))); }
                                 }
                                 else
-                                //already activated
-                                { listSnippet.Add(new Snippet(string.Format("{0} is already activated and awaiting your orders!", actor.Name))); }
+                                {
+                                    //actor delayed
+                                    { listSnippet.Add(new Snippet(string.Format("Crow can NOT be dispatched to {0} as they are delayed (\"{1}\"", actor.Name, actor.DelayReason))); }
+                                }
                             }
                             else
                             {
@@ -2033,6 +2060,23 @@ namespace Next_Game
             Player player = (Player)GetActiveActor(1);
             //snippet = new Snippet(string.Format("You have {0} {1} remaining", numCrows, numCrows == 1 ? "Crow" : "Crows"));
             return player.CrowsNumber;
+        }
+
+        /// <summary>
+        /// end of turn housekeeping
+        /// </summary>
+        private void UpdateActiveActors()
+        {
+            foreach(var actor in dictActiveActors)
+            {
+                //Decrement delays
+                if (actor.Value.Delay > 0)
+                {
+                    actor.Value.Delay--;
+                    if (actor.Value.Delay == 0)
+                    { actor.Value.DelayReason = null; }
+                }
+            }
         }
 
         //new Methods above here

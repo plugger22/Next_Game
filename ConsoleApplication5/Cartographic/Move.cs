@@ -14,8 +14,8 @@ namespace Next_Game.Cartographic
         List<Position> pathList; //sequence of cells for the route to be followed
         int speed; //speed party travels in cells per turn
         int currentPosIndex; //index for positionList to track parties current position
-        int turnDeparted; 
-        PartyStatus partyStatus;
+        int turnDeparted;
+        public PartyStatus Status {get; set; }
         bool playerInParty; //is a player controlled character in the party? (different color or symbol on map)
         public int MapMarker { get; set; } //# of party on map which is equal to the highest ranked member in party (lowest ID as ID 1 is the player)
 
@@ -28,7 +28,7 @@ namespace Next_Game.Cartographic
             pathList = new List<Position>(listPos);
             characterList = new List<int>(listParty);
             this.speed = speed;
-            partyStatus = PartyStatus.Active;
+            Status = PartyStatus.Active;
             currentPosIndex = 0;
             this.playerInParty = playerInParty;
             this.turnDeparted = turnDeparted;
@@ -74,7 +74,7 @@ namespace Next_Game.Cartographic
         public Position GetCurrentPosition()
         {
             Position pos = new Position();
-            if(partyStatus != PartyStatus.Done)
+            if(Status != PartyStatus.Done)
             { pos = pathList[currentPosIndex];}
             else
             //end of the road
@@ -86,10 +86,33 @@ namespace Next_Game.Cartographic
         public List<int> GetCharacterList()
         { return characterList; }
 
-        public void SetPartyStatus(PartyStatus status)
-        { partyStatus = status; }
+        /// <summary>
+        /// directly set Party status
+        /// </summary>
+        /// <param name="status"></param>
+        //public void SetPartyStatus(PartyStatus status)
+        //{ Status = status; }
 
-        public PartyStatus GetPartyStatus()
-        { return partyStatus; }
+        /// <summary>
+        /// Polls characters in party to check for any that are delayed (affects all party members, if so)
+        /// </summary>
+        public void UpdatePartyStatus()
+        {
+            foreach(int actorID in characterList)
+            {
+                Actor actor = Game.world.GetAnyActor(actorID);
+                if (actor != null)
+                {
+                    if (actor.Delay > 0)
+                    { Status = PartyStatus.Delayed; break; }
+                    else
+                    { Status = PartyStatus.Active; }
+                }
+                else { Game.SetError(new Error(51, "Invalid Actor in characterList")); }
+            }
+        }
+
+        //public PartyStatus GetPartyStatus()
+        //{ return partyStatus; }
     }
 }
