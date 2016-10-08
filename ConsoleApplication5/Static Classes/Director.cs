@@ -133,7 +133,7 @@ namespace Next_Game
                                 case ArcRoad.Normal:
                                     listGenEventsNormal.Add(eventID);
                                     break;
-                                case ArcRoad.Royal:
+                                case ArcRoad.Kings:
                                     listGenEventsKing.Add(eventID);
                                     break;
                                 case ArcRoad.Connector:

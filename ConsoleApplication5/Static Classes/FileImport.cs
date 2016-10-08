@@ -479,7 +479,7 @@ namespace Next_Game
                                                 structEvent.Road = ArcRoad.Normal;
                                                 break;
                                             case "Royal":
-                                                structEvent.Road = ArcRoad.Royal;
+                                                structEvent.Road = ArcRoad.Kings;
                                                 break;
                                             case "Connector":
                                                 structEvent.Road = ArcRoad.Connector;

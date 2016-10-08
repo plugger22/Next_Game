@@ -9,7 +9,7 @@ namespace Next_Game
     public enum ArcType {None, GeoCluster, Location, Road}
     public enum ArcGeo {None, Sea, Mountain, Forest } //geocluster sub category
     public enum ArcLoc {None, Capital, Major, Minor, Inn} //location sub category
-    public enum ArcRoad {None, Normal, Royal, Connector} //road sub category
+    public enum ArcRoad {None, Normal, Kings, Connector} //road sub category
     
 
     class Archetype

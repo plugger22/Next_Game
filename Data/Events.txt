@@ -5,7 +5,7 @@
 # Name: descriptive
 # TempID: unique number
 # Type: GeoCluster/Location/Road
-# subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Royal/Connector)
+# subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Kings/Connector)
 # Category: Generic/Special
 # Frequency: Rare/Low/Normal/High/Common
 # EventText:
@@ -45,7 +45,7 @@ Type: GeoCluster
 subType: Forest
 Category: Generic
 Frequency: Normal
-EventText: A pack of wolves close in at dusk. They flit from tree to tree in the fading light. Large, powerful beasts. The howling is all around.
+EventText: A pack of wolves close in at dusk. They flit from tree to tree in the fading light. Large, powerful beasts. Hungry howls come from all directions.
 SucceedText: takes a burning branch from the fire and fends off the wolf pack.
 FailText: is forced to take shelter up a tree after being bitten on the leg by a wolf
 Trait: Combat
@@ -100,5 +100,113 @@ Trait: Combat
 Delay: 2
 
 # Roads -> subType is Normal/Royal/Connector ---  
+
+Name: Bad Going
+TempID: 7
+Type: Road
+subType: Normal
+Category: Generic
+Frequency: Normal
+EventText: Recent rains have gouged out deep gullies across the path of the road necessitating, what appears to be, a long detour.
+SucceedText: takes one look at the ragged gap and spurs their horse into an almighty gallop. Bending low in the saddle they leap across in a flurry of dirt and rocks.
+FailText: decides that discretion is the better part of valour and, rather than attempt to jump the gap, spends a whole day plodding around the obstacle before finally rejoining the road on the far side.
+Trait: Combat
+Delay: 1
+
+Name: Peasants
+TempID: 8
+Type: Road
+subType: Normal
+Category: Generic
+Frequency: Normal
+EventText: A large group of peasants surround a bogged cart and a floundering team of oxen, blocking the road. They are milling around ineffectively and appear to have all the time in the world.
+SucceedText: takes charge of the situation. Teams are organised and after some heavy exertion the cart is freed and the oxen reattached.
+FailText: attempts to bring order to chaos but nobody pays any attention to their flapping hand gestures and wildly waving arms. 
+Trait: Leadership
+Delay: 1
+
+Name: Heavy Rain
+TempID: 9
+Type: Road
+subType: Normal
+Category: Generic
+Frequency: Low
+EventText: Pelting rain hammers the ground and the road up ahead is covered in swirling, brown, water. It looks dangerous and it's uncertain how solid the footing is under the roiling, murky, water.
+SucceedText: carefully picks their way through the chest high waters by keeping their horse moving through the areas of stiller water and avoiding the eddies and swirls.
+FailText: rides their horse straight into the torrent and is immediately swept downstream. Luckily the horse manages to swim back to the far bank in a quiet eddy but it's going to take several days to make it back to the road.
+Trait: Wits
+Delay: 2
+
+Name: Priest
+TempID: 10
+Type: Road
+subType: Kings
+Category: Generic
+Frequency: 
+EventText: 
+SucceedText: 
+FailText: 
+Trait: Charm
+Delay: 
+
+Name: Rowdy Peasants
+TempID: 11
+Type: Road
+subType: Kings
+Category: Generic
+Frequency: Low
+EventText: A group of drunken peasants lurch out of a nearby tavern and surround the hapless traveller, demanding a 'donation' to support their families and their drinking habits. Most likely the later.
+SucceedText: astounds the inebriated peasants by breaking into a rowdy drinking song and soon has them all singing in harmony, belting out the chorus.
+FailText: attempts to ride down the nearest peasants down and gets dragged off their horse and soundly beaten for their troubles before being rescued by other travellers. A day of rest is needed to recover.
+Trait: Charm
+Delay: 1
+
+Name: Merchant
+TempID: 12
+Type: Road
+subType: Kings
+Category: Generic
+Frequency: Normal
+EventText: 
+SucceedText: 
+FailText: 
+Trait: Charm
+Delay: 
+
+Name: Horse Throws a Shoe
+TempID: 13
+Type: Road
+subType: Connector
+Category: Generic
+Frequency: Normal
+EventText: Twang! The horse brays and it's shoe is gone. Luckily it's easy to find but the horse seems reluctant to continue on without it.
+SucceedText: time learning from the stable master pays off. The horse is much happier with the shoe back on and willing trots off down the road at a steady pace.
+FailText: looks at the shoe and regrets not having paid attention when the stable master gave a demonstration of how to re shoe a horse. Somebody else will have to do it.
+Trait: Combat
+Delay: 1
+
+Name: Thick Mud
+TempID: 14
+Type: Road
+subType: Connector
+Category: Generic
+Frequency: Normal
+EventText: It's a poor road at the best of times but recent rains have turned it into a muddy swamp that looks like it could drag an elephant down into it's sticky depths.
+SucceedText: gets down off their horse and finds the firm high ground. It's not easy in this flat expanse but by getting as low as possible it can be discerned to those who know where to look.
+FailText: urges their horse ever deeper into the mud until both horse and rider are hopelessly stuck. Passers by rescue them but the exhaustion of both mount and rider necessitates several days of rest.
+Trait: Wits
+Delay: 2
+
+Name: Collapsed Bridge
+TempID: 15
+Type: Road
+subType: Connector
+Category: Generic
+Frequency: Low
+EventText: Neglect and poor maintenance by the local Lord has resulted in a bridge that has collapsed into the river. There are groups of peasants and nearby villagers waiting to cross on both sides but with no apparent means of doing so.
+SucceedText: takes the bull by the horns and soon has the milling manpower working at resetting the remaining planks. Before long a creaky, narrow, but usable path is available for those brave and willing enough to risk life and limb crossing the river.
+FailText: is at a loss. How can you manage such ignorant peasants? It takes days before enough trees have been chopped down and the bridge repaired. Of course they paid no heed to good advice and managed to stumble from one disaster to the next.
+Trait: Leadership
+Delay: 3
 
 # Locations -> subType is Capital/Major/Minor/Inn ---
