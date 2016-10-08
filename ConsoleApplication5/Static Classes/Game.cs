@@ -179,25 +179,32 @@ namespace Next_Game
             bool complete = false;
 
             //special display mode (Events and Conflicts)
-            if (_specialMode > 0 && keyPress != null)
+            if (_specialMode > 0)
             {
-                SpecialModeInput(keyPress, _specialMode);
-                //any events that need dealing with?
-                if (director.ProcessCurrentEvents()) { }
-                else
+                if (keyPress != null)
                 {
-                    _specialMode = SpecialMode.None;
-                    //exit mouse input 
-                    if (_mouseOn == true)
-                    { _mouseOn = false; }
-                    //revert back to main menu
+                    SpecialModeInput(keyPress, _specialMode);
+                    //any events that need dealing with?
+                    /*
+                    if (director.ProcessCurrentEvents()) { }
                     else
                     {
-                        //return to main menu from sub menus
-                        if (_menuMode != MenuMode.Main)
-                        { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
+                        _specialMode = SpecialMode.None;
+                        //exit mouse input 
+                        if (_mouseOn == true)
+                        { _mouseOn = false; }
+                        //revert back to main menu
+                        else
+                        {
+                            //return to main menu from sub menus
+                            if (_menuMode != MenuMode.Main)
+                            { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
+                        }
                     }
+                    */
+                    keyPress = null;
                 }
+                _renderRequired = true;
             }
 
             //activate scrolling mode
@@ -1046,21 +1053,37 @@ namespace Next_Game
             {
                 case RLKey.F1:
                     //test
-                    _specialMode = SpecialMode.Event;
+                    //_specialMode = SpecialMode.Event;
                     break;
                 case RLKey.F2:
-                    infoChannel.ChangeBoxColor(Color._background2, BoxType.Card);
+                    //infoChannel.ChangeBoxColor(Color._background2, BoxType.Card);
                     break;
                 case RLKey.F3:
-                    infoChannel.ChangeBoxColor(Color._background3, BoxType.Card);
+                    //infoChannel.ChangeBoxColor(Color._background3, BoxType.Card);
                     break;
                 case RLKey.Enter:
                 case RLKey.Escape:
-                    //Exit out of Special Display mode
-                    _specialMode = SpecialMode.None;
                     //clear input & multi consoles
                     infoChannel.ClearConsole(ConsoleDisplay.Input);
                     infoChannel.ClearConsole(ConsoleDisplay.Multi);
+                    //any events that need dealing with?
+                    if (director.ProcessCurrentEvents()) { }
+                    else
+                    {
+                        //Exit out of Special Display mode
+                        _specialMode = SpecialMode.None;
+                        //exit mouse input 
+                        if (_mouseOn == true)
+                        { _mouseOn = false; }
+                        //revert back to main menu
+                        else
+                        {
+                            //return to main menu from sub menus
+                            if (_menuMode != MenuMode.Main)
+                            { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
+                        }
+                    }
+                    keyPress = null;
                     /*
                     //exit mouse input 
                     if (_mouseOn == true)

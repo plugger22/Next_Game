@@ -149,6 +149,11 @@ namespace Next_Game
             }
         }
 
+        /// <summary>
+        /// empty out list ready for the next turn
+        /// </summary>
+        public void ClearCurrentEvents()
+        { listCurrentEvents.Clear(); }
         
         /// <summary>
         /// check active characters for random events
@@ -166,10 +171,12 @@ namespace Next_Game
                         //Location event
                         if (rnd.Next(100) <= story.EventLocation)
                         {
+                            /*
                             Console.WriteLine("{0}, Aid {1} at {2}, has experienced a Location event", actor.Value.Name, actor.Value.ActID, Game.world.GetLocationName(actor.Value.LocID));
                             Message message = new Message(string.Format("{0}, Aid {1} at {2}, has experienced a Location event", actor.Value.Name, actor.Value.ActID, 
                                 Game.world.GetLocationName(actor.Value.LocID)), MessageType.Event);
                             Game.world.SetMessage(message);
+                            */
                             ResolveEvent(actor.Value, EventType.Location);
                         }
                     }
@@ -178,9 +185,11 @@ namespace Next_Game
                         //travelling event
                         if (rnd.Next(100) <= story.EventTravelling)
                         {
+                            /*
                             Console.WriteLine("{0}, Aid {1} {2} has experienced a travel event", actor.Value.Name, actor.Value.ActID, Game.world.ShowLocationCoords(actor.Value.LocID));
                             Message message = new Message(string.Format("{0}, Aid {1} {2} has experienced a travel event", actor.Value.Name, actor.Value.ActID, Game.world.ShowLocationCoords(actor.Value.LocID)), MessageType.Event);
                             Game.world.SetMessage(message);
+                            */
                             ResolveEvent(actor.Value, EventType.Travelling);
                         }
                     }
@@ -194,7 +203,7 @@ namespace Next_Game
         /// <param name="actor"></param>
         private void ResolveEvent(Active actor, EventType type)
         {
-            int geoID, terrain, road, frequency;
+            int geoID, terrain, road, locID, frequency;
             Cartographic.Position pos = actor.GetActorPosition();
             List<Event> listEventPool = new List<Event>();
             //Location event
@@ -207,8 +216,9 @@ namespace Next_Game
                 geoID = Game.map.GetMapInfo(Cartographic.MapLayer.GeoID, pos.PosX, pos.PosY);
                 terrain = Game.map.GetMapInfo(Cartographic.MapLayer.Terrain, pos.PosX, pos.PosY);
                 road = Game.map.GetMapInfo(Cartographic.MapLayer.Road, pos.PosX, pos.PosY);
+                locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
                 //get generic terrain & road events
-                if (terrain == 1)
+                if (locID == 0 && terrain == 1)
                 {
                     //mountains
                     foreach (int eventID in listGenEventsMountain)
@@ -223,7 +233,7 @@ namespace Next_Game
                         }
                     }
                 }
-                else if (terrain == 2)
+                else if (locID == 0 && terrain == 2)
                 {
                     //forests
                     foreach(int eventID in listGenEventsForest)
@@ -245,7 +255,8 @@ namespace Next_Game
                 int rndNum = rnd.Next(0, listEventPool.Count);
                 Event eventTemp = listEventPool[rndNum];
                 EventGeneric eventChosen = eventTemp as EventGeneric;
-                Message message = new Message(string.Format("{0}, Aid {1}, [Event] {2}", actor.Name, actor.ActID, eventChosen.EventText), MessageType.Event);
+                Message message = new Message(string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
+                    type, eventChosen.Name), MessageType.Event);
                 Game.world.SetMessage(message);
                 //store in list of Current Events
                 EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
@@ -280,16 +291,16 @@ namespace Next_Game
                     Cartographic.Position pos = actor.GetActorPosition();
                     eventList.Add(new Snippet(string.Format("{0} at Loc {1}:{2}, Aid {3}, travelling towards {4}", actor.Name, pos.PosX, pos.PosY, actor.ActID,
                         Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
-                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet(eventObject.EventText, foreColor, backColor));
-                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet(""));
                     //resolve event and add to description (add delay to actor if needed)
-                    eventList.Add(new Snippet(string.Format("A test of {0}", eventObject.Trait), RLColor.Gray, backColor));
-                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet(string.Format("A test of {0}", eventObject.Trait), RLColor.Brown, backColor));
+                    eventList.Add(new Snippet(""));
                     effectText = actor.GetTraitEffectText(eventObject.Trait);
                     ability = actor.GetTrait(eventObject.Trait);
                     rndNum = rnd.Next(100);
@@ -303,34 +314,34 @@ namespace Next_Game
                     { eventList.Add(new Snippet(string.Format("{0} {1} {2}", Game.world.GetStars(ability), actor.arrayOfTraitNames[(int)eventObject.Trait], effectText), traitColor, backColor)); }
                     else
                     { eventList.Add(new Snippet(string.Format("{0}", Game.world.GetStars(ability)), traitColor, backColor)); }
-                    eventList.Add(new Snippet("", foreColor, backColor));
-                    eventList.Add(new Snippet(string.Format("Success on {0}%, or less", success), RLColor.Gray, backColor));
-                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet(""));
+                    eventList.Add(new Snippet(string.Format("Success on {0}% or less", success), RLColor.Brown, backColor));
+                    eventList.Add(new Snippet(""));
                     if (rndNum < success)
                     {
                         //success
                         eventList.Add(new Snippet(string.Format("Roll {0}", rndNum), RLColor.Gray, backColor));
-                        eventList.Add(new Snippet("", foreColor, backColor));
+                        eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                        eventList.Add(new Snippet("", foreColor, backColor));
+                        eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet(string.Format("{0} {1}", actor.Name, eventObject.SucceedText), RLColor.Black, backColor));
                     }
                     else
                     {
                         //failure
                         eventList.Add(new Snippet(string.Format("Roll {0}", rndNum), RLColor.LightRed, backColor));
-                        eventList.Add(new Snippet("", foreColor, backColor));
+                        eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                        eventList.Add(new Snippet("", foreColor, backColor));
+                        eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet(string.Format("{0} {1}", actor.Name, eventObject.FailText), RLColor.Black, backColor));
                         //delay
-                        eventList.Add(new Snippet("", foreColor, backColor));
+                        eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet(string.Format("{0} has been delayed for {1} {2}", actor.Name, eventObject.Delay, eventObject.Delay == 1 ? "Day" : "Day's"), 
                             RLColor.LightRed, backColor));
-                        eventList.Add(new Snippet("", foreColor, backColor));
+                        eventList.Add(new Snippet(""));
                     }
                     
-                    eventList.Add(new Snippet("", foreColor, backColor));
+                    eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("Press ENTER or ESC to continue", RLColor.LightGray, backColor));
                     //housekeeping
                     Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
@@ -339,8 +350,7 @@ namespace Next_Game
                     break;
                 }
             }
-            //empty out Current Events ready for next turn
-            listCurrentEvents.Clear();
+            
             return returnValue;
         }
 

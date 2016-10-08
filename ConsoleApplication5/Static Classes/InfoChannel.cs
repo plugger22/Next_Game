@@ -92,7 +92,7 @@ namespace Next_Game
                                 text = tempList[k];
                                 eventList.Add(new Snippet(text, tempSnippet.GetForeColor(), tempSnippet.GetBackColor()));
                                 //spacer line if required
-                                if (k > 0 && k < tempList.Count)
+                                if ( k < tempList.Count - 1)
                                 { eventList.Add(new Snippet("")); }
                             }
                         }
