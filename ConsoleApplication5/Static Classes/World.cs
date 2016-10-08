@@ -276,8 +276,12 @@ namespace Next_Game
                     }
                     else
                     {
-                        if (actor.Value.Activated == true) { textColor = Color._active; }
-                        else { textColor = RLColor.White; }
+                        if (actor.Value.Delay == 0)
+                        {
+                            if (actor.Value.Activated == true) { textColor = Color._active; }
+                            else { textColor = RLColor.White; }
+                        }
+                        else { textColor = RLColor.LightGray; }
                         //distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
                         distText = string.Format("{0} {1}", "dist:", actor.Value.CrowDistance);
                         chance = actor.Value.CrowChance + actor.Value.CrowBonus;
@@ -343,13 +347,16 @@ namespace Next_Game
                 { listToDisplay.Add(new Snippet(handle, Color._star, RLColor.Black, false)); }
                 //actorID
                 listToDisplay.Add(new Snippet(string.Format(", Aid {0}", actorID), RLColor.Yellow, RLColor.Black));
-                //realm?
+                //realm
                 if ((int)person.Realm > 0)
                 { listToDisplay.Add(new Snippet(string.Format("Realm Title: {0}", person.Realm))); }
-                //office?
+                //office
                 if ((int)person.Office > 0)
                 { listToDisplay.Add(new Snippet(string.Format("Office: {0}", person.Office), RLColor.Yellow, RLColor.Black)); }
                 listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
+                //Delayed
+                if (person.Delay > 0)
+                { listToDisplay.Add(new Snippet(string.Format("Delayed (\"{0}\") for {1} {2}", person.DelayReason, person.Delay, person.Delay == 1 ? "turn" : "turns"), RLColor.LightRed, RLColor.Black)); }
                 if (person is Knight)
                 {
                     Knight knight = person as Knight;
@@ -559,7 +566,6 @@ namespace Next_Game
                         { listToDisplay.Add(new Snippet("Activated", RLColor.Yellow, RLColor.Black)); }
                         else
                         { listToDisplay.Add(new Snippet("Not activated", RLColor.Red, RLColor.Black)); }
-
                     }
                 }
 

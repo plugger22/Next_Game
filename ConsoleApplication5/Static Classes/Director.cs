@@ -170,28 +170,13 @@ namespace Next_Game
                     {
                         //Location event
                         if (rnd.Next(100) <= story.EventLocation)
-                        {
-                            /*
-                            Console.WriteLine("{0}, Aid {1} at {2}, has experienced a Location event", actor.Value.Name, actor.Value.ActID, Game.world.GetLocationName(actor.Value.LocID));
-                            Message message = new Message(string.Format("{0}, Aid {1} at {2}, has experienced a Location event", actor.Value.Name, actor.Value.ActID, 
-                                Game.world.GetLocationName(actor.Value.LocID)), MessageType.Event);
-                            Game.world.SetMessage(message);
-                            */
-                            ResolveEvent(actor.Value, EventType.Location);
-                        }
+                        { ResolveEvent(actor.Value, EventType.Location); }
                     }
                     else if (actor.Value.Status == ActorStatus.Travelling)
                     {
                         //travelling event
                         if (rnd.Next(100) <= story.EventTravelling)
-                        {
-                            /*
-                            Console.WriteLine("{0}, Aid {1} {2} has experienced a travel event", actor.Value.Name, actor.Value.ActID, Game.world.ShowLocationCoords(actor.Value.LocID));
-                            Message message = new Message(string.Format("{0}, Aid {1} {2} has experienced a travel event", actor.Value.Name, actor.Value.ActID, Game.world.ShowLocationCoords(actor.Value.LocID)), MessageType.Event);
-                            Game.world.SetMessage(message);
-                            */
-                            ResolveEvent(actor.Value, EventType.Travelling);
-                        }
+                        { ResolveEvent(actor.Value, EventType.Travelling); }
                     }
                 }
             }
@@ -260,8 +245,6 @@ namespace Next_Game
                 Game.world.SetMessage(message);
                 //store in list of Current Events
                 EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
-                //current.actor = actor;
-                //current.eventObject = eventChosen;
                 listCurrentEvents.Add(current);
             }
              
@@ -339,6 +322,9 @@ namespace Next_Game
                         eventList.Add(new Snippet(string.Format("{0} has been delayed for {1} {2}", actor.Name, eventObject.Delay, eventObject.Delay == 1 ? "Day" : "Day's"), 
                             RLColor.LightRed, backColor));
                         eventList.Add(new Snippet(""));
+                        //update actor 
+                        actor.Delay = eventObject.Delay;
+                        actor.DelayReason = eventObject.Name;
                     }
                     
                     eventList.Add(new Snippet(""));
