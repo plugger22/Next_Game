@@ -32,7 +32,7 @@ namespace Next_Game
         List<int> listGenEventsMountain;
         List<int> listGenEventsSea;
         List<int> listGenEventsNormal;
-        List<int> listGenEventsRoyal;
+        List<int> listGenEventsKing;
         List<int> listGenEventsConnector;
         List<int> listGenEventsCapital;
         List<int> listGenEventsMajor;
@@ -56,7 +56,7 @@ namespace Next_Game
             listGenEventsMountain = new List<int>();
             listGenEventsSea = new List<int>();
             listGenEventsNormal = new List<int>(); //note that Normal road generic events also apply to all types of Roads (Royal generics -> Royal + Normal, for example)
-            listGenEventsRoyal = new List<int>();
+            listGenEventsKing = new List<int>();
             listGenEventsConnector = new List<int>();
             listGenEventsCapital = new List<int>();
             listGenEventsMajor = new List<int>();
@@ -134,7 +134,7 @@ namespace Next_Game
                                     listGenEventsNormal.Add(eventID);
                                     break;
                                 case ArcRoad.Royal:
-                                    listGenEventsRoyal.Add(eventID);
+                                    listGenEventsKing.Add(eventID);
                                     break;
                                 case ArcRoad.Connector:
                                     listGenEventsConnector.Add(eventID);
@@ -188,7 +188,7 @@ namespace Next_Game
         /// <param name="actor"></param>
         private void ResolveEvent(Active actor, EventType type)
         {
-            int geoID, terrain, road, locID, refID, frequency;
+            int geoID, terrain, road, locID, refID;
             Cartographic.Position pos = actor.GetActorPosition();
             List<Event> listEventPool = new List<Event>();
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
@@ -235,6 +235,26 @@ namespace Next_Game
                 {
                     //forests
                     listEventPool.AddRange(GetValidEvents(listGenEventsForest));
+                }
+                else if (locID == 0 && terrain == 0)
+                {
+                    //road event
+                    if (road == 1)
+                    {
+                        //normal road
+                        listEventPool.AddRange(GetValidEvents(listGenEventsNormal));
+                    }
+                    else if (road == 2)
+                    {
+                        //king's road
+                        listEventPool.AddRange(GetValidEvents(listGenEventsKing));
+                    }
+                    else if (road == 3)
+                    {
+                        //connector road
+                        listEventPool.AddRange(GetValidEvents(listGenEventsConnector));
+
+                    }
                 }
             }
             //choose an event
