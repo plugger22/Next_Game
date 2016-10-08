@@ -184,24 +184,6 @@ namespace Next_Game
                 if (keyPress != null)
                 {
                     SpecialModeInput(keyPress, _specialMode);
-                    //any events that need dealing with?
-                    /*
-                    if (director.ProcessCurrentEvents()) { }
-                    else
-                    {
-                        _specialMode = SpecialMode.None;
-                        //exit mouse input 
-                        if (_mouseOn == true)
-                        { _mouseOn = false; }
-                        //revert back to main menu
-                        else
-                        {
-                            //return to main menu from sub menus
-                            if (_menuMode != MenuMode.Main)
-                            { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
-                        }
-                    }
-                    */
                     keyPress = null;
                 }
                 _renderRequired = true;
@@ -795,18 +777,11 @@ namespace Next_Game
                 infoChannel.SetInfoList(world.ShowRecentMessagesRL(), ConsoleDisplay.Message);
                 //draw to consoles
                 map.DrawMapRL(_mapConsole);
-                //messageLog.DrawMessageQueue(_messageConsole);
-                
                 menu.DrawMenuRL(_menuConsole);
                 infoChannel.DrawInfoConsole(_inputConsole, ConsoleDisplay.Input);
                 infoChannel.DrawInfoConsole(_messageConsole, ConsoleDisplay.Message);
-
-                //if (_menuMode != MenuMode.Special) { infoChannel.DrawInfoConsole(_multiConsole, ConsoleDisplay.Multi);}
-                //else { infoChannel.DrawSpecial(_multiConsole, SpecialMode.Event); }
                 infoChannel.DrawInfoConsole(_multiConsole, ConsoleDisplay.Multi, _specialMode);
-
                 infoChannel.DrawInfoConsole(_statusConsole, ConsoleDisplay.Status);
-
                 //Blit to root Console
                 RLConsole.Blit(_menuConsole, 0, 0, _menuWidth, _menuHeight,_rootConsole, 0, 0);
                 RLConsole.Blit(_mapConsole, 0, 0, _mapWidth, _mapHeight,_rootConsole, 0, 20);
@@ -1052,7 +1027,6 @@ namespace Next_Game
             switch (keyPress.Key)
             {
                 case RLKey.F1:
-                    //test
                     //_specialMode = SpecialMode.Event;
                     break;
                 case RLKey.F2:
@@ -1083,21 +1057,7 @@ namespace Next_Game
                             { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
                         }
                     }
-                    keyPress = null;
-                    /*
-                    //exit mouse input 
-                    if (_mouseOn == true)
-                    { _mouseOn = false; }
-                    //revert back to main menu
-                    else
-                    {
-                        if (_menuMode != MenuMode.Main)
-                        {
-                            //return to main menu from sub menus
-                            _menuMode = menu.SwitchMenuMode(MenuMode.Main);
-                        }
-                    }
-                    */
+                    //keyPress = null;
                     break;
             }
         }
