@@ -188,12 +188,35 @@ namespace Next_Game
         /// <param name="actor"></param>
         private void ResolveEvent(Active actor, EventType type)
         {
-            int geoID, terrain, road, locID, frequency;
+            int geoID, terrain, road, locID, refID, frequency;
             Cartographic.Position pos = actor.GetActorPosition();
             List<Event> listEventPool = new List<Event>();
+            locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
             //Location event
             if (type == EventType.Location)
-            { }
+            {
+                refID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
+                if (locID == 1)
+                {
+                    //capital
+                    listEventPool.AddRange(GetValidEvents(listGenEventsCapital));
+                }
+                else if (refID < 100)
+                {
+                    //Major House
+                    listEventPool.AddRange(GetValidEvents(listGenEventsMajor));
+                }
+                else if (refID < 1000)
+                {
+                    //Minor House
+                    listEventPool.AddRange(GetValidEvents(listGenEventsMinor));
+                }
+                else if (refID >= 1000)
+                {
+                    //Special Location - Inn
+                    listEventPool.AddRange(GetValidEvents(listGenEventsInn));
+                }
+            }
             //Travelling event
             else if (type == EventType.Travelling)
             {
@@ -201,37 +224,17 @@ namespace Next_Game
                 geoID = Game.map.GetMapInfo(Cartographic.MapLayer.GeoID, pos.PosX, pos.PosY);
                 terrain = Game.map.GetMapInfo(Cartographic.MapLayer.Terrain, pos.PosX, pos.PosY);
                 road = Game.map.GetMapInfo(Cartographic.MapLayer.Road, pos.PosX, pos.PosY);
-                locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
+                
                 //get generic terrain & road events
                 if (locID == 0 && terrain == 1)
                 {
                     //mountains
-                    foreach (int eventID in listGenEventsMountain)
-                    {
-                        Event eventObject = dictEvents[eventID];
-                        if (eventObject != null && eventObject.Active == true)
-                        {
-                            frequency = (int)eventObject.Frequency;
-                            //add # of events to pool equal to (int)EventFrequency
-                            for (int i = 0; i < frequency; i++)
-                            { listEventPool.Add(eventObject); }
-                        }
-                    }
+                    listEventPool.AddRange(GetValidEvents(listGenEventsMountain));
                 }
                 else if (locID == 0 && terrain == 2)
                 {
                     //forests
-                    foreach(int eventID in listGenEventsForest)
-                    {
-                        Event eventObject = dictEvents[eventID];
-                        if (eventObject != null && eventObject.Active == true)
-                        {
-                            frequency = (int)eventObject.Frequency;
-                            //add # of events to pool equal to (int)EventFrequency
-                            for(int i = 0; i < frequency; i++)
-                            { listEventPool.Add(eventObject); }
-                        }
-                    }
+                    listEventPool.AddRange(GetValidEvents(listGenEventsForest));
                 }
             }
             //choose an event
@@ -247,7 +250,29 @@ namespace Next_Game
                 EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
                 listCurrentEvents.Add(current);
             }
-             
+        }
+
+        /// <summary>
+        /// Extracts all valid events from a list of EventID's
+        /// </summary>
+        /// <param name="listEventID"></param>
+        /// <returns></returns>
+        private List<Event> GetValidEvents(List<int> listEventID)
+        {
+            int frequency;
+            List<Event> listEvents = new List<Event>();
+            foreach (int eventID in listEventID)
+            {
+                Event eventObject = dictEvents[eventID];
+                if (eventObject != null && eventObject.Active == true)
+                {
+                    frequency = (int)eventObject.Frequency;
+                    //add # of events to pool equal to (int)EventFrequency
+                    for (int i = 0; i < frequency; i++)
+                    { listEvents.Add(eventObject); }
+                }
+            }
+            return listEvents;
         }
        
         /// <summary>
@@ -272,8 +297,18 @@ namespace Next_Game
                     Active actor = package.Person;
                     //create event description
                     Cartographic.Position pos = actor.GetActorPosition();
-                    eventList.Add(new Snippet(string.Format("{0} at Loc {1}:{2}, Aid {3}, travelling towards {4}", actor.Name, pos.PosX, pos.PosY, actor.ActID,
-                        Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
+                    switch (eventObject.Type)
+                    {
+                        case ArcType.GeoCluster:
+                        case ArcType.Road:
+                            eventList.Add(new Snippet(string.Format("{0} at Loc {1}:{2}, Aid {3}, travelling towards {4}", actor.Name, pos.PosX, pos.PosY, actor.ActID,
+                                Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
+                            break;
+                        case ArcType.Location:
+                            eventList.Add(new Snippet(string.Format("{0} at Loc {1}:{2}, Aid {3}, currently at {4}", actor.Name, pos.PosX, pos.PosY, actor.ActID,
+                                Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
+                            break;
+                    }
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                     eventList.Add(new Snippet(""));

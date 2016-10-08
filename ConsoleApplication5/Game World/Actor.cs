@@ -173,6 +173,7 @@ namespace Next_Game
         public int CrowChance { get; set; } //chance of crow getting through
         public int CrowDistance { get; set; } //distance between player and follower
         public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
+        public int Resources { get; set; } //abstracted money, equipment and influence
         public bool Activated { get; set; } //can move/be given orders this turn, or not
         private List<string> crowTooltip { get; set; } //explanation of factors influencing crow chance
 
