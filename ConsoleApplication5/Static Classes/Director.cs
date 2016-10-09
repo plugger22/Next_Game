@@ -40,6 +40,7 @@ namespace Next_Game
         List<int> listGenEventsInn;
         List<EventPackage> listCurrentEvents;
         Dictionary<int, Event> dictEvents;
+        Dictionary<int, Archetype> dictArchetypes;
 
         public Director(int seed)
         {
@@ -48,8 +49,8 @@ namespace Next_Game
             //debug
             story = new Story("Steady Eddy");
             story.AI = StoryAI.Balanced;
-            story.EventLocation = 10;
-            story.EventTravelling = 60;
+            story.Ev_Follower_Loc = 10;
+            story.Ev_Follower_Trav = 60;
 
             listOfActiveGeoClusters = new List<int>();
             listGenEventsForest = new List<int>();
@@ -169,13 +170,13 @@ namespace Next_Game
                     if (actor.Value.Status == ActorStatus.AtLocation)
                     {
                         //Location event
-                        if (rnd.Next(100) <= story.EventLocation)
+                        if (rnd.Next(100) <= story.Ev_Follower_Loc)
                         { ResolveEvent(actor.Value, EventType.Location); }
                     }
                     else if (actor.Value.Status == ActorStatus.Travelling)
                     {
                         //travelling event
-                        if (rnd.Next(100) <= story.EventTravelling)
+                        if (rnd.Next(100) <= story.Ev_Follower_Trav)
                         { ResolveEvent(actor.Value, EventType.Travelling); }
                     }
                 }

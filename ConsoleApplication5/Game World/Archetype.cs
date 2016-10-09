@@ -16,9 +16,10 @@ namespace Next_Game
     {
         private static int arcIndex = 1;
         public string Name { get; set; }
-        public int arcID { get; }
+        public int ArcID { get; }
+        public int TempID { get; }
         public ArcType Type { get; set; } //which class of object it applies to
-        private List<int> listOfEvents; //Event ID list
+        private List<int> listFollowerEvents; //Event ID list that apply to followers
 
         /// <summary>
         /// default constructor
@@ -26,12 +27,13 @@ namespace Next_Game
         /// <param name="type"></param>
         /// <param name="category"></param>
         /// <param name="events"></param>
-        public Archetype(string name, ArcType type, List<int> events)
+        public Archetype(string name, ArcType type, int tempID, List<int> events)
         {
-            arcID = arcIndex++;
+            ArcID = arcIndex++;
             this.Name = name;
             Type = type;
-            if (events != null) { listOfEvents = new List<int>(events); }
+            this.TempID = tempID;
+            if (events != null) { listFollowerEvents = new List<int>(events); }
             else { Game.SetError(new Error(48, "Invalid list of Events")); }
         }
     }

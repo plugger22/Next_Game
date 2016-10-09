@@ -626,6 +626,99 @@ namespace Next_Game
             return dictOfEvents;
         }
 
+        /// <summary>
+        /// Import Archetypes
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        internal Dictionary<int, Archetype> GetArchetypes(string fileName)
+        {
+            int dataCounter = 0;
+            string cleanTag;
+            string cleanToken;
+            bool newEvent = false;
+            bool validData = true;
+            int dataInt;
+            List<int> listTempID = new List<int>(); //used to pick up duplicate tempID's
+            Dictionary<int, Archetype> dictOfArchetypes = new Dictionary<int, Archetype>();
+            string[] arrayOfEvents = ImportDataFile(fileName);
+            EventStruct structEvent = new EventStruct();
+            //loop imported array of strings
+            for (int i = 0; i < arrayOfEvents.Length; i++)
+            {
+                if (arrayOfEvents[i] != "" && !arrayOfEvents[i].StartsWith("#"))
+                {
+                    //set up for a new house
+                    if (newEvent == false)
+                    {
+                        newEvent = true;
+                        validData = true;
+                        //Console.WriteLine();
+                        dataCounter++;
+                        //new Trait object
+                        structEvent = new EventStruct();
+                    }
+                    string[] tokens = arrayOfEvents[i].Split(':');
+                    //strip out leading spaces
+                    cleanTag = tokens[0].Trim();
+                    cleanToken = tokens[1].Trim();
+                    if (cleanToken.Length == 0)
+                    { Game.SetError(new Error(53, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                    else
+                    {
+                        switch (cleanTag)
+                        {
+                            case "Name":
+                                structEvent.Name = cleanToken;
+                                break;
+                            case "End":
+                                //write record
+                                if (validData == true)
+                                {
+                                    //pass info over to a class instance
+                                    Archetype arcObject = null;
+                                    switch (structEvent.Type)
+                                    {
+                                        case ArcType.GeoCluster:
+                                            arcObject = new EventGeo(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Geo);
+                                            break;
+                                        case ArcType.Location:
+                                            arcObject = new EventLoc(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Loc);
+                                            break;
+                                        case ArcType.Road:
+                                            arcObject = new EventRoad(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Road);
+                                            break;
+                                    }
+                                    if (arcObject != null)
+                                    {
+                                        Archetype arcTemp = arcObject as Archetype;
+                                        arcTemp.EventText = structEvent.EventText;
+                                        arcTemp.SucceedText = structEvent.SucceedText;
+                                        arcTemp.FailText = structEvent.FailText;
+                                        arcTemp.Trait = structEvent.Trait;
+                                        arcTemp.Delay = structEvent.Delay;
+                                        arcTemp.Category = structEvent.Cat;
+                                        //last datapoint - save object to list
+                                        if (dataCounter > 0)
+                                        { dictOfArchetypes.Add(arcTemp.EventID, arcTemp); }
+                                    }
+                                    else { Game.SetError(new Error(49, "Invalid Input, eventObject")); }
+                                }
+                                else
+                                { Game.SetError(new Error(49, string.Format("Event, (\"{0}\" TempID {1}), not Imported", structEvent.Name, structEvent.TempID))); }
+                                break;
+                            default:
+                                Game.SetError(new Error(49, "Invalid Input, CleanTag"));
+                                break;
+                        }
+                    }
+                }
+                else { newEvent = false; }
+            }
+            return dictOfArchetypes;
+        }
+
+
 
         /// <summary>
         /// Import GeoNames

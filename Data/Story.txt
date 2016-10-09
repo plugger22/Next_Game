@@ -2,10 +2,37 @@
 
 # Name: description
 # StoryAI: Personality -> Benevolent, Balanced, Evil, Tricky
-# EventLocation:  number (1 to 100) -> chance of an active character experiencing a random event while at a location
-# EventTravelling: number (1 to 100) -> chance of an active character experiencing a random event while travelling
+# Ev_Follower_Loc:  number (1 to 100) -> chance of a follower experiencing a random event while at a location
+# Ev_Follower_Trav: number (1 to 100) -> chance of a follower experiencing a random event while travelling
+# Ev_Player_Loc: number (1 to 100) -> chance of the Player experiencing a random event while at a location
+# Ev_Player_Trav: number (1 to 100) -> chance of the Player experiencing a random event while travelling
+# Arc_... : Archetype ID for that applies (leave blank if none)
+# Chance_...	: % chance of Archetype applying for that type (eg. 10% chance of Arc_Geo_Forest applying to any Forest) (leave blank if none)
+
 
 Name: Steady Eddy
 StoryAI: Balanced
-EventLocation: 20
-EventTravelling: 30
+Ev_Follower_Loc: 10
+Ev_Follower_Trav: 30
+Ev_Player_Loc: 10
+Ev_Player_Trav: 10
+Arc_Geo_Sea:
+Arc_Geo_Mountain:
+Arc_Geo_Forest:
+Arc_Loc_Capital:
+Arc_Loc_Major:
+Arc_Loc_Minor:
+Arc_Loc_Inn:
+Arc_Road_Normal:
+Arc_Road_Kings:
+Arc_Road_Connector:
+Chance_Forest:
+Chance_Mountain:
+Chance_Sea:
+Chance_Capital:
+Chance_Major:
+Chance_Minor:
+Chance_Inn:
+Chance_Normal:
+Chance_Kings:
+Chance_Connector:
