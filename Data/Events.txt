@@ -13,6 +13,7 @@
 # FailText: [follower's name] ....text  (Tip: don't mention the time required in the text, keep it vague so that any change in the delay amount won't require a corresponding text change)
 # Trait: (test against) Combat / Wits / Charm / Treachery / Leadership  (touched acts as a DM bonus)
 # Delay: number of turns
+# End -> needed for file Import
 
 # GeoClusters -> subType is Sea/Mountain/Forest ---
 
@@ -27,6 +28,7 @@ SucceedText: hacks their way clear and hastily departs before anything comes to 
 FailText: becomes entangled within the sticky web and wakes an unknown time later with no memory of events.
 Trait: Wits
 Delay: 2
+End
 
 Name: Wolves
 TempID: 2
@@ -39,6 +41,7 @@ SucceedText: takes a burning branch from the fire and fends off the wolf pack.
 FailText: is forced to take shelter up a tree after being bitten on the leg by a wolf
 Trait: Combat
 Delay: 1
+End
 
 Name: Rockfall
 TempID: 3
@@ -51,6 +54,7 @@ SucceedText: finds an alternative path through a narrow crevice.
 FailText: is unable to find a way past and must laboriously clear the rockfall before proceeding.
 Trait: Wits
 Delay: 2
+End
 
 Name: Shadow Cat
 TempID: 4
@@ -63,6 +67,7 @@ SucceedText: manages to wound the Shadow Cat as it launches itself at them. No m
 FailText: is knocked off the side of the mountain by the Shadow Cat landing heavily on their back. Luckily they land on a nearby ledge but are in sore need of rest and recovery.
 Trait: Combat
 Delay: 2
+End
 
 Name: Dire Wolf Tracks
 TempID: 5
@@ -75,6 +80,7 @@ SucceedText: checks the tracks and notices that they are moving away from the tr
 FailText: lights a fire to fend off any nearby Dire Wolves and only succeeds in attracting them. While the wolves are reluctant to attack a lot of time is lost waiting for them to leave.
 Trait: Wits
 Delay: 1
+End
 
 Name: Dire Wolves Attack
 TempID: 6
@@ -87,6 +93,7 @@ SucceedText: manages to duck under the Dire Wolf, draw their sword and fend off 
 FailText: is wounded by the beast and is forced to take time out to rest and recover before they can continue onwards.
 Trait: Combat
 Delay: 2
+End
 
 # Roads -> subType is Normal/Kings/Connector ---  
 
@@ -101,6 +108,7 @@ SucceedText: takes one look at the ragged gap and spurs their horse into an almi
 FailText: decides that discretion is the better part of valour and, rather than attempt to jump the gap, laboriously plods around the obstacle before finally rejoining the road on the far side.
 Trait: Combat
 Delay: 1
+End
 
 Name: Peasants
 TempID: 8
@@ -113,6 +121,7 @@ SucceedText: takes charge of the situation. Teams are organised and after some h
 FailText: attempts to bring order to chaos but nobody pays any attention to their flapping hand gestures and wildly waving arms. 
 Trait: Leadership
 Delay: 1
+End
 
 Name: Heavy Rain
 TempID: 9
@@ -125,6 +134,7 @@ SucceedText: carefully picks their way through the chest high waters by keeping 
 FailText: rides their horse straight into the torrent and is immediately swept downstream. Luckily the horse manages to swim back to the far bank in a quiet eddy but it's going to take a while to make it back to the road.
 Trait: Wits
 Delay: 2
+End
 
 Name: Priest
 TempID: 10
@@ -137,6 +147,7 @@ SucceedText: explains that they are carrying an important message from the High 
 FailText: swears at the Priest as they ride past, mud splattering the God Botherer from the horses hooves. Shortly after the horse develops an unexplained limp.
 Trait: Charm
 Delay: 1
+End
 
 Name: Rowdy Peasants
 TempID: 11
@@ -149,6 +160,7 @@ SucceedText: astounds the inebriated peasants by breaking into a rowdy drinking 
 FailText: attempts to ride down the nearest peasants down and gets dragged off their horse and soundly beaten for their troubles before being rescued by other travellers. Recovering will require rest.
 Trait: Charm
 Delay: 1
+End
 
 Name: Merchant
 TempID: 12
@@ -161,6 +173,7 @@ SucceedText: wisely exchanges pleasant greetings and rides on. There is somethin
 FailText: willingly provides amiable company to the cheerful merchant. Later, after continuing on, the Dornish beer rebounds and necessitates numerous trips to nearby bushes.
 Trait: Charm
 Delay: 1
+End
 
 Name: Horse Throws a Shoe
 TempID: 13
@@ -173,6 +186,7 @@ SucceedText: time learning from the stable master pays off. The horse is much ha
 FailText: looks at the shoe and regrets not having paid attention when the stable master gave a demonstration of how to re-shoe a horse. Somebody else will have to do it. It might be a long wait.
 Trait: Combat
 Delay: 2
+End
 
 Name: Thick Mud
 TempID: 14
@@ -185,6 +199,7 @@ SucceedText: gets down off their horse and finds the firm high ground. It's not 
 FailText: urges their horse ever deeper into the mud until both horse and rider are hopelessly stuck. Passers by rescue them but the exhaustion of both mount and rider necessitates a period of rest.
 Trait: Wits
 Delay: 2
+End
 
 Name: Collapsed Bridge
 TempID: 15
@@ -197,6 +212,7 @@ SucceedText: takes the bull by the horns and soon has the milling manpower worki
 FailText: is at a loss. How can you manage such ignorant peasants? It takes days before enough trees have been chopped down and the bridge repaired. Of course they paid no heed to good advice and managed to stumble from one disaster to the next.
 Trait: Leadership
 Delay: 3
+End
 
 # Locations -> subType is Capital/Major/Minor/Inn ---
 
@@ -211,6 +227,7 @@ SucceedText: informs him that of course he will fetch the Royal Maester just as 
 FailText: grumpily tells the Noble that he can damn well fetch the Maester himself. The insulted, arrogant, Noble yells for the Guards and demands retribution.
 Trait: Charm
 Delay: 1
+End
 
 Name: Pickpocket
 TempID: 17
@@ -223,6 +240,7 @@ SucceedText: fast reflexes come to the fore and the Pickpocket is caught red han
 FailText: realises they have been robbed, run after the Pickpocket and throw him to the ground. He yells that he's being assaulted. When the guards arrive it takes some time to resolve the confusion.
 Trait: Combat
 Delay: 1
+End
 
 Name: Knight
 TempID: 18
@@ -235,6 +253,7 @@ SucceedText: apologises profusely and helps the sore headed Knight back to his f
 FailText: asks what sort of Knight he is if they can't see where they are going? Not taking kindly to this insult, the Knight beats them and leaves them bleeding on the ground.
 Trait: Charm 
 Delay: 1
+End
 
 Name: Squire
 TempID: 19
@@ -247,6 +266,7 @@ SucceedText: reassures him and suggests that he would be better off approaching 
 FailText: agrees to help only to find that his 'sister' is a comely wench in a nearby alley looking for business. A disagreement ensures.
 Trait: Wits
 Delay: 1
+End
 
 Name: Beggar
 TempID: 20
@@ -259,6 +279,7 @@ SucceedText: adroitly trips the beggar as he appears to reach into his filthy ro
 FailText: briskly pushes past the beggar who promptly pulls out a truncheon and slams it down on their head.
 Trait: Combat
 Delay: 1
+End
 
 Name: Vendor
 TempID: 21
@@ -271,6 +292,7 @@ SucceedText: knows off color meat when they see it. The meat is cheap for a reas
 FailText: takes full advantage of the bargain. A case of food poisoning isn't far behind.
 Trait: Wits
 Delay: 1
+End
 
 Name: Drunken Thugs
 TempID: 22
@@ -283,6 +305,7 @@ SucceedText: brings them all to order with a few sharp words. Everybody goes bac
 FailText: yells for calm but they may as well have poured oil onto the fire. All hell breaks loose and not a person in the inn remains unscathed.
 Trait: Leadership
 Delay: 1
+End
 
 Name: Pleasures of the Flesh
 TempID: 23
@@ -295,3 +318,4 @@ SucceedText: politely, and wisely, refuses their offer.
 FailText: follows them upstairs only to be immediately brained unconscious by their accomplice.
 Trait: Wits
 Delay: 1
+End

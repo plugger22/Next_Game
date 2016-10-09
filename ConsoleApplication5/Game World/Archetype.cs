@@ -37,6 +37,8 @@ namespace Next_Game
             this.TempID = tempID;
             if (events != null) { listOfEvents = new List<int>(events); }
             else { Game.SetError(new Error(48, "Invalid list of Events")); }
+            //debug
+            Console.WriteLine("ArcID {0}, {1}, No. Events {2} -> TempID {3}", ArcID, Name, events.Count, TempID);
         }
 
     }

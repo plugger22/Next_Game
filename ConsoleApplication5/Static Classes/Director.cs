@@ -77,7 +77,9 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- Import Events");
             dictEvents = Game.file.GetEvents("Events.txt");
             GetGenericEvents();
+            Console.WriteLine(Environment.NewLine + "--- Import Archetypes");
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
+            Console.WriteLine(Environment.NewLine);
         }
 
         /// <summary>

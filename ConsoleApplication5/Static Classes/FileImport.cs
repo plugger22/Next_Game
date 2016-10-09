@@ -404,7 +404,8 @@ namespace Next_Game
                     string[] tokens = arrayOfEvents[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    cleanToken = tokens[1].Trim();
+                    if (cleanTag == "End") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    else { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0)
                     { Game.SetError(new Error(20, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                     else
@@ -595,6 +596,8 @@ namespace Next_Game
                                 { structEvent.Delay = dataInt; }
                                 else
                                 { Game.SetError(new Error(49, string.Format("Invalid Input, Delay, (\"{0}\")", arrayOfEvents[i]))); validData = false; }
+                                break;
+                            case "End":
                                 //write record
                                 if (validData == true)
                                 {
@@ -676,10 +679,8 @@ namespace Next_Game
                     string[] tokens = arrayOfArchetypes[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    if (cleanTag == "End") 
-                    { cleanToken = "1"; } //any value > 0, irrelevant what it is
-                    else
-                    { cleanToken = tokens[1].Trim(); }
+                    if (cleanTag == "End") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    else { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0)
                     { Game.SetError(new Error(53, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                     else
@@ -827,7 +828,7 @@ namespace Next_Game
                                     if (arcObject != null)
                                     {
                                         Archetype arcTemp = arcObject as Archetype;
-                                        
+                                        arcTemp.Type = arcObject.Type;
                                         //last datapoint - save object to list
                                         if (dataCounter > 0)
                                         { dictOfArchetypes.Add(arcTemp.ArcID, arcTemp); }
