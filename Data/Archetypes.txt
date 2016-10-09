@@ -1,6 +1,6 @@
 # Archetypes
 
-# TempID: unique number 
+# ArcID: unique number 
 # Name: descriptive title for archetype
 # Type: (ArcType -> GeoCluster / Location / Road)
 # subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Royal/Connector) 
@@ -9,7 +9,7 @@
 
 # GeoClusters ---
 
-TempID: 1
+ArcID: 1
 Name: Dire Wolf Forest
 Type: GeoCluster
 subType: Forest

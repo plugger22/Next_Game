@@ -14,10 +14,10 @@ namespace Next_Game
 
     public class Archetype
     {
-        private static int arcIndex = 1;
+        //private static int arcIndex = 1;
         public string Name { get; set; }
         public int ArcID { get; }
-        public int TempID { get; set; }
+        //public int TempID { get; set; }
         public ArcType Type { get; set; } //which class of object it applies to
         public ArcGeo Geo { get; set; } //subtypes, default to 'None' if not applicable
         public ArcLoc Loc { get; set; }
@@ -30,15 +30,16 @@ namespace Next_Game
         /// <param name="type"></param>
         /// <param name="category"></param>
         /// <param name="events"></param>
-        public Archetype(string name, int tempID, List<int> events)
+        public Archetype(string name, int arcID, List<int> events)
         {
-            ArcID = arcIndex++;
+            //ArcID = arcIndex++;
+            this.ArcID = arcID;
             this.Name = name;
-            this.TempID = tempID;
+            //this.TempID = tempID;
             if (events != null) { listOfEvents = new List<int>(events); }
             else { Game.SetError(new Error(48, "Invalid list of Events")); }
             //debug
-            Console.WriteLine("ArcID {0}, {1}, No. Events {2} -> TempID {3}", ArcID, Name, events.Count, TempID);
+            Console.WriteLine("ArcID {0}, {1}, No. Events {2}", ArcID, Name, events.Count);
         }
 
     }
@@ -49,7 +50,7 @@ namespace Next_Game
     public class ArcTypeGeo : Archetype
     {
 
-        public ArcTypeGeo(string name, ArcGeo subtype, int tempID, List<int> events) : base(name, tempID, events)
+        public ArcTypeGeo(string name, ArcGeo subtype, int arcID, List<int> events) : base(name, arcID, events)
         {
             Type = ArcType.GeoCluster;
             Geo = subtype;
@@ -62,7 +63,7 @@ namespace Next_Game
     public class ArcTypeLoc : Archetype
     {
 
-        public ArcTypeLoc(string name, ArcLoc subtype, int tempID, List<int> events) : base(name, tempID, events)
+        public ArcTypeLoc(string name, ArcLoc subtype, int arcID, List<int> events) : base(name, arcID, events)
         {
             Type = ArcType.Location;
             Loc = subtype;
@@ -75,7 +76,7 @@ namespace Next_Game
     public class ArcTypeRoad : Archetype
     {
 
-        public ArcTypeRoad(string name, ArcRoad subtype, int tempID, List<int> events) : base(name, tempID, events)
+        public ArcTypeRoad(string name, ArcRoad subtype, int arcID, List<int> events) : base(name, arcID, events)
         {
             Type = ArcType.Road;
             Road = subtype;

@@ -52,7 +52,7 @@ namespace Next_Game
     struct ArcStruct
     {
         public string Name { get; set; }
-        public int TempID { get; set; }
+        public int ArcID { get; set; }
         public ArcType Type { get; set; } //which class of object it applies to
         public ArcGeo Geo { get; set; }
         public ArcLoc Loc { get; set; }
@@ -657,7 +657,7 @@ namespace Next_Game
             bool newArc = false;
             bool validData = true;
             int dataInt;
-            List<int> listTempID = new List<int>(); //used to pick up duplicate tempID's
+            List<int> listArcID = new List<int>(); //used to pick up duplicate arcID's
             Dictionary<int, Archetype> dictOfArchetypes = new Dictionary<int, Archetype>();
             string[] arrayOfArchetypes = ImportDataFile(fileName);
             ArcStruct structArc = new ArcStruct();
@@ -690,15 +690,15 @@ namespace Next_Game
                             case "Name":
                                 structArc.Name = cleanToken;
                                 break;
-                            case "TempID":
+                            case "ArcID":
                                 try
-                                { structArc.TempID = Convert.ToInt32(cleanToken); }
+                                { structArc.ArcID = Convert.ToInt32(cleanToken); }
                                 catch
-                                { Game.SetError(new Error(53, string.Format("Invalid input for TempID {0}, (\"{1}\")", cleanToken, structArc.Name))); validData = false; }
-                                //check for duplicate TempID's
-                                if (listTempID.Contains(structArc.TempID))
-                                { Game.SetError(new Error(53, string.Format("Duplicate TempID {0}, (\"{1}\")", cleanToken, structArc.Name))); validData = false; }
-                                else { listTempID.Add(structArc.TempID); }
+                                { Game.SetError(new Error(53, string.Format("Invalid input for ArcID {0}, (\"{1}\")", cleanToken, structArc.Name))); validData = false; }
+                                //check for duplicate arcID's
+                                if (listArcID.Contains(structArc.ArcID))
+                                { Game.SetError(new Error(53, string.Format("Duplicate ArcID {0}, (\"{1}\")", cleanToken, structArc.Name))); validData = false; }
+                                else { listArcID.Add(structArc.ArcID); }
                                 break;
                             case "Type":
                                 switch (cleanToken)
@@ -823,13 +823,13 @@ namespace Next_Game
                                     switch (structArc.Type)
                                     {
                                         case ArcType.GeoCluster:
-                                            arcObject = new ArcTypeGeo(structArc.Name, structArc.Geo, structArc.TempID, structArc.listOfEvents);
+                                            arcObject = new ArcTypeGeo(structArc.Name, structArc.Geo, structArc.ArcID, structArc.listOfEvents);
                                             break;
                                         case ArcType.Location:
-                                            arcObject = new ArcTypeLoc(structArc.Name, structArc.Loc, structArc.TempID, structArc.listOfEvents);
+                                            arcObject = new ArcTypeLoc(structArc.Name, structArc.Loc, structArc.ArcID, structArc.listOfEvents);
                                             break;
                                         case ArcType.Road:
-                                            arcObject = new ArcTypeRoad(structArc.Name, structArc.Road, structArc.TempID, structArc.listOfEvents);
+                                            arcObject = new ArcTypeRoad(structArc.Name, structArc.Road, structArc.ArcID, structArc.listOfEvents);
                                             break;
                                     }
                                     if (arcObject != null)
@@ -843,7 +843,7 @@ namespace Next_Game
                                     else { Game.SetError(new Error(53, "Invalid Input, arcObject")); }
                                 }
                                 else
-                                { Game.SetError(new Error(53, string.Format("Archetype, (\"{0}\" TempID {1}), not Imported", structArc.Name, structArc.TempID))); }
+                                { Game.SetError(new Error(53, string.Format("Archetype, (\"{0}\" ArcID {1}), not Imported", structArc.Name, structArc.ArcID))); }
                                 break;
                             default:
                                 Game.SetError(new Error(53, string.Format("Invalid Input, CleanTag {0}, \"{1}\"", cleanTag, structArc.Name)));
