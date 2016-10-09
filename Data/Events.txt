@@ -14,17 +14,6 @@
 # Trait: (test against) Combat / Wits / Charm / Treachery / Leadership  (touched acts as a DM bonus)
 # Delay: number of turns
 
-# Name:
-# TempID:
-# Type:
-# subType:
-# Category:
-# EventText:
-# SucceedText:
-# FailText:
-# Trait:
-# Delay:
-
 # GeoClusters -> subType is Sea/Mountain/Forest ---
 
 Name: Spiders
@@ -99,7 +88,7 @@ FailText: is wounded by the beast and is forced to take time out to rest and rec
 Trait: Combat
 Delay: 2
 
-# Roads -> subType is Normal/Royal/Connector ---  
+# Roads -> subType is Normal/Kings/Connector ---  
 
 Name: Bad Going
 TempID: 7
@@ -181,9 +170,9 @@ Category: Generic
 Frequency: Normal
 EventText: Twang! The horse brays and it's shoe is gone. Luckily it's easy to find but the horse seems reluctant to continue on without it.
 SucceedText: time learning from the stable master pays off. The horse is much happier with the shoe back on and willing trots off down the road at a steady pace.
-FailText: looks at the shoe and regrets not having paid attention when the stable master gave a demonstration of how to re shoe a horse. Somebody else will have to do it.
+FailText: looks at the shoe and regrets not having paid attention when the stable master gave a demonstration of how to re-shoe a horse. Somebody else will have to do it. It might be a long wait.
 Trait: Combat
-Delay: 1
+Delay: 2
 
 Name: Thick Mud
 TempID: 14
@@ -193,7 +182,7 @@ Category: Generic
 Frequency: Normal
 EventText: It's a poor road at the best of times but recent rains have turned it into a muddy swamp that looks like it could drag an elephant down into it's sticky depths.
 SucceedText: gets down off their horse and finds the firm high ground. It's not easy in this flat expanse but by getting as low as possible it can be discerned to those who know where to look.
-FailText: urges their horse ever deeper into the mud until both horse and rider are hopelessly stuck. Passers by rescue them but the exhaustion of both mount and rider necessitates several days of rest.
+FailText: urges their horse ever deeper into the mud until both horse and rider are hopelessly stuck. Passers by rescue them but the exhaustion of both mount and rider necessitates a period of rest.
 Trait: Wits
 Delay: 2
 
@@ -210,3 +199,99 @@ Trait: Leadership
 Delay: 3
 
 # Locations -> subType is Capital/Major/Minor/Inn ---
+
+Name: Noble
+TempID: 16
+Type: Location
+subType: Capital
+Category: Generic
+Frequency: Low
+EventText: A Noble with an elevated sense of his own with worth demands assistance as he's feeling faint headed and needs a Maester to attend him.
+SucceedText: informs him that of course he will fetch the Royal Maester just as soon as he can find him knowing full well that the Maester has better things to do.
+FailText: grumpily tells the Noble that he can damn well fetch the Maester himself. The insulted, arrogant, Noble yells for the Guards and demands retribution.
+Trait: Charm
+Delay: 1
+
+Name: Pickpocket
+TempID: 17
+Type: Location
+subType: Capital
+Category: Generic
+Frequency: Low
+EventText: A Pickpocket is working the crowd and approaches with intent.
+SucceedText: fast reflexes come to the fore and the Pickpocket is caught red handed, belted around the ears and sent on his way.
+FailText: realises they have been robbed, run after the Pickpocket and throw him to the ground. He yells that he's being assaulted. When the guards arrive it takes some time to resolve the confusion.
+Trait: Combat
+Delay: 1
+
+Name: Knight
+TempID: 18
+Type: Location
+subType: Major
+Category: Generic
+Frequency: Low
+EventText: A Knight, not looking where he is walking, is knocked down accidentally.
+SucceedText: apologises profusely and helps the sore headed Knight back to his feet.
+FailText: asks what sort of Knight he is if they can't see where they are going? Not taking kindly to this insult, the Knight beats them and leaves them bleeding on the ground.
+Trait: Charm 
+Delay: 1
+
+Name: Squire
+TempID: 19
+Type: Location
+subType: Major
+Category: Generic
+Frequency: Normal
+EventText: A frantic Squire is approaching people asking for their help in locating his sister.
+SucceedText: reassures him and suggests that he would be better off approaching the Lord and requesting his assistance.
+FailText: agrees to help only to find that his 'sister' is a comely wench in a nearby alley looking for business. A disagreement ensures.
+Trait: Wits
+Delay: 1
+
+Name: Beggar
+TempID: 20
+Type: Location
+subType: Minor
+Category: Generic
+Frequency: 
+EventText: 
+SucceedText: 
+FailText: 
+Trait: 
+Delay: 
+
+Name: Vendor
+TempID: 21
+Type: Location
+subType: Minor
+Category: Generic
+Frequency: 
+EventText: 
+SucceedText: 
+FailText: 
+Trait: 
+Delay: 
+
+Name: Drunken Thugs
+TempID: 22
+Type: Location
+subType: Inn
+Category: Generic
+Frequency: 
+EventText: 
+SucceedText: 
+FailText: 
+Trait: 
+Delay: 
+
+Name: Wanton Woman
+TempID: 23
+Type: Location
+subType: Inn
+Category: Generic
+Frequency: 
+EventText: 
+SucceedText: 
+FailText: 
+Trait: 
+Delay: 

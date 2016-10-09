@@ -321,11 +321,11 @@ namespace Next_Game
                     {
                         case ArcType.GeoCluster:
                         case ArcType.Road:
-                            eventList.Add(new Snippet(string.Format("{0} at Loc {1}:{2}, Aid {3}, travelling towards {4}", actor.Name, pos.PosX, pos.PosY, actor.ActID,
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
                                 Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
                             break;
                         case ArcType.Location:
-                            eventList.Add(new Snippet(string.Format("{0} at Loc {1}:{2}, Aid {3}, currently at {4}", actor.Name, pos.PosX, pos.PosY, actor.ActID,
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at Loc {2}:{3} {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY, 
                                 Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
                             break;
                     }
