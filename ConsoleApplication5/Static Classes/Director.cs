@@ -333,8 +333,8 @@ namespace Next_Game
                                 Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
                             break;
                         case ArcType.Location:
-                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at Loc {2}:{3} {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY, 
-                                Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID), 
+                                pos.PosX, pos.PosY), RLColor.LightGray, backColor));
                             break;
                     }
                     eventList.Add(new Snippet(""));

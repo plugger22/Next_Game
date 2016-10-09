@@ -1,9 +1,9 @@
 # Events -> contains all Generic events. 
-# assign each a TempID (should be unique but not critical)
+# assign each a EventID (should be unique but not critical)
 # NOTE: Keep order for individual events as shown. Sequence is important for file import routine.
 
 # Name: descriptive
-# TempID: unique number
+# EventID: unique number
 # Type: GeoCluster/Location/Road
 # subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Kings/Connector)
 # Category: Generic/Special
@@ -18,7 +18,7 @@
 # GeoClusters -> subType is Sea/Mountain/Forest ---
 
 Name: Spiders
-TempID: 1
+EventID: 1
 Type: GeoCluster
 subType: Forest
 Category: Generic
@@ -31,7 +31,7 @@ Delay: 2
 End
 
 Name: Wolves
-TempID: 2
+EventID: 2
 Type: GeoCluster
 subType: Forest
 Category: Generic
@@ -44,7 +44,7 @@ Delay: 1
 End
 
 Name: Rockfall
-TempID: 3
+EventID: 3
 Type: GeoCluster
 subType: Mountain
 Category: Generic
@@ -57,7 +57,7 @@ Delay: 2
 End
 
 Name: Shadow Cat
-TempID: 4
+EventID: 4
 Type: GeoCluster
 subType: Mountain
 Category: Generic
@@ -70,7 +70,7 @@ Delay: 2
 End
 
 Name: Dire Wolf Tracks
-TempID: 5
+EventID: 5
 Type: GeoCluster
 subType: Forest
 Category: Special
@@ -83,7 +83,7 @@ Delay: 1
 End
 
 Name: Dire Wolves Attack
-TempID: 6
+EventID: 6
 Type: GeoCluster
 subType: Forest
 Category: Special
@@ -98,7 +98,7 @@ End
 # Roads -> subType is Normal/Kings/Connector ---  
 
 Name: Bad Going
-TempID: 7
+EventID: 7
 Type: Road
 subType: Normal
 Category: Generic
@@ -111,7 +111,7 @@ Delay: 1
 End
 
 Name: Peasants
-TempID: 8
+EventID: 8
 Type: Road
 subType: Normal
 Category: Generic
@@ -124,7 +124,7 @@ Delay: 1
 End
 
 Name: Heavy Rain
-TempID: 9
+EventID: 9
 Type: Road
 subType: Normal
 Category: Generic
@@ -137,7 +137,7 @@ Delay: 2
 End
 
 Name: Priest
-TempID: 10
+EventID: 10
 Type: Road
 subType: Kings
 Category: Generic
@@ -150,7 +150,7 @@ Delay: 1
 End
 
 Name: Rowdy Peasants
-TempID: 11
+EventID: 11
 Type: Road
 subType: Kings
 Category: Generic
@@ -163,7 +163,7 @@ Delay: 1
 End
 
 Name: Merchant
-TempID: 12
+EventID: 12
 Type: Road
 subType: Kings
 Category: Generic
@@ -176,7 +176,7 @@ Delay: 1
 End
 
 Name: Horse Throws a Shoe
-TempID: 13
+EventID: 13
 Type: Road
 subType: Connector
 Category: Generic
@@ -189,7 +189,7 @@ Delay: 2
 End
 
 Name: Thick Mud
-TempID: 14
+EventID: 14
 Type: Road
 subType: Connector
 Category: Generic
@@ -202,7 +202,7 @@ Delay: 2
 End
 
 Name: Collapsed Bridge
-TempID: 15
+EventID: 15
 Type: Road
 subType: Connector
 Category: Generic
@@ -217,7 +217,7 @@ End
 # Locations -> subType is Capital/Major/Minor/Inn ---
 
 Name: Noble
-TempID: 16
+EventID: 16
 Type: Location
 subType: Capital
 Category: Generic
@@ -230,7 +230,7 @@ Delay: 1
 End
 
 Name: Pickpocket
-TempID: 17
+EventID: 17
 Type: Location
 subType: Capital
 Category: Generic
@@ -243,7 +243,7 @@ Delay: 1
 End
 
 Name: Knight
-TempID: 18
+EventID: 18
 Type: Location
 subType: Major
 Category: Generic
@@ -256,7 +256,7 @@ Delay: 1
 End
 
 Name: Squire
-TempID: 19
+EventID: 19
 Type: Location
 subType: Major
 Category: Generic
@@ -269,7 +269,7 @@ Delay: 1
 End
 
 Name: Beggar
-TempID: 20
+EventID: 20
 Type: Location
 subType: Minor
 Category: Generic
@@ -282,7 +282,7 @@ Delay: 1
 End
 
 Name: Vendor
-TempID: 21
+EventID: 21
 Type: Location
 subType: Minor
 Category: Generic
@@ -295,7 +295,7 @@ Delay: 1
 End
 
 Name: Drunken Thugs
-TempID: 22
+EventID: 22
 Type: Location
 subType: Inn
 Category: Generic
@@ -308,7 +308,7 @@ Delay: 1
 End
 
 Name: Pleasures of the Flesh
-TempID: 23
+EventID: 23
 Type: Location
 subType: Inn
 Category: Generic

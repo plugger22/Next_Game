@@ -15,10 +15,10 @@ namespace Next_Game
     /// </summary>
     public class Event
     {
-        private static int eventIndex = 1;
-        public int EventID { get; }
+        //private static int eventIndex = 1;
+        //public int EventID { get; }
         public string Name { get; set; }
-        public int TempID { get; set; }
+        public int EventID { get; }
         public bool Active { get; set; } = true; //can only be used if active
         public EventFrequency Frequency { get; set; }
         public EventCategory Category { get; set; } = EventCategory.None;
@@ -34,17 +34,17 @@ namespace Next_Game
         /// <summary>
         /// base class constructor
         /// </summary>
-        /// <param name="tempID"></param>
+        /// <param name="eventID"></param>
         /// <param name="name"></param>
         /// <param name="frequency"></param>
-        public Event(int tempID, string name, EventFrequency frequency)
+        public Event(int eventID, string name, EventFrequency frequency)
         {
-            EventID = eventIndex++;
-            this.TempID = tempID;
+            //EventID = eventIndex++;
+            this.EventID = eventID;
             this.Name = name;
             this.Frequency = frequency;
             //debug
-            Console.WriteLine("EventID {0}, {1}, Frequency {2} -> TempID {3}", EventID, Name, Frequency, TempID);
+            Console.WriteLine("EventID {0}, {1}, Frequency {2}", EventID, Name, Frequency);
         }
     }
 
@@ -64,10 +64,10 @@ namespace Next_Game
         /// <summary>
         /// pass through constructor for subclasses
         /// </summary>
-        /// <param name="tempID"></param>
+        /// <param name="eventID"></param>
         /// <param name="name"></param>
         /// <param name="frequency"></param>
-        public EventGeneric(int tempID, string name, EventFrequency frequency) : base(tempID, name, frequency)
+        public EventGeneric(int eventID, string name, EventFrequency frequency) : base(eventID, name, frequency)
         {
             
         }
@@ -79,7 +79,7 @@ namespace Next_Game
     public class EventGeo : EventGeneric
     {
 
-        public EventGeo (int tempID, string name, EventFrequency frequency, ArcGeo subtype) : base (tempID, name, frequency)
+        public EventGeo (int eventID, string name, EventFrequency frequency, ArcGeo subtype) : base (eventID, name, frequency)
         {
             Type = ArcType.GeoCluster;
             GeoType = subtype;
@@ -92,7 +92,7 @@ namespace Next_Game
     public class EventLoc : EventGeneric
     {
 
-        public EventLoc(int tempID, string name, EventFrequency frequency, ArcLoc subtype) : base(tempID, name, frequency)
+        public EventLoc(int eventID, string name, EventFrequency frequency, ArcLoc subtype) : base(eventID, name, frequency)
         {
             Type = ArcType.Location;
             LocType = subtype;
@@ -105,7 +105,7 @@ namespace Next_Game
     public class EventRoad : EventGeneric
     {
 
-        public EventRoad(int tempID, string name, EventFrequency frequency, ArcRoad subtype) : base(tempID, name, frequency)
+        public EventRoad(int eventID, string name, EventFrequency frequency, ArcRoad subtype) : base(eventID, name, frequency)
         {
             Type = ArcType.Road;
             RoadType = subtype;

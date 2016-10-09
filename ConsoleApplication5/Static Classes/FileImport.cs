@@ -37,7 +37,7 @@ namespace Next_Game
         public string EventText { get; set; }
         public string SucceedText { get; set; }
         public string FailText { get; set; }
-        public int TempID { get; set; }
+        public int EventID { get; set; }
         public ArcType Type { get; set; }
         public ArcGeo Geo { get; set; }
         public ArcRoad Road { get; set; }
@@ -382,7 +382,7 @@ namespace Next_Game
             bool newEvent = false;
             bool validData = true;
             int dataInt;
-            List<int> listTempID = new List<int>(); //used to pick up duplicate tempID's
+            List<int> listEventID = new List<int>(); //used to pick up duplicate eventID's
             Dictionary<int, Event> dictOfEvents = new Dictionary<int, Event>();
             string[] arrayOfEvents = ImportDataFile(fileName);
             EventStruct structEvent = new EventStruct();
@@ -415,15 +415,15 @@ namespace Next_Game
                             case "Name":
                                 structEvent.Name = cleanToken;
                                 break;
-                            case "TempID":
+                            case "EventID":
                                 try
-                                { structEvent.TempID = Convert.ToInt32(cleanToken); }
+                                { structEvent.EventID = Convert.ToInt32(cleanToken); }
                                 catch
-                                { Game.SetError(new Error(49, string.Format("Invalid input for TempID {0}, (\"{1}\")", cleanToken, structEvent.Name))); validData = false; }
-                                //check for duplicate TempID's
-                                if (listTempID.Contains(structEvent.TempID))
-                                { Game.SetError(new Error(49, string.Format("Duplicate TempID {0}, (\"{1}\")", cleanToken, structEvent.Name))); validData = false; }
-                                else { listTempID.Add(structEvent.TempID); }
+                                { Game.SetError(new Error(49, string.Format("Invalid input for EventID {0}, (\"{1}\")", cleanToken, structEvent.Name))); validData = false; }
+                                //check for duplicate EventID's
+                                if (listEventID.Contains(structEvent.EventID))
+                                { Game.SetError(new Error(49, string.Format("Duplicate EventID {0}, (\"{1}\")", cleanToken, structEvent.Name))); validData = false; }
+                                else { listEventID.Add(structEvent.EventID); }
                                 break;
                             case "Type":
                                 switch (cleanToken)
@@ -606,13 +606,13 @@ namespace Next_Game
                                     switch (structEvent.Type)
                                     {
                                         case ArcType.GeoCluster:
-                                            eventObject = new EventGeo(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Geo);
+                                            eventObject = new EventGeo(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Geo);
                                             break;
                                         case ArcType.Location:
-                                            eventObject = new EventLoc(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Loc);
+                                            eventObject = new EventLoc(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Loc);
                                             break;
                                         case ArcType.Road:
-                                            eventObject = new EventRoad(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Road);
+                                            eventObject = new EventRoad(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Road);
                                             break;
                                     }
                                     if (eventObject != null)
@@ -631,7 +631,7 @@ namespace Next_Game
                                     else { Game.SetError(new Error(49, "Invalid Input, eventObject")); }
                                 }
                                 else
-                                { Game.SetError(new Error(49, string.Format("Event, (\"{0}\" TempID {1}), not Imported", structEvent.Name, structEvent.TempID))); }
+                                { Game.SetError(new Error(49, string.Format("Event, (\"{0}\" EventID {1}), not Imported", structEvent.Name, structEvent.EventID))); }
                                 break;
                             default:
                                 Game.SetError(new Error(49, "Invalid Input, CleanTag"));
