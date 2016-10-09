@@ -802,7 +802,13 @@ namespace Next_Game
                                         {
                                             dataInt = Convert.ToInt32(tempHandle);
                                             if (dataInt > 0)
-                                            { tempList.Add(dataInt); }
+                                            {
+                                                //check a valid event
+                                                if (Game.director.ConfirmEvent(dataInt))
+                                                { tempList.Add(dataInt); }
+                                                else
+                                                { Game.SetError(new Error(53, string.Format("Invalid EventID \"{0}\" (Not found in Dictionary) for {1}", dataInt, structArc.Name))); validData = false; }
+                                            }
                                             else
                                             { Game.SetError(new Error(53, string.Format("Invalid EventID (Zero Value) for {0}, {1}", structArc.Name, fileName))); validData = false; }
                                         }

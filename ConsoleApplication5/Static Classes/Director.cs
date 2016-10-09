@@ -39,8 +39,8 @@ namespace Next_Game
         List<int> listGenEventsMinor;
         List<int> listGenEventsInn;
         List<EventPackage> listCurrentEvents;
-        Dictionary<int, Event> dictEvents;
-        Dictionary<int, Archetype> dictArchetypes;
+        private Dictionary<int, Event> dictEvents;
+        private Dictionary<int, Archetype> dictArchetypes;
 
         public Director(int seed)
         {
@@ -78,6 +78,7 @@ namespace Next_Game
             dictEvents = Game.file.GetEvents("Events.txt");
             GetGenericEvents();
             Console.WriteLine(Environment.NewLine + "--- Import Archetypes");
+            //Run AFTER importing Events
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
             Console.WriteLine(Environment.NewLine);
         }
@@ -414,6 +415,19 @@ namespace Next_Game
         /// <returns></returns>
         public int GetNumCurrentEvents()
         { return listCurrentEvents.Count(); }
+
+        /// <summary>
+        /// query whether an event exists in based on ID
+        /// </summary>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        public bool ConfirmEvent(int eventID)
+        {
+            bool status = false;
+            if(dictEvents.ContainsKey(eventID))
+            { return true; }
+            return status;
+        }
 
         //place Director methods above here
     }
