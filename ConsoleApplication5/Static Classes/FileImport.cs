@@ -656,12 +656,12 @@ namespace Next_Game
             int dataInt;
             List<int> listTempID = new List<int>(); //used to pick up duplicate tempID's
             Dictionary<int, Archetype> dictOfArchetypes = new Dictionary<int, Archetype>();
-            string[] arrayOfEvents = ImportDataFile(fileName);
+            string[] arrayOfArchetypes = ImportDataFile(fileName);
             ArcStruct structArc = new ArcStruct();
             //loop imported array of strings
-            for (int i = 0; i < arrayOfEvents.Length; i++)
+            for (int i = 0; i < arrayOfArchetypes.Length; i++)
             {
-                if (arrayOfEvents[i] != "" && !arrayOfEvents[i].StartsWith("#"))
+                if (arrayOfArchetypes[i] != "" && !arrayOfArchetypes[i].StartsWith("#"))
                 {
                     //set up for a new house
                     if (newArc == false)
@@ -673,10 +673,13 @@ namespace Next_Game
                         //new Trait object
                         structArc = new ArcStruct();
                     }
-                    string[] tokens = arrayOfEvents[i].Split(':');
+                    string[] tokens = arrayOfArchetypes[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    cleanToken = tokens[1].Trim();
+                    if (cleanTag == "End") 
+                    { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    else
+                    { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0)
                     { Game.SetError(new Error(53, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                     else
@@ -688,6 +691,120 @@ namespace Next_Game
                                 break;
                             case "TempID":
                                 structArc.TempID = Convert.ToInt32(cleanToken);
+                                break;
+                            case "Type":
+                                switch (cleanToken)
+                                {
+                                    case "GeoCluster":
+                                        structArc.Type = ArcType.GeoCluster;
+                                        break;
+                                    case "Location":
+                                        structArc.Type = ArcType.Location;
+                                        break;
+                                    case "Road":
+                                        structArc.Type = ArcType.Road;
+                                        break;
+                                    default:
+                                        structArc.Type = ArcType.None;
+                                        Game.SetError(new Error(53, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfArchetypes[i])));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "subType":
+                                //NOTE: subType needs to be AFTER Type in text file
+                                switch (structArc.Type)
+                                {
+                                    case ArcType.GeoCluster:
+                                        switch (cleanToken)
+                                        {
+                                            case "Sea":
+                                                structArc.Geo = ArcGeo.Sea;
+                                                break;
+                                            case "Mountain":
+                                                structArc.Geo = ArcGeo.Mountain;
+                                                break;
+                                            case "Forest":
+                                                structArc.Geo = ArcGeo.Forest;
+                                                break;
+                                            default:
+                                                structArc.Geo = ArcGeo.None;
+                                                Game.SetError(new Error(53, string.Format("Invalid Input, GeoCluster Type, (\"{0}\")", arrayOfArchetypes[i])));
+                                                validData = false;
+                                                break;
+                                        }
+                                        break;
+                                    case ArcType.Location:
+                                        switch (cleanToken)
+                                        {
+                                            case "Capital":
+                                                structArc.Loc = ArcLoc.Capital;
+                                                break;
+                                            case "Major":
+                                                structArc.Loc = ArcLoc.Major;
+                                                break;
+                                            case "Minor":
+                                                structArc.Loc = ArcLoc.Minor;
+                                                break;
+                                            case "Inn":
+                                                structArc.Loc = ArcLoc.Inn;
+                                                break;
+                                            default:
+                                                Game.SetError(new Error(53, string.Format("Invalid Input, Location Type, (\"{0}\")", arrayOfArchetypes[i])));
+                                                validData = false;
+                                                break;
+                                        }
+                                        break;
+                                    case ArcType.Road:
+                                        switch (cleanToken)
+                                        {
+                                            case "Normal":
+                                                structArc.Road = ArcRoad.Normal;
+                                                break;
+                                            case "Kings":
+                                                structArc.Road = ArcRoad.Kings;
+                                                break;
+                                            case "Connector":
+                                                structArc.Road = ArcRoad.Connector;
+                                                break;
+                                            default:
+                                                Game.SetError(new Error(53, string.Format("Invalid Input, Road Type, (\"{0}\")", arrayOfArchetypes[i])));
+                                                validData = false;
+                                                break;
+                                        }
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(53, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfArchetypes[i])));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "Ev_Follower":
+                                //get list of Events
+                                string[] arrayOfEvents = cleanToken.Split(',');
+                                List<int> tempList = new List<int>();
+                                //loop eventID array and add all to lists
+                                string tempHandle = null;
+                                for (int k = 0; k < arrayOfEvents.Length; k++)
+                                {
+                                    tempHandle = arrayOfEvents[k].Trim();
+                                    if (String.IsNullOrEmpty(tempHandle) == false)
+                                    {
+                                        try
+                                        {
+                                            dataInt = Convert.ToInt32(tempHandle);
+                                            if (dataInt > 0)
+                                            { tempList.Add(dataInt); }
+                                            else
+                                            { Game.SetError(new Error(53, string.Format("Invalid EventID (Zero Value) for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                        }
+                                        catch { Game.SetError(new Error(53, string.Format("Invalid EventID (Conversion Error) for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                    }
+                                    //dodgy EventID is ignored, it doesn't invalidate the record (some records deliberately don't have nicknames)
+                                    else
+                                    { Game.SetError(new Error(53, string.Format("Invalid EventID for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                }
+                                structArc.listOfEvents = tempList;
                                 break;
                             case "End":
                                 //write record
@@ -721,7 +838,7 @@ namespace Next_Game
                                 { Game.SetError(new Error(53, string.Format("Archetype, (\"{0}\" TempID {1}), not Imported", structArc.Name, structArc.TempID))); }
                                 break;
                             default:
-                                Game.SetError(new Error(53, "Invalid Input, CleanTag"));
+                                Game.SetError(new Error(53, string.Format("Invalid Input, CleanTag {0}, \"{1}\"", cleanTag, structArc.Name)));
                                 break;
                         }
                     }

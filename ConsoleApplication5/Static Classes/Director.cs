@@ -65,6 +65,7 @@ namespace Next_Game
             listGenEventsInn = new List<int>();
             listCurrentEvents = new List<EventPackage>();
             dictEvents = new Dictionary<int, Event>();
+            dictArchetypes = new Dictionary<int, Archetype>();
         }
 
         /// <summary>
@@ -76,6 +77,7 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- Import Events");
             dictEvents = Game.file.GetEvents("Events.txt");
             GetGenericEvents();
+            dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
         }
 
         /// <summary>
