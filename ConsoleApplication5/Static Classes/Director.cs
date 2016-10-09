@@ -49,7 +49,7 @@ namespace Next_Game
             story = new Story("Steady Eddy");
             story.AI = StoryAI.Balanced;
             story.EventLocation = 10;
-            story.EventTravelling = 80;
+            story.EventTravelling = 60;
 
             listOfActiveGeoClusters = new List<int>();
             listGenEventsForest = new List<int>();
@@ -188,34 +188,37 @@ namespace Next_Game
         /// <param name="actor"></param>
         private void ResolveEvent(Active actor, EventType type)
         {
-            int geoID, terrain, road, locID, refID;
+            int geoID, terrain, road, locID, refID, houseID;
             Cartographic.Position pos = actor.GetActorPosition();
             List<Event> listEventPool = new List<Event>();
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
             //Location event
             if (type == EventType.Location)
             {
-                refID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
+                refID = Game.map.GetMapInfo(Cartographic.MapLayer.RefID, pos.PosX, pos.PosY);
+                houseID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
                 if (locID == 1)
                 {
                     //capital
                     listEventPool.AddRange(GetValidEvents(listGenEventsCapital));
                 }
-                else if (refID < 100)
+                else if (refID > 0 && refID < 100)
                 {
                     //Major House
                     listEventPool.AddRange(GetValidEvents(listGenEventsMajor));
                 }
-                else if (refID < 1000)
+                else if (refID >= 100 && refID < 1000)
                 {
                     //Minor House
                     listEventPool.AddRange(GetValidEvents(listGenEventsMinor));
                 }
-                else if (refID >= 1000)
+                else if (houseID == 99)
                 {
                     //Special Location - Inn
                     listEventPool.AddRange(GetValidEvents(listGenEventsInn));
                 }
+                else
+                { Game.SetError(new Error(52, "Invalid Location Event Type")); }
             }
             //Travelling event
             else if (type == EventType.Travelling)

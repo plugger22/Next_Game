@@ -253,45 +253,45 @@ TempID: 20
 Type: Location
 subType: Minor
 Category: Generic
-Frequency: 
-EventText: 
-SucceedText: 
-FailText: 
-Trait: 
-Delay: 
+Frequency: Normal
+EventText: A beggar approaches asking for a donation. His manner is forceful.
+SucceedText: adroitly trips the beggar as he appears to reach into his filthy robe for a dagger.
+FailText: briskly pushes past the beggar who promptly pulls out a truncheon and slams it down on their head.
+Trait: Combat
+Delay: 1
 
 Name: Vendor
 TempID: 21
 Type: Location
 subType: Minor
 Category: Generic
-Frequency: 
-EventText: 
-SucceedText: 
-FailText: 
-Trait: 
-Delay: 
+Frequency: Low
+EventText: A vendor offers sweat meats for a ridiculously low price.
+SucceedText: knows off color meat when they see it. The meat is cheap for a reason.
+FailText: takes full advantage of the bargain. A case of food poisoning isn't far behind.
+Trait: Wits
+Delay: 1
 
 Name: Drunken Thugs
 TempID: 22
 Type: Location
 subType: Inn
 Category: Generic
-Frequency: 
-EventText: 
-SucceedText: 
-FailText: 
-Trait: 
-Delay: 
+Frequency: Low
+EventText: Rough, country folk, full of liquor are quarrelling amongst themselves. There is a risk of a full scale confrontation developing.
+SucceedText: brings them all to order with a few sharp words. Everybody goes back to drinking.
+FailText: yells for calm but they may as well have poured oil onto the fire. All hell breaks loose and not a person in the inn remains unscathed.
+Trait: Leadership
+Delay: 1
 
-Name: Wanton Woman
+Name: Pleasures of the Flesh
 TempID: 23
 Type: Location
 subType: Inn
 Category: Generic
-Frequency: 
-EventText: 
-SucceedText: 
-FailText: 
-Trait: 
-Delay: 
+Frequency: Low
+EventText: A resident of the Inn approaches, offering delights of the carnal kind.
+SucceedText: politely, and wisely, refuses their offer.
+FailText: follows them upstairs only to be immediately brained unconscious by their accomplice.
+Trait: Wits
+Delay: 1
