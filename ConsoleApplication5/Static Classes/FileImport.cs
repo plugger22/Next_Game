@@ -478,7 +478,7 @@ namespace Next_Game
                                             case "Normal":
                                                 structEvent.Road = ArcRoad.Normal;
                                                 break;
-                                            case "Royal":
+                                            case "Kings":
                                                 structEvent.Road = ArcRoad.Kings;
                                                 break;
                                             case "Connector":
@@ -514,6 +514,9 @@ namespace Next_Game
                             case "Frequency":
                                 switch (cleanToken)
                                 {
+                                    case "Very_Rare":
+                                        structEvent.Frequency = EventFrequency.Very_Rare;
+                                        break;
                                     case "Rare":
                                         structEvent.Frequency = EventFrequency.Rare;
                                         break;
@@ -528,6 +531,9 @@ namespace Next_Game
                                         break;
                                     case "Common":
                                         structEvent.Frequency = EventFrequency.Common;
+                                        break;
+                                    case "Very_Common":
+                                        structEvent.Frequency = EventFrequency.Very_Common;
                                         break;
                                     default:
                                         Game.SetError(new Error(49, string.Format("Invalid Input, Frequency, (\"{0}\")", arrayOfEvents[i])));

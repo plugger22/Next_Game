@@ -7,10 +7,10 @@
 # Type: GeoCluster/Location/Road
 # subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Kings/Connector)
 # Category: Generic/Special
-# Frequency: Rare/Low/Normal/High/Common
+# Frequency: Very_Rare/Rare/Low/Normal/High/Common/Very_Common
 # EventText:
 # SucceedText: [follower's name] ....text
-# FailText: [follower's name] ....text
+# FailText: [follower's name] ....text  (Tip: don't mention the time required in the text, keep it vague so that any change in the delay amount won't require a corresponding text change)
 # Trait: (test against) Combat / Wits / Charm / Treachery / Leadership  (touched acts as a DM bonus)
 # Delay: number of turns
 
@@ -35,7 +35,7 @@ Category: Generic
 Frequency: Low
 EventText: A dense, almost invisible, web has been woven across the trail. Nobody is sure but there are rumours of Giant Spiders in the woods.
 SucceedText: hacks their way clear and hastily departs before anything comes to investigate.
-FailText: becomes entangled within the sticky web and wakes several days later with no memory of events.
+FailText: becomes entangled within the sticky web and wakes an unknown time later with no memory of events.
 Trait: Wits
 Delay: 2
 
@@ -83,7 +83,7 @@ Category: Special
 Frequency: Low
 EventText: Fresh Dire Wolf tracks are seen nearby. These big, powerful animals are dangerous and best avoided.
 SucceedText: checks the tracks and notices that they are moving away from the trail. The danger is in the past.
-FailText: lights a fire to fend off any nearby Dire Wolves and only succeeds in attracting them. While the wolves are reluctant to attack a full day is lost waiting for them to leave.
+FailText: lights a fire to fend off any nearby Dire Wolves and only succeeds in attracting them. While the wolves are reluctant to attack a lot of time is lost waiting for them to leave.
 Trait: Wits
 Delay: 1
 
@@ -95,7 +95,7 @@ Category: Special
 Frequency: Low
 EventText: A Dire Wolf lunges out of the dense undergrowth without warning.
 SucceedText: manages to duck under the Dire Wolf, draw their sword and fend off the beast.
-FailText: is wounded by the beast and is forced to spend several days recovering before they can continue onwards.
+FailText: is wounded by the beast and is forced to take time out to rest and recover before they can continue onwards.
 Trait: Combat
 Delay: 2
 
@@ -109,7 +109,7 @@ Category: Generic
 Frequency: Normal
 EventText: Recent rains have gouged out deep gullies across the path of the road necessitating, what appears to be, a long detour.
 SucceedText: takes one look at the ragged gap and spurs their horse into an almighty gallop. Bending low in the saddle they leap across in a flurry of dirt and rocks.
-FailText: decides that discretion is the better part of valour and, rather than attempt to jump the gap, spends a whole day plodding around the obstacle before finally rejoining the road on the far side.
+FailText: decides that discretion is the better part of valour and, rather than attempt to jump the gap, laboriously plods around the obstacle before finally rejoining the road on the far side.
 Trait: Combat
 Delay: 1
 
@@ -133,7 +133,7 @@ Category: Generic
 Frequency: Low
 EventText: Pelting rain hammers the ground and the road up ahead is covered in swirling, brown, water. It looks dangerous and it's uncertain how solid the footing is under the roiling, murky, water.
 SucceedText: carefully picks their way through the chest high waters by keeping their horse moving through the areas of stiller water and avoiding the eddies and swirls.
-FailText: rides their horse straight into the torrent and is immediately swept downstream. Luckily the horse manages to swim back to the far bank in a quiet eddy but it's going to take several days to make it back to the road.
+FailText: rides their horse straight into the torrent and is immediately swept downstream. Luckily the horse manages to swim back to the far bank in a quiet eddy but it's going to take a while to make it back to the road.
 Trait: Wits
 Delay: 2
 
@@ -142,12 +142,12 @@ TempID: 10
 Type: Road
 subType: Kings
 Category: Generic
-Frequency: 
-EventText: 
-SucceedText: 
-FailText: 
+Frequency: Rare
+EventText: A Priest is standing by the side of the road demanding a replacement horse as his has died. It's the duty of all god fearing travellers to provide help when asked by the clergy.
+SucceedText: explains that they are carrying an important message from the High Septon and that, as much as they would love to assist, they are under orders to not stop for any reason.
+FailText: swears at the Priest as they ride past, mud splattering the God Botherer from the horses hooves. Shortly after the horse develops an unexplained limp.
 Trait: Charm
-Delay: 
+Delay: 1
 
 Name: Rowdy Peasants
 TempID: 11
@@ -157,7 +157,7 @@ Category: Generic
 Frequency: Low
 EventText: A group of drunken peasants lurch out of a nearby tavern and surround the hapless traveller, demanding a 'donation' to support their families and their drinking habits. Most likely the later.
 SucceedText: astounds the inebriated peasants by breaking into a rowdy drinking song and soon has them all singing in harmony, belting out the chorus.
-FailText: attempts to ride down the nearest peasants down and gets dragged off their horse and soundly beaten for their troubles before being rescued by other travellers. A day of rest is needed to recover.
+FailText: attempts to ride down the nearest peasants down and gets dragged off their horse and soundly beaten for their troubles before being rescued by other travellers. Recovering will require rest.
 Trait: Charm
 Delay: 1
 
@@ -167,11 +167,11 @@ Type: Road
 subType: Kings
 Category: Generic
 Frequency: Normal
-EventText: 
-SucceedText: 
-FailText: 
+EventText: A friendly merchant with a cart load of goods approaches you with good cheer and a flagon of the finest Dornish beer on offer. He appears to be in search of companionship.
+SucceedText: wisely exchanges pleasant greetings and rides on. There is something about the merchant that doesn't ring true.
+FailText: willingly provides amiable company to the cheerful merchant. Later, after continuing on, the Dornish beer rebounds and necessitates numerous trips to nearby bushes.
 Trait: Charm
-Delay: 
+Delay: 1
 
 Name: Horse Throws a Shoe
 TempID: 13
