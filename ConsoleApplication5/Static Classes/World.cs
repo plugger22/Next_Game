@@ -1869,7 +1869,7 @@ namespace Next_Game
         public void ProcessStartTurn()
         {
             CalculateCrows();
-            Game.director.CheckActivePlayerEvents(dictActiveActors);
+            Game.director.CheckFollowerEvents(dictActiveActors);
             //any events that need dealing with?
             if (Game.director.ProcessCurrentEvents())
             { Game._specialMode = SpecialMode.Event; }

@@ -156,15 +156,15 @@ namespace Next_Game
         { listCurrentEvents.Clear(); }
         
         /// <summary>
-        /// check active characters for random events
+        /// check active (Follower only) characters for random events
         /// </summary>
-        public void CheckActivePlayerEvents(Dictionary<int, Active> dictActiveActors)
+        public void CheckFollowerEvents(Dictionary<int, Active> dictActiveActors)
         {
             //loop all active players
             foreach (var actor in dictActiveActors)
             {
-                //not delayed or gone?
-                if (actor.Value.Status != ActorStatus.Gone && actor.Value.Delay == 0)
+                //not delayed, gone or the Player?
+                if (actor.Value is Follower && actor.Value.Status != ActorStatus.Gone && actor.Value.Delay == 0)
                 {
                     if (actor.Value.Status == ActorStatus.AtLocation)
                     {
