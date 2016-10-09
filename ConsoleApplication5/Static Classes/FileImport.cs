@@ -691,7 +691,14 @@ namespace Next_Game
                                 structArc.Name = cleanToken;
                                 break;
                             case "TempID":
-                                structArc.TempID = Convert.ToInt32(cleanToken);
+                                try
+                                { structArc.TempID = Convert.ToInt32(cleanToken); }
+                                catch
+                                { Game.SetError(new Error(53, string.Format("Invalid input for TempID {0}, (\"{1}\")", cleanToken, structArc.Name))); validData = false; }
+                                //check for duplicate TempID's
+                                if (listTempID.Contains(structArc.TempID))
+                                { Game.SetError(new Error(53, string.Format("Duplicate TempID {0}, (\"{1}\")", cleanToken, structArc.Name))); validData = false; }
+                                else { listTempID.Add(structArc.TempID); }
                                 break;
                             case "Type":
                                 switch (cleanToken)
