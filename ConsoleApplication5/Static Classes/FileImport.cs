@@ -6,6 +6,8 @@ using System.IO;
 
 namespace Next_Game
 {
+    //NOTE: structures are needed as using objects within the import routines runs into Heap reference issues. Beaware that you're using the Stack and memory could be an issue.
+
     //holds data read in from house.txt. Used for pool of houses.
     public struct HouseStruct
     {
@@ -44,6 +46,19 @@ namespace Next_Game
         public EventFrequency Frequency { get; set; }
         public TraitType Trait { get; set; }
         public int Delay { get; set; }
+    }
+
+    //archetypes
+    struct ArcStruct
+    {
+        public string Name { get; set; }
+        public int TempID { get; set; }
+        public ArcType Type { get; set; } //which class of object it applies to
+        public ArcGeo Geo { get; set; }
+        public ArcLoc Loc { get; set; }
+        public ArcRoad Road { get; set; }
+        public string SubType { get; set; }
+        public List<int> listOfEvents { get; set; }
     }
 
     /// <summary>
@@ -636,27 +651,27 @@ namespace Next_Game
             int dataCounter = 0;
             string cleanTag;
             string cleanToken;
-            bool newEvent = false;
+            bool newArc = false;
             bool validData = true;
             int dataInt;
             List<int> listTempID = new List<int>(); //used to pick up duplicate tempID's
             Dictionary<int, Archetype> dictOfArchetypes = new Dictionary<int, Archetype>();
             string[] arrayOfEvents = ImportDataFile(fileName);
-            EventStruct structEvent = new EventStruct();
+            ArcStruct structArc = new ArcStruct();
             //loop imported array of strings
             for (int i = 0; i < arrayOfEvents.Length; i++)
             {
                 if (arrayOfEvents[i] != "" && !arrayOfEvents[i].StartsWith("#"))
                 {
                     //set up for a new house
-                    if (newEvent == false)
+                    if (newArc == false)
                     {
-                        newEvent = true;
+                        newArc = true;
                         validData = true;
                         //Console.WriteLine();
                         dataCounter++;
                         //new Trait object
-                        structEvent = new EventStruct();
+                        structArc = new ArcStruct();
                     }
                     string[] tokens = arrayOfEvents[i].Split(':');
                     //strip out leading spaces
@@ -669,7 +684,10 @@ namespace Next_Game
                         switch (cleanTag)
                         {
                             case "Name":
-                                structEvent.Name = cleanToken;
+                                structArc.Name = cleanToken;
+                                break;
+                            case "TempID":
+                                structArc.TempID = Convert.ToInt32(cleanToken);
                                 break;
                             case "End":
                                 //write record
@@ -677,43 +695,38 @@ namespace Next_Game
                                 {
                                     //pass info over to a class instance
                                     Archetype arcObject = null;
-                                    switch (structEvent.Type)
+                                    switch (structArc.Type)
                                     {
                                         case ArcType.GeoCluster:
-                                            arcObject = new EventGeo(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Geo);
+                                            arcObject = new ArcTypeGeo(structArc.Name, structArc.Geo, structArc.TempID, structArc.listOfEvents);
                                             break;
                                         case ArcType.Location:
-                                            arcObject = new EventLoc(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Loc);
+                                            arcObject = new ArcTypeLoc(structArc.Name, structArc.Loc, structArc.TempID, structArc.listOfEvents);
                                             break;
                                         case ArcType.Road:
-                                            arcObject = new EventRoad(structEvent.TempID, structEvent.Name, structEvent.Frequency, structEvent.Road);
+                                            arcObject = new ArcTypeRoad(structArc.Name, structArc.Road, structArc.TempID, structArc.listOfEvents);
                                             break;
                                     }
                                     if (arcObject != null)
                                     {
                                         Archetype arcTemp = arcObject as Archetype;
-                                        arcTemp.EventText = structEvent.EventText;
-                                        arcTemp.SucceedText = structEvent.SucceedText;
-                                        arcTemp.FailText = structEvent.FailText;
-                                        arcTemp.Trait = structEvent.Trait;
-                                        arcTemp.Delay = structEvent.Delay;
-                                        arcTemp.Category = structEvent.Cat;
+                                        
                                         //last datapoint - save object to list
                                         if (dataCounter > 0)
-                                        { dictOfArchetypes.Add(arcTemp.EventID, arcTemp); }
+                                        { dictOfArchetypes.Add(arcTemp.ArcID, arcTemp); }
                                     }
-                                    else { Game.SetError(new Error(49, "Invalid Input, eventObject")); }
+                                    else { Game.SetError(new Error(53, "Invalid Input, arcObject")); }
                                 }
                                 else
-                                { Game.SetError(new Error(49, string.Format("Event, (\"{0}\" TempID {1}), not Imported", structEvent.Name, structEvent.TempID))); }
+                                { Game.SetError(new Error(53, string.Format("Archetype, (\"{0}\" TempID {1}), not Imported", structArc.Name, structArc.TempID))); }
                                 break;
                             default:
-                                Game.SetError(new Error(49, "Invalid Input, CleanTag"));
+                                Game.SetError(new Error(53, "Invalid Input, CleanTag"));
                                 break;
                         }
                     }
                 }
-                else { newEvent = false; }
+                else { newArc = false; }
             }
             return dictOfArchetypes;
         }
