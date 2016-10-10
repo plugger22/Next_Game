@@ -77,15 +77,16 @@ namespace Next_Game
         {
             listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters());
             Console.WriteLine(Environment.NewLine + "--- Import Events");
+            //Run FIRST
             dictEvents = Game.file.GetEvents("Events.txt");
             GetGenericEvents();
             Console.WriteLine(Environment.NewLine + "--- Import Archetypes");
             //Run AFTER importing Events
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
-            Console.WriteLine(Environment.NewLine);
             Console.WriteLine(Environment.NewLine + "--- Import Stories");
-            //Run AFTER importing Events
+            //Run AFTER importing Archetypes
             dictStories = Game.file.GetStories("Stories.txt");
+            Console.WriteLine(Environment.NewLine);
         }
 
         /// <summary>

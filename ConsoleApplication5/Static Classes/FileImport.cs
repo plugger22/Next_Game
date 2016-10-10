@@ -73,16 +73,16 @@ namespace Next_Game
         public int Ev_Player_Loc { get; set; } // chance of the Player experiencing a random event
         public int Ev_Player_Trav { get; set; }
         //categoryies of archetypes
-        public int Arc_Geo_Sea { get; set; }
-        public int Arc_Geo_Mountain { get; set; }
-        public int Arc_Geo_Forest { get; set; }
-        public int Arc_Loc_Capital { get; set; }
-        public int Arc_Loc_Major { get; set; }
-        public int Arc_Loc_Minor { get; set; }
-        public int Arc_Loc_Inn { get; set; }
-        public int Arc_Road_Normal { get; set; }
-        public int Arc_Road_Kings { get; set; }
-        public int Arc_Road_Connector { get; set; }
+        public int Sea { get; set; }
+        public int Mountain { get; set; }
+        public int Forest { get; set; }
+        public int Capital { get; set; }
+        public int Major { get; set; }
+        public int Minor { get; set; }
+        public int Inn { get; set; }
+        public int Normal { get; set; }
+        public int Kings { get; set; }
+        public int Connector { get; set; }
     }
 
     /// <summary>
@@ -862,6 +862,7 @@ namespace Next_Game
                                 }
                                 structArc.listOfEvents = tempList;
                                 break;
+                            
                             case "end":
                             case "End":
                                 //write record
@@ -938,31 +939,35 @@ namespace Next_Game
                         //new Trait object
                         structStory = new StoryStruct();
                     }
+
                     string[] tokens = arrayOfStories[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
                     else { cleanToken = tokens[1].Trim(); }
-                    if (cleanToken.Length == 0)
-                    { Game.SetError(new Error(54, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
-                    else
+
+                    switch (cleanTag)
                     {
-                        switch (cleanTag)
-                        {
-                            case "Name":
-                                structStory.Name = cleanToken;
-                                break;
-                            case "StoryID":
-                                try
-                                { structStory.StoryID = Convert.ToInt32(cleanToken); }
-                                catch
-                                { Game.SetError(new Error(54, string.Format("Invalid input for StoryID {0}, (\"{1}\")", cleanToken, structStory.Name))); validData = false; }
-                                //check for duplicate arcID's
-                                if (listStoryID.Contains(structStory.StoryID))
-                                { Game.SetError(new Error(54, string.Format("Duplicate StoryID {0}, (\"{1}\")", cleanToken, structStory.Name))); validData = false; }
-                                else { listStoryID.Add(structStory.StoryID); }
-                                break;
-                            case "Type":
+                        case "Name":
+                            if (cleanToken.Length == 0)
+                            { Game.SetError(new Error(54, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            else { structStory.Name = cleanToken; }
+                            break;
+                        case "StoryID":
+                            try
+                            { structStory.StoryID = Convert.ToInt32(cleanToken); }
+                            catch
+                            { Game.SetError(new Error(54, string.Format("Invalid input for StoryID {0}, (\"{1}\")", cleanToken, structStory.Name))); validData = false; }
+                            //check for duplicate arcID's
+                            if (listStoryID.Contains(structStory.StoryID))
+                            { Game.SetError(new Error(54, string.Format("Duplicate StoryID {0}, (\"{1}\")", cleanToken, structStory.Name))); validData = false; }
+                            else { listStoryID.Add(structStory.StoryID); }
+                            break;
+                        case "Type":
+                            if (cleanToken.Length == 0)
+                            { Game.SetError(new Error(54, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            else
+                            {
                                 switch (cleanToken)
                                 {
                                     case "Benevolent":
@@ -983,41 +988,260 @@ namespace Next_Game
                                         validData = false;
                                         break;
                                 }
-                                break;
-                            case "end":
-                            case "End":
-                                //write record
-                                if (validData == true)
+                            }
+                            break;
+                        case "Ev_Follower_Loc":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
                                 {
-                                    //pass info over to a class instance
-                                    Story storyObject = new Story(structStory.Name, structStory.StoryID, structStory.Type);
-                                    storyObject.Ev_Follower_Loc = structStory.Ev_Follower_Loc;
-                                    storyObject.Ev_Follower_Trav = structStory.Ev_Follower_Trav;
-                                    storyObject.Ev_Player_Loc = structStory.Ev_Player_Loc;
-                                    storyObject.Ev_Player_Trav = structStory.Ev_Player_Trav;
-                                    storyObject.Arc_Geo_Sea = structStory.Arc_Geo_Sea;
-                                    storyObject.Arc_Geo_Mountain = structStory.Arc_Geo_Mountain;
-                                    storyObject.Arc_Geo_Forest = structStory.Arc_Geo_Forest;
-                                    storyObject.Arc_Loc_Capital = structStory.Arc_Loc_Capital;
-                                    storyObject.Arc_Loc_Major = structStory.Arc_Loc_Major;
-                                    storyObject.Arc_Loc_Minor = structStory.Arc_Loc_Minor;
-                                    storyObject.Arc_Loc_Inn = structStory.Arc_Loc_Inn;
-                                    storyObject.Arc_Road_Normal = structStory.Arc_Road_Normal;
-                                    storyObject.Arc_Road_Kings = structStory.Arc_Road_Kings;
-                                    storyObject.Arc_Road_Connector = structStory.Arc_Road_Connector;
-                                    //last datapoint - save object to list
-                                    if (dataCounter > 0)
-                                    { dictOfStories.Add(storyObject.StoryID, storyObject); }
-                                    else { Game.SetError(new Error(54, "Invalid Input, storyObject")); }
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Ev_Follower_Loc = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Ev_Follower_Loc \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
                                 }
-                                else
-                                { Game.SetError(new Error(54, string.Format("Story, (\"{0}\" StoryID {1}), not Imported", structStory.Name, structStory.StoryID))); }
-                                break;
-                            default:
-                                Game.SetError(new Error(54, string.Format("Invalid Input, CleanTag \"{0}\", \"{1}\"", cleanTag, structStory.Name)));
-                                break;
-                        }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Ev_Follower_Loc (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            else
+                            { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Follower_Loc), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            break;
+                        case "Ev_Follower_Trav":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Ev_Follower_Trav = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Ev_Follower_Trav \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Ev_Follower_Trav (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            else
+                            { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Follower_Trav), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            break;
+                        case "Ev_Player_Loc":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Ev_Player_Loc = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Ev_Player_Loc \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Ev_Player_Loc (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            else
+                            { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Player_Loc), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            break;
+                        case "Ev_Player_Trav":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Ev_Player_Trav = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Ev_Player_Trav \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Ev_Player_Trav (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            else
+                            { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Player_Trav), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            break;
+                        case "Arc_Geo_Sea":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Sea = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Sea \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Sea (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            break;
+                        case "Arc_Geo_Mountain":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Mountain = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Mountain \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Mountain (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            break;
+                        case "Arc_Geo_Forest":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Forest = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Forest \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Forest (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            break;
+                        case "Arc_Loc_Capital":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Capital = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Capital \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Capital (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            break;
+                        case "Arc_Loc_Major":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Major = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Major \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Major (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            break;
+                        case "Arc_Loc_Minor":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Minor = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Minor \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Minor (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            break;
+                        case "Arc_Loc_Inn":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Inn = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Inn \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Inn (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            break;
+                        case "Arc_Road_Normal":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Normal = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Road Normal \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Road Normal (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            break;
+                        case "Arc_Road_Kings":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Kings = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Kings Road \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Kings Road (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            break;
+                        case "Arc_Road_Connector":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structStory.Connector = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Connector Road \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Connector Road (Conversion) for  {0}", structStory.Name))); validData = false; }
+                            }
+                            break;
+                        case "end":
+                        case "End":
+                            //write record
+                            if (validData == true)
+                            {
+                                //pass info over to a class instance
+                                Story storyObject = new Story(structStory.Name, structStory.StoryID, structStory.Type);
+                                storyObject.Ev_Follower_Loc = structStory.Ev_Follower_Loc;
+                                storyObject.Ev_Follower_Trav = structStory.Ev_Follower_Trav;
+                                storyObject.Ev_Player_Loc = structStory.Ev_Player_Loc;
+                                storyObject.Ev_Player_Trav = structStory.Ev_Player_Trav;
+                                storyObject.Arc_Geo_Sea = structStory.Sea;
+                                storyObject.Arc_Geo_Mountain = structStory.Mountain;
+                                storyObject.Arc_Geo_Forest = structStory.Forest;
+                                storyObject.Arc_Loc_Capital = structStory.Capital;
+                                storyObject.Arc_Loc_Major = structStory.Major;
+                                storyObject.Arc_Loc_Minor = structStory.Minor;
+                                storyObject.Arc_Loc_Inn = structStory.Inn;
+                                storyObject.Arc_Road_Normal = structStory.Normal;
+                                storyObject.Arc_Road_Kings = structStory.Kings;
+                                storyObject.Arc_Road_Connector = structStory.Connector;
+                                //last datapoint - save object to list
+                                if (dataCounter > 0)
+                                { dictOfStories.Add(storyObject.StoryID, storyObject); }
+                                else { Game.SetError(new Error(54, "Invalid Input, storyObject")); }
+                            }
+                            else
+                            { Game.SetError(new Error(54, string.Format("Story, (\"{0}\" StoryID {1}), not Imported", structStory.Name, structStory.StoryID))); }
+                            break;
+                        default:
+                            Game.SetError(new Error(54, string.Format("Invalid Input, CleanTag \"{0}\", \"{1}\"", cleanTag, structStory.Name)));
+                            break;
                     }
+
                 }
                 else { newStory = false; }
             }

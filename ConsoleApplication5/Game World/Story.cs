@@ -35,7 +35,9 @@ namespace Next_Game
         {
             this.Name = name;
             this.StoryID = storyID;
-            this.Type = Type;
+            this.Type = type;
+            //debug
+            Console.WriteLine("Story \"{0}\", {1}, StoryID {2}", Name, Type, StoryID);
         }
     }
 }

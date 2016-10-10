@@ -3,10 +3,10 @@
 # Name: description
 # StoryID: unique number
 # Type: Personality -> Benevolent, Balanced, Evil, Tricky
-# Ev_Follower_Loc:  number (1 to 100) -> chance of a follower experiencing a random event while at a location
-# Ev_Follower_Trav: number (1 to 100) -> chance of a follower experiencing a random event while travelling
+# Ev_Follower_Loc:  number (1 to 100) -> chance of a follower experiencing a random event while at a location 
+# Ev_Follower_Trav: number (1 to 100) -> chance of a follower experiencing a random event while travelling 
 # Ev_Player_Loc: number (1 to 100) -> chance of the Player experiencing a random event while at a location
-# Ev_Player_Trav: number (1 to 100) -> chance of the Player experiencing a random event while travelling
+# Ev_Player_Trav: number (1 to 100) -> chance of the Player experiencing a random event while travelling 
 # Arc_... : Archetype ID for that applies (leave blank if none)
 
 
