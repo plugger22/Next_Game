@@ -43,8 +43,6 @@ namespace Next_Game
             this.EventID = eventID;
             this.Name = name;
             this.Frequency = frequency;
-            //debug
-            Console.WriteLine("EventID {0}, {1}, Frequency {2}", EventID, Name, Frequency);
         }
     }
 
@@ -69,7 +67,8 @@ namespace Next_Game
         /// <param name="frequency"></param>
         public EventGeneric(int eventID, string name, EventFrequency frequency) : base(eventID, name, frequency)
         {
-            
+            //debug
+            Console.WriteLine("EventID {0}, {1}, Frequency {2}", EventID, Name, Frequency);
         }
     }
 

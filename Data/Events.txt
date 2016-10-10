@@ -40,7 +40,7 @@ EventText: A pack of wolves close in at dusk. They flit from tree to tree in the
 SucceedText: takes a burning branch from the fire and fends off the wolf pack.
 FailText: is forced to take shelter up a tree after being bitten on the leg by a wolf
 Trait: Combat
-Delay: 1
+Delay: 2
 End
 
 Name: Rockfall

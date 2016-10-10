@@ -53,6 +53,7 @@ namespace Next_Game
     {
         public string Name { get; set; }
         public int ArcID { get; set; }
+        public int Chance { get; set; }
         public ArcType Type { get; set; } //which class of object it applies to
         public ArcGeo Geo { get; set; }
         public ArcLoc Loc { get; set; }
@@ -591,11 +592,16 @@ namespace Next_Game
                                 }
                                 break;
                             case "Delay":
-                                dataInt = Convert.ToInt32(cleanToken);
-                                if (dataInt > 0)
-                                { structEvent.Delay = dataInt; }
-                                else
-                                { Game.SetError(new Error(49, string.Format("Invalid Input, Delay, (\"{0}\")", arrayOfEvents[i]))); validData = false; }
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structEvent.Delay = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(49, string.Format("Invalid Input, Delay, (\"{0}\")", arrayOfEvents[i]))); validData = false; }
+                                }
+                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Delay, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                
                                 break;
                             case "End":
                                 //write record
@@ -787,6 +793,18 @@ namespace Next_Game
                                         break;
                                 }
                                 break;
+                            case "Chance":
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structArc.Chance = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(53, string.Format("Invalid Chance \"{0}\" (Zero) for {1}", dataInt, structArc.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(53, string.Format("Invalid Chance (Conversion) for  {0}", structArc.Name))); validData = false; }
+                                break;
                             case "Ev_Follower":
                                 //get list of Events
                                 string[] arrayOfEvents = cleanToken.Split(',');
@@ -804,7 +822,7 @@ namespace Next_Game
                                             if (dataInt > 0)
                                             {
                                                 //check a valid event
-                                                if (Game.director.ConfirmEvent(dataInt))
+                                                if (Game.director.CheckEvent(dataInt))
                                                 { tempList.Add(dataInt); }
                                                 else
                                                 { Game.SetError(new Error(53, string.Format("Invalid EventID \"{0}\" (Not found in Dictionary) for {1}", dataInt, structArc.Name))); validData = false; }
@@ -829,13 +847,13 @@ namespace Next_Game
                                     switch (structArc.Type)
                                     {
                                         case ArcType.GeoCluster:
-                                            arcObject = new ArcTypeGeo(structArc.Name, structArc.Geo, structArc.ArcID, structArc.listOfEvents);
+                                            arcObject = new ArcTypeGeo(structArc.Name, structArc.Geo, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
                                             break;
                                         case ArcType.Location:
-                                            arcObject = new ArcTypeLoc(structArc.Name, structArc.Loc, structArc.ArcID, structArc.listOfEvents);
+                                            arcObject = new ArcTypeLoc(structArc.Name, structArc.Loc, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
                                             break;
                                         case ArcType.Road:
-                                            arcObject = new ArcTypeRoad(structArc.Name, structArc.Road, structArc.ArcID, structArc.listOfEvents);
+                                            arcObject = new ArcTypeRoad(structArc.Name, structArc.Road, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
                                             break;
                                     }
                                     if (arcObject != null)

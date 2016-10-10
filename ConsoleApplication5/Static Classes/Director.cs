@@ -417,14 +417,27 @@ namespace Next_Game
         { return listCurrentEvents.Count(); }
 
         /// <summary>
-        /// query whether an event exists in based on ID
+        /// query whether an event exists based on ID
         /// </summary>
         /// <param name="eventID"></param>
         /// <returns></returns>
-        public bool ConfirmEvent(int eventID)
+        public bool CheckEvent(int eventID)
         {
             bool status = false;
             if(dictEvents.ContainsKey(eventID))
+            { return true; }
+            return status;
+        }
+
+        /// <summary>
+        /// query whether an archetype exists based on ID
+        /// </summary>
+        /// <param name="arcID"></param>
+        /// <returns></returns>
+        public bool CheckArchetype(int arcID)
+        {
+            bool status = false;
+            if (dictArchetypes.ContainsKey(arcID))
             { return true; }
             return status;
         }
