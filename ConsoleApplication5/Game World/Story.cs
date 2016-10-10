@@ -30,6 +30,8 @@ namespace Next_Game
         public int Arc_Road_Kings { get; set; }
         public int Arc_Road_Connector { get; set; }
 
+        public Story()
+        { }
 
         public Story(string name, int storyID, StoryAI type)
         {

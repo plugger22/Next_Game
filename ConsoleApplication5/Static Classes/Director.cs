@@ -86,6 +86,7 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- Import Stories");
             //Run AFTER importing Archetypes
             dictStories = Game.file.GetStories("Stories.txt");
+            story = SetStory(1); //choose which story to use
             Console.WriteLine(Environment.NewLine);
         }
 
@@ -446,6 +447,18 @@ namespace Next_Game
             if (dictArchetypes.ContainsKey(arcID))
             { return true; }
             return status;
+        }
+
+        /// <summary>
+        /// Returns a story to be used by Director
+        /// </summary>
+        /// <param name="storyID"></param>
+        /// <returns></returns>
+        private Story SetStory(int storyID)
+        {
+            if( dictStories.TryGetValue(storyID, out story))
+            { return story; }
+            return null;
         }
 
         //place Director methods above here
