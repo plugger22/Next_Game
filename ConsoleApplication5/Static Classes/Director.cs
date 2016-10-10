@@ -279,9 +279,20 @@ namespace Next_Game
                 int rndNum = rnd.Next(0, listEventPool.Count);
                 Event eventTemp = listEventPool[rndNum];
                 EventGeneric eventChosen = eventTemp as EventGeneric;
-                Message message = new Message(string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
-                    type, eventChosen.Name), MessageType.Event);
-                Game.world.SetMessage(message);
+                Message message = null;
+                if (type == EventType.Travelling)
+                {
+                    message = new Message(string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
+                      type, eventChosen.Name), MessageType.Event);
+                }
+                else if (type == EventType.Location)
+                {
+                    message = new Message(string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
+                      type, eventChosen.Name), MessageType.Event);
+                }
+                if (message != null)
+                { Game.world.SetMessage(message); }
+                else { Game.SetError(new Error(53, "Invalid Message (null)")); }
                 //store in list of Current Events
                 EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
                 listCurrentEvents.Add(current);
