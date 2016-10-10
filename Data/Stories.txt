@@ -1,7 +1,8 @@
 # Story
 
 # Name: description
-# StoryAI: Personality -> Benevolent, Balanced, Evil, Tricky
+# StoryID: unique number
+# Type: Personality -> Benevolent, Balanced, Evil, Tricky
 # Ev_Follower_Loc:  number (1 to 100) -> chance of a follower experiencing a random event while at a location
 # Ev_Follower_Trav: number (1 to 100) -> chance of a follower experiencing a random event while travelling
 # Ev_Player_Loc: number (1 to 100) -> chance of the Player experiencing a random event while at a location
@@ -10,7 +11,8 @@
 
 
 Name: Steady Eddy
-StoryAI: Balanced
+StoryID: 1
+Type: Balanced
 Ev_Follower_Loc: 10
 Ev_Follower_Trav: 30
 Ev_Player_Loc: 10

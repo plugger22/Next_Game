@@ -41,16 +41,17 @@ namespace Next_Game
         List<EventPackage> listCurrentEvents;
         private Dictionary<int, Event> dictEvents;
         private Dictionary<int, Archetype> dictArchetypes;
+        private Dictionary<int, Story> dictStories;
 
         public Director(int seed)
         {
             rnd = new Random(seed);
 
             //debug
-            story = new Story("Steady Eddy");
-            story.AI = StoryAI.Balanced;
+            /*story = new Story("Steady Eddy");
+            story.Type = StoryAI.Balanced;
             story.Ev_Follower_Loc = 10;
-            story.Ev_Follower_Trav = 60;
+            story.Ev_Follower_Trav = 60;*/
 
             listOfActiveGeoClusters = new List<int>();
             listGenEventsForest = new List<int>();
@@ -66,6 +67,7 @@ namespace Next_Game
             listCurrentEvents = new List<EventPackage>();
             dictEvents = new Dictionary<int, Event>();
             dictArchetypes = new Dictionary<int, Archetype>();
+            dictStories = new Dictionary<int, Story>();
         }
 
         /// <summary>
@@ -81,6 +83,9 @@ namespace Next_Game
             //Run AFTER importing Events
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
             Console.WriteLine(Environment.NewLine);
+            Console.WriteLine(Environment.NewLine + "--- Import Stories");
+            //Run AFTER importing Events
+            dictStories = Game.file.GetStories("Stories.txt");
         }
 
         /// <summary>

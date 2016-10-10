@@ -12,7 +12,8 @@ namespace Next_Game
     class Story
     {
         public string Name { get; set; }
-        public StoryAI AI { get; set; }
+        public int StoryID {get; set; }
+        public StoryAI Type { get; set; }
         public int Ev_Follower_Loc { get; set; } // chance of a follower experiencing a random event when at a Location
         public int Ev_Follower_Trav { get; set; } // chance of a follower experiencing a random event when travelling
         public int Ev_Player_Loc { get; set; } // chance of the Player experiencing a random event
@@ -30,9 +31,11 @@ namespace Next_Game
         public int Arc_Road_Connector { get; set; }
 
 
-        public Story(string name)
+        public Story(string name, int storyID, StoryAI type)
         {
             this.Name = name;
+            this.StoryID = storyID;
+            this.Type = Type;
         }
     }
 }
