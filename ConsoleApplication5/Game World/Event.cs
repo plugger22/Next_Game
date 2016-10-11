@@ -50,7 +50,7 @@ namespace Next_Game
     /// <summary>
     /// derived base class for Generic Events (followers)
     /// </summary>
-    public class EventGeneric : Event
+    public class EventFollower : Event
     {
         public string EventText { get; set; }
         public string SucceedText { get; set; } //text to display if follower succeeds test
@@ -65,7 +65,7 @@ namespace Next_Game
         /// <param name="eventID"></param>
         /// <param name="name"></param>
         /// <param name="frequency"></param>
-        public EventGeneric(int eventID, string name, EventFrequency frequency) : base(eventID, name, frequency)
+        public EventFollower(int eventID, string name, EventFrequency frequency) : base(eventID, name, frequency)
         {
             //debug
             Console.WriteLine("EventID {0}, {1}, Frequency {2}", EventID, Name, Frequency);
@@ -75,7 +75,7 @@ namespace Next_Game
     /// <summary>
     /// GeoCluster generic event
     /// </summary>
-    public class EventGeo : EventGeneric
+    public class EventGeo : EventFollower
     {
 
         public EventGeo (int eventID, string name, EventFrequency frequency, ArcGeo subtype) : base (eventID, name, frequency)
@@ -88,7 +88,7 @@ namespace Next_Game
     /// <summary>
     /// Location generic event
     /// </summary>
-    public class EventLoc : EventGeneric
+    public class EventLoc : EventFollower
     {
 
         public EventLoc(int eventID, string name, EventFrequency frequency, ArcLoc subtype) : base(eventID, name, frequency)
@@ -101,7 +101,7 @@ namespace Next_Game
     /// <summary>
     /// Road generic event
     /// </summary>
-    public class EventRoad : EventGeneric
+    public class EventRoad : EventFollower
     {
 
         public EventRoad(int eventID, string name, EventFrequency frequency, ArcRoad subtype) : base(eventID, name, frequency)

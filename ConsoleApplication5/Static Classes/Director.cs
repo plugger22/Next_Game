@@ -17,7 +17,7 @@ namespace Next_Game
     public class EventPackage
     {
         public Active Person { get; set; }
-        public EventGeneric EventObject { get; set; }
+        public EventFollower EventObject { get; set; }
         public bool Done { get; set; }
     }
     
@@ -216,6 +216,7 @@ namespace Next_Game
             Cartographic.Position pos = actor.GetActorPosition();
             List<Event> listEventPool = new List<Event>();
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
+            
             //Location event
             if (type == EventType.Location)
             {
@@ -256,17 +257,19 @@ namespace Next_Game
                 geoID = Game.map.GetMapInfo(Cartographic.MapLayer.GeoID, pos.PosX, pos.PosY);
                 terrain = Game.map.GetMapInfo(Cartographic.MapLayer.Terrain, pos.PosX, pos.PosY);
                 road = Game.map.GetMapInfo(Cartographic.MapLayer.Road, pos.PosX, pos.PosY);
-                
-                //get generic terrain & road events
+                GeoCluster cluster = Game.world.GetGeoCluster(geoID);
+                //get terrain & road events
                 if (locID == 0 && terrain == 1)
                 {
                     //mountains
                     listEventPool.AddRange(GetValidEvents(listGenEventsMountain));
+                    listEventPool.AddRange(GetValidEvents(cluster.GetEvents()));
                 }
                 else if (locID == 0 && terrain == 2)
                 {
                     //forests
                     listEventPool.AddRange(GetValidEvents(listGenEventsForest));
+                    listEventPool.AddRange(GetValidEvents(cluster.GetEvents()));
                 }
                 else if (locID == 0 && terrain == 0)
                 {
@@ -275,16 +278,19 @@ namespace Next_Game
                     {
                         //normal road
                         listEventPool.AddRange(GetValidEvents(listGenEventsNormal));
+                        listEventPool.AddRange(GetValidEvents(listRoadEventsNormal));
                     }
                     else if (road == 2)
                     {
                         //king's road
                         listEventPool.AddRange(GetValidEvents(listGenEventsKing));
+                        listEventPool.AddRange(GetValidEvents(listRoadEventsKings));
                     }
                     else if (road == 3)
                     {
                         //connector road
                         listEventPool.AddRange(GetValidEvents(listGenEventsConnector));
+                        listEventPool.AddRange(GetValidEvents(listRoadEventsConnector));
 
                     }
                 }
@@ -294,7 +300,7 @@ namespace Next_Game
             {
                 int rndNum = rnd.Next(0, listEventPool.Count);
                 Event eventTemp = listEventPool[rndNum];
-                EventGeneric eventChosen = eventTemp as EventGeneric;
+                EventFollower eventChosen = eventTemp as EventFollower;
                 Message message = null;
                 if (type == EventType.Travelling)
                 {
@@ -356,7 +362,7 @@ namespace Next_Game
                 EventPackage package = listCurrentEvents[i];
                 if (package.Done == false)
                 {
-                    EventGeneric eventObject = package.EventObject;
+                    EventFollower eventObject = package.EventObject;
                     Active actor = package.Person;
                     //create event description
                     Cartographic.Position pos = actor.GetActorPosition();

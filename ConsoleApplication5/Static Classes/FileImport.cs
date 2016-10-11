@@ -647,7 +647,7 @@ namespace Next_Game
                                     }
                                     if (eventObject != null)
                                     {
-                                        EventGeneric eventTemp = eventObject as EventGeneric;
+                                        EventFollower eventTemp = eventObject as EventFollower;
                                         eventTemp.EventText = structEvent.EventText;
                                         eventTemp.SucceedText = structEvent.SucceedText;
                                         eventTemp.FailText = structEvent.FailText;
