@@ -711,7 +711,7 @@ namespace Next_Game
                 RLColor color = RLColor.Cyan;
                 bool houseCapital = false;
                 Location loc = Game.network.GetLocation(locID);
-                House house = GetHouse(loc.HouseRefID);
+                House house = GetHouse(loc.RefID);
                 //if a House Capital show in Yellow
                 if(Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) > 0 )
                 { color = RLColor.Yellow; houseCapital = true; }

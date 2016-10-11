@@ -66,8 +66,9 @@ namespace Next_Game.Cartographic
         public int ConnectorID { get; set; } = 0; //ID of location at the other end of the connection (if one exists)
         public int DistanceToCapital { get; set; } 
         public int DistanceToConnector { get; set; }
-        public int HouseID { get; set; }
-        public int HouseRefID { get; set; }
+        public int HouseID { get; set; } //location house ID if applicable
+        public int RefID { get; set; } //location ref ID if applicable
+        public int ArcID { get; set; } //location archetype ID if applicable
         private List<Position> listOfNeighboursPos; //list of immediate neighbours, by Position
         private List<int> listOfNeighboursLocID; //list of immediate neighbours, by LocID
         private readonly List<Route> routeToCapital; //Loc -> Capital
@@ -318,11 +319,22 @@ namespace Next_Game.Cartographic
 
         //add character to location (goes with RemoveActor)
         public void AddActor(int actorID)
-        { listOfActors.Add(actorID); }
+        {
+            try
+            { listOfActors.Add(actorID); }
+            catch (Exception e)
+            { Game.SetError(new Error(60, e.Message)); }
+        }
+           
 
         ///remove character from location (goes with AddActor)
         public void RemoveActor(int actorID)
-        { listOfActors.Remove(actorID); }
+        {
+            try
+            { listOfActors.Remove(actorID); }
+            catch (Exception e)
+            { Game.SetError(new Error(61, e.Message)); }
+        }
 
 
         //prints details of array
@@ -336,6 +348,17 @@ namespace Next_Game.Cartographic
             { Console.WriteLine("CONNECTOR NODE"); }
             Console.WriteLine(LocName);
         }
+
+        internal void SetEvents(List<int> listEvents)
+        {
+            if (listEvents != null)
+            { listOfEvents.AddRange(listEvents); }
+            else
+            { Game.SetError(new Error(58, "Invalid list of Events input (null)")); }
+        }
+
+        internal List<int> GetEvents()
+        { return listOfEvents; }
 
     }
 }

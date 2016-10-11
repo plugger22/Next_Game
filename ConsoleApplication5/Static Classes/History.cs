@@ -116,7 +116,7 @@ namespace Next_Game
                 house.Name = listHousePool[i].Name;
                 house.Motto = listHousePool[i].Motto;
                 house.Banner = listHousePool[i].Banner;
-                house.ArchetypeID = listHousePool[i].Archetype;
+                house.ArcID = listHousePool[i].Archetype;
                 house.RefID = listHousePool[i].RefID;
                 house.LocName = listHousePool[i].Capital;
                 house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
@@ -140,7 +140,7 @@ namespace Next_Game
             house.Name = listHousePool[index].Name;
             house.Motto = listHousePool[index].Motto;
             house.Banner = listHousePool[index].Banner;
-            house.ArchetypeID = listHousePool[index].Archetype;
+            house.ArcID = listHousePool[index].Archetype;
             house.LocName = listHousePool[index].Capital;
             house.RefID = listHousePool[index].RefID;
             house.LocID = LocID;
@@ -153,7 +153,7 @@ namespace Next_Game
             //update location details
             Location loc = Game.network.GetLocation(LocID);
             loc.LocName = house.LocName;
-            loc.HouseRefID = house.RefID;
+            loc.RefID = house.RefID;
         }
 
 
@@ -1764,7 +1764,9 @@ namespace Next_Game
                 //change location (all)
                 kingsKeep.AddActor(royal.ActID);
                 Location oldLoc = Game.network.GetLocation(royal.LocID);
-                oldLoc.RemoveActor(royal.ActID);
+                //avoid removing dead wives or children
+                if (royal.Status == ActorStatus.AtLocation)
+                { oldLoc.RemoveActor(royal.ActID); }
                 royal.LocID = 1;
                 Record record = null;
                 //specific roles & also handle fate of royal family

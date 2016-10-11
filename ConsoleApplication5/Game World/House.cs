@@ -19,7 +19,7 @@ namespace Next_Game
         public int HouseID { get; set; } = 0; //unique to Great House (allocated by Network.UpdateHouses)
         public int LocID { get; set; } //unique to location
         public int RefID { get; set; } //unique to house (great or minor)
-        public int ArchetypeID { get; set; }
+        public int ArcID { get; set; } //unique to archetype
         public int Branch { get; set; }
         public int MenAtArms { get; set; }
         public int LordID { get; set; } //actorID of noble Lord currently in charge of house

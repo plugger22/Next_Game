@@ -14,7 +14,79 @@ ArcID: 1
 Name: Dire Wolf Forest
 Type: GeoCluster
 subType: Forest
+Chance: 30
+Ev_Follower: 5, 6
+End
+
+ArcID: 2
+Name: Bandit Mountains
+Type: GeoCluster
+subType: Mountain
+Chance: 30
+Ev_Follower: 5, 6
+End
+
+ArcID: 3
+Name: Kraken Sea
+Type: GeoCluster
+subType: Sea
+Chance: 30
+Ev_Follower: 5, 6
+End
+
+ArcID: 4
+Name: Goblin Road
+Type: Road
+subType: Normal
+Chance: 30
+Ev_Follower: 5, 6
+End
+
+ArcID: 5
+Name: Dwarf Road
+Type: Road
+subType: Kings
+Chance: 30
+Ev_Follower: 5, 6
+End
+
+ArcID: 6
+Name: Orc Hunting Party
+Type: Road
+subType: Connector
+Chance: 30
+Ev_Follower: 5, 6
+End
+
+ArcID: 7
+Name: Plague Manor
+Type: Location
+subType: Major
+Chance: 20
+Ev_Follower: 5, 6
+End
+
+ArcID: 8
+Name: Rabid Dogs
+Type: Location
+subType: Minor
+Chance: 20
+Ev_Follower: 5, 6
+End
+
+ArcID: 9
+Name: Entertainers
+Type: Location
+subType: Capital
 Chance: 50
+Ev_Follower: 5, 6
+End
+
+ArcID: 10
+Name: Willowy Wenches
+Type: Location
+subType: Inn
+Chance: 30
 Ev_Follower: 5, 6
 End
 

@@ -17,14 +17,14 @@ Ev_Follower_Loc: 10
 Ev_Follower_Trav: 30
 Ev_Player_Loc: 10
 Ev_Player_Trav: 10
-Arc_Geo_Sea:
-Arc_Geo_Mountain:
+Arc_Geo_Sea: 3
+Arc_Geo_Mountain: 2
 Arc_Geo_Forest: 1
-Arc_Loc_Capital:
-Arc_Loc_Major:
-Arc_Loc_Minor:
-Arc_Loc_Inn:
-Arc_Road_Normal:
-Arc_Road_Kings:
-Arc_Road_Connector:
+Arc_Loc_Capital: 9
+Arc_Loc_Major: 7
+Arc_Loc_Minor: 8
+Arc_Loc_Inn: 10
+Arc_Road_Normal: 4
+Arc_Road_Kings: 5
+Arc_Road_Connector: 6
 end

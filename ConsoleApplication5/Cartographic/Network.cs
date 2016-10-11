@@ -1290,6 +1290,9 @@ namespace Next_Game.Cartographic
             return loc;
         }
 
+        internal Dictionary<int, Location> GetLocations()
+        { return dictLocations; }
+
         public int GetNumLocations()
         { return ListOfLocations.Count(); }
 
@@ -2034,7 +2037,7 @@ namespace Next_Game.Cartographic
                 capitalLocID = arrayOfCapitals[houseID];
                 Location loc = GetLocation(capitalLocID);
                 loc.LocName = house.LocName;
-                loc.HouseRefID = house.RefID;
+                loc.RefID = house.RefID;
                 //update capital Loc ID & branch
                 house.LocID = capitalLocID;
                 house.Branch = loc.GetCapitalRouteDirection();

@@ -492,8 +492,7 @@ namespace Next_Game
             Archetype arcSea = GetArchetype(story.Arc_Geo_Sea);
             Archetype arcMountain = GetArchetype(story.Arc_Geo_Mountain);
             Archetype arcForest = GetArchetype(story.Arc_Geo_Forest);
-
-            //loop list of active GeoClusters (ones with roads through them)
+            //Initialise active GeoClusters (ones with roads through them)
             foreach (int geoID in listOfActiveGeoClusters)
             {
                 //get cluster
@@ -577,6 +576,72 @@ namespace Next_Game
                 listCapitalEvents.AddRange(arcCapital.GetEvents());
                 Console.WriteLine("The Capital at KingsKeep has been initialised with \"{0}\", arcID {1}", arcCapital.Name, arcCapital.ArcID);
             }
+
+            //Location archetypes
+            Archetype arcMajor = GetArchetype(story.Arc_Loc_Major);
+            Archetype arcMinor = GetArchetype(story.Arc_Loc_Minor);
+            Archetype arcInn = GetArchetype(story.Arc_Loc_Inn);
+            //Initialise Locations
+            Dictionary<int, Location> tempLocations = Game.network.GetLocations();
+            int refID;
+            foreach(var loc in tempLocations)
+            {
+                refID = loc.Value.RefID;
+                //location present (excludes capital)
+                if (refID > 0)
+                {
+                    if (refID < 100)
+                    {
+                        //Major House
+                        if (arcMajor != null)
+                        {
+                            //% chance of applying to each instance
+                            if (rnd.Next(100) < arcMajor.Chance)
+                            {
+                                //copy Archetype event ID's across to GeoCluster
+                                loc.Value.SetEvents(arcMajor.GetEvents());
+                                loc.Value.ArcID = arcMajor.ArcID;
+                                //debug
+                                Console.WriteLine("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID);
+                            }
+                        }
+
+                    }
+                    else if (refID >= 100 && refID < 1000)
+                    {
+                        //Minor House
+                        if (arcMinor != null)
+                        {
+                            //% chance of applying to each instance
+                            if (rnd.Next(100) < arcMinor.Chance)
+                            {
+                                //copy Archetype event ID's across to GeoCluster
+                                loc.Value.SetEvents(arcMinor.GetEvents());
+                                loc.Value.ArcID = arcMinor.ArcID;
+                                //debug
+                                Console.WriteLine("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMinor.Name, arcMinor.ArcID);
+                            }
+                        }
+                    }
+                    else if (refID >= 1000)
+                    {
+                        //Inn
+                        if (arcInn != null)
+                        {
+                            //% chance of applying to each instance
+                            if (rnd.Next(100) < arcInn.Chance)
+                            {
+                                //copy Archetype event ID's across to GeoCluster
+                                loc.Value.SetEvents(arcInn.GetEvents());
+                                loc.Value.ArcID = arcInn.ArcID;
+                                //debug
+                                Console.WriteLine("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcInn.Name, arcInn.ArcID);
+                            }
+                        }
+                    }
+                }
+            }
+
         }
 
         /// <summary>

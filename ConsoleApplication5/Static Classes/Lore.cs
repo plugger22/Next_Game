@@ -315,7 +315,7 @@ namespace Next_Game
                 { kingdomEvent = HistKingdomIncident.Battle; descriptor = string.Format("The Battle of {0}", loc.LocName); }
                 //create record
                 string details = string.Format("{0} {1}", descriptor, Game.world.ShowLocationCoords(loc.LocationID));
-                Record record = new Record(details, loc.LocationID, loc.HouseRefID, year, kingdomEvent);
+                Record record = new Record(details, loc.LocationID, loc.RefID, year, kingdomEvent);
                 Game.world.SetRecord(record);
                 //add to list of battles to enable actor events to be fleshed out
                 listOfUprisingBattles.Add(descriptor);
@@ -941,7 +941,7 @@ namespace Next_Game
                 newMajorhouse.Name = turncoatHouse.Name;
                 newMajorhouse.Motto = turncoatHouse.Motto;
                 newMajorhouse.Banner = turncoatHouse.Banner;
-                newMajorhouse.ArchetypeID = turncoatHouse.ArchetypeID;
+                newMajorhouse.ArcID = turncoatHouse.ArcID;
                 newMajorhouse.RefID = turncoatHouse.RefID;
                 newMajorhouse.LocName = oldkingHouse.LocName;
                 newMajorhouse.MenAtArms = oldkingHouse.MenAtArms;
@@ -962,7 +962,7 @@ namespace Next_Game
                 Console.WriteLine("loc {0}:{1}, houseID: {2}", locLord.GetPosX(), locLord.GetPosY(), houseID);
                 //update Loc details
                 locLord.HouseID = houseID;
-                locLord.HouseRefID = oldBannerLordRefID;
+                locLord.RefID = oldBannerLordRefID;
 
                 //new MinorHouse
                 MinorHouse newMinorHouse = new MinorHouse();
@@ -974,7 +974,7 @@ namespace Next_Game
                 newMinorHouse.Motto = minorStruct.Motto;
                 newMinorHouse.Banner = minorStruct.Banner;
                 newMinorHouse.LocName = minorStruct.Capital;
-                newMinorHouse.ArchetypeID = minorStruct.Archetype;
+                newMinorHouse.ArcID = minorStruct.Archetype;
                 newMinorHouse.Loyalty_AtStart = KingLoyalty.Old_King;
                 newMinorHouse.Loyalty_Current = KingLoyalty.New_King;
                 newMinorHouse.LocID = turncoatHouse.LocID;
@@ -1090,7 +1090,7 @@ namespace Next_Game
                 Game.map.SetMapInfo(MapLayer.RefID, locBannerLord.GetPosX(), locBannerLord.GetPosY(), newMinorHouse.RefID);
                 Console.WriteLine("Updating MapLayer -> loc {0}:{1}, refID: {2}", locBannerLord.GetPosX(), locBannerLord.GetPosY(), newMinorHouse.RefID);
                 //update Loc details
-                locBannerLord.HouseRefID = newMinorHouse.RefID;
+                locBannerLord.RefID = newMinorHouse.RefID;
                 
                 //advisors - castellan, in oldkings house need replacing
                 foreach( Advisor advisor in listOfRoyalAdvisors)
