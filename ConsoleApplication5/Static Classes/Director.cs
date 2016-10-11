@@ -88,7 +88,7 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- Import Events");
             //Run FIRST
             dictEvents = Game.file.GetEvents("Events.txt");
-            GetGenericEvents();
+            InitialiseGenericEvents();
             Console.WriteLine(Environment.NewLine + "--- Import Archetypes");
             //Run AFTER importing Events
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
@@ -104,7 +104,7 @@ namespace Next_Game
         /// <summary>
         /// loop all events and place generic eventID's in their approrpriate lists
         /// </summary>
-        private void GetGenericEvents()
+        private void InitialiseGenericEvents()
         {
             int eventID;
             foreach(var eventObject in dictEvents)
@@ -221,25 +221,30 @@ namespace Next_Game
             {
                 refID = Game.map.GetMapInfo(Cartographic.MapLayer.RefID, pos.PosX, pos.PosY);
                 houseID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
+                Location loc = Game.network.GetLocation(locID);
                 if (locID == 1)
                 {
                     //capital
                     listEventPool.AddRange(GetValidEvents(listGenEventsCapital));
+                    listEventPool.AddRange(GetValidEvents(listCapitalEvents));
                 }
                 else if (refID > 0 && refID < 100)
                 {
                     //Major House
                     listEventPool.AddRange(GetValidEvents(listGenEventsMajor));
+                    listEventPool.AddRange(GetValidEvents(loc.GetEvents()));
                 }
                 else if (refID >= 100 && refID < 1000)
                 {
                     //Minor House
                     listEventPool.AddRange(GetValidEvents(listGenEventsMinor));
+                    listEventPool.AddRange(GetValidEvents(loc.GetEvents()));
                 }
                 else if (houseID == 99)
                 {
                     //Special Location - Inn
                     listEventPool.AddRange(GetValidEvents(listGenEventsInn));
+                    listEventPool.AddRange(GetValidEvents(loc.GetEvents()));
                 }
                 else
                 { Game.SetError(new Error(52, "Invalid Location Event Type")); }
