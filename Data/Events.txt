@@ -74,7 +74,7 @@ EventID: 5
 Type: GeoCluster
 subType: Forest
 Category: Special
-Frequency: Low
+Frequency: Normal
 EventText: Fresh Dire Wolf tracks are seen nearby. These big, powerful animals are dangerous and best avoided.
 SucceedText: checks the tracks and notices that they are moving away from the trail. The danger is in the past.
 FailText: lights a fire to fend off any nearby Dire Wolves and only succeeds in attracting them. While the wolves are reluctant to attack a lot of time is lost waiting for them to leave.
@@ -87,7 +87,7 @@ EventID: 6
 Type: GeoCluster
 subType: Forest
 Category: Special
-Frequency: Low
+Frequency: Normal
 EventText: A Dire Wolf lunges out of the dense undergrowth without warning.
 SucceedText: manages to duck under the Dire Wolf, draw their sword and fend off the beast.
 FailText: is wounded by the beast and is forced to take time out to rest and recover before they can continue onwards.

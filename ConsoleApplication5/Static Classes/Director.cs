@@ -234,18 +234,28 @@ namespace Next_Game
                     //Major House
                     listEventPool.AddRange(GetValidEvents(listGenEventsMajor));
                     listEventPool.AddRange(GetValidEvents(loc.GetEvents()));
+                    House house = Game.world.GetHouse(refID);
+                    if (house != null)
+                    { listEventPool.AddRange(GetValidEvents(house.GetEvents())); }
+                    else { Game.SetError(new Error(52, "Invalid Major House (refID)")); }
                 }
                 else if (refID >= 100 && refID < 1000)
                 {
                     //Minor House
                     listEventPool.AddRange(GetValidEvents(listGenEventsMinor));
                     listEventPool.AddRange(GetValidEvents(loc.GetEvents()));
+                    House house = Game.world.GetHouse(refID);
+                    if (house != null)
+                    { listEventPool.AddRange(GetValidEvents(house.GetEvents())); }
+                    else { Game.SetError(new Error(52, "Invalid Minor House (refID)")); }
                 }
                 else if (houseID == 99)
                 {
                     //Special Location - Inn
                     listEventPool.AddRange(GetValidEvents(listGenEventsInn));
                     listEventPool.AddRange(GetValidEvents(loc.GetEvents()));
+
+                    //NOTE: need to add code for inns (house archetypes)
                 }
                 else
                 { Game.SetError(new Error(52, "Invalid Location Event Type")); }
@@ -616,16 +626,7 @@ namespace Next_Game
                                 Console.WriteLine("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID);
                             }
                         }
-                        //House specific archetypes
-                        House house = Game.world.GetHouse(refID);
-                        arcID = house.ArcID;
-                        if (arcID > 0)
-                        {
-                            Archetype archetype = GetArchetype(arcID);
-                            house.SetEvents(archetype.GetEvents());
-                            //debug
-                            Console.WriteLine("House {0}, refID {1}, has been initialised with \"{2}\", arcID {3}", house.Name, house.RefID, archetype.Name, archetype.GetNumEvents());
-                        }
+                        
                     }
                     else if (refID >= 100 && refID < 1000)
                     {
@@ -658,6 +659,17 @@ namespace Next_Game
                                 Console.WriteLine("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcInn.Name, arcInn.ArcID);
                             }
                         }
+                    }
+                    //House specific archetypes
+                    House house = Game.world.GetHouse(refID);
+                    arcID = house.ArcID;
+                    //DEBUG: prevents Inns until they are ready to go
+                    if (arcID > 0 && arcID < 1000)
+                    {
+                        Archetype archetype = GetArchetype(arcID);
+                        house.SetEvents(archetype.GetEvents());
+                        //debug
+                        Console.WriteLine("House {0}, refID {1}, has been initialised with \"{2}\", arcID {3}", house.Name, house.RefID, archetype.Name, archetype.ArcID);
                     }
                 }
             }
