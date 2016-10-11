@@ -974,7 +974,7 @@ namespace Next_Game
                 newMinorHouse.Motto = minorStruct.Motto;
                 newMinorHouse.Banner = minorStruct.Banner;
                 newMinorHouse.LocName = minorStruct.Capital;
-                newMinorHouse.ArcID = minorStruct.Archetype;
+                newMinorHouse.ArcID = minorStruct.ArcID;
                 newMinorHouse.Loyalty_AtStart = KingLoyalty.Old_King;
                 newMinorHouse.Loyalty_Current = KingLoyalty.New_King;
                 newMinorHouse.LocID = turncoatHouse.LocID;

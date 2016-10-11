@@ -14,7 +14,7 @@ namespace Next_Game
         public string Name { get; set; }
         public string Motto { get; set; }
         public string Banner { get; set; }
-        public int Archetype { get; set; }
+        public int ArcID { get; set; }
         public int RefID { get; set; }
         public string Capital { get; set; }
     }
@@ -192,7 +192,7 @@ namespace Next_Game
                                 houseStruct.Banner = cleanToken;
                                 break;
                             case "ArchetypeID":
-                                try { houseStruct.Archetype = Convert.ToInt32(cleanToken); }
+                                try { houseStruct.ArcID = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
                                 { Game.SetError(new Error(18, e.Message)); validData = false; }
                                 break;

@@ -102,7 +102,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// loop all events and place generic eventID's in their approrpriate lists
+        /// loop all events and place Generic eventID's in their approrpriate lists
         /// </summary>
         private void InitialiseGenericEvents()
         {
@@ -594,10 +594,11 @@ namespace Next_Game
             Archetype arcInn = GetArchetype(story.Arc_Loc_Inn);
             //Initialise Locations
             Dictionary<int, Location> tempLocations = Game.network.GetLocations();
-            int refID;
+            int refID, arcID;
             foreach(var loc in tempLocations)
             {
                 refID = loc.Value.RefID;
+                House house = Game.world.GetHouse(refID);
                 //location present (excludes capital)
                 if (refID > 0)
                 {
@@ -614,6 +615,15 @@ namespace Next_Game
                                 loc.Value.ArcID = arcMajor.ArcID;
                                 //debug
                                 Console.WriteLine("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID);
+                                //House specific archetypes
+                                arcID = house.ArcID;
+                                if (arcID > 0)
+                                {
+                                    Archetype archetype = GetArchetype(arcID);
+                                    house.SetEvents(archetype.GetEvents());
+                                    //debug
+                                    Console.WriteLine("House {0}, refID {1}, has been initialised with \"{2}\", arcID {3}", house.Name, house.RefID, archetype.Name, archetype.GetNumEvents());
+                                }
                             }
                         }
 

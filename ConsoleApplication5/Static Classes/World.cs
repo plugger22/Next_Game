@@ -723,10 +723,13 @@ namespace Next_Game
                 //ignore the capital and special locations for the moment until they are included in dictAllHouses
                 if (house != null)
                 {
+                    int eventCount = house.GetNumEvents();
                     locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}", house.Name, loc.LocName, loc.LocationID), color, RLColor.Black));
                     locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                     locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
                     locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
+                    if (eventCount > 0)
+                    { locList.Add(new Snippet(string.Format(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID) ,eventCount )))); }
                 }
                 //correct location description
                 if (loc.HouseID == 99)

@@ -119,7 +119,7 @@ namespace Next_Game
                 house.Name = listHousePool[i].Name;
                 house.Motto = listHousePool[i].Motto;
                 house.Banner = listHousePool[i].Banner;
-                house.ArcID = listHousePool[i].Archetype;
+                house.ArcID = listHousePool[i].ArcID;
                 house.RefID = listHousePool[i].RefID;
                 house.LocName = listHousePool[i].Capital;
                 house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
@@ -143,7 +143,7 @@ namespace Next_Game
             house.Name = listHousePool[index].Name;
             house.Motto = listHousePool[index].Motto;
             house.Banner = listHousePool[index].Banner;
-            house.ArcID = listHousePool[index].Archetype;
+            house.ArcID = listHousePool[index].ArcID;
             house.LocName = listHousePool[index].Capital;
             house.RefID = listHousePool[index].RefID;
             house.LocID = LocID;

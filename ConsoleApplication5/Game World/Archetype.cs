@@ -51,6 +51,9 @@ namespace Next_Game
 
         public List<int> GetEvents()
         { return listOfEvents; }
+
+        public int GetNumEvents()
+        { return listOfEvents.Count; }
     }
 
     /// <summary>
