@@ -231,7 +231,12 @@ namespace Next_Game
             for(int i = moveList.Count; i > 0; i--)
             {
                 if (moveList[i - 1].Status == PartyStatus.Done)
-                { moveList.RemoveAt(i - 1); }
+                {
+                    try
+                    { moveList.RemoveAt(i - 1); }
+                    catch (Exception e)
+                    { Game.SetError(new Error(61, e.Message)); }
+                }
             }
             //pass dictionary of markers back to map object via Game
             return dictMapMarkers;
@@ -1836,8 +1841,13 @@ namespace Next_Game
         {
             if (actor != null)
             {
-                dictAllActors.Add(actor.ActID, actor);
-                dictPassiveActors.Add(actor.ActID, actor);
+                try
+                {
+                    dictAllActors.Add(actor.ActID, actor);
+                    dictPassiveActors.Add(actor.ActID, actor);
+                }
+                catch (Exception e)
+                { Game.SetError(new Error(60, e.Message)); }
             }
             else { Game.SetError(new Error(38, "null Actor input")); }
         }

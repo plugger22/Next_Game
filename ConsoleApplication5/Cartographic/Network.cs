@@ -279,7 +279,10 @@ namespace Next_Game.Cartographic
                     posSearch.PosX = posNew.PosX;
                     posSearch.PosY = posNew.PosY;
                     //delete as that direction is now being searched
-                    originNeighbours.RemoveAt(0);
+                    try
+                    { originNeighbours.RemoveAt(0); }
+                    catch (Exception e)
+                    { Game.SetError(new Error(61, e.Message)); }
                 }
                 else
                 {
@@ -393,7 +396,10 @@ namespace Next_Game.Cartographic
                                         posNew.PosX = originNeighbours[0].PosX;
                                         posNew.PosY = originNeighbours[0].PosY;
                                         //delete record to indicate that direction has been searched
-                                        originNeighbours.RemoveAt(0);
+                                        try
+                                        { originNeighbours.RemoveAt(0); }
+                                        catch (Exception e)
+                                        { Game.SetError(new Error(61, e.Message)); }
                                         //place new position on stack
                                         PositionPair posPairTemp = new PositionPair();
                                         posPairTemp.PosX = posBase.PosX;
@@ -426,7 +432,10 @@ namespace Next_Game.Cartographic
                                 posNew.PosX = originNeighbours[0].PosX;
                                 posNew.PosY = originNeighbours[0].PosY;
                                 //delete record to indicate that direction has been searched
-                                originNeighbours.RemoveAt(0);
+                                try
+                                { originNeighbours.RemoveAt(0); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(61, e.Message)); }
                                 //place new position on stack
                                 PositionPair posPairTemp = new PositionPair();
                                 posPairTemp.PosX = posBase.PosX;
@@ -637,7 +646,10 @@ namespace Next_Game.Cartographic
                                     posNew.PosX = originNeighbours[0].PosX;
                                     posNew.PosY = originNeighbours[0].PosY;
                                     //delete record to indicate that direction has been searched
-                                    originNeighbours.RemoveAt(0);
+                                    try
+                                    { originNeighbours.RemoveAt(0); }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(61, e.Message)); }
                                     foundPos = true;
                                 }
                                 //no more directions to search from origin, all over
@@ -1350,7 +1362,10 @@ namespace Next_Game.Cartographic
             //get name
             name = listOfLocationNames[index];
             //delete record in list to prevent duplicate names
-            listOfLocationNames.RemoveAt(index);
+            try
+            { listOfLocationNames.RemoveAt(index); }
+            catch (Exception e)
+            { Game.SetError(new Error(61, e.Message)); }
             return name;
         }
 
@@ -2018,7 +2033,10 @@ namespace Next_Game.Cartographic
                 //assign a random house ID (from available) to house
                 randomIndex = rnd.Next(1, randomList.Count + 1);
                 house.HouseID = randomList[randomIndex - 1];
-                randomList.RemoveAt(randomIndex - 1);
+                try
+                { randomList.RemoveAt(randomIndex - 1); }
+                catch (Exception e)
+                { Game.SetError(new Error(61, e.Message)); }
                 Console.WriteLine("House {0} has LocID {1} and HouseID {2}", house.Name, house.LocID, house.HouseID);
             }
             //loop houses and update data

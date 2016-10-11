@@ -104,7 +104,10 @@ namespace Next_Game
             {
                 index = rnd.Next(0, count);
                 Console.WriteLine("Great House {0} removed", listHousePool[index].Name);
-                listHousePool.RemoveAt(index);
+                try
+                { listHousePool.RemoveAt(index); }
+                catch (Exception e)
+                { Game.SetError(new Error(61, e.Message)); }
                 count = listHousePool.Count;
             }
             Console.WriteLine();
@@ -149,7 +152,10 @@ namespace Next_Game
             //add house to listOfHouses
             listOfMinorHouses.Add(house);
             //remove minorhouse from pool list to avoid being chosen again
-            listHousePool.RemoveAt(index);
+            try
+            { listHousePool.RemoveAt(index); }
+            catch (Exception e)
+            { Game.SetError(new Error(61, e.Message)); }
             //update location details
             Location loc = Game.network.GetLocation(LocID);
             loc.LocName = house.LocName;
@@ -215,7 +221,10 @@ namespace Next_Game
                         randomNum = rnd.Next(0, tempList.Count);
                         cluster.Name = tempList[randomNum];
                         //delete from list to prevent reuse
-                        tempList.RemoveAt(randomNum);
+                        try
+                        { tempList.RemoveAt(randomNum); }
+                        catch (Exception e)
+                        { Game.SetError(new Error(61, e.Message)); }
                     }
                     else
                     {
@@ -242,7 +251,10 @@ namespace Next_Game
                 //get name
                 actorName = listOfPlayerNames[index];
                 //delete record in list to prevent duplicate names
-                listOfPlayerNames.RemoveAt(index);
+                try
+                { listOfPlayerNames.RemoveAt(index); }
+                catch (Exception e)
+                { Game.SetError(new Error(61, e.Message)); }
                 //new character
                 ActorType type = ActorType.Loyal_Follower;
                 Active person = null;

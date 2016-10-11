@@ -417,7 +417,6 @@ namespace Next_Game
                                                     string infoText = world.InitiateMoveActors(_charIDSelected, _posSelect1, _posSelect2, pathToTravel);
                                                     Message message = new Message(infoText, _charIDSelected, map.GetMapInfo(MapLayer.LocID, _posSelect2.PosX, _posSelect2.PosY), MessageType.Move);
                                                     world.SetMessage(message);
-                                                    //messageLog.Add(new Snippet(infoText), gameTurn);
                                                     infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
                                                     //show route
                                                     map.UpdateMap();
@@ -979,7 +978,12 @@ namespace Next_Game
                 {
                     //backspace - delete last character
                     if (_multiData.Length > 0)
-                    { _multiData = _multiData.Remove(_multiData.Length - 1); }
+                    {
+                        try
+                        { _multiData = _multiData.Remove(_multiData.Length - 1); }
+                        catch (Exception e)
+                        { SetError(new Error(61, e.Message)); }
+                    }
                 }
                 else
                 { _multiData += '?'; }
