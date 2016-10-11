@@ -598,7 +598,6 @@ namespace Next_Game
             foreach(var loc in tempLocations)
             {
                 refID = loc.Value.RefID;
-                House house = Game.world.GetHouse(refID);
                 //location present (excludes capital)
                 if (refID > 0)
                 {
@@ -615,18 +614,18 @@ namespace Next_Game
                                 loc.Value.ArcID = arcMajor.ArcID;
                                 //debug
                                 Console.WriteLine("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID);
-                                //House specific archetypes
-                                arcID = house.ArcID;
-                                if (arcID > 0)
-                                {
-                                    Archetype archetype = GetArchetype(arcID);
-                                    house.SetEvents(archetype.GetEvents());
-                                    //debug
-                                    Console.WriteLine("House {0}, refID {1}, has been initialised with \"{2}\", arcID {3}", house.Name, house.RefID, archetype.Name, archetype.GetNumEvents());
-                                }
                             }
                         }
-
+                        //House specific archetypes
+                        House house = Game.world.GetHouse(refID);
+                        arcID = house.ArcID;
+                        if (arcID > 0)
+                        {
+                            Archetype archetype = GetArchetype(arcID);
+                            house.SetEvents(archetype.GetEvents());
+                            //debug
+                            Console.WriteLine("House {0}, refID {1}, has been initialised with \"{2}\", arcID {3}", house.Name, house.RefID, archetype.Name, archetype.GetNumEvents());
+                        }
                     }
                     else if (refID >= 100 && refID < 1000)
                     {
