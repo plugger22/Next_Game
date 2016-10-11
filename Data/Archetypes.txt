@@ -90,6 +90,90 @@ Chance: 30
 Ev_Follower: 5, 6
 End
 
+ArcID: 11
+Name: Crazy Starks
+Type: House
+subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End
 
+ArcID: 12
+Name: Foxy Foxes
+Type: House
+subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End
 
+ArcID: 13
+Name: Leaping Trout
+Type: House
+subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End
 
+ArcID: 14
+Name: Lazy Lions
+Type: House
+subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End
+
+ArcID: 15
+Name: Stop and Go
+Type: House
+subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End
+
+ArcID: 16
+Name: Cloud Climbers
+Type: House
+subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End
+
+ArcID: 17
+Name: Golden Kraken
+Type: House
+subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End
+
+ArcID: 18
+Name: Sunny Sons
+Type: House
+subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End
+
+ArcID: 19
+Name: Lusty Stags
+Type: House
+subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End
+
+ArcID: 20
+Name: Strong Men
+Type: House
+subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End
+
+ArcID: 21
+Name: Dragon Lovers
+Type: House
+subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End

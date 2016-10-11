@@ -58,6 +58,7 @@ namespace Next_Game
         public ArcGeo Geo { get; set; }
         public ArcLoc Loc { get; set; }
         public ArcRoad Road { get; set; }
+        public ArcHouse House { get; set; }
         public string SubType { get; set; }
         public List<int> listOfEvents { get; set; }
     }
@@ -742,6 +743,9 @@ namespace Next_Game
                                     case "Road":
                                         structArc.Type = ArcType.Road;
                                         break;
+                                    case "House":
+                                        structArc.Type = ArcType.House;
+                                        break;
                                     default:
                                         structArc.Type = ArcType.None;
                                         Game.SetError(new Error(53, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfArchetypes[i])));
@@ -807,6 +811,21 @@ namespace Next_Game
                                                 break;
                                             default:
                                                 Game.SetError(new Error(53, string.Format("Invalid Input, Road Type, (\"{0}\")", arrayOfArchetypes[i])));
+                                                validData = false;
+                                                break;
+                                        }
+                                        break;
+                                    case ArcType.House:
+                                        switch (cleanToken)
+                                        {
+                                            case "Major":
+                                                structArc.House = ArcHouse.Major;
+                                                break;
+                                            case "Minor":
+                                                structArc.House = ArcHouse.Minor;
+                                                break;
+                                            default:
+                                                Game.SetError(new Error(53, string.Format("Invalid Input, House Type, (\"{0}\")", arrayOfArchetypes[i])));
                                                 validData = false;
                                                 break;
                                         }
@@ -880,6 +899,9 @@ namespace Next_Game
                                             break;
                                         case ArcType.Road:
                                             arcObject = new ArcTypeRoad(structArc.Name, structArc.Road, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
+                                            break;
+                                        case ArcType.House:
+                                            arcObject = new ArcTypeHouse(structArc.Name, structArc.House, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
                                             break;
                                     }
                                     if (arcObject != null)

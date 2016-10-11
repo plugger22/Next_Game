@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    public enum ArcType {None, GeoCluster, Location, Road}
+    public enum ArcType {None, GeoCluster, Location, Road, House}
     public enum ArcGeo {None, Sea, Mountain, Forest } //geocluster sub category
     public enum ArcLoc {None, Capital, Major, Minor, Inn} //location sub category
     public enum ArcRoad {None, Normal, Kings, Connector} //road sub category
+    public enum ArcHouse {None, Major, Minor} //House sub category (specific archetype to a house, eg. Stark.
     
 
     public class Archetype
@@ -23,6 +24,7 @@ namespace Next_Game
         public ArcGeo Geo { get; set; } //subtypes, default to 'None' if not applicable
         public ArcLoc Loc { get; set; }
         public ArcRoad Road { get; set; }
+        public ArcHouse House { get; set; }
         private List<int> listOfEvents; //Event ID list that apply to followers
 
         public Archetype()
@@ -52,7 +54,7 @@ namespace Next_Game
     }
 
     /// <summary>
-    /// Geocluster Archetype
+    /// Geocluster Archetype (eg. 'Haunted Woods')
     /// </summary>
     public class ArcTypeGeo : Archetype
     {
@@ -65,7 +67,7 @@ namespace Next_Game
     }
 
     /// <summary>
-    /// Location Archetype
+    /// Location Archetype, (eg. "Plague')
     /// </summary>
     public class ArcTypeLoc : Archetype
     {
@@ -78,7 +80,7 @@ namespace Next_Game
     }
 
     /// <summary>
-    /// Road Archetype
+    /// Road Archetype (eg. 'Bandit Infestation'
     /// </summary>
     public class ArcTypeRoad : Archetype
     {
@@ -90,4 +92,17 @@ namespace Next_Game
         }
     }
 
+
+    /// <summary>
+    /// House Archetype (eg. 'Crazy Starks')
+    /// </summary>
+    public class ArcTypeHouse : Archetype
+    {
+
+        public ArcTypeHouse(string name, ArcHouse subtype, int arcID, int chance, List<int> events) : base(name, arcID, chance, events)
+        {
+            Type = ArcType.House;
+            House = subtype;
+        }
+    }
 }

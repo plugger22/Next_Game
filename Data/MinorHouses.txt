@@ -211,7 +211,7 @@ Seat: Horn Hill
 House: Tarth
 Motto: None Shall Pass
 Banner: A Yellow Sun and Crescent Moon on a Quartered Rose and Azure
-ArchetypeID: 1
+ArchetypeID: 15
 ReferenceID: 130
 Seat: Evenfall
 
