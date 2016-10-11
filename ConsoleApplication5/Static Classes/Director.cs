@@ -39,6 +39,10 @@ namespace Next_Game
         List<int> listGenEventsMajor;
         List<int> listGenEventsMinor;
         List<int> listGenEventsInn;
+        List<int> listRoadEventsNormal;
+        List<int> listRoadEventsKings;
+        List<int> listRoadEventsConnector;
+        List<int> listCapitalEvents;
         List<EventPackage> listCurrentEvents;
         private Dictionary<int, Event> dictEvents;
         private Dictionary<int, Archetype> dictArchetypes;
@@ -65,6 +69,10 @@ namespace Next_Game
             listGenEventsMajor = new List<int>();
             listGenEventsMinor = new List<int>();
             listGenEventsInn = new List<int>();
+            listRoadEventsNormal = new List<int>();
+            listRoadEventsKings = new List<int>();
+            listRoadEventsConnector = new List<int>();
+            listCapitalEvents = new List<int>();
             listCurrentEvents = new List<EventPackage>();
             dictEvents = new Dictionary<int, Event>();
             dictArchetypes = new Dictionary<int, Archetype>();
@@ -538,6 +546,36 @@ namespace Next_Game
                             break;
                     }
                 }
+            }
+
+            //Road archetypes
+            Archetype arcNormal = GetArchetype(story.Arc_Road_Normal);
+            Archetype arcKings = GetArchetype(story.Arc_Road_Kings);
+            Archetype arcConnector = GetArchetype(story.Arc_Road_Connector);
+            //Initialise Roads
+            if (arcNormal != null)
+            {
+                listRoadEventsNormal.AddRange(arcNormal.GetEvents());
+                Console.WriteLine("Normal roads have been initialised with \"{0}\", arcID {1}", arcNormal.Name, arcNormal.ArcID);
+            }
+            if (arcKings != null)
+            {
+                listRoadEventsKings.AddRange(arcKings.GetEvents());
+                Console.WriteLine("Kings roads have been initialised with \"{0}\", arcID {1}", arcKings.Name, arcKings.ArcID);
+            }
+            if (arcConnector != null)
+            {
+                listRoadEventsConnector.AddRange(arcConnector.GetEvents());
+                Console.WriteLine("Connector roads have been initialised with \"{0}\", arcID {1}", arcConnector.Name, arcConnector.ArcID);
+            }
+
+            //Capital archetype
+            Archetype arcCapital = GetArchetype(story.Arc_Loc_Capital);
+            //Initialise Capital
+            if (arcCapital != null)
+            {
+                listCapitalEvents.AddRange(arcCapital.GetEvents());
+                Console.WriteLine("The Capital at KingsKeep has been initialised with \"{0}\", arcID {1}", arcCapital.Name, arcCapital.ArcID);
             }
         }
 

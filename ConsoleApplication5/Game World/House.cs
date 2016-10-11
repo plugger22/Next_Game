@@ -27,13 +27,19 @@ namespace Next_Game
         public KingLoyalty Loyalty_Current { get; set; }
         private List<int> listOfFirstNames; //contains ID #'s (listOfMaleFirstNames index) of all first names used by males within the house (eg. 'Eddard Stark II')
         private List<int> listOfSecrets;
+        private List<int> listOfEvents;
 
-
+        /// <summary>
+        /// default constructor
+        /// </summary>
         public House()
         {
             listOfFirstNames = new List<int>();
             listOfSecrets = new List<int>();
+            listOfEvents = new List<int>();
         }
+
+
 
         /// <summary>
         /// adds ID to list of names and returns # of like names in list
@@ -48,11 +54,27 @@ namespace Next_Game
             return numOfLikeNames;
         }
 
+        internal void SetEvents(List<int> listEvents)
+        {
+            if (listEvents != null)
+            { listOfEvents.AddRange(listEvents); }
+            else
+            { Game.SetError(new Error(56, "Invalid list of Events input (null)")); }
+        }
+
+        internal List<int> GetEvents()
+        { return listOfEvents; }
+
         internal List<int> GetSecrets()
         { return listOfSecrets; }
 
         internal void SetSecrets(List<int> tempSecrets)
-        { if (tempSecrets != null) { listOfSecrets.Clear();  listOfSecrets.AddRange(tempSecrets); } }
+        {
+            if (tempSecrets != null)
+            { listOfSecrets.Clear();  listOfSecrets.AddRange(tempSecrets); }
+            else
+            { Game.SetError(new Error(57, "Invalid list of Secrets input (null)")); }
+        }
 
     }
 

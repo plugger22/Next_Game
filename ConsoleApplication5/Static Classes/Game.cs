@@ -121,8 +121,10 @@ namespace Next_Game
             world = new World(seed);
             world.InitialiseWorld();
             infoChannel = new InfoChannel();
+            timer_1.Start();
             director = new Director(seed);
             director.InitialiseDirector();
+            StopTimer(timer_1, "Director Initialisation");
             world.ShowGeneratorStatsRL();
             Message message = new Message($"Game world created with seed {seed}", MessageType.System);
             world.SetMessage(message);
