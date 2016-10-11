@@ -16,17 +16,23 @@ namespace Next_Game.Cartographic
         public string Description { get; set; } = "No description provided";
         public int Size { get; }
         public int GeoID { get; }
+        public int Archetype { get; set; } //arcID, if any
         public Cluster Terrain { get; }
         public GeoType Type { get; }
         private List<int> listOfSecrets;
+        private List<int> listOfEvents; //Archetype events
 
         public GeoCluster()
-        { listOfSecrets = new List<int>(); }
+        {
+            listOfSecrets = new List<int>();
+            listOfEvents = new List<int>();
+        }
 
         //default constructor
         public GeoCluster(int geoID, int type, int size)
         {
             listOfSecrets = new List<int>();
+            listOfEvents = new List<int>();
             this.GeoID = geoID;
             Terrain = (Cluster)type;
             this.Size = size;
@@ -54,5 +60,24 @@ namespace Next_Game.Cartographic
                     break;
             }
         }
+
+        /// <summary>
+        /// add events to the Geocluster
+        /// </summary>
+        /// <param name="listArchEvents"></param>
+        public void SetEvents(List<int> listArchEvents)
+        {
+            if (listArchEvents != null)
+            { listOfEvents.AddRange(listArchEvents); }
+            else
+            { Game.SetError(new Error(55, "Invalid list of Events input (null)")); }
+        }
+
+
+        public List<int> GetEvents()
+        { return listOfEvents; }
+
+        public int GetNumEvents()
+        { return listOfEvents.Count; }
     }
 }

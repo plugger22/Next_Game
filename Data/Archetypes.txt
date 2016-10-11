@@ -14,7 +14,7 @@ ArcID: 1
 Name: Dire Wolf Forest
 Type: GeoCluster
 subType: Forest
-Chance: 10
+Chance: 50
 Ev_Follower: 5, 6
 End
 

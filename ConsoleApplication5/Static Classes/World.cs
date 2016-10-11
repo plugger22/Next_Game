@@ -784,6 +784,7 @@ namespace Next_Game
             else if (locID == 0)
             {
                 int geoID = Game.map.GetMapInfo(MapLayer.GeoID, mouseX, mouseY, true);
+                int numEvents;
                 //geo sea zone or terrain cluster present?
                 if (geoID > 0)
                 {
@@ -793,6 +794,9 @@ namespace Next_Game
                         locList.Add(new Snippet(string.Format("{0}, geoID {1}", cluster.Name, cluster.GeoID), RLColor.Yellow, RLColor.Black));
                         locList.Add(new Snippet(cluster.Description));
                         locList.Add(new Snippet(string.Format("Size {0}, Terrain {1}, Type {2}", cluster.Size, cluster.Terrain, cluster.Type)));
+                        numEvents = cluster.GetNumEvents();
+                        if (numEvents > 0)
+                        { locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} Events", Game.director.GetArchetypeName(cluster.Archetype), numEvents))); }
                     }
                     else
                     { locList.Add(new Snippet(string.Format("ERROR: GeoCluster couldn't be found for geoID {0}", geoID), RLColor.Red, RLColor.Black)); }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Next_Game.Cartographic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,7 +28,7 @@ namespace Next_Game
     {
         static Random rnd;
         Story story;
-        List<int> listOfActiveGeoClusters; //clusters that have a road through them
+        List<int> listOfActiveGeoClusters; //clusters that have a road through them (GeoID's)
         List<int> listGenEventsForest; //generic events for forests
         List<int> listGenEventsMountain;
         List<int> listGenEventsSea;
@@ -87,6 +88,8 @@ namespace Next_Game
             //Run AFTER importing Archetypes
             dictStories = Game.file.GetStories("Stories.txt");
             story = SetStory(1); //choose which story to use
+            Console.WriteLine(Environment.NewLine + "--- Initialise Archetypes");
+            InitialiseArchetypes();
             Console.WriteLine(Environment.NewLine);
         }
 
@@ -471,6 +474,99 @@ namespace Next_Game
             { return story; }
             return null;
         }
+
+        /// <summary>
+        /// Using Story, set up archetypes for geo / loc / road's
+        /// </summary>
+        public void InitialiseArchetypes()
+        {
+            //GeoCluster archetypes
+            Archetype arcSea = GetArchetype(story.Arc_Geo_Sea);
+            Archetype arcMountain = GetArchetype(story.Arc_Geo_Mountain);
+            Archetype arcForest = GetArchetype(story.Arc_Geo_Forest);
+
+            //loop list of active GeoClusters (ones with roads through them)
+            foreach (int geoID in listOfActiveGeoClusters)
+            {
+                //get cluster
+                GeoCluster cluster = Game.world.GetGeoCluster(geoID);
+                if (cluster != null)
+                {
+                    switch(cluster.Terrain)
+                    {
+                        case Cluster.Sea:
+                            if (arcSea != null)
+                            {
+                                //% chance of applying to each instance
+                                if (rnd.Next(100) < arcSea.Chance)
+                                {
+                                    //copy Archetype event ID's across to GeoCluster
+                                    cluster.SetEvents(arcSea.GetEvents());
+                                    cluster.Archetype = arcSea.ArcID;
+                                    //debug
+                                    Console.WriteLine("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcSea.Name, arcSea.ArcID);
+                                }
+                            }
+                            break;
+                        case Cluster.Mountain:
+                            if (arcMountain != null)
+                            {
+                                //% chance of applying to each instance
+                                if (rnd.Next(100) < arcMountain.Chance)
+                                {
+                                    //copy Archetype event ID's across to GeoCluster
+                                    cluster.SetEvents(arcMountain.GetEvents());
+                                    cluster.Archetype = arcMountain.ArcID;
+                                    //debug
+                                    Console.WriteLine("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcMountain.Name, arcMountain.ArcID);
+                                }
+                            }
+                            break;
+                        case Cluster.Forest:
+                            if (arcForest != null)
+                            {
+                                //% chance of applying to each instance
+                                if (rnd.Next(100) < arcForest.Chance)
+                                {
+                                    //copy Archetype event ID's across to GeoCluster
+                                    cluster.SetEvents(arcForest.GetEvents());
+                                    cluster.Archetype = arcForest.ArcID;
+                                    //debug
+                                    Console.WriteLine("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcForest.Name, arcForest.ArcID);
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns an Archetype from dictionary
+        /// </summary>
+        /// <param name="arcID"></param>
+        /// <returns></returns>
+        private Archetype GetArchetype(int arcID)
+        {
+            Archetype arc = new Archetype();
+            if (dictArchetypes.TryGetValue(arcID, out arc))
+            { return arc; }
+            return null;
+        }
+
+        /// <summary>
+        /// Returns name of Archetype based on arcID. Null if not found.
+        /// </summary>
+        /// <param name="arcID"></param>
+        /// <returns></returns>
+        public string GetArchetypeName(int arcID)
+        {
+            Archetype arc = new Archetype();
+            if (dictArchetypes.TryGetValue(arcID, out arc))
+            { return arc.Name; }
+            return null;
+        }
+
 
         //place Director methods above here
     }

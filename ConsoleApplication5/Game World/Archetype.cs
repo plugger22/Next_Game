@@ -25,6 +25,9 @@ namespace Next_Game
         public ArcRoad Road { get; set; }
         private List<int> listOfEvents; //Event ID list that apply to followers
 
+        public Archetype()
+        { }
+
         /// <summary>
         /// default constructor
         /// </summary>
@@ -44,6 +47,8 @@ namespace Next_Game
             Console.WriteLine("ArcID {0}, {1}, Chance {2}%, No. Events {3}", ArcID, Name, Chance, events.Count);
         }
 
+        public List<int> GetEvents()
+        { return listOfEvents; }
     }
 
     /// <summary>
