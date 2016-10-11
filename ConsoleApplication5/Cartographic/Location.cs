@@ -68,14 +68,15 @@ namespace Next_Game.Cartographic
         public int DistanceToConnector { get; set; }
         public int HouseID { get; set; }
         public int HouseRefID { get; set; }
-        private List<Position> listOfNeighboursPos = new List<Position>(); //list of immediate neighbours, by Position
-        private List<int> listOfNeighboursLocID = new List<int>(); //list of immediate neighbours, by LocID
-        private readonly List<Route> routeToCapital = new List<Route>(); //Loc -> Capital
-        private readonly List<Route> routeToConnector = new List<Route>(); //Loc -> Connector
-        private readonly List<Route> routeFromCapital = new List<Route>(); //Capital -> Loc
-        private readonly List<Route> routeFromConnector = new List<Route>(); //Connector -> Loc
-        private List<int> listOfActors = new List<int>(); //list of characters (actorID's) currently at Location
-        private List<int> listOfSecrets = new List<int>();
+        private List<Position> listOfNeighboursPos; //list of immediate neighbours, by Position
+        private List<int> listOfNeighboursLocID; //list of immediate neighbours, by LocID
+        private readonly List<Route> routeToCapital; //Loc -> Capital
+        private readonly List<Route> routeToConnector; //Loc -> Connector
+        private readonly List<Route> routeFromCapital; //Capital -> Loc
+        private readonly List<Route> routeFromConnector; //Connector -> Loc
+        private List<int> listOfActors; //list of characters (actorID's) currently at Location
+        private List<int> listOfSecrets;
+        private List<int> listOfEvents;
 
         public Location()
         { LocName = "testville"; Capital = false; locPos = new Position(); LocationID = locationIndex++; }
@@ -83,6 +84,16 @@ namespace Next_Game.Cartographic
         //normal double constructor for a location
         public Location(Position pos)
         {
+            listOfActors = new List<int>();
+            listOfSecrets = new List<int>();
+            listOfEvents = new List<int>();
+            listOfNeighboursPos = new List<Position>();
+            listOfNeighboursLocID = new List<int>();
+            routeToCapital = new List<Route>();
+            routeToConnector = new List<Route>();
+            routeFromCapital = new List<Route>();
+            routeFromConnector = new List<Route>();
+
             LocName = "testville";
             locPos = new Position();
             locPos.PosX = pos.PosX; locPos.PosY = pos.PosY;
@@ -94,6 +105,16 @@ namespace Next_Game.Cartographic
         //triple constructor to specify capital
         public Location(Position pos, bool capital)
         {
+            listOfActors = new List<int>();
+            listOfSecrets = new List<int>();
+            listOfEvents = new List<int>();
+            listOfNeighboursPos = new List<Position>();
+            listOfNeighboursLocID = new List<int>();
+            routeToCapital = new List<Route>();
+            routeToConnector = new List<Route>();
+            routeFromCapital = new List<Route>();
+            routeFromConnector = new List<Route>();
+
             LocName = "testville";
             locPos = new Position();
             locPos.PosX = pos.PosX; locPos.PosY = pos.PosY;
@@ -105,6 +126,16 @@ namespace Next_Game.Cartographic
         //quad constructor to include CapitalRoute
         public Location(Position pos, int dir,  bool capital)
         {
+            listOfActors = new List<int>();
+            listOfSecrets = new List<int>();
+            listOfEvents = new List<int>();
+            listOfNeighboursPos = new List<Position>();
+            listOfNeighboursLocID = new List<int>();
+            routeToCapital = new List<Route>();
+            routeToConnector = new List<Route>();
+            routeFromCapital = new List<Route>();
+            routeFromConnector = new List<Route>();
+
             LocName = "testville";
             locPos = new Position();
             locPos.PosX = pos.PosX; locPos.PosY = pos.PosY; locPos.CapitalRoute = dir;
