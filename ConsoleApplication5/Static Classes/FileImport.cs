@@ -22,10 +22,10 @@ namespace Next_Game
     //holds data for Traits (best to use stack, not heap for this)
     struct TraitStruct
     {
+        public string Name { get; set; }
         public TraitType Type { get; set; }
         public TraitSex Sex { get; set; }
         public TraitAge Age { get; set; }
-        public string Name { get; set; }
         public int Effect { get; set; }
         public int Chance { get; set; }
     }
@@ -177,7 +177,10 @@ namespace Next_Game
                     if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
                     else { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0)
-                    { validData = false; Game.SetError(new Error(16, "Empty data field")); }
+                    {
+                        validData = false;
+                        Game.SetError(new Error(16, string.Format("House {0} (Missing data for \"{1}\") \"{2}\"", 
+                        String.IsNullOrEmpty(houseStruct.Name) ? "?" : houseStruct.Name, cleanTag, fileName))); }
                     else
                     {
                         //Console.WriteLine("{0}: {1}", tokens[0], tokens[1]);
@@ -280,6 +283,7 @@ namespace Next_Game
             bool newTrait = false;
             bool validData = true;
             List<Trait> listOfTraits = new List<Trait>();
+            List<string> listOfNickNames = new List<string>();
             string[] arrayOfTraits = ImportDataFile(fileName);
             TraitStruct structTrait = new TraitStruct();
             //loop imported array of strings
@@ -302,9 +306,14 @@ namespace Next_Game
                     string[] tokens = arrayOfTraits[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    cleanToken = tokens[1].Trim();
+                    if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    else { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0 && cleanTag != "Nicknames")
-                    { Game.SetError(new Error(20, string.Format("Empty data field, record {0}, {1}", i, fileName))); validData = false;  }
+                    {
+                        validData = false;
+                        Game.SetError(new Error(20, string.Format("Trait {0} (Missing data for \"{1}\") \"{2}\"",
+                            String.IsNullOrEmpty(structTrait.Name) ? "?" : structTrait.Name, cleanTag, fileName)));
+                    }
                     else
                     {
                         switch (cleanTag)
@@ -359,15 +368,15 @@ namespace Next_Game
                                 break;
                             case "Nicknames":
                                 //get list of nicknames
+                                listOfNickNames.Clear();
                                 string[] arrayOfNames = cleanToken.Split(',');
-                                List<string> tempList = new List<string>();
                                 //loop nickname array and add all to lists
                                 string tempHandle = null;
                                 for (int k = 0; k < arrayOfNames.Length; k++)
                                 {
                                     tempHandle = arrayOfNames[k].Trim();
                                     if (String.IsNullOrEmpty(tempHandle) == false)
-                                    { tempList.Add(tempHandle); }
+                                    { listOfNickNames.Add(tempHandle); }
                                     //dodgy Nickname is ignored, it doesn't invalidate the record (some records deliberately don't have nicknames)
                                     else
                                     {
@@ -375,10 +384,14 @@ namespace Next_Game
                                         { Game.SetError(new Error(21, string.Format("Invalid Nickname for {0}, {1}", structTrait.Name, fileName))); }
                                     }
                                 }
+                                break;
+                            case "end":
+                            case "End":
                                 if (validData == true)
                                 {
                                     //pass info over to a class instance
-                                    Trait classTrait = new Trait(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, structTrait.Chance, tempList);
+                                    Trait classTrait = new Trait(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, 
+                                        structTrait.Chance, listOfNickNames);
                                     //last datapoint - save object to list
                                     if (dataCounter > 0)
                                     { listOfTraits.Add(classTrait); }

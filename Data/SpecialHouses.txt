@@ -5,6 +5,7 @@
 House: Ambrose
 Motto: Never Resting
 Banner: Red Ants on a Yellow Field
-ArchetypeID: 0
-ReferenceID: 100
+ArcID: 0
+RefID: 100
 Seat: Blackwater
+End
