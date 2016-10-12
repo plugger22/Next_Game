@@ -26,6 +26,7 @@ namespace Next_Game
         public ArcGeo GeoType { get; set; } = ArcGeo.None;
         public ArcLoc LocType { get; set; } = ArcLoc.None;
         public ArcRoad RoadType { get; set; } = ArcRoad.None;
+        public ArcHouse HouseType { get; set; } = ArcHouse.None;
         
 
         public Event()
@@ -111,4 +112,16 @@ namespace Next_Game
         }
     }
 
+    /// <summary>
+    /// House specific event
+    /// </summary>
+    public class EventHouse : EventFollower
+    {
+
+        public EventHouse(int eventID, string name, EventFrequency frequency, ArcHouse subtype) : base(eventID, name, frequency)
+        {
+            Type = ArcType.House;
+            HouseType = subtype;
+        }
+    }
 }

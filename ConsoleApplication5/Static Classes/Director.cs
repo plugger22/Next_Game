@@ -254,8 +254,10 @@ namespace Next_Game
                     //Special Location - Inn
                     listEventPool.AddRange(GetValidEvents(listGenEventsInn));
                     listEventPool.AddRange(GetValidEvents(loc.GetEvents()));
-
-                    //NOTE: need to add code for inns (house archetypes)
+                    House house = Game.world.GetHouse(refID);
+                    if (house != null)
+                    { listEventPool.AddRange(GetValidEvents(house.GetEvents())); }
+                    else { Game.SetError(new Error(52, "Invalid Inn (refID)")); }
                 }
                 else
                 { Game.SetError(new Error(52, "Invalid Location Event Type")); }
@@ -626,7 +628,7 @@ namespace Next_Game
                                 Console.WriteLine("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID);
                             }
                         }
-                        
+
                     }
                     else if (refID >= 100 && refID < 1000)
                     {
@@ -663,8 +665,7 @@ namespace Next_Game
                     //House specific archetypes
                     House house = Game.world.GetHouse(refID);
                     arcID = house.ArcID;
-                    //DEBUG: prevents Inns until they are ready to go
-                    if (arcID > 0 && arcID < 1000)
+                    if (arcID > 0)
                     {
                         Archetype archetype = GetArchetype(arcID);
                         house.SetEvents(archetype.GetEvents());

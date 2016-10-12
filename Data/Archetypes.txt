@@ -2,8 +2,8 @@
 
 # ArcID: unique number 
 # Name: descriptive title for archetype
-# Type: (ArcType -> GeoCluster / Location / Road)
-# subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Royal/Connector) 
+# Type: (ArcType -> GeoCluster / Location / Road / House)
+# subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Royal/Connector, House -> Major/Minor/Inn) 
 # Chance: % chance of archetype applying to whatever (eg. all forests have a chance% of having this archetype). Minimum 1 instance. Roads auto 100%
 # Ev_Follower: tempID's comma separated, eg. 2, 33, 47, 48 (follower)
 # End -> needed for file import
@@ -174,6 +174,14 @@ ArcID: 21
 Name: Dragon Lovers
 Type: House
 subType: Major
+Chance: 100
+Ev_Follower: 5, 6
+End
+
+ArcID: 22
+Name: Evil Tavern
+Type: House
+subType: Inn
 Chance: 100
 Ev_Follower: 5, 6
 End

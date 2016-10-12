@@ -43,6 +43,7 @@ namespace Next_Game
         public ArcGeo Geo { get; set; }
         public ArcRoad Road { get; set; }
         public ArcLoc Loc { get; set; }
+        public ArcHouse House { get; set; }
         public EventCategory Cat { get; set; }
         public EventFrequency Frequency { get; set; }
         public TraitType Trait { get; set; }
@@ -552,6 +553,24 @@ namespace Next_Game
                                                 break;
                                         }
                                         break;
+                                    case ArcType.House:
+                                        switch (cleanToken)
+                                        {
+                                            case "Major":
+                                                structEvent.House = ArcHouse.Major;
+                                                break;
+                                            case "Minor":
+                                                structEvent.House = ArcHouse.Minor;
+                                                break;
+                                            case "Inn":
+                                                structEvent.House = ArcHouse.Inn;
+                                                break;
+                                            default:
+                                                Game.SetError(new Error(49, string.Format("Invalid Input, House Type, (\"{0}\")", arrayOfEvents[i])));
+                                                validData = false;
+                                                break;
+                                        }
+                                        break;
                                     default:
                                         Game.SetError(new Error(49, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfEvents[i])));
                                         validData = false;
@@ -665,6 +684,13 @@ namespace Next_Game
                                             break;
                                         case ArcType.Road:
                                             eventObject = new EventRoad(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Road);
+                                            break;
+                                        case ArcType.House:
+                                            eventObject = new EventHouse(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.House);
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid ArcType for Object (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
                                             break;
                                     }
                                     if (eventObject != null)
@@ -844,6 +870,9 @@ namespace Next_Game
                                                 break;
                                             case "Minor":
                                                 structArc.House = ArcHouse.Minor;
+                                                break;
+                                            case "Inn":
+                                                structArc.House = ArcHouse.Inn;
                                                 break;
                                             default:
                                                 Game.SetError(new Error(53, string.Format("Invalid Input, House Type, (\"{0}\")", arrayOfArchetypes[i])));

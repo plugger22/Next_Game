@@ -8,7 +8,7 @@ Name: The Clumsy Hog
 Special: Inn
 Motto: Meat and Succour
 Sign: A fallen Hog face down in the mud
-ArcID: 0
+ArcID: 22
 RefID: 1000
 End
 
@@ -16,7 +16,7 @@ Name: The Raucous Rat
 Special: Inn
 Motto: Class before Ass
 Sign: An upright Rat in a Top Hat
-ArcID: 0
+ArcID: 22
 RefID: 1001
 End
 
@@ -24,7 +24,7 @@ Name: The Singing Ghost
 Special: Inn
 Motto: Joy for All
 Sign: A Bright Red Musical Ghost
-ArcID: 0
+ArcID: 22
 RefID: 1002
 End
 
@@ -32,7 +32,7 @@ Name: The Yellow Huntress
 Special: Inn
 Motto: We serve Predators
 Sign: A Beautiful Female Archer in a Dark Cloak
-ArcID: 0
+ArcID: 22
 RefID: 1003
 End
 
@@ -40,7 +40,7 @@ Name: The Shaggy Parrot
 Special: Inn
 Motto: Fly In, Crawl Out
 Sign: A Hairy Parrot the size of a Bear
-ArcID: 0
+ArcID: 22
 RefID: 1004
 End
 
@@ -48,7 +48,7 @@ Name: The Pickled Prune
 Special: Inn
 Motto: We Bury Customers for Free
 Sign: A Coffin with an oversized Prune on it
-ArcID: 0
+ArcID: 22
 RefID: 1005
 End
 
@@ -56,6 +56,6 @@ Name: One Eyed Pete's
 Special: Inn
 Motto: We choose Not to See
 Sign: A Pirate with an Eye Patch
-ArcID: 0
+ArcID: 22
 RefID: 1006
 End
