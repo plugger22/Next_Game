@@ -10,7 +10,7 @@ namespace Next_Game
     public enum ArcGeo {None, Sea, Mountain, Forest } //geocluster sub category
     public enum ArcLoc {None, Capital, Major, Minor, Inn} //location sub category
     public enum ArcRoad {None, Normal, Kings, Connector} //road sub category
-    public enum ArcHouse {None, Major, Minor} //House sub category (specific archetype to a house, eg. Stark.
+    public enum ArcHouse {None, Major, Minor, Inn} //House sub category (specific archetype to a house, eg. Stark.
     
 
     public class Archetype
@@ -20,11 +20,11 @@ namespace Next_Game
         public int ArcID { get; }
         public int Chance { get; set; } //% chance of archetype applying to whatever it is (roads are 100%, all others are a minimum of one instance)
         //public int TempID { get; set; }
-        public ArcType Type { get; set; } //which class of object it applies to
+        public ArcType Type { get; set; } //which class of object it applies to (eg. applies to all subtype forests or inns, depending on chance roll)
         public ArcGeo Geo { get; set; } //subtypes, default to 'None' if not applicable
         public ArcLoc Loc { get; set; }
         public ArcRoad Road { get; set; }
-        public ArcHouse House { get; set; }
+        public ArcHouse House { get; set; } //specific to a house or an inn 
         private List<int> listOfEvents; //Event ID list that apply to followers
 
         public Archetype()

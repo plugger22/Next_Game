@@ -461,7 +461,7 @@ namespace Next_Game
                             case "Name":
                                 structEvent.Name = cleanToken;
                                 break;
-                            case "EventID":
+                            case "ID":
                                 try
                                 { structEvent.EventID = Convert.ToInt32(cleanToken); }
                                 catch
@@ -558,7 +558,7 @@ namespace Next_Game
                                         break;
                                 }
                                 break;
-                            case "Category":
+                            case "Cat":
                                 switch (cleanToken)
                                 {
                                     case "Generic":
@@ -573,7 +573,7 @@ namespace Next_Game
                                         break;
                                 }
                                 break;
-                            case "Frequency":
+                            case "Freq":
                                 switch (cleanToken)
                                 {
                                     case "Very_Rare":
@@ -603,13 +603,13 @@ namespace Next_Game
                                         break;
                                 }
                                 break;
-                            case "EventText":
+                            case "Event":
                                 structEvent.EventText = cleanToken;
                                 break;
-                            case "SucceedText":
+                            case "Succeed":
                                 structEvent.SucceedText = cleanToken;
                                 break;
-                            case "FailText":
+                            case "Fail":
                                 structEvent.FailText = cleanToken;
                                 break;
                             case "Trait":
