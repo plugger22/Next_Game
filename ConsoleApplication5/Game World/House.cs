@@ -185,10 +185,10 @@ namespace Next_Game
     /// <summary>
     /// Inn's
     /// </summary>
-    class Inn : SpecialHouse
+    class InnHouse : SpecialHouse
     {
 
-        public Inn()
+        public InnHouse()
         { Special = HouseSpecial.Inn; }
     }
 }

@@ -84,6 +84,7 @@ namespace Next_Game
             listHousePool.AddRange(Game.file.GetHouses("MinorHouses.txt"));
             //Special Houses, run AFTER minor houses
             listSpecialHousePool.AddRange(Game.file.GetHouses("SpecialHouses.txt"));
+            InitialiseSpecialHouses();
             //GeoNames
             arrayOfGeoNames = Game.file.GetGeoNames("GeoNames.txt");
             InitialiseGeoClusters();
@@ -138,9 +139,9 @@ namespace Next_Game
         /// <summary>
         /// called by Network.UpdateHouses(), it randomly chooses a minor house from list and initiliases it
         /// </summary>
-        /// <param name="LocID"></param>
+        /// <param name="locID"></param>
         /// <param name="houseID"></param>
-        public void InitialiseMinorHouse(int LocID, int houseID)
+        public void InitialiseMinorHouse(int locID, int houseID)
         {
             //get random minorhouse
             int index = rnd.Next(0, listHousePool.Count);
@@ -152,7 +153,7 @@ namespace Next_Game
             house.ArcID = listHousePool[index].ArcID;
             house.LocName = listHousePool[index].Capital;
             house.RefID = listHousePool[index].RefID;
-            house.LocID = LocID;
+            house.LocID = locID;
             house.HouseID = houseID;
             house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
             //add house to listOfHouses
@@ -163,11 +164,54 @@ namespace Next_Game
             catch (Exception e)
             { Game.SetError(new Error(61, e.Message)); }
             //update location details
-            Location loc = Game.network.GetLocation(LocID);
+            Location loc = Game.network.GetLocation(locID);
             loc.LocName = house.LocName;
             loc.RefID = house.RefID;
         }
 
+        /// <summary>
+        /// randomly choose special house (eg. inn) and initialise it
+        /// </summary>
+        public void InitialiseSpecialHouses()
+        {
+            List<Location> listLocations = Game.network.GetLocationsList();
+            int index;
+
+            //NOTE: Assumes at present the only special house type is an Inn 
+
+            //loop locations looking for specials (houseID = 99)
+            for (int i = 0; i < listLocations.Count; i++)
+            {
+                Location loc = listLocations[i];
+                if (loc.HouseID == 99)
+                {
+                    //get random special Inn
+                    index = rnd.Next(0, listSpecialHousePool.Count);
+                    InnHouse specialInn = new InnHouse();
+                    //copy data over from house struct
+                    specialInn.Name = listSpecialHousePool[index].Name;
+                    specialInn.Motto = listSpecialHousePool[index].Motto;
+                    specialInn.Banner = listSpecialHousePool[index].Banner;
+                    specialInn.ArcID = listSpecialHousePool[index].ArcID;
+                    specialInn.LocName = listSpecialHousePool[index].Capital;
+                    specialInn.RefID = listSpecialHousePool[index].RefID;
+                    specialInn.LocID = loc.LocationID;
+                    specialInn.HouseID = loc.HouseID;
+                    specialInn.MenAtArms = 0;
+                    //add house to listOfHouses
+                    listOfSpecialHouses.Add(specialInn);
+                    Console.WriteLine("\"{0}\" Inn initialised, RefID {1}, LocID {2}, HouseID {3}", specialInn.Name, specialInn.RefID, specialInn.LocID, specialInn.HouseID);
+                    //remove minorhouse from pool list to avoid being chosen again
+                    try
+                    { listSpecialHousePool.RemoveAt(index); }
+                    catch (Exception e)
+                    { Game.SetError(new Error(61, e.Message)); }
+                    //update location details
+                    loc.LocName = specialInn.LocName;
+                    loc.RefID = specialInn.RefID;
+                }
+            }
+        }
 
         /// <summary>
         /// add names and any historical data to GeoClusters

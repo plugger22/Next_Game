@@ -1174,8 +1174,6 @@ namespace Next_Game
             { AddMajorHouse(house); }
             //populate sorted dictionary (descending) of house ID's by Power (# of BannerLords)
             SortMajorHouses();
-            /*foreach (KeyValuePair<int, int> kvp in dictGreatID.OrderByDescending(key => key.Value))
-            { dictHousePower.Add(kvp.Key, kvp.Value); }*/
             //minor houses
             List<House> listOfMinorHouses = Game.history.GetMinorHouses();
             foreach (House house in listOfMinorHouses)

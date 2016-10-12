@@ -1305,6 +1305,9 @@ namespace Next_Game.Cartographic
         internal Dictionary<int, Location> GetLocations()
         { return dictLocations; }
 
+        internal List<Location> GetLocationsList()
+        { return ListOfLocations; }
+
         public int GetNumLocations()
         { return ListOfLocations.Count(); }
 
@@ -2076,7 +2079,6 @@ namespace Next_Game.Cartographic
                 //Console.WriteLine("--- House {0}", houseID);
                 foreach(Route route in tempListOfRoutes)
                 {
-                    //route.PrintRoute();
                     Position pos = route.GetLoc1();
                     minorHouseID = Game.map.GetMapInfo(MapLayer.HouseID, pos.PosX, pos.PosY);
                     //called method checks for locID = 0 & duplicate houseID's
@@ -2086,6 +2088,7 @@ namespace Next_Game.Cartographic
                 }
             }
         }
+
 
         /// <summary>
         /// used to randomly place player characters at start (debug)
