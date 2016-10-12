@@ -22,6 +22,7 @@ namespace Next_Game
         private List<House> listOfMinorHouses;
         private List<House> listOfSpecialHouses;
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
+        private List<HouseStruct> listSpecialHousePool; //used for special house imports and random choice
         //geo names
         private List<GeoCluster> listOfGeoClusters;
         private string[][] arrayOfGeoNames;
@@ -52,6 +53,7 @@ namespace Next_Game
             listOfMinorHouses = new List<House>();
             listOfSpecialHouses = new List<House>();
             listHousePool = new List<HouseStruct>();
+            listSpecialHousePool = new List<HouseStruct>();
             listOfGeoClusters = new List<GeoCluster>();
             arrayOfGeoNames = new string[(int)GeoType.Count][];
             listOfTraits = new List<Trait>();
@@ -80,6 +82,8 @@ namespace Next_Game
             //Minor houses, run AFTER major houses
             listHousePool.Clear();
             listHousePool.AddRange(Game.file.GetHouses("MinorHouses.txt"));
+            //Special Houses, run AFTER minor houses
+            listSpecialHousePool.AddRange(Game.file.GetHouses("SpecialHouses.txt"));
             //GeoNames
             arrayOfGeoNames = Game.file.GetGeoNames("GeoNames.txt");
             InitialiseGeoClusters();

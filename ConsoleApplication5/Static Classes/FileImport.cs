@@ -12,6 +12,7 @@ namespace Next_Game
     public struct HouseStruct
     {
         public string Name { get; set; }
+        public string Special { get; set; } //special houses only, ignore otherwise
         public string Motto { get; set; }
         public string Banner { get; set; }
         public int ArcID { get; set; }
@@ -186,12 +187,18 @@ namespace Next_Game
                         //Console.WriteLine("{0}: {1}", tokens[0], tokens[1]);
                         switch (cleanTag)
                         {
+                            case "Name":
                             case "House":
                                 houseStruct.Name = cleanToken;
+                                break;
+                            case "Special":
+                                //special house types only, ignore otherwise
+                                houseStruct.Special = cleanToken;
                                 break;
                             case "Motto":
                                 houseStruct.Motto = cleanToken;
                                 break;
+                            case "Sign":
                             case "Banner":
                                 houseStruct.Banner = cleanToken;
                                 break;
