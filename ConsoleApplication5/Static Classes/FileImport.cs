@@ -174,7 +174,8 @@ namespace Next_Game
                     string[] tokens = arrayOfHouseNames[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    cleanToken = tokens[1].Trim();
+                    if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    else { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0)
                     { validData = false; Game.SetError(new Error(16, "Empty data field")); }
                     else
@@ -191,24 +192,24 @@ namespace Next_Game
                             case "Banner":
                                 houseStruct.Banner = cleanToken;
                                 break;
-                            case "ArchetypeID":
+                            case "ArcID":
                                 try { houseStruct.ArcID = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
                                 { Game.SetError(new Error(18, e.Message)); validData = false; }
                                 break;
-                            case "ReferenceID":
+                            case "RefID":
                                 try { houseStruct.RefID = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
                                 { Game.SetError(new Error(18, e.Message)); validData = false; }
                                 break;
                             case "Capital": //Major Houses
                                 houseStruct.Capital = cleanToken;
-                                //last datapoint - save structure to list
-                                if (dataCounter > 0 && validData == true )
-                                { listHouses.Add(houseStruct); }
                                 break;
                             case "Seat": //Minor Houses
                                 houseStruct.Capital = cleanToken;
+                                break;
+                            case "end":
+                            case "End":
                                 //last datapoint - save structure to list
                                 if (dataCounter > 0  && validData == true)
                                 { listHouses.Add(houseStruct); }

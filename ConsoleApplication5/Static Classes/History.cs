@@ -20,6 +20,7 @@ namespace Next_Game
         //house names
         private List<MajorHouse> listOfGreatHouses;
         private List<House> listOfMinorHouses;
+        private List<House> listOfSpecialHouses;
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
         //geo names
         private List<GeoCluster> listOfGeoClusters;
@@ -49,6 +50,7 @@ namespace Next_Game
             listOfSurnames = new List<string>();
             listOfGreatHouses = new List<MajorHouse>();
             listOfMinorHouses = new List<House>();
+            listOfSpecialHouses = new List<House>();
             listHousePool = new List<HouseStruct>();
             listOfGeoClusters = new List<GeoCluster>();
             arrayOfGeoNames = new string[(int)GeoType.Count][];

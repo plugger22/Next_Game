@@ -1,0 +1,10 @@
+# Special Houses (Inns, etc)
+# RefID: (ReferenceID) a unique number (Inn's num >= 1000 & num < 2000)
+# ArcID: (Archetypes) have a default value of '0' (none) unless specified
+
+House: Ambrose
+Motto: Never Resting
+Banner: Red Ants on a Yellow Field
+ArchetypeID: 0
+ReferenceID: 100
+Seat: Blackwater

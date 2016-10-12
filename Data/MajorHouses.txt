@@ -1,70 +1,83 @@
+# Major Houses (Noble)
+# RefID: (ReferenceID) a unique number (num > 0 & num < 100)
+# ArcID: (Archetypes) have a default value of '0' (none) unless specified
+
 House: Lannister
 Motto: Hear Me Roar!
 Banner: Roaring Lion
-ArchetypeID: 14
-ReferenceID: 2
+ArcID: 14
+RefID: 2
 Capital: Casterly Rock
+End
 
 House: Martell
 Motto: Unbowed, Unbent, Unbroken
 Banner: Red Sun pierced by a Gold Spear
-ArchetypeID: 18
-ReferenceID: 3
+ArcID: 18
+RefID: 3
 Capital: Dorne
+End
 
 House: Florent
 Motto: Never forget, never forgive
 Banner: Fox Head in a circle of Flowers
-ArchetypeID: 12
-ReferenceID: 4
+ArcID: 12
+RefID: 4
 Capital: Brightwater Keep
+End
 
 House: Greyjoy
 Motto: We Do Not Sow
 Banner: Golden Kraken
-ArchetypeID: 17
-ReferenceID: 5
+ArcID: 17
+RefID: 5
 Capital: Pyke
+End
 
 House: Arryn
 Motto: As High as Honour
 Banner: Moon and Falcon
-ArchetypeID: 16
-ReferenceID: 6
+ArcID: 16
+RefID: 6
 Capital: Eyrie
+End
 
 House: Baratheon
 Motto: Ours is the Fury
 Banner: Crowned Stag on a Golden Field
-ArchetypeID: 19
-ReferenceID: 7
+ArcID: 19
+RefID: 7
 Capital: Bloodkeep
+End
 
 House: Stark
 Motto: Winter is Coming
 Banner: Grey Direwolf on an Ice Field
-ArchetypeID: 11
-ReferenceID: 8
+ArcID: 11
+RefID: 8
 Capital: Winterfell
+End
 
 House: Tully
 Motto: Family, Duty, Honour
 Banner: Leaping Silver Trout
-ArchetypeID: 13
-ReferenceID: 9
+ArcID: 13
+RefID: 9
 Capital: Riverrun
+End
 
 House: Tyrell
 Motto: Growing Strong
 Banner: Golden Rose on a Green Field
-ArchetypeID: 20
-ReferenceID: 10
+ArcID: 20
+RefID: 10
 Capital: Highgarden
+End
 
 House: Targaryen
 Motto: Fire and Blood
 Banner: Three Headed Dragon
-ArchetypeID: 21
-ReferenceID: 11
+ArcID: 21
+RefID: 11
 Capital: Valyria
-
+End

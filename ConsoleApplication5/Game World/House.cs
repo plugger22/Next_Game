@@ -6,6 +6,7 @@ using System.Linq;
 namespace Next_Game
 {
     public enum KingLoyalty {None, Old_King, New_King}
+    public enum HouseSpecial { None, Inn}
 
     //
     // Base class
@@ -25,6 +26,7 @@ namespace Next_Game
         public int LordID { get; set; } //actorID of noble Lord currently in charge of house
         public KingLoyalty Loyalty_AtStart { get; set; }
         public KingLoyalty Loyalty_Current { get; set; }
+        public HouseSpecial Special { get; set; }
         private List<int> listOfFirstNames; //contains ID #'s (listOfMaleFirstNames index) of all first names used by males within the house (eg. 'Eddard Stark II')
         private List<int> listOfSecrets;
         private List<int> listOfEvents;
@@ -161,13 +163,32 @@ namespace Next_Game
 
     }
 
-    //
-    //Bannerlords ---
-    //
+   /// <summary>
+   /// Bannerlords
+   /// </summary>
     class MinorHouse : House
     {
         public MinorHouse()
         { }
 
+    }
+
+    /// <summary>
+    /// Special House class 
+    /// </summary>
+    class SpecialHouse : House
+    {
+        public SpecialHouse()
+        { }
+    }
+
+    /// <summary>
+    /// Inn's
+    /// </summary>
+    class Inn : SpecialHouse
+    {
+
+        public Inn()
+        { Special = HouseSpecial.Inn; }
     }
 }
