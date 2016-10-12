@@ -1071,7 +1071,7 @@ namespace Next_Game
                 Game.world.RemoveMajorHouse(oldkingHouse);
                 //remove old bannerlord house, add new from dictAllHouses
                 //Game.world.RemoveMinorHouse(oldBannerLordRefID);
-                Game.world.AddMinorHouse(newMinorHouse);
+                Game.world.AddOtherHouse(newMinorHouse);
                 //add house to world dictionaries (do after turncoatHouse update otherwise two identical houses in world.dictAllHouses)
                 Game.world.AddMajorHouse(newMajorhouse);
                 //sort list Of GreatHouses by Power

@@ -84,7 +84,6 @@ namespace Next_Game
             listHousePool.AddRange(Game.file.GetHouses("MinorHouses.txt"));
             //Special Houses, run AFTER minor houses
             listSpecialHousePool.AddRange(Game.file.GetHouses("SpecialHouses.txt"));
-            InitialiseSpecialHouses();
             //GeoNames
             arrayOfGeoNames = Game.file.GetGeoNames("GeoNames.txt");
             InitialiseGeoClusters();
@@ -193,13 +192,14 @@ namespace Next_Game
                     specialInn.Motto = listSpecialHousePool[index].Motto;
                     specialInn.Banner = listSpecialHousePool[index].Banner;
                     specialInn.ArcID = listSpecialHousePool[index].ArcID;
-                    specialInn.LocName = listSpecialHousePool[index].Capital;
+                    specialInn.LocName = listSpecialHousePool[index].Name;
                     specialInn.RefID = listSpecialHousePool[index].RefID;
                     specialInn.LocID = loc.LocationID;
                     specialInn.HouseID = loc.HouseID;
                     specialInn.MenAtArms = 0;
                     //add house to listOfHouses
                     listOfSpecialHouses.Add(specialInn);
+                    Game.world.AddOtherHouse(specialInn);
                     Console.WriteLine("\"{0}\" Inn initialised, RefID {1}, LocID {2}, HouseID {3}", specialInn.Name, specialInn.RefID, specialInn.LocID, specialInn.HouseID);
                     //remove minorhouse from pool list to avoid being chosen again
                     try

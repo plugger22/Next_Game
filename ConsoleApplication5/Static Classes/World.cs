@@ -724,12 +724,26 @@ namespace Next_Game
                 if (house != null)
                 {
                     int eventCount = house.GetNumEvents();
-                    locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}", house.Name, loc.LocName, loc.LocationID), color, RLColor.Black));
-                    locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
-                    locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
-                    locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
-                    if (eventCount > 0)
-                    { locList.Add(new Snippet(string.Format(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID) ,eventCount )))); }
+                    if (loc.HouseID != 99)
+                    {
+                       //normal houses - major / minor / capital 
+                        locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}", house.Name, loc.LocName, loc.LocationID), color, RLColor.Black));
+                        locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
+                        locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
+                        locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
+                        if (eventCount > 0)
+                        { locList.Add(new Snippet(string.Format(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount)))); }
+                    }
+                    else
+                    {
+                        //special Inn
+                        locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}", house.Name, loc.LocationID, loc.RefID), color, RLColor.Black));
+                        locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
+                        locList.Add(new Snippet(string.Format("Signage \"{0}\"", house.Banner)));
+                        locList.Add(new Snippet(string.Format("Found at {0}", ShowLocationCoords(locID))));
+                        if (eventCount > 0)
+                        { locList.Add(new Snippet(string.Format(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount)))); }
+                    }
                 }
                 //correct location description
                 if (loc.HouseID == 99)
@@ -1178,6 +1192,8 @@ namespace Next_Game
             List<House> listOfMinorHouses = Game.history.GetMinorHouses();
             foreach (House house in listOfMinorHouses)
             { dictAllHouses.Add(house.RefID, house); }
+            //initialise Special Locations
+            Game.history.InitialiseSpecialHouses();
             //update Map layer for RefID
             int locID = 0;
             int refID = 0;
@@ -1307,8 +1323,9 @@ namespace Next_Game
         /// Add non-Major house to the only relevant dictionary
         /// </summary>
         /// <param name="house"></param>
-        internal void AddMinorHouse(House house)
+        internal void AddOtherHouse(House house)
         { dictAllHouses.Add(house.RefID, house); }
+
             
         /// <summary>
         /// find entry with same RefID in dictAllHouses and removes it if present (used by lore.cs CreateNewMajorHouse)
@@ -1436,7 +1453,7 @@ namespace Next_Game
             int numLocs = Game.network.GetNumLocations();
             int numGreatHouses = dictMajorHouses.Count;
             int numSpecialLocs = Game.network.GetNumSpecialLocations();
-            int numBannerLords = dictAllHouses.Count - numGreatHouses - 1;
+            int numBannerLords = dictAllHouses.Count - numGreatHouses - 1 - numSpecialLocs;
             int numActors = dictAllActors.Count;
             int numChildren = numActors - (numGreatHouses * 2) - numBannerLords;
             int numSecrets = dictSecrets.Count;
