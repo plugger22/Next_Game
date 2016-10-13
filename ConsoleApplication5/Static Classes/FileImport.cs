@@ -1539,32 +1539,32 @@ namespace Next_Game
                                 catch (Exception e)
                                 { Game.SetError(new Error(59, e.Message)); validData = false; }
                                 break;
-                            case "Combat_Effects":
+                            case "Combat_Effect":
                                 try { structFollower.Combat_Effect = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
                                 { Game.SetError(new Error(59, e.Message)); validData = false; }
                                 break;
-                            case "Wits_Effects":
+                            case "Wits_Effect":
                                 try { structFollower.Wits_Effect = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
                                 { Game.SetError(new Error(59, e.Message)); validData = false; }
                                 break;
-                            case "Charm_Effects":
+                            case "Charm_Effect":
                                 try { structFollower.Charm_Effect = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
                                 { Game.SetError(new Error(59, e.Message)); validData = false; }
                                 break;
-                            case "Treachery_Effects":
+                            case "Treachery_Effect":
                                 try { structFollower.Treachery_Effect = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
                                 { Game.SetError(new Error(59, e.Message)); validData = false; }
                                 break;
-                            case "Leadership_Effects":
+                            case "Leadership_Effect":
                                 try { structFollower.Leadership_Effect = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
                                 { Game.SetError(new Error(59, e.Message)); validData = false; }
                                 break;
-                            case "Touched_Effects":
+                            case "Touched_Effect":
                                 try { structFollower.Touched_Effect = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
                                 { Game.SetError(new Error(59, e.Message)); validData = false; }
@@ -1594,7 +1594,7 @@ namespace Next_Game
                                 { listFollowers.Add(structFollower); }
                                 break;
                             default:
-                                Game.SetError(new Error(59, "Invalid Data \"{0}\" in Follower Input", cleanTag));
+                                Game.SetError(new Error(59, string.Format("Invalid Data \"{0}\" in Follower Input", cleanTag)));
                                 break;
                         }
                     }
