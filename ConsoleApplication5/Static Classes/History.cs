@@ -23,8 +23,9 @@ namespace Next_Game
         private List<House> listOfSpecialHouses;
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
         private List<HouseStruct> listSpecialHousePool; //used for special house imports and random choice
-        //geo names
+        //geo names & followers
         private List<GeoCluster> listOfGeoClusters;
+        private List<Active> listOfActiveActors;
         private string[][] arrayOfGeoNames;
         //traits
         private List<Trait> listOfTraits; //main
@@ -55,6 +56,7 @@ namespace Next_Game
             listHousePool = new List<HouseStruct>();
             listSpecialHousePool = new List<HouseStruct>();
             listOfGeoClusters = new List<GeoCluster>();
+            listOfActiveActors = new List<Active>();
             arrayOfGeoNames = new string[(int)GeoType.Count][];
             listOfTraits = new List<Trait>();
             arrayOfTraits = new Trait[(int)TraitType.Count, (int)ActorSex.Count][];
@@ -95,6 +97,10 @@ namespace Next_Game
             listOfWounds.AddRange(Game.file.GetStrings("Wounds.txt"));
             //set up filtered sets of traits ready for random access by newly created actors
             InitialiseTraits();
+            //Player & Followers (set up later in World)
+            InitialisePlayer();
+            InitialiseFollowers(Game.file.GetFollowers("Followers.txt"));
+            
         }
 
         /// <summary>
@@ -285,7 +291,59 @@ namespace Next_Game
             }
         }
 
-        
+        /// <summary>
+        /// Sets up a place holder character with Actor ID 1
+        /// </summary>
+        private void InitialisePlayer()
+        {
+            int locID;
+            //create player (place holder)
+            Player player = new Player("William Tell", ActorType.Ursuper);
+            //Player should be first record in list and first Active actor initialised (ActID = '1')
+            listOfActiveActors.Add(player);
+            //assign to random location on map
+            locID = Game.network.GetRandomLocation();
+            Location loc = Game.network.GetLocation(locID);
+            //place characters at Location
+            player.LocID = locID;
+            player.SetActorPosition(loc.GetPosition());
+            //add to Location list of Characters
+            loc.AddActor(player.ActID);
+        }
+
+        /// <summary>
+        /// add followers to listofActiveActors from imported data
+        /// </summary>
+        /// <param name="listOfStructs"></param>
+        internal void InitialiseFollowers(List<FollowerStruct> listOfStructs)
+        {
+            Console.WriteLine(Environment.NewLine + "--- Import Followers");
+            //Convert FollowerStructs into Follower objects
+            foreach (var data in listOfStructs)
+            {
+                Follower follower = null;
+                try
+                { follower = new Follower(data.Name, ActorType.Loyal_Follower, data.FID, data.Sex); }
+                catch (Exception e)
+                { Game.SetError(new Error(59, e.Message)); continue; /*skip this record*/}
+                if (follower != null)
+                {
+                    //copy data across from struct to object
+                    follower.Role = data.Role;
+                    follower.Loyalty_Player = data.Loyalty;
+                    follower.Description = data.Description;
+                    follower.ArcID = data.ArcID;
+                    follower.Resources = data.Resources;
+                    follower.Age = data.Age;
+                    follower.Born = Game.gameStart - data.Age;
+                    //add to list
+                    listOfActiveActors.Add(follower);
+                    Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.Loyalty_Player);
+                }
+            }
+        }
+
+        /*
         /// <summary>
         /// create a base list of Player controlled Characters
         /// </summary>
@@ -294,8 +352,8 @@ namespace Next_Game
         {
             string actorName;
             //rough and ready creation of a handful of basic player characters
-           /* for (int i = 0; i < numCharacters; i++)
-            {*/
+            for (int i = 0; i < numCharacters; i++)
+            {
 
             //debug -> temp method to create Player
 
@@ -323,7 +381,8 @@ namespace Next_Game
 
            // }
         }
-        
+        */
+
 
         /// <summary>
         /// Initialise Passive Actors at game start (populate world) - Nobles, Bannerlords only & add to location
@@ -1668,8 +1727,8 @@ namespace Next_Game
         /// return list of Initial Player Characters
         /// </summary>
         /// <returns>List of Characters</returns>
-        internal List<Active> GetPlayerActors()
-        { return listOfPlayerActors; }
+        internal List<Active> GetActiveActors()
+        { return listOfActiveActors; }
 
         /// <summary>
         ///return list of Great Houses (one house for each houseID)

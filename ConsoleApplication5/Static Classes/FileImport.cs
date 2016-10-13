@@ -1452,11 +1452,10 @@ namespace Next_Game
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        internal List<Follower> GetFollowers(string fileName)
+        internal List<FollowerStruct> GetFollowers(string fileName)
         {
             string[] arrayOfFollowers = ImportDataFile(fileName);
             List <FollowerStruct> listOfStructs = new List<FollowerStruct>();
-            List<Follower> listOfFollowers = new List<Follower>();
             bool newFollower = false;
             bool validData = true;
             int dataCounter = 0; //number of followers
@@ -1609,32 +1608,7 @@ namespace Next_Game
                 else
                 { newFollower = false; }
             }
-
-            //Convert FollowerStructs into Follower objects
-            foreach (var data in listOfStructs)
-            {
-                Follower follower = null;
-                try
-                { follower = new Follower(data.Name, ActorType.Loyal_Follower, data.FID, data.Sex); }
-                catch (Exception e)
-                { Game.SetError(new Error(59, e.Message)); continue; /*skip this record*/}
-                if (follower != null)
-                {
-                    //copy data across from struct to object
-                    follower.Role = data.Role;
-                    follower.Loyalty_Player = data.Loyalty;
-                    follower.Description = data.Description;
-                    follower.ArcID = data.ArcID;
-                    follower.Resources = data.Resources;
-                    follower.Age = data.Age;
-                    follower.Born = Game.gameStart - data.Age;
-                    //add to list
-                    listOfFollowers.Add(follower);
-                    Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.Loyalty_Player);
-                }
-            }
-
-            return listOfFollowers;
+            return listOfStructs;
         }
 
         //methods above here

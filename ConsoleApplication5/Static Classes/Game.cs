@@ -116,7 +116,7 @@ namespace Next_Game
             timer_1.Start();
             history = new History(seed);
             history.InitialiseHistory(network.GetNumUniqueHouses());
-            history.CreatePlayerActors(6);
+            //history.CreatePlayerActors(6);
             StopTimer(timer_1, "History Initialisation");
             world = new World(seed);
             world.InitialiseWorld();

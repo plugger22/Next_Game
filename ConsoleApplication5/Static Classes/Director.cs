@@ -100,9 +100,6 @@ namespace Next_Game
             story = SetStory(1); //choose which story to use
             Console.WriteLine(Environment.NewLine + "--- Initialise Archetypes");
             InitialiseArchetypes();
-            Console.WriteLine(Environment.NewLine + "--- Import Followers");
-            listOfFollowers = Game.file.GetFollowers("Followers.txt");
-            InitialiseFollowers(listOfFollowers);
             Console.WriteLine(Environment.NewLine);
         }
 
@@ -706,47 +703,6 @@ namespace Next_Game
             if (dictArchetypes.TryGetValue(arcID, out arc))
             { return arc.Name; }
             return null;
-        }
-
-
-        /// <summary>
-        /// randomly chooses which ones to use, places them in the world and populates lists and dictionaries
-        /// </summary>
-        /// <param name="listOfStructs"></param>
-        private void InitialiseFollowers(List<Follower> listOfImportedFollowers)
-        {
-            int numFollowers = Game.constant.GetValue(Global.NUM_FOLLOWERS);
-            int locID, index;
-            for (int i = 0; i < numFollowers; i++)
-            {
-                //choose a random follower
-                index = rnd.Next(0, listOfImportedFollowers.Count);
-                Follower follower = listOfImportedFollowers[index];
-                //remove from list
-                listOfImportedFollowers.RemoveAt(index);
-                //add to list and Dictionaries in World
-                Game.world.SetActiveActor(follower);
-                //assign to random location on map
-                locID = Game.network.GetRandomLocation();
-                Location loc = Game.network.GetLocation(locID);
-                //place characters at Location
-                follower.LocID = locID;
-                follower.SetActorPosition(loc.GetPosition());
-                //add to Location list of Characters
-                loc.AddActor(follower.ActID);
-            }
-            //create player (temporary)
-            Player player = new Player("William Tell", ActorType.Ursuper);
-            //add to list and Dictionaries in World
-            Game.world.SetActiveActor(player);
-            //assign to random location on map
-            locID = Game.network.GetRandomLocation();
-            Location loc_1 = Game.network.GetLocation(locID);
-            //place characters at Location
-            player.LocID = locID;
-            player.SetActorPosition(loc_1.GetPosition());
-            //add to Location list of Characters
-            loc_1.AddActor(player.ActID);
         }
 
 

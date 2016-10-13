@@ -73,6 +73,51 @@ namespace Next_Game
         }
         */
 
+        internal void InitialiseActiveActors(List<Active> listOfActiveActors)
+        {
+            
+            int numFollowers = Game.constant.GetValue(Global.NUM_FOLLOWERS);
+            int locID, index;
+            
+            for (int i = 0; i < numFollowers; i++)
+            {
+                if (i > 0)
+                {
+                    //choose a random follower
+                    index = rnd.Next(0, listOfActiveActors.Count);
+                    Follower follower = (Follower)listOfActiveActors[index];
+                    //remove from list
+                    listOfActiveActors.RemoveAt(index);
+                    //add to list and Dictionaries in World
+                    Game.world.SetActiveActor(follower);
+                    //assign to random location on map
+                    locID = Game.network.GetRandomLocation();
+                    Location loc = Game.network.GetLocation(locID);
+                    //place characters at Location
+                    follower.LocID = locID;
+                    follower.SetActorPosition(loc.GetPosition());
+                    //add to Location list of Characters
+                    loc.AddActor(follower.ActID);
+                }
+                else
+                {
+                    //player (first in list)
+                    Player player = (Player)listOfActiveActors[0];
+                    //player goes in first
+                    Game.world.SetActiveActor(player);
+                    listOfActiveActors.RemoveAt(0);
+                    //assign to random location on map
+                    locID = Game.network.GetRandomLocation();
+                    Location loc = Game.network.GetLocation(locID);
+                    //place characters at Location
+                    player.LocID = locID;
+                    player.SetActorPosition(loc.GetPosition());
+                    //add to Location list of Characters
+                    loc.AddActor(player.ActID);
+                }
+                
+            }
+        }
 
         /// <summary>
         /// main method to initialise all world collections
@@ -83,9 +128,9 @@ namespace Next_Game
             timer_2.Start();
             InitialiseGeoClusters();
             Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
-            //timer_2.Start();
-            //InitiatePlayerActors(Game.history.GetPlayerActors());
-            //Game.StopTimer(timer_2, "W: InitiatePlayerActors");
+            timer_2.Start();
+            InitialiseActiveActors(Game.history.GetActiveActors());
+            Game.StopTimer(timer_2, "W: InitiatePlayerActors");
             timer_2.Start();
             InitialiseHouses();
             Game.StopTimer(timer_2, "W: InitialiseHouses");
