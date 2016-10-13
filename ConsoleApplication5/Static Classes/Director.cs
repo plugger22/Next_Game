@@ -43,6 +43,7 @@ namespace Next_Game
         List<int> listRoadEventsKings;
         List<int> listRoadEventsConnector;
         List<int> listCapitalEvents;
+        List<Follower> listOfFollowers;
         List<EventPackage> listCurrentEvents;
         private Dictionary<int, Event> dictEvents;
         private Dictionary<int, Archetype> dictArchetypes;
@@ -74,6 +75,7 @@ namespace Next_Game
             listRoadEventsConnector = new List<int>();
             listCapitalEvents = new List<int>();
             listCurrentEvents = new List<EventPackage>();
+            listOfFollowers = new List<Follower>();
             dictEvents = new Dictionary<int, Event>();
             dictArchetypes = new Dictionary<int, Archetype>();
             dictStories = new Dictionary<int, Story>();
@@ -98,7 +100,8 @@ namespace Next_Game
             story = SetStory(1); //choose which story to use
             Console.WriteLine(Environment.NewLine + "--- Initialise Archetypes");
             InitialiseArchetypes();
-            Game.file.GetFollowers("Followers.txt");
+            listOfFollowers = Game.file.GetFollowers("Followers.txt");
+            InitialiseFollowers(listOfFollowers);
             Console.WriteLine(Environment.NewLine);
         }
 
@@ -702,6 +705,16 @@ namespace Next_Game
             if (dictArchetypes.TryGetValue(arcID, out arc))
             { return arc.Name; }
             return null;
+        }
+
+
+        /// <summary>
+        /// randomly chooses which ones to use, places them in the world and populates lists and dictionaries
+        /// </summary>
+        /// <param name="listOfStructs"></param>
+        private void InitialiseFollowers(List<Follower> listOfImportData)
+        {
+
         }
 
 

@@ -1451,10 +1451,11 @@ namespace Next_Game
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        internal List<FollowerStruct> GetFollowers(string fileName)
+        internal List<Follower> GetFollowers(string fileName)
         {
             string[] arrayOfFollowers = ImportDataFile(fileName);
-            List <FollowerStruct> listFollowers = new List<FollowerStruct>();
+            List <FollowerStruct> listOfStructs = new List<FollowerStruct>();
+            List<Follower> listOfFollowers = new List<Follower>();
             bool newFollower = false;
             bool validData = true;
             int dataCounter = 0; //number of followers
@@ -1591,7 +1592,7 @@ namespace Next_Game
                             case "End":
                                 //last datapoint - save structure to list
                                 if (dataCounter > 0 && validData == true)
-                                { listFollowers.Add(structFollower); }
+                                { listOfStructs.Add(structFollower); }
                                 break;
                             default:
                                 Game.SetError(new Error(59, string.Format("Invalid Data \"{0}\" in Follower Input", cleanTag)));
@@ -1602,7 +1603,10 @@ namespace Next_Game
                 else
                 { newFollower = false; }
             }
-            return listFollowers;
+
+            //Convert FollowerStructs into Follower objects
+
+            return listOfFollowers;
 
 
         }
