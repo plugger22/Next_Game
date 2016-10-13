@@ -1,0 +1,245 @@
+# Followers
+# NOTE: All fields must have a value
+# FID: (Follower ID) unique number
+# Sex: Male / Female
+# Role: job or role that they play, eg. 'Beggar', 'Assassin' (one or two words at most). No default, compulsory.
+# Description: paint a picture of the character. No default, compulsory.
+# Special: short text description of a weakness or strength (tied into Archetype and related events). Default of 'None'
+# ArcID: Archetype ID, default value of '0' for none (events that are specific to the follower, eg. a recurring weakness)
+# Resources: Starting amount of resources, default value of '0'
+# Loyalty: Base Loyalty level (range 1 to 5) default '3'
+# ...._Effect: Description of Effect, eg. "Puzzled" (keep short). Use default of 'Normal' if nothing unusual. Tie in with Effect system if possible.
+# ...._Effect: A number (range +/- 1 or 2), eg. '+1' which gives a value of '4'. Default of '0' gives an average Effect of 3 (or none for 'Touched')
+# Touched Effect: is different, default of '0' gives a value of '0'. To be touched you must give a value of +/- 1/2. It's rare to be touched.
+
+
+
+Name: The Spider
+FID: 1
+Sex: Male
+Role: Spy
+Description: A nondescript, short, middle aged man who listens in, observes, and takes note of everything around him while tending to his sticky web of contacts.
+Special: None
+ArcID: 0
+Resources: 0
+Loyalty: 3
+Combat_Effect: -2
+Combat_Trait: Pacifist
+Wits_Effect: +2
+Wits_Trait: Acutely Observant
+Charm_Effect: 0
+Charm_Trait: Normal
+Treachery_Effect: +1
+Treachery_Trait: Cunning
+Leadership_Effect: -1
+Leadership_Trait: Unassuming
+Touched_Effect: 0
+Touched_Trait: Normal
+End
+
+Name: The Jester
+FID: 2
+Sex: Male
+Role: Entertainer
+Description: A lithe, jolly young man with great agility who can sing, dance and perform acrobatic feats.
+Special: None
+ArcID: 0
+Resources: 0
+Loyalty: 3
+Combat_Effect: +1
+Combat_Trait: Acrobatic
+Wits_Effect: 0
+Wits_Trait: Normal
+Charm_Effect: +2
+Charm_Trait: Captivating
+Treachery_Effect: 0
+Treachery_Trait: Normal
+Leadership_Effect: 0
+Leadership_Trait: Normal
+Touched_Effect: 0
+Touched_Trait: Normal
+End
+
+Name: The Viper
+FID: 3
+Sex: Male
+Role: Assassin
+Description: Hooded, piercing dark eyes and a swarthy complexion.  The Viper lives in the silence of the shadows.
+Special: None
+ArcID: 0
+Resources: 0
+Loyalty: 3
+Combat_Effect: +2
+Combat_Trait: Silent Killer
+Wits_Effect: +1
+Wits_Trait: Calculating
+Charm_Effect: -2
+Charm_Trait: Why bother?
+Treachery_Effect: +1
+Treachery_Trait: Cunning
+Leadership_Effect: 0
+Leadership_Trait: Normal
+Touched_Effect: 0
+Touched_Trait: Normal
+End
+
+Name: The Leper
+FID: 4
+Sex: Male
+Role: Beggar
+Description: Leprosy is both a curse and a blessing. The Leper's hideous appearance has him ignored and shunned by all. He doesn't need to use subterfuge as people automatically avert their gaze.
+Special: None
+ArcID: 0
+Resources: 0
+Loyalty: 3
+Combat_Effect: -2
+Combat_Trait: Deformed
+Wits_Effect: 0
+Wits_Trait: Normal
+Charm_Effect: -2
+Charm_Trait: Disfigured
+Treachery_Effect: 0
+Treachery_Trait: Normal
+Leadership_Effect: -2
+Leadership_Trait: Ignored
+Touched_Effect: -1
+Touched_Trait: Dark Magic
+End
+
+Name: The Dark Eminence
+FID: 5
+Sex: Male
+Role: Manipulator
+Description: People willingly abide his wishes without realising they have been manipulated. Is it hypnotism or witch doctor jigggery pokery?
+Special: None
+ArcID: 0
+Resources: 0
+Loyalty: 2
+Combat_Effect: -2
+Combat_Trait: Avoids Confrontation
+Wits_Effect: +1
+Wits_Trait: Multilingual
+Charm_Effect: +2
+Charm_Trait: Charismatic
+Treachery_Effect: +2
+Treachery_Trait: Machiavellian
+Leadership_Effect: +2
+Leadership_Trait: Seductive Appeal
+Touched_Effect: 0
+Touched_Trait: Normal
+End
+
+Name: The Duchess
+FID: 6
+Sex: Female
+Role: Seductress
+Description: Rumoured to be from a long lost Royal line, the striking looks and sultry charm of the Duchess sweep all men before her.
+Special: None
+ArcID: 0
+Resources: 0
+Loyalty: 4
+Combat_Effect: -2
+Combat_Trait: Womanly
+Wits_Effect: -1
+Wits_Trait: Hears Voices
+Charm_Effect: +2
+Charm_Trait: Lady of the Night
+Treachery_Effect: -1
+Treachery_Trait: Royal Bloodlines
+Leadership_Effect: +1
+Leadership_Trait: Man Magnet
+Touched_Effect: 0
+Touched_Trait: Normal
+End
+
+Name: The Beast
+FID: 7
+Sex: Male
+Role: Enforcer
+Description: Massive muscles, brawn and a plethora of scars create a slow moving, physically huge, dangerous threat to all those within arm's reach.
+Special: None
+ArcID: 0
+Resources: 0
+Loyalty: 5
+Combat_Effect: +2
+Combat_Trait: Humungus
+Wits_Effect: -2
+Wits_Trait: Dumb
+Charm_Effect: -2
+Charm_Trait: Huh?
+Treachery_Effect: -2
+Treachery_Trait: What's that?
+Leadership_Effect: -2
+Leadership_Trait: Too Scary
+Touched_Effect: 0
+Touched_Trait: Normal
+End
+
+Name: The Crone
+FID: 8
+Sex: Female
+Role: Old Woman
+Description: Hunched over a walking stick, shuffling from place to place, the Crone is invisible to all.
+Special: None
+ArcID: 0
+Resources: 0
+Loyalty: 3
+Combat_Effect: -2
+Combat_Trait: Infirm
+Wits_Effect: +2
+Wits_Trait: Needle Sharp
+Charm_Effect: -1
+Charm_Trait: Wizened
+Treachery_Effect: 0
+Treachery_Trait: Normal
+Leadership_Effect: -2
+Leadership_Trait: Old and Wrinkled
+Touched_Effect: +1
+Touched_Trait: Sorceress
+End
+
+Name: The Haggler
+FID: 9
+Sex: Male
+Role: Merchant
+Description: Apparently from a far off land, the Haggler wheels and deals his way from town to town. While he is laden with fine goods it's secrets that he craves.
+Special: None
+ArcID: 0
+Resources: 100
+Loyalty: 3
+Combat_Effect: -2
+Combat_Trait: Corpulent
+Wits_Effect: +2
+Wits_Trait: Negotiator
+Charm_Effect: +1
+Charm_Trait: Bon Vivant
+Treachery_Effect: 0
+Treachery_Trait: Normal
+Leadership_Effect: -1
+Leadership_Trait: Overconfident
+Touched_Effect: 0
+Touched_Trait: Normal
+End
+
+Name: The Lost Child
+FID: 10
+Sex: Female
+Role: Child
+Description: Sweet, innocent and seemingly without parents what is to become of the poor child? Those who can feel compelled to rush to her aid.
+Special: None
+ArcID: 0
+Resources: 0
+Loyalty: 3
+Combat_Effect: +1
+Combat_Trait: Sneaky
+Wits_Effect: +1
+Wits_Trait: Astute
+Charm_Effect: +2
+Charm_Trait: Help me!
+Treachery_Effect: -1
+Treachery_Trait: Innocent
+Leadership_Effect: -2
+Leadership_Trait: Too Young
+Touched_Effect: -1
+Touched_Trait: Enchantress
+End

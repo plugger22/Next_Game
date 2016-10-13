@@ -88,6 +88,21 @@ namespace Next_Game
         public int Connector { get; set; }
     }
 
+    //follower
+    struct FollowerStruct
+    {
+        public string Name { get; set; }
+        public int FID { get; set; } //follower ID
+        public ActorSex sex { get; set; }
+        public string Role { get; set; }
+        public string Description { get; set; }
+        public string Special { get; set; } //weakness or strength peculiar to the follower
+        public int ArcID { get; set; } //archetype for events tied into the Special trait
+        public int Resources { get; set; } //any starting resources
+        public int Loyalty { get; set; } //loyalty to the player (1 to 5 stars)
+
+    }
+
     /// <summary>
     /// Handles all file Import duties
     /// </summary>

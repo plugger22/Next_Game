@@ -205,8 +205,15 @@ namespace Next_Game
     //Player controlled Minions
     public class Follower : Active
     {
-        public Follower(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { Activated = false; }
+        public int FollowerID { get; set; } //FID
+        public string Role { get; set; } //one or two word description of who they represent, eg. Beggar, Assasssin, etc.
+        public int Loyalty_Player { get; set; } //loyalty to the player (1 to 5 stars)
+
+        public Follower(string name, ActorType type, int followerID, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        {
+            Activated = false;
+            FollowerID = followerID;
+        }
     }
 
 
