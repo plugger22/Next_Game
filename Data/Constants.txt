@@ -19,6 +19,8 @@
 5: 2
 # MOVE_SPEED -> movement speed of actors on map, per turn
 10: 2
+# NUM_FOLLOWERS -> number of followers at game start
+28: 4
 
 # Houses ---
 

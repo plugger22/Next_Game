@@ -48,7 +48,7 @@ namespace Next_Game
             dictRoyalCourt = new Dictionary<int, Passive>();
         }
 
-
+        /*
         /// <summary>
         /// Sets up Player characters at the specificied location at start of game
         /// </summary>
@@ -71,6 +71,7 @@ namespace Next_Game
                 loc.AddActor(person.ActID);
             }
         }
+        */
 
 
         /// <summary>
@@ -82,9 +83,9 @@ namespace Next_Game
             timer_2.Start();
             InitialiseGeoClusters();
             Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
-            timer_2.Start();
-            InitiatePlayerActors(Game.history.GetPlayerActors());
-            Game.StopTimer(timer_2, "W: InitiatePlayerActors");
+            //timer_2.Start();
+            //InitiatePlayerActors(Game.history.GetPlayerActors());
+            //Game.StopTimer(timer_2, "W: InitiatePlayerActors");
             timer_2.Start();
             InitialiseHouses();
             Game.StopTimer(timer_2, "W: InitialiseHouses");
@@ -1646,6 +1647,16 @@ namespace Next_Game
         internal void SetPassiveActor(Passive actor)
         {
             dictPassiveActors.Add(actor.ActID, actor);
+            dictAllActors.Add(actor.ActID, actor);
+        }
+
+        /// <summary>
+        /// store a new actor (player and follower)
+        /// </summary>
+        /// <param name="actor"></param>
+        internal void SetActiveActor(Active actor)
+        {
+            dictActiveActors.Add(actor.ActID, actor);
             dictAllActors.Add(actor.ActID, actor);
         }
 

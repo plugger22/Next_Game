@@ -285,7 +285,7 @@ namespace Next_Game
             }
         }
 
-
+        
         /// <summary>
         /// create a base list of Player controlled Characters
         /// </summary>
@@ -294,8 +294,11 @@ namespace Next_Game
         {
             string actorName;
             //rough and ready creation of a handful of basic player characters
-            for (int i = 0; i < numCharacters; i++)
-            {
+           /* for (int i = 0; i < numCharacters; i++)
+            {*/
+
+            //debug -> temp method to create Player
+
                 int index;
                 index = rnd.Next(0, listOfPlayerNames.Count);
                 //get name
@@ -306,20 +309,21 @@ namespace Next_Game
                 catch (Exception e)
                 { Game.SetError(new Error(61, e.Message)); }
                 //new character
-                ActorType type = ActorType.Loyal_Follower;
+                //ActorType type = ActorType.Loyal_Follower;
                 Active person = null;
                 //set player as ursuper
-                if (i == 0)
-                {
-                    type = ActorType.Ursuper;
+                //if (i == 0)
+                //{
+                    ActorType type = ActorType.Ursuper;
                     person = new Player(actorName, type) as Player;
-                }
-                else
-                { person = new Follower(actorName, type, 0); }
-                listOfPlayerActors.Add(person);
+                //}
+                //else
+                //{ person = new Follower(actorName, type, 0); }
+                //listOfPlayerActors.Add(person);
 
-            }
+           // }
         }
+        
 
         /// <summary>
         /// Initialise Passive Actors at game start (populate world) - Nobles, Bannerlords only & add to location

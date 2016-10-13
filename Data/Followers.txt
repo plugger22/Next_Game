@@ -19,6 +19,7 @@ FID: 1
 Sex: Male
 Role: Spy
 Description: A nondescript, short, middle aged man who listens in, observes, and takes note of everything around him while tending to his sticky web of contacts.
+Age: 40
 Special: None
 ArcID: 0
 Resources: 0
@@ -42,6 +43,7 @@ FID: 2
 Sex: Male
 Role: Entertainer
 Description: A lithe, jolly young man with great agility who can sing, dance and perform acrobatic feats.
+Age: 19
 Special: None
 ArcID: 0
 Resources: 0
@@ -65,6 +67,7 @@ FID: 3
 Sex: Male
 Role: Assassin
 Description: Hooded, piercing dark eyes and a swarthy complexion.  The Viper lives in the silence of the shadows.
+Age: 32
 Special: None
 ArcID: 0
 Resources: 0
@@ -88,6 +91,7 @@ FID: 4
 Sex: Male
 Role: Beggar
 Description: Leprosy is both a curse and a blessing. The Leper's hideous appearance has him ignored and shunned by all. He doesn't need to use subterfuge as people automatically avert their gaze.
+Age: 48
 Special: None
 ArcID: 0
 Resources: 0
@@ -110,7 +114,8 @@ Name: The Dark Eminence
 FID: 5
 Sex: Male
 Role: Manipulator
-Description: People willingly abide his wishes without realising they have been manipulated. Is it hypnotism or witch doctor jigggery pokery?
+Description: People willingly abide his wishes without realising they have been manipulated. Is it hypnotism or witch doctor hocus pocus?
+Age: 36
 Special: None
 ArcID: 0
 Resources: 0
@@ -134,6 +139,7 @@ FID: 6
 Sex: Female
 Role: Seductress
 Description: Rumoured to be from a long lost Royal line, the striking looks and sultry charm of the Duchess sweep all men before her.
+Age: 25
 Special: None
 ArcID: 0
 Resources: 0
@@ -157,6 +163,7 @@ FID: 7
 Sex: Male
 Role: Enforcer
 Description: Massive muscles, brawn and a plethora of scars create a slow moving, physically huge, dangerous threat to all those within arm's reach.
+Age: 29
 Special: None
 ArcID: 0
 Resources: 0
@@ -180,6 +187,7 @@ FID: 8
 Sex: Female
 Role: Old Woman
 Description: Hunched over a walking stick, shuffling from place to place, the Crone is invisible to all.
+Age: 63
 Special: None
 ArcID: 0
 Resources: 0
@@ -203,6 +211,7 @@ FID: 9
 Sex: Male
 Role: Merchant
 Description: Apparently from a far off land, the Haggler wheels and deals his way from town to town. While he is laden with fine goods it's secrets that he craves.
+Age: 42
 Special: None
 ArcID: 0
 Resources: 100
@@ -221,11 +230,12 @@ Touched_Effect: 0
 Touched_Trait: Normal
 End
 
-Name: The Lost Child
+Name: The Waif
 FID: 10
 Sex: Female
-Role: Child
-Description: Sweet, innocent and seemingly without parents what is to become of the poor child? Those who can feel compelled to rush to her aid.
+Role: Lost Child
+Description: Sweet, innocent, looks half her age, and seemingly without parents what is to become of the poor child? Those who are able to feel compelled to rush to her aid.
+Age: 15
 Special: None
 ArcID: 0
 Resources: 0

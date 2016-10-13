@@ -96,6 +96,7 @@ namespace Next_Game
         public ActorSex Sex { get; set; }
         public string Role { get; set; }
         public string Description { get; set; }
+        public int Age { get; set; }
         public string Special { get; set; } //weakness or strength peculiar to the follower
         public int ArcID { get; set; } //archetype for events tied into the Special trait
         public int Resources { get; set; } //any starting resources
@@ -1521,6 +1522,11 @@ namespace Next_Game
                             case "Description":
                                 structFollower.Description = cleanToken;
                                 break;
+                            case "Age":
+                                try { structFollower.Age = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
                             case "Special":
                                 //NOTE: not yet sure of what special field will represent
                                 structFollower.Special = cleanToken;
@@ -1620,10 +1626,11 @@ namespace Next_Game
                     follower.Description = data.Description;
                     follower.ArcID = data.ArcID;
                     follower.Resources = data.Resources;
-
+                    follower.Age = data.Age;
+                    follower.Born = Game.gameStart - data.Age;
                     //add to list
                     listOfFollowers.Add(follower);
-                    Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" imported", follower.Name, follower.ActID, follower.FollowerID, follower.Role);
+                    Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.Loyalty_Player);
                 }
             }
 

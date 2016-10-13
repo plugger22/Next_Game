@@ -33,6 +33,7 @@ namespace Next_Game
         SEA_LARGE,
         MOUNTAIN_LARGE,
         FOREST_LARGE,
+        NUM_FOLLOWERS,
         Count //keep as last
     }
 
@@ -73,6 +74,7 @@ namespace Next_Game
             arrayOfGlobals[25] = Global.SEA_LARGE;
             arrayOfGlobals[26] = Global.MOUNTAIN_LARGE;
             arrayOfGlobals[27] = Global.FOREST_LARGE;
+            arrayOfGlobals[28] = Global.NUM_FOLLOWERS;
             }
 
         /// <summary>
