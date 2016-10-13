@@ -100,6 +100,7 @@ namespace Next_Game
             story = SetStory(1); //choose which story to use
             Console.WriteLine(Environment.NewLine + "--- Initialise Archetypes");
             InitialiseArchetypes();
+            Console.WriteLine(Environment.NewLine + "--- Import Followers");
             listOfFollowers = Game.file.GetFollowers("Followers.txt");
             InitialiseFollowers(listOfFollowers);
             Console.WriteLine(Environment.NewLine);

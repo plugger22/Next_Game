@@ -170,6 +170,7 @@ namespace Next_Game
 
     public class Active : Actor
     {
+        public int ArcID { get; set; } //archetype ID
         public int CrowChance { get; set; } //chance of crow getting through
         public int CrowDistance { get; set; } //distance between player and follower
         public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
