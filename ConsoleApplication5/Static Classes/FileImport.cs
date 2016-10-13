@@ -8,7 +8,7 @@ namespace Next_Game
 {
     //NOTE: structures are needed as using objects within the import routines runs into Heap reference issues. Beaware that you're using the Stack and memory could be an issue.
 
-    //holds data read in from house.txt. Used for pool of houses.
+    //Houses
     public struct HouseStruct
     {
         public string Name { get; set; }
@@ -20,7 +20,7 @@ namespace Next_Game
         public string Capital { get; set; }
     }
 
-    //holds data for Traits (best to use stack, not heap for this)
+    //Traits
     struct TraitStruct
     {
         public string Name { get; set; }
@@ -31,7 +31,7 @@ namespace Next_Game
         public int Chance { get; set; }
     }
 
-    //holds data for Events
+    //Events
     struct EventStruct
     {
         public string Name { get; set; }
@@ -93,14 +93,25 @@ namespace Next_Game
     {
         public string Name { get; set; }
         public int FID { get; set; } //follower ID
-        public ActorSex sex { get; set; }
+        public ActorSex Sex { get; set; }
         public string Role { get; set; }
         public string Description { get; set; }
         public string Special { get; set; } //weakness or strength peculiar to the follower
         public int ArcID { get; set; } //archetype for events tied into the Special trait
         public int Resources { get; set; } //any starting resources
         public int Loyalty { get; set; } //loyalty to the player (1 to 5 stars)
-
+        public int Combat_Effect { get; set; }
+        public int Wits_Effect { get; set; }
+        public int Charm_Effect { get; set; }
+        public int Treachery_Effect { get; set; }
+        public int Leadership_Effect { get; set; }
+        public int Touched_Effect { get; set; }
+        public string Combat_Trait { get; set; }
+        public string Wits_Trait { get; set; }
+        public string Charm_Trait { get; set; }
+        public string Treachery_Trait { get; set; }
+        public string Leadership_Trait { get; set; }
+        public string Touched_Trait { get; set; }
     }
 
     /// <summary>
@@ -1433,6 +1444,167 @@ namespace Next_Game
             arrayOfNames[(int)GeoType.Small_Sea] = listOfSmallSeas.ToArray();
 
             return arrayOfNames;
+        }
+
+        /// <summary>
+        /// Import Followers
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        internal List<FollowerStruct> GetFollowers(string fileName)
+        {
+            string[] arrayOfFollowers = ImportDataFile(fileName);
+            List <FollowerStruct> listFollowers = new List<FollowerStruct>();
+            bool newFollower = false;
+            bool validData = true;
+            int dataCounter = 0; //number of followers
+            FollowerStruct structFollower = new FollowerStruct();
+            string cleanToken;
+            string cleanTag;
+            for (int i = 0; i < arrayOfFollowers.Length; i++)
+            {
+                if (arrayOfFollowers[i] != "" && !arrayOfFollowers[i].StartsWith("#"))
+                {
+                    //set up for a new house
+                    if (newFollower == false)
+                    {
+                        newFollower = true;
+                        validData = true;
+                        //Console.WriteLine();
+                        dataCounter++;
+                        //new structure
+                        structFollower = new FollowerStruct();
+                    }
+                    string[] tokens = arrayOfFollowers[i].Split(':');
+                    //strip out leading spaces
+                    cleanTag = tokens[0].Trim();
+                    if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    else { cleanToken = tokens[1].Trim(); }
+                    if (cleanToken.Length == 0)
+                    {
+                        validData = false;
+                        Game.SetError(new Error(59, string.Format("Follower {0} (Missing data for \"{1}\") \"{2}\"",
+                        String.IsNullOrEmpty(structFollower.Name) ? "?" : structFollower.Name, cleanTag, fileName)));
+                    }
+                    else
+                    {
+                        switch (cleanTag)
+                        {
+                            case "Name":
+                                structFollower.Name = cleanToken;
+                                break;
+                            case "FID":
+                                try { structFollower.FID = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Sex":
+                                switch (cleanToken)
+                                {
+                                    case "Male":
+                                        structFollower.Sex = ActorSex.Male;
+                                        break;
+                                    case "Female":
+                                        structFollower.Sex = ActorSex.Female;
+                                        break;
+                                    default:
+                                        structFollower.Sex = ActorSex.None;
+                                        Game.SetError(new Error(59, string.Format("Invalid Input, Sex (\"{0}\")", arrayOfFollowers[i])));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "Role":
+                                structFollower.Role = cleanToken;
+                                break;
+                            case "Description":
+                                structFollower.Description = cleanToken;
+                                break;
+                            case "Special":
+                                //NOTE: not yet sure of what special field will represent
+                                structFollower.Special = cleanToken;
+                                break;
+                            case "ArcID":
+                                try { structFollower.ArcID = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Resources":
+                                try { structFollower.Resources = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Loyalty":
+                                try { structFollower.Loyalty = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Combat_Effects":
+                                try { structFollower.Combat_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Wits_Effects":
+                                try { structFollower.Wits_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Charm_Effects":
+                                try { structFollower.Charm_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Treachery_Effects":
+                                try { structFollower.Treachery_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Leadership_Effects":
+                                try { structFollower.Leadership_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Touched_Effects":
+                                try { structFollower.Touched_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Combat_Trait":
+                                structFollower.Combat_Trait = cleanToken;
+                                break;
+                            case "Wits_Trait":
+                                structFollower.Wits_Trait = cleanToken;
+                                break;
+                            case "Charm_Trait":
+                                structFollower.Charm_Trait = cleanToken;
+                                break;
+                            case "Treachery_Trait":
+                                structFollower.Treachery_Trait = cleanToken;
+                                break;
+                            case "Leadership_Trait":
+                                structFollower.Leadership_Trait = cleanToken;
+                                break;
+                            case "Touched_Trait":
+                                structFollower.Touched_Trait = cleanToken;
+                                break;
+                            case "end":
+                            case "End":
+                                //last datapoint - save structure to list
+                                if (dataCounter > 0 && validData == true)
+                                { listFollowers.Add(structFollower); }
+                                break;
+                            default:
+                                Game.SetError(new Error(59, "Invalid Data \"{0}\" in Follower Input", cleanTag));
+                                break;
+                        }
+                    }
+                }
+                else
+                { newFollower = false; }
+            }
+            return listFollowers;
+
+
         }
 
         //methods above here
