@@ -319,3 +319,55 @@ Fail: follows them upstairs only to be immediately brained unconscious by their 
 Trait: Wits
 Delay: 1
 End
+
+Name: Guard Inspection
+ID: 24
+Type: Location
+subType: Minor
+Cat: Special
+Freq: Low
+Event: A handful of Royal Guards gather round and begin asking questions.
+Succeed: manages to convince them that they are innocent of any wrongdoing.
+Fail: hesitate before providing a dubious reason for their activities
+Trait: Wits
+Delay: 2
+End
+
+Name: City Watch
+ID: 25
+Type: Location
+subType: Capital
+Cat: Special
+Freq: Low
+Event: A member of the City Watch demands a donation in return for free passage.
+Succeed: offers a lucrative prize in return for their unhindered progress. The Watch Guard salivates with greed.
+Fail: indignantly informs that Guard that they don't pay bribes and are promptly arrested for their trouble.
+Trait: Treachery
+Delay: 2
+End
+
+Name: The Shadow
+ID: 26
+Type: Actor
+subType: Follower
+Cat: Special
+Freq: Low
+Event: There's a dark shadow. It's always there. It's following, relentless in it's pursuit. Why won't it go away?
+Succeed: realises that's it's only a shadow. The voices in their head are nothing but harmless uttering.
+Fail: looks over their shoulder and panics. Melts down there and then. Escape is pointless, it's here and it is omnipresent.
+Trait: Wits
+Delay: 2
+End
+
+Name: The Voices
+ID: 27
+Type: Actor
+subType: Follower
+Cat: Special
+Freq: Low
+Event: They mutter obscenities. They suggest, cajole and prod. Do this, they say. Do that, NOW.
+Succeed: has learnt to come to terms with the voices. They have them under control.
+Fail: can't resist the siren call of the voices. They do things that they shouldn't because the voices insist.
+Trait: Wits
+Delay: 2
+End

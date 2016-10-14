@@ -27,6 +27,7 @@ namespace Next_Game
         public ArcLoc LocType { get; set; } = ArcLoc.None;
         public ArcRoad RoadType { get; set; } = ArcRoad.None;
         public ArcHouse HouseType { get; set; } = ArcHouse.None;
+        public ArcActor ActorType { get; set; } = ArcActor.None;
         
 
         public Event()
@@ -122,6 +123,19 @@ namespace Next_Game
         {
             Type = ArcType.House;
             HouseType = subtype;
+        }
+    }
+
+    /// <summary>
+    /// Active actor specific event
+    /// </summary>
+    public class EventActor : EventFollower
+    {
+
+        public EventActor(int eventID, string name, EventFrequency frequency, ArcActor subtype) : base(eventID, name, frequency)
+        {
+            Type = ArcType.Actor;
+            ActorType = subtype;
         }
     }
 }

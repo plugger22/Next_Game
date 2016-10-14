@@ -714,7 +714,7 @@ namespace Next_Game
 
         internal string GetLocationName(int locID)
         {
-            string locName = "unknown";
+            string locName = null;
             Location loc = Game.network.GetLocation(locID);
             locName = loc.LocName;
             return locName;
@@ -1153,6 +1153,12 @@ namespace Next_Game
             return person;
         }
 
+        /// <summary>
+        /// returns dictionary of Active Actors
+        /// </summary>
+        /// <returns></returns>
+        internal Dictionary<int, Active> GetAllActiveActors()
+        { return dictActiveActors; }
       
         /// <summary>
         /// returns string showing character name and status (at 'x' loc, travelling)

@@ -2,7 +2,7 @@ Hi Budd,
 
 [quote]Lancer so anything you can share about plans for the DC series? I remember there was going to be an announcement and then the plans changed. [/quote]
 
-Vic is currently making  'Shadow Empires'. He'd be the best person to tell you about it but, from what I gather, it's a Scifi hex and counter game with random maps and a likeness to one of his other games, Advanced Tactics.
+Vic is currently making  'Shadow Empires'. He'd be the best person to tell you about it but, from what I gather, it's a Scifi hex and counter groggy type game with random maps and with similarities to his Advanced Tactics. There's more information about it on his VR website.
 
 Whether Vic is eventually going to circle back around and make another Decisive Campaigns game after finishing Shadow Empires or perhaps get somebody else to do one, as I did with Barbarossa (using Vic's engine and help. Vic did the AI), is another question best aimed at Vic.
 
@@ -11,9 +11,16 @@ Cameron
 
 Hi Rommel,
 
-Sorry to hear that. You've got a predominately tactical orientated sets of games there - have you looked at the Conflict of Heroes board game as it's got a very innovative solo expansion? 
+Sorry to hear that. You've got a predominately tactical orientated set of games there - have you looked at the Conflict of Heroes board game as it's got a very innovative solo expansion? 
 
 Playing a physical game can be more rewarding sometimes than sitting in front of a computer as your imagination tends to work harder. Maybe it's just the fun of rolling dice to get an outcome rather than 'clicking' on a button to get the same.
 
 Cheers,
 Cameron
+
+
+Hi Saros,
+
+There is a text file in the games root directory called 'editorblock.txt'. Change both entries from 'true' to 'false' then restart the game as this will unlock the simple and advanced editors.
+
+Load the scenario and then go to the Simple Editor. Choose the 'Table' Tab

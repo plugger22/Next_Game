@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    public enum ArcType {None, GeoCluster, Location, Road, House}
+    public enum ArcType {None, GeoCluster, Location, Road, House, Actor}
     public enum ArcGeo {None, Sea, Mountain, Forest } //geocluster sub category
     public enum ArcLoc {None, Capital, Major, Minor, Inn} //location sub category
     public enum ArcRoad {None, Normal, Kings, Connector} //road sub category
     public enum ArcHouse {None, Major, Minor, Inn} //House sub category (specific archetype to a house, eg. Stark.
+    public enum ArcActor {None, Player, Follower} //actor specific subcategory
     
 
     public class Archetype
@@ -25,6 +26,7 @@ namespace Next_Game
         public ArcLoc Loc { get; set; }
         public ArcRoad Road { get; set; }
         public ArcHouse House { get; set; } //specific to a house or an inn 
+        public ArcActor Actor { get; set; }
         private List<int> listOfEvents; //Event ID list that apply to followers
 
         public Archetype()
@@ -106,6 +108,19 @@ namespace Next_Game
         {
             Type = ArcType.House;
             House = subtype;
+        }
+    }
+
+    /// <summary>
+    /// Actor Archetype (eg. 'The Voice within')
+    /// </summary>
+    public class ArcTypeActor : Archetype
+    {
+
+        public ArcTypeActor(string name, ArcActor subtype, int arcID, int chance, List<int> events) : base(name, arcID, chance, events)
+        {
+            Type = ArcType.Actor;
+            Actor = subtype;
         }
     }
 }

@@ -44,6 +44,7 @@ namespace Next_Game
         public ArcRoad Road { get; set; }
         public ArcLoc Loc { get; set; }
         public ArcHouse House { get; set; }
+        public ArcActor Actor { get; set; }
         public EventCategory Cat { get; set; }
         public EventFrequency Frequency { get; set; }
         public TraitType Trait { get; set; }
@@ -61,6 +62,7 @@ namespace Next_Game
         public ArcLoc Loc { get; set; }
         public ArcRoad Road { get; set; }
         public ArcHouse House { get; set; }
+        public ArcActor Actor { get; set; }
         public string SubType { get; set; }
         public List<int> listOfEvents { get; set; }
     }
@@ -511,6 +513,9 @@ namespace Next_Game
                                     case "Road":
                                         structEvent.Type = ArcType.Road;
                                         break;
+                                    case "Actor":
+                                        structEvent.Type = ArcType.Actor;
+                                        break;
                                     default:
                                         structEvent.Type = ArcType.None;
                                         Game.SetError(new Error(49, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfEvents[i])));
@@ -594,6 +599,21 @@ namespace Next_Game
                                                 break;
                                             default:
                                                 Game.SetError(new Error(49, string.Format("Invalid Input, House Type, (\"{0}\")", arrayOfEvents[i])));
+                                                validData = false;
+                                                break;
+                                        }
+                                        break;
+                                    case ArcType.Actor:
+                                        switch (cleanToken)
+                                        {
+                                            case "Player":
+                                                structEvent.Actor = ArcActor.Player;
+                                                break;
+                                            case "Follower":
+                                                structEvent.Actor = ArcActor.Follower;
+                                                break;
+                                            default:
+                                                Game.SetError(new Error(49, string.Format("Invalid Input, Actor Type, (\"{0}\")", arrayOfEvents[i])));
                                                 validData = false;
                                                 break;
                                         }
@@ -715,6 +735,9 @@ namespace Next_Game
                                         case ArcType.House:
                                             eventObject = new EventHouse(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.House);
                                             break;
+                                        case ArcType.Actor:
+                                            eventObject = new EventActor(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Actor);
+                                            break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid ArcType for Object (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
@@ -820,6 +843,9 @@ namespace Next_Game
                                     case "House":
                                         structArc.Type = ArcType.House;
                                         break;
+                                    case "Actor":
+                                        structArc.Type = ArcType.Actor;
+                                        break;
                                     default:
                                         structArc.Type = ArcType.None;
                                         Game.SetError(new Error(53, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfArchetypes[i])));
@@ -907,6 +933,21 @@ namespace Next_Game
                                                 break;
                                         }
                                         break;
+                                    case ArcType.Actor:
+                                        switch (cleanToken)
+                                        {
+                                            case "Player":
+                                                structArc.Actor = ArcActor.Player;
+                                                break;
+                                            case "Follower":
+                                                structArc.Actor = ArcActor.Follower;
+                                                break;
+                                            default:
+                                                Game.SetError(new Error(53, string.Format("Invalid Input, Actor Type, (\"{0}\")", arrayOfArchetypes[i])));
+                                                validData = false;
+                                                break;
+                                        }
+                                        break;
                                     default:
                                         Game.SetError(new Error(53, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfArchetypes[i])));
                                         validData = false;
@@ -925,7 +966,7 @@ namespace Next_Game
                                 catch
                                 { Game.SetError(new Error(53, string.Format("Invalid Chance (Conversion) for  {0}", structArc.Name))); validData = false; }
                                 break;
-                            case "Ev_Follower":
+                            case "Events":
                                 //get list of Events
                                 string[] arrayOfEvents = cleanToken.Split(',');
                                 List<int> tempList = new List<int>();
@@ -979,6 +1020,9 @@ namespace Next_Game
                                             break;
                                         case ArcType.House:
                                             arcObject = new ArcTypeHouse(structArc.Name, structArc.House, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
+                                            break;
+                                        case ArcType.Actor:
+                                            arcObject = new ArcTypeActor(structArc.Name, structArc.Actor, structArc.ArcID, structArc.Chance, structArc.listOfEvents);
                                             break;
                                     }
                                     if (arcObject != null)

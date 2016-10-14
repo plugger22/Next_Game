@@ -53,8 +53,9 @@ namespace Next_Game
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public int[] arrayOfTraitInfluences { get; set; } //effects due to person influencing (default 0)
-        //secrets
+        //secrets & events
         private List<int> listOfSecrets;
+        private List<int> listOfEvents;
 
 
         //default constructor 
@@ -72,6 +73,7 @@ namespace Next_Game
             arrayOfTraitNames = new string[(int)TraitType.Count];
             arrayOfTraitInfluences = new int[(int)TraitType.Count];
             listOfSecrets = new List<int>();
+            listOfEvents = new List<int>();
         }
 
         /// <summary>
@@ -93,6 +95,7 @@ namespace Next_Game
             arrayOfTraitNames = new string[(int)TraitType.Count];
             arrayOfTraitInfluences = new int[(int)TraitType.Count];
             listOfSecrets = new List<int>();
+            listOfEvents = new List<int>();
         }
 
         public void SetActorPosition(Position posLoc)
@@ -100,6 +103,20 @@ namespace Next_Game
 
         public Position GetActorPosition()
         { return actorPos; }
+
+        internal void SetEvents(List<int> listEvents)
+        {
+            if (listEvents != null)
+            { listOfEvents.AddRange(listEvents); }
+            else
+            { Game.SetError(new Error(65, "Invalid list of Events input (null)")); }
+        }
+
+        internal List<int> GetEvents()
+        { return listOfEvents; }
+
+        internal int GetNumEvents()
+        { return listOfEvents.Count; }
 
         /// <summary>
         /// checks whether particular trait has any influence effect, True if so.

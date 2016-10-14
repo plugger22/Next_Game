@@ -5,7 +5,7 @@
 # Type: (ArcType -> GeoCluster / Location / Road / House)
 # subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Royal/Connector, House -> Major/Minor/Inn) 
 # Chance: % chance of archetype applying to whatever (eg. all forests have a chance% of having this archetype). Minimum 1 instance. Roads auto 100%
-# Ev_Follower: tempID's comma separated, eg. 2, 33, 47, 48 (follower)
+# Events: tempID's comma separated, eg. 2, 33, 47, 48 
 # End -> needed for file import
 
 # GeoClusters ---
@@ -15,7 +15,7 @@ Name: Dire Wolf Forest
 Type: GeoCluster
 subType: Forest
 Chance: 30
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 2
@@ -23,7 +23,7 @@ Name: Bandit Mountains
 Type: GeoCluster
 subType: Mountain
 Chance: 30
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 3
@@ -31,7 +31,7 @@ Name: Kraken Sea
 Type: GeoCluster
 subType: Sea
 Chance: 30
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 4
@@ -39,7 +39,7 @@ Name: Goblin Road
 Type: Road
 subType: Normal
 Chance: 30
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 5
@@ -47,7 +47,7 @@ Name: Dwarf Road
 Type: Road
 subType: Kings
 Chance: 30
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 6
@@ -55,23 +55,23 @@ Name: Orc Hunting Party
 Type: Road
 subType: Connector
 Chance: 30
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 7
-Name: Plague Manor
+Name: Attentive Guards
 Type: Location
 subType: Major
 Chance: 20
-Ev_Follower: 5, 6
+Events: 24, 25
 End
 
 ArcID: 8
-Name: Rabid Dogs
+Name: Attentive Guards
 Type: Location
 subType: Minor
 Chance: 20
-Ev_Follower: 5, 6
+Events: 24, 25
 End
 
 ArcID: 9
@@ -79,7 +79,7 @@ Name: Entertainers
 Type: Location
 subType: Capital
 Chance: 50
-Ev_Follower: 5, 6
+Events: 24, 25
 End
 
 ArcID: 10
@@ -87,7 +87,7 @@ Name: Willowy Wenches
 Type: Location
 subType: Inn
 Chance: 30
-Ev_Follower: 5, 6
+Events: 24, 25
 End
 
 ArcID: 11
@@ -95,7 +95,7 @@ Name: Crazy Starks
 Type: House
 subType: Major
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 12
@@ -103,7 +103,7 @@ Name: Foxy Foxes
 Type: House
 subType: Major
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 13
@@ -111,7 +111,7 @@ Name: Leaping Trout
 Type: House
 subType: Major
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 14
@@ -119,7 +119,7 @@ Name: Lazy Lions
 Type: House
 subType: Major
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 15
@@ -127,7 +127,7 @@ Name: Stop and Go
 Type: House
 subType: Major
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 16
@@ -135,7 +135,7 @@ Name: Cloud Climbers
 Type: House
 subType: Major
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 17
@@ -143,7 +143,7 @@ Name: Golden Kraken
 Type: House
 subType: Major
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 18
@@ -151,7 +151,7 @@ Name: Sunny Sons
 Type: House
 subType: Major
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 19
@@ -159,7 +159,7 @@ Name: Lusty Stags
 Type: House
 subType: Major
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 20
@@ -167,7 +167,7 @@ Name: Strong Men
 Type: House
 subType: Major
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 21
@@ -175,7 +175,7 @@ Name: Dragon Lovers
 Type: House
 subType: Major
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
 End
 
 ArcID: 22
@@ -183,5 +183,13 @@ Name: Evil Tavern
 Type: House
 subType: Inn
 Chance: 100
-Ev_Follower: 5, 6
+Events: 5, 6
+End
+
+ArcID: 23
+Name: The Ghosts Within
+Type: Actor
+subType: Follower
+Chance: 100
+Events: 26, 27
 End

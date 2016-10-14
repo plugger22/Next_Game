@@ -53,12 +53,6 @@ namespace Next_Game
         {
             rnd = new Random(seed);
 
-            //debug
-            /*story = new Story("Steady Eddy");
-            story.Type = StoryAI.Balanced;
-            story.Ev_Follower_Loc = 10;
-            story.Ev_Follower_Trav = 60;*/
-
             listOfActiveGeoClusters = new List<int>();
             listGenEventsForest = new List<int>();
             listGenEventsMountain = new List<int>();
@@ -309,6 +303,9 @@ namespace Next_Game
                     }
                 }
             }
+            //character specific events
+            if (actor.GetNumEvents() > 0)
+            { listEventPool.AddRange(GetValidEvents(actor.GetEvents())); }
             //choose an event
             if (listEventPool.Count > 0)
             {
@@ -365,7 +362,7 @@ namespace Next_Game
         {
             bool returnValue = false;
             int ability, rndNum, success;
-            string effectText;
+            string effectText, status;
             List<Snippet> eventList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
             RLColor backColor = Color._background1;
@@ -389,6 +386,12 @@ namespace Next_Game
                             break;
                         case ArcType.Location:
                             eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID), 
+                                pos.PosX, pos.PosY), RLColor.LightGray, backColor));
+                            break;
+                        case ArcType.Actor:
+                            if (actor.Status == ActorStatus.AtLocation) { status = Game.world.GetLocationName(actor.LocID) + " "; }
+                            else { status = null; }
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2}(Loc {3}:{4})", actor.Name, actor.ActID, status,
                                 pos.PosX, pos.PosY), RLColor.LightGray, backColor));
                             break;
                     }
@@ -515,6 +518,7 @@ namespace Next_Game
         /// </summary>
         public void InitialiseArchetypes()
         {
+            int refID, arcID;
             //GeoCluster archetypes
             Archetype arcSea = GetArchetype(story.Arc_Geo_Sea);
             Archetype arcMountain = GetArchetype(story.Arc_Geo_Mountain);
@@ -610,7 +614,7 @@ namespace Next_Game
             Archetype arcInn = GetArchetype(story.Arc_Loc_Inn);
             //Initialise Locations
             Dictionary<int, Location> tempLocations = Game.network.GetLocations();
-            int refID, arcID;
+            
             foreach(var loc in tempLocations)
             {
                 refID = loc.Value.RefID;
@@ -678,7 +682,23 @@ namespace Next_Game
                     }
                 }
             }
-
+            //Player & Follower specific archetypes
+            Dictionary<int, Active> tempActiveActors = Game.world.GetAllActiveActors();
+            if (tempActiveActors != null)
+            {
+                foreach(var actor in tempActiveActors)
+                {
+                    arcID = actor.Value.ArcID;
+                    if (arcID > 0)
+                    {
+                        Archetype archetype = GetArchetype(arcID);
+                        actor.Value.SetEvents(archetype.GetEvents());
+                        //debug
+                        Console.WriteLine("\"{0}\", AiD {1}, has been initialised with \"{2}\", arcID {3}", actor.Value.Name, actor.Value.ActID, archetype.Name, archetype.ArcID);
+                    }
+                }
+            }
+            else { Game.SetError(new Error(64, "Invalid Dictionary Input (null)")); }
         }
 
         /// <summary>
