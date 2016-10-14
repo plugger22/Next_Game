@@ -234,7 +234,7 @@ Name: The Waif
 FID: 10
 Sex: Female
 Role: Lost Child
-Description: Sweet, innocent, looks half her age, and seemingly without parents what is to become of the poor child? Those who are able to feel compelled to rush to her aid.
+Description: Sweet, innocent and looks half her age. Seemingly abandoned and without parents. What is to become of the poor child? Those who can, feel compelled to rush to her aid.
 Age: 15
 Special: None
 ArcID: 0

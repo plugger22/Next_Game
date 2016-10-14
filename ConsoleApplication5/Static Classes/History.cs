@@ -318,6 +318,7 @@ namespace Next_Game
         internal void InitialiseFollowers(List<FollowerStruct> listOfStructs)
         {
             Console.WriteLine(Environment.NewLine + "--- Import Followers");
+            int age = (int)TraitAge.Fifteen;
             //Convert FollowerStructs into Follower objects
             foreach (var data in listOfStructs)
             {
@@ -336,6 +337,21 @@ namespace Next_Game
                     follower.Resources = data.Resources;
                     follower.Age = data.Age;
                     follower.Born = Game.gameStart - data.Age;
+                    //trait effects
+                    follower.arrayOfTraitEffects[age, (int)TraitType.Combat] = data.Combat_Effect;
+                    follower.arrayOfTraitEffects[age, (int)TraitType.Wits] = data.Wits_Effect;
+                    follower.arrayOfTraitEffects[age, (int)TraitType.Charm] = data.Charm_Effect;
+                    follower.arrayOfTraitEffects[age, (int)TraitType.Treachery] = data.Treachery_Effect;
+                    follower.arrayOfTraitEffects[age, (int)TraitType.Leadership] = data.Leadership_Effect;
+                    follower.arrayOfTraitEffects[age, (int)TraitType.Touched] = data.Touched_Effect;
+                    //trait names
+                    follower.arrayOfTraitNames[(int)TraitType.Combat] = data.Combat_Trait;
+                    follower.arrayOfTraitNames[(int)TraitType.Wits] = data.Wits_Trait;
+                    follower.arrayOfTraitNames[(int)TraitType.Charm] = data.Charm_Trait;
+                    follower.arrayOfTraitNames[(int)TraitType.Treachery] = data.Treachery_Trait;
+                    follower.arrayOfTraitNames[(int)TraitType.Leadership] = data.Leadership_Trait;
+                    follower.arrayOfTraitNames[(int)TraitType.Touched] = data.Touched_Trait;
+                    //trait ID's not needed
                     //add to list
                     listOfActiveActors.Add(follower);
                     Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.Loyalty_Player);
