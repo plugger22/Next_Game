@@ -48,31 +48,10 @@ namespace Next_Game
             dictRoyalCourt = new Dictionary<int, Passive>();
         }
 
-        /*
         /// <summary>
-        /// Sets up Player characters at the specificied location at start of game
+        /// Sets up actors in dictionaries and places them on the map.
         /// </summary>
-        /// <param name="listPlayerCharacters"></param>
-        /// <param name="locID"></param>
-        internal void InitiatePlayerActors(List<Active> listPlayerCharacters)
-        {
-            int locID;
-            //loop list and transfer characters to dictionary
-            foreach (Active person in listPlayerCharacters)
-            {
-                locID = Game.network.GetRandomLocation();
-                Location loc = Game.network.GetLocation(locID);
-                //place characters at Location
-                person.LocID = locID;
-                person.SetActorPosition(loc.GetPosition());
-                dictActiveActors.Add(person.ActID, person);
-                dictAllActors.Add(person.ActID, person);
-                //add to Location list of Characters
-                loc.AddActor(person.ActID);
-            }
-        }
-        */
-
+        /// <param name="listOfActiveActors"></param>
         internal void InitialiseActiveActors(List<Active> listOfActiveActors)
         {
             
@@ -86,36 +65,45 @@ namespace Next_Game
                     //choose a random follower
                     index = rnd.Next(0, listOfActiveActors.Count);
                     Follower follower = (Follower)listOfActiveActors[index];
-                    //remove from list
-                    listOfActiveActors.RemoveAt(index);
-                    //add to list and Dictionaries in World
-                    Game.world.SetActiveActor(follower);
-                    //assign to random location on map
-                    locID = Game.network.GetRandomLocation();
-                    Location loc = Game.network.GetLocation(locID);
-                    //place characters at Location
-                    follower.LocID = locID;
-                    follower.SetActorPosition(loc.GetPosition());
-                    //add to Location list of Characters
-                    loc.AddActor(follower.ActID);
+                    if (follower != null)
+                    {
+                        //remove from list
+                        listOfActiveActors.RemoveAt(index);
+                        //add to list and Dictionaries in World
+                        Game.world.SetActiveActor(follower);
+                        //assign to random location on map
+                        locID = Game.network.GetRandomLocation();
+                        Location loc = Game.network.GetLocation(locID);
+                        //place characters at Location
+                        follower.LocID = locID;
+                        follower.SetActorPosition(loc.GetPosition());
+                        //add to Location list of Characters
+                        loc.AddActor(follower.ActID);
+                    }
+                    else
+                    { Game.SetError(new Error(63, "Invalid Actor in listOfActiveActors")); }
                 }
                 else
                 {
                     //player (first in list)
                     Player player = (Player)listOfActiveActors[0];
-                    //player goes in first
-                    Game.world.SetActiveActor(player);
-                    listOfActiveActors.RemoveAt(0);
-                    //assign to random location on map
-                    locID = Game.network.GetRandomLocation();
-                    Location loc = Game.network.GetLocation(locID);
-                    //place characters at Location
-                    player.LocID = locID;
-                    player.SetActorPosition(loc.GetPosition());
-                    //add to Location list of Characters
-                    loc.AddActor(player.ActID);
+                    if (player != null)
+                    {
+                        //player goes in first
+                        Game.world.SetActiveActor(player);
+                        listOfActiveActors.RemoveAt(0);
+                        //assign to random location on map
+                        locID = Game.network.GetRandomLocation();
+                        Location loc = Game.network.GetLocation(locID);
+                        //place characters at Location
+                        player.LocID = locID;
+                        player.SetActorPosition(loc.GetPosition());
+                        //add to Location list of Characters
+                        loc.AddActor(player.ActID);
+                    }
+                    else
+                    { Game.SetError(new Error(63, "Invalid Player in listOfActiveActors")); }
                 }
-                
             }
         }
 
@@ -422,8 +410,15 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet(string.Format("Has sworn allegiance to House {0}", houseName )));
                 }
                 //Loyalty
-                listToDisplay.Add(new Snippet(string.Format("Loyal to the {0} (originally {1})", person.Loyalty_Current, person.Loyalty_AtStart)));
-                //listToDisplay.Add(new Snippet(string.Format("Description: {0}", person.Description)));
+                if (person is Passive)
+                { listToDisplay.Add(new Snippet(string.Format("Loyal to the {0} (originally {1})", person.Loyalty_Current, person.Loyalty_AtStart))); }
+                else if (person is Follower)
+                {
+                    Follower follower = person as Follower;
+                    listToDisplay.Add(new Snippet(string.Format("Loyalty to the Ursurper {0}", follower.Loyalty_Player)));
+                    List<string> textToWrap = Game.utility.WordWrap(string.Format("\"{0}\"", follower.Description), 120);
+                    foreach (string text in textToWrap) { listToDisplay.Add(new Snippet(text)); }
+                }
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
 
                 //stats - natural ---
