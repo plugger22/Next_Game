@@ -415,7 +415,7 @@ namespace Next_Game
                 else if (person is Follower)
                 {
                     Follower follower = person as Follower;
-                    listToDisplay.Add(new Snippet(string.Format("Loyalty to the Ursurper {0}", follower.Loyalty_Player)));
+                    listToDisplay.Add(new Snippet(string.Format("Loyalty to the Ursurper, {0} Stars", follower.Loyalty_Player)));
                     List<string> textToWrap = Game.utility.WordWrap(string.Format("\"{0}\"", follower.Description), 120);
                     foreach (string text in textToWrap) { listToDisplay.Add(new Snippet(text)); }
                 }
@@ -671,7 +671,7 @@ namespace Next_Game
                 }
             }
             else
-            { listToDisplay.Add(new Snippet("No Character with this ID exists", RLColor.Red, RLColor.Black)); }
+            { listToDisplay.Add(new Snippet(string.Format("No Character with ID {0} exists", actorID ), RLColor.LightRed, RLColor.Black)); }
             
             return listToDisplay;
         }

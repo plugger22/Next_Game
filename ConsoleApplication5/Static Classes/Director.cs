@@ -407,14 +407,16 @@ namespace Next_Game
                     rndNum = rnd.Next(100);
                     success = ability * 20;
                     //trait stars
-                    if (ability < 3) { traitColor = Color._badTrait; }
+                    if (ability < 3) { traitColor = RLColor.LightRed; }
                     else if (ability == 3) { traitColor = RLColor.Gray; }
-                    else { traitColor = Color._goodTrait; }
+                    else { traitColor = RLColor.Green; }
                     //enables stars to be centred
                     if (ability != 3)
-                    { eventList.Add(new Snippet(string.Format("{0} {1} {2}", Game.world.GetStars(ability), actor.arrayOfTraitNames[(int)eventObject.Trait], effectText), traitColor, backColor)); }
+                    { eventList.Add(new Snippet(string.Format("({0} {1})  {2} {3} {4}", ability, ability == 1 ? "Star" : "Stars",
+                        Game.world.GetStars(ability), actor.arrayOfTraitNames[(int)eventObject.Trait], 
+                        effectText), traitColor, backColor)); }
                     else
-                    { eventList.Add(new Snippet(string.Format("{0}", Game.world.GetStars(ability)), traitColor, backColor)); }
+                    { eventList.Add(new Snippet(string.Format("({0} {1})  {2}", ability, ability == 1 ? "Star" : "Stars", Game.world.GetStars(ability)), traitColor, backColor)); }
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet(string.Format("Success on {0}% or less", success), RLColor.Brown, backColor));
                     eventList.Add(new Snippet(""));
@@ -437,15 +439,15 @@ namespace Next_Game
                         eventList.Add(new Snippet(string.Format("{0} {1}", actor.Name, eventObject.FailText), RLColor.Black, backColor));
                         //delay
                         eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet(string.Format("{0} has been delayed for {1} {2}", actor.Name, eventObject.Delay, eventObject.Delay == 1 ? "Day" : "Day's"), 
-                            RLColor.LightRed, backColor));
+                        eventList.Add(new Snippet(string.Format("{0} has been {1} for {2} {3}", actor.Name, eventObject.Type == ArcType.Location ? "indisposed" : "delayed",
+                            eventObject.Delay, eventObject.Delay == 1 ? "Day" : "Day's"), RLColor.LightRed, backColor));
                         eventList.Add(new Snippet(""));
                         //update actor 
                         actor.Delay = eventObject.Delay;
                         actor.DelayReason = eventObject.Name;
                         //message
-                        Message message = new Message(string.Format("{0} has been delayed (\"{1}\") for {2} {3}", actor.Name, actor.DelayReason, eventObject.Delay,
-                            eventObject.Delay == 1 ? "Day" : "Day's"), MessageType.Move);
+                        Message message = new Message(string.Format("{0} has been {1} (\"{2}\") for {3} {4}", actor.Name, eventObject.Type == ArcType.Location ? "indisposed" : "delayed",
+                            actor.DelayReason, eventObject.Delay, eventObject.Delay == 1 ? "Day" : "Day's"), MessageType.Move);
                         Game.world.SetMessage(message);
                     }
                     
