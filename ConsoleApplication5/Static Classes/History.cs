@@ -324,7 +324,7 @@ namespace Next_Game
             {
                 Follower follower = null;
                 try
-                { follower = new Follower(data.Name, ActorType.Loyal_Follower, data.FID, data.Sex); }
+                { follower = new Follower(data.Name, ActorType.Follower, data.FID, data.Sex); }
                 catch (Exception e)
                 { Game.SetError(new Error(59, e.Message)); continue; /*skip this record*/}
                 if (follower != null)
@@ -1938,6 +1938,21 @@ namespace Next_Game
                         eventText = string.Format("Heir {0}, Aid {1}, was spirited away to the Free Cities by unknown actors, age {2}", royal.Name, royal.ActID, royal.Age);
                         record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorIncident.Conflict);
                         RemoveActor(royal, yearChanged, ActorGone.Missing);
+                        //update Player (should be the oldHeir)
+                        Player player = (Player)Game.world.GetActiveActor(1);
+                        if (player != null)
+                        {
+                            player.Name = OldHeir.Name;
+                            //player.Age = OldHeir.Age;
+                            player.Born = OldHeir.Born;
+                            player.Handle = OldHeir.Handle;
+                            player.HistoryID = OldHeir.ActID;
+                            player.arrayOfTraitID = OldHeir.arrayOfTraitID;
+                            player.arrayOfTraitEffects = OldHeir.arrayOfTraitEffects;
+                            player.arrayOfTraitNames = OldHeir.arrayOfTraitNames;
+                            player.SetSecrets(OldHeir.GetSecrets());
+                        }
+                        else { Game.SetError(new Error(66, "Invalid Player (null)")); }
                         break;
                     case ActorType.lord:
                         royal.Type = ActorType.Prince;

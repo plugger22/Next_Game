@@ -662,7 +662,14 @@ namespace Next_Game
                 }
 
                 //personal history
-                List<string> actorHistory = GetActorRecords(person.ActID);
+                List<string> actorHistory = new List<string>();
+                if (person is Player)
+                {
+                    //Player -> get original (pre-game start history)
+                    Player player = person as Player;
+                    actorHistory = GetActorRecords(player.HistoryID);
+                }
+                actorHistory.AddRange(GetActorRecords(person.ActID));
                 if (actorHistory.Count > 0)
                 {
                     listToDisplay.Add(new Snippet("Personal History", RLColor.Brown, RLColor.Black));
