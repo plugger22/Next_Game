@@ -24,7 +24,7 @@ namespace Next_Game
         MAP_FREQUENCY,
         MAP_SPACING,
         MAP_SIZE,
-        GAME_YEAR,
+        GAME_START,
         GAME_REVOLT,
         MAP_DIVISOR,
         CONNECTOR_MIN,
@@ -34,7 +34,6 @@ namespace Next_Game
         MOUNTAIN_LARGE,
         FOREST_LARGE,
         NUM_FOLLOWERS,
-        GAME_START,
         Count //keep as last
     }
 
@@ -66,7 +65,7 @@ namespace Next_Game
             arrayOfGlobals[16] = Global.MAP_FREQUENCY;
             arrayOfGlobals[17] = Global.MAP_SPACING;
             arrayOfGlobals[18] = Global.MAP_SIZE;
-            arrayOfGlobals[19] = Global.GAME_YEAR;
+            arrayOfGlobals[19] = Global.GAME_START;
             arrayOfGlobals[20] = Global.GAME_REVOLT;
             arrayOfGlobals[21] = Global.MAP_DIVISOR;
             arrayOfGlobals[22] = Global.CONNECTOR_MIN;
@@ -76,7 +75,6 @@ namespace Next_Game
             arrayOfGlobals[26] = Global.MOUNTAIN_LARGE;
             arrayOfGlobals[27] = Global.FOREST_LARGE;
             arrayOfGlobals[28] = Global.NUM_FOLLOWERS;
-            arrayOfGlobals[29] = Global.GAME_START;
             }
 
         /// <summary>

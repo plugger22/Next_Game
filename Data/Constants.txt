@@ -72,9 +72,8 @@
 
 # Game ---
 
-# GAME_YEAR -> current game year starting value
-19: 1200
+# GAME_START -> year game begins 
+19: 1225
 # GAME_REVOLT -> baseline year for 1st generation (time of revolt)
 20: 1200
-# GAME_START -> year game begins
-29: 1225
+

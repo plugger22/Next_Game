@@ -637,7 +637,7 @@ namespace Next_Game
                             maidenName = "";
                             if (relPerson.MaidenName != null)
                             { maidenName = string.Format(" (nee {0})", relPerson.MaidenName); }
-                            int relAge = Game.gameYear - relPerson.Born;
+                            int relAge = Game.gameRevolt - relPerson.Born;
                             string text = string.Format("{0} Aid {1}: {2} {3}{4} of House {5}, Age {6}", 
                                 kvp.Value, relPerson.ActID, relPerson.Type, relPerson.Name, maidenName, GetGreatHouseName(relPerson.HouseID), relAge);
                             listToDisplay.Add(new Snippet(text, familyColor, RLColor.Black));

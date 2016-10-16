@@ -147,7 +147,7 @@ namespace Next_Game
 
             Console.WriteLine("King {0} was {1} by his people", OldKing.Name, OldKing_Popularity);
             Console.WriteLine("His Queen, {0}, was {1} with the common folk", OldQueen.Name, OldQueen_Popularity);
-            Console.WriteLine(Environment.NewLine + "In {0} there was a great Revolt", Game.gameYear);
+            Console.WriteLine(Environment.NewLine + "In {0} there was a great Revolt", Game.gameRevolt);
 
             //loyalties of Kings
             OldKing.Loyalty_Current = KingLoyalty.Old_King;

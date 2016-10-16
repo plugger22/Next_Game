@@ -336,7 +336,7 @@ namespace Next_Game
                     follower.ArcID = data.ArcID;
                     follower.Resources = data.Resources;
                     follower.Age = data.Age;
-                    follower.Born = Game.gameRevolt - data.Age;
+                    follower.Born = Game.gameStart - data.Age;
                     //trait effects
                     follower.arrayOfTraitEffects[age, (int)TraitType.Combat] = data.Combat_Effect;
                     follower.arrayOfTraitEffects[age, (int)TraitType.Wits] = data.Wits_Effect;
@@ -431,7 +431,7 @@ namespace Next_Game
             { age = rnd.Next(25, 60); }
             else
             { age = rnd.Next(14, 35); }
-            actor.Born = Game.gameYear - age;
+            actor.Born = Game.gameRevolt - age;
             actor.Age = age;
             //data
             actor.SetActorPosition(pos);
@@ -562,7 +562,7 @@ namespace Next_Game
             actor.Realm = ActorRealm.Head_of_House;
             //age (older men, younger wives
             int age = rnd.Next(25, 60);
-            actor.Born = Game.gameYear - age;
+            actor.Born = Game.gameRevolt - age;
             actor.Age = age;
             //data
             actor.SetActorPosition(pos);
@@ -600,7 +600,7 @@ namespace Next_Game
             actor.Realm = ActorRealm.Regent;
             //age (older men, younger wives
             int age = rnd.Next(25, 60);
-            actor.Born = Game.gameYear - age;
+            actor.Born = Game.gameRevolt - age;
             actor.Age = age;
             //data
             actor.SetActorPosition(pos);
@@ -636,11 +636,11 @@ namespace Next_Game
             Knight knight = new Knight(name, type, ActorSex.Male);
             //age (older men, younger wives
             int age = rnd.Next(25, 60);
-            knight.Born = Game.gameYear - age;
+            knight.Born = Game.gameRevolt - age;
             knight.Age = age;
             //when knighted (age 18 - 27)
             int knighted = rnd.Next(18, 28);
-            knight.Knighthood = Game.gameYear - (age - knighted);
+            knight.Knighthood = Game.gameRevolt - (age - knighted);
             //add to Location
             Location loc = Game.network.GetLocation(locID);
             loc.AddActor(knight.ActID);
@@ -692,7 +692,7 @@ namespace Next_Game
                 //age
                 int minAge = 20; int maxAge = 60;
                 int age = rnd.Next(minAge, maxAge);
-                advisor.Born = Game.gameYear - age;
+                advisor.Born = Game.gameRevolt - age;
                 int startAge = yearCommenced - advisor.Born;
                 advisor.Age = age;
                 //auto calc's start of service if no year provided. Can't be before minAge of advisor)
@@ -1385,7 +1385,7 @@ namespace Next_Game
             {
                 
                 //birthing loop, once every 2 years
-                for (int year = lady.Married; year <= Game.gameYear; year += 2)
+                for (int year = lady.Married; year <= Game.gameRevolt; year += 2)
                 {
                     //chance of a child every 2 years
                     if (rnd.Next(100) < Game.constant.GetValue(Global.PREGNANT) )
@@ -1395,7 +1395,7 @@ namespace Next_Game
                         { break; }
                     }
                     //over age?
-                    if (Game.gameYear - year > 40)
+                    if (Game.gameRevolt - year > 40)
                     { lady.Fertile = false; break; }
                 }
             }
@@ -1428,7 +1428,7 @@ namespace Next_Game
             //get a random first name
             string actorName = GetActorName(Game.world.GetGreatHouseName(Lord.HouseID), sex, Lady.RefID);
             Noble child = new Noble(actorName, ActorType.None, sex);
-            int age = Game.gameYear - year;
+            int age = Game.gameRevolt - year;
             age = Math.Max(age, 0);
             child.Age = age;
             child.Born = year;
@@ -1789,7 +1789,7 @@ namespace Next_Game
         internal void RemoveActor(Passive actor, int year, ActorGone reason)
         {
             actor.Gone = year;
-            actor.Age = actor.Age - (Game.gameYear - year);
+            actor.Age = actor.Age - (Game.gameRevolt - year);
             actor.Status = ActorStatus.Gone;
             actor.ReasonGone = reason;
             //remove actor from location
@@ -1943,7 +1943,7 @@ namespace Next_Game
                         if (player != null)
                         {
                             player.Name = OldHeir.Name;
-                            //player.Age = OldHeir.Age;
+                            player.Age = Game.gameStart - OldHeir.Born;
                             player.Born = OldHeir.Born;
                             player.Handle = OldHeir.Handle;
                             player.HistoryID = OldHeir.ActID;

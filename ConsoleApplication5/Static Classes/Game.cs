@@ -1155,7 +1155,7 @@ namespace Next_Game
             gameStart = constant.GetValue(Global.GAME_START); //start of game from Player's point of view
             gameRevolt = constant.GetValue(Global.GAME_REVOLT); //year of revolt (old king replaced by the new king)
             gameExile = gameStart - gameRevolt; //time elapsed between revolt and return of the heir (start of game)
-            gameYear = constant.GetValue(Global.GAME_YEAR);
+            gameYear = constant.GetValue(Global.GAME_START);
             gameGeneration = 1; //current generation (25 years each)
             mapSize = constant.GetValue(Global.MAP_SIZE);
         }
