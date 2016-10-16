@@ -8,6 +8,7 @@ namespace Next_Game
 {
     public enum EventFrequency { None, Very_Rare, Rare, Low, Normal, High, Common, Very_Common } //determines how many entries are placed in the event pool -> (int)EventFrequency (1 to 7)
     public enum EventCategory { None, Generic, Special } //specials are used by archetypes, generics apply to all
+    public enum EventStatus { Active, Live, Dormant, Dead} //sequential event states from dead to activated
 
     /// <summary>
     /// Base Event class
@@ -19,9 +20,13 @@ namespace Next_Game
         //public int EventID { get; }
         public string Name { get; set; }
         public int EventID { get; }
+        public int TimerLive { get; set; } = 0; //turns to change from Live -> Active
+        public int TimerDormant { get; set; } = 0; //turns to change from Active -> Dormant
+        public int TimerRepeat { get; set; } = 0; //# times remaining for the event to repeat (if 0 then reverts to dormant)
         public bool Active { get; set; } = true; //can only be used if active
         public EventFrequency Frequency { get; set; }
         public EventCategory Category { get; set; } = EventCategory.None;
+        public EventStatus Status { get; set; } = EventStatus.Active;
         public ArcType Type { get; set; } = ArcType.None;
         public ArcGeo GeoType { get; set; } = ArcGeo.None;
         public ArcLoc LocType { get; set; } = ArcLoc.None;
