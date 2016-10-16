@@ -1955,6 +1955,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartGame()
         {
+            Game.history.AgePassiveCharacters(dictPassiveActors);
             CalculateCrows();
             Console.WriteLine(Environment.NewLine + "--- Game Input");
         }

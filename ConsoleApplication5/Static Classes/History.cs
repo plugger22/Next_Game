@@ -2239,6 +2239,24 @@ namespace Next_Game
         public void SetSecret(Secret secret)
         { if (secret != null) { listOfSecrets.Add(secret); } }
 
+        /// <summary>
+        /// Takes all current (alive) Passive actors (at time of gameRevolt) and ages them up to the time of gameStart.
+        /// </summary>
+        public void AgePassiveCharacters(Dictionary<int, Passive> dictPassiveActors)
+        {
+            int elapsedTime = Game.gameExile;
+            Console.WriteLine(Environment.NewLine + "--- Age all Current Passive Actors");
+            foreach(var actor in dictPassiveActors)
+            {
+                //actor currently alive at time of revolt?
+                if (actor.Value.Status != ActorStatus.Gone)
+                {
+                    actor.Value.Age += elapsedTime;
+                    Console.WriteLine("{0}, Aid {1}, has is now age {2}", actor.Value.Name, actor.Value.ActID, actor.Value.Age);
+                }
+            }
+        }
+
         //add methods above
     }
 }
