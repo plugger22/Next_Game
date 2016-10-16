@@ -1455,7 +1455,7 @@ namespace Next_Game
                     Noble Lord = (Noble)GetPassiveActor(listOfLords[i]);
                     Noble Lady = (Noble)GetPassiveActor(listOfLadies[i]);
                     //get year
-                    yearUpper = Game.gameStart;
+                    yearUpper = Game.gameRevolt;
                     if (Lady.Status == ActorStatus.Gone)
                     { yearUpper = Lady.Gone; }
                     yearLower = Lady.Married;

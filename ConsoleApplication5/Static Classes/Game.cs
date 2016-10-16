@@ -51,7 +51,7 @@ namespace Next_Game
         private static readonly int _messageHeight = 20;
         private static RLConsole _messageConsole; //bottom right
 
-        public static int gameTurn, gameGeneration, gameStart, gameYear, mapSize;
+        public static int gameTurn, gameGeneration, gameStart, gameRevolt, gameExile, gameYear, mapSize;
 
         //core objects
         public static Menu menu;
@@ -1152,7 +1152,9 @@ namespace Next_Game
         private static void InitialiseGameVariables()
         {
             gameTurn = 0; //each turn represents a day
-            gameStart = constant.GetValue(Global.GAME_START);
+            gameStart = constant.GetValue(Global.GAME_START); //start of game from Player's point of view
+            gameRevolt = constant.GetValue(Global.GAME_REVOLT); //year of revolt (old king replaced by the new king)
+            gameExile = gameStart - gameRevolt; //time elapsed between revolt and return of the heir (start of game)
             gameYear = constant.GetValue(Global.GAME_YEAR);
             gameGeneration = 1; //current generation (25 years each)
             mapSize = constant.GetValue(Global.MAP_SIZE);

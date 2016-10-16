@@ -336,7 +336,7 @@ namespace Next_Game
                     follower.ArcID = data.ArcID;
                     follower.Resources = data.Resources;
                     follower.Age = data.Age;
-                    follower.Born = Game.gameStart - data.Age;
+                    follower.Born = Game.gameRevolt - data.Age;
                     //trait effects
                     follower.arrayOfTraitEffects[age, (int)TraitType.Combat] = data.Combat_Effect;
                     follower.arrayOfTraitEffects[age, (int)TraitType.Wits] = data.Wits_Effect;
@@ -1899,7 +1899,7 @@ namespace Next_Game
             Noble OldHeir = null;
             Location kingsKeep = Game.network.GetLocation(1);
             string eventText;
-            int yearChanged = Game.gameStart;
+            int yearChanged = Game.gameRevolt;
             foreach(Noble royal in listOfRoyalNobles)
             {
                 //change location (all)
@@ -1997,8 +1997,8 @@ namespace Next_Game
             else
             {
                 Record record_1;
-                int year = rnd.Next(OldKing.Lordship, Game.gameStart);
-                int age = OldKing.Age - (Game.gameStart - year);
+                int year = rnd.Next(OldKing.Lordship, Game.gameRevolt);
+                int age = OldKing.Age - (Game.gameRevolt - year);
                 string descriptor = string.Format("{0}, Aid {1}, crowned as King during a royal coronation ceremony at Kingskeep, age {2}", OldKing.Name, OldKing.ActID, age);
                 record_1 = new Record(descriptor, OldKing.ActID, OldKing.LocID, OldKing.RefID, year, HistActorIncident.Coronation);
                 Game.world?.SetRecord(record_1);
@@ -2094,9 +2094,9 @@ namespace Next_Game
                 if (knight.Status == ActorStatus.AtLocation)
                 {
                     eventText = string.Format("{0}, Aid {1}, was hung upside down and gutted on orders of King {2}", knight.Name, knight.ActID, NewKing.Name);
-                    Record record = new Record(eventText, knight.ActID, knight.LocID, knight.RefID, Game.gameStart, HistActorIncident.Died);
+                    Record record = new Record(eventText, knight.ActID, knight.LocID, knight.RefID, Game.gameRevolt, HistActorIncident.Died);
                     Game.world.SetRecord(record);
-                    Game.history.RemoveActor(knight, Game.gameStart, ActorGone.Murdered);
+                    Game.history.RemoveActor(knight, Game.gameRevolt, ActorGone.Murdered);
                 }
             }
 
