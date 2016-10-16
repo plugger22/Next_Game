@@ -22,7 +22,7 @@ namespace Next_Game
         public int EventID { get; }
         public int TimerLive { get; set; } = 0; //turns to change from Live -> Active
         public int TimerDormant { get; set; } = 0; //turns to change from Active -> Dormant
-        public int TimerRepeat { get; set; } = 0; //# times remaining for the event to repeat (if 0 then reverts to dormant)
+        public int TimerRepeat { get; set; } = 1000; //# times remaining for the event to repeat (if 0 then reverts to dormant)
         public bool Active { get; set; } = true; //can only be used if active
         public EventFrequency Frequency { get; set; }
         public EventCategory Category { get; set; } = EventCategory.None;
