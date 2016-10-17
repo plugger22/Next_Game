@@ -1952,6 +1952,7 @@ namespace Next_Game
                             player.arrayOfTraitEffects = OldHeir.arrayOfTraitEffects;
                             player.arrayOfTraitNames = OldHeir.arrayOfTraitNames;
                             player.SetSecrets(OldHeir.GetSecrets());
+                            player.SetFamily(OldHeir.GetFamily());
                             //manually set touched trait
                             player.Touched = OldHeir.Touched;
                        

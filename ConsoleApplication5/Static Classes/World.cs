@@ -620,15 +620,17 @@ namespace Next_Game
                 }
 
                 //family
-                if (person is Noble)
+                SortedDictionary<int, ActorRelation> dictTempFamily = null;
+                if (person is Noble) { Noble tempPerson = person as Noble; dictTempFamily = tempPerson.GetFamily(); }
+                else if (person is Player) { Player tempPerson = person as Player; dictTempFamily = tempPerson.GetFamily(); }
+                if (dictTempFamily != null)
                 {
-                    Noble tempPerson = person as Noble;
-                    SortedDictionary<int, ActorRelation> dictTempFamily = tempPerson.GetFamily();
+                    //SortedDictionary<int, ActorRelation> dictTempFamily = tempFamilyPerson.GetFamily();
                     if (dictTempFamily?.Count > 0)
                     {
                         listToDisplay.Add(new Snippet("Family", RLColor.Brown, RLColor.Black));
                         string maidenName;
-                        foreach(KeyValuePair<int, ActorRelation> kvp in dictTempFamily)
+                        foreach (KeyValuePair<int, ActorRelation> kvp in dictTempFamily)
                         {
                             Noble relPerson = (Noble)GetPassiveActor(kvp.Key);
                             RLColor familyColor = RLColor.White;
@@ -638,7 +640,7 @@ namespace Next_Game
                             if (relPerson.MaidenName != null)
                             { maidenName = string.Format(" (nee {0})", relPerson.MaidenName); }
                             int relAge = Game.gameRevolt - relPerson.Born;
-                            string text = string.Format("{0} Aid {1}: {2} {3}{4} of House {5}, Age {6}", 
+                            string text = string.Format("{0} Aid {1}: {2} {3}{4} of House {5}, Age {6}",
                                 kvp.Value, relPerson.ActID, relPerson.Type, relPerson.Name, maidenName, GetGreatHouseName(relPerson.HouseID), relAge);
                             listToDisplay.Add(new Snippet(text, familyColor, RLColor.Black));
                         }

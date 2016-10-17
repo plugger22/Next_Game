@@ -118,6 +118,10 @@ namespace Next_Game
         internal int GetNumEvents()
         { return listOfEvents.Count; }
 
+        //needed for sub classes (world.cs -> ShowActorRL)
+        internal SortedDictionary<int, ActorRelation> GetFamily()
+        { return null; }
+
         /// <summary>
         /// checks whether particular trait has any influence effect, True if so.
         /// </summary>
@@ -194,6 +198,7 @@ namespace Next_Game
         public int Resources { get; set; } //abstracted money, equipment and influence
         public bool Activated { get; set; } //can move/be given orders this turn, or not
         private List<string> crowTooltip { get; set; } //explanation of factors influencing crow chance
+        
 
         public Active()
         { crowTooltip = new List<string>(); }
@@ -216,9 +221,19 @@ namespace Next_Game
     {
         public int CrowsNumber { get; set; }
         public int HistoryID { get; set; } //actorID of character who becomes the ursurper
+        private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
 
         public Player(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { Activated = true; }
+
+        public void SetFamily (SortedDictionary<int, ActorRelation> dictFamily)
+        {
+            if (dictFamily != null)
+            { this.dictFamily = dictFamily; }
+        }
+
+        public SortedDictionary<int, ActorRelation> GetFamily()
+        { return dictFamily; }
     }
 
     //Player controlled Minions
