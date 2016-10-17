@@ -451,7 +451,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        internal Dictionary<int, Event> GetEvents(string fileName)
+        internal Dictionary<int, Event> GetFollowerEvents(string fileName)
         {
             int dataCounter = 0;
             string cleanTag;

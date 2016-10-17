@@ -46,7 +46,7 @@ namespace Next_Game
         List<int> listCapitalEvents;
         List<Follower> listOfFollowers;
         List<EventPackage> listCurrentEvents;
-        private Dictionary<int, Event> dictEvents;
+        private Dictionary<int, Event> dictFollowerEvents;
         private Dictionary<int, Archetype> dictArchetypes;
         private Dictionary<int, Story> dictStories;
 
@@ -71,7 +71,7 @@ namespace Next_Game
             listCapitalEvents = new List<int>();
             listCurrentEvents = new List<EventPackage>();
             listOfFollowers = new List<Follower>();
-            dictEvents = new Dictionary<int, Event>();
+            dictFollowerEvents = new Dictionary<int, Event>();
             dictArchetypes = new Dictionary<int, Archetype>();
             dictStories = new Dictionary<int, Story>();
         }
@@ -84,7 +84,7 @@ namespace Next_Game
             listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters());
             Console.WriteLine(Environment.NewLine + "--- Import Events");
             //Run FIRST
-            dictEvents = Game.file.GetEvents("Events_Follower.txt");
+            dictFollowerEvents = Game.file.GetFollowerEvents("Events_Follower.txt");
             InitialiseGenericEvents();
             Console.WriteLine(Environment.NewLine + "--- Import Archetypes");
             //Run AFTER importing Events
@@ -104,7 +104,7 @@ namespace Next_Game
         private void InitialiseGenericEvents()
         {
             int eventID;
-            foreach(var eventObject in dictEvents)
+            foreach(var eventObject in dictFollowerEvents)
             {
                 if (eventObject.Value.Category == EventCategory.Generic)
                 {
@@ -344,7 +344,7 @@ namespace Next_Game
             List<Event> listEvents = new List<Event>();
             foreach (int eventID in listEventID)
             {
-                Event eventObject = dictEvents[eventID];
+                Event eventObject = dictFollowerEvents[eventID];
                 if (eventObject != null && eventObject.Status == EventStatus.Active)
                 {
                     frequency = (int)eventObject.Frequency;
@@ -364,7 +364,7 @@ namespace Next_Game
         internal Event GetEvent(int eventID)
         {
             Event eventObject = null;
-            if (dictEvents.TryGetValue(eventID, out eventObject))
+            if (dictFollowerEvents.TryGetValue(eventID, out eventObject))
             { return eventObject; }
             return eventObject;
         }
@@ -497,7 +497,7 @@ namespace Next_Game
         public bool CheckEvent(int eventID)
         {
             bool status = false;
-            if(dictEvents.ContainsKey(eventID))
+            if(dictFollowerEvents.ContainsKey(eventID))
             { return true; }
             return status;
         }
