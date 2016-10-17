@@ -445,7 +445,7 @@ namespace Next_Game
                     //combat
                     trait = TraitType.Combat;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
+                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                     {
                         abilityStars = person.GetTrait(trait, age, true);
                         influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
@@ -471,7 +471,7 @@ namespace Next_Game
                     //Wits
                     trait = TraitType.Wits;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
+                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                     {
                         abilityStars = person.GetTrait(trait, age, true);
                         influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
@@ -497,7 +497,7 @@ namespace Next_Game
                     //charm
                     trait = TraitType.Charm;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
+                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                     {
                         abilityStars = person.GetTrait(trait, age, true);
                         influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
@@ -524,7 +524,7 @@ namespace Next_Game
                     //treachery
                     trait = TraitType.Treachery;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
+                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                     {
                         abilityStars = person.GetTrait(trait, age, true);
                         influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
@@ -550,7 +550,7 @@ namespace Next_Game
                     //Leadership
                     trait = TraitType.Leadership;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
+                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                     {
                         abilityStars = person.GetTrait(trait, age, true);
                         influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
@@ -578,7 +578,7 @@ namespace Next_Game
                     {
                         trait = TraitType.Touched;
                         effectText = person.GetTraitEffectText(trait, age);
-                        if (influencer > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
+                        if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckTraitInfluenced(trait))
                         {
                             abilityStars = person.GetTrait(trait, age, true);
                             influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
