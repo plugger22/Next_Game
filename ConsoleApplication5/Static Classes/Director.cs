@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Next_Game.Cartographic;
+using Next_Game.Event_System;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -83,7 +84,7 @@ namespace Next_Game
             listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters());
             Console.WriteLine(Environment.NewLine + "--- Import Events");
             //Run FIRST
-            dictEvents = Game.file.GetEvents("Events.txt");
+            dictEvents = Game.file.GetEvents("Events_Follower.txt");
             InitialiseGenericEvents();
             Console.WriteLine(Environment.NewLine + "--- Import Archetypes");
             //Run AFTER importing Events
@@ -344,7 +345,7 @@ namespace Next_Game
             foreach (int eventID in listEventID)
             {
                 Event eventObject = dictEvents[eventID];
-                if (eventObject != null && eventObject.Active == true)
+                if (eventObject != null && eventObject.Status == EventStatus.Active)
                 {
                     frequency = (int)eventObject.Frequency;
                     //add # of events to pool equal to (int)EventFrequency

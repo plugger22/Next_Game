@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Next_Game
+namespace Next_Game.Event_System
 {
     public enum EventFrequency { None, Very_Rare, Rare, Low, Normal, High, Common, Very_Common } //determines how many entries are placed in the event pool -> (int)EventFrequency (1 to 7)
     public enum EventCategory { None, Generic, Special } //specials are used by archetypes, generics apply to all
@@ -33,6 +33,7 @@ namespace Next_Game
         public ArcRoad RoadType { get; set; } = ArcRoad.None;
         public ArcHouse HouseType { get; set; } = ArcHouse.None;
         public ArcActor ActorType { get; set; } = ArcActor.None;
+        private List<Option> listOfOptions;
         
 
         public Event()
@@ -50,6 +51,7 @@ namespace Next_Game
             this.EventID = eventID;
             this.Name = name;
             this.Frequency = frequency;
+            listOfOptions = new List<Option>();
         }
     }
 
