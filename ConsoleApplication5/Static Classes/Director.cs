@@ -355,6 +355,19 @@ namespace Next_Game
             }
             return listEvents;
         }
+
+        /// <summary>
+        /// returns an Event from dict, null if not found
+        /// </summary>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        internal Event GetEvent(int eventID)
+        {
+            Event eventObject = null;
+            if (dictEvents.TryGetValue(eventID, out eventObject))
+            { return eventObject; }
+            return eventObject;
+        }
        
         /// <summary>
         /// Process current events one at a time. Returns true if event present to be processed, false otherwise.

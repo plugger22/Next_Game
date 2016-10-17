@@ -8,7 +8,7 @@ namespace Next_Game.Event_System
 {
     public enum EventFrequency { None, Very_Rare, Rare, Low, Normal, High, Common, Very_Common } //determines how many entries are placed in the event pool -> (int)EventFrequency (1 to 7)
     public enum EventCategory { None, Generic, Special } //specials are used by archetypes, generics apply to all
-    public enum EventStatus { Active, Live, Dormant, Dead} //sequential event states from dead to activated
+    public enum EventStatus { None, Active, Live, Dormant, Dead} //sequential event states from dead to activated
 
     /// <summary>
     /// Base Event class
