@@ -232,7 +232,7 @@ namespace Next_Game
             { this.dictFamily = dictFamily; }
         }
 
-        public SortedDictionary<int, ActorRelation> GetFamily()
+        public new SortedDictionary<int, ActorRelation> GetFamily()
         { return dictFamily; }
     }
 
@@ -308,7 +308,7 @@ namespace Next_Game
         /// returns sorted dict of Family members (sorted by enum Actor.cs Relation order)
         /// </summary>
         /// <returns></returns>
-        public SortedDictionary<int, ActorRelation> GetFamily()
+        public new SortedDictionary<int, ActorRelation> GetFamily()
         { return dictFamily; }
     }
 
