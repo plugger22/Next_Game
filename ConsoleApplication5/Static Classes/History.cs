@@ -344,6 +344,7 @@ namespace Next_Game
                     follower.arrayOfTraitEffects[age, (int)TraitType.Treachery] = data.Treachery_Effect;
                     follower.arrayOfTraitEffects[age, (int)TraitType.Leadership] = data.Leadership_Effect;
                     follower.arrayOfTraitEffects[age, (int)TraitType.Touched] = data.Touched_Effect;
+                    if (data.Touched_Effect != 0) { follower.Touched = 3; }
                     //trait names
                     follower.arrayOfTraitNames[(int)TraitType.Combat] = data.Combat_Trait;
                     follower.arrayOfTraitNames[(int)TraitType.Wits] = data.Wits_Trait;
@@ -1951,6 +1952,9 @@ namespace Next_Game
                             player.arrayOfTraitEffects = OldHeir.arrayOfTraitEffects;
                             player.arrayOfTraitNames = OldHeir.arrayOfTraitNames;
                             player.SetSecrets(OldHeir.GetSecrets());
+                            //manually set touched trait
+                            player.Touched = OldHeir.Touched;
+                       
                         }
                         else { Game.SetError(new Error(66, "Invalid Player (null)")); }
                         break;
@@ -2245,14 +2249,14 @@ namespace Next_Game
         public void AgePassiveCharacters(Dictionary<int, Passive> dictPassiveActors)
         {
             int elapsedTime = Game.gameExile;
-            Console.WriteLine(Environment.NewLine + "--- Age all Current Passive Actors");
+            //Console.WriteLine(Environment.NewLine + "--- Age all Current Passive Actors");
             foreach(var actor in dictPassiveActors)
             {
                 //actor currently alive at time of revolt?
                 if (actor.Value.Status != ActorStatus.Gone)
                 {
                     actor.Value.Age += elapsedTime;
-                    Console.WriteLine("{0}, Aid {1}, has is now age {2}", actor.Value.Name, actor.Value.ActID, actor.Value.Age);
+                    //Console.WriteLine("{0}, Aid {1}, has is now age {2}", actor.Value.Name, actor.Value.ActID, actor.Value.Age);
                 }
             }
         }

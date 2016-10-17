@@ -10,7 +10,7 @@
 # Loyalty: Base Loyalty level (range 1 to 5) default '3'
 # ...._Effect: Description of Effect, eg. "Puzzled" (keep short). Use default of 'Normal' if nothing unusual. Tie in with Effect system if possible.
 # ...._Effect: A number (range +/- 1 or 2), eg. '+1' which gives a value of '4'. Default of '0' gives an average Effect of 3 (or none for 'Touched')
-# Touched Effect: is different, default of '0' gives a value of '0'. To be touched you must give a value of +/- 1/2. It's rare to be touched.
+# Touched Effect: is different, default of '0' gives a value of '0'. To be touched you must give a value of between -2 to +2 (excluding '0')
 
 
 

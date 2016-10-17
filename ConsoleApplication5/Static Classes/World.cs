@@ -357,7 +357,7 @@ namespace Next_Game
                 else { actorType = Convert.ToString(person.Type); }
                 if ((int)person.Office > 0)
                 { actorType = Convert.ToString(person.Office); }
-                string name = string.Format("{0} {1}", actorType, person.Name);
+                string name = string.Format("{0} {1}", actorType, person is Follower ? "\"" + person.Name + "\"" : person.Name);
                 string handle = null;
                 bool newLine = true;
                 //nickname
