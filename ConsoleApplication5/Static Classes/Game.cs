@@ -18,9 +18,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        private static int seed = 1225;
+        //private static int seed = 40508;
         
 
         private static readonly int _rootWidth = 230;
@@ -203,7 +203,7 @@ namespace Next_Game
             {
                 complete = MultiKeyInput(keyPress);
                 _renderRequired = true;
-                if (complete == true)
+                if (complete == true && !String.IsNullOrEmpty(_multiData))
                 {
                     switch(_multiCaller)
                     {
@@ -955,11 +955,13 @@ namespace Next_Game
                     inputType = 3;
                     break;
                 case RLKey.Enter:
-                    //exit multi key input
-                    _inputMode = InputMode.Normal;
-                    _multiData = _multiData.Replace("?", "");
-                    Console.WriteLine("{0} input", _multiData);
-                    inputComplete = true;
+                    if (_multiData != null)
+                    {   //exit multi key input
+                        _inputMode = InputMode.Normal;
+                        _multiData = _multiData.Replace("?", "");
+                        Console.WriteLine("{0} input", _multiData);
+                        inputComplete = true;
+                    }
                     break;
                 case RLKey.Escape:
                     //exit data input, exit calling routine
