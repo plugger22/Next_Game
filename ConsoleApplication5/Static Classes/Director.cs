@@ -47,6 +47,7 @@ namespace Next_Game
         List<Follower> listOfFollowers;
         List<EventPackage> listCurrentEvents;
         private Dictionary<int, EventFollower> dictFollowerEvents;
+        private Dictionary<int, EventPlayer> dictPlayerEvents;
         private Dictionary<int, Archetype> dictArchetypes;
         private Dictionary<int, Story> dictStories;
 
@@ -72,6 +73,7 @@ namespace Next_Game
             listCurrentEvents = new List<EventPackage>();
             listOfFollowers = new List<Follower>();
             dictFollowerEvents = new Dictionary<int, EventFollower>();
+            dictPlayerEvents = new Dictionary<int, EventPlayer>();
             dictArchetypes = new Dictionary<int, Archetype>();
             dictStories = new Dictionary<int, Story>();
         }
@@ -82,15 +84,17 @@ namespace Next_Game
         public void InitialiseDirector()
         {
             listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters());
-            Console.WriteLine(Environment.NewLine + "--- Import Events");
             //Run FIRST
+            Console.WriteLine(Environment.NewLine + "--- Import Follower Events");
             dictFollowerEvents = Game.file.GetFollowerEvents("Events_Follower.txt");
+            Console.WriteLine(Environment.NewLine + "--- Import Player Events");
+            dictPlayerEvents = Game.file.GetPlayerEvents("Events_Player.txt");
             InitialiseGenericEvents();
-            Console.WriteLine(Environment.NewLine + "--- Import Archetypes");
             //Run AFTER importing Events
+            Console.WriteLine(Environment.NewLine + "--- Import Archetypes");
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
-            Console.WriteLine(Environment.NewLine + "--- Import Stories");
             //Run AFTER importing Archetypes
+            Console.WriteLine(Environment.NewLine + "--- Import Stories");
             dictStories = Game.file.GetStories("Stories.txt");
             story = SetStory(1); //choose which story to use
             Console.WriteLine(Environment.NewLine + "--- Initialise Archetypes");
@@ -368,7 +372,20 @@ namespace Next_Game
             { return eventObject; }
             return eventObject;
         }
-       
+
+        /// <summary>
+        /// returns an Event from Player dict, null if not found
+        /// </summary>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        internal EventPlayer GetPlayerEvent(int eventID)
+        {
+            EventPlayer eventObject = null;
+            if (dictPlayerEvents.TryGetValue(eventID, out eventObject))
+            { return eventObject; }
+            return eventObject;
+        }
+
         /// <summary>
         /// Resolve current events one at a time. Returns true if event present to be processed, false otherwise.
         /// </summary>

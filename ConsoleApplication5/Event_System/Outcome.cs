@@ -8,6 +8,7 @@ namespace Next_Game.Event_System
 {
 
     public enum OutApply { None, Add, Subtract, Random} //Random is rnd.Next(amount)
+    
 
     /// <summary>
     /// Option outcome, event system
@@ -16,7 +17,7 @@ namespace Next_Game.Event_System
     {
         private static int outcomeIndex = 1; //autoassigned ID's. Main focus is the Outcome Class
         public int OutcomeID { get; }
-        public int EventID { get; }
+        public int EventID { get; } //could be EventFID (follower) or EventPID (player)
 
 
         public Outcome(int eventID)
@@ -35,6 +36,9 @@ namespace Next_Game.Event_System
         { }
 
     }
+
+
+    // --- Follower subclass ---
 
     /// <summary>
     /// Gives a delay to an Active Actor
@@ -77,5 +81,102 @@ namespace Next_Game.Event_System
     }
 
 
+    //--- Player subclasses ---
+
+
+    /// <summary>
+    /// Player outcome -> Initiate a conflict
+    /// </summary>
+    class OutConflict : Outcome
+    {
+        public OutConflict(int eventID) : base (eventID)
+        { }
+
+        /// <summary>
+        /// data1 is actor ID
+        /// </summary>
+        /// <param name="data1"></param>
+        /// <param name="data2"></param>
+        public override void Resolve(int data1, int data2 = 0)
+        {
+            Active actor = Game.world.GetActiveActor(data1);
+            Event eventObject = Game.director.GetPlayerEvent(EventID);
+            if (actor != null)
+            {
+                if (eventObject != null)
+                {
+                    //message
+                    Message message = new Message(string.Format("{0} is involved in a CONFLICT", actor.Name), MessageType.Move);
+                    Game.world.SetMessage(message);
+                }
+                else { Game.SetError(new Error(67, "Event not found using EventPID in OutDelay.cs")); }
+            }
+            else { Game.SetError(new Error(67, "Active Actor not found")); }
+        }
+    }
+
+
+    /// <summary>
+    /// Player outcome -> changes a Game variable
+    /// </summary>
+    class OutGame : Outcome
+    {
+        public OutGame(int eventID) : base(eventID)
+        { }
+
+        /// <summary>
+        /// data1 is actor ID
+        /// </summary>
+        /// <param name="data1"></param>
+        /// <param name="data2"></param>
+        public override void Resolve(int data1, int data2 = 0)
+        {
+            Active actor = Game.world.GetActiveActor(data1);
+            Event eventObject = Game.director.GetPlayerEvent(EventID);
+            if (actor != null)
+            {
+                if (eventObject != null)
+                {
+                    //message
+                    Message message = new Message(string.Format("{0} is involved in changing a GAME VARIABLE", actor.Name), MessageType.Move);
+                    Game.world.SetMessage(message);
+                }
+                else { Game.SetError(new Error(67, "Event not found using EventPID in OutDelay.cs")); }
+            }
+            else { Game.SetError(new Error(67, "Active Actor not found")); }
+        }
+    }
+
+
+    /// <summary>
+    /// Player outcome -> do something to an Event
+    /// </summary>
+    class OutEvent : Outcome
+    {
+        public OutEvent(int eventID) : base(eventID)
+        { }
+
+        /// <summary>
+        /// data1 is actor ID
+        /// </summary>
+        /// <param name="data1"></param>
+        /// <param name="data2"></param>
+        public override void Resolve(int data1, int data2 = 0)
+        {
+            Active actor = Game.world.GetActiveActor(data1);
+            Event eventObject = Game.director.GetPlayerEvent(EventID);
+            if (actor != null)
+            {
+                if (eventObject != null)
+                {
+                    //message
+                    Message message = new Message(string.Format("{0} is involved in a changing an EVENT", actor.Name), MessageType.Move);
+                    Game.world.SetMessage(message);
+                }
+                else { Game.SetError(new Error(67, "Event not found using EventPID in OutDelay.cs")); }
+            }
+            else { Game.SetError(new Error(67, "Active Actor not found")); }
+        }
+    }
 
 }
