@@ -191,23 +191,23 @@ namespace Next_Game
                     {
                         //Location event
                         if (rnd.Next(100) <= story.Ev_Follower_Loc)
-                        { ResolveFollowerEvent(actor.Value, EventType.Location); }
+                        { DetermineFollowerEvent(actor.Value, EventType.Location); }
                     }
                     else if (actor.Value.Status == ActorStatus.Travelling)
                     {
                         //travelling event
                         if (rnd.Next(100) <= story.Ev_Follower_Trav)
-                        { ResolveFollowerEvent(actor.Value, EventType.Travelling); }
+                        { DetermineFollowerEvent(actor.Value, EventType.Travelling); }
                     }
                 }
             }
         }
 
         /// <summary>
-        /// Resolve an event for an active actor
+        /// Determine which event applies to a Follower
         /// </summary>
         /// <param name="actor"></param>
-        private void ResolveFollowerEvent(Active actor, EventType type)
+        private void DetermineFollowerEvent(Active actor, EventType type)
         {
             int geoID, terrain, road, locID, refID, houseID;
             Cartographic.Position pos = actor.GetActorPosition();
@@ -370,9 +370,9 @@ namespace Next_Game
         }
        
         /// <summary>
-        /// Process current events one at a time. Returns true if event present to be processed, false otherwise.
+        /// Resolve current events one at a time. Returns true if event present to be processed, false otherwise.
         /// </summary>
-        public bool ProcessFollowerEvents()
+        public bool ResolveFollowerEvents()
         {
             bool returnValue = false;
             int ability, rndNum, success;
@@ -451,37 +451,76 @@ namespace Next_Game
                         eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                         eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet(string.Format("{0} {1}", actor.Name, option.ReplyGood), RLColor.Black, backColor));
+                        //outcomes
+                        List<Outcome> listGoodOutcomes = option.GetGoodOutcomes();
+                        //ignore if none present
+                        if (listGoodOutcomes != null && listGoodOutcomes.Count > 0)
+                        {
+                            //Loop outcomes (can be multiple)
+                            for (int k = 0; k < listGoodOutcomes.Count; k++)
+                            {
+                                Outcome outTemp = listGoodOutcomes[k];
+                                //Type of Outcome
+                                if (outTemp is OutDelay)
+                                {
+                                    /*
+                                    SAMPLE PLACEHOLDER CODE
+                                    */
+                                }
+                                else
+                                {
+                                    //fault condition
+                                    Game.SetError(new Error(70, "Invalid Good Outcome Type (not covered by code)"));
+                                    eventList.Add(new Snippet(""));
+                                    eventList.Add(new Snippet("NO VALID GOOD OUTCOME PRESENT", RLColor.LightRed, backColor));
+                                }
+                            }
+                        }
                     }
                     else
                     {
                         //failure
-                        List<Outcome> listBadOutcomes = option.GetBadOutcomes();
-                        //NOTE: assumes the only outcome is a delay!
-                        OutDelay outcome = null; 
-                        if (listBadOutcomes != null) { outcome = (OutDelay)listBadOutcomes[0]; }
-                        else { Game.SetError(new Error(70, "Invalid ListOfBadOutcomes input (null)")); break; }
-
                         eventList.Add(new Snippet(string.Format("Roll {0}", rndNum), RLColor.LightRed, backColor));
                         eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                         eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet(string.Format("{0} {1}", actor.Name, option.ReplyBad), RLColor.Black, backColor));
-                        //delay
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet(string.Format("{0} has been {1} for {2} {3}", actor.Name, eventObject.Type == ArcType.Location ? "indisposed" : "delayed",
-                            outcome.Delay, outcome.Delay == 1 ? "Day" : "Day's"), RLColor.LightRed, backColor));
-                        eventList.Add(new Snippet(""));
-                        //actor delay and message
-                        outcome.Resolve(actor.ActID);
-                        /*
-                        //update actor 
-                        actor.Delay = outcome.Delay;
-                        actor.DelayReason = eventObject.Name;
-                        //message
-                        Message message = new Message(string.Format("{0} has been {1} (\"{2}\") for {3} {4}", actor.Name, eventObject.Type == ArcType.Location ? "indisposed" : "delayed",
-                            actor.DelayReason, outcome.Delay, outcome.Delay == 1 ? "Day" : "Day's"), MessageType.Move);
-                        Game.world.SetMessage(message);
-                        */
+                        //outcomes
+                        List<Outcome> listBadOutcomes = option.GetBadOutcomes();
+                        if (listBadOutcomes != null && listBadOutcomes.Count > 0)
+                        {
+                            //Loop outcomes (can be multiple)
+                            for(int k = 0; k < listBadOutcomes.Count; k++)
+                            {
+                                Outcome outTemp = listBadOutcomes[k];
+                                //Type of Outcome
+                                if (outTemp is OutDelay)
+                                {
+                                    //Delay
+                                    OutDelay outcome = outTemp as OutDelay;
+                                    outcome.Resolve(actor.ActID);
+                                    eventList.Add(new Snippet(""));
+                                    eventList.Add(new Snippet(string.Format("{0} has been {1} for {2} {3}", actor.Name, eventObject.Type == ArcType.Location ? "indisposed" : "delayed",
+                                        outcome.Delay, outcome.Delay == 1 ? "Day" : "Day's"), RLColor.LightRed, backColor));
+                                    eventList.Add(new Snippet(""));
+                                }
+                                else
+                                {
+                                    //fault condition
+                                    Game.SetError(new Error(70, "Invalid Bad Outcome Type (not covered by code)"));
+                                    eventList.Add(new Snippet(""));
+                                    eventList.Add(new Snippet("NO VALID BAD OUTCOME PRESENT", RLColor.LightRed, backColor));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //no bad outcomes present
+                            Game.SetError(new Error(70, "Invalid ListOfBadOutcomes input (null)"));
+                            eventList.Add(new Snippet(""));
+                            eventList.Add(new Snippet("NO VALID BAD OUTCOME PRESENT", RLColor.LightRed, backColor));
+                        }
+
                     }
                     
                     eventList.Add(new Snippet(""));

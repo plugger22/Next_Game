@@ -60,7 +60,7 @@ namespace Next_Game.Event_System
             {
                 if (eventObject != null)
                 {
-                    actor.Delay = Delay;
+                    actor.Delay += Delay;
                     actor.DelayReason = eventObject.Name;
                     //message
                     Message message = new Message(string.Format("{0} has been {1} (\"{2}\") for {3} {4}", actor.Name, eventObject.Type == ArcType.Location ? "indisposed" : "delayed",

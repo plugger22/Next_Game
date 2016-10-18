@@ -371,3 +371,6 @@ Fail: can't resist the siren call of the voices. They do things that they should
 Trait: Wits
 Delay: 2
 End
+
+# Dormant Events -----------------------
+# Status: Dormant

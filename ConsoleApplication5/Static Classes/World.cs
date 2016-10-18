@@ -1970,7 +1970,7 @@ namespace Next_Game
             CalculateCrows();
             //Follower events
             Game.director.CheckFollowerEvents(dictActiveActors);
-            if (Game.director.ProcessFollowerEvents())
+            if (Game.director.ResolveFollowerEvents())
             { Game._specialMode = SpecialMode.Event; }
         }
 
