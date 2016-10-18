@@ -376,6 +376,7 @@ namespace Next_Game
         {
             bool returnValue = false;
             int ability, rndNum, success;
+            int traitMultiplier = Game.constant.GetValue(Global.TRAIT_MULTIPLIER);
             string effectText, status;
             List<Snippet> eventList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
@@ -427,7 +428,7 @@ namespace Next_Game
                     effectText = actor.GetTraitEffectText(option.Trait);
                     ability = actor.GetTrait(option.Trait);
                     rndNum = rnd.Next(100);
-                    success = ability * 20;
+                    success = ability * traitMultiplier;
                     //trait stars
                     if (ability < 3) { traitColor = RLColor.LightRed; }
                     else if (ability == 3) { traitColor = RLColor.Gray; }

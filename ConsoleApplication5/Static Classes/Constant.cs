@@ -34,6 +34,7 @@ namespace Next_Game
         MOUNTAIN_LARGE,
         FOREST_LARGE,
         NUM_FOLLOWERS,
+        TRAIT_MULTIPLIER,
         Count //keep as last
     }
 
@@ -75,6 +76,7 @@ namespace Next_Game
             arrayOfGlobals[26] = Global.MOUNTAIN_LARGE;
             arrayOfGlobals[27] = Global.FOREST_LARGE;
             arrayOfGlobals[28] = Global.NUM_FOLLOWERS;
+            arrayOfGlobals[29] = Global.TRAIT_MULTIPLIER;
             }
 
         /// <summary>
