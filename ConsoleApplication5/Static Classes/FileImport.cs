@@ -68,28 +68,22 @@ namespace Next_Game
         public EventCategory Cat { get; set; }
         public EventStatus Status { get; set; }
         public EventFrequency Frequency { get; set; }
-        public string Opt1_Txt {get; set; } //option 1
-        public string Opt1_Reply { get; set; }
-        public string Opt1_Effect { get; set; }
-        public int Opt1_Data { get; set; }
-        public int Opt1_Amount { get; set; }
-        public OutApply Opt1_Apply { get; set; }
-        public string Opt2_Txt { get; set; } //option 2
-        public string Opt2_Reply { get; set; }
-        public int Opt2_Data { get; set; }
-        public int Opt2_Amount { get; set; }
-        public OutApply Opt2_Apply { get; set; }
-        public string Opt3_Txt { get; set; } //option 3
-        public string Opt3_Reply { get; set; }
-        public int Opt3_Data { get; set; }
-        public int Opt3_Amount { get; set; }
-        public OutApply Opt3_Apply { get; set; }
-        public string Opt4_Txt { get; set; } //option 4
-        public string Opt4_Reply { get; set; }
-        public int Opt4_Data { get; set; }
-        public int Opt4_Amount { get; set; }
-        public OutApply Opt4_Apply { get; set; }
+        public List<OptionStruct> Options { get; set; }
+    }
 
+    struct OptionStruct
+    {
+        public string Text { get; set; }
+        public string Reply { get; set; }
+        public List<OutcomeStruct> Outcome {get; set;}
+    }
+
+    struct OutcomeStruct
+    {
+        public string Effect { get; set; }
+        public int Data { get; set; }
+        public int Amount { get; set; }
+        public OutApply Apply { get; set; }
     }
 
     //archetypes
@@ -753,7 +747,6 @@ namespace Next_Game
                                     { Game.SetError(new Error(49, string.Format("Invalid Input, Delay, (\"{0}\")", arrayOfEvents[i]))); validData = false; }
                                 }
                                 catch { Game.SetError(new Error(49, string.Format("Invalid Input, Delay, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
-                                
                                 break;
                             case "Status":
                                 switch (cleanToken)
@@ -847,6 +840,8 @@ namespace Next_Game
         internal Dictionary<int, EventPlayer> GetPlayerEvents(string fileName)
         {
             int dataCounter = 0;
+            bool optionFlag = false;
+            bool outcomeFlag = false;
             string cleanTag;
             string cleanToken;
             bool newEvent = false;
@@ -856,6 +851,8 @@ namespace Next_Game
             Dictionary<int, EventPlayer> dictOfPlayerEvents = new Dictionary<int, EventPlayer>();
             string[] arrayOfEvents = ImportDataFile(fileName);
             EventPlayerStruct structEvent = new EventPlayerStruct();
+            OptionStruct structOption = new OptionStruct();
+            OutcomeStruct structOutcome = new OutcomeStruct();
             //loop imported array of strings
             for (int i = 0; i < arrayOfEvents.Length; i++)
             {
@@ -882,6 +879,23 @@ namespace Next_Game
                     {
                         switch (cleanTag)
                         {
+                            case "[option]":
+                                //option complete, save
+                                if (optionFlag == true)
+                                {
+                                    if (outcomeFlag == true)
+                                    { structOption.Outcome.Add(structOutcome); }
+                                    structEvent.Options.Add(structOption);
+                                }
+                                //set flag to true so option is saved on next tag
+                                else { optionFlag = true; }
+                                break;
+                            case "[outcome]":
+                                //outcome complete, save
+                                if (outcomeFlag == true)
+                                { structOption.Outcome.Add(structOutcome); }
+                                else { outcomeFlag = true; }
+                                break;
                             case "Name":
                                 structEvent.Name = cleanToken;
                                 break;
@@ -1087,24 +1101,70 @@ namespace Next_Game
                                         break;
                                 }
                                 break;
-                            case "1_text":
-                                //Option 1 text
-                                structEvent.Opt1_Txt = cleanToken;
+                            case "text":
+                                //Option text
+                                structOption.Text = cleanToken;
                                 break;
-                            case "1_reply":
-                                //Option 1 reply
-                                structEvent.Opt1_Reply = cleanToken;
+                            case "reply":
+                                //Option reply
+                                structOption.Reply = cleanToken;
                                 break;
-                            case "1_effect":
-                                //Option 1 effect
+                            case "effect":
+                                //Outcome effect
                                 switch (cleanToken)
                                 {
                                     case "Conflict":
-                                        structEvent.Opt1_Effect = cleanToken;
+                                        structOutcome.Effect = cleanToken;
+                                        break;
+                                    case "Game":
+                                        structOutcome.Effect = cleanToken;
+                                        break;
+                                    case "Event":
+                                        structOutcome.Effect = cleanToken;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Effect, (\"{0}\")", arrayOfEvents[i])));
+                                        validData = false;
                                         break;
                                 }
                                 break;
-
+                            case "data":
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structOutcome.Data = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Data (< 0), (\"{0}\")", arrayOfEvents[i]))); validData = false; }
+                                }
+                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Data, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                break;
+                            case "amount":
+                                try
+                                { structOutcome.Data = Convert.ToInt32(cleanToken); }
+                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Amount, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                break;
+                            case "apply":
+                                switch (cleanToken)
+                                {
+                                    case "None":
+                                        structOutcome.Apply = OutApply.None;
+                                        break;
+                                    case "Add":
+                                        structOutcome.Apply = OutApply.Add;
+                                        break;
+                                    case "Subtract":
+                                        structOutcome.Apply = OutApply.Subtract;
+                                        break;
+                                    case "Random":
+                                        structOutcome.Apply = OutApply.Random;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Apply, (\"{0}\")", arrayOfEvents[i])));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
                             case "end":
                             case "End":
                                 //write record
@@ -1136,7 +1196,7 @@ namespace Next_Game
                                     }
                                     if (eventObject != null)
                                     {
-                                        EventFollower eventTemp = eventObject as EventFollower;
+                                        EventPlayer eventTemp = eventObject as EventPlayerr;
                                         eventTemp.Text = structEvent.EventText;
                                         eventTemp.Category = structEvent.Cat;
                                         //if no data provided for Status then default to 'Active'
