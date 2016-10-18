@@ -46,7 +46,7 @@ namespace Next_Game
         List<int> listCapitalEvents;
         List<Follower> listOfFollowers;
         List<EventPackage> listCurrentEvents;
-        private Dictionary<int, Event> dictFollowerEvents;
+        private Dictionary<int, EventFollower> dictFollowerEvents;
         private Dictionary<int, Archetype> dictArchetypes;
         private Dictionary<int, Story> dictStories;
 
@@ -71,7 +71,7 @@ namespace Next_Game
             listCapitalEvents = new List<int>();
             listCurrentEvents = new List<EventPackage>();
             listOfFollowers = new List<Follower>();
-            dictFollowerEvents = new Dictionary<int, Event>();
+            dictFollowerEvents = new Dictionary<int, EventFollower>();
             dictArchetypes = new Dictionary<int, Archetype>();
             dictStories = new Dictionary<int, Story>();
         }
@@ -108,7 +108,7 @@ namespace Next_Game
             {
                 if (eventObject.Value.Category == EventCategory.Generic)
                 {
-                    eventID = eventObject.Value.EventID;
+                    eventID = eventObject.Value.EventFID;
                     switch(eventObject.Value.Type)
                     {
                         case ArcType.GeoCluster:
@@ -357,13 +357,13 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// returns an Event from dict, null if not found
+        /// returns an Event from follower dict, null if not found
         /// </summary>
         /// <param name="eventID"></param>
         /// <returns></returns>
-        internal Event GetEvent(int eventID)
+        internal EventFollower GetFollowerEvent(int eventID)
         {
-            Event eventObject = null;
+            EventFollower eventObject = null;
             if (dictFollowerEvents.TryGetValue(eventID, out eventObject))
             { return eventObject; }
             return eventObject;

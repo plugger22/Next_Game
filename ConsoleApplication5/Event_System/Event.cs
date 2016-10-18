@@ -16,10 +16,7 @@ namespace Next_Game.Event_System
     /// </summary>
     public class Event
     {
-        //private static int eventIndex = 1;
-        //public int EventID { get; }
         public string Name { get; set; }
-        public int EventID { get; }
         public int TimerLive { get; set; } = 0; //turns to change from Live -> Active
         public int TimerDormant { get; set; } = 0; //turns to change from Active -> Dormant
         public int TimerRepeat { get; set; } = 1000; //# times remaining for the event to repeat (if 0 then reverts to dormant)
@@ -45,10 +42,8 @@ namespace Next_Game.Event_System
         /// <param name="eventID"></param>
         /// <param name="name"></param>
         /// <param name="frequency"></param>
-        public Event(int eventID, string name, EventFrequency frequency)
+        public Event(string name, EventFrequency frequency)
         {
-            //EventID = eventIndex++;
-            this.EventID = eventID;
             this.Name = name;
             this.Frequency = frequency;
             
@@ -61,10 +56,7 @@ namespace Next_Game.Event_System
     /// </summary>
     public class EventFollower : Event
     {
-        //public string SucceedText { get; set; } //text to display if follower succeeds test
-        //public string FailText { get; set; } //text to display if follower fails test
-        //public TraitType Trait { get; set; } //trait type to test against
-        //public int Delay { get; set; } //# of days delayed if fail test
+        public int EventFID {get; set;} //unique number to follower events
         private List<OptionAuto> listOfOptions;
 
 
@@ -74,11 +66,12 @@ namespace Next_Game.Event_System
         /// <param name="eventID"></param>
         /// <param name="name"></param>
         /// <param name="frequency"></param>
-        public EventFollower(int eventID, string name, EventFrequency frequency) : base(eventID, name, frequency)
+        public EventFollower(int eventID, string name, EventFrequency frequency) : base(name, frequency)
         {
+            EventFID = eventID;
             listOfOptions = new List<OptionAuto>();
             //debug
-            Console.WriteLine("EventID {0}, {1}, Frequency {2}", EventID, Name, Frequency);
+            Console.WriteLine("EventID {0}, {1}, Frequency {2}", EventFID, Name, Frequency);
         }
 
         /// <summary>
@@ -171,10 +164,12 @@ namespace Next_Game.Event_System
     /// </summary>
     public class EventPlayer : Event
     {
+        public int EventPID { get; set; }
         private List<OptionInteractive> listOfOptions;
 
-        public EventPlayer(int eventID, string name, EventFrequency frequency) : base(eventID, name, frequency)
+        public EventPlayer(int eventID, string name, EventFrequency frequency) : base( name, frequency)
         {
+            EventPID = eventID;
             listOfOptions = new List<OptionInteractive>();
         }
 

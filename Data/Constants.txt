@@ -80,4 +80,4 @@
 # Decisions ---
 
 # TRAIT_MULTIPLIER -> amount trait level (1 to 5) is multiplied by for automatic option follower tests
-29: 19
+29: 20

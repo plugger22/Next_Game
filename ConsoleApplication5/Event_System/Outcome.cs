@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
+
+    public enum OutApply { None, Add, Subtract, Random} //Random is rnd.Next(amount)
+
     /// <summary>
     /// Option outcome, event system
     /// </summary>
@@ -55,7 +58,7 @@ namespace Next_Game.Event_System
         public override void Resolve(int data1, int data2 = 0)
         {
             Active actor = Game.world.GetActiveActor(data1);
-            Event eventObject = Game.director.GetEvent(EventID);
+            Event eventObject = Game.director.GetFollowerEvent(EventID);
             if (actor != null)
             {
                 if (eventObject != null)

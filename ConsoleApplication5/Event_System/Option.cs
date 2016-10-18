@@ -16,7 +16,7 @@ namespace Next_Game.Event_System
         private static int optionIndex = 1; //autoassigned ID's.
         public int OptionID { get;}
         
-        public string ReplyGood { get; set; } //text for good outcome
+        public string ReplyGood { get; set; } //text for good outcome or if only a single outcome result possible (eg. interactive)
         public string ReplyBad { get; set; } //text for bad outcome
         public string Tooltip { get; set; }
         private List<Outcome> listGoodOutcomes; //All possible outcomes if success or chosen

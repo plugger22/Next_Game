@@ -452,7 +452,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        internal Dictionary<int, Event> GetFollowerEvents(string fileName)
+        internal Dictionary<int, EventFollower> GetFollowerEvents(string fileName)
         {
             int dataCounter = 0;
             string cleanTag;
@@ -461,7 +461,7 @@ namespace Next_Game
             bool validData = true;
             int dataInt;
             List<int> listEventID = new List<int>(); //used to pick up duplicate eventID's
-            Dictionary<int, Event> dictOfFollowerEvents = new Dictionary<int, Event>();
+            Dictionary<int, EventFollower> dictOfFollowerEvents = new Dictionary<int, EventFollower>();
             string[] arrayOfEvents = ImportDataFile(fileName);
             EventStruct structEvent = new EventStruct();
             //loop imported array of strings
@@ -783,12 +783,12 @@ namespace Next_Game
                                         else { eventTemp.Status = structEvent.Status; }
                                         //add option
                                         OptionAuto option = new OptionAuto(structEvent.Trait) { ReplyGood = structEvent.SucceedText, ReplyBad = structEvent.FailText };
-                                        option.SetBadOutcome(new OutDelay(structEvent.Delay, eventTemp.EventID));
+                                        option.SetBadOutcome(new OutDelay(structEvent.Delay, eventTemp.EventFID));
                                         eventTemp.SetOption(option);
 
                                         //last datapoint - save object to list
                                         if (dataCounter > 0)
-                                        { dictOfFollowerEvents.Add(eventTemp.EventID, eventTemp); }
+                                        { dictOfFollowerEvents.Add(eventTemp.EventFID, eventTemp); }
                                     }
                                     else { Game.SetError(new Error(49, "Invalid Input, eventObject")); }
                                 }

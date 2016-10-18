@@ -1,9 +1,8 @@
 # Events -> contains all Generic events. 
-# assign each an ID (should be unique but not critical)
-# NOTE: Keep order for individual events as shown. Sequence is important for file import routine.
+# NOTE: Keep order within individual events as shown. Sequence is important for file import routine.
 
 # Name: descriptive
-# ID: (Event ID) unique number
+# ID: (Event ID) unique number for FOLLOWER Events only
 # Type: GeoCluster/Location/Road
 # subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Kings/Connector)
 # Cat: (Category) Generic/Special
