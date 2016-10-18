@@ -779,19 +779,19 @@ namespace Next_Game
                                     switch (structEvent.Type)
                                     {
                                         case ArcType.GeoCluster:
-                                            eventObject = new EventGeo(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Geo);
+                                            eventObject = new EventFolGeo(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Geo);
                                             break;
                                         case ArcType.Location:
-                                            eventObject = new EventLoc(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Loc);
+                                            eventObject = new EventFolLoc(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Loc);
                                             break;
                                         case ArcType.Road:
-                                            eventObject = new EventRoad(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Road);
+                                            eventObject = new EventFolRoad(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Road);
                                             break;
                                         case ArcType.House:
-                                            eventObject = new EventHouse(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.House);
+                                            eventObject = new EventFolHouse(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.House);
                                             break;
                                         case ArcType.Actor:
-                                            eventObject = new EventActor(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Actor);
+                                            eventObject = new EventFolActor(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Actor);
                                             break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid ArcType for Object (\"{0}\")", arrayOfEvents[i])));
@@ -1167,6 +1167,14 @@ namespace Next_Game
                                 break;
                             case "end":
                             case "End":
+                                //tidy up outstanding options
+                                if (optionFlag == true)
+                                {
+                                    //tidy up last outcome
+                                    if (outcomeFlag == true)
+                                    { structOption.Outcome.Add(structOutcome); }
+                                    structEvent.Options.Add(structOption);
+                                }
                                 //write record
                                 if (validData == true)
                                 {
@@ -1175,19 +1183,19 @@ namespace Next_Game
                                     switch (structEvent.Type)
                                     {
                                         case ArcType.GeoCluster:
-                                            eventObject = new EventGeo(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Geo);
+                                            eventObject = new EventPlyGeo(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Geo);
                                             break;
                                         case ArcType.Location:
-                                            eventObject = new EventLoc(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Loc);
+                                            eventObject = new EventPlyLoc(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Loc);
                                             break;
                                         case ArcType.Road:
-                                            eventObject = new EventRoad(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Road);
+                                            eventObject = new EventPlyRoad(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Road);
                                             break;
                                         case ArcType.House:
-                                            eventObject = new EventHouse(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.House);
+                                            eventObject = new EventPlyHouse(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.House);
                                             break;
                                         case ArcType.Actor:
-                                            eventObject = new EventActor(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Actor);
+                                            eventObject = new EventFolActor(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Actor);
                                             break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid ArcType for Object (\"{0}\")", arrayOfEvents[i])));
@@ -1196,21 +1204,51 @@ namespace Next_Game
                                     }
                                     if (eventObject != null)
                                     {
-                                        EventPlayer eventTemp = eventObject as EventPlayerr;
+                                        EventPlayer eventTemp = eventObject as EventPlayer;
                                         eventTemp.Text = structEvent.EventText;
                                         eventTemp.Category = structEvent.Cat;
-                                        //if no data provided for Status then default to 'Active'
-                                        if (structEvent.Status == EventStatus.None)
-                                        { eventTemp.Status = EventStatus.Active; }
-                                        else { eventTemp.Status = structEvent.Status; }
-                                        //add option
-                                        OptionAuto option = new OptionAuto(structEvent.Trait) { ReplyGood = structEvent.SucceedText, ReplyBad = structEvent.FailText };
-                                        option.SetBadOutcome(new OutDelay(structEvent.Delay, eventTemp.EventFID));
-                                        eventTemp.SetOption(option);
+                                        eventTemp.Status = EventStatus.Active;
+                                        //add options
+                                        if (structEvent.Options.Count > 1)
+                                        {
+                                            for (int index = 0; index < structEvent.Options.Count; index++)
+                                            {
+                                                OptionStruct optionTemp = structEvent.Options[index];
+                                                //at least one outcome must be present
+                                                if (optionTemp.Outcome.Count > 0)
+                                                {
+                                                    OptionInteractive optionObject = new OptionInteractive(optionTemp.Text) { ReplyGood = optionTemp.Reply};
+                                                    for (int e = 0; e < structOption.Outcome.Count; e++)
+                                                    {
+                                                        //create appropriae outcome object
+                                                        OutcomeStruct outcomeTemp = structOption.Outcome[e];
+                                                        //add appropriate outcome object to option object
+                                                        switch(outcomeTemp.Effect)
+                                                        {
+                                                            case "Conflict":
+                                                                break;
+                                                            case "Game":
+                                                                break;
+                                                            case "Event":
+                                                                break;
+                                                        }
+                                                    }
+
+                                                    //add option object to event object
+                                                    eventTemp.SetOption(optionObject);
+                                                
+                                                }
+                                                else { Game.SetError(new Error(49, string.Format("{0} has no Outcome for Option {1}", structEvent.Name, index + 1))); validData = false; }
+                                                
+
+                                                
+                                            }
+                                        }
+                                        else { Game.SetError(new Error(49, string.Format("{0} has insufficient Options", structEvent.Name))); validData = false; }
 
                                         //last datapoint - save object to list
-                                        if (dataCounter > 0)
-                                        { dictOfPlayerEvents.Add(eventTemp.EventFID, eventTemp); }
+                                        if (dataCounter > 0 && validData == true)
+                                        { dictOfPlayerEvents.Add(eventTemp.EventPID, eventTemp); }
                                     }
                                     else { Game.SetError(new Error(49, "Invalid Input, eventObject")); }
                                 }

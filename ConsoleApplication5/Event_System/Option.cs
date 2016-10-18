@@ -19,8 +19,8 @@ namespace Next_Game.Event_System
         public string ReplyGood { get; set; } //text for good outcome or if only a single outcome result possible (eg. interactive)
         public string ReplyBad { get; set; } //text for bad outcome
         public string Tooltip { get; set; }
-        private List<Outcome> listGoodOutcomes; //All possible outcomes if success or chosen
-        private List<Outcome> listBadOutcomes; //All possible outcomes if fail or ignored
+        private List<Outcome> listGoodOutcomes; //All possible outcomes if success (auto) or if selected (eg. interactive)
+        private List<Outcome> listBadOutcomes; //All possible outcomes if fail
         private Dictionary<int, OptionCheck> dictOfTriggers; //trigger conditions, if any, that must be met for the option to be active
         
 
@@ -106,5 +106,10 @@ namespace Next_Game.Event_System
     public class OptionInteractive : Option
     {
         public string Text { get; set; } //option text
+
+        public OptionInteractive(string text)
+        {
+            this.Text = text;
+        }
     }
 }

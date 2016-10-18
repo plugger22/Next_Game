@@ -91,12 +91,12 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// GeoCluster generic event
+    /// GeoCluster Follower generic event
     /// </summary>
-    public class EventGeo : EventFollower
+    public class EventFolGeo : EventFollower
     {
 
-        public EventGeo (int eventID, string name, EventFrequency frequency, ArcGeo subtype) : base (eventID, name, frequency)
+        public EventFolGeo (int eventID, string name, EventFrequency frequency, ArcGeo subtype) : base (eventID, name, frequency)
         {
             Type = ArcType.GeoCluster;
             GeoType = subtype;
@@ -104,12 +104,12 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// Location generic event
+    /// Location Follower generic event
     /// </summary>
-    public class EventLoc : EventFollower
+    public class EventFolLoc : EventFollower
     {
 
-        public EventLoc(int eventID, string name, EventFrequency frequency, ArcLoc subtype) : base(eventID, name, frequency)
+        public EventFolLoc(int eventID, string name, EventFrequency frequency, ArcLoc subtype) : base(eventID, name, frequency)
         {
             Type = ArcType.Location;
             LocType = subtype;
@@ -117,12 +117,12 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// Road generic event
+    /// Road Follower generic event
     /// </summary>
-    public class EventRoad : EventFollower
+    public class EventFolRoad : EventFollower
     {
 
-        public EventRoad(int eventID, string name, EventFrequency frequency, ArcRoad subtype) : base(eventID, name, frequency)
+        public EventFolRoad(int eventID, string name, EventFrequency frequency, ArcRoad subtype) : base(eventID, name, frequency)
         {
             Type = ArcType.Road;
             RoadType = subtype;
@@ -130,12 +130,12 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// House specific event
+    /// House Follower specific event
     /// </summary>
-    public class EventHouse : EventFollower
+    public class EventFolHouse : EventFollower
     {
 
-        public EventHouse(int eventID, string name, EventFrequency frequency, ArcHouse subtype) : base(eventID, name, frequency)
+        public EventFolHouse(int eventID, string name, EventFrequency frequency, ArcHouse subtype) : base(eventID, name, frequency)
         {
             Type = ArcType.House;
             HouseType = subtype;
@@ -143,12 +143,12 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// Active actor specific event
+    ///  Follower actor specific event
     /// </summary>
-    public class EventActor : EventFollower
+    public class EventFolActor : EventFollower
     {
 
-        public EventActor(int eventID, string name, EventFrequency frequency, ArcActor subtype) : base(eventID, name, frequency)
+        public EventFolActor(int eventID, string name, EventFrequency frequency, ArcActor subtype) : base(eventID, name, frequency)
         {
             Type = ArcType.Actor;
             ActorType = subtype;
@@ -188,4 +188,72 @@ namespace Next_Game.Event_System
         public List<OptionInteractive> GetOptions()
         { return listOfOptions; }
     }
+
+    /// <summary>
+    /// GeoCluster Player generic event
+    /// </summary>
+    public class EventPlyGeo : EventPlayer
+    {
+
+        public EventPlyGeo(int eventID, string name, EventFrequency frequency, ArcGeo subtype) : base(eventID, name, frequency)
+        {
+            Type = ArcType.GeoCluster;
+            GeoType = subtype;
+        }
+    }
+
+    /// <summary>
+    /// Location Player generic event
+    /// </summary>
+    public class EventPlyLoc : EventPlayer
+    {
+
+        public EventPlyLoc(int eventID, string name, EventFrequency frequency, ArcLoc subtype) : base(eventID, name, frequency)
+        {
+            Type = ArcType.Location;
+            LocType = subtype;
+        }
+    }
+
+    /// <summary>
+    /// Road Player generic event
+    /// </summary>
+    public class EventPlyRoad : EventPlayer
+    {
+
+        public EventPlyRoad(int eventID, string name, EventFrequency frequency, ArcRoad subtype) : base(eventID, name, frequency)
+        {
+            Type = ArcType.Road;
+            RoadType = subtype;
+        }
+    }
+
+    /// <summary>
+    /// House Player specific event
+    /// </summary>
+    public class EventPlyHouse : EventPlayer
+    {
+
+        public EventPlyHouse(int eventID, string name, EventFrequency frequency, ArcHouse subtype) : base(eventID, name, frequency)
+        {
+            Type = ArcType.House;
+            HouseType = subtype;
+        }
+    }
+
+    /// <summary>
+    ///  Player specific event
+    /// </summary>
+    public class EventPlyActor : EventPlayer
+    {
+
+        public EventPlyActor(int eventID, string name, EventFrequency frequency, ArcActor subtype) : base(eventID, name, frequency)
+        {
+            Type = ArcType.Actor;
+            ActorType = subtype;
+        }
+    }
+
+
+
 }
