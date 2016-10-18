@@ -47,6 +47,7 @@ namespace Next_Game
         public ArcHouse House { get; set; }
         public ArcActor Actor { get; set; }
         public EventCategory Cat { get; set; }
+        public EventStatus Status { get; set; }
         public EventFrequency Frequency { get; set; }
         public TraitType Trait { get; set; }
         public int Delay { get; set; }
@@ -460,7 +461,7 @@ namespace Next_Game
             bool validData = true;
             int dataInt;
             List<int> listEventID = new List<int>(); //used to pick up duplicate eventID's
-            Dictionary<int, Event> dictOfEvents = new Dictionary<int, Event>();
+            Dictionary<int, Event> dictOfFollowerEvents = new Dictionary<int, Event>();
             string[] arrayOfEvents = ImportDataFile(fileName);
             EventStruct structEvent = new EventStruct();
             //loop imported array of strings
@@ -655,14 +656,14 @@ namespace Next_Game
                                     case "Normal":
                                         structEvent.Frequency = EventFrequency.Normal;
                                         break;
-                                    case "High":
-                                        structEvent.Frequency = EventFrequency.High;
-                                        break;
                                     case "Common":
                                         structEvent.Frequency = EventFrequency.Common;
                                         break;
-                                    case "Very_Common":
-                                        structEvent.Frequency = EventFrequency.Very_Common;
+                                    case "High":
+                                        structEvent.Frequency = EventFrequency.High;
+                                        break;
+                                    case "Very_High":
+                                        structEvent.Frequency = EventFrequency.Very_High;
                                         break;
                                     default:
                                         Game.SetError(new Error(49, string.Format("Invalid Input, Frequency, (\"{0}\")", arrayOfEvents[i])));
@@ -715,6 +716,27 @@ namespace Next_Game
                                 catch { Game.SetError(new Error(49, string.Format("Invalid Input, Delay, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                 
                                 break;
+                            case "Status":
+                                switch (cleanToken)
+                                {
+                                    case "Active":
+                                        structEvent.Status = EventStatus.Active;
+                                        break;
+                                    case "Live":
+                                        structEvent.Status = EventStatus.Live;
+                                        break;
+                                    case "Dormant":
+                                        structEvent.Status = EventStatus.Dormant;
+                                        break;
+                                    case "Dead":
+                                        structEvent.Status = EventStatus.Dead;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Status, (\"{0}\")", arrayOfEvents[i])));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
                             case "end":
                             case "End":
                                 //write record
@@ -747,15 +769,26 @@ namespace Next_Game
                                     if (eventObject != null)
                                     {
                                         EventFollower eventTemp = eventObject as EventFollower;
-                                        eventTemp.EventText = structEvent.EventText;
+                                        eventTemp.Text = structEvent.EventText;
+                                        /*
                                         eventTemp.SucceedText = structEvent.SucceedText;
                                         eventTemp.FailText = structEvent.FailText;
                                         eventTemp.Trait = structEvent.Trait;
-                                        eventTemp.Delay = structEvent.Delay;
+                                        eventTemp.Delay = structEvent.Delay;*/
+
                                         eventTemp.Category = structEvent.Cat;
+                                        //if no data provided for Status then default to 'Active'
+                                        if (structEvent.Status == EventStatus.None)
+                                        { eventTemp.Status = EventStatus.Active; }
+                                        else { eventTemp.Status = structEvent.Status; }
+                                        //add option
+                                        OptionAuto option = new OptionAuto(structEvent.Trait) { ReplyGood = structEvent.SucceedText, ReplyBad = structEvent.FailText };
+                                        option.SetBadOutcome(new OutDelay(structEvent.Delay, eventTemp.EventID));
+                                        eventTemp.SetOption(option);
+
                                         //last datapoint - save object to list
                                         if (dataCounter > 0)
-                                        { dictOfEvents.Add(eventTemp.EventID, eventTemp); }
+                                        { dictOfFollowerEvents.Add(eventTemp.EventID, eventTemp); }
                                     }
                                     else { Game.SetError(new Error(49, "Invalid Input, eventObject")); }
                                 }
@@ -770,7 +803,7 @@ namespace Next_Game
                 }
                 else { newEvent = false; }
             }
-            return dictOfEvents;
+            return dictOfFollowerEvents;
         }
 
         /// <summary>

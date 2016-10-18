@@ -6,27 +6,30 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum OpCondition {None, Trait, Resources, Companion, Item } //special conditions that must be met for the option to trigger (all resolve down to an 'int' value in the dict)
+    public enum OptionCheck {None, Trait, Resources, Companion, Item } //special conditions that must be met for the option to trigger (all resolve down to an 'int' value in the dict)
 
     /// <summary>
     /// Event option
     /// </summary>
     public class Option
     {
-        public int OptionID { get; set; }
+        private static int optionIndex = 1; //autoassigned ID's.
+        public int OptionID { get;}
         
         public string ReplyGood { get; set; } //text for good outcome
         public string ReplyBad { get; set; } //text for bad outcome
+        public string Tooltip { get; set; }
         private List<Outcome> listGoodOutcomes; //All possible outcomes if success or chosen
         private List<Outcome> listBadOutcomes; //All possible outcomes if fail or ignored
-        private Dictionary<int, OpCondition> dictOfTriggers; //trigger conditions, if any, that must be met for the option to be active
+        private Dictionary<int, OptionCheck> dictOfTriggers; //trigger conditions, if any, that must be met for the option to be active
         
 
         public Option()
         {
+            OptionID = optionIndex++;
             listGoodOutcomes = new List<Outcome>();
             listBadOutcomes = new List<Outcome>();
-            dictOfTriggers = new Dictionary<int, OpCondition>();
+            dictOfTriggers = new Dictionary<int, OptionCheck>();
         }
 
         /// <summary>
@@ -62,14 +65,14 @@ namespace Next_Game.Event_System
         /// </summary>
         /// <param name="data"></param>
         /// <param name="condition"></param>
-        internal void AddTrigger(int data, OpCondition condition)
+        internal void AddTrigger(int data, OptionCheck condition)
         {
-            if (data > 0 && condition != OpCondition.None)
+            if (data > 0 && condition != OptionCheck.None)
             {
                 //validate data input
                 switch (condition)
                 {
-                    case OpCondition.Trait:
+                    case OptionCheck.Trait:
 
                         break;
                 }
@@ -79,20 +82,29 @@ namespace Next_Game.Event_System
 
     }
 
+
+
     /// <summary>
     /// Automatic options, eg. Follower event
     /// </summary>
     public class OptionAuto : Option
     {
-        public TraitType Trait { get; set; } //trait type that the option uses as a succeed/fail test
-        public string Text { get; set; } //main text
-        public string Tooltip { get; set; }
+        public TraitType Trait { get; set; } //trait type that the option uses as a succeed/fail test (# traits stars x 20 < 1d100 to succeed)
+        
+        public OptionAuto(TraitType traitToTest)
+        {
+            Trait = traitToTest;
+        }
     }
+
+
 
 
     /// <summary>
     /// Interactive options, eg. Player event
     /// </summary>
-    public class OptionInter : Option
-    { }
+    public class OptionInteractive : Option
+    {
+        public string Text { get; set; } //option text
+    }
 }

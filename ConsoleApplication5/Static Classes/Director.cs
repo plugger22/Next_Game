@@ -191,13 +191,13 @@ namespace Next_Game
                     {
                         //Location event
                         if (rnd.Next(100) <= story.Ev_Follower_Loc)
-                        { ResolveEvent(actor.Value, EventType.Location); }
+                        { ResolveFollowerEvent(actor.Value, EventType.Location); }
                     }
                     else if (actor.Value.Status == ActorStatus.Travelling)
                     {
                         //travelling event
                         if (rnd.Next(100) <= story.Ev_Follower_Trav)
-                        { ResolveEvent(actor.Value, EventType.Travelling); }
+                        { ResolveFollowerEvent(actor.Value, EventType.Travelling); }
                     }
                 }
             }
@@ -207,7 +207,7 @@ namespace Next_Game
         /// Resolve an event for an active actor
         /// </summary>
         /// <param name="actor"></param>
-        private void ResolveEvent(Active actor, EventType type)
+        private void ResolveFollowerEvent(Active actor, EventType type)
         {
             int geoID, terrain, road, locID, refID, houseID;
             Cartographic.Position pos = actor.GetActorPosition();
@@ -372,7 +372,7 @@ namespace Next_Game
         /// <summary>
         /// Process current events one at a time. Returns true if event present to be processed, false otherwise.
         /// </summary>
-        public bool ProcessCurrentEvents()
+        public bool ProcessFollowerEvents()
         {
             bool returnValue = false;
             int ability, rndNum, success;
@@ -388,9 +388,14 @@ namespace Next_Game
                 if (package.Done == false)
                 {
                     EventFollower eventObject = package.EventObject;
+                    List<OptionAuto> listOptions = eventObject.GetOptions();
+                    //assume only a single option
+                    OptionAuto option = null;
+                    if (listOptions != null) { option = listOptions[0]; }
+                    else { Game.SetError(new Error(70, "Invalid ListOfOptions input (null)")); break; }
                     Active actor = package.Person;
                     //create event description
-                    Cartographic.Position pos = actor.GetActorPosition();
+                    Position pos = actor.GetActorPosition();
                     switch (eventObject.Type)
                     {
                         case ArcType.GeoCluster:
@@ -412,15 +417,15 @@ namespace Next_Game
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                     eventList.Add(new Snippet(""));
-                    eventList.Add(new Snippet(eventObject.EventText, foreColor, backColor));
+                    eventList.Add(new Snippet(eventObject.Text, foreColor, backColor));
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                     eventList.Add(new Snippet(""));
                     //resolve event and add to description (add delay to actor if needed)
-                    eventList.Add(new Snippet(string.Format("A test of {0}", eventObject.Trait), RLColor.Brown, backColor));
+                    eventList.Add(new Snippet(string.Format("A test of {0}", option.Trait), RLColor.Brown, backColor));
                     eventList.Add(new Snippet(""));
-                    effectText = actor.GetTraitEffectText(eventObject.Trait);
-                    ability = actor.GetTrait(eventObject.Trait);
+                    effectText = actor.GetTraitEffectText(option.Trait);
+                    ability = actor.GetTrait(option.Trait);
                     rndNum = rnd.Next(100);
                     success = ability * 20;
                     //trait stars
@@ -430,7 +435,7 @@ namespace Next_Game
                     //enables stars to be centred
                     if (ability != 3)
                     { eventList.Add(new Snippet(string.Format("({0} {1})  {2} {3} {4}", ability, ability == 1 ? "Star" : "Stars",
-                        Game.world.GetStars(ability), actor.arrayOfTraitNames[(int)eventObject.Trait], 
+                        Game.world.GetStars(ability), actor.arrayOfTraitNames[(int)option.Trait], 
                         effectText), traitColor, backColor)); }
                     else
                     { eventList.Add(new Snippet(string.Format("({0} {1})  {2}", ability, ability == 1 ? "Star" : "Stars", Game.world.GetStars(ability)), traitColor, backColor)); }
@@ -444,28 +449,38 @@ namespace Next_Game
                         eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                         eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet(string.Format("{0} {1}", actor.Name, eventObject.SucceedText), RLColor.Black, backColor));
+                        eventList.Add(new Snippet(string.Format("{0} {1}", actor.Name, option.ReplyGood), RLColor.Black, backColor));
                     }
                     else
                     {
                         //failure
+                        List<Outcome> listBadOutcomes = option.GetBadOutcomes();
+                        //NOTE: assumes the only outcome is a delay!
+                        OutDelay outcome = null; 
+                        if (listBadOutcomes != null) { outcome = (OutDelay)listBadOutcomes[0]; }
+                        else { Game.SetError(new Error(70, "Invalid ListOfBadOutcomes input (null)")); break; }
+
                         eventList.Add(new Snippet(string.Format("Roll {0}", rndNum), RLColor.LightRed, backColor));
                         eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                         eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet(string.Format("{0} {1}", actor.Name, eventObject.FailText), RLColor.Black, backColor));
+                        eventList.Add(new Snippet(string.Format("{0} {1}", actor.Name, option.ReplyBad), RLColor.Black, backColor));
                         //delay
                         eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet(string.Format("{0} has been {1} for {2} {3}", actor.Name, eventObject.Type == ArcType.Location ? "indisposed" : "delayed",
-                            eventObject.Delay, eventObject.Delay == 1 ? "Day" : "Day's"), RLColor.LightRed, backColor));
+                            outcome.Delay, outcome.Delay == 1 ? "Day" : "Day's"), RLColor.LightRed, backColor));
                         eventList.Add(new Snippet(""));
+                        //actor delay and message
+                        outcome.Resolve(actor.ActID);
+                        /*
                         //update actor 
-                        actor.Delay = eventObject.Delay;
+                        actor.Delay = outcome.Delay;
                         actor.DelayReason = eventObject.Name;
                         //message
                         Message message = new Message(string.Format("{0} has been {1} (\"{2}\") for {3} {4}", actor.Name, eventObject.Type == ArcType.Location ? "indisposed" : "delayed",
-                            actor.DelayReason, eventObject.Delay, eventObject.Delay == 1 ? "Day" : "Day's"), MessageType.Move);
+                            actor.DelayReason, outcome.Delay, outcome.Delay == 1 ? "Day" : "Day's"), MessageType.Move);
                         Game.world.SetMessage(message);
+                        */
                     }
                     
                     eventList.Add(new Snippet(""));

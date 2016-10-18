@@ -1968,9 +1968,9 @@ namespace Next_Game
         public void ProcessStartTurn()
         {
             CalculateCrows();
+            //Follower events
             Game.director.CheckFollowerEvents(dictActiveActors);
-            //any events that need dealing with?
-            if (Game.director.ProcessCurrentEvents())
+            if (Game.director.ProcessFollowerEvents())
             { Game._specialMode = SpecialMode.Event; }
         }
 

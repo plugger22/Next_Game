@@ -77,3 +77,4 @@
 # GAME_REVOLT -> baseline year for 1st generation (time of revolt)
 20: 1200
 
+# Decisions ---

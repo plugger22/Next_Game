@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum EventFrequency { None, Very_Rare, Rare, Low, Normal, High, Common, Very_Common } //determines how many entries are placed in the event pool -> (int)EventFrequency (1 to 7)
+    public enum EventFrequency { None, Very_Rare, Rare, Low, Normal, Common, High, Very_High } //determines how many entries are placed in the event pool -> (int)EventFrequency (1 to 7)
     public enum EventCategory { None, Generic, Special } //specials are used by archetypes, generics apply to all
     public enum EventStatus { None, Active, Live, Dormant, Dead} //sequential event states from dead to activated
 
@@ -23,7 +23,7 @@ namespace Next_Game.Event_System
         public int TimerLive { get; set; } = 0; //turns to change from Live -> Active
         public int TimerDormant { get; set; } = 0; //turns to change from Active -> Dormant
         public int TimerRepeat { get; set; } = 1000; //# times remaining for the event to repeat (if 0 then reverts to dormant)
-        public bool Active { get; set; } = true; //can only be used if active
+        public string Text { get; set; } //main text for event
         public EventFrequency Frequency { get; set; }
         public EventCategory Category { get; set; } = EventCategory.None;
         public EventStatus Status { get; set; } = EventStatus.Active;
@@ -33,7 +33,7 @@ namespace Next_Game.Event_System
         public ArcRoad RoadType { get; set; } = ArcRoad.None;
         public ArcHouse HouseType { get; set; } = ArcHouse.None;
         public ArcActor ActorType { get; set; } = ArcActor.None;
-        private List<Option> listOfOptions;
+        
         
 
         public Event()
@@ -51,21 +51,21 @@ namespace Next_Game.Event_System
             this.EventID = eventID;
             this.Name = name;
             this.Frequency = frequency;
-            listOfOptions = new List<Option>();
+            
         }
     }
 
 
     /// <summary>
-    /// derived base class for Generic Events (followers)
+    /// derived base class for Generic Events (followers) -----------------
     /// </summary>
     public class EventFollower : Event
     {
-        public string EventText { get; set;}
-        public string SucceedText { get; set; } //text to display if follower succeeds test
-        public string FailText { get; set; } //text to display if follower fails test
-        public TraitType Trait { get; set; } //trait type to test against
-        public int Delay { get; set; } //# of days delayed if fail test
+        //public string SucceedText { get; set; } //text to display if follower succeeds test
+        //public string FailText { get; set; } //text to display if follower fails test
+        //public TraitType Trait { get; set; } //trait type to test against
+        //public int Delay { get; set; } //# of days delayed if fail test
+        private List<OptionAuto> listOfOptions;
 
 
         /// <summary>
@@ -76,9 +76,25 @@ namespace Next_Game.Event_System
         /// <param name="frequency"></param>
         public EventFollower(int eventID, string name, EventFrequency frequency) : base(eventID, name, frequency)
         {
+            listOfOptions = new List<OptionAuto>();
             //debug
             Console.WriteLine("EventID {0}, {1}, Frequency {2}", EventID, Name, Frequency);
         }
+
+        /// <summary>
+        /// add an option
+        /// </summary>
+        /// <param name="option"></param>
+        public void SetOption(OptionAuto option)
+        {
+            if (option != null)
+            { listOfOptions.Add(option); }
+            else
+            { Game.SetError(new Error(69, "Invalid Option Input (null)")); }
+        }
+
+        public List<OptionAuto> GetOptions()
+        { return listOfOptions; }
     }
 
     /// <summary>
@@ -144,5 +160,37 @@ namespace Next_Game.Event_System
             Type = ArcType.Actor;
             ActorType = subtype;
         }
+    }
+
+
+
+
+
+    /// <summary>
+    /// Player events --------------------------------
+    /// </summary>
+    public class EventPlayer : Event
+    {
+        private List<OptionInteractive> listOfOptions;
+
+        public EventPlayer(int eventID, string name, EventFrequency frequency) : base(eventID, name, frequency)
+        {
+            listOfOptions = new List<OptionInteractive>();
+        }
+
+        /// <summary>
+        /// add an option
+        /// </summary>
+        /// <param name="option"></param>
+        public void SetOption(OptionInteractive option)
+        {
+            if (option != null)
+            { listOfOptions.Add(option); }
+            else
+            { Game.SetError(new Error(69, "Invalid Option Input (null)")); }
+        }
+
+        public List<OptionInteractive> GetOptions()
+        { return listOfOptions; }
     }
 }

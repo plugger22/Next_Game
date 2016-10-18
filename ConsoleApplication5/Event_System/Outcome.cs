@@ -48,7 +48,7 @@ namespace Next_Game.Event_System
         }
 
         /// <summary>
-        /// data1 is ActorID, give delay
+        /// data1 is ActorID -> message & update actor delay
         /// </summary>
         /// <param name="data1"></param>
         /// <param name="data2"></param>

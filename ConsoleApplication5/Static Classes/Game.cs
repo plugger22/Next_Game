@@ -1049,7 +1049,7 @@ namespace Next_Game
                     infoChannel.ClearConsole(ConsoleDisplay.Input);
                     infoChannel.ClearConsole(ConsoleDisplay.Multi);
                     //any events that need dealing with?
-                    if (director.ProcessCurrentEvents()) { }
+                    if (director.ProcessFollowerEvents()) { }
                     else
                     {
                         //Exit out of Special Display mode
