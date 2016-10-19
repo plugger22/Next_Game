@@ -68,14 +68,12 @@ namespace Next_Game
         public EventCategory Cat { get; set; }
         public EventStatus Status { get; set; }
         public EventFrequency Frequency { get; set; }
-        public List<OptionStruct> Options { get; set; }
     }
 
     struct OptionStruct
     {
         public string Text { get; set; }
         public string Reply { get; set; }
-        public List<OutcomeStruct> Outcome {get; set;}
     }
 
     struct OutcomeStruct
@@ -853,6 +851,8 @@ namespace Next_Game
             EventPlayerStruct structEvent = new EventPlayerStruct();
             OptionStruct structOption = new OptionStruct();
             OutcomeStruct structOutcome = new OutcomeStruct();
+            List<OptionStruct> listOptions = null;
+            List<OutcomeStruct> listOutcomes = null;
             //loop imported array of strings
             for (int i = 0; i < arrayOfEvents.Length; i++)
             {
@@ -865,13 +865,16 @@ namespace Next_Game
                         validData = true;
                         //Console.WriteLine();
                         dataCounter++;
-                        //new Trait object
+                        //new objects
                         structEvent = new EventPlayerStruct();
+                        listOptions = new List<OptionStruct>();
+                        listOutcomes = new List<OutcomeStruct>();
                     }
                     string[] tokens = arrayOfEvents[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    //if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
                     else { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0)
                     { Game.SetError(new Error(20, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
@@ -884,8 +887,12 @@ namespace Next_Game
                                 if (optionFlag == true)
                                 {
                                     if (outcomeFlag == true)
-                                    { structOption.Outcome.Add(structOutcome); }
-                                    structEvent.Options.Add(structOption);
+                                    {
+                                        //structOption.Outcomes.Add(structOutcome);
+                                        listOutcomes.Add(structOutcome);
+                                    }
+                                    //structEvent.Options.Add(structOption);
+                                    listOptions.Add(structOption);
                                 }
                                 //set flag to true so option is saved on next tag
                                 else { optionFlag = true; }
@@ -893,7 +900,10 @@ namespace Next_Game
                             case "[outcome]":
                                 //outcome complete, save
                                 if (outcomeFlag == true)
-                                { structOption.Outcome.Add(structOutcome); }
+                                {
+                                    listOutcomes.Add(structOutcome);
+                                    //structOption.Outcomes.Add(structOutcome);
+                                }
                                 else { outcomeFlag = true; }
                                 break;
                             case "Name":
@@ -1141,7 +1151,7 @@ namespace Next_Game
                                 break;
                             case "amount":
                                 try
-                                { structOutcome.Data = Convert.ToInt32(cleanToken); }
+                                { structOutcome.Amount = Convert.ToInt32(cleanToken); }
                                 catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Amount, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                 break;
                             case "apply":
@@ -1165,15 +1175,19 @@ namespace Next_Game
                                         break;
                                 }
                                 break;
-                            case "end":
-                            case "End":
+                            case "[end]":
+                            case "[End]":
                                 //tidy up outstanding options
                                 if (optionFlag == true)
                                 {
                                     //tidy up last outcome
                                     if (outcomeFlag == true)
-                                    { structOption.Outcome.Add(structOutcome); }
-                                    structEvent.Options.Add(structOption);
+                                    {
+                                        listOutcomes.Add(structOutcome);
+                                        //structOption.Outcomes.Add(structOutcome);
+                                    }
+                                    listOptions.Add(structOption);
+                                    //structEvent.Options.Add(structOption);
                                 }
                                 //write record
                                 if (validData == true)
@@ -1209,19 +1223,25 @@ namespace Next_Game
                                         eventTemp.Category = structEvent.Cat;
                                         eventTemp.Status = EventStatus.Active;
                                         //add options
-                                        if (structEvent.Options.Count > 1)
+                                        //if (structEvent.Options.Count > 1)
+                                        if (listOptions.Count > 1)
                                         {
-                                            for (int index = 0; index < structEvent.Options.Count; index++)
+                                            //for (int index = 0; index < structEvent.Options.Count; index++)
+                                            for (int index = 0; index < listOptions.Count; index++)
                                             {
-                                                OptionStruct optionTemp = structEvent.Options[index];
+                                                //OptionStruct optionTemp = structEvent.Options[index];
+                                                OptionStruct optionTemp = listOptions[index];
                                                 //at least one outcome must be present
-                                                if (optionTemp.Outcome.Count > 0)
+                                                if (listOutcomes.Count > 0)
+                                                //if (optionTemp.Outcomes.Count > 0)
                                                 {
                                                     OptionInteractive optionObject = new OptionInteractive(optionTemp.Text) { ReplyGood = optionTemp.Reply};
-                                                    for (int e = 0; e < structOption.Outcome.Count; e++)
+                                                    for (int e = 0; e < listOutcomes.Count; e++)
+                                                    //for (int e = 0; e < structOption.Outcomes.Count; e++)
                                                     {
                                                         //create appropriae outcome object
-                                                        OutcomeStruct outTemp = structOption.Outcome[e];
+                                                        //OutcomeStruct outTemp = structOption.Outcomes[e];
+                                                        OutcomeStruct outTemp = listOutcomes[e];
                                                         Outcome outObject = null;
                                                         //add appropriate outcome object to option object
                                                         switch(outTemp.Effect)
