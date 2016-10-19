@@ -13,9 +13,9 @@
 # 1_text: option text (number is block, or option num, eg. 1 to 4). Keep it short and clear.
 # 1_reply: text shown when option selected
 # 1_effect: type of Effect ( Conflict, Event, Game)
-# 1_data: multi-purpose data point, usually and ID of some form (depends on effect, must be an Integer)
-# 1_amount: amount to change by (if applicable) multi-purpose, depends on type of effect
-# 1_apply: how the amount is applied (None, Add, Subtract, Random) where 'Random' is random range (amount), eg. amount 100 then random (1 to 100)
+# 1_data: multi-purpose data point, usually and ID of some form (depends on effect, must be an Integer), default '0'
+# 1_amount: amount to change by (if applicable) multi-purpose, depends on type of effect, default '0'
+# 1_apply: how the amount is applied (None, Add, Subtract, Random) where 'Random' is random range (amount). Default 'None'
 
 # End -> needed for file Import
 
@@ -29,16 +29,42 @@ Cat: Generic
 Freq: Low
 Status: Active
 Event: You encounter a mounted group of the King's Men, armed and dangerous. They are looking directly at you.
-1_text: Run for it!
-1_reply: Giddee Up Trigger! You attempt to gallop away to safety
-1_effect: Conflict
-1_data: 11
-1_amount: 1
-1_apply: None
-2_text: Talk your way through
-2_reply: You approach the King's Men with an easy smile and a confident demeanour.
-2_effect: Game
-2_data: 22
-2_amount: 2
-2_apply: Add
+
+[option]
+text: Run for it!
+reply: Giddee Up Trigger! You attempt to gallop away to safety
+[outcome]
+effect: Conflict
+data: 11
+amount: 1
+apply: None
+[outcome]
+effect: Game
+data: 12
+amount: 12
+apply: Subtract
+
+[option]
+text: Talk your way through
+reply: You approach the King's Men with an easy smile and a confident demeanour.
+[outcome]
+effect: Game
+data: 22
+amount: 2
+apply: Add
+
+[option]
+text: Talk your way through
+reply: You approach the King's Men with an easy smile and a confident demeanour.
+[outcome]
+effect: Game
+data: 22
+amount: 2
+apply: Add
+[outcome]
+effect: Event
+data: 22
+amount: 3
+apply: None
+
 End

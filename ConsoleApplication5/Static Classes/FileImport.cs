@@ -1221,27 +1221,33 @@ namespace Next_Game
                                                     for (int e = 0; e < structOption.Outcome.Count; e++)
                                                     {
                                                         //create appropriae outcome object
-                                                        OutcomeStruct outcomeTemp = structOption.Outcome[e];
+                                                        OutcomeStruct outTemp = structOption.Outcome[e];
+                                                        Outcome outObject = null;
                                                         //add appropriate outcome object to option object
-                                                        switch(outcomeTemp.Effect)
+                                                        switch(outTemp.Effect)
                                                         {
                                                             case "Conflict":
+                                                                outObject = new OutConflict(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
                                                                 break;
                                                             case "Game":
+                                                                outObject = new OutGame(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
                                                                 break;
                                                             case "Event":
+                                                                outObject = new OutEvent(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
+                                                                break;
+                                                            default:
+                                                                Game.SetError(new Error(49, string.Format("Invalid Outcome Effect for Event (\"{0}\")", structEvent.Name)));
+                                                                validData = false;
                                                                 break;
                                                         }
+                                                        //add Outcome object to Option object
+                                                        if (outObject != null)
+                                                        { optionObject.SetGoodOutcome(outObject); }
                                                     }
-
                                                     //add option object to event object
                                                     eventTemp.SetOption(optionObject);
-                                                
                                                 }
                                                 else { Game.SetError(new Error(49, string.Format("{0} has no Outcome for Option {1}", structEvent.Name, index + 1))); validData = false; }
-                                                
-
-                                                
                                             }
                                         }
                                         else { Game.SetError(new Error(49, string.Format("{0} has insufficient Options", structEvent.Name))); validData = false; }

@@ -18,6 +18,10 @@ namespace Next_Game.Event_System
         private static int outcomeIndex = 1; //autoassigned ID's. Main focus is the Outcome Class
         public int OutcomeID { get; }
         public int EventID { get; } //could be EventFID (follower) or EventPID (player)
+        public int Data { get; set; } //optional stored data point for use with resolve
+        public int Amount { get; set; }
+        public OutApply Apply { get; set; }
+        
 
 
         public Outcome(int eventID)
@@ -89,8 +93,12 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutConflict : Outcome
     {
-        public OutConflict(int eventID) : base (eventID)
-        { }
+        public OutConflict(int eventID, int data, int amount, OutApply apply = OutApply.None) : base (eventID)
+        {
+            this.Data = data;
+            this.Amount = amount;
+            this.Apply = apply;
+        }
 
         /// <summary>
         /// data1 is actor ID
@@ -121,7 +129,7 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutGame : Outcome
     {
-        public OutGame(int eventID) : base(eventID)
+        public OutGame(int eventID, int data, int amount, OutApply apply = OutApply.None) : base(eventID)
         { }
 
         /// <summary>
@@ -153,7 +161,7 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutEvent : Outcome
     {
-        public OutEvent(int eventID) : base(eventID)
+        public OutEvent(int eventID, int data, int amount, OutApply apply = OutApply.None) : base(eventID)
         { }
 
         /// <summary>
