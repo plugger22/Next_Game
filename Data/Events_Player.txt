@@ -16,8 +16,8 @@
 # 1_data: multi-purpose data point, usually and ID of some form (depends on effect, must be an Integer), default '0'
 # 1_amount: amount to change by (if applicable) multi-purpose, depends on type of effect, default '0'
 # 1_apply: how the amount is applied (None, Add, Subtract, Random) where 'Random' is random range (amount). Default 'None'
-
 # End -> needed for file Import
+# NOTE: Leave no spaces between lines WITHIN an event
 
 # GeoClusters -> subType is Sea/Mountain/Forest ---
 
@@ -29,7 +29,6 @@ Cat: Generic
 Freq: Low
 Status: Active
 Event: You encounter a mounted group of the King's Men, armed and dangerous. They are looking directly at you.
-
 [option]
 text: Run for it!
 reply: Giddee Up Trigger! You attempt to gallop away to safety
@@ -43,7 +42,6 @@ effect: Game
 data: 12
 amount: 12
 apply: Subtract
-
 [option]
 text: Talk your way through
 reply: You approach the King's Men with an easy smile and a confident demeanour.
@@ -52,7 +50,6 @@ effect: Game
 data: 22
 amount: 2
 apply: Add
-
 [option]
 text: Talk your way through
 reply: You approach the King's Men with an easy smile and a confident demeanour.
@@ -66,5 +63,4 @@ effect: Event
 data: 22
 amount: 3
 apply: None
-
 [End]

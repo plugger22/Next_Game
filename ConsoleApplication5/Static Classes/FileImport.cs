@@ -868,7 +868,6 @@ namespace Next_Game
                         //new objects
                         structEvent = new EventPlayerStruct();
                         listOptions = new List<OptionStruct>();
-                        listOutcomes = new List<OutcomeStruct>();
                     }
                     string[] tokens = arrayOfEvents[i].Split(':');
                     //strip out leading spaces
@@ -895,7 +894,8 @@ namespace Next_Game
                                     listOptions.Add(structOption);
                                 }
                                 //set flag to true so option is saved on next tag
-                                else { optionFlag = true; }
+                                else
+                                { optionFlag = true; }
                                 break;
                             case "[outcome]":
                                 //outcome complete, save
@@ -904,7 +904,11 @@ namespace Next_Game
                                     listOutcomes.Add(structOutcome);
                                     //structOption.Outcomes.Add(structOutcome);
                                 }
-                                else { outcomeFlag = true; }
+                                else
+                                {
+                                    outcomeFlag = true;
+                                    listOutcomes = new List<OutcomeStruct>();
+                                }
                                 break;
                             case "Name":
                                 structEvent.Name = cleanToken;
