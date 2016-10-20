@@ -870,6 +870,7 @@ namespace Next_Game
                         structEvent = new EventPlayerStruct();
                         listOptions = new List<OptionStruct>();
                         listAllOutcomes = new List<List<OutcomeStruct>>();
+                        //listSubOutcomes = new List<OutcomeStruct>();
                     }
                     string[] tokens = arrayOfEvents[i].Split(':');
                     //strip out leading spaces
@@ -895,18 +896,18 @@ namespace Next_Game
                                 }
                                 //set flag to true so option is saved on next tag
                                 else
-                                {
-                                    optionFlag = true;
-                                    //create new sublist of outcomes for each option
-                                    listSubOutcomes = new List<OutcomeStruct>();
-                                }
+                                { optionFlag = true; }
                                 break;
                             case "[outcome]":
                                 //outcome complete, save
                                 if (outcomeFlag == true)
                                 { listSubOutcomes.Add(structOutcome); }
                                 else
-                                { outcomeFlag = true; }
+                                {
+                                    outcomeFlag = true;
+                                    //create new sublist of outcomes for each option
+                                    listSubOutcomes = new List<OutcomeStruct>();
+                                }
                                 break;
                             case "Name":
                                 structEvent.Name = cleanToken;
@@ -1225,50 +1226,41 @@ namespace Next_Game
                                         eventTemp.Category = structEvent.Cat;
                                         eventTemp.Status = EventStatus.Active;
                                         //add options
-                                        //if (structEvent.Options.Count > 1)
                                         if (listOptions.Count > 1)
                                         {
-                                            //for (int index = 0; index < structEvent.Options.Count; index++)
                                             for (int index = 0; index < listOptions.Count; index++)
                                             {
-                                                //OptionStruct optionTemp = structEvent.Options[index];
                                                 OptionStruct optionTemp = listOptions[index];
                                                 //at least one outcome must be present
                                                 if (listAllOutcomes.Count > 0)
-                                                //if (optionTemp.Outcomes.Count > 0)
                                                 {
                                                     OptionInteractive optionObject = new OptionInteractive(optionTemp.Text) { ReplyGood = optionTemp.Reply};
-                                                    for (int e = 0; e < listAllOutcomes.Count; e++)
-                                                    //for (int e = 0; e < structOption.Outcomes.Count; e++)
+                                                    List <OutcomeStruct> sublist = listAllOutcomes[index];
+                                                    //create appropriae outcome object
+                                                    for (int inner = 0; inner < sublist.Count; inner++)
                                                     {
-                                                        List <OutcomeStruct> sublist = listAllOutcomes[e];
-                                                        //create appropriae outcome object
-                                                        //OutcomeStruct outTemp = structOption.Outcomes[e];
-                                                        for (int inner = 0; inner < sublist.Count; inner++)
+                                                        OutcomeStruct outTemp = sublist[inner];
+                                                        Outcome outObject = null;
+                                                        //add appropriate outcome object to option object
+                                                        switch (outTemp.Effect)
                                                         {
-                                                            OutcomeStruct outTemp = sublist[inner];
-                                                            Outcome outObject = null;
-                                                            //add appropriate outcome object to option object
-                                                            switch (outTemp.Effect)
-                                                            {
-                                                                case "Conflict":
-                                                                    outObject = new OutConflict(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
-                                                                    break;
-                                                                case "Game":
-                                                                    outObject = new OutGame(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
-                                                                    break;
-                                                                case "Event":
-                                                                    outObject = new OutEvent(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
-                                                                    break;
-                                                                default:
-                                                                    Game.SetError(new Error(49, string.Format("Invalid Outcome Effect for Event (\"{0}\")", structEvent.Name)));
-                                                                    validData = false;
-                                                                    break;
-                                                            }
-                                                            //add Outcome object to Option object
-                                                            if (outObject != null)
-                                                            { optionObject.SetGoodOutcome(outObject); }
+                                                            case "Conflict":
+                                                                outObject = new OutConflict(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
+                                                                break;
+                                                            case "Game":
+                                                                outObject = new OutGame(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
+                                                                break;
+                                                            case "Event":
+                                                                outObject = new OutEvent(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
+                                                                break;
+                                                            default:
+                                                                Game.SetError(new Error(49, string.Format("Invalid Outcome Effect for Event (\"{0}\")", structEvent.Name)));
+                                                                validData = false;
+                                                                break;
                                                         }
+                                                        //add Outcome object to Option object
+                                                        if (outObject != null)
+                                                        { optionObject.SetGoodOutcome(outObject); }
                                                     }
                                                     //add option object to event object
                                                     eventTemp.SetOption(optionObject);
