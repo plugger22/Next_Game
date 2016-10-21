@@ -9,15 +9,16 @@
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/High/Common/Very_Common
 # Status: (Active or Dormant)
 # Event: (Event Text)
-# Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks.
-# 1_text: option text (number is block, or option num, eg. 1 to 4). Keep it short and clear.
-# 1_reply: text shown when option selected
-# 1_effect: type of Effect ( Conflict, Event, Game)
-# 1_data: multi-purpose data point, usually and ID of some form (depends on effect, must be an Integer), default '0'
-# 1_amount: amount to change by (if applicable) multi-purpose, depends on type of effect, default '0'
-# 1_apply: how the amount is applied (None, Add, Subtract, Random) where 'Random' is random range (amount). Default 'None'
-# End -> needed for file Import
-# NOTE: Leave no spaces between lines WITHIN an event
+# [option]: Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks. Place block header at top
+# text: option text (number is block, or option num, eg. 1 to 4). Keep it short and clear.
+# reply: text shown when option selected
+# [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
+# effect: type of outcome Effect ( Conflict, Event, Game)
+# data: multi-purpose outcome data point, usually and ID of some form (depends on effect, must be an Integer), default '0'
+# amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0'
+# apply: how the amount is applied (None, Add, Subtract, Random) where 'Random' is random range (amount). Default 'None'
+# [End] -> Place at very bottom of event.
+# NOTE: Leave no spaces between lines WITHIN an event. Indents (tabs) are O.K
 
 # GeoClusters -> subType is Sea/Mountain/Forest ---
 
@@ -37,11 +38,11 @@ Event: You encounter a mounted group of the King's Men, armed and dangerous. The
 		data: 11
 		amount: 1
 		apply: None
-		[outcome]
-		effect: Game
-		data: 12
-		amount: 12
-		apply: Subtract
+			[outcome]
+			effect: Game
+			data: 12
+			amount: 12
+			apply: Subtract
 	[option]
 	text: Talk your way through
 	reply: You approach the King's Men with an easy smile and a confident demeanour.
@@ -58,9 +59,9 @@ Event: You encounter a mounted group of the King's Men, armed and dangerous. The
 		data: 22
 		amount: 2
 		apply: Add
-		[outcome]
-		effect: Event
-		data: 22
-		amount: 3
-		apply: None
+			[outcome]
+			effect: Event
+			data: 22
+			amount: 3
+			apply: None
 [End]

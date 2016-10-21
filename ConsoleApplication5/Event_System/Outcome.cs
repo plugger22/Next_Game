@@ -130,7 +130,11 @@ namespace Next_Game.Event_System
     class OutGame : Outcome
     {
         public OutGame(int eventID, int data, int amount, OutApply apply = OutApply.None) : base(eventID)
-        { }
+        {
+            this.Data = data;
+            this.Amount = amount;
+            this.Apply = apply;
+        }
 
         /// <summary>
         /// data1 is actor ID
@@ -162,7 +166,11 @@ namespace Next_Game.Event_System
     class OutEvent : Outcome
     {
         public OutEvent(int eventID, int data, int amount, OutApply apply = OutApply.None) : base(eventID)
-        { }
+        {
+            this.Data = data;
+            this.Amount = amount;
+            this.Apply = apply;
+        }
 
         /// <summary>
         /// data1 is actor ID
