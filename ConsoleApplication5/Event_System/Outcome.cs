@@ -53,6 +53,7 @@ namespace Next_Game.Event_System
 
         public OutDelay(int delay, int eventID) : base (eventID)
         {
+            
             if (delay > 0)
             { this.Delay = delay; }
             else { Game.SetError(new Error(67, "Invalid Input (Delay) in OutDelay")); }

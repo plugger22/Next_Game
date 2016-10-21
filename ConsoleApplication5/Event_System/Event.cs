@@ -171,6 +171,8 @@ namespace Next_Game.Event_System
         {
             EventPID = eventID;
             listOfOptions = new List<OptionInteractive>();
+            //debug
+            Console.WriteLine("EventID {0}, \"{1}\", {2} frequency", EventPID, Name, Frequency);
         }
 
         /// <summary>

@@ -870,7 +870,9 @@ namespace Next_Game
                         structEvent = new EventPlayerStruct();
                         listOptions = new List<OptionStruct>();
                         listAllOutcomes = new List<List<OutcomeStruct>>();
-                        //listSubOutcomes = new List<OutcomeStruct>();
+                        //set flags to false
+                        optionFlag = false;
+                        outcomeFlag = false;
                     }
                     string[] tokens = arrayOfEvents[i].Split(':');
                     //strip out leading spaces
