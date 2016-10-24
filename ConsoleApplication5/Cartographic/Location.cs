@@ -77,7 +77,8 @@ namespace Next_Game.Cartographic
         private readonly List<Route> routeFromConnector; //Connector -> Loc
         private List<int> listOfActors; //list of characters (actorID's) currently at Location
         private List<int> listOfSecrets;
-        private List<int> listOfEvents;
+        private List<int> listOfFollowerEvents;
+        private List<int> listOfPlayerEvents;
 
         public Location()
         { LocName = "testville"; Capital = false; locPos = new Position(); LocationID = locationIndex++; }
@@ -87,7 +88,8 @@ namespace Next_Game.Cartographic
         {
             listOfActors = new List<int>();
             listOfSecrets = new List<int>();
-            listOfEvents = new List<int>();
+            listOfFollowerEvents = new List<int>();
+            listOfPlayerEvents = new List<int>();
             listOfNeighboursPos = new List<Position>();
             listOfNeighboursLocID = new List<int>();
             routeToCapital = new List<Route>();
@@ -108,7 +110,8 @@ namespace Next_Game.Cartographic
         {
             listOfActors = new List<int>();
             listOfSecrets = new List<int>();
-            listOfEvents = new List<int>();
+            listOfFollowerEvents = new List<int>();
+            listOfPlayerEvents = new List<int>();
             listOfNeighboursPos = new List<Position>();
             listOfNeighboursLocID = new List<int>();
             routeToCapital = new List<Route>();
@@ -129,7 +132,8 @@ namespace Next_Game.Cartographic
         {
             listOfActors = new List<int>();
             listOfSecrets = new List<int>();
-            listOfEvents = new List<int>();
+            listOfFollowerEvents = new List<int>();
+            listOfPlayerEvents = new List<int>();
             listOfNeighboursPos = new List<Position>();
             listOfNeighboursLocID = new List<int>();
             routeToCapital = new List<Route>();
@@ -352,13 +356,16 @@ namespace Next_Game.Cartographic
         internal void SetEvents(List<int> listEvents)
         {
             if (listEvents != null)
-            { listOfEvents.AddRange(listEvents); }
+            { listOfFollowerEvents.AddRange(listEvents); }
             else
             { Game.SetError(new Error(58, "Invalid list of Events input (null)")); }
         }
 
-        internal List<int> GetEvents()
-        { return listOfEvents; }
+        internal List<int> GetFollowerEvents()
+        { return listOfFollowerEvents; }
+
+        internal List<int> GetPlayerEvents()
+        { return listOfPlayerEvents; }
 
     }
 }

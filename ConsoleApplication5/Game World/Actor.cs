@@ -55,7 +55,8 @@ namespace Next_Game
         public int[] arrayOfTraitInfluences { get; set; } //effects due to person influencing (default 0)
         //secrets & events
         private List<int> listOfSecrets;
-        private List<int> listOfEvents;
+        private List<int> listOfFollowerEvents;
+        private List<int> listOfPlayerEvents;
 
 
         //default constructor 
@@ -73,7 +74,8 @@ namespace Next_Game
             arrayOfTraitNames = new string[(int)TraitType.Count];
             arrayOfTraitInfluences = new int[(int)TraitType.Count];
             listOfSecrets = new List<int>();
-            listOfEvents = new List<int>();
+            listOfFollowerEvents = new List<int>();
+            listOfPlayerEvents = new List<int>();
         }
 
         /// <summary>
@@ -95,7 +97,8 @@ namespace Next_Game
             arrayOfTraitNames = new string[(int)TraitType.Count];
             arrayOfTraitInfluences = new int[(int)TraitType.Count];
             listOfSecrets = new List<int>();
-            listOfEvents = new List<int>();
+            listOfFollowerEvents = new List<int>();
+            listOfPlayerEvents = new List<int>();
         }
 
         public void SetActorPosition(Position posLoc)
@@ -107,16 +110,22 @@ namespace Next_Game
         internal void SetEvents(List<int> listEvents)
         {
             if (listEvents != null)
-            { listOfEvents.AddRange(listEvents); }
+            { listOfFollowerEvents.AddRange(listEvents); }
             else
             { Game.SetError(new Error(65, "Invalid list of Events input (null)")); }
         }
 
-        internal List<int> GetEvents()
-        { return listOfEvents; }
+        internal List<int> GetFollowerEvents()
+        { return listOfFollowerEvents; }
 
-        internal int GetNumEvents()
-        { return listOfEvents.Count; }
+        internal int GetNumFollowerEvents()
+        { return listOfFollowerEvents.Count; }
+
+        internal List<int> GetPlayerEvents()
+        { return listOfPlayerEvents; }
+
+        internal int GetNumPlayerEvents()
+        { return listOfPlayerEvents.Count; }
 
         //needed for sub classes (world.cs -> ShowActorRL)
         internal SortedDictionary<int, ActorRelation> GetFamily()

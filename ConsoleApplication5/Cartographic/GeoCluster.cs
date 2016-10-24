@@ -20,19 +20,22 @@ namespace Next_Game.Cartographic
         public Cluster Terrain { get; }
         public GeoType Type { get; }
         private List<int> listOfSecrets;
-        private List<int> listOfEvents; //Archetype events
+        private List<int> listOfFollowerEvents; //Archetype events
+        private List<int> listOfPlayerEvents; 
 
         public GeoCluster()
         {
             listOfSecrets = new List<int>();
-            listOfEvents = new List<int>();
+            listOfFollowerEvents = new List<int>();
+            listOfPlayerEvents = new List<int>();
         }
 
         //default constructor
         public GeoCluster(int geoID, int type, int size)
         {
             listOfSecrets = new List<int>();
-            listOfEvents = new List<int>();
+            listOfFollowerEvents = new List<int>();
+            listOfPlayerEvents = new List<int>();
             this.GeoID = geoID;
             Terrain = (Cluster)type;
             this.Size = size;
@@ -62,22 +65,41 @@ namespace Next_Game.Cartographic
         }
 
         /// <summary>
-        /// add events to the Geocluster
+        /// add Follower events to the Geocluster
         /// </summary>
         /// <param name="listArchEvents"></param>
-        public void SetEvents(List<int> listArchEvents)
+        public void SetFollowerEvents(List<int> listArchEvents)
         {
             if (listArchEvents != null)
-            { listOfEvents.AddRange(listArchEvents); }
+            { listOfFollowerEvents.AddRange(listArchEvents); }
             else
             { Game.SetError(new Error(55, "Invalid list of Events input (null)")); }
         }
 
 
-        public List<int> GetEvents()
-        { return listOfEvents; }
+        public List<int> GetFollowerEvents()
+        { return listOfFollowerEvents; }
 
-        public int GetNumEvents()
-        { return listOfEvents.Count; }
+        public int GetNumFollowerEvents()
+        { return listOfFollowerEvents.Count; }
+
+        /// <summary>
+        /// add Player events to the Geocluster
+        /// </summary>
+        /// <param name="listArchEvents"></param>
+        public void SetPlayerEvents(List<int> listArchEvents)
+        {
+            if (listArchEvents != null)
+            { listOfPlayerEvents.AddRange(listArchEvents); }
+            else
+            { Game.SetError(new Error(55, "Invalid list of Events input (null)")); }
+        }
+
+
+        public List<int> GetPlayerEvents()
+        { return listOfPlayerEvents; }
+
+        public int GetNumPlayerEvents()
+        { return listOfPlayerEvents.Count; }
     }
 }

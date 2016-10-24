@@ -29,7 +29,8 @@ namespace Next_Game
         public HouseSpecial Special { get; set; }
         private List<int> listOfFirstNames; //contains ID #'s (listOfMaleFirstNames index) of all first names used by males within the house (eg. 'Eddard Stark II')
         private List<int> listOfSecrets;
-        private List<int> listOfEvents;
+        private List<int> listOfFollowerEvents;
+        private List<int> listOfPlayerEvents;
 
         /// <summary>
         /// default constructor
@@ -38,7 +39,7 @@ namespace Next_Game
         {
             listOfFirstNames = new List<int>();
             listOfSecrets = new List<int>();
-            listOfEvents = new List<int>();
+            listOfFollowerEvents = new List<int>();
         }
 
 
@@ -59,16 +60,22 @@ namespace Next_Game
         internal void SetEvents(List<int> listEvents)
         {
             if (listEvents != null)
-            { listOfEvents.AddRange(listEvents); }
+            { listOfFollowerEvents.AddRange(listEvents); }
             else
             { Game.SetError(new Error(56, "Invalid list of Events input (null)")); }
         }
 
-        internal List<int> GetEvents()
-        { return listOfEvents; }
+        internal List<int> GetFollowerEvents()
+        { return listOfFollowerEvents; }
 
-        internal int GetNumEvents()
-        { return listOfEvents.Count; }
+        internal int GetNumFollowerEvents()
+        { return listOfFollowerEvents.Count; }
+
+        internal List<int> GetPlayerEvents()
+        { return listOfPlayerEvents; }
+
+        internal int GetNumPlayerEvents()
+        { return listOfPlayerEvents.Count; }
 
         internal List<int> GetSecrets()
         { return listOfSecrets; }

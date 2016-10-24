@@ -773,7 +773,7 @@ namespace Next_Game
                 //ignore the capital and special locations for the moment until they are included in dictAllHouses
                 if (house != null)
                 {
-                    int eventCount = house.GetNumEvents();
+                    int eventCount = house.GetNumFollowerEvents();
                     if (loc.HouseID != 99)
                     {
                        //normal houses - major / minor / capital 
@@ -866,7 +866,7 @@ namespace Next_Game
                         locList.Add(new Snippet(string.Format("{0}, geoID {1}", cluster.Name, cluster.GeoID), RLColor.Yellow, RLColor.Black));
                         locList.Add(new Snippet(cluster.Description));
                         locList.Add(new Snippet(string.Format("Size {0}, Terrain {1}, Type {2}", cluster.Size, cluster.Terrain, cluster.Type)));
-                        numEvents = cluster.GetNumEvents();
+                        numEvents = cluster.GetNumFollowerEvents();
                         if (numEvents > 0)
                         { locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} Events", Game.director.GetArchetypeName(cluster.Archetype), numEvents))); }
                     }
@@ -1968,6 +1968,8 @@ namespace Next_Game
         public void ProcessStartTurn()
         {
             CalculateCrows();
+            //Player events
+            Game.director.CheckPlayerEvents();
             //Follower events
             Game.director.CheckFollowerEvents(dictActiveActors);
             if (Game.director.ResolveFollowerEvents())
