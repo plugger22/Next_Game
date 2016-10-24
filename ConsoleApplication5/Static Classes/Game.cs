@@ -1036,6 +1036,7 @@ namespace Next_Game
             {
                 case RLKey.F1:
                     //_specialMode = SpecialMode.Event;
+                    Console.WriteLine("F1 key has been pressed");
                     break;
                 case RLKey.F2:
                     //infoChannel.ChangeBoxColor(Color._background2, BoxType.Card);

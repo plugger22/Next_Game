@@ -903,7 +903,7 @@ namespace Next_Game
                         {
                             optionText = string.Format("[F{0}]  {1}", ctr++, option.Text);
                             if (optionText.Length > maxWidth) { maxWidth = optionText.Length; }
-                            eventList.Add(new Snippet(string.Format("{0, -50}", optionText), RLColor.Gray, backColor));
+                            eventList.Add(new Snippet(string.Format("{0, -40}", optionText), RLColor.Gray, backColor));
                             eventList.Add(new Snippet(""));
                         }
                     }
