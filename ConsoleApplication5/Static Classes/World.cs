@@ -1135,7 +1135,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// return an Active actor from dictActiveActors
+        /// return an Active actor from dictActiveActors, otherwise null
         /// </summary>
         /// <param name="actorID"></param>
         /// <returns></returns>

@@ -129,7 +129,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// loop all events and place Generic eventID's in their approrpriate lists
+        /// loop all events and place Generic eventID's in their approrpriate lists for both Follower and Player event types
         /// </summary>
         private void InitialiseGenericEvents()
         {
@@ -306,6 +306,31 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// handles all Player events
+        /// </summary>
+        public void CheckPlayerEvents()
+        {
+            Active player = Game.world.GetActiveActor(1);
+            if (player != null && player.Status != ActorStatus.Gone && player.Delay == 0)
+            {
+                if (player.Status == ActorStatus.AtLocation)
+                {
+                    //Location event
+                    if (rnd.Next(100) <= story.Ev_Player_Loc)
+                    { DeterminePlayerEvent(player, EventType.Location); }
+                }
+                else if (player.Status == ActorStatus.Travelling)
+                {
+                    //travelling event
+                    if (rnd.Next(100) <= story.Ev_Player_Trav)
+                    { DeterminePlayerEvent(player, EventType.Travelling); }
+                }
+            }
+            else
+            { Game.SetError(new Error(71, "Player not found")); }
+        }
+
+        /// <summary>
         /// Determine which event applies to a Follower
         /// </summary>
         /// <param name="actor"></param>
@@ -432,6 +457,15 @@ namespace Next_Game
                 EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
                 listCurrentEvents.Add(current);
             }
+        }
+
+        /// <summary>
+        /// Determine which event applies to the Player
+        /// </summary>
+        /// <param name="actor"></param>
+        private void DeterminePlayerEvent(Active actor, EventType type)
+        {
+
         }
 
         /// <summary>
