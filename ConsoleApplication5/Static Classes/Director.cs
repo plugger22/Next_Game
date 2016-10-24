@@ -863,11 +863,7 @@ namespace Next_Game
                 if (package.Done == false)
                 {
                     EventPlayer eventObject = (EventPlayer)package.EventObject;
-                    List<OptionInteractive> listOptions = eventObject.GetOptions();
-                    //assume only a single option
-                    OptionInteractive option = null;
-                    if (listOptions != null) { option = listOptions[0]; }
-                    else { Game.SetError(new Error(70, "Invalid ListOfOptions input (null)")); break; }
+                    
                     Active actor = package.Person;
                     //create event description
                     Position pos = actor.GetActorPosition();
@@ -896,10 +892,27 @@ namespace Next_Game
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                     eventList.Add(new Snippet(""));
+                    //display options (F1, F2, F3 ...)
+                    List<OptionInteractive> listOptions = eventObject.GetOptions();
+                    string optionText;
+                    int ctr = 1;
+                    int maxWidth = 0;
+                    if (listOptions != null)
+                    {
+                        foreach(OptionInteractive option in listOptions)
+                        {
+                            optionText = string.Format("[F{0}]  {1}", ctr++, option.Text);
+                            if (optionText.Length > maxWidth) { maxWidth = optionText.Length; }
+                            eventList.Add(new Snippet(string.Format("{0, -50}", optionText), RLColor.Gray, backColor));
+                            eventList.Add(new Snippet(""));
+                        }
+                    }
+                    else { Game.SetError(new Error(70, "Invalid ListOfOptions Player input (null)")); break; }
+                    
                     //resolve event and add to description (add delay to actor if needed)
                     
                     eventList.Add(new Snippet(""));
-                    eventList.Add(new Snippet("Press ENTER or ESC to continue", RLColor.LightGray, backColor));
+                    eventList.Add(new Snippet("Press ENTER or ESC to ignore this event", RLColor.LightGray, backColor));
                     //housekeeping
                     Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
                     returnValue = true;
