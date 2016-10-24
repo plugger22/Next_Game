@@ -30,20 +30,20 @@ namespace Next_Game
         static Random rnd;
         Story story;
         List<int> listOfActiveGeoClusters; //clusters that have a road through them (GeoID's)
-        List<int> listGenEventsForest; //generic events for forests
-        List<int> listGenEventsMountain;
-        List<int> listGenEventsSea;
-        List<int> listGenEventsNormal;
-        List<int> listGenEventsKing;
-        List<int> listGenEventsConnector;
-        List<int> listGenEventsCapital;
-        List<int> listGenEventsMajor;
-        List<int> listGenEventsMinor;
-        List<int> listGenEventsInn;
-        List<int> listRoadEventsNormal;
-        List<int> listRoadEventsKings;
-        List<int> listRoadEventsConnector;
-        List<int> listCapitalEvents;
+        List<int> listGenFolEventsForest; //generic events for followers
+        List<int> listGenFolEventsMountain;
+        List<int> listGenFolEventsSea;
+        List<int> listGenFolEventsNormal;
+        List<int> listGenFolEventsKing;
+        List<int> listGenFolEventsConnector;
+        List<int> listGenFolEventsCapital;
+        List<int> listGenFolEventsMajor;
+        List<int> listGenFolEventsMinor;
+        List<int> listGenFolEventsInn;
+        List<int> listFolRoadEventsNormal; //archetype events
+        List<int> listFolRoadEventsKings;
+        List<int> listFolRoadEventsConnector;
+        List<int> listFolCapitalEvents;
         List<Follower> listOfFollowers;
         List<EventPackage> listCurrentEvents;
         private Dictionary<int, EventFollower> dictFollowerEvents;
@@ -56,20 +56,20 @@ namespace Next_Game
             rnd = new Random(seed);
 
             listOfActiveGeoClusters = new List<int>();
-            listGenEventsForest = new List<int>();
-            listGenEventsMountain = new List<int>();
-            listGenEventsSea = new List<int>();
-            listGenEventsNormal = new List<int>(); //note that Normal road generic events also apply to all types of Roads (Royal generics -> Royal + Normal, for example)
-            listGenEventsKing = new List<int>();
-            listGenEventsConnector = new List<int>();
-            listGenEventsCapital = new List<int>();
-            listGenEventsMajor = new List<int>();
-            listGenEventsMinor = new List<int>();
-            listGenEventsInn = new List<int>();
-            listRoadEventsNormal = new List<int>();
-            listRoadEventsKings = new List<int>();
-            listRoadEventsConnector = new List<int>();
-            listCapitalEvents = new List<int>();
+            listGenFolEventsForest = new List<int>();
+            listGenFolEventsMountain = new List<int>();
+            listGenFolEventsSea = new List<int>();
+            listGenFolEventsNormal = new List<int>(); //note that Normal road generic events also apply to all types of Roads (Royal generics -> Royal + Normal, for example)
+            listGenFolEventsKing = new List<int>();
+            listGenFolEventsConnector = new List<int>();
+            listGenFolEventsCapital = new List<int>();
+            listGenFolEventsMajor = new List<int>();
+            listGenFolEventsMinor = new List<int>();
+            listGenFolEventsInn = new List<int>();
+            listFolRoadEventsNormal = new List<int>();
+            listFolRoadEventsKings = new List<int>();
+            listFolRoadEventsConnector = new List<int>();
+            listFolCapitalEvents = new List<int>();
             listCurrentEvents = new List<EventPackage>();
             listOfFollowers = new List<Follower>();
             dictFollowerEvents = new Dictionary<int, EventFollower>();
@@ -119,13 +119,13 @@ namespace Next_Game
                             switch(eventObject.Value.GeoType)
                             {
                                 case ArcGeo.Forest:
-                                    listGenEventsForest.Add(eventID);
+                                    listGenFolEventsForest.Add(eventID);
                                     break;
                                 case ArcGeo.Mountain:
-                                    listGenEventsMountain.Add(eventID);
+                                    listGenFolEventsMountain.Add(eventID);
                                     break;
                                 case ArcGeo.Sea:
-                                    listGenEventsSea.Add(eventID);
+                                    listGenFolEventsSea.Add(eventID);
                                     break;
                                 default:
                                     Game.SetError(new Error(50, "Invalid Type, ArcGeo"));
@@ -136,16 +136,16 @@ namespace Next_Game
                             switch(eventObject.Value.LocType)
                             {
                                 case ArcLoc.Capital:
-                                    listGenEventsCapital.Add(eventID);
+                                    listGenFolEventsCapital.Add(eventID);
                                     break;
                                 case ArcLoc.Major:
-                                    listGenEventsMajor.Add(eventID);
+                                    listGenFolEventsMajor.Add(eventID);
                                     break;
                                 case ArcLoc.Minor:
-                                    listGenEventsMinor.Add(eventID);
+                                    listGenFolEventsMinor.Add(eventID);
                                     break;
                                 case ArcLoc.Inn:
-                                    listGenEventsInn.Add(eventID);
+                                    listGenFolEventsInn.Add(eventID);
                                     break;
                                 default:
                                     Game.SetError(new Error(50, "Invalid Type, ArcLoc"));
@@ -156,13 +156,13 @@ namespace Next_Game
                             switch(eventObject.Value.RoadType)
                             {
                                 case ArcRoad.Normal:
-                                    listGenEventsNormal.Add(eventID);
+                                    listGenFolEventsNormal.Add(eventID);
                                     break;
                                 case ArcRoad.Kings:
-                                    listGenEventsKing.Add(eventID);
+                                    listGenFolEventsKing.Add(eventID);
                                     break;
                                 case ArcRoad.Connector:
-                                    listGenEventsConnector.Add(eventID);
+                                    listGenFolEventsConnector.Add(eventID);
                                     break;
                                 default:
                                     Game.SetError(new Error(50, "Invalid Type, ArcRoad"));
@@ -227,13 +227,13 @@ namespace Next_Game
                 if (locID == 1)
                 {
                     //capital
-                    listEventPool.AddRange(GetValidEvents(listGenEventsCapital));
-                    listEventPool.AddRange(GetValidEvents(listCapitalEvents));
+                    listEventPool.AddRange(GetValidEvents(listGenFolEventsCapital));
+                    listEventPool.AddRange(GetValidEvents(listFolCapitalEvents));
                 }
                 else if (refID > 0 && refID < 100)
                 {
                     //Major House
-                    listEventPool.AddRange(GetValidEvents(listGenEventsMajor));
+                    listEventPool.AddRange(GetValidEvents(listGenFolEventsMajor));
                     listEventPool.AddRange(GetValidEvents(loc.GetEvents()));
                     House house = Game.world.GetHouse(refID);
                     if (house != null)
@@ -243,7 +243,7 @@ namespace Next_Game
                 else if (refID >= 100 && refID < 1000)
                 {
                     //Minor House
-                    listEventPool.AddRange(GetValidEvents(listGenEventsMinor));
+                    listEventPool.AddRange(GetValidEvents(listGenFolEventsMinor));
                     listEventPool.AddRange(GetValidEvents(loc.GetEvents()));
                     House house = Game.world.GetHouse(refID);
                     if (house != null)
@@ -253,7 +253,7 @@ namespace Next_Game
                 else if (houseID == 99)
                 {
                     //Special Location - Inn
-                    listEventPool.AddRange(GetValidEvents(listGenEventsInn));
+                    listEventPool.AddRange(GetValidEvents(listGenFolEventsInn));
                     listEventPool.AddRange(GetValidEvents(loc.GetEvents()));
                     House house = Game.world.GetHouse(refID);
                     if (house != null)
@@ -275,13 +275,13 @@ namespace Next_Game
                 if (locID == 0 && terrain == 1)
                 {
                     //mountains
-                    listEventPool.AddRange(GetValidEvents(listGenEventsMountain));
+                    listEventPool.AddRange(GetValidEvents(listGenFolEventsMountain));
                     listEventPool.AddRange(GetValidEvents(cluster.GetEvents()));
                 }
                 else if (locID == 0 && terrain == 2)
                 {
                     //forests
-                    listEventPool.AddRange(GetValidEvents(listGenEventsForest));
+                    listEventPool.AddRange(GetValidEvents(listGenFolEventsForest));
                     listEventPool.AddRange(GetValidEvents(cluster.GetEvents()));
                 }
                 else if (locID == 0 && terrain == 0)
@@ -290,21 +290,20 @@ namespace Next_Game
                     if (road == 1)
                     {
                         //normal road
-                        listEventPool.AddRange(GetValidEvents(listGenEventsNormal));
-                        listEventPool.AddRange(GetValidEvents(listRoadEventsNormal));
+                        listEventPool.AddRange(GetValidEvents(listGenFolEventsNormal));
+                        listEventPool.AddRange(GetValidEvents(listFolRoadEventsNormal));
                     }
                     else if (road == 2)
                     {
                         //king's road
-                        listEventPool.AddRange(GetValidEvents(listGenEventsKing));
-                        listEventPool.AddRange(GetValidEvents(listRoadEventsKings));
+                        listEventPool.AddRange(GetValidEvents(listGenFolEventsKing));
+                        listEventPool.AddRange(GetValidEvents(listFolRoadEventsKings));
                     }
                     else if (road == 3)
                     {
                         //connector road
-                        listEventPool.AddRange(GetValidEvents(listGenEventsConnector));
-                        listEventPool.AddRange(GetValidEvents(listRoadEventsConnector));
-
+                        listEventPool.AddRange(GetValidEvents(listGenFolEventsConnector));
+                        listEventPool.AddRange(GetValidEvents(listFolRoadEventsConnector));
                     }
                 }
             }
@@ -537,9 +536,7 @@ namespace Next_Game
                             eventList.Add(new Snippet(""));
                             eventList.Add(new Snippet("NO VALID BAD OUTCOME PRESENT", RLColor.LightRed, backColor));
                         }
-
                     }
-                    
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("Press ENTER or ESC to continue", RLColor.LightGray, backColor));
                     //housekeeping
@@ -549,7 +546,6 @@ namespace Next_Game
                     break;
                 }
             }
-            
             return returnValue;
         }
 
@@ -671,17 +667,17 @@ namespace Next_Game
             //Initialise Roads
             if (arcNormal != null)
             {
-                listRoadEventsNormal.AddRange(arcNormal.GetEvents());
+                listFolRoadEventsNormal.AddRange(arcNormal.GetEvents());
                 Console.WriteLine("Normal roads have been initialised with \"{0}\", arcID {1}", arcNormal.Name, arcNormal.ArcID);
             }
             if (arcKings != null)
             {
-                listRoadEventsKings.AddRange(arcKings.GetEvents());
+                listFolRoadEventsKings.AddRange(arcKings.GetEvents());
                 Console.WriteLine("Kings roads have been initialised with \"{0}\", arcID {1}", arcKings.Name, arcKings.ArcID);
             }
             if (arcConnector != null)
             {
-                listRoadEventsConnector.AddRange(arcConnector.GetEvents());
+                listFolRoadEventsConnector.AddRange(arcConnector.GetEvents());
                 Console.WriteLine("Connector roads have been initialised with \"{0}\", arcID {1}", arcConnector.Name, arcConnector.ArcID);
             }
 
@@ -690,7 +686,7 @@ namespace Next_Game
             //Initialise Capital
             if (arcCapital != null)
             {
-                listCapitalEvents.AddRange(arcCapital.GetEvents());
+                listFolCapitalEvents.AddRange(arcCapital.GetEvents());
                 Console.WriteLine("The Capital at KingsKeep has been initialised with \"{0}\", arcID {1}", arcCapital.Name, arcCapital.ArcID);
             }
 
