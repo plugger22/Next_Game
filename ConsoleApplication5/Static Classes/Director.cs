@@ -288,7 +288,10 @@ namespace Next_Game
         /// empty out list ready for the next turn
         /// </summary>
         public void ClearCurrentEvents()
-        { listFolCurrentEvents.Clear(); }
+        {
+            listFolCurrentEvents.Clear();
+            listPlyCurrentEvents.Clear();
+        }
         
         /// <summary>
         /// check active (Follower only) characters for random events
@@ -609,15 +612,18 @@ namespace Next_Game
         {
             int frequency;
             List<Event> listEvents = new List<Event>();
-            foreach (int eventID in listEventID)
+            if (listEventID != null)
             {
-                Event eventObject = dictFollowerEvents[eventID];
-                if (eventObject != null && eventObject.Status == EventStatus.Active)
+                foreach (int eventID in listEventID)
                 {
-                    frequency = (int)eventObject.Frequency;
-                    //add # of events to pool equal to (int)EventFrequency
-                    for (int i = 0; i < frequency; i++)
-                    { listEvents.Add(eventObject); }
+                    Event eventObject = dictFollowerEvents[eventID];
+                    if (eventObject != null && eventObject.Status == EventStatus.Active)
+                    {
+                        frequency = (int)eventObject.Frequency;
+                        //add # of events to pool equal to (int)EventFrequency
+                        for (int i = 0; i < frequency; i++)
+                        { listEvents.Add(eventObject); }
+                    }
                 }
             }
             return listEvents;
@@ -632,15 +638,18 @@ namespace Next_Game
         {
             int frequency;
             List<Event> listEvents = new List<Event>();
-            foreach (int eventID in listEventID)
+            if (listEventID != null)
             {
-                Event eventObject = dictPlayerEvents[eventID];
-                if (eventObject != null && eventObject.Status == EventStatus.Active)
+                foreach (int eventID in listEventID)
                 {
-                    frequency = (int)eventObject.Frequency;
-                    //add # of events to pool equal to (int)EventFrequency
-                    for (int i = 0; i < frequency; i++)
-                    { listEvents.Add(eventObject); }
+                    Event eventObject = dictPlayerEvents[eventID];
+                    if (eventObject != null && eventObject.Status == EventStatus.Active)
+                    {
+                        frequency = (int)eventObject.Frequency;
+                        //add # of events to pool equal to (int)EventFrequency
+                        for (int i = 0; i < frequency; i++)
+                        { listEvents.Add(eventObject); }
+                    }
                 }
             }
             return listEvents;
