@@ -40,10 +40,23 @@ namespace Next_Game
         List<int> listGenFolEventsMajor;
         List<int> listGenFolEventsMinor;
         List<int> listGenFolEventsInn;
-        List<int> listFolRoadEventsNormal; //archetype events
+        //archetype follower events
+        List<int> listFolRoadEventsNormal; 
         List<int> listFolRoadEventsKings;
         List<int> listFolRoadEventsConnector;
         List<int> listFolCapitalEvents;
+        //Player events
+        List<int> listPlyEventsForest;
+        List<int> listPlyEventsMountain;
+        List<int> listPlyEventsSea;
+        List<int> listPlyEventsNormal;
+        List<int> listPlyEventsKing;
+        List<int> listPlyEventsConnector;
+        List<int> listPlyEventsCapital;
+        List<int> listPlyEventsMajor;
+        List<int> listPlyEventsMinor;
+        List<int> listPlyEventsInn;
+        //other
         List<Follower> listOfFollowers;
         List<EventPackage> listCurrentEvents;
         private Dictionary<int, EventFollower> dictFollowerEvents;
@@ -54,7 +67,7 @@ namespace Next_Game
         public Director(int seed)
         {
             rnd = new Random(seed);
-
+            //follower generic events
             listOfActiveGeoClusters = new List<int>();
             listGenFolEventsForest = new List<int>();
             listGenFolEventsMountain = new List<int>();
@@ -66,10 +79,23 @@ namespace Next_Game
             listGenFolEventsMajor = new List<int>();
             listGenFolEventsMinor = new List<int>();
             listGenFolEventsInn = new List<int>();
+            //Player events
+            listPlyEventsForest = new List<int>();
+            listPlyEventsMountain = new List<int>();
+            listPlyEventsSea = new List<int>();
+            listPlyEventsNormal = new List<int>();
+            listPlyEventsKing = new List<int>();
+            listPlyEventsConnector = new List<int>();
+            listPlyEventsCapital = new List<int>();
+            listPlyEventsMajor = new List<int>();
+            listPlyEventsMinor = new List<int>();
+            listPlyEventsInn = new List<int>();
+            //archetype follower events
             listFolRoadEventsNormal = new List<int>();
             listFolRoadEventsKings = new List<int>();
             listFolRoadEventsConnector = new List<int>();
             listFolCapitalEvents = new List<int>();
+            //other
             listCurrentEvents = new List<EventPackage>();
             listOfFollowers = new List<Follower>();
             dictFollowerEvents = new Dictionary<int, EventFollower>();
@@ -108,6 +134,7 @@ namespace Next_Game
         private void InitialiseGenericEvents()
         {
             int eventID;
+            //Follower events
             foreach(var eventObject in dictFollowerEvents)
             {
                 if (eventObject.Value.Category == EventCategory.Generic)
@@ -128,7 +155,7 @@ namespace Next_Game
                                     listGenFolEventsSea.Add(eventID);
                                     break;
                                 default:
-                                    Game.SetError(new Error(50, "Invalid Type, ArcGeo"));
+                                    Game.SetError(new Error(50, string.Format("Invalid Type, ArcGeo, Follower Event, ID {0}", eventID)));
                                     break;
                             }
                             break;
@@ -148,7 +175,7 @@ namespace Next_Game
                                     listGenFolEventsInn.Add(eventID);
                                     break;
                                 default:
-                                    Game.SetError(new Error(50, "Invalid Type, ArcLoc"));
+                                    Game.SetError(new Error(50, string.Format("Invalid Type, ArcLoc, Follower Event, ID {0}", eventID)));
                                     break;
                             }
                             break;
@@ -165,9 +192,80 @@ namespace Next_Game
                                     listGenFolEventsConnector.Add(eventID);
                                     break;
                                 default:
-                                    Game.SetError(new Error(50, "Invalid Type, ArcRoad"));
+                                    Game.SetError(new Error(50, string.Format("Invalid Type, ArcRoad, Follower Event, ID {0}", eventID)));
                                     break;
                             }
+                            break;
+                        default:
+                            Game.SetError(new Error(50, string.Format("Invalid Type, Unknown, Follower Event, ID {0}", eventID)));
+                            break;
+                    }
+                }
+            }
+            //Player Events
+            foreach (var eventObject in dictPlayerEvents)
+            {
+                if (eventObject.Value.Category == EventCategory.Generic)
+                {
+                    eventID = eventObject.Value.EventPID;
+                    switch (eventObject.Value.Type)
+                    {
+                        case ArcType.GeoCluster:
+                            switch (eventObject.Value.GeoType)
+                            {
+                                case ArcGeo.Forest:
+                                    listPlyEventsForest.Add(eventID);
+                                    break;
+                                case ArcGeo.Mountain:
+                                    listPlyEventsMountain.Add(eventID);
+                                    break;
+                                case ArcGeo.Sea:
+                                    listPlyEventsSea.Add(eventID);
+                                    break;
+                                default:
+                                    Game.SetError(new Error(50, string.Format("Invalid Type, ArcGeo, Player Event, ID {0}", eventID)));
+                                    break;
+                            }
+                            break;
+                        case ArcType.Location:
+                            switch (eventObject.Value.LocType)
+                            {
+                                case ArcLoc.Capital:
+                                    listPlyEventsCapital.Add(eventID);
+                                    break;
+                                case ArcLoc.Major:
+                                    listPlyEventsMajor.Add(eventID);
+                                    break;
+                                case ArcLoc.Minor:
+                                    listPlyEventsMinor.Add(eventID);
+                                    break;
+                                case ArcLoc.Inn:
+                                    listPlyEventsInn.Add(eventID);
+                                    break;
+                                default:
+                                    Game.SetError(new Error(50, string.Format("Invalid Type, ArcLoc, Player Event, ID {0}", eventID)));
+                                    break;
+                            }
+                            break;
+                        case ArcType.Road:
+                            switch (eventObject.Value.RoadType)
+                            {
+                                case ArcRoad.Normal:
+                                    listPlyEventsNormal.Add(eventID);
+                                    break;
+                                case ArcRoad.Kings:
+                                    listPlyEventsKing.Add(eventID);
+                                    break;
+                                case ArcRoad.Connector:
+                                    listPlyEventsConnector.Add(eventID);
+                                    break;
+                                default:
+                                    Game.SetError(new Error(50, string.Format("Invalid Type, ArcRoad, Player Event, ID {0}", eventID)));
+                                    break;
+                            }
+                            break;
+                        default:
+                            Game.SetError(new Error(50, string.Format("Invalid Type, Unknown, Player Event, ID {0}", eventID)));
                             break;
                     }
                 }
