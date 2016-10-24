@@ -318,7 +318,9 @@ namespace Next_Game
 
             switch (mode)
             {
-                case SpecialMode.Event:
+                case SpecialMode.PlayerEvent:
+                case SpecialMode.FollowerEvent:
+                case SpecialMode.Outcome:
                     //ignore if nothing to display
                     if (eventList.Count > 0)
                     {

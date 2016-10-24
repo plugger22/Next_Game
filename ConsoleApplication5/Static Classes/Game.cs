@@ -12,7 +12,7 @@ namespace Next_Game
     public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record, Special, Lore} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
-    public enum SpecialMode {None, Event, Conflict} //if MenuMode.Special then this is the type of special
+    public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome} //if MenuMode.Special then this is the type of special
 
     public static class Game
     {
@@ -77,6 +77,7 @@ namespace Next_Game
         private static MenuMode _menuMode = MenuMode.Main; //menu mode in operation (corresponds to enum above)
         public static InputMode _inputMode = InputMode.Normal; //non-standard input modes, default none
         public static SpecialMode _specialMode = SpecialMode.None; //special, multiConsole display modes
+        public static int _eventID = 0; //ID of current event being dealt with
         public static bool _fullConsole = false; //set to true by InfoChannel.DrawInfoConsole if multiConsole is maxxed out
         public static int _scrollIndex = 0; //used by infoChannel.DrawConsole to handle scrolling up and down
         public static int _multiConsoleLength = 46; //max length of data in multi Console (infochannel.drawInfoConsole)
@@ -1035,38 +1036,85 @@ namespace Next_Game
             switch (keyPress.Key)
             {
                 case RLKey.F1:
-                    //_specialMode = SpecialMode.Event;
-                    Console.WriteLine("F1 key has been pressed");
+                    if (mode == SpecialMode.PlayerEvent)
+                    {
+                        _specialMode = SpecialMode.Outcome;
+                        director.ResolveOutcome(_eventID, 1);
+                    }
                     break;
                 case RLKey.F2:
-                    //infoChannel.ChangeBoxColor(Color._background2, BoxType.Card);
+                    if (mode == SpecialMode.PlayerEvent)
+                    {
+                        _specialMode = SpecialMode.Outcome;
+                        director.ResolveOutcome(_eventID, 2);
+                    }
                     break;
                 case RLKey.F3:
-                    //infoChannel.ChangeBoxColor(Color._background3, BoxType.Card);
+                    if (mode == SpecialMode.PlayerEvent)
+                    {
+                        _specialMode = SpecialMode.Outcome;
+                        director.ResolveOutcome(_eventID, 2);
+                    }
                     break;
                 case RLKey.Enter:
                 case RLKey.Escape:
                     //clear input & multi consoles
-                    infoChannel.ClearConsole(ConsoleDisplay.Input);
+                    /*infoChannel.ClearConsole(ConsoleDisplay.Input);
                     infoChannel.ClearConsole(ConsoleDisplay.Multi);
-                    //any events that need dealing with?
-                    if (director.ResolveFollowerEvents()) { }
-                    else
+                    _eventID = 0;*/
+                    //any Follower events that need dealing with?
+                    if (mode == SpecialMode.FollowerEvent)
                     {
-                        //Exit out of Special Display mode
-                        _specialMode = SpecialMode.None;
-                        //exit mouse input 
-                        if (_mouseOn == true)
-                        { _mouseOn = false; }
-                        //revert back to main menu
+                        if (director.ResolveFollowerEvents())
+                        { }
                         else
                         {
-                            //return to main menu from sub menus
-                            if (_menuMode != MenuMode.Main)
-                            { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
+                            //Exit out of Special Display mode
+                            _specialMode = SpecialMode.None;
+                            //exit mouse input 
+                            if (_mouseOn == true)
+                            { _mouseOn = false; }
+                            //revert back to main menu
+                            else
+                            {
+                                //return to main menu from sub menus
+                                if (_menuMode != MenuMode.Main)
+                                { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
+                            }
                         }
                     }
-                    //keyPress = null;
+                    //Player Events
+                    else if (mode == SpecialMode.PlayerEvent)
+                    {
+                        if (director.ResolvePlayerEvents())
+                        { }
+                        else
+                        {
+                            _eventID = 0;
+                            infoChannel.ClearConsole(ConsoleDisplay.Input);
+                            infoChannel.ClearConsole(ConsoleDisplay.Multi);
+                            //Exit out of Special Display mode
+                            _specialMode = SpecialMode.None;
+                            //exit mouse input 
+                            if (_mouseOn == true)
+                            { _mouseOn = false; }
+                            //revert back to main menu
+                            else
+                            {
+                                //return to main menu from sub menus
+                                if (_menuMode != MenuMode.Main)
+                                { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
+                            }
+                        }
+                    }
+                    //Outcome - needs to be AFTER Player Events
+                    else if (mode == SpecialMode.Outcome)
+                    {
+                        infoChannel.ClearConsole(ConsoleDisplay.Input);
+                        infoChannel.ClearConsole(ConsoleDisplay.Multi);
+                        _specialMode = SpecialMode.PlayerEvent;
+                        _eventID = 0;
+                    }
                     break;
             }
         }
