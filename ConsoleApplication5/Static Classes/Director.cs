@@ -682,7 +682,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Resolve current events one at a time. Returns true if event present to be processed, false otherwise.
+        /// Resolve current Follower events one at a time. Returns true if event present to be processed, false otherwise.
         /// </summary>
         public bool ResolveFollowerEvents()
         {
@@ -845,6 +845,70 @@ namespace Next_Game
             return returnValue;
         }
 
+        /// <summary>
+        /// Resolve current Player events one at a time. Returns true if event present to be processed, false otherwise.
+        /// </summary>
+        public bool ResolvePlayerEvents()
+        {
+            bool returnValue = false;
+            int traitMultiplier = Game.constant.GetValue(Global.TRAIT_MULTIPLIER);
+            string status;
+            List<Snippet> eventList = new List<Snippet>();
+            RLColor foreColor = RLColor.Black;
+            RLColor backColor = Color._background1;
+            //loop all triggered events for this turn
+            for (int i = 0; i < listPlyCurrentEvents.Count; i++)
+            {
+                EventPackage package = listPlyCurrentEvents[i];
+                if (package.Done == false)
+                {
+                    EventPlayer eventObject = (EventPlayer)package.EventObject;
+                    List<OptionInteractive> listOptions = eventObject.GetOptions();
+                    //assume only a single option
+                    OptionInteractive option = null;
+                    if (listOptions != null) { option = listOptions[0]; }
+                    else { Game.SetError(new Error(70, "Invalid ListOfOptions input (null)")); break; }
+                    Active actor = package.Person;
+                    //create event description
+                    Position pos = actor.GetActorPosition();
+                    switch (eventObject.Type)
+                    {
+                        case ArcType.GeoCluster:
+                        case ArcType.Road:
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
+                                Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
+                            break;
+                        case ArcType.Location:
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
+                                pos.PosX, pos.PosY), RLColor.LightGray, backColor));
+                            break;
+                        case ArcType.Actor:
+                            if (actor.Status == ActorStatus.AtLocation) { status = Game.world.GetLocationName(actor.LocID) + " "; }
+                            else { status = null; }
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2}(Loc {3}:{4})", actor.Name, actor.ActID, status,
+                                pos.PosX, pos.PosY), RLColor.LightGray, backColor));
+                            break;
+                    }
+                    eventList.Add(new Snippet(""));
+                    eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                    eventList.Add(new Snippet(""));
+                    eventList.Add(new Snippet(eventObject.Text, foreColor, backColor));
+                    eventList.Add(new Snippet(""));
+                    eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                    eventList.Add(new Snippet(""));
+                    //resolve event and add to description (add delay to actor if needed)
+                    
+                    eventList.Add(new Snippet(""));
+                    eventList.Add(new Snippet("Press ENTER or ESC to continue", RLColor.LightGray, backColor));
+                    //housekeeping
+                    Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
+                    returnValue = true;
+                    package.Done = true;
+                    break;
+                }
+            }
+            return returnValue;
+        }
 
         /// <summary>
         /// returns the # of current events for the turn
@@ -1054,7 +1118,7 @@ namespace Next_Game
                     if (arcID > 0)
                     {
                         Archetype archetype = GetArchetype(arcID);
-                        house.SetEvents(archetype.GetEvents());
+                        house.SetFollowerEvents(archetype.GetEvents());
                         //debug
                         Console.WriteLine("House {0}, refID {1}, has been initialised with \"{2}\", arcID {3}", house.Name, house.RefID, archetype.Name, archetype.ArcID);
                     }

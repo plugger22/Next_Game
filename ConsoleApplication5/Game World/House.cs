@@ -40,7 +40,9 @@ namespace Next_Game
             listOfFirstNames = new List<int>();
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
+            listOfPlayerEvents = new List<int>();
         }
+
 
 
 
@@ -57,7 +59,7 @@ namespace Next_Game
             return numOfLikeNames;
         }
 
-        internal void SetEvents(List<int> listEvents)
+        internal void SetFollowerEvents(List<int> listEvents)
         {
             if (listEvents != null)
             { listOfFollowerEvents.AddRange(listEvents); }
@@ -70,6 +72,14 @@ namespace Next_Game
 
         internal int GetNumFollowerEvents()
         { return listOfFollowerEvents.Count; }
+
+        internal void SetPlayerEvents(List<int> listEvents)
+        {
+            if (listEvents != null)
+            { listOfPlayerEvents.AddRange(listEvents); }
+            else
+            { Game.SetError(new Error(56, "Invalid list of Events input (null)")); }
+        }
 
         internal List<int> GetPlayerEvents()
         { return listOfPlayerEvents; }
