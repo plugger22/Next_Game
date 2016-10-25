@@ -11,7 +11,8 @@ namespace Next_Game
 {
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
     public enum EventType { None, Location, Travelling }
-    public enum DataPoint {None, Threat, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count }
+    public enum DataPoint {None, Threat, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count } //arrayOfGameStates primary index
+    public enum DataState { Good, Bad, Count } //arrayOfGameStates secondary index
 
     /// <summary>
     /// used to store all triggered events for the current turn
@@ -31,7 +32,7 @@ namespace Next_Game
         static Random rnd;
         Story story;
         State state;
-        int[,] arrayOfGameStates; //tracks game states (enum DataPoints), all are index 0 -> good, index 1 -> bad
+        private int[,] arrayOfGameStates; //tracks game states (enum DataPoints), all are index 0 -> good, index 1 -> bad
         //events
         List<int> listOfActiveGeoClusters; //clusters that have a road through them (GeoID's)
         List<int> listGenFollEventsForest; //generic events for followers
@@ -78,7 +79,7 @@ namespace Next_Game
         {
             rnd = new Random(seed);
             state = new State();
-            arrayOfGameStates = new int[(int)DataPoint.Count, 2];
+            arrayOfGameStates = new int[(int)DataPoint.Count, (int)DataState.Count];
             //follower generic events
             listOfActiveGeoClusters = new List<int>();
             listGenFollEventsForest = new List<int>();
@@ -1286,6 +1287,35 @@ namespace Next_Game
             return null;
         }
 
+
+        /// <summary>
+        /// Set data in arrayOfGameStates
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="state"></param>
+        /// <param name="value"></param>
+        public void SetGameState(DataPoint point, DataState state, int value)
+        {
+            if (point <= DataPoint.Count && state <= DataState.Count)
+            { arrayOfGameStates[(int)point, (int)state] = value; }
+            else
+            { Game.SetError(new Error(75, "Invalid Input (exceeds enum)")); }
+        }
+
+        /// <summary>
+        /// Get a game state. Returns -999 if not found
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        public int GetGameState(DataPoint point, DataState state)
+        {
+            if (point <= DataPoint.Count && state <= DataState.Count)
+            { return arrayOfGameStates[(int)point, (int)state]; }
+            else
+            { Game.SetError(new Error(75, "Invalid Input (exceeds enum)")); }
+            return -999;
+        }
 
         //place Director methods above here
     }

@@ -21,13 +21,15 @@ namespace Next_Game.Event_System
         /// <summary>
         /// adjusts a state
         /// </summary>
-        /// <param name="data">GameVar enum index</param>
+        /// <param name="data">GameVar enum index. If positive then DataState.Good, if negative then DataState.Bad</param>
         /// <param name="amount">how much</param>
         /// <param name="apply">how to apply it</param>
         public void SetState(string eventTxt, string optionTxt, int data, int amount, OutApply apply)
         {
             GameVar gameVar;
             bool stateChanged = false;
+            DataState state = DataState.Good;
+            if (data < 0) { state = DataState.Bad; }
             //convert to a GameVar enum
             if ((int)GameVar.Count <= data)
             {
@@ -37,7 +39,9 @@ namespace Next_Game.Event_System
                 switch (gameVar)
                 {
                     case GameVar.Threat:
-
+                        int threat = Game.director.GetGameState(gameVar, state);
+                        
+                        
                         break;
 
                     default:
