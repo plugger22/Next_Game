@@ -960,19 +960,65 @@ namespace Next_Game
         /// <param name="optionNum"></param>
         public void ResolveOutcome(int eventID, int optionNum)
         {
+            string status;
             List<Snippet> eventList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
             RLColor backColor = Color._background1;
             //Get eVent
-            //find option
-            //resolve option
-            //display message
-            eventList.Add(new Snippet(""));
-            eventList.Add(new Snippet(string.Format("You have chosen Option {0}", optionNum), foreColor, backColor));
-            eventList.Add(new Snippet(""));
-            eventList.Add(new Snippet("Press ENTER or ESC to ignore this event", RLColor.LightGray, backColor));
-            //housekeeping
-            Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
+            EventPlayer eventObject = GetPlayerEvent(eventID);
+            if (eventObject != null)
+            {
+                //find option
+                List<OptionInteractive> listOptions = eventObject.GetOptions();
+                if (listOptions != null)
+                {
+                    if (listOptions.Count >= optionNum)
+                    {
+                        OptionInteractive option = listOptions[optionNum - 1];
+                        Active actor = Game.world.GetActiveActor(1);
+                        //resolve option
+                        //display message
+                        Position pos = actor.GetActorPosition();
+                        switch (eventObject.Type)
+                        {
+                            case ArcType.GeoCluster:
+                            case ArcType.Road:
+                                eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
+                                    Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
+                                break;
+                            case ArcType.Location:
+                                eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
+                                    pos.PosX, pos.PosY), RLColor.LightGray, backColor));
+                                break;
+                            case ArcType.Actor:
+                                if (actor.Status == ActorStatus.AtLocation) { status = Game.world.GetLocationName(actor.LocID) + " "; }
+                                else { status = null; }
+                                eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2}(Loc {3}:{4})", actor.Name, actor.ActID, status,
+                                    pos.PosX, pos.PosY), RLColor.LightGray, backColor));
+                                break;
+                        }
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet(string.Format("{0}", eventObject.Name), foreColor, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet(string.Format("\"{0}\"", option.Text), foreColor, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet(string.Format("{0}", option.ReplyGood), foreColor, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("Press ENTER or ESC to ignore this event", RLColor.LightGray, backColor));
+                        //housekeeping
+                        Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
+                    }
+                    else { Game.SetError(new Error(73, string.Format("No valid option present for \"{0}\", option # {1}", eventObject.Name, optionNum))); }
+                }
+                else { Game.SetError(new Error(73, string.Format("No options present for \"{0}\"", eventObject.Name))); }
+            }
+            else { Game.SetError(new Error(73, string.Format("Invalid Event Input \"{0}\"", eventID))); }
         }
 
         /// <summary>
