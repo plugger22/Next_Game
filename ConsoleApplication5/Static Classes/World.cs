@@ -1504,7 +1504,6 @@ namespace Next_Game
         public void ShowGeneratorStatsRL()
         {
             List<Snippet> listStats = new List<Snippet>();
-
             //calcs
             int numLocs = Game.network.GetNumLocations();
             int numGreatHouses = dictMajorHouses.Count;
@@ -1550,9 +1549,50 @@ namespace Next_Game
                     listStats.AddRange(tempList);
                 }
             }
-
             //display data
             Game.infoChannel.SetInfoList(listStats, ConsoleDisplay.Multi);
+        }
+
+        /// <summary>
+        /// Show game state as well as the date as the default input display
+        /// </summary>
+        public void ShowGameStateRL()
+        {
+            int data, good, bad;
+            List<Snippet> listStats = new List<Snippet>();
+            listStats.Add(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black));
+            //Notoriety
+            data = Game.director.CheckGameState(DataPoint.Notoriety);
+            good = Game.director.GetGameState(DataPoint.Notoriety, DataState.Good);
+            bad = Game.director.GetGameState(DataPoint.Notoriety, DataState.Bad);
+            listStats.Add(new Snippet(string.Format("Notoriety (You) {0}% (good {1} bad {2})", data, good, bad)));
+            //justice
+            data = Game.director.CheckGameState(DataPoint.Justice);
+            good = Game.director.GetGameState(DataPoint.Justice, DataState.Good);
+            bad = Game.director.GetGameState(DataPoint.Justice, DataState.Bad);
+            listStats.Add(new Snippet(string.Format("Justice (Cause) {0}% (good {1} bad {2})", data, good, bad)));
+            //legend_ursurper
+            data = Game.director.CheckGameState(DataPoint.Legend_Ursurper);
+            good = Game.director.GetGameState(DataPoint.Legend_Ursurper, DataState.Good);
+            bad = Game.director.GetGameState(DataPoint.Legend_Ursurper, DataState.Bad);
+            listStats.Add(new Snippet(string.Format("Legend (You) {0}% (good {1} bad {2})", data, good, bad)));
+            //legend_king
+            data = Game.director.CheckGameState(DataPoint.Legend_King);
+            good = Game.director.GetGameState(DataPoint.Legend_King, DataState.Good);
+            bad = Game.director.GetGameState(DataPoint.Legend_King, DataState.Bad);
+            listStats.Add(new Snippet(string.Format("Legend (King) {0}% (good {1} bad {2})", data, good, bad)));
+            //honour_ursurper
+            data = Game.director.CheckGameState(DataPoint.Honour_Ursurper);
+            good = Game.director.GetGameState(DataPoint.Honour_Ursurper, DataState.Good);
+            bad = Game.director.GetGameState(DataPoint.Honour_Ursurper, DataState.Bad);
+            listStats.Add(new Snippet(string.Format("Honour (You) {0}% (good {1} bad {2})", data, good, bad)));
+            //honour_king
+            data = Game.director.CheckGameState(DataPoint.Honour_King);
+            good = Game.director.GetGameState(DataPoint.Honour_King, DataState.Good);
+            bad = Game.director.GetGameState(DataPoint.Honour_King, DataState.Bad);
+            listStats.Add(new Snippet(string.Format("Honour (King) {0}% (good {1} bad {2})", data, good, bad)));
+            //display data
+            Game.infoChannel.SetInfoList(listStats, ConsoleDisplay.Input);
         }
 
         /// <summary>

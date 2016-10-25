@@ -11,7 +11,7 @@ namespace Next_Game
 {
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
     public enum EventType { None, Location, Travelling }
-    public enum DataPoint {None, Threat, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count } //arrayOfGameStates primary index
+    public enum DataPoint {None, Notoriety, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count } //arrayOfGameStates primary index
     public enum DataState { Good, Bad, Count } //arrayOfGameStates secondary index
 
     /// <summary>
@@ -1342,7 +1342,7 @@ namespace Next_Game
             float good = arrayOfGameStates[(int)point, (int)DataState.Good];
             float bad = arrayOfGameStates[(int)point, (int)DataState.Bad];
             float difference = good - bad;
-            if (difference == 0) { returnValue = 50; }
+            if (difference == 0 || good + bad == 0) { returnValue = 50; }
             else
             {
                 float percentage = 50 + difference / (good + bad) * 100;

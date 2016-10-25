@@ -8,12 +8,12 @@ namespace Next_Game.Event_System
 {
 
     public enum GameVar { None,
-        Threat, //don't change order
-        Justice, //don't change order
-        Legend_Ursurper, //don't change order
-        Legend_King, //don't change order
-        Honour_Ursurper, //don't change order
-        Honour_King, //don't change order
+        Notoriety, //don't change order -> Director DataPoint
+        Justice, //don't change order -> Director DataPoint
+        Legend_Ursurper, //don't change order -> Director DataPoint
+        Legend_King, //don't change order -> Director DataPoint
+        Honour_Ursurper, //don't change order -> Director DataPoint
+        Honour_King, //don't change order -> Director DataPoint
         Count } //use descriptive tags as variable names are referenced via methods
 
     /// <summary>
@@ -48,12 +48,12 @@ namespace Next_Game.Event_System
                 OptionInteractive option = new OptionInteractive();
                 switch (gameVar)
                 {
-                    case GameVar.Threat:
-                        oldData = Game.director.GetGameState(DataPoint.Threat, state);
+                    case GameVar.Notoriety:
+                        oldData = Game.director.GetGameState(DataPoint.Notoriety, state);
                         //apply change
                         newData = ChangeData(oldData, amount, apply);
                         //update 
-                        Game.director.SetGameState(DataPoint.Threat, state, newData);
+                        Game.director.SetGameState(DataPoint.Notoriety, state, newData);
                         break;
                     case GameVar.Justice:
                         oldData = Game.director.GetGameState(DataPoint.Justice, state);
