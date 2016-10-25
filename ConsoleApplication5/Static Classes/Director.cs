@@ -11,6 +11,7 @@ namespace Next_Game
 {
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
     public enum EventType { None, Location, Travelling }
+    public enum DataPoint {None, Threat, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count }
 
     /// <summary>
     /// used to store all triggered events for the current turn
@@ -29,6 +30,9 @@ namespace Next_Game
     {
         static Random rnd;
         Story story;
+        State state;
+        int[,] arrayOfGameStates; //tracks game states (enum DataPoints), all are index 0 -> good, index 1 -> bad
+        //events
         List<int> listOfActiveGeoClusters; //clusters that have a road through them (GeoID's)
         List<int> listGenFollEventsForest; //generic events for followers
         List<int> listGenFollEventsMountain;
@@ -73,6 +77,8 @@ namespace Next_Game
         public Director(int seed)
         {
             rnd = new Random(seed);
+            state = new State();
+            arrayOfGameStates = new int[(int)DataPoint.Count, 2];
             //follower generic events
             listOfActiveGeoClusters = new List<int>();
             listGenFollEventsForest = new List<int>();
