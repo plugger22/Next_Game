@@ -1033,6 +1033,7 @@ namespace Next_Game
         /// <param name="mode"></param>
         private static void SpecialModeInput(RLKeyPress keyPress, SpecialMode mode)
         {
+            bool exitFlag = false;
             switch (keyPress.Key)
             {
                 case RLKey.F1:
@@ -1053,35 +1054,18 @@ namespace Next_Game
                     if (mode == SpecialMode.PlayerEvent)
                     {
                         _specialMode = SpecialMode.Outcome;
-                        director.ResolveOutcome(_eventID, 2);
+                        director.ResolveOutcome(_eventID, 3);
                     }
                     break;
                 case RLKey.Enter:
                 case RLKey.Escape:
-                    //clear input & multi consoles
-                    /*infoChannel.ClearConsole(ConsoleDisplay.Input);
-                    infoChannel.ClearConsole(ConsoleDisplay.Multi);
-                    _eventID = 0;*/
                     //any Follower events that need dealing with?
                     if (mode == SpecialMode.FollowerEvent)
                     {
                         if (director.ResolveFollowerEvents())
                         { }
                         else
-                        {
-                            //Exit out of Special Display mode
-                            _specialMode = SpecialMode.None;
-                            //exit mouse input 
-                            if (_mouseOn == true)
-                            { _mouseOn = false; }
-                            //revert back to main menu
-                            else
-                            {
-                                //return to main menu from sub menus
-                                if (_menuMode != MenuMode.Main)
-                                { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
-                            }
-                        }
+                        { exitFlag = true; }
                     }
                     //Player Events
                     else if (mode == SpecialMode.PlayerEvent)
@@ -1090,33 +1074,56 @@ namespace Next_Game
                         { }
                         else
                         {
-                            _eventID = 0;
-                            infoChannel.ClearConsole(ConsoleDisplay.Input);
-                            infoChannel.ClearConsole(ConsoleDisplay.Multi);
-                            //Exit out of Special Display mode
-                            _specialMode = SpecialMode.None;
-                            //exit mouse input 
-                            if (_mouseOn == true)
-                            { _mouseOn = false; }
-                            //revert back to main menu
-                            else
+                            //any follower events? (they come after Player events)
+                            if (director.CheckRemainingFollowerEvents())
                             {
-                                //return to main menu from sub menus
-                                if (_menuMode != MenuMode.Main)
-                                { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
+                                _specialMode = SpecialMode.FollowerEvent;
+                                director.ResolveFollowerEvents();
                             }
+                            else
+                            { exitFlag = true; }
                         }
                     }
                     //Outcome - needs to be AFTER Player Events
                     else if (mode == SpecialMode.Outcome)
                     {
+                        _eventID = 0;
                         infoChannel.ClearConsole(ConsoleDisplay.Input);
                         infoChannel.ClearConsole(ConsoleDisplay.Multi);
-                        _specialMode = SpecialMode.PlayerEvent;
-                        _eventID = 0;
+                        if (director.CheckRemainingPlayerEvents())
+                        { _specialMode = SpecialMode.PlayerEvent; }
+                        else if (director.CheckRemainingFollowerEvents())
+                        {
+                            _specialMode = SpecialMode.FollowerEvent;
+                            director.ResolveFollowerEvents();
+                        }
+                        else
+                        { exitFlag = true; }
+
                     }
                     break;
             }
+
+            //exit
+            if (exitFlag == true)
+            {
+                _eventID = 0;
+                infoChannel.ClearConsole(ConsoleDisplay.Input);
+                infoChannel.ClearConsole(ConsoleDisplay.Multi);
+                //Exit out of Special Display mode
+                _specialMode = SpecialMode.None;
+                //exit mouse input 
+                if (_mouseOn == true)
+                { _mouseOn = false; }
+                //revert back to main menu
+                else
+                {
+                    //return to main menu from sub menus
+                    if (_menuMode != MenuMode.Main)
+                    { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
+                }
+            }
+            
         }
         
 

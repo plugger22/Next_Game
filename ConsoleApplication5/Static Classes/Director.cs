@@ -21,7 +21,7 @@ namespace Next_Game
         public Event EventObject { get; set; }
         public bool Done { get; set; }
     }
-    
+
     /// <summary>
     /// Director that manages the game world according to a Story AI personality
     /// </summary>
@@ -41,7 +41,7 @@ namespace Next_Game
         List<int> listGenFollEventsMinor;
         List<int> listGenFollEventsInn;
         //archetype follower events
-        List<int> listFollRoadEventsNormal; 
+        List<int> listFollRoadEventsNormal;
         List<int> listFollRoadEventsKings;
         List<int> listFollRoadEventsConnector;
         List<int> listFollCapitalEvents;
@@ -147,15 +147,15 @@ namespace Next_Game
         {
             int eventID;
             //Follower events
-            foreach(var eventObject in dictFollowerEvents)
+            foreach (var eventObject in dictFollowerEvents)
             {
                 if (eventObject.Value.Category == EventCategory.Generic)
                 {
                     eventID = eventObject.Value.EventFID;
-                    switch(eventObject.Value.Type)
+                    switch (eventObject.Value.Type)
                     {
                         case ArcType.GeoCluster:
-                            switch(eventObject.Value.GeoType)
+                            switch (eventObject.Value.GeoType)
                             {
                                 case ArcGeo.Forest:
                                     listGenFollEventsForest.Add(eventID);
@@ -172,7 +172,7 @@ namespace Next_Game
                             }
                             break;
                         case ArcType.Location:
-                            switch(eventObject.Value.LocType)
+                            switch (eventObject.Value.LocType)
                             {
                                 case ArcLoc.Capital:
                                     listGenFollEventsCapital.Add(eventID);
@@ -192,7 +192,7 @@ namespace Next_Game
                             }
                             break;
                         case ArcType.Road:
-                            switch(eventObject.Value.RoadType)
+                            switch (eventObject.Value.RoadType)
                             {
                                 case ArcRoad.Normal:
                                     listGenFollEventsNormal.Add(eventID);
@@ -292,7 +292,7 @@ namespace Next_Game
             listFollCurrentEvents.Clear();
             listPlyrCurrentEvents.Clear();
         }
-        
+
         /// <summary>
         /// check active (Follower only) characters for random events
         /// </summary>
@@ -355,7 +355,7 @@ namespace Next_Game
             Cartographic.Position pos = actor.GetActorPosition();
             List<Event> listEventPool = new List<Event>();
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
-            
+
             //Location event
             if (type == EventType.Location)
             {
@@ -717,7 +717,7 @@ namespace Next_Game
                                 Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
                             break;
                         case ArcType.Location:
-                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID), 
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
                                 pos.PosX, pos.PosY), RLColor.LightGray, backColor));
                             break;
                         case ArcType.Actor:
@@ -748,7 +748,7 @@ namespace Next_Game
                     //enables stars to be centred
                     if (ability != 3)
                     { eventList.Add(new Snippet(string.Format("({0} {1})  {2} {3} {4}", ability, ability == 1 ? "Star" : "Stars",
-                        Game.world.GetStars(ability), actor.arrayOfTraitNames[(int)option.Trait], 
+                        Game.world.GetStars(ability), actor.arrayOfTraitNames[(int)option.Trait],
                         effectText), traitColor, backColor)); }
                     else
                     { eventList.Add(new Snippet(string.Format("({0} {1})  {2}", ability, ability == 1 ? "Star" : "Stars", Game.world.GetStars(ability)), traitColor, backColor)); }
@@ -802,7 +802,7 @@ namespace Next_Game
                         if (listBadOutcomes != null && listBadOutcomes.Count > 0)
                         {
                             //Loop outcomes (can be multiple)
-                            for(int k = 0; k < listBadOutcomes.Count; k++)
+                            for (int k = 0; k < listBadOutcomes.Count; k++)
                             {
                                 Outcome outTemp = listBadOutcomes[k];
                                 //Type of Outcome
@@ -844,6 +844,37 @@ namespace Next_Game
             }
             return returnValue;
         }
+
+        /// <summary>
+        /// returns true if there are any Follower Events still to be resolved this turn
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckRemainingFollowerEvents()
+        {
+            for (int i = 0; i < listFollCurrentEvents.Count; i++)
+            {
+                EventPackage package = listFollCurrentEvents[i];
+                if (package.Done == false)
+                { return true; }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// returns true if there are any Player Events still to be resolved this turn
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckRemainingPlayerEvents()
+        {
+            for (int i = 0; i < listPlyrCurrentEvents.Count; i++)
+            {
+                EventPackage package = listPlyrCurrentEvents[i];
+                if (package.Done == false)
+                { return true; }
+            }
+            return false;
+        }
+
 
         /// <summary>
         /// Resolve current Player events one at a time. Returns true if event present to be processed, false otherwise.
