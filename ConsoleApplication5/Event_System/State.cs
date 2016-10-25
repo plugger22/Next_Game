@@ -7,7 +7,14 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
 
-    public enum GameVar { None, Threat, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count } //use descriptive tags as variable names are referenced via methods
+    public enum GameVar { None,
+        Threat, //don't change order
+        Justice, //don't change order
+        Legend_Ursurper, //don't change order
+        Legend_King, //don't change order
+        Honour_Ursurper, //don't change order
+        Honour_King, //don't change order
+        Count } //use descriptive tags as variable names are referenced via methods
 
     /// <summary>
     /// Enables Player events to change game state variables (not constants). Only accessed through Director.cs

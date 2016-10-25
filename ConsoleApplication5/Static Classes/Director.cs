@@ -1333,6 +1333,27 @@ namespace Next_Game
             return -999;
         }
 
+        /// <summary>
+        /// returns a % value for a Game state based on proportion of good vs. bad
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public int CheckGameState(DataPoint point)
+        {
+            int returnValue = 0;
+            float good = arrayOfGameStates[(int)point, (int)DataState.Good];
+            float bad = arrayOfGameStates[(int)point, (int)DataState.Bad];
+            float difference = good - bad;
+            if (difference == 0) { returnValue = 50; }
+            else
+            {
+                float percentage = 50 + difference / (good + bad) * 100;
+                percentage = Math.Min(100, percentage);
+                percentage = Math.Max(0, percentage);
+            }
+            return returnValue;
+        }
+
         //place Director methods above here
     }
 }
