@@ -84,11 +84,13 @@ namespace Next_Game.Event_System
                 //tracker
                 if (stateChanged == true)
                 {
-                    
                     //message
-
+                    Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2} level {3} from {4} to {5}", eventTxt, optionTxt, gameVar, 
+                        oldData > newData ? "decreased" : "increased" , oldData, newData), 1, 0, MessageType.Event);
+                    Game.world.SetMessage(message);
                     //debug
-                    Console.WriteLine(string.Format("Event \"{0}\", Option \"{1}\", {2} data changed from {3} to {4}", eventTxt, optionTxt, gameVar, oldData, newData));
+                    Console.WriteLine(string.Format("Event \"{0}\", Option \"{1}\", {2} level {3} from {4} to {5}", eventTxt, optionTxt, gameVar,
+                        oldData > newData ? "decreased" : "increased", oldData, newData));
                 }
             }
             else { Game.SetError(new Error(74, string.Format("Invalid input (data \"{0}\") for eventPID {1}", outType, eventTxt))); }

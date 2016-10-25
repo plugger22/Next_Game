@@ -30,7 +30,8 @@ namespace Next_Game.Event_System
             if (eventID > 0) { EventID = eventID; }
             else { Game.SetError(new Error(67, "Invalid Input (eventID) in constructor")); }
         }
-
+        
+        /*
         /// <summary>
         /// virtual Resolve method used by all dervied classes. Data1 to 3 could refer to any ID type. Handles details and gives message
         /// </summary>
@@ -38,7 +39,7 @@ namespace Next_Game.Event_System
         /// <param name="data2"></param>
         public virtual void Resolve(int data1, int data2 = 0)
         { }
-
+        */
     }
 
 
@@ -64,7 +65,7 @@ namespace Next_Game.Event_System
         /// </summary>
         /// <param name="data1"></param>
         /// <param name="data2"></param>
-        public override void Resolve(int data1, int data2 = 0)
+        public void Resolve(int data1, int data2 = 0)
         {
             Active actor = Game.world.GetActiveActor(data1);
             Event eventObject = Game.director.GetFollowerEvent(EventID);
@@ -101,12 +102,13 @@ namespace Next_Game.Event_System
             this.Apply = apply;
         }
 
+        /*
         /// <summary>
         /// data1 is actor ID
         /// </summary>
         /// <param name="data1"></param>
         /// <param name="data2"></param>
-        public override void Resolve(int data1, int data2 = 0)
+        public void Resolve(int data1, int data2 = 0)
         {
             Active actor = Game.world.GetActiveActor(data1);
             Event eventObject = Game.director.GetPlayerEvent(EventID);
@@ -121,7 +123,7 @@ namespace Next_Game.Event_System
                 else { Game.SetError(new Error(67, "Event not found using EventPID in OutDelay.cs")); }
             }
             else { Game.SetError(new Error(67, "Active Actor not found")); }
-        }
+        }*/
     }
 
 
@@ -174,12 +176,13 @@ namespace Next_Game.Event_System
             this.Apply = apply;
         }
 
+        /*
         /// <summary>
         /// data1 is actor ID
         /// </summary>
         /// <param name="data1"></param>
         /// <param name="data2"></param>
-        public override void Resolve(int data1, int data2 = 0)
+        public void Resolve(int data1, int data2 = 0)
         {
             Active actor = Game.world.GetActiveActor(data1);
             Event eventObject = Game.director.GetPlayerEvent(EventID);
@@ -194,7 +197,7 @@ namespace Next_Game.Event_System
                 else { Game.SetError(new Error(67, "Event not found using EventPID in OutDelay.cs")); }
             }
             else { Game.SetError(new Error(67, "Active Actor not found")); }
-        }
+        }*/
     }
 
 }

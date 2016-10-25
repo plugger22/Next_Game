@@ -990,9 +990,7 @@ namespace Next_Game
                             foreach(Outcome outcome in listOutcomes)
                             {
                                 if (outcome is OutGame)
-                                {
-                                    state.SetState(eventObject.Name, option.Text, outcome.Type, outcome.Amount, outcome.Apply);
-                                }
+                                { state.SetState(eventObject.Name, option.Text, outcome.Type, outcome.Amount, outcome.Apply); }
                                 else if (outcome is OutConflict)
                                 { }
                                 else if (outcome is OutEvent)
