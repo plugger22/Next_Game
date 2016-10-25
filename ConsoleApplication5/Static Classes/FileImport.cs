@@ -1129,11 +1129,7 @@ namespace Next_Game
                                 switch (cleanToken)
                                 {
                                     case "Conflict":
-                                        structOutcome.Effect = cleanToken;
-                                        break;
                                     case "Game":
-                                        structOutcome.Effect = cleanToken;
-                                        break;
                                     case "Event":
                                         structOutcome.Effect = cleanToken;
                                         break;
@@ -1143,7 +1139,8 @@ namespace Next_Game
                                         break;
                                 }
                                 break;
-                            case "data":
+                            case "out":
+                                //outcome type (multipurpose)
                                 try
                                 {
                                     dataInt = Convert.ToInt32(cleanToken);

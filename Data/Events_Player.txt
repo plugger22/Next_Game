@@ -14,7 +14,8 @@
 # reply: text shown when option selected
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # effect: type of outcome Effect ( Conflict, Event, Game)
-# data: multi-purpose outcome data point, usually and ID of some form (depends on effect, must be an Integer), default '0'
+# out: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
+# effect = game, then out -> 1 Threat, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0'
 # apply: how the amount is applied (None, Add, Subtract, Random) where 'Random' is random range (amount). Default 'None'
 # [End] -> Place at very bottom of event.
@@ -35,12 +36,12 @@ text: Run for it!
 reply: Giddee Up Trigger! You attempt to gallop away to safety
 [outcome]
 effect: Conflict
-data: 11
+out: 1
 amount: 1
 apply: None
 [outcome]
 effect: Game
-data: 12
+out: 2
 amount: 12
 apply: Subtract
 [option]
@@ -48,20 +49,20 @@ text: Talk your way through
 reply: You approach the King's Men with an easy smile and a confident demeanour.
 [outcome]
 effect: Game
-data: 22
+out: 5
 amount: 2
 apply: Add
 [option]
-text: Talk your way through
-reply: You approach the King's Men with an easy smile and a confident demeanour.
+text: Bluff your way through
+reply: You approach the King's Men with a haughty manner, demanding that they make way for the King's Tax Collector.
 [outcome]
 effect: Game
-data: 22
-amount: 2
+out: 6
+amount: 20
 apply: Add
 [outcome]
 effect: Event
-data: 22
+out: 1
 amount: 3
 apply: None
 [End]
@@ -79,33 +80,33 @@ text: Leg it!
 reply: Do they know who you are? Why take the chance?
 [outcome]
 effect: Conflict
-data: 11
+out: 2
 amount: 1
 apply: None
 [outcome]
 effect: Game
-data: 12
+out: 5
 amount: 12
 apply: Subtract
 [option]
-text: Stay Calm.
+text: Stay Calm
 reply: They regularly stop people at random, you should be able to talk your way out of this.
 [outcome]
 effect: Game
-data: 22
-amount: 2
-apply: Add
+out: 6
+amount: 100
+apply: Random
 [option]
-text: Run straight at them.
+text: Run straight at them
 reply: Surprise is the key. Wait until they are almost upon you, draw your sword and charge.
 [outcome]
 effect: Game
-data: 15
-amount: 5
-apply: Add
+out: 1
+amount: 50
+apply: Random
 [outcome]
 effect: Event
-data: 25
+out: 2
 amount: 2
 apply: None
 [End]

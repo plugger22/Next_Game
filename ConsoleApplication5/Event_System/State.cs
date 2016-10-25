@@ -7,43 +7,68 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
 
-    public enum GameVar { None, Threat, Count} //use descriptive tags as variable names are referenced via methods
+    public enum GameVar { None, Threat, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count } //use descriptive tags as variable names are referenced via methods
 
     /// <summary>
     /// Enables Player events to change game state variables (not constants). Only accessed through Director.cs
     /// </summary>
     public class State
     {
+        static Random rnd;
 
-        public State()
-        { }
+        public State(int seed)
+        { rnd = new Random(seed); }
 
         /// <summary>
         /// adjusts a state
         /// </summary>
-        /// <param name="data">GameVar enum index. If positive then DataState.Good, if negative then DataState.Bad</param>
+        /// <param name="outType">GameVar enum index. If positive then DataState.Good, if negative then DataState.Bad</param>
         /// <param name="amount">how much</param>
         /// <param name="apply">how to apply it</param>
-        public void SetState(string eventTxt, string optionTxt, int data, int amount, OutApply apply)
+        public void SetState(string eventTxt, string optionTxt, int outType, int amount, OutApply apply)
         {
             GameVar gameVar;
             bool stateChanged = false;
             DataState state = DataState.Good;
-            if (data < 0) { state = DataState.Bad; }
+            if (outType < 0) { state = DataState.Bad; outType *= -1; }
+            int newData = 0;
+            int oldData = 0;
             //convert to a GameVar enum
-            if ((int)GameVar.Count <= data)
+            if (outType <= (int)GameVar.Count)
             {
-                gameVar = (GameVar)data;
+                gameVar = (GameVar)outType;
                 stateChanged = true;
                 OptionInteractive option = new OptionInteractive();
                 switch (gameVar)
                 {
                     case GameVar.Threat:
-                        int threat = Game.director.GetGameState(gameVar, state);
-                        
-                        
+                        oldData = Game.director.GetGameState(DataPoint.Threat, state);
+                        //apply change
+                        newData = ChangeData(oldData, amount, apply);
+                        //update 
+                        Game.director.SetGameState(DataPoint.Threat, state, newData);
                         break;
-
+                    case GameVar.Justice:
+                        oldData = Game.director.GetGameState(DataPoint.Justice, state);
+                        //apply change
+                        newData = ChangeData(oldData, amount, apply);
+                        //update 
+                        Game.director.SetGameState(DataPoint.Justice, state, newData);
+                        break;
+                    case GameVar.Honour_Ursurper:
+                        oldData = Game.director.GetGameState(DataPoint.Honour_Ursurper, state);
+                        //apply change
+                        newData = ChangeData(oldData, amount, apply);
+                        //update 
+                        Game.director.SetGameState(DataPoint.Honour_Ursurper, state, newData);
+                        break;
+                    case GameVar.Honour_King:
+                        oldData = Game.director.GetGameState(DataPoint.Honour_King, state);
+                        //apply change
+                        newData = ChangeData(oldData, amount, apply);
+                        //update 
+                        Game.director.SetGameState(DataPoint.Honour_King, state, newData);
+                        break;
                     default:
                         Game.SetError(new Error(74, string.Format("Invalid input (enum \"{0}\") for eventPID {1}", gameVar, eventTxt)));
                         stateChanged = false;
@@ -56,11 +81,43 @@ namespace Next_Game.Event_System
                     //message
 
                     //debug
-                    Console.WriteLine(string.Format(""));
+                    Console.WriteLine(string.Format("Event \"{0}\", Option \"{1}\", {2} data changed from {3} to {4}", eventTxt, optionTxt, gameVar, oldData, newData));
                 }
             }
-            else { Game.SetError(new Error(74, string.Format("Invalid input (data \"{0}\") for eventPID {1}", data, eventTxt))); }
+            else { Game.SetError(new Error(74, string.Format("Invalid input (data \"{0}\") for eventPID {1}", outType, eventTxt))); }
         }
 
+        /// <summary>
+        /// implements actual changes
+        /// </summary>
+        /// <param name="currentValue"></param>
+        /// <param name="amount"></param>
+        /// <param name="apply"></param>
+        /// <returns></returns>
+        private int ChangeData(int currentValue, int amount, OutApply apply)
+        {
+            int newValue = currentValue;
+            switch(apply)
+            {
+                case OutApply.Add:
+                    newValue += amount;
+                    break;
+                case OutApply.Subtract:
+                    newValue -= amount;
+                    break;
+                case OutApply.Random:
+                    bool addRandom = true;
+                    //negative amount indicates SUBTRACT
+                    if (amount < 0)
+                    { addRandom = false; amount *= -1; }
+                    int rndNum = rnd.Next(amount);
+                    if (addRandom == true) { newValue += rndNum; }
+                    else { newValue -= rndNum; }
+                    break;
+            }
+            return newValue;
+        }
+
+        //add new methods above here
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
 
-    public enum OutApply { None, Add, Subtract, Random} //Random is rnd.Next(amount)
+    public enum OutApply { None, Add, Subtract, Random} //Random is rnd.Next(amount), if amount is -ve then it's Subtract rnd.Next(abs(amount))
     
 
     /// <summary>
@@ -18,7 +18,7 @@ namespace Next_Game.Event_System
         private static int outcomeIndex = 1; //autoassigned ID's. Main focus is the Outcome Class
         public int OutcomeID { get; }
         public int EventID { get; } //could be EventFID (follower) or EventPID (player)
-        public int Data { get; set; } //optional stored data point for use with resolve
+        public int Type { get; set; } //optional multipurpose type for use with resolve
         public int Amount { get; set; }
         public OutApply Apply { get; set; }
         
@@ -94,9 +94,9 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutConflict : Outcome
     {
-        public OutConflict(int eventID, int data, int amount, OutApply apply = OutApply.None) : base (eventID)
+        public OutConflict(int eventID, int type, int amount, OutApply apply = OutApply.None) : base (eventID)
         {
-            this.Data = data;
+            this.Type = type;
             this.Amount = amount;
             this.Apply = apply;
         }
@@ -130,13 +130,14 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutGame : Outcome
     {
-        public OutGame(int eventID, int data, int amount, OutApply apply = OutApply.None) : base(eventID)
+        public OutGame(int eventID, int type, int amount, OutApply apply = OutApply.None) : base(eventID)
         {
-            this.Data = data;
+            this.Type = type;
             this.Amount = amount;
             this.Apply = apply;
         }
 
+        /*
         /// <summary>
         /// data1 is actor ID
         /// </summary>
@@ -157,7 +158,7 @@ namespace Next_Game.Event_System
                 else { Game.SetError(new Error(67, "Event not found using EventPID in OutDelay.cs")); }
             }
             else { Game.SetError(new Error(67, "Active Actor not found")); }
-        }
+        }*/
     }
 
 
@@ -166,9 +167,9 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutEvent : Outcome
     {
-        public OutEvent(int eventID, int data, int amount, OutApply apply = OutApply.None) : base(eventID)
+        public OutEvent(int eventID, int type, int amount, OutApply apply = OutApply.None) : base(eventID)
         {
-            this.Data = data;
+            this.Type = type;
             this.Amount = amount;
             this.Apply = apply;
         }

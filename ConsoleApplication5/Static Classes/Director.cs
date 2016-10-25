@@ -78,7 +78,7 @@ namespace Next_Game
         public Director(int seed)
         {
             rnd = new Random(seed);
-            state = new State();
+            state = new State(seed);
             arrayOfGameStates = new int[(int)DataPoint.Count, (int)DataState.Count];
             //follower generic events
             listOfActiveGeoClusters = new List<int>();
@@ -984,6 +984,22 @@ namespace Next_Game
                         OptionInteractive option = listOptions[optionNum - 1];
                         Active actor = Game.world.GetActiveActor(1);
                         //resolve option
+                        List<Outcome> listOutcomes = option.GetGoodOutcomes();
+                        if (listOutcomes != null)
+                        {
+                            foreach(Outcome outcome in listOutcomes)
+                            {
+                                if (outcome is OutGame)
+                                {
+                                    state.SetState(eventObject.Name, option.Text, outcome.Type, outcome.Amount, outcome.Apply);
+                                }
+                                else if (outcome is OutConflict)
+                                { }
+                                else if (outcome is OutEvent)
+                                { }
+                            }
+                        }
+                        else { Game.SetError(new Error(73, "Invalid list of Outcomes")); }
                         //display message
                         Position pos = actor.GetActorPosition();
                         switch (eventObject.Type)
