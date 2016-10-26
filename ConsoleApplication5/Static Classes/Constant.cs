@@ -35,6 +35,7 @@ namespace Next_Game
         FOREST_LARGE,
         NUM_FOLLOWERS,
         TRAIT_MULTIPLIER,
+        GAME_STATE,
         Count //keep as last
     }
 
@@ -77,6 +78,7 @@ namespace Next_Game
             arrayOfGlobals[27] = Global.FOREST_LARGE;
             arrayOfGlobals[28] = Global.NUM_FOLLOWERS;
             arrayOfGlobals[29] = Global.TRAIT_MULTIPLIER;
+            arrayOfGlobals[30] = Global.GAME_STATE;
             }
 
         /// <summary>

@@ -145,7 +145,47 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- Initialise Archetypes");
             InitialiseArchetypes();
             Console.WriteLine(Environment.NewLine);
+            InitialiseGameStates();
         }
+
+        /// <summary>
+        ///Initialise all game states
+        /// </summary>
+        private void InitialiseGameStates()
+        {
+            int multiplier = Game.constant.GetValue(Global.GAME_STATE);
+            //Justice -> Old King popularity (charm) - New King
+            int popularity = Game.lore.OldKing.GetTrait(TraitType.Charm);
+            Game.director.SetGameState(DataPoint.Justice, DataState.Good, popularity * multiplier);
+            popularity = Game.lore.NewKing.GetTrait(TraitType.Charm);
+            Game.director.SetGameState(DataPoint.Justice, DataState.Bad, popularity * multiplier);
+            //Legend_Ursurper -> Combat
+            int legend = Game.lore.OldHeir.GetTrait(TraitType.Combat);
+            if (legend > 3)
+            { Game.director.SetGameState(DataPoint.Legend_Ursurper, DataState.Good, (legend - 3) * multiplier); }
+            else if (legend < 3)
+            { Game.director.SetGameState(DataPoint.Legend_Ursurper, DataState.Bad, (3 - legend) * multiplier); }
+            //Legend_New King -> Combat
+            legend = Game.lore.NewKing.GetTrait(TraitType.Combat);
+            if (legend > 3)
+            { Game.director.SetGameState(DataPoint.Legend_King, DataState.Good, (legend - 3) * multiplier); }
+            else if (legend < 3)
+            { Game.director.SetGameState(DataPoint.Legend_King, DataState.Bad, (3 - legend) * multiplier); }
+            //Honour_Ursurper -> Treachery (good is < 3)
+            int treachery = Game.lore.OldHeir.GetTrait(TraitType.Treachery);
+            if (treachery > 3)
+            { Game.director.SetGameState(DataPoint.Honour_Ursurper, DataState.Bad, (treachery - 3) * multiplier); }
+            else if (treachery < 3)
+            { Game.director.SetGameState(DataPoint.Honour_Ursurper, DataState.Good, (3 - treachery) * multiplier); }
+            //Honour_King -> Treachery (good is < 3)
+            treachery = Game.lore.NewKing.GetTrait(TraitType.Treachery);
+            if (treachery > 3)
+            { Game.director.SetGameState(DataPoint.Honour_King, DataState.Bad, (treachery - 3) * multiplier); }
+            else if (treachery < 3)
+            { Game.director.SetGameState(DataPoint.Honour_King, DataState.Good, (3 - treachery) * multiplier); }
+        }
+
+
 
         /// <summary>
         /// loop all events and place Generic eventID's in their approrpriate lists for both Follower and Player event types

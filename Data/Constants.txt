@@ -77,6 +77,9 @@
 # GAME_REVOLT -> baseline year for 1st generation (time of revolt)
 20: 1200
 
+# GAME_STATE -> honour (treachery) & legend (combat) good ( trait > 3) or bad (trait < 3), per point difference from baseline of 3
+30: 2
+
 # Decisions ---
 
 # TRAIT_MULTIPLIER -> amount trait level (1 to 5) is multiplied by for automatic option follower tests
