@@ -15,6 +15,7 @@
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # effect: type of outcome Effect ( Conflict, Event, Game)
 # out: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
+# out -> if +ve then Good, if -ve then Bad
 # effect = game, then out -> 1 Threat, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
 # apply: how the amount is applied (None, Add, Subtract, Random) where 'Random' is random range (amount). Default 'None'
@@ -101,7 +102,7 @@ text: Run straight at them
 reply: Surprise is the key. Wait until they are almost upon you, draw your sword and charge.
 [outcome]
 effect: Game
-out: 1
+out: -1
 amount: 50
 apply: Random
 [outcome]

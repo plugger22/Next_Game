@@ -1311,7 +1311,7 @@ namespace Next_Game
         public void SetGameState(DataPoint point, DataState state, int value)
         {
             if (point <= DataPoint.Count && state <= DataState.Count)
-            { arrayOfGameStates[(int)point, (int)state] = Math.Abs(value); }
+            { arrayOfGameStates[(int)point, (int)state] = value; }
             else
             { Game.SetError(new Error(75, "Invalid Input (exceeds enum)")); }
         }
@@ -1348,6 +1348,7 @@ namespace Next_Game
                 float percentage = 50 + difference / (good + bad) * 100;
                 percentage = Math.Min(100, percentage);
                 percentage = Math.Max(0, percentage);
+                returnValue = Convert.ToInt32(percentage);
             }
             return returnValue;
         }

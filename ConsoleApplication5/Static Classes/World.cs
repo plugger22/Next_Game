@@ -1554,7 +1554,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Show game state as well as the date as the default input display
+        /// Show game state as well as the date as the default input display (green if Good has increased, red if Bad)
         /// </summary>
         public void ShowGameStateRL()
         {

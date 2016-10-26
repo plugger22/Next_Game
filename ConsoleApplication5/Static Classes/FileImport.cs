@@ -1144,10 +1144,10 @@ namespace Next_Game
                                 try
                                 {
                                     dataInt = Convert.ToInt32(cleanToken);
-                                    if (dataInt > 0)
-                                    { structOutcome.Data = dataInt; }
-                                    else
-                                    { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Data (< 0), (\"{0}\")", arrayOfEvents[i]))); validData = false; }
+                                    //if (dataInt > 0)
+                                    structOutcome.Data = dataInt;
+                                    //else
+                                    //{ Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Data (less than 0), (\"{0}\")", arrayOfEvents[i]))); validData = false; }
                                 }
                                 catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Data, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                 break;
