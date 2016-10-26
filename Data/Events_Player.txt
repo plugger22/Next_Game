@@ -16,7 +16,7 @@
 # effect: type of outcome Effect ( Conflict, Event, Game)
 # out: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
 # effect = game, then out -> 1 Threat, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King
-# amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0'
+# amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
 # apply: how the amount is applied (None, Add, Subtract, Random) where 'Random' is random range (amount). Default 'None'
 # [End] -> Place at very bottom of event.
 # NOTE: Leave no spaces between lines WITHIN an event. Indents (tabs) are O.K, even better is colour coding using Notepad++ (example)
@@ -43,7 +43,7 @@ apply: None
 effect: Game
 out: 2
 amount: 12
-apply: Subtract
+apply: Add
 [option]
 text: Talk your way through
 reply: You approach the King's Men with an easy smile and a confident demeanour.
@@ -87,14 +87,14 @@ apply: None
 effect: Game
 out: 5
 amount: 12
-apply: Subtract
+apply: Add
 [option]
 text: Stay Calm
 reply: They regularly stop people at random, you should be able to talk your way out of this.
 [outcome]
 effect: Game
 out: 6
-amount: 100
+amount: 10
 apply: Random
 [option]
 text: Run straight at them

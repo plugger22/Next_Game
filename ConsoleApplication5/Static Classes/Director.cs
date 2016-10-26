@@ -11,8 +11,8 @@ namespace Next_Game
 {
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
     public enum EventType { None, Location, Travelling }
-    public enum DataPoint {None, Notoriety, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count } //arrayOfGameStates primary index
-    public enum DataState { Good, Bad, Count } //arrayOfGameStates secondary index
+    public enum DataPoint {None, Notoriety, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
+    public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
 
     /// <summary>
     /// used to store all triggered events for the current turn
@@ -1311,7 +1311,7 @@ namespace Next_Game
         public void SetGameState(DataPoint point, DataState state, int value)
         {
             if (point <= DataPoint.Count && state <= DataState.Count)
-            { arrayOfGameStates[(int)point, (int)state] = value; }
+            { arrayOfGameStates[(int)point, (int)state] = Math.Abs(value); }
             else
             { Game.SetError(new Error(75, "Invalid Input (exceeds enum)")); }
         }
@@ -1350,6 +1350,20 @@ namespace Next_Game
                 percentage = Math.Max(0, percentage);
             }
             return returnValue;
+        }
+
+        /// <summary>
+        /// returns change state (-ve for an increase in bad, +ve for increase in good, 0 for none)
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public int CheckGameStateChange(DataPoint point)
+        {
+            int change = arrayOfGameStates[(int)point, (int)DataState.Change];
+            //zero out any change, once queried
+            if (change != 0)
+            { arrayOfGameStates[(int)point, (int)DataState.Change] = 0; }
+            return change;
         }
 
         //place Director methods above here

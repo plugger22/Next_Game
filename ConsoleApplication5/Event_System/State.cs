@@ -8,12 +8,12 @@ namespace Next_Game.Event_System
 {
 
     public enum GameVar { None,
-        Notoriety, //don't change order -> Director DataPoint
-        Justice, //don't change order -> Director DataPoint
-        Legend_Ursurper, //don't change order -> Director DataPoint
-        Legend_King, //don't change order -> Director DataPoint
-        Honour_Ursurper, //don't change order -> Director DataPoint
-        Honour_King, //don't change order -> Director DataPoint
+        Notoriety, //don't change order -> corresponds to Director DataPoint
+        Justice, //don't change order -> corresponds to Director DataPoint
+        Legend_Ursurper, //don't change order -> corresponds to Director DataPoint
+        Legend_King, //don't change order -> corresponds to Director DataPoint
+        Honour_Ursurper, //don't change order -> corresponds to Director DataPoint
+        Honour_King, //don't change order -> corresponds to Director DataPoint
         Count } //use descriptive tags as variable names are referenced via methods
 
     /// <summary>
@@ -34,6 +34,7 @@ namespace Next_Game.Event_System
         /// <param name="apply">how to apply it</param>
         public void SetState(string eventTxt, string optionTxt, int outType, int amount, OutApply apply)
         {
+            amount = Math.Abs(amount); //must be positive 
             GameVar gameVar;
             bool stateChanged = false;
             DataState state = DataState.Good;
@@ -81,17 +82,29 @@ namespace Next_Game.Event_System
                         stateChanged = false;
                         break;
                 }
-                //tracker
+                //update Change state if required
                 if (stateChanged == true)
                 {
-                    //message
-                    Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2} level {3} from {4} to {5}", eventTxt, optionTxt, gameVar, 
-                        oldData > newData ? "decreased" : "increased" , oldData, newData), 1, 0, MessageType.Event);
-                    Game.world.SetMessage(message);
-                    //debug
-                    Console.WriteLine(string.Format("Event \"{0}\", Option \"{1}\", {2} level {3} from {4} to {5}", eventTxt, optionTxt, gameVar,
-                        oldData > newData ? "decreased" : "increased", oldData, newData));
+                    //Note: Director GameVar enum needs to be in same numerical order and position as State DataPoint enum
+                    DataPoint dataPoint = (DataPoint)outType;
+                    if (state == DataState.Good)
+                    {
+                        //good increase
+                        Game.director.SetGameState(dataPoint, DataState.Change, 1);
+                    }
+                    else
+                    {
+                        //Bad increase
+                        Game.director.SetGameState(dataPoint, DataState.Change, -1);
+                    }
                 }
+                //message
+                Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2} level {3} from {4} to {5}", eventTxt, optionTxt, gameVar,
+                    oldData > newData ? "decreased" : "increased", oldData, newData), 1, 0, MessageType.Event);
+                Game.world.SetMessage(message);
+                //debug
+                Console.WriteLine(string.Format("Event \"{0}\", Option \"{1}\", {2} level {3} from {4} to {5}", eventTxt, optionTxt, gameVar,
+                    oldData > newData ? "decreased" : "increased", oldData, newData));
             }
             else { Game.SetError(new Error(74, string.Format("Invalid input (data \"{0}\") for eventPID {1}", outType, eventTxt))); }
         }
@@ -111,17 +124,12 @@ namespace Next_Game.Event_System
                 case OutApply.Add:
                     newValue += amount;
                     break;
-                case OutApply.Subtract:
+                case OutApply.Subtract: //NOT for Director.cs DataPoint enums
                     newValue -= amount;
                     break;
                 case OutApply.Random:
-                    bool addRandom = true;
-                    //negative amount indicates SUBTRACT
-                    if (amount < 0)
-                    { addRandom = false; amount *= -1; }
                     int rndNum = rnd.Next(amount);
-                    if (addRandom == true) { newValue += rndNum; }
-                    else { newValue -= rndNum; }
+                    newValue += rndNum;
                     break;
             }
             return newValue;
