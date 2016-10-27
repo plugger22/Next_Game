@@ -105,5 +105,8 @@ namespace Next_Game.Event_System
         /// <param name="tempList"></param>
         internal void SetTriggers(List<Trigger> tempList)
         { listTriggers.AddRange(tempList); }
+
+        internal List<Trigger> GetTriggers()
+        { return listTriggers; }
     }
 }

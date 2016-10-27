@@ -64,6 +64,11 @@ check: Trait
 item: 4
 thresh: 5
 calc: =
+[trigger]
+check: Trait
+item: 6
+thresh: 0
+calc: >=
 [outcome]
 effect: Game
 out: 5

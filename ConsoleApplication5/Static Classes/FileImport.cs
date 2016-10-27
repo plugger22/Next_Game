@@ -1441,6 +1441,25 @@ namespace Next_Game
                 }
                 else { newEvent = false; }
             }
+            //debug - data dump of Player Events
+            Console.WriteLine(Environment.NewLine + "--- Player Events");
+            foreach(var eventObject in dictOfPlayerEvents)
+            {
+                Console.WriteLine("\"{0}\" Event, ID {1}, Type {2}", eventObject.Value.Name, eventObject.Value.EventPID, eventObject.Value.Type);
+                List<OptionInteractive> listTempOptions = eventObject.Value.GetOptions();
+                foreach (OptionInteractive optionObject in listTempOptions)
+                {
+                    Console.WriteLine("  Option \"{0}\"", optionObject.Text);
+                    List<Outcome> listTempOutcomes = optionObject.GetGoodOutcomes();
+                    List<Trigger> listTempTriggers = optionObject.GetTriggers();
+                    foreach(Trigger triggerObject in listTempTriggers)
+                    { Console.WriteLine("   Trigger -> if {0} {1} is {2} to {3}", triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold); }
+                    foreach(Outcome outcomeObject in listTempOutcomes)
+                    { Console.WriteLine("    Outcome -> out {0}, amount {1}, apply {2}", outcomeObject.Type, outcomeObject.Amount, outcomeObject.Calc); }
+                }
+                Console.WriteLine();
+            }
+
             return dictOfPlayerEvents;
         }
 
