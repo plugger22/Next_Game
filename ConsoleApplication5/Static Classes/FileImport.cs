@@ -84,6 +84,14 @@ namespace Next_Game
         public EventCalc Apply { get; set; }
     }
 
+    struct TriggerStruct
+    {
+        public TriggerCheck Check { get; set; }
+        public int Item { get; set; }
+        public int Threshold { get; set; }
+        public EventCalc Calc { get; set; }
+    }
+
     //archetypes
     struct ArcStruct
     {
@@ -840,6 +848,7 @@ namespace Next_Game
             int dataCounter = 0;
             bool optionFlag = false;
             bool outcomeFlag = false;
+            bool triggerFlag = false;
             string cleanTag;
             string cleanToken;
             bool newEvent = false;
@@ -851,9 +860,12 @@ namespace Next_Game
             EventPlayerStruct structEvent = new EventPlayerStruct();
             OptionStruct structOption = new OptionStruct();
             OutcomeStruct structOutcome = new OutcomeStruct();
+            TriggerStruct structTrigger = new TriggerStruct();
             List<OptionStruct> listOptions = null;
             List<List<OutcomeStruct>> listAllOutcomes = null; //all outcomes for an event (each option can have multiple outcomes)
             List<OutcomeStruct> listSubOutcomes = new List<OutcomeStruct>(); //list of outcomes for an individual option
+            List<Trigger> listSubTriggers = new List<Trigger>(); //list of individual triggers specific to an option
+            List<List<Trigger>> listAllTriggers = null; //all triggers for an event (each option can have multiple triggers)
             //loop imported array of strings
             for (int i = 0; i < arrayOfEvents.Length; i++)
             {
@@ -870,9 +882,11 @@ namespace Next_Game
                         structEvent = new EventPlayerStruct();
                         listOptions = new List<OptionStruct>();
                         listAllOutcomes = new List<List<OutcomeStruct>>();
+                        listAllTriggers = new List<List<Trigger>>();
                         //set flags to false
                         optionFlag = false;
                         outcomeFlag = false;
+                        triggerFlag = false;
                     }
                     string[] tokens = arrayOfEvents[i].Split(':');
                     //strip out leading spaces
@@ -895,6 +909,17 @@ namespace Next_Game
                                     listAllOutcomes.Add(listSubOutcomes);
                                     listOptions.Add(structOption);
                                     outcomeFlag = false;
+                                    //add Triggers to a list in same sequential order as options (place a blank trigger in the list if none exists)
+                                    if (listSubTriggers.Count > 0)
+                                    { listAllTriggers.Add(listSubTriggers); }
+                                    else
+                                    {
+                                        //create list with a single blank Trigger (effect = none)
+                                        listSubTriggers.Add(new Trigger());
+                                        listAllTriggers.Add(listSubTriggers);
+                                    }
+                                    //zero out listSubTriggers
+                                    listSubTriggers = null;
                                 }
                                 //set flag to true so option is saved on next tag
                                 else
@@ -910,6 +935,22 @@ namespace Next_Game
                                     //create new sublist of outcomes for each option
                                     listSubOutcomes = new List<OutcomeStruct>();
                                 }
+                                break;
+                            case "[trigger]":
+                                //trigger complete, save
+                                if (triggerFlag == true)
+                                {
+                                    try
+                                    {
+                                        //add trigger to list
+                                        Trigger trigger = new Trigger(structTrigger.Check, structTrigger.Item, structTrigger.Threshold, structTrigger.Calc);
+                                        listSubTriggers.Add(trigger);
+                                    }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(48, e.Message)); validData = false; }
+                                }
+                                else
+                                { triggerFlag = true; }
                                 break;
                             case "Name":
                                 structEvent.Name = cleanToken;
@@ -1124,6 +1165,62 @@ namespace Next_Game
                                 //Option reply
                                 structOption.Reply = cleanToken;
                                 break;
+                            case "check":
+                                //Trigger Check
+                                switch (cleanToken)
+                                {
+                                    case "Trait":
+                                        structTrigger.Check = TriggerCheck.Trait;
+                                        break;
+                                    case "GameVar":
+                                        structTrigger.Check = TriggerCheck.GameVar;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Check, (\"{0}\")", arrayOfEvents[i])));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "item":
+                                //Trigger item
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0) { structTrigger.Item = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Item, (value less than 0) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                }
+                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Item, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                break;
+                            case "thresh":
+                                //Trigger Threshold
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    structTrigger.Threshold = dataInt;
+                                }
+                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Item, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                break;
+                            case "calc":
+                                //Trigger Comparator
+                                switch (cleanToken)
+                                {
+                                    case ">=":
+                                        structTrigger.Calc = EventCalc.GreaterThanOrEqual;
+                                        break;
+                                    case "<=":
+                                        structTrigger.Calc = EventCalc.LessThanOrEqual;
+                                        break;
+                                    case "=":
+                                        structTrigger.Calc = EventCalc.Equals;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Calc, (\"{0}\")", arrayOfEvents[i])));
+                                        validData = false;
+                                        break;
+
+                                }
+                                break;
                             case "effect":
                                 //Outcome effect
                                 switch (cleanToken)
@@ -1144,10 +1241,7 @@ namespace Next_Game
                                 try
                                 {
                                     dataInt = Convert.ToInt32(cleanToken);
-                                    //if (dataInt > 0)
                                     structOutcome.Data = dataInt;
-                                    //else
-                                    //{ Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Data (less than 0), (\"{0}\")", arrayOfEvents[i]))); validData = false; }
                                 }
                                 catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Data, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                 break;
@@ -1187,6 +1281,17 @@ namespace Next_Game
                                     {
                                         listSubOutcomes.Add(structOutcome);
                                         listAllOutcomes.Add(listSubOutcomes);
+                                        //add Triggers to a list in same sequential order as options (place a blank trigger in the list if none exists)
+                                        if (listSubTriggers.Count > 0)
+                                        { listAllTriggers.Add(listSubTriggers); }
+                                        else
+                                        {
+                                            //create list with a single blank Trigger (effect = none)
+                                            listSubTriggers.Add(new Trigger());
+                                            listAllTriggers.Add(listSubTriggers);
+                                        }
+                                        //zero out listSubTriggers
+                                        listSubTriggers = null;
                                     }
                                     listOptions.Add(structOption);
                                     //structEvent.Options.Add(structOption);
@@ -1234,8 +1339,17 @@ namespace Next_Game
                                                 if (listAllOutcomes.Count > 0)
                                                 {
                                                     OptionInteractive optionObject = new OptionInteractive(optionTemp.Text) { ReplyGood = optionTemp.Reply};
+
+                                                    //Triggers (optional)
+                                                    List<Trigger> tempTriggers = listAllTriggers[index];
+                                                    Trigger trigger = tempTriggers[0];
+                                                    //if first record has a default value of None then it's a blank Trigger put there as a placeholder
+                                                    if (trigger.Check != TriggerCheck.None)
+                                                    { optionObject.SetTriggers(tempTriggers); }
+
+                                                    //Outcomes
                                                     List <OutcomeStruct> sublist = listAllOutcomes[index];
-                                                    //create appropriae outcome object
+                                                    //create appropriate outcome object
                                                     for (int inner = 0; inner < sublist.Count; inner++)
                                                     {
                                                         OutcomeStruct outTemp = sublist[inner];

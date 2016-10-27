@@ -20,7 +20,7 @@ namespace Next_Game.Event_System
         public string Tooltip { get; set; }
         private List<Outcome> listGoodOutcomes; //All possible outcomes if success (auto) or if selected (eg. interactive)
         private List<Outcome> listBadOutcomes; //All possible outcomes if fail
-        private List<Trigger> listTriggers; //Triggers for option to be active (if any)
+        
         
 
         public Option()
@@ -57,7 +57,7 @@ namespace Next_Game.Event_System
 
         internal List<Outcome> GetBadOutcomes()
         { return listBadOutcomes; }
-
+        
     }
 
 
@@ -80,20 +80,30 @@ namespace Next_Game.Event_System
 
 
 
-
     /// <summary>
     /// Interactive options, eg. Player event
     /// </summary>
     public class OptionInteractive : Option
     {
         public string Text { get; set; } //option text
+        private List<Trigger> listTriggers; //Triggers for option to be active (if any)
 
         public OptionInteractive()
-        { }
+        {
+            listTriggers = new List<Trigger>();
+        }
 
         public OptionInteractive(string text)
         {
             this.Text = text;
+            listTriggers = new List<Trigger>();
         }
+
+        /// <summary>
+        /// Add a list of Triggers (options may or may not have triggers (can be multiple)
+        /// </summary>
+        /// <param name="tempList"></param>
+        internal void SetTriggers(List<Trigger> tempList)
+        { listTriggers.AddRange(tempList); }
     }
 }

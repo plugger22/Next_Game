@@ -13,7 +13,7 @@ namespace Next_Game.Event_System
     /// </summary>
     class Trigger
     {
-        public TriggerCheck Check { get; set; }
+        public TriggerCheck Check { get; set; } = TriggerCheck.None;
         public int Data { get; set; } //multipurpose data point depending on Condition type
         public int Threshold { get; set; } //activation point
         public EventCalc Calc { get; set; } //comparison method
@@ -27,6 +27,8 @@ namespace Next_Game.Event_System
             this.Data = data;
             this.Threshold = threshold;
             this.Calc = calc;
+            //debug
+            Console.WriteLine("{0} Trigger, if {1} is {2} than {3}", Check, Data, Calc, Threshold);
         }
     }
 }
