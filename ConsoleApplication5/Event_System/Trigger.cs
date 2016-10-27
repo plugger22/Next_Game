@@ -19,7 +19,9 @@ namespace Next_Game.Event_System
         public EventCalc Calc { get; set; } //comparison method
 
         public Trigger()
-        { }
+        {
+            Console.WriteLine("Blank Trigger initialised");
+        }
 
         public Trigger(TriggerCheck condition, int data, int threshold, EventCalc calc)
         {
@@ -28,7 +30,7 @@ namespace Next_Game.Event_System
             this.Threshold = threshold;
             this.Calc = calc;
             //debug
-            Console.WriteLine("{0} Trigger, if {1} is {2} than {3}", Check, Data, Calc, Threshold);
+            Console.WriteLine("{0} Trigger, if {1} is {2} t0 {3}", Check, Data, Calc, Threshold);
         }
     }
 }

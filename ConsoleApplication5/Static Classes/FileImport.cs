@@ -914,13 +914,26 @@ namespace Next_Game
                                     { listAllTriggers.Add(listSubTriggers); }
                                     else
                                     {
-                                        //create list with a single blank Trigger (effect = none)
-                                        listSubTriggers.Add(new Trigger());
+                                        Trigger trigger;
+                                        //if not default value then write full data
+                                        if (structTrigger.Check > 0)
+                                        {
+                                            trigger = new Trigger(structTrigger.Check, structTrigger.Item, structTrigger.Threshold, structTrigger.Calc);
+                                            //reset to default value
+                                            structTrigger.Check = TriggerCheck.None;
+                                        }
+                                        else
+                                        {
+                                            //otherwise create list with a single blank Trigger (effect = none)
+                                            trigger = new Trigger();
+                                        }
+                                        listSubTriggers.Add(trigger);
                                         List<Trigger> tempTriggers = new List<Trigger>(listSubTriggers);
                                         listAllTriggers.Add(tempTriggers);
                                     }
                                     //zero out listSubTriggers
                                     listSubTriggers.Clear();
+                                    triggerFlag = false;
                                 }
                                 //set flag to true so option is saved on next tag
                                 else
@@ -1287,8 +1300,21 @@ namespace Next_Game
                                         { listAllTriggers.Add(listSubTriggers); }
                                         else
                                         {
+                                            Trigger trigger;
+                                            //if not default value then write full data
+                                            if (structTrigger.Check > 0)
+                                            {
+                                                trigger = new Trigger(structTrigger.Check, structTrigger.Item, structTrigger.Threshold, structTrigger.Calc);
+                                                //reset to default value
+                                                structTrigger.Check = TriggerCheck.None;
+                                            }
+                                            else
+                                            {
+                                                //otherwise create list with a single blank Trigger (effect = none)
+                                                trigger = new Trigger();
+                                            }
                                             //create list with a single blank Trigger (effect = none)
-                                            listSubTriggers.Add(new Trigger());
+                                            listSubTriggers.Add(trigger);
                                             List<Trigger> tempTriggers = new List<Trigger>(listSubTriggers);
                                             listAllTriggers.Add(tempTriggers);
                                         }
