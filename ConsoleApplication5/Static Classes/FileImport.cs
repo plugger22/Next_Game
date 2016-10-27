@@ -911,7 +911,18 @@ namespace Next_Game
                                     outcomeFlag = false;
                                     //add Triggers to a list in same sequential order as options (place a blank trigger in the list if none exists)
                                     if (listSubTriggers.Count > 0)
-                                    { listAllTriggers.Add(listSubTriggers); }
+                                    {
+                                        if (structTrigger.Check > 0)
+                                        {
+                                            //add remaining trigger to list
+                                            Trigger trigger = new Trigger(structTrigger.Check, structTrigger.Item, structTrigger.Threshold, structTrigger.Calc);
+                                            listSubTriggers.Add(trigger);
+                                            //reset to default value
+                                            structTrigger.Check = TriggerCheck.None;
+                                        }
+                                        List<Trigger> tempTriggers = new List<Trigger>(listSubTriggers);
+                                        listAllTriggers.Add(tempTriggers);
+                                    }
                                     else
                                     {
                                         Trigger trigger;
@@ -959,6 +970,8 @@ namespace Next_Game
                                         //add trigger to list
                                         Trigger trigger = new Trigger(structTrigger.Check, structTrigger.Item, structTrigger.Threshold, structTrigger.Calc);
                                         listSubTriggers.Add(trigger);
+                                        //reset to default value
+                                        structTrigger.Check = TriggerCheck.None;
                                     }
                                     catch (Exception e)
                                     { Game.SetError(new Error(48, e.Message)); validData = false; }

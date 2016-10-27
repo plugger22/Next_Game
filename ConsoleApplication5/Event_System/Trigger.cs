@@ -30,7 +30,7 @@ namespace Next_Game.Event_System
             this.Threshold = threshold;
             this.Calc = calc;
             //debug
-            Console.WriteLine("{0} Trigger, if {1} is {2} t0 {3}", Check, Data, Calc, Threshold);
+            Console.WriteLine("{0} Trigger, if {1} is {2} to {3}", Check, Data, Calc, Threshold);
         }
     }
 }
