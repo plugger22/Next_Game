@@ -1334,6 +1334,8 @@ namespace Next_Game
                                         //zero out listSubTriggers
                                         listSubTriggers.Clear();
                                     }
+                                    else if (outcomeFlag == false)
+                                    { Game.SetError(new Error(49, string.Format("{0} has no Outcomes", structEvent.Name))); validData = false; }
                                     listOptions.Add(structOption);
                                     //structEvent.Options.Add(structOption);
                                 }

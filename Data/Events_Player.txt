@@ -147,3 +147,30 @@ out: 2
 amount: 2
 apply: None
 [End]
+
+Name: Mysterious Stranger
+ID: 3
+Type: Location
+subType: Minor
+Cat: Generic
+Freq: Low
+Status: Active
+Event: A hooded figure crosses your path, piercing eyes glancing in your direction.
+[option]
+text: Ignore them
+reply: Why risk getting involved with an unknown stranger?
+[outcome]
+effect: Game
+out: -1
+amount: 50
+apply: Random
+[option]
+text: Talk to them
+reply: The Stranger stops and looks at your expectantly
+[outcome]
+effect: Game
+out: 5
+amount: 12
+apply: Add
+[End]
+
