@@ -17,7 +17,7 @@
 # check -> if 'Trait' then -> 1 Combat, 2 Wits, 3 Charm, 4 Treachery, 5 Leadership, 6 Touched
 # item: multi purpose number depending on Trigger Check type 
 # thresh: Trigger threshold amount to be tested against, eg. < 3
-# calc: Type of comparison for testing trigger (None, GreaterThanOrEqual, LessThanOrEqual, Equals)
+# calc: Type of comparison for testing trigger (>=, <=, =)
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # effect: type of outcome Effect ( Conflict, Event, Game)
 # out: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -58,7 +58,7 @@ reply: You approach the King's Men with an easy smile and a confident demeanour.
 check: Trait
 item: 3
 thresh: 3
-calc: GreaterThanOrEqual
+calc: >=
 [outcome]
 effect: Game
 out: 5
@@ -71,7 +71,7 @@ reply: You approach the King's Men with a haughty manner, demanding that they ma
 check: Trait
 item: 4
 thresh: 3
-calc: GreaterThanOrEqual
+calc: >=
 [outcome]
 effect: Game
 out: 6
@@ -99,7 +99,7 @@ reply: Do they know who you are? Why take the chance?
 check: Trait
 item: 2
 thresh: 3
-calc: GreaterThanOrEqual
+calc: >=
 [outcome]
 effect: Conflict
 out: 2
@@ -125,7 +125,7 @@ reply: Surprise is the key. Wait until they are almost upon you, draw your sword
 check: Trait
 item: 1
 thresh: 3
-calc: GreaterThanOrEqual
+calc: >=
 [outcome]
 effect: Game
 out: -1

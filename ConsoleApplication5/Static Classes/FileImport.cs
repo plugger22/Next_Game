@@ -916,10 +916,11 @@ namespace Next_Game
                                     {
                                         //create list with a single blank Trigger (effect = none)
                                         listSubTriggers.Add(new Trigger());
-                                        listAllTriggers.Add(listSubTriggers);
+                                        List<Trigger> tempTriggers = new List<Trigger>(listSubTriggers);
+                                        listAllTriggers.Add(tempTriggers);
                                     }
                                     //zero out listSubTriggers
-                                    listSubTriggers = null;
+                                    listSubTriggers.Clear();
                                 }
                                 //set flag to true so option is saved on next tag
                                 else
@@ -1288,10 +1289,11 @@ namespace Next_Game
                                         {
                                             //create list with a single blank Trigger (effect = none)
                                             listSubTriggers.Add(new Trigger());
-                                            listAllTriggers.Add(listSubTriggers);
+                                            List<Trigger> tempTriggers = new List<Trigger>(listSubTriggers);
+                                            listAllTriggers.Add(tempTriggers);
                                         }
                                         //zero out listSubTriggers
-                                        listSubTriggers = null;
+                                        listSubTriggers.Clear();
                                     }
                                     listOptions.Add(structOption);
                                     //structEvent.Options.Add(structOption);
