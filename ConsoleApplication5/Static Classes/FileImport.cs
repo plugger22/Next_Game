@@ -81,7 +81,7 @@ namespace Next_Game
         public string Effect { get; set; }
         public int Data { get; set; }
         public int Amount { get; set; }
-        public OutApply Apply { get; set; }
+        public EventCalc Apply { get; set; }
     }
 
     //archetypes
@@ -1160,16 +1160,16 @@ namespace Next_Game
                                 switch (cleanToken)
                                 {
                                     case "None":
-                                        structOutcome.Apply = OutApply.None;
+                                        structOutcome.Apply = Event_System.EventCalc.None;
                                         break;
                                     case "Add":
-                                        structOutcome.Apply = OutApply.Add;
+                                        structOutcome.Apply = Event_System.EventCalc.Add;
                                         break;
                                     case "Subtract":
-                                        structOutcome.Apply = OutApply.Subtract;
+                                        structOutcome.Apply = Event_System.EventCalc.Subtract;
                                         break;
                                     case "Random":
-                                        structOutcome.Apply = OutApply.Random;
+                                        structOutcome.Apply = Event_System.EventCalc.Random;
                                         break;
                                     default:
                                         Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Apply, (\"{0}\")", arrayOfEvents[i])));

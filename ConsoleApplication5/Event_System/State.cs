@@ -32,7 +32,7 @@ namespace Next_Game.Event_System
         /// <param name="outType">GameVar enum index. If positive then DataState.Good, if negative then DataState.Bad</param>
         /// <param name="amount">how much</param>
         /// <param name="apply">how to apply it</param>
-        public void SetState(string eventTxt, string optionTxt, int outType, int amount, OutApply apply)
+        public void SetState(string eventTxt, string optionTxt, int outType, int amount, EventCalc apply)
         {
             int amountNum = Math.Abs(amount); //must be positive 
             GameVar gameVar;
@@ -134,18 +134,18 @@ namespace Next_Game.Event_System
         /// <param name="amount"></param>
         /// <param name="apply"></param>
         /// <returns></returns>
-        private int ChangeData(int currentValue, int amount, OutApply apply)
+        private int ChangeData(int currentValue, int amount, EventCalc apply)
         {
             int newValue = currentValue;
             switch(apply)
             {
-                case OutApply.Add:
+                case EventCalc.Add:
                     newValue += amount;
                     break;
-                case OutApply.Subtract: //NOT for Director.cs DataPoint enums
+                case EventCalc.Subtract: //NOT for Director.cs DataPoint enums
                     newValue -= amount;
                     break;
-                case OutApply.Random:
+                case EventCalc.Random:
                     int rndNum = rnd.Next(amount);
                     newValue += rndNum;
                     break;

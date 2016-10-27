@@ -11,8 +11,10 @@ namespace Next_Game
 {
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
     public enum EventType { None, Location, Travelling }
+    
     public enum DataPoint {None, Notoriety, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
     public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
+    
 
     /// <summary>
     /// used to store all triggered events for the current turn
@@ -1030,7 +1032,7 @@ namespace Next_Game
                             foreach(Outcome outcome in listOutcomes)
                             {
                                 if (outcome is OutGame)
-                                { state.SetState(eventObject.Name, option.Text, outcome.Type, outcome.Amount, outcome.Apply); }
+                                { state.SetState(eventObject.Name, option.Text, outcome.Type, outcome.Amount, outcome.Calc); }
                                 else if (outcome is OutConflict)
                                 { }
                                 else if (outcome is OutEvent)

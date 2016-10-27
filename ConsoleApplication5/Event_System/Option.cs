@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum OptionCheck {None, Trait, Resources, Companion, Item } //special conditions that must be met for the option to trigger (all resolve down to an 'int' value in the dict)
 
     /// <summary>
     /// Event option
@@ -21,7 +20,7 @@ namespace Next_Game.Event_System
         public string Tooltip { get; set; }
         private List<Outcome> listGoodOutcomes; //All possible outcomes if success (auto) or if selected (eg. interactive)
         private List<Outcome> listBadOutcomes; //All possible outcomes if fail
-        private Dictionary<int, OptionCheck> dictOfTriggers; //trigger conditions, if any, that must be met for the option to be active
+        private List<Trigger> listTriggers; //Triggers for option to be active (if any)
         
 
         public Option()
@@ -29,7 +28,6 @@ namespace Next_Game.Event_System
             OptionID = optionIndex++;
             listGoodOutcomes = new List<Outcome>();
             listBadOutcomes = new List<Outcome>();
-            dictOfTriggers = new Dictionary<int, OptionCheck>();
         }
 
         /// <summary>
@@ -59,26 +57,6 @@ namespace Next_Game.Event_System
 
         internal List<Outcome> GetBadOutcomes()
         { return listBadOutcomes; }
-
-        /// <summary>
-        /// set up a trigger for the option (won't show unless condition met)
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="condition"></param>
-        internal void AddTrigger(int data, OptionCheck condition)
-        {
-            if (data > 0 && condition != OptionCheck.None)
-            {
-                //validate data input
-                switch (condition)
-                {
-                    case OptionCheck.Trait:
-
-                        break;
-                }
-            }
-            else { Game.SetError(new Error(68, "Invalid input (Trigger) in Option.cs")); }
-        }
 
     }
 

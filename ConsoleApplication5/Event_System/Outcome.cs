@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
 
-    public enum OutApply { None, Add, Subtract, Random} //Random is rnd.Next(amount), if amount is -ve then it's Subtract rnd.Next(abs(amount))
+    //public enum EventCalc { None, Add, Subtract, Random} //Random is rnd.Next(amount), if amount is -ve then it's Subtract rnd.Next(abs(amount))
     
 
     /// <summary>
@@ -20,7 +20,7 @@ namespace Next_Game.Event_System
         public int EventID { get; } //could be EventFID (follower) or EventPID (player)
         public int Type { get; set; } //optional multipurpose type for use with resolve
         public int Amount { get; set; }
-        public OutApply Apply { get; set; }
+        public EventCalc Calc { get; set; }
         
 
 
@@ -95,11 +95,11 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutConflict : Outcome
     {
-        public OutConflict(int eventID, int type, int amount, OutApply apply = OutApply.None) : base (eventID)
+        public OutConflict(int eventID, int type, int amount, EventCalc apply = EventCalc.None) : base (eventID)
         {
             this.Type = type;
             this.Amount = amount;
-            this.Apply = apply;
+            this.Calc = apply;
         }
 
         /*
@@ -132,11 +132,11 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutGame : Outcome
     {
-        public OutGame(int eventID, int type, int amount, OutApply apply = OutApply.None) : base(eventID)
+        public OutGame(int eventID, int type, int amount, EventCalc apply = EventCalc.None) : base(eventID)
         {
             this.Type = type;
             this.Amount = amount;
-            this.Apply = apply;
+            this.Calc = apply;
         }
 
         /*
@@ -169,11 +169,11 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutEvent : Outcome
     {
-        public OutEvent(int eventID, int type, int amount, OutApply apply = OutApply.None) : base(eventID)
+        public OutEvent(int eventID, int type, int amount, EventCalc apply = EventCalc.None) : base(eventID)
         {
             this.Type = type;
             this.Amount = amount;
-            this.Apply = apply;
+            this.Calc = apply;
         }
 
         /*

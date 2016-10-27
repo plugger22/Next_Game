@@ -12,6 +12,12 @@
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks. Place block header at top
 # text: option text (number is block, or option num, eg. 1 to 4). Keep it short and clear.
 # reply: text shown when option selected
+# [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
+# check: Trigger Check ( None, Trait, GameVar)
+# check -> if 'Trait' then -> 1 Combat, 2 Wits, 3 Charm, 4 Treachery, 5 Leadership, 6 Touched
+# item: multi purpose number depending on Trigger Check type 
+# thresh: Trigger threshold amount to be tested against, eg. < 3
+# calc: Type of comparison for testing trigger (None, GreaterThanOrEqual, LessThanOrEqual, Equals)
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # effect: type of outcome Effect ( Conflict, Event, Game)
 # out: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -48,6 +54,11 @@ apply: Add
 [option]
 text: Talk your way through
 reply: You approach the King's Men with an easy smile and a confident demeanour.
+[trigger]
+check: Trait
+item: 3
+thresh: 3
+calc: GreaterThanOrEqual
 [outcome]
 effect: Game
 out: 5
@@ -56,6 +67,11 @@ apply: Add
 [option]
 text: Bluff your way through
 reply: You approach the King's Men with a haughty manner, demanding that they make way for the King's Tax Collector.
+[trigger]
+check: Trait
+item: 4
+thresh: 3
+calc: GreaterThanOrEqual
 [outcome]
 effect: Game
 out: 6
@@ -79,6 +95,11 @@ Event: You there, Halt! A group of black coated Inquisitors move purposely towar
 [option]
 text: Leg it!
 reply: Do they know who you are? Why take the chance?
+[trigger]
+check: Trait
+item: 2
+thresh: 3
+calc: GreaterThanOrEqual
 [outcome]
 effect: Conflict
 out: 2
@@ -100,6 +121,11 @@ apply: Random
 [option]
 text: Run straight at them
 reply: Surprise is the key. Wait until they are almost upon you, draw your sword and charge.
+[trigger]
+check: Trait
+item: 1
+thresh: 3
+calc: GreaterThanOrEqual
 [outcome]
 effect: Game
 out: -1
