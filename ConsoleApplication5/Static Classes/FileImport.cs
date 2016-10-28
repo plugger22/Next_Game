@@ -1467,9 +1467,15 @@ namespace Next_Game
                     List<Outcome> listTempOutcomes = optionObject.GetGoodOutcomes();
                     List<Trigger> listTempTriggers = optionObject.GetTriggers();
                     foreach(Trigger triggerObject in listTempTriggers)
-                    { Console.WriteLine("   Trigger -> if {0} {1} is {2} to {3}", triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold); }
+                    {
+                        var name = nameof(triggerObject);
+                        Console.WriteLine("   {0} -> if {1} {2} is {3} to {4}", name, triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold);
+                    }
                     foreach(Outcome outcomeObject in listTempOutcomes)
-                    { Console.WriteLine("    Outcome -> out {0}, amount {1}, apply {2}", outcomeObject.Type, outcomeObject.Amount, outcomeObject.Calc); }
+                    {
+                        var name = nameof(outcomeObject);
+                        Console.WriteLine("    {0} -> out {1}, amount {2}, apply {3}", name, outcomeObject.Type, outcomeObject.Amount, outcomeObject.Calc);
+                    }
                 }
                 Console.WriteLine();
             }
