@@ -1041,7 +1041,7 @@ namespace Next_Game
                                 type = TraitType.Combat;
                                 Game.SetError(new Error(76, string.Format("Invalid Trigger Data (\"{0}\"), default Combat trait used instead, for Option \"{1}\"", trigger.Data, option.Text)));
                             }
-                            Console.WriteLine("\"{0}\" {1} Trigger, if {2} is {3} to {4}", option.Text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold);
+                            Console.WriteLine("\"{0}\" {1} Trigger, if type {2} is {3} to {4}", option.Text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold);
                             if (CheckTrigger(player.GetTrait(type), trigger.Calc, trigger.Threshold) == false)
                                 { return false; }
                             break;
@@ -1078,7 +1078,7 @@ namespace Next_Game
                     if (data > threshold) { validCheck = false; }
                     break;
                 case EventCalc.Equals:
-                    if (data == threshold) { validCheck = false; }
+                    if (data != threshold) { validCheck = false; }
                     break;
                 default:
                     Game.SetError(new Error(77, string.Format("Invalid Trigger Calculation Type (\"{0}\")", comparator)));
@@ -1090,12 +1090,13 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// handles outcome resolution for player events, eg. player has chosen option 2 (pressed 'F2')
+        /// handles outcome resolution for player events, eg. player has chosen option 2 (pressed 'F2').Return 'true' if option Active, false if not.
         /// </summary>
         /// <param name="eventID"></param>
         /// <param name="optionNum"></param>
-        public void ResolveOutcome(int eventID, int optionNum)
+        public bool ResolveOutcome(int eventID, int optionNum)
         {
+            bool validOption = true;
             string status;
             List<Snippet> eventList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
@@ -1168,13 +1169,19 @@ namespace Next_Game
                             //housekeeping
                             Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
                         }
-                        else { Console.WriteLine("Inactive (greyed out) Option chosen for \"{0}\", option # {1}", eventObject.Name, optionNum); }
+                        else
+                        {
+                            //invalid option (trigger/s didn't pass)
+                            validOption = false;
+                            Console.WriteLine("Inactive (greyed out) Option chosen for \"{0}\", option # {1}", eventObject.Name, optionNum);
+                        }
                     }
                     else { Game.SetError(new Error(73, string.Format("No valid option present for \"{0}\", option # {1}", eventObject.Name, optionNum))); }
                 }
                 else { Game.SetError(new Error(73, string.Format("No options present for \"{0}\"", eventObject.Name))); }
             }
             else { Game.SetError(new Error(73, string.Format("Invalid Event Input \"{0}\"", eventID))); }
+            return validOption;
         }
 
         /// <summary>

@@ -1040,22 +1040,22 @@ namespace Next_Game
                 case RLKey.F1:
                     if (mode == SpecialMode.PlayerEvent)
                     {
-                        _specialMode = SpecialMode.Outcome;
-                        director.ResolveOutcome(_eventID, 1);
+                       if (director.ResolveOutcome(_eventID, 1) == true)
+                        { _specialMode = SpecialMode.Outcome; }
                     }
                     break;
                 case RLKey.F2:
                     if (mode == SpecialMode.PlayerEvent)
                     {
-                        _specialMode = SpecialMode.Outcome;
-                        director.ResolveOutcome(_eventID, 2);
+                        if (director.ResolveOutcome(_eventID, 2) == true)
+                        { _specialMode = SpecialMode.Outcome; }
                     }
                     break;
                 case RLKey.F3:
                     if (mode == SpecialMode.PlayerEvent)
                     {
-                        _specialMode = SpecialMode.Outcome;
-                        director.ResolveOutcome(_eventID, 3);
+                        if (director.ResolveOutcome(_eventID, 3) == true)
+                        { _specialMode = SpecialMode.Outcome; }
                     }
                     break;
                 case RLKey.Enter:
