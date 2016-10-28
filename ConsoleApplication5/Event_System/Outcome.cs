@@ -89,6 +89,19 @@ namespace Next_Game.Event_System
 
     //--- Player subclasses ---
 
+    /// <summary>
+    /// Do nothing outcome
+    /// </summary>
+    class OutNone : Outcome
+    {
+        public OutNone(int eventID) : base (eventID)
+        {
+            //set all to default (they aren't used but do show up on debug messages)
+            Type = 0;
+            Amount = 0;
+            Calc = EventCalc.None;
+        }
+    }
 
     /// <summary>
     /// Player outcome -> Initiate a conflict

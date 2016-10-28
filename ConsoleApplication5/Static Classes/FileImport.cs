@@ -1255,6 +1255,7 @@ namespace Next_Game
                                     case "Conflict":
                                     case "Game":
                                     case "Event":
+                                    case "None":
                                         structOutcome.Effect = cleanToken;
                                         break;
                                     default:
@@ -1409,6 +1410,9 @@ namespace Next_Game
                                                             case "Event":
                                                                 outObject = new OutEvent(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
                                                                 break;
+                                                            case "None":
+                                                                outObject = new OutNone(structEvent.EventID);
+                                                                break;
                                                             default:
                                                                 Game.SetError(new Error(49, string.Format("Invalid Outcome Effect for Event (\"{0}\")", structEvent.Name)));
                                                                 validData = false;
@@ -1421,7 +1425,8 @@ namespace Next_Game
                                                     //add option object to event object
                                                     eventTemp.SetOption(optionObject);
                                                 }
-                                                else { Game.SetError(new Error(49, string.Format("{0} has no Outcome for Option {1}", structEvent.Name, index + 1))); validData = false; }
+                                                else
+                                                { Game.SetError(new Error(49, string.Format("{0} has no Outcome for Option {1}", structEvent.Name, index + 1))); validData = false; }
                                             }
                                         }
                                         else { Game.SetError(new Error(49, string.Format("{0} has insufficient Options", structEvent.Name))); validData = false; }

@@ -1037,6 +1037,7 @@ namespace Next_Game
                                 { }
                                 else if (outcome is OutEvent)
                                 { }
+                                //ignore if OutNone (do nothing)
                             }
                         }
                         else { Game.SetError(new Error(73, "Invalid list of Outcomes")); }
@@ -1387,7 +1388,7 @@ namespace Next_Game
             if (difference == 0 || good + bad == 0) { returnValue = 50; }
             else
             {
-                float percentage = 50 + difference / (good + bad) * 100;
+                float percentage = good / (good + bad) * 100;
                 percentage = Math.Min(100, percentage);
                 percentage = Math.Max(0, percentage);
                 returnValue = Convert.ToInt32(percentage);
