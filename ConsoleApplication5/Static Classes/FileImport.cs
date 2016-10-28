@@ -1457,6 +1457,8 @@ namespace Next_Game
             }
             //debug - data dump of Player Events
             Console.WriteLine(Environment.NewLine + "--- Player Events");
+            Type type;
+            String name;
             foreach(var eventObject in dictOfPlayerEvents)
             {
                 Console.WriteLine("\"{0}\" Event, ID {1}, Type {2}", eventObject.Value.Name, eventObject.Value.EventPID, eventObject.Value.Type);
@@ -1467,14 +1469,16 @@ namespace Next_Game
                     List<Outcome> listTempOutcomes = optionObject.GetGoodOutcomes();
                     List<Trigger> listTempTriggers = optionObject.GetTriggers();
                     foreach(Trigger triggerObject in listTempTriggers)
-                    {
-                        var name = nameof(triggerObject);
-                        Console.WriteLine("   {0} -> if {1} {2} is {3} to {4}", name, triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold);
-                    }
+                    { Console.WriteLine("   {0} -> if {1} {2} is {3} to {4}", "Trigger", triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold); }
                     foreach(Outcome outcomeObject in listTempOutcomes)
                     {
-                        var name = nameof(outcomeObject);
-                        Console.WriteLine("    {0} -> out {1}, amount {2}, apply {3}", name, outcomeObject.Type, outcomeObject.Amount, outcomeObject.Calc);
+                        //extract and isolate name of derived outcome object
+                        type = outcomeObject.GetType();
+                        name = type.ToString();
+                        string[] tokens = name.Split('.');
+                        //strip out leading spaces
+                        cleanTag = tokens[tokens.Length - 1].Trim();
+                        Console.WriteLine("    {0} -> out {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Type, outcomeObject.Amount, outcomeObject.Calc);
                     }
                 }
                 Console.WriteLine();
