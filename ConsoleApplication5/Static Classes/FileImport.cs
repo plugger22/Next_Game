@@ -1405,6 +1405,13 @@ namespace Next_Game
                                                                 outObject = new OutConflict(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
                                                                 break;
                                                             case "Game":
+                                                                //check that GameVars (DataPoints) are only 'add' or 'random'
+                                                                if (outTemp.Data <= 6 && outTemp.Apply != EventCalc.Add && outTemp.Apply != EventCalc.Random)
+                                                                {
+                                                                    Game.SetError(new Error(49, string.Format("Outcome \"apply: {0}\" changed to \"Add\" for Event (\"{1}\")", 
+                                                                        outTemp.Apply, structEvent.Name)));
+                                                                    outTemp.Apply = EventCalc.Add;
+                                                                }
                                                                 outObject = new OutGame(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
                                                                 break;
                                                             case "Event":

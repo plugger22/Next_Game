@@ -46,7 +46,7 @@ reply: Giddee Up Trigger! You attempt to gallop away to safety
 effect: Conflict
 out: 1
 amount: 1
-apply: None
+apply: Subtract
 [outcome]
 effect: Game
 out: 2
@@ -169,6 +169,14 @@ reply: The Stranger stops and looks at your expectantly
 effect: Game
 out: 5
 amount: 12
+apply: Add
+[option]
+text: Curse all strangers
+reply: You are heard. The Stranger has taken note of your insolence.
+[outcome]
+effect: Game
+out: -3
+amount: 2
 apply: Add
 [End]
 
