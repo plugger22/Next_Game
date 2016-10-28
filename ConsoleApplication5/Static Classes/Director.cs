@@ -976,13 +976,23 @@ namespace Next_Game
                     string optionText;
                     int ctr = 1;
                     int maxWidth = 0;
+                    RLColor optionColor;
                     if (listOptions != null)
                     {
                         foreach(OptionInteractive option in listOptions)
                         {
+                            //check any option triggers 
+                            if (CheckOption(option) == true)
+                            { optionColor = RLColor.Blue; option.Active = true; }
+                            else
+                            {
+                                //invalid triggers, option shown greyed out and unusable
+                                optionColor = RLColor.LightGray;
+                                option.Active = false;
+                            }
                             optionText = string.Format("[F{0}]  {1}", ctr++, option.Text);
                             if (optionText.Length > maxWidth) { maxWidth = optionText.Length; }
-                            eventList.Add(new Snippet(string.Format("{0, -40}", optionText), RLColor.Blue, backColor));
+                            eventList.Add(new Snippet(string.Format("{0, -40}", optionText), optionColor, backColor));
                             eventList.Add(new Snippet(""));
                         }
                     }
@@ -1000,6 +1010,83 @@ namespace Next_Game
                 }
             }
             return returnValue;
+        }
+
+        /// <summary>
+        /// Checks any triggers for the option and determines if it's active (triggers are all good -> returns true), or not
+        /// </summary>
+        /// <param name="option"></param>
+        /// <returns></returns>
+        private bool CheckOption(OptionInteractive option)
+        {
+            bool validCheck = true;
+            List<Trigger> listTriggers = option.GetTriggers();
+            if (listTriggers.Count > 0)
+            {
+                //check each trigger
+                foreach(Trigger trigger in listTriggers)
+                {
+                    switch (trigger.Check)
+                    {
+                        case TriggerCheck.None:
+                            break;
+                        case TriggerCheck.Trait:
+                            Active player = Game.world.GetActiveActor(1);
+                            TraitType type;
+                            try
+                            { type = (TraitType)trigger.Data; }
+                            catch
+                            {
+                                //set to combat to get the job done but generate an error
+                                type = TraitType.Combat;
+                                Game.SetError(new Error(76, string.Format("Invalid Trigger Data (\"{0}\"), default Combat trait used instead, for Option \"{1}\"", trigger.Data, option.Text)));
+                            }
+                            Console.WriteLine("\"{0}\" {1} Trigger, if {2} is {3} to {4}", option.Text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold);
+                            if (CheckTrigger(player.GetTrait(type), trigger.Calc, trigger.Threshold) == false)
+                                { return false; }
+                            break;
+                        case TriggerCheck.GameVar:
+
+                            //NOT YET IMPLEMENTED
+
+                            break;
+                        default:
+                            Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\"", trigger.Check, option.Text)));
+                            break;
+                    }
+                }
+            }
+            return validCheck;
+        }
+
+        /// <summary>
+        /// Checks the validity of any trigger (if passes -> return true)
+        /// </summary>
+        /// <param name="data">any number</param>
+        /// <param name="comparator"></param>
+        /// <param name="threshold"></param>
+        /// <returns></returns>
+        private bool CheckTrigger(int data, EventCalc comparator, int threshold)
+        {
+            bool validCheck = true;
+            switch(comparator)
+            {
+                case EventCalc.GreaterThanOrEqual:
+                    if (data < threshold) { validCheck = false; }
+                    break;
+                case EventCalc.LessThanOrEqual:
+                    if (data > threshold) { validCheck = false; }
+                    break;
+                case EventCalc.Equals:
+                    if (data == threshold) { validCheck = false; }
+                    break;
+                default:
+                    Game.SetError(new Error(77, string.Format("Invalid Trigger Calculation Type (\"{0}\")", comparator)));
+                    validCheck = false;
+                    break;
+            }
+            Console.WriteLine("Trigger {0} on \"{1}\"", validCheck == true ? "passed" : "FAILED", data);
+            return validCheck;
         }
 
         /// <summary>
@@ -1025,58 +1112,63 @@ namespace Next_Game
                     {
                         OptionInteractive option = listOptions[optionNum - 1];
                         Active actor = Game.world.GetActiveActor(1);
-                        //resolve option
-                        List<Outcome> listOutcomes = option.GetGoodOutcomes();
-                        if (listOutcomes != null)
+                        //Active option?
+                        if (option.Active == true)
                         {
-                            foreach(Outcome outcome in listOutcomes)
+                            //resolve option
+                            List<Outcome> listOutcomes = option.GetGoodOutcomes();
+                            if (listOutcomes != null)
                             {
-                                if (outcome is OutGame)
-                                { state.SetState(eventObject.Name, option.Text, outcome.Type, outcome.Amount, outcome.Calc); }
-                                else if (outcome is OutConflict)
-                                { }
-                                else if (outcome is OutEvent)
-                                { }
-                                //ignore if OutNone (do nothing)
+                                foreach (Outcome outcome in listOutcomes)
+                                {
+                                    if (outcome is OutGame)
+                                    { state.SetState(eventObject.Name, option.Text, outcome.Type, outcome.Amount, outcome.Calc); }
+                                    else if (outcome is OutConflict)
+                                    { }
+                                    else if (outcome is OutEvent)
+                                    { }
+                                    //ignore if OutNone (do nothing)
+                                }
                             }
+                            else { Game.SetError(new Error(73, "Invalid list of Outcomes")); }
+                            //display message
+                            Position pos = actor.GetActorPosition();
+                            switch (eventObject.Type)
+                            {
+                                case ArcType.GeoCluster:
+                                case ArcType.Road:
+                                    eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
+                                        Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
+                                    break;
+                                case ArcType.Location:
+                                    eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
+                                        pos.PosX, pos.PosY), RLColor.LightGray, backColor));
+                                    break;
+                                case ArcType.Actor:
+                                    if (actor.Status == ActorStatus.AtLocation) { status = Game.world.GetLocationName(actor.LocID) + " "; }
+                                    else { status = null; }
+                                    eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2}(Loc {3}:{4})", actor.Name, actor.ActID, status,
+                                        pos.PosX, pos.PosY), RLColor.LightGray, backColor));
+                                    break;
+                            }
+                            eventList.Add(new Snippet(""));
+                            eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                            eventList.Add(new Snippet(""));
+                            eventList.Add(new Snippet(string.Format("{0}", eventObject.Name), foreColor, backColor));
+                            eventList.Add(new Snippet(""));
+                            eventList.Add(new Snippet(string.Format("\"{0}\"", option.Text), foreColor, backColor));
+                            eventList.Add(new Snippet(""));
+                            eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                            eventList.Add(new Snippet(""));
+                            eventList.Add(new Snippet(string.Format("{0}", option.ReplyGood), foreColor, backColor));
+                            eventList.Add(new Snippet(""));
+                            eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                            eventList.Add(new Snippet(""));
+                            eventList.Add(new Snippet("Press ENTER or ESC to ignore this event", RLColor.LightGray, backColor));
+                            //housekeeping
+                            Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
                         }
-                        else { Game.SetError(new Error(73, "Invalid list of Outcomes")); }
-                        //display message
-                        Position pos = actor.GetActorPosition();
-                        switch (eventObject.Type)
-                        {
-                            case ArcType.GeoCluster:
-                            case ArcType.Road:
-                                eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
-                                    Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
-                                break;
-                            case ArcType.Location:
-                                eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
-                                    pos.PosX, pos.PosY), RLColor.LightGray, backColor));
-                                break;
-                            case ArcType.Actor:
-                                if (actor.Status == ActorStatus.AtLocation) { status = Game.world.GetLocationName(actor.LocID) + " "; }
-                                else { status = null; }
-                                eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2}(Loc {3}:{4})", actor.Name, actor.ActID, status,
-                                    pos.PosX, pos.PosY), RLColor.LightGray, backColor));
-                                break;
-                        }
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet(string.Format("{0}", eventObject.Name), foreColor, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet(string.Format("\"{0}\"", option.Text), foreColor, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet(string.Format("{0}", option.ReplyGood), foreColor, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("Press ENTER or ESC to ignore this event", RLColor.LightGray, backColor));
-                        //housekeeping
-                        Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
+                        else { Console.WriteLine("Inactive (greyed out) Option chosen for \"{0}\", option # {1}", eventObject.Name, optionNum); }
                     }
                     else { Game.SetError(new Error(73, string.Format("No valid option present for \"{0}\", option # {1}", eventObject.Name, optionNum))); }
                 }

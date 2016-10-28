@@ -86,6 +86,7 @@ namespace Next_Game.Event_System
     public class OptionInteractive : Option
     {
         public string Text { get; set; } //option text
+        public bool Active { get; set; } //option triggers allow option to fire? (true) Set at time of Option use (Director.cs ResolvePlayerEvents)
         private List<Trigger> listTriggers; //Triggers for option to be active (if any)
 
         public OptionInteractive()
