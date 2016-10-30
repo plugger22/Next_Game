@@ -7,7 +7,9 @@
 # subType:(GeoCluster -> Sea/Mountain/Forest, Location -> Capital/Major/Minor/Inn, Road -> Normal/Kings/Connector)
 # Cat: (Category) Generic/Special
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/High/Common/Very_Common
-# Status: (Active or Dormant)
+# Status: (Active or Dormant) -> Optional tag (if not shown then default of 'Active')
+# Repeat: Number > 0 -> Optional tag (if not shown then default of 1000) -> Fixed number of activations before event goes dormant
+# Dormant: Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before event goes dormant
 # Event: (Event Text)
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks. Place block header at top
 # text: option text (number is block, or option num, eg. 1 to 4). Keep it short and clear.
@@ -37,7 +39,6 @@ Type: Road
 subType: Kings
 Cat: Generic
 Freq: Low
-Status: Active
 Event: You encounter a mounted group of the King's Men, armed and dangerous. They are looking directly at you.
 [option]
 text: Run for it!
@@ -102,15 +103,11 @@ subType: Major
 Cat: Generic
 Freq: Low
 Status: Active
+Dormant: 2
 Event: You there, Halt! A group of black coated Inquisitors move purposely towards you.
 [option]
 text: Leg it!
 reply: Do they know who you are? Why take the chance?
-[trigger]
-check: Trait
-item: 2
-thresh: 3
-calc: >=
 [outcome]
 effect: Conflict
 out: 2
@@ -124,6 +121,11 @@ apply: Add
 [option]
 text: Stay Calm
 reply: They regularly stop people at random, you should be able to talk your way out of this.
+[trigger]
+check: Trait
+item: 2
+thresh: 3
+calc: >=
 [outcome]
 effect: Game
 out: 6
@@ -155,7 +157,7 @@ Type: Location
 subType: Minor
 Cat: Generic
 Freq: Low
-Status: Active
+Repeat: 2
 Event: A hooded figure crosses your path, piercing eyes glancing in your direction.
 [option]
 text: Ignore them

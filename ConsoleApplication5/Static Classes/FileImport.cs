@@ -59,6 +59,8 @@ namespace Next_Game
         public string Name { get; set; }
         public string EventText { get; set; }
         public int EventID { get; set; }
+        public int Repeat { get; set; }
+        public int Dormant { get; set; }
         public ArcType Type { get; set; }
         public ArcGeo Geo { get; set; }
         public ArcRoad Road { get; set; }
@@ -1184,6 +1186,34 @@ namespace Next_Game
                                         break;
                                 }
                                 break;
+                            case "Repeat":
+                                try
+                                {
+                                    structEvent.Repeat = Convert.ToInt32(cleanToken);
+                                    //can't be 0 or less
+                                    if (structEvent.Repeat <= 0)
+                                    {
+                                        //give default value (constructor -> 1000)
+                                        structEvent.Repeat = 0;
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Repeat (timer), (value <= 0, set to default value instead) \"{0}\"", arrayOfEvents[i])));
+                                    }
+                                }
+                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Repeat (timer), (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                break;
+                            case "Dormant":
+                                try
+                                {
+                                    structEvent.Dormant = Convert.ToInt32(cleanToken);
+                                    //can't be 0 or less
+                                    if (structEvent.Dormant < 0)
+                                    {
+                                        //give default value (constructor -> 1000)
+                                        structEvent.Dormant = 0;
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Dormant (timer), (value < 0, set to default value instead) \"{0}\"", arrayOfEvents[i])));
+                                    }
+                                }
+                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Repeat (timer), (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                break;
                             case "text":
                                 //Option text
                                 structOption.Text = cleanToken;
@@ -1278,6 +1308,7 @@ namespace Next_Game
                                 { structOutcome.Amount = Convert.ToInt32(cleanToken); }
                                 catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Amount, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                 break;
+
                             case "apply":
                                 switch (cleanToken)
                                 {
@@ -1372,7 +1403,15 @@ namespace Next_Game
                                         EventPlayer eventTemp = eventObject as EventPlayer;
                                         eventTemp.Text = structEvent.EventText;
                                         eventTemp.Category = structEvent.Cat;
-                                        eventTemp.Status = EventStatus.Active;
+                                        //status -> default 'active' if not present
+                                        if (structEvent.Status == EventStatus.None)
+                                        { eventTemp.Status = EventStatus.Active;}
+                                        else
+                                        { eventTemp.Status = structEvent.Status; }
+                                        //Repeat Timer -> default 1000 (constructor) if not present
+                                        if (structEvent.Repeat > 0) { eventTemp.TimerRepeat = structEvent.Repeat; }
+                                        //Dormant Timer -> default 0 (constructor) if not present
+                                        if (structEvent.Dormant > 0) { eventTemp.TimerDormant = structEvent.Dormant; }
                                         //add options
                                         if (listOptions.Count > 1)
                                         {
@@ -1469,7 +1508,8 @@ namespace Next_Game
             String name;
             foreach(var eventObject in dictOfPlayerEvents)
             {
-                Console.WriteLine("\"{0}\" Event, ID {1}, Type {2}", eventObject.Value.Name, eventObject.Value.EventPID, eventObject.Value.Type);
+                Console.WriteLine("\"{0}\" Event, ID {1}, Type {2}, Repeat {3}, Dormant {4}, Status {5}", eventObject.Value.Name, eventObject.Value.EventPID, eventObject.Value.Type,
+                    eventObject.Value.TimerRepeat, eventObject.Value.TimerDormant, eventObject.Value.Status);
                 List<OptionInteractive> listTempOptions = eventObject.Value.GetOptions();
                 foreach (OptionInteractive optionObject in listTempOptions)
                 {

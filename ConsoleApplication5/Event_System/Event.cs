@@ -19,7 +19,7 @@ namespace Next_Game.Event_System
     {
         public string Name { get; set; }
         public int TimerLive { get; set; } = 0; //turns to change from Live -> Active
-        public int TimerDormant { get; set; } = 0; //turns to change from Active -> Dormant
+        public int TimerDormant { get; set; } = 0; //turns to change from Active -> Dormant (lasts a fixed number of turns, not activations as with TimerRepeat)
         public int TimerRepeat { get; set; } = 1000; //# times remaining for the event to repeat (if 0 then reverts to dormant)
         public string Text { get; set; } //main text for event
         public EventFrequency Frequency { get; set; }

@@ -998,8 +998,31 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(70, "Invalid ListOfOptions Player input (null)")); break; }
                     
-                    //resolve event and add to description (add delay to actor if needed)
-                    
+                    //repeat timer (set # of activations till event goes dormant)
+                    if (eventObject.TimerRepeat > 0)
+                    {
+                        eventObject.TimerRepeat--;
+                        Console.WriteLine("Event \"{0}\" Timer Repeat now {1}", eventObject.Name, eventObject.TimerRepeat);
+                        //if repeat timer has run down to 0, the event is no longer active
+                        if (eventObject.TimerRepeat == 0)
+                        {
+                            eventObject.Status = EventStatus.Dormant;
+                            Console.WriteLine("Event \"{0}\" Timer Repeat has run down to Zero. Event is now {1}", eventObject.Name, eventObject.Status);
+                        }
+                    }
+                    //dormant timer (set # of turns till event goes dormant)
+                    if (eventObject.TimerDormant > 0)
+                    {
+                        eventObject.TimerDormant--;
+                        Console.WriteLine("Event \"{0}\" Timer Dormant now {1}", eventObject.Name, eventObject.TimerDormant);
+                        //if dormant timer has run down to 0, the event is no longer active
+                        if (eventObject.TimerDormant == 0)
+                        {
+                            eventObject.Status = EventStatus.Dormant;
+                            Console.WriteLine("Event \"{0}\" Timer Dormant has run down to Zero. Event is now {1}", eventObject.Name, eventObject.Status);
+                        }
+                    }
+
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("Press ENTER or ESC to ignore this event", RLColor.LightGray, backColor));
                     //housekeeping
