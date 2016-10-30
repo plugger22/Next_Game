@@ -1063,6 +1063,7 @@ namespace Next_Game
                     //any Follower events that need dealing with?
                     if (mode == SpecialMode.FollowerEvent)
                     {
+                        
                         if (director.ResolveFollowerEvents())
                         { }
                         else
@@ -1071,7 +1072,10 @@ namespace Next_Game
                     //Player Events
                     else if (mode == SpecialMode.PlayerEvent)
                     {
-                        if (director.ResolvePlayerEvents())
+                        //default option (first option) if player ignores the event
+                        if (director.ResolveOutcome(_eventID, 1) == true)
+                        { _specialMode = SpecialMode.Outcome; }
+                        else if (director.ResolvePlayerEvents())
                         { }
                         else
                         {

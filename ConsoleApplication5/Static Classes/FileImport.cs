@@ -1389,7 +1389,15 @@ namespace Next_Game
                                                     Trigger trigger = tempTriggers[0];
                                                     //if first record has a default value of None then it's a blank Trigger put there as a placeholder
                                                     if (trigger.Check != TriggerCheck.None)
-                                                    { optionObject.SetTriggers(tempTriggers); }
+                                                    {
+                                                        if (index == 0)
+                                                        {
+                                                            //first, default option, not allowed any triggers (they're ignored)
+                                                            Game.SetError(new Error(49, string.Format("No triggers allowed (they are ignored) for first Option of (\"{0}\")", arrayOfEvents[i])));
+                                                        }
+                                                        else { optionObject.SetTriggers(tempTriggers); }
+                                                        
+                                                    }
 
                                                     //Outcomes
                                                     List <OutcomeStruct> sublist = listAllOutcomes[index];
