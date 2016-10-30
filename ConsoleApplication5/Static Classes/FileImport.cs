@@ -1393,7 +1393,7 @@ namespace Next_Game
                                                         if (index == 0)
                                                         {
                                                             //first, default option, not allowed any triggers (they're ignored)
-                                                            Game.SetError(new Error(49, string.Format("No triggers allowed (they are ignored) for first Option of (\"{0}\")", arrayOfEvents[i])));
+                                                            Game.SetError(new Error(49, string.Format("No triggers allowed (ignored) for first Option of \"{0}\"", eventTemp.Name)));
                                                         }
                                                         else { optionObject.SetTriggers(tempTriggers); }
                                                         
