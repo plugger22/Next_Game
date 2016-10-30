@@ -1010,6 +1010,7 @@ namespace Next_Game
                             Console.WriteLine("Event \"{0}\" Timer Repeat has run down to Zero. Event is now {1}", eventObject.Name, eventObject.Status);
                         }
                     }
+                    /*
                     //dormant timer (set # of turns till event goes dormant)
                     if (eventObject.TimerDormant > 0)
                     {
@@ -1022,7 +1023,7 @@ namespace Next_Game
                             Console.WriteLine("Event \"{0}\" Timer Dormant has run down to Zero. Event is now {1}", eventObject.Name, eventObject.Status);
                         }
                     }
-
+                    */
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("Press ENTER or ESC to ignore this event", RLColor.LightGray, backColor));
                     //housekeeping
@@ -1530,6 +1531,48 @@ namespace Next_Game
             if (change != 0)
             { arrayOfGameStates[(int)point, (int)DataState.Change] = 0; }
             return change;
+        }
+
+        /// <summary>
+        /// checks event timers each turn
+        /// </summary>
+        internal void CheckEventTimers()
+        {
+            //PLAYER events
+            foreach (var eventObject in dictPlayerEvents)
+            {
+                switch (eventObject.Value.Status)
+                {
+                    case EventStatus.Active:
+                        //decrement DORMANT timer, if present
+                        if (eventObject.Value.TimerDormant > 0)
+                        {
+                            eventObject.Value.TimerDormant--;
+                            Console.WriteLine("Event \"{0}\" Dormant Timer decremented to {1}", eventObject.Value.Name, eventObject.Value.TimerDormant);
+                            //if dormant timer has run down to 0, the event is no longer active
+                            if (eventObject.Value.TimerDormant == 0)
+                            {
+                                eventObject.Value.Status = EventStatus.Dormant;
+                                Console.WriteLine("Event \"{0}\" Dormant Timer has run down to Zero. Event is now {1}", eventObject.Value.Name, eventObject.Value.Status);
+                            }
+                        }
+                        break;
+                    case EventStatus.Live:
+                        //decrement Live timer, if present
+                        if (eventObject.Value.TimerLive > 0)
+                        {
+                            eventObject.Value.TimerLive--;
+                            Console.WriteLine("Event \"{0}\" Live Timer decremented to {1}", eventObject.Value.Name, eventObject.Value.TimerLive);
+                            //if Lie timer has run down to 0, the event goes active
+                            if (eventObject.Value.TimerLive == 0)
+                            {
+                                eventObject.Value.Status = EventStatus.Active;
+                                Console.WriteLine("Event \"{0}\" Live Timer has run down to Zero. Event is now {1}", eventObject.Value.Name, eventObject.Value.Status);
+                            }
+                        }
+                        break;
+                }
+            }
         }
 
         //place Director methods above here

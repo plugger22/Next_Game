@@ -2058,6 +2058,7 @@ namespace Next_Game
             Game.map.UpdateMap();
             Game.map.UpdatePlayers(MoveActors());
             Game.director.ClearCurrentEvents();
+            Game.director.CheckEventTimers();
             UpdateActiveActors();
             Game.gameTurn++;
         }
