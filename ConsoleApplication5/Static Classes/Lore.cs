@@ -21,6 +21,7 @@ namespace Next_Game
         public int RoyalRefIDNew { get; set; } // refID
         public int RoyalRefIDCurrent { get; set; } // refID
         public int TurnCoat { get; set; } //actID of Turncoat Bannerlord who takes over lands of old king
+        public int OldHouseID { get; set; } //HouseID of Old King (needed 'cause it's  removed from the house dictionaries once the new king takes over)
         public string OldHouseName { get; set; } //House name of old King
         //Royal & Rebel Family Nobles
         private List<Passive> listOfOldRoyals; //at time of revolt

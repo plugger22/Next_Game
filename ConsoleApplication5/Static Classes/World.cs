@@ -403,10 +403,10 @@ namespace Next_Game
                 if (person is Knight)
                 {
                     Knight knight = person as Knight;
-                    string houseName = GetGreatHouseName(knight.HouseID);
+                    string houseName;
+                    if (knight.HouseID == Game.lore.OldHouseID) { houseName = Game.lore.OldHouseName; }
                     //deals with case of knight belonging to old King (he's been deleted from dictMajorHouses)
-                    if (String.IsNullOrEmpty(houseName) )
-                    { houseName = Game.lore.OldHouseName; }
+                    else { houseName = GetGreatHouseName(knight.HouseID); }
                     listToDisplay.Add(new Snippet(string.Format("Has sworn allegiance to House {0}", houseName )));
                 }
                 //Loyalty
@@ -640,8 +640,14 @@ namespace Next_Game
                             if (relPerson.MaidenName != null)
                             { maidenName = string.Format(" (nee {0})", relPerson.MaidenName); }
                             int relAge = Game.gameRevolt - relPerson.Born;
+                            string houseName;
+                            //needed 'cause old King's house has been removed from the dictionaries
+                            if (relPerson.HouseID == Game.lore.OldHouseID)
+                            { houseName = Game.lore.OldHouseName; }
+                            else { houseName = GetGreatHouseName(relPerson.HouseID); }
                             string text = string.Format("{0} Aid {1}: {2} {3}{4} of House {5}, Age {6}",
-                                kvp.Value, relPerson.ActID, relPerson.Type, relPerson.Name, maidenName, GetGreatHouseName(relPerson.HouseID), relAge);
+                              kvp.Value, relPerson.ActID, relPerson.Type, relPerson.Name, maidenName, houseName, relAge);
+
                             listToDisplay.Add(new Snippet(text, familyColor, RLColor.Black));
                         }
                     }
@@ -1634,6 +1640,7 @@ namespace Next_Game
             MajorHouse house = new MajorHouse();
             if(dictMajorHouses.TryGetValue(houseID, out house))
             { houseName = house.Name; }
+
             return houseName;
         }
 

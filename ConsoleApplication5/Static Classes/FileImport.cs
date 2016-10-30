@@ -523,7 +523,7 @@ namespace Next_Game
                     string[] tokens = arrayOfEvents[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
                     else { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0)
                     { Game.SetError(new Error(20, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
@@ -777,8 +777,8 @@ namespace Next_Game
                                         break;
                                 }
                                 break;
-                            case "end":
-                            case "End":
+                            case "[end]":
+                            case "[End]":
                                 //write record
                                 if (validData == true)
                                 {
@@ -1571,7 +1571,7 @@ namespace Next_Game
                     string[] tokens = arrayOfArchetypes[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
                     else { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0)
                     { Game.SetError(new Error(53, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
@@ -1764,8 +1764,8 @@ namespace Next_Game
                                 structArc.listOfEvents = tempList;
                                 break;
                             
-                            case "end":
-                            case "End":
+                            case "[end]":
+                            case "[End]":
                                 //write record
                                 if (validData == true)
                                 {
@@ -1850,7 +1850,8 @@ namespace Next_Game
                     string[] tokens = arrayOfStories[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    //if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
                     else { cleanToken = tokens[1].Trim(); }
 
                     switch (cleanTag)
@@ -2115,8 +2116,8 @@ namespace Next_Game
                                 { Game.SetError(new Error(54, string.Format("Invalid Connector Road (Conversion) for  {0}", structStory.Name))); validData = false; }
                             }
                             break;
-                        case "end":
-                        case "End":
+                        case "[end]":
+                        case "[End]":
                             //write record
                             if (validData == true)
                             {
@@ -2287,7 +2288,7 @@ namespace Next_Game
                     string[] tokens = arrayOfFollowers[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
                     else { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0)
                     {
@@ -2401,8 +2402,8 @@ namespace Next_Game
                             case "Touched_Trait":
                                 structFollower.Touched_Trait = cleanToken;
                                 break;
-                            case "end":
-                            case "End":
+                            case "[end]":
+                            case "[End]":
                                 //last datapoint - save structure to list
                                 if (dataCounter > 0 && validData == true)
                                 { listOfStructs.Add(structFollower); }

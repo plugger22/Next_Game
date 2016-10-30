@@ -27,4 +27,4 @@ Arc_Loc_Inn: 10
 Arc_Road_Normal: 4
 Arc_Road_Kings: 5
 Arc_Road_Connector: 6
-End
+[End]

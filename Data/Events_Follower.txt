@@ -12,7 +12,8 @@
 # Fail: (Fail text) [follower's name] ....text  (Tip: don't mention the time required in the text, keep it vague so that any change in the delay amount won't require a corresponding text change)
 # Trait: (test against) Combat / Wits / Charm / Treachery / Leadership  (touched acts as a DM bonus)
 # Delay: number of turns
-# End -> needed for file Import
+# [End] -> place at the end of the event description
+# NOTE: Leave no spaces between lines WITHIN an event. Indents (tabs) are O.K, even better is colour coding using Notepad++ (example)
 
 # GeoClusters -> subType is Sea/Mountain/Forest ---
 
@@ -27,7 +28,7 @@ Succeed: hacks their way clear and hastily departs before anything comes to inve
 Fail: becomes entangled within the sticky web and wakes an unknown time later with no memory of events.
 Trait: Wits
 Delay: 2
-End
+[End]
 
 Name: Wolves
 ID: 2
@@ -40,7 +41,7 @@ Succeed: takes a burning branch from the fire and fends off the wolf pack.
 Fail: is forced to take shelter up a tree after being bitten on the leg by a wolf
 Trait: Combat
 Delay: 2
-End
+[End]
 
 Name: Rockfall
 ID: 3
@@ -53,7 +54,7 @@ Succeed: finds an alternative path through a narrow crevice.
 Fail: is unable to find a way past and must laboriously clear the rockfall before proceeding.
 Trait: Wits
 Delay: 2
-End
+[End]
 
 Name: Shadow Cat
 ID: 4
@@ -66,7 +67,7 @@ Succeed: manages to wound the Shadow Cat as it launches itself at them. No more 
 Fail: is knocked off the side of the mountain by the Shadow Cat landing heavily on their back. Luckily they land on a nearby ledge but are in sore need of rest and recovery.
 Trait: Combat
 Delay: 2
-End
+[End]
 
 Name: Dire Wolf Tracks
 ID: 5
@@ -79,7 +80,7 @@ Succeed: checks the tracks and notices that they are moving away from the trail.
 Fail: lights a fire to fend off any nearby Dire Wolves and only succeeds in attracting them. While the wolves are reluctant to attack a lot of time is lost waiting for them to leave.
 Trait: Wits
 Delay: 1
-End
+[End]
 
 Name: Dire Wolves Attack
 ID: 6
@@ -92,7 +93,7 @@ Succeed: manages to duck under the Dire Wolf, draw their sword and fend off the 
 Fail: is wounded by the beast and is forced to take time out to rest and recover before they can continue onwards.
 Trait: Combat
 Delay: 2
-End
+[End]
 
 # Roads -> subType is Normal/Kings/Connector ---  
 
@@ -107,7 +108,7 @@ Succeed: takes one look at the ragged gap and spurs their horse into an almighty
 Fail: decides that discretion is the better part of valour and, rather than attempt to jump the gap, laboriously plods around the obstacle before finally rejoining the road on the far side.
 Trait: Combat
 Delay: 1
-End
+[End]
 
 Name: Peasants
 ID: 8
@@ -120,7 +121,7 @@ Succeed: takes charge of the situation. Teams are organised and after some heavy
 Fail: attempts to bring order to chaos but nobody pays any attention to their flapping hand gestures and wildly waving arms. 
 Trait: Leadership
 Delay: 1
-End
+[End]
 
 Name: Heavy Rain
 ID: 9
@@ -133,7 +134,7 @@ Succeed: carefully picks their way through the chest high waters by keeping thei
 Fail: rides their horse straight into the torrent and is immediately swept downstream. Luckily the horse manages to swim back to the far bank in a quiet eddy but it's going to take a while to make it back to the road.
 Trait: Wits
 Delay: 2
-End
+[End]
 
 Name: Priest
 ID: 10
@@ -146,7 +147,7 @@ Succeed: explains that they are carrying an important message from the High Sept
 Fail: swears at the Priest as they ride past, mud splattering the God Botherer from the horses hooves. Shortly after the horse develops an unexplained limp.
 Trait: Charm
 Delay: 1
-End
+[End]
 
 Name: Rowdy Peasants
 ID: 11
@@ -159,7 +160,7 @@ Succeed: astounds the inebriated peasants by breaking into a rowdy drinking song
 Fail: attempts to ride down the nearest peasants down and gets dragged off their horse and soundly beaten for their troubles before being rescued by other travellers. Recovering will require rest.
 Trait: Charm
 Delay: 1
-End
+[End]
 
 Name: Merchant
 ID: 12
@@ -172,7 +173,7 @@ Succeed: wisely exchanges pleasant greetings and rides on. There is something ab
 Fail: willingly provides amiable company to the cheerful merchant. Later, after continuing on, the Dornish beer rebounds and necessitates numerous trips to nearby bushes.
 Trait: Charm
 Delay: 1
-End
+[End]
 
 Name: Horse Throws a Shoe
 ID: 13
@@ -185,7 +186,7 @@ Succeed: time learning from the stable master pays off. The horse is much happie
 Fail: looks at the shoe and regrets not having paid attention when the stable master gave a demonstration of how to re-shoe a horse. Somebody else will have to do it. It might be a long wait.
 Trait: Combat
 Delay: 2
-End
+[End]
 
 Name: Thick Mud
 ID: 14
@@ -198,7 +199,7 @@ Succeed: gets down off their horse and finds the firm high ground. It's not easy
 Fail: urges their horse ever deeper into the mud until both horse and rider are hopelessly stuck. Passers by rescue them but the exhaustion of both mount and rider necessitates a period of rest.
 Trait: Wits
 Delay: 2
-End
+[End]
 
 Name: Collapsed Bridge
 ID: 15
@@ -211,7 +212,7 @@ Succeed: takes the bull by the horns and soon has the milling manpower working a
 Fail: is at a loss. How can you manage such ignorant peasants? It takes days before enough trees have been chopped down and the bridge repaired. Of course they paid no heed to good advice and managed to stumble from one disaster to the next.
 Trait: Leadership
 Delay: 3
-End
+[End]
 
 # Locations -> subType is Capital/Major/Minor/Inn ---
 
@@ -221,12 +222,12 @@ Type: Location
 subType: Capital
 Cat: Generic
 Freq: Low
-Event: A Noble with an elevated sense of his own with worth demands assistance as he's feeling faint headed and needs a Maester to attend him.
+Event: A Noble with an elevated sense of his own with worth demands assistance as he's feeling faint headed and needs a Maester to att[End] him.
 Succeed: informs him that of course he will fetch the Royal Maester just as soon as he can find him knowing full well that the Maester has better things to do.
 Fail: grumpily tells the Noble that he can damn well fetch the Maester himself. The insulted, arrogant, Noble yells for the Guards and demands retribution.
 Trait: Charm
 Delay: 1
-End
+[End]
 
 Name: Pickpocket
 ID: 17
@@ -239,7 +240,7 @@ Succeed: fast reflexes come to the fore and the Pickpocket is caught red handed,
 Fail: realises they have been robbed, run after the Pickpocket and throw him to the ground. He yells that he's being assaulted. When the guards arrive it takes some time to resolve the confusion.
 Trait: Combat
 Delay: 1
-End
+[End]
 
 Name: Knight
 ID: 18
@@ -252,7 +253,7 @@ Succeed: apologises profusely and helps the sore headed Knight back to his feet.
 Fail: asks what sort of Knight he is if they can't see where they are going? Not taking kindly to this insult, the Knight beats them and leaves them bleeding on the ground.
 Trait: Charm 
 Delay: 1
-End
+[End]
 
 Name: Squire
 ID: 19
@@ -265,7 +266,7 @@ Succeed: reassures him and suggests that he would be better off approaching the 
 Fail: agrees to help only to find that his 'sister' is a comely wench in a nearby alley looking for business. A disagreement ensures.
 Trait: Wits
 Delay: 1
-End
+[End]
 
 Name: Beggar
 ID: 20
@@ -278,7 +279,7 @@ Succeed: adroitly trips the beggar as he appears to reach into his filthy robe f
 Fail: briskly pushes past the beggar who promptly pulls out a truncheon and slams it down on their head.
 Trait: Combat
 Delay: 1
-End
+[End]
 
 Name: Vendor
 ID: 21
@@ -291,7 +292,7 @@ Succeed: knows off color meat when they see it. The meat is cheap for a reason.
 Fail: takes full advantage of the bargain. A case of food poisoning isn't far behind.
 Trait: Wits
 Delay: 1
-End
+[End]
 
 Name: Drunken Thugs
 ID: 22
@@ -304,7 +305,7 @@ Succeed: brings them all to order with a few sharp words. Everybody goes back to
 Fail: yells for calm but they may as well have poured oil onto the fire. All hell breaks loose and not a person in the inn remains unscathed.
 Trait: Leadership
 Delay: 1
-End
+[End]
 
 Name: Pleasures of the Flesh
 ID: 23
@@ -317,7 +318,7 @@ Succeed: politely, and wisely, refuses their offer.
 Fail: follows them upstairs only to be immediately brained unconscious by their accomplice.
 Trait: Wits
 Delay: 1
-End
+[End]
 
 Name: Guard Inspection
 ID: 24
@@ -330,7 +331,7 @@ Succeed: manages to convince them that they are innocent of any wrongdoing.
 Fail: hesitate before providing a dubious reason for their activities
 Trait: Wits
 Delay: 2
-End
+[End]
 
 Name: City Watch
 ID: 25
@@ -343,7 +344,7 @@ Succeed: offers a lucrative prize in return for their unhindered progress. The W
 Fail: indignantly informs that Guard that they don't pay bribes and are promptly arrested for their trouble.
 Trait: Treachery
 Delay: 2
-End
+[End]
 
 Name: The Shadow
 ID: 26
@@ -356,7 +357,7 @@ Succeed: realises that's it's only a shadow. The voices in their head are nothin
 Fail: looks over their shoulder and panics. Melts down there and then. Escape is pointless, it's here and it is omnipresent.
 Trait: Wits
 Delay: 2
-End
+[End]
 
 Name: The Voices
 ID: 27
@@ -369,7 +370,7 @@ Succeed: has learnt to come to terms with the voices. They have them under contr
 Fail: can't resist the siren call of the voices. They do things that they shouldn't because the voices insist.
 Trait: Wits
 Delay: 2
-End
+[End]
 
 # Dormant Events -----------------------
 # Status: Dormant

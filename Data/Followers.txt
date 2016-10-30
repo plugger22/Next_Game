@@ -36,7 +36,7 @@ Leadership_Effect: -1
 Leadership_Trait: Unassuming
 Touched_Effect: 0
 Touched_Trait: Normal
-End
+[End]
 
 Name: The Jester
 FID: 2
@@ -60,7 +60,7 @@ Leadership_Effect: 0
 Leadership_Trait: Normal
 Touched_Effect: 0
 Touched_Trait: Normal
-End
+[End]
 
 Name: The Viper
 FID: 3
@@ -84,7 +84,7 @@ Leadership_Effect: 0
 Leadership_Trait: Normal
 Touched_Effect: 0
 Touched_Trait: Normal
-End
+[End]
 
 Name: The Leper
 FID: 4
@@ -108,7 +108,7 @@ Leadership_Effect: -2
 Leadership_Trait: Ignored
 Touched_Effect: -1
 Touched_Trait: Dark Magic
-End
+[End]
 
 Name: The Dark Eminence
 FID: 5
@@ -132,7 +132,7 @@ Leadership_Effect: +2
 Leadership_Trait: Seductive Appeal
 Touched_Effect: 0
 Touched_Trait: Normal
-End
+[End]
 
 Name: The Duchess
 FID: 6
@@ -156,7 +156,7 @@ Leadership_Effect: +1
 Leadership_Trait: Man Magnet
 Touched_Effect: 0
 Touched_Trait: Normal
-End
+[End]
 
 Name: The Beast
 FID: 7
@@ -180,7 +180,7 @@ Leadership_Effect: -2
 Leadership_Trait: Too Scary
 Touched_Effect: 0
 Touched_Trait: Normal
-End
+[End]
 
 Name: The Crone
 FID: 8
@@ -204,7 +204,7 @@ Leadership_Effect: -2
 Leadership_Trait: Old and Wrinkled
 Touched_Effect: +1
 Touched_Trait: Sorceress
-End
+[End]
 
 Name: The Haggler
 FID: 9
@@ -228,7 +228,7 @@ Leadership_Effect: -1
 Leadership_Trait: Overconfident
 Touched_Effect: 0
 Touched_Trait: Normal
-End
+[End]
 
 Name: The Waif
 FID: 10
@@ -252,4 +252,4 @@ Leadership_Effect: -2
 Leadership_Trait: Too Young
 Touched_Effect: -1
 Touched_Trait: Enchantress
-End
+[End]

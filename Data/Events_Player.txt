@@ -28,7 +28,7 @@
 # effect = game, then out -> 1 Threat, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
 # apply: how the amount is applied (None, Add, Subtract, Random) where 'Random' is random range (amount). Default 'None'
-# [End] -> Place at very bottom of event.
+# [End] -> Place at the end of the event description.
 # NOTE: Leave no spaces between lines WITHIN an event. Indents (tabs) are O.K, even better is colour coding using Notepad++ (example)
 
 # Road -> subType is Normal / Kings / Connector ---
