@@ -1501,7 +1501,7 @@ namespace Next_Game
                                                                     if (outTemp.Data > 0)
                                                                     {
                                                                         if (outTemp.Data != structEvent.EventID)
-                                                                        { outObject = new OutEventStatus(outTemp.Data, outTemp.NewStatus); }
+                                                                        { outObject = new OutEventStatus(structEvent.EventID, outTemp.Data, outTemp.NewStatus); }
                                                                         else
                                                                         {
                                                                             Game.SetError(new Error(49, "Invalid Input, Outcome Data (EventStatus) same as EventID, object not created"));

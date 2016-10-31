@@ -194,10 +194,12 @@ namespace Next_Game.Event_System
     class OutEventStatus : Outcome
     {
         public EventStatus NewStatus { get; set; }
+        //
 
-        public OutEventStatus(int eventID, EventStatus status) : base(eventID)
+        public OutEventStatus(int eventID, int targetEventID, EventStatus status) : base(eventID)
         {
             NewStatus = status;
+            Type = targetEventID;
         }
     }
 

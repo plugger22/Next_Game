@@ -155,7 +155,7 @@ amount: 50
 apply: Random
 [outcome]
 effect: EventStatus
-data: 0
+data: 5
 newStatus: Live
 [End]
 

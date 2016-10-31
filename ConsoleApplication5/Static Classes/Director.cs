@@ -1153,7 +1153,10 @@ namespace Next_Game
                                     else if (outcome is OutEventTimer)
                                     { }
                                     else if (outcome is OutEventStatus)
-                                    { }
+                                    {
+                                        OutEventStatus tempOutcome = outcome as OutEventStatus;
+                                        ChangePlayerEventStatus(tempOutcome.Type, tempOutcome.NewStatus);
+                                    }
                                     //ignore if OutNone (do nothing)
                                 }
                             }
@@ -1575,6 +1578,31 @@ namespace Next_Game
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Changes Player events from one status to another
+        /// </summary>
+        /// <param name="targetEventID"></param>
+        /// <param name="newStatus"></param>
+        private void ChangePlayerEventStatus(int targetEventID, EventStatus newStatus)
+        {
+            //get player event
+            EventPlayer eventObject = GetPlayerEvent(targetEventID);
+            if (eventObject != null)
+            {
+                if (newStatus > EventStatus.None)
+                {
+                    if (eventObject.Status != newStatus)
+                    { eventObject.Status = newStatus; }
+                    else
+                    { Game.SetError(new Error(78, string.Format("\"{0}\" identical to existing, eventID {1} status unchanged", newStatus, targetEventID))); }
+                }
+                else
+                { Game.SetError(new Error(78, string.Format("Invalid newStatus {0}, eventID {1} status unchanged", newStatus, targetEventID))); }
+            }
+            else
+            { Game.SetError(new Error(78, string.Format("Target Event ID {0} not found, event status unchanged", targetEventID))); }
         }
 
         //place Director methods above here
