@@ -1150,7 +1150,9 @@ namespace Next_Game
                                     { state.SetState(eventObject.Name, option.Text, outcome.Type, outcome.Amount, outcome.Calc); }
                                     else if (outcome is OutConflict)
                                     { }
-                                    else if (outcome is OutEvent)
+                                    else if (outcome is OutEventTimer)
+                                    { }
+                                    else if (outcome is OutEventStatus)
                                     { }
                                     //ignore if OutNone (do nothing)
                                 }

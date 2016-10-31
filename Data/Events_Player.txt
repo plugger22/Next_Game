@@ -11,23 +11,33 @@
 # Repeat: Number > 0 -> Optional tag (if not shown then default of 1000) -> Fixed number of activations before event goes dormant
 # Dormant: Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before event goes dormant
 # Event: (Event Text)
+
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks. Place block header at top
 # text: option text (number is block, or option num, eg. 1 to 4). Keep it short and clear.
 # reply: text shown when option selected
+
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
 # check: Trigger Check ( None, Trait, GameVar)
 # check -> if 'Trait' then -> 1 Combat, 2 Wits, 3 Charm, 4 Treachery, 5 Leadership, 6 Touched
 # item: multi purpose number depending on Trigger Check type 
 # thresh: Trigger threshold amount to be tested against, eg. < 3
 # calc: Type of comparison for testing trigger (>=, <=, =)
+
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, Event, Game)
-# out: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
-# out -> if +ve then Good, if -ve then Bad
-# effect = game, then out -> 1 Threat, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game)
+
+# [outcome] -> Game
+# data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
+# data -> if +ve then Good, if -ve then Bad
+# effect = game, then data -> 1 Threat, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
 # apply: how the amount is applied (None, Add, Subtract, Random) where 'Random' is random range (amount). Default 'None'
+
+# [outcome] -> EventStatus
+# data: target EventID
+# newStatus: specific to EventStatus outcomes, desired new Status of target event -> (Active, Live, Dormant, Dead)
+
 # [End] -> Place at the end of the event description.
 # NOTE: Leave no spaces between lines WITHIN an event. Indents (tabs) are O.K, even better is colour coding using Notepad++ (example)
 
@@ -45,12 +55,12 @@ text: Run for it!
 reply: Giddee Up Trigger! You attempt to gallop away to safety
 [outcome]
 effect: Conflict
-out: 1
+data: 1
 amount: 1
 apply: Subtract
 [outcome]
 effect: Game
-out: 2
+data: 2
 amount: 12
 apply: Add
 [option]
@@ -73,7 +83,7 @@ thresh: 0
 calc: >=
 [outcome]
 effect: Game
-out: 5
+data: 5
 amount: 2
 apply: Add
 [option]
@@ -86,14 +96,14 @@ thresh: 3
 calc: >=
 [outcome]
 effect: Game
-out: 6
+data: 6
 amount: 20
 apply: Add
 [outcome]
-effect: Event
-out: 1
+effect: Game
+data: 1
 amount: 3
-apply: None
+apply: Add
 [End]
 
 Name: Search and Detain
@@ -109,13 +119,12 @@ Event: You there, Halt! A group of black coated Inquisitors move purposely towar
 text: Leg it!
 reply: Do they know who you are? Why take the chance?
 [outcome]
-effect: Conflict
-out: 2
-amount: 1
-apply: None
+effect: EventStatus
+data: 3
+newStatus: Dormant
 [outcome]
 effect: Game
-out: 5
+data: 5
 amount: 12
 apply: Add
 [option]
@@ -128,7 +137,7 @@ thresh: 3
 calc: >=
 [outcome]
 effect: Game
-out: 6
+data: 6
 amount: 10
 apply: Random
 [option]
@@ -141,12 +150,12 @@ thresh: 3
 calc: >=
 [outcome]
 effect: Game
-out: -1
+data: -1
 amount: 50
 apply: Random
 [outcome]
-effect: Event
-out: 2
+effect: EventStatus
+data: 4
 amount: 2
 apply: None
 [End]
@@ -174,7 +183,7 @@ thresh: 3
 calc: >=
 [outcome]
 effect: Game
-out: 5
+data: 5
 amount: 12
 apply: Add
 [option]
@@ -187,7 +196,7 @@ thresh: 3
 calc: >=
 [outcome]
 effect: Game
-out: -3
+data: -3
 amount: 2
 apply: Add
 [End]

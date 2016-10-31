@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
 
-    //public enum EventCalc { None, Add, Subtract, Random} //Random is rnd.Next(amount), if amount is -ve then it's Subtract rnd.Next(abs(amount))
-    
 
     /// <summary>
     /// Option outcome, event system
@@ -178,39 +176,29 @@ namespace Next_Game.Event_System
 
 
     /// <summary>
-    /// Player outcome -> do something to an Event
+    /// Player outcome -> change an Event's Timer
     /// </summary>
-    class OutEvent : Outcome
+    class OutEventTimer : Outcome
     {
-        public OutEvent(int eventID, int type, int amount, EventCalc apply = EventCalc.None) : base(eventID)
+        public OutEventTimer(int eventID, int type, int amount, EventCalc apply = EventCalc.None) : base(eventID)
         {
             this.Type = type;
             this.Amount = amount;
             this.Calc = apply;
         }
+    }
 
-        /*
-        /// <summary>
-        /// data1 is actor ID
-        /// </summary>
-        /// <param name="data1"></param>
-        /// <param name="data2"></param>
-        public void Resolve(int data1, int data2 = 0)
+    /// <summary>
+    /// Player outcome -> change an Event's Status
+    /// </summary>
+    class OutEventStatus : Outcome
+    {
+        public EventStatus NewStatus { get; set; }
+
+        public OutEventStatus(int eventID, EventStatus status) : base(eventID)
         {
-            Active actor = Game.world.GetActiveActor(data1);
-            Event eventObject = Game.director.GetPlayerEvent(EventID);
-            if (actor != null)
-            {
-                if (eventObject != null)
-                {
-                    //message
-                    Message message = new Message(string.Format("{0} is involved in a changing an EVENT", actor.Name), MessageType.Move);
-                    Game.world.SetMessage(message);
-                }
-                else { Game.SetError(new Error(67, "Event not found using EventPID in OutDelay.cs")); }
-            }
-            else { Game.SetError(new Error(67, "Active Actor not found")); }
-        }*/
+            NewStatus = status;
+        }
     }
 
 }
