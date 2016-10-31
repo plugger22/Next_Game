@@ -61,6 +61,7 @@ namespace Next_Game
         public int EventID { get; set; }
         public int Repeat { get; set; }
         public int Dormant { get; set; }
+        public int Live { get; set; }
         public ArcType Type { get; set; }
         public ArcGeo Geo { get; set; }
         public ArcRoad Road { get; set; }
@@ -1196,6 +1197,7 @@ namespace Next_Game
                                 }
                                 break;
                             case "Repeat":
+                                //Repeat Timer (number of activations before active event goes dormant)
                                 try
                                 {
                                     structEvent.Repeat = Convert.ToInt32(cleanToken);
@@ -1210,6 +1212,7 @@ namespace Next_Game
                                 catch { Game.SetError(new Error(49, string.Format("Invalid Input, Repeat (timer), (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                 break;
                             case "Dormant":
+                                //Dormant Timer (# turns before Active event goes dormant)
                                 try
                                 {
                                     structEvent.Dormant = Convert.ToInt32(cleanToken);
@@ -1221,7 +1224,22 @@ namespace Next_Game
                                         Game.SetError(new Error(49, string.Format("Invalid Input, Dormant (timer), (value < 0, set to default value instead) \"{0}\"", arrayOfEvents[i])));
                                     }
                                 }
-                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Repeat (timer), (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Dormant (timer), (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                break;
+                            case "Live":
+                                //Live Timer (# turns before Live event becomes Active)
+                                try
+                                {
+                                    structEvent.Live = Convert.ToInt32(cleanToken);
+                                    //can't be 0 or less
+                                    if (structEvent.Live < 0)
+                                    {
+                                        //give default value (constructor -> 1000)
+                                        structEvent.Live = 0;
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Live (timer), (value < 0, set to default value instead) \"{0}\"", arrayOfEvents[i])));
+                                    }
+                                }
+                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Live (timer), (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                 break;
                             case "text":
                                 //Option text
@@ -1445,6 +1463,8 @@ namespace Next_Game
                                         if (structEvent.Repeat > 0) { eventTemp.TimerRepeat = structEvent.Repeat; }
                                         //Dormant Timer -> default 0 (constructor) if not present
                                         if (structEvent.Dormant > 0) { eventTemp.TimerDormant = structEvent.Dormant; }
+                                        //Live Timer -> default 0 (constructor) if not present
+                                        if (structEvent.Live > 0) { eventTemp.TimerLive = structEvent.Live; }
                                         //add options
                                         if (listOptions.Count > 1)
                                         {
@@ -1576,8 +1596,8 @@ namespace Next_Game
             //events
             foreach(var eventObject in dictOfPlayerEvents)
             {
-                Console.WriteLine("\"{0}\" Event, ID {1}, Type {2}, Repeat {3}, Dormant {4}, Status {5}", eventObject.Value.Name, eventObject.Value.EventPID, eventObject.Value.Type,
-                    eventObject.Value.TimerRepeat, eventObject.Value.TimerDormant, eventObject.Value.Status);
+                Console.WriteLine("\"{0}\" Event, ID {1}, Type {2}, Repeat {3}, Dormant {4}, Live {5}, Status {6}", eventObject.Value.Name, eventObject.Value.EventPID, eventObject.Value.Type,
+                    eventObject.Value.TimerRepeat, eventObject.Value.TimerDormant, eventObject.Value.TimerLive, eventObject.Value.Status);
                 List<OptionInteractive> listTempOptions = eventObject.Value.GetOptions();
                 //options
                 foreach (OptionInteractive optionObject in listTempOptions)

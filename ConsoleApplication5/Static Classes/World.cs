@@ -2032,9 +2032,10 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartGame()
         {
+            Console.WriteLine(Environment.NewLine + "--- Start Game");
             Game.history.AgePassiveCharacters(dictPassiveActors);
             CalculateCrows();
-            Console.WriteLine(Environment.NewLine + "--- Game Input");
+            
         }
 
         /// <summary>
@@ -2042,6 +2043,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartTurn()
         {
+            Console.WriteLine(Environment.NewLine + "--- Start Turn Day {0}", Game.gameTurn + 1);
             CalculateCrows();
             //Create events
             Game.director.CheckPlayerEvents();
@@ -2062,13 +2064,13 @@ namespace Next_Game
         /// </summary>
         public void ProcessEndTurn()
         {
+            Console.WriteLine(Environment.NewLine + "--- End Turn Day {0}", Game.gameTurn + 1);
             Game.map.UpdateMap();
             Game.map.UpdatePlayers(MoveActors());
             Game.director.ClearCurrentEvents();
             Game.director.CheckEventTimers();
             UpdateActiveActors();
             Game.gameTurn++;
-            Console.WriteLine(Environment.NewLine);
         }
 
         /// <summary>
