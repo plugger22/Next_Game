@@ -20,7 +20,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Adroit, The Canny, The Shrewd, The Crafty
-End
+[End]
 
 Name: Learned
 Skill: Wits
@@ -28,7 +28,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Erudite, The Educated, The Scholar, The Book Lover
-End
+[End]
 
 Name: Curious
 Skill: Wits 
@@ -36,7 +36,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Examiner, The Inquiring, The Prying, The Searcher
-End
+[End]
 
 Name: Focused
 Skill: Wits 
@@ -44,7 +44,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Centered, The Sharp, The Concentrated, The Direct
-End
+[End]
 
 Name: Strong Willed
 Skill: Wits 
@@ -52,7 +52,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Head Strong, The Iron Willed, The Obstinate, The Resolute, The Unyielding, The Uncompromising
-End
+[End]
 
 Name: Multilingual
 Skill: Wits 
@@ -60,7 +60,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Speaker Of Tongues, The Knowing, The Erudite, The Word Master, The Many Tongued
-End
+[End]
 
 Name: Good Memory
 Skill: Wits 
@@ -68,7 +68,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Recaller, The Recollector, The Retentive
-End
+[End]
 
 Name:  Talented
 Skill: Wits 
@@ -76,7 +76,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Accomplished, The Adept, The Capable, The Skilled, The Smart, The Expert
-End
+[End]
 
 Name: Adaptable
 Skill: Wits 
@@ -84,7 +84,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Adjustable, The Ductile, The Changeable, The Pliable, The Tractable, The Pliant
-End
+[End]
 
 Name: Clever
 Skill: Wits 
@@ -92,7 +92,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Brilliant, The Gifted, The Adroit, The Wise, The Shrewd, The Quick Witted, The Intelligent
-End
+[End]
 
 Name: Precise
 Skill: Wits 
@@ -100,7 +100,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Definitive, The Rigorous, The Correct, The Literal, The Fixed, The Stringent
-End
+[End]
 
 # Wits --- -1
 
@@ -110,7 +110,7 @@ Effect: -1
 Chance: 100
 Age: 15
 Nicknames: The Ignorant, The Uneducated, The UnRead
-End
+[End]
 
 Name: Fickle
 Skill: Wits
@@ -118,7 +118,7 @@ Effect: -1
 Chance: 50
 Age: 15
 Nicknames: The Temperamental, The Unpredictable, The Untrue, The Wayward, The Haphazard, The Whimsical
-End
+[End]
 
 Name: Poor Memory
 Skill: Wits 
@@ -126,7 +126,7 @@ Effect: -1
 Chance: 50
 Age: 15
 Nicknames: The Forgetful, The Hazy, The Confused, The Muddled, The Blank
-End
+[End]
 
 Name: Rigid Thinker
 Skill: Wits 
@@ -134,7 +134,7 @@ Effect: -1
 Chance: 50
 Age: 15
 Nicknames: The Adamant, The Exacting, The Stern, The Unyielding, The Uncompromising, The Hard, The Inflexible, The Locked, The Static, The Unchanging
-End
+[End]
 
 Name: Bad Tempered
 Skill: Wits 
@@ -142,7 +142,7 @@ Effect: -1
 Chance: 50
 Age: 15
 Nicknames: The Cantankerous, The Snarly, The Surly, The Splenetic
-End
+[End]
 
 Name: Hears Voices
 Skill: Wits 
@@ -150,7 +150,7 @@ Effect: -1
 Chance: 50
 Age: 15
 Nicknames: The Troubled, The Distraught, The Haunted, The Disturbed, The Unsettled, The Harrowed, The Perturbed, The Vexed
-End
+[End]
 
 Name: Lacks Common Sense
 Skill: Wits 
@@ -158,7 +158,7 @@ Effect: -1
 Chance: 50
 Age: 15
 Nicknames: The Inept, The Stupid, The Ignorant, The Unable, The Artless
-End
+[End]
 
 Name: Absent Minded
 Skill: Wits 
@@ -166,7 +166,7 @@ Effect: -1
 Chance: 50
 Age: 15
 Nicknames: The Absent, The Careless, The Inattentive, The Heedless, The Dreamy, The Oblivious, The Neglectful, The Woolly
-End
+[End]
 
 Name: Careless
 Skill: Wits 
@@ -174,7 +174,7 @@ Effect: -1
 Chance: 50
 Age: 15
 Nicknames: The Casual, The Forgetful, The Lax, The Nonchalant, The Sloppy, The Offhand, The Slipshod
-End
+[End]
 
 Name: Obsessive
 Skill: Wits 
@@ -182,7 +182,7 @@ Effect: -1
 Chance: 50
 Age: 15
 Nicknames: The Addictive, The Enslaving, The Affected, The Single Minded, The Zealous, The Dogmatic
-End
+[End]
 
 # Wits --- -2
 
@@ -192,7 +192,7 @@ Effect: -2
 Chance: 25
 Age: 5
 Nicknames: The Mystified, The Bewildered, The Nonplussed, The Stumped, The Baffled
-End
+[End]
 
 Name: Delusional
 Skill: Wits
@@ -200,7 +200,7 @@ Effect: -2
 Chance: 25
 Age: 15
 Nicknames: The Unrealistic, The Confused, The Deranged, The Neurotic, The Senile, The Impossible, The Quixotic, The Silly, The Unreal, The Improbable
-End
+[End]
 
 Name: Chaotic
 Skill: Wits
@@ -208,7 +208,7 @@ Effect: -2
 Chance: 25
 Age: 15
 Nicknames: The Anarchic, The Tumultuous, The Deranged, The Purposeless
-End
+[End]
 
 # Charm --- +2 ------------------------------- Charm
 
@@ -220,7 +220,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Gracious, The Polite, The Artful, The Astute, The Calculating, The Courteous
-End
+[End]
 
 Name: Lucky
 Skill: Charm
@@ -228,7 +228,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Fortuitous, The Successful, The Auspicious, The Blessed, The Charmed, The Properous
-End
+[End]
 
 Name: Connoisseur
 Skill: Charm
@@ -236,7 +236,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Devotee, The Aficionado, The Buff, The Dilettante, The Gourmet, The Epicure
-End
+[End]
 
 Name: Empathetic
 Skill: Charm
@@ -244,7 +244,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Sensitive, The Feeling, The Perceptive, The Charitable
-End
+[End]
 
 Name: Optimist
 Skill: Charm
@@ -252,7 +252,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Dreamer, The Idealist, The Romancer, The Stargazer, The Visionary
-End
+[End]
 
 Name: Forgiving
 Skill: Charm
@@ -260,7 +260,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Lenient, The Benign, The Clement, The Easy, The Forbearing, The Tolerant, The Obliging, The Soft
-End
+[End]
 
 Name: Eccentric
 Skill: Charm
@@ -268,7 +268,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Bizarre, The Quirky, The Unconventional, The Whimsical, The Droll, The Abnormal, The Odd
-End
+[End]
 
 Name: Generous
 Skill: Charm
@@ -276,7 +276,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Good, The Helpful, The Lavish, The Beneficent, The Bounteous, The Prodigal, The Munificent, The Just
-End
+[End]
 
 Name: Passionate
 Skill: Charm
@@ -284,7 +284,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Ardent, The Lustful, The Avid, The Spirited, The Impassioned, The Fervent, The Intense
-End
+[End]
 
 # Charm --- -1
 
@@ -294,7 +294,7 @@ Effect: -1
 Chance: 50
 Age: 15
 Nicknames: The All Thumbs, The Artless, The Blundering, The Bumbling, The Gawky, The Inept, The Uncoordinated, The Ungainly
-End
+[End]
 
 # Charm --- -2
 
@@ -304,7 +304,7 @@ Effect: -2
 Chance: 25
 Age: 5
 Nicknames: The Deafened, The Quiet, The Soundless
-End
+[End]
 
 Name: Gaseous
 Skill: Charm 
@@ -312,7 +312,7 @@ Effect: -2
 Chance: 25
 Age: 15
 Nicknames: The Farter, The Windy, The Odious, The Drafty, The Expeller, The Smelly, The Noisy
-End
+[End]
 
 Name: Horribly Disfigured
 Skill: Charm 
@@ -320,7 +320,7 @@ Effect: -2
 Chance: 25
 Age: 5
 Nicknames: The Bent, The Horrid, The Deformed, The Disfigured, The Monstrous
-End
+[End]
 
 Name: Sociopath
 Skill: Charm 
@@ -328,7 +328,7 @@ Effect: -2
 Chance: 25
 Age: 15
 Nicknames: The Lunatic, The Maniac, The Psychotic, The Crazy, The Deranged, The Insane, The Mad
-End
+[End]
 
 Name: Hideously Ugly
 Skill: Charm 
@@ -336,7 +336,7 @@ Effect: -2
 Chance: 25
 Age: 15
 Nicknames: The Hideous, The Grotesque, The Unlovely, The Shocking, The Repulsive, The Repugnant, The Ogress
-End
+[End]
 
 Name: Annoying Voice
 Skill: Charm 
@@ -344,7 +344,7 @@ Effect: -2
 Chance: 25
 Age: 15
 Nicknames: The Shriek, The Shrill, The Squealer, The Unbearable
-End
+[End]
 
 # Treachery --- +2 ------------------------------- Treachery
 
@@ -354,7 +354,7 @@ Effect: 2
 Chance: 25
 Age: 15
 Nicknames: The Distrustful, The Mistrustful, The Watchful
-End
+[End]
 
 Name: Psychopath
 Skill: Treachery
@@ -362,7 +362,7 @@ Effect: 2
 Chance: 25
 Age: 15
 Nicknames: The Mad, The Crazy, The Devil, The Evil, The Unstable, The Insane
-End
+[End]
 
 Name: Machiavellian
 Skill: Treachery
@@ -370,7 +370,7 @@ Effect: 2
 Chance: 25
 Age: 15
 Nicknames: The Calculating, The Plotter, The Unscrupulous, The Conniving The Devious
-End
+[End]
 
 Name: Megalomaniac
 Skill: Treachery
@@ -378,7 +378,7 @@ Effect: 2
 Chance: 25
 Age: 15
 Nicknames: The Egotistical, The Ambitious, The Proud, The Superior, The Swollen, The Inflated, The Boastful
-End
+[End]
 
 # Treachery --- +1
 
@@ -388,7 +388,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Smooth, The Smart, The Knowing, The Sly, The Crafty, The Slippery
-End
+[End]
 
 Name: Vengeful
 Skill: Treachery
@@ -396,7 +396,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Hater, The Finisher, The Vindictive, The Relentless, The Unforgiving, The Spiteful
-End
+[End]
 
 Name: Deceitful
 Skill: Treachery
@@ -404,7 +404,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Duplicitous, The Hypocritical, The Misleading, The Underhanded, The Untruthful, The Double Dealing, The Treacherous
-End
+[End]
 
 Name: Compulsive Liar
 Skill: Treachery
@@ -412,7 +412,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Cheater, The Phony, The Deceiver, The Fabricator, The Trickster
-End
+[End]
 
 Name: Jealous
 Skill: Treachery
@@ -420,7 +420,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Suspicious, The Envious, The Possessive, The Green Eyed, The Covetous
-End
+[End]
 
 Name: Mischievous
 Skill: Treachery
@@ -428,7 +428,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Malicious, The Playful, The Sly, The Holy Terror, The Insidious, The Vexatious
-End
+[End]
 
 Name: Schemer
 Skill: Treachery
@@ -436,7 +436,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Conspirator, The Controller, The Rogue, The Conductor
-End
+[End]
 
 Name: Cynical
 Skill: Treachery
@@ -444,7 +444,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Contemptuous, The Derisive, The Ironic, The Mocking, The Sarcastic, The Sardonic, The Scoffing
-End
+[End]
 
 Name: Manipulative
 Skill: Treachery
@@ -452,7 +452,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Wily, The Puppet Master, The Contriving, The Circumspect, The Discreet, The Sly
-End
+[End]
 
 Name: Suspicious
 Skill: Treachery
@@ -460,7 +460,7 @@ Effect: 1
 Chance: 50
 Age: 15
 Nicknames: The Cautious, The Doubtful, The Wary, The Careful, The Incredulous, The Questioning
-End
+[End]
 
 # Treachery --- -1
 
@@ -470,7 +470,7 @@ Effect: -1
 Chance: 75
 Age: 15
 Nicknames: The Authentic, The Decent, The Genuine, The Impartial
-End
+[End]
 
 Name: Loyal
 Skill: Treachery
@@ -478,7 +478,7 @@ Effect: -1
 Chance: 75
 Age: 15
 Nicknames: The Devoted, The Steadfast, The Dutiful, The Staunch, The Steady, The Unwavering
-End
+[End]
 
 Name: Pious
 Skill: Treachery
@@ -486,7 +486,7 @@ Effect: -1
 Chance: 75
 Age: 15
 Nicknames: The Devout, The Righteous, The Saintly, The Sanctimonious, The Divine, The Reverent, The Spiritual
-End
+[End]
 
 Name: Truthful
 Skill: Treachery
@@ -494,7 +494,7 @@ Effect: -1
 Chance: 75
 Age: 15
 Nicknames: The Believable, The Factual, The Forthright, The Correct, The Truth Telling, The Plain Spoken, The Trustworthy
-End
+[End]
 
 # Treachery --- -2
 
@@ -504,7 +504,7 @@ Effect: -2
 Chance: 25
 Age: 15
 Nicknames: The Trusting, The Dependable, The Responsible
-End
+[End]
 
 Name: Innocent
 Skill: Treachery
@@ -512,7 +512,7 @@ Effect: -2
 Chance: 25
 Age: 15
 Nicknames: The Pure, The Virtuous, The Upright, The Good
-End
+[End]
 
 Name: Guileless
 Skill: Treachery
@@ -520,7 +520,7 @@ Effect: -2
 Chance: 25
 Age: 15
 Nicknames: The Simple Minded, The Unsophisticated, The Lamb, The Green, The Inexperienced
-End
+[End]
 
 Name: Naive
 Skill: Treachery
@@ -528,7 +528,7 @@ Effect: -2
 Chance: 25
 Age: 15
 Nicknames: The Believing, The Unsuspecting, The Unquestioning, The Virgin, The Harmless
-End
+[End]
 
 # Leadership --- +2 ------------------------------- Leadership
 

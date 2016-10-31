@@ -8,7 +8,7 @@ Banner: Roaring Lion
 ArcID: 14
 RefID: 2
 Capital: Casterly Rock
-End
+[End]
 
 House: Martell
 Motto: Unbowed, Unbent, Unbroken
@@ -16,7 +16,7 @@ Banner: Red Sun pierced by a Gold Spear
 ArcID: 18
 RefID: 3
 Capital: Dorne
-End
+[End]
 
 House: Florent
 Motto: Never forget, never forgive
@@ -24,7 +24,7 @@ Banner: Fox Head in a circle of Flowers
 ArcID: 12
 RefID: 4
 Capital: Brightwater Keep
-End
+[End]
 
 House: Greyjoy
 Motto: We Do Not Sow
@@ -32,7 +32,7 @@ Banner: Golden Kraken
 ArcID: 17
 RefID: 5
 Capital: Pyke
-End
+[End]
 
 House: Arryn
 Motto: As High as Honour
@@ -40,7 +40,7 @@ Banner: Moon and Falcon
 ArcID: 16
 RefID: 6
 Capital: Eyrie
-End
+[End]
 
 House: Baratheon
 Motto: Ours is the Fury
@@ -48,7 +48,7 @@ Banner: Crowned Stag on a Golden Field
 ArcID: 19
 RefID: 7
 Capital: Bloodkeep
-End
+[End]
 
 House: Stark
 Motto: Winter is Coming
@@ -56,7 +56,7 @@ Banner: Grey Direwolf on an Ice Field
 ArcID: 11
 RefID: 8
 Capital: Winterfell
-End
+[End]
 
 House: Tully
 Motto: Family, Duty, Honour
@@ -64,7 +64,7 @@ Banner: Leaping Silver Trout
 ArcID: 13
 RefID: 9
 Capital: Riverrun
-End
+[End]
 
 House: Tyrell
 Motto: Growing Strong
@@ -72,7 +72,7 @@ Banner: Golden Rose on a Green Field
 ArcID: 20
 RefID: 10
 Capital: Highgarden
-End
+[End]
 
 House: Targaryen
 Motto: Fire and Blood
@@ -80,4 +80,4 @@ Banner: Three Headed Dragon
 ArcID: 21
 RefID: 11
 Capital: Valyria
-End
+[End]

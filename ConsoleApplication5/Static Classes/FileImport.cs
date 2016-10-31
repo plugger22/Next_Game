@@ -248,7 +248,7 @@ namespace Next_Game
                     string[] tokens = arrayOfHouseNames[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
                     else { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0)
                     {
@@ -291,8 +291,8 @@ namespace Next_Game
                             case "Seat": //Minor Houses
                                 houseStruct.Capital = cleanToken;
                                 break;
-                            case "end":
-                            case "End":
+                            case "[end]":
+                            case "[End]":
                                 //last datapoint - save structure to list
                                 if (dataCounter > 0  && validData == true)
                                 { listHouses.Add(houseStruct); }
@@ -386,7 +386,7 @@ namespace Next_Game
                     string[] tokens = arrayOfTraits[i].Split(':');
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
-                    if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
                     else { cleanToken = tokens[1].Trim(); }
                     if (cleanToken.Length == 0 && cleanTag != "Nicknames")
                     {
@@ -465,8 +465,8 @@ namespace Next_Game
                                     }
                                 }
                                 break;
-                            case "end":
-                            case "End":
+                            case "[end]":
+                            case "[End]":
                                 if (validData == true)
                                 {
                                     //pass info over to a class instance
