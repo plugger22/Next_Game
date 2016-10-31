@@ -155,9 +155,8 @@ amount: 50
 apply: Random
 [outcome]
 effect: EventStatus
-data: 4
-amount: 2
-apply: None
+data: 0
+newStatus: Live
 [End]
 
 Name: Mysterious Stranger

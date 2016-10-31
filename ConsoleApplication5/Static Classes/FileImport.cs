@@ -1541,9 +1541,20 @@ namespace Next_Game
                                         }
                                         else { Game.SetError(new Error(49, string.Format("{0} has insufficient Options", structEvent.Name))); validData = false; }
 
-                                        //last datapoint - save object to list
-                                        if (dataCounter > 0 && validData == true)
-                                        { dictOfPlayerEvents.Add(eventTemp.EventPID, eventTemp); }
+                                        //last datapoint - save object to dictionary
+                                        if (dataCounter > 0)
+                                        {
+                                            //final checks all passed?
+                                            if (validData == true)
+                                            {
+                                                try
+                                                { dictOfPlayerEvents.Add(eventTemp.EventPID, eventTemp); }
+                                                catch
+                                                { Game.SetError(new Error(49, string.Format("Event, (\"{0}\" EventID {1}), not Imported (add to Dictionary)", structEvent.Name, structEvent.EventID))); }
+                                            }
+                                            else
+                                            { Game.SetError(new Error(49, string.Format("Event, (\"{0}\" EventID {1}), not Imported (validData false)", structEvent.Name, structEvent.EventID))); }
+                                        }
                                     }
                                     else { Game.SetError(new Error(49, "Invalid Input, eventObject")); }
                                 }
