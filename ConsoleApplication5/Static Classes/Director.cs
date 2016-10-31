@@ -1147,7 +1147,7 @@ namespace Next_Game
                                 foreach (Outcome outcome in listOutcomes)
                                 {
                                     if (outcome is OutGame)
-                                    { state.SetState(eventObject.Name, option.Text, outcome.Type, outcome.Amount, outcome.Calc); }
+                                    { state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc); }
                                     else if (outcome is OutConflict)
                                     { }
                                     else if (outcome is OutEventTimer)
@@ -1155,7 +1155,7 @@ namespace Next_Game
                                     else if (outcome is OutEventStatus)
                                     {
                                         OutEventStatus tempOutcome = outcome as OutEventStatus;
-                                        ChangePlayerEventStatus(tempOutcome.Type, tempOutcome.NewStatus);
+                                        ChangePlayerEventStatus(tempOutcome.Data, tempOutcome.NewStatus);
                                     }
                                     //ignore if OutNone (do nothing)
                                 }
@@ -1594,7 +1594,10 @@ namespace Next_Game
                 if (newStatus > EventStatus.None)
                 {
                     if (eventObject.Status != newStatus)
-                    { eventObject.Status = newStatus; }
+                    {
+                        eventObject.Status = newStatus;
+                        Console.WriteLine("\"{0}\", eventPID {1}, has changed status to \"{2}\"", eventObject.Name, eventObject.EventPID, newStatus);
+                    }
                     else
                     { Game.SetError(new Error(78, string.Format("\"{0}\" identical to existing, eventID {1} status unchanged", newStatus, targetEventID))); }
                 }

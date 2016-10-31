@@ -8,9 +8,11 @@
 # Cat: (Category) Generic/Special
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/High/Common/Very_Common
 # Status: (Active or Dormant) -> Optional tag (if not shown then default of 'Active')
-# Repeat: Number > 0 -> Optional tag (if not shown then default of 1000) -> Fixed number of activations before event goes dormant
-# Dormant: Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before event goes dormant
 # Event: (Event Text)
+
+# Repeat: (Timer) Number > 0 -> Optional tag (if not shown then default of 1000) -> Fixed number of activations before event goes dormant
+# Dormant: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before event goes dormant
+# Live: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before Live event becomes Active
 
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks. Place block header at top
 # text: option text (number is block, or option num, eg. 1 to 4). Keep it short and clear.
@@ -113,15 +115,15 @@ subType: Major
 Cat: Generic
 Freq: Low
 Status: Active
-Dormant: 2
+Dormant: 20
 Event: You there, Halt! A group of black coated Inquisitors move purposely towards you.
 [option]
 text: Leg it!
 reply: Do they know who you are? Why take the chance?
 [outcome]
 effect: EventStatus
-data: 3
-newStatus: Dormant
+data: 4
+newStatus: Active
 [outcome]
 effect: Game
 data: 5
@@ -151,7 +153,7 @@ calc: >=
 [outcome]
 effect: Game
 data: -1
-amount: 50
+amount: 5
 apply: Random
 [outcome]
 effect: EventStatus
@@ -165,7 +167,7 @@ Type: Location
 subType: Minor
 Cat: Generic
 Freq: Low
-Repeat: 2
+Repeat: 10
 Event: A hooded figure crosses your path, piercing eyes glancing in your direction.
 [option]
 text: Ignore them
@@ -197,6 +199,85 @@ calc: >=
 effect: Game
 data: -3
 amount: 2
+apply: Add
+[End]
+
+# Dormant events
+
+Name: Naked Woman
+ID: 4
+Type: Road
+subType: Normal
+Cat: Generic
+Freq: Low
+Status: Dormant
+Repeat: 10
+Event: A dazed, naked woman is limping along the road ahead, leading a donkey.
+[option]
+text: Ride past, ignoring her
+reply: You can't save the world, it's too big and mean. The woman pleads for some water as you canter past.
+[outcome]
+effect: None
+[option]
+text: Dismount immediately and offer assistance
+reply: You approach her on foot only to find that she has strange, lifeless eyes. Bright blue eyes.
+[outcome]
+effect: Game
+data: 5
+amount: 1
+apply: Add
+[option]
+text: Ride her down!
+reply: As you spur your horse into a gallop and aim directly at the helpless woman you feel no pity or remorse. Anyone woman foolish enough to wander naked down a road deserves to the form of natural justice that you are so adept at providing.
+[trigger]
+check: Trait
+item: 4
+thresh: 3
+calc: >=
+[outcome]
+effect: Game
+data: -5
+amount: 3
+apply: Add
+[End]
+
+Name: The Hand of the King
+ID: 5
+Type: Location
+subType: Major
+Cat: Generic
+Freq: Low
+Status: Dormant
+Live: 3
+Event: A passing citizen recognises you. He approaches covertly and whispers that the Hand of the King has been asking around for anyone with knowledge of you.
+[option]
+text: Thank the Citizen
+reply: You express your gratitude but the citizen scurries off down a lane way before you can finish.
+[outcome]
+effect: Game
+data: -1
+amount: 1
+apply: Add
+[option]
+text: Slap the Citizen for his insolence!
+reply: The surprised citizen recoils backwards before regaining his balance and yelling at the top of his voice "Guards! Guards!". You have no choice but to run for your life.
+[outcome]
+effect: Game
+data: -1
+amount: 2
+apply: Add
+[option]
+text: Pay the Citizen for the information
+reply: Carefully, without trying to attract any attention, you slip a gold coin into the citizens eager hand. it's always good to know what's going on, especially when it concerns yourself.
+[trigger]
+check: Trait
+item: 2
+thresh: 3
+calc: >=
+[outcome]
+effect: Game
+data: 5
+amount: 1
 apply: Add
 [End]
 

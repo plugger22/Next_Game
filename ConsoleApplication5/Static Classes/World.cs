@@ -2068,6 +2068,7 @@ namespace Next_Game
             Game.director.CheckEventTimers();
             UpdateActiveActors();
             Game.gameTurn++;
+            Console.WriteLine(Environment.NewLine);
         }
 
         /// <summary>

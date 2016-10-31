@@ -1600,10 +1600,10 @@ namespace Next_Game
                         if (outcomeObject is OutEventStatus)
                         {
                             OutEventStatus tempOutcome = outcomeObject as OutEventStatus;
-                            Console.WriteLine("    {0} -> Target EventID {1}, New Status {2}", cleanTag, tempOutcome.EventID, tempOutcome.NewStatus);
+                            Console.WriteLine("    {0} -> Target EventID {1}, New Status {2}", cleanTag, tempOutcome.Data, tempOutcome.NewStatus);
                         }
                         else
-                            { Console.WriteLine("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Type, outcomeObject.Amount, outcomeObject.Calc); }
+                            { Console.WriteLine("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc); }
                     }
                 }
                 Console.WriteLine();
