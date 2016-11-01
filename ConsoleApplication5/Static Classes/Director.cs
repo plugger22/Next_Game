@@ -1151,7 +1151,10 @@ namespace Next_Game
                                     else if (outcome is OutConflict)
                                     { }
                                     else if (outcome is OutEventTimer)
-                                    { }
+                                    {
+                                        OutEventTimer tempOutcome = outcome as OutEventTimer;
+                                        ChangePlayerEventTimer(tempOutcome);
+                                    }
                                     else if (outcome is OutEventStatus)
                                     {
                                         OutEventStatus tempOutcome = outcome as OutEventStatus;
@@ -1606,6 +1609,81 @@ namespace Next_Game
             }
             else
             { Game.SetError(new Error(78, string.Format("Target Event ID {0} not found, event status unchanged", targetEventID))); }
+        }
+
+        /// <summary>
+        /// Change Player event Timer 
+        /// </summary>
+        /// <param name="outcome"></param>
+        private void ChangePlayerEventTimer(OutEventTimer outcome)
+        {
+            if (outcome != null)
+            {
+                try
+                {
+                    EventPlayer eventObject = GetPlayerEvent(outcome.EventID);
+                    int oldValue, newValue;
+                    switch (outcome.Timer)
+                    {
+                        case EventTimer.Repeat:
+                            oldValue = eventObject.TimerRepeat;
+                            newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
+                            eventObject.TimerRepeat = newValue;
+                            Console.WriteLine("\"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
+                            break;
+                        case EventTimer.Dormant:
+                            oldValue = eventObject.TimerDormant;
+                            newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
+                            eventObject.TimerDormant = newValue;
+                            Console.WriteLine("\"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
+                            break;
+                        case EventTimer.Live:
+                            oldValue = eventObject.TimerLive;
+                            newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
+                            eventObject.TimerLive = newValue;
+                            Console.WriteLine("\"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
+                            break;
+                        default:
+                            Game.SetError(new Error(79, string.Format("Invalid Timer \"{0}\", EventID \"{1}\"", outcome.Timer, outcome.EventID)));
+                            break;
+                    }
+                }
+                catch
+                { Game.SetError(new Error(79, string.Format("Invalid EventID \"{0}\" (not found)", outcome.EventID))); }
+            }
+            else
+            { Game.SetError(new Error(79, "Invalid Outcome argument (null)")); }
+        }
+
+
+        /// <summary>
+        /// implements actual changes
+        /// </summary>
+        /// <param name="currentValue"></param>
+        /// <param name="amount"></param>
+        /// <param name="apply"></param>
+        /// <returns></returns>
+        public int ChangeData(int currentValue, int amount, EventCalc apply)
+        {
+            int newValue = currentValue;
+            switch (apply)
+            {
+                case EventCalc.Add:
+                    newValue += amount;
+                    break;
+                case EventCalc.Subtract:
+                    newValue -= amount;
+                    break;
+                case EventCalc.Random:
+                    //Adds
+                    int rndNum = rnd.Next(amount);
+                    newValue += rndNum;
+                    break;
+                case EventCalc.Equals:
+                    newValue = amount;
+                    break;
+            }
+            return newValue;
         }
 
         //place Director methods above here

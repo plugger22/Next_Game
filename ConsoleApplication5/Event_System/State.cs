@@ -52,42 +52,42 @@ namespace Next_Game.Event_System
                     case GameVar.Notoriety:
                         oldData = Game.director.GetGameState(DataPoint.Notoriety, state);
                         //apply change
-                        newData = Math.Abs(ChangeData(oldData, amountNum, apply));
+                        newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
                         Game.director.SetGameState(DataPoint.Notoriety, state, newData);
                         break;
                     case GameVar.Justice:
                         oldData = Game.director.GetGameState(DataPoint.Justice, state);
                         //apply change (positive #)
-                        newData = Math.Abs(ChangeData(oldData, amountNum, apply));
+                        newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
                         Game.director.SetGameState(DataPoint.Justice, state, newData);
                         break;
                     case GameVar.Legend_Ursurper:
                         oldData = Game.director.GetGameState(DataPoint.Legend_Ursurper, state);
                         //apply change (positive #)
-                        newData = Math.Abs(ChangeData(oldData, amountNum, apply));
+                        newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
                         Game.director.SetGameState(DataPoint.Legend_Ursurper, state, newData);
                         break;
                     case GameVar.Legend_King:
                         oldData = Game.director.GetGameState(DataPoint.Legend_King, state);
                         //apply change (positive #)
-                        newData = Math.Abs(ChangeData(oldData, amountNum, apply));
+                        newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
                         Game.director.SetGameState(DataPoint.Legend_King, state, newData);
                         break;
                     case GameVar.Honour_Ursurper:
                         oldData = Game.director.GetGameState(DataPoint.Honour_Ursurper, state);
                         //apply change (positive #)
-                        newData = Math.Abs(ChangeData(oldData, amountNum, apply));
+                        newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
                         Game.director.SetGameState(DataPoint.Honour_Ursurper, state, newData);
                         break;
                     case GameVar.Honour_King:
                         oldData = Game.director.GetGameState(DataPoint.Honour_King, state);
                         //apply change (positive #)
-                        newData = Math.Abs(ChangeData(oldData, amountNum, apply));
+                        newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
                         Game.director.SetGameState(DataPoint.Honour_King, state, newData);
                         break;
@@ -127,31 +127,6 @@ namespace Next_Game.Event_System
             else { Game.SetError(new Error(74, string.Format("Invalid input (data \"{0}\") for eventPID {1}", outType, eventTxt))); }
         }
 
-        /// <summary>
-        /// implements actual changes
-        /// </summary>
-        /// <param name="currentValue"></param>
-        /// <param name="amount"></param>
-        /// <param name="apply"></param>
-        /// <returns></returns>
-        private int ChangeData(int currentValue, int amount, EventCalc apply)
-        {
-            int newValue = currentValue;
-            switch(apply)
-            {
-                case EventCalc.Add:
-                    newValue += amount;
-                    break;
-                case EventCalc.Subtract: //NOT for Director.cs DataPoint enums
-                    newValue -= amount;
-                    break;
-                case EventCalc.Random:
-                    int rndNum = rnd.Next(amount);
-                    newValue += rndNum;
-                    break;
-            }
-            return newValue;
-        }
 
         //add new methods above here
     }

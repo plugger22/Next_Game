@@ -127,11 +127,14 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutEventTimer : Outcome
     {
-        public OutEventTimer(int eventID, int type, int amount, EventCalc apply = EventCalc.None) : base(eventID)
+        public EventTimer Timer { get; set; }
+
+        public OutEventTimer(int eventID, int targetEventID, int amount, EventCalc apply, EventTimer timer) : base(eventID)
         {
-            this.Data = type;
+            Data = targetEventID;
             this.Amount = amount;
             this.Calc = apply;
+            this.Timer = timer;
         }
     }
 

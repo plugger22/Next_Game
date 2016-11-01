@@ -84,8 +84,9 @@ namespace Next_Game
         public string Effect { get; set; }
         public int Data { get; set; }
         public int Amount { get; set; }
-        public EventCalc Apply { get; set; }
+        public EventCalc Calc { get; set; }
         public EventStatus NewStatus { get; set; } //specific to EventStatus outcomes
+        public EventTimer Timer { get; set; } //specific to EventTimer outcomes
     }
 
     struct TriggerStruct
@@ -963,8 +964,9 @@ namespace Next_Game
                                     structOutcome.Effect = "";
                                     structOutcome.Data = 0;
                                     structOutcome.Amount = 0;
-                                    structOutcome.Apply = EventCalc.None;
+                                    structOutcome.Calc = EventCalc.None;
                                     structOutcome.NewStatus = EventStatus.None;
+                                    structOutcome.Timer = EventTimer.None;
                                 }
                                 else
                                 {
@@ -1337,27 +1339,27 @@ namespace Next_Game
                                 catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Amount, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                 break;
                             case "apply":
-                                if (structOutcome.Effect == "Game")
+                                switch (cleanToken)
                                 {
-                                    switch (cleanToken)
-                                    {
-                                        case "None":
-                                            structOutcome.Apply = Event_System.EventCalc.None;
-                                            break;
-                                        case "Add":
-                                            structOutcome.Apply = Event_System.EventCalc.Add;
-                                            break;
-                                        case "Subtract":
-                                            structOutcome.Apply = Event_System.EventCalc.Subtract;
-                                            break;
-                                        case "Random":
-                                            structOutcome.Apply = Event_System.EventCalc.Random;
-                                            break;
-                                        default:
-                                            Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Apply, (\"{0}\")", arrayOfEvents[i])));
-                                            validData = false;
-                                            break;
-                                    }
+                                    case "None":
+                                        structOutcome.Calc = EventCalc.None;
+                                        break;
+                                    case "Add":
+                                        structOutcome.Calc = EventCalc.Add;
+                                        break;
+                                    case "Subtract":
+                                        structOutcome.Calc = EventCalc.Subtract;
+                                        break;
+                                    case "Equals":
+                                        structOutcome.Calc = EventCalc.Equals;
+                                        break;
+                                    case "Random":
+                                        structOutcome.Calc = EventCalc.Random;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Apply, (\"{0}\")", arrayOfEvents[i])));
+                                        validData = false;
+                                        break;
                                 }
                                 break;
                             case "newStatus":
@@ -1378,6 +1380,25 @@ namespace Next_Game
                                         break;
                                     default:
                                         Game.SetError(new Error(49, string.Format("Invalid Input, Outcome newStatus, (\"{0}\")", arrayOfEvents[i])));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "timer":
+                                //specific to EventTimer outcomes
+                                switch (cleanToken)
+                                {
+                                    case "Repeat":
+                                        structOutcome.Timer = EventTimer.Repeat;
+                                        break;
+                                    case "Dormant":
+                                        structOutcome.Timer = EventTimer.Dormant;
+                                        break;
+                                    case "Live":
+                                        structOutcome.Timer = EventTimer.Live;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Outcome timer, (\"{0}\")", arrayOfEvents[i])));
                                         validData = false;
                                         break;
                                 }
@@ -1500,43 +1521,33 @@ namespace Next_Game
                                                         switch (outTemp.Effect)
                                                         {
                                                             case "Conflict":
-                                                                outObject = new OutConflict(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
+                                                                outObject = new OutConflict(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Calc);
                                                                 break;
                                                             case "Game":
                                                                 //check that GameVars (DataPoints) are only 'add' or 'random'
-                                                                if (outTemp.Data <= 6 && outTemp.Apply != EventCalc.Add && outTemp.Apply != EventCalc.Random)
+                                                                if (outTemp.Data <= 6 && outTemp.Calc != EventCalc.Add && outTemp.Calc != EventCalc.Random)
                                                                 {
-                                                                    Game.SetError(new Error(49, string.Format("Outcome \"apply: {0}\" changed to \"Add\" for Event (\"{1}\")", 
-                                                                        outTemp.Apply, structEvent.Name)));
-                                                                    outTemp.Apply = EventCalc.Add;
+                                                                    Game.SetError(new Error(49, string.Format("Outcome \"apply: {0}\" changed to \"Add\" for Event (\"{1}\")",
+                                                                        outTemp.Calc, structEvent.Name)));
+                                                                    outTemp.Calc = EventCalc.Add;
                                                                 }
-                                                                outObject = new OutGame(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
+                                                                outObject = new OutGame(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Calc);
                                                                 break;
                                                             case "EventTimer":
-                                                                outObject = new OutEventTimer(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Apply);
-                                                                break;
-                                                            case "EventStatus":
-                                                                if (outTemp.NewStatus > EventStatus.None)
-                                                                {
-                                                                    if (outTemp.Data > 0)
-                                                                    {
-                                                                        if (outTemp.Data != structEvent.EventID)
-                                                                        { outObject = new OutEventStatus(structEvent.EventID, outTemp.Data, outTemp.NewStatus); }
-                                                                        else
-                                                                        {
-                                                                            Game.SetError(new Error(49, "Invalid Input, Outcome Data (EventStatus) same as EventID, object not created"));
-                                                                            validData = false;
-                                                                        }
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        Game.SetError(new Error(49, "Invalid Input, Outcome Data (EventStatus), (Data <= Zero, can't create object)"));
-                                                                        validData = false;
-                                                                    }
-                                                                }
+                                                                if (outTemp.Data > 0)
+                                                                { outObject = new OutEventTimer(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Calc, outTemp.Timer); }
                                                                 else
                                                                 {
-                                                                    Game.SetError(new Error(49, "Invalid Input, Outcome newStatus, (no value present, can't create object)"));
+                                                                    Game.SetError(new Error(49, "Invalid Input, Outcome Data, (EventTimer), can't create object)"));
+                                                                    validData = false;
+                                                                }
+                                                                break;
+                                                            case "EventStatus":
+                                                                if (outTemp.Data > 0)
+                                                                { outObject = new OutEventStatus(structEvent.EventID, outTemp.Data, outTemp.NewStatus); }
+                                                                else
+                                                                {
+                                                                    Game.SetError(new Error(49, "Invalid Input, Outcome Data (EventStatus), (Data <= Zero, can't create object)"));
                                                                     validData = false;
                                                                 }
                                                                 break;
@@ -1621,6 +1632,11 @@ namespace Next_Game
                         {
                             OutEventStatus tempOutcome = outcomeObject as OutEventStatus;
                             Console.WriteLine("    {0} -> Target EventID {1}, New Status {2}", cleanTag, tempOutcome.Data, tempOutcome.NewStatus);
+                        }
+                        else if (outcomeObject is OutEventTimer)
+                        {
+                            OutEventTimer tempOutcome = outcomeObject as OutEventTimer;
+                            Console.WriteLine("    {0} -> Target EventID {1}, {2} timer, amount {3} apply {4}", cleanTag, tempOutcome.Data, tempOutcome.Timer, tempOutcome.Amount, tempOutcome.Calc);
                         }
                         else
                             { Console.WriteLine("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc); }

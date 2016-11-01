@@ -32,13 +32,18 @@
 # [outcome] -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
 # data -> if +ve then Good, if -ve then Bad
-# effect = game, then data -> 1 Threat, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King
+# if data <= 6 then data -> 1 Threat, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King (apply: Add or Random only)
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
-# apply: how the amount is applied (None, Add, Subtract, Random) where 'Random' is random range (amount). Default 'None'
+# apply: how the amount is applied -> None / Add / Subtract / Equals / Random   where 'Random' is Add random range (amount). Default 'None'
 
 # [outcome] -> EventStatus
 # data: target EventID
 # newStatus: specific to EventStatus outcomes, desired new Status of target event -> (Active, Live, Dormant, Dead)
+
+# [outcome] -> EventTimer
+# data: target EventID (can reference it's host decision), amount and apply (+, -, =, Random)
+# timer: which timer -> Repeat / Dormant / Live
+
 
 # [End] -> Place at the end of the event description.
 # NOTE: Leave no spaces between lines WITHIN an event. Indents (tabs) are O.K, even better is colour coding using Notepad++ (example)
@@ -145,11 +150,6 @@ apply: Random
 [option]
 text: Run straight at them
 reply: Surprise is the key. Wait until they are almost upon you, draw your sword and charge.
-[trigger]
-check: Trait
-item: 1
-thresh: 3
-calc: >=
 [outcome]
 effect: Game
 data: -1
@@ -202,7 +202,7 @@ amount: 2
 apply: Add
 [End]
 
-# Dormant events
+# Dormant events ---
 
 Name: Naked Woman
 ID: 4
@@ -219,8 +219,8 @@ reply: You can't save the world, it's too big and mean. The woman pleads for som
 [outcome]
 effect: None
 [option]
-text: Dismount immediately and offer assistance
-reply: You approach her on foot only to find that she has strange, lifeless eyes. Bright blue eyes.
+text: Offer assistance
+reply: You immediately dismount and approach her on foot only to find that she has strange, lifeless eyes. Bright blue eyes.
 [outcome]
 effect: Game
 data: 5
@@ -259,15 +259,21 @@ data: -1
 amount: 1
 apply: Add
 [option]
-text: Slap the Citizen for his insolence!
-reply: The surprised citizen recoils backwards before regaining his balance and yelling at the top of his voice "Guards! Guards!". You have no choice but to run for your life.
+text: Deal with his Insolence
+reply: You slap the surprised citizen who recoils backwards before regaining his balance and yelling at the top of his voice "Guards! Guards!". You have no choice but to run for your life.
 [outcome]
 effect: Game
 data: -1
 amount: 2
 apply: Add
+[outcome]
+effect: EventTimer
+data: 5
+amount: 3
+apply: Equals
+timer: Repeat
 [option]
-text: Pay the Citizen for the information
+text: Pay the Citizen
 reply: Carefully, without trying to attract any attention, you slip a gold coin into the citizens eager hand. it's always good to know what's going on, especially when it concerns yourself.
 [trigger]
 check: Trait

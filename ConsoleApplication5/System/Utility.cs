@@ -84,6 +84,7 @@ namespace Next_Game
             return (int)distance;
         }
 
+
         //methods above here
     }
 }
