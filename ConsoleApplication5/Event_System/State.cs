@@ -8,7 +8,7 @@ namespace Next_Game.Event_System
 {
 
     public enum GameVar { None,
-        Notoriety, //don't change order -> corresponds to Director DataPoint
+        Invisibility, //don't change order -> corresponds to Director DataPoint
         Justice, //don't change order -> corresponds to Director DataPoint
         Legend_Ursurper, //don't change order -> corresponds to Director DataPoint
         Legend_King, //don't change order -> corresponds to Director DataPoint
@@ -49,12 +49,12 @@ namespace Next_Game.Event_System
                 OptionInteractive option = new OptionInteractive();
                 switch (gameVar)
                 {
-                    case GameVar.Notoriety:
-                        oldData = Game.director.GetGameState(DataPoint.Notoriety, state);
+                    case GameVar.Invisibility:
+                        oldData = Game.director.GetGameState(DataPoint.Invisibility, state);
                         //apply change
                         newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
-                        Game.director.SetGameState(DataPoint.Notoriety, state, newData);
+                        Game.director.SetGameState(DataPoint.Invisibility, state, newData);
                         break;
                     case GameVar.Justice:
                         oldData = Game.director.GetGameState(DataPoint.Justice, state);

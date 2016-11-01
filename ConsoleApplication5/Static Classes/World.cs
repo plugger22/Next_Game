@@ -1571,15 +1571,15 @@ namespace Next_Game
             RLColor foreground;
             //Date
             listStats.Add(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black));
-            //Notoriety
-            data = Game.director.CheckGameState(DataPoint.Notoriety);
-            good = Game.director.GetGameState(DataPoint.Notoriety, DataState.Good);
-            bad = Game.director.GetGameState(DataPoint.Notoriety, DataState.Bad);
-            change = Game.director.CheckGameStateChange(DataPoint.Notoriety);
+            //Invisibility
+            data = Game.director.CheckGameState(DataPoint.Invisibility);
+            good = Game.director.GetGameState(DataPoint.Invisibility, DataState.Good);
+            bad = Game.director.GetGameState(DataPoint.Invisibility, DataState.Bad);
+            change = Game.director.CheckGameStateChange(DataPoint.Invisibility);
             foreground = RLColor.White;
             if (change > 0 ) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }
-            listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Notoriety (You)", data, good, bad), foreground, RLColor.Black));
+            listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Invisibility (You)", data, good, bad), foreground, RLColor.Black));
             //justice
             data = Game.director.CheckGameState(DataPoint.Justice);
             good = Game.director.GetGameState(DataPoint.Justice, DataState.Good);
