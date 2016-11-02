@@ -995,7 +995,7 @@ namespace Next_Game
             //clear input console before displaying input
             infoChannel.ClearConsole(ConsoleDisplay.Input);
             infoChannel.AppendInfoList(new Snippet(string.Format("{0} input", _multiData), RLColor.LightMagenta, RLColor.Black), ConsoleDisplay.Input);
-            infoChannel.AppendInfoList(new Snippet(string.Format("Press ENTER when done, BACKSPACE to change, or ESC to exit", _multiData)), ConsoleDisplay.Input);
+            infoChannel.AppendInfoList(new Snippet("Press ENTER when done, BACKSPACE to change, or ESC to exit"), ConsoleDisplay.Input);
             infoChannel.AppendInfoList(new Snippet("Any '?' will be automatically removed"), ConsoleDisplay.Input);
             return inputComplete;
         }

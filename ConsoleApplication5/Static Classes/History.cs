@@ -2222,7 +2222,7 @@ namespace Next_Game
                     minion.arrayOfTraitInfluences[(int)trait] = influenceAmount;
                     minion.Influencer = master.ActID;
                     //debug
-                    Console.WriteLine("- {0}, Aid {1} has adjusted {3} ({4}) due to {4}'s, Aid {5}, influence", minion.Name, minion.ActID, trait, influenceAmount, master.Name, master.ActID);
+                    Console.WriteLine("- {0}, Aid {1} has adjusted {2} ({3}) due to {4}'s, Aid {5}, influence", minion.Name, minion.ActID, trait, influenceAmount, master.Name, master.ActID);
                 }
                 //trait affected if master trait < minion trait and not positiveOnly
                 if (masterTrait < minionTrait && positiveOnly == false)
