@@ -61,17 +61,32 @@ namespace Next_Game
         /// </summary>
         public void InitialiseCards()
         {
+            int left_align = 11; //left side of status boxes (y_coord)
+            int top_align = 24; //top of card (y_coord)
+            int card_width = 40;
+            int card_height = 40;
+            int bottom_align = top_align + card_height;
+            int status_box_width = 16;
+            int status_box_height = 10;
+            int text_box_width = 106; //two boxes under the card display
+            
             //Card
-            DrawBox(44, 24, 40, 40, RLColor.Yellow, RLColor.LightGray);
+            DrawBox(44, top_align, card_width, card_height, RLColor.Yellow, RLColor.LightGray);
             //message box under card
-            DrawBox(11, 70, 106, 12, RLColor.Yellow, RLColor.LightGray);
+            DrawBox(left_align, 70, text_box_width, 12, RLColor.Yellow, RLColor.LightGray);
             //instruction box
-            DrawBox(11, 86, 106, 6, RLColor.Yellow, RLColor.LightGray);
-            //Remaining Influence
-            DrawBox(11, 24, 16, 10, RLColor.Yellow, RLColor.LightGray);
-            DrawCenteredText("Remaining", 11, 16, 26, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            //Remaining Cards
-            DrawBox(11, 54, 16, 10, RLColor.Yellow, RLColor.LightGray);
+            DrawBox(left_align, 86, text_box_width, 6, RLColor.Yellow, RLColor.LightGray);
+            //Remaining Influence (top left in relation to card display)
+            DrawBox(left_align, top_align, status_box_width, status_box_height, RLColor.Yellow, RLColor.LightGray);
+            DrawCenteredText("Remaining", left_align, status_box_width, top_align + 2, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("Influence", left_align, status_box_width, top_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("0", left_align, status_box_width, top_align + 6, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            //Remaining Cards (bottom left in relation to card display)
+            int vertical_align = bottom_align - status_box_height;
+            DrawBox(11, vertical_align, status_box_width, status_box_height, RLColor.Yellow, RLColor.LightGray);
+            DrawCenteredText("Remaining", left_align, status_box_width, vertical_align + 2, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("Cards", left_align, status_box_width, vertical_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("0", left_align, status_box_width, vertical_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
         }
 
         /// <summary>
