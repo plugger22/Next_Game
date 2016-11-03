@@ -61,7 +61,17 @@ namespace Next_Game
         /// </summary>
         public void InitialiseCards()
         {
-            DrawBox(20, 20, 20, 20, RLColor.Blue, RLColor.Yellow);
+            //Card
+            DrawBox(44, 24, 40, 40, RLColor.Yellow, RLColor.LightGray);
+            //message box under card
+            DrawBox(11, 70, 106, 12, RLColor.Yellow, RLColor.LightGray);
+            //instruction box
+            DrawBox(11, 86, 106, 6, RLColor.Yellow, RLColor.LightGray);
+            //Remaining Influence
+            DrawBox(11, 24, 16, 10, RLColor.Yellow, RLColor.LightGray);
+            DrawCenteredText("Remaining", 11, 16, 26, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            //Remaining Cards
+            DrawBox(11, 54, 16, 10, RLColor.Yellow, RLColor.LightGray);
         }
 
         /// <summary>
@@ -93,8 +103,9 @@ namespace Next_Game
         {
             //error check input, exit on bad data
             if (coord_X < 0 || coord_X + width > Width - Offset_x)
-            { Game.SetError(new Error(81, string.Format("Invalid coordX input \"{0}\"", coord_X))); return; }
+            { Game.SetError(new Error(81, string.Format("Invalid coord_X input \"{0}\"", coord_X))); return; }
             if (coord_Y < 0 || coord_Y + height > Height - Offset_y * 2)
+            { Game.SetError(new Error(81, string.Format("Invalid coord_Y input \"{0}\"", coord_Y))); return; }
             //populate array - corners
             arrayOfCells_Cards[coord_X, coord_Y] = 218; arrayOfForeColors_Cards[coord_X, coord_Y] = borderColor; //top left
             arrayOfCells_Cards[coord_X, coord_Y + height - 1] = 192; arrayOfForeColors_Cards[coord_X, coord_Y + height - 1] = borderColor; //bottom left
@@ -116,10 +127,55 @@ namespace Next_Game
                 arrayOfForeColors_Cards[coord_X, i] = borderColor;
                 arrayOfForeColors_Cards[coord_X + width - 1, i] = borderColor;
             }
-            
             //fill backcolor
+            for (int width_index = coord_X + 1; width_index < coord_X + width - 1; width_index++)
+            {
+                for (int height_index = coord_Y + 1; height_index < coord_Y + height - 1; height_index++)
+                { arrayOfBackColors_Cards[width_index, height_index] = fillColor; }
+            }
         }
 
+        /// <summary>
+        /// Draws text on a layout (labels)
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="coord_X"></param>
+        /// <param name="coord_Y"></param>
+        /// <param name="foreColor"></param>
+        internal void DrawText(string text, int coord_X, int coord_Y, RLColor foreColor, int [,] arrayOfCells, RLColor [,] arrayOfForeColors)
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                arrayOfCells[coord_X + i, coord_Y] = text[i];
+                arrayOfForeColors[coord_X + i, coord_Y] = foreColor;
+            }
+        }
+
+        /// <summary>
+        /// Draws text centered between two x coords (Left and Right boundaries)
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="coord_X_Left"></param>
+        /// <param name="coord_X_Right"></param>
+        /// <param name="coord_Y"></param>
+        /// <param name="foreColor"></param>
+        /// <param name="arrayOfCells"></param>
+        /// <param name="arrayOfForeColors"></param>
+        internal void DrawCenteredText(string text, int coord_X, int width, int coord_Y, RLColor foreColor, int[,] arrayOfCells, RLColor[,] arrayOfForeColors)
+        {
+            int length = text.Length;
+            //error check
+            if (length >= width)
+            { Game.SetError(new Error(82, string.Format("String input \"{0}\" is to wide to fit in the box (max {1})", text, width))); return; }
+            //work out start position
+            int start = (width - length) / 2;
+            //place text
+            for (int i = 0; i < text.Length; i++)
+            {
+                arrayOfCells[coord_X + i + start, coord_Y] = text[i];
+                arrayOfForeColors[coord_X + i + start, coord_Y] = foreColor;
+            }
+        }
 
     }
 }
