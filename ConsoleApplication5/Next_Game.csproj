@@ -84,6 +84,7 @@
     <Compile Include="Static Classes\Director.cs" />
     <Compile Include="Static Classes\Lore.cs" />
     <Compile Include="System\Box.cs" />
+    <Compile Include="System\Layout.cs" />
     <Compile Include="System\CustomExceptions.cs" />
     <Compile Include="System\Utility.cs" />
     <Compile Include="System\Error.cs" />

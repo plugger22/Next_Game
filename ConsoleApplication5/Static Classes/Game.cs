@@ -66,6 +66,7 @@ namespace Next_Game
         public static Constant constant;
         public static FileImport file;
         public static Utility utility;
+        public static Layout layout;
         
         //flags
         private static bool _renderRequired = true; //redraw Console?
@@ -130,6 +131,8 @@ namespace Next_Game
             Message message = new Message($"Game world created with seed {seed}", MessageType.System);
             world.SetMessage(message);
             world.ProcessStartGame();
+            //layouts
+            layout = new Layout(130, 100, 2, 2, RLColor.Gray, RLColor.Yellow);
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
@@ -1105,6 +1108,10 @@ namespace Next_Game
                         else
                         { exitFlag = true; }
 
+                    }
+                    else if (mode == SpecialMode.Conflict)
+                    {
+                        exitFlag = true;
                     }
                     break;
             }

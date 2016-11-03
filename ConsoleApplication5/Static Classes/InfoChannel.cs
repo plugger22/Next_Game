@@ -39,7 +39,7 @@ namespace Next_Game
             boxWidth = 100;
             RLColor backColor = Color._background1;
             //dynamicBox = new Box(boxWidth, 10, 10, backColor, RLColor.Black);
-            cardBox = new Box(50, 50, 10, backColor, RLColor.Black);
+            cardBox = new Box(45, 45, 10, backColor, RLColor.Black);
         }
 
         
@@ -334,8 +334,9 @@ namespace Next_Game
                     }
                     break;
                 case SpecialMode.Conflict:
-                    cardBox.SetText(listOfSnippets);
-                    cardBox.Draw(multiConsole);
+                    Game.layout.Draw(multiConsole);
+                    //cardBox.SetText(listOfSnippets);
+                    //cardBox.Draw(multiConsole);
                     break;
             }
         }
