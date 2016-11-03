@@ -334,7 +334,7 @@ namespace Next_Game
                     }
                     break;
                 case SpecialMode.Conflict:
-                    Game.layout.Draw(multiConsole);
+                    Game.layout.DrawCards(multiConsole);
                     //cardBox.SetText(listOfSnippets);
                     //cardBox.Draw(multiConsole);
                     break;

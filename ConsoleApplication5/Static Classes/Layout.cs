@@ -62,6 +62,7 @@ namespace Next_Game
         public void InitialiseCards()
         {
             int left_align = 11; //left side of status boxes (y_coord)
+            int right_align = 117;
             int top_align = 24; //top of card (y_coord)
             int card_width = 40;
             int card_height = 40;
@@ -80,27 +81,43 @@ namespace Next_Game
             DrawBox(left_align, top_align, status_box_width, status_box_height, RLColor.Yellow, RLColor.LightGray);
             DrawCenteredText("Remaining", left_align, status_box_width, top_align + 2, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Influence", left_align, status_box_width, top_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("0", left_align, status_box_width, top_align + 6, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            //Remaining Cards (bottom left in relation to card display)
+            DrawCenteredText("0", left_align, status_box_width, top_align + 7, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            //Remaining Cards (bottom left)
             int vertical_align = bottom_align - status_box_height;
-            DrawBox(11, vertical_align, status_box_width, status_box_height, RLColor.Yellow, RLColor.LightGray);
+            DrawBox(left_align, vertical_align, status_box_width, status_box_height, RLColor.Yellow, RLColor.LightGray);
             DrawCenteredText("Remaining", left_align, status_box_width, vertical_align + 2, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Cards", left_align, status_box_width, vertical_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("0", left_align, status_box_width, vertical_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("0", left_align, status_box_width, vertical_align + 7, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            //Pool info (top right)
+            int horizontal_align = right_align - status_box_width;
+            DrawBox(horizontal_align, top_align, status_box_width, status_box_height, RLColor.Yellow, RLColor.LightGray);
+            DrawText("Good", horizontal_align + 2, top_align + 2, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Neutral", horizontal_align + 2, top_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Bad", horizontal_align + 2, top_align + 6, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Total", horizontal_align + 2, top_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            //Strategy Info (bottom right)
+            DrawBox(horizontal_align, vertical_align, status_box_width, status_box_height, RLColor.Yellow, RLColor.LightGray);
         }
+
+        /// <summary>
+        /// Draw Cards Layout
+        /// </summary>
+        /// <param name="multiConsole"></param>
+        public void DrawCards(RLConsole multiConsole)
+        { Draw(multiConsole, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); }
 
         /// <summary>
         /// Draw box to multiConsole
         /// </summary>
         /// <param name="multiConsole"></param>
-        public void Draw(RLConsole multiConsole)
+        private void Draw(RLConsole multiConsole, int[,] arrayOfCells, RLColor[,] arrayOfForeColors, RLColor[,] arrayOfBackColors )
         {
             multiConsole.Clear();
             for (int height_index = Offset_y; height_index < Height - Offset_y * 2; height_index++)
             {
                 for (int width_index = 0; width_index < Width - Offset_x; width_index++)
-                { multiConsole.Set(width_index, height_index, arrayOfForeColors_Cards[width_index, height_index], arrayOfBackColors_Cards[width_index, height_index], 
-                    arrayOfCells_Cards[width_index, height_index]); }
+                { multiConsole.Set(width_index, height_index, arrayOfForeColors[width_index, height_index], arrayOfBackColors[width_index, height_index], 
+                    arrayOfCells[width_index, height_index]); }
             }
 
         }
