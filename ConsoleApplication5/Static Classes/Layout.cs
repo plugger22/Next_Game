@@ -67,8 +67,8 @@ namespace Next_Game
             int card_width = 40;
             int card_height = 40;
             int bottom_align = top_align + card_height;
-            int status_box_width = 16;
-            int status_box_height = 10;
+            int status_box_width = 26;
+            int status_box_height = 11;
             int text_box_width = 106; //two boxes under the card display
             
             //Card
@@ -91,12 +91,16 @@ namespace Next_Game
             //Pool info (top right)
             int horizontal_align = right_align - status_box_width;
             DrawBox(horizontal_align, top_align, status_box_width, status_box_height, RLColor.Yellow, RLColor.LightGray);
-            DrawText("Good", horizontal_align + 2, top_align + 2, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("Neutral", horizontal_align + 2, top_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("Bad", horizontal_align + 2, top_align + 6, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("Total", horizontal_align + 2, top_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Good cards", horizontal_align + 3, top_align + 2, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Neutral cards", horizontal_align + 3, top_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Bad cards", horizontal_align + 3, top_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Total cards", horizontal_align + 3, top_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Strategy Info (bottom right)
             DrawBox(horizontal_align, vertical_align, status_box_width, status_box_height, RLColor.Yellow, RLColor.LightGray);
+            DrawCenteredText("Your Strategy", horizontal_align, status_box_width, vertical_align + 2, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("All Out Assault", horizontal_align, status_box_width, vertical_align + 4, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("Opponent's Strategy", horizontal_align, status_box_width, vertical_align + 6, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("Hold the Ground", horizontal_align, status_box_width, vertical_align + 8, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
         }
 
         /// <summary>
