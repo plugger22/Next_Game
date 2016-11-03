@@ -17,40 +17,53 @@ namespace Next_Game
         public int Offset_x { get; set; } //offset from right hand side of screen (cells)
         public int Offset_y { get; set; } //offset from top and bottom of screen (cells)
         private RLColor backColor;
-        private int[,] arrayOfCells; //cell array for box and text
-        private RLColor[,] arrayOfColors; //foreground color for cell contents
+        private int[,] arrayOfCells_Cards; //cell array for box and text
+        private RLColor[,] arrayOfForeColors_Cards; //foreground color for cell contents
+        private RLColor[,] arrayOfBackColors_Cards; //background color for cell's
 
         /// <summary>
         /// default constructor
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        /// <param name="backColor"></param>
+        /// <param name="fillColor"></param>
         /// <param name="borderColor"></param>
-        public Layout(int width, int height, int offset_x, int offset_y, RLColor backColor, RLColor borderColor)
+        public Layout(int width, int height, int offset_x, int offset_y, RLColor fillColor, RLColor borderColor)
         {
             this.Width = width;
             this.Height = height;
-            this.backColor = backColor;
+            this.backColor = fillColor;
             this.Offset_x = offset_x;
             this.Offset_y = offset_y;
             //error check dimensions to see that they'll fit into the multi-console (130 x 100)
             if (Width > 130) { Width = 130; Game.SetError(new Error(80, string.Format("Invalid Width input \"{0}\", changed to 130", width))); }
             if (Height > 100) { Height = 100; Game.SetError(new Error(80, string.Format("Invalid Height input \"{0}\", changed to 130", height))); }
             //initialise border and colors
-            arrayOfCells = new int[Width - Offset_x, Height - Offset_y * 2];
-            arrayOfColors = new RLColor[Width, Height];
+            arrayOfCells_Cards = new int[Width - Offset_x, Height - Offset_y * 2];
+            arrayOfForeColors_Cards = new RLColor[Width - Offset_x, Height - Offset_y * 2];
+            arrayOfBackColors_Cards = new RLColor[Width - Offset_x, Height - Offset_y * 2];
 
             //debug data set
             for (int height_index = 0; height_index < Height - Offset_y * 2; height_index++)
             {
                 for (int width_index = 0; width_index < Width - Offset_x; width_index++)
-                { arrayOfColors[width_index, height_index] = backColor; arrayOfCells[width_index, height_index] = 177; }
+                {
+                    arrayOfBackColors_Cards[width_index, height_index] = fillColor;
+                    arrayOfForeColors_Cards[width_index, height_index] = RLColor.White;
+                    arrayOfCells_Cards[width_index, height_index] = 255;
+                }
             }
 
         }
-    
-                
+
+        /// <summary>
+        /// Initialise Cards layout
+        /// </summary>
+        public void InitialiseCards()
+        {
+            DrawBox(20, 20, 20, 20, RLColor.Blue, RLColor.Yellow);
+        }
+
         /// <summary>
         /// Draw box to multiConsole
         /// </summary>
@@ -61,7 +74,8 @@ namespace Next_Game
             for (int height_index = Offset_y; height_index < Height - Offset_y * 2; height_index++)
             {
                 for (int width_index = 0; width_index < Width - Offset_x; width_index++)
-                { multiConsole.Set(width_index, height_index, arrayOfColors[width_index, height_index], backColor, arrayOfCells[width_index, height_index]); }
+                { multiConsole.Set(width_index, height_index, arrayOfForeColors_Cards[width_index, height_index], arrayOfBackColors_Cards[width_index, height_index], 
+                    arrayOfCells_Cards[width_index, height_index]); }
             }
 
         }
@@ -75,66 +89,37 @@ namespace Next_Game
         /// <param name="height"></param>
         /// <param name="borderColor"></param>
         /// <param name="fillColor"></param>
-        private void DrawBox(int coord_X, int coord_Y, int width, int height, RLColor borderColor, RLColor fillColor)
+        internal void DrawBox(int coord_X, int coord_Y, int width, int height, RLColor borderColor, RLColor fillColor)
         {
             //error check input, exit on bad data
             if (coord_X < 0 || coord_X + width > Width - Offset_x)
             { Game.SetError(new Error(81, string.Format("Invalid coordX input \"{0}\"", coord_X))); return; }
             if (coord_Y < 0 || coord_Y + height > Height - Offset_y * 2)
             //populate array - corners
-            arrayOfCells[coord_X, coord_Y] = 218; arrayOfColors[coord_X, coord_Y] = borderColor; //top left
-            arrayOfCells[coord_X, coord_Y + height - 1] = 192; arrayOfColors[coord_X, coord_Y + height - 1] = borderColor; //bottom left
-            arrayOfCells[coord_X + width - 1, coord_Y] = 191; arrayOfColors[coord_X + width - 1, coord_Y] = borderColor; //top right
-            arrayOfCells[coord_X + width - 1, coord_Y + height - 1] = 217; arrayOfColors[coord_X + width - 1, coord_Y + height - 1] = borderColor; //bottom right
+            arrayOfCells_Cards[coord_X, coord_Y] = 218; arrayOfForeColors_Cards[coord_X, coord_Y] = borderColor; //top left
+            arrayOfCells_Cards[coord_X, coord_Y + height - 1] = 192; arrayOfForeColors_Cards[coord_X, coord_Y + height - 1] = borderColor; //bottom left
+            arrayOfCells_Cards[coord_X + width - 1, coord_Y] = 191; arrayOfForeColors_Cards[coord_X + width - 1, coord_Y] = borderColor; //top right
+            arrayOfCells_Cards[coord_X + width - 1, coord_Y + height - 1] = 217; arrayOfForeColors_Cards[coord_X + width - 1, coord_Y + height - 1] = borderColor; //bottom right
             //Top & bottom rows
-            for (int i = coord_X; i < coord_X + width - 1; i++)
-            { arrayOfCells[i, coord_Y] = 196; arrayOfCells[i, coord_Y + height - 1] = 196; arrayOfColors[i, coord_Y] = borderColor; arrayOfColors[i, coord_Y + height - 1] = borderColor; }
+            for (int i = coord_X + 1; i < coord_X + width - 1; i++)
+            {
+                arrayOfCells_Cards[i, coord_Y] = 196;
+                arrayOfCells_Cards[i, coord_Y + height - 1] = 196;
+                arrayOfForeColors_Cards[i, coord_Y] = borderColor;
+                arrayOfForeColors_Cards[i, coord_Y + height - 1] = borderColor;
+            }
             //left and right sides
-            for (int i = coord_Y; i < coord_Y + height - 1; i++)
-            { arrayOfCells[coord_X, i] = 179; arrayOfCells[coord_X + width - 1, i] = 179; arrayOfColors[coord_X, i] = borderColor; arrayOfColors[coord_X + width - 1, i] = borderColor; }
+            for (int i = coord_Y + 1; i < coord_Y + height - 1; i++)
+            {
+                arrayOfCells_Cards[coord_X, i] = 179;
+                arrayOfCells_Cards[coord_X + width - 1, i] = 179;
+                arrayOfForeColors_Cards[coord_X, i] = borderColor;
+                arrayOfForeColors_Cards[coord_X + width - 1, i] = borderColor;
+            }
+            
+            //fill backcolor
         }
 
+
     }
-
-    /// <summary>
-    /// Decide Strategy layout
-    /// </summary>
-    public class LayoutStrategy : Layout
-    {
-
-        public LayoutStrategy(int width, int height, int offset_x, int offset_y, RLColor backColor, RLColor borderColor) : base(width, height, offset_x, offset_y, backColor, borderColor)
-        { }
-    }
-
-
-
-    /// <summary>
-    /// Card Play layout
-    /// </summary>
-    public class LayoutCards : Layout
-    {
-       
-        public LayoutCards(int width, int height, int offset_x, int offset_y, RLColor backColor, RLColor borderColor) : base (width, height, offset_x, offset_y, backColor, borderColor)
-        { }
-
-        /// <summary>
-        /// Set up layout
-        /// </summary>
-        public void Initialise()
-        {
-
-        }
-    }
-
-
-    /// <summary>
-    /// End of Conflict Outcome layout
-    /// </summary>
-    public class LayoutOutcome : Layout
-    {
-
-        public LayoutOutcome(int width, int height, int offset_x, int offset_y, RLColor backColor, RLColor borderColor) : base(width, height, offset_x, offset_y, backColor, borderColor)
-        { }
-    }
-
 }

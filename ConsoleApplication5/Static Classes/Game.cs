@@ -133,6 +133,7 @@ namespace Next_Game
             world.ProcessStartGame();
             //layouts
             layout = new Layout(130, 100, 2, 2, RLColor.Gray, RLColor.Yellow);
+            layout.InitialiseCards();
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
