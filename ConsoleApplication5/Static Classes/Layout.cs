@@ -70,13 +70,19 @@ namespace Next_Game
             int status_box_width = 26;
             int status_box_height = 11;
             int text_box_width = 106; //two boxes under the card display
+            int bottom_space = 6; //space between bottom of card and top of text boxes below
+            int message_box_height = 12; //upper text box
+            int instruction_box_height = 8; //lower text box
+            
             
             //Card
             DrawBox(44, top_align, card_width, card_height, RLColor.Yellow, RLColor.LightGray);
             //message box under card
-            DrawBox(left_align, 70, text_box_width, 12, RLColor.Yellow, RLColor.LightGray);
+            int vertical_pos = top_align + card_height + bottom_space;
+            DrawBox(left_align, vertical_pos, text_box_width, message_box_height, RLColor.Yellow, RLColor.LightGray);
             //instruction box
-            DrawBox(left_align, 86, text_box_width, 6, RLColor.Yellow, RLColor.LightGray);
+            vertical_pos += message_box_height + bottom_space / 2;
+            DrawBox(left_align, vertical_pos, text_box_width, instruction_box_height, RLColor.Yellow, RLColor.LightGray);
             //Remaining Influence (top left in relation to card display)
             DrawBox(left_align, top_align, status_box_width, status_box_height, RLColor.Yellow, RLColor.LightGray);
             DrawCenteredText("Remaining", left_align, status_box_width, top_align + 2, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
