@@ -132,7 +132,7 @@ namespace Next_Game
             world.SetMessage(message);
             world.ProcessStartGame();
             //layouts
-            layout = new Layout(130, 100, 2, 2, RLColor.Gray, RLColor.Yellow);
+            layout = new Layout(130, 100, 2, 3, RLColor.Gray, RLColor.Yellow);
             layout.InitialiseCards();
             //set up menu
             menu = new Menu(4, 8);
