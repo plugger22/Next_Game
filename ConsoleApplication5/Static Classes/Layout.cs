@@ -65,9 +65,17 @@ namespace Next_Game
             int right_align = 120;
             int card_width = 40;
             int card_height = 41;
+            int card_left_align = 44;
             int status_box_width = 33;
             int status_box_height = 11;
             int top_align = 22; //top of card (y_coord) & top y_coord for upper status boxes
+            int card_vert_1 = top_align + 2; //type of card, eg. 'skill card', y_coord
+            int card_vert_2 = top_align + 4; //spacer
+            int card_vert_3 = top_align + card_height / 4; //eg. "King's Leadship"
+            int card_vert_4 = top_align + card_height / 4 + 3; //Immersion text eg. "Forward Men!"
+            int card_vert_5 = top_align + card_height / 4 * 3; //advantage / disadvantage
+            int card_vert_6 = top_align + card_height / 4 * 3 + 3; //"Play for 2 points"
+            int card_vert_7 = top_align + card_height / 4 * 3 + 6; //"Ignore for 1 point"
             int middle_align = top_align + card_height / 2 - status_box_height / 2; // top y_coord for middle status boxes
             int bottom_align = top_align + card_height; //bottom y_coord for lower status boees
             int bottom_space = 6; //space between bottom of card and top of text boxes below
@@ -89,7 +97,14 @@ namespace Next_Game
             int bar_top = score_vertical_align + bar_offset_y; //y_coord of bar
             int bar_height = score_height - (bar_offset_y * 2);
             //Card
-            DrawBox(44, top_align, card_width, card_height, RLColor.Yellow, RLColor.LightGray);
+            DrawBox(card_left_align, top_align, card_width, card_height, RLColor.Yellow, RLColor.LightGray);
+            DrawCenteredText("Skill Card", card_left_align, card_vert_1, card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("--- 0 ---", card_left_align, card_vert_2, card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("The King's Leadership", card_left_align, card_vert_3, card_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("For the King! Long Live the King!", card_left_align, card_vert_4, card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("Disadvantage", card_left_align, card_vert_5, card_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("Play for -2 Points", card_left_align, card_vert_6, card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("Ignore for -8 Points", card_left_align, card_vert_7, card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Score track
             DrawBox(score_left_align, score_vertical_align, score_width, score_height, RLColor.Yellow, RLColor.LightGray);
             //...bar
