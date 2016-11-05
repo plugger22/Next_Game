@@ -13,6 +13,7 @@ namespace Next_Game
     public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome} //if MenuMode.Special then this is the type of special
+    public enum ConflictMode { None, Strategy, Cards, Outcome, Confirm, AutoResolve} //submodes within SpecialMode.Conflict
 
     public static class Game
     {
@@ -78,6 +79,7 @@ namespace Next_Game
         private static MenuMode _menuMode = MenuMode.Main; //menu mode in operation (corresponds to enum above)
         public static InputMode _inputMode = InputMode.Normal; //non-standard input modes, default none
         public static SpecialMode _specialMode = SpecialMode.None; //special, multiConsole display modes
+        public static ConflictMode _conflictMode = ConflictMode.None; //conflict secondary display modes
         public static int _eventID = 0; //ID of current event being dealt with
         public static bool _fullConsole = false; //set to true by InfoChannel.DrawInfoConsole if multiConsole is maxxed out
         public static int _scrollIndex = 0; //used by infoChannel.DrawConsole to handle scrolling up and down
@@ -133,7 +135,7 @@ namespace Next_Game
             world.ProcessStartGame();
             //layouts
             layout = new Layout(130, 100, 2, 3, RLColor.Gray, RLColor.Yellow);
-            layout.InitialiseCards();
+            layout.Initialise();
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
@@ -658,7 +660,8 @@ namespace Next_Game
                             {
                                 case MenuMode.Main:
                                     _menuMode = MenuMode.Special;
-                                    _specialMode = SpecialMode.Conflict; 
+                                    _specialMode = SpecialMode.Conflict;
+                                    _conflictMode = ConflictMode.Strategy;
                                     break;
                                 case MenuMode.Debug:
                                     //Show All Secrets log
@@ -1047,12 +1050,30 @@ namespace Next_Game
                        if (director.ResolveOutcome(_eventID, 1) == true)
                         { _specialMode = SpecialMode.Outcome; }
                     }
+                    else if (mode == SpecialMode.Conflict)
+                    {
+                        switch (_conflictMode)
+                        {
+                            case ConflictMode.Strategy:
+                                _conflictMode = ConflictMode.Confirm;
+                                break;
+                        }
+                    }
                     break;
                 case RLKey.F2:
                     if (mode == SpecialMode.PlayerEvent)
                     {
                         if (director.ResolveOutcome(_eventID, 2) == true)
                         { _specialMode = SpecialMode.Outcome; }
+                    }
+                    else if (mode == SpecialMode.Conflict)
+                    {
+                        switch (_conflictMode)
+                        {
+                            case ConflictMode.Strategy:
+                                _conflictMode = ConflictMode.Confirm;
+                                break;
+                        }
                     }
                     break;
                 case RLKey.F3:
@@ -1061,7 +1082,17 @@ namespace Next_Game
                         if (director.ResolveOutcome(_eventID, 3) == true)
                         { _specialMode = SpecialMode.Outcome; }
                     }
+                    else if (mode == SpecialMode.Conflict)
+                    {
+                        switch (_conflictMode)
+                        {
+                            case ConflictMode.Strategy:
+                                _conflictMode = ConflictMode.Confirm;
+                                break;
+                        }
+                    }
                     break;
+                case RLKey.Space:
                 case RLKey.Enter:
                 case RLKey.Escape:
                     //any Follower events that need dealing with?
@@ -1112,7 +1143,19 @@ namespace Next_Game
                     }
                     else if (mode == SpecialMode.Conflict)
                     {
-                        exitFlag = true;
+                        switch (_conflictMode)
+                        {
+                            case ConflictMode.Strategy:
+                                //swap to cards screen
+                                _conflictMode = ConflictMode.Cards;
+                                break;
+                            case ConflictMode.Cards:
+                                exitFlag = true;
+                                break;
+                            case ConflictMode.Confirm:
+                                _conflictMode = ConflictMode.Cards;
+                                break;
+                        }
                     }
                     break;
             }

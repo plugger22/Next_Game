@@ -334,9 +334,19 @@ namespace Next_Game
                     }
                     break;
                 case SpecialMode.Conflict:
-                    Game.layout.DrawCards(multiConsole);
-                    //cardBox.SetText(listOfSnippets);
-                    //cardBox.Draw(multiConsole);
+                    switch (Game._conflictMode)
+                    {
+                        case ConflictMode.Strategy:
+                            Game.layout.DrawStrategy(multiConsole);
+                            break;
+                        case ConflictMode.Cards:
+                            Game.layout.DrawCards(multiConsole);
+                            break;
+                        case ConflictMode.Confirm:
+                            Game.layout.DrawConfirm(multiConsole);
+                            break;
+                    }
+                                       
                     break;
             }
         }
