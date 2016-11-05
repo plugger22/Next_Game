@@ -134,7 +134,7 @@ namespace Next_Game
             world.SetMessage(message);
             world.ProcessStartGame();
             //layouts
-            layout = new Layout(130, 100, 2, 3, RLColor.Gray, RLColor.Yellow);
+            layout = new Layout(130, 100, 2, 3, RLColor.Black, RLColor.Yellow);
             layout.Initialise();
             //set up menu
             menu = new Menu(4, 8);
@@ -1150,10 +1150,13 @@ namespace Next_Game
                                 _conflictMode = ConflictMode.Cards;
                                 break;
                             case ConflictMode.Cards:
-                                exitFlag = true;
+                                _conflictMode = ConflictMode.Outcome;
                                 break;
                             case ConflictMode.Confirm:
                                 _conflictMode = ConflictMode.Cards;
+                                break;
+                            case ConflictMode.Outcome:
+                                exitFlag = true;
                                 break;
                         }
                     }
