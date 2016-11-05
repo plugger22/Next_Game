@@ -1143,21 +1143,33 @@ namespace Next_Game
                     }
                     else if (mode == SpecialMode.Conflict)
                     {
-                        switch (_conflictMode)
+                        if (keyPress.Key == RLKey.Escape && (_conflictMode == ConflictMode.Strategy || _conflictMode == ConflictMode.Cards))
                         {
-                            case ConflictMode.Strategy:
-                                //swap to cards screen
-                                _conflictMode = ConflictMode.Cards;
-                                break;
-                            case ConflictMode.Cards:
-                                _conflictMode = ConflictMode.Outcome;
-                                break;
-                            case ConflictMode.Confirm:
-                                _conflictMode = ConflictMode.Cards;
-                                break;
-                            case ConflictMode.Outcome:
-                                exitFlag = true;
-                                break;
+                            //AutoResolve Mode
+                            _conflictMode = ConflictMode.AutoResolve;
+                        }
+                        else
+                        {
+                            //Manual Resolution
+                            switch (_conflictMode)
+                            {
+                                case ConflictMode.Strategy:
+                                    //swap to cards screen
+                                    _conflictMode = ConflictMode.Cards;
+                                    break;
+                                case ConflictMode.Cards:
+                                    _conflictMode = ConflictMode.Outcome;
+                                    break;
+                                case ConflictMode.Confirm:
+                                    _conflictMode = ConflictMode.Cards;
+                                    break;
+                                case ConflictMode.AutoResolve:
+                                    _conflictMode = ConflictMode.Outcome;
+                                    break;
+                                case ConflictMode.Outcome:
+                                    exitFlag = true;
+                                    break;
+                            }
                         }
                     }
                     break;

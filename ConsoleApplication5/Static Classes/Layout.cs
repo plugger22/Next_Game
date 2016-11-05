@@ -193,7 +193,7 @@ namespace Next_Game
             DrawCenteredText("0", left_align, vertical_align + 7, status_box_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Situation (top right)
             DrawBox(horizontal_align, top_align, status_box_width, status_box_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
-            DrawCenteredText("-0- Situation -0-", horizontal_align, top_align + 2, status_box_width,  RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("Situation", horizontal_align, top_align + 2, status_box_width,  RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Defendable Hill (2 cards)", horizontal_align, top_align + 4, status_box_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Muddy Ground (1 card)", horizontal_align, top_align + 6, status_box_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Army Size (3 cards)", horizontal_align, top_align + 8, status_box_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -242,13 +242,13 @@ namespace Next_Game
             DrawText("24", left_outer + 24, top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Situation (top right)
             DrawBox(right_inner, top_align, upper_box_width, upper_box_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
-            DrawCenteredText("-0- Situation -0-", right_inner, top_align + 2, upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText("Situation", right_inner, top_align + 2, upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawCenteredText("Defendable Hill (2 cards)", right_inner, top_align + 4, upper_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawCenteredText("Muddy Ground (1 card)", right_inner, top_align + 6, upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawCenteredText("Army Size (3 cards)", right_inner, top_align + 8, upper_box_width, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Choose Strategy (top middle)
             DrawBox(middle_align, top_align, strategy_box_width, strategy_box_height, RLColor.Yellow, RLColor.White, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
-            DrawCenteredText("-0- Choose a Strategy -0-", middle_align, top_align + 2, strategy_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText("Choose a Strategy", middle_align, top_align + 2, strategy_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText("[F1] Take the Fight to the Enemy", middle_align + 4, top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText("[F2] Aggressive Defensive", middle_align + 4, top_align + 6, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText("[F1] Stand Firm", middle_align + 4, top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
@@ -276,10 +276,10 @@ namespace Next_Game
             int vertical_bottom = vertical_middle + history_height + spacer;
             //Outcome
             DrawBox(left_align, vertical_top, box_width, outcome_height, RLColor.Yellow, RLColor.White, arrayOfCells_Outcome, arrayOfForeColors_Outcome, arrayOfBackColors_Outcome);
-            DrawCenteredText("-0- Outcome -0-", left_align, vertical_top + 2, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText("Outcome", left_align, vertical_top + 2, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
             //History
             DrawBox(left_align, vertical_middle, box_width, history_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Outcome, arrayOfForeColors_Outcome, arrayOfBackColors_Outcome);
-            DrawCenteredText("-0- History -0-", left_align, vertical_middle + 2, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText("History", left_align, vertical_middle + 2, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
             //Instruction
             DrawBox(left_align, vertical_bottom, box_width, instruction_height, RLColor.Yellow, RLColor.White, arrayOfCells_Outcome, arrayOfForeColors_Outcome, arrayOfBackColors_Outcome);
             DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, vertical_bottom + 2, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
@@ -322,6 +322,13 @@ namespace Next_Game
         /// </summary>
         /// <param name="multiConsole"></param>
         public void DrawConfirm(RLConsole multiConsole)
+        { Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm); }
+
+        /// <summary>
+        /// Draw AutoResolve Layout
+        /// </summary>
+        /// <param name="multiConsole"></param>
+        public void DrawAutoResolve(RLConsole multiConsole)
         { Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm); }
 
         /// <summary>
