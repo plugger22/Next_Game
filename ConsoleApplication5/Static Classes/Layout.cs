@@ -18,8 +18,37 @@ namespace Next_Game
         public int Offset_x { get; set; } //offset from right hand side of screen (cells)
         public int Offset_y { get; set; } //offset from top and bottom of screen (cells)
         private RLColor backColor;
-
-        
+        //card layout
+        int ca_left_outer; //left side of status boxes (y_coord)
+        int ca_right_align;
+        int ca_card_width;
+        int ca_card_height;
+        int ca_left_inner;
+        int ca_status_width;
+        int ca_status_height;
+        int ca_top_align; //top of card (y_coord) & top y_coord for upper status boxes
+        int ca_spacer; //space between bottom of card and top of text boxes below
+        int ca_message_height; //upper text box
+        int ca_instruct_height; //lower text box
+        int ca_score_height;
+        int ca_score_vert_align;
+        int ca_bar_offset_x; //score internal bar
+        int ca_bar_offset_y;
+        //strategy layout
+        int st_left_outer; //left margin (y_coord)
+        int st_middle_align; //middle box margin (y_coord)
+        int st_right_outer;
+        int st_upper_box_width;
+        int st_upper_box_height;
+        int st_top_align;
+        int st_spacer; //vertical space between frames
+        int st_strategy_width; //strategy box, uppper middle
+        int st_instruct_height;
+        //Outcome layout
+        int ou_left_align;
+        int ou_spacer;
+        int ou_outcome_height;
+        int ou_instruct_height;
 
         //Conflict Cards
         private int[,] arrayOfCells_Cards; //cell array for box and text
@@ -88,7 +117,37 @@ namespace Next_Game
                     arrayOfCells_Confirm[width_index, height_index] = 255;
                 }
             }
-
+            //Card Layout
+            ca_left_outer = 8; //left side of status boxes (y_coord)
+            ca_right_align = 120;
+            ca_card_width = 40;
+            ca_card_height = 41;
+            ca_left_inner = 44;
+            ca_status_width = 33;
+            ca_status_height = 11;
+            ca_top_align = 22; //top of card (y_coord) & top y_coord for upper status boxes
+            ca_spacer = 6; //space between bottom of card and top of text boxes below
+            ca_message_height = 12; //upper text box
+            ca_instruct_height = 9; //lower text box
+            ca_score_height = 12;
+            ca_score_vert_align = 6;
+            ca_bar_offset_x = 4; //score internal bar
+            ca_bar_offset_y = 3;
+            //Strategy Layout
+            st_left_outer = 8; //left margin (y_coord)
+            st_middle_align = 44; //middle box margin (y_coord)
+            st_right_outer = 120;
+            st_upper_box_width = 33;
+            st_upper_box_height = 11;
+            st_top_align = 6;
+            st_spacer = 3; //vertical space between frames
+            st_strategy_width = 40; //strategy box, uppper middle
+            st_instruct_height = 9;
+            //Outcome Layout
+            ou_left_align = 10;
+            ou_spacer = 4;
+            ou_outcome_height = 20;
+            ou_instruct_height = 7;
         }
 
         /// <summary>
@@ -107,22 +166,6 @@ namespace Next_Game
         /// </summary>
         public void InitialiseCards()
         {
-            int ca_left_outer = 8; //left side of status boxes (y_coord)
-            int ca_right_align = 120;
-            int ca_card_width = 40;
-            int ca_card_height = 41;
-            int ca_left_inner = 44;
-            int ca_status_width = 33;
-            int ca_status_height = 11;
-            int ca_top_align = 22; //top of card (y_coord) & top y_coord for upper status boxes
-            int ca_spacer = 6; //space between bottom of card and top of text boxes below
-            int ca_message_height = 12; //upper text box
-            int ca_instruct_height = 9; //lower text box
-            int ca_score_height = 12;
-            int ca_score_vert_align = 6;
-            int ca_bar_offset_x = 4; //score internal bar
-            int ca_bar_offset_y = 3;
-
             int card_vert_1 = ca_top_align + 2; //type of card, eg. 'skill card', y_coord
             int card_vert_2 = ca_top_align + 4; //spacer
             int card_vert_3 = ca_top_align + ca_card_height / 4; //eg. "King's Leadship"
@@ -132,21 +175,17 @@ namespace Next_Game
             int card_vert_7 = ca_top_align + ca_card_height / 4 * 3 + 6; //"Ignore for 1 point"
             int middle_align = ca_top_align + ca_card_height / 2 - ca_status_height / 2; // top y_coord for middle status boxes
             int bottom_align = ca_top_align + ca_card_height; //bottom y_coord for lower status boees
-            
             int horizontal_align = ca_right_align - ca_status_width; //status boxes, left side of status boxes for those on the right hand side
             int vertical_align = bottom_align - ca_status_height; //status boxes
             int vertical_pos = ca_top_align + ca_card_height + ca_spacer; //used for message boxes down the bottom
             int text_box_width = horizontal_align + ca_status_width - ca_left_outer; //two boxes under the card display
             int score_width = horizontal_align - ca_left_outer;
-            
             int score_left_align = ca_left_outer + ca_status_width / 2;
-            
             int bar_width = score_width - (ca_bar_offset_x * 2);
             int bar_middle = score_left_align + ca_bar_offset_x + (bar_width / 2); //x_coord of mid point
             int bar_segment = Convert.ToInt32((float)bar_width / 8); //scoring marker segments on bar (4 either side of the zero mid point)
             int bar_top = ca_score_vert_align + ca_bar_offset_y; //y_coord of bar
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
-
             //Card
             DrawBox(ca_left_inner, ca_top_align, ca_card_width, ca_card_height, RLColor.Yellow, RLColor.White, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             DrawCenteredText("Skill Card", ca_left_inner, card_vert_1, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -223,16 +262,6 @@ namespace Next_Game
         /// </summary>
         public void InitialiseStrategy()
         {
-            int st_left_outer = 8; //left margin (y_coord)
-            int st_middle_align = 44; //middle box margin (y_coord)
-            int st_right_outer = 120;
-            int st_upper_box_width = 33;
-            int st_upper_box_height = 11;
-            int st_top_align = 6;
-            int st_spacer = 3; //vertical space between frames
-            int st_strategy_width = 40; //strategy box, uppper middle
-            int st_instruct_height = 9;
-
             int strategy_box_height = st_upper_box_height;
             int right_inner = st_right_outer - st_upper_box_width;
             int vertical_middle = st_top_align + st_upper_box_height + st_spacer; //y_coord of breakdown box
@@ -275,11 +304,6 @@ namespace Next_Game
         /// </summary>
         public void InitialiseOutcome()
         {
-            int ou_left_align = 10;
-            int ou_spacer = 4;
-            int ou_outcome_height = 20;
-            int ou_instruct_height = 7;
-
             int box_width = Width - Offset_x - ou_left_align * 2;
             int history_height = Height - Offset_y * 2 - ou_outcome_height - ou_instruct_height - ou_spacer * 4;
             int vertical_top = ou_spacer;
@@ -362,7 +386,6 @@ namespace Next_Game
                 { multiConsole.Set(width_index, height_index, arrayOfForeColors[width_index, height_index], arrayOfBackColors[width_index, height_index], 
                     arrayOfCells[width_index, height_index]); }
             }
-
         }
 
         /// <summary>
