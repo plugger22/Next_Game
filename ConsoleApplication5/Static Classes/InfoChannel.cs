@@ -355,7 +355,7 @@ namespace Next_Game
                             Game.layout.DrawMessage(multiConsole);
                             break;
                         case ConflictMode.ErrorStrategy:
-                            Game.layout.UpdateMessage(Game.layout.GetTestDataErrorStrategy(), Game.layout.Error_FillColor);
+                            Game.layout.UpdateMessage(Game.layout.GetDataErrorStrategy(), Game.layout.Error_FillColor);
                             Game.layout.DrawMessage(multiConsole);
                             break;
                         case ConflictMode.Outcome:
