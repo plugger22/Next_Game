@@ -343,10 +343,12 @@ namespace Next_Game
                             Game.layout.DrawCards(multiConsole);
                             break;
                         case ConflictMode.Confirm:
-                            Game.layout.DrawConfirm(multiConsole, Game.layout.GetTestDataConfirm());
+                            Game.layout.UpdateConfirm(Game.layout.GetTestDataConfirm());
+                            Game.layout.DrawConfirm(multiConsole);
                             break;
                         case ConflictMode.AutoResolve:
-                            Game.layout.DrawAutoResolve(multiConsole, Game.layout.GetTestDataAutoResolve());
+                            Game.layout.UpdateAutoResolve(Game.layout.GetTestDataAutoResolve());
+                            Game.layout.DrawAutoResolve(multiConsole);
                             break;
                         case ConflictMode.Outcome:
                             Game.layout.DrawOutcome(multiConsole);

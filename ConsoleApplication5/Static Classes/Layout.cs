@@ -53,7 +53,8 @@ namespace Next_Game
         RLColor Confirm_FillColor { get; set; }
         //AutoResolve Layout
         RLColor Resolve_FillColor { get; set; }
-
+        //Dynamic Data Sets
+        public int[] ArrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
         //Conflict Cards
         private int[,] arrayOfCells_Cards; //cell array for box and text
         private RLColor[,] arrayOfForeColors_Cards; //foreground color for cell contents
@@ -156,6 +157,8 @@ namespace Next_Game
             Confirm_FillColor = RLColor.White;
             //AutoResolve Layout
             Resolve_FillColor = RLColor.White;
+            //Dynamic Data Sets
+            ArrayCardPool = new int[3];
         }
 
         /// <summary>
@@ -163,10 +166,53 @@ namespace Next_Game
         /// </summary>
         public void Initialise()
         {
+            SetTestData();
             InitialiseStrategy();
             InitialiseCards();
             InitialiseOutcome();
             InitialiseConfirm();
+        }
+
+        /// <summary>
+        /// Initialise Choose a Strategy Layout
+        /// </summary>
+        public void InitialiseStrategy()
+        {
+            int strategy_box_height = st_upper_box_height;
+            int right_inner = st_right_outer - st_upper_box_width;
+            int vertical_middle = st_top_align + st_upper_box_height + st_spacer; //y_coord of breakdown box
+            int instruction_box_width = st_right_outer - st_left_outer;
+            int vertical_bottom = Height - Offset_y * 2 - st_spacer - st_instruct_height; //y-coord of instruction box
+            int breakdown_box_height = vertical_bottom - vertical_middle - st_spacer;
+            int breakdown_box_width = st_right_outer - st_left_outer;
+            //Card Pool (top left)
+            DrawBox(st_left_outer, st_top_align, st_upper_box_width, st_upper_box_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
+            DrawText("Good cards", st_left_outer + 7, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText("Neutral cards", st_left_outer + 7, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText("Bad cards", st_left_outer + 7, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText("Total cards", st_left_outer + 7, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(ArrayCardPool[0]), st_left_outer + 24, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(ArrayCardPool[1]), st_left_outer + 24, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(ArrayCardPool[2]), st_left_outer + 24, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(ArrayCardPool.Sum()), st_left_outer + 24, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            //Situation (top right)
+            DrawBox(right_inner, st_top_align, st_upper_box_width, st_upper_box_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
+            DrawCenteredText("Situation", right_inner, st_top_align + 2, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText("Defendable Hill (Good)", right_inner, st_top_align + 4, st_upper_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText("Muddy Ground (Neutral)", right_inner, st_top_align + 6, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText("Relative Army Sizes (Bad)", right_inner, st_top_align + 8, st_upper_box_width, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            //Choose Strategy (top middle)
+            DrawBox(st_middle_align, st_top_align, st_strategy_width, strategy_box_height, RLColor.Yellow, RLColor.White, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
+            DrawCenteredText("Choose a Strategy", st_middle_align, st_top_align + 2, st_strategy_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText("[F1] Take the Fight to the Enemy", st_middle_align + 4, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText("[F2] Aggressive Defensive", st_middle_align + 4, st_top_align + 6, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText("[F1] Stand Firm", st_middle_align + 4, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            //Breakdown of Cards box 
+            DrawBox(st_left_outer, vertical_middle, breakdown_box_width, breakdown_box_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
+            //Instruction box
+            DrawBox(st_left_outer, vertical_bottom, instruction_box_width, st_instruct_height, RLColor.Yellow, RLColor.White, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
+            DrawCenteredText("Choose a Strategy [F1], [F2] or [F3]", st_left_outer, vertical_bottom + 2, instruction_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText("[ESC] to Auto Resolve", st_left_outer, vertical_bottom + 6, instruction_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
         }
 
         /// <summary>
@@ -238,10 +284,10 @@ namespace Next_Game
             DrawText("Neutral cards", ca_left_outer + 7, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Bad cards", ca_left_outer + 7, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Total cards", ca_left_outer + 7, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("12", ca_left_outer + 24, middle_align + 2, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("4", ca_left_outer + 24, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("8", ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("24", ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(ArrayCardPool[0]), ca_left_outer + 24, middle_align + 2, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(ArrayCardPool[1]), ca_left_outer + 24, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(ArrayCardPool[2]), ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(ArrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Remaining Cards (bottom left)
             DrawBox(ca_left_outer, vertical_align, ca_status_width, ca_status_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             DrawCenteredText("Remaining", ca_left_outer, vertical_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -263,48 +309,6 @@ namespace Next_Game
             DrawCenteredText("All Out Assault 8/2", horizontal_align, vertical_align + 4, ca_status_width,  RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Opponent's Strategy", horizontal_align, vertical_align + 6, ca_status_width,  RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Hold the Ground 4/0", horizontal_align, vertical_align + 8, ca_status_width,  RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
-        }
-
-        /// <summary>
-        /// Initialise Choose a Strategy Layout
-        /// </summary>
-        public void InitialiseStrategy()
-        {
-            int strategy_box_height = st_upper_box_height;
-            int right_inner = st_right_outer - st_upper_box_width;
-            int vertical_middle = st_top_align + st_upper_box_height + st_spacer; //y_coord of breakdown box
-            int instruction_box_width = st_right_outer - st_left_outer;
-            int vertical_bottom = Height - Offset_y * 2 - st_spacer - st_instruct_height; //y-coord of instruction box
-            int breakdown_box_height = vertical_bottom - vertical_middle - st_spacer;
-            int breakdown_box_width = st_right_outer - st_left_outer;
-            //Card Pool (top left)
-            DrawBox(st_left_outer, st_top_align, st_upper_box_width, st_upper_box_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
-            DrawText("Good cards", st_left_outer + 7, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText("Neutral cards", st_left_outer + 7, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText("Bad cards", st_left_outer + 7, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText("Total cards", st_left_outer + 7, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText("12", st_left_outer + 24, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText("4", st_left_outer + 24, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText("8", st_left_outer + 24, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText("24", st_left_outer + 24, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            //Situation (top right)
-            DrawBox(right_inner, st_top_align, st_upper_box_width, st_upper_box_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
-            DrawCenteredText("Situation", right_inner, st_top_align + 2, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawCenteredText("Defendable Hill (2 cards)", right_inner, st_top_align + 4, st_upper_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawCenteredText("Muddy Ground (1 card)", right_inner, st_top_align + 6, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawCenteredText("Army Size (3 cards)", right_inner, st_top_align + 8, st_upper_box_width, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            //Choose Strategy (top middle)
-            DrawBox(st_middle_align, st_top_align, st_strategy_width, strategy_box_height, RLColor.Yellow, RLColor.White, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
-            DrawCenteredText("Choose a Strategy", st_middle_align, st_top_align + 2, st_strategy_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText("[F1] Take the Fight to the Enemy", st_middle_align + 4, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText("[F2] Aggressive Defensive", st_middle_align + 4, st_top_align + 6, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText("[F1] Stand Firm", st_middle_align + 4, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            //Breakdown of Cards box 
-            DrawBox(st_left_outer, vertical_middle, breakdown_box_width, breakdown_box_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
-            //Instruction box
-            DrawBox(st_left_outer, vertical_bottom, instruction_box_width, st_instruct_height, RLColor.Yellow, RLColor.White, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
-            DrawCenteredText("Choose a Strategy [F1], [F2] or [F3]", st_left_outer, vertical_bottom + 2, instruction_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawCenteredText("[ESC] to Auto Resolve", st_left_outer, vertical_bottom + 6, instruction_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
         }
 
         /// <summary>
@@ -360,7 +364,14 @@ namespace Next_Game
         /// Draw Confirm Layout (internals filled and new text written)
         /// </summary>
         /// <param name="multiConsole"></param>
-        public void DrawConfirm(RLConsole multiConsole, List<Snippet> listOfSnippets)
+        public void DrawConfirm(RLConsole multiConsole)
+        { Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm); }
+
+        /// <summary>
+        /// Update Confirm Layout contents
+        /// </summary>
+        /// <param name="listOfSnippets"></param>
+        public void UpdateConfirm(List<Snippet> listOfSnippets)
         {
             int left_align = (Width - Offset_x) / 3;
             int top_align = (Height - Offset_y * 2) / 3;
@@ -376,7 +387,7 @@ namespace Next_Game
             string text;
             RLColor foreColor;
             //max lines of text
-            int limit = Math.Min((top_align -6) / 3, listOfSnippets.Count);
+            int limit = Math.Min((top_align - 6) / 3, listOfSnippets.Count);
             for (int i = 0; i < limit; i++)
             {
                 text = listOfSnippets[i].GetText();
@@ -384,15 +395,21 @@ namespace Next_Game
                 DrawCenteredText(text, left_align, top_align + (i + 1) * 3, box_width, foreColor, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
             }
             DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + 28, box_width, RLColor.Black, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
-            //Draw
-            Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm);
         }
 
         /// <summary>
         /// Draw AutoResolve Layout
         /// </summary>
         /// <param name="multiConsole"></param>
-        public void DrawAutoResolve(RLConsole multiConsole, List<Snippet> listOfSnippets)
+        public void DrawAutoResolve(RLConsole multiConsole )
+        { Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm); }
+
+
+        /// <summary>
+        /// Update AutoResolve Layout
+        /// </summary>
+        /// <param name="listOfSnippets"></param>
+        public void UpdateAutoResolve(List<Snippet> listOfSnippets)
         {
             int left_align = (Width - Offset_x) / 3;
             int top_align = (Height - Offset_y * 2) / 3;
@@ -416,8 +433,6 @@ namespace Next_Game
                 DrawCenteredText(text, left_align, top_align + (i + 1) * 3, box_width, foreColor, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
             }
             DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + 28, box_width, RLColor.Black, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
-            //Draw
-            Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm);
         }
 
         /// <summary>
@@ -564,6 +579,16 @@ namespace Next_Game
             listOfSnippets.Add(new Snippet("The Imp showed how it was done", RLColor.Black, Confirm_FillColor));
             listOfSnippets.Add(new Snippet("The Imp was very brave", RLColor.Blue, Confirm_FillColor));
             return listOfSnippets;
+        }
+
+        /// <summary>
+        /// Debug method
+        /// </summary>
+        private void SetTestData()
+        {
+            ArrayCardPool[0] = 8;
+            ArrayCardPool[1] = 4;
+            ArrayCardPool[2] = 1;
         }
 
         //new methods above here
