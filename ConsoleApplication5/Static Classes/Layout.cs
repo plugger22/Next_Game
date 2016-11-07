@@ -49,10 +49,10 @@ namespace Next_Game
         int ou_spacer;
         int ou_outcome_height;
         int ou_instruct_height;
-        //Confirm Layout
-        RLColor Confirm_FillColor { get; set; }
-        //AutoResolve Layout
-        RLColor Resolve_FillColor { get; set; }
+        //Message Layout fillcolors
+        public RLColor Confirm_FillColor { get; set; }
+        public RLColor Resolve_FillColor { get; set; }
+        public RLColor Error_FillColor { get; set; }
         //Dynamic Data Sets
         public int[] ArrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
         //Conflict Cards
@@ -153,10 +153,10 @@ namespace Next_Game
             ou_spacer = 4;
             ou_outcome_height = 20;
             ou_instruct_height = 7;
-            //Confirm layout
+            //Message Layout fillcolors
             Confirm_FillColor = RLColor.White;
-            //AutoResolve Layout
             Resolve_FillColor = RLColor.White;
+            Error_FillColor = Color._errorFill;
             //Dynamic Data Sets
             ArrayCardPool = new int[3];
         }
@@ -432,17 +432,20 @@ namespace Next_Game
         /// Update Message Layout
         /// </summary>
         /// <param name="listOfSnippets"></param>
-        public void UpdateMessage(List<Snippet> listOfSnippets)
+        public void UpdateMessage(List<Snippet> listOfSnippets, RLColor fillColor)
         {
             int left_align = (Width - Offset_x) / 3;
             int top_align = (Height - Offset_y * 2) / 3;
             int box_width = left_align;
             int box_height = top_align;
-            //Clear box
+            //Clear box & change background color
             for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
             {
                 for (int height_index = top_align + 1; height_index < top_align + box_height - 1; height_index++)
-                { arrayOfCells_Message[width_index, height_index] = 255; }
+                {
+                    arrayOfCells_Message[width_index, height_index] = 255;
+                    arrayOfBackColors_Message[width_index, height_index] = fillColor;
+                }
             }
             //Add new text
             string text;
@@ -589,8 +592,8 @@ namespace Next_Game
         public List<Snippet> GetTestDataErrorStrategy()
         {
             List<Snippet> listOfSnippets = new List<Snippet>();
-            listOfSnippets.Add(new Snippet("You need to choose a Strategy", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("or press [ESC] to AutoResolve", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("You need to choose a Strategy", RLColor.Gray, Error_FillColor));
+            listOfSnippets.Add(new Snippet("or press [ESC] to AutoResolve", RLColor.Gray, Error_FillColor));
             return listOfSnippets;
         }
 
@@ -601,18 +604,18 @@ namespace Next_Game
         public List<Snippet> GetTestDataAutoResolve()
         {
             List<Snippet> listOfSnippets = new List<Snippet>();
-            listOfSnippets.Add(new Snippet("You have chosen to AutoResolve", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("Calculating...", RLColor.Blue, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("Your Strategy was Aggressive", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("Your Opponents Strategy was Balanced", RLColor.Red, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("The battle was tense", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("You emerged Victorious", RLColor.Blue, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("Your Opponent was captured", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("", RLColor.Blue, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("You owe your Victory to Lord Holster", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("The Imp showed how it was done", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("The Imp was very brave", RLColor.Blue, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("You have chosen to AutoResolve", RLColor.Black, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("Calculating...", RLColor.Blue, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("Your Strategy was Aggressive", RLColor.Black, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("Your Opponents Strategy was Balanced", RLColor.Red, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("", RLColor.Black, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("The battle was tense", RLColor.Black, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("You emerged Victorious", RLColor.Blue, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("Your Opponent was captured", RLColor.Black, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("", RLColor.Blue, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("You owe your Victory to Lord Holster", RLColor.Black, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("The Imp showed how it was done", RLColor.Black, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("The Imp was very brave", RLColor.Blue, Resolve_FillColor));
             return listOfSnippets;
         }
 

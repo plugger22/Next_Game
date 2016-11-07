@@ -29,10 +29,9 @@ namespace Next_Game
         public static RLColor _goodTrait = Palette.jade;
         public static RLColor _badTrait = Palette.salmon;
         public static RLColor _touched = Palette.tulip;
-        //box backgrounds
-        public static RLColor _background1 = Palette.pinacolada; //neutral
-        public static RLColor _background2 = Palette.stem; //good
-        public static RLColor _background3 = Palette.salmon; //bad
+        //GUI
+        public static RLColor _errorFill = Palette.salmon;
+        public static RLColor _background1 = Palette.pinacolada;
         //game states
         public static RLColor _increase = Palette.jade;
         public static RLColor _decrease = Palette.salmon;

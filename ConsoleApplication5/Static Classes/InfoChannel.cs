@@ -347,15 +347,15 @@ namespace Next_Game
                         case ConflictMode.Confirm:
                             //Game.layout.UpdateConfirm(Game.layout.GetTestDataConfirm());
                             //Game.layout.DrawConfirm(multiConsole);
-                            Game.layout.UpdateMessage(Game.layout.GetTestDataConfirm());
+                            Game.layout.UpdateMessage(Game.layout.GetTestDataConfirm(), Game.layout.Confirm_FillColor);
                             Game.layout.DrawMessage(multiConsole);
                             break;
                         case ConflictMode.AutoResolve:
-                            Game.layout.UpdateMessage(Game.layout.GetTestDataAutoResolve());
+                            Game.layout.UpdateMessage(Game.layout.GetTestDataAutoResolve(), Game.layout.Resolve_FillColor);
                             Game.layout.DrawMessage(multiConsole);
                             break;
                         case ConflictMode.ErrorStrategy:
-                            Game.layout.UpdateMessage(Game.layout.GetTestDataErrorStrategy());
+                            Game.layout.UpdateMessage(Game.layout.GetTestDataErrorStrategy(), Game.layout.Error_FillColor);
                             Game.layout.DrawMessage(multiConsole);
                             break;
                         case ConflictMode.Outcome:
