@@ -59,7 +59,7 @@ namespace Next_Game
         public int[] ArrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
         public string[] ArraySituation { get; set; } // up to 3 situation factors
         public string[] ArrayStrategy { get; set; } //3 strategies - always variations of Attack, Balanced & Defend
-        public List<Snippet> ListCardBreakdown { get; set; } //breakdown of card pool by Your cards, opponents & situation
+        private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
         //Conflict Cards
         private int[,] arrayOfCells_Cards; //cell array for box and text
         private RLColor[,] arrayOfForeColors_Cards; //foreground color for cell contents
@@ -76,6 +76,9 @@ namespace Next_Game
         private int[,] arrayOfCells_Message;
         private RLColor[,] arrayOfForeColors_Message;
         private RLColor[,] arrayOfBackColors_Message;
+        //Conflict Data
+        public int Strategy_You { get; set; }
+        public int Strategy_Opponent { get; set; }
 
         /// <summary>
         /// default constructor
@@ -169,7 +172,7 @@ namespace Next_Game
             ArrayCardPool = new int[3];
             ArraySituation = new string[3];
             ArrayStrategy = new string[3];
-            ListCardBreakdown = new List<Snippet>();
+            listCardBreakdown = new List<Snippet>();
         }
 
         /// <summary>
@@ -183,6 +186,8 @@ namespace Next_Game
             InitialiseOutcome();
             InitialiseMessage();
         }
+
+
 
         /// <summary>
         /// Initialise Choose a Strategy Layout
@@ -418,9 +423,9 @@ namespace Next_Game
             DrawText(string.Format("[F2] {0}", ArrayStrategy[1]), st_middle_align + 4, st_top_align + 6, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(string.Format("[F3] {0}", ArrayStrategy[2]), st_middle_align + 4, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Breakdown of Card Pool
-            int limit = Math.Min(40, ListCardBreakdown.Count);
+            int limit = Math.Min((breakdown_box_height - 8) / 2, listCardBreakdown.Count);
             for (int i = 0; i < limit; i++)
-            { DrawText(ListCardBreakdown[i].GetText(), st_left_outer + 4, vertical_middle + 2 + (i + 1) * 2, ListCardBreakdown[i].GetForeColor(), arrayOfCells_Strategy, arrayOfForeColors_Strategy); }
+            { DrawText(listCardBreakdown[i].GetText(), st_left_outer + 4, vertical_middle + 2 + (i + 1) * 2, listCardBreakdown[i].GetForeColor(), arrayOfCells_Strategy, arrayOfForeColors_Strategy); }
         }
 
         /// <summary>
@@ -648,12 +653,38 @@ namespace Next_Game
             ArrayStrategy[1] = "Aggressive Defense";
             ArrayStrategy[2] = "Hold Firm";
             //breakdown
-            ListCardBreakdown.Add(new Snippet("Your Cards", RLColor.Blue, RLColor.Black));
-            ListCardBreakdown.Add(new Snippet("Daven Arryn's Leadership Skill (Good), 2 Cards from 2 Stars, Primary Conflict Skill", RLColor.Black, RLColor.Black));
-            ListCardBreakdown.Add(new Snippet("Daven Arryn's Combat Skill (Good), 1 Card from 4 Stars, Secondary Conflict Skill", RLColor.Black, RLColor.Black));
-            ListCardBreakdown.Add(new Snippet("Dave Arryn's Stubborn Trait (Bad), 1 Card", RLColor.Red, RLColor.Black));
-            ListCardBreakdown.Add(new Snippet("Ice, special Sword (Good), 2 Cards", RLColor.Black, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("Your Cards", RLColor.Blue, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("Daven Arryn's Leadership Skill (Good), 2 Cards, Primary Conflict Skill (Leadership 2 Stars)", RLColor.Black, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("Daven Arryn's Combat Skill (Good), 1 Card, Secondary Conflict Skill (Combat 4 Stars)", RLColor.Black, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("Dave Arryn's Stubborn Trait (Bad), 1 Card", RLColor.Red, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("Ice, special Sword (Good), 2 Cards", RLColor.Black, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("Knight Ser Raymun Jankin, 1 card, (Combat 5 Stars)", RLColor.Black, RLColor.Black));
+            listCardBreakdown.Add(new Snippet(""));
+            listCardBreakdown.Add(new Snippet("Opponent's Cards", RLColor.Blue, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("King Beuves Florent's Leadership Skill (Bad), 3 Cards, Primary Conflict Skill (Leadership 3 Stars)", RLColor.Red, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("Lord Tolly Targyen (Bad), 1 Card, (Leadership 5 Stars)", RLColor.Red, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("Knight Ser Humfridus Hamelin (Bad), 1 Card, (Combat 5 Stars)", RLColor.Red, RLColor.Black));
+            listCardBreakdown.Add(new Snippet(""));
+            listCardBreakdown.Add(new Snippet("Situation Cards", RLColor.Blue, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("Defendable Hill (Good), 2 Cards (Doesn't apply if you choose an Aggressive strategy)", RLColor.Black, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("Muddy Ground (Neutral), 1 Card", RLColor.Gray, RLColor.Black));
+            listCardBreakdown.Add(new Snippet("Relative Size of Armies (Bad), 3 Cards (You 10,000 Men-At-Arms, Opponent 25,000 Men-At-Arms)", RLColor.Red, RLColor.Black));
 
+        }
+
+        /// <summary>
+        /// Set up Card Breakdown
+        /// </summary>
+        /// <param name="listOfSnippets"></param>
+        internal void SetCardBreakdown(List<Snippet> listOfSnippets)
+        {
+            if (listOfSnippets.Count > 0)
+            {
+                listCardBreakdown.Clear();
+                listCardBreakdown.AddRange(listOfSnippets);
+            }
+            else
+            { Game.SetError(new Error(83, "Invalid Input (List has no records")); }
         }
 
         //new methods above here

@@ -1056,6 +1056,7 @@ namespace Next_Game
                         {
                             case ConflictMode.Strategy:
                                 _conflictMode = ConflictMode.Confirm;
+                                layout.Strategy_You = 1;
                                 break;
                         }
                     }
@@ -1072,6 +1073,7 @@ namespace Next_Game
                         {
                             case ConflictMode.Strategy:
                                 _conflictMode = ConflictMode.Confirm;
+                                layout.Strategy_You = 2;
                                 break;
                         }
                     }
@@ -1088,6 +1090,7 @@ namespace Next_Game
                         {
                             case ConflictMode.Strategy:
                                 _conflictMode = ConflictMode.Confirm;
+                                layout.Strategy_You = 3;
                                 break;
                         }
                     }
