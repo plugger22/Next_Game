@@ -337,9 +337,11 @@ namespace Next_Game
                     switch (Game._conflictMode)
                     {
                         case ConflictMode.Strategy:
+                            Game.layout.UpdateStrategy();
                             Game.layout.DrawStrategy(multiConsole);
                             break;
                         case ConflictMode.Cards:
+                            Game.layout.UpdateCards();
                             Game.layout.DrawCards(multiConsole);
                             break;
                         case ConflictMode.Confirm:

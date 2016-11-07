@@ -191,10 +191,10 @@ namespace Next_Game
             DrawText("Neutral cards", st_left_outer + 7, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText("Bad cards", st_left_outer + 7, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText("Total cards", st_left_outer + 7, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText(Convert.ToString(ArrayCardPool[0]), st_left_outer + 24, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            /*DrawText(Convert.ToString(ArrayCardPool[0]), st_left_outer + 24, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(Convert.ToString(ArrayCardPool[1]), st_left_outer + 24, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(Convert.ToString(ArrayCardPool[2]), st_left_outer + 24, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText(Convert.ToString(ArrayCardPool.Sum()), st_left_outer + 24, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(ArrayCardPool.Sum()), st_left_outer + 24, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);*/
             //Situation (top right)
             DrawBox(right_inner, st_top_align, st_upper_box_width, st_upper_box_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
             DrawCenteredText("Situation", right_inner, st_top_align + 2, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
@@ -284,10 +284,10 @@ namespace Next_Game
             DrawText("Neutral cards", ca_left_outer + 7, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Bad cards", ca_left_outer + 7, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Total cards", ca_left_outer + 7, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText(Convert.ToString(ArrayCardPool[0]), ca_left_outer + 24, middle_align + 2, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            /*DrawText(Convert.ToString(ArrayCardPool[0]), ca_left_outer + 24, middle_align + 2, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText(Convert.ToString(ArrayCardPool[1]), ca_left_outer + 24, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText(Convert.ToString(ArrayCardPool[2]), ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText(Convert.ToString(ArrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(ArrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);*/
             //Remaining Cards (bottom left)
             DrawBox(ca_left_outer, vertical_align, ca_status_width, ca_status_height, RLColor.Yellow, RLColor.LightGray, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             DrawCenteredText("Remaining", ca_left_outer, vertical_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -354,11 +354,63 @@ namespace Next_Game
         { Draw(multiConsole, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); }
 
         /// <summary>
+        /// Update Card Layout contents (assumes that all card data sets are up to data)
+        /// </summary>
+        public void UpdateCards()
+        {
+            int card_vert_1 = ca_top_align + 2; //type of card, eg. 'skill card', y_coord
+            int card_vert_2 = ca_top_align + 4; //spacer
+            int card_vert_3 = ca_top_align + ca_card_height / 4; //eg. "King's Leadship"
+            int card_vert_4 = ca_top_align + ca_card_height / 4 + 3; //Immersion text eg. "Forward Men!"
+            int card_vert_5 = ca_top_align + ca_card_height / 4 * 3; //advantage / disadvantage
+            int card_vert_6 = ca_top_align + ca_card_height / 4 * 3 + 3; //"Play for 2 points"
+            int card_vert_7 = ca_top_align + ca_card_height / 4 * 3 + 6; //"Ignore for 1 point"
+            int middle_align = ca_top_align + ca_card_height / 2 - ca_status_height / 2; // top y_coord for middle status boxes
+            int bottom_align = ca_top_align + ca_card_height; //bottom y_coord for lower status boees
+            int horizontal_align = ca_right_align - ca_status_width; //status boxes, left side of status boxes for those on the right hand side
+            int vertical_align = bottom_align - ca_status_height; //status boxes
+            int vertical_pos = ca_top_align + ca_card_height + ca_spacer; //used for message boxes down the bottom
+            int text_box_width = horizontal_align + ca_status_width - ca_left_outer; //two boxes under the card display
+            int score_width = horizontal_align - ca_left_outer;
+            int score_left_align = ca_left_outer + ca_status_width / 2;
+            int bar_width = score_width - (ca_bar_offset_x * 2);
+            int bar_middle = score_left_align + ca_bar_offset_x + (bar_width / 2); //x_coord of mid point
+            int bar_segment = Convert.ToInt32((float)bar_width / 8); //scoring marker segments on bar (4 either side of the zero mid point)
+            int bar_top = ca_score_vert_align + ca_bar_offset_y; //y_coord of bar
+            int bar_height = ca_score_height - (ca_bar_offset_y * 2);
+            //Card Pool
+            DrawText(Convert.ToString(ArrayCardPool[0]), ca_left_outer + 24, middle_align + 2, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(ArrayCardPool[1]), ca_left_outer + 24, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(ArrayCardPool[2]), ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(ArrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+        }
+
+
+        /// <summary>
         /// Draw Strategy Layout
         /// </summary>
         /// <param name="multiConsole"></param>
         public void DrawStrategy(RLConsole multiConsole)
         { Draw(multiConsole, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy); }
+
+        /// <summary>
+        /// Update Strategy Layout contents (assumes that all strategy data sets are up to date)
+        /// </summary>
+        public void UpdateStrategy()
+        {
+            int strategy_box_height = st_upper_box_height;
+            int right_inner = st_right_outer - st_upper_box_width;
+            int vertical_middle = st_top_align + st_upper_box_height + st_spacer; //y_coord of breakdown box
+            int instruction_box_width = st_right_outer - st_left_outer;
+            int vertical_bottom = Height - Offset_y * 2 - st_spacer - st_instruct_height; //y-coord of instruction box
+            int breakdown_box_height = vertical_bottom - vertical_middle - st_spacer;
+            int breakdown_box_width = st_right_outer - st_left_outer;
+            //Card Pool dynamic data
+            DrawText(Convert.ToString(ArrayCardPool[0]), st_left_outer + 24, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(ArrayCardPool[1]), st_left_outer + 24, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(ArrayCardPool[2]), st_left_outer + 24, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(ArrayCardPool.Sum()), st_left_outer + 24, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+        }
 
         /// <summary>
         /// Draw Confirm Layout (internals filled and new text written)
