@@ -366,17 +366,17 @@ namespace Next_Game
             int top_align = (Height - Offset_y * 2) / 3;
             int box_width = left_align;
             int box_height = top_align;
-            //Clear box
+            //Clear box of any existing text
             for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
             {
                 for (int height_index = top_align + 1; height_index < top_align + box_height - 1; height_index++)
-                { arrayOfBackColors_Confirm[width_index, height_index] = Confirm_FillColor; }
+                { arrayOfCells_Confirm[width_index, height_index] = 255; }
             }
             //Add new text
             string text;
             RLColor foreColor;
-            //max four lines of text
-            int limit = Math.Min(4, listOfSnippets.Count);
+            //max lines of text
+            int limit = Math.Min((top_align -6) / 3, listOfSnippets.Count);
             for (int i = 0; i < limit; i++)
             {
                 text = listOfSnippets[i].GetText();
@@ -402,13 +402,13 @@ namespace Next_Game
             for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
             {
                 for (int height_index = top_align + 1; height_index < top_align + box_height - 1; height_index++)
-                { arrayOfBackColors_Confirm[width_index, height_index] = Resolve_FillColor; }
+                { arrayOfCells_Confirm[width_index, height_index] = 255; }
             }
             //Add new text
             string text;
             RLColor foreColor;
-            //max four lines of text
-            int limit = Math.Min(4, listOfSnippets.Count);
+            //max ines of text
+            int limit = Math.Min((top_align - 6) / 3, listOfSnippets.Count);
             for (int i = 0; i < limit; i++)
             {
                 text = listOfSnippets[i].GetText();
@@ -416,7 +416,6 @@ namespace Next_Game
                 DrawCenteredText(text, left_align, top_align + (i + 1) * 3, box_width, foreColor, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
             }
             DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + 28, box_width, RLColor.Black, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
-            //Draw
             //Draw
             Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm);
         }
@@ -554,8 +553,16 @@ namespace Next_Game
             List<Snippet> listOfSnippets = new List<Snippet>();
             listOfSnippets.Add(new Snippet("You have chosen to AutoResolve", RLColor.Black, Confirm_FillColor));
             listOfSnippets.Add(new Snippet("Calculating...", RLColor.Blue, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("Your Opponent chose...", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("Aggressive Probe", RLColor.Red, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("Your Strategy was Aggressive", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("Your Opponents Strategy was Balanced", RLColor.Red, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("The battle was tense", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("You emerged Victorious", RLColor.Blue, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("Your Opponent was captured", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("", RLColor.Blue, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("You owe your Victory to Lord Holster", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("The Imp showed how it was done", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("The Imp was very brave", RLColor.Blue, Confirm_FillColor));
             return listOfSnippets;
         }
 
