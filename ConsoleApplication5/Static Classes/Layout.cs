@@ -49,6 +49,10 @@ namespace Next_Game
         int ou_spacer;
         int ou_outcome_height;
         int ou_instruct_height;
+        //Confirm Layout
+        RLColor Confirm_FillColor { get; set; }
+        //AutoResolve Layout
+        RLColor Resolve_FillColor { get; set; }
 
         //Conflict Cards
         private int[,] arrayOfCells_Cards; //cell array for box and text
@@ -148,6 +152,10 @@ namespace Next_Game
             ou_spacer = 4;
             ou_outcome_height = 20;
             ou_instruct_height = 7;
+            //Confirm layout
+            Confirm_FillColor = RLColor.White;
+            //AutoResolve Layout
+            Resolve_FillColor = RLColor.White;
         }
 
         /// <summary>
@@ -330,13 +338,9 @@ namespace Next_Game
             int box_width = left_align;
             int box_height = top_align;
             //confirmation box (centred)
-            DrawBox(left_align, top_align, box_width, box_height, RLColor.Yellow, RLColor.White, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm);
-            DrawCenteredText("You have chosen...", left_align, top_align + 3, box_width, RLColor.Black, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
-            DrawCenteredText("Take the Fight to the Enemy", left_align, top_align + 6, box_width, RLColor.Blue, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
-            DrawCenteredText("Your Opponent has chosen...", left_align, top_align + 12, box_width, RLColor.Black, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
-            DrawCenteredText("Aggressive Probe", left_align, top_align + 15, box_width, RLColor.Red, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
-            DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + 28, box_width, RLColor.Black, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
+            DrawBox(left_align, top_align, box_width, box_height, RLColor.Yellow, Confirm_FillColor, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm);
         }
+
 
         /// <summary>
         /// Draw Cards Layout
@@ -353,18 +357,69 @@ namespace Next_Game
         { Draw(multiConsole, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy); }
 
         /// <summary>
-        /// Draw Confirm Layout
+        /// Draw Confirm Layout (internals filled and new text written)
         /// </summary>
         /// <param name="multiConsole"></param>
-        public void DrawConfirm(RLConsole multiConsole)
-        { Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm); }
+        public void DrawConfirm(RLConsole multiConsole, List<Snippet> listOfSnippets)
+        {
+            int left_align = (Width - Offset_x) / 3;
+            int top_align = (Height - Offset_y * 2) / 3;
+            int box_width = left_align;
+            int box_height = top_align;
+            //Clear box
+            for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
+            {
+                for (int height_index = top_align + 1; height_index < top_align + box_height - 1; height_index++)
+                { arrayOfBackColors_Confirm[width_index, height_index] = Confirm_FillColor; }
+            }
+            //Add new text
+            string text;
+            RLColor foreColor;
+            //max four lines of text
+            int limit = Math.Min(4, listOfSnippets.Count);
+            for (int i = 0; i < limit; i++)
+            {
+                text = listOfSnippets[i].GetText();
+                foreColor = listOfSnippets[i].GetForeColor();
+                DrawCenteredText(text, left_align, top_align + (i + 1) * 3, box_width, foreColor, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
+            }
+            DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + 28, box_width, RLColor.Black, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
+            //Draw
+            Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm);
+        }
 
         /// <summary>
         /// Draw AutoResolve Layout
         /// </summary>
         /// <param name="multiConsole"></param>
-        public void DrawAutoResolve(RLConsole multiConsole)
-        { Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm); }
+        public void DrawAutoResolve(RLConsole multiConsole, List<Snippet> listOfSnippets)
+        {
+            int left_align = (Width - Offset_x) / 3;
+            int top_align = (Height - Offset_y * 2) / 3;
+            int box_width = left_align;
+            int box_height = top_align;
+            //Clear box
+            for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
+            {
+                for (int height_index = top_align + 1; height_index < top_align + box_height - 1; height_index++)
+                { arrayOfBackColors_Confirm[width_index, height_index] = Resolve_FillColor; }
+            }
+            //Add new text
+            string text;
+            RLColor foreColor;
+            //max four lines of text
+            int limit = Math.Min(4, listOfSnippets.Count);
+            for (int i = 0; i < limit; i++)
+            {
+                text = listOfSnippets[i].GetText();
+                foreColor = listOfSnippets[i].GetForeColor();
+                DrawCenteredText(text, left_align, top_align + (i + 1) * 3, box_width, foreColor, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
+            }
+            DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + 28, box_width, RLColor.Black, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
+            //Draw
+            //Draw
+            Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm);
+        }
 
         /// <summary>
         /// Draw Outcome Layout
@@ -476,5 +531,34 @@ namespace Next_Game
             }
         }
 
+        /// <summary>
+        /// Debug method
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> GetTestDataConfirm()
+        {
+            List<Snippet> listOfSnippets = new List<Snippet>();
+            listOfSnippets.Add(new Snippet("You have Chosen...", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("Take the Fight to the Enemy", RLColor.Blue, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("Your Opponent has Chosen...", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("Aggressive Probe", RLColor.Red, Confirm_FillColor));
+            return listOfSnippets;
+        }
+
+        /// <summary>
+        /// Debug method
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> GetTestDataAutoResolve()
+        {
+            List<Snippet> listOfSnippets = new List<Snippet>();
+            listOfSnippets.Add(new Snippet("You have chosen to AutoResolve", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("Calculating...", RLColor.Blue, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("Your Opponent chose...", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("Aggressive Probe", RLColor.Red, Confirm_FillColor));
+            return listOfSnippets;
+        }
+
+        //new methods above here
     }
 }
