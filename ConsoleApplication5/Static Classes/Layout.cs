@@ -67,10 +67,10 @@ namespace Next_Game
         private int[,] arrayOfCells_Outcome;
         private RLColor[,] arrayOfForeColors_Outcome;
         private RLColor[,] arrayOfBackColors_Outcome;
-        //Confirmation
-        private int[,] arrayOfCells_Confirm;
-        private RLColor[,] arrayOfForeColors_Confirm;
-        private RLColor[,] arrayOfBackColors_Confirm;
+        //Message
+        private int[,] arrayOfCells_Message;
+        private RLColor[,] arrayOfForeColors_Message;
+        private RLColor[,] arrayOfBackColors_Message;
 
         /// <summary>
         /// default constructor
@@ -99,9 +99,9 @@ namespace Next_Game
             arrayOfCells_Outcome = new int[Width - Offset_x, Height - Offset_y * 2];
             arrayOfForeColors_Outcome = new RLColor[Width - Offset_x, Height - Offset_y * 2];
             arrayOfBackColors_Outcome = new RLColor[Width - Offset_x, Height - Offset_y * 2];
-            arrayOfCells_Confirm = new int[Width - Offset_x, Height - Offset_y * 2];
-            arrayOfForeColors_Confirm = new RLColor[Width - Offset_x, Height - Offset_y * 2];
-            arrayOfBackColors_Confirm = new RLColor[Width - Offset_x, Height - Offset_y * 2];
+            arrayOfCells_Message = new int[Width - Offset_x, Height - Offset_y * 2];
+            arrayOfForeColors_Message = new RLColor[Width - Offset_x, Height - Offset_y * 2];
+            arrayOfBackColors_Message = new RLColor[Width - Offset_x, Height - Offset_y * 2];
 
             //debug data set
             for (int height_index = 0; height_index < Height - Offset_y * 2; height_index++)
@@ -117,9 +117,9 @@ namespace Next_Game
                     arrayOfBackColors_Outcome[width_index, height_index] = fillColor;
                     arrayOfForeColors_Outcome[width_index, height_index] = RLColor.White;
                     arrayOfCells_Outcome[width_index, height_index] = 255;
-                    arrayOfBackColors_Confirm[width_index, height_index] = fillColor;
-                    arrayOfForeColors_Confirm[width_index, height_index] = RLColor.White;
-                    arrayOfCells_Confirm[width_index, height_index] = 255;
+                    arrayOfBackColors_Message[width_index, height_index] = fillColor;
+                    arrayOfForeColors_Message[width_index, height_index] = RLColor.White;
+                    arrayOfCells_Message[width_index, height_index] = 255;
                 }
             }
             //Card Layout
@@ -170,7 +170,7 @@ namespace Next_Game
             InitialiseStrategy();
             InitialiseCards();
             InitialiseOutcome();
-            InitialiseConfirm();
+            InitialiseMessage();
         }
 
         /// <summary>
@@ -333,16 +333,16 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Set up a General purpose confirmation box
+        /// Set up a General purpose Message box
         /// </summary>
-        public void InitialiseConfirm()
+        public void InitialiseMessage()
         {
             int left_align = ( Width - Offset_x ) / 3;
             int top_align = ( Height - Offset_y * 2 ) / 3;
             int box_width = left_align;
             int box_height = top_align;
             //confirmation box (centred)
-            DrawBox(left_align, top_align, box_width, box_height, RLColor.Yellow, Confirm_FillColor, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm);
+            DrawBox(left_align, top_align, box_width, box_height, RLColor.Yellow, Confirm_FillColor, arrayOfCells_Message, arrayOfForeColors_Message, arrayOfBackColors_Message);
         }
 
 
@@ -417,51 +417,22 @@ namespace Next_Game
         /// </summary>
         /// <param name="multiConsole"></param>
         public void DrawConfirm(RLConsole multiConsole)
-        { Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm); }
+        { Draw(multiConsole, arrayOfCells_Message, arrayOfForeColors_Message, arrayOfBackColors_Message); }
 
-        /// <summary>
-        /// Update Confirm Layout contents
-        /// </summary>
-        /// <param name="listOfSnippets"></param>
-        public void UpdateConfirm(List<Snippet> listOfSnippets)
-        {
-            int left_align = (Width - Offset_x) / 3;
-            int top_align = (Height - Offset_y * 2) / 3;
-            int box_width = left_align;
-            int box_height = top_align;
-            //Clear box of any existing text
-            for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
-            {
-                for (int height_index = top_align + 1; height_index < top_align + box_height - 1; height_index++)
-                { arrayOfCells_Confirm[width_index, height_index] = 255; }
-            }
-            //Add new text
-            string text;
-            RLColor foreColor;
-            //max lines of text
-            int limit = Math.Min((top_align - 6) / 3, listOfSnippets.Count);
-            for (int i = 0; i < limit; i++)
-            {
-                text = listOfSnippets[i].GetText();
-                foreColor = listOfSnippets[i].GetForeColor();
-                DrawCenteredText(text, left_align, top_align + (i + 1) * 3, box_width, foreColor, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
-            }
-            DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + 28, box_width, RLColor.Black, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
-        }
 
         /// <summary>
         /// Draw AutoResolve Layout
         /// </summary>
         /// <param name="multiConsole"></param>
-        public void DrawAutoResolve(RLConsole multiConsole )
-        { Draw(multiConsole, arrayOfCells_Confirm, arrayOfForeColors_Confirm, arrayOfBackColors_Confirm); }
+        public void DrawMessage(RLConsole multiConsole )
+        { Draw(multiConsole, arrayOfCells_Message, arrayOfForeColors_Message, arrayOfBackColors_Message); }
 
 
         /// <summary>
-        /// Update AutoResolve Layout
+        /// Update Message Layout
         /// </summary>
         /// <param name="listOfSnippets"></param>
-        public void UpdateAutoResolve(List<Snippet> listOfSnippets)
+        public void UpdateMessage(List<Snippet> listOfSnippets)
         {
             int left_align = (Width - Offset_x) / 3;
             int top_align = (Height - Offset_y * 2) / 3;
@@ -471,7 +442,7 @@ namespace Next_Game
             for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
             {
                 for (int height_index = top_align + 1; height_index < top_align + box_height - 1; height_index++)
-                { arrayOfCells_Confirm[width_index, height_index] = 255; }
+                { arrayOfCells_Message[width_index, height_index] = 255; }
             }
             //Add new text
             string text;
@@ -482,9 +453,9 @@ namespace Next_Game
             {
                 text = listOfSnippets[i].GetText();
                 foreColor = listOfSnippets[i].GetForeColor();
-                DrawCenteredText(text, left_align, top_align + (i + 1) * 3, box_width, foreColor, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
+                DrawCenteredText(text, left_align, top_align + (i + 1) * 3, box_width, foreColor, arrayOfCells_Message, arrayOfForeColors_Message);
             }
-            DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + 28, box_width, RLColor.Black, arrayOfCells_Confirm, arrayOfForeColors_Confirm);
+            DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + 28, box_width, RLColor.Black, arrayOfCells_Message, arrayOfForeColors_Message);
         }
 
         /// <summary>
@@ -608,6 +579,18 @@ namespace Next_Game
             listOfSnippets.Add(new Snippet("Take the Fight to the Enemy", RLColor.Blue, Confirm_FillColor));
             listOfSnippets.Add(new Snippet("Your Opponent has Chosen...", RLColor.Black, Confirm_FillColor));
             listOfSnippets.Add(new Snippet("Aggressive Probe", RLColor.Red, Confirm_FillColor));
+            return listOfSnippets;
+        }
+
+        /// <summary>
+        /// Debug method
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> GetTestDataErrorStrategy()
+        {
+            List<Snippet> listOfSnippets = new List<Snippet>();
+            listOfSnippets.Add(new Snippet("You need to choose a Strategy", RLColor.Black, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet("or press [ESC] to AutoResolve", RLColor.Black, Confirm_FillColor));
             return listOfSnippets;
         }
 
