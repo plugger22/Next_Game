@@ -58,7 +58,7 @@ namespace Next_Game
         //Dynamic Data Sets
         public int[] ArrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
         public string[] ArraySituation { get; set; } // up to 3 situation factors
-        public string[] ArrayStrategy { get; set; } //3 strategies - always variations of Attack, Balanced & Defend
+        private string[] arrayStrategy { get; set; } //3 strategies - always variations of Attack, Balanced & Defend
         private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
         //Conflict Cards
         private int[,] arrayOfCells_Cards; //cell array for box and text
@@ -76,8 +76,10 @@ namespace Next_Game
         private int[,] arrayOfCells_Message;
         private RLColor[,] arrayOfForeColors_Message;
         private RLColor[,] arrayOfBackColors_Message;
-       
-        
+        //strategy
+        public int Strategy_Player { get; set; }
+        public int Strategy_Opponent { get; set; }
+
 
         /// <summary>
         /// default constructor
@@ -170,7 +172,7 @@ namespace Next_Game
             //Dynamic Data Sets
             ArrayCardPool = new int[3];
             ArraySituation = new string[3];
-            ArrayStrategy = new string[3];
+            arrayStrategy = new string[3];
             listCardBreakdown = new List<Snippet>();
         }
 
@@ -305,9 +307,7 @@ namespace Next_Game
             //Strategy Info (bottom right)
             DrawBox(horizontal_align, vertical_align, ca_status_width, ca_status_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             DrawCenteredText("Your Strategy", horizontal_align, vertical_align + 2, ca_status_width,  RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("All Out Assault 8/2", horizontal_align, vertical_align + 4, ca_status_width,  RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Opponent's Strategy", horizontal_align, vertical_align + 6, ca_status_width,  RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("Hold the Ground 4/0", horizontal_align, vertical_align + 8, ca_status_width,  RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
         }
 
         /// <summary>
@@ -382,10 +382,13 @@ namespace Next_Game
             DrawText(Convert.ToString(ArrayCardPool[1]), ca_left_outer + 24, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText(Convert.ToString(ArrayCardPool[2]), ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText(Convert.ToString(ArrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            //Sitauation
+            //Situation
             DrawCenteredText(ArraySituation[0], horizontal_align, ca_top_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(ArraySituation[1], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(ArraySituation[2], horizontal_align, ca_top_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            //Strategy
+            DrawCenteredText(arrayStrategy[Strategy_Player], horizontal_align, vertical_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(arrayStrategy[Strategy_Opponent], horizontal_align, vertical_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
         }
 
 
@@ -418,9 +421,9 @@ namespace Next_Game
             DrawCenteredText(ArraySituation[1], right_inner, st_top_align + 6, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawCenteredText(ArraySituation[2], right_inner, st_top_align + 8, st_upper_box_width, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Strategy
-            DrawText(string.Format("[F1] {0}", ArrayStrategy[0]), st_middle_align + 4, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText(string.Format("[F2] {0}", ArrayStrategy[1]), st_middle_align + 4, st_top_align + 6, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText(string.Format("[F3] {0}", ArrayStrategy[2]), st_middle_align + 4, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(string.Format("[F1] {0}", arrayStrategy[0]), st_middle_align + 4, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(string.Format("[F2] {0}", arrayStrategy[1]), st_middle_align + 4, st_top_align + 6, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(string.Format("[F3] {0}", arrayStrategy[2]), st_middle_align + 4, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Breakdown of Card Pool
             int limit = Math.Min((breakdown_box_height - 8) / 2, listCardBreakdown.Count);
             for (int i = 0; i < limit; i++)
@@ -553,11 +556,15 @@ namespace Next_Game
         /// <param name="foreColor"></param>
         internal void DrawText(string text, int coord_X, int coord_Y, RLColor foreColor, int [,] arrayOfCells, RLColor [,] arrayOfForeColors)
         {
-            for (int i = 0; i < text.Length; i++)
+            if (text != null)
             {
-                arrayOfCells[coord_X + i, coord_Y] = text[i];
-                arrayOfForeColors[coord_X + i, coord_Y] = foreColor;
+                for (int i = 0; i < text.Length; i++)
+                {
+                    arrayOfCells[coord_X + i, coord_Y] = text[i];
+                    arrayOfForeColors[coord_X + i, coord_Y] = foreColor;
+                }
             }
+            else { Game.SetError(new Error(87, "String input is invalid (null)")); }
         }
 
         /// <summary>
@@ -572,18 +579,22 @@ namespace Next_Game
         /// <param name="arrayOfForeColors"></param>
         internal void DrawCenteredText(string text, int coord_X, int coord_Y, int width, RLColor foreColor, int[,] arrayOfCells, RLColor[,] arrayOfForeColors)
         {
-            int length = text.Length;
-            //error check
-            if (length >= width)
-            { Game.SetError(new Error(82, string.Format("String input \"{0}\" is to wide to fit in the box (max {1})", text, width))); return; }
-            //work out start position
-            int start = (width - length) / 2;
-            //place text
-            for (int i = 0; i < text.Length; i++)
+            if (text != null)
             {
-                arrayOfCells[coord_X + i + start, coord_Y] = text[i];
-                arrayOfForeColors[coord_X + i + start, coord_Y] = foreColor;
+                int length = text.Length;
+                //error check
+                if (length >= width)
+                { Game.SetError(new Error(82, string.Format("String input \"{0}\" is to wide to fit in the box (max {1})", text, width))); return; }
+                //work out start position
+                int start = (width - length) / 2;
+                //place text
+                for (int i = 0; i < text.Length; i++)
+                {
+                    arrayOfCells[coord_X + i + start, coord_Y] = text[i];
+                    arrayOfForeColors[coord_X + i + start, coord_Y] = foreColor;
+                }
             }
+            else { Game.SetError(new Error(82, "String input is invalid (null)")); }
         }
 
         /// <summary>
@@ -594,9 +605,9 @@ namespace Next_Game
         {
             List<Snippet> listOfSnippets = new List<Snippet>();
             listOfSnippets.Add(new Snippet("You have Chosen...", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("Take the Fight to the Enemy", RLColor.Blue, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet(arrayStrategy[Strategy_Player], RLColor.Blue, Confirm_FillColor));
             listOfSnippets.Add(new Snippet("Your Opponent has Chosen...", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet("Aggressive Probe", RLColor.Red, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet(arrayStrategy[Strategy_Opponent], RLColor.Red, Confirm_FillColor));
             return listOfSnippets;
         }
 
@@ -648,9 +659,9 @@ namespace Next_Game
             ArraySituation[1] = "Muddy Ground (Neutral)";
             ArraySituation[2] = "Relative Army Size (Bad)";
             //strategy
-            ArrayStrategy[0] = "Take the Fight to the Enemy";
-            ArrayStrategy[1] = "Aggressive Defense";
-            ArrayStrategy[2] = "Hold Firm";
+            /*arrayStrategy[0] = "Take the Fight to the Enemy";
+            arrayStrategy[1] = "Aggressive Defense";
+            arrayStrategy[2] = "Hold Firm";*/
             //breakdown
             listCardBreakdown.Add(new Snippet("Your Cards", RLColor.Blue, RLColor.Black));
             listCardBreakdown.Add(new Snippet("Daven Arryn's Leadership Skill (Good), 2 Cards, Primary Conflict Skill (Leadership 2 Stars)", RLColor.Black, RLColor.Black));
@@ -684,6 +695,18 @@ namespace Next_Game
             }
             else
             { Game.SetError(new Error(83, "Invalid Input (List has no records")); }
+        }
+
+        /// <summary>
+        /// Sets up Strategy array (overwrites existing data)
+        /// </summary>
+        /// <param name="arrayInput"></param>
+        internal void SetStrategy(string[] arrayInput)
+        {
+            if (arrayInput.Length == 3)
+            { arrayInput.CopyTo(arrayStrategy, 0); }
+            else
+            { Game.SetError(new Error(85, "Invalid Strategy Array input (needs precisely 3 strategies)")); }
         }
 
         //new methods above here

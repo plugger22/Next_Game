@@ -68,6 +68,7 @@ namespace Next_Game
         public static FileImport file;
         public static Utility utility;
         public static Layout layout;
+        public static Conflict conflict;
         
         //flags
         private static bool _renderRequired = true; //redraw Console?
@@ -133,9 +134,10 @@ namespace Next_Game
             Message message = new Message($"Game world created with seed {seed}", MessageType.System);
             world.SetMessage(message);
             world.ProcessStartGame();
-            //layouts
+            //layout & conflict
             layout = new Layout(130, 100, 2, 3, RLColor.Black, RLColor.Yellow);
             layout.Initialise();
+            conflict = new Conflict(seed);
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
@@ -662,6 +664,10 @@ namespace Next_Game
                                     _menuMode = MenuMode.Special;
                                     _specialMode = SpecialMode.Conflict;
                                     _conflictMode = ConflictMode.Strategy;
+                                    //debug
+                                    conflict.Conflict_Type = ConflictType.Combat;
+                                    conflict.Combat_Type = CombatType.Battle;
+                                    conflict.InitialiseConflict();
                                     break;
                                 case MenuMode.Debug:
                                     //Show All Secrets log
@@ -1056,7 +1062,7 @@ namespace Next_Game
                         {
                             case ConflictMode.Strategy:
                                 _conflictMode = ConflictMode.Confirm;
-                                //layout.Strategy_You = 1;
+                                layout.Strategy_Player = 0;
                                 break;
                         }
                     }
@@ -1073,7 +1079,7 @@ namespace Next_Game
                         {
                             case ConflictMode.Strategy:
                                 _conflictMode = ConflictMode.Confirm;
-                                //layout.Strategy_You = 2;
+                                layout.Strategy_Player = 1;
                                 break;
                         }
                     }
@@ -1090,7 +1096,7 @@ namespace Next_Game
                         {
                             case ConflictMode.Strategy:
                                 _conflictMode = ConflictMode.Confirm;
-                                //layout.Strategy_You = 3;
+                                layout.Strategy_Player = 2;
                                 break;
                         }
                     }
