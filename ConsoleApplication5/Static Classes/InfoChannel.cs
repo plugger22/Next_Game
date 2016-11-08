@@ -347,7 +347,7 @@ namespace Next_Game
                         case ConflictMode.Confirm:
                             //Game.layout.UpdateConfirm(Game.layout.GetTestDataConfirm());
                             //Game.layout.DrawConfirm(multiConsole);
-                            Game.layout.UpdateMessage(Game.layout.GetTestDataConfirm(), Game.layout.Confirm_FillColor);
+                            Game.layout.UpdateMessage(Game.layout.GetDataConfirm(), Game.layout.Confirm_FillColor);
                             Game.layout.DrawMessage(multiConsole);
                             break;
                         case ConflictMode.AutoResolve:

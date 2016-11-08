@@ -97,9 +97,9 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutConflict : Outcome
     {
-        public OutConflict(int eventID, int type, int amount, EventCalc apply = EventCalc.None) : base (eventID)
+        public OutConflict(int eventID, int opponentID, int amount, EventCalc apply = EventCalc.None) : base (eventID)
         {
-            this.Data = type;
+            this.Data = opponentID;
             this.Amount = amount;
             this.Calc = apply;
         }

@@ -56,8 +56,8 @@ namespace Next_Game
         public RLColor Resolve_FillColor { get; set; }
         public RLColor Error_FillColor { get; set; }
         //Dynamic Data Sets
-        public int[] ArrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
-        public string[] ArraySituation { get; set; } // up to 3 situation factors
+        private int[] arrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
+        private string[] arraySituation { get; set; } // up to 3 situation factors
         private string[] arrayStrategy { get; set; } //3 strategies - always variations of Attack, Balanced & Defend
         private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
         //Conflict Cards
@@ -170,8 +170,8 @@ namespace Next_Game
             Error_FillColor = Color._errorFill;
 
             //Dynamic Data Sets
-            ArrayCardPool = new int[3];
-            ArraySituation = new string[3];
+            arrayCardPool = new int[3];
+            arraySituation = new string[3];
             arrayStrategy = new string[3];
             listCardBreakdown = new List<Snippet>();
         }
@@ -378,14 +378,14 @@ namespace Next_Game
             int bar_top = ca_score_vert_align + ca_bar_offset_y; //y_coord of bar
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
             //Card Pool
-            DrawText(Convert.ToString(ArrayCardPool[0]), ca_left_outer + 24, middle_align + 2, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText(Convert.ToString(ArrayCardPool[1]), ca_left_outer + 24, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText(Convert.ToString(ArrayCardPool[2]), ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText(Convert.ToString(ArrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(arrayCardPool[0]), ca_left_outer + 24, middle_align + 2, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(arrayCardPool[1]), ca_left_outer + 24, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(arrayCardPool[2]), ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(arrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Situation
-            DrawCenteredText(ArraySituation[0], horizontal_align, ca_top_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText(ArraySituation[1], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText(ArraySituation[2], horizontal_align, ca_top_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(arraySituation[0], horizontal_align, ca_top_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(arraySituation[1], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(arraySituation[2], horizontal_align, ca_top_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Strategy
             DrawCenteredText(arrayStrategy[Strategy_Player], horizontal_align, vertical_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arrayStrategy[Strategy_Opponent], horizontal_align, vertical_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -412,14 +412,14 @@ namespace Next_Game
             int breakdown_box_height = vertical_bottom - vertical_middle - st_spacer;
             int breakdown_box_width = st_right_outer - st_left_outer;
             //Card Pool dynamic data
-            DrawText(Convert.ToString(ArrayCardPool[0]), st_left_outer + 24, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText(Convert.ToString(ArrayCardPool[1]), st_left_outer + 24, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText(Convert.ToString(ArrayCardPool[2]), st_left_outer + 24, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText(Convert.ToString(ArrayCardPool.Sum()), st_left_outer + 24, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(arrayCardPool[0]), st_left_outer + 24, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(arrayCardPool[1]), st_left_outer + 24, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(arrayCardPool[2]), st_left_outer + 24, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(arrayCardPool.Sum()), st_left_outer + 24, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Situation
-            DrawCenteredText(ArraySituation[0], right_inner, st_top_align + 4, st_upper_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawCenteredText(ArraySituation[1], right_inner, st_top_align + 6, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawCenteredText(ArraySituation[2], right_inner, st_top_align + 8, st_upper_box_width, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText(arraySituation[0], right_inner, st_top_align + 4, st_upper_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText(arraySituation[1], right_inner, st_top_align + 6, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText(arraySituation[2], right_inner, st_top_align + 8, st_upper_box_width, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Strategy
             DrawText(string.Format("[F1] {0}", arrayStrategy[0]), st_middle_align + 4, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(string.Format("[F2] {0}", arrayStrategy[1]), st_middle_align + 4, st_top_align + 6, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
@@ -601,7 +601,7 @@ namespace Next_Game
         /// Debug method
         /// </summary>
         /// <returns></returns>
-        public List<Snippet> GetTestDataConfirm()
+        public List<Snippet> GetDataConfirm()
         {
             List<Snippet> listOfSnippets = new List<Snippet>();
             listOfSnippets.Add(new Snippet("You have Chosen...", RLColor.Black, Confirm_FillColor));
@@ -651,13 +651,13 @@ namespace Next_Game
         private void SetTestData()
         {
             //card pool
-            ArrayCardPool[0] = 8;
-            ArrayCardPool[1] = 4;
-            ArrayCardPool[2] = 1;
+            arrayCardPool[0] = 8;
+            arrayCardPool[1] = 4;
+            arrayCardPool[2] = 1;
             //situations
-            ArraySituation[0] = "Defendable Hill (Good)";
-            ArraySituation[1] = "Muddy Ground (Neutral)";
-            ArraySituation[2] = "Relative Army Size (Bad)";
+            /*arraySituation[0] = "Defendable Hill (Good)";
+            arraySituation[1] = "Muddy Ground (Neutral)";
+            arraySituation[2] = "Relative Army Size (Bad)";*/
             //strategy
             /*arrayStrategy[0] = "Take the Fight to the Enemy";
             arrayStrategy[1] = "Aggressive Defense";
@@ -707,6 +707,21 @@ namespace Next_Game
             { arrayInput.CopyTo(arrayStrategy, 0); }
             else
             { Game.SetError(new Error(85, "Invalid Strategy Array input (needs precisely 3 strategies)")); }
+        }
+
+        /// <summary>
+        /// Sets up Situation array (overwrites existing data)
+        /// </summary>
+        /// <param name="arraySituation"></param>
+        internal void SetSituation(string[] arrayInput)
+        {
+            //empty out the array 
+            Array.Clear(arraySituation, 0, arraySituation.Length);
+            //3 or less factors
+            if (arrayInput.Length <= 3 & arrayInput.Length > 0)
+            { arrayInput.CopyTo(arraySituation, 0); }
+            else
+            { Game.SetError(new Error(85, "Invalid Situation Array input (needs from 1 to 3 strategies)")); }
         }
 
         //new methods above here

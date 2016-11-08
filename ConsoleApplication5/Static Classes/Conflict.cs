@@ -82,7 +82,9 @@ namespace Next_Game
         public void InitialiseConflict()
         {
             SetPlayerStrategy();
+            SetSituation();
             SetOpponentStrategy();
+
         }
 
         /// <summary>
@@ -117,6 +119,27 @@ namespace Next_Game
                     }
                     break;
                 case ConflictType.Social:
+                    switch (Social_Type)
+                    {
+                        case SocialType.Befriend:
+                            tempArray[0] = "Do what Whatever it Takes";
+                            tempArray[1] = "Extend the Hand of Friendship";
+                            tempArray[2] = "Approach them with Caution";
+                            break;
+                        case SocialType.Blackmail:
+                            tempArray[0] = "Lean on Them. Hard.";
+                            tempArray[1] = "Explain the Facts of Life";
+                            tempArray[2] = "Gently Nudge Them";
+                            break;
+                        case SocialType.Seduce:
+                            tempArray[0] = "Actively Flirt and Pursue";
+                            tempArray[1] = "Make your Intentions Clear";
+                            tempArray[2] = "Infer Wonderful Possibilities";
+                            break;
+                        default:
+                            Game.SetError(new Error(86, "Invalid Social Type"));
+                            break;
+                    }
                     break;
                 default:
                     Game.SetError(new Error(86, "Invalid Conflict Type"));
@@ -136,6 +159,86 @@ namespace Next_Game
         {
             //placeholder 
             Game.layout.Strategy_Opponent = rnd.Next(0, 3);
+        }
+
+        /// <summary>
+        /// specify opponent (it's always the player vs. opponent)
+        /// </summary>
+        /// <param name="actorID"></param>
+        public void SetOpponent(int actorID)
+        {
+            if (actorID > 0)
+            {
+                opponent = Game.world.GetActiveActor(actorID);
+                if (opponent == null)
+                { Game.SetError(new Error(88, "Opponent not found (null)")); }
+            }
+            else { Game.SetError(new Error(88, "Invalid actorID input (<= 0)")); }
+        }
+
+        /// <summary>
+        /// Set up the situation and send to layout
+        /// </summary>
+        public void SetSituation()
+        {
+            string[] tempArray = new string[3];
+            switch (Conflict_Type)
+            {
+                case ConflictType.Combat:
+                    switch (Combat_Type)
+                    {
+                        case CombatType.Personal:
+                            tempArray[0] = "Go for the Throat";
+                            tempArray[1] = "Be Flexible";
+                            tempArray[2] = "Focus on Staying Alive";
+                            break;
+                        case CombatType.Tournament:
+                            tempArray[0] = "Knock them to the Ground";
+                            tempArray[1] = "Wait for an Opportunity";
+                            tempArray[2] = "Stay in the Saddle";
+                            break;
+                        case CombatType.Battle:
+                            tempArray[0] = "Take the Fight to the Enemy";
+                            tempArray[1] = "Push but don't Overextend";
+                            tempArray[2] = "Hold Firm";
+                            break;
+                        default:
+                            Game.SetError(new Error(86, "Invalid Combat Type"));
+                            break;
+                    }
+                    break;
+                case ConflictType.Social:
+                    switch (Social_Type)
+                    {
+                        case SocialType.Befriend:
+                            tempArray[0] = "Do what Whatever it Takes";
+                            tempArray[1] = "Extend the Hand of Friendship";
+                            tempArray[2] = "Approach them with Caution";
+                            break;
+                        case SocialType.Blackmail:
+                            tempArray[0] = "Lean on Them. Hard.";
+                            tempArray[1] = "Explain the Facts of Life";
+                            tempArray[2] = "Gently Nudge Them";
+                            break;
+                        case SocialType.Seduce:
+                            tempArray[0] = "Actively Flirt and Pursue";
+                            tempArray[1] = "Make your Intentions Clear";
+                            tempArray[2] = "Infer Wonderful Possibilities";
+                            break;
+                        default:
+                            Game.SetError(new Error(86, "Invalid Social Type"));
+                            break;
+                    }
+                    break;
+                default:
+                    Game.SetError(new Error(86, "Invalid Conflict Type"));
+                    break;
+            }
+            //send to layout
+            if (tempArray.Length <= 3 && tempArray.Length > 0)
+            { Game.layout.SetSituation(tempArray); }
+            else
+            { Game.SetError(new Error(89, "Invalid Situation, Layout not updated")); }
         }
         // methods above here
     }

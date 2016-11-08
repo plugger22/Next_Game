@@ -665,8 +665,10 @@ namespace Next_Game
                                     _specialMode = SpecialMode.Conflict;
                                     _conflictMode = ConflictMode.Strategy;
                                     //debug
+                                    Noble newKing = lore.NewKing;
                                     conflict.Conflict_Type = ConflictType.Combat;
                                     conflict.Combat_Type = CombatType.Battle;
+                                    conflict.SetOpponent(newKing.ActID);
                                     conflict.InitialiseConflict();
                                     break;
                                 case MenuMode.Debug:
