@@ -13,7 +13,7 @@ namespace Next_Game
     public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome} //if MenuMode.Special then this is the type of special
-    public enum ConflictMode { None, Strategy, Cards, Outcome, Confirm, AutoResolve, ErrorStrategy} //submodes within SpecialMode.Conflict
+    public enum ConflictMode { None, Strategy, Cards, Outcome, Confirm, AutoResolve, ErrorStrategy} //submodes within SpecialMode.Conflict, determines GUI
 
     public static class Game
     {
@@ -1056,7 +1056,7 @@ namespace Next_Game
                         {
                             case ConflictMode.Strategy:
                                 _conflictMode = ConflictMode.Confirm;
-                                layout.Strategy_You = 1;
+                                //layout.Strategy_You = 1;
                                 break;
                         }
                     }
@@ -1073,7 +1073,7 @@ namespace Next_Game
                         {
                             case ConflictMode.Strategy:
                                 _conflictMode = ConflictMode.Confirm;
-                                layout.Strategy_You = 2;
+                                //layout.Strategy_You = 2;
                                 break;
                         }
                     }
@@ -1090,7 +1090,7 @@ namespace Next_Game
                         {
                             case ConflictMode.Strategy:
                                 _conflictMode = ConflictMode.Confirm;
-                                layout.Strategy_You = 3;
+                                //layout.Strategy_You = 3;
                                 break;
                         }
                     }

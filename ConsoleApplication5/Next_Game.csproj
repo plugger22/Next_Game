@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Event_System\Conflict.cs" />
     <Compile Include="Event_System\Trigger.cs" />
     <Compile Include="Event_System\State.cs" />
     <Compile Include="Event_System\Outcome.cs" />

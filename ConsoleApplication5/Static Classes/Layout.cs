@@ -76,9 +76,8 @@ namespace Next_Game
         private int[,] arrayOfCells_Message;
         private RLColor[,] arrayOfForeColors_Message;
         private RLColor[,] arrayOfBackColors_Message;
-        //Conflict Data
-        public int Strategy_You { get; set; }
-        public int Strategy_Opponent { get; set; }
+       
+        
 
         /// <summary>
         /// default constructor
