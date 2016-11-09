@@ -24,8 +24,9 @@ namespace Next_Game
         private List<Card> listCardPool;
         private List<Snippet> listBreakdown; //description of card pool contents
         //skills
-        public SkillType PrimarySkill { get; set; }
-        public SkillType SecondaryTrait { get; set; }
+        public SkillType PrimarySkill { get; set; } //each skill level counts as 2 cards
+        public SkillType OtherSkill_1 { get; set; } //only trait effects count
+        public SkillType OtherSkill_2 { get; set; }
 
         /// <summary>
         /// default Constructor
@@ -320,15 +321,18 @@ namespace Next_Game
                     {
                         case CombatType.Personal:
                             PrimarySkill = SkillType.Combat;
-                            SecondaryTrait = SkillType.Wits;
+                            OtherSkill_1 = SkillType.Wits;
+                            OtherSkill_2 = SkillType.Treachery;
                             break;
                         case CombatType.Tournament:
                             PrimarySkill = SkillType.Combat;
-                            SecondaryTrait = SkillType.Wits;
+                            OtherSkill_1 = SkillType.Wits;
+                            OtherSkill_2 = SkillType.Treachery;
                             break;
                         case CombatType.Battle:
                             PrimarySkill = SkillType.Leadership;
-                            SecondaryTrait = SkillType.Wits;
+                            OtherSkill_1 = SkillType.Wits;
+                            OtherSkill_2 = SkillType.Treachery;
                             break;
                         default:
                             Game.SetError(new Error(91, "Invalid Combat Type"));
@@ -340,15 +344,18 @@ namespace Next_Game
                     {
                         case SocialType.Befriend:
                             PrimarySkill = SkillType.Charm;
-                            SecondaryTrait = SkillType.Treachery;
+                            OtherSkill_1 = SkillType.Treachery;
+                            OtherSkill_2 = SkillType.Wits;
                             break;
                         case SocialType.Blackmail:
                             PrimarySkill = SkillType.Treachery;
-                            SecondaryTrait = SkillType.Wits;
+                            OtherSkill_1 = SkillType.Wits;
+                            OtherSkill_2 = SkillType.Charm;
                             break;
                         case SocialType.Seduce:
                             PrimarySkill = SkillType.Charm;
-                            SecondaryTrait = SkillType.Treachery;
+                            OtherSkill_1 = SkillType.Treachery;
+                            OtherSkill_2 = SkillType.Wits;
                             break;
                         default:
                             Game.SetError(new Error(91, "Invalid Social Type"));
