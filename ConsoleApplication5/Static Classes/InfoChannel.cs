@@ -336,6 +336,10 @@ namespace Next_Game
                 case SpecialMode.Conflict:
                     switch (Game._conflictMode)
                     {
+                        case ConflictMode.Intro:
+                            Game.layout.UpdateIntro();
+                            Game.layout.DrawIntro(multiConsole);
+                            break;
                         case ConflictMode.Strategy:
                             Game.layout.UpdateStrategy();
                             Game.layout.DrawStrategy(multiConsole);
@@ -345,8 +349,6 @@ namespace Next_Game
                             Game.layout.DrawCards(multiConsole);
                             break;
                         case ConflictMode.Confirm:
-                            //Game.layout.UpdateConfirm(Game.layout.GetTestDataConfirm());
-                            //Game.layout.DrawConfirm(multiConsole);
                             Game.layout.UpdateMessage(Game.layout.GetDataConfirm(), Game.layout.Confirm_FillColor);
                             Game.layout.DrawMessage(multiConsole);
                             break;

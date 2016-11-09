@@ -13,7 +13,7 @@ namespace Next_Game
     public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome} //if MenuMode.Special then this is the type of special
-    public enum ConflictMode { None, Strategy, Cards, Outcome, Confirm, AutoResolve, ErrorStrategy} //submodes within SpecialMode.Conflict, determines GUI
+    public enum ConflictMode { None, Intro, Strategy, Cards, Outcome, Confirm, AutoResolve, ErrorStrategy} //submodes within SpecialMode.Conflict, determines GUI
 
     public static class Game
     {
@@ -22,8 +22,9 @@ namespace Next_Game
         private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
         //private static int seed = 40508;
-        
 
+        static Random rnd;
+        
         private static readonly int _rootWidth = 230;
         private static readonly int _rootHeight = 140;
         private static RLRootConsole _rootConsole; //main console
@@ -101,6 +102,7 @@ namespace Next_Game
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
+            rnd = new Random(seed);
             Console.SetWindowSize(100, 80);
             //initialise game objects
             Stopwatch timer_1 = new Stopwatch();
@@ -663,11 +665,11 @@ namespace Next_Game
                                 case MenuMode.Main:
                                     _menuMode = MenuMode.Special;
                                     _specialMode = SpecialMode.Conflict;
-                                    _conflictMode = ConflictMode.Strategy;
+                                    _conflictMode = ConflictMode.Intro;
                                     //debug
                                     Noble newKing = lore.NewKing;
                                     conflict.Conflict_Type = ConflictType.Combat;
-                                    conflict.Combat_Type = CombatType.Battle;
+                                    conflict.Combat_Type = (CombatType)rnd.Next(1,4);
                                     conflict.SetOpponent(newKing.ActID);
                                     conflict.InitialiseConflict();
                                     break;
@@ -1164,6 +1166,9 @@ namespace Next_Game
                             //Manual Resolution
                             switch (_conflictMode)
                             {
+                                case ConflictMode.Intro:
+                                    _conflictMode = ConflictMode.Strategy;
+                                    break;
                                 case ConflictMode.Strategy:
                                     _conflictMode = ConflictMode.ErrorStrategy;
                                     break;

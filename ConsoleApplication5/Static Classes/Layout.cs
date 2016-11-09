@@ -49,26 +49,28 @@ namespace Next_Game
         int ou_spacer;
         int ou_outcome_height;
         int ou_instruct_height;
-        //Message Layout fillcolors
+        //Layout Fill colors
         public RLColor Bar_FillColor { get; set; } 
         public RLColor Back_FillColor { get; set; } //for all non-highlighted boxes
         public RLColor Confirm_FillColor { get; set; }
         public RLColor Resolve_FillColor { get; set; }
         public RLColor Error_FillColor { get; set; }
+        public RLColor Intro_FillColor { get; set; }
         //Dynamic Data Sets
         private int[] arrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
         private string[] arraySituation { get; set; } // up to 3 situation factors
         private string[] arrayStrategy { get; set; } //3 strategies - always variations of Attack, Balanced & Defend
+        private string[] arrayOutcome { get; set; } // 0 is Conflict Type, 1/2/3 are Wins (minor/normal/major), 4/5/6 are Losses, 7/8 are advantage/disadvantage and recommendation
         private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
-        //Conflict Cards
+        //Cards
         private int[,] arrayOfCells_Cards; //cell array for box and text
         private RLColor[,] arrayOfForeColors_Cards; //foreground color for cell contents
         private RLColor[,] arrayOfBackColors_Cards; //background color for cell's
-        //Conflict Strategy
+        //Strategy
         private int[,] arrayOfCells_Strategy;
         private RLColor[,] arrayOfForeColors_Strategy;
         private RLColor[,] arrayOfBackColors_Strategy;
-        //Conflict Outcome
+        //Outcome
         private int[,] arrayOfCells_Outcome;
         private RLColor[,] arrayOfForeColors_Outcome;
         private RLColor[,] arrayOfBackColors_Outcome;
@@ -76,6 +78,10 @@ namespace Next_Game
         private int[,] arrayOfCells_Message;
         private RLColor[,] arrayOfForeColors_Message;
         private RLColor[,] arrayOfBackColors_Message;
+        //Introduction
+        private int[,] arrayOfCells_Intro;
+        private RLColor[,] arrayOfForeColors_Intro;
+        private RLColor[,] arrayOfBackColors_Intro;
         //strategy
         public int Strategy_Player { get; set; }
         public int Strategy_Opponent { get; set; }
@@ -111,6 +117,9 @@ namespace Next_Game
             arrayOfCells_Message = new int[Width - Offset_x, Height - Offset_y * 2];
             arrayOfForeColors_Message = new RLColor[Width - Offset_x, Height - Offset_y * 2];
             arrayOfBackColors_Message = new RLColor[Width - Offset_x, Height - Offset_y * 2];
+            arrayOfCells_Intro = new int[Width - Offset_x, Height - Offset_y * 2];
+            arrayOfForeColors_Intro = new RLColor[Width - Offset_x, Height - Offset_y * 2];
+            arrayOfBackColors_Intro = new RLColor[Width - Offset_x, Height - Offset_y * 2];
 
             //debug data set
             for (int height_index = 0; height_index < Height - Offset_y * 2; height_index++)
@@ -129,6 +138,9 @@ namespace Next_Game
                     arrayOfBackColors_Message[width_index, height_index] = fillColor;
                     arrayOfForeColors_Message[width_index, height_index] = RLColor.White;
                     arrayOfCells_Message[width_index, height_index] = 255;
+                    arrayOfBackColors_Intro[width_index, height_index] = fillColor;
+                    arrayOfForeColors_Intro[width_index, height_index] = RLColor.White;
+                    arrayOfCells_Intro[width_index, height_index] = 255;
                 }
             }
             //Card Layout
@@ -168,11 +180,12 @@ namespace Next_Game
             Confirm_FillColor = RLColor.White;
             Resolve_FillColor = RLColor.White;
             Error_FillColor = Color._errorFill;
-
+            Intro_FillColor = RLColor.White;
             //Dynamic Data Sets
             arrayCardPool = new int[3];
             arraySituation = new string[3];
             arrayStrategy = new string[3];
+            arrayOutcome = new string[9];
             listCardBreakdown = new List<Snippet>();
         }
 
@@ -182,13 +195,25 @@ namespace Next_Game
         public void Initialise()
         {
             SetTestData();
+            InitialiseIntro();
             InitialiseStrategy();
             InitialiseCards();
             InitialiseOutcome();
             InitialiseMessage();
         }
 
-
+        /// <summary>
+        /// Initialise Introduction Layout
+        /// </summary>
+        public void InitialiseIntro()
+        {
+            int left_align = (Width - Offset_x) / 4;
+            int top_align = (Height - Offset_y * 2) / 4;
+            int box_width = (Width - Offset_x) / 2;
+            int box_height = (Height - Offset_y * 2) / 2;
+            //confirmation box (centred)
+            DrawBox(left_align, top_align, box_width, box_height, RLColor.Yellow, Intro_FillColor, arrayOfCells_Intro, arrayOfForeColors_Intro, arrayOfBackColors_Intro);
+        }
 
         /// <summary>
         /// Initialise Choose a Strategy Layout
@@ -344,6 +369,43 @@ namespace Next_Game
             DrawBox(left_align, top_align, box_width, box_height, RLColor.Yellow, Confirm_FillColor, arrayOfCells_Message, arrayOfForeColors_Message, arrayOfBackColors_Message);
         }
 
+        /// <summary>
+        /// Draw Introduction Layout
+        /// </summary>
+        /// <param name="multiConsole"></param>
+        public void DrawIntro(RLConsole multiConsole)
+        { Draw(multiConsole, arrayOfCells_Intro, arrayOfForeColors_Intro, arrayOfBackColors_Intro); }
+
+        /// <summary>
+        /// Update Introduction layout contents
+        /// </summary>
+        public void UpdateIntro()
+        {
+            int left_align = (Width - Offset_x) / 4;
+            int top_align = (Height - Offset_y * 2) / 4;
+            int box_width = (Width - Offset_x) / 2;
+            int box_height = (Height - Offset_y * 2) / 2;
+            //Clear box & change background color
+            for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
+            {
+                for (int height_index = top_align + 1; height_index < top_align + box_height - 1; height_index++)
+                {
+                    arrayOfCells_Intro[width_index, height_index] = 255;
+                    arrayOfBackColors_Intro[width_index, height_index] = Intro_FillColor;
+                }
+            }
+            //Add new text -> Type of Conflict
+            DrawCenteredText(arrayOutcome[0] + " Challenge", left_align, top_align + 4, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Minor Win:     " + arrayOutcome[1], left_align + 4, top_align + 8, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Standard Win:  " + arrayOutcome[2], left_align + 4, top_align + 10, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Major Win:     " + arrayOutcome[3], left_align + 4, top_align + 12, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Minor Loss:    " + arrayOutcome[4], left_align + 4, top_align + 14, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Standard Loss: " + arrayOutcome[5], left_align + 4, top_align + 16, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Major Loss:    " + arrayOutcome[6], left_align + 4, top_align + 18, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText(arrayOutcome[7], left_align, top_align + 22, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText(arrayOutcome[8], left_align, top_align + 24, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + box_height - 3, box_width, RLColor.Gray, arrayOfCells_Intro, arrayOfForeColors_Intro);
+        }
 
         /// <summary>
         /// Draw Cards Layout
@@ -722,6 +784,21 @@ namespace Next_Game
             { arrayInput.CopyTo(arraySituation, 0); }
             else
             { Game.SetError(new Error(85, "Invalid Situation Array input (needs from 1 to 3 strategies)")); }
+        }
+
+        /// <summary>
+        /// Sets up Outcome array (overwrites existing data)
+        /// </summary>
+        /// <param name="arrayInput"></param>
+        internal void SetOutcome(string[] arrayInput)
+        {
+            //empty out the array 
+            Array.Clear(arrayOutcome, 0, arrayOutcome.Length);
+            //9 factors required
+            if (arrayInput.Length == 9)
+            { arrayInput.CopyTo(arrayOutcome, 0); }
+            else
+            { Game.SetError(new Error(90, "Invalid Outcome Array input (needs exactly 9 items)")); }
         }
 
         //new methods above here

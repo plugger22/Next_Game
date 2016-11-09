@@ -188,19 +188,19 @@ namespace Next_Game
                     switch (Combat_Type)
                     {
                         case CombatType.Personal:
-                            tempArray[0] = "Go for the Throat";
-                            tempArray[1] = "Be Flexible";
-                            tempArray[2] = "Focus on Staying Alive";
+                            tempArray[0] = "Uneven Ground";
+                            tempArray[1] = "A Bright Sun, Low on the Horizon";
+                            tempArray[2] = "Outnumbered";
                             break;
                         case CombatType.Tournament:
-                            tempArray[0] = "Knock them to the Ground";
-                            tempArray[1] = "Wait for an Opportunity";
-                            tempArray[2] = "Stay in the Saddle";
+                            tempArray[0] = "A Weakened Jousting Lance";
+                            tempArray[1] = "Cheers of the Crowd";
+                            tempArray[2] = "Opponent has Momentum";
                             break;
                         case CombatType.Battle:
-                            tempArray[0] = "Take the Fight to the Enemy";
-                            tempArray[1] = "Push but don't Overextend";
-                            tempArray[2] = "Hold Firm";
+                            tempArray[0] = "A Defendable Hill";
+                            tempArray[1] = "Muddy Ground";
+                            tempArray[2] = "Relative Army Sizes";
                             break;
                         default:
                             Game.SetError(new Error(86, "Invalid Combat Type"));
@@ -211,19 +211,19 @@ namespace Next_Game
                     switch (Social_Type)
                     {
                         case SocialType.Befriend:
-                            tempArray[0] = "Do what Whatever it Takes";
-                            tempArray[1] = "Extend the Hand of Friendship";
-                            tempArray[2] = "Approach them with Caution";
+                            tempArray[0] = "A fine Arbor Wine";
+                            tempArray[1] = "A Pleasant Lunch";
+                            tempArray[2] = "Your Reputation Precedes you";
                             break;
                         case SocialType.Blackmail:
-                            tempArray[0] = "Lean on Them. Hard.";
-                            tempArray[1] = "Explain the Facts of Life";
-                            tempArray[2] = "Gently Nudge Them";
+                            tempArray[0] = "A Noisey Room full of People";
+                            tempArray[1] = "The Threat of Retaliation";
+                            tempArray[2] = "Difficulty of a Meaningful Threat";
                             break;
                         case SocialType.Seduce:
-                            tempArray[0] = "Actively Flirt and Pursue";
-                            tempArray[1] = "Make your Intentions Clear";
-                            tempArray[2] = "Infer Wonderful Possibilities";
+                            tempArray[0] = "A Romantic Venue";
+                            tempArray[1] = "A Witch's Aphrodisiac";
+                            tempArray[2] = "The Lady is Happily Married";
                             break;
                         default:
                             Game.SetError(new Error(86, "Invalid Social Type"));
@@ -240,6 +240,96 @@ namespace Next_Game
             else
             { Game.SetError(new Error(89, "Invalid Situation, Layout not updated")); }
         }
+
+        /// <summary>
+        /// Set up outcomes and send to layout
+        /// </summary>
+        public void SetOutcome()
+        {
+            string[] tempArray = new string[9];
+            //type of conflict
+            tempArray[0] = "A " + Convert.ToString(Combat_Type);
+            //descriptions of outcomes (minor/standard/major wins and losses)
+            switch (Conflict_Type)
+            {
+                case ConflictType.Combat:
+                    switch (Combat_Type)
+                    {
+                        case CombatType.Personal:
+                            tempArray[1] = "Your Opponent retires with a minor wound and an injured ego";
+                            tempArray[2] = "Your Opponent Yields and you can claim an Advantage from him";
+                            tempArray[3] = "Your Opponent Suffers a Major Wound and may die";
+                            tempArray[4] = "You suffer a minor wound and retire defeated";
+                            tempArray[5] = "You are Forced to Yield to a superior Opponent who can demand an Advantage";
+                            tempArray[6] = "You have been Badly Injured and Lose any Special Items";
+                            break;
+                        case CombatType.Tournament:
+                            tempArray[1] = "Your Opponent withdraws from the contest but refuses to accept that he lost";
+                            tempArray[2] = "You unhorse your Opponent and claim victory and glory";
+                            tempArray[3] = "Your Opponent is thrown from the saddle and badly Injured";
+                            tempArray[4] = "";
+                            tempArray[5] = "";
+                            tempArray[6] = "";
+                            break;
+                        case CombatType.Battle:
+                            tempArray[1] = "";
+                            tempArray[2] = "";
+                            tempArray[3] = "";
+                            tempArray[4] = "";
+                            tempArray[5] = "";
+                            tempArray[6] = "";
+                            break;
+                        default:
+                            Game.SetError(new Error(86, "Invalid Combat Type"));
+                            break;
+                    }
+                    break;
+                case ConflictType.Social:
+                    switch (Social_Type)
+                    {
+                        case SocialType.Befriend:
+                            tempArray[1] = "";
+                            tempArray[2] = "";
+                            tempArray[3] = "";
+                            tempArray[4] = "";
+                            tempArray[5] = "";
+                            tempArray[6] = "";
+                            break;
+                        case SocialType.Blackmail:
+                            tempArray[1] = "";
+                            tempArray[2] = "";
+                            tempArray[3] = "";
+                            tempArray[4] = "";
+                            tempArray[5] = "";
+                            tempArray[6] = "";
+                            break;
+                        case SocialType.Seduce:
+                            tempArray[1] = "";
+                            tempArray[2] = "";
+                            tempArray[3] = "";
+                            tempArray[4] = "";
+                            tempArray[5] = "";
+                            tempArray[6] = "";
+                            break;
+                        default:
+                            Game.SetError(new Error(86, "Invalid Social Type"));
+                            break;
+                    }
+                    break;
+                default:
+                    Game.SetError(new Error(86, "Invalid Conflict Type"));
+                    break;
+            }
+            //Who has the advantage and a recommendation
+            tempArray[7] = "You have the Advantage";
+            tempArray[8] = "An Aggressive Strategy is Recommended";
+            //send to layout
+            if (tempArray.Length == 9)
+            { Game.layout.SetOutcome(tempArray); }
+            else
+            { Game.SetError(new Error(89, "Invalid Situation, Layout not updated")); }
+        }
+
         // methods above here
     }
 }
