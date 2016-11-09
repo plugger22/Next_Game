@@ -24,8 +24,8 @@ namespace Next_Game
         private List<Card> listCardPool;
         private List<Snippet> listBreakdown; //description of card pool contents
         //skills
-        public TraitType PrimarySkill { get; set; }
-        public TraitType SecondaryTrait { get; set; }
+        public SkillType PrimarySkill { get; set; }
+        public SkillType SecondaryTrait { get; set; }
 
         /// <summary>
         /// default Constructor
@@ -300,7 +300,7 @@ namespace Next_Game
             string handle_player, handle_opponent;
             if (player.Handle != null) { handle_player = string.Format(" \"{0}\" ", player.Handle); } else { handle_player = null; }
             if (opponent.Handle != null) { handle_opponent = string.Format(" \"{0}\" ", opponent.Handle); } else { handle_opponent = null; }
-            tempArray[9] = string.Format("{0}{1}{2} vs. {3}{4}{5}", player.Type, handle_player, player.Name, title, handle_opponent, opponent.Name);
+            tempArray[9] = string.Format("{0} {1}{2} vs. {3} {4}{5}", player.Type, player.Name, handle_player, title, opponent.Name, handle_opponent);
             //send to layout
             if (tempArray.Length == 10)
             { Game.layout.SetOutcome(tempArray); }
@@ -319,16 +319,16 @@ namespace Next_Game
                     switch (Combat_Type)
                     {
                         case CombatType.Personal:
-                            PrimarySkill = TraitType.Combat;
-                            SecondaryTrait = TraitType.Wits;
+                            PrimarySkill = SkillType.Combat;
+                            SecondaryTrait = SkillType.Wits;
                             break;
                         case CombatType.Tournament:
-                            PrimarySkill = TraitType.Combat;
-                            SecondaryTrait = TraitType.Wits;
+                            PrimarySkill = SkillType.Combat;
+                            SecondaryTrait = SkillType.Wits;
                             break;
                         case CombatType.Battle:
-                            PrimarySkill = TraitType.Leadership;
-                            SecondaryTrait = TraitType.Wits;
+                            PrimarySkill = SkillType.Leadership;
+                            SecondaryTrait = SkillType.Wits;
                             break;
                         default:
                             Game.SetError(new Error(91, "Invalid Combat Type"));
@@ -339,16 +339,16 @@ namespace Next_Game
                     switch (Social_Type)
                     {
                         case SocialType.Befriend:
-                            PrimarySkill = TraitType.Charm;
-                            SecondaryTrait = TraitType.Treachery;
+                            PrimarySkill = SkillType.Charm;
+                            SecondaryTrait = SkillType.Treachery;
                             break;
                         case SocialType.Blackmail:
-                            PrimarySkill = TraitType.Treachery;
-                            SecondaryTrait = TraitType.Wits;
+                            PrimarySkill = SkillType.Treachery;
+                            SecondaryTrait = SkillType.Wits;
                             break;
                         case SocialType.Seduce:
-                            PrimarySkill = TraitType.Charm;
-                            SecondaryTrait = TraitType.Treachery;
+                            PrimarySkill = SkillType.Charm;
+                            SecondaryTrait = SkillType.Treachery;
                             break;
                         default:
                             Game.SetError(new Error(91, "Invalid Social Type"));

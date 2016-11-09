@@ -28,8 +28,8 @@ namespace Next_Game
         private List<Active> listOfActiveActors;
         private string[][] arrayOfGeoNames;
         //traits
-        private List<Trait> listOfTraits; //main
-        private Trait[,][] arrayOfTraits; //filtered sets for fast random access
+        private List<Skill> listOfTraits; //main
+        private Skill[,][] arrayOfTraits; //filtered sets for fast random access
         //secrets
         private List<Secret> listOfSecrets;
         //Mishaps
@@ -58,8 +58,8 @@ namespace Next_Game
             listOfGeoClusters = new List<GeoCluster>();
             listOfActiveActors = new List<Active>();
             arrayOfGeoNames = new string[(int)GeoType.Count][];
-            listOfTraits = new List<Trait>();
-            arrayOfTraits = new Trait[(int)TraitType.Count, (int)ActorSex.Count][];
+            listOfTraits = new List<Skill>();
+            arrayOfTraits = new Skill[(int)SkillType.Count, (int)ActorSex.Count][];
             listOfSecrets = new List<Secret>();
             listOfWounds = new List<string>();
             listOfInjuries = new List<string>();
@@ -90,9 +90,9 @@ namespace Next_Game
             arrayOfGeoNames = Game.file.GetGeoNames("GeoNames.txt");
             InitialiseGeoClusters();
             //Traits
-            listOfTraits.AddRange(Game.file.GetTraits("Traits_All.txt", TraitSex.All));
-            listOfTraits.AddRange(Game.file.GetTraits("Traits_Male.txt", TraitSex.Male));
-            listOfTraits.AddRange(Game.file.GetTraits("Traits_Female.txt", TraitSex.Female));
+            listOfTraits.AddRange(Game.file.GetTraits("Traits_All.txt", SkillSex.All));
+            listOfTraits.AddRange(Game.file.GetTraits("Traits_Male.txt", SkillSex.Male));
+            listOfTraits.AddRange(Game.file.GetTraits("Traits_Female.txt", SkillSex.Female));
             //mishaps
             listOfWounds.AddRange(Game.file.GetStrings("Wounds.txt"));
             //set up filtered sets of traits ready for random access by newly created actors
@@ -318,7 +318,7 @@ namespace Next_Game
         internal void InitialiseFollowers(List<FollowerStruct> listOfStructs)
         {
             Console.WriteLine(Environment.NewLine + "--- Import Followers");
-            int age = (int)TraitAge.Fifteen;
+            int age = (int)SkillAge.Fifteen;
             //Convert FollowerStructs into Follower objects
             foreach (var data in listOfStructs)
             {
@@ -338,20 +338,20 @@ namespace Next_Game
                     follower.Age = data.Age;
                     follower.Born = Game.gameStart - data.Age;
                     //trait effects
-                    follower.arrayOfTraitEffects[age, (int)TraitType.Combat] = data.Combat_Effect;
-                    follower.arrayOfTraitEffects[age, (int)TraitType.Wits] = data.Wits_Effect;
-                    follower.arrayOfTraitEffects[age, (int)TraitType.Charm] = data.Charm_Effect;
-                    follower.arrayOfTraitEffects[age, (int)TraitType.Treachery] = data.Treachery_Effect;
-                    follower.arrayOfTraitEffects[age, (int)TraitType.Leadership] = data.Leadership_Effect;
-                    follower.arrayOfTraitEffects[age, (int)TraitType.Touched] = data.Touched_Effect;
+                    follower.arrayOfTraitEffects[age, (int)SkillType.Combat] = data.Combat_Effect;
+                    follower.arrayOfTraitEffects[age, (int)SkillType.Wits] = data.Wits_Effect;
+                    follower.arrayOfTraitEffects[age, (int)SkillType.Charm] = data.Charm_Effect;
+                    follower.arrayOfTraitEffects[age, (int)SkillType.Treachery] = data.Treachery_Effect;
+                    follower.arrayOfTraitEffects[age, (int)SkillType.Leadership] = data.Leadership_Effect;
+                    follower.arrayOfTraitEffects[age, (int)SkillType.Touched] = data.Touched_Effect;
                     if (data.Touched_Effect != 0) { follower.Touched = 3; }
                     //trait names
-                    follower.arrayOfTraitNames[(int)TraitType.Combat] = data.Combat_Trait;
-                    follower.arrayOfTraitNames[(int)TraitType.Wits] = data.Wits_Trait;
-                    follower.arrayOfTraitNames[(int)TraitType.Charm] = data.Charm_Trait;
-                    follower.arrayOfTraitNames[(int)TraitType.Treachery] = data.Treachery_Trait;
-                    follower.arrayOfTraitNames[(int)TraitType.Leadership] = data.Leadership_Trait;
-                    follower.arrayOfTraitNames[(int)TraitType.Touched] = data.Touched_Trait;
+                    follower.arrayOfTraitNames[(int)SkillType.Combat] = data.Combat_Trait;
+                    follower.arrayOfTraitNames[(int)SkillType.Wits] = data.Wits_Trait;
+                    follower.arrayOfTraitNames[(int)SkillType.Charm] = data.Charm_Trait;
+                    follower.arrayOfTraitNames[(int)SkillType.Treachery] = data.Treachery_Trait;
+                    follower.arrayOfTraitNames[(int)SkillType.Leadership] = data.Leadership_Trait;
+                    follower.arrayOfTraitNames[(int)SkillType.Touched] = data.Touched_Trait;
                     //trait ID's not needed
                     //add to list
                     listOfActiveActors.Add(follower);
@@ -652,7 +652,7 @@ namespace Next_Game
             knight.HouseID = houseID;
             knight.Type = ActorType.Knight;
             knight.Realm = ActorRealm.None;
-            InitialiseActorTraits(knight, null, null, TraitType.Combat, TraitType.Treachery);
+            InitialiseActorTraits(knight, null, null, SkillType.Combat, SkillType.Treachery);
             //record
             string descriptor = string.Format("{0} knighted and swears allegiance to House {1}, age {2}", knight.Name, Game.world.GetGreatHouseName(knight.HouseID), knighted);
             Record record = new Record(descriptor, knight.ActID, knight.LocID, knight.RefID, knight.Knighthood, HistActorIncident.Knighthood);
@@ -705,18 +705,18 @@ namespace Next_Game
                 Location loc = Game.network.GetLocation(locID);
                 loc.AddActor(advisor.ActID);
                 //traits
-                TraitType positiveTrait = TraitType.None;
-                TraitType negativeTrait = TraitType.None;
+                SkillType positiveTrait = SkillType.None;
+                SkillType negativeTrait = SkillType.None;
                 if ((int)advisorRoyal > 0)
                 {
                     advisor.advisorRoyal = advisorRoyal;
-                    negativeTrait = TraitType.Combat;
-                    if (advisorRoyal == AdvisorRoyal.Master_of_Whisperers) { positiveTrait = TraitType.Treachery; }
-                    else if (advisorRoyal == AdvisorRoyal.High_Septon) { positiveTrait = TraitType.Charm; negativeTrait = TraitType.Treachery; }
-                    else if (advisorRoyal == AdvisorRoyal.Commander_of_Kings_Guard) { positiveTrait = TraitType.Combat; negativeTrait = TraitType.Treachery; }
-                    else if (advisorRoyal == AdvisorRoyal.Commander_of_City_Watch) { positiveTrait = TraitType.Leadership; negativeTrait = TraitType.Treachery; }
-                    else if (advisorRoyal == AdvisorRoyal.Hand_of_the_King) { positiveTrait = TraitType.Wits; negativeTrait = TraitType.Treachery; }
-                    else { positiveTrait = TraitType.Wits;  }
+                    negativeTrait = SkillType.Combat;
+                    if (advisorRoyal == AdvisorRoyal.Master_of_Whisperers) { positiveTrait = SkillType.Treachery; }
+                    else if (advisorRoyal == AdvisorRoyal.High_Septon) { positiveTrait = SkillType.Charm; negativeTrait = SkillType.Treachery; }
+                    else if (advisorRoyal == AdvisorRoyal.Commander_of_Kings_Guard) { positiveTrait = SkillType.Combat; negativeTrait = SkillType.Treachery; }
+                    else if (advisorRoyal == AdvisorRoyal.Commander_of_City_Watch) { positiveTrait = SkillType.Leadership; negativeTrait = SkillType.Treachery; }
+                    else if (advisorRoyal == AdvisorRoyal.Hand_of_the_King) { positiveTrait = SkillType.Wits; negativeTrait = SkillType.Treachery; }
+                    else { positiveTrait = SkillType.Wits;  }
                     //record
                     descriptor = string.Format("{0} {1}, Aid {2}, commenced serving on the Royal Council, age {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, startAge);
                     Record record = new Record(descriptor, advisor.ActID, locID, refID, yearCommenced, HistActorIncident.Service);
@@ -725,9 +725,9 @@ namespace Next_Game
                 else if ((int)advisorNoble > 0)
                 {
                     advisor.advisorNoble = advisorNoble;
-                    if (advisorNoble == AdvisorNoble.Castellan) { positiveTrait = TraitType.Leadership; negativeTrait = TraitType.Treachery; }
-                    else if (advisorNoble == AdvisorNoble.Septon) { positiveTrait = TraitType.Charm; negativeTrait = TraitType.Treachery; }
-                    else { positiveTrait = TraitType.Wits; negativeTrait = TraitType.Combat; }
+                    if (advisorNoble == AdvisorNoble.Castellan) { positiveTrait = SkillType.Leadership; negativeTrait = SkillType.Treachery; }
+                    else if (advisorNoble == AdvisorNoble.Septon) { positiveTrait = SkillType.Charm; negativeTrait = SkillType.Treachery; }
+                    else { positiveTrait = SkillType.Wits; negativeTrait = SkillType.Combat; }
                     //record
                     descriptor = string.Format("{0} {1}, Aid {2}, entered the service of House {3}, age {4}", advisor.advisorNoble, advisor.Name, advisor.ActID, Game.world.GetGreatHouseName(houseID), startAge);
                     Record record = new Record(descriptor, advisor.ActID, locID, refID, yearCommenced, HistActorIncident.Service );
@@ -749,7 +749,7 @@ namespace Next_Game
         /// <param name="mother">supply for when parental genetics come into play</param>
         /// <param name="traitPositive">if present this trait will be given preference (high values more likely, but not guaranteed)</param>
         /// <param name="traitNegative">if present this trait will be given malus (low values more likely, but not guaranteed)</param>
-        private void InitialiseActorTraits(Actor person, Noble father = null, Noble mother = null, TraitType traitPositive = TraitType.None, TraitType traitNegative = TraitType.None)
+        private void InitialiseActorTraits(Actor person, Noble father = null, Noble mother = null, SkillType traitPositive = SkillType.None, SkillType traitNegative = SkillType.None)
         {
             //nicknames from all assigned traits kept here and one is randomly chosen to be given the actor (their 'handle')
             List<string> tempHandles = new List<string>();
@@ -757,7 +757,7 @@ namespace Next_Game
             int rndRange;
             int startRange = 0; //used for random selection of traits
             int endRange = 0;
-            Trait rndTrait;
+            Skill rndTrait;
             int chanceOfTrait;
             int traitID;
             int effect;
@@ -770,22 +770,22 @@ namespace Next_Game
                 if (person.Sex == ActorSex.Male) { parent = father; }
                 else { parent = mother; }
                 //does parent have a combat trait?
-                traitID = parent.arrayOfTraitID[(int)TraitType.Combat];
+                traitID = parent.arrayOfSkillID[(int)SkillType.Combat];
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
                     if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT_TRAIT))
                     {
                         //find trait
-                        Trait trait = GetTrait(traitID);
+                        Skill trait = GetTrait(traitID);
                         if (trait != null)
                         {
                             //same trait passed on
-                            TraitAge age = trait.Age;
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Combat];
-                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat];
-                            person.arrayOfTraitID[(int)TraitType.Combat] = parent.arrayOfTraitID[(int)TraitType.Combat];
-                            person.arrayOfTraitNames[(int)TraitType.Combat] = parent.arrayOfTraitNames[(int)TraitType.Combat];
+                            SkillAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)SkillType.Combat] = parent.arrayOfTraitEffects[(int)age, (int)SkillType.Combat];
+                            person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Combat] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Combat];
+                            person.arrayOfSkillID[(int)SkillType.Combat] = parent.arrayOfSkillID[(int)SkillType.Combat];
+                            person.arrayOfTraitNames[(int)SkillType.Combat] = parent.arrayOfTraitNames[(int)SkillType.Combat];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -800,30 +800,30 @@ namespace Next_Game
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
             if (needRandomTrait == true)
             {
-                rndRange = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex].Length;
+                rndRange = arrayOfTraits[(int)SkillType.Combat, (int)person.Sex].Length;
                 //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
-                if (traitPositive == TraitType.Combat) { startRange = 0; endRange = rndRange / 2; }
-                else if (traitNegative == TraitType.Combat) { startRange = rndRange / 2; endRange = rndRange; }
+                if (traitPositive == SkillType.Combat) { startRange = 0; endRange = rndRange / 2; }
+                else if (traitNegative == SkillType.Combat) { startRange = rndRange / 2; endRange = rndRange; }
                 else { startRange = 0; endRange = rndRange; }
 
                 if (rndRange > 0)
                 {
                     
-                    rndTrait = arrayOfTraits[(int)TraitType.Combat, (int)person.Sex][rnd.Next(startRange, endRange)];
+                    rndTrait = arrayOfTraits[(int)SkillType.Combat, (int)person.Sex][rnd.Next(startRange, endRange)];
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
                     {
                         string name = rndTrait.Name;
                         effect = rndTrait.Effect;
-                        traitID = rndTrait.TraitID;
-                        TraitAge age = rndTrait.Age;
+                        traitID = rndTrait.SkillID;
+                        SkillAge age = rndTrait.Age;
                         //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                         //update trait arrays
-                        person.arrayOfTraitID[(int)TraitType.Combat] = traitID;
-                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Combat] = effect;
-                        person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Combat] = effect; //any age 5 effect also needs to set for age 15
-                        person.arrayOfTraitNames[(int)TraitType.Combat] = name;
+                        person.arrayOfSkillID[(int)SkillType.Combat] = traitID;
+                        person.arrayOfTraitEffects[(int)age, (int)SkillType.Combat] = effect;
+                        person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Combat] = effect; //any age 5 effect also needs to set for age 15
+                        person.arrayOfTraitNames[(int)SkillType.Combat] = name;
                         tempHandles.AddRange(rndTrait.GetNickNames());
                     }
                 }
@@ -842,22 +842,22 @@ namespace Next_Game
                 { parent = father; }
                 else { parent = mother; }
                 //does parent have a Wits trait?
-                traitID = parent.arrayOfTraitID[(int)TraitType.Wits];
+                traitID = parent.arrayOfSkillID[(int)SkillType.Wits];
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
                     if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT_TRAIT))
                     {
                         //find trait
-                        Trait trait = GetTrait(traitID);
+                        Skill trait = GetTrait(traitID);
                         if (trait != null)
                         {
                             //same trait passed on
-                            TraitAge age = trait.Age;
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Wits];
-                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Wits] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Wits];
-                            person.arrayOfTraitID[(int)TraitType.Wits] = parent.arrayOfTraitID[(int)TraitType.Wits];
-                            person.arrayOfTraitNames[(int)TraitType.Wits] = parent.arrayOfTraitNames[(int)TraitType.Wits];
+                            SkillAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)SkillType.Wits] = parent.arrayOfTraitEffects[(int)age, (int)SkillType.Wits];
+                            person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Wits] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Wits];
+                            person.arrayOfSkillID[(int)SkillType.Wits] = parent.arrayOfSkillID[(int)SkillType.Wits];
+                            person.arrayOfTraitNames[(int)SkillType.Wits] = parent.arrayOfTraitNames[(int)SkillType.Wits];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -872,29 +872,29 @@ namespace Next_Game
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
             if (needRandomTrait == true)
             {
-                rndRange = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex].Length;
+                rndRange = arrayOfTraits[(int)SkillType.Wits, (int)person.Sex].Length;
                 //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
-                if (traitPositive == TraitType.Wits) { startRange = 0; endRange = rndRange / 2; }
-                else if (traitNegative == TraitType.Wits) { startRange = rndRange / 2; endRange = rndRange; }
+                if (traitPositive == SkillType.Wits) { startRange = 0; endRange = rndRange / 2; }
+                else if (traitNegative == SkillType.Wits) { startRange = rndRange / 2; endRange = rndRange; }
                 else { startRange = 0; endRange = rndRange; }
 
                 if (rndRange > 0)
                 {
-                    rndTrait = arrayOfTraits[(int)TraitType.Wits, (int)person.Sex][rnd.Next(startRange, endRange)];
+                    rndTrait = arrayOfTraits[(int)SkillType.Wits, (int)person.Sex][rnd.Next(startRange, endRange)];
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
                     {
                         string name = rndTrait.Name;
                         effect = rndTrait.Effect;
-                        traitID = rndTrait.TraitID;
-                        TraitAge age = rndTrait.Age;
+                        traitID = rndTrait.SkillID;
+                        SkillAge age = rndTrait.Age;
                         //Console.WriteLine("Wits {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                         //update trait arrays
-                        person.arrayOfTraitID[(int)TraitType.Wits] = traitID;
-                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Wits] = effect;
-                        person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Wits] = effect; //any age 5 effect also needs to set for age 15
-                        person.arrayOfTraitNames[(int)TraitType.Wits] = name;
+                        person.arrayOfSkillID[(int)SkillType.Wits] = traitID;
+                        person.arrayOfTraitEffects[(int)age, (int)SkillType.Wits] = effect;
+                        person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Wits] = effect; //any age 5 effect also needs to set for age 15
+                        person.arrayOfTraitNames[(int)SkillType.Wits] = name;
                         tempHandles.AddRange(rndTrait.GetNickNames());
                     }
                 }
@@ -912,22 +912,22 @@ namespace Next_Game
                 if (person.Sex == ActorSex.Male) { parent = father; }
                 else { parent = mother; }
                 //does parent have a Charm trait?
-                traitID = parent.arrayOfTraitID[(int)TraitType.Charm];
+                traitID = parent.arrayOfSkillID[(int)SkillType.Charm];
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
                     if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT_TRAIT))
                     {
                         //find trait
-                        Trait trait = GetTrait(traitID);
+                        Skill trait = GetTrait(traitID);
                         if (trait != null)
                         {
                             //same trait passed on
-                            TraitAge age = trait.Age;
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Charm];
-                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Charm] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Charm];
-                            person.arrayOfTraitID[(int)TraitType.Charm] = parent.arrayOfTraitID[(int)TraitType.Charm];
-                            person.arrayOfTraitNames[(int)TraitType.Charm] = parent.arrayOfTraitNames[(int)TraitType.Charm];
+                            SkillAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)SkillType.Charm] = parent.arrayOfTraitEffects[(int)age, (int)SkillType.Charm];
+                            person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Charm] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Charm];
+                            person.arrayOfSkillID[(int)SkillType.Charm] = parent.arrayOfSkillID[(int)SkillType.Charm];
+                            person.arrayOfTraitNames[(int)SkillType.Charm] = parent.arrayOfTraitNames[(int)SkillType.Charm];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -942,29 +942,29 @@ namespace Next_Game
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
             if (needRandomTrait == true)
             {
-                rndRange = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex].Length;
+                rndRange = arrayOfTraits[(int)SkillType.Charm, (int)person.Sex].Length;
                 //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
-                if (traitPositive == TraitType.Charm) { startRange = 0; endRange = rndRange / 2; }
-                else if (traitNegative == TraitType.Charm) { startRange = rndRange / 2; endRange = rndRange; }
+                if (traitPositive == SkillType.Charm) { startRange = 0; endRange = rndRange / 2; }
+                else if (traitNegative == SkillType.Charm) { startRange = rndRange / 2; endRange = rndRange; }
                 else { startRange = 0; endRange = rndRange; }
 
                 if (rndRange > 0)
                 {
-                    rndTrait = arrayOfTraits[(int)TraitType.Charm, (int)person.Sex][rnd.Next(startRange, endRange)];
+                    rndTrait = arrayOfTraits[(int)SkillType.Charm, (int)person.Sex][rnd.Next(startRange, endRange)];
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
                     {
                         string name = rndTrait.Name;
                         effect = rndTrait.Effect;
-                        traitID = rndTrait.TraitID;
-                        TraitAge age = rndTrait.Age;
+                        traitID = rndTrait.SkillID;
+                        SkillAge age = rndTrait.Age;
                         //Console.WriteLine("Charm {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                         //update trait arrays
-                        person.arrayOfTraitID[(int)TraitType.Charm] = traitID;
-                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Charm] = effect;
-                        person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Charm] = effect; //any age 5 effect also needs to set for age 15
-                        person.arrayOfTraitNames[(int)TraitType.Charm] = name;
+                        person.arrayOfSkillID[(int)SkillType.Charm] = traitID;
+                        person.arrayOfTraitEffects[(int)age, (int)SkillType.Charm] = effect;
+                        person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Charm] = effect; //any age 5 effect also needs to set for age 15
+                        person.arrayOfTraitNames[(int)SkillType.Charm] = name;
                         tempHandles.AddRange(rndTrait.GetNickNames());
                     }
                 }
@@ -982,22 +982,22 @@ namespace Next_Game
                 if (person.Sex == ActorSex.Male) { parent = father; }
                 else { parent = mother; }
                 //does parent have a Treachery trait?
-                traitID = parent.arrayOfTraitID[(int)TraitType.Treachery];
+                traitID = parent.arrayOfSkillID[(int)SkillType.Treachery];
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
                     if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT_TRAIT))
                     {
                         //find trait
-                        Trait trait = GetTrait(traitID);
+                        Skill trait = GetTrait(traitID);
                         if (trait != null)
                         {
                             //same trait passed on
-                            TraitAge age = trait.Age;
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery];
-                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Treachery] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Treachery];
-                            person.arrayOfTraitID[(int)TraitType.Treachery] = parent.arrayOfTraitID[(int)TraitType.Treachery];
-                            person.arrayOfTraitNames[(int)TraitType.Treachery] = parent.arrayOfTraitNames[(int)TraitType.Treachery];
+                            SkillAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)SkillType.Treachery] = parent.arrayOfTraitEffects[(int)age, (int)SkillType.Treachery];
+                            person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Treachery] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Treachery];
+                            person.arrayOfSkillID[(int)SkillType.Treachery] = parent.arrayOfSkillID[(int)SkillType.Treachery];
+                            person.arrayOfTraitNames[(int)SkillType.Treachery] = parent.arrayOfTraitNames[(int)SkillType.Treachery];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -1012,29 +1012,29 @@ namespace Next_Game
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
             if (needRandomTrait == true)
             {
-                rndRange = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex].Length;
+                rndRange = arrayOfTraits[(int)SkillType.Treachery, (int)person.Sex].Length;
                 //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
-                if (traitPositive == TraitType.Treachery) { startRange = 0; endRange = rndRange / 2; }
-                else if (traitNegative == TraitType.Treachery) { startRange = rndRange / 2; endRange = rndRange; }
+                if (traitPositive == SkillType.Treachery) { startRange = 0; endRange = rndRange / 2; }
+                else if (traitNegative == SkillType.Treachery) { startRange = rndRange / 2; endRange = rndRange; }
                 else { startRange = 0; endRange = rndRange; }
                 
                 if (rndRange > 0)
                 {
-                    rndTrait = arrayOfTraits[(int)TraitType.Treachery, (int)person.Sex][rnd.Next(startRange, endRange)];
+                    rndTrait = arrayOfTraits[(int)SkillType.Treachery, (int)person.Sex][rnd.Next(startRange, endRange)];
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
                     {
                         string name = rndTrait.Name;
                         effect = rndTrait.Effect;
-                        traitID = rndTrait.TraitID;
-                        TraitAge age = rndTrait.Age;
+                        traitID = rndTrait.SkillID;
+                        SkillAge age = rndTrait.Age;
                         //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                         //update trait arrays
-                        person.arrayOfTraitID[(int)TraitType.Treachery] = traitID;
-                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Treachery] = effect;
-                        person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Treachery] = effect; //any age 5 effect also needs to set for age 15
-                        person.arrayOfTraitNames[(int)TraitType.Treachery] = name;
+                        person.arrayOfSkillID[(int)SkillType.Treachery] = traitID;
+                        person.arrayOfTraitEffects[(int)age, (int)SkillType.Treachery] = effect;
+                        person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Treachery] = effect; //any age 5 effect also needs to set for age 15
+                        person.arrayOfTraitNames[(int)SkillType.Treachery] = name;
                         tempHandles.AddRange(rndTrait.GetNickNames());
                     }
                 }
@@ -1052,22 +1052,22 @@ namespace Next_Game
                 if (person.Sex == ActorSex.Male) { parent = father; }
                 else { parent = mother; }
                 //does parent have a Leadership trait?
-                traitID = parent.arrayOfTraitID[(int)TraitType.Leadership];
+                traitID = parent.arrayOfSkillID[(int)SkillType.Leadership];
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
                     if (rnd.Next(100) < Game.constant.GetValue(Global.INHERIT_TRAIT))
                     {
                         //find trait
-                        Trait trait = GetTrait(traitID);
+                        Skill trait = GetTrait(traitID);
                         if (trait != null)
                         {
                             //same trait passed on
-                            TraitAge age = trait.Age;
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership];
-                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Leadership] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Leadership];
-                            person.arrayOfTraitID[(int)TraitType.Leadership] = parent.arrayOfTraitID[(int)TraitType.Leadership];
-                            person.arrayOfTraitNames[(int)TraitType.Leadership] = parent.arrayOfTraitNames[(int)TraitType.Leadership];
+                            SkillAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)SkillType.Leadership] = parent.arrayOfTraitEffects[(int)age, (int)SkillType.Leadership];
+                            person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Leadership] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Leadership];
+                            person.arrayOfSkillID[(int)SkillType.Leadership] = parent.arrayOfSkillID[(int)SkillType.Leadership];
+                            person.arrayOfTraitNames[(int)SkillType.Leadership] = parent.arrayOfTraitNames[(int)SkillType.Leadership];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -1082,29 +1082,29 @@ namespace Next_Game
             //Random Trait (no genetics apply, either no parents or genetic roll failed)
             if (needRandomTrait == true)
             {
-                rndRange = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex].Length;
+                rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)person.Sex].Length;
                 //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
-                if (traitPositive == TraitType.Leadership) { startRange = 0; endRange = rndRange / 2; }
-                else if (traitNegative == TraitType.Leadership) { startRange = rndRange / 2; endRange = rndRange; }
+                if (traitPositive == SkillType.Leadership) { startRange = 0; endRange = rndRange / 2; }
+                else if (traitNegative == SkillType.Leadership) { startRange = rndRange / 2; endRange = rndRange; }
                 else { startRange = 0; endRange = rndRange; }
 
                 if (rndRange > 0)
                 {
-                    rndTrait = arrayOfTraits[(int)TraitType.Leadership, (int)person.Sex][rnd.Next(startRange, endRange)];
+                    rndTrait = arrayOfTraits[(int)SkillType.Leadership, (int)person.Sex][rnd.Next(startRange, endRange)];
                     //trait roll (trait only assigned if passes roll, otherwise no trait)
                     chanceOfTrait = rndTrait.Chance;
                     if (rnd.Next(100) < chanceOfTrait)
                     {
                         string name = rndTrait.Name;
                         effect = rndTrait.Effect;
-                        traitID = rndTrait.TraitID;
-                        TraitAge age = rndTrait.Age;
+                        traitID = rndTrait.SkillID;
+                        SkillAge age = rndTrait.Age;
                         //Console.WriteLine("Leadership {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                         //update trait arrays
-                        person.arrayOfTraitID[(int)TraitType.Leadership] = traitID;
-                        person.arrayOfTraitEffects[(int)age, (int)TraitType.Leadership] = effect;
-                        person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Leadership] = effect; //any age 5 effect also needs to set for age 15
-                        person.arrayOfTraitNames[(int)TraitType.Leadership] = name;
+                        person.arrayOfSkillID[(int)SkillType.Leadership] = traitID;
+                        person.arrayOfTraitEffects[(int)age, (int)SkillType.Leadership] = effect;
+                        person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Leadership] = effect; //any age 5 effect also needs to set for age 15
+                        person.arrayOfTraitNames[(int)SkillType.Leadership] = name;
                         tempHandles.AddRange(rndTrait.GetNickNames());
                     }
                 }
@@ -1122,7 +1122,7 @@ namespace Next_Game
                 if (person.Sex == ActorSex.Male) { parent = father; }
                 else { parent = mother; }
                 //does parent have a Touched trait?
-                traitID = parent.arrayOfTraitID[(int)TraitType.Touched];
+                traitID = parent.arrayOfSkillID[(int)SkillType.Touched];
                 if (traitID != 0)
                 {
                     //random % of trait being passed on
@@ -1131,15 +1131,15 @@ namespace Next_Game
                         //give base strength of 3 (prior to any traits)
                         person.Touched = 3;
                         //find trait
-                        Trait trait = GetTrait(traitID);
+                        Skill trait = GetTrait(traitID);
                         if (trait != null)
                         {
                             //same trait passed on
-                            TraitAge age = trait.Age;
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched] = parent.arrayOfTraitEffects[(int)age, (int)TraitType.Touched];
-                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Touched] = parent.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Touched];
-                            person.arrayOfTraitID[(int)TraitType.Touched] = parent.arrayOfTraitID[(int)TraitType.Touched];
-                            person.arrayOfTraitNames[(int)TraitType.Touched] = parent.arrayOfTraitNames[(int)TraitType.Touched];
+                            SkillAge age = trait.Age;
+                            person.arrayOfTraitEffects[(int)age, (int)SkillType.Touched] = parent.arrayOfTraitEffects[(int)age, (int)SkillType.Touched];
+                            person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Touched] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Touched];
+                            person.arrayOfSkillID[(int)SkillType.Touched] = parent.arrayOfSkillID[(int)SkillType.Touched];
+                            person.arrayOfTraitNames[(int)SkillType.Touched] = parent.arrayOfTraitNames[(int)SkillType.Touched];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -1159,29 +1159,29 @@ namespace Next_Game
                     //give base strength of 3 (prior to any traits)
                     person.Touched = 3;
                     Console.WriteLine("- {0}, Aid {1} is Touched", person.Name, person.ActID);
-                    rndRange = arrayOfTraits[(int)TraitType.Touched, (int)person.Sex].Length;
+                    rndRange = arrayOfTraits[(int)SkillType.Touched, (int)person.Sex].Length;
                     //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
-                    if (traitPositive == TraitType.Touched) { startRange = 0; endRange = rndRange / 2; }
-                    else if (traitNegative == TraitType.Touched) { startRange = rndRange / 2; endRange = rndRange; }
+                    if (traitPositive == SkillType.Touched) { startRange = 0; endRange = rndRange / 2; }
+                    else if (traitNegative == SkillType.Touched) { startRange = rndRange / 2; endRange = rndRange; }
                     else { startRange = 0; endRange = rndRange; }
 
                     if (rndRange > 0)
                     {
-                        rndTrait = arrayOfTraits[(int)TraitType.Touched, (int)person.Sex][rnd.Next(startRange, endRange)];
+                        rndTrait = arrayOfTraits[(int)SkillType.Touched, (int)person.Sex][rnd.Next(startRange, endRange)];
                         //trait roll (trait only assigned if passes roll, otherwise no trait)
                         chanceOfTrait = rndTrait.Chance;
                         if (rnd.Next(100) < chanceOfTrait)
                         {
                             string name = rndTrait.Name;
                             effect = rndTrait.Effect;
-                            traitID = rndTrait.TraitID;
-                            TraitAge age = rndTrait.Age;
+                            traitID = rndTrait.SkillID;
+                            SkillAge age = rndTrait.Age;
                             //Console.WriteLine("Touched {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
                             //update trait arrays
-                            person.arrayOfTraitID[(int)TraitType.Touched] = traitID;
-                            person.arrayOfTraitEffects[(int)age, (int)TraitType.Touched] = effect;
-                            person.arrayOfTraitEffects[(int)TraitAge.Fifteen, (int)TraitType.Touched] = effect; //any age 5 effect also needs to set for age 15
-                            person.arrayOfTraitNames[(int)TraitType.Touched] = name;
+                            person.arrayOfSkillID[(int)SkillType.Touched] = traitID;
+                            person.arrayOfTraitEffects[(int)age, (int)SkillType.Touched] = effect;
+                            person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Touched] = effect; //any age 5 effect also needs to set for age 15
+                            person.arrayOfTraitNames[(int)SkillType.Touched] = name;
                         }
                     }
                     else
@@ -1211,118 +1211,118 @@ namespace Next_Game
         {
 
             //Combat male
-            IEnumerable<Trait> enumTraits =
+            IEnumerable<Skill> enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Combat && trait.Sex != TraitSex.Female
+                where trait.Type == SkillType.Combat && trait.Sex != SkillSex.Female
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Male] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Combat, (int)ActorSex.Male] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Combat, (int)ActorSex.Male] = enumTraits.ToArray();
             //Combat female
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Combat && trait.Sex != TraitSex.Male
+                where trait.Type == SkillType.Combat && trait.Sex != SkillSex.Male
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Combat, (int)ActorSex.Female] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Combat, (int)ActorSex.Female] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Combat, (int)ActorSex.Female] = enumTraits.ToArray();
 
             //Wits male
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Wits && trait.Sex != TraitSex.Female
+                where trait.Type == SkillType.Wits && trait.Sex != SkillSex.Female
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Male] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Wits, (int)ActorSex.Male] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Wits, (int)ActorSex.Male] = enumTraits.ToArray();
             //Wits female
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Wits && trait.Sex != TraitSex.Male
+                where trait.Type == SkillType.Wits && trait.Sex != SkillSex.Male
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Wits, (int)ActorSex.Female] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Wits, (int)ActorSex.Female] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Wits, (int)ActorSex.Female] = enumTraits.ToArray();
 
             //Charm male
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Charm && trait.Sex != TraitSex.Female
+                where trait.Type == SkillType.Charm && trait.Sex != SkillSex.Female
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Male] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Charm, (int)ActorSex.Male] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Charm, (int)ActorSex.Male] = enumTraits.ToArray();
             //Charm female
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Charm && trait.Sex != TraitSex.Male
+                where trait.Type == SkillType.Charm && trait.Sex != SkillSex.Male
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Charm, (int)ActorSex.Female] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Charm, (int)ActorSex.Female] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Charm, (int)ActorSex.Female] = enumTraits.ToArray();
 
             //Treachery male
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Treachery && trait.Sex != TraitSex.Female
+                where trait.Type == SkillType.Treachery && trait.Sex != SkillSex.Female
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Male] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Treachery, (int)ActorSex.Male] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Treachery, (int)ActorSex.Male] = enumTraits.ToArray();
             //Treachery female
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Treachery && trait.Sex != TraitSex.Male
+                where trait.Type == SkillType.Treachery && trait.Sex != SkillSex.Male
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Treachery, (int)ActorSex.Female] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Treachery, (int)ActorSex.Female] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Treachery, (int)ActorSex.Female] = enumTraits.ToArray();
 
             //Leadership male
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Leadership && trait.Sex != TraitSex.Female
+                where trait.Type == SkillType.Leadership && trait.Sex != SkillSex.Female
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Male] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Leadership, (int)ActorSex.Male] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Leadership, (int)ActorSex.Male] = enumTraits.ToArray();
             //Leadership female
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Leadership && trait.Sex != TraitSex.Male
+                where trait.Type == SkillType.Leadership && trait.Sex != SkillSex.Male
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Leadership, (int)ActorSex.Female] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Leadership, (int)ActorSex.Female] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Leadership, (int)ActorSex.Female] = enumTraits.ToArray();
 
             //Touched male
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Touched && trait.Sex != TraitSex.Female
+                where trait.Type == SkillType.Touched && trait.Sex != SkillSex.Female
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Touched, (int)ActorSex.Male] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Touched, (int)ActorSex.Male] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Touched, (int)ActorSex.Male] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Touched, (int)ActorSex.Male] = enumTraits.ToArray();
             //Touched female
             enumTraits =
                 from trait in listOfTraits
-                where trait.Type == TraitType.Touched && trait.Sex != TraitSex.Male
+                where trait.Type == SkillType.Touched && trait.Sex != SkillSex.Male
                 orderby trait.Effect descending
                 select trait;
             //drop filtered set into the appropriate array slot
-            arrayOfTraits[(int)TraitType.Touched, (int)ActorSex.Female] = new Trait[enumTraits.Count()];
-            arrayOfTraits[(int)TraitType.Touched, (int)ActorSex.Female] = enumTraits.ToArray();
+            arrayOfTraits[(int)SkillType.Touched, (int)ActorSex.Female] = new Skill[enumTraits.Count()];
+            arrayOfTraits[(int)SkillType.Touched, (int)ActorSex.Female] = enumTraits.ToArray();
         }
 
 
@@ -1370,7 +1370,7 @@ namespace Next_Game
             CreateStartingChildren(lord, lady, place);
             //wife has influence over husband (only if smarter)
             //SetWifeInfluence(lord, lady);
-            SetInfluence(lord, lady, TraitType.Wits);
+            SetInfluence(lord, lady, SkillType.Wits);
         }
 
 
@@ -1764,7 +1764,7 @@ namespace Next_Game
         internal List<GeoCluster> GetGeoClusters()
         { return listOfGeoClusters; }
 
-        internal List<Trait> GetTraits()
+        internal List<Skill> GetTraits()
         { return listOfTraits; }
 
         internal List<Secret> GetSecrets()
@@ -1775,9 +1775,9 @@ namespace Next_Game
         /// </summary>
         /// <param name="traitID"></param>
         /// <returns></returns>
-        private Trait GetTrait(int traitID)
+        private Skill GetTrait(int traitID)
         {
-            Trait trait = listOfTraits.Find(x => x.TraitID == traitID);
+            Skill trait = listOfTraits.Find(x => x.SkillID == traitID);
             return trait;
         }
 
@@ -1949,7 +1949,7 @@ namespace Next_Game
                             player.Born = OldHeir.Born;
                             player.Handle = OldHeir.Handle;
                             player.HistoryID = OldHeir.ActID;
-                            player.arrayOfTraitID = OldHeir.arrayOfTraitID;
+                            player.arrayOfSkillID = OldHeir.arrayOfSkillID;
                             player.arrayOfTraitEffects = OldHeir.arrayOfTraitEffects;
                             player.arrayOfTraitNames = OldHeir.arrayOfTraitNames;
                             player.SetSecrets(OldHeir.GetSecrets());
@@ -2209,17 +2209,17 @@ namespace Next_Game
         /// <param name="master"></param>
         /// <param name="trait"></param>
         /// <param name="positiveOnly">if true the influence only applies if the master has a higher trait level than the minion</param>
-        internal void SetInfluence(Passive minion, Passive master, TraitType trait, bool positiveOnly = false)
+        internal void SetInfluence(Passive minion, Passive master, SkillType trait, bool positiveOnly = false)
         {
-            int minionTrait = minion.GetTrait(trait);
-            int masterTrait = master.GetTrait(trait);
+            int minionTrait = minion.GetSkill(trait);
+            int masterTrait = master.GetSkill(trait);
             if (masterTrait != minionTrait)
             {
                 //trait only affected if master trait > minion trait
                 if (masterTrait > minionTrait)
                 {
                     int influenceAmount = masterTrait - minionTrait;
-                    minion.arrayOfTraitInfluences[(int)trait] = influenceAmount;
+                    minion.arrayOfSkillInfluences[(int)trait] = influenceAmount;
                     minion.Influencer = master.ActID;
                     //debug
                     Console.WriteLine("- {0}, Aid {1} has adjusted {2} ({3}) due to {4}'s, Aid {5}, influence", minion.Name, minion.ActID, trait, influenceAmount, master.Name, master.ActID);
@@ -2228,7 +2228,7 @@ namespace Next_Game
                 if (masterTrait < minionTrait && positiveOnly == false)
                 {
                     int influenceAmount = masterTrait - minionTrait;
-                    minion.arrayOfTraitInfluences[(int)trait] = influenceAmount;
+                    minion.arrayOfSkillInfluences[(int)trait] = influenceAmount;
                     minion.Influencer = master.ActID;
                     //debug
                     Console.WriteLine("- {0}, Aid {1} has adjusted {2} ({3}) due to {4}'s, Aid {5}, influence", minion.Name, minion.ActID, trait, influenceAmount, master.Name, master.ActID);

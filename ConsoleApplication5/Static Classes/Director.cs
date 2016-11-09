@@ -159,30 +159,30 @@ namespace Next_Game
         {
             int multiplier = Game.constant.GetValue(Global.GAME_STATE);
             //Justice -> Old King popularity (charm) - New King
-            int popularity = Game.lore.OldKing.GetTrait(TraitType.Charm);
+            int popularity = Game.lore.OldKing.GetSkill(SkillType.Charm);
             Game.director.SetGameState(DataPoint.Justice, DataState.Good, popularity * multiplier);
-            popularity = Game.lore.NewKing.GetTrait(TraitType.Charm);
+            popularity = Game.lore.NewKing.GetSkill(SkillType.Charm);
             Game.director.SetGameState(DataPoint.Justice, DataState.Bad, popularity * multiplier);
             //Legend_Ursurper -> Combat
-            int legend = Game.lore.OldHeir.GetTrait(TraitType.Combat);
+            int legend = Game.lore.OldHeir.GetSkill(SkillType.Combat);
             if (legend > 3)
             { Game.director.SetGameState(DataPoint.Legend_Ursurper, DataState.Good, (legend - 3) * multiplier); }
             else if (legend < 3)
             { Game.director.SetGameState(DataPoint.Legend_Ursurper, DataState.Bad, (3 - legend) * multiplier); }
             //Legend_New King -> Combat
-            legend = Game.lore.NewKing.GetTrait(TraitType.Combat);
+            legend = Game.lore.NewKing.GetSkill(SkillType.Combat);
             if (legend > 3)
             { Game.director.SetGameState(DataPoint.Legend_King, DataState.Good, (legend - 3) * multiplier); }
             else if (legend < 3)
             { Game.director.SetGameState(DataPoint.Legend_King, DataState.Bad, (3 - legend) * multiplier); }
             //Honour_Ursurper -> Treachery (good is < 3)
-            int treachery = Game.lore.OldHeir.GetTrait(TraitType.Treachery);
+            int treachery = Game.lore.OldHeir.GetSkill(SkillType.Treachery);
             if (treachery > 3)
             { Game.director.SetGameState(DataPoint.Honour_Ursurper, DataState.Bad, (treachery - 3) * multiplier); }
             else if (treachery < 3)
             { Game.director.SetGameState(DataPoint.Honour_Ursurper, DataState.Good, (3 - treachery) * multiplier); }
             //Honour_King -> Treachery (good is < 3)
-            treachery = Game.lore.NewKing.GetTrait(TraitType.Treachery);
+            treachery = Game.lore.NewKing.GetSkill(SkillType.Treachery);
             if (treachery > 3)
             { Game.director.SetGameState(DataPoint.Honour_King, DataState.Bad, (treachery - 3) * multiplier); }
             else if (treachery < 3)
@@ -789,7 +789,7 @@ namespace Next_Game
                     eventList.Add(new Snippet(string.Format("A test of {0}", option.Trait), RLColor.Brown, backColor));
                     eventList.Add(new Snippet(""));
                     effectText = actor.GetTraitEffectText(option.Trait);
-                    ability = actor.GetTrait(option.Trait);
+                    ability = actor.GetSkill(option.Trait);
                     rndNum = rnd.Next(100);
                     success = ability * traitMultiplier;
                     //trait stars
@@ -1044,17 +1044,17 @@ namespace Next_Game
                             break;
                         case TriggerCheck.Trait:
                             Active player = Game.world.GetActiveActor(1);
-                            TraitType type;
+                            SkillType type;
                             try
-                            { type = (TraitType)trigger.Data; }
+                            { type = (SkillType)trigger.Data; }
                             catch
                             {
                                 //set to combat to get the job done but generate an error
-                                type = TraitType.Combat;
+                                type = SkillType.Combat;
                                 Game.SetError(new Error(76, string.Format("Invalid Trigger Data (\"{0}\"), default Combat trait used instead, for Option \"{1}\"", trigger.Data, option.Text)));
                             }
                             Console.WriteLine("\"{0}\" {1} Trigger, if type {2} is {3} to {4}", option.Text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold);
-                            if (CheckTrigger(player.GetTrait(type), trigger.Calc, trigger.Threshold) == false)
+                            if (CheckTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == false)
                                 { return false; }
                             break;
                         case TriggerCheck.GameVar:

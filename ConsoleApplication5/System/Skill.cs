@@ -3,30 +3,30 @@ using System.Collections.Generic;
 
 namespace Next_Game
 {
-    public enum TraitType {None, Combat, Wits, Charm, Treachery, Leadership, Touched, Count} //Note: Count should be last, None should be first
-    public enum TraitSex {All, Male, Female, Count} //who does it affect? Either Male or Female plus All for everybody
-    public enum TraitAge {Five, Fifteen, Count} //what age the trait is revealed and has an effect, Note: Count should be at end
+    public enum SkillType {None, Combat, Wits, Charm, Treachery, Leadership, Touched, Count} //Note: Count should be last, None should be first
+    public enum SkillSex {All, Male, Female, Count} //who does it affect? Either Male or Female plus All for everybody
+    public enum SkillAge {Five, Fifteen, Count} //what age the trait is revealed and has an effect, Note: Count should be at end
 
-    //Actor Traits
-    class Trait : IEquatable<Trait>
+    //Actor Skills
+    class Skill : IEquatable<Skill>
     {
-        private static int traitIndex = 1;
-        public int TraitID { get; set; }
-        public TraitType Type { get; set; } = TraitType.None;
-        public TraitSex Sex { get; set; } = TraitSex.All; //applies to males or females?
-        public TraitAge Age { get; set; } = TraitAge.Fifteen; //what age does the trait kick in?
+        private static int skillIndex = 1;
+        public int SkillID { get; set; }
+        public SkillType Type { get; set; } = SkillType.None;
+        public SkillSex Sex { get; set; } = SkillSex.All; //applies to males or females?
+        public SkillAge Age { get; set; } = SkillAge.Fifteen; //what age does the trait kick in?
         public string Name { get; set; } = "Unknown";
         public string Conflict { get; set; } = "Unknown"; //generic text used for a conflict card, eg. Upset Stomach -> "You feel an urgent need to empty your bowels"
         public int Effect { get; set; } = 0;
         public int Chance { get; set; } = 50;
         private List<string> listOfNicknames;
 
-        public Trait()
+        public Skill()
         { listOfNicknames = new List<string>(); }
 
-        public Trait(string name, TraitType skill, int effect, TraitSex sex, TraitAge age, int chance, List<string> nicknames)
+        public Skill(string name, SkillType skill, int effect, SkillSex sex, SkillAge age, int chance, List<string> nicknames)
         {
-            TraitID = traitIndex++;
+            SkillID = skillIndex++;
             this.Name = name;
             Type = skill;
             this.Effect = effect;
@@ -44,9 +44,9 @@ namespace Next_Game
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
-            Trait trait = obj as Trait;
-            if (trait == null) return false;
-            else return Equals(trait);
+            Skill skill = obj as Skill;
+            if (skill == null) return false;
+            else return Equals(skill);
         }
 
         /// <summary>
@@ -54,17 +54,17 @@ namespace Next_Game
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode()
-        { return TraitID; }
+        { return SkillID; }
 
         /// <summary>
         /// IEquatable (match on Trait ID)
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals (Trait other)
+        public bool Equals (Skill other)
         {
             if (other == null) return false;
-            return (this.TraitID.Equals(other.TraitID));
+            return (this.SkillID.Equals(other.SkillID));
         }
 
         public List<string> GetNickNames()

@@ -25,9 +25,9 @@ namespace Next_Game
     struct TraitStruct
     {
         public string Name { get; set; }
-        public TraitType Type { get; set; }
-        public TraitSex Sex { get; set; }
-        public TraitAge Age { get; set; }
+        public SkillType Type { get; set; }
+        public SkillSex Sex { get; set; }
+        public SkillAge Age { get; set; }
         public int Effect { get; set; }
         public int Chance { get; set; }
     }
@@ -49,7 +49,7 @@ namespace Next_Game
         public EventCategory Cat { get; set; }
         public EventStatus Status { get; set; }
         public EventFrequency Frequency { get; set; }
-        public TraitType Trait { get; set; }
+        public SkillType Trait { get; set; }
         public int Delay { get; set; }
     }
 
@@ -358,14 +358,14 @@ namespace Next_Game
         /// <param name="fileName"></param>
         /// <param name="sex"></param>
         /// <returns></returns>
-        internal List<Trait> GetTraits(string fileName, TraitSex sex)
+        internal List<Skill> GetTraits(string fileName, SkillSex sex)
         {
             int dataCounter = 0;
             string cleanTag;
             string cleanToken;
             bool newTrait = false;
             bool validData = true;
-            List<Trait> listOfTraits = new List<Trait>();
+            List<Skill> listOfTraits = new List<Skill>();
             List<string> listOfNickNames = new List<string>();
             string[] arrayOfTraits = ImportDataFile(fileName);
             TraitStruct structTrait = new TraitStruct();
@@ -408,22 +408,22 @@ namespace Next_Game
                                 switch (cleanToken)
                                 {
                                     case "Combat":
-                                        structTrait.Type = TraitType.Combat;
+                                        structTrait.Type = SkillType.Combat;
                                         break;
                                     case "Wits":
-                                        structTrait.Type = TraitType.Wits;
+                                        structTrait.Type = SkillType.Wits;
                                         break;
                                     case "Charm":
-                                        structTrait.Type = TraitType.Charm;
+                                        structTrait.Type = SkillType.Charm;
                                         break;
                                     case "Treachery":
-                                        structTrait.Type = TraitType.Treachery;
+                                        structTrait.Type = SkillType.Treachery;
                                         break;
                                     case "Leadership":
-                                        structTrait.Type = TraitType.Leadership;
+                                        structTrait.Type = SkillType.Leadership;
                                         break;
                                     case "Touched":
-                                        structTrait.Type = TraitType.Touched;
+                                        structTrait.Type = SkillType.Touched;
                                         break;
                                 }
                                 break;
@@ -442,9 +442,9 @@ namespace Next_Game
                                 {
                                     int tempNum = Convert.ToInt32(cleanToken);
                                     if (tempNum == 5)
-                                    { structTrait.Age = TraitAge.Five; }
+                                    { structTrait.Age = SkillAge.Five; }
                                     else
-                                    { structTrait.Age = TraitAge.Fifteen; }
+                                    { structTrait.Age = SkillAge.Fifteen; }
                                 }
                                 catch (Exception e)
                                 { Game.SetError(new Error(20, e.Message)); validData = false; }
@@ -473,7 +473,7 @@ namespace Next_Game
                                 if (validData == true)
                                 {
                                     //pass info over to a class instance
-                                    Trait classTrait = new Trait(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, 
+                                    Skill classTrait = new Skill(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, 
                                         structTrait.Chance, listOfNickNames);
                                     //last datapoint - save object to list
                                     if (dataCounter > 0)
@@ -728,19 +728,19 @@ namespace Next_Game
                                 switch (cleanToken)
                                 {
                                     case "Combat":
-                                        structEvent.Trait = TraitType.Combat;
+                                        structEvent.Trait = SkillType.Combat;
                                         break;
                                     case "Wits":
-                                        structEvent.Trait = TraitType.Wits;
+                                        structEvent.Trait = SkillType.Wits;
                                         break;
                                     case "Charm":
-                                        structEvent.Trait = TraitType.Charm;
+                                        structEvent.Trait = SkillType.Charm;
                                         break;
                                     case "Treachery":
-                                        structEvent.Trait = TraitType.Treachery;
+                                        structEvent.Trait = SkillType.Treachery;
                                         break;
                                     case "Leadership":
-                                        structEvent.Trait = TraitType.Leadership;
+                                        structEvent.Trait = SkillType.Leadership;
                                         break;
                                     default:
                                         Game.SetError(new Error(49, string.Format("Invalid Input, Trait, (\"{0}\")", arrayOfEvents[i])));

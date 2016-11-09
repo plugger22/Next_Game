@@ -67,12 +67,12 @@ namespace Next_Game.Event_System
     /// </summary>
     public class OptionAuto : Option
     {
-        public TraitType Trait { get; set; } //trait type that the option uses as a succeed/fail test (# traits stars x 20 < 1d100 to succeed)
+        public SkillType Trait { get; set; } //trait type that the option uses as a succeed/fail test (# traits stars x 20 < 1d100 to succeed)
 
         public OptionAuto()
         { }
         
-        public OptionAuto(TraitType traitToTest)
+        public OptionAuto(SkillType traitToTest)
         {
             Trait = traitToTest;
         }

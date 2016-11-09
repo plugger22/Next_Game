@@ -98,9 +98,9 @@ namespace Next_Game
             //check how smart old king was (takes into account wife's possible influence)
             int oldKing_Wits;
             int influencer = OldKing.Influencer;
-            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1) && OldKing.CheckTraitInfluenced(TraitType.Wits))
-            { oldKing_Wits = OldKing.GetTrait(TraitType.Wits, TraitAge.Fifteen, true); }
-            else { oldKing_Wits = OldKing.GetTrait(TraitType.Wits); }
+            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1) && OldKing.CheckSkillInfluenced(SkillType.Wits))
+            { oldKing_Wits = OldKing.GetSkill(SkillType.Wits, SkillAge.Fifteen, true); }
+            else { oldKing_Wits = OldKing.GetSkill(SkillType.Wits); }
             //dumb king (2 pool entries if wits 2 stars and 5 entries if wits 1 star)
             if (oldKing_Wits == 2) { for (int i = 0; i < 2; i++) { listWhyPool.Add(RevoltReason.Stupid_OldKing); } } 
             else if (oldKing_Wits == 1) { for (int i = 0; i < 5; i++) { listWhyPool.Add(RevoltReason.Stupid_OldKing); } }
@@ -108,16 +108,16 @@ namespace Next_Game
             //check new king treachery
             int newKing_Treachery;
             influencer = NewKing.Influencer;
-            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1) && NewKing.CheckTraitInfluenced(TraitType.Treachery))
-            { newKing_Treachery = NewKing.GetTrait(TraitType.Treachery, TraitAge.Fifteen, true); }
-            else { newKing_Treachery = NewKing.GetTrait(TraitType.Treachery); }
+            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1) && NewKing.CheckSkillInfluenced(SkillType.Treachery))
+            { newKing_Treachery = NewKing.GetSkill(SkillType.Treachery, SkillAge.Fifteen, true); }
+            else { newKing_Treachery = NewKing.GetSkill(SkillType.Treachery); }
             //treacherous new king grabs power (2 pool entries if 4 starts, 5 entries if treachery 5 stars)
             if (newKing_Treachery == 4) { for (int i = 0; i < 2; i++) { listWhyPool.Add(RevoltReason.Treacherous_NewKing); } }
             else if (newKing_Treachery == 5) { for (int i = 0; i < 5; i++) { listWhyPool.Add(RevoltReason.Treacherous_NewKing); } }
 
             //both kings leadership
-            int oldKing_Leadership = OldKing.GetTrait(TraitType.Leadership);
-            int newKing_Leadership = NewKing.GetTrait(TraitType.Leadership);
+            int oldKing_Leadership = OldKing.GetSkill(SkillType.Leadership);
+            int newKing_Leadership = NewKing.GetSkill(SkillType.Leadership);
 
             //3 entries for old king being incapacitated
             for (int i = 0; i < 3; i++) { listWhyPool.Add(RevoltReason.Incapacited_OldKing); }
@@ -137,10 +137,10 @@ namespace Next_Game
             Console.WriteLine("WhyRevolt: {0}", WhyRevolt);
 
             //get old & new king and Queen's charm (can't be influenced)
-            int oldKing_Charm = OldKing.GetTrait(TraitType.Charm);
-            int newKing_Charm = NewKing.GetTrait(TraitType.Charm);
-            int oldQueen_Charm = OldQueen.GetTrait(TraitType.Charm);
-            int newQueen_Charm = NewQueen.GetTrait(TraitType.Charm);
+            int oldKing_Charm = OldKing.GetSkill(SkillType.Charm);
+            int newKing_Charm = NewKing.GetSkill(SkillType.Charm);
+            int oldQueen_Charm = OldQueen.GetSkill(SkillType.Charm);
+            int newQueen_Charm = NewQueen.GetSkill(SkillType.Charm);
             OldKing_Popularity = (Popularity)oldKing_Charm;
             NewKing_Popularity = (Popularity)newKing_Charm;
             OldQueen_Popularity = (Popularity)oldQueen_Charm;
@@ -449,8 +449,8 @@ namespace Next_Game
                                 break;
                             case 8:
                             case 9:
-                                int knightCombat = knight.GetTrait(TraitType.Combat);
-                                int knightTreachery = knight.GetTrait(TraitType.Treachery);
+                                int knightCombat = knight.GetSkill(SkillType.Combat);
+                                int knightTreachery = knight.GetSkill(SkillType.Treachery);
                                 bool trueEvent = true;
                                 //special deed, good or bad
                                 if (rnd.Next(0, 6) < knightCombat)
@@ -573,7 +573,7 @@ namespace Next_Game
                                     changedSides = true;
                                 }
                                 //was it because they were a traitor? -> secret
-                                int lordTreachery = royal.GetTrait(TraitType.Treachery);
+                                int lordTreachery = royal.GetSkill(SkillType.Treachery);
                                 if (rnd.Next(0,6) < lordTreachery)
                                 {
                                     secretText = string.Format("{0}, Aid {1}, {2} {3}", royal.Name, royal.ActID, "was a traitor who deliberately changed sides during", descriptor);
@@ -598,7 +598,7 @@ namespace Next_Game
                                 index = rnd.Next(0, array_GoodLeadership.Length);
                                 eventText = string.Format("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_GoodLeadership[index], descriptor);
                                 Console.WriteLine("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_GoodLeadership[index], descriptor);
-                                int lordLeadership = royal.GetTrait(TraitType.Leadership);
+                                int lordLeadership = royal.GetSkill(SkillType.Leadership);
                                 if (rnd.Next(1, 6) > lordLeadership)
                                 {
                                     //poor leadership, took somebody else's glory -> secret
@@ -695,7 +695,7 @@ namespace Next_Game
                                 }
                                 
                                 //was it because they were a traitor? -> secret
-                                int lordTreachery = rebel.GetTrait(TraitType.Treachery);
+                                int lordTreachery = rebel.GetSkill(SkillType.Treachery);
                                 if (rnd.Next(0, 6) < lordTreachery)
                                 {
                                     secretText = string.Format("{0}, Aid {1}, {2} {3}", rebel.Name, rebel.ActID, "was a traitor who deliberately changed sides during", descriptor);
@@ -721,7 +721,7 @@ namespace Next_Game
                                 index = rnd.Next(0, array_GoodLeadership.Length);
                                 eventText = string.Format("{0}, Aid {1}, {2} during {3}", rebel.Name, rebel.ActID, array_GoodLeadership[index], descriptor);
                                 Console.WriteLine("{0}, Aid {1}, {2} during {3}", rebel.Name, rebel.ActID, array_GoodLeadership[index], descriptor);
-                                int lordLeadership = rebel.GetTrait(TraitType.Leadership);
+                                int lordLeadership = rebel.GetSkill(SkillType.Leadership);
                                 if (rnd.Next(1, 6) > lordLeadership)
                                 {
                                     //poor leadership, took somebody else's glory -> secret
@@ -841,7 +841,7 @@ namespace Next_Game
             //get Lord's treachery (adjusts number fielded) low treachery -> many, high treachery -> few
             int lordID = house.LordID;
             Passive lord = Game.world.GetPassiveActor(lordID);
-            menAtArms = (float)(6 - lord.GetTrait(TraitType.Treachery, TraitAge.Fifteen, true)) / 5 * (float)house.MenAtArms;
+            menAtArms = (float)(6 - lord.GetSkill(SkillType.Treachery, SkillAge.Fifteen, true)) / 5 * (float)house.MenAtArms;
             Console.WriteLine("Aid {0}, {1} has provided {2} men", lord.ActID, lord.Name, menAtArms);
             return Convert.ToInt32(menAtArms);
         }
@@ -878,7 +878,7 @@ namespace Next_Game
                     record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameRevolt, HistActorIncident.Service);
                     Game.history.RemoveActor(advisor, Game.gameRevolt, ActorGone.Missing);
                     //chance of advisor being killed as a result -> secret (depends on New Kings treachery)
-                    int liegeTreachery = liege.GetTrait(TraitType.Treachery);
+                    int liegeTreachery = liege.GetSkill(SkillType.Treachery);
                     string fate = evilFate[rnd.Next(0, evilFate.Length)];
                     if (rnd.Next(0, 6) < liegeTreachery )
                     {
@@ -894,7 +894,7 @@ namespace Next_Game
                     eventText = string.Format("{0} {1}, Aid {2}, swears allegiance to King {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
                     record = new Record(eventText, advisor.ActID, 1, 9999, Game.gameRevolt, HistActorIncident.Service);
                     //chance of advisor being a secret sympathiser to the Old King, a fifth Column -> secret (depends on Advisors treachery)
-                    int advisorTreachery = liege.GetTrait(TraitType.Treachery);
+                    int advisorTreachery = liege.GetSkill(SkillType.Treachery);
                     string fate = evilFate[rnd.Next(0, evilFate.Length)];
                     if (rnd.Next(100) < (advisorTreachery * 5))
                     {
@@ -1038,9 +1038,9 @@ namespace Next_Game
                 newLord.HouseID = oldBannerLord.HouseID;
                 newLord.Name = oldBannerLord.Name;
                 newLord.Handle = oldBannerLord.Handle;
-                newLord.arrayOfTraitID = oldBannerLord.arrayOfTraitID;
+                newLord.arrayOfSkillID = oldBannerLord.arrayOfSkillID;
                 newLord.arrayOfTraitEffects = oldBannerLord.arrayOfTraitEffects;
-                newLord.arrayOfTraitInfluences = oldBannerLord.arrayOfTraitInfluences;
+                newLord.arrayOfSkillInfluences = oldBannerLord.arrayOfSkillInfluences;
                 newLord.arrayOfTraitNames = oldBannerLord.arrayOfTraitNames;
                 newLord.Type = ActorType.Lord;
                 newLord.Realm = ActorRealm.Head_of_Noble_House;
@@ -1258,11 +1258,11 @@ namespace Next_Game
                         Game.world.SetRecord(record_1);
                         //wife as regent
                         wife.Realm = ActorRealm.Regent;
-                        Game.history.SetInfluence(heir, wife, TraitType.Combat);
-                        Game.history.SetInfluence(heir, wife, TraitType.Wits);
-                        Game.history.SetInfluence(heir, wife, TraitType.Charm);
-                        Game.history.SetInfluence(heir, wife, TraitType.Leadership);
-                        Game.history.SetInfluence(heir, wife, TraitType.Treachery);
+                        Game.history.SetInfluence(heir, wife, SkillType.Combat);
+                        Game.history.SetInfluence(heir, wife, SkillType.Wits);
+                        Game.history.SetInfluence(heir, wife, SkillType.Charm);
+                        Game.history.SetInfluence(heir, wife, SkillType.Leadership);
+                        Game.history.SetInfluence(heir, wife, SkillType.Treachery);
                         //record
                         descriptor = string.Format("{0}, Aid {1}, wife of {2}, assumes Regency of House {3}, age {4}", wife.Name, wife.ActID, deadLord.Name, house.Name, wife.Age);
                         Record record_2 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
@@ -1278,11 +1278,11 @@ namespace Next_Game
                         Position pos = loc.GetPosition();
                         //create new lord
                         Noble brother = (Noble)Game.history.CreateRegent(house.Name, pos, house.LocID, house.RefID, house.HouseID);
-                        Game.history.SetInfluence(heir, brother, TraitType.Combat);
-                        Game.history.SetInfluence(heir, brother, TraitType.Wits);
-                        Game.history.SetInfluence(heir, brother, TraitType.Charm);
-                        Game.history.SetInfluence(heir, brother, TraitType.Leadership);
-                        Game.history.SetInfluence(heir, brother, TraitType.Treachery);
+                        Game.history.SetInfluence(heir, brother, SkillType.Combat);
+                        Game.history.SetInfluence(heir, brother, SkillType.Wits);
+                        Game.history.SetInfluence(heir, brother, SkillType.Charm);
+                        Game.history.SetInfluence(heir, brother, SkillType.Leadership);
+                        Game.history.SetInfluence(heir, brother, SkillType.Treachery);
                         //record
                         descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Regency of House {3}, age {4}", brother.Name, brother.ActID, deadLord.Name, house.Name, brother.Age);
                         Record record_3 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
