@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Next_Game.Event_System;
 
 namespace Next_Game
 {
@@ -19,6 +20,12 @@ namespace Next_Game
         public ConflictType Conflict_Type { get; set; }
         public CombatType Combat_Type { get; set; }
         public SocialType Social_Type { get; set; }
+        //Card Pool
+        private List<Card> listCardPool;
+        private List<Snippet> listBreakdown; //description of card pool contents
+        //skills
+        public TraitType PrimarySkill { get; set; }
+        public TraitType SecondaryTrait { get; set; }
 
         /// <summary>
         /// default Constructor
@@ -26,66 +33,26 @@ namespace Next_Game
         public Conflict(int seed)
         {
             rnd = new Random(seed);
+            listCardPool = new List<Card>();
+            listBreakdown = new List<Snippet>();
             //get player (always the player vs. somebody else)
             player = Game.world.GetActiveActor(1);
-            if (player != null)
-            { }
+            if (player != null) {}
             else { Game.SetError(new Error(84, "Player not found (null)")); }
         }
         
-        /*
-        /// <summary>
-        /// default constructor -> Combat conflict
-        /// </summary>
-        public Conflict(int opponentID, ConflictType conflictType, CombatType combatType)
-        {
-            if (opponentID > 0)
-            {
-                //actors
-                player = Game.world.GetActiveActor(1);
-                opponent = Game.world.GetActiveActor(opponentID);
-                if (player != null || opponent != null)
-                {
-                    this.conflictType = conflictType;
-                    this.combatType = combatType;
-                }
-                else { Game.SetError(new Error(84, "Player or Opponent not found (null)")); }
-            }
-            else { Game.SetError(new Error(84, "Invalid Opponent input (null)")); }
-        }
-
-
-        /// <summary>
-        /// default constructor -> Social conflict
-        /// </summary>
-        public Conflict(int opponentID, ConflictType conflictType, SocialType socialType)
-        {
-            if (opponentID > 0)
-            {
-                //actors
-                player = Game.world.GetActiveActor(1);
-                opponent = Game.world.GetActiveActor(opponentID);
-                if (player != null || opponent != null)
-                {
-                    this.conflictType = conflictType;
-                    this.socialType = socialType;
-                }
-                else { Game.SetError(new Error(84, "Player or Opponent not found (null)")); }
-            }
-            else { Game.SetError(new Error(84, "Invalid Opponent input (null)")); }
-        }
-        */
-
+   
         /// <summary>
         /// Master method that handles all conflict set up
         /// </summary>
         public void InitialiseConflict()
         {
             SetPlayerStrategy();
+            SetTraits();
             SetSituation();
             SetOpponentStrategy();
             SetOutcome();
-
+            SetCardPool();
         }
 
         /// <summary>
@@ -248,12 +215,12 @@ namespace Next_Game
         public void SetOutcome()
         {
             string[] tempArray = new string[10];
-            //type of conflict
-            tempArray[0] = "A " + Convert.ToString(Combat_Type);
             //descriptions of outcomes (minor/standard/major wins and losses)
             switch (Conflict_Type)
             {
                 case ConflictType.Combat:
+                    //type of conflict
+                    tempArray[0] = string.Format("A {0} {1} Challenge", Combat_Type, Conflict_Type);
                     switch (Combat_Type)
                     {
                         case CombatType.Personal:
@@ -286,6 +253,8 @@ namespace Next_Game
                     }
                     break;
                 case ConflictType.Social:
+                    //type of conflict
+                    tempArray[0] = string.Format("A {0} {1} Challenge", Social_Type, Conflict_Type);
                     switch (Social_Type)
                     {
                         case SocialType.Befriend:
@@ -328,12 +297,76 @@ namespace Next_Game
             string title;
             if (opponent.Office == ActorOffice.None) { title = Convert.ToString(opponent.Type); }
             else { title = Convert.ToString(opponent.Office); }
-            tempArray[9] = string.Format("{0} {1} vs. {2} {3}", player.Type, player.Name, title, opponent.Name);
+            string handle_player, handle_opponent;
+            if (player.Handle != null) { handle_player = string.Format(" \"{0}\" ", player.Handle); } else { handle_player = null; }
+            if (opponent.Handle != null) { handle_opponent = string.Format(" \"{0}\" ", opponent.Handle); } else { handle_opponent = null; }
+            tempArray[9] = string.Format("{0}{1}{2} vs. {3}{4}{5}", player.Type, handle_player, player.Name, title, handle_opponent, opponent.Name);
             //send to layout
             if (tempArray.Length == 10)
             { Game.layout.SetOutcome(tempArray); }
             else
             { Game.SetError(new Error(89, "Invalid Situation, Layout not updated")); }
+        }
+
+        /// <summary>
+        /// Set up Primary and Secondary Traits in use
+        /// </summary>
+        public void SetTraits()
+        {
+            switch (Conflict_Type)
+            {
+                case ConflictType.Combat:
+                    switch (Combat_Type)
+                    {
+                        case CombatType.Personal:
+                            PrimarySkill = TraitType.Combat;
+                            SecondaryTrait = TraitType.Wits;
+                            break;
+                        case CombatType.Tournament:
+                            PrimarySkill = TraitType.Combat;
+                            SecondaryTrait = TraitType.Wits;
+                            break;
+                        case CombatType.Battle:
+                            PrimarySkill = TraitType.Leadership;
+                            SecondaryTrait = TraitType.Wits;
+                            break;
+                        default:
+                            Game.SetError(new Error(91, "Invalid Combat Type"));
+                            break;
+                    }
+                    break;
+                case ConflictType.Social:
+                    switch (Social_Type)
+                    {
+                        case SocialType.Befriend:
+                            PrimarySkill = TraitType.Charm;
+                            SecondaryTrait = TraitType.Treachery;
+                            break;
+                        case SocialType.Blackmail:
+                            PrimarySkill = TraitType.Treachery;
+                            SecondaryTrait = TraitType.Wits;
+                            break;
+                        case SocialType.Seduce:
+                            PrimarySkill = TraitType.Charm;
+                            SecondaryTrait = TraitType.Treachery;
+                            break;
+                        default:
+                            Game.SetError(new Error(91, "Invalid Social Type"));
+                            break;
+                    }
+                    break;
+                default:
+                    Game.SetError(new Error(91, "Invalid Conflict Type"));
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Set up Card Pool
+        /// </summary>
+        public void SetCardPool()
+        {
+
         }
 
         // methods above here

@@ -395,7 +395,7 @@ namespace Next_Game
                 }
             }
             //Add new text -> Type of Conflict
-            DrawCenteredText(arrayOutcome[0] + " Challenge", left_align, top_align + 3, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText(arrayOutcome[0], left_align, top_align + 3, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
             //protagonists
             DrawCenteredText(arrayOutcome[9], left_align, top_align + 5, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             //who has the advantage
