@@ -84,6 +84,7 @@ namespace Next_Game
             SetPlayerStrategy();
             SetSituation();
             SetOpponentStrategy();
+            SetOutcome();
 
         }
 
@@ -169,7 +170,7 @@ namespace Next_Game
         {
             if (actorID > 0)
             {
-                opponent = Game.world.GetActiveActor(actorID);
+                opponent = Game.world.GetAnyActor(actorID);
                 if (opponent == null)
                 { Game.SetError(new Error(88, "Opponent not found (null)")); }
             }
@@ -189,7 +190,7 @@ namespace Next_Game
                     {
                         case CombatType.Personal:
                             tempArray[0] = "Uneven Ground";
-                            tempArray[1] = "A Bright Sun, Low on the Horizon";
+                            tempArray[1] = "The Sun at Your Back";
                             tempArray[2] = "Outnumbered";
                             break;
                         case CombatType.Tournament:
@@ -246,7 +247,7 @@ namespace Next_Game
         /// </summary>
         public void SetOutcome()
         {
-            string[] tempArray = new string[9];
+            string[] tempArray = new string[10];
             //type of conflict
             tempArray[0] = "A " + Convert.ToString(Combat_Type);
             //descriptions of outcomes (minor/standard/major wins and losses)
@@ -264,20 +265,20 @@ namespace Next_Game
                             tempArray[6] = "You have been Badly Injured and Lose any Special Items";
                             break;
                         case CombatType.Tournament:
-                            tempArray[1] = "Your Opponent withdraws from the contest but refuses to accept that he lost";
-                            tempArray[2] = "You unhorse your Opponent and claim victory and glory";
-                            tempArray[3] = "Your Opponent is thrown from the saddle and badly Injured";
-                            tempArray[4] = "";
-                            tempArray[5] = "";
-                            tempArray[6] = "";
+                            tempArray[1] = "You make the final group but fail to go any further";
+                            tempArray[2] = "You reach the top three jousters and gain glory and recognition";
+                            tempArray[3] = "You are named Tournament Champion and gain a Ladies Favour";
+                            tempArray[4] = "You are unhorsed midway through the tournament";
+                            tempArray[5] = "You are unhorsed early on by a mid ranked jouster";
+                            tempArray[6] = "You fall off your horse and break bones on your first joust. Disgrace!";
                             break;
                         case CombatType.Battle:
-                            tempArray[1] = "";
-                            tempArray[2] = "";
-                            tempArray[3] = "";
-                            tempArray[4] = "";
-                            tempArray[5] = "";
-                            tempArray[6] = "";
+                            tempArray[1] = "The enemy pulls back hurt but isn't defeated";
+                            tempArray[2] = "You carry the day and the enemy retreat";
+                            tempArray[3] = "The enemy rout and suffer horrendous casualties";
+                            tempArray[4] = "You are forced to withdraw but hold your army together";
+                            tempArray[5] = "You army suffers substantial casualties and is defeated";
+                            tempArray[6] = "Your army breaks. You flee the field in order to save yourself";
                             break;
                         default:
                             Game.SetError(new Error(86, "Invalid Combat Type"));
@@ -323,8 +324,13 @@ namespace Next_Game
             //Who has the advantage and a recommendation
             tempArray[7] = "You have the Advantage";
             tempArray[8] = "An Aggressive Strategy is Recommended";
+            //protagonists
+            string title;
+            if (opponent.Office == ActorOffice.None) { title = Convert.ToString(opponent.Type); }
+            else { title = Convert.ToString(opponent.Office); }
+            tempArray[9] = string.Format("{0} {1} vs. {2} {3}", player.Type, player.Name, title, opponent.Name);
             //send to layout
-            if (tempArray.Length == 9)
+            if (tempArray.Length == 10)
             { Game.layout.SetOutcome(tempArray); }
             else
             { Game.SetError(new Error(89, "Invalid Situation, Layout not updated")); }

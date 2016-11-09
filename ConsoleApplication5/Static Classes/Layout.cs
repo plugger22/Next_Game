@@ -60,7 +60,7 @@ namespace Next_Game
         private int[] arrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
         private string[] arraySituation { get; set; } // up to 3 situation factors
         private string[] arrayStrategy { get; set; } //3 strategies - always variations of Attack, Balanced & Defend
-        private string[] arrayOutcome { get; set; } // 0 is Conflict Type, 1/2/3 are Wins (minor/normal/major), 4/5/6 are Losses, 7/8 are advantage/disadvantage and recommendation
+        private string[] arrayOutcome { get; set; } // 0 is Conflict Type, 1/2/3 are Wins (minor/normal/major), 4/5/6 are Losses, 7/8 are advantage/disadvantage and recommendation, 9 Actors
         private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
         //Cards
         private int[,] arrayOfCells_Cards; //cell array for box and text
@@ -185,7 +185,7 @@ namespace Next_Game
             arrayCardPool = new int[3];
             arraySituation = new string[3];
             arrayStrategy = new string[3];
-            arrayOutcome = new string[9];
+            arrayOutcome = new string[10];
             listCardBreakdown = new List<Snippet>();
         }
 
@@ -207,9 +207,9 @@ namespace Next_Game
         /// </summary>
         public void InitialiseIntro()
         {
-            int left_align = (Width - Offset_x) / 4;
+            int left_align = (Width - Offset_x) / 8;
             int top_align = (Height - Offset_y * 2) / 4;
-            int box_width = (Width - Offset_x) / 2;
+            int box_width = (Width - Offset_x) * 6 / 8;
             int box_height = (Height - Offset_y * 2) / 2;
             //confirmation box (centred)
             DrawBox(left_align, top_align, box_width, box_height, RLColor.Yellow, Intro_FillColor, arrayOfCells_Intro, arrayOfForeColors_Intro, arrayOfBackColors_Intro);
@@ -381,9 +381,9 @@ namespace Next_Game
         /// </summary>
         public void UpdateIntro()
         {
-            int left_align = (Width - Offset_x) / 4;
+            int left_align = (Width - Offset_x) / 8;
             int top_align = (Height - Offset_y * 2) / 4;
-            int box_width = (Width - Offset_x) / 2;
+            int box_width = (Width - Offset_x) * 6 / 8;
             int box_height = (Height - Offset_y * 2) / 2;
             //Clear box & change background color
             for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
@@ -395,15 +395,23 @@ namespace Next_Game
                 }
             }
             //Add new text -> Type of Conflict
-            DrawCenteredText(arrayOutcome[0] + " Challenge", left_align, top_align + 4, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Minor Win:     " + arrayOutcome[1], left_align + 4, top_align + 8, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Standard Win:  " + arrayOutcome[2], left_align + 4, top_align + 10, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Major Win:     " + arrayOutcome[3], left_align + 4, top_align + 12, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Minor Loss:    " + arrayOutcome[4], left_align + 4, top_align + 14, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Standard Loss: " + arrayOutcome[5], left_align + 4, top_align + 16, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Major Loss:    " + arrayOutcome[6], left_align + 4, top_align + 18, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawCenteredText(arrayOutcome[7], left_align, top_align + 22, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawCenteredText(arrayOutcome[8], left_align, top_align + 24, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText(arrayOutcome[0] + " Challenge", left_align, top_align + 3, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            //protagonists
+            DrawCenteredText(arrayOutcome[9], left_align, top_align + 5, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            //who has the advantage
+            DrawCenteredText(arrayOutcome[7], left_align, top_align + 10, box_width, RLColor.Green, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            //recommendation
+            DrawCenteredText(arrayOutcome[8], left_align, top_align + 12, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            //outcomes
+            DrawText("Win Outcomes", left_align + 3, top_align + 18, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Minor Win:  " + arrayOutcome[1], left_align + 3, top_align + 20, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Win:        " + arrayOutcome[2], left_align + 3, top_align + 22, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Major Win:  " + arrayOutcome[3], left_align + 3, top_align + 24, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Lose Outcomes", left_align + 3, top_align + 28, RLColor.Red, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Minor Loss: " + arrayOutcome[4], left_align + 3, top_align + 30, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Loss:       " + arrayOutcome[5], left_align + 3, top_align + 32, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Major Loss: " + arrayOutcome[6], left_align + 3, top_align + 34, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            
             DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + box_height - 3, box_width, RLColor.Gray, arrayOfCells_Intro, arrayOfForeColors_Intro);
         }
 
@@ -794,8 +802,8 @@ namespace Next_Game
         {
             //empty out the array 
             Array.Clear(arrayOutcome, 0, arrayOutcome.Length);
-            //9 factors required
-            if (arrayInput.Length == 9)
+            //10 factors required
+            if (arrayInput.Length == 10)
             { arrayInput.CopyTo(arrayOutcome, 0); }
             else
             { Game.SetError(new Error(90, "Invalid Outcome Array input (needs exactly 9 items)")); }
