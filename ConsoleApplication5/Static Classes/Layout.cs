@@ -176,11 +176,11 @@ namespace Next_Game
             ou_instruct_height = 7;
             //Layout fillcolors
             Bar_FillColor = RLColor.Gray;
-            Back_FillColor = RLColor.LightGray;
+            Back_FillColor = Color._background0;
             Confirm_FillColor = RLColor.White;
             Resolve_FillColor = RLColor.White;
             Error_FillColor = Color._errorFill;
-            Intro_FillColor = RLColor.White;
+            Intro_FillColor = Color._background0;
             //Dynamic Data Sets
             arrayCardPool = new int[3];
             arraySituation = new string[3];

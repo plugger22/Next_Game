@@ -31,6 +31,7 @@ namespace Next_Game
         public static RLColor _touched = Palette.tulip;
         //GUI
         public static RLColor _errorFill = Palette.salmon;
+        public static RLColor _background0 = Palette.german;
         public static RLColor _background1 = Palette.pinacolada;
         //game states
         public static RLColor _increase = Palette.jade;
@@ -70,6 +71,8 @@ namespace Next_Game
         public static RLColor vacation = new RLColor(253, 202, 15);
         public static RLColor golden = new RLColor(241, 217, 121);
         public static RLColor pinacolada = new RLColor(251, 245, 213);
+        //grey
+        public static RLColor german = new RLColor(204, 204, 204);
 
 
     }
