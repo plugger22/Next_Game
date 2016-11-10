@@ -36,6 +36,7 @@ namespace Next_Game
         NUM_FOLLOWERS,
         TRAIT_MULTIPLIER,
         GAME_STATE,
+        HAND_CARDS_NUM,
         Count //keep as last
     }
 
@@ -79,6 +80,7 @@ namespace Next_Game
             arrayOfGlobals[28] = Global.NUM_FOLLOWERS;
             arrayOfGlobals[29] = Global.TRAIT_MULTIPLIER;
             arrayOfGlobals[30] = Global.GAME_STATE;
+            arrayOfGlobals[31] = Global.HAND_CARDS_NUM;
             }
 
         /// <summary>

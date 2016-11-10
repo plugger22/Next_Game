@@ -23,6 +23,7 @@ namespace Next_Game
         public SocialType Social_Type { get; set; }
         //Card Pool
         private List<Card> listCardPool;
+        private List<Card> listCardHand; //hand that will be played
         private List<Snippet> listBreakdown; //description of card pool contents
         //skills
         public SkillType PrimarySkill { get; set; } //each skill level counts as 2 cards
@@ -36,6 +37,7 @@ namespace Next_Game
         {
             rnd = new Random(seed);
             listCardPool = new List<Card>();
+            listCardHand = new List<Card>();
             listBreakdown = new List<Snippet>();
             //get player (always the player vs. somebody else)
             player = Game.world.GetActiveActor(1);
@@ -55,12 +57,13 @@ namespace Next_Game
             SetOpponentStrategy();
             SetOutcome();
             SetCardPool();
+            SetHand();
         }
 
         /// <summary>
         /// Determine Strategy and send to Layout
         /// </summary>
-        public void SetPlayerStrategy()
+        private void SetPlayerStrategy()
         {
             string[] tempArray = new string[3];
             switch(Conflict_Type)
@@ -125,7 +128,7 @@ namespace Next_Game
         /// <summary>
         /// Determine opponent's strategy and send to layout
         /// </summary>
-        public void SetOpponentStrategy()
+        private void SetOpponentStrategy()
         {
             //placeholder 
             Game.layout.Strategy_Opponent = rnd.Next(0, 3);
@@ -135,7 +138,7 @@ namespace Next_Game
         /// specify opponent (it's always the player vs. opponent)
         /// </summary>
         /// <param name="actorID"></param>
-        public void SetOpponent(int actorID)
+        internal void SetOpponent(int actorID)
         {
             if (actorID > 0)
             {
@@ -149,7 +152,7 @@ namespace Next_Game
         /// <summary>
         /// Set up the situation and send to layout
         /// </summary>
-        public void SetSituation()
+        private void SetSituation()
         {
             string[] tempArray = new string[3];
             switch (Conflict_Type)
@@ -214,7 +217,7 @@ namespace Next_Game
         /// <summary>
         /// Set up outcomes and send to layout
         /// </summary>
-        public void SetOutcome()
+        private void SetOutcome()
         {
             string[] tempArray = new string[10];
             //descriptions of outcomes (minor/standard/major wins and losses)
@@ -313,7 +316,7 @@ namespace Next_Game
         /// <summary>
         /// Set up Primary and Secondary Traits in use
         /// </summary>
-        public void SetTraits()
+        private void SetTraits()
         {
             switch (Conflict_Type)
             {
@@ -372,7 +375,7 @@ namespace Next_Game
         /// <summary>
         /// Set up Card Pool
         /// </summary>
-        public void SetCardPool()
+        private void SetCardPool()
         {
             RLColor backColor = Game.layout.Back_FillColor;
             RLColor foreColor = RLColor.Black;
@@ -418,6 +421,29 @@ namespace Next_Game
             //send to layout
             Game.layout.SetCardBreakdown(listBreakdown);
             Game.layout.SetCardPool(arrayPool);
+        }
+
+        /// <summary>
+        /// Draw cards to form a challenge hand
+        /// </summary>
+        private void SetHand()
+        {
+            int numCards = Game.constant.GetValue(Global.HAND_CARDS_NUM);
+            //check enough cards in pool, if not downsize hand
+            if (numCards > listCardPool.Count)
+            { numCards = listCardPool.Count; Game.SetError(new Error(93, "Not enough cards in the Pool")); }
+            //clear out the list
+            listCardHand.Clear();
+            int rndNum;
+            for(int i = 0; i < numCards; i++)
+            {
+                rndNum = rnd.Next(0, listCardPool.Count);
+                listCardHand.Add(listCardPool[rndNum]);
+                //delete record as you don't want repeats
+                listCardPool.RemoveAt(rndNum);
+            }
+            //send to layout
+            Game.layout.SetCardHand(listCardHand);
         }
 
         // methods above here

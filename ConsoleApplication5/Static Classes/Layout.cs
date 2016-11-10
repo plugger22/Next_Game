@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Next_Game.Event_System;
 using RLNET;
 
 namespace Next_Game
@@ -62,6 +63,7 @@ namespace Next_Game
         private string[] arrayStrategy { get; set; } //3 strategies - always variations of Attack, Balanced & Defend
         private string[] arrayOutcome { get; set; } // 0 is Conflict Type, 1/2/3 are Wins (minor/normal/major), 4/5/6 are Losses, 7/8 are advantage/disadvantage and recommendation, 9 Actors
         private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
+        private List<Card> listCardHand; //cards in playable hand
         //Cards
         private int[,] arrayOfCells_Cards; //cell array for box and text
         private RLColor[,] arrayOfForeColors_Cards; //foreground color for cell contents
@@ -187,6 +189,7 @@ namespace Next_Game
             arrayStrategy = new string[3];
             arrayOutcome = new string[10];
             listCardBreakdown = new List<Snippet>();
+            listCardHand = new List<Card>();
         }
 
         /// <summary>
@@ -820,6 +823,17 @@ namespace Next_Game
             { tempArray.CopyTo(arrayCardPool, 0); }
             else
             { Game.SetError(new Error(92, "Invalid Card Pool Array Input (needs exactly 3 items")); }
+        }
+
+        internal void SetCardHand(List<Card> tempList)
+        {
+            if (tempList != null)
+            {
+                //empty out list first
+                listCardHand.Clear();
+                listCardHand.AddRange(tempList);
+            }
+            else { Game.SetError(new Error(94, "Invalid tempList input (null)")); }
         }
 
         //new methods above here
