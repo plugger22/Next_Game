@@ -1068,6 +1068,12 @@ namespace Next_Game
                                 _conflictMode = ConflictMode.Confirm;
                                 layout.Strategy_Player = 0;
                                 break;
+                            case ConflictMode.Cards:
+                                //repeat until hand is empty
+                                if (layout.CheckHandStatus() == false)
+                                { _conflictMode = ConflictMode.Outcome; }
+                                layout.NextCard = true;
+                                break;
                         }
                     }
                     break;
@@ -1176,10 +1182,13 @@ namespace Next_Game
                                     _conflictMode = ConflictMode.Strategy;
                                     break;
                                 case ConflictMode.Cards:
-                                    _conflictMode = ConflictMode.Outcome;
+                                    //repeat until hand is empty
+                                    if (layout.CheckHandStatus() == false) { _conflictMode = ConflictMode.Outcome; }
+                                    layout.NextCard = true;
                                     break;
                                 case ConflictMode.Confirm:
                                     _conflictMode = ConflictMode.Cards;
+                                    layout.NextCard = true;
                                     break;
                                 case ConflictMode.AutoResolve:
                                     _conflictMode = ConflictMode.Outcome;

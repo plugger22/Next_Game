@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Next_Game.Event_System;
 using RLNET;
 
 namespace Next_Game
@@ -345,8 +346,11 @@ namespace Next_Game
                             Game.layout.DrawStrategy(multiConsole);
                             break;
                         case ConflictMode.Cards:
-                            Game.layout.UpdateCards();
-                            Game.layout.DrawCards(multiConsole);
+                            if (Game.layout.NextCard == true)
+                            {
+                                Game.layout.UpdateCards();
+                                Game.layout.DrawCards(multiConsole);
+                            }
                             break;
                         case ConflictMode.Confirm:
                             Game.layout.UpdateMessage(Game.layout.GetDataConfirm(), Game.layout.Confirm_FillColor);

@@ -19,6 +19,9 @@ namespace Next_Game
         public int Offset_x { get; set; } //offset from right hand side of screen (cells)
         public int Offset_y { get; set; } //offset from top and bottom of screen (cells)
         private RLColor backColor;
+        //assorted
+        public bool NextCard { get; set; } //flag indicating next card is ready to draw
+        int cardsRemaining; 
         //card layout
         int ca_left_outer; //left side of status boxes (y_coord)
         int ca_right_align;
@@ -316,7 +319,7 @@ namespace Next_Game
             DrawBox(ca_left_outer, vertical_align, ca_status_width, ca_status_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             DrawCenteredText("Remaining", ca_left_outer, vertical_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Cards", ca_left_outer, vertical_align + 4, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("0", ca_left_outer, vertical_align + 7, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            
             //Situation (top right)
             DrawBox(horizontal_align, ca_top_align, ca_status_width, ca_status_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             DrawCenteredText("Situation", horizontal_align, ca_top_align + 2, ca_status_width,  RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -416,7 +419,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="multiConsole"></param>
         public void DrawCards(RLConsole multiConsole)
-        { Draw(multiConsole, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); }
+        { Draw(multiConsole, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); NextCard = false; }
 
         /// <summary>
         /// Update Card Layout contents (assumes that all card data sets are up to data)
@@ -460,17 +463,21 @@ namespace Next_Game
             {
                 //get next card, delete once done
                 Card_Conflict card = (Card_Conflict)listCardHand[0];
-                RLColor backColor;
+                RLColor backColor = RLColor.White;
+                string textType = "Unknown";
                 switch (card.Type)
                 {
                     case CardType.Good:
                         backColor = Color._goodCard;
+                        textType = "Advantage";
                         break;
                     case CardType.Neutral:
                         backColor = Color._neutralCard;
+                        textType = "Could Go Either Way";
                         break;
                     case CardType.Bad:
                         backColor = Color._badCard;
+                        textType = "Disadvantage";
                         break;
                     default:
                         Game.SetError(new Error(95, "Invalid Card Type"));
@@ -478,12 +485,17 @@ namespace Next_Game
                 }
                 DrawCenteredText(string.Format("{0} Card", card.Conflict_Type), ca_left_inner, card_vert_1, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText("--- 0 ---", ca_left_inner, card_vert_2, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-                DrawCenteredText(card.Title, ca_left_inner, card_vert_3, ca_card_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                DrawCenteredText(card.Title, ca_left_inner, card_vert_3, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText(card.Description, ca_left_inner, card_vert_4, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-                DrawCenteredText(Convert.ToString(card.Type), ca_left_inner, card_vert_5, ca_card_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                DrawCenteredText(textType, ca_left_inner, card_vert_5, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText("Play for -2 Points", ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText("Ignore for -8 Points", ca_left_inner, card_vert_7, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 listCardHand.RemoveAt(0);
+                //redraw box
+                DrawBox(ca_left_inner, ca_top_align, ca_card_width, ca_card_height, RLColor.Yellow, backColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
+                //update remaining cards
+                DrawCenteredText(Convert.ToString(cardsRemaining), ca_left_outer, vertical_align + 7, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                cardsRemaining--;
             }
             else { Game.SetError(new Error(95, "No Cards Remaining in listCardHand")); }
         }
@@ -838,6 +850,10 @@ namespace Next_Game
             { Game.SetError(new Error(90, "Invalid Outcome Array input (needs exactly 10 items)")); }
         }
 
+        /// <summary>
+        /// Sets up Card Pool array
+        /// </summary>
+        /// <param name="tempArray"></param>
         internal void SetCardPool(int[] tempArray)
         {
             //empty out array first
@@ -849,15 +865,31 @@ namespace Next_Game
             { Game.SetError(new Error(92, "Invalid Card Pool Array Input (needs exactly 3 items")); }
         }
 
+        /// <summary>
+        /// Sets up Card Hand list
+        /// </summary>
+        /// <param name="tempList"></param>
         internal void SetCardHand(List<Card> tempList)
         {
             if (tempList != null)
             {
                 //empty out list first
                 listCardHand.Clear();
+                //update
                 listCardHand.AddRange(tempList);
+                cardsRemaining = listCardHand.Count();
             }
             else { Game.SetError(new Error(94, "Invalid tempList input (null)")); }
+        }
+
+        /// <summary>
+        /// Used by game.cs to check if hand completed (returns false)
+        /// </summary>
+        /// <returns></returns>
+        internal bool CheckHandStatus()
+        {
+            if (listCardHand.Count < 1) { return false; }
+            return true;
         }
 
         //new methods above here
