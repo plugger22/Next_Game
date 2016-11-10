@@ -447,11 +447,7 @@ namespace Next_Game
             int bar_segment = Convert.ToInt32((float)bar_width / 8); //scoring marker segments on bar (4 either side of the zero mid point)
             int bar_top = ca_score_vert_align + ca_bar_offset_y; //y_coord of bar
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
-            //Card Pool
-            DrawText(Convert.ToString(arrayCardPool[0]), ca_left_outer + 24, middle_align + 2, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText(Convert.ToString(arrayCardPool[1]), ca_left_outer + 24, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText(Convert.ToString(arrayCardPool[2]), ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText(Convert.ToString(arrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            
             //Situation
             DrawCenteredText(arraySituation[0], horizontal_align, ca_top_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arraySituation[1], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -462,7 +458,6 @@ namespace Next_Game
             //Card
             if (listCardHand.Count > 0)
             {
-                
                 //get next card, delete once done
                 Card_Conflict card = (Card_Conflict)listCardHand[0];
                 RLColor backColor = RLColor.White;
@@ -472,14 +467,17 @@ namespace Next_Game
                     case CardType.Good:
                         backColor = Color._goodCard;
                         textType = "Advantage";
+                        arrayCardPool[0]--;
                         break;
                     case CardType.Neutral:
                         backColor = Color._neutralCard;
                         textType = "Could Go Either Way";
+                        arrayCardPool[1]--;
                         break;
                     case CardType.Bad:
                         backColor = Color._badCard;
                         textType = "Disadvantage";
+                        arrayCardPool[2]--;
                         break;
                     default:
                         Game.SetError(new Error(95, "Invalid Card Type"));
@@ -503,7 +501,6 @@ namespace Next_Game
                 DrawCenteredText("Play for -2 Points", ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText("Ignore for -8 Points", ca_left_inner, card_vert_7, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 listCardHand.RemoveAt(0);
-                
                 //update remaining cards
                 DrawCenteredText(Convert.ToString(cardsRemaining), ca_left_outer, vertical_align + 7, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 cardsRemaining--;
@@ -511,6 +508,16 @@ namespace Next_Game
                 DrawCenteredText(Convert.ToString(InfluenceRemaining), ca_left_outer, ca_top_align + 7, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             }
             else { Game.SetError(new Error(95, "No Cards Remaining in listCardHand")); }
+            //Card Pool
+            for (int width_index = ca_left_outer + 24; width_index < ca_left_outer + 28; width_index++)
+            {
+                for (int height_index = middle_align + 2; height_index < middle_align + ca_status_height - 1; height_index++)
+                { arrayOfCells_Cards[width_index, height_index] = 255; }
+            }
+            DrawText(Convert.ToString(arrayCardPool[0]), ca_left_outer + 24, middle_align + 2, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(arrayCardPool[1]), ca_left_outer + 24, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(arrayCardPool[2]), ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(Convert.ToString(arrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
         }
 
 
@@ -890,7 +897,8 @@ namespace Next_Game
                 listCardHand.Clear();
                 //update
                 listCardHand.AddRange(tempList);
-                cardsRemaining = listCardHand.Count();
+                cardsRemaining = listCardHand.Count() - 1;
+                cardsRemaining = Math.Max(1, cardsRemaining);
                 InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
             }
             else { Game.SetError(new Error(94, "Invalid tempList input (null)")); }
