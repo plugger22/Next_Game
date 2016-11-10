@@ -43,6 +43,8 @@ namespace Next_Game
             player = Game.world.GetActiveActor(1);
             if (player != null) {}
             else { Game.SetError(new Error(84, "Player not found (null)")); }
+            //pass Points matrix to Layout (only needed once)
+            SetPoints();
         }
         
    
@@ -55,6 +57,7 @@ namespace Next_Game
             SetTraits();
             SetSituation();
             SetOpponentStrategy();
+            
             SetOutcome();
             SetCardPool();
             SetHand();
@@ -446,6 +449,63 @@ namespace Next_Game
             Game.layout.SetCardHand(listCardHand);
         }
 
+        /// <summary>
+        /// Passes a matrix of points (strategy vs. strategy) over to Layout
+        /// </summary>
+        private void SetPoints()
+        {
+            int[,,] tempArray = new int[3,3,4];
+            //attk vs attk (good play/good ignore/bad play/bad ignore)
+            tempArray[0, 0, 0] = 12;
+            tempArray[0, 0, 1] = 4;
+            tempArray[0, 0, 2] = -12;
+            tempArray[0, 0, 3] = -4;
+            //attk vs balanced
+            tempArray[0, 1, 0] = 10;
+            tempArray[0, 1, 1] = 3;
+            tempArray[0, 1, 2] = -6;
+            tempArray[0, 1, 3] = -1;
+            //attk vs. Def
+            tempArray[0, 2, 0] = 8;
+            tempArray[0, 2, 1] = 2;
+            tempArray[0, 2, 2] = -4;
+            tempArray[0, 2, 3] = 0;
+
+            //bal vs. attk
+            tempArray[1, 0, 0] = 6;
+            tempArray[1, 0, 1] = 1;
+            tempArray[1, 0, 2] = -10;
+            tempArray[1, 0, 3] = -3;
+            //bal vs balanced
+            tempArray[1, 1, 0] = 8;
+            tempArray[1, 1, 1] = 2;
+            tempArray[1, 1, 2] = -8;
+            tempArray[1, 1, 3] = -2;
+            //bal vs. Def
+            tempArray[1, 2, 0] = 6;
+            tempArray[1, 2, 1] = 1;
+            tempArray[1, 2, 2] = -4;
+            tempArray[1, 2, 3] = 0;
+
+            //def vs. attk
+            tempArray[2, 0, 0] = 4;
+            tempArray[2, 0, 1] = 0;
+            tempArray[2, 0, 2] = -8;
+            tempArray[2, 0, 3] = -2;
+            //def vs balanced
+            tempArray[2, 1, 0] = 6;
+            tempArray[2, 1, 1] = 1;
+            tempArray[2, 1, 2] = -8;
+            tempArray[2, 1, 3] = -2;
+            //def vs. Def
+            tempArray[2, 2, 0] = 4;
+            tempArray[2, 2, 1] = 0;
+            tempArray[2, 2, 2] = -4;
+            tempArray[2, 2, 3] = 0;
+            //send to layout
+            Game.layout.SetPoints(tempArray);
+        }
+        
         // methods above here
     }
 }

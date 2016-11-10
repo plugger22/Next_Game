@@ -63,6 +63,7 @@ namespace Next_Game
         public RLColor Intro_FillColor { get; set; }
         //Dynamic Data Sets
         private int[] arrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
+        private int[,,] arrayPoints { get; set; } //0 -> Good card Influence, 1 - Good card Ignore, 2 Bad card Influence, 3 Bad card Ignore (3 x 3 is Player vs. Opponent strategies)
         private string[] arraySituation { get; set; } // up to 3 situation factors
         private string[] arrayStrategy { get; set; } //3 strategies - always variations of Attack, Balanced & Defend
         private string[] arrayOutcome { get; set; } // 0 is Conflict Type, 1/2/3 are Wins (minor/normal/major), 4/5/6 are Losses, 7/8 are advantage/disadvantage and recommendation, 9 Actors
@@ -189,6 +190,7 @@ namespace Next_Game
             Intro_FillColor = Color._background0;
             //Dynamic Data Sets
             arrayCardPool = new int[3];
+            arrayPoints = new int[3,3,4];
             arraySituation = new string[3];
             arrayStrategy = new string[3];
             arrayOutcome = new string[10];
@@ -447,7 +449,6 @@ namespace Next_Game
             int bar_segment = Convert.ToInt32((float)bar_width / 8); //scoring marker segments on bar (4 either side of the zero mid point)
             int bar_top = ca_score_vert_align + ca_bar_offset_y; //y_coord of bar
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
-            
             //Situation
             DrawCenteredText(arraySituation[0], horizontal_align, ca_top_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arraySituation[1], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -456,6 +457,8 @@ namespace Next_Game
             DrawCenteredText(arrayStrategy[Strategy_Player], horizontal_align, vertical_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arrayStrategy[Strategy_Opponent], horizontal_align, vertical_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Card
+            int points_play = 0;
+            int points_ignore = 0;
             if (listCardHand.Count > 0)
             {
                 //get next card, delete once done
@@ -468,6 +471,7 @@ namespace Next_Game
                         backColor = Color._goodCard;
                         textType = "Advantage";
                         arrayCardPool[0]--;
+                        points_play = arrayPoints[Strategy_Player, Strategy_Opponent, 0]; points_ignore = arrayPoints[Strategy_Player, Strategy_Opponent, 1];
                         break;
                     case CardType.Neutral:
                         backColor = Color._neutralCard;
@@ -478,6 +482,7 @@ namespace Next_Game
                         backColor = Color._badCard;
                         textType = "Disadvantage";
                         arrayCardPool[2]--;
+                        points_play = arrayPoints[Strategy_Player, Strategy_Opponent, 2]; points_ignore = arrayPoints[Strategy_Player, Strategy_Opponent,3];
                         break;
                     default:
                         Game.SetError(new Error(95, "Invalid Card Type"));
@@ -498,8 +503,10 @@ namespace Next_Game
                 DrawCenteredText(card.Title, ca_left_inner, card_vert_3, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText(card.Description, ca_left_inner, card_vert_4, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText(textType, ca_left_inner, card_vert_5, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-                DrawCenteredText("Play for -2 Points", ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-                DrawCenteredText("Ignore for -8 Points", ca_left_inner, card_vert_7, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                DrawCenteredText(string.Format("Play for{0}{1} Points", points_play > 0 ? " +" : " ", points_play), ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, 
+                    arrayOfForeColors_Cards);
+                DrawCenteredText(string.Format("Ignore for{0}{1} Points", points_ignore > 0 ? " +" : " ", points_ignore), ca_left_inner, card_vert_7, ca_card_width, RLColor.Black, arrayOfCells_Cards, 
+                    arrayOfForeColors_Cards);
                 listCardHand.RemoveAt(0);
                 //update remaining cards
                 DrawCenteredText(Convert.ToString(cardsRemaining), ca_left_outer, vertical_align + 7, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -884,6 +891,13 @@ namespace Next_Game
             else
             { Game.SetError(new Error(92, "Invalid Card Pool Array Input (needs exactly 3 items")); }
         }
+
+        /// <summary>
+        /// passes reference to Card Points Matrix (all set for a 1X card, double for a 2X, etc.)
+        /// </summary>
+        /// <param name="tempArray"></param>
+        internal void SetPoints(int[,,] tempArray)
+        { arrayPoints = tempArray; }
 
         /// <summary>
         /// Sets up Card Hand list
