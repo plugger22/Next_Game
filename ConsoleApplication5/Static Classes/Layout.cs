@@ -461,6 +461,7 @@ namespace Next_Game
             //Card
             if (listCardHand.Count > 0)
             {
+                
                 //get next card, delete once done
                 Card_Conflict card = (Card_Conflict)listCardHand[0];
                 RLColor backColor = RLColor.White;
@@ -483,6 +484,16 @@ namespace Next_Game
                         Game.SetError(new Error(95, "Invalid Card Type"));
                         break;
                 }
+                //blank out previous text and redraw new card background
+                for (int width_index = ca_left_inner + 1; width_index < ca_left_inner + ca_card_width - 1; width_index++)
+                {
+                    for (int height_index = ca_top_align + 1; height_index < ca_top_align + ca_card_height - 1; height_index++)
+                    {
+                        arrayOfCells_Cards[width_index, height_index] = 255;
+                        arrayOfBackColors_Cards[width_index, height_index] = backColor;
+                    }
+                }
+                //redraw text
                 DrawCenteredText(string.Format("{0} Card", card.Conflict_Type), ca_left_inner, card_vert_1, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText("--- 0 ---", ca_left_inner, card_vert_2, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText(card.Title, ca_left_inner, card_vert_3, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -491,8 +502,7 @@ namespace Next_Game
                 DrawCenteredText("Play for -2 Points", ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText("Ignore for -8 Points", ca_left_inner, card_vert_7, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 listCardHand.RemoveAt(0);
-                //redraw box
-                DrawBox(ca_left_inner, ca_top_align, ca_card_width, ca_card_height, RLColor.Yellow, backColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
+                
                 //update remaining cards
                 DrawCenteredText(Convert.ToString(cardsRemaining), ca_left_outer, vertical_align + 7, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 cardsRemaining--;
