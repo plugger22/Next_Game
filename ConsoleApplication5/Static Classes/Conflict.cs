@@ -377,6 +377,8 @@ namespace Next_Game
             RLColor backColor = Game.layout.Back_FillColor;
             RLColor foreColor = RLColor.Black;
             CardType type;
+            //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
+            int[] arrayPool = new int[3]; 
             //three lists to consolidate into pool breakdown description
             List<Snippet> listPlayerCards = new List<Snippet>();
             List<Snippet> listOpponentCards = new List<Snippet>();
@@ -394,19 +396,20 @@ namespace Next_Game
             //create cards, add to pool and breakdown lists
             string skillDescription = "Get a Random Description";
             //...Player
-            type = CardType.Good; foreColor = RLColor.Black;
+            type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += cards_player;
             for (int i = 0; i < cards_player; i++)
             { listCardPool.Add(new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1}", player.Name, PrimarySkill), skillDescription)); }
             string text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", player.Name, PrimarySkill, type, cards_player, skill_player);
             listPlayerCards.Add(new Snippet(text, foreColor, backColor));
             //...Opponent
-            type = CardType.Bad; foreColor = RLColor.Red;
+            type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += cards_opponent;
             for (int i = 0; i < cards_opponent; i++)
             { listCardPool.Add(new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1}", opponent.Name, PrimarySkill), skillDescription)); }
             text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", opponent.Name, PrimarySkill, type, cards_opponent, skill_opponent);
             listOpponentCards.Add(new Snippet(text, foreColor, backColor));
-            //consolidate lists
+            //clear master list and add headers
             listBreakdown.Clear();
+            //consolidate lists
             listBreakdown.AddRange(listPlayerCards);
             listBreakdown.Add(new Snippet(""));
             listBreakdown.AddRange(listOpponentCards);
@@ -414,6 +417,7 @@ namespace Next_Game
             listBreakdown.AddRange(listSituationCards);
             //send to layout
             Game.layout.SetCardBreakdown(listBreakdown);
+            Game.layout.SetCardPool(arrayPool);
         }
 
         // methods above here

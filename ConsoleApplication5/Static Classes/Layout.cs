@@ -494,10 +494,12 @@ namespace Next_Game
             DrawText(string.Format("[F1] {0}", arrayStrategy[0]), st_middle_align + 4, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(string.Format("[F2] {0}", arrayStrategy[1]), st_middle_align + 4, st_top_align + 6, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(string.Format("[F3] {0}", arrayStrategy[2]), st_middle_align + 4, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            //Breakdown of Card Pool
+            //Breakdown of Card Pool -> header first then card breakdown
+            DrawCenteredText(arrayOutcome[0], st_left_outer, vertical_middle + 2, breakdown_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText(arrayOutcome[9], st_left_outer, vertical_middle + 4, breakdown_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             int limit = Math.Min((breakdown_box_height - 8) / 2, listCardBreakdown.Count);
             for (int i = 0; i < limit; i++)
-            { DrawText(listCardBreakdown[i].GetText(), st_left_outer + 4, vertical_middle + 2 + (i + 1) * 2, listCardBreakdown[i].GetForeColor(), arrayOfCells_Strategy, arrayOfForeColors_Strategy); }
+            { DrawText(listCardBreakdown[i].GetText(), st_left_outer + 4, vertical_middle + 6 + (i + 1) * 2, listCardBreakdown[i].GetForeColor(), arrayOfCells_Strategy, arrayOfForeColors_Strategy); }
         }
 
         /// <summary>
@@ -721,15 +723,15 @@ namespace Next_Game
         private void SetTestData()
         {
             //card pool
-            arrayCardPool[0] = 8;
+            /*arrayCardPool[0] = 8;
             arrayCardPool[1] = 4;
             arrayCardPool[2] = 1;
             //situations
-            /*arraySituation[0] = "Defendable Hill (Good)";
+            arraySituation[0] = "Defendable Hill (Good)";
             arraySituation[1] = "Muddy Ground (Neutral)";
-            arraySituation[2] = "Relative Army Size (Bad)";*/
+            arraySituation[2] = "Relative Army Size (Bad)";
             //strategy
-            /*arrayStrategy[0] = "Take the Fight to the Enemy";
+            arrayStrategy[0] = "Take the Fight to the Enemy";
             arrayStrategy[1] = "Aggressive Defense";
             arrayStrategy[2] = "Hold Firm";*/
             //breakdown
@@ -806,7 +808,18 @@ namespace Next_Game
             if (arrayInput.Length == 10)
             { arrayInput.CopyTo(arrayOutcome, 0); }
             else
-            { Game.SetError(new Error(90, "Invalid Outcome Array input (needs exactly 9 items)")); }
+            { Game.SetError(new Error(90, "Invalid Outcome Array input (needs exactly 10 items)")); }
+        }
+
+        internal void SetCardPool(int[] tempArray)
+        {
+            //empty out array first
+            Array.Clear(arrayCardPool, 0, arrayCardPool.Length);
+            //3 factors required
+            if (tempArray.Length == 3)
+            { tempArray.CopyTo(arrayCardPool, 0); }
+            else
+            { Game.SetError(new Error(92, "Invalid Card Pool Array Input (needs exactly 3 items")); }
         }
 
         //new methods above here
