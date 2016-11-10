@@ -365,6 +365,7 @@ namespace Next_Game
                             Game.layout.DrawMessage(multiConsole);
                             break;
                         case ConflictMode.Outcome:
+                            Game.layout.UpdateOutcome();
                             Game.layout.DrawOutcome(multiConsole);
                             break;
                     }

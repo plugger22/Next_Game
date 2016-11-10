@@ -455,53 +455,53 @@ namespace Next_Game
         private void SetPoints()
         {
             int[,,] tempArray = new int[3,3,4];
-            //attk vs attk (good play/good ignore/bad play/bad ignore)
+            //attk vs attk (good play/good ignore/bad ignore/bad play)
             tempArray[0, 0, 0] = 12;
             tempArray[0, 0, 1] = 4;
-            tempArray[0, 0, 2] = -12;
-            tempArray[0, 0, 3] = -4;
+            tempArray[0, 0, 2] = -4;
+            tempArray[0, 0, 3] = -12;
             //attk vs balanced
             tempArray[0, 1, 0] = 10;
             tempArray[0, 1, 1] = 3;
-            tempArray[0, 1, 2] = -6;
-            tempArray[0, 1, 3] = -1;
+            tempArray[0, 1, 2] = -1;
+            tempArray[0, 1, 3] = -6;
             //attk vs. Def
             tempArray[0, 2, 0] = 8;
             tempArray[0, 2, 1] = 2;
-            tempArray[0, 2, 2] = -4;
-            tempArray[0, 2, 3] = 0;
+            tempArray[0, 2, 2] = 0;
+            tempArray[0, 2, 3] = -4;
 
             //bal vs. attk
             tempArray[1, 0, 0] = 6;
             tempArray[1, 0, 1] = 1;
-            tempArray[1, 0, 2] = -10;
-            tempArray[1, 0, 3] = -3;
+            tempArray[1, 0, 2] = -3;
+            tempArray[1, 0, 3] = -10;
             //bal vs balanced
             tempArray[1, 1, 0] = 8;
             tempArray[1, 1, 1] = 2;
-            tempArray[1, 1, 2] = -8;
-            tempArray[1, 1, 3] = -2;
+            tempArray[1, 1, 2] = -2;
+            tempArray[1, 1, 3] = -8;
             //bal vs. Def
             tempArray[1, 2, 0] = 6;
             tempArray[1, 2, 1] = 1;
-            tempArray[1, 2, 2] = -4;
-            tempArray[1, 2, 3] = 0;
+            tempArray[1, 2, 2] = 0;
+            tempArray[1, 2, 3] = -4;
 
             //def vs. attk
             tempArray[2, 0, 0] = 4;
             tempArray[2, 0, 1] = 0;
-            tempArray[2, 0, 2] = -8;
-            tempArray[2, 0, 3] = -2;
+            tempArray[2, 0, 2] = -2;
+            tempArray[2, 0, 3] = -8;
             //def vs balanced
             tempArray[2, 1, 0] = 6;
             tempArray[2, 1, 1] = 1;
-            tempArray[2, 1, 2] = -8;
-            tempArray[2, 1, 3] = -2;
+            tempArray[2, 1, 2] = -2;
+            tempArray[2, 1, 3] = -8;
             //def vs. Def
             tempArray[2, 2, 0] = 4;
             tempArray[2, 2, 1] = 0;
-            tempArray[2, 2, 2] = -4;
-            tempArray[2, 2, 3] = 0;
+            tempArray[2, 2, 2] = 0;
+            tempArray[2, 2, 3] = -4;
             //send to layout
             Game.layout.SetPoints(tempArray);
         }

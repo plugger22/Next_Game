@@ -1075,8 +1075,7 @@ namespace Next_Game
                                     //repeat until hand is empty
                                     if (layout.CheckHandStatus() == false)
                                     { _conflictMode = ConflictMode.Outcome; }
-                                    layout.NextCard = true;
-                                    layout.InfluenceRemaining--;
+                                    layout.ResolveCard(true);
                                 }
                                 break;
                         }
@@ -1189,11 +1188,11 @@ namespace Next_Game
                                 case ConflictMode.Cards:
                                     //repeat until hand is empty
                                     if (layout.CheckHandStatus() == false) { _conflictMode = ConflictMode.Outcome; }
-                                    layout.NextCard = true;
+                                    layout.ResolveCard();
                                     break;
                                 case ConflictMode.Confirm:
                                     _conflictMode = ConflictMode.Cards;
-                                    layout.NextCard = true;
+                                    layout.ResolveCard();
                                     break;
                                 case ConflictMode.AutoResolve:
                                     _conflictMode = ConflictMode.Outcome;

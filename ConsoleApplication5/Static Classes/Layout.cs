@@ -21,8 +21,12 @@ namespace Next_Game
         private RLColor backColor;
         //assorted
         public bool NextCard { get; set; } //flag indicating next card is ready to draw
-        int cardsRemaining;
         public int InfluenceRemaining { get; set; }
+        int cardsRemaining;
+        int score;
+        int points_play; //points if card played
+        int points_ignore; //points if card ignored
+        Card_Conflict currentCard;
         //card layout
         int ca_left_outer; //left side of status boxes (y_coord)
         int ca_right_align;
@@ -69,6 +73,7 @@ namespace Next_Game
         private string[] arrayOutcome { get; set; } // 0 is Conflict Type, 1/2/3 are Wins (minor/normal/major), 4/5/6 are Losses, 7/8 are advantage/disadvantage and recommendation, 9 Actors
         private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
         private List<Card> listCardHand; //cards in playable hand
+        private List<Snippet> listHistory; //record of how the hand was played
         //Cards
         private int[,] arrayOfCells_Cards; //cell array for box and text
         private RLColor[,] arrayOfForeColors_Cards; //foreground color for cell contents
@@ -196,6 +201,10 @@ namespace Next_Game
             arrayOutcome = new string[10];
             listCardBreakdown = new List<Snippet>();
             listCardHand = new List<Card>();
+            listHistory = new List<Snippet>();
+            //assorted
+            score = 0;
+            currentCard = new Card_Conflict();
         }
 
         /// <summary>
@@ -297,8 +306,7 @@ namespace Next_Game
             DrawText("-5", bar_middle - bar_segment - 1, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("-10", bar_middle - bar_segment * 2 - 2, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("-15", bar_middle - bar_segment * 3 - 2, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            //...current score
-            DrawText("+10", bar_middle - 1, bar_top + bar_height, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            
             //upper text box - messages
             DrawBox(ca_left_outer, vertical_pos, text_box_width, ca_message_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             //lower text box - instructions
@@ -418,6 +426,25 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Update Outcome layout contents
+        /// </summary>
+        public void UpdateOutcome()
+        {
+            int box_width = Width - Offset_x - ou_left_align * 2;
+            int history_height = Height - Offset_y * 2 - ou_outcome_height - ou_instruct_height - ou_spacer * 4;
+            int vertical_top = ou_spacer;
+            int vertical_middle = vertical_top + ou_outcome_height + ou_spacer;
+            int vertical_bottom = vertical_middle + history_height + ou_spacer;
+            //history
+            //DrawBox(ou_left_align, vertical_middle, box_width, history_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Outcome, arrayOfForeColors_Outcome, arrayOfBackColors_Outcome);
+            DrawCenteredText("History", ou_left_align, vertical_middle + 2, box_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            for (int i = 0; i < listHistory.Count; i++)
+            {
+                DrawText(listHistory[i].GetText(), ou_left_align + 4, vertical_middle + 5 + i * 2, listHistory[i].GetForeColor(), arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            }
+        }
+
+        /// <summary>
         /// Draw Cards Layout
         /// </summary>
         /// <param name="multiConsole"></param>
@@ -457,12 +484,13 @@ namespace Next_Game
             DrawCenteredText(arrayStrategy[Strategy_Player], horizontal_align, vertical_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arrayStrategy[Strategy_Opponent], horizontal_align, vertical_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Card
-            int points_play = 0;
-            int points_ignore = 0;
+            points_play = 0;
+            points_ignore = 0;
             if (listCardHand.Count > 0)
             {
                 //get next card, delete once done
                 Card_Conflict card = (Card_Conflict)listCardHand[0];
+                currentCard = (Card_Conflict)listCardHand[0];
                 RLColor backColor = RLColor.White;
                 string textType = "Unknown";
                 switch (card.Type)
@@ -525,6 +553,10 @@ namespace Next_Game
             DrawText(Convert.ToString(arrayCardPool[1]), ca_left_outer + 24, middle_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText(Convert.ToString(arrayCardPool[2]), ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText(Convert.ToString(arrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            //Score Bar
+
+            //...current score
+            DrawText(string.Format("{0}{1}", score > 0 ? "+" : "", score), bar_middle - 1, bar_top + bar_height, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
         }
 
 
@@ -926,6 +958,42 @@ namespace Next_Game
         {
             if (listCardHand.Count < 1) { return false; }
             return true;
+        }
+
+        /// <summary>
+        /// Run each time a card is either played, or ignored
+        /// </summary>
+        /// <param name="cardPlayed"></param>
+        internal void ResolveCard(bool cardPlayed = false)
+        {
+            //history
+            string playerAction = "Ignored";
+            int pointsGained = points_ignore;
+            
+            //update score and influence
+            if (cardPlayed == true)
+            {
+                InfluenceRemaining--;
+                score += points_play;
+                playerAction = "Played";
+                pointsGained = points_play;
+            }
+            else
+            {
+                score += points_ignore;
+            }
+            //flip next card
+            NextCard = true;
+            //Red for Bad cards
+            RLColor foreColor = RLColor.Black;
+            if (currentCard.Type == CardType.Bad) { foreColor = RLColor.Red; }
+            //add to history
+            if (currentCard.Type != CardType.None)
+            {
+                string text = string.Format("{0} {1}, ({2}), for {3}{4} points, score {5}{6}", playerAction, currentCard.Title, currentCard.Type, pointsGained > 0 ? "+" : "", pointsGained,
+                    score > 0 ? "+" : "", score);
+                listHistory.Add(new Snippet(text, foreColor, Back_FillColor));
+            }
         }
 
         //new methods above here

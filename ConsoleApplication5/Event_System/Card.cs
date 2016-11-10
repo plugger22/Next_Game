@@ -21,6 +21,9 @@ namespace Next_Game.Event_System
         public string Title { get; set; }
         public string Description { get; set; }
 
+        public Card()
+        { }
+
         public Card(CardType type, string title, string description)
         {
             this.Type = type;
@@ -37,6 +40,9 @@ namespace Next_Game.Event_System
         public int Effect { get; set; } //eg. 1X, 2X, etc.
         public string Special { get; set; }
         public CardConflict Conflict_Type { get; set; }
+
+        public Card_Conflict()
+        { }
 
         /// <summary>
         /// Default constructor
