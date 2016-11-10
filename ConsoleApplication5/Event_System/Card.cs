@@ -8,7 +8,7 @@ namespace Next_Game.Event_System
 {
 
     public enum CardCategory { None, Conflict, Item, Secret, Companion, Disguise }
-    public enum ConflictType { None, Skill, Trait, Situation, Companion, Item, Supporter }
+    public enum CardConflict { None, Skill, Trait, Situation, Companion, Item, Supporter }
     public enum CardType { None, Good, Bad, Neutral}
 
     /// <summary>
@@ -32,16 +32,16 @@ namespace Next_Game.Event_System
     /// <summary>
     /// Conflict Cards
     /// </summary>
-    class CardConflict : Card
+    class Card_Conflict : Card
     {
         public int Effect { get; set; } //eg. 1X, 2X, etc.
         public string Special { get; set; }
-        public ConflictType Conflict_Type { get; set; }
+        public CardConflict Conflict_Type { get; set; }
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public CardConflict(ConflictType conflictType, CardType type, string title, string description, int effect = 1) : base (type, title, description)
+        public Card_Conflict(CardConflict conflictType, CardType type, string title, string description, int effect = 1) : base (type, title, description)
         {
             Category = CardCategory.Conflict;
             Conflict_Type = conflictType;

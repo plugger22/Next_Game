@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Next_Game.Event_System;
+using RLNET;
 
 namespace Next_Game
 {
@@ -373,7 +374,46 @@ namespace Next_Game
         /// </summary>
         public void SetCardPool()
         {
+            RLColor backColor = Game.layout.Back_FillColor;
+            RLColor foreColor = RLColor.Black;
+            CardType type;
+            //three lists to consolidate into pool breakdown description
+            List<Snippet> listPlayerCards = new List<Snippet>();
+            List<Snippet> listOpponentCards = new List<Snippet>();
+            List<Snippet> listSituationCards = new List<Snippet>();
+            //headers
+            listPlayerCards.Add(new Snippet("Your Cards", RLColor.Blue, backColor));
+            listOpponentCards.Add(new Snippet("Opponent's Cards", RLColor.Blue, backColor));
+            listSituationCards.Add(new Snippet("Situation Cards", RLColor.Blue, backColor));
 
+            //primary skills (2 cards per skill level)
+            int skill_player = player.GetSkill(PrimarySkill, SkillAge.Fifteen, true);
+            int skill_opponent = opponent.GetSkill(PrimarySkill, SkillAge.Fifteen, true);
+            int cards_player = skill_player * 2;
+            int cards_opponent = skill_opponent * 2;
+            //create cards, add to pool and breakdown lists
+            string skillDescription = "Get a Random Description";
+            //...Player
+            type = CardType.Good; foreColor = RLColor.Black;
+            for (int i = 0; i < cards_player; i++)
+            { listCardPool.Add(new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1}", player.Name, PrimarySkill), skillDescription)); }
+            string text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", player.Name, PrimarySkill, type, cards_player, skill_player);
+            listPlayerCards.Add(new Snippet(text, foreColor, backColor));
+            //...Opponent
+            type = CardType.Bad; foreColor = RLColor.Red;
+            for (int i = 0; i < cards_opponent; i++)
+            { listCardPool.Add(new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1}", opponent.Name, PrimarySkill), skillDescription)); }
+            text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", opponent.Name, PrimarySkill, type, cards_opponent, skill_opponent);
+            listOpponentCards.Add(new Snippet(text, foreColor, backColor));
+            //consolidate lists
+            listBreakdown.Clear();
+            listBreakdown.AddRange(listPlayerCards);
+            listBreakdown.Add(new Snippet(""));
+            listBreakdown.AddRange(listOpponentCards);
+            listBreakdown.Add(new Snippet(""));
+            listBreakdown.AddRange(listSituationCards);
+            //send to layout
+            Game.layout.SetCardBreakdown(listBreakdown);
         }
 
         // methods above here
