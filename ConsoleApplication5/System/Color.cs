@@ -33,6 +33,9 @@ namespace Next_Game
         public static RLColor _errorFill = Palette.salmon;
         public static RLColor _background0 = Palette.german;
         public static RLColor _background1 = Palette.pinacolada;
+        public static RLColor _goodCard = Palette.salmon;
+        public static RLColor _badCard = Palette.jade;
+        public static RLColor _neutralCard = Palette.silver;
         //game states
         public static RLColor _increase = Palette.jade;
         public static RLColor _decrease = Palette.salmon;
@@ -73,6 +76,7 @@ namespace Next_Game
         public static RLColor pinacolada = new RLColor(251, 245, 213);
         //grey
         public static RLColor german = new RLColor(204, 204, 204);
+        public static RLColor silver = new RLColor(218, 222, 225);
 
 
     }

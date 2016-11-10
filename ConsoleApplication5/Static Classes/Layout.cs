@@ -277,13 +277,6 @@ namespace Next_Game
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
             //Card
             DrawBox(ca_left_inner, ca_top_align, ca_card_width, ca_card_height, RLColor.Yellow, RLColor.White, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
-            DrawCenteredText("Skill Card", ca_left_inner, card_vert_1, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("--- 0 ---", ca_left_inner, card_vert_2, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("The King's Leadership", ca_left_inner, card_vert_3, ca_card_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("For the King! Long Live the King!", ca_left_inner, card_vert_4, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("Disadvantage", ca_left_inner, card_vert_5, ca_card_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("Play for -2 Points", ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("Ignore for -8 Points", ca_left_inner, card_vert_7, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Score track
             DrawBox(score_left_align, ca_score_vert_align, score_width, ca_score_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             //...bar
@@ -462,6 +455,37 @@ namespace Next_Game
             //Strategy
             DrawCenteredText(arrayStrategy[Strategy_Player], horizontal_align, vertical_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arrayStrategy[Strategy_Opponent], horizontal_align, vertical_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            //Card
+            if (listCardHand.Count > 0)
+            {
+                //get next card, delete once done
+                Card_Conflict card = (Card_Conflict)listCardHand[0];
+                RLColor backColor;
+                switch (card.Type)
+                {
+                    case CardType.Good:
+                        backColor = Color._goodCard;
+                        break;
+                    case CardType.Neutral:
+                        backColor = Color._neutralCard;
+                        break;
+                    case CardType.Bad:
+                        backColor = Color._badCard;
+                        break;
+                    default:
+                        Game.SetError(new Error(95, "Invalid Card Type"));
+                        break;
+                }
+                DrawCenteredText(string.Format("{0} Card", card.Conflict_Type), ca_left_inner, card_vert_1, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                DrawCenteredText("--- 0 ---", ca_left_inner, card_vert_2, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                DrawCenteredText(card.Title, ca_left_inner, card_vert_3, ca_card_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                DrawCenteredText(card.Description, ca_left_inner, card_vert_4, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                DrawCenteredText(Convert.ToString(card.Type), ca_left_inner, card_vert_5, ca_card_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                DrawCenteredText("Play for -2 Points", ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                DrawCenteredText("Ignore for -8 Points", ca_left_inner, card_vert_7, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                listCardHand.RemoveAt(0);
+            }
+            else { Game.SetError(new Error(95, "No Cards Remaining in listCardHand")); }
         }
 
 
