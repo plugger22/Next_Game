@@ -1069,10 +1069,15 @@ namespace Next_Game
                                 layout.Strategy_Player = 0;
                                 break;
                             case ConflictMode.Cards:
-                                //repeat until hand is empty
-                                if (layout.CheckHandStatus() == false)
-                                { _conflictMode = ConflictMode.Outcome; }
-                                layout.NextCard = true;
+                                //only a valid keypress if there is influence remaining
+                                if (layout.InfluenceRemaining > 0)
+                                {
+                                    //repeat until hand is empty
+                                    if (layout.CheckHandStatus() == false)
+                                    { _conflictMode = ConflictMode.Outcome; }
+                                    layout.NextCard = true;
+                                    layout.InfluenceRemaining--;
+                                }
                                 break;
                         }
                     }

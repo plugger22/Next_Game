@@ -89,3 +89,5 @@
 
 # HAND_CARDS_NUM -> number of cards in a challenge hand
 31: 6
+# PLAYER_INFLUENCE -> how many cards can the player influence in a hand
+32: 3

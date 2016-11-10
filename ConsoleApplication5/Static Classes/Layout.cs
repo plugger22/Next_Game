@@ -21,7 +21,8 @@ namespace Next_Game
         private RLColor backColor;
         //assorted
         public bool NextCard { get; set; } //flag indicating next card is ready to draw
-        int cardsRemaining; 
+        int cardsRemaining;
+        public int InfluenceRemaining { get; set; }
         //card layout
         int ca_left_outer; //left side of status boxes (y_coord)
         int ca_right_align;
@@ -308,7 +309,7 @@ namespace Next_Game
             DrawBox(ca_left_outer, ca_top_align, ca_status_width, ca_status_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             DrawCenteredText("Remaining", ca_left_outer, ca_top_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Influence", ca_left_outer, ca_top_align + 4, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("0", ca_left_outer, ca_top_align + 7, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            
             //Card Pool (middle left)
             DrawBox(ca_left_outer, middle_align, ca_status_width, ca_status_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             DrawText("Good cards", ca_left_outer + 7, middle_align + 2, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -506,6 +507,8 @@ namespace Next_Game
                 //update remaining cards
                 DrawCenteredText(Convert.ToString(cardsRemaining), ca_left_outer, vertical_align + 7, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 cardsRemaining--;
+                //update remaining influence
+                DrawCenteredText(Convert.ToString(InfluenceRemaining), ca_left_outer, ca_top_align + 7, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             }
             else { Game.SetError(new Error(95, "No Cards Remaining in listCardHand")); }
         }
@@ -888,6 +891,7 @@ namespace Next_Game
                 //update
                 listCardHand.AddRange(tempList);
                 cardsRemaining = listCardHand.Count();
+                InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
             }
             else { Game.SetError(new Error(94, "Invalid tempList input (null)")); }
         }

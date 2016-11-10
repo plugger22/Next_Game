@@ -37,6 +37,7 @@ namespace Next_Game
         TRAIT_MULTIPLIER,
         GAME_STATE,
         HAND_CARDS_NUM,
+        PLAYER_INFLUENCE,
         Count //keep as last
     }
 
@@ -81,6 +82,7 @@ namespace Next_Game
             arrayOfGlobals[29] = Global.TRAIT_MULTIPLIER;
             arrayOfGlobals[30] = Global.GAME_STATE;
             arrayOfGlobals[31] = Global.HAND_CARDS_NUM;
+            arrayOfGlobals[32] = Global.PLAYER_INFLUENCE;
             }
 
         /// <summary>
