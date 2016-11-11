@@ -26,6 +26,7 @@ namespace Next_Game
         int score;
         int points_play; //points if card played
         int points_ignore; //points if card ignored
+        int cardCounter; //number of cards played
         Card_Conflict currentCard;
         //card layout
         int ca_left_outer; //left side of status boxes (y_coord)
@@ -294,10 +295,7 @@ namespace Next_Game
             DrawBox(ca_left_inner, ca_top_align, ca_card_width, ca_card_height, RLColor.Yellow, RLColor.White, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             //Score track
             DrawBox(score_left_align, ca_score_vert_align, score_width, ca_score_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
-            //...bar
-            DrawBox(score_left_align + ca_bar_offset_x, bar_top, bar_width, bar_height, Bar_FillColor, Bar_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
-            //...coloured bars
-            DrawBox(bar_middle, bar_top, bar_segment * 2, bar_height, Bar_FillColor, RLColor.Green, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
+            
             //...bar number markings (top)
             DrawText("0", bar_middle, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("+5", bar_middle + bar_segment - 1, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -437,11 +435,9 @@ namespace Next_Game
             int vertical_bottom = vertical_middle + history_height + ou_spacer;
             //history
             //DrawBox(ou_left_align, vertical_middle, box_width, history_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Outcome, arrayOfForeColors_Outcome, arrayOfBackColors_Outcome);
-            DrawCenteredText("History", ou_left_align, vertical_middle + 2, box_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText("Hand History", ou_left_align, vertical_middle + 2, box_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
             for (int i = 0; i < listHistory.Count; i++)
-            {
-                DrawText(listHistory[i].GetText(), ou_left_align + 4, vertical_middle + 5 + i * 2, listHistory[i].GetForeColor(), arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            }
+            { DrawText(listHistory[i].GetText(), ou_left_align + 4, vertical_middle + 5 + i * 2, listHistory[i].GetForeColor(), arrayOfCells_Outcome, arrayOfForeColors_Outcome); }
         }
 
         /// <summary>
@@ -471,9 +467,9 @@ namespace Next_Game
             int text_box_width = horizontal_align + ca_status_width - ca_left_outer; //two boxes under the card display
             int score_width = horizontal_align - ca_left_outer;
             int score_left_align = ca_left_outer + ca_status_width / 2;
-            int bar_width = score_width - (ca_bar_offset_x * 2);
+            int bar_width = score_width - (ca_bar_offset_x * 2); //scoring colored bar
             int bar_middle = score_left_align + ca_bar_offset_x + (bar_width / 2); //x_coord of mid point
-            int bar_segment = Convert.ToInt32((float)bar_width / 8); //scoring marker segments on bar (4 either side of the zero mid point)
+            
             int bar_top = ca_score_vert_align + ca_bar_offset_y; //y_coord of bar
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
             //Situation
@@ -554,7 +550,15 @@ namespace Next_Game
             DrawText(Convert.ToString(arrayCardPool[2]), ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText(Convert.ToString(arrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Score Bar
-
+            //...bar
+            DrawBox(score_left_align + ca_bar_offset_x, bar_top, bar_width, bar_height, Bar_FillColor, Bar_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
+            //...coloured bars
+            int tempScore = Math.Min(20, score);
+            int bar_length = Math.Abs(Convert.ToInt32((float)(bar_width / 2 * tempScore / 20))); //scoring marker segments on bar (max display of bar is +/- 20 points)
+            if (score > 0)
+            { DrawBox(bar_middle, bar_top, bar_length, bar_height, Bar_FillColor, RLColor.Green, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); }
+            else if (score < 0)
+            { DrawBox(bar_middle - bar_length, bar_top, bar_length, bar_height, Bar_FillColor, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); }
             //...current score
             DrawText(string.Format("{0}{1}", score > 0 ? "+" : "", score), bar_middle - 1, bar_top + bar_height, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
         }
@@ -945,6 +949,7 @@ namespace Next_Game
                 listCardHand.AddRange(tempList);
                 cardsRemaining = listCardHand.Count() - 1;
                 cardsRemaining = Math.Max(1, cardsRemaining);
+                cardCounter = 0;
                 InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
             }
             else { Game.SetError(new Error(94, "Invalid tempList input (null)")); }
@@ -969,7 +974,8 @@ namespace Next_Game
             //history
             string playerAction = "Ignored";
             int pointsGained = points_ignore;
-            
+            //Green for Played cards, black for ignored
+            RLColor foreColor = RLColor.Black;
             //update score and influence
             if (cardPlayed == true)
             {
@@ -977,23 +983,21 @@ namespace Next_Game
                 score += points_play;
                 playerAction = "Played";
                 pointsGained = points_play;
+                foreColor = RLColor.Green;
             }
             else
-            {
-                score += points_ignore;
-            }
+            { score += points_ignore; }
             //flip next card
             NextCard = true;
-            //Red for Bad cards
-            RLColor foreColor = RLColor.Black;
-            if (currentCard.Type == CardType.Bad) { foreColor = RLColor.Red; }
             //add to history
             if (currentCard.Type != CardType.None)
             {
-                string text = string.Format("{0} {1}, ({2}), for {3}{4} points, score {5}{6}", playerAction, currentCard.Title, currentCard.Type, pointsGained > 0 ? "+" : "", pointsGained,
-                    score > 0 ? "+" : "", score);
+                cardCounter++;
+                string text = string.Format("Card {0}, {1} {2}, ({3}), for {4}{5} points, score {6}{7}", cardCounter, playerAction, currentCard.Title, currentCard.Type, 
+                    pointsGained > 0 ? "+" : "", pointsGained, score > 0 ? "+" : "", score);
                 listHistory.Add(new Snippet(text, foreColor, Back_FillColor));
             }
+            
         }
 
         //new methods above here
