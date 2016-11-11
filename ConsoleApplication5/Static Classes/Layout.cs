@@ -295,7 +295,8 @@ namespace Next_Game
             DrawBox(ca_left_inner, ca_top_align, ca_card_width, ca_card_height, RLColor.Yellow, RLColor.White, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             //Score track
             DrawBox(score_left_align, ca_score_vert_align, score_width, ca_score_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
-            
+            //...bar
+            DrawBox(score_left_align + ca_bar_offset_x, bar_top, bar_width, bar_height, Bar_FillColor, Bar_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             //...bar number markings (top)
             DrawText("0", bar_middle, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("+5", bar_middle + bar_segment - 1, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -936,7 +937,7 @@ namespace Next_Game
         { arrayPoints = tempArray; }
 
         /// <summary>
-        /// Sets up Card Hand list
+        /// Sets up Card Hand list & zero out other stuff where needed
         /// </summary>
         /// <param name="tempList"></param>
         internal void SetCardHand(List<Card> tempList)
@@ -950,7 +951,11 @@ namespace Next_Game
                 cardsRemaining = listCardHand.Count() - 1;
                 cardsRemaining = Math.Max(1, cardsRemaining);
                 cardCounter = 0;
+                score = 0;
                 InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
+                //reset other stuff
+                listHistory.Clear();
+                currentCard = null;
             }
             else { Game.SetError(new Error(94, "Invalid tempList input (null)")); }
         }
@@ -990,7 +995,7 @@ namespace Next_Game
             //flip next card
             NextCard = true;
             //add to history
-            if (currentCard.Type != CardType.None)
+            if (currentCard != null && currentCard.Type != CardType.None)
             {
                 cardCounter++;
                 string text = string.Format("Card {0}, {1} {2}, ({3}), for {4}{5} points, score {6}{7}", cardCounter, playerAction, currentCard.Title, currentCard.Type, 
