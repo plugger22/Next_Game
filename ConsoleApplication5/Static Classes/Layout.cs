@@ -288,7 +288,7 @@ namespace Next_Game
             int score_left_align = ca_left_outer + ca_status_width / 2;
             int bar_width = score_width - (ca_bar_offset_x * 2);
             int bar_middle = score_left_align + ca_bar_offset_x + (bar_width / 2); //x_coord of mid point
-            int bar_segment = Convert.ToInt32((float)bar_width / 8); //scoring marker segments on bar (4 either side of the zero mid point)
+            int bar_segment = Convert.ToInt32((float)(bar_width / 8)); //scoring marker segments on bar (4 either side of the zero mid point)
             int bar_top = ca_score_vert_align + ca_bar_offset_y; //y_coord of bar
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
             //Card
@@ -436,6 +436,12 @@ namespace Next_Game
             int vertical_bottom = vertical_middle + history_height + ou_spacer;
             //history
             //DrawBox(ou_left_align, vertical_middle, box_width, history_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Outcome, arrayOfForeColors_Outcome, arrayOfBackColors_Outcome);
+            //zero out character cells
+            for (int width_index = ou_left_align + 1; width_index < ou_left_align + box_width - 1; width_index++)
+            {
+                for (int height_index = vertical_middle + 1; height_index < vertical_middle + history_height - 1; height_index++)
+                { /*arrayOfBackColors_Outcome[width_index, height_index] = Back_FillColor;*/ arrayOfCells_Outcome[width_index, height_index] = 255; }
+            }
             DrawCenteredText("Hand History", ou_left_align, vertical_middle + 2, box_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
             for (int i = 0; i < listHistory.Count; i++)
             { DrawText(listHistory[i].GetText(), ou_left_align + 4, vertical_middle + 5 + i * 2, listHistory[i].GetForeColor(), arrayOfCells_Outcome, arrayOfForeColors_Outcome); }
@@ -555,6 +561,7 @@ namespace Next_Game
             DrawBox(score_left_align + ca_bar_offset_x, bar_top, bar_width, bar_height, Bar_FillColor, Bar_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             //...coloured bars
             int tempScore = Math.Min(20, score);
+            tempScore = Math.Max(-20, tempScore);
             int bar_length = Math.Abs(Convert.ToInt32((float)(bar_width / 2 * tempScore / 20))); //scoring marker segments on bar (max display of bar is +/- 20 points)
             if (score > 0)
             { DrawBox(bar_middle, bar_top, bar_length, bar_height, Bar_FillColor, RLColor.Green, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); }
@@ -944,20 +951,25 @@ namespace Next_Game
         {
             if (tempList != null)
             {
-                //empty out list first
-                listCardHand.Clear();
                 //update
                 listCardHand.AddRange(tempList);
                 cardsRemaining = listCardHand.Count() - 1;
                 cardsRemaining = Math.Max(1, cardsRemaining);
-                cardCounter = 0;
-                score = 0;
-                InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
-                //reset other stuff
-                listHistory.Clear();
-                currentCard = null;
             }
             else { Game.SetError(new Error(94, "Invalid tempList input (null)")); }
+        }
+
+        /// <summary>
+        /// resets all relevant data prior to a new challenge
+        /// </summary>
+        internal void ResetLayout()
+        {
+            cardCounter = 0;
+            score = 0;
+            listCardHand.Clear();
+            listHistory.Clear();
+            currentCard = null;
+            InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
         }
 
         /// <summary>

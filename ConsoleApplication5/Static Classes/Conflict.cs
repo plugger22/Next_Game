@@ -53,11 +53,11 @@ namespace Next_Game
         /// </summary>
         public void InitialiseConflict()
         {
+            ResetData();
             SetPlayerStrategy();
             SetTraits();
             SetSituation();
             SetOpponentStrategy();
-            
             SetOutcome();
             SetCardPool();
             SetHand();
@@ -506,6 +506,14 @@ namespace Next_Game
             Game.layout.SetPoints(tempArray);
         }
         
+
+        /// <summary>
+        /// reset all relevant data in conflict and layout prior to a new challenge
+        /// </summary>
+        private void ResetData()
+        {
+            Game.layout.ResetLayout();
+        }
         // methods above here
     }
 }
