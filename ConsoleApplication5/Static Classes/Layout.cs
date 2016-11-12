@@ -329,19 +329,12 @@ namespace Next_Game
             DrawBox(ca_left_outer, vertical_align, ca_status_width, ca_status_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             DrawCenteredText("Remaining", ca_left_outer, vertical_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Cards", ca_left_outer, vertical_align + 4, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            
             //Situation (top right)
             DrawBox(horizontal_align, ca_top_align, ca_status_width, ca_status_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
-            DrawCenteredText("Situation", horizontal_align, ca_top_align + 2, ca_status_width,  RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            
             //Secrets box (middle right)
             DrawBox(horizontal_align, middle_align, ca_status_width, ca_status_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
-            DrawCenteredText("Secrets", horizontal_align, middle_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("No Relevant Secrets Found", horizontal_align, middle_align + 4, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Strategy Info (bottom right)
             DrawBox(horizontal_align, vertical_align, ca_status_width, ca_status_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
-            DrawCenteredText("Your Strategy", horizontal_align, vertical_align + 2, ca_status_width,  RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("Opponent's Strategy", horizontal_align, vertical_align + 6, ca_status_width,  RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
         }
 
         /// <summary>
@@ -480,11 +473,32 @@ namespace Next_Game
             int bar_top = ca_score_vert_align + ca_bar_offset_y; //y_coord of bar
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
             //Situation
+            for (int width_index = horizontal_align + 1; width_index < horizontal_align + ca_status_width - 1; width_index++)
+            {
+                for (int height_index = ca_top_align + 1; height_index < ca_top_align + ca_status_height - 1; height_index++)
+                { arrayOfCells_Cards[width_index, height_index] = 255; }
+            }
+            DrawCenteredText("Situation", horizontal_align, ca_top_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arraySituation[0], horizontal_align, ca_top_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arraySituation[1], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arraySituation[2], horizontal_align, ca_top_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            //Secrets box (middle right)
+            for (int width_index = horizontal_align + 1; width_index < horizontal_align + ca_status_width - 1; width_index++)
+            {
+                for (int height_index = middle_align + 1; height_index < middle_align + ca_status_height - 1; height_index++)
+                { arrayOfCells_Cards[width_index, height_index] = 255; }
+            }
+            DrawCenteredText("Secrets", horizontal_align, middle_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("No Relevant Secrets Found", horizontal_align, middle_align + 4, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Strategy
+            for (int width_index = horizontal_align + 1; width_index < horizontal_align + ca_status_width - 1; width_index++)
+            {
+                for (int height_index = vertical_align + 1; height_index < vertical_align + ca_status_height - 1; height_index++)
+                { arrayOfCells_Cards[width_index, height_index] = 255; }
+            }
+            DrawCenteredText("Your Strategy", horizontal_align, vertical_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arrayStrategy[Strategy_Player], horizontal_align, vertical_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("Opponent's Strategy", horizontal_align, vertical_align + 6, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arrayStrategy[Strategy_Opponent], horizontal_align, vertical_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Card
             points_play = 0;
