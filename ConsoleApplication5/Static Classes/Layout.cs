@@ -512,7 +512,7 @@ namespace Next_Game
             }
             Snippet[] messageArray = messageQueue.ToArray();
             for (int i = 0; i < messageQueue.Count(); i++)
-            { DrawText(messageArray[i].GetText(), ca_left_outer + 4, vertical_pos + 2 + i * 2, messageArray[i].GetForeColor(), arrayOfCells_Cards, arrayOfForeColors_Cards); }
+            { DrawCenteredText(messageArray[i].GetText(), ca_left_outer + 4, vertical_pos + 3 + i * 2, text_box_width, messageArray[i].GetForeColor(), arrayOfCells_Cards, arrayOfForeColors_Cards); }
             //Card
             points_play = 0;
             points_ignore = 0;
