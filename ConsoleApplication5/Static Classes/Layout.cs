@@ -557,6 +557,11 @@ namespace Next_Game
             DrawText(Convert.ToString(arrayCardPool[2]), ca_left_outer + 24, middle_align + 6, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText(Convert.ToString(arrayCardPool.Sum()), ca_left_outer + 24, middle_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Score Bar
+            for (int width_index = score_left_align + ca_bar_offset_x; width_index < score_left_align + ca_bar_offset_x + bar_width; width_index++)
+            {
+                for (int height_index = bar_top; height_index < bar_top + bar_height + 1; height_index++)
+                { arrayOfCells_Cards[width_index, height_index] = 255; }
+            }
             //...bar
             DrawBox(score_left_align + ca_bar_offset_x, bar_top, bar_width, bar_height, Bar_FillColor, Bar_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             //...coloured bars
