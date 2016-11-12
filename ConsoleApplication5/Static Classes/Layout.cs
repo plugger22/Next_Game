@@ -600,7 +600,9 @@ namespace Next_Game
             else if (score < 0)
             { DrawBox(bar_middle - bar_length, bar_top, bar_length, bar_height, RLColor.Red, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); }
             //...current score
-            DrawText(string.Format("{0}{1}", score > 0 ? "+" : "", score), bar_middle - 1, bar_top + bar_height, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            if (score != 0)
+            { DrawText(string.Format("{0}{1}", score > 0 ? "+" : "", score), bar_middle - 1, bar_top + bar_height, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards); }
+            else { DrawText(string.Format(" {0}", score), bar_middle - 1, bar_top + bar_height, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards); }
         }
 
 
