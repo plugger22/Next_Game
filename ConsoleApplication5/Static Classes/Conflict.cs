@@ -53,7 +53,6 @@ namespace Next_Game
         /// </summary>
         public void InitialiseConflict()
         {
-            ResetData();
             SetPlayerStrategy();
             SetTraits();
             SetSituation();
@@ -507,13 +506,7 @@ namespace Next_Game
         }
         
 
-        /// <summary>
-        /// reset all relevant data in conflict and layout prior to a new challenge
-        /// </summary>
-        private void ResetData()
-        {
-            Game.layout.ResetLayout();
-        }
+    
         // methods above here
     }
 }

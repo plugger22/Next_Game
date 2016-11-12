@@ -564,9 +564,9 @@ namespace Next_Game
             tempScore = Math.Max(-20, tempScore);
             int bar_length = Math.Abs(Convert.ToInt32((float)(bar_width / 2 * tempScore / 20))); //scoring marker segments on bar (max display of bar is +/- 20 points)
             if (score > 0)
-            { DrawBox(bar_middle, bar_top, bar_length, bar_height, Bar_FillColor, RLColor.Green, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); }
+            { DrawBox(bar_middle, bar_top, bar_length, bar_height, RLColor.Green, RLColor.Green, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); }
             else if (score < 0)
-            { DrawBox(bar_middle - bar_length, bar_top, bar_length, bar_height, Bar_FillColor, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); }
+            { DrawBox(bar_middle - bar_length, bar_top, bar_length, bar_height, RLColor.Red, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); }
             //...current score
             DrawText(string.Format("{0}{1}", score > 0 ? "+" : "", score), bar_middle - 1, bar_top + bar_height, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
         }
@@ -957,19 +957,21 @@ namespace Next_Game
                 cardsRemaining = Math.Max(1, cardsRemaining);
             }
             else { Game.SetError(new Error(94, "Invalid tempList input (null)")); }
+            InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
         }
 
         /// <summary>
-        /// resets all relevant data prior to a new challenge
+        /// resets all relevant data at the end of a challenge
         /// </summary>
         internal void ResetLayout()
         {
             cardCounter = 0;
             score = 0;
+            points_play = 0;
+            points_ignore = 0;
             listCardHand.Clear();
             listHistory.Clear();
             currentCard = null;
-            InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
         }
 
         /// <summary>
@@ -1014,7 +1016,6 @@ namespace Next_Game
                     pointsGained > 0 ? "+" : "", pointsGained, score > 0 ? "+" : "", score);
                 listHistory.Add(new Snippet(text, foreColor, Back_FillColor));
             }
-            
         }
 
         //new methods above here

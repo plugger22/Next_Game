@@ -1198,6 +1198,7 @@ namespace Next_Game
                                     _conflictMode = ConflictMode.Outcome;
                                     break;
                                 case ConflictMode.Outcome:
+                                    layout.ResetLayout();
                                     exitFlag = true;
                                     break;
                             }
