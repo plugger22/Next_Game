@@ -44,6 +44,7 @@ namespace Next_Game
         int ca_score_vert_align;
         int ca_bar_offset_x; //score internal bar
         int ca_bar_offset_y;
+        int ca_message_max; 
         //strategy layout
         int st_left_outer; //left margin (y_coord)
         int st_middle_align; //middle box margin (y_coord)
@@ -75,6 +76,7 @@ namespace Next_Game
         private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
         private List<Card> listCardHand; //cards in playable hand
         private List<Snippet> listHistory; //record of how the hand was played
+        private Queue<Snippet> messageQueue;
         //Cards
         private int[,] arrayOfCells_Cards; //cell array for box and text
         private RLColor[,] arrayOfForeColors_Cards; //foreground color for cell contents
@@ -166,6 +168,7 @@ namespace Next_Game
             ca_status_height = 11;
             ca_top_align = 22; //top of card (y_coord) & top y_coord for upper status boxes
             ca_spacer = 6; //space between bottom of card and top of text boxes below
+            ca_message_max = 3; //number of lines of text in message box
             ca_message_height = 12; //upper text box
             ca_instruct_height = 9; //lower text box
             ca_score_height = 12;
@@ -203,6 +206,7 @@ namespace Next_Game
             listCardBreakdown = new List<Snippet>();
             listCardHand = new List<Card>();
             listHistory = new List<Snippet>();
+            messageQueue = new Queue<Snippet>();
             //assorted
             score = 0;
             currentCard = new Card_Conflict();
@@ -500,6 +504,15 @@ namespace Next_Game
             DrawCenteredText(arrayStrategy[Strategy_Player], horizontal_align, vertical_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Opponent's Strategy", horizontal_align, vertical_align + 6, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arrayStrategy[Strategy_Opponent], horizontal_align, vertical_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            //Message
+            for (int width_index = ca_left_outer + 1; width_index < ca_left_outer + text_box_width - 1; width_index++)
+            {
+                for (int height_index = vertical_pos + 1; height_index < vertical_pos + ca_message_height - 1; height_index++)
+                { arrayOfCells_Cards[width_index, height_index] = 255; }
+            }
+            Snippet[] messageArray = messageQueue.ToArray();
+            for (int i = 0; i < messageQueue.Count(); i++)
+            { DrawText(messageArray[i].GetText(), ca_left_outer + 4, vertical_pos + 2 + i * 2, messageArray[i].GetForeColor(), arrayOfCells_Cards, arrayOfForeColors_Cards); }
             //Card
             points_play = 0;
             points_ignore = 0;
@@ -990,6 +1003,7 @@ namespace Next_Game
             points_ignore = 0;
             listCardHand.Clear();
             listHistory.Clear();
+            messageQueue.Clear();
             currentCard = null;
         }
 
@@ -1033,7 +1047,11 @@ namespace Next_Game
                 cardCounter++;
                 string text = string.Format("Card {0}, {1} {2}, ({3}), for {4}{5} points, score {6}{7}", cardCounter, playerAction, currentCard.Title, currentCard.Type, 
                     pointsGained > 0 ? "+" : "", pointsGained, score > 0 ? "+" : "", score);
-                listHistory.Add(new Snippet(text, foreColor, Back_FillColor));
+                Snippet snippet = new Snippet(text, foreColor, Back_FillColor);
+                listHistory.Add(snippet);
+                //add to message queue
+                messageQueue.Enqueue(snippet);
+                if (messageQueue.Count > ca_message_max) { messageQueue.Dequeue();}
             }
         }
 
