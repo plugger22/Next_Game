@@ -431,13 +431,42 @@ namespace Next_Game
             int vertical_top = ou_spacer;
             int vertical_middle = vertical_top + ou_outcome_height + ou_spacer;
             int vertical_bottom = vertical_middle + history_height + ou_spacer;
+            //outcome
+            string textDescription = "No Conclusive Outcome was obtained either way. Status unchanged.";
+            string textOutcome = "No Result";
+            int resultOutcome = 0; // 1/2/3 for ascending level of wins and 4/5/6 for ascending level of losses. '0' for no result
+            RLColor forecolor = RLColor.Black;
+            //determine level of win or loss
+            if (score > 0)
+            {
+                if (score >= 5) { resultOutcome = 1; textOutcome = "A Minor Win"; forecolor = RLColor.Green; }
+                else if (score >= 10) { resultOutcome = 2; textOutcome = "A Win"; forecolor = RLColor.Green; }
+                else if (score >= 15) { resultOutcome = 3; textOutcome = "A Major Win"; forecolor = RLColor.Green; }
+            }
+            else if (score < 0)
+            {
+                if (score <= -5) { resultOutcome = 4; textOutcome = "A Minor Loss"; forecolor = RLColor.Red; }
+                else if (score <= -10) { resultOutcome = 5; textOutcome = "A Loss"; forecolor = RLColor.Red; }
+                else if (score <= -15) { resultOutcome = 6; textOutcome = "A Major Loss"; forecolor = RLColor.Red; }
+            }
+            //text version of win/loss outcome
+            if (resultOutcome != 0) { textDescription = arrayOutcome[resultOutcome]; }
+            //clear out outcome box
+            for (int width_index = ou_left_align + 1; width_index < ou_left_align + box_width - 1; width_index++)
+            {
+                for (int height_index = vertical_top + 1; height_index < vertical_top + ou_outcome_height - 1; height_index++)
+                { arrayOfCells_Outcome[width_index, height_index] = 255; }
+            }
+            DrawCenteredText("Outcome", ou_left_align, vertical_top + 2, box_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText(string.Format("Final Score {0}{1}", score > 0 ? "+" : "", score), ou_left_align, vertical_top + 4, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            
+            DrawCenteredText(textOutcome, ou_left_align, vertical_top + 6, box_width, forecolor, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText(textDescription, ou_left_align, vertical_top + 8, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
             //history
-            //DrawBox(ou_left_align, vertical_middle, box_width, history_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Outcome, arrayOfForeColors_Outcome, arrayOfBackColors_Outcome);
-            //zero out character cells
             for (int width_index = ou_left_align + 1; width_index < ou_left_align + box_width - 1; width_index++)
             {
                 for (int height_index = vertical_middle + 1; height_index < vertical_middle + history_height - 1; height_index++)
-                { /*arrayOfBackColors_Outcome[width_index, height_index] = Back_FillColor;*/ arrayOfCells_Outcome[width_index, height_index] = 255; }
+                { arrayOfCells_Outcome[width_index, height_index] = 255; }
             }
             DrawCenteredText("Hand History", ou_left_align, vertical_middle + 2, box_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
             for (int i = 0; i < listHistory.Count; i++)
