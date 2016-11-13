@@ -689,7 +689,7 @@ namespace Next_Game
                 width++; height = 0;
             }
             //draw popUp box in card layout
-            DrawBox(po_left_align, po_top_align, po_box_width, po_box_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
+            DrawBox(po_left_align, po_top_align, po_box_width, po_box_height, RLColor.Magenta, Color._popup, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             //populate with relevant data
             DrawCenteredText("Win Outcomes (+5/+10/+15)", po_left_align + 3, po_top_align + 2, po_box_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Minor Win:  " + arrayOutcome[1], po_left_align + 3, po_top_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
