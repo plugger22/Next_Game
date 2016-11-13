@@ -358,8 +358,10 @@ namespace Next_Game
                             Game.layout.DrawCards(multiConsole);
                             break;
                         case ConflictMode.RestoreCards:
-                            Game.layout.RemovePopup();
+                            if (Game.layout.PopupFlag == true)
+                            { Game.layout.RemovePopup(); }
                             Game.layout.DrawCards(multiConsole);
+                            Game._conflictMode = ConflictMode.Cards;
                             break;
                         case ConflictMode.Confirm:
                             Game.layout.UpdateMessage(Game.layout.GetDataConfirm(), Game.layout.Confirm_FillColor);

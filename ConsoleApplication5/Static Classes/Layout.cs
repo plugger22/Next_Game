@@ -729,7 +729,7 @@ namespace Next_Game
             Array.Clear(arrayOfCells_Popup, 0, arrayOfCells_Popup.Length);
             Array.Clear(arrayOfForeColors_Popup, 0, arrayOfForeColors_Popup.Length);
             Array.Clear(arrayOfBackColors_Popup, 0, arrayOfBackColors_Popup.Length);
-
+            PopupFlag = false;
         }
 
         /// <summary>

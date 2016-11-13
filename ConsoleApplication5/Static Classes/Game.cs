@@ -1207,9 +1207,9 @@ namespace Next_Game
                                 case ConflictMode.Popup:
                                     _conflictMode = ConflictMode.RestoreCards;
                                     break;
-                                case ConflictMode.RestoreCards:
+                                /*case ConflictMode.RestoreCards:
                                     _conflictMode = ConflictMode.Cards;
-                                    break;
+                                    break;*/
                             }
                         }
                     }
