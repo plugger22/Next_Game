@@ -336,8 +336,8 @@ namespace Next_Game
             //lower text box - instructions
             vertical_pos += ca_message_height + ca_spacer / 2;
             DrawBox(ca_left_outer, vertical_pos, text_box_width, ca_instruct_height, RLColor.Yellow, RLColor.White, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
-            DrawCenteredText("[F1] to Play a Card", ca_left_outer, vertical_pos + 2, text_box_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("[SPACE] or [ENTER] to Ignore a Card", ca_left_outer, vertical_pos + 4, text_box_width, RLColor.Gray, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("[F1] to Play a Card, [SPACE] or [ENTER] to Ignore a Card", ca_left_outer, vertical_pos + 2, text_box_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("[F2] to see Outcomes", ca_left_outer, vertical_pos + 4, text_box_width, RLColor.Gray, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("[ESC] to Auto Resolve", ca_left_outer, vertical_pos + 6, text_box_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Remaining Influence (top left in relation to card display)
             DrawBox(ca_left_outer, ca_top_align, ca_status_width, ca_status_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
@@ -472,14 +472,14 @@ namespace Next_Game
             if (score > 0)
             {
                 if (score >= 5) { resultOutcome = 1; textOutcome = "A Minor Win"; forecolor = RLColor.Green; }
-                else if (score >= 10) { resultOutcome = 2; textOutcome = "A Win"; forecolor = RLColor.Green; }
-                else if (score >= 15) { resultOutcome = 3; textOutcome = "A Major Win"; forecolor = RLColor.Green; }
+                if (score >= 10) { resultOutcome = 2; textOutcome = "A Win"; forecolor = RLColor.Green; }
+                if (score >= 15) { resultOutcome = 3; textOutcome = "A Major Win"; forecolor = RLColor.Green; }
             }
             else if (score < 0)
             {
                 if (score <= -5) { resultOutcome = 4; textOutcome = "A Minor Loss"; forecolor = RLColor.Red; }
-                else if (score <= -10) { resultOutcome = 5; textOutcome = "A Loss"; forecolor = RLColor.Red; }
-                else if (score <= -15) { resultOutcome = 6; textOutcome = "A Major Loss"; forecolor = RLColor.Red; }
+                if (score <= -10) { resultOutcome = 5; textOutcome = "A Loss"; forecolor = RLColor.Red; }
+                if (score <= -15) { resultOutcome = 6; textOutcome = "A Major Loss"; forecolor = RLColor.Red; }
             }
             //text version of win/loss outcome
             if (resultOutcome != 0) { textDescription = arrayOutcome[resultOutcome]; }
@@ -695,10 +695,10 @@ namespace Next_Game
             DrawText("Minor Win:  " + arrayOutcome[1], po_left_align + 3, po_top_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Win:        " + arrayOutcome[2], po_left_align + 3, po_top_align + 6, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Major Win:  " + arrayOutcome[3], po_left_align + 3, po_top_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("Lose Outcomes (-5/-10/-15)", po_left_align + 3, po_top_align + 12, po_box_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("Minor Loss: " + arrayOutcome[4], po_left_align + 3, po_top_align + 14, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("Loss:       " + arrayOutcome[5], po_left_align + 3, po_top_align + 16, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("Major Loss: " + arrayOutcome[6], po_left_align + 3, po_top_align + 18, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("Lose Outcomes (-5/-10/-15)", po_left_align + 3, po_top_align + 10, po_box_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Minor Loss: " + arrayOutcome[4], po_left_align + 3, po_top_align + 12, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Loss:       " + arrayOutcome[5], po_left_align + 3, po_top_align + 14, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Major Loss: " + arrayOutcome[6], po_left_align + 3, po_top_align + 16, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //top box instructions
             DrawCenteredText("Press [SPACE] or [ENTER] to Continue", po_left_align, po_top_align + po_box_height - 3, po_box_width, RLColor.Gray, arrayOfCells_Cards, arrayOfForeColors_Cards);
             PopupFlag = true;
