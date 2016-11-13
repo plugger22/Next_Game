@@ -13,7 +13,7 @@ namespace Next_Game
     public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome} //if MenuMode.Special then this is the type of special
-    public enum ConflictMode { None, Intro, Strategy, Cards, Outcome, Confirm, AutoResolve, ErrorStrategy} //submodes within SpecialMode.Conflict, determines GUI
+    public enum ConflictMode { None, Intro, Strategy, Cards, Outcome, Confirm, AutoResolve, ErrorStrategy, Popup, RestoreCards} //submodes within SpecialMode.Conflict, determines GUI
 
     public static class Game
     {
@@ -1095,6 +1095,12 @@ namespace Next_Game
                                 _conflictMode = ConflictMode.Confirm;
                                 layout.Strategy_Player = 1;
                                 break;
+                            case ConflictMode.Cards:
+                                _conflictMode = ConflictMode.Popup;
+                                break;
+                            case ConflictMode.Popup:
+                                _conflictMode = ConflictMode.RestoreCards;
+                                break;   
                         }
                     }
                     break;
@@ -1200,6 +1206,12 @@ namespace Next_Game
                                 case ConflictMode.Outcome:
                                     layout.ResetLayout();
                                     exitFlag = true;
+                                    break;
+                                case ConflictMode.Popup:
+                                    _conflictMode = ConflictMode.RestoreCards;
+                                    break;
+                                case ConflictMode.RestoreCards:
+                                    _conflictMode = ConflictMode.Cards;
                                     break;
                             }
                         }

@@ -682,7 +682,7 @@ namespace Next_Game
                     arrayOfBackColors_Popup[width, height] = arrayOfBackColors_Cards[width_index, height_index];
                     height++;
                 }
-                width++; 
+                width++; height = 0;
             }
             //draw popUp box in card layout
             DrawBox(po_left_align, po_top_align, po_box_width, po_box_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
@@ -715,7 +715,7 @@ namespace Next_Game
                     arrayOfBackColors_Cards[width_index, height_index] = arrayOfBackColors_Popup[width, height];
                     height++;
                 }
-                width++;
+                width++; height = 0;
             }
         }
 

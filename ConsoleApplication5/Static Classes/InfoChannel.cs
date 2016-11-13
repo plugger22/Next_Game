@@ -352,6 +352,14 @@ namespace Next_Game
                                 Game.layout.DrawCards(multiConsole);
                             }
                             break;
+                        case ConflictMode.Popup:
+                            Game.layout.UpdatePopup();
+                            Game.layout.DrawCards(multiConsole);
+                            break;
+                        case ConflictMode.RestoreCards:
+                            Game.layout.RemovePopup();
+                            Game.layout.DrawCards(multiConsole);
+                            break;
                         case ConflictMode.Confirm:
                             Game.layout.UpdateMessage(Game.layout.GetDataConfirm(), Game.layout.Confirm_FillColor);
                             Game.layout.DrawMessage(multiConsole);
@@ -368,6 +376,7 @@ namespace Next_Game
                             Game.layout.UpdateOutcome();
                             Game.layout.DrawOutcome(multiConsole);
                             break;
+
                     }
                                        
                     break;
