@@ -231,11 +231,14 @@ namespace Next_Game
         public void InitialiseIntro()
         {
             int left_align = (Width - Offset_x) / 8;
-            int top_align = (Height - Offset_y * 2) / 4;
+            int vertical_segment = (Height - Offset_y * 2) / 8;
+            int top_align = vertical_segment * 2;
+            int bottom_align = vertical_segment * 5;
             int box_width = (Width - Offset_x) * 6 / 8;
-            int box_height = (Height - Offset_y * 2) / 2;
+            int box_height = vertical_segment * 2;
             //confirmation box (centred)
             DrawBox(left_align, top_align, box_width, box_height, RLColor.Yellow, Intro_FillColor, arrayOfCells_Intro, arrayOfForeColors_Intro, arrayOfBackColors_Intro);
+            DrawBox(left_align, bottom_align, box_width, box_height, RLColor.Yellow, Intro_FillColor, arrayOfCells_Intro, arrayOfForeColors_Intro, arrayOfBackColors_Intro);
         }
 
         /// <summary>
@@ -358,7 +361,7 @@ namespace Next_Game
             DrawBox(ou_left_align, vertical_middle, box_width, history_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Outcome, arrayOfForeColors_Outcome, arrayOfBackColors_Outcome);
             DrawCenteredText("History", ou_left_align, vertical_middle + 2, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
             //Instruction
-            DrawBox(ou_left_align, vertical_bottom, box_width, ou_instruct_height, RLColor.Yellow, RLColor.White, arrayOfCells_Outcome, arrayOfForeColors_Outcome, arrayOfBackColors_Outcome);
+            DrawBox(ou_left_align, vertical_bottom, box_width, ou_instruct_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Outcome, arrayOfForeColors_Outcome, arrayOfBackColors_Outcome);
             DrawCenteredText("Press [SPACE] or [ENTER] to Continue", ou_left_align, vertical_bottom + 2, box_width, RLColor.Gray, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
         }
 
@@ -388,36 +391,47 @@ namespace Next_Game
         public void UpdateIntro()
         {
             int left_align = (Width - Offset_x) / 8;
-            int top_align = (Height - Offset_y * 2) / 4;
+            int vertical_segment = (Height - Offset_y * 2) / 8;
+            int top_align = vertical_segment * 2;
+            int bottom_align = vertical_segment * 5;
             int box_width = (Width - Offset_x) * 6 / 8;
-            int box_height = (Height - Offset_y * 2) / 2;
-            //Clear box & change background color
+            int box_height = vertical_segment * 2;
+            //Clear top box & change background color
             for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
             {
                 for (int height_index = top_align + 1; height_index < top_align + box_height - 1; height_index++)
                 {
                     arrayOfCells_Intro[width_index, height_index] = 255;
-                    arrayOfBackColors_Intro[width_index, height_index] = Intro_FillColor;
+                    //arrayOfBackColors_Intro[width_index, height_index] = Intro_FillColor;
                 }
             }
             //Add new text -> Type of Conflict
             DrawCenteredText(arrayOutcome[0], left_align, top_align + 3, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
             //protagonists
-            DrawCenteredText(arrayOutcome[9], left_align, top_align + 5, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText(arrayOutcome[9], left_align, top_align + 6, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             //who has the advantage
             DrawCenteredText(arrayOutcome[7], left_align, top_align + 10, box_width, RLColor.Green, arrayOfCells_Intro, arrayOfForeColors_Intro);
             //recommendation
-            DrawCenteredText(arrayOutcome[8], left_align, top_align + 12, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText(arrayOutcome[8], left_align, top_align + 13, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            //clear bottom box
+            for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
+            {
+                for (int height_index = bottom_align + 1; height_index < bottom_align + box_height - 1; height_index++)
+                {
+                    arrayOfCells_Intro[width_index, height_index] = 255;
+                    //arrayOfBackColors_Intro[width_index, height_index] = Intro_FillColor;
+                }
+            }
             //outcomes
-            DrawText("Win Outcomes", left_align + 3, top_align + 18, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Minor Win:  " + arrayOutcome[1], left_align + 3, top_align + 20, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Win:        " + arrayOutcome[2], left_align + 3, top_align + 22, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Major Win:  " + arrayOutcome[3], left_align + 3, top_align + 24, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Lose Outcomes", left_align + 3, top_align + 28, RLColor.Red, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Minor Loss: " + arrayOutcome[4], left_align + 3, top_align + 30, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Loss:       " + arrayOutcome[5], left_align + 3, top_align + 32, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawText("Major Loss: " + arrayOutcome[6], left_align + 3, top_align + 34, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            
+            DrawCenteredText("Win Outcomes", left_align + 3, bottom_align + 2, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Minor Win:  " + arrayOutcome[1], left_align + 3, bottom_align + 4, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Win:        " + arrayOutcome[2], left_align + 3, bottom_align + 6, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Major Win:  " + arrayOutcome[3], left_align + 3, bottom_align + 8, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText("Lose Outcomes", left_align + 3, bottom_align + 12, box_width, RLColor.Red, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Minor Loss: " + arrayOutcome[4], left_align + 3, bottom_align + 14, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Loss:       " + arrayOutcome[5], left_align + 3, bottom_align + 16, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawText("Major Loss: " + arrayOutcome[6], left_align + 3, bottom_align + 18, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            //top box instructions
             DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + box_height - 3, box_width, RLColor.Gray, arrayOfCells_Intro, arrayOfForeColors_Intro);
         }
 
@@ -458,10 +472,10 @@ namespace Next_Game
                 { arrayOfCells_Outcome[width_index, height_index] = 255; }
             }
             DrawCenteredText("Outcome", ou_left_align, vertical_top + 2, box_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            DrawCenteredText(string.Format("Final Score {0}{1}", score > 0 ? "+" : "", score), ou_left_align, vertical_top + 4, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            
-            DrawCenteredText(textOutcome, ou_left_align, vertical_top + 6, box_width, forecolor, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            DrawCenteredText(textDescription, ou_left_align, vertical_top + 8, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText(arrayOutcome[0], ou_left_align, vertical_top + 4, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText(string.Format("Final Score {0}{1}", score > 0 ? "+" : "", score), ou_left_align, vertical_top + 6, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText(textOutcome, ou_left_align, vertical_top + 8, box_width, forecolor, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText(textDescription, ou_left_align, vertical_top + 10, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
             //history
             for (int width_index = ou_left_align + 1; width_index < ou_left_align + box_width - 1; width_index++)
             {
