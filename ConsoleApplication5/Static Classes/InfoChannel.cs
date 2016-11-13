@@ -309,7 +309,7 @@ namespace Next_Game
         /// <param name="mode"></param>
         private void DrawSpecial(RLConsole multiConsole, SpecialMode mode )
         {
-            //test data
+            /*//test data
                     List<Snippet> listOfSnippets = new List<Snippet>();
                     listOfSnippets.Add(new Snippet("This is the most amazing house I've lived in", RLColor.Black, RLColor.Black));
                     listOfSnippets.Add(new Snippet());
@@ -319,7 +319,7 @@ namespace Next_Game
                     listOfSnippets.Add(new Snippet());
                     listOfSnippets.Add(new Snippet());
                     listOfSnippets.Add(new Snippet("Choose [F1] Event or [F2] Color", RLColor.Red, RLColor.Black));
-
+                    */
             switch (mode)
             {
                 case SpecialMode.PlayerEvent:
@@ -353,7 +353,8 @@ namespace Next_Game
                             }
                             break;
                         case ConflictMode.Popup:
-                            Game.layout.UpdatePopup();
+                            if (Game.layout.PopupFlag == false)
+                            { Game.layout.UpdatePopup(); }
                             Game.layout.DrawCards(multiConsole);
                             break;
                         case ConflictMode.RestoreCards:

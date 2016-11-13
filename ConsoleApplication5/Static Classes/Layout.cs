@@ -21,6 +21,7 @@ namespace Next_Game
         private RLColor backColor;
         //assorted
         public bool NextCard { get; set; } //flag indicating next card is ready to draw
+        public bool PopupFlag { get; set; } //flag to prevent popup overwriting itself
         public int InfluenceRemaining { get; set; }
         int cardsRemaining;
         int score;
@@ -226,7 +227,7 @@ namespace Next_Game
             //assorted
             score = 0;
             currentCard = new Card_Conflict();
-
+            PopupFlag = false;
         }
 
         /// <summary>
@@ -677,9 +678,12 @@ namespace Next_Game
             {
                 for(int height_index = po_top_align; height_index < po_top_align + po_box_height; height_index++)
                 {
+                    //copy data
                     arrayOfCells_Popup[width, height] = arrayOfCells_Cards[width_index, height_index];
                     arrayOfForeColors_Popup[width, height] = arrayOfForeColors_Cards[width_index, height_index];
                     arrayOfBackColors_Popup[width, height] = arrayOfBackColors_Cards[width_index, height_index];
+                    //blank card cellarray
+                    arrayOfCells_Cards[width_index, height_index] = 255;
                     height++;
                 }
                 width++; height = 0;
@@ -697,6 +701,7 @@ namespace Next_Game
             DrawText("Major Loss: " + arrayOutcome[6], po_left_align + 3, po_top_align + 18, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //top box instructions
             DrawCenteredText("Press [SPACE] or [ENTER] to Continue", po_left_align, po_top_align + po_box_height - 3, po_box_width, RLColor.Gray, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            PopupFlag = true;
         }
 
         /// <summary>
@@ -710,6 +715,9 @@ namespace Next_Game
             {
                 for (int height_index = po_top_align; height_index < po_top_align + po_box_height; height_index++)
                 {
+                    //blank card cellarray
+                    arrayOfCells_Cards[width_index, height_index] = 255;
+                    //swap data
                     arrayOfCells_Cards[width_index, height_index] = arrayOfCells_Popup[width, height];
                     arrayOfForeColors_Cards[width_index, height_index] = arrayOfForeColors_Popup[width, height];
                     arrayOfBackColors_Cards[width_index, height_index] = arrayOfBackColors_Popup[width, height];
@@ -717,6 +725,11 @@ namespace Next_Game
                 }
                 width++; height = 0;
             }
+            //clear popup arrays
+            Array.Clear(arrayOfCells_Popup, 0, arrayOfCells_Popup.Length);
+            Array.Clear(arrayOfForeColors_Popup, 0, arrayOfForeColors_Popup.Length);
+            Array.Clear(arrayOfBackColors_Popup, 0, arrayOfBackColors_Popup.Length);
+
         }
 
         /// <summary>
