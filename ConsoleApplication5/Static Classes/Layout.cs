@@ -60,6 +60,11 @@ namespace Next_Game
         int ou_spacer;
         int ou_outcome_height;
         int ou_instruct_height;
+        //Popup layout
+        int po_left_align;
+        int po_top_align;
+        int po_box_width;
+        int po_box_height;
         //Layout Fill colors
         public RLColor Bar_FillColor { get; set; } 
         public RLColor Back_FillColor { get; set; } //for all non-highlighted boxes
@@ -97,6 +102,10 @@ namespace Next_Game
         private int[,] arrayOfCells_Intro;
         private RLColor[,] arrayOfForeColors_Intro;
         private RLColor[,] arrayOfBackColors_Intro;
+        //Pop-up -> used to store & restore Card layout data before & after a pop-up
+        private int[,] arrayOfCells_Popup;
+        private RLColor[,] arrayOfForeColors_Popup;
+        private RLColor[,] arrayOfBackColors_Popup;
         //strategy
         public int Strategy_Player { get; set; }
         public int Strategy_Opponent { get; set; }
@@ -116,6 +125,11 @@ namespace Next_Game
             this.backColor = fillColor;
             this.Offset_x = offset_x;
             this.Offset_y = offset_y;
+            //Popup layout (overlays Card layout)
+            po_left_align = (Width - Offset_x) / 8;
+            po_top_align = (Height - Offset_y * 2) / 4;
+            po_box_width = (Width - Offset_x) * 6 / 8;
+            po_box_height = (Height - Offset_y * 2) / 4;
             //error check dimensions to see that they'll fit into the multi-console (130 x 100)
             if (Width > 130) { Width = 130; Game.SetError(new Error(80, string.Format("Invalid Width input \"{0}\", changed to 130", width))); }
             if (Height > 100) { Height = 100; Game.SetError(new Error(80, string.Format("Invalid Height input \"{0}\", changed to 130", height))); }
@@ -135,8 +149,10 @@ namespace Next_Game
             arrayOfCells_Intro = new int[Width - Offset_x, Height - Offset_y * 2];
             arrayOfForeColors_Intro = new RLColor[Width - Offset_x, Height - Offset_y * 2];
             arrayOfBackColors_Intro = new RLColor[Width - Offset_x, Height - Offset_y * 2];
-
-            //debug data set
+            arrayOfCells_Popup = new int[po_box_width, po_box_height];
+            arrayOfForeColors_Popup = new RLColor[po_box_width, po_box_height];
+            arrayOfBackColors_Popup = new RLColor[po_box_width, po_box_height];
+            //Default data for arrays
             for (int height_index = 0; height_index < Height - Offset_y * 2; height_index++)
             {
                 for (int width_index = 0; width_index < Width - Offset_x; width_index++)
@@ -158,6 +174,16 @@ namespace Next_Game
                     arrayOfCells_Intro[width_index, height_index] = 255;
                 }
             }
+            //Dynamic Data Sets
+            arrayCardPool = new int[3];
+            arrayPoints = new int[3, 3, 4];
+            arraySituation = new string[3];
+            arrayStrategy = new string[3];
+            arrayOutcome = new string[10];
+            listCardBreakdown = new List<Snippet>();
+            listCardHand = new List<Card>();
+            listHistory = new List<Snippet>();
+            messageQueue = new Queue<Snippet>();
             //Card Layout
             ca_left_outer = 8; //left side of status boxes (y_coord)
             ca_right_align = 120;
@@ -197,19 +223,10 @@ namespace Next_Game
             Resolve_FillColor = RLColor.White;
             Error_FillColor = Color._errorFill;
             Intro_FillColor = Color._background0;
-            //Dynamic Data Sets
-            arrayCardPool = new int[3];
-            arrayPoints = new int[3,3,4];
-            arraySituation = new string[3];
-            arrayStrategy = new string[3];
-            arrayOutcome = new string[10];
-            listCardBreakdown = new List<Snippet>();
-            listCardHand = new List<Card>();
-            listHistory = new List<Snippet>();
-            messageQueue = new Queue<Snippet>();
             //assorted
             score = 0;
             currentCard = new Card_Conflict();
+
         }
 
         /// <summary>
@@ -423,11 +440,11 @@ namespace Next_Game
                 }
             }
             //outcomes
-            DrawCenteredText("Win Outcomes", left_align + 3, bottom_align + 2, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText("Win Outcomes (+5/+10/+15)", left_align + 3, bottom_align + 2, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Minor Win:  " + arrayOutcome[1], left_align + 3, bottom_align + 4, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Win:        " + arrayOutcome[2], left_align + 3, bottom_align + 6, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Major Win:  " + arrayOutcome[3], left_align + 3, bottom_align + 8, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawCenteredText("Lose Outcomes", left_align + 3, bottom_align + 12, box_width, RLColor.Red, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText("Lose Outcomes (-5/-10/-15)", left_align + 3, bottom_align + 12, box_width, RLColor.Red, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Minor Loss: " + arrayOutcome[4], left_align + 3, bottom_align + 14, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Loss:       " + arrayOutcome[5], left_align + 3, bottom_align + 16, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Major Loss: " + arrayOutcome[6], left_align + 3, bottom_align + 18, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
@@ -648,6 +665,59 @@ namespace Next_Game
             else { DrawText(string.Format(" {0}", score), bar_middle - 1, bar_top + bar_height, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards); }
         }
 
+        /// <summary>
+        /// Update card layout to show an overlaid popup, call DrawCard() to display Popup
+        /// </summary>
+        public void UpdatePopup()
+        {
+            //copy relevant section of card arrays to Popup arrays
+            int width = 0;
+            int height = 0;
+            for(int width_index = po_left_align; width_index < po_left_align + po_box_width; width_index++)
+            {
+                for(int height_index = po_top_align; height_index < po_top_align + po_box_height; height_index++)
+                {
+                    arrayOfCells_Popup[width, height] = arrayOfCells_Cards[width_index, height_index];
+                    arrayOfForeColors_Popup[width, height] = arrayOfForeColors_Cards[width_index, height_index];
+                    arrayOfBackColors_Popup[width, height] = arrayOfBackColors_Cards[width_index, height_index];
+                    height++;
+                }
+                width++; 
+            }
+            //draw popUp box in card layout
+            DrawBox(po_left_align, po_top_align, po_box_width, po_box_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
+            //populate with relevant data
+            DrawCenteredText("Win Outcomes (+5/+10/+15)", po_left_align + 3, po_top_align + 2, po_box_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Minor Win:  " + arrayOutcome[1], po_left_align + 3, po_top_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Win:        " + arrayOutcome[2], po_left_align + 3, po_top_align + 6, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Major Win:  " + arrayOutcome[3], po_left_align + 3, po_top_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText("Lose Outcomes (-5/-10/-15)", po_left_align + 3, po_top_align + 12, po_box_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Minor Loss: " + arrayOutcome[4], po_left_align + 3, po_top_align + 14, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Loss:       " + arrayOutcome[5], po_left_align + 3, po_top_align + 16, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText("Major Loss: " + arrayOutcome[6], po_left_align + 3, po_top_align + 18, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            //top box instructions
+            DrawCenteredText("Press [SPACE] or [ENTER] to Continue", po_left_align, po_top_align + po_box_height - 3, po_box_width, RLColor.Gray, arrayOfCells_Cards, arrayOfForeColors_Cards);
+        }
+
+        /// <summary>
+        /// Removes Popup by restoring original card layout from data within Popup arrays. Run DrawCard afterwards
+        /// </summary>
+        public void RemovePopup()
+        {
+            int width = 0;
+            int height = 0;
+            for (int width_index = po_left_align; width_index < po_left_align + po_box_width; width_index++)
+            {
+                for (int height_index = po_top_align; height_index < po_top_align + po_box_height; height_index++)
+                {
+                    arrayOfCells_Cards[width_index, height_index] = arrayOfCells_Popup[width, height];
+                    arrayOfForeColors_Cards[width_index, height_index] = arrayOfForeColors_Popup[width, height];
+                    arrayOfBackColors_Cards[width_index, height_index] = arrayOfBackColors_Popup[width, height];
+                    height++;
+                }
+                width++;
+            }
+        }
 
         /// <summary>
         /// Draw Strategy Layout
