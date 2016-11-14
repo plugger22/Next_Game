@@ -29,6 +29,12 @@ namespace Next_Game
         public SkillType PrimarySkill { get; set; } //each skill level counts as 2 cards
         public SkillType OtherSkill_1 { get; set; } //only trait effects count
         public SkillType OtherSkill_2 { get; set; }
+        //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
+        private int[] arrayPool;
+        //three lists to consolidate into pool breakdown description
+        private List<Snippet> listPlayerCards;
+        private List<Snippet> listOpponentCards;
+        private List<Snippet> listSituationCards;
 
         /// <summary>
         /// default Constructor
@@ -39,6 +45,12 @@ namespace Next_Game
             listCardPool = new List<Card>();
             listCardHand = new List<Card>();
             listBreakdown = new List<Snippet>();
+            //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
+            arrayPool = new int[3];
+            //three lists to consolidate into pool breakdown description
+            listPlayerCards = new List<Snippet>();
+            listOpponentCards = new List<Snippet>();
+            listSituationCards = new List<Snippet>();
             //get player (always the player vs. somebody else)
             player = Game.world.GetActiveActor(1);
             if (player != null) {}
@@ -384,11 +396,11 @@ namespace Next_Game
             CardType type;
             string text;
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
-            int[] arrayPool = new int[3]; 
+            Array.Clear(arrayPool, 0 , arrayPool.Length);
             //three lists to consolidate into pool breakdown description
-            List<Snippet> listPlayerCards = new List<Snippet>();
-            List<Snippet> listOpponentCards = new List<Snippet>();
-            List<Snippet> listSituationCards = new List<Snippet>();
+            listPlayerCards.Clear();
+            listOpponentCards.Clear();
+            listSituationCards.Clear();
             //headers
             listPlayerCards.Add(new Snippet("Your Cards", RLColor.Blue, backColor));
             listOpponentCards.Add(new Snippet("Opponent's Cards", RLColor.Blue, backColor));
@@ -414,7 +426,15 @@ namespace Next_Game
             listOpponentCards.Add(new Snippet(text, foreColor, backColor));
 
             //Primary Skill Traits
-            int numCards = skill_player - 3;
+            CheckActorTrait(player, PrimarySkill, listPlayerCards);
+            CheckActorTrait(opponent, PrimarySkill, listOpponentCards);
+            //Secondary Skill Traits
+            CheckActorTrait(player, OtherSkill_1, listPlayerCards);
+            CheckActorTrait(player, OtherSkill_2, listPlayerCards);
+            CheckActorTrait(opponent, OtherSkill_1, listOpponentCards);
+            CheckActorTrait(opponent, OtherSkill_2, listOpponentCards);
+
+            /*int numCards = skill_player - 3;
             if (numCards != 0)
             {
                 string traitText = player.GetTrait(PrimarySkill);
@@ -438,7 +458,7 @@ namespace Next_Game
                     text = string.Format("{0}'s {1} Trait ({2}), {3} card{4}, ({5})", player.Name, traitText, type, numCards, numCards > 1 ? "s" : "", traitExpanded);
                     listPlayerCards.Add(new Snippet(text, foreColor, backColor));
                 }
-            }
+            }*/
 
             //Secondary Skills
 
@@ -453,6 +473,53 @@ namespace Next_Game
             //send to layout
             Game.layout.SetCardBreakdown(listBreakdown);
             Game.layout.SetCardPool(arrayPool);
+        }
+
+        /// <summary>
+        /// internal submethod used to check an actor's trait and add cards to the appropriate pools
+        /// </summary>
+        /// <param name="actor"></param>
+        /// <param name="skill"></param>
+        private void CheckActorTrait(Actor actor, SkillType skill, List<Snippet> cardList)
+        {
+            CardType type;
+            int numCards;
+            string text;
+            string traitExpanded;
+            string description = "Get a Random Description from a Pool of Possibilities";
+            RLColor backColor = Game.layout.Back_FillColor;
+            RLColor foreColor = RLColor.Black;
+            //get skill level -> NOT the influenced skill
+            int skill_actor = actor.GetSkill(skill);
+            //reverse the sign (good/bad) if opponent (who is anyone else other than the Ursurper)
+            if (actor.ActID == 1) { numCards = skill_actor - 3; }
+            else { numCards = 3 - skill_actor; }
+            //ignore if no trait present (skill level = 3)
+            if (numCards != 0)
+            {
+                string traitText = actor.GetTrait(skill);
+                if (numCards > 0)
+                {
+                    //positive trait
+                    traitExpanded = string.Format("{0} skill {1}{2}", skill, numCards > 0 ? "+" : "", numCards);
+                    type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += numCards;
+                    for (int i = 0; i < numCards; i++)
+                    { listCardPool.Add(new Card_Conflict(CardConflict.Trait, type, string.Format("{0}'s {1} Trait", actor.Name, traitText), description)); }
+                    text = string.Format("{0}'s {1} Trait ({2}), {3} card{4}, ({5})", actor.Name, traitText, type, numCards, numCards > 1 ? "s" : "", traitExpanded);
+                    cardList.Add(new Snippet(text, foreColor, backColor));
+                }
+                else
+                {
+                    //negative trait
+                    numCards = Math.Abs(numCards);
+                    traitExpanded = string.Format("{0} skill {1}{2}", skill, numCards > 0 ? "+" : "", numCards);
+                    type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += numCards;
+                    for (int i = 0; i < numCards; i++)
+                    { listCardPool.Add(new Card_Conflict(CardConflict.Trait, type, string.Format("{0}'s {1} Trait", actor.Name, traitText), description)); }
+                    text = string.Format("{0}'s {1} Trait ({2}), {3} card{4}, ({5})", actor.Name, traitText, type, numCards, numCards > 1 ? "s" : "", traitExpanded);
+                    cardList.Add(new Snippet(text, foreColor, backColor));
+                }
+            }
         }
 
         /// <summary>
