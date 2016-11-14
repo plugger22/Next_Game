@@ -491,9 +491,18 @@ namespace Next_Game
             RLColor foreColor = RLColor.Black;
             //get skill level -> NOT the influenced skill
             int skill_actor = actor.GetSkill(skill);
-            //reverse the sign (good/bad) if opponent (who is anyone else other than the Ursurper)
-            if (actor.ActID == 1) { numCards = skill_actor - 3; }
-            else { numCards = 3 - skill_actor; }
+            if (actor.ActID == 1)
+            {
+                numCards = skill_actor - 3;
+                traitExpanded = string.Format("{0} skill {1}{2}", skill, numCards > 0 ? "+" : "", numCards);
+            }
+            else
+            {
+                //reverse the sign (good/bad) if opponent (who is anyone else other than the Ursurper)
+                numCards = 3 - skill_actor;
+                int tempNumCards = numCards * -1;
+                traitExpanded = string.Format("{0} skill {1}{2}", skill, tempNumCards * -1 > 0 ? "+" : "", tempNumCards);
+            }
             //ignore if no trait present (skill level = 3)
             if (numCards != 0)
             {
@@ -501,7 +510,6 @@ namespace Next_Game
                 if (numCards > 0)
                 {
                     //positive trait
-                    traitExpanded = string.Format("{0} skill {1}{2}", skill, numCards > 0 ? "+" : "", numCards);
                     type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += numCards;
                     for (int i = 0; i < numCards; i++)
                     { listCardPool.Add(new Card_Conflict(CardConflict.Trait, type, string.Format("{0}'s {1} Trait", actor.Name, traitText), description)); }
@@ -512,7 +520,6 @@ namespace Next_Game
                 {
                     //negative trait
                     numCards = Math.Abs(numCards);
-                    traitExpanded = string.Format("{0} skill {1}{2}", skill, numCards > 0 ? "+" : "", numCards);
                     type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += numCards;
                     for (int i = 0; i < numCards; i++)
                     { listCardPool.Add(new Card_Conflict(CardConflict.Trait, type, string.Format("{0}'s {1} Trait", actor.Name, traitText), description)); }
