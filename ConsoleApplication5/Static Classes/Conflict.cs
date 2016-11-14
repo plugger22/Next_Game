@@ -434,34 +434,6 @@ namespace Next_Game
             CheckActorTrait(opponent, OtherSkill_1, listOpponentCards);
             CheckActorTrait(opponent, OtherSkill_2, listOpponentCards);
 
-            /*int numCards = skill_player - 3;
-            if (numCards != 0)
-            {
-                string traitText = player.GetTrait(PrimarySkill);
-                string traitExpanded = string.Format("{0} skill {1}{2}", PrimarySkill, numCards > 0 ? "+" : "", numCards);
-                if (numCards > 0)
-                {
-                    //positive trait
-                    type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += numCards;
-                    for (int i = 0; i < numCards; i++)
-                    { listCardPool.Add(new Card_Conflict(CardConflict.Trait, type, string.Format("{0}'s {1} Trait", player.Name, traitText), description)); }
-                    text = string.Format("{0}'s {1} Trait ({2}), {3} card{4}, ({5})", player.Name, traitText, type, numCards, numCards > 1 ? "s" : "", traitExpanded);
-                    listPlayerCards.Add(new Snippet(text, foreColor, backColor));
-                }
-                else
-                {
-                    //negative trait
-                    numCards = Math.Abs(numCards);
-                    type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += numCards;
-                    for (int i = 0; i < numCards; i++)
-                    { listCardPool.Add(new Card_Conflict(CardConflict.Trait, type, string.Format("{0}'s {1} Trait", player.Name, traitText), description)); }
-                    text = string.Format("{0}'s {1} Trait ({2}), {3} card{4}, ({5})", player.Name, traitText, type, numCards, numCards > 1 ? "s" : "", traitExpanded);
-                    listPlayerCards.Add(new Snippet(text, foreColor, backColor));
-                }
-            }*/
-
-            //Secondary Skills
-
             //clear master list and add headers
             listBreakdown.Clear();
             //consolidate lists
