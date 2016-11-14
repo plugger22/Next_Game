@@ -224,16 +224,31 @@ namespace Next_Game
             }
             //send to layout
             if (tempArray.Length <= 3 && tempArray.Length > 0)
-            { Game.layout.SetSituation(tempArray); }
+            {
+                Game.layout.SetSituation(tempArray);
+                //add cards to the pool ( 1 advantage defender card, 1 neutral & 1 game specific)
+                CardType type;
+                RLColor foreColor;
+                RLColor backColor = Game.layout.Back_FillColor;
+                string text;
+                int numCards = GetSituationCardNumber();
+                //advantage defender card
+                if (Challenger == true) { type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += numCards; }
+                else { type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += numCards; }
+                for (int i = 0; i < numCards; i++)
+                { listCardPool.Add(new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", tempArray[0]), "An advantage to the Defender")); }
+                text = string.Format("{0} Situation, {1} cards (Only available if Defender chooses a Defend [F3] Strategy)", tempArray[0], numCards );
+                listSituationCards.Add(new Snippet(text, foreColor, backColor));
+            }
             else
             { Game.SetError(new Error(89, "Invalid Situation, Layout not updated")); }
         }
 
         /// <summary>
-        /// determine # of cards
+        /// determine # of cards (70% -> 1, 16% -> 2, 8% -> 3, 4% -> 4, 2% -> 5)
         /// </summary>
         /// <returns></returns>
-        private int GetSituationCard()
+        private int GetSituationCardNumber()
         {
             int numCards = 1;
             int rndNum = rnd.Next(100);
