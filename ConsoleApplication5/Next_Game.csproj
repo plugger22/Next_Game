@@ -92,7 +92,7 @@
     <Compile Include="System\Error.cs" />
     <Compile Include="Static Classes\FileImport.cs" />
     <Compile Include="Static Classes\Constant.cs" />
-    <Compile Include="System\Skill.cs" />
+    <Compile Include="Game World\Skill.cs" />
     <Compile Include="System\Tracker.cs" />
     <Compile Include="Game World\House.cs" />
     <Compile Include="Static Classes\History.cs" />

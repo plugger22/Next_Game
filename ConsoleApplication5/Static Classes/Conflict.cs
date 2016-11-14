@@ -382,6 +382,7 @@ namespace Next_Game
             RLColor backColor = Game.layout.Back_FillColor;
             RLColor foreColor = RLColor.Black;
             CardType type;
+            string text;
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
             int[] arrayPool = new int[3]; 
             //three lists to consolidate into pool breakdown description
@@ -392,26 +393,55 @@ namespace Next_Game
             listPlayerCards.Add(new Snippet("Your Cards", RLColor.Blue, backColor));
             listOpponentCards.Add(new Snippet("Opponent's Cards", RLColor.Blue, backColor));
             listSituationCards.Add(new Snippet("Situation Cards", RLColor.Blue, backColor));
-
             //primary skills (2 cards per skill level)
             int skill_player = player.GetSkill(PrimarySkill, SkillAge.Fifteen, true);
             int skill_opponent = opponent.GetSkill(PrimarySkill, SkillAge.Fifteen, true);
             int cards_player = skill_player * 2;
             int cards_opponent = skill_opponent * 2;
             //create cards, add to pool and breakdown lists
-            string skillDescription = "Get a Random Description";
-            //...Player
+            string description = "Get a Random Description from a Pool of Possibilities";
+            //...Player Primary skill
             type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += cards_player;
             for (int i = 0; i < cards_player; i++)
-            { listCardPool.Add(new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1}", player.Name, PrimarySkill), skillDescription)); }
-            string text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", player.Name, PrimarySkill, type, cards_player, skill_player);
+            { listCardPool.Add(new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", player.Name, PrimarySkill), description)); }
+            text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", player.Name, PrimarySkill, type, cards_player, skill_player);
             listPlayerCards.Add(new Snippet(text, foreColor, backColor));
-            //...Opponent
+            //...Opponent Primary skill
             type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += cards_opponent;
             for (int i = 0; i < cards_opponent; i++)
-            { listCardPool.Add(new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1}", opponent.Name, PrimarySkill), skillDescription)); }
+            { listCardPool.Add(new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", opponent.Name, PrimarySkill), description)); }
             text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", opponent.Name, PrimarySkill, type, cards_opponent, skill_opponent);
             listOpponentCards.Add(new Snippet(text, foreColor, backColor));
+
+            //Primary Skill Traits
+            int numCards = skill_player - 3;
+            if (numCards != 0)
+            {
+                string traitText = player.GetTrait(PrimarySkill);
+                string traitExpanded = string.Format("{0} skill {1}{2}", PrimarySkill, numCards > 0 ? "+" : "", numCards);
+                if (numCards > 0)
+                {
+                    //positive trait
+                    type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += numCards;
+                    for (int i = 0; i < numCards; i++)
+                    { listCardPool.Add(new Card_Conflict(CardConflict.Trait, type, string.Format("{0}'s {1} Trait", player.Name, traitText), description)); }
+                    text = string.Format("{0}'s {1} Trait ({2}), {3} card{4}, ({5})", player.Name, traitText, type, numCards, numCards > 1 ? "s" : "", traitExpanded);
+                    listPlayerCards.Add(new Snippet(text, foreColor, backColor));
+                }
+                else
+                {
+                    //negative trait
+                    numCards = Math.Abs(numCards);
+                    type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += numCards;
+                    for (int i = 0; i < numCards; i++)
+                    { listCardPool.Add(new Card_Conflict(CardConflict.Trait, type, string.Format("{0}'s {1} Trait", player.Name, traitText), description)); }
+                    text = string.Format("{0}'s {1} Trait ({2}), {3} card{4}, ({5})", player.Name, traitText, type, numCards, numCards > 1 ? "s" : "", traitExpanded);
+                    listPlayerCards.Add(new Snippet(text, foreColor, backColor));
+                }
+            }
+
+            //Secondary Skills
+
             //clear master list and add headers
             listBreakdown.Clear();
             //consolidate lists

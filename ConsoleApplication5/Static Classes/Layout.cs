@@ -279,10 +279,8 @@ namespace Next_Game
             DrawText("Total cards", st_left_outer + 7, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Situation (top right)
             DrawBox(right_inner, st_top_align, st_upper_box_width, st_upper_box_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
-            DrawCenteredText("Situation", right_inner, st_top_align + 2, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Choose Strategy (top middle)
             DrawBox(st_middle_align, st_top_align, st_strategy_width, strategy_box_height, RLColor.Yellow, RLColor.White, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
-            DrawCenteredText("Choose a Strategy", st_middle_align, st_top_align + 2, st_strategy_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Breakdown of Cards box 
             DrawBox(st_left_outer, vertical_middle, breakdown_box_width, breakdown_box_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
             //Instruction box
@@ -519,8 +517,8 @@ namespace Next_Game
         {
             int card_vert_1 = ca_top_align + 2; //type of card, eg. 'skill card', y_coord
             int card_vert_2 = ca_top_align + 4; //spacer
-            int card_vert_3 = ca_top_align + ca_card_height / 4; //eg. "King's Leadship"
-            int card_vert_4 = ca_top_align + ca_card_height / 4 + 3; //Immersion text eg. "Forward Men!"
+            int card_vert_3 = ca_top_align + ca_card_height / 4; //eg. "King's Leadship" + "Immersion text"
+            //int card_vert_4 = ca_top_align + ca_card_height / 4 + 3; //Immersion text eg. "Forward Men!"
             int card_vert_5 = ca_top_align + ca_card_height / 4 * 3; //advantage / disadvantage
             int card_vert_6 = ca_top_align + ca_card_height / 4 * 3 + 3; //"Play for 2 points"
             int card_vert_7 = ca_top_align + ca_card_height / 4 * 3 + 6; //"Ignore for 1 point"
@@ -616,11 +614,18 @@ namespace Next_Game
                         arrayOfBackColors_Cards[width_index, height_index] = backColor;
                     }
                 }
-                //redraw text
+                //card text
                 DrawCenteredText(string.Format("{0} Card", card.Conflict_Type), ca_left_inner, card_vert_1, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText("--- 0 ---", ca_left_inner, card_vert_2, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-                DrawCenteredText(card.Title, ca_left_inner, card_vert_3, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-                DrawCenteredText(card.Description, ca_left_inner, card_vert_4, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                //...word wrap title & description
+                List<string> tempList = new List<string>();
+                tempList.AddRange(Game.utility.WordWrap(card.Title, ca_card_width - 2));
+                tempList.Add("");
+                tempList.AddRange(Game.utility.WordWrap(card.Description, ca_card_width - 2));
+                for (int i = 0; i < tempList.Count; i++)
+                { DrawCenteredText(tempList[i], ca_left_inner, card_vert_3 + i * 2, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards); }
+
+                //DrawCenteredText(card.Description, ca_left_inner, card_vert_4, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText(textType, ca_left_inner, card_vert_5, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText(string.Format("Play for{0}{1} Points", points_play > 0 ? " +" : " ", points_play), ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, 
                     arrayOfForeColors_Cards);
@@ -752,19 +757,42 @@ namespace Next_Game
             int breakdown_box_height = vertical_bottom - vertical_middle - st_spacer;
             int breakdown_box_width = st_right_outer - st_left_outer;
             //Card Pool dynamic data
+            for (int width_index = st_left_outer + 24; width_index < st_left_outer + 26; width_index++)
+            {
+                for (int height_index = st_top_align + 1; height_index < st_top_align + st_upper_box_height - 1; height_index++)
+                { arrayOfCells_Strategy[width_index, height_index] = 255; }
+            }
             DrawText(Convert.ToString(arrayCardPool[0]), st_left_outer + 24, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(Convert.ToString(arrayCardPool[1]), st_left_outer + 24, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(Convert.ToString(arrayCardPool[2]), st_left_outer + 24, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(Convert.ToString(arrayCardPool.Sum()), st_left_outer + 24, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Situation
+            for (int width_index = right_inner + 1; width_index < right_inner + st_upper_box_width - 1; width_index++)
+            {
+                for (int height_index = st_top_align + 1; height_index < st_top_align + st_upper_box_height - 1; height_index++)
+                { arrayOfCells_Strategy[width_index, height_index] = 255; }
+            }
+            DrawCenteredText("Situation", right_inner, st_top_align + 2, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawCenteredText(arraySituation[0], right_inner, st_top_align + 4, st_upper_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawCenteredText(arraySituation[1], right_inner, st_top_align + 6, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawCenteredText(arraySituation[2], right_inner, st_top_align + 8, st_upper_box_width, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Strategy
+            for (int width_index = st_middle_align + 1; width_index < st_middle_align + st_strategy_width - 1; width_index++)
+            {
+                for (int height_index = st_top_align + 1; height_index < st_top_align + strategy_box_height - 1; height_index++)
+                { arrayOfCells_Strategy[width_index, height_index] = 255; }
+            }
+            DrawCenteredText("Choose a Strategy", st_middle_align, st_top_align + 2, st_strategy_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(string.Format("[F1] {0}", arrayStrategy[0]), st_middle_align + 4, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(string.Format("[F2] {0}", arrayStrategy[1]), st_middle_align + 4, st_top_align + 6, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(string.Format("[F3] {0}", arrayStrategy[2]), st_middle_align + 4, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            //Breakdown of Card Pool -> header first then card breakdown
+            //Breakdown of Card Pool
+            for (int width_index = st_left_outer + 1; width_index < st_left_outer + breakdown_box_width - 1; width_index++)
+            {
+                for (int height_index = vertical_middle + 1; height_index < vertical_middle + breakdown_box_height - 1; height_index++)
+                { arrayOfCells_Strategy[width_index, height_index] = 255; }
+            }
+            //header first then card breakdown
             DrawCenteredText(arrayOutcome[0], st_left_outer, vertical_middle + 2, breakdown_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawCenteredText(arrayOutcome[9], st_left_outer, vertical_middle + 4, breakdown_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             int limit = Math.Min((breakdown_box_height - 8) / 2, listCardBreakdown.Count);

@@ -178,6 +178,14 @@ namespace Next_Game
             return text;
         }
 
+        /// <summary>
+        /// returns straight trait text, eg. "Obnoxious"
+        /// </summary>
+        /// <param name="skill"></param>
+        /// <returns></returns>
+        public string GetTrait(SkillType skill)
+        { return arrayOfTraitNames[(int)skill]; }
+
         public void AddSecret(int secretID)
         {
             if (secretID > 0)
