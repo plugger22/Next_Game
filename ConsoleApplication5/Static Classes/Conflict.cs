@@ -230,6 +230,24 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// determine # of cards
+        /// </summary>
+        /// <returns></returns>
+        private int GetSituationCard()
+        {
+            int numCards = 1;
+            int rndNum = rnd.Next(100);
+            if (rndNum >= 70)
+            {
+                if (rndNum >= 98) { numCards = 5; }
+                else if (rndNum >= 94) { numCards = 4; }
+                else if (rndNum >= 86) { numCards = 3; }
+                else { numCards = 2; }
+            }
+            return numCards;
+        }
+
+        /// <summary>
         /// Set up outcomes and send to layout
         /// </summary>
         private void SetOutcome()
