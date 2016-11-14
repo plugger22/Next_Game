@@ -22,6 +22,7 @@ namespace Next_Game
         //assorted
         public bool NextCard { get; set; } //flag indicating next card is ready to draw
         public bool PopupFlag { get; set; } //flag to prevent popup overwriting itself
+        public bool Challenger { get; set; } //is the Player the Challenger?
         public int InfluenceRemaining { get; set; }
         int cardsRemaining;
         int score;
@@ -235,7 +236,7 @@ namespace Next_Game
         /// </summary>
         public void Initialise()
         {
-            SetTestData();
+            //SetTestData();
             InitialiseIntro();
             InitialiseStrategy();
             InitialiseCards();
@@ -426,7 +427,9 @@ namespace Next_Game
             //protagonists
             DrawCenteredText(arrayOutcome[9], left_align, top_align + 6, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             //who has the advantage
-            DrawCenteredText(arrayOutcome[7], left_align, top_align + 10, box_width, RLColor.Green, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            RLColor foreColor = RLColor.Green;
+            if (Challenger == false) { foreColor = RLColor.Red; }
+            DrawCenteredText(arrayOutcome[7], left_align, top_align + 10, box_width, foreColor, arrayOfCells_Intro, arrayOfForeColors_Intro);
             //recommendation
             DrawCenteredText(arrayOutcome[8], left_align, top_align + 13, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             //clear bottom box
@@ -1031,7 +1034,7 @@ namespace Next_Game
             //strategy
             arrayStrategy[0] = "Take the Fight to the Enemy";
             arrayStrategy[1] = "Aggressive Defense";
-            arrayStrategy[2] = "Hold Firm";*/
+            arrayStrategy[2] = "Hold Firm";
             //breakdown
             listCardBreakdown.Add(new Snippet("Your Cards", RLColor.Blue, RLColor.Black));
             listCardBreakdown.Add(new Snippet("Daven Arryn's Leadership Skill (Good), 2 Cards, Primary Conflict Skill (Leadership 2 Stars)", RLColor.Black, RLColor.Black));
@@ -1049,7 +1052,7 @@ namespace Next_Game
             listCardBreakdown.Add(new Snippet("Defendable Hill (Good), 2 Cards (Doesn't apply if you choose an Aggressive strategy)", RLColor.Black, RLColor.Black));
             listCardBreakdown.Add(new Snippet("Muddy Ground (Neutral), 1 Card", RLColor.Gray, RLColor.Black));
             listCardBreakdown.Add(new Snippet("Relative Size of Armies (Bad), 3 Cards (You 10,000 Men-At-Arms, Opponent 25,000 Men-At-Arms)", RLColor.Red, RLColor.Black));
-
+            */
         }
 
         /// <summary>

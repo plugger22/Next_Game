@@ -17,6 +17,7 @@ namespace Next_Game
         //protagonists
         Actor opponent;
         Active player;
+        public bool Challenger { get; set; } //is the Player the Challenger?
         //type of conflict
         public ConflictType Conflict_Type { get; set; }
         public CombatType Combat_Type { get; set; }
@@ -134,7 +135,7 @@ namespace Next_Game
             }
             //update Layout
             if (tempArray.Length == 3)
-            { Game.layout.SetStrategy(tempArray); }
+            { Game.layout.SetStrategy(tempArray); Game.layout.Challenger = Challenger; }
             else
             { Game.SetError(new Error(86, "Invalid Strategy, Layout not updated")); }
         }
@@ -277,28 +278,28 @@ namespace Next_Game
                     switch (Social_Type)
                     {
                         case SocialType.Befriend:
-                            tempArray[1] = "";
-                            tempArray[2] = "";
-                            tempArray[3] = "";
-                            tempArray[4] = "";
-                            tempArray[5] = "";
-                            tempArray[6] = "";
+                            tempArray[1] = "Your relationship improves";
+                            tempArray[2] = "You have become firm friends";
+                            tempArray[3] = "You have gained an ardent supporter";
+                            tempArray[4] = "Your relationship deteriorates";
+                            tempArray[5] = "You have become disliked";
+                            tempArray[6] = "Your opponent is actively campaigning against you";
                             break;
                         case SocialType.Blackmail:
-                            tempArray[1] = "";
-                            tempArray[2] = "";
-                            tempArray[3] = "";
-                            tempArray[4] = "";
-                            tempArray[5] = "";
-                            tempArray[6] = "";
+                            tempArray[1] = "You have gained a small amount of influence";
+                            tempArray[2] = "Your opponent agrees to your demands";
+                            tempArray[3] = "Your opponent has become your minion";
+                            tempArray[4] = "You relationship has deteroriated";
+                            tempArray[5] = "You have been firmly rebuffed";
+                            tempArray[6] = "Your opponent is now your enemy";
                             break;
                         case SocialType.Seduce:
-                            tempArray[1] = "";
-                            tempArray[2] = "";
-                            tempArray[3] = "";
-                            tempArray[4] = "";
-                            tempArray[5] = "";
-                            tempArray[6] = "";
+                            tempArray[1] = "Your relationship has improved";
+                            tempArray[2] = "You seduce your opponent and gain an advantage";
+                            tempArray[3] = "Your opponent has become an ardent supporter and lover";
+                            tempArray[4] = "Your relationship has deteriorated";
+                            tempArray[5] = "You have been firmly rebuffed";
+                            tempArray[6] = "Your opponent has taken offence and is now your enemy";
                             break;
                         default:
                             Game.SetError(new Error(86, "Invalid Social Type"));
@@ -310,7 +311,9 @@ namespace Next_Game
                     break;
             }
             //Who has the advantage and a recommendation
-            tempArray[7] = "You have the Advantage";
+            if (Challenger == true)
+            { tempArray[7] = "You are the Challenger and have the Advantage"; }
+            else { tempArray[7] = "You are Defending"; }
             tempArray[8] = "An Aggressive Strategy is Recommended";
             //protagonists
             string title;

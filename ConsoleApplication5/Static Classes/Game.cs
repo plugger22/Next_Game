@@ -667,10 +667,22 @@ namespace Next_Game
                                     _specialMode = SpecialMode.Conflict;
                                     _conflictMode = ConflictMode.Intro;
                                     //debug
-                                    Noble newKing = lore.NewKing;
-                                    conflict.Conflict_Type = ConflictType.Combat;
-                                    conflict.Combat_Type = (CombatType)rnd.Next(1,4);
-                                    conflict.SetOpponent(newKing.ActID);
+                                    if (rnd.Next(100) < 55)
+                                    {
+                                        Noble newKing = lore.NewKing;
+                                        conflict.Conflict_Type = ConflictType.Combat;
+                                        conflict.Combat_Type = (CombatType)rnd.Next(1, 4);
+                                        conflict.SetOpponent(newKing.ActID);
+                                    }
+                                    else
+                                    {
+                                        Noble newQueen = lore.NewQueen;
+                                        conflict.Conflict_Type = ConflictType.Social;
+                                        conflict.Social_Type = (SocialType)rnd.Next(1, 4);
+                                        conflict.SetOpponent(newQueen.ActID);
+                                    }
+                                    if (rnd.Next(100) < 50) { conflict.Challenger = true; }
+                                    else { conflict.Challenger = false; }
                                     conflict.InitialiseConflict();
                                     break;
                                 case MenuMode.Debug:
