@@ -459,6 +459,7 @@ namespace Next_Game
         {
             CardType type;
             int numCards;
+            int tempNumCards;
             string text;
             string traitExpanded;
             string description = "Get a Random Description from a Pool of Possibilities";
@@ -475,8 +476,8 @@ namespace Next_Game
             {
                 //reverse the sign (good/bad) if opponent (who is anyone else other than the Ursurper)
                 numCards = 3 - skill_actor;
-                int tempNumCards = numCards * -1;
-                traitExpanded = string.Format("{0} skill {1}{2}", skill, tempNumCards * -1 > 0 ? "+" : "", tempNumCards);
+                tempNumCards = numCards * -1;
+                traitExpanded = string.Format("{0} skill {1}{2}", skill, tempNumCards > 0 ? "+" : "", tempNumCards);
             }
             //ignore if no trait present (skill level = 3)
             if (numCards != 0)
