@@ -22,8 +22,8 @@ namespace Next_Game
         public CombatType Combat_Type { get; set; }
         public SocialType Social_Type { get; set; }
         //Card Pool
-        private List<Card> listCardPool;
-        private List<Card> listCardHand; //hand that will be played
+        private List<Card_Conflict> listCardPool;
+        private List<Card_Conflict> listCardHand; //hand that will be played
         private List<Snippet> listBreakdown; //description of card pool contents
         //skills
         public SkillType PrimarySkill { get; set; } //each skill level counts as 2 cards
@@ -42,8 +42,8 @@ namespace Next_Game
         public Conflict(int seed)
         {
             rnd = new Random(seed);
-            listCardPool = new List<Card>();
-            listCardHand = new List<Card>();
+            listCardPool = new List<Card_Conflict>();
+            listCardHand = new List<Card_Conflict>();
             listBreakdown = new List<Snippet>();
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
             arrayPool = new int[3];
@@ -516,7 +516,8 @@ namespace Next_Game
             for(int i = 0; i < numCards; i++)
             {
                 rndNum = rnd.Next(0, listCardPool.Count);
-                listCardHand.Add(listCardPool[rndNum]);
+                Card_Conflict card = listCardPool[rndNum];
+                listCardHand.Add(card);
                 //delete record as you don't want repeats
                 listCardPool.RemoveAt(rndNum);
             }

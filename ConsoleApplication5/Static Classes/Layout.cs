@@ -80,7 +80,7 @@ namespace Next_Game
         private string[] arrayStrategy { get; set; } //3 strategies - always variations of Attack, Balanced & Defend
         private string[] arrayOutcome { get; set; } // 0 is Conflict Type, 1/2/3 are Wins (minor/normal/major), 4/5/6 are Losses, 7/8 are advantage/disadvantage and recommendation, 9 Actors
         private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
-        private List<Card> listCardHand; //cards in playable hand
+        private List<Card_Conflict> listCardHand; //cards in playable hand
         private List<Snippet> listHistory; //record of how the hand was played
         private Queue<Snippet> messageQueue;
         //Cards
@@ -182,7 +182,7 @@ namespace Next_Game
             arrayStrategy = new string[3];
             arrayOutcome = new string[10];
             listCardBreakdown = new List<Snippet>();
-            listCardHand = new List<Card>();
+            listCardHand = new List<Card_Conflict>();
             listHistory = new List<Snippet>();
             messageQueue = new Queue<Snippet>();
             //Card Layout
@@ -578,8 +578,8 @@ namespace Next_Game
             if (listCardHand.Count > 0)
             {
                 //get next card, delete once done
-                Card_Conflict card = (Card_Conflict)listCardHand[0];
-                currentCard = (Card_Conflict)listCardHand[0];
+                Card_Conflict card = listCardHand[0];
+                currentCard = listCardHand[0];
                 RLColor backColor = RLColor.White;
                 string textType = "Unknown";
                 switch (card.Type)
@@ -1135,7 +1135,7 @@ namespace Next_Game
         /// Sets up Card Hand list & zero out other stuff where needed
         /// </summary>
         /// <param name="tempList"></param>
-        internal void SetCardHand(List<Card> tempList)
+        internal void SetCardHand(List<Card_Conflict> tempList)
         {
             if (tempList != null)
             {
