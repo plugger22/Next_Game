@@ -25,6 +25,7 @@ namespace Next_Game
         public bool PopupFlag { get; set; } //flag to prevent popup overwriting itself
         public bool Challenger { get; set; } //is the Player the Challenger?
         public int InfluenceRemaining { get; set; }
+        public int DefenderStrategy { get; set; } //chosen strategy of the Defender
         int cardsRemaining;
         int score;
         int points_play; //points if card played
@@ -543,10 +544,9 @@ namespace Next_Game
             if (CardFirstFlag == true)
             {
                 //is the defender using a Defence [F3] strategy?
-                int defenderStrategy;
-                if (Challenger == true) { defenderStrategy = Strategy_Opponent; }
-                else { defenderStrategy = Strategy_Player; }
-                Game.conflict.UpdateCardPool(defenderStrategy);
+                if (Challenger == true) { DefenderStrategy = Strategy_Opponent; }
+                else { DefenderStrategy = Strategy_Player; }
+                Game.conflict.UpdateCardPool(DefenderStrategy);
                 Game.conflict.SetHand();
                 CardFirstFlag = false;
             }
@@ -557,8 +557,8 @@ namespace Next_Game
                 { arrayOfCells_Cards[width_index, height_index] = 255; }
             }
             DrawCenteredText("Situation", horizontal_align, ca_top_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-
-            DrawCenteredText(arraySituation[0], horizontal_align, ca_top_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            if (DefenderStrategy != 2) { foreColor = RLColor.LightGray; } else { foreColor = RLColor.Blue; }
+            DrawCenteredText(arraySituation[0], horizontal_align, ca_top_align + 4, ca_status_width, foreColor, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arraySituation[1], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Magenta, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arraySituation[2], horizontal_align, ca_top_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Secrets box (middle right)
