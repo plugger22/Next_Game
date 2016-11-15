@@ -35,7 +35,7 @@ namespace Next_Game
         public static RLColor _background1 = Palette.pinacolada;
         public static RLColor _goodCard = Palette.jade;
         public static RLColor _badCard = Palette.salmon;
-        public static RLColor _neutralCard = Palette.silver;
+        public static RLColor _neutralCard = Palette.tulip;
         public static RLColor _popup = Palette.pinacolada;
         //game states
         public static RLColor _increase = Palette.jade;

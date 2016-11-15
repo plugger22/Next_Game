@@ -238,11 +238,14 @@ namespace Next_Game
         /// <summary>
         /// determine # of cards (70% -> 1, 16% -> 2, 8% -> 3, 4% -> 4, 2% -> 5)
         /// </summary>
+        /// <param name="modifier">Optional DM to die roll</param>
         /// <returns></returns>
-        private int GetSituationCardNumber()
+        private int GetSituationCardNumber(int modifier = 0)
         {
             int numCards = 1;
             int rndNum = rnd.Next(100);
+            if (modifier != 0)
+            { rndNum += modifier; } 
             if (rndNum >= 70)
             {
                 if (rndNum >= 98) { numCards = 5; }
@@ -426,6 +429,7 @@ namespace Next_Game
             RLColor foreColor = RLColor.Black;
             CardType type;
             string text;
+            int numCards;
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
             Array.Clear(arrayPool, 0 , arrayPool.Length);
             //three lists to consolidate into pool breakdown description
@@ -466,7 +470,7 @@ namespace Next_Game
             CheckActorTrait(opponent, OtherSkill_2, listOpponentCards);
 
             //Situation Cards
-            int numCards = GetSituationCardNumber();
+            numCards = GetSituationCardNumber();
             //...advantage defender card
             if (Challenger == true) { type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += numCards; }
             else { type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += numCards; }
@@ -479,7 +483,16 @@ namespace Next_Game
             text = string.Format("\"{0}\", {1} card{2}. ONLY AVAILABLE if Defender ({3}) chooses an [F3] Strategy", arraySituation[0], numCards, numCards > 1 ? "s" : "",
                 Challenger == false ? "Player" : "Opponent");
             listSituationCards.Add(new Snippet(text, foreColor, backColor));
-
+            //...neutral card
+            numCards = GetSituationCardNumber(50);
+            type = CardType.Neutral; foreColor = RLColor.Magenta; arrayPool[1] += numCards;
+            for (int i = 0; i < numCards; i++)
+            {
+                Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", arraySituation[1]), "Could go either way...");
+                listCardPool.Add(card);
+            }
+            text = string.Format("\"{0}\", {1} card{2}, A Neutral Card (Good if played, Bad if ignored)", arraySituation[1], numCards, numCards > 1 ? "s" : "");
+            listSituationCards.Add(new Snippet(text, foreColor, backColor));
             //clear master list and add headers
             listBreakdown.Clear();
             //consolidate lists
@@ -555,7 +568,7 @@ namespace Next_Game
         public void UpdateCardPool(int defenderStrategy)
         {
             //only need to update if defender hasn't chosen a defensive [F3] strategy
-            if (defenderStrategy != 3)
+            if (defenderStrategy != 2)
             {
                 //reverse loop card pool
                 for (int i = listCardPool.Count() - 1; i >= 0; i--)

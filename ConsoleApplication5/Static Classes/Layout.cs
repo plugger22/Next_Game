@@ -110,7 +110,7 @@ namespace Next_Game
         private RLColor[,] arrayOfForeColors_Popup;
         private RLColor[,] arrayOfBackColors_Popup;
         //strategy
-        public int Strategy_Player { get; set; }
+        public int Strategy_Player { get; set; } //0 -> Aggressive, 1 -> Balanced, 2 -> Defend (set in Game.SetSpecialMode)
         public int Strategy_Opponent { get; set; }
 
 
@@ -538,6 +538,7 @@ namespace Next_Game
             int bar_middle = score_left_align + ca_bar_offset_x + (bar_width / 2); //x_coord of mid point
             int bar_top = ca_score_vert_align + ca_bar_offset_y; //y_coord of bar
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
+            RLColor foreColor;
             //Update Card Pool and Deal Hand if first run through
             if (CardFirstFlag == true)
             {
@@ -549,15 +550,16 @@ namespace Next_Game
                 Game.conflict.SetHand();
                 CardFirstFlag = false;
             }
-            //Situation
+            //Situation -> Defender Advantage at top, Neutral middle, Game Specific bottom
             for (int width_index = horizontal_align + 1; width_index < horizontal_align + ca_status_width - 1; width_index++)
             {
                 for (int height_index = ca_top_align + 1; height_index < ca_top_align + ca_status_height - 1; height_index++)
                 { arrayOfCells_Cards[width_index, height_index] = 255; }
             }
             DrawCenteredText("Situation", horizontal_align, ca_top_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+
             DrawCenteredText(arraySituation[0], horizontal_align, ca_top_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText(arraySituation[1], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(arraySituation[1], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Magenta, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arraySituation[2], horizontal_align, ca_top_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Secrets box (middle right)
             for (int width_index = horizontal_align + 1; width_index < horizontal_align + ca_status_width - 1; width_index++)
@@ -788,7 +790,7 @@ namespace Next_Game
             }
             DrawCenteredText("Situation", right_inner, st_top_align + 2, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawCenteredText(arraySituation[0], right_inner, st_top_align + 4, st_upper_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawCenteredText(arraySituation[1], right_inner, st_top_align + 6, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText(arraySituation[1], right_inner, st_top_align + 6, st_upper_box_width, RLColor.Magenta, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawCenteredText(arraySituation[2], right_inner, st_top_align + 8, st_upper_box_width, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Strategy
             for (int width_index = st_middle_align + 1; width_index < st_middle_align + st_strategy_width - 1; width_index++)
@@ -997,7 +999,7 @@ namespace Next_Game
             //has defender forfeited their advantage?
             if (Challenger == true)
             {
-                if (Strategy_Opponent != 3)
+                if (Strategy_Opponent != 2)
                 {
                     //word wrap
                     string text = string.Format("Your Opponent has forfeited the advantage of \"{0}\" by not defending", arraySituation[0]);
@@ -1009,7 +1011,7 @@ namespace Next_Game
             }
             else
             {
-                if (Strategy_Player != 3)
+                if (Strategy_Player != 2)
                 {
                     //word wrap
                     string text = string.Format("You have forfeited the advantage of \"{0}\" by not defending", arraySituation[0]);
