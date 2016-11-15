@@ -32,6 +32,7 @@ namespace Next_Game
         public SkillType OtherSkill_2 { get; set; }
         //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
         private int[] arrayPool;
+        private string[] arraySituation;
         //three lists to consolidate into pool breakdown description
         private List<Snippet> listPlayerCards;
         private List<Snippet> listOpponentCards;
@@ -48,6 +49,7 @@ namespace Next_Game
             listBreakdown = new List<Snippet>();
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
             arrayPool = new int[3];
+            arraySituation = new string[3];
             //three lists to consolidate into pool breakdown description
             listPlayerCards = new List<Snippet>();
             listOpponentCards = new List<Snippet>();
@@ -72,7 +74,8 @@ namespace Next_Game
             SetOpponentStrategy();
             SetOutcome();
             SetCardPool();
-            SetHand();
+            //SetHand(); -> called from Layout.UpdateCards on first run through
+            Game.layout.CardFirstFlag = true;
         }
 
         /// <summary>
@@ -141,7 +144,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Determine opponent's strategy and send to layout
+        /// Determine opponent's strategy and send to layout (attack/balanced/defend)
         /// </summary>
         private void SetOpponentStrategy()
         {
@@ -165,30 +168,30 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Set up the situation and send to layout
+        /// Set up the situation (text descriptors)
         /// </summary>
         private void SetSituation()
         {
-            string[] tempArray = new string[3];
+            
             switch (Conflict_Type)
             {
                 case ConflictType.Combat:
                     switch (Combat_Type)
                     {
                         case CombatType.Personal:
-                            tempArray[0] = "Uneven Ground";
-                            tempArray[1] = "The Sun at Your Back";
-                            tempArray[2] = "Outnumbered";
+                            arraySituation[0] = "Uneven Ground";
+                            arraySituation[1] = "The Sun at Your Back";
+                            arraySituation[2] = "Outnumbered";
                             break;
                         case CombatType.Tournament:
-                            tempArray[0] = "A Weakened Jousting Lance";
-                            tempArray[1] = "Cheers of the Crowd";
-                            tempArray[2] = "Opponent has Momentum";
+                            arraySituation[0] = "A Weakened Jousting Lance";
+                            arraySituation[1] = "Cheers of the Crowd";
+                            arraySituation[2] = "Opponent has Momentum";
                             break;
                         case CombatType.Battle:
-                            tempArray[0] = "A Defendable Hill";
-                            tempArray[1] = "Muddy Ground";
-                            tempArray[2] = "Relative Army Sizes";
+                            arraySituation[0] = "A Defendable Hill";
+                            arraySituation[1] = "Muddy Ground";
+                            arraySituation[2] = "Relative Army Sizes";
                             break;
                         default:
                             Game.SetError(new Error(86, "Invalid Combat Type"));
@@ -199,19 +202,19 @@ namespace Next_Game
                     switch (Social_Type)
                     {
                         case SocialType.Befriend:
-                            tempArray[0] = "A fine Arbor Wine";
-                            tempArray[1] = "A Pleasant Lunch";
-                            tempArray[2] = "Your Reputation Precedes you";
+                            arraySituation[0] = "A fine Arbor Wine";
+                            arraySituation[1] = "A Pleasant Lunch";
+                            arraySituation[2] = "Your Reputation Precedes you";
                             break;
                         case SocialType.Blackmail:
-                            tempArray[0] = "A Noisey Room full of People";
-                            tempArray[1] = "The Threat of Retaliation";
-                            tempArray[2] = "Difficulty of a Meaningful Threat";
+                            arraySituation[0] = "A Noisey Room full of People";
+                            arraySituation[1] = "The Threat of Retaliation";
+                            arraySituation[2] = "Difficulty of a Meaningful Threat";
                             break;
                         case SocialType.Seduce:
-                            tempArray[0] = "A Romantic Venue";
-                            tempArray[1] = "A Witch's Aphrodisiac";
-                            tempArray[2] = "The Lady is Happily Married";
+                            arraySituation[0] = "A Romantic Venue";
+                            arraySituation[1] = "A Witch's Aphrodisiac";
+                            arraySituation[2] = "The Lady is Happily Married";
                             break;
                         default:
                             Game.SetError(new Error(86, "Invalid Social Type"));
@@ -223,22 +226,10 @@ namespace Next_Game
                     break;
             }
             //send to layout
-            if (tempArray.Length <= 3 && tempArray.Length > 0)
+            if (arraySituation.Length <= 3 && arraySituation.Length > 0)
             {
-                Game.layout.SetSituation(tempArray);
-                //add cards to the pool ( 1 advantage defender card, 1 neutral & 1 game specific)
-                CardType type;
-                RLColor foreColor;
-                RLColor backColor = Game.layout.Back_FillColor;
-                string text;
-                int numCards = GetSituationCardNumber();
-                //advantage defender card
-                if (Challenger == true) { type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += numCards; }
-                else { type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += numCards; }
-                for (int i = 0; i < numCards; i++)
-                { listCardPool.Add(new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", tempArray[0]), "An advantage to the Defender")); }
-                text = string.Format("{0} Situation, {1} cards (Only available if Defender chooses a Defend [F3] Strategy)", tempArray[0], numCards );
-                listSituationCards.Add(new Snippet(text, foreColor, backColor));
+                Game.layout.SetSituation(arraySituation);
+                
             }
             else
             { Game.SetError(new Error(89, "Invalid Situation, Layout not updated")); }
@@ -470,6 +461,20 @@ namespace Next_Game
             CheckActorTrait(opponent, OtherSkill_1, listOpponentCards);
             CheckActorTrait(opponent, OtherSkill_2, listOpponentCards);
 
+            //Situation Cards
+            int numCards = GetSituationCardNumber();
+            //...advantage defender card
+            if (Challenger == true) { type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += numCards; }
+            else { type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += numCards; }
+            for (int i = 0; i < numCards; i++)
+            {
+                //only applies if Defender chooses an [F3] Defence strategy
+                Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", arraySituation[0]), "An advantage to the Defender") { TypeDefend = CardType.Good };
+                listCardPool.Add(card);
+            }
+            text = string.Format("\"{0}\", {1} card{2} (ONLY AVAILABLE if Defender chooses an [F3] Strategy)", arraySituation[0], numCards, numCards > 1 ? "s" : "");
+            listSituationCards.Add(new Snippet(text, foreColor, backColor));
+
             //clear master list and add headers
             listBreakdown.Clear();
             //consolidate lists
@@ -539,9 +544,37 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Draw cards to form a challenge hand
+        /// Called from layout and updates pool as a result of chosen strategies
         /// </summary>
-        private void SetHand()
+        /// <param name="defenderStrategy"></param>
+        public void UpdateCardPool(int defenderStrategy)
+        {
+            //only need to update if defender hasn't chosen a defensive [F3] strategy
+            if (defenderStrategy != 3)
+            {
+                //reverse loop card pool
+                for (int i = listCardPool.Count() - 1; i >= 0; i--)
+                {
+                    Card_Conflict card = listCardPool[i];
+                    //remove any situation cards that advantage the defender
+                    if (card.Conflict_Type == CardConflict.Situation && card.TypeDefend == CardType.Good)
+                    {
+                        //update pool stats
+                        if (card.Type == CardType.Good) { arrayPool[0]--; }
+                        else if (card.Type == CardType.Bad) { arrayPool[2]--; }
+                        //remove card from pool
+                        listCardPool.RemoveAt(i);
+                    }
+                }
+                //send updated Card pool array to Layout
+                Game.layout.SetCardPool(arrayPool);
+            }
+        }
+
+        /// <summary>
+        /// Draw cards to form a challenge hand (called from Layout 'cause of variable situation cards)
+        /// </summary>
+        public void SetHand()
         {
             int numCards = Game.constant.GetValue(Global.HAND_CARDS_NUM);
             //check enough cards in pool, if not downsize hand
@@ -550,7 +583,7 @@ namespace Next_Game
             //clear out the list
             listCardHand.Clear();
             int rndNum;
-            for(int i = 0; i < numCards; i++)
+            for (int i = 0; i < numCards; i++)
             {
                 rndNum = rnd.Next(0, listCardPool.Count);
                 Card_Conflict card = listCardPool[rndNum];

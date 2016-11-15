@@ -41,9 +41,9 @@ namespace Next_Game.Event_System
         public int Effect { get; set; } //eg. 1X, 2X, etc.
         public string Special { get; set; }
         public CardConflict Conflict_Type { get; set; }
-        public CardType TypeAttack { get; set; } //how a situation card is treated if defender chooses an Attack strategy
-        public CardType TypeBalanced { get; set; } //how a situation card is treated if defender chooses a balanced strategy
-        public CardType TypeDefend { get; set; } //how a situation card is treated if defender chooses a defend strategy
+        public CardType TypeAttack { get; set; } //how a situation card is treated if defender chooses an Attack strategy (default None)
+        public CardType TypeBalanced { get; set; } //how a situation card is treated if defender chooses a balanced strategy (default None)
+        public CardType TypeDefend { get; set; } //how a situation card is treated if defender chooses a defend strategy (default None)
 
         public Card_Conflict()
         { }

@@ -21,6 +21,7 @@ namespace Next_Game
         private RLColor backColor;
         //assorted
         public bool NextCard { get; set; } //flag indicating next card is ready to draw
+        public bool CardFirstFlag { get; set; } //used to update card pool and hand on first run through UpdateCards
         public bool PopupFlag { get; set; } //flag to prevent popup overwriting itself
         public bool Challenger { get; set; } //is the Player the Challenger?
         public int InfluenceRemaining { get; set; }
@@ -535,9 +536,19 @@ namespace Next_Game
             int score_left_align = ca_left_outer + ca_status_width / 2;
             int bar_width = score_width - (ca_bar_offset_x * 2); //scoring colored bar
             int bar_middle = score_left_align + ca_bar_offset_x + (bar_width / 2); //x_coord of mid point
-            
             int bar_top = ca_score_vert_align + ca_bar_offset_y; //y_coord of bar
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
+            //Update Card Pool and Deal Hand if first run through
+            if (CardFirstFlag == true)
+            {
+                //is the defender using a Defence [F3] strategy?
+                int defenderStrategy;
+                if (Challenger == true) { defenderStrategy = Strategy_Opponent; }
+                else { defenderStrategy = Strategy_Player; }
+                Game.conflict.UpdateCardPool(defenderStrategy);
+                Game.conflict.SetHand();
+                CardFirstFlag = false;
+            }
             //Situation
             for (int width_index = horizontal_align + 1; width_index < horizontal_align + ca_status_width - 1; width_index++)
             {
