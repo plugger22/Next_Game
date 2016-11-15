@@ -75,7 +75,7 @@ namespace Next_Game
             SetOutcome();
             SetCardPool();
             //SetHand(); -> called from Layout.UpdateCards on first run through
-            Game.layout.CardFirstFlag = true;
+            
         }
 
         /// <summary>
@@ -346,7 +346,11 @@ namespace Next_Game
             string handle_player, handle_opponent;
             if (player.Handle != null) { handle_player = string.Format(" \"{0}\" ", player.Handle); } else { handle_player = null; }
             if (opponent.Handle != null) { handle_opponent = string.Format(" \"{0}\" ", opponent.Handle); } else { handle_opponent = null; }
-            tempArray[9] = string.Format("{0} {1}{2} vs. {3} {4}{5}", player.Type, player.Name, handle_player, title, opponent.Name, handle_opponent);
+            //order protagnoists so that challenger is first and defender is second
+            if (Challenger == true)
+            { tempArray[9] = string.Format("{0} {1}{2} vs. {3} {4}{5}", player.Type, player.Name, handle_player, title, opponent.Name, handle_opponent); }
+            else
+            { tempArray[9] = string.Format("{0} {1}{2} vs. {3} {4}{5}", title, opponent.Name, handle_opponent, player.Type, player.Name, handle_player); }
             //send to layout
             if (tempArray.Length == 10)
             { Game.layout.SetOutcome(tempArray); }
@@ -472,7 +476,8 @@ namespace Next_Game
                 Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", arraySituation[0]), "An advantage to the Defender") { TypeDefend = CardType.Good };
                 listCardPool.Add(card);
             }
-            text = string.Format("\"{0}\", {1} card{2} (ONLY AVAILABLE if Defender chooses an [F3] Strategy)", arraySituation[0], numCards, numCards > 1 ? "s" : "");
+            text = string.Format("\"{0}\", {1} card{2}. ONLY AVAILABLE if Defender ({3}) chooses an [F3] Strategy", arraySituation[0], numCards, numCards > 1 ? "s" : "",
+                Challenger == false ? "Player" : "Opponent");
             listSituationCards.Add(new Snippet(text, foreColor, backColor));
 
             //clear master list and add headers

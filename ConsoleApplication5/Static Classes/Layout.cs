@@ -259,6 +259,7 @@ namespace Next_Game
             //confirmation box (centred)
             DrawBox(left_align, top_align, box_width, box_height, RLColor.Yellow, Intro_FillColor, arrayOfCells_Intro, arrayOfForeColors_Intro, arrayOfBackColors_Intro);
             DrawBox(left_align, bottom_align, box_width, box_height, RLColor.Yellow, Intro_FillColor, arrayOfCells_Intro, arrayOfForeColors_Intro, arrayOfBackColors_Intro);
+            
         }
 
         /// <summary>
@@ -391,7 +392,7 @@ namespace Next_Game
             int left_align = ( Width - Offset_x ) / 3;
             int top_align = ( Height - Offset_y * 2 ) / 3;
             int box_width = left_align;
-            int box_height = top_align;
+            int box_height = top_align + 2;
             //confirmation box (centred)
             DrawBox(left_align, top_align, box_width, box_height, RLColor.Yellow, Confirm_FillColor, arrayOfCells_Message, arrayOfForeColors_Message, arrayOfBackColors_Message);
         }
@@ -418,10 +419,7 @@ namespace Next_Game
             for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
             {
                 for (int height_index = top_align + 1; height_index < top_align + box_height - 1; height_index++)
-                {
-                    arrayOfCells_Intro[width_index, height_index] = 255;
-                    //arrayOfBackColors_Intro[width_index, height_index] = Intro_FillColor;
-                }
+                { arrayOfCells_Intro[width_index, height_index] = 255; }
             }
             //Add new text -> Type of Conflict
             DrawCenteredText(arrayOutcome[0], left_align, top_align + 3, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
@@ -453,6 +451,8 @@ namespace Next_Game
             DrawText("Major Loss: " + arrayOutcome[6], left_align + 3, bottom_align + 18, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             //top box instructions
             DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + box_height - 3, box_width, RLColor.Gray, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            //set flag to Update Card pool and deal hand on first run through of each conflict
+            CardFirstFlag = true;
         }
 
         /// <summary>
@@ -987,11 +987,38 @@ namespace Next_Game
         /// <returns></returns>
         public List<Snippet> GetDataConfirm()
         {
+            int box_width = (Width - Offset_x) / 3;
             List<Snippet> listOfSnippets = new List<Snippet>();
             listOfSnippets.Add(new Snippet("You have Chosen...", RLColor.Black, Confirm_FillColor));
             listOfSnippets.Add(new Snippet(arrayStrategy[Strategy_Player], RLColor.Blue, Confirm_FillColor));
             listOfSnippets.Add(new Snippet("Your Opponent has Chosen...", RLColor.Black, Confirm_FillColor));
             listOfSnippets.Add(new Snippet(arrayStrategy[Strategy_Opponent], RLColor.Red, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet(""));
+            //has defender forfeited their advantage?
+            if (Challenger == true)
+            {
+                if (Strategy_Opponent != 3)
+                {
+                    //word wrap
+                    string text = string.Format("Your Opponent has forfeited the advantage of \"{0}\" by not defending", arraySituation[0]);
+                    List<string> tempList = new List<string>();
+                    tempList.AddRange(Game.utility.WordWrap(text, box_width - 4));
+                    for (int i = 0; i < tempList.Count(); i++)
+                    { listOfSnippets.Add(new Snippet(tempList[i], RLColor.Magenta, Confirm_FillColor)); }
+                }
+            }
+            else
+            {
+                if (Strategy_Player != 3)
+                {
+                    //word wrap
+                    string text = string.Format("You have forfeited the advantage of \"{0}\" by not defending", arraySituation[0]);
+                    List<string> tempList = new List<string>();
+                    tempList.AddRange(Game.utility.WordWrap(text, box_width - 4));
+                    for (int i = 0; i < tempList.Count(); i++)
+                    { listOfSnippets.Add(new Snippet(tempList[i], RLColor.LightMagenta, Confirm_FillColor)); }
+                }
+            }
             return listOfSnippets;
         }
 
@@ -1001,6 +1028,7 @@ namespace Next_Game
         /// <returns></returns>
         public List<Snippet> GetDataErrorStrategy()
         {
+
             List<Snippet> listOfSnippets = new List<Snippet>();
             listOfSnippets.Add(new Snippet("You need to choose a Strategy", RLColor.Black, Error_FillColor));
             listOfSnippets.Add(new Snippet("or press [ESC] to AutoResolve", RLColor.Black, Error_FillColor));
