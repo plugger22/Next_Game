@@ -137,7 +137,7 @@ namespace Next_Game
             world.SetMessage(message);
             world.ProcessStartGame();
             //layout & conflict
-            layout = new Layout(130, 100, 2, 3, RLColor.Black, RLColor.Yellow);
+            layout = new Layout(seed, 130, 100, 2, 3, RLColor.Black, RLColor.Yellow);
             layout.Initialise();
             conflict = new Conflict(seed);
             //set up menu

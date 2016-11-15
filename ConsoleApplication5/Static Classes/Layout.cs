@@ -13,6 +13,7 @@ namespace Next_Game
     /// </summary>
     public class Layout
     {
+        static Random rnd;
         //multiConsole window
         public int Width { get; set; }
         public int Height { get; set; }
@@ -122,8 +123,9 @@ namespace Next_Game
         /// <param name="height"></param>
         /// <param name="fillColor"></param>
         /// <param name="borderColor"></param>
-        public Layout(int width, int height, int offset_x, int offset_y, RLColor fillColor, RLColor borderColor)
+        public Layout(int seed, int width, int height, int offset_x, int offset_y, RLColor fillColor, RLColor borderColor)
         {
+            rnd = new Random(seed);
             this.Width = width;
             this.Height = height;
             this.backColor = fillColor;
@@ -605,18 +607,22 @@ namespace Next_Game
                         backColor = Color._goodCard;
                         textType = "Advantage";
                         arrayCardPool[0]--;
-                        points_play = arrayPoints[Strategy_Player, Strategy_Opponent, 0]; points_ignore = arrayPoints[Strategy_Player, Strategy_Opponent, 1];
+                        points_play = arrayPoints[Strategy_Player, Strategy_Opponent, 0] * card.Effect;
+                        points_ignore = arrayPoints[Strategy_Player, Strategy_Opponent, 1] * card.Effect;
                         break;
                     case CardType.Neutral:
                         backColor = Color._neutralCard;
                         textType = "Could Go Either Way";
+                        int rndNum = rnd.Next(1, 7) + rnd.Next(1, 7); //2d6
+                        points_play = rndNum; points_ignore = rndNum * -1; 
                         arrayCardPool[1]--;
                         break;
                     case CardType.Bad:
                         backColor = Color._badCard;
                         textType = "Disadvantage";
                         arrayCardPool[2]--;
-                        points_play = arrayPoints[Strategy_Player, Strategy_Opponent, 2]; points_ignore = arrayPoints[Strategy_Player, Strategy_Opponent,3];
+                        points_play = arrayPoints[Strategy_Player, Strategy_Opponent, 2] * card.Effect;
+                        points_ignore = arrayPoints[Strategy_Player, Strategy_Opponent,3] * card.Effect;
                         break;
                     default:
                         Game.SetError(new Error(95, "Invalid Card Type"));

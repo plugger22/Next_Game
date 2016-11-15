@@ -209,7 +209,7 @@ namespace Next_Game
                         case SocialType.Blackmail:
                             arraySituation[0] = "A Noisey Room full of People";
                             arraySituation[1] = "The Threat of Retaliation";
-                            arraySituation[2] = "Difficulty of a Meaningful Threat";
+                            arraySituation[2] = "Your Poor Reputation";
                             break;
                         case SocialType.Seduce:
                             arraySituation[0] = "A Romantic Venue";
