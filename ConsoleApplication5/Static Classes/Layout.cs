@@ -540,6 +540,7 @@ namespace Next_Game
             int bar_top = ca_score_vert_align + ca_bar_offset_y; //y_coord of bar
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
             RLColor foreColor;
+            string textPlay, textIgnore;
             //Update Card Pool and Deal Hand if first run through
             if (CardFirstFlag == true)
             {
@@ -640,13 +641,15 @@ namespace Next_Game
                 tempList.AddRange(Game.utility.WordWrap(card.Description, ca_card_width - 2));
                 for (int i = 0; i < tempList.Count; i++)
                 { DrawCenteredText(tempList[i], ca_left_inner, card_vert_3 + i * 2, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards); }
-
-                //DrawCenteredText(card.Description, ca_left_inner, card_vert_4, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText(textType, ca_left_inner, card_vert_5, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-                DrawCenteredText(string.Format("Play for{0}{1} Points", points_play > 0 ? " +" : " ", points_play), ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, 
-                    arrayOfForeColors_Cards);
-                DrawCenteredText(string.Format("Ignore for{0}{1} Points", points_ignore > 0 ? " +" : " ", points_ignore), ca_left_inner, card_vert_7, ca_card_width, RLColor.Black, arrayOfCells_Cards, 
-                    arrayOfForeColors_Cards);
+                if (card.Type != CardType.Neutral)
+                {
+                    textPlay = string.Format("Play for{0}{1} Points", points_play > 0 ? " +" : " ", points_play);
+                    textIgnore = string.Format("Ignore for{0}{1} Points", points_ignore > 0 ? " +" : " ", points_ignore);
+                }
+                else { textPlay = "Play for +2d6 Points";  textIgnore ="Ignore for -2d6 Points"; }
+                DrawCenteredText(textPlay, ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                DrawCenteredText(textIgnore, ca_left_inner, card_vert_7, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 listCardHand.RemoveAt(0);
                 //update remaining cards
                 DrawCenteredText(Convert.ToString(cardsRemaining), ca_left_outer, vertical_align + 7, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
