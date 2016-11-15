@@ -1232,6 +1232,7 @@ namespace Next_Game
         /// <param name="cardPlayed"></param>
         internal void ResolveCard(bool cardPlayed = false)
         {
+            string text;
             //history
             string playerAction = "Ignored";
             int pointsGained = points_ignore;
@@ -1254,8 +1255,16 @@ namespace Next_Game
             if (currentCard != null && currentCard.Type != CardType.None)
             {
                 cardCounter++;
-                string text = string.Format("Card {0}, {1} {2}, ({3}), for {4}{5} points, score {6}{7}", cardCounter, playerAction, currentCard.Title, currentCard.Type, 
+                if (currentCard.Conflict_Type == CardConflict.Situation)
+                {
+                    text = string.Format("Card {0}, {1} \"{2}\", ({3}), for {4}{5} points, score {6}{7}", cardCounter, playerAction, currentCard.Title, currentCard.Type,
                     pointsGained > 0 ? "+" : "", pointsGained, score > 0 ? "+" : "", score);
+                }
+                else
+                {
+                    text = string.Format("Card {0}, {1} {2}, ({3}), for {4}{5} points, score {6}{7}", cardCounter, playerAction, currentCard.Title, currentCard.Type,
+                    pointsGained > 0 ? "+" : "", pointsGained, score > 0 ? "+" : "", score);
+                }
                 Snippet snippet = new Snippet(text, foreColor, Back_FillColor);
                 listHistory.Add(snippet);
                 //add to message queue
