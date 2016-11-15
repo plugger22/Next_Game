@@ -432,7 +432,8 @@ namespace Next_Game
             int numCards;
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
             Array.Clear(arrayPool, 0 , arrayPool.Length);
-            //three lists to consolidate into pool breakdown description
+            //clear lists
+            listCardPool.Clear();
             listPlayerCards.Clear();
             listOpponentCards.Clear();
             listSituationCards.Clear();
