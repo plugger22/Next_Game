@@ -839,7 +839,7 @@ namespace Next_Game
             int left_align = (Width - Offset_x) / 3;
             int top_align = (Height - Offset_y * 2) / 3;
             int box_width = left_align;
-            int box_height = top_align;
+            int box_height = top_align + 2;
             //Clear box & change background color
             for (int width_index = left_align + 1; width_index < left_align + box_width - 1; width_index++)
             {
@@ -860,7 +860,7 @@ namespace Next_Game
                 foreColor = listOfSnippets[i].GetForeColor();
                 DrawCenteredText(text, left_align, top_align + (i + 1) * 3, box_width, foreColor, arrayOfCells_Message, arrayOfForeColors_Message);
             }
-            DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + 28, box_width, RLColor.Gray, arrayOfCells_Message, arrayOfForeColors_Message);
+            DrawCenteredText("Press [SPACE] or [ENTER] to Continue", left_align, top_align + box_height - 3, box_width, RLColor.Gray, arrayOfCells_Message, arrayOfForeColors_Message);
         }
 
         /// <summary>
