@@ -428,8 +428,11 @@ namespace Next_Game
             }
             //Add new text -> Type of Conflict
             DrawCenteredText(arrayOutcome[0], left_align, top_align + 3, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            //protagonists
-            DrawCenteredText(arrayOutcome[9], left_align, top_align + 6, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            //protagonists -> Word Wrap
+            List<string> tempList = new List<string>();
+            tempList.AddRange(Game.utility.WordWrap(arrayOutcome[9], box_width - 4));
+            for (int i = 0; i < tempList.Count(); i++)
+            { DrawCenteredText(tempList[i], left_align, top_align + 6 + i, box_width, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro); }
             //who has the advantage
             RLColor foreColor = RLColor.Green;
             if (Challenger == false) { foreColor = RLColor.Red; }

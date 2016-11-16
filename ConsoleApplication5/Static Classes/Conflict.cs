@@ -766,6 +766,8 @@ namespace Next_Game
             //First couple of situation modifiers
             arrayModifiers[0] = mod_0;
             arrayModifiers[1] = mod_1;
+            //if there is a difference of 0 it should automatically be a single card for the game specific situation
+            if (difference == 0) { modifier = -100; }
             arrayModifiers[2] = modifier;
             //Type
             if (difference > 0) { Game_Type = CardType.Good; }
