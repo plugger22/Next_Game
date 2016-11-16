@@ -65,7 +65,7 @@ namespace Next_Game
             listBreakdown = new List<Snippet>();
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
             arrayPool = new int[3];
-            arrayModifiers = new int[3]; //modifier (DM) for GetSituationCardNumber, 0/1/2 refer to the three situation cards (def adv/neutral/game specific)
+            arrayModifiers = new int[3]; //modifier (DM) for GetSituationCardNumber, 0/1/2 refer to the three situation cards (def adv/neutral/game specific) -> DM for 0 & 1, # of cards for Game ('2')
             arraySituation = new string[3];
             //three lists to consolidate into pool breakdown description
             listPlayerCards = new List<Snippet>();
@@ -256,7 +256,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// determine # of cards (70% -> 1, 16% -> 2, 8% -> 3, 4% -> 4, 2% -> 5)
+        /// determine # of cards (70% -> 1, 16% -> 2, 8% -> 3, 4% -> 4, 2% -> 5). Only for the first two situations (def adv & neutral)
         /// </summary>
         /// <param name="modifier">Optional DM to die roll</param>
         /// <returns></returns>
@@ -264,8 +264,9 @@ namespace Next_Game
         {
             int numCards = 1;
             int rndNum = rnd.Next(100);
+            int rndDebug = rndNum;
             if (modifier != 0) { rndNum += modifier; } 
-            else { rndNum -= 6; } //if modifier 0 then auto modify to prevent way out results, eg. 4 or 5 cards
+            //else { rndNum -= 6; } //if modifier 0 then auto modify to prevent way out results, eg. 4 or 5 cards
             if (rndNum >= 70)
             {
                 if (rndNum >= 98) { numCards = 5; }
@@ -273,6 +274,9 @@ namespace Next_Game
                 else if (rndNum >= 86) { numCards = 3; }
                 else { numCards = 2; }
             }
+            //debug
+            Console.WriteLine("SitCard: modifier {0}, rndNum {1}, net {2}, numCards {3}", modifier, rndDebug, rndNum, numCards);
+            //return 
             return numCards;
         }
 
@@ -518,7 +522,7 @@ namespace Next_Game
             if (Game_Type != CardType.None)
             {
                 string textCard = "Unknown";
-                numCards = GetSituationCardNumber(arrayModifiers[2]);
+                numCards = arrayModifiers[2];
                 type = Game_Type;
                 if (type == CardType.Bad) { foreColor = RLColor.Red; arrayPool[2] += numCards; textCard = "Advantage Opponent"; }
                 else if (type == CardType.Good) { foreColor = RLColor.Black; arrayPool[0] += numCards; textCard = "Advantage Player"; }
@@ -720,6 +724,7 @@ namespace Next_Game
         /// <param name="mod_1">Modifier to neutral situation card #'s (second)</param>
         public void SetGameSituation(ConflictState gameState, string title, int mod_0 = 0, int mod_1 = 0)
         {
+            int numCards;
             int modifier = 0;
             int difference = 0;
             string description = "unknown";
@@ -733,10 +738,11 @@ namespace Next_Game
             switch (gameState)
             {
                 case ConflictState.Relative_Army_Size:
+                    int factor = Game.constant.GetValue(Global.ARMY_SIZE);
                     //Difference in two sides Armies - PLACEHOLDER
-                    difference = rnd.Next(1, 101) - rnd.Next(1, 101);
-                    modifier = Math.Abs(difference);
-                    description = string.Format("{0} {1:N0} more Men-At-Arms than {2}", difference > 0 ? "You have" : "The King has", modifier * 1000, difference > 0 ? "the King" : "You");
+                    difference = rnd.Next(1, 101) * factor - rnd.Next(1, 101) * factor;
+                    modifier = Math.Abs(difference / factor);
+                    description = string.Format("{0} {1:N0} more Men-At-Arms than {2}", difference > 0 ? "You have" : "The King has", modifier * factor, difference > 0 ? "the King" : "You");
                     break;
                 case ConflictState.Relative_Fame:
                     //Ursurpers Legend - Kings Legend
@@ -766,9 +772,12 @@ namespace Next_Game
             //First couple of situation modifiers
             arrayModifiers[0] = mod_0;
             arrayModifiers[1] = mod_1;
-            //if there is a difference of 0 it should automatically be a single card for the game specific situation
-            if (difference == 0) { modifier = -100; }
-            arrayModifiers[2] = modifier;
+            // '2' contains the actual number of cards (random for 0 & 1 but fixed for game specific situation)
+            numCards = modifier / 20 + 1;
+            numCards = Math.Min(5, numCards);
+            arrayModifiers[2] = numCards;
+            //debug
+            Console.WriteLine(Environment.NewLine + "Situation: \"{0}\", difference {1} Modifier {2} numCards {3}", description, difference, modifier, numCards);
             //Type
             if (difference > 0) { Game_Type = CardType.Good; }
             else if (difference < 0) { Game_Type = CardType.Bad; }

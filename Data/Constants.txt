@@ -84,8 +84,13 @@
 
 # TRAIT_MULTIPLIER -> amount trait level (1 to 5) is multiplied by for automatic option follower tests
 29: 20
+
+# Challenges ---
+
 # NEUTRAL_EFFECT -> effect of neutral cards expressed as 2d #, eg. if '6' then 2d6 -> 2 to 12.
 33: 6
+# ARMY_SIZE -> divisor used to get relative army sizes modifier
+34: 1000
 
 # Conflicts ---
 

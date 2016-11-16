@@ -39,6 +39,7 @@ namespace Next_Game
         HAND_CARDS_NUM,
         PLAYER_INFLUENCE,
         NEUTRAL_EFFECT,
+        ARMY_SIZE,
         Count //keep as last
     }
 
@@ -85,6 +86,7 @@ namespace Next_Game
             arrayOfGlobals[31] = Global.HAND_CARDS_NUM;
             arrayOfGlobals[32] = Global.PLAYER_INFLUENCE;
             arrayOfGlobals[33] = Global.NEUTRAL_EFFECT;
+            arrayOfGlobals[34] = Global.ARMY_SIZE;
             }
 
         /// <summary>
