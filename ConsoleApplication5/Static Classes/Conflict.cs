@@ -13,6 +13,9 @@ namespace Next_Game
         None,
         Relative_Army_Size, //battle conflicts
         Relative_Fame, //social conflicts
+        Relative_Honour, //social conflicts
+        Relative_Justice,
+        Relative_Invisibility,
     }
 
     /// <summary>
@@ -707,43 +710,68 @@ namespace Next_Game
             Game.layout.SetPoints(tempArray);
         }
         
-        /// <summary>
-        /// Sets modifiers (DM's) for GetSituationCardNumbers for the three situation cards (0 is the defenders advantage card, 1 is the neutral one, etc.)
-        /// </summary>
-        /// <param name="mod_0"></param>
-        /// <param name="mod_1"></param>
-        /// <param name="mod_2"></param>
-        public void SetSituationModifiers(int mod_0 = 0, int mod_1 = 0, int mod_2 = 0)
-        {
-            arrayModifiers[0] = mod_0;
-            arrayModifiers[1] = mod_1;
-            arrayModifiers[2] = mod_2;
-        }
     
         /// <summary>
-        /// pass details of the third, game specific, situation
+        /// pass details of the third, game specific, situation. Run before Conflict.Initialise
         /// </summary>
-        /// <param name="state"></param>
-        /// <param name="title"></param>
-        public void SetGameSituation(ConflictState state, string title)
+        /// <param name="gameState">Game specific state</param>
+        /// <param name="title">Card title</param>
+        /// <param name="mod_0">Modifier to def adv situation card #'s (first)</param>
+        /// <param name="mod_1">Modifier to neutral situation card #'s (second)</param>
+        public void SetGameSituation(ConflictState gameState, string title, int mod_0 = 0, int mod_1 = 0)
         {
-            Game_State = state;
+            int modifier = 0;
+            int difference = 0;
+            string description = "unknown";
+            Game_State = gameState;
             if (String.IsNullOrEmpty(title) == false)
             { Game_Title = title; }
             else
             { Game.SetError(new Error(97, "Invalid Title Input (null)")); Game_Title = "Unknown"; }
-            //determine card type
-            switch (state)
+            
+            //determine card #'s (modifier), type (difference) and Description (description)
+            switch (gameState)
             {
                 case ConflictState.Relative_Army_Size:
                     if (rnd.Next(100) < 50) { Game_Type = CardType.Good; }
                     else { Game_Type = CardType.Bad; }
                     break;
                 case ConflictState.Relative_Fame:
-                    if (rnd.Next(100) < 50) { Game_Type = CardType.Good; }
-                    else { Game_Type = CardType.Bad; }
+                    //Ursurpers Legend - Kings Legend
+                    difference = Game.director.CheckGameState(DataPoint.Legend_Ursurper) - Game.director.CheckGameState(DataPoint.Legend_King);
+                    modifier = Math.Abs(difference);
+                    description = string.Format("difference between Your's and the King's Legend is {0}{1} %", difference > 0 ? "+" : "", difference);
+                    break;
+                case ConflictState.Relative_Honour:
+                    //Ursurpers Honour - Kings Honour
+                    difference = Game.director.CheckGameState(DataPoint.Honour_Ursurper) - Game.director.CheckGameState(DataPoint.Honour_King);
+                    modifier = Math.Abs(difference);
+                    description = string.Format("difference between Your's and the King's Honour is {0}{1} %", difference > 0 ? "+" : "", difference);
+                    break;
+                case ConflictState.Relative_Justice:
+                    //Relative Justice of the Ursurpers Cause
+                    difference = Game.director.CheckGameState(DataPoint.Justice) - 50;
+                    modifier = Math.Abs(difference);
+                    description = string.Format("relative Justice of Your Cause is {0}{1} %", difference > 0 ? "+" : "", difference);
+                    break;
+                case ConflictState.Relative_Invisibility:
+                    //Relative Invisibility of the Ursurper
+                    difference = Game.director.CheckGameState(DataPoint.Invisibility) - 50;
+                    modifier = Math.Abs(difference);
+                    description = string.Format("relative Invisibility of Your Cause is {0}{1} %", difference > 0 ? "+" : "", difference);
                     break;
             }
+            //First couple of situation modifiers
+            arrayModifiers[0] = mod_0;
+            arrayModifiers[1] = mod_1;
+            arrayModifiers[2] = modifier;
+            //Type
+            if (difference > 0) { Game_Type = CardType.Good; }
+            else if (difference < 0) { Game_Type = CardType.Bad; }
+            else { Game_Type = CardType.Neutral; }
+            //description
+            Game_Description = string.Format("({0})", description);
+
         }
 
         // methods above here

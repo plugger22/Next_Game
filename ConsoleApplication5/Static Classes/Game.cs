@@ -673,7 +673,7 @@ namespace Next_Game
                                         conflict.Conflict_Type = ConflictType.Combat;
                                         conflict.Combat_Type = (CombatType)rnd.Next(1, 4);
                                         conflict.SetOpponent(newKing.ActID);
-                                        conflict.SetGameSituation(ConflictState.Relative_Army_Size, "Relative Army Size");
+                                        conflict.SetGameSituation(ConflictState.Relative_Army_Size, "Relative Army Size", rnd.Next(0, 30), rnd.Next(0, 30));
                                     }
                                     else
                                     {
@@ -681,9 +681,9 @@ namespace Next_Game
                                         conflict.Conflict_Type = ConflictType.Social;
                                         conflict.Social_Type = (SocialType)rnd.Next(1, 4);
                                         conflict.SetOpponent(newQueen.ActID);
-                                        conflict.SetGameSituation(ConflictState.Relative_Fame, "Ursurpers Relative Fame");
+                                        ConflictState debugState = (ConflictState)rnd.Next(2, 6);
+                                        conflict.SetGameSituation(debugState, string.Format("Ursurpers {0}", debugState), rnd.Next(0, 30), rnd.Next(0, 30));
                                     }
-                                    conflict.SetSituationModifiers(rnd.Next(0, 30), rnd.Next(0, 30), rnd.Next(0, 30));
                                     if (rnd.Next(100) < 50) { conflict.Challenger = true; }
                                     else { conflict.Challenger = false; }
                                     conflict.InitialiseConflict();
