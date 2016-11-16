@@ -10,6 +10,7 @@ namespace Next_Game.Event_System
     public enum CardCategory { None, Conflict, Item, Secret, Companion, Disguise }
     public enum CardConflict { None, Skill, Trait, Situation, Companion, Item, Supporter }
     public enum CardType { None, Good, Bad, Neutral}
+    
 
     /// <summary>
     /// Base class

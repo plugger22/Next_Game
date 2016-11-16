@@ -8,6 +8,13 @@ using RLNET;
 
 namespace Next_Game
 {
+    public enum ConflictState   //game specific states that are used for situations
+    {
+        None,
+        Relative_Army_Size,
+        Notoriety,
+    }
+
     /// <summary>
     /// Handles the card Conflict system. Single class as there is only ever a single instance in existence.
     /// </summary>
@@ -22,6 +29,11 @@ namespace Next_Game
         public ConflictType Conflict_Type { get; set; }
         public CombatType Combat_Type { get; set; }
         public SocialType Social_Type { get; set; }
+        //Game specific Situation
+        public ConflictState Game_State { get; set; }
+        public CardType Game_Type { get; set; }
+        public string Game_Title { get; set; } //used for card title
+        public string Game_Description { get; set; } //used for card breakdown
         //Card Pool
         private List<Card_Conflict> listCardPool;
         private List<Card_Conflict> listCardHand; //hand that will be played
@@ -32,6 +44,7 @@ namespace Next_Game
         public SkillType OtherSkill_2 { get; set; }
         //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
         private int[] arrayPool;
+        private int[] arrayModifiers; 
         private string[] arraySituation;
         //three lists to consolidate into pool breakdown description
         private List<Snippet> listPlayerCards;
@@ -49,6 +62,7 @@ namespace Next_Game
             listBreakdown = new List<Snippet>();
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
             arrayPool = new int[3];
+            arrayModifiers = new int[3]; //modifier (DM) for GetSituationCardNumber, 0/1/2 refer to the three situation cards (def adv/neutral/game specific)
             arraySituation = new string[3];
             //three lists to consolidate into pool breakdown description
             listPlayerCards = new List<Snippet>();
@@ -168,7 +182,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Set up the situation (text descriptors)
+        /// Set up the situation (text descriptors) -> NOTE: arraySituation[2] is here for Debug purposes only, it should instead come from SetGameSituation
         /// </summary>
         private void SetSituation()
         {
@@ -225,6 +239,9 @@ namespace Next_Game
                     Game.SetError(new Error(86, "Invalid Conflict Type"));
                     break;
             }
+            //give correct title for game specific situation, if present
+            if (String.IsNullOrEmpty(Game_Title) == false)
+            { arraySituation[2] = Game_Title; }
             //send to layout
             if (arraySituation.Length <= 3 && arraySituation.Length > 0)
             {
@@ -471,8 +488,8 @@ namespace Next_Game
             CheckActorTrait(opponent, OtherSkill_2, listOpponentCards);
 
             //Situation Cards
-            numCards = GetSituationCardNumber();
-            //...advantage defender card
+            numCards = GetSituationCardNumber(arrayModifiers[0]);
+            //...advantage defender card -> First situation
             if (Challenger == true) { type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += numCards; }
             else { type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += numCards; }
             for (int i = 0; i < numCards; i++)
@@ -484,8 +501,8 @@ namespace Next_Game
             text = string.Format("\"{0}\", {1} card{2}. ONLY AVAILABLE if Defender ({3}) chooses an [F3] Strategy", arraySituation[0], numCards, numCards > 1 ? "s" : "",
                 Challenger == false ? "Player" : "Opponent");
             listSituationCards.Add(new Snippet(text, foreColor, backColor));
-            //...neutral card
-            numCards = GetSituationCardNumber(50);
+            //...neutral card -> Second Situation
+            numCards = GetSituationCardNumber(arrayModifiers[1]);
             type = CardType.Neutral; foreColor = RLColor.Magenta; arrayPool[1] += numCards;
             for (int i = 0; i < numCards; i++)
             {
@@ -494,6 +511,25 @@ namespace Next_Game
             }
             text = string.Format("\"{0}\", {1} card{2}, A Neutral Card (Good if played, Bad if ignored)", arraySituation[1], numCards, numCards > 1 ? "s" : "");
             listSituationCards.Add(new Snippet(text, foreColor, backColor));
+            //...Game Specific Situation
+            if (Game_Type != CardType.None)
+            {
+                string textCard = "Unknown";
+                numCards = GetSituationCardNumber(arrayModifiers[2]);
+                type = Game_Type;
+                if (type == CardType.Bad) { foreColor = RLColor.Red; arrayPool[2] += numCards; textCard = "Advantage Opponent"; }
+                else if (type == CardType.Good) { foreColor = RLColor.Black; arrayPool[0] += numCards; textCard = "Advantage Player"; }
+                else if (type == CardType.Neutral) { foreColor = RLColor.Magenta; arrayPool[1] += numCards; textCard = "Could go either way..."; }
+                for (int i = 0; i < numCards; i++)
+                {
+                    Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", arraySituation[2]), textCard);
+                    listCardPool.Add(card);
+                }
+                text = string.Format("\"{0}\", {1} card{2}, {3}", arraySituation[2], numCards, numCards > 1 ? "s" : "", Game_Description);
+                listSituationCards.Add(new Snippet(text, foreColor, backColor));
+            }
+            else { arraySituation[2] = ""; }
+
             //clear master list and add headers
             listBreakdown.Clear();
             //consolidate lists
@@ -671,8 +707,45 @@ namespace Next_Game
             Game.layout.SetPoints(tempArray);
         }
         
-
+        /// <summary>
+        /// Sets modifiers (DM's) for GetSituationCardNumbers for the three situation cards (0 is the defenders advantage card, 1 is the neutral one, etc.)
+        /// </summary>
+        /// <param name="mod_0"></param>
+        /// <param name="mod_1"></param>
+        /// <param name="mod_2"></param>
+        public void SetSituationModifiers(int mod_0 = 0, int mod_1 = 0, int mod_2 = 0)
+        {
+            arrayModifiers[0] = mod_0;
+            arrayModifiers[1] = mod_1;
+            arrayModifiers[2] = mod_2;
+        }
     
+        /// <summary>
+        /// pass details of the third, game specific, situation
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="title"></param>
+        public void SetGameSituation(ConflictState state, string title)
+        {
+            Game_State = state;
+            if (String.IsNullOrEmpty(title) == false)
+            { Game_Title = title; }
+            else
+            { Game.SetError(new Error(97, "Invalid Title Input (null)")); Game_Title = "Unknown"; }
+            //determine card type
+            switch (state)
+            {
+                case ConflictState.Relative_Army_Size:
+                    if (rnd.Next(100) < 50) { Game_Type = CardType.Good; }
+                    else { Game_Type = CardType.Bad; }
+                    break;
+                case ConflictState.Notoriety:
+                    if (rnd.Next(100) < 50) { Game_Type = CardType.Good; }
+                    else { Game_Type = CardType.Bad; }
+                    break;
+            }
+        }
+
         // methods above here
     }
 }
