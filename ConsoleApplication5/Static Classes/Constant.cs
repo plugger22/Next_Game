@@ -38,6 +38,7 @@ namespace Next_Game
         GAME_STATE,
         HAND_CARDS_NUM,
         PLAYER_INFLUENCE,
+        NEUTRAL_EFFECT,
         Count //keep as last
     }
 
@@ -83,6 +84,7 @@ namespace Next_Game
             arrayOfGlobals[30] = Global.GAME_STATE;
             arrayOfGlobals[31] = Global.HAND_CARDS_NUM;
             arrayOfGlobals[32] = Global.PLAYER_INFLUENCE;
+            arrayOfGlobals[33] = Global.NEUTRAL_EFFECT;
             }
 
         /// <summary>

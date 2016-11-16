@@ -736,7 +736,7 @@ namespace Next_Game
                     //Difference in two sides Armies - PLACEHOLDER
                     difference = rnd.Next(1, 101) - rnd.Next(1, 101);
                     modifier = Math.Abs(difference);
-                    description = string.Format("{0} {1:N0} more Men-At-Arms than {2}", difference > 0 ? "You have" : "The King has", modifier * 5000, difference > 0 ? "the King" : "You");
+                    description = string.Format("{0} {1:N0} more Men-At-Arms than {2}", difference > 0 ? "You have" : "The King has", modifier * 1000, difference > 0 ? "the King" : "You");
                     break;
                 case ConflictState.Relative_Fame:
                     //Ursurpers Legend - Kings Legend

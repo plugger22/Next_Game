@@ -545,6 +545,7 @@ namespace Next_Game
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
             RLColor foreColor;
             string textPlay, textIgnore;
+            int neutralEffect = Game.constant.GetValue(Global.NEUTRAL_EFFECT);
             //Update Card Pool and Deal Hand if first run through
             if (CardFirstFlag == true)
             {
@@ -617,7 +618,7 @@ namespace Next_Game
                     case CardType.Neutral:
                         backColor = Color._neutralCard;
                         textType = "Could Go Either Way";
-                        int rndNum = rnd.Next(1, 7) + rnd.Next(1, 7); //2d6
+                        int rndNum = rnd.Next(1, neutralEffect + 1) + rnd.Next(1, neutralEffect + 1); //2d6
                         points_play = rndNum; points_ignore = rndNum * -1; 
                         arrayCardPool[1]--;
                         break;
@@ -657,7 +658,7 @@ namespace Next_Game
                     textPlay = string.Format("Play for{0}{1} Points", points_play > 0 ? " +" : " ", points_play);
                     textIgnore = string.Format("Ignore for{0}{1} Points", points_ignore > 0 ? " +" : " ", points_ignore);
                 }
-                else { textPlay = "Play for +2d6 Points";  textIgnore ="Ignore for -2d6 Points"; }
+                else { textPlay = string.Format("Play for +2d{0} Points", neutralEffect);  textIgnore = string.Format("Ignore for -2d{0} Points", neutralEffect); }
                 DrawCenteredText(textPlay, ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText(textIgnore, ca_left_inner, card_vert_7, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 listCardHand.RemoveAt(0);
