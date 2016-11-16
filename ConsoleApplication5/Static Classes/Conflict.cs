@@ -264,8 +264,8 @@ namespace Next_Game
         {
             int numCards = 1;
             int rndNum = rnd.Next(100);
-            if (modifier != 0)
-            { rndNum += modifier; } 
+            if (modifier != 0) { rndNum += modifier; } 
+            else { rndNum -= 6; } //if modifier 0 then auto modify to prevent way out results, eg. 4 or 5 cards
             if (rndNum >= 70)
             {
                 if (rndNum >= 98) { numCards = 5; }
