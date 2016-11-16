@@ -681,7 +681,7 @@ namespace Next_Game
                                         conflict.Conflict_Type = ConflictType.Social;
                                         conflict.Social_Type = (SocialType)rnd.Next(1, 4);
                                         conflict.SetOpponent(newQueen.ActID);
-                                        conflict.SetGameSituation(ConflictState.Notoriety, "Ursurpers Notorierity");
+                                        conflict.SetGameSituation(ConflictState.Relative_Fame, "Ursurpers Relative Fame");
                                     }
                                     conflict.SetSituationModifiers(rnd.Next(0, 30), rnd.Next(0, 30), rnd.Next(0, 30));
                                     if (rnd.Next(100) < 50) { conflict.Challenger = true; }

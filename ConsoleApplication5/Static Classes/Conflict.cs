@@ -11,8 +11,8 @@ namespace Next_Game
     public enum ConflictState   //game specific states that are used for situations
     {
         None,
-        Relative_Army_Size,
-        Notoriety,
+        Relative_Army_Size, //battle conflicts
+        Relative_Fame, //social conflicts
     }
 
     /// <summary>
@@ -739,7 +739,7 @@ namespace Next_Game
                     if (rnd.Next(100) < 50) { Game_Type = CardType.Good; }
                     else { Game_Type = CardType.Bad; }
                     break;
-                case ConflictState.Notoriety:
+                case ConflictState.Relative_Fame:
                     if (rnd.Next(100) < 50) { Game_Type = CardType.Good; }
                     else { Game_Type = CardType.Bad; }
                     break;
