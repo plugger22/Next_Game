@@ -682,7 +682,7 @@ namespace Next_Game
                                         conflict.Social_Type = (SocialType)rnd.Next(1, 4);
                                         conflict.SetOpponent(newQueen.ActID);
                                         ConflictState debugState = (ConflictState)rnd.Next(2, 6);
-                                        conflict.SetGameSituation(debugState, string.Format("Ursurpers {0}", debugState), rnd.Next(0, 30), rnd.Next(0, 30));
+                                        conflict.SetGameSituation(debugState, string.Format("Your {0}", debugState), rnd.Next(0, 30), rnd.Next(0, 30));
                                     }
                                     if (rnd.Next(100) < 50) { conflict.Challenger = true; }
                                     else { conflict.Challenger = false; }

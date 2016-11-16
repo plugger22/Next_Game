@@ -1240,14 +1240,21 @@ namespace Next_Game
         /// <param name="cardPlayed"></param>
         internal void ResolveCard(bool cardPlayed = false)
         {
+            bool actionTaken = cardPlayed;
             string text;
             //history
             string playerAction = "Ignored";
             int pointsGained = points_ignore;
             //Green for Played cards, black for ignored
             RLColor foreColor = RLColor.Black;
+            //last three cards will be autoplayed if ignored by player and enough influence remains
+            if (cardPlayed == false)
+            {
+                if (cardsRemaining + 1 <= 2 && cardsRemaining + 1 < InfluenceRemaining)
+                { actionTaken = true; }
+            }
             //update score and influence
-            if (cardPlayed == true)
+            if (actionTaken == true)
             {
                 InfluenceRemaining--;
                 score += points_play;
