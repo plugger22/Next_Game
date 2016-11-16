@@ -528,7 +528,7 @@ namespace Next_Game
                     Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", arraySituation[2]), textCard);
                     listCardPool.Add(card);
                 }
-                text = string.Format("\"{0}\", {1} card{2}, {3}", arraySituation[2], numCards, numCards > 1 ? "s" : "", Game_Description);
+                text = string.Format("\"{0}\", {1} card{2} ({3}), {4}", arraySituation[2], numCards, numCards > 1 ? "s" : "", Game_Type, Game_Description);
                 listSituationCards.Add(new Snippet(text, foreColor, backColor));
             }
             else { arraySituation[2] = ""; }
@@ -733,8 +733,10 @@ namespace Next_Game
             switch (gameState)
             {
                 case ConflictState.Relative_Army_Size:
-                    if (rnd.Next(100) < 50) { Game_Type = CardType.Good; }
-                    else { Game_Type = CardType.Bad; }
+                    //Difference in two sides Armies - PLACEHOLDER
+                    difference = rnd.Next(1, 101) - rnd.Next(1, 101);
+                    modifier = Math.Abs(difference);
+                    description = string.Format("{0} {1:N0} more Men-At-Arms than {2}", difference > 0 ? "You have" : "The King has", modifier * 5000, difference > 0 ? "the King" : "You");
                     break;
                 case ConflictState.Relative_Fame:
                     //Ursurpers Legend - Kings Legend
@@ -770,8 +772,9 @@ namespace Next_Game
             else if (difference < 0) { Game_Type = CardType.Bad; }
             else { Game_Type = CardType.Neutral; }
             //description
-            Game_Description = string.Format("({0})", description);
-
+            Game_Description = description;
+            //let layout know what type of situation card 
+            Game.layout.GameSituation = Game_Type;
         }
 
         // methods above here

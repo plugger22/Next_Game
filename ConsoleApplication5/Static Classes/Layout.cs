@@ -27,12 +27,14 @@ namespace Next_Game
         public bool Challenger { get; set; } //is the Player the Challenger?
         public int InfluenceRemaining { get; set; }
         public int DefenderStrategy { get; set; } //chosen strategy of the Defender
+        public CardType GameSituation { get; set; } //is the game specific situation good, bad or neutral?
         int cardsRemaining;
         int score;
         int points_play; //points if card played
         int points_ignore; //points if card ignored
         int cardCounter; //number of cards played
         Card_Conflict currentCard;
+        
         //card layout
         int ca_left_outer; //left side of status boxes (y_coord)
         int ca_right_align;
@@ -559,11 +561,13 @@ namespace Next_Game
                 for (int height_index = ca_top_align + 1; height_index < ca_top_align + ca_status_height - 1; height_index++)
                 { arrayOfCells_Cards[width_index, height_index] = 255; }
             }
-            DrawCenteredText("Situation", horizontal_align, ca_top_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            if (DefenderStrategy != 2) { foreColor = RLColor.LightGray; } else { foreColor = RLColor.Blue; }
+            DrawCenteredText("Situation", horizontal_align, ca_top_align + 2, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            if (DefenderStrategy != 2) { foreColor = RLColor.LightGray; } else { foreColor = RLColor.Black; }
             DrawCenteredText(arraySituation[0], horizontal_align, ca_top_align + 4, ca_status_width, foreColor, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText(arraySituation[1], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Magenta, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText(arraySituation[2], horizontal_align, ca_top_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            foreColor = RLColor.Green;
+            if (GameSituation == CardType.Bad) { foreColor = RLColor.Red; } else if (GameSituation == CardType.Neutral) { foreColor = RLColor.Magenta; }
+            DrawCenteredText(arraySituation[2], horizontal_align, ca_top_align + 8, ca_status_width, foreColor, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Secrets box (middle right)
             for (int width_index = horizontal_align + 1; width_index < horizontal_align + ca_status_width - 1; width_index++)
             {
@@ -774,6 +778,7 @@ namespace Next_Game
         /// </summary>
         public void UpdateStrategy()
         {
+            RLColor foreColor;
             int strategy_box_height = st_upper_box_height;
             int right_inner = st_right_outer - st_upper_box_width;
             int vertical_middle = st_top_align + st_upper_box_height + st_spacer; //y_coord of breakdown box
@@ -797,10 +802,12 @@ namespace Next_Game
                 for (int height_index = st_top_align + 1; height_index < st_top_align + st_upper_box_height - 1; height_index++)
                 { arrayOfCells_Strategy[width_index, height_index] = 255; }
             }
-            DrawCenteredText("Situation", right_inner, st_top_align + 2, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawCenteredText(arraySituation[0], right_inner, st_top_align + 4, st_upper_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText("Situation", right_inner, st_top_align + 2, st_upper_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText(arraySituation[0], right_inner, st_top_align + 4, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawCenteredText(arraySituation[1], right_inner, st_top_align + 6, st_upper_box_width, RLColor.Magenta, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawCenteredText(arraySituation[2], right_inner, st_top_align + 8, st_upper_box_width, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            foreColor = RLColor.Green;
+            if (GameSituation == CardType.Bad) { foreColor = RLColor.Red; } else if (GameSituation == CardType.Neutral) { foreColor = RLColor.Magenta; }
+            DrawCenteredText(arraySituation[2], right_inner, st_top_align + 8, st_upper_box_width, foreColor, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Strategy
             for (int width_index = st_middle_align + 1; width_index < st_middle_align + st_strategy_width - 1; width_index++)
             {
