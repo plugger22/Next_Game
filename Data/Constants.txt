@@ -91,6 +91,8 @@
 33: 6
 # ARMY_SIZE -> divisor used to get relative army sizes modifier
 34: 1000
+# SIT_CARD_NUM -> sets the numbers for GetSituationCardNumber, eg. 2 gives a spread of 70-16-8-4-2 for 1/2/3/4/5 cards (remainder/8X/4X/2X/1X)
+35: 3
 
 # Conflicts ---
 

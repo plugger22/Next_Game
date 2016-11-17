@@ -256,7 +256,20 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// determine # of cards (70% -> 1, 16% -> 2, 8% -> 3, 4% -> 4, 2% -> 5). Only for the first two situations (def adv & neutral)
+        /// returns a neutral situation description appropriate to the conflict
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="subtype"></param>
+        /// <returns></returns>
+        private string GetSituationNeutral(ConflictType type, int subtype)
+        {
+            string description = "unknown";
+
+            return description;
+        }
+
+        /// <summary>
+        /// determine # of cards (worked on remainder / 8x / 4x / 2x / 1x for 1/2/3/4/5 cards). Only for the first two situations (def adv & neutral)
         /// </summary>
         /// <param name="modifier">Optional DM to die roll</param>
         /// <returns></returns>
@@ -265,13 +278,18 @@ namespace Next_Game
             int numCards = 1;
             int rndNum = rnd.Next(100);
             int rndDebug = rndNum;
-            if (modifier != 0) { rndNum += modifier; } 
-            //else { rndNum -= 6; } //if modifier 0 then auto modify to prevent way out results, eg. 4 or 5 cards
-            if (rndNum >= 70)
+            //calculate spread
+            int spreadNum = Game.constant.GetValue(Global.SIT_CARD_NUM);
+            int remainder = 100 - spreadNum - spreadNum * 2 - spreadNum * 4 - spreadNum * 8;
+            int upper = 100 - spreadNum - spreadNum * 2;
+            int lower = upper - spreadNum * 4;
+            int top = 100 - spreadNum;
+            if (modifier != 0) { rndNum += modifier; }
+            if (rndNum >= remainder)
             {
-                if (rndNum >= 98) { numCards = 5; }
-                else if (rndNum >= 94) { numCards = 4; }
-                else if (rndNum >= 86) { numCards = 3; }
+                if (rndNum >= top) { numCards = 5; }
+                else if (rndNum >= upper) { numCards = 4; }
+                else if (rndNum >= lower) { numCards = 3; }
                 else { numCards = 2; }
             }
             //debug
