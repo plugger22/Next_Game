@@ -19,7 +19,7 @@ Data1: 0
 Data2: 0
 Good1: <*> struggled up the hill while being peppered by our arrows.
 Good2: Our men used their height advantage to great effect.
-Good3: As <*> climbed the hill they sweated and grew tired.
+Good3: As <*> climbed the hill they huffed and puffed. It's a big hill.
 Bad1: <*> managed to find an easy, unseen, path up the hill.
 Bad2: You failed to deploy your men to take advantage of the hill.
 Bad3: The hill proved less of an obstacle to <*> than expected.

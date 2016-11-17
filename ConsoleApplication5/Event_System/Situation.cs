@@ -49,7 +49,33 @@ namespace Next_Game.Event_System
             listBad = new List<string>();
         }
 
-        
+        /// <summary>
+        /// list of Good outcomes - immersion text
+        /// </summary>
+        /// <param name="tempList"></param>
+        public void SetGood(List<string> tempList)
+        {
+            if (tempList != null && tempList.Count() > 0)
+            {
+                listGood.Clear();
+                listGood.AddRange(tempList);
+            }
+            else { Game.SetError(new Error(99, "Invalid Input (null or empty list")); }
+        }
+
+        /// <summary>
+        /// list of Bad outcomes - immersion text
+        /// </summary>
+        /// <param name="tempList"></param>
+        public void SetBad(List<string> tempList)
+        {
+            if (tempList != null && tempList.Count() > 0)
+            {
+                listBad.Clear();
+                listBad.AddRange(tempList);
+            }
+            else { Game.SetError(new Error(100, "Invalid Input (null or empty list")); }
+        }
         //add methods above here
     }
 }
