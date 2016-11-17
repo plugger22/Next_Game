@@ -2555,7 +2555,206 @@ namespace Next_Game
         /// <returns></returns>
         internal Dictionary<int, Situation> GetSituations(string fileName)
         {
+            Dictionary<int, Situation> tempDictionary = new Dictionary<int, Situation>();
 
+            string[] arrayOfSituations = ImportDataFile(fileName);
+            List<SituationStruct> listOfStructs = new List<SituationStruct>();
+            bool newSituation = false;
+            bool validData = true;
+            int dataCounter = 0; //number of situations
+            SituationStruct structSituation = new SituationStruct();
+            string cleanToken;
+            string cleanTag;
+            for (int i = 0; i < arrayOfSituations.Length; i++)
+            {
+                if (arrayOfSituations[i] != "" && !arrayOfSituations[i].StartsWith("#"))
+                {
+                    //set up for a new house
+                    if (newSituation == false)
+                    {
+                        newSituation = true;
+                        validData = true;
+                        //Console.WriteLine();
+                        dataCounter++;
+                        //new structure
+                        structSituation = new SituationStruct();
+                    }
+                    string[] tokens = arrayOfSituations[i].Split(':');
+                    //strip out leading spaces
+                    cleanTag = tokens[0].Trim();
+                    if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    else { cleanToken = tokens[1].Trim(); }
+                    if (cleanToken.Length == 0)
+                    {
+                        validData = false;
+                        Game.SetError(new Error(98, string.Format("Situation {0} (Missing data for \"{1}\") \"{2}\"",
+                        String.IsNullOrEmpty(structSituation.Name) ? "?" : structSituation.Name, cleanTag, fileName)));
+                    }
+                    else
+                    {
+                        switch (cleanTag)
+                        {
+                            case "Name":
+                                structSituation.Name = cleanToken;
+                                break;
+                            case "Type":
+                                switch (cleanToken)
+                                {
+                                    case "Combat":
+                                        structSituation.Type = ConflictType.Combat;
+                                        break;
+                                    case "Social":
+                                        structSituation.Type = ConflictType.Social;
+                                        break;
+                                    case "Other":
+                                        structSituation.Type = ConflictType.Other;
+                                        break;
+                                    default:
+                                        structSituation.Type = ConflictType.None;
+                                        Game.SetError(new Error(98, string.Format("Invalid Input, Type (\"{0}\")", arrayOfSituations[i])));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "SubType":
+                                switch (cleanToken)
+                                {
+                                    case "Tournament":
+                                        if (structSituation.Type == ConflictType.Combat)
+                                        { structSituation.Type_Combat = CombatType.Tournament; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
+                                    case "Personal":
+                                        if (structSituation.Type == ConflictType.Combat)
+                                        { structSituation.Type_Combat = CombatType.Personal; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
+                                    case "Battle":
+                                        if (structSituation.Type == ConflictType.Combat)
+                                        { structSituation.Type_Combat = CombatType.Battle; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
+                                    case "Blackmail":
+                                        if (structSituation.Type == ConflictType.Social)
+                                        { structSituation.Type_Social = SocialType.Blackmail; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
+                                    case "Seduce":
+                                        if (structSituation.Type == ConflictType.Social)
+                                        { structSituation.Type_Social = SocialType.Seduce; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
+                                    case "Befriend":
+                                        if (structSituation.Type == ConflictType.Social)
+                                        { structSituation.Type_Social = SocialType.Befriend; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
+                                    case "Hunting":
+                                        if (structSituation.Type == ConflictType.Other)
+                                        { structSituation.Type_Other = OtherType.Hunting; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
+                                    case "Stealth":
+                                        if (structSituation.Type == ConflictType.Other)
+                                        { structSituation.Type_Other = OtherType.Stealth; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
+                                }
+                                break;
+                            case "Role":
+                                structSituation.Role = cleanToken;
+                                break;
+                            case "Description":
+                                structSituation.Description = cleanToken;
+                                break;
+                            case "Age":
+                                try { structSituation.Age = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Special":
+                                //NOTE: not yet sure of what special field will represent
+                                structSituation.Special = cleanToken;
+                                break;
+                            case "ArcID":
+                                try { structSituation.ArcID = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Resources":
+                                try { structSituation.Resources = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Loyalty":
+                                try { structSituation.Loyalty = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Combat_Effect":
+                                try { structSituation.Combat_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Wits_Effect":
+                                try { structSituation.Wits_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Charm_Effect":
+                                try { structSituation.Charm_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Treachery_Effect":
+                                try { structSituation.Treachery_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Leadership_Effect":
+                                try { structSituation.Leadership_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Touched_Effect":
+                                try { structSituation.Touched_Effect = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(59, e.Message)); validData = false; }
+                                break;
+                            case "Combat_Trait":
+                                structSituation.Combat_Trait = cleanToken;
+                                break;
+                            case "Wits_Trait":
+                                structSituation.Wits_Trait = cleanToken;
+                                break;
+                            case "Charm_Trait":
+                                structSituation.Charm_Trait = cleanToken;
+                                break;
+                            case "Treachery_Trait":
+                                structSituation.Treachery_Trait = cleanToken;
+                                break;
+                            case "Leadership_Trait":
+                                structSituation.Leadership_Trait = cleanToken;
+                                break;
+                            case "Touched_Trait":
+                                structSituation.Touched_Trait = cleanToken;
+                                break;
+                            case "[end]":
+                            case "[End]":
+                                //last datapoint - save structure to list
+                                if (dataCounter > 0 && validData == true)
+                                { listOfStructs.Add(structSituation); }
+                                break;
+                            default:
+                                Game.SetError(new Error(59, string.Format("Invalid Data \"{0}\" in Follower Input", cleanTag)));
+                                break;
+                        }
+                    }
+                }
+                else
+                { newSituation = false; }
+            }
+            return tempDictionary;
         }
 
         //methods above here

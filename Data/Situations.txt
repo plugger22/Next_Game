@@ -1,8 +1,8 @@
 # Situations
 # NOTE: All fields must have a value
-# Name: Situation descriptor -> max. of four words
+# Name: Situation descriptor -> no more than four or five words
 # Type: (ConflictType) Combat / Social / Other
-# SubType: if Combat -> Personal/Tournament/Battle, if Social -> BlackMail/Seduce/Befriend, if Other -> Hunting/Stealth
+# SubType: if Combat -> Personal/Tournament/Battle, if Social -> Blackmail/Seduce/Befriend, if Other -> Hunting/Stealth
 # SitNum: Situation Number -> '0' (defenders advantage), '1' (neutral) or '2' (game specific)
 # Data1: multi purpose integer, default 0
 # Data2: multi purpose integer, default 0

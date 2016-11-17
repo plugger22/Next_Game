@@ -79,6 +79,7 @@ namespace Next_Game
         private Dictionary<int, EventPlayer> dictPlayerEvents;
         private Dictionary<int, Archetype> dictArchetypes;
         private Dictionary<int, Story> dictStories;
+        private Dictionary<int, Situation> dictSituations;
 
         public Director(int seed)
         {
@@ -126,6 +127,7 @@ namespace Next_Game
             dictPlayerEvents = new Dictionary<int, EventPlayer>();
             dictArchetypes = new Dictionary<int, Archetype>();
             dictStories = new Dictionary<int, Story>();
+            dictSituations = new Dictionary<int, Situation>();
         }
 
         /// <summary>
@@ -149,6 +151,8 @@ namespace Next_Game
             story = SetStory(1); //choose which story to use
             Console.WriteLine(Environment.NewLine + "--- Initialise Archetypes");
             InitialiseArchetypes();
+            Console.WriteLine(Environment.NewLine + "--- Initialise Situations");
+            dictSituations = Game.file.GetSituations("Situations.txt");
             Console.WriteLine(Environment.NewLine);
             InitialiseGameStates();
         }
