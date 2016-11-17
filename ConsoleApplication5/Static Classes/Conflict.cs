@@ -185,7 +185,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Set up the situation (text descriptors) -> NOTE: arraySituation[2] is here for Debug purposes only, it should instead come from SetGameSituation
+        /// Set up the situation (text descriptors) (first two situations only) -> NOTE: arraySituation[2] is here for Debug purposes only, it should instead come from SetGameSituation
         /// </summary>
         private void SetSituation()
         {

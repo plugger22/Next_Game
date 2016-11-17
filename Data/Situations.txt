@@ -1,0 +1,96 @@
+# Situations
+# NOTE: All fields must have a value
+# Name: Situation descriptor -> max. of four words
+# Type: (ConflictType) Combat / Social / Other
+# SubType: if Combat -> Personal/Tournament/Battle, if Social -> BlackMail/Seduce/Befriend, if Other -> Hunting/Stealth
+# SitNum: Situation Number -> '0' (defenders advantage), '1' (neutral) or '2' (game specific)
+# Data1: multi purpose integer, default 0
+# Data2: multi purpose integer, default 0
+# Good: immersion strings, 3 variations for good outcomes, short/med sentence, use 'You' & '<*>' for your enemy/opponent, max 6, eg. Good6:, min1
+# Bad: immersion strings, 3 variations for bad outcomes, short/med sentence, use 'You' & '<*>' for your enemy/opponent, max 6, eg. Bad6:, min 1
+
+# Combat ---
+
+Name: A Defendable Hill
+Type: Combat
+SubType: Battle
+SitNum: 0
+Data1: 0
+Data2: 0
+Good1: <*> struggled up the hill while being peppered by our arrows.
+Good2: Our men used their height advantage to great effect.
+Good3: As <*> climbed the hill they sweated and grew tired.
+Bad1: <*> managed to find an easy, unseen, path up the hill.
+Bad2: You failed to deploy your men to take advantage of the hill.
+Bad3: The hill proved less of an obstacle to <*> than expected.
+[end]
+
+Name: Muddy Ground
+Type: Combat
+SubType: Battle
+SitNum: 1
+Data1: 0
+Data2: 0
+Good1: <*> were bought to halt by the sticky, glutinous mud.
+Good2: You tricked <*> into traversing the muddy ground.
+Good3: With some sharp observation you managed to avoid the muddy ground.
+Bad1: Alas, the green grass hid a muddy underbelly that your men blundered into.
+Bad2: Unfortunately, there was no way around the treacherous, muddy ground.
+Bad3: The mud reached up and sucked hard at the legs of your knight's mounts as they struggled through.
+[end]
+
+Name: Cheers of the Crowd
+Type: Combat
+SubType: Tournament
+SitNum: 0
+Data1: 0
+Data2: 0
+Good1: The crowd spurred you onto greater martial feats with their boisterous support.
+Good2: <*> scowled at the crowds indifference to <s>.
+Good3: The cheers were all for you. <*> received only boos and catcalls.
+Bad1: Why do they cheer <*>. Don't they realise who you are?
+Bad2: You try your best to shut out the cacophony of noise as the crowds go wild cheering <*>.
+Bad3: It's hard to concentrate when there is so much noise. Why must they cheer <*> so much?
+[end]
+
+Name: Favoured Side of the Fence
+Type: Combat
+SubType: Tournament
+SitNum: 1
+Data1: 0
+Data2: 0
+Good1: Your mount finds favour on the top side of the jousting barrier.
+Good2: With a slight rise in the ground on the top side you gain an advantage
+Good3: The ground is noticeably smoother on the top side where you are positioned.
+Bad1: Your mount slews sideways as it's foot skids on the uneven ground.
+Bad2: The small broken rocks on your side of the fence unsettle your mount.
+Bad3: Has nobody thought to smooth the ground on your side of the fence? Perhaps it's deliberate.
+[end]
+
+Name: Glare of the Sun
+Type: Combat
+SubType: Personal
+SitNum: 0
+Data1: 0
+Data2: 0
+Good1: Keeping the sun at your back, <*> is forced to squint hard.
+Good2: The clouds open and <*> gets hit with the full glare of the sun.
+Good3: <*> discomfort at having the sun in his eyes is there for all to see.
+Bad1: It's hard to get a clear view of <*> with the sun in your eyes.
+Bad2:  Where are the damn clouds? The sun's glare is fierce and blinding.
+Bad3: Your fighting a dark shadow. That's all you can see with the sun in your eyes.
+[end]
+
+Name: Uneven Ground
+Type: Combat
+SubType: Personal
+SitNum: 1
+Data1: 0
+Data2: 0
+Good1: <*> stumbles as you force him back onto a ragged tree stump.
+Good2: You stand firm on the only piece of smooth ground. <*> isn't so lucky.
+Good3: Pushed backwards, <*> struggles to maintain his footing amongst the rocks and tree roots.
+Bad1: Your foot gets caught in a tree root and you tumble to the ground.
+Bad2: Your ankle skews outwards as your slip on a rock.
+Bad3: You're having to fight with one eye on the uneven ground and it's treacherous footing.
+[end]

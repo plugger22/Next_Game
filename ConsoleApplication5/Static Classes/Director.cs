@@ -11,9 +11,10 @@ namespace Next_Game
 {
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
     public enum EventType { None, Location, Travelling }
-    public enum ConflictType { None, Combat, Social} //broad category
-    public enum CombatType { None, Personal, Tournament, Battle}
-    public enum SocialType { None, Blackmail, Seduce, Befriend}
+    public enum ConflictType { None, Combat, Social, Other} //broad category
+    public enum CombatType { None, Personal, Tournament, Battle} //sub category
+    public enum SocialType { None, Blackmail, Seduce, Befriend} //sub category
+    public enum OtherType { None, Hunting, Stealth} //sub category
     public enum DataPoint {None, Invisibility, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
     public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
     

@@ -163,6 +163,21 @@ namespace Next_Game
         public string Touched_Trait { get; set; }
     }
 
+    //situations
+    struct SituationStruct
+    {
+        public string Name { get; set; }
+        public ConflictType Type { get; set; }
+        public CombatType Type_Combat { get; set; }
+        public SocialType Type_Social { get; set; }
+        public OtherType Type_Other { get; set; }
+        public int SitNum { get; set; }
+        public int Data1 { get; set; }
+        public int Data2 { get; set; }
+        public List<string> ListGood { get; set; }
+        public List<string> ListBad { get; set; }
+    }
+
     /// <summary>
     /// Handles all file Import duties
     /// </summary>
@@ -2531,6 +2546,16 @@ namespace Next_Game
                 { newFollower = false; }
             }
             return listOfStructs;
+        }
+
+        /// <summary>
+        /// Import Situations
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        internal Dictionary<int, Situation> GetSituations(string fileName)
+        {
+
         }
 
         //methods above here
