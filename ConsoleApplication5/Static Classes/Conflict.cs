@@ -28,6 +28,7 @@ namespace Next_Game
         Actor opponent;
         Active player;
         public bool Challenger { get; set; } //is the Player the Challenger?
+        int numberOfCards;
         //type of conflict
         public ConflictType Conflict_Type { get; set; }
         public CombatType Combat_Type { get; set; }
@@ -48,7 +49,7 @@ namespace Next_Game
         //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
         private int[] arrayPool;
         private int[] arrayModifiers; 
-        private string[] arraySituation;
+        private string[,] arraySituation;
         //three lists to consolidate into pool breakdown description
         private List<Snippet> listPlayerCards;
         private List<Snippet> listOpponentCards;
@@ -60,13 +61,14 @@ namespace Next_Game
         public Conflict(int seed)
         {
             rnd = new Random(seed);
+            numberOfCards = Game.constant.GetValue(Global.HAND_CARDS_NUM);
             listCardPool = new List<Card_Conflict>();
             listCardHand = new List<Card_Conflict>();
             listBreakdown = new List<Snippet>();
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
             arrayPool = new int[3];
             arrayModifiers = new int[3]; //modifier (DM) for GetSituationCardNumber, 0/1/2 refer to the three situation cards (def adv/neutral/game specific) -> DM for 0 & 1, # of cards for Game ('2')
-            arraySituation = new string[3];
+            arraySituation = new string[3, 3];
             //three lists to consolidate into pool breakdown description
             listPlayerCards = new List<Snippet>();
             listOpponentCards = new List<Snippet>();
@@ -87,7 +89,7 @@ namespace Next_Game
         {
             SetPlayerStrategy();
             SetTraits();
-            SetSituation();
+            SetSituation(Game.director.GetSituations());
             SetOpponentStrategy();
             SetOutcome();
             SetCardPool();
@@ -187,13 +189,58 @@ namespace Next_Game
         /// <summary>
         /// Set up the situation (text descriptors) (first two situations only) -> NOTE: arraySituation[2] is here for Debug purposes only, it should instead come from SetGameSituation
         /// </summary>
-        private void SetSituation()
+        private void SetSituation(Dictionary<int, Situation> tempDictionary)
         {
             
             switch (Conflict_Type)
             {
-                case ConflictType.Combat:
-                    switch (Combat_Type)
+            case ConflictType.Combat:
+                    //filter suitable situations from dictionary
+                    List<Situation> listFilteredSituations = new List<Situation>();
+                    IEnumerable<Situation> situationSet =
+                        from situation in tempDictionary
+                        where situation.Value.Type == ConflictType.Combat
+                        where situation.Value.Type_Combat == Combat_Type
+                        where situation.Value.SitNum == 0
+                        orderby situation.Value.SitID
+                        select situation.Value;
+                    listFilteredSituations = situationSet.ToList();
+
+                    //filter for Defensive Advantage card (1st situation)
+                    List<Situation> listFirstSituations = new List<Situation>();
+                    IEnumerable<Situation> firstSituationSet =
+                        from situation in listFilteredSituations
+                        where situation.SitNum == 0
+                        select situation;
+                    listFirstSituations = firstSituationSet.ToList();
+
+                    Situation situationFirst = listFirstSituations[rnd.Next(0, listFirstSituations.Count)];
+                    List<string> tempListGood = situationFirst.GetGood();
+                    List<string> tempListBad = situationFirst.GetBad();
+                    //place data in array (name and immersion texts for played/ignored outcomes)
+                    arraySituation[0, 1] = situationFirst.Name;
+                    arraySituation[0, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
+                    arraySituation[0, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
+
+                    //filter for Neutral card (2nd situation)
+                    List<Situation> listSecondSituations = new List<Situation>();
+                    IEnumerable<Situation> secondSituationSet =
+                        from situation in listFilteredSituations
+                        where situation.SitNum == 1
+                        select situation;
+                    listSecondSituations = secondSituationSet.ToList();
+
+                    Situation situationSecond = listSecondSituations[rnd.Next(0, listSecondSituations.Count)];
+                    tempListGood = situationSecond.GetGood();
+                    tempListBad = situationSecond.GetBad();
+                    //place data in array (name and immersion texts for played/ignored outcomes)
+                    arraySituation[1, 1] = situationSecond.Name;
+                    arraySituation[1, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
+                    arraySituation[1, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
+
+
+
+                    /*switch (Combat_Type)
                     {
                         case CombatType.Personal:
                             arraySituation[0] = "Uneven Ground";
@@ -213,25 +260,25 @@ namespace Next_Game
                         default:
                             Game.SetError(new Error(86, "Invalid Combat Type"));
                             break;
-                    }
+                    }*/
                     break;
                 case ConflictType.Social:
                     switch (Social_Type)
                     {
                         case SocialType.Befriend:
-                            arraySituation[0] = "A fine Arbor Wine";
-                            arraySituation[1] = "A Pleasant Lunch";
-                            arraySituation[2] = "Your Reputation Precedes you";
+                            arraySituation[0, 0] = "A fine Arbor Wine";
+                            arraySituation[1, 0] = "A Pleasant Lunch";
+                            arraySituation[2, 0] = "Your Reputation Precedes you";
                             break;
                         case SocialType.Blackmail:
-                            arraySituation[0] = "A Noisey Room full of People";
-                            arraySituation[1] = "The Threat of Retaliation";
-                            arraySituation[2] = "Your Poor Reputation";
+                            arraySituation[0, 0] = "A Noisey Room full of People";
+                            arraySituation[1, 0] = "The Threat of Retaliation";
+                            arraySituation[2, 0] = "Your Poor Reputation";
                             break;
                         case SocialType.Seduce:
-                            arraySituation[0] = "A Romantic Venue";
-                            arraySituation[1] = "A Witch's Aphrodisiac";
-                            arraySituation[2] = "The Lady is Happily Married";
+                            arraySituation[0, 0] = "A Romantic Venue";
+                            arraySituation[1, 0] = "A Witch's Aphrodisiac";
+                            arraySituation[2, 0] = "The Lady is Happily Married";
                             break;
                         default:
                             Game.SetError(new Error(86, "Invalid Social Type"));
@@ -244,7 +291,7 @@ namespace Next_Game
             }
             //give correct title for game specific situation, if present
             if (String.IsNullOrEmpty(Game_Title) == false)
-            { arraySituation[2] = Game_Title; }
+            { arraySituation[2, 0] = Game_Title; }
             //send to layout
             if (arraySituation.Length <= 3 && arraySituation.Length > 0)
             {
@@ -520,10 +567,11 @@ namespace Next_Game
             for (int i = 0; i < numCards; i++)
             {
                 //only applies if Defender chooses an [F3] Defence strategy
-                Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", arraySituation[0]), "An advantage to the Defender") { TypeDefend = CardType.Good };
+                Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", arraySituation[0, 0]), "An advantage to the Defender") { TypeDefend = CardType.Good };
+                card.PlayedText = arraySituation[0, 1]; card.IgnoredText = arraySituation[0, 2];
                 listCardPool.Add(card);
             }
-            text = string.Format("\"{0}\", {1} card{2}. ONLY AVAILABLE if Defender ({3}) chooses an [F3] Strategy", arraySituation[0], numCards, numCards > 1 ? "s" : "",
+            text = string.Format("\"{0}\", {1} card{2}. ONLY AVAILABLE if Defender ({3}) chooses an [F3] Strategy", arraySituation[0, 0], numCards, numCards > 1 ? "s" : "",
                 Challenger == false ? "Player" : "Opponent");
             listSituationCards.Add(new Snippet(text, foreColor, backColor));
             //...neutral card -> Second Situation
@@ -531,10 +579,11 @@ namespace Next_Game
             type = CardType.Neutral; foreColor = RLColor.Magenta; arrayPool[1] += numCards;
             for (int i = 0; i < numCards; i++)
             {
-                Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", arraySituation[1]), "Could go either way...");
+                Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", arraySituation[1, 0]), "Could go either way...");
+                card.PlayedText = arraySituation[1, 1]; card.IgnoredText = arraySituation[1, 2];
                 listCardPool.Add(card);
             }
-            text = string.Format("\"{0}\", {1} card{2}, A Neutral Card (Good if played, Bad if ignored)", arraySituation[1], numCards, numCards > 1 ? "s" : "");
+            text = string.Format("\"{0}\", {1} card{2}, A Neutral Card (Good if played, Bad if ignored)", arraySituation[1, 0], numCards, numCards > 1 ? "s" : "");
             listSituationCards.Add(new Snippet(text, foreColor, backColor));
             //...Game Specific Situation
             if (Game_Type != CardType.None)
@@ -547,13 +596,14 @@ namespace Next_Game
                 else if (type == CardType.Neutral) { foreColor = RLColor.Magenta; arrayPool[1] += numCards; textCard = "Could go either way..."; }
                 for (int i = 0; i < numCards; i++)
                 {
-                    Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", arraySituation[2]), textCard);
+                    Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, string.Format("{0}", arraySituation[2, 0]), textCard);
+                    card.PlayedText = arraySituation[2, 1]; card.IgnoredText = arraySituation[2, 2];
                     listCardPool.Add(card);
                 }
-                text = string.Format("\"{0}\", {1} card{2} ({3}), {4}", arraySituation[2], numCards, numCards > 1 ? "s" : "", Game_Type, Game_Description);
+                text = string.Format("\"{0}\", {1} card{2} ({3}), {4}", arraySituation[2, 0], numCards, numCards > 1 ? "s" : "", Game_Type, Game_Description);
                 listSituationCards.Add(new Snippet(text, foreColor, backColor));
             }
-            else { arraySituation[2] = ""; }
+            else { arraySituation[2, 0] = ""; }
 
             //clear master list and add headers
             listBreakdown.Clear();
@@ -656,14 +706,13 @@ namespace Next_Game
         /// </summary>
         public void SetHand()
         {
-            int numCards = Game.constant.GetValue(Global.HAND_CARDS_NUM);
             //check enough cards in pool, if not downsize hand
-            if (numCards > listCardPool.Count)
-            { numCards = listCardPool.Count; Game.SetError(new Error(93, "Not enough cards in the Pool")); }
+            if (numberOfCards > listCardPool.Count)
+            { numberOfCards = listCardPool.Count; Game.SetError(new Error(93, "Not enough cards in the Pool")); }
             //clear out the list
             listCardHand.Clear();
             int rndNum;
-            for (int i = 0; i < numCards; i++)
+            for (int i = 0; i < numberOfCards; i++)
             {
                 rndNum = rnd.Next(0, listCardPool.Count);
                 Card_Conflict card = listCardPool[rndNum];

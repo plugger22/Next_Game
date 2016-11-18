@@ -85,14 +85,6 @@
 # TRAIT_MULTIPLIER -> amount trait level (1 to 5) is multiplied by for automatic option follower tests
 29: 20
 
-# Challenges ---
-
-# NEUTRAL_EFFECT -> effect of neutral cards expressed as 2d #, eg. if '6' then 2d6 -> 2 to 12.
-33: 6
-# ARMY_SIZE -> divisor used to get relative army sizes modifier
-34: 1000
-# SIT_CARD_NUM -> sets the numbers for GetSituationCardNumber, eg. 2 gives a spread of 70-16-8-4-2 for 1/2/3/4/5 cards (remainder/8X/4X/2X/1X)
-35: 3
 
 # Conflicts ---
 
@@ -100,3 +92,9 @@
 31: 6
 # PLAYER_INFLUENCE -> how many cards can the player influence in a hand
 32: 3
+# NEUTRAL_EFFECT -> effect of neutral cards expressed as 2d #, eg. if '6' then 2d6 -> 2 to 12.
+33: 6
+# ARMY_SIZE -> divisor used to get relative army sizes modifier
+34: 1000
+# SIT_CARD_NUM -> sets the numbers for GetSituationCardNumber, eg. 2 gives a spread of 70-16-8-4-2 for 1/2/3/4/5 cards (remainder/8X/4X/2X/1X)
+35: 3

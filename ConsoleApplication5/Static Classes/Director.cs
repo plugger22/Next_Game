@@ -1679,6 +1679,13 @@ namespace Next_Game
             return newValue;
         }
 
+        /// <summary>
+        /// return dictionary of Situations to conflict.GetSituations
+        /// </summary>
+        /// <returns></returns>
+        internal Dictionary<int, Situation> GetSituations()
+        { return dictSituations; }
+
         //place Director methods above here
     }
 }

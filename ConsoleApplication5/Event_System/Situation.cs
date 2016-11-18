@@ -76,6 +76,14 @@ namespace Next_Game.Event_System
             }
             else { Game.SetError(new Error(100, "Invalid Input (null or empty list")); }
         }
+
+
+        public List<string> GetGood()
+        { return listGood; }
+
+        public List<string> GetBad()
+        { return listBad; }
+
         //add methods above here
     }
 }

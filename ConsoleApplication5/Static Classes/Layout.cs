@@ -82,7 +82,7 @@ namespace Next_Game
         //Dynamic Data Sets
         private int[] arrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
         private int[,,] arrayPoints { get; set; } //0 -> Good card Influence, 1 - Good card Ignore, 2 Bad card Influence, 3 Bad card Ignore (3 x 3 is Player vs. Opponent strategies)
-        private string[] arraySituation { get; set; } // up to 3 situation factors
+        private string[,] arraySituation { get; set; } // up to 3 situation factors
         private string[] arrayStrategy { get; set; } //3 strategies - always variations of Attack, Balanced & Defend
         private string[] arrayOutcome { get; set; } // 0 is Conflict Type, 1/2/3 are Wins (minor/normal/major), 4/5/6 are Losses, 7/8 are advantage/disadvantage and recommendation, 9 Actors
         private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
@@ -185,7 +185,7 @@ namespace Next_Game
             //Dynamic Data Sets
             arrayCardPool = new int[3];
             arrayPoints = new int[3, 3, 4];
-            arraySituation = new string[3];
+            arraySituation = new string[3, 3];
             arrayStrategy = new string[3];
             arrayOutcome = new string[10];
             listCardBreakdown = new List<Snippet>();
@@ -567,11 +567,11 @@ namespace Next_Game
             }
             DrawCenteredText("Situation", horizontal_align, ca_top_align + 2, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             if (DefenderStrategy != 2) { foreColor = RLColor.LightGray; } else { foreColor = RLColor.Black; }
-            DrawCenteredText(arraySituation[0], horizontal_align, ca_top_align + 4, ca_status_width, foreColor, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText(arraySituation[1], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Magenta, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(arraySituation[0, 0], horizontal_align, ca_top_align + 4, ca_status_width, foreColor, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(arraySituation[1, 0], horizontal_align, ca_top_align + 6, ca_status_width, RLColor.Magenta, arrayOfCells_Cards, arrayOfForeColors_Cards);
             foreColor = RLColor.Green;
             if (GameSituation == CardType.Bad) { foreColor = RLColor.Red; } else if (GameSituation == CardType.Neutral) { foreColor = RLColor.Magenta; }
-            DrawCenteredText(arraySituation[2], horizontal_align, ca_top_align + 8, ca_status_width, foreColor, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(arraySituation[2, 0], horizontal_align, ca_top_align + 8, ca_status_width, foreColor, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Secrets box (middle right)
             for (int width_index = horizontal_align + 1; width_index < horizontal_align + ca_status_width - 1; width_index++)
             {
@@ -807,11 +807,11 @@ namespace Next_Game
                 { arrayOfCells_Strategy[width_index, height_index] = 255; }
             }
             DrawCenteredText("Situation", right_inner, st_top_align + 2, st_upper_box_width, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawCenteredText(arraySituation[0], right_inner, st_top_align + 4, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawCenteredText(arraySituation[1], right_inner, st_top_align + 6, st_upper_box_width, RLColor.Magenta, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText(arraySituation[0, 0], right_inner, st_top_align + 4, st_upper_box_width, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText(arraySituation[1, 0], right_inner, st_top_align + 6, st_upper_box_width, RLColor.Magenta, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             foreColor = RLColor.Green;
             if (GameSituation == CardType.Bad) { foreColor = RLColor.Red; } else if (GameSituation == CardType.Neutral) { foreColor = RLColor.Magenta; }
-            DrawCenteredText(arraySituation[2], right_inner, st_top_align + 8, st_upper_box_width, foreColor, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawCenteredText(arraySituation[2, 0], right_inner, st_top_align + 8, st_upper_box_width, foreColor, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Strategy
             for (int width_index = st_middle_align + 1; width_index < st_middle_align + st_strategy_width - 1; width_index++)
             {
@@ -1022,7 +1022,7 @@ namespace Next_Game
                 if (Strategy_Opponent != 2)
                 {
                     //word wrap
-                    string text = string.Format("Your Opponent has forfeited the advantage of \"{0}\" by not defending", arraySituation[0]);
+                    string text = string.Format("Your Opponent has forfeited the advantage of \"{0}\" by not defending", arraySituation[0, 0]);
                     List<string> tempList = new List<string>();
                     tempList.AddRange(Game.utility.WordWrap(text, box_width - 4));
                     for (int i = 0; i < tempList.Count(); i++)
@@ -1034,7 +1034,7 @@ namespace Next_Game
                 if (Strategy_Player != 2)
                 {
                     //word wrap
-                    string text = string.Format("You have forfeited the advantage of \"{0}\" by not defending", arraySituation[0]);
+                    string text = string.Format("You have forfeited the advantage of \"{0}\" by not defending", arraySituation[0, 0]);
                     List<string> tempList = new List<string>();
                     tempList.AddRange(Game.utility.WordWrap(text, box_width - 4));
                     for (int i = 0; i < tempList.Count(); i++)
@@ -1147,7 +1147,7 @@ namespace Next_Game
         /// Sets up Situation array (overwrites existing data)
         /// </summary>
         /// <param name="arraySituation"></param>
-        internal void SetSituation(string[] arrayInput)
+        internal void SetSituation(string[,] arrayInput)
         {
             //empty out the array 
             Array.Clear(arraySituation, 0, arraySituation.Length);
@@ -1244,7 +1244,8 @@ namespace Next_Game
         internal void ResolveCard(bool cardPlayed = false)
         {
             bool actionTaken = cardPlayed;
-            string text;
+            string textAction;
+            string textImmersion;
             //history
             string playerAction = "Ignored";
             int pointsGained = points_ignore;
@@ -1273,21 +1274,36 @@ namespace Next_Game
             if (currentCard != null && currentCard.Type != CardType.None)
             {
                 cardCounter++;
+                //Player Action
                 if (currentCard.Conflict_Type == CardConflict.Situation)
                 {
-                    text = string.Format("Card {0}, {1} \"{2}\", ({3}), for {4}{5} points, score {6}{7}", cardCounter, playerAction, currentCard.Title, currentCard.Type,
+                    textAction = string.Format("Card {0}, {1} \"{2}\", ({3}), for {4}{5} points, score {6}{7}", cardCounter, playerAction, currentCard.Title, currentCard.Type,
                     pointsGained > 0 ? "+" : "", pointsGained, score > 0 ? "+" : "", score);
                 }
                 else
                 {
-                    text = string.Format("Card {0}, {1} {2}, ({3}), for {4}{5} points, score {6}{7}", cardCounter, playerAction, currentCard.Title, currentCard.Type,
+                    textAction = string.Format("Card {0}, {1} {2}, ({3}), for {4}{5} points, score {6}{7}", cardCounter, playerAction, currentCard.Title, currentCard.Type,
                     pointsGained > 0 ? "+" : "", pointsGained, score > 0 ? "+" : "", score);
                 }
-                Snippet snippet = new Snippet(text, foreColor, Back_FillColor);
-                listHistory.Add(snippet);
-                //add to message queue
-                messageQueue.Enqueue(snippet);
+                Snippet snippetCard = new Snippet(textAction, foreColor, Back_FillColor);
+                listHistory.Add(snippetCard);
+                //...add to message queue
+                messageQueue.Enqueue(snippetCard);
                 if (messageQueue.Count > ca_message_max) { messageQueue.Dequeue();}
+
+                //Immersion text
+                if (cardPlayed == true)
+                { textImmersion = currentCard.PlayedText; }
+                else { textImmersion = currentCard.IgnoredText; }
+                if (textImmersion != null && textImmersion.Length> 0)
+                {
+                    Snippet snippetImmersion = new Snippet(textImmersion, foreColor, Back_FillColor);
+                    listHistory.Add(snippetImmersion);
+                    //...add to message queue
+                    messageQueue.Enqueue(snippetImmersion);
+                    if (messageQueue.Count > ca_message_max) { messageQueue.Dequeue(); }
+                }
+
             }
         }
 

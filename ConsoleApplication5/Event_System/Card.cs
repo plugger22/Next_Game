@@ -45,6 +45,8 @@ namespace Next_Game.Event_System
         public CardType TypeAttack { get; set; } //how a situation card is treated if defender chooses an Attack strategy (default None)
         public CardType TypeBalanced { get; set; } //how a situation card is treated if defender chooses a balanced strategy (default None)
         public CardType TypeDefend { get; set; } //how a situation card is treated if defender chooses a defend strategy (default None)
+        public string PlayedText { get; set; } //randomly chosen immersion text
+        public string IgnoredText { get; set; } //randomly chosen immersion text
 
         public Card_Conflict()
         { }
