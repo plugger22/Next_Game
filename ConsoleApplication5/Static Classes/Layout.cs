@@ -1153,13 +1153,10 @@ namespace Next_Game
             int lower = arrayInput.GetUpperBound(1);
             int rank = arrayInput.Rank;
             //empty out the array 
-            Array.Clear(arraySituation, 0, upper + 1 * lower + 1);
+            Array.Clear(arraySituation, 0, (upper + 1) * (lower + 1));
             //3 or less factors
             if (upper == 2 && upper > 0 && rank == 2)
-            {
-                //arrayInput.CopyTo(arraySituation, 0);
-                arraySituation = arrayInput;
-            }
+            { Array.Copy(arrayInput, arraySituation, (upper + 1) * (lower + 1)); }
             else
             { Game.SetError(new Error(85, "Invalid Situation Array input (needs from 1 to 3 strategies)")); }
         }
@@ -1303,7 +1300,7 @@ namespace Next_Game
                 else { textImmersion = currentCard.IgnoredText; }
                 if (textImmersion != null && textImmersion.Length> 0)
                 {
-                    Snippet snippetImmersion = new Snippet(textImmersion, foreColor, Back_FillColor);
+                    Snippet snippetImmersion = new Snippet(textImmersion, RLColor.Brown, Back_FillColor);
                     listHistory.Add(snippetImmersion);
                     //...add to message queue
                     messageQueue.Enqueue(snippetImmersion);
