@@ -201,7 +201,6 @@ namespace Next_Game
                         from situation in tempDictionary
                         where situation.Value.Type == ConflictType.Combat
                         where situation.Value.Type_Combat == Combat_Type
-                        where situation.Value.SitNum == 0
                         orderby situation.Value.SitID
                         select situation.Value;
                     listFilteredSituations = situationSet.ToList();
@@ -218,7 +217,7 @@ namespace Next_Game
                     List<string> tempListGood = situationFirst.GetGood();
                     List<string> tempListBad = situationFirst.GetBad();
                     //place data in array (name and immersion texts for played/ignored outcomes)
-                    arraySituation[0, 1] = situationFirst.Name;
+                    arraySituation[0, 0] = situationFirst.Name;
                     arraySituation[0, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
                     arraySituation[0, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
 
@@ -234,7 +233,7 @@ namespace Next_Game
                     tempListGood = situationSecond.GetGood();
                     tempListBad = situationSecond.GetBad();
                     //place data in array (name and immersion texts for played/ignored outcomes)
-                    arraySituation[1, 1] = situationSecond.Name;
+                    arraySituation[1, 0] = situationSecond.Name;
                     arraySituation[1, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
                     arraySituation[1, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
 
@@ -293,11 +292,8 @@ namespace Next_Game
             if (String.IsNullOrEmpty(Game_Title) == false)
             { arraySituation[2, 0] = Game_Title; }
             //send to layout
-            if (arraySituation.Length <= 3 && arraySituation.Length > 0)
-            {
-                Game.layout.SetSituation(arraySituation);
-                
-            }
+            if (arraySituation.GetUpperBound(0) == 2 && arraySituation.GetUpperBound(0) > 0)
+            { Game.layout.SetSituation(arraySituation); }
             else
             { Game.SetError(new Error(89, "Invalid Situation, Layout not updated")); }
         }

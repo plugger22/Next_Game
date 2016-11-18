@@ -1149,11 +1149,17 @@ namespace Next_Game
         /// <param name="arraySituation"></param>
         internal void SetSituation(string[,] arrayInput)
         {
+            int upper = arrayInput.GetUpperBound(0);
+            int lower = arrayInput.GetUpperBound(1);
+            int rank = arrayInput.Rank;
             //empty out the array 
-            Array.Clear(arraySituation, 0, arraySituation.Length);
+            Array.Clear(arraySituation, 0, upper + 1 * lower + 1);
             //3 or less factors
-            if (arrayInput.Length <= 3 & arrayInput.Length > 0)
-            { arrayInput.CopyTo(arraySituation, 0); }
+            if (upper == 2 && upper > 0 && rank == 2)
+            {
+                //arrayInput.CopyTo(arraySituation, 0);
+                arraySituation = arrayInput;
+            }
             else
             { Game.SetError(new Error(85, "Invalid Situation Array input (needs from 1 to 3 strategies)")); }
         }
