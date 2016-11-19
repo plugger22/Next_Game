@@ -307,6 +307,7 @@ namespace Next_Game
             //place characters at Location
             player.LocID = locID;
             player.SetActorPosition(loc.GetPosition());
+            player.Type = ActorType.Ursurper;
             //add to Location list of Characters
             loc.AddActor(player.ActID);
         }

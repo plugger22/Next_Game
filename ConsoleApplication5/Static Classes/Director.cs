@@ -151,8 +151,10 @@ namespace Next_Game
             story = SetStory(1); //choose which story to use
             Console.WriteLine(Environment.NewLine + "--- Initialise Archetypes");
             InitialiseArchetypes();
-            Console.WriteLine(Environment.NewLine + "--- Initialise Situations");
-            dictSituations = Game.file.GetSituations("Situations.txt");
+            Console.WriteLine(Environment.NewLine + "--- Initialise Normal Situations");
+            dictSituations = Game.file.GetSituations("SitNormal.txt");
+            Console.WriteLine(Environment.NewLine + "--- Initialise Game Specific Situations");
+            dictSituations = Game.file.GetSituations("SitGame.txt");
             Console.WriteLine(Environment.NewLine);
             InitialiseGameStates();
         }

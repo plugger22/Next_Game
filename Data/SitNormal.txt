@@ -1,18 +1,20 @@
-# Situations
+# SitNormal -> First and Second Situations (defender advantage & neutral) -> should be two entries for each situation (SitNum '0' & '1')
 # NOTE: All fields must have a value
 # Name: Situation descriptor -> no more than four or five words
-# Type: (ConflictType) Combat / Social / Other
+# Type: (ConflictType) Combat / Social / Other / State (game specific)
 # SubType: if Combat -> Personal/Tournament/Battle, if Social -> Blackmail/Seduce/Befriend, if Other -> Hunting/Stealth
-# SitNum: Situation Number -> '0' (defenders advantage), '1' (neutral) or '2' (game specific)
+# SubType: if State -> ArmySize/Fame/Honour/Justice/Invisibility
+# SitNum: Situation Number -> '0' (defenders advantage), '1' (neutral)
 # Data1: multi purpose integer, default 0
 # Data2: multi purpose integer, default 0
-# Good: immersion strings, 3 variations for good outcomes, short/med sentence, use 'You' & '<*>' for your enemy/opponent, max 6, eg. Good6:, min1
-# Bad: immersion strings, 3 variations for bad outcomes, short/med sentence, use 'You' & '<*>' for your enemy/opponent, max 6, eg. Bad6:, min 1
+# Good: immersion strings, 3 variations for good outcomes, short/med sentence, use tags, max 6, eg. Good6:, min1
+# Bad: immersion strings, 3 variations for bad outcomes, short/med sentence, use tags, max 6, eg. Bad6:, min 1
+
 
 # Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She
 
 
-# Combat ---
+# Type -> Combat ---
 
 Name: A Defendable Hill
 Type: Combat
@@ -96,4 +98,90 @@ Good3: Pushed backwards, <name> struggles to maintain his footing amongst the ro
 Bad1: Your foot gets caught in a tree root and you tumble to the ground.
 Bad2: Your ankle skews outwards as your slip on a rock.
 Bad3: You're having to fight with one eye on the uneven ground. It's treacherous footing.
+[end]
+
+# Type -> Social ---
+
+Name: 
+Type: Social
+SubType: 
+SitNum: 0
+Data1: 0
+Data2: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[end]
+
+Name: 
+Type: Social
+SubType: 
+SitNum: 0
+Data1: 0
+Data2: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[end]
+
+Name: 
+Type: Social
+SubType: 
+SitNum: 0
+Data1: 0
+Data2: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[end]
+
+Name: 
+Type: Social
+SubType: 
+SitNum: 0
+Data1: 0
+Data2: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[end]
+
+Name: 
+Type: Social
+SubType: 
+SitNum: 0
+Data1: 0
+Data2: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[end]
+
+Name: 
+Type: Social
+SubType: 
+SitNum: 0
+Data1: 0
+Data2: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
 [end]
