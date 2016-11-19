@@ -89,7 +89,7 @@ namespace Next_Game
         {
             SetPlayerStrategy();
             SetTraits();
-            SetSituation(Game.director.GetSituationsNormal());
+            SetSituation(Game.director.GetSituationsNormal(), Game.director.GetSituationsGame());
             SetOpponentStrategy();
             SetOutcome();
             SetCardPool();
@@ -192,17 +192,19 @@ namespace Next_Game
         /// <summary>
         /// Set up the situation (text descriptors) (first two situations only) -> NOTE: arraySituation[2] is here for Debug purposes only, it should instead come from SetGameSituation
         /// </summary>
-        private void SetSituation(Dictionary<int, Situation> tempDictionary)
+        private void SetSituation(Dictionary<int, Situation> normalDictionary, Dictionary<int, Situation> gameDictionary)
         {
-            if (tempDictionary.Count > 0)
+            if (normalDictionary.Count > 0)
             {
+                List<string> tempListGood = new List<string>();
+                List<string> tempListBad = new List<string>();
                 switch (Conflict_Type)
                 {
                     case ConflictType.Combat:
                         //filter suitable situations from dictionary
                         List<Situation> listFilteredSituations = new List<Situation>();
                         IEnumerable<Situation> situationSet =
-                            from situation in tempDictionary
+                            from situation in normalDictionary
                             where situation.Value.Type == ConflictType.Combat
                             where situation.Value.Type_Combat == Combat_Type
                             //orderby situation.Value.SitID
@@ -220,8 +222,8 @@ namespace Next_Game
                         if (listFirstSituations.Count == 0) { Game.SetError(new Error(89, "listFirstSituations has no data")); }
 
                         Situation situationFirst = listFirstSituations[rnd.Next(0, listFirstSituations.Count)];
-                        List<string> tempListGood = situationFirst.GetGood();
-                        List<string> tempListBad = situationFirst.GetBad();
+                        tempListGood = situationFirst.GetGood();
+                        tempListBad = situationFirst.GetBad();
                         //place data in array (name and immersion texts for played/ignored outcomes)
                         arraySituation[0, 0] = situationFirst.Name;
                         arraySituation[0, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
@@ -243,30 +245,6 @@ namespace Next_Game
                         arraySituation[1, 0] = situationSecond.Name;
                         arraySituation[1, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
                         arraySituation[1, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
-
-
-
-                        /*switch (Combat_Type)
-                        {
-                            case CombatType.Personal:
-                                arraySituation[0] = "Uneven Ground";
-                                arraySituation[1] = "The Sun at Your Back";
-                                arraySituation[2] = "Outnumbered";
-                                break;
-                            case CombatType.Tournament:
-                                arraySituation[0] = "A Weakened Jousting Lance";
-                                arraySituation[1] = "Cheers of the Crowd";
-                                arraySituation[2] = "Opponent has Momentum";
-                                break;
-                            case CombatType.Battle:
-                                arraySituation[0] = "A Defendable Hill";
-                                arraySituation[1] = "Muddy Ground";
-                                arraySituation[2] = "Relative Army Sizes";
-                                break;
-                            default:
-                                Game.SetError(new Error(86, "Invalid Combat Type"));
-                                break;
-                        }*/
                         break;
                     case ConflictType.Social:
                         switch (Social_Type)
@@ -297,7 +275,43 @@ namespace Next_Game
                 }
                 //give correct title for game specific situation, if present
                 if (String.IsNullOrEmpty(Game_Title) == false)
-                { arraySituation[2, 0] = Game_Title; }
+                {
+                    arraySituation[2, 0] = Game_Title;
+                    //filter suitable game situation from dictionary
+                    List<Situation> listGameSituations = new List<Situation>();
+                    IEnumerable<Situation> situationSet =
+                        from situation in gameDictionary
+                        where situation.Value.State == Game_State
+                        orderby situation.Value.SitNum
+                        select situation.Value;
+                    listGameSituations = situationSet.ToList();
+                    if (listGameSituations.Count == 0) { Game.SetError(new Error(89, "listGameSituations has no data")); }
+                    else if (listGameSituations.Count == 3)
+                    {
+                        //list ordered in sequence sitNum -1/0/1 -> player adv / neutral / opponent adv in whatever game state is being measured
+                        switch (Game_Type)
+                        {
+                            case CardType.Good:
+                                tempListGood = listGameSituations[2].GetGood();
+                                tempListBad = listGameSituations[2].GetBad();
+                                break;
+                            case CardType.Neutral:
+                                tempListGood = listGameSituations[1].GetGood();
+                                tempListBad = listGameSituations[1].GetBad();
+                                break;
+                            case CardType.Bad:
+                                tempListGood = listGameSituations[0].GetGood();
+                                tempListBad = listGameSituations[0].GetBad();
+                                break;
+                            default:
+                                Game.SetError(new Error(89, "invalid Game_Type"));
+                                break;
+                        }
+                        arraySituation[2, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
+                        arraySituation[2, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
+                    }
+                    else { Game.SetError(new Error(89, string. Format("listGameSituations has incorrect number of entries (\"{0}\")", listGameSituations.Count))); }
+                }
                 //send to layout
                 if (arraySituation.GetUpperBound(0) == 2 && arraySituation.GetUpperBound(0) > 0)
                 { Game.layout.SetSituation(arraySituation); }

@@ -54,7 +54,7 @@ SitNum: -1
 Data1: 0
 Data2: 0
 Good1: <men> are everywhere but you manage to manoeuvre your smaller army to greater effect.
-Good2: How many Men-At-Arms does <name> have? It doesn't matter as your men are fighting smarter.
+Good2: How many Men-At-Arms does <name> have? It doesn't matter as your men are demon fighters today.
 Good3: <name> superior numbers would count if it wasn't for the nimbleness of your smaller force.
 Bad1: You feel that you've been hit on the head by a mace. <men> seem unstoppable.
 Bad2: Everywhere you look there are more of <men> than yours. You risk being overwhelmed.
