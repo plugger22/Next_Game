@@ -79,7 +79,8 @@ namespace Next_Game
         private Dictionary<int, EventPlayer> dictPlayerEvents;
         private Dictionary<int, Archetype> dictArchetypes;
         private Dictionary<int, Story> dictStories;
-        private Dictionary<int, Situation> dictSituations;
+        private Dictionary<int, Situation> dictSituationsNormal;
+        private Dictionary<int, Situation> dictSituationsGame;
 
         public Director(int seed)
         {
@@ -127,7 +128,8 @@ namespace Next_Game
             dictPlayerEvents = new Dictionary<int, EventPlayer>();
             dictArchetypes = new Dictionary<int, Archetype>();
             dictStories = new Dictionary<int, Story>();
-            dictSituations = new Dictionary<int, Situation>();
+            dictSituationsNormal = new Dictionary<int, Situation>(); //first two situations (def. adv. & neutral)
+            dictSituationsGame = new Dictionary<int, Situation>(); //third, game specific, situation
         }
 
         /// <summary>
@@ -152,9 +154,9 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- Initialise Archetypes");
             InitialiseArchetypes();
             Console.WriteLine(Environment.NewLine + "--- Initialise Normal Situations");
-            dictSituations = Game.file.GetSituations("SitNormal.txt");
+            dictSituationsNormal = Game.file.GetSituations("SitNormal.txt");
             Console.WriteLine(Environment.NewLine + "--- Initialise Game Specific Situations");
-            dictSituations = Game.file.GetSituations("SitGame.txt");
+            dictSituationsGame = Game.file.GetSituations("SitGame.txt");
             Console.WriteLine(Environment.NewLine);
             InitialiseGameStates();
         }
@@ -1685,8 +1687,11 @@ namespace Next_Game
         /// return dictionary of Situations to conflict.GetSituations
         /// </summary>
         /// <returns></returns>
-        internal Dictionary<int, Situation> GetSituations()
-        { return dictSituations; }
+        internal Dictionary<int, Situation> GetSituationsNormal()
+        { return dictSituationsNormal; }
+
+        internal Dictionary<int, Situation> GetSituationsGame()
+        { return dictSituationsGame; }
 
         //place Director methods above here
     }

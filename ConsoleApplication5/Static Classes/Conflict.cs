@@ -89,7 +89,7 @@ namespace Next_Game
         {
             SetPlayerStrategy();
             SetTraits();
-            SetSituation(Game.director.GetSituations());
+            SetSituation(Game.director.GetSituationsNormal());
             SetOpponentStrategy();
             SetOutcome();
             SetCardPool();
