@@ -94,6 +94,9 @@ namespace Next_Game
             SetOutcome();
             SetCardPool();
             //SetHand(); -> called from Layout.UpdateCards on first run through
+            //debug
+            //string test = Game.utility.CheckTagsActor("Why is there no joy in the world?", opponent);
+            //string sentence = Game.utility.CheckTagsActor("The mud slowed <men> to a crawl. <He> fell off his horse and <he> wasn't happy", opponent);
             
         }
 

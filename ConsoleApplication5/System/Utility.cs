@@ -96,9 +96,8 @@ namespace Next_Game
             if (String.IsNullOrEmpty(text) == false)
             {
 
-                string tag, token, replaceText;
+                string tag, replaceText;
                 int tagStart, tagFinish, length; //indexes
-                char[] stripTags = new char[2] { '<', '>' };
 
                 //loop whilever tags are present
                 while (checkedText.Contains("<") == true)
@@ -106,23 +105,28 @@ namespace Next_Game
                     tagStart = checkedText.IndexOf("<");
                     tagFinish = checkedText.IndexOf(">");
                     length = tagFinish - tagStart;
-                    tag = checkedText.Substring(tagStart, length);
+                    tag = checkedText.Substring(tagStart + 1, length - 1);
                     //strip brackets
-                    token = tag.Trim(stripTags);
                     replaceText = null;
-                    switch(token)
+                    switch(tag)
                     {
                         case "men":
                             replaceText = string.Format("{0} {1}'s Men-At-Arms", actor.Office, actor.Name);
                             break;
-                        case "sex":
-                            replaceText = string.Format("{0}", actor.Sex);
+                        case "him":
+                            replaceText = string.Format("{0}", actor.Sex == ActorSex.Male ? "him" : "her");
+                            break;
+                        case "he":
+                            replaceText = string.Format("{0}", actor.Sex == ActorSex.Male ? "he" : "she");
+                            break;
+                        case "He":
+                            replaceText = string.Format("{0}", actor.Sex == ActorSex.Male ? "He" : "She");
                             break;
                     }
                     if (replaceText != null)
                     {
                         //swap tag for text
-                        checkedText.Remove(tagStart, length);
+                        checkedText = checkedText.Remove(tagStart, length + 1);
                         checkedText = checkedText.Insert(tagStart, replaceText);
                     }
                 }
