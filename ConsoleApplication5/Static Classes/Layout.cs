@@ -1297,7 +1297,7 @@ namespace Next_Game
                 if (messageQueue.Count > ca_message_max) { messageQueue.Dequeue();}
 
                 //Immersion text
-                if (cardPlayed == true)
+                if (actionTaken == true)
                 { textImmersion = currentCard.PlayedText; }
                 else { textImmersion = currentCard.IgnoredText; }
                 if (textImmersion != null && textImmersion.Length> 0)
