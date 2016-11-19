@@ -84,6 +84,54 @@ namespace Next_Game
             return (int)distance;
         }
 
+        /// <summary>
+        /// Checks a string for actor related text tags and swaps them over for correct texts 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="actor"></param>
+        /// <returns></returns>
+        public string CheckTagsActor(string text, Actor actor)
+        {
+            string checkedText = text;
+            if (String.IsNullOrEmpty(text) == false)
+            {
+
+                string tag, token, replaceText;
+                int tagStart, tagFinish, length; //indexes
+                char[] stripTags = new char[2] { '<', '>' };
+
+                //loop whilever tags are present
+                while (checkedText.Contains("<") == true)
+                {
+                    tagStart = checkedText.IndexOf("<");
+                    tagFinish = checkedText.IndexOf(">");
+                    length = tagFinish - tagStart;
+                    tag = checkedText.Substring(tagStart, length);
+                    //strip brackets
+                    token = tag.Trim(stripTags);
+                    replaceText = null;
+                    switch(token)
+                    {
+                        case "men":
+                            replaceText = string.Format("{0} {1}'s Men-At-Arms", actor.Office, actor.Name);
+                            break;
+                        case "sex":
+                            replaceText = string.Format("{0}", actor.Sex);
+                            break;
+                    }
+                    if (replaceText != null)
+                    {
+                        //swap tag for text
+                        checkedText.Remove(tagStart, length);
+                        checkedText = checkedText.Insert(tagStart, replaceText);
+                    }
+                }
+            }
+            else
+            { Game.SetError(new Error(101, "Invalid Input (null or empty)")); }
+               
+            return checkedText;
+        }
 
         //methods above here
     }

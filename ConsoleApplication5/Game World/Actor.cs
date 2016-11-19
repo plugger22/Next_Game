@@ -6,8 +6,8 @@ namespace Next_Game
 {
     public enum ActorStatus {AtLocation, Travelling, Gone}; //'Gone' encompasses dead and missing
     //lord and lady are children of Lords, Heir is first in line to inherit. Note: keep Knight immediately after Bannerlord with Advisor and Special behind Knight.
-    public enum ActorType {None, Ursuper, Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special }; 
-    public enum ActorOffice {None, King, Queen, Lord_of_the_North, Lord_of_the_East, Lord_of_the_South, Lord_of_the_West }
+    public enum ActorType {None, Ursurper, Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special }; 
+    public enum ActorOffice {None, Ursurper, King, Queen, Lord_of_the_North, Lord_of_the_East, Lord_of_the_South, Lord_of_the_West }
     public enum ActorRealm {None, Head_of_Noble_House, Head_of_House, Regent}
     public enum AdvisorRoyal {None, Master_of_Coin, Master_of_Whisperers, Master_of_Laws, Master_of_Ships, High_Septon, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch }
     public enum AdvisorNoble {None, Maester, Castellan, Septon}

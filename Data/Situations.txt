@@ -46,7 +46,7 @@ SitNum: 0
 Data1: 0
 Data2: 0
 Good1: The crowd spurred you onto greater martial feats with their boisterous support.
-Good2: <*> scowled at the crowds indifference to <s>.
+Good2: <*> scowled at the crowds indifference to <sex>.
 Good3: The cheers were all for you. <*> received only boos and catcalls.
 Bad1: Why do they cheer <*>. Don't they realise who you are?
 Bad2: You try your best to shut out the cacophony of noise as the crowds go wild cheering <*>.
