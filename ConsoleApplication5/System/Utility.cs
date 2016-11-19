@@ -88,9 +88,9 @@ namespace Next_Game
         /// Checks a string for actor related text tags and swaps them over for correct texts 
         /// </summary>
         /// <param name="text"></param>
-        /// <param name="actor"></param>
+        /// <param name="opponent"></param>
         /// <returns></returns>
-        public string CheckTagsActor(string text, Actor actor)
+        public string CheckTagsActor(string text, Actor opponent)
         {
             string checkedText = text;
             if (String.IsNullOrEmpty(text) == false)
@@ -111,16 +111,19 @@ namespace Next_Game
                     switch(tag)
                     {
                         case "men":
-                            replaceText = string.Format("{0} {1}'s Men-At-Arms", actor.Office, actor.Name);
+                            replaceText = string.Format("{0} {1}'s Men-At-Arms", opponent.Office, opponent.Name);
+                            break;
+                        case "name":
+                            replaceText = string.Format("{0} {1}", opponent.Office, opponent.Name);
                             break;
                         case "him":
-                            replaceText = string.Format("{0}", actor.Sex == ActorSex.Male ? "him" : "her");
+                            replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "him" : "her");
                             break;
                         case "he":
-                            replaceText = string.Format("{0}", actor.Sex == ActorSex.Male ? "he" : "she");
+                            replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "he" : "she");
                             break;
                         case "He":
-                            replaceText = string.Format("{0}", actor.Sex == ActorSex.Male ? "He" : "She");
+                            replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "He" : "She");
                             break;
                     }
                     if (replaceText != null)

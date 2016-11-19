@@ -40,7 +40,7 @@ namespace Next_Game
         PLAYER_INFLUENCE,
         NEUTRAL_EFFECT,
         ARMY_SIZE,
-        SIT_CARD_NUM,
+        SIT_CARD_SPREAD,
         Count //keep as last
     }
 
@@ -88,7 +88,7 @@ namespace Next_Game
             arrayOfGlobals[32] = Global.PLAYER_INFLUENCE;
             arrayOfGlobals[33] = Global.NEUTRAL_EFFECT;
             arrayOfGlobals[34] = Global.ARMY_SIZE;
-            arrayOfGlobals[35] = Global.SIT_CARD_NUM;
+            arrayOfGlobals[35] = Global.SIT_CARD_SPREAD;
             }
 
         /// <summary>

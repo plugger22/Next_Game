@@ -67,6 +67,7 @@ namespace Next_Game
         int ou_spacer;
         int ou_outcome_height;
         int ou_instruct_height;
+        int ou_width;
         //Popup layout
         int po_left_align;
         int po_top_align;
@@ -224,6 +225,7 @@ namespace Next_Game
             ou_spacer = 4;
             ou_outcome_height = 20;
             ou_instruct_height = 7;
+            ou_width = Width - Offset_x - ou_left_align * 2;
             //Layout fillcolors
             Bar_FillColor = RLColor.Gray;
             Back_FillColor = Color._background0;
@@ -494,23 +496,23 @@ namespace Next_Game
             //text version of win/loss outcome
             if (resultOutcome != 0) { textDescription = arrayOutcome[resultOutcome]; }
             //clear out outcome box
-            for (int width_index = ou_left_align + 1; width_index < ou_left_align + box_width - 1; width_index++)
+            for (int width_index = ou_left_align + 1; width_index < ou_left_align + ou_width - 1; width_index++)
             {
                 for (int height_index = vertical_top + 1; height_index < vertical_top + ou_outcome_height - 1; height_index++)
                 { arrayOfCells_Outcome[width_index, height_index] = 255; }
             }
-            DrawCenteredText("Outcome", ou_left_align, vertical_top + 2, box_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            DrawCenteredText(arrayOutcome[0], ou_left_align, vertical_top + 4, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            DrawCenteredText(string.Format("Final Score {0}{1}", score > 0 ? "+" : "", score), ou_left_align, vertical_top + 6, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            DrawCenteredText(textOutcome, ou_left_align, vertical_top + 8, box_width, forecolor, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            DrawCenteredText(textDescription, ou_left_align, vertical_top + 10, box_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText("Outcome", ou_left_align, vertical_top + 2, ou_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText(arrayOutcome[0], ou_left_align, vertical_top + 4, ou_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText(string.Format("Final Score {0}{1}", score > 0 ? "+" : "", score), ou_left_align, vertical_top + 6, ou_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText(textOutcome, ou_left_align, vertical_top + 8, ou_width, forecolor, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText(textDescription, ou_left_align, vertical_top + 10, ou_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
             //history
-            for (int width_index = ou_left_align + 1; width_index < ou_left_align + box_width - 1; width_index++)
+            for (int width_index = ou_left_align + 1; width_index < ou_left_align + ou_width - 1; width_index++)
             {
                 for (int height_index = vertical_middle + 1; height_index < vertical_middle + history_height - 1; height_index++)
                 { arrayOfCells_Outcome[width_index, height_index] = 255; }
             }
-            DrawCenteredText("Hand History", ou_left_align, vertical_middle + 2, box_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            DrawCenteredText("Hand History", ou_left_align, vertical_middle + 2, ou_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
             for (int i = 0; i < listHistory.Count; i++)
             { DrawText(listHistory[i].GetText(), ou_left_align + 4, vertical_middle + 5 + i * 2, listHistory[i].GetForeColor(), arrayOfCells_Outcome, arrayOfForeColors_Outcome); }
         }
@@ -650,9 +652,9 @@ namespace Next_Game
                 DrawCenteredText("--- 0 ---", ca_left_inner, card_vert_2, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 //...word wrap title & description
                 List<string> tempList = new List<string>();
-                tempList.AddRange(Game.utility.WordWrap(card.Title, ca_card_width - 2));
+                tempList.AddRange(Game.utility.WordWrap(card.Title, ca_card_width - 4));
                 tempList.Add("");
-                tempList.AddRange(Game.utility.WordWrap(card.Description, ca_card_width - 2));
+                tempList.AddRange(Game.utility.WordWrap(card.Description, ca_card_width - 4));
                 for (int i = 0; i < tempList.Count; i++)
                 { DrawCenteredText(tempList[i], ca_left_inner, card_vert_3 + i * 2, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards); }
                 DrawCenteredText(textType, ca_left_inner, card_vert_5, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
@@ -1300,11 +1302,19 @@ namespace Next_Game
                 else { textImmersion = currentCard.IgnoredText; }
                 if (textImmersion != null && textImmersion.Length> 0)
                 {
-                    Snippet snippetImmersion = new Snippet(textImmersion, RLColor.Brown, Back_FillColor);
-                    listHistory.Add(snippetImmersion);
-                    //...add to message queue
-                    messageQueue.Enqueue(snippetImmersion);
-                    if (messageQueue.Count > ca_message_max) { messageQueue.Dequeue(); }
+                    //deal with any text tags
+                    textImmersion = Game.utility.CheckTagsActor(textImmersion, Game.conflict.GetOpponent());
+                    //word wrap
+                    List<string> tempList = new List<string>();
+                    tempList.AddRange(Game.utility.WordWrap(textImmersion, ou_width - 4));
+                    for (int i = 0; i < tempList.Count; i++)
+                    {
+                        Snippet snippetImmersion = new Snippet(tempList[i], RLColor.Brown, Back_FillColor);
+                        listHistory.Add(snippetImmersion);
+                        //...add to message queue
+                        messageQueue.Enqueue(snippetImmersion);
+                        if (messageQueue.Count > ca_message_max) { messageQueue.Dequeue(); }
+                    }
                 }
 
             }

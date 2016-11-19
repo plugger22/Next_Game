@@ -9,6 +9,9 @@
 # Good: immersion strings, 3 variations for good outcomes, short/med sentence, use 'You' & '<*>' for your enemy/opponent, max 6, eg. Good6:, min1
 # Bad: immersion strings, 3 variations for bad outcomes, short/med sentence, use 'You' & '<*>' for your enemy/opponent, max 6, eg. Bad6:, min 1
 
+# Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She
+
+
 # Combat ---
 
 Name: A Defendable Hill
@@ -17,12 +20,12 @@ SubType: Battle
 SitNum: 0
 Data1: 0
 Data2: 0
-Good1: <*> struggled up the hill while being peppered by our arrows.
+Good1: <men> struggled up the hill while being peppered by our arrows.
 Good2: Our men used their height advantage to great effect.
-Good3: As <*> climbed the hill they huffed and puffed. It's a big hill.
-Bad1: <*> managed to find an easy, unseen, path up the hill.
+Good3: As <men> climbed the hill they huffed and puffed. It's a big hill.
+Bad1: <men> managed to find an easy, unseen, path up the hill.
 Bad2: You failed to deploy your men to take advantage of the hill.
-Bad3: The hill proved less of an obstacle to <*> than expected.
+Bad3: The hill proved less of an obstacle to <men> than expected.
 [end]
 
 Name: Muddy Ground
@@ -31,8 +34,8 @@ SubType: Battle
 SitNum: 1
 Data1: 0
 Data2: 0
-Good1: <*> were bought to halt by the sticky, glutinous mud.
-Good2: You tricked <*> into traversing the muddy ground.
+Good1: <men> were bought to halt by the sticky, glutinous mud.
+Good2: You tricked <men> into traversing the muddy ground.
 Good3: With some sharp observation you managed to avoid the muddy ground.
 Bad1: Alas, the green fields hid a muddy underbelly that your men blundered into.
 Bad2: Unfortunately, there was no way around the treacherous, muddy ground.
@@ -46,11 +49,11 @@ SitNum: 0
 Data1: 0
 Data2: 0
 Good1: The crowd spurred you onto greater martial feats with their boisterous support.
-Good2: <*> scowled at the crowds indifference to <sex>.
-Good3: The cheers were all for you. <*> received only boos and catcalls.
-Bad1: Why do they cheer <*>. Don't they realise who you are?
-Bad2: You try your best to shut out the cacophony of noise as the crowds go wild cheering <*>.
-Bad3: It's hard to concentrate when there is so much noise. Why must they cheer <*> so much?
+Good2: <name> scowled at the crowds indifference to <sex>.
+Good3: The cheers were all for you. <name> received only boos and catcalls.
+Bad1: Why do they cheer <name>. Don't they realise who you are?
+Bad2: You try your best to shut out the cacophony of noise as the crowds go wild cheering <name>.
+Bad3: It's hard to concentrate when there is so much noise. Why must they cheer <name> so much?
 [end]
 
 Name: Favoured Side of the Fence
@@ -73,10 +76,10 @@ SubType: Personal
 SitNum: 0
 Data1: 0
 Data2: 0
-Good1: Keeping the sun at your back, <*> is forced to squint hard.
-Good2: The clouds open and <*> gets hit with the full glare of the sun.
-Good3: <*> discomfort at having the sun in his eyes is there for all to see.
-Bad1: It's hard to get a clear view of <*> with the sun in your eyes.
+Good1: Keeping the sun at your back, <name> is forced to squint hard.
+Good2: The clouds open and <name> gets hit with the full glare of the sun.
+Good3: <name> discomfort at having the sun in his eyes is there for all to see.
+Bad1: It's hard to get a clear view of <name> with the sun in your eyes.
 Bad2:  Where are the damn clouds? The sun's glare is fierce and blinding.
 Bad3: Your fighting a dark shadow. That's all you can see with the sun in your eyes.
 [end]
@@ -87,10 +90,10 @@ SubType: Personal
 SitNum: 1
 Data1: 0
 Data2: 0
-Good1: <*> stumbles as you force him back onto a ragged tree stump.
-Good2: You stand firm on the only piece of smooth ground. <*> isn't so lucky.
-Good3: Pushed backwards, <*> struggles to maintain his footing amongst the rocks and tree roots.
+Good1: <name> stumbles as you force <him> back onto a ragged tree stump.
+Good2: You stand firm on the only piece of smooth ground. <name> isn't so lucky.
+Good3: Pushed backwards, <name> struggles to maintain his footing amongst the rocks and tree roots.
 Bad1: Your foot gets caught in a tree root and you tumble to the ground.
 Bad2: Your ankle skews outwards as your slip on a rock.
-Bad3: You're having to fight with one eye on the uneven ground and it's treacherous footing.
+Bad3: You're having to fight with one eye on the uneven ground. It's treacherous footing.
 [end]

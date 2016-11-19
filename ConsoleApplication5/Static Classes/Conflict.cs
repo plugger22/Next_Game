@@ -332,7 +332,7 @@ namespace Next_Game
             int rndNum = rnd.Next(100);
             int rndDebug = rndNum;
             //calculate spread
-            int spreadNum = Game.constant.GetValue(Global.SIT_CARD_NUM);
+            int spreadNum = Game.constant.GetValue(Global.SIT_CARD_SPREAD);
             int remainder = 100 - spreadNum - spreadNum * 2 - spreadNum * 4 - spreadNum * 8;
             int upper = 100 - spreadNum - spreadNum * 2;
             int lower = upper - spreadNum * 4;
@@ -860,6 +860,13 @@ namespace Next_Game
             //let layout know what type of situation card 
             Game.layout.GameSituation = Game_Type;
         }
+
+        /// <summary>
+        /// get opponent in conflict
+        /// </summary>
+        /// <returns></returns>
+        public Actor GetOpponent()
+        { return opponent; }
 
         // methods above here
     }
