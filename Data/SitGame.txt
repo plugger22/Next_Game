@@ -1,9 +1,10 @@
-# SitGame -> Game specific situations, apply to all conflict types -> should be two entries for each situation (SitNum '0' & '1')
+# SitGame -> Game specific situations, apply to all conflict types
+# should be three entries, player advantage, eg. the most men, (sitnum 1), no advantage (sitnum 0), opponent advantage (sitnum -1)
 # NOTE: All fields must have a value
 # Name: Situation descriptor -> no more than four or five words
 # Type: 'State'
 # SubType: State -> ArmySize/Fame/Honour/Justice/Invisibility
-# SitNum: Situation Number -> '0' (defenders advantage), '1' (neutral) (should be at least one situation for each)
+# SitNum: Situation Number -> Note: DIFFERENT to SitNormal -> '1' player has advantage, '0' no advantage, '-1' opponent has advantage
 # Data1: multi purpose integer, default 0
 # Data2: multi purpose integer, default 0
 # Good: immersion strings, 3 variations for good outcomes, short/med sentence, use tags, max 6, eg. Good6:, min1
@@ -12,16 +13,51 @@
 
 # Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She
 
-Name: 
+# Army Size -> player advantage
+
+Name: Relative Army Size
 Type: State
-subType: ArmySize
+SubType: ArmySize
+SitNum: 1
+Data1: 0
+Data2: 0
+Good1: Superior numbers count. Your men surge into the enemy.
+Good2: Sheer weight of numbers force the enemy back.
+Good3: Always bring more men than your opponent to a battle.
+Bad1: Having more men has given you a small edge.
+Bad2: At least you've got more men than the enemy. It's a help.
+Bad3: While you aren't taking advantage of your superior numbers they still make a difference.
+[End]
+
+# Army Size -> no advantage
+
+Name: Relative Army Size
+Type: State
+SubType: ArmySize
 SitNum: 0
 Data1: 0
 Data2: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: Without any noticeable difference in Men-At-Arms you manage to make yours count the most.
+Good2: It'd be a help to have more men but you are making the most of those that you've got.
+Good3: A larger army can sway the day but your men are fighting as if there were two for each of them.
+Bad1: There doesn't appear to be any more enemy Men-At-Arms than you've got but they are fighting harder.
+Bad2: The enemy are moving around so much that it's hard to tell how many of them there are. You feel flat footed.
+Bad3: If you didn't know better you'd think that enemy has twice as many men as they actually did. They sure know how to fight.
 [End]
+
+# Army Size -> opponent advantage
+
+Name: Relative Army Size
+Type: State
+SubType: ArmySize
+SitNum: -1
+Data1: 0
+Data2: 0
+Good1: <men> are everywhere but you manage to manoeuvre your smaller army to greater effect.
+Good2: How many Men-At-Arms does <name> have? It doesn't matter as your men are fighting smarter.
+Good3: <name> superior numbers would count if it wasn't for the nimbleness of your smaller force.
+Bad1: You feel that you've been hit on the head by a mace. <men> seem unstoppable.
+Bad2: Everywhere you look there are more of <men> than yours. You risk being overwhelmed.
+Bad3: Your outnumbered. You know it and your men know it. It doesn't bode well.
+[End]
+

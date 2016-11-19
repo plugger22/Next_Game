@@ -2746,13 +2746,17 @@ namespace Next_Game
                                     }
                                     else if (structSituation.Type == ConflictType.None && structSituation.State > ConflictState.None)
                                     { situation = new Situation(structSituation.Name, structSituation.State, structSituation.SitNum); }
-
+                                    //add data
                                     situation.Data1 = structSituation.Data1;
                                     situation.Data2 = structSituation.Data2;
                                     situation.SetGood(tempListGood);
                                     situation.SetBad(tempListBad);
                                     tempDictionary.Add(situation.SitID, situation);
-                                    Console.WriteLine("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad", structSituation.Name, structSituation.Type, tempListGood.Count, tempListBad.Count);
+                                    if (structSituation.Type > ConflictType.None)
+                                    { Console.WriteLine("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad", structSituation.Name, structSituation.Type, tempListGood.Count, tempListBad.Count); }
+                                    else if (structSituation.State > ConflictState.None)
+                                    { Console.WriteLine("\"{0}\" imported, a {1} game state, {2} good records & {3} bad, SitNum {4}", structSituation.Name, structSituation.State, tempListGood.Count, tempListBad.Count, 
+                                        structSituation.SitNum); }
                                 }
                                 break;
                             default:
