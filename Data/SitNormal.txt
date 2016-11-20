@@ -5,6 +5,7 @@
 # SubType: if Combat -> Personal/Tournament/Battle, if Social -> Blackmail/Seduce/Befriend, if Other -> Hunting/Stealth
 # SubType: if State -> ArmySize/Fame/Honour/Justice/Invisibility
 # SitNum: Situation Number -> '0' (defenders advantage), '1' (neutral)
+# Def: '1' if player is the defender, '-1' if opponent (only applies to 1st situation (def. adv.), eg. SitNum '0', ignored for SitNum '1'
 # Data1: multi purpose integer, default 0
 # Data2: multi purpose integer, default 0
 # Good: immersion strings, 3 variations for good outcomes, short/med sentence, use tags, max 6, eg. Good6:, min1
@@ -20,6 +21,7 @@ Name: A Defendable Hill
 Type: Combat
 SubType: Battle
 SitNum: 0
+Def: 1
 Data1: 0
 Data2: 0
 Good1: <men> struggled up the hill while being peppered by our arrows.
@@ -47,7 +49,7 @@ Bad3: The mud reached up and sucked hard at the legs of your knight's mounts as 
 Name: Cheers of the Crowd
 Type: Combat
 SubType: Tournament
-SitNum: 0
+SitNum: 1
 Data1: 0
 Data2: 0
 Good1: The crowd spurred you onto greater martial feats with their boisterous support.
@@ -75,7 +77,7 @@ Bad3: Has nobody thought to smooth the ground on your side of the fence? Perhaps
 Name: Glare of the Sun
 Type: Combat
 SubType: Personal
-SitNum: 0
+SitNum: 1
 Data1: 0
 Data2: 0
 Good1: Keeping the sun at your back, <name> is forced to squint hard.
@@ -100,88 +102,3 @@ Bad2: Your ankle skews outwards as your slip on a rock.
 Bad3: You're having to fight with one eye on the uneven ground. It's treacherous footing.
 [end]
 
-# Type -> Social ---
-
-Name: 
-Type: Social
-SubType: 
-SitNum: 0
-Data1: 0
-Data2: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
-[end]
-
-Name: 
-Type: Social
-SubType: 
-SitNum: 0
-Data1: 0
-Data2: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
-[end]
-
-Name: 
-Type: Social
-SubType: 
-SitNum: 0
-Data1: 0
-Data2: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
-[end]
-
-Name: 
-Type: Social
-SubType: 
-SitNum: 0
-Data1: 0
-Data2: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
-[end]
-
-Name: 
-Type: Social
-SubType: 
-SitNum: 0
-Data1: 0
-Data2: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
-[end]
-
-Name: 
-Type: Social
-SubType: 
-SitNum: 0
-Data1: 0
-Data2: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
-[end]

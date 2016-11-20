@@ -173,6 +173,7 @@ namespace Next_Game
         public SocialType Type_Social { get; set; }
         public OtherType Type_Other { get; set; }
         public int SitNum { get; set; }
+        public int Defender { get; set; }
         public int Data1 { get; set; }
         public int Data2 { get; set; }
         public List<string> ListGood { get; set; }
@@ -272,7 +273,7 @@ namespace Next_Game
                     if (cleanToken.Length == 0)
                     {
                         validData = false;
-                        Game.SetError(new Error(16, string.Format("House {0} (Missing data for \"{1}\") \"{2}\"", 
+                        Game.SetError(new Error(16, string.Format("House {0} (Missing data for \"{1}\") \"{2}\"",
                         String.IsNullOrEmpty(houseStruct.Name) ? "?" : houseStruct.Name, cleanTag, fileName))); }
                     else
                     {
@@ -313,7 +314,7 @@ namespace Next_Game
                             case "[end]":
                             case "[End]":
                                 //last datapoint - save structure to list
-                                if (dataCounter > 0  && validData == true)
+                                if (dataCounter > 0 && validData == true)
                                 { listHouses.Add(houseStruct); }
                                 break;
                             default:
@@ -489,7 +490,7 @@ namespace Next_Game
                                 if (validData == true)
                                 {
                                     //pass info over to a class instance
-                                    Skill classTrait = new Skill(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age, 
+                                    Skill classTrait = new Skill(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age,
                                         structTrait.Chance, listOfNickNames);
                                     //last datapoint - save object to list
                                     if (dataCounter > 0)
@@ -1493,7 +1494,7 @@ namespace Next_Game
                                         eventTemp.Category = structEvent.Cat;
                                         //status -> default 'active' if not present
                                         if (structEvent.Status == EventStatus.None)
-                                        { eventTemp.Status = EventStatus.Active;}
+                                        { eventTemp.Status = EventStatus.Active; }
                                         else
                                         { eventTemp.Status = structEvent.Status; }
                                         //Repeat Timer -> default 1000 (constructor) if not present
@@ -1511,7 +1512,7 @@ namespace Next_Game
                                                 //at least one outcome must be present
                                                 if (listAllOutcomes.Count > 0)
                                                 {
-                                                    OptionInteractive optionObject = new OptionInteractive(optionTemp.Text) { ReplyGood = optionTemp.Reply};
+                                                    OptionInteractive optionObject = new OptionInteractive(optionTemp.Text) { ReplyGood = optionTemp.Reply };
 
                                                     //Triggers (optional)
                                                     List<Trigger> tempTriggers = listAllTriggers[index];
@@ -1527,7 +1528,7 @@ namespace Next_Game
                                                         else { optionObject.SetTriggers(tempTriggers); }
                                                     }
                                                     //Outcomes
-                                                    List <OutcomeStruct> sublist = listAllOutcomes[index];
+                                                    List<OutcomeStruct> sublist = listAllOutcomes[index];
                                                     //create appropriate outcome object
                                                     for (int inner = 0; inner < sublist.Count; inner++)
                                                     {
@@ -1621,7 +1622,7 @@ namespace Next_Game
             Type type;
             String name;
             //events
-            foreach(var eventObject in dictOfPlayerEvents)
+            foreach (var eventObject in dictOfPlayerEvents)
             {
                 Console.WriteLine("\"{0}\" Event, ID {1}, Type {2}, Repeat {3}, Dormant {4}, Live {5}, Status {6}", eventObject.Value.Name, eventObject.Value.EventPID, eventObject.Value.Type,
                     eventObject.Value.TimerRepeat, eventObject.Value.TimerDormant, eventObject.Value.TimerLive, eventObject.Value.Status);
@@ -1633,10 +1634,10 @@ namespace Next_Game
                     List<Outcome> listTempOutcomes = optionObject.GetGoodOutcomes();
                     List<Trigger> listTempTriggers = optionObject.GetTriggers();
                     //triggers
-                    foreach(Trigger triggerObject in listTempTriggers)
+                    foreach (Trigger triggerObject in listTempTriggers)
                     { Console.WriteLine("   {0} -> if {1} {2} is {3} to {4}", "Trigger", triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold); }
                     //outcomes
-                    foreach(Outcome outcomeObject in listTempOutcomes)
+                    foreach (Outcome outcomeObject in listTempOutcomes)
                     {
                         //extract and isolate name of derived outcome object
                         type = outcomeObject.GetType();
@@ -1655,7 +1656,7 @@ namespace Next_Game
                             Console.WriteLine("    {0} -> Target EventID {1}, {2} timer, amount {3} apply {4}", cleanTag, tempOutcome.Data, tempOutcome.Timer, tempOutcome.Amount, tempOutcome.Calc);
                         }
                         else
-                            { Console.WriteLine("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc); }
+                        { Console.WriteLine("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc); }
                     }
                 }
                 Console.WriteLine();
@@ -1892,7 +1893,7 @@ namespace Next_Game
                                 }
                                 structArc.listOfEvents = tempList;
                                 break;
-                            
+
                             case "[end]":
                             case "[End]":
                                 //write record
@@ -2393,7 +2394,7 @@ namespace Next_Game
         internal List<FollowerStruct> GetFollowers(string fileName)
         {
             string[] arrayOfFollowers = ImportDataFile(fileName);
-            List <FollowerStruct> listOfStructs = new List<FollowerStruct>();
+            List<FollowerStruct> listOfStructs = new List<FollowerStruct>();
             bool newFollower = false;
             bool validData = true;
             int dataCounter = 0; //number of followers
@@ -2642,7 +2643,7 @@ namespace Next_Game
                                         { structSituation.Type_Combat = CombatType.Battle; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
-                                        //...Social
+                                    //...Social
                                     case "Blackmail":
                                         if (structSituation.Type == ConflictType.Social)
                                         { structSituation.Type_Social = SocialType.Blackmail; }
@@ -2658,7 +2659,7 @@ namespace Next_Game
                                         { structSituation.Type_Social = SocialType.Befriend; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
-                                        //...Other
+                                    //...Other
                                     case "Hunting":
                                         if (structSituation.Type == ConflictType.Other)
                                         { structSituation.Type_Other = OtherType.Hunting; }
@@ -2706,6 +2707,19 @@ namespace Next_Game
                                 catch (Exception e)
                                 { Game.SetError(new Error(98, e.Message)); validData = false; }
                                 break;
+                            case "Def":
+                                //only applies to first situation (def. adv.) if '1' then written from POV of player defending, if '-1' then opponent
+                                try
+                                {
+                                    int tempNum = Convert.ToInt32(cleanToken);
+                                    if (tempNum != 0)
+                                    { structSituation.Defender = tempNum; }
+                                    else
+                                    { Game.SetError(new Error(98, "Defender input invalid (must be 1 or -1)")); }
+                                }
+                                catch (Exception e)
+                                { Game.SetError(new Error(98, e.Message)); validData = false; }
+                                break;
                             case "Data1":
                                 try { structSituation.Data1 = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
@@ -2747,13 +2761,15 @@ namespace Next_Game
                                     else if (structSituation.Type == ConflictType.None && structSituation.State > ConflictState.None)
                                     { situation = new Situation(structSituation.Name, structSituation.State, structSituation.SitNum); }
                                     //add data
+                                    situation.Defender = structSituation.Defender;
                                     situation.Data1 = structSituation.Data1;
                                     situation.Data2 = structSituation.Data2;
                                     situation.SetGood(tempListGood);
                                     situation.SetBad(tempListBad);
                                     tempDictionary.Add(situation.SitID, situation);
                                     if (structSituation.Type > ConflictType.None)
-                                    { Console.WriteLine("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad", structSituation.Name, structSituation.Type, tempListGood.Count, tempListBad.Count); }
+                                    { Console.WriteLine("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad, SitNum {4}, Def {5}", structSituation.Name, structSituation.Type, 
+                                        tempListGood.Count, tempListBad.Count, structSituation.SitNum, structSituation.Defender); }
                                     else if (structSituation.State > ConflictState.None)
                                     { Console.WriteLine("\"{0}\" imported, a {1} game state, {2} good records & {3} bad, SitNum {4}", structSituation.Name, structSituation.State, tempListGood.Count, tempListBad.Count, 
                                         structSituation.SitNum); }

@@ -12,6 +12,7 @@ namespace Next_Game.Event_System
         public int SitID { get; set; }
         public string Name { get; set; }
         public int SitNum { get; set; } //'0' for when card is Played and '1' for when card Ignored
+        public int Defender { get; set; } //'1' if written from POV of Player as defender, if '-1' then opponent as defender. Only applies to first situation (def. adv.)
         public int Data1 { get; set; } //multi-purpose data points, ignore if not needed, eg. able to specify terrain type for def adv. card
         public int Data2 { get; set; }
         public ConflictType Type { get; set; } //applies to first two situations
