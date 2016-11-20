@@ -13,7 +13,7 @@
 
 # Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She
 
-# Army Size -> player advantage
+# Army Size -> player advantage ---
 
 Name: Relative Army Size
 Type: State
@@ -58,3 +58,47 @@ Bad2: Everywhere you look there are more of <men> than yours. You risk being ove
 Bad3: Your outnumbered. You know it and your men know it. It doesn't bode well.
 [End]
 
+# Fame -> player advantage ---
+
+Name: Relative Fame
+Type: State
+SubType: Fame
+SitNum: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+# Fame -> no advantage
+
+Name: Relative Fame
+Type: State
+SubType: Fame
+SitNum: 0
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+# Fame -> opponent advantage
+
+Name: Relative Fame
+Type: State
+SubType: Fame
+SitNum: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
