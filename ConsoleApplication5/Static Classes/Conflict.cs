@@ -209,26 +209,26 @@ namespace Next_Game
                 {
                     case ConflictType.Combat:
                         //Get suitable situations from dictionary
-                        List<Situation> listFilteredSituations = new List<Situation>();
-                        IEnumerable<Situation> situationSet =
+                        List<Situation> listFilteredCombatSituations = new List<Situation>();
+                        IEnumerable<Situation> situationCombatSet =
                             from situation in normalDictionary
                             where situation.Value.Type == ConflictType.Combat
                             where situation.Value.Type_Combat == Combat_Type
                             //orderby situation.Value.SitID
                             select situation.Value;
-                        listFilteredSituations = situationSet.ToList();
-                        if (listFilteredSituations.Count == 0) { Game.SetError(new Error(89, "listFilteredSituations has no data")); }
+                        listFilteredCombatSituations = situationCombatSet.ToList();
+                        if (listFilteredCombatSituations.Count == 0) { Game.SetError(new Error(89, "listFilteredCombatSituations has no data")); }
                         else
                         {
                             //filter for Defensive Advantage card (1st situation)
                             List<Situation> listFirstSituations = new List<Situation>();
                             IEnumerable<Situation> firstSituationSet =
-                                from situation in listFilteredSituations
+                                from situation in listFilteredCombatSituations
                                 where situation.SitNum == 0
                                 where situation.Defender == whoDefends
                                 select situation;
                             listFirstSituations = firstSituationSet.ToList();
-                            if (listFirstSituations.Count == 0) { Game.SetError(new Error(89, "listFirstSituations has no data")); invalidData = true; }
+                            if (listFirstSituations.Count == 0) { Game.SetError(new Error(89, "listFirstSituations (Combat) has no data")); invalidData = true; }
 
                             if (invalidData == false)
                             {
@@ -250,14 +250,14 @@ namespace Next_Game
                             //filter for Neutral card (2nd situation)
                             List<Situation> listSecondSituations = new List<Situation>();
                             IEnumerable<Situation> secondSituationSet =
-                                from situation in listFilteredSituations
+                                from situation in listFilteredCombatSituations
                                 where situation.SitNum == 1
                                 select situation;
                             listSecondSituations = secondSituationSet.ToList();
                             if (listSecondSituations.Count == 0)
                             {
                                 //set default empty data if nothing found
-                                Game.SetError(new Error(89, "listSecondSituations has no data"));
+                                Game.SetError(new Error(89, "listSecondSituations (Combat) has no data"));
                                 arraySituation[1, 0] = "";
                                 arraySituation[1, 1] = "";
                                 arraySituation[1, 2] = "";
@@ -275,26 +275,94 @@ namespace Next_Game
                         }
                         break;
                     case ConflictType.Social:
-                        switch (Social_Type)
+                    /*
+                    switch (Social_Type)
+                    {
+                        case SocialType.Befriend:
+                            arraySituation[0, 0] = "A fine Arbor Wine";
+                            arraySituation[1, 0] = "A Pleasant Lunch";
+                            arraySituation[2, 0] = "Your Reputation Precedes you";
+                            break;
+                        case SocialType.Blackmail:
+                            arraySituation[0, 0] = "A Noisey Room full of People";
+                            arraySituation[1, 0] = "The Threat of Retaliation";
+                            arraySituation[2, 0] = "Your Poor Reputation";
+                            break;
+                        case SocialType.Seduce:
+                            arraySituation[0, 0] = "A Romantic Venue";
+                            arraySituation[1, 0] = "A Witch's Aphrodisiac";
+                            arraySituation[2, 0] = "The Lady is Happily Married";
+                            break;
+                        default:
+                            Game.SetError(new Error(86, "Invalid Social Type"));
+                            break;
+                    }
+                    break;
+                    */
+                        //Get suitable situations from dictionary
+                        List<Situation> listFilteredSocialSituations = new List<Situation>();
+                        IEnumerable<Situation> situationSocialSet =
+                            from situation in normalDictionary
+                            where situation.Value.Type == ConflictType.Social
+                            where situation.Value.Type_Social == Social_Type
+                            //orderby situation.Value.SitID
+                            select situation.Value;
+                        listFilteredSocialSituations = situationSocialSet.ToList();
+                        if (listFilteredSocialSituations.Count == 0) { Game.SetError(new Error(89, "listFilteredSocialSituations has no data")); }
+                        else
                         {
-                            case SocialType.Befriend:
-                                arraySituation[0, 0] = "A fine Arbor Wine";
-                                arraySituation[1, 0] = "A Pleasant Lunch";
-                                arraySituation[2, 0] = "Your Reputation Precedes you";
-                                break;
-                            case SocialType.Blackmail:
-                                arraySituation[0, 0] = "A Noisey Room full of People";
-                                arraySituation[1, 0] = "The Threat of Retaliation";
-                                arraySituation[2, 0] = "Your Poor Reputation";
-                                break;
-                            case SocialType.Seduce:
-                                arraySituation[0, 0] = "A Romantic Venue";
-                                arraySituation[1, 0] = "A Witch's Aphrodisiac";
-                                arraySituation[2, 0] = "The Lady is Happily Married";
-                                break;
-                            default:
-                                Game.SetError(new Error(86, "Invalid Social Type"));
-                                break;
+                            //filter for Defensive Advantage card (1st situation)
+                            List<Situation> listFirstSituations = new List<Situation>();
+                            IEnumerable<Situation> firstSituationSet =
+                                from situation in listFilteredSocialSituations
+                                where situation.SitNum == 0
+                                where situation.Defender == whoDefends
+                                select situation;
+                            listFirstSituations = firstSituationSet.ToList();
+                            if (listFirstSituations.Count == 0) { Game.SetError(new Error(89, "listFirstSituations (Social) has no data")); invalidData = true; }
+
+                            if (invalidData == false)
+                            {
+                                Situation situationFirst = listFirstSituations[rnd.Next(0, listFirstSituations.Count)];
+                                tempListGood = situationFirst.GetGood();
+                                tempListBad = situationFirst.GetBad();
+                                //place data in array (name and immersion texts for played/ignored outcomes)
+                                arraySituation[0, 0] = situationFirst.Name;
+                                arraySituation[0, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
+                                arraySituation[0, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
+                            }
+                            else
+                            {
+                                //set default empty data if nothing found
+                                arraySituation[0, 0] = "";
+                                arraySituation[0, 1] = "";
+                                arraySituation[0, 2] = "";
+                            }
+                            //filter for Neutral card (2nd situation)
+                            List<Situation> listSecondSituations = new List<Situation>();
+                            IEnumerable<Situation> secondSituationSet =
+                                from situation in listFilteredSocialSituations
+                                where situation.SitNum == 1
+                                select situation;
+                            listSecondSituations = secondSituationSet.ToList();
+                            if (listSecondSituations.Count == 0)
+                            {
+                                //set default empty data if nothing found
+                                Game.SetError(new Error(89, "listSecondSituations (Social) has no data"));
+                                arraySituation[1, 0] = "";
+                                arraySituation[1, 1] = "";
+                                arraySituation[1, 2] = "";
+                            }
+                            else
+                            {
+                                Situation situationSecond = listSecondSituations[rnd.Next(0, listSecondSituations.Count)];
+                                tempListGood = situationSecond.GetGood();
+                                tempListBad = situationSecond.GetBad();
+                                //place data in array (name and immersion texts for played/ignored outcomes)
+                                arraySituation[1, 0] = situationSecond.Name;
+                                arraySituation[1, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
+                                arraySituation[1, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
+                            }
                         }
                         break;
                     default:
