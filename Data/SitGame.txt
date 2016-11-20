@@ -5,8 +5,7 @@
 # Type: 'State'
 # SubType: State -> ArmySize/Fame/Honour/Justice/Invisibility
 # SitNum: Situation Number -> Note: DIFFERENT to SitNormal -> '1' player has advantage, '0' no advantage, '-1' opponent has advantage
-# Data1: multi purpose integer, default 0
-# Data2: multi purpose integer, default 0
+# Data: multi purpose integer, default 0
 # Good: immersion strings, 3 variations for good outcomes, short/med sentence, use tags, max 6, eg. Good6:, min1
 # Bad: immersion strings, 3 variations for bad outcomes, short/med sentence, use tags, max 6, eg. Bad6:, min 1
 
@@ -19,8 +18,7 @@ Name: Relative Army Size
 Type: State
 SubType: ArmySize
 SitNum: 1
-Data1: 0
-Data2: 0
+Data: 0
 Good1: Superior numbers count. Your men surge into the enemy.
 Good2: Sheer weight of numbers force the enemy back.
 Good3: Always bring more men than your opponent to a battle.
@@ -35,8 +33,7 @@ Name: Relative Army Size
 Type: State
 SubType: ArmySize
 SitNum: 0
-Data1: 0
-Data2: 0
+Data: 0
 Good1: Without any noticeable difference in Men-At-Arms you manage to make yours count the most.
 Good2: It'd be a help to have more men but you are making the most of those that you've got.
 Good3: A larger army can sway the day but your men are fighting as if there were two for each of them.
@@ -51,8 +48,7 @@ Name: Relative Army Size
 Type: State
 SubType: ArmySize
 SitNum: -1
-Data1: 0
-Data2: 0
+Data: 0
 Good1: <men> are everywhere but you manage to manoeuvre your smaller army to greater effect.
 Good2: How many Men-At-Arms does <name> have? It doesn't matter as your men are demon fighters today  .
 Good3: <name> superior numbers would count if it wasn't for the nimbleness of your smaller force.

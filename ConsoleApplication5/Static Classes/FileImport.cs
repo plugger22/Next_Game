@@ -174,8 +174,7 @@ namespace Next_Game
         public OtherType Type_Other { get; set; }
         public int SitNum { get; set; }
         public int Defender { get; set; }
-        public int Data1 { get; set; }
-        public int Data2 { get; set; }
+        public int Data { get; set; }
         public List<string> ListGood { get; set; }
         public List<string> ListBad { get; set; }
     }
@@ -2720,13 +2719,8 @@ namespace Next_Game
                                 catch (Exception e)
                                 { Game.SetError(new Error(98, e.Message)); validData = false; }
                                 break;
-                            case "Data1":
-                                try { structSituation.Data1 = Convert.ToInt32(cleanToken); }
-                                catch (Exception e)
-                                { Game.SetError(new Error(98, e.Message)); validData = false; }
-                                break;
-                            case "Data2":
-                                try { structSituation.Data2 = Convert.ToInt32(cleanToken); }
+                            case "Data":
+                                try { structSituation.Data = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
                                 { Game.SetError(new Error(98, e.Message)); validData = false; }
                                 break;
@@ -2762,8 +2756,7 @@ namespace Next_Game
                                     { situation = new Situation(structSituation.Name, structSituation.State, structSituation.SitNum); }
                                     //add data
                                     situation.Defender = structSituation.Defender;
-                                    situation.Data1 = structSituation.Data1;
-                                    situation.Data2 = structSituation.Data2;
+                                    situation.Data = structSituation.Data;
                                     situation.SetGood(tempListGood);
                                     situation.SetBad(tempListBad);
                                     tempDictionary.Add(situation.SitID, situation);
