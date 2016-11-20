@@ -2706,7 +2706,7 @@ namespace Next_Game
                                 catch (Exception e)
                                 { Game.SetError(new Error(98, e.Message)); validData = false; }
                                 break;
-                            case "Def":
+                            case "PlyrDef":
                                 //only applies to first situation (def. adv.) if '1' then written from POV of player defending, if '-1' then opponent
                                 try
                                 {

@@ -5,11 +5,13 @@
 # SubType: if Combat -> Personal/Tournament/Battle, if Social -> Blackmail/Seduce/Befriend, if Other -> Hunting/Stealth
 # SubType: if State -> ArmySize/Fame/Honour/Justice/Invisibility
 # SitNum: Situation Number -> '0' (defenders advantage), '1' (neutral)
-# Def: '1' if player is the defender, '-1' if opponent (only applies to 1st situation (def. adv.), eg. SitNum '0', ignored for SitNum '1'
+# SitNum: If '0' then you need 'PlyrDef:' (below) and two sit's of the same name. If '1' then a single situation is all that's needed (more are O.K)
+# PlyrDef: '1' if player is the defender, '-1' if opponent (only applies to 1st situation (def. adv.), eg. SitNum '0', ignored for SitNum '1'
 # Data: multi purpose integer, default 0
 # Good: immersion strings, 3 variations for good outcomes, short/med sentence, use tags, max 6, eg. Good6:, min1
 # Bad: immersion strings, 3 variations for bad outcomes, short/med sentence, use tags, max 6, eg. Bad6:, min 1
 
+# terminology: Use 'you' and 'your', not 'our'
 
 # Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She
 
@@ -20,10 +22,10 @@ Name: A Defendable Hill
 Type: Combat
 SubType: Battle
 SitNum: 0
-Def: 1
+PlyrDef: 1
 Data: 0
-Good1: <men> struggled up the hill while being peppered by our arrows.
-Good2: Our men used their height advantage to great effect.
+Good1: <men> struggled up the hill while being peppered by your arrows.
+Good2: Your men used their height advantage to great effect.
 Good3: As <men> climbed the hill they huffed and puffed. It's a big hill.
 Bad1: <men> managed to find an easy, unseen, path up the hill.
 Bad2: You failed to deploy your men to take advantage of the hill.
@@ -34,14 +36,14 @@ Name: A Defendable Hill
 Type: Combat
 SubType: Battle
 SitNum: 0
-Def: -1
+PlyrDef: -1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: It's hill, not a mountain. You pick the best route up and let loose the dogs of war.
+Good2: You swing half your men around the back of the hill and hit them from both sides.
+Good3: A properly executed shield wall while advancing up the hill neutralises <name>'s archers.
+Bad1: Height can be a significant advantage. <men> put it to good use.
+Bad2: You attempt an advance up through a gully but only end up bottlenecked half way up the hill.
+Bad3: You order a frontal assault straight up the hill against advice. As predicted, it goes badly.
 [end]
 
 Name: Muddy Ground
@@ -57,34 +59,34 @@ Bad2: Unfortunately, there was no way around the treacherous, muddy ground.
 Bad3: The mud reached up and sucked hard at the legs of your knight's mounts as they struggled through.
 [end]
 
-# tournament Combat
+# tournament Combat (player as anonymous entry -> challenger, player as Ursurper -> defender). Joust an opponent.
 
-Name: 
+Name: Hold Back until Needed
 Type: Combat
 SubType: Tournament
 SitNum: 0
-Def: 1
+PlyrDef: 1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: You restrain yourself and keep the best till last.
+Good2: Keep <him> guessing. You deliberately ride poorly in order to gain an advantage in the later rounds.
+Good3: You bide your time. Let <him> think that you don't know how to joust. 
+Bad1: You hold back your best but time it badly and risk being knocked out of the tournament.
+Bad2: <name> doesn't believe that you can't joust and your pretence has only infuriated <him> further.
+Bad3: Your skill is needed now, not later! <name> thunders down upon you, lance arcing towards your breast.
 [end]
 
-Name: 
+Name: Hold Back until Needed
 Type: Combat
 SubType: Tournament
 SitNum: 0
-Def: -1
+PlyrDef: -1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: <name> doesn't realise who you are or what you can do. You take advantage of his ignorance.
+Good2: An indecisive round of jousting has <name> thinking that you are easy meat. <He> soon learns otherwise.
+Good3: You lull <name> into a false sense of security. Your lance takes him hard under the chin this round.
+Bad1: It's hard to tell if <name> has realised who you are. He is certainly jousting as if there is no tomorrow.
+Bad2: Your plan of holding back hasn't worked. All that you've succeeded in doing is getting beaten to a pulp.
+Bad3: The trouble with waiting for the right moment is that sometimes it doesn't come.
 [end]
 
 Name: Cheers of the Crowd
@@ -115,32 +117,32 @@ Bad3: Has nobody thought to smooth the ground on your side of the fence? Perhaps
 
 # personal Combat
 
-Name: 
+Name: Freedom of Movement
 Type: Combat
 SubType: Personal
 SitNum: 0
-Def: 1
+PlyrDef: 1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: You make full use of your ability to freely duck, dodge and lunge.
+Good2: You move around at will, darting in and out like a striking Cobra.
+Good3: Nimble and fleet of foot you take advantage of the clear space around you.
+Bad1: You fail to utilise the open area around you and remain flat footed and stationary.
+Bad2: There is scope for fast, encircling, movement around your opponent but you ignore it.
+Bad3: There is an open space around you but why bother? Perhaps you should have...
 [end]
 
-Name: 
+Name: Freedom of Movement
 Type: Combat
 SubType: Personal
 SitNum: 0
-Def: -1
+PlyrDef: -1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: You force <name> backwards from the small spot of clear ground that they occupy.
+Good2: With a flurry of blows you push <name> back into a more restricted place.
+Good3: Thrusting and lunging you gain control of the tiny piece of clear ground where <name> stood.
+Bad1: <name> comes flying at you from all directions. If only he didn't have such freedom.
+Bad2: You twist and turn but <name> keeps circling around like a tiger waiting to pounce.
+Bad3: If <name> was as restricted in his movements as you are it would be a different story.
 [end]
 
 Name: Glare of the Sun
@@ -153,7 +155,7 @@ Good2: The clouds open and <name> gets hit with the full glare of the sun.
 Good3: <name> discomfort at having the sun in his eyes is there for all to see.
 Bad1: It's hard to get a clear view of <name> with the sun in your eyes.
 Bad2:  Where are the damn clouds? The sun's glare is fierce and blinding.
-Bad3: Your fighting a dark shadow. That's all you can see with the sun in your eyes.
+Bad3: You're fighting a dark shadow. That's all you can see with the sun in your eyes.
 [end]
 
 Name: Uneven Ground
@@ -169,3 +171,144 @@ Bad2: Your ankle skews outwards as your slip on a rock.
 Bad3: You're having to fight with one eye on the uneven ground. It's treacherous footing.
 [end]
 
+# Blackmail Social
+
+Name: Take the Moral High Ground
+Type: Social
+SubType: Blackmail
+SitNum: 0
+PlyrDef: 1
+Data: 0
+Good1: You don't have any time for grubby blackmailers.
+Good2: Morals maketh the man, not dirty, grubby threats.
+Good3: A man who delves into the murky depths of blackmail has lost your respect
+Bad1: A man who succumbs to blackmail is on a slippery path
+Bad2: You should have refused to engage but you didn't
+Bad3: Who is worse, the blackmailer or the willing victim?
+[end]
+
+Name: Take the Moral High Ground
+Type: Social
+SubType: Blackmail
+SitNum: 0
+PlyrDef: -1
+Data: 0
+Good1: Yes, you are blackmailing <him> but your cause is just and righteous. The Gods are on your side.
+Good2: There are times when the ends justify the means. This is one of them.
+Good3: Who is <he> to squeak and squawk of morals? You take no heed of his bleatings.
+Bad1: You feel a certain unease about the necessity of blackmailing <name>. Perhaps there was a better way?
+Bad2: The queasy, unsettling feeling that you get from your stomach is a direct result of your dark dealings.
+Bad3: How has it come to this? You are supposed to be on the side of the angels, yet here you lie with the underclass.
+[end]
+
+Name: An Unspoken Threat
+Type: Social
+SubType: Blackmail
+SitNum: 1
+Data: 0
+Good1: There is always a threat. Lurking quietly in the wings. You make to summon it.
+Good2: Threats are all the more powerful for their unspoken presence. They are the evil shadows lurking in the dark corners.
+Good3: Like the Sword of Damocles, you hint at unspoken consequences. It's enough.
+Bad1: You allude to a threat but <name> only laughs in your face. Did he misunderstand?
+Bad2: <name> looks at you, puzzled. Clearly he hasn't gotten the message. Perhaps you should have spelled it out.
+Bad3: Your attempts at alluding to terrible consequences fall flat as <name> scratches <his> head and asks 'What?'
+[end]
+
+# Seduce Social
+
+Name: An Austere Venue
+Type: Social
+SubType: Seduce
+SitNum: 0
+PlyrDef: 1
+Data: 0
+Good1: It's hard to be romantic when there's a cold wind howling through the cracks in the wall.
+Good2: Cold grey walls and a harsh stone floor don't elicit any feelings of romance.
+Good3: You choose the venue well. If <name> doesn't get blown off their feet soon you'll be surprised.
+Bad1: What you though was a suitably unromantic venue has turned out to be only mildly so.
+Bad2: Yes it's unromantic but you didn't account for the lavish, erotic, tapestries hung on the walls.
+Bad3: <name> doesn't appear to be the least put out by your carefully chosen venue.
+[end]
+
+Name: An Austere Venue
+Type: Social
+SubType: Seduce
+SitNum: 0
+PlyrDef: -1
+Data: 0
+Good1: Has <name> deliberately chosen such a drab venue to meet? You laugh and lighten the room with your presence.
+Good2: It's a poor location for a romantic interlude but there is no dimming your ardour and sincerity.
+Good3: Did <name> think that they were safe from your affections in such a dreary venue? Little do they know...
+Bad1: You're finding it difficult to conjure up any feelings of romance in such a depressing venue.
+Bad2: If the d*mn wind would stop howling you might be able to say something that <name> would hear.
+Bad3: You should have paid more attention to the venue. This place isn't fir to hold a pig wrestling contest.
+[end]
+
+Name: Minstrel Musicians
+Type: Social
+SubType: Seduce
+SitNum: 1
+Data: 0
+Good1: Who could resist the lilting tunes of the nearby Minstrels?
+Good2: The soft, uplifting tunes of the Minstrels are affecting <name>.
+Good3: The seductive lyrics of the Minstrels serve your purpose well.
+Bad1: The bl**dy Minstrels! Don't they know when to leave enough alone?
+Bad2: The noise, oh, the noise. Are they howling dogs or Minstrels? It's hard to tell.
+Bad3: Why won't they play somewhere else? You feel your temper rising.
+[end]
+
+# Befriend Social
+
+Name: Hostile Whispers
+Type: Social
+SubType: Befriend
+SitNum: 0
+PlyrDef: 1
+Data: 0
+Good1: They whisper in your ear all day and night. You know more about <name> than you desire. None of it good.
+Good2: It is hard to take <name>'s overtures seriously when you have heard such scurrilous rumours.
+Good3: Why <name> has even bothered to attempt to curry favour with you is a mystery? You have heard such dreadful things.
+Bad1: Yes, you should have taken greater heed of what people where whispering in your ear about <name>.
+Bad2: Brushing off all those rumours about <name> has proved to be problematic. You should have paid more attention.
+Bad3: Can it all be true? Surely not. <name> can't be that bad. You pay no heed to gossip. Perhaps you should have.
+[end]
+
+Name: Hostile Whispers
+Type: Social
+SubType: Befriend
+SitNum: 0
+PlyrDef: -1
+Data: 0
+Good1: You make it clear from the start that the rumours about you are nothing more than scurrilous whispers from jealous individuals.
+Good2: Why, you ask <name>, should any heed be paid to such rumours an innuendo about you? A proper, moral, person doesn't give any credence to gossip.
+Good3: Let them whisper. You demonstrate your sincerity and strong morals through a firm, engaging manner that appeals to <name>.
+Bad1: Ahhh, the rumours, the gossip. You should have addressed them directly rather than ignoring them. <name> is puzzled and confused.
+Bad2: The insidious anonymous whispers have done their job well. <name> appears to view you in the most unfavourable terms.
+Bad3: What can you do in the face of such insidious, never-ending gossip? It has cruelled your chances with <name>.
+[end]
+
+Name: A Fine Arbor Wine
+Type: Social
+SubType: Befriend
+SitNum: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[end]
+
+Name: A Pleasant Lunch
+Type: Social
+SubType: Befriend
+SitNum: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[end]
