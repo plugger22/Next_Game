@@ -674,7 +674,7 @@ namespace Next_Game
                                         conflict.Conflict_Type = ConflictType.Combat;
                                         conflict.Combat_Type = (ConflictCombat)rnd.Next(1, 4);
                                         conflict.SetOpponent(newKing.ActID, Convert.ToBoolean(rnd.Next(0, 2)));
-                                        conflict.SetSpecialSituation(ConflictSpecial.Fortified_Position, CardType.Good, 2);
+                                        conflict.SetSpecialSituation(ConflictSpecial.Fortified_Position, CardType.Good, rnd.Next(1, 5));
                                         conflict.SetGameSituation(ConflictState.Relative_Army_Size);
                                     }
                                     else

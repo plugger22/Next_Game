@@ -705,18 +705,25 @@ namespace Next_Game
             }
             else { arraySituation[2, 0] = ""; }
 
-
             //Special Situations
             if (listCardSpecials.Count > 0)
             {
                 numCards = listCardSpecials.Count();
+                string oldTitle = "";
+                string newTitle = "";
                 for (int i = 0; i < numCards; i++)
                 {
                     Card_Conflict cardSpecial = listCardSpecials[i];
+                    newTitle = cardSpecial.Title;
+                    if (newTitle != oldTitle)
+                    {
+                        oldTitle = newTitle;
+                        text = string.Format("\"{0}\", {1} card{2} ({3}), {4}", cardSpecial.Title, numCards, numCards > 1 ? "s" : "", Game_Type, cardSpecial.Description);
+                        listSituationCards.Add(new Snippet(text, foreColor, backColor));
+                    }
                     type = cardSpecial.Type;
-                    if (type == CardType.Good) { foreColor = RLColor.Black; arrayPool[0] += numCards;}
-                    else if (type == CardType.Bad) { foreColor = RLColor.Red;  arrayPool[2] += numCards; }
-                    
+                    if (type == CardType.Good) { foreColor = RLColor.Black; arrayPool[0] += 1;}
+                    else if (type == CardType.Bad) { foreColor = RLColor.Red;  arrayPool[2] += 1; }
                     listCardPool.Add(cardSpecial);
                 }
             }
