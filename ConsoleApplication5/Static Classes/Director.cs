@@ -1701,6 +1701,7 @@ namespace Next_Game
         internal Dictionary<int, Situation> GetSituationsSpecial()
         { return dictSituationsSpecial; }
 
+
         //place Director methods above here
     }
 }

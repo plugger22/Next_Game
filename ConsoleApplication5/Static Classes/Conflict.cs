@@ -41,6 +41,7 @@ namespace Next_Game
         //Card Pool
         private List<Card_Conflict> listCardPool;
         private List<Card_Conflict> listCardHand; //hand that will be played
+        private List<Card_Conflict> listCardSpecials; //special, decision derived, situation cards
         private List<Snippet> listBreakdown; //description of card pool contents
         //skills
         public SkillType PrimarySkill { get; set; } //each skill level counts as 2 cards
@@ -64,6 +65,7 @@ namespace Next_Game
             numberOfCards = Game.constant.GetValue(Global.HAND_CARDS_NUM);
             listCardPool = new List<Card_Conflict>();
             listCardHand = new List<Card_Conflict>();
+            listCardSpecials = new List<Card_Conflict>();
             listBreakdown = new List<Snippet>();
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
             arrayPool = new int[3];
@@ -714,6 +716,8 @@ namespace Next_Game
             //send to layout
             Game.layout.SetCardBreakdown(listBreakdown);
             Game.layout.SetCardPool(arrayPool);
+            //empty special situations ready for next conflict
+            listSpecialCards.Clear();
         }
 
         /// <summary>
@@ -959,6 +963,56 @@ namespace Next_Game
         /// <returns></returns>
         public Actor GetOpponent()
         { return opponent; }
+
+        /// <summary>
+        /// Input special, decision derived, situations. 
+        /// </summary>
+        /// <param name="specialType"></param>
+        /// <param name="cardType"></param>
+        /// <param name="numCards">leave at default '0' if you want a random #</param>
+        public void SetSpecialSituation(ConflictSpecial specialType, CardType cardType, int numCards = 0)
+        {
+            //get dictionary of specials
+            Dictionary<int, Situation> specialDictionary = Game.director.GetSituationsSpecial();
+            if (specialDictionary.Count > 1)
+            {
+                if (specialType > ConflictSpecial.None)
+                {
+                    if (cardType > CardType.None)
+                    {
+                        int defender = 0;
+                        if (cardType == CardType.Good) { defender = 1; } else if (cardType == CardType.Bad) { defender = -1; }
+                        //Get special situations from dictionary
+                        List<Situation> listFilteredSituations = new List<Situation>();
+                        IEnumerable<Situation> situationSet =
+                            from situation in specialDictionary
+                            where situation.Value.Special == specialType
+                            where situation.Value.Defender == defender
+                            //orderby situation.Value.SitID
+                            select situation.Value;
+                        listFilteredSituations = situationSet.ToList();
+                        //should be a single situation in the list
+                        if (listFilteredSituations.Count > 0)
+                        {
+                            Situation situation = listFilteredSituations[rnd.Next(0, listFilteredSituations.Count)];
+                            List<string> tempListGood = situation.GetGood();
+                            List<string> tempListBad = situation.GetBad();
+                            int number = numCards;
+                            if (numCards == 0) { numCards = GetSituationCardNumber(); }
+                            //add cards to special card list
+                            for (int i = 0; i < number; i++)
+                            {
+                                Card_Conflict card = new Card_Conflict(CardConflict.Situation, cardType, situation.Name, "special situation");
+                                card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)];
+                                card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)];
+                                card.TypeDefend = CardType.Good;
+                                listCardSpecials.Add(card);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         // methods above here
     }

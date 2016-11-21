@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RLNET;
 using Next_Game.Cartographic;
+using Next_Game.Event_System;
 
 namespace Next_Game
 {
@@ -673,6 +674,7 @@ namespace Next_Game
                                         conflict.Conflict_Type = ConflictType.Combat;
                                         conflict.Combat_Type = (ConflictCombat)rnd.Next(1, 4);
                                         conflict.SetOpponent(newKing.ActID, Convert.ToBoolean(rnd.Next(0, 2)));
+                                        conflict.SetSpecialSituation(ConflictSpecial.Fortified_Position, CardType.Good, 2);
                                         conflict.SetGameSituation(ConflictState.Relative_Army_Size);
                                     }
                                     else

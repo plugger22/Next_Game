@@ -2797,10 +2797,8 @@ namespace Next_Game
                                     { Console.WriteLine("\"{0}\" imported, {1} good records & {2} bad, SitNum {3}", structSituation.Name, tempListGood.Count, tempListBad.Count, 
                                         structSituation.SitNum); }
                                     else if (structSituation.Special > ConflictSpecial.None)
-                                    {
-                                        Console.WriteLine("\"{0}\" imported, {1} good records & {2} bad, Def {3}", structSituation.Name, tempListGood.Count, tempListBad.Count,
-                                          structSituation.Defender);
-                                    }
+                                    {  Console.WriteLine("\"{0}\" imported, {1} good records & {2} bad, Def {3}", structSituation.Name, tempListGood.Count, tempListBad.Count,
+                                          structSituation.Defender);  }
                                 }
                                 break;
                             default:
