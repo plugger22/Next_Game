@@ -275,30 +275,6 @@ namespace Next_Game
                         }
                         break;
                     case ConflictType.Social:
-                    /*
-                    switch (Social_Type)
-                    {
-                        case SocialType.Befriend:
-                            arraySituation[0, 0] = "A fine Arbor Wine";
-                            arraySituation[1, 0] = "A Pleasant Lunch";
-                            arraySituation[2, 0] = "Your Reputation Precedes you";
-                            break;
-                        case SocialType.Blackmail:
-                            arraySituation[0, 0] = "A Noisey Room full of People";
-                            arraySituation[1, 0] = "The Threat of Retaliation";
-                            arraySituation[2, 0] = "Your Poor Reputation";
-                            break;
-                        case SocialType.Seduce:
-                            arraySituation[0, 0] = "A Romantic Venue";
-                            arraySituation[1, 0] = "A Witch's Aphrodisiac";
-                            arraySituation[2, 0] = "The Lady is Happily Married";
-                            break;
-                        default:
-                            Game.SetError(new Error(86, "Invalid Social Type"));
-                            break;
-                    }
-                    break;
-                    */
                         //Get suitable situations from dictionary
                         List<Situation> listFilteredSocialSituations = new List<Situation>();
                         IEnumerable<Situation> situationSocialSet =
@@ -372,7 +348,7 @@ namespace Next_Game
                 //give correct title for game specific situation, if present
                 if (String.IsNullOrEmpty(Game_Title) == false)
                 {
-                    arraySituation[2, 0] = Game_Title;
+                    
                     //filter suitable game situation from dictionary
                     List<Situation> listGameSituations = new List<Situation>();
                     IEnumerable<Situation> situationSet =
@@ -384,25 +360,31 @@ namespace Next_Game
                     if (listGameSituations.Count == 0) { Game.SetError(new Error(89, "listGameSituations has no data")); }
                     else if (listGameSituations.Count == 3)
                     {
+                        string backupTitle = "unknown backup";
                         //list ordered in sequence sitNum -1/0/1 -> player adv / neutral / opponent adv in whatever game state is being measured
                         switch (Game_Type)
                         {
                             case CardType.Good:
                                 tempListGood = listGameSituations[2].GetGood();
                                 tempListBad = listGameSituations[2].GetBad();
+                                backupTitle = listGameSituations[2].Name;
                                 break;
                             case CardType.Neutral:
                                 tempListGood = listGameSituations[1].GetGood();
                                 tempListBad = listGameSituations[1].GetBad();
+                                backupTitle = listGameSituations[1].Name;
                                 break;
                             case CardType.Bad:
                                 tempListGood = listGameSituations[0].GetGood();
                                 tempListBad = listGameSituations[0].GetBad();
+                                backupTitle = listGameSituations[0].Name;
                                 break;
                             default:
                                 Game.SetError(new Error(89, "invalid Game_Type"));
                                 break;
                         }
+                        if (Game_Title == "unknown") { Game_Title = backupTitle; }
+                        arraySituation[2, 0] = Game_Title;
                         arraySituation[2, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
                         arraySituation[2, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
                     }
@@ -915,7 +897,7 @@ namespace Next_Game
             if (String.IsNullOrEmpty(title) == false)
             { Game_Title = title; }
             else
-            { Game.SetError(new Error(97, "Invalid Title Input (null)")); Game_Title = "Unknown"; }
+            { Game.SetError(new Error(97, "Invalid Title Input (null)")); Game_Title = "unknown"; }
             
             //determine card #'s (modifier), type (difference) and Description (description)
             switch (gameState)
@@ -961,9 +943,9 @@ namespace Next_Game
             arrayModifiers[2] = numCards;
             //debug
             Console.WriteLine(Environment.NewLine + "Situation: \"{0}\", difference {1} Modifier {2} numCards {3}", description, difference, modifier, numCards);
-            //Type
-            if (difference > 0) { Game_Type = CardType.Good; }
-            else if (difference < 0) { Game_Type = CardType.Bad; }
+            //Type (if difference between -10 & +10 then card is neutral
+            if (difference > 10) { Game_Type = CardType.Good; }
+            else if (difference < -10) { Game_Type = CardType.Bad; }
             else { Game_Type = CardType.Neutral; }
             //description
             Game_Description = description;
