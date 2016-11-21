@@ -650,6 +650,12 @@ namespace Next_Game
             text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", opponent.Name, PrimarySkill, type, cards_opponent, skill_opponent);
             listOpponentCards.Add(new Snippet(text, foreColor, backColor));
 
+            //Special Situations
+            if (listCardSpecials.Count > 0)
+            {
+
+            }
+
             //Primary Skill Traits
             CheckActorTrait(player, PrimarySkill, listPlayerCards);
             CheckActorTrait(opponent, PrimarySkill, listOpponentCards);
@@ -974,7 +980,7 @@ namespace Next_Game
         {
             //get dictionary of specials
             Dictionary<int, Situation> specialDictionary = Game.director.GetSituationsSpecial();
-            if (specialDictionary.Count > 1)
+            if (specialDictionary.Count > 0)
             {
                 if (specialType > ConflictSpecial.None)
                 {
@@ -1009,9 +1015,13 @@ namespace Next_Game
                                 listCardSpecials.Add(card);
                             }
                         }
+                        else { Game.SetError(new Error(102, "No special situations found that match criteria")); }
                     }
+                    else { Game.SetError(new Error(102, "Invalid CardType Input (\"None\"))")); }
                 }
+                else { Game.SetError(new Error(102, "Invalid ConflictSpecial Input (\"None\")")); }
             }
+            else { Game.SetError(new Error(102, "Invalid Dictionary Input (empty)")); }
         }
 
         // methods above here
