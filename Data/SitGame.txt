@@ -22,7 +22,7 @@ SitNum: 1
 Data: 0
 Good1: Superior numbers count. Your men surge into the enemy.
 Good2: Sheer weight of numbers force the enemy back.
-Good3: Always bring more men than your opponent to a battle.
+Good3: Always bring more men than your opponent to a fight.
 Bad1: Having more men has given you a small edge.
 Bad2: At least you've got more men than the enemy. It's a help.
 Bad3: While you aren't taking advantage of your superior numbers they still make a difference.
@@ -65,12 +65,12 @@ Type: State
 SubType: Fame
 SitNum: 1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: People have heard of you. You're known. A legend in the making.
+Good2: Like an Avenging Angel you have returned to reclaim your throne.
+Good3: The peasants love you. As they should. You are the rightful ruler of the land.
+Bad1: Despite your failure to take advantage of your fame, some of it seeps through.
+Bad2: What is the point of fame if you fail to capitalise on it?
+Bad3: Your failure to rise to the occasion has seen you become a diminished figure.
 [End]
 
 # Fame -> no advantage
@@ -80,12 +80,12 @@ Type: State
 SubType: Fame
 SitNum: 0
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: You are known but then so is the King. You do your best to make yourself more noticeable.
+Good2: If you hadn't made it clear to all that your are a rising star you would be no more known than the King.
+Good3: It's a struggle but you manage to make the most of your fame. Around you, support for the King falls away.
+Bad1: As much as you protest otherwise, the peasants appear to view the King more favourably.
+Bad2: It's hard to stand tall, proud and famous when the current King keeps crowding you out.
+Bad3: What does a man need to do in order to become better known than the odious current King? You have yet to find the answer.
 [End]
 
 # Fame -> opponent advantage
@@ -95,10 +95,145 @@ Type: State
 SubType: Fame
 SitNum: -1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: Yes, it's true that the King is more famous than yourself but you manage to make a difference here and now.
+Good2: While your fame doesn't match that of the King you take full advantage of your personal presence to make it seem otherwise.
+Good3: It's a constant struggle to gain name recognition with the peasants with the King being so famous but you mange to breakthrough today.
+Bad1: It seems that nobody cares who you are. All that the peasants know is that their King is famous.
+Bad2: You feel like a shadow, constantly tagging along behind the King, hiding behind the arc of his fame.
+Bad3: It is a constant frustration that the King is better known. What do you have to do to change this? You have no answers today.
+[End]
+
+# Honour -> player advantage
+
+Name: Relative Honour
+Type: State
+SubType: Honour
+SitNum: 1
+Data: 0
+Good1: Even though you haven't yet claimed the throne your name is respected throughout the land.
+Good2: Your word is your honour. People understand and respect it.
+Good3: The King's honour is a shabby, ragged thing compared to your own.
+Bad1: With such a strong reputation for honour and doing the right thing why have you chosen to ignore it?
+Bad2: While the King's honour is no match for your own you appear unable to take advantage of this.
+Bad3: You are recognised as an honourable man yet your modesty in such matters works against you.
+[End]
+
+# Honour -> no advantage
+
+Name: Relative Honour
+Type: State
+SubType: Honour
+SitNum: 0
+Data: 0
+Good1: Who has the most honour, yourself or the King? Hard to say but you find a way to shine up your own into a lustrous orb.
+Good2: When it comes to honour your reputation is no better than that of the King but that's not how it appears today.
+Good3: You are a man of honour and people should recognise you as such. Who cares about the King?
+Bad1: In a two horse race for the honour stakes you are running a distant second even though there is little to distinguish your honour from that of the King.
+Bad2: You abdicate your claim to be the more honourable by neglect. 
+Bad3: Why bother? Does it matter who is the more honourable? Let the King be seen as the more upright.
+[End]
+
+# Honour -> opponent advantage
+
+Name: Relative Honour
+Type: State
+SubType: Honour
+SitNum: -1
+Data: 0
+Good1: Without a doubt it's the King who is viewed as the most honourable but you elevate yourself on the back of rumours and fake tales of chivalry.
+Good2: It takes strong personal conviction to overcome the perception that you are less honourable than the King but you manage the feat.
+Good3: Your local deeds overcome the people's favouring of the King as the more honourable. To a degree.
+Bad1: It's a hopeless cause. The King, despite his many, highly visible, faults, is viewed by all as having more honour than yourself.
+Bad2: The sad fact of life is that you are viewed as a scoundrel whereas the King is seen as a man of honour.
+Bad3: Despite your best efforts it is the King who is seen as being the most honourable.
+[End]
+
+# Justice -> player advantage
+
+Name: Relative Justice
+Type: State
+SubType: Justice
+SitNum: 1
+Data: 0
+Good1: Your cause is just and righteous. The people know it as such.
+Good2: Verily come forth the virtuous! You proclaim your cause as the one true path.
+Good3: The Gods are firmly on the side of those in possession of a just, righteous, cause.
+Bad1: Yes your cause is just but why must you keep it a secret?
+Bad2: There is no point in striving for a just cause when you fail to convince the people of it's righteousness.
+Bad3: Who knows how just your cause is? If you don't tell them they don't know.
+[End]
+
+# Justice -> no advantage
+
+Name: Relative Justice
+Type: State
+SubType: Justice
+SitNum: 0
+Data: 0
+Good1: There is a fine line between a just cause and a cursed one. You place yourself on the right side of the line.
+Good2: A just cause is helped by the frequent proclamation of such, even though it's absolute righteousness is no stronger than that of the Kings.
+Good3: The King might have an equally valid claim to the throne but you ensure that yours is the one that is front and centre.
+Bad1: Despite the validity of both your and the King's claim to the throne it is his that the peasants put more credence in.
+Bad2: It is the King's claim to the throne that is the one on most people's lips today, not yours.
+Bad3: Your claim to have a just reason for the throne is, sadly, falling on deaf ears. Perhaps you should have spoken up.
+[End]
+
+# Justice -> opponent advantage
+
+Name: Relative Justice
+Type: State
+SubType: Justice
+SitNum: -1
+Data: 0
+Good1: While the King has the stronger claim to the throne in the eyes of the people, you do your best to dispute the matter.
+Good2: You believe in the righteousness of your cause despite opinion being against you. Your conviction and sincerity wins through, however.
+Good3: It is your natural born right to assume the throne from the fake King. Nobody takes you seriously but they take the time to listen.
+Bad1: You seem to be a sole voice in the wilderness. All anybody wants to talk about is the current King's righteous claim to the throne, not yours.
+Bad2: The King has, according to general opinion, a much stronger claim to the throne than yourself. You make no attempt to dispute this.
+Bad3: Is there any justice in the world? It appears not. The King has a firm hold on his throne and the people agree that it is his to sit upon as he wishes.
+[End]
+
+# Invisibility -> player advantage
+
+Name: Relative Invisibility
+Type: State
+SubType: Invisibility
+SitNum: 1
+Data: 0
+Good1: You keep a low profile. That's the way you like it.
+Good2: As a shadow you move throughout the land, silent and unseen.
+Good3: It is a wise man who seeks to avoid the spotlight. Anonymity gives you the freedom to move unnoticed.
+Bad1: Few know of your presence and yet you tell that man over there who you are? Fool.
+Bad2: Why insist that are the rightful King when it is silence and anonymity that you desire?
+Bad3: Yes, you have a low profile but not today. Did you have beans for breakfast?
+[End]
+
+# Invisibility -> no advantage
+
+Name: Relative Invisibility
+Type: State
+SubType: Invisibility
+SitNum: 0
+Data: 0
+Good1: Those that know of you keep their counsel to themselves as you blend in.
+Good2: It is easier to move around when you are as silent and as stealthy as you are today.
+Good3: It's the new boots. You feel like a thief incarnate. You prowl around as if you were invisible.
+Bad1: That man over there knows who you are. Rather than having a quiet word you watch as he spreads the word.
+Bad2: Your profile isn't as low as you'd like. Already you've been recognised.
+Bad3: They know who you are. What do you expect as you've made no effort to conceal your identity.
+[End]
+
+# Invisibility -> opponent advantage
+
+Name: Relative Invisibility
+Type: State
+SubType: Invisibility
+SitNum: -1
+Data: 0
+Good1: Everybody seems to know you. Or do they? You have them confused, doubting their own eyes. It's a skill.
+Good2: Even though you are well known you manage to convince at least some people otherwise.
+Good3: You can hear them muttering your name. You raise your head, square your shoulders and proceed to prove them wrong. Not all, but enough.
+Bad1: People constantly point their fingers at you, telling their companions that it's the Usurper. You choose to ignore them.
+Bad2: It's bl**dy difficult to do anything stealthy when you are so well known.
+Bad3: If people didn't keep recognising you it'd be a lot easier to move around unnoticed. Can't the peasants stay indoors?
 [End]

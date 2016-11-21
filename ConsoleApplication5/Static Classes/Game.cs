@@ -671,9 +671,7 @@ namespace Next_Game
                                     {
                                         Noble newKing = lore.NewKing;
                                         conflict.Conflict_Type = ConflictType.Combat;
-                                        //conflict.Combat_Type = (CombatType)rnd.Next(1, 4);
-                                        conflict.Combat_Type = CombatType.Battle;
-
+                                        conflict.Combat_Type = (CombatType)rnd.Next(1, 4);
                                         conflict.SetOpponent(newKing.ActID, Convert.ToBoolean(rnd.Next(0, 2)));
                                         conflict.SetGameSituation(ConflictState.Relative_Army_Size, "Relative Army Size");
                                     }

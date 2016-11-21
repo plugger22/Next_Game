@@ -15,7 +15,7 @@ namespace Next_Game
     public enum CombatType { None, Personal, Tournament, Battle} //sub category
     public enum SocialType { None, Blackmail, Seduce, Befriend} //sub category
     public enum OtherType { None, Hunting, Stealth} //sub category
-    public enum DataPoint {None, Invisibility, Justice, Legend_Ursurper, Legend_King, Honour_Ursurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
+    public enum DataPoint {None, Invisibility, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
     public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
     
 
@@ -172,24 +172,24 @@ namespace Next_Game
             Game.director.SetGameState(DataPoint.Justice, DataState.Good, popularity * multiplier);
             popularity = Game.lore.NewKing.GetSkill(SkillType.Charm);
             Game.director.SetGameState(DataPoint.Justice, DataState.Bad, popularity * multiplier);
-            //Legend_Ursurper -> Combat
+            //Legend_Usurper -> Combat
             int legend = Game.lore.OldHeir.GetSkill(SkillType.Combat);
             if (legend > 3)
-            { Game.director.SetGameState(DataPoint.Legend_Ursurper, DataState.Good, (legend - 3) * multiplier); }
+            { Game.director.SetGameState(DataPoint.Legend_Usurper, DataState.Good, (legend - 3) * multiplier); }
             else if (legend < 3)
-            { Game.director.SetGameState(DataPoint.Legend_Ursurper, DataState.Bad, (3 - legend) * multiplier); }
+            { Game.director.SetGameState(DataPoint.Legend_Usurper, DataState.Bad, (3 - legend) * multiplier); }
             //Legend_New King -> Combat
             legend = Game.lore.NewKing.GetSkill(SkillType.Combat);
             if (legend > 3)
             { Game.director.SetGameState(DataPoint.Legend_King, DataState.Good, (legend - 3) * multiplier); }
             else if (legend < 3)
             { Game.director.SetGameState(DataPoint.Legend_King, DataState.Bad, (3 - legend) * multiplier); }
-            //Honour_Ursurper -> Treachery (good is < 3)
+            //Honour_Usurper -> Treachery (good is < 3)
             int treachery = Game.lore.OldHeir.GetSkill(SkillType.Treachery);
             if (treachery > 3)
-            { Game.director.SetGameState(DataPoint.Honour_Ursurper, DataState.Bad, (treachery - 3) * multiplier); }
+            { Game.director.SetGameState(DataPoint.Honour_Usurper, DataState.Bad, (treachery - 3) * multiplier); }
             else if (treachery < 3)
-            { Game.director.SetGameState(DataPoint.Honour_Ursurper, DataState.Good, (3 - treachery) * multiplier); }
+            { Game.director.SetGameState(DataPoint.Honour_Usurper, DataState.Good, (3 - treachery) * multiplier); }
             //Honour_King -> Treachery (good is < 3)
             treachery = Game.lore.NewKing.GetSkill(SkillType.Treachery);
             if (treachery > 3)

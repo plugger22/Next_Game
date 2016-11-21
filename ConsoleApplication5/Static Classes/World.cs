@@ -415,7 +415,7 @@ namespace Next_Game
                 else if (person is Follower)
                 {
                     Follower follower = person as Follower;
-                    listToDisplay.Add(new Snippet(string.Format("Loyalty to the Ursurper, {0} Stars", follower.Loyalty_Player)));
+                    listToDisplay.Add(new Snippet(string.Format("Loyalty to the Usurper, {0} Stars", follower.Loyalty_Player)));
                     List<string> textToWrap = Game.utility.WordWrap(string.Format("\"{0}\"", follower.Description), 120);
                     foreach (string text in textToWrap) { listToDisplay.Add(new Snippet(text)); }
                 }
@@ -1589,11 +1589,11 @@ namespace Next_Game
             if (change > 0) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }
             listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Justice (Cause)", data, good, bad), foreground, RLColor.Black));
-            //legend_ursurper
-            data = Game.director.CheckGameState(DataPoint.Legend_Ursurper);
-            good = Game.director.GetGameState(DataPoint.Legend_Ursurper, DataState.Good);
-            bad = Game.director.GetGameState(DataPoint.Legend_Ursurper, DataState.Bad);
-            change = Game.director.CheckGameStateChange(DataPoint.Legend_Ursurper);
+            //legend_usurper
+            data = Game.director.CheckGameState(DataPoint.Legend_Usurper);
+            good = Game.director.GetGameState(DataPoint.Legend_Usurper, DataState.Good);
+            bad = Game.director.GetGameState(DataPoint.Legend_Usurper, DataState.Bad);
+            change = Game.director.CheckGameStateChange(DataPoint.Legend_Usurper);
             foreground = RLColor.White;
             if (change > 0) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }
@@ -1607,11 +1607,11 @@ namespace Next_Game
             if (change > 0) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }
             listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Legend (King)", data, good, bad), foreground, RLColor.Black));
-            //honour_ursurper
-            data = Game.director.CheckGameState(DataPoint.Honour_Ursurper);
-            good = Game.director.GetGameState(DataPoint.Honour_Ursurper, DataState.Good);
-            bad = Game.director.GetGameState(DataPoint.Honour_Ursurper, DataState.Bad);
-            change = Game.director.CheckGameStateChange(DataPoint.Honour_Ursurper);
+            //honour_usurper
+            data = Game.director.CheckGameState(DataPoint.Honour_Usurper);
+            good = Game.director.GetGameState(DataPoint.Honour_Usurper, DataState.Good);
+            bad = Game.director.GetGameState(DataPoint.Honour_Usurper, DataState.Bad);
+            change = Game.director.CheckGameStateChange(DataPoint.Honour_Usurper);
             foreground = RLColor.White;
             if (change > 0) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }

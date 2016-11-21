@@ -2764,7 +2764,7 @@ namespace Next_Game
                                     { Console.WriteLine("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad, SitNum {4}, Def {5}", structSituation.Name, structSituation.Type, 
                                         tempListGood.Count, tempListBad.Count, structSituation.SitNum, structSituation.Defender); }
                                     else if (structSituation.State > ConflictState.None)
-                                    { Console.WriteLine("\"{0}\" imported, a {1} game state, {2} good records & {3} bad, SitNum {4}", structSituation.Name, structSituation.State, tempListGood.Count, tempListBad.Count, 
+                                    { Console.WriteLine("\"{0}\" imported, {1} good records & {2} bad, SitNum {3}", structSituation.Name, tempListGood.Count, tempListBad.Count, 
                                         structSituation.SitNum); }
                                 }
                                 break;

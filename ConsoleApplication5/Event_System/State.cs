@@ -10,9 +10,9 @@ namespace Next_Game.Event_System
     public enum GameVar { None,
         Invisibility, //don't change order -> corresponds to Director DataPoint
         Justice, //don't change order -> corresponds to Director DataPoint
-        Legend_Ursurper, //don't change order -> corresponds to Director DataPoint
+        Legend_Usurper, //don't change order -> corresponds to Director DataPoint
         Legend_King, //don't change order -> corresponds to Director DataPoint
-        Honour_Ursurper, //don't change order -> corresponds to Director DataPoint
+        Honour_Usurper, //don't change order -> corresponds to Director DataPoint
         Honour_King, //don't change order -> corresponds to Director DataPoint
         Count } //use descriptive tags as variable names are referenced via methods
 
@@ -63,12 +63,12 @@ namespace Next_Game.Event_System
                         //update 
                         Game.director.SetGameState(DataPoint.Justice, state, newData);
                         break;
-                    case GameVar.Legend_Ursurper:
-                        oldData = Game.director.GetGameState(DataPoint.Legend_Ursurper, state);
+                    case GameVar.Legend_Usurper:
+                        oldData = Game.director.GetGameState(DataPoint.Legend_Usurper, state);
                         //apply change (positive #)
                         newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
-                        Game.director.SetGameState(DataPoint.Legend_Ursurper, state, newData);
+                        Game.director.SetGameState(DataPoint.Legend_Usurper, state, newData);
                         break;
                     case GameVar.Legend_King:
                         oldData = Game.director.GetGameState(DataPoint.Legend_King, state);
@@ -77,12 +77,12 @@ namespace Next_Game.Event_System
                         //update 
                         Game.director.SetGameState(DataPoint.Legend_King, state, newData);
                         break;
-                    case GameVar.Honour_Ursurper:
-                        oldData = Game.director.GetGameState(DataPoint.Honour_Ursurper, state);
+                    case GameVar.Honour_Usurper:
+                        oldData = Game.director.GetGameState(DataPoint.Honour_Usurper, state);
                         //apply change (positive #)
                         newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
-                        Game.director.SetGameState(DataPoint.Honour_Ursurper, state, newData);
+                        Game.director.SetGameState(DataPoint.Honour_Usurper, state, newData);
                         break;
                     case GameVar.Honour_King:
                         oldData = Game.director.GetGameState(DataPoint.Honour_King, state);

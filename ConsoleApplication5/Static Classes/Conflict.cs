@@ -758,7 +758,7 @@ namespace Next_Game
             }
             else
             {
-                //reverse the sign (good/bad) if opponent (who is anyone else other than the Ursurper)
+                //reverse the sign (good/bad) if opponent (who is anyone else other than the Usurper)
                 numCards = 3 - skill_actor;
                 tempNumCards = numCards * -1;
                 traitExpanded = string.Format("{0} skill {1}{2}", skill, tempNumCards > 0 ? "+" : "", tempNumCards);
@@ -928,25 +928,25 @@ namespace Next_Game
                     description = string.Format("{0} {1:N0} more Men-At-Arms than {2}", difference > 0 ? "You have" : "The King has", modifier * factor, difference > 0 ? "the King" : "You");
                     break;
                 case ConflictState.Relative_Fame:
-                    //Ursurpers Legend - Kings Legend
-                    difference = Game.director.CheckGameState(DataPoint.Legend_Ursurper) - Game.director.CheckGameState(DataPoint.Legend_King);
+                    //Usurpers Legend - Kings Legend
+                    difference = Game.director.CheckGameState(DataPoint.Legend_Usurper) - Game.director.CheckGameState(DataPoint.Legend_King);
                     modifier = Math.Abs(difference);
                     description = string.Format("difference between Your's and the King's Legend is {0}{1} %", difference > 0 ? "+" : "", difference);
                     break;
                 case ConflictState.Relative_Honour:
-                    //Ursurpers Honour - Kings Honour
-                    difference = Game.director.CheckGameState(DataPoint.Honour_Ursurper) - Game.director.CheckGameState(DataPoint.Honour_King);
+                    //Usurpers Honour - Kings Honour
+                    difference = Game.director.CheckGameState(DataPoint.Honour_Usurper) - Game.director.CheckGameState(DataPoint.Honour_King);
                     modifier = Math.Abs(difference);
                     description = string.Format("difference between Your's and the King's Honour is {0}{1} %", difference > 0 ? "+" : "", difference);
                     break;
                 case ConflictState.Relative_Justice:
-                    //Relative Justice of the Ursurpers Cause
+                    //Relative Justice of the Usurpers Cause
                     difference = Game.director.CheckGameState(DataPoint.Justice) - 50;
                     modifier = Math.Abs(difference);
                     description = string.Format("relative Justice of Your Cause is {0}{1} %", difference > 0 ? "+" : "", difference);
                     break;
                 case ConflictState.Relative_Invisibility:
-                    //Relative Invisibility of the Ursurper
+                    //Relative Invisibility of the Usurper
                     difference = Game.director.CheckGameState(DataPoint.Invisibility) - 50;
                     modifier = Math.Abs(difference);
                     description = string.Format("relative Invisibility of Your Cause is {0}{1} %", difference > 0 ? "+" : "", difference);

@@ -298,7 +298,7 @@ namespace Next_Game
         {
             int locID;
             //create player (place holder)
-            Player player = new Player("William Tell", ActorType.Ursurper);
+            Player player = new Player("William Tell", ActorType.Usurper);
             //Player should be first record in list and first Active actor initialised (ActID = '1')
             listOfActiveActors.Add(player);
             //assign to random location on map
@@ -307,7 +307,7 @@ namespace Next_Game
             //place characters at Location
             player.LocID = locID;
             player.SetActorPosition(loc.GetPosition());
-            player.Type = ActorType.Ursurper;
+            player.Type = ActorType.Usurper;
             //add to Location list of Characters
             loc.AddActor(player.ActID);
         }
