@@ -884,10 +884,10 @@ namespace Next_Game
         /// pass details of the third, game specific, situation. Run before Conflict.Initialise
         /// </summary>
         /// <param name="gameState">Game specific state</param>
-        /// <param name="title">Card title</param>
+        /// <param name="title"> leave blank if you want the situation name as the card title</param>
         /// <param name="mod_0">Modifier to def adv situation card #'s (first)</param>
         /// <param name="mod_1">Modifier to neutral situation card #'s (second)</param>
-        public void SetGameSituation(ConflictState gameState, string title, int mod_0 = 0, int mod_1 = 0)
+        public void SetGameSituation(ConflictState gameState, string title = null, int mod_0 = 0, int mod_1 = 0)
         {
             int numCards;
             int modifier = 0;

@@ -673,7 +673,7 @@ namespace Next_Game
                                         conflict.Conflict_Type = ConflictType.Combat;
                                         conflict.Combat_Type = (CombatType)rnd.Next(1, 4);
                                         conflict.SetOpponent(newKing.ActID, Convert.ToBoolean(rnd.Next(0, 2)));
-                                        conflict.SetGameSituation(ConflictState.Relative_Army_Size, "");
+                                        conflict.SetGameSituation(ConflictState.Relative_Army_Size);
                                     }
                                     else
                                     {
@@ -682,7 +682,8 @@ namespace Next_Game
                                         conflict.Social_Type = (SocialType)rnd.Next(1, 4);
                                         conflict.SetOpponent(newQueen.ActID, Convert.ToBoolean(rnd.Next(0, 2)));
                                         ConflictState debugState = (ConflictState)rnd.Next(2, 6);
-                                        conflict.SetGameSituation(debugState, string.Format("Your {0}", debugState));
+                                        //conflict.SetGameSituation(debugState, string.Format("Your {0}", debugState));
+                                        conflict.SetGameSituation(debugState);
                                     }
                                     if (rnd.Next(100) < 50) { conflict.Challenger = true; }
                                     else { conflict.Challenger = false; }
