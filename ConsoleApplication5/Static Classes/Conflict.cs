@@ -650,12 +650,6 @@ namespace Next_Game
             text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", opponent.Name, PrimarySkill, type, cards_opponent, skill_opponent);
             listOpponentCards.Add(new Snippet(text, foreColor, backColor));
 
-            //Special Situations
-            if (listCardSpecials.Count > 0)
-            {
-
-            }
-
             //Primary Skill Traits
             CheckActorTrait(player, PrimarySkill, listPlayerCards);
             CheckActorTrait(opponent, PrimarySkill, listOpponentCards);
@@ -710,6 +704,22 @@ namespace Next_Game
                 listSituationCards.Add(new Snippet(text, foreColor, backColor));
             }
             else { arraySituation[2, 0] = ""; }
+
+
+            //Special Situations
+            if (listCardSpecials.Count > 0)
+            {
+                numCards = listCardSpecials.Count();
+                for (int i = 0; i < numCards; i++)
+                {
+                    Card_Conflict cardSpecial = listCardSpecials[i];
+                    type = cardSpecial.Type;
+                    if (type == CardType.Good) { foreColor = RLColor.Black; arrayPool[0] += numCards;}
+                    else if (type == CardType.Bad) { foreColor = RLColor.Red;  arrayPool[2] += numCards; }
+                    
+                    listCardPool.Add(cardSpecial);
+                }
+            }
 
             //clear master list and add headers
             listBreakdown.Clear();
