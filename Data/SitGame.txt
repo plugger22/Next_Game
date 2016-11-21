@@ -1,5 +1,5 @@
 # SitGame -> Game specific situations, apply to all conflict types
-# should be three entries, player advantage, eg. the most men, (sitnum 1), no advantage (sitnum 0), opponent advantage (sitnum -1)
+# should be THREE entries, player advantage, eg. the most men, (sitnum 1), no advantage (sitnum 0), opponent advantage (sitnum -1)
 # NOTE: All fields must have a value
 # Name: Situation descriptor -> no more than four or five words
 # Type: 'State'
@@ -55,7 +55,7 @@ Good2: How many Men-At-Arms does <name> have? It doesn't matter as your men are 
 Good3: <name> superior numbers would count if it wasn't for the nimbleness of your smaller force.
 Bad1: You feel that you've been hit on the head by a mace. <men> seem unstoppable.
 Bad2: Everywhere you look there are more of <men> than yours. You risk being overwhelmed.
-Bad3: Your outnumbered. You know it and your men know it. It doesn't bode well.
+Bad3: You're outnumbered. You know it and your men know it. It doesn't bode well.
 [End]
 
 # Fame -> player advantage ---

@@ -17,7 +17,7 @@ namespace Next_Game
     public enum ConflictCombat { None, Personal, Tournament, Battle} //sub category
     public enum ConflictSocial { None, Blackmail, Seduce, Befriend} //sub category
     public enum ConflictOther { None, Hunting, Stealth} //sub category
-    public enum ConflictSpecial { None, Fortified_Position, Mountain_Country, Forest_Country } //special situations
+    public enum ConflictSpecial { None, Fortified_Position, Mountain_Country, Forest_Country, Castle_Walls } //special situations
    
 
     /// <summary>

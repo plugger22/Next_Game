@@ -2713,6 +2713,11 @@ namespace Next_Game
                                         { structSituation.Special = ConflictSpecial.Forest_Country; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
+                                    case "CastleWalls":
+                                        if (structSituation.Type == ConflictType.None)
+                                        { structSituation.Special = ConflictSpecial.Castle_Walls; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
                                     default:
                                         Game.SetError(new Error(98, string.Format("Invalid Input, SubType unknown (\"{0}\")", arrayOfSituations[i])));
                                         validData = false;
@@ -2791,6 +2796,11 @@ namespace Next_Game
                                     else if (structSituation.State > ConflictState.None)
                                     { Console.WriteLine("\"{0}\" imported, {1} good records & {2} bad, SitNum {3}", structSituation.Name, tempListGood.Count, tempListBad.Count, 
                                         structSituation.SitNum); }
+                                    else if (structSituation.Special > ConflictSpecial.None)
+                                    {
+                                        Console.WriteLine("\"{0}\" imported, {1} good records & {2} bad, Def {3}", structSituation.Name, tempListGood.Count, tempListBad.Count,
+                                          structSituation.Defender);
+                                    }
                                 }
                                 break;
                             default:

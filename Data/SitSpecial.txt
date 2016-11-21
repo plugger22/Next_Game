@@ -3,7 +3,7 @@
 # NOTE: All fields must have a value
 # Name: Situation descriptor -> no more than four or five words
 # Type: 'Special'
-# SubType: ConflictSpecial -> Fortified_Position, Mountain_Country, Forest_Country
+# SubType: ConflictSpecial -> FortifiedPosition, MountainCountry, ForestCountry, CastleWalls
 # SitNum: NO sitNum as all cards are assumed to be defender advantage, sitnum 0, cards.
 # PlyrDef: '1' if player is the defender, '-1' if opponent 
 # Data: multi purpose integer, default 0
@@ -21,12 +21,12 @@ Type: Special
 SubType: FortifiedPosition
 PlyrDef: 1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: Your well prepared position have brought <men> to a temporary halt as your arrows rain down upon them.
+Good2: You can see the strain on <men> as they try to clamber up and over your defences in the face of your archers.
+Good3: The time spent fortifying your position has been worth it. A pile of bodies belonging to <name> lie before you.
+Bad1: You decline to properly man your defences and let <men> slowly pick their way over unmolested.
+Bad2: <men> carefully climb over your fortifications. Where are you archers and spear men to prevent them doing so?
+Bad3: Your fortifications haven't been properly built. It was a rushed job and you're paying for it now.
 [End]
 
 Name: Fortified Position
@@ -34,10 +34,10 @@ Type: Special
 SubType: FortifiedPosition
 PlyrDef: -1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: <name> fortifications appear impregnable but looks are deceiving. Your Men-At-Arms are hindered but not stopped.
+Good2: Did <name> think that his puny fortifications would stop you? Was there a proper engineer advising him or did he make it up himself?
+Good3: <name>'s fortifications are less of an obstacle then you expected. Did <men> run out of trees to fell for a ready source of timber?
+Bad1: Curse <name> and his damn fortifications! You watch as your men mill around aimlessly in front of his defences.
+Bad2: <name>'s archers are having a field day picking off your men one by one as they try and climb over the fortifications.
+Bad3: Where did <name> find the time and expertise to construct such wickedly effective fortifications?
 [End]
