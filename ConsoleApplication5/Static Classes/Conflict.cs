@@ -717,7 +717,7 @@ namespace Next_Game
             Game.layout.SetCardBreakdown(listBreakdown);
             Game.layout.SetCardPool(arrayPool);
             //empty special situations ready for next conflict
-            listSpecialCards.Clear();
+            listCardSpecials.Clear();
         }
 
         /// <summary>

@@ -161,7 +161,7 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- Initialise Game Specific Situations");
             dictSituationsGame = Game.file.GetSituations("SitGame.txt");
             Console.WriteLine(Environment.NewLine + "--- Initialise Special Situations");
-            dictSituationsGame = Game.file.GetSituations("SitSpecial.txt");
+            dictSituationsSpecial = Game.file.GetSituations("SitSpecial.txt");
             Console.WriteLine(Environment.NewLine);
             InitialiseGameStates();
         }
