@@ -169,9 +169,10 @@ namespace Next_Game
         public string Name { get; set; }
         public ConflictType Type { get; set; }
         public ConflictState State { get; set; }
-        public CombatType Type_Combat { get; set; }
-        public SocialType Type_Social { get; set; }
-        public OtherType Type_Other { get; set; }
+        public ConflictSpecial Special { get; set; }
+        public ConflictCombat Type_Combat { get; set; }
+        public ConflictSocial Type_Social { get; set; }
+        public ConflictOther Type_Other { get; set; }
         public int SitNum { get; set; }
         public int Defender { get; set; }
         public int Data { get; set; }
@@ -2614,6 +2615,7 @@ namespace Next_Game
                                         structSituation.Type = ConflictType.Other;
                                         break;
                                     case "State":
+                                    case "Special":
                                         structSituation.Type = ConflictType.None;
                                         break;
                                     default:
@@ -2629,47 +2631,47 @@ namespace Next_Game
                                     //...Combat
                                     case "Tournament":
                                         if (structSituation.Type == ConflictType.Combat)
-                                        { structSituation.Type_Combat = CombatType.Tournament; }
+                                        { structSituation.Type_Combat = ConflictCombat.Tournament; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
                                     case "Personal":
                                         if (structSituation.Type == ConflictType.Combat)
-                                        { structSituation.Type_Combat = CombatType.Personal; }
+                                        { structSituation.Type_Combat = ConflictCombat.Personal; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
                                     case "Battle":
                                         if (structSituation.Type == ConflictType.Combat)
-                                        { structSituation.Type_Combat = CombatType.Battle; }
+                                        { structSituation.Type_Combat = ConflictCombat.Battle; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
                                     //...Social
                                     case "Blackmail":
                                         if (structSituation.Type == ConflictType.Social)
-                                        { structSituation.Type_Social = SocialType.Blackmail; }
+                                        { structSituation.Type_Social = ConflictSocial.Blackmail; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
                                     case "Seduce":
                                         if (structSituation.Type == ConflictType.Social)
-                                        { structSituation.Type_Social = SocialType.Seduce; }
+                                        { structSituation.Type_Social = ConflictSocial.Seduce; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
                                     case "Befriend":
                                         if (structSituation.Type == ConflictType.Social)
-                                        { structSituation.Type_Social = SocialType.Befriend; }
+                                        { structSituation.Type_Social = ConflictSocial.Befriend; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
                                     //...Other
                                     case "Hunting":
                                         if (structSituation.Type == ConflictType.Other)
-                                        { structSituation.Type_Other = OtherType.Hunting; }
+                                        { structSituation.Type_Other = ConflictOther.Hunting; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
                                     case "Stealth":
                                         if (structSituation.Type == ConflictType.Other)
-                                        { structSituation.Type_Other = OtherType.Stealth; }
+                                        { structSituation.Type_Other = ConflictOther.Stealth; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
-                                    //...State
+                                    //...State (Game)
                                     case "ArmySize":
                                         if (structSituation.Type == ConflictType.None)
                                         { structSituation.State = ConflictState.Relative_Army_Size; }
@@ -2693,6 +2695,22 @@ namespace Next_Game
                                     case "Invisibility":
                                         if (structSituation.Type == ConflictType.None)
                                         { structSituation.State = ConflictState.Relative_Invisibility; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
+                                    //...Special
+                                    case "FortifiedPosition":
+                                        if (structSituation.Type == ConflictType.None)
+                                        { structSituation.Special = ConflictSpecial.Fortified_Position; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
+                                    case "MountainCountry":
+                                        if (structSituation.Type == ConflictType.None)
+                                        { structSituation.Special = ConflictSpecial.Mountain_Country; }
+                                        else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
+                                        break;
+                                    case "ForestCountry":
+                                        if (structSituation.Type == ConflictType.None)
+                                        { structSituation.Special = ConflictSpecial.Forest_Country; }
                                         else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                         break;
                                     default:
@@ -2745,15 +2763,22 @@ namespace Next_Game
                                 //last datapoint - save structure to list
                                 if (dataCounter > 0 && validData == true)
                                 {
-                                    //new sitnormal or new sitGame -> if situation type = 'None' & conflictState > 'None' then sitGame
+                                    //new sitnormal, sitGame or sitSpecial -> if situation type = 'None' & conflictState > 'None' then sitGame
                                     Situation situation = null;
                                     if (structSituation.State == ConflictState.None && structSituation.Type > ConflictType.None)
                                     {
                                         situation = new Situation(structSituation.Name, structSituation.Type, structSituation.SitNum, structSituation.Type_Combat,
                                             structSituation.Type_Social, structSituation.Type_Other);
                                     }
-                                    else if (structSituation.Type == ConflictType.None && structSituation.State > ConflictState.None)
-                                    { situation = new Situation(structSituation.Name, structSituation.State, structSituation.SitNum); }
+                                    else if (structSituation.Type == ConflictType.None)
+                                    {
+                                        //sitGame
+                                        if (structSituation.State > ConflictState.None)
+                                        { situation = new Situation(structSituation.Name, structSituation.State, structSituation.SitNum); }
+                                        //sitSpecial
+                                        else if (structSituation.Special > ConflictSpecial.None)
+                                        { situation = new Situation(structSituation.Name, structSituation.Special, 0); }
+                                    }
                                     //add data
                                     situation.Defender = structSituation.Defender;
                                     situation.Data = structSituation.Data;

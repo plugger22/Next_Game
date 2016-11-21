@@ -15,10 +15,11 @@ namespace Next_Game.Event_System
         public int Defender { get; set; } //'1' if written from POV of Player as defender, if '-1' then opponent as defender. Only applies to first situation (def. adv.)
         public int Data { get; set; } //multi-purpose data points, ignore if not needed, eg. able to specify terrain type for def adv. card
         public ConflictType Type { get; set; } //applies to first two situations
-        public CombatType Type_Combat { get; set; } //applies to first two situations
-        public SocialType Type_Social { get; set; } //applies to first two situations
-        public OtherType Type_Other { get; set; } //applies to first two situations
+        public ConflictCombat Type_Combat { get; set; } //applies to first two situations
+        public ConflictSocial Type_Social { get; set; } //applies to first two situations
+        public ConflictOther Type_Other { get; set; } //applies to first two situations
         public ConflictState State { get; set; } //only applies to game specific situations
+        public ConflictSpecial Special { get; set; } //decision derived special situations
         private List<string> listGood;
         private List<string> listBad;
 
@@ -31,7 +32,7 @@ namespace Next_Game.Event_System
         /// <param name="combatType"></param>
         /// <param name="socialType"></param>
         /// <param name="otherType"></param>
-        public Situation(string name, ConflictType type, int sitnum, CombatType combatType = CombatType.None, SocialType socialType = SocialType.None, OtherType otherType = OtherType.None)
+        public Situation(string name, ConflictType type, int sitnum, ConflictCombat combatType = ConflictCombat.None, ConflictSocial socialType = ConflictSocial.None, ConflictOther otherType = ConflictOther.None)
         {
             SitID = SituationIndex++;
             listGood = new List<string>();
@@ -59,11 +60,30 @@ namespace Next_Game.Event_System
             this.SitNum = sitnum;
             this.State = state;
             Type = ConflictType.None;
-            Type_Combat = CombatType.None;
-            Type_Social = SocialType.None;
-            Type_Other = OtherType.None;
+            Type_Combat = ConflictCombat.None;
+            Type_Social = ConflictSocial.None;
+            Type_Other = ConflictOther.None;
         }
-        
+
+        /// <summary>
+        /// default constructor for special situations which are independet of conflict type/substype
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="special"></param>
+        /// <param name="sitnum"></param>
+        public Situation(string name, ConflictSpecial special, int sitnum)
+        {
+            SitID = SituationIndex++;
+            listGood = new List<string>();
+            listBad = new List<string>();
+            this.Name = name;
+            this.SitNum = sitnum;
+            this.Special = special;
+            Type = ConflictType.None;
+            Type_Combat = ConflictCombat.None;
+            Type_Social = ConflictSocial.None;
+            Type_Other = ConflictOther.None;
+        }
 
         /// <summary>
         /// list of Good outcomes - immersion text

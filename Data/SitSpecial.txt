@@ -1,0 +1,43 @@
+# SitSpecial -> Special, decision related,  situations, apply to all conflict types
+# should be TWO entries, defender advantage, eg. the most men, (sitnum 1), no advantage (sitnum 0), opponent advantage (sitnum -1)
+# NOTE: All fields must have a value
+# Name: Situation descriptor -> no more than four or five words
+# Type: 'Special'
+# SubType: ConflictSpecial -> Fortified_Position, Mountain_Country, Forest_Country
+# SitNum: NO sitNum as all cards are assumed to be defender advantage, sitnum 0, cards.
+# PlyrDef: '1' if player is the defender, '-1' if opponent 
+# Data: multi purpose integer, default 0
+# Good: immersion strings, 3 variations for good outcomes, short/med sentence, use tags, max 6, eg. Good6:, min1
+# Bad: immersion strings, 3 variations for bad outcomes, short/med sentence, use tags, max 6, eg. Bad6:, min 1
+
+# terminology: Use 'you' and 'your', not 'our'
+
+# Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She
+
+# Fortified Position ---
+
+Name: Fortified Position
+Type: Special
+SubType: FortifiedPosition
+PlyrDef: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+Name: Fortified Position
+Type: Special
+SubType: FortifiedPosition
+PlyrDef: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]

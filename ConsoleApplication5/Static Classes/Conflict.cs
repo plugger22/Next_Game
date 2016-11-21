@@ -31,8 +31,8 @@ namespace Next_Game
         int numberOfCards;
         //type of conflict
         public ConflictType Conflict_Type { get; set; }
-        public CombatType Combat_Type { get; set; }
-        public SocialType Social_Type { get; set; }
+        public ConflictCombat Combat_Type { get; set; }
+        public ConflictSocial Social_Type { get; set; }
         //Game specific Situation
         public ConflictState Game_State { get; set; }
         public CardType Game_Type { get; set; }
@@ -111,17 +111,17 @@ namespace Next_Game
                 case ConflictType.Combat:
                     switch( Combat_Type)
                     {
-                        case CombatType.Personal:
+                        case ConflictCombat.Personal:
                             tempArray[0] = "Go for the Throat";
                             tempArray[1] = "Be Flexible";
                             tempArray[2] = "Focus on Staying Alive";
                             break;
-                        case CombatType.Tournament:
+                        case ConflictCombat.Tournament:
                             tempArray[0] = "Knock them to the Ground";
                             tempArray[1] = "Wait for an Opportunity";
                             tempArray[2] = "Stay in the Saddle";
                             break;
-                        case CombatType.Battle:
+                        case ConflictCombat.Battle:
                             tempArray[0] = "Take the Fight to the Enemy";
                             tempArray[1] = "Push but don't Overextend";
                             tempArray[2] = "Hold Firm";
@@ -134,17 +134,17 @@ namespace Next_Game
                 case ConflictType.Social:
                     switch (Social_Type)
                     {
-                        case SocialType.Befriend:
+                        case ConflictSocial.Befriend:
                             tempArray[0] = "Do what Whatever it Takes";
                             tempArray[1] = "Extend the Hand of Friendship";
                             tempArray[2] = "Approach them with Caution";
                             break;
-                        case SocialType.Blackmail:
+                        case ConflictSocial.Blackmail:
                             tempArray[0] = "Lean on Them. Hard.";
                             tempArray[1] = "Explain the Facts of Life";
                             tempArray[2] = "Gently Nudge Them";
                             break;
-                        case SocialType.Seduce:
+                        case ConflictSocial.Seduce:
                             tempArray[0] = "Actively Flirt and Pursue";
                             tempArray[1] = "Make your Intentions Clear";
                             tempArray[2] = "Infer Wonderful Possibilities";
@@ -457,7 +457,7 @@ namespace Next_Game
                     tempArray[0] = string.Format("A {0} {1} Challenge", Combat_Type, Conflict_Type);
                     switch (Combat_Type)
                     {
-                        case CombatType.Personal:
+                        case ConflictCombat.Personal:
                             tempArray[1] = "Your Opponent retires with a minor wound and an injured ego";
                             tempArray[2] = "Your Opponent Yields and you can claim an Advantage from him";
                             tempArray[3] = "Your Opponent Suffers a Major Wound and may die";
@@ -465,7 +465,7 @@ namespace Next_Game
                             tempArray[5] = "You are Forced to Yield to a superior Opponent who can demand an Advantage";
                             tempArray[6] = "You have been Badly Injured and Lose any Special Items";
                             break;
-                        case CombatType.Tournament:
+                        case ConflictCombat.Tournament:
                             tempArray[1] = "You make the final group but fail to go any further";
                             tempArray[2] = "You reach the top three jousters and gain glory and recognition";
                             tempArray[3] = "You are named Tournament Champion and gain a Ladies Favour";
@@ -473,7 +473,7 @@ namespace Next_Game
                             tempArray[5] = "You are unhorsed early on by a mid ranked jouster";
                             tempArray[6] = "You fall off your horse and break bones on your first joust. Disgrace!";
                             break;
-                        case CombatType.Battle:
+                        case ConflictCombat.Battle:
                             tempArray[1] = "The enemy pulls back hurt but isn't defeated";
                             tempArray[2] = "You carry the day and the enemy retreat";
                             tempArray[3] = "The enemy rout and suffer horrendous casualties";
@@ -491,7 +491,7 @@ namespace Next_Game
                     tempArray[0] = string.Format("A {0} {1} Challenge", Social_Type, Conflict_Type);
                     switch (Social_Type)
                     {
-                        case SocialType.Befriend:
+                        case ConflictSocial.Befriend:
                             tempArray[1] = "Your relationship improves";
                             tempArray[2] = "You have become firm friends";
                             tempArray[3] = "You have gained an ardent supporter";
@@ -499,7 +499,7 @@ namespace Next_Game
                             tempArray[5] = "You have become disliked";
                             tempArray[6] = "Your opponent is actively campaigning against you";
                             break;
-                        case SocialType.Blackmail:
+                        case ConflictSocial.Blackmail:
                             tempArray[1] = "You have gained a small amount of influence";
                             tempArray[2] = "Your opponent agrees to your demands";
                             tempArray[3] = "Your opponent has become your minion";
@@ -507,7 +507,7 @@ namespace Next_Game
                             tempArray[5] = "You have been firmly rebuffed";
                             tempArray[6] = "Your opponent is now your enemy";
                             break;
-                        case SocialType.Seduce:
+                        case ConflictSocial.Seduce:
                             tempArray[1] = "Your relationship has improved";
                             tempArray[2] = "You seduce your opponent and gain an advantage";
                             tempArray[3] = "Your opponent has become an ardent supporter and lover";
@@ -558,17 +558,17 @@ namespace Next_Game
                 case ConflictType.Combat:
                     switch (Combat_Type)
                     {
-                        case CombatType.Personal:
+                        case ConflictCombat.Personal:
                             PrimarySkill = SkillType.Combat;
                             OtherSkill_1 = SkillType.Wits;
                             OtherSkill_2 = SkillType.Treachery;
                             break;
-                        case CombatType.Tournament:
+                        case ConflictCombat.Tournament:
                             PrimarySkill = SkillType.Combat;
                             OtherSkill_1 = SkillType.Wits;
                             OtherSkill_2 = SkillType.Treachery;
                             break;
-                        case CombatType.Battle:
+                        case ConflictCombat.Battle:
                             PrimarySkill = SkillType.Leadership;
                             OtherSkill_1 = SkillType.Wits;
                             OtherSkill_2 = SkillType.Treachery;
@@ -581,17 +581,17 @@ namespace Next_Game
                 case ConflictType.Social:
                     switch (Social_Type)
                     {
-                        case SocialType.Befriend:
+                        case ConflictSocial.Befriend:
                             PrimarySkill = SkillType.Charm;
                             OtherSkill_1 = SkillType.Treachery;
                             OtherSkill_2 = SkillType.Wits;
                             break;
-                        case SocialType.Blackmail:
+                        case ConflictSocial.Blackmail:
                             PrimarySkill = SkillType.Treachery;
                             OtherSkill_1 = SkillType.Wits;
                             OtherSkill_2 = SkillType.Charm;
                             break;
-                        case SocialType.Seduce:
+                        case ConflictSocial.Seduce:
                             PrimarySkill = SkillType.Charm;
                             OtherSkill_1 = SkillType.Treachery;
                             OtherSkill_2 = SkillType.Wits;

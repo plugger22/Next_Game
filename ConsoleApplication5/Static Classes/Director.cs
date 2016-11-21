@@ -11,13 +11,14 @@ namespace Next_Game
 {
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
     public enum EventType { None, Location, Travelling }
-    public enum ConflictType { None, Combat, Social, Other} //broad category
-    public enum CombatType { None, Personal, Tournament, Battle} //sub category
-    public enum SocialType { None, Blackmail, Seduce, Befriend} //sub category
-    public enum OtherType { None, Hunting, Stealth} //sub category
-    public enum DataPoint {None, Invisibility, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
+    public enum DataPoint { None, Invisibility, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
     public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
-    
+    public enum ConflictType { None, Combat, Social, Other} //broad category
+    public enum ConflictCombat { None, Personal, Tournament, Battle} //sub category
+    public enum ConflictSocial { None, Blackmail, Seduce, Befriend} //sub category
+    public enum ConflictOther { None, Hunting, Stealth} //sub category
+    public enum ConflictSpecial { None, Fortified_Position, Mountain_Country, Forest_Country } //special situations
+   
 
     /// <summary>
     /// used to store all triggered events for the current turn
@@ -81,6 +82,7 @@ namespace Next_Game
         private Dictionary<int, Story> dictStories;
         private Dictionary<int, Situation> dictSituationsNormal;
         private Dictionary<int, Situation> dictSituationsGame;
+        private Dictionary<int, Situation> dictSituationsSpecial;
 
         public Director(int seed)
         {
@@ -130,6 +132,7 @@ namespace Next_Game
             dictStories = new Dictionary<int, Story>();
             dictSituationsNormal = new Dictionary<int, Situation>(); //first two situations (def. adv. & neutral)
             dictSituationsGame = new Dictionary<int, Situation>(); //third, game specific, situation
+            dictSituationsSpecial = new Dictionary<int, Situation>(); //decisions-derived special situations
         }
 
         /// <summary>
@@ -157,6 +160,8 @@ namespace Next_Game
             dictSituationsNormal = Game.file.GetSituations("SitNormal.txt");
             Console.WriteLine(Environment.NewLine + "--- Initialise Game Specific Situations");
             dictSituationsGame = Game.file.GetSituations("SitGame.txt");
+            Console.WriteLine(Environment.NewLine + "--- Initialise Special Situations");
+            dictSituationsGame = Game.file.GetSituations("SitSpecial.txt");
             Console.WriteLine(Environment.NewLine);
             InitialiseGameStates();
         }
@@ -1692,6 +1697,9 @@ namespace Next_Game
 
         internal Dictionary<int, Situation> GetSituationsGame()
         { return dictSituationsGame; }
+
+        internal Dictionary<int, Situation> GetSituationsSpecial()
+        { return dictSituationsSpecial; }
 
         //place Director methods above here
     }
