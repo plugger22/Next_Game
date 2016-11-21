@@ -80,6 +80,7 @@ namespace Next_Game
         public RLColor Resolve_FillColor { get; set; }
         public RLColor Error_FillColor { get; set; }
         public RLColor Intro_FillColor { get; set; }
+        public RLColor Outcome_FillColor { get; set; }
         //Dynamic Data Sets
         private int[] arrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
         private int[,,] arrayPoints { get; set; } //0 -> Good card Influence, 1 - Good card Ignore, 2 Bad card Influence, 3 Bad card Ignore (3 x 3 is Player vs. Opponent strategies)
@@ -231,6 +232,7 @@ namespace Next_Game
             Back_FillColor = Color._background0;
             Confirm_FillColor = RLColor.White;
             Resolve_FillColor = RLColor.White;
+            Outcome_FillColor = RLColor.White;
             Error_FillColor = Color._errorFill;
             Intro_FillColor = Color._background0;
             //assorted
@@ -475,6 +477,7 @@ namespace Next_Game
             int vertical_top = ou_spacer;
             int vertical_middle = vertical_top + ou_outcome_height + ou_spacer;
             int vertical_bottom = vertical_middle + history_height + ou_spacer;
+            List<Snippet> listOutcome = new List<Snippet>();
             //outcome
             string textDescription = "No Conclusive Outcome was obtained either way. Status unchanged.";
             string textOutcome = "No Result";
@@ -501,11 +504,20 @@ namespace Next_Game
                 for (int height_index = vertical_top + 1; height_index < vertical_top + ou_outcome_height - 1; height_index++)
                 { arrayOfCells_Outcome[width_index, height_index] = 255; }
             }
-            DrawCenteredText("Outcome", ou_left_align, vertical_top + 2, ou_width, RLColor.Blue, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            DrawCenteredText(arrayOutcome[0], ou_left_align, vertical_top + 4, ou_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            DrawCenteredText(string.Format("Final Score {0}{1}", score > 0 ? "+" : "", score), ou_left_align, vertical_top + 6, ou_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            DrawCenteredText(textOutcome, ou_left_align, vertical_top + 8, ou_width, forecolor, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
-            DrawCenteredText(textDescription, ou_left_align, vertical_top + 10, ou_width, RLColor.Black, arrayOfCells_Outcome, arrayOfForeColors_Outcome);
+            //fill list to display in outcome box, top
+            listOutcome.Add(new Snippet("Outcome", RLColor.Blue, Outcome_FillColor));
+            //...protagonists -> Word Wrap
+            List<string> tempList = new List<string>();
+            tempList.AddRange(Game.utility.WordWrap(arrayOutcome[9], box_width - 4));
+            for (int i = 0; i < tempList.Count(); i++)
+            { listOutcome.Add(new Snippet(tempList[i], RLColor.Magenta, Outcome_FillColor)); }
+            listOutcome.Add(new Snippet(arrayOutcome[0], RLColor.Black, Outcome_FillColor));
+            listOutcome.Add(new Snippet(string.Format("Final Score {0}{1}", score > 0 ? "+" : "", score), RLColor.Black, Outcome_FillColor));
+            listOutcome.Add(new Snippet(textOutcome, RLColor.Magenta, Outcome_FillColor));
+            listOutcome.Add(new Snippet(textDescription, RLColor.Black, Outcome_FillColor));
+            //...display outcome box text
+            for(int i = 0; i < listOutcome.Count(); i++)
+            { DrawCenteredText(listOutcome[i].GetText(), ou_left_align, vertical_top + 2 + i * 2, ou_width, listOutcome[i].GetForeColor(), arrayOfCells_Outcome, arrayOfForeColors_Outcome); }
             //history
             for (int width_index = ou_left_align + 1; width_index < ou_left_align + ou_width - 1; width_index++)
             {
