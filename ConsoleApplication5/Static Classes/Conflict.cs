@@ -724,7 +724,7 @@ namespace Next_Game
                     if (newTitle != oldTitle)
                     {
                         oldTitle = newTitle;
-                        text = string.Format("\"{0}\", {1} card{2} ({3}), {4}", cardSpecial.Title, numCards, numCards > 1 ? "s" : "", type, cardSpecial.Description);
+                        text = string.Format("\"{0}\", {1} card{2}, {3}", cardSpecial.Title, numCards, numCards > 1 ? "s" : "", cardSpecial.Description);
                         listSituationCards.Add(new Snippet(text, foreColor, backColor));
                     }
                     listCardPool.Add(cardSpecial);
@@ -1022,11 +1022,12 @@ namespace Next_Game
                         List<string> tempListGood = situation.GetGood();
                         List<string> tempListBad = situation.GetBad();
                         int number = numCards;
+                        string text = string.Format("ONLY AVAILABLE if Defender ({0}) chooses an [F3] Strategy", Challenger == false ? "Player" : "Opponent");
                         if (numCards == 0) { numCards = GetSituationCardNumber(); }
                         //add cards to special card list
                         for (int i = 0; i < number; i++)
                         {
-                            Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, situation.Name, "special situation");
+                            Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, situation.Name, text);
                             Console.WriteLine("SPECIAL Situation \"{0}\" -> {1}, Challenger {2}", card.Title, card.Type, Challenger);
                             card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)];
                             card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)];
