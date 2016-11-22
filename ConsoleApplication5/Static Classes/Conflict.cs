@@ -47,7 +47,7 @@ namespace Next_Game
         public SkillType PrimarySkill { get; set; } //each skill level counts as 2 cards
         public SkillType OtherSkill_1 { get; set; } //only trait effects count
         public SkillType OtherSkill_2 { get; set; }
-        //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
+        
         private int[] arrayPool;
         private int[] arrayModifiers; 
         private string[,] arraySituation;
@@ -68,7 +68,7 @@ namespace Next_Game
             listCardSpecials = new List<Card_Conflict>();
             listBreakdown = new List<Snippet>();
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
-            arrayPool = new int[3];
+            arrayPool = new int[3]; //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
             arrayModifiers = new int[3]; //modifier (DM) for GetSituationCardNumber, 0/1/2 refer to the three situation cards (def adv/neutral/game specific) -> DM for 0 & 1, # of cards for Game ('2')
             arraySituation = new string[3, 3];
             //three lists to consolidate into pool breakdown description
@@ -162,7 +162,7 @@ namespace Next_Game
             }
             //update Layout
             if (tempArray.Length == 3)
-            { Game.layout.SetStrategy(tempArray); Game.layout.Challenger = Challenger; }
+            { Game.layout.SetStrategy(tempArray); }
             else
             { Game.SetError(new Error(86, "Invalid Strategy, Layout not updated")); }
         }
@@ -177,7 +177,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// specify opponent (it's always the player vs. opponent)
+        /// specify opponent (it's always the player vs. opponent). NOTE: Run BEFORE SetSpecialSituation
         /// </summary>
         /// <param name="actorID"></param>
         /// <param name="challenger">true if player is the challenger</param>
@@ -187,6 +187,9 @@ namespace Next_Game
             {
                 opponent = Game.world.GetAnyActor(actorID);
                 this.Challenger = challenger;
+                Game.layout.Challenger = Challenger;
+                //debug
+                Console.WriteLine("SetOpponent: Challenger -> {0}", challenger);
                 if (opponent == null)
                 { Game.SetError(new Error(88, "Opponent not found (null)")); }
             }
@@ -715,15 +718,15 @@ namespace Next_Game
                 {
                     Card_Conflict cardSpecial = listCardSpecials[i];
                     newTitle = cardSpecial.Title;
-                    if (newTitle != oldTitle)
-                    {
-                        oldTitle = newTitle;
-                        text = string.Format("\"{0}\", {1} card{2} ({3}), {4}", cardSpecial.Title, numCards, numCards > 1 ? "s" : "", Game_Type, cardSpecial.Description);
-                        listSituationCards.Add(new Snippet(text, foreColor, backColor));
-                    }
                     type = cardSpecial.Type;
                     if (type == CardType.Good) { foreColor = RLColor.Black; arrayPool[0] += 1;}
                     else if (type == CardType.Bad) { foreColor = RLColor.Red;  arrayPool[2] += 1; }
+                    if (newTitle != oldTitle)
+                    {
+                        oldTitle = newTitle;
+                        text = string.Format("\"{0}\", {1} card{2} ({3}), {4}", cardSpecial.Title, numCards, numCards > 1 ? "s" : "", type, cardSpecial.Description);
+                        listSituationCards.Add(new Snippet(text, foreColor, backColor));
+                    }
                     listCardPool.Add(cardSpecial);
                 }
             }
@@ -988,12 +991,11 @@ namespace Next_Game
         { return opponent; }
 
         /// <summary>
-        /// Input special, decision derived, situations. 
+        /// Input special, decision derived, situations. Always def.Adv. cards that help the defender. NOTE: Run AFTER SetOpponent()
         /// </summary>
         /// <param name="specialType"></param>
-        /// <param name="cardType"></param>
         /// <param name="numCards">leave at default '0' if you want a random #</param>
-        public void SetSpecialSituation(ConflictSpecial specialType, CardType cardType, int numCards = 0)
+        public void SetSpecialSituation(ConflictSpecial specialType, int numCards = 0)
         {
             //get dictionary of specials
             Dictionary<int, Situation> specialDictionary = Game.director.GetSituationsSpecial();
@@ -1001,40 +1003,38 @@ namespace Next_Game
             {
                 if (specialType > ConflictSpecial.None)
                 {
-                    if (cardType > CardType.None)
-                    {
-                        int defender = 0;
-                        if (cardType == CardType.Good) { defender = 1; } else if (cardType == CardType.Bad) { defender = -1; }
-                        //Get special situations from dictionary
-                        List<Situation> listFilteredSituations = new List<Situation>();
-                        IEnumerable<Situation> situationSet =
-                            from situation in specialDictionary
-                            where situation.Value.Special == specialType
-                            where situation.Value.Defender == defender
+                    int defender = 1;
+                    CardType type = CardType.Good;
+                    if (Challenger == true) { defender = -1; type = CardType.Bad; }
+                    //Get special situations from dictionary
+                    List<Situation> listFilteredSituations = new List<Situation>();
+                    IEnumerable<Situation> situationSet =
+                        from situation in specialDictionary
+                        where situation.Value.Special == specialType
+                        where situation.Value.Defender == defender
                             //orderby situation.Value.SitID
                             select situation.Value;
-                        listFilteredSituations = situationSet.ToList();
-                        //should be a single situation in the list
-                        if (listFilteredSituations.Count > 0)
+                    listFilteredSituations = situationSet.ToList();
+                    //should be a single situation in the list
+                    if (listFilteredSituations.Count == 1)
+                    {
+                        Situation situation = listFilteredSituations[rnd.Next(0, listFilteredSituations.Count)];
+                        List<string> tempListGood = situation.GetGood();
+                        List<string> tempListBad = situation.GetBad();
+                        int number = numCards;
+                        if (numCards == 0) { numCards = GetSituationCardNumber(); }
+                        //add cards to special card list
+                        for (int i = 0; i < number; i++)
                         {
-                            Situation situation = listFilteredSituations[rnd.Next(0, listFilteredSituations.Count)];
-                            List<string> tempListGood = situation.GetGood();
-                            List<string> tempListBad = situation.GetBad();
-                            int number = numCards;
-                            if (numCards == 0) { numCards = GetSituationCardNumber(); }
-                            //add cards to special card list
-                            for (int i = 0; i < number; i++)
-                            {
-                                Card_Conflict card = new Card_Conflict(CardConflict.Situation, cardType, situation.Name, "special situation");
-                                card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)];
-                                card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)];
-                                card.TypeDefend = CardType.Good;
-                                listCardSpecials.Add(card);
-                            }
+                            Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, situation.Name, "special situation");
+                            Console.WriteLine("SPECIAL Situation \"{0}\" -> {1}, Challenger {2}", card.Title, card.Type, Challenger);
+                            card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)];
+                            card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)];
+                            card.TypeDefend = CardType.Good; //as long as it's not CardType.None
+                            listCardSpecials.Add(card);
                         }
-                        else { Game.SetError(new Error(102, "No special situations found that match criteria")); }
                     }
-                    else { Game.SetError(new Error(102, "Invalid CardType Input (\"None\"))")); }
+                    else { Game.SetError(new Error(102, "No (or too many) special situations found that match criteria")); }
                 }
                 else { Game.SetError(new Error(102, "Invalid ConflictSpecial Input (\"None\")")); }
             }

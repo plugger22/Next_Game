@@ -671,10 +671,11 @@ namespace Next_Game
                                     if (rnd.Next(100) < 55)
                                     {
                                         Noble newKing = lore.NewKing;
+                                        //NOTE: Stick to this sequence
                                         conflict.Conflict_Type = ConflictType.Combat;
                                         conflict.Combat_Type = (ConflictCombat)rnd.Next(1, 4);
-                                        conflict.SetOpponent(newKing.ActID, Convert.ToBoolean(rnd.Next(0, 2)));
-                                        conflict.SetSpecialSituation(ConflictSpecial.Fortified_Position, CardType.Good, rnd.Next(1, 5));
+                                        conflict.SetOpponent(newKing.ActID, Convert.ToBoolean(rnd.Next(2)));
+                                        conflict.SetSpecialSituation(ConflictSpecial.Fortified_Position, rnd.Next(1, 5));
                                         conflict.SetGameSituation(ConflictState.Relative_Army_Size);
                                     }
                                     else
@@ -687,8 +688,6 @@ namespace Next_Game
                                         //conflict.SetGameSituation(debugState, string.Format("Your {0}", debugState));
                                         conflict.SetGameSituation(debugState);
                                     }
-                                    if (rnd.Next(100) < 50) { conflict.Challenger = true; }
-                                    else { conflict.Challenger = false; }
                                     conflict.InitialiseConflict();
                                     break;
                                 case MenuMode.Debug:
