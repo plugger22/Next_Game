@@ -41,3 +41,87 @@ Bad1: Curse <name> and his damn fortifications! You watch as your men mill aroun
 Bad2: <name>'s archers are having a field day picking off your men one by one as they try and climb over the fortifications.
 Bad3: Where did <name> find the time and expertise to construct such wickedly effective fortifications?
 [End]
+
+# Mountain Country ---
+
+Name: Mountain Terrain
+Type: Special
+SubType: MountainCountry
+PlyrDef: 1
+Data: 0
+Good1: High ground, mountain passes and steep valley walls all work to your favour.
+Good2: One man defending in the mountains is worth four down on the plains.
+Good3: The mountains naturally favour the defender. You make full use of the terrain.
+Bad1: <men> aren't attacking along the expected path. It's a contingency that you should have covered.
+Bad2: The mountains are full of hidden paths and approaches. Have <men> found an alternative route?
+Bad3: Why, if you've got the high ground, did you not place your archers where they can take advantage of it?
+[End]
+
+Name: Mountain Terrain
+Type: Special
+SubType: MountainCountry
+PlyrDef: -1
+Data: 0
+Good1: <name> is basking in a false sense of security from the safety of his mountain perch. You're about to prove him wrong.
+Good2: The mountains are hard. You need to know how to capitalise on their strengths. You doubt that <name> realises this.
+Good3: There are few places in the mountains that don't offer alternative paths if you're prepared to risk a climb.
+Bad1: <men> have wedged themselves into a tight, difficult to assault position. A costly frontal assault looks to be the only way.
+Bad2: Damn <name> and damn the mountains. Why couldn't <he> fight on the plains like a proud Stag instead of a rock hoping Goat?
+Bad3: Who in their right mind would want to fight in the mountains? Only a man with four legs, four arms and two *rseholes.
+[End]
+
+# Forest Country ---
+
+Name: Forest Terrain
+Type: Special
+SubType: ForestCountry
+PlyrDef: 1
+Data: 0
+Good1: Plenty of greenery and tall, climbable, trees allow your archers to pick of <men> one by one.
+Good2: The density of the terrain prevent <men> from being able to launch any coordinated assault on your position.
+Good3: Forest fighting is a learned skill that's hard won. You know it, <name> doesn't.
+Bad1: If you'd had more time you'd have placed archers in the trees and staked the ground to funnel the attackers. If you'd had more time...
+Bad2: The dense undergrowth has allowed <men> to creep unmolested a lot closer than you'd like.
+Bad3: The trees and undergrowth have made it impossible for your knights to fight mounted.
+[End]
+
+Name: Forest Terrain
+Type: Special
+SubType: ForestCountry
+PlyrDef: -1
+Data: 0
+Good1: Dense greenery works both ways. Your men manage to quietly move around the enemies flank, unseen.
+Good2: <name> has made the mistake of leaving his knights mounted. You've got yours fighting on foot in the dense terrain.
+Good3: You've posted men up the tallest trees and have managed to gain excellent situational awareness.
+Bad1: Your men are spending just as much time fighting the entangling bushes as they are the enemy.
+Bad2: Where are <men>? Judging by the bodies of your own men lying at your feet there are more hidden archers than trees in the forest.
+Bad3: If it wasn't so damp you'd burn the whole damn forest to the ground. There is naught but death in these dank, dark, woods.
+[End]
+
+# Castle Walls
+
+Name: Castle Walls
+Type: Special
+SubType: CastleWalls
+PlyrDef: 1
+Data: 0
+Good1: One archer on a castle wall is your five, or more, of <men> milling around below.
+Good2: Strong, well built, walls that are ably defended are a formidable obstacle. Your men rain death on those below.
+Good3: You gaze down at <men> from the ramparts and watch as your bolt throwers and trebuchet tear holes in their ranks.
+Bad1: Castle walls are only effective if there are men to defend them. You choose to ignore the walls to your rear.
+Bad2: The walls are old and have not been maintained. The Castellan did warn you of this.
+Bad3: You've been dismissive of <men> ability to breach the walls. Look what they are doing now...
+[End]
+
+Name: Castle Walls
+Type: Special
+SubType: CastleWalls
+PlyrDef: -1
+Data: 0
+Good1: The castle has been built to look impressive. You would have built it to be practical. There's a blind spot next to the tower.
+Good2: <men> have to spread thin to defend the full perimeter of the castle walls whereas you can pick and choose where to assault.
+Good3: Your Trebuchets slam rocks into one part of the wall. There are already cracks and holes. A breach beckons.
+Bad1: The walls are solid and appear impregnable. Each time you order your men forward they get mowed down by crossbowmen on the ramparts.
+Bad2: You're losing a lot of men to the archers and crossbowmen a-high on the ramparts. All you can do is grind your teeth.
+Bad3: Your ladder teams were met with boiling oil. They are refusing to give it one more try. Nobody wants their flesh sluiced off their bones.
+[End]

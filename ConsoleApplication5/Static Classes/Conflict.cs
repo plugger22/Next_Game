@@ -712,6 +712,7 @@ namespace Next_Game
                 numCards = listCardSpecials.Count();
                 string oldTitle = "";
                 string newTitle = "";
+                string explanation = string.Format("ONLY AVAILABLE if Defender ({0}) chooses an [F3] Strategy", Challenger == false ? "Player" : "Opponent");
                 for (int i = 0; i < numCards; i++)
                 {
                     Card_Conflict cardSpecial = listCardSpecials[i];
@@ -722,7 +723,7 @@ namespace Next_Game
                     if (newTitle != oldTitle)
                     {
                         oldTitle = newTitle;
-                        text = string.Format("\"{0}\", {1} card{2}, {3}", cardSpecial.Title, numCards, numCards > 1 ? "s" : "", cardSpecial.Description);
+                        text = string.Format("\"{0}\", {1} card{2}, {3}", cardSpecial.Title, numCards, numCards > 1 ? "s" : "", explanation);
                         listSituationCards.Add(new Snippet(text, foreColor, backColor));
                     }
                     listCardPool.Add(cardSpecial);
@@ -924,8 +925,6 @@ namespace Next_Game
             Game_State = gameState;
             if (String.IsNullOrEmpty(title) == false)
             { Game_Title = title; }
-            else
-            { Game.SetError(new Error(97, "Invalid Title Input (null)")); Game_Title = "unknown"; }
             
             //determine card #'s (modifier), type (difference) and Description (description)
             switch (gameState)
@@ -1020,12 +1019,11 @@ namespace Next_Game
                         List<string> tempListGood = situation.GetGood();
                         List<string> tempListBad = situation.GetBad();
                         int number = numCards;
-                        string text = string.Format("ONLY AVAILABLE if Defender ({0}) chooses an [F3] Strategy", Challenger == false ? "Player" : "Opponent");
                         if (numCards == 0) { numCards = GetSituationCardNumber(); }
                         //add cards to special card list
                         for (int i = 0; i < number; i++)
                         {
-                            Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, situation.Name, text);
+                            Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, situation.Name, "A Special Situation");
                             //Console.WriteLine("SPECIAL Situation \"{0}\" -> {1}, Challenger {2}", card.Title, card.Type, Challenger);
                             card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)];
                             card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)];
