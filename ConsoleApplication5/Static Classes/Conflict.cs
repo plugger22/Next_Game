@@ -188,8 +188,6 @@ namespace Next_Game
                 opponent = Game.world.GetAnyActor(actorID);
                 this.Challenger = challenger;
                 Game.layout.Challenger = Challenger;
-                //debug
-                Console.WriteLine("SetOpponent: Challenger -> {0}", challenger);
                 if (opponent == null)
                 { Game.SetError(new Error(88, "Opponent not found (null)")); }
             }
@@ -1028,7 +1026,7 @@ namespace Next_Game
                         for (int i = 0; i < number; i++)
                         {
                             Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, situation.Name, text);
-                            Console.WriteLine("SPECIAL Situation \"{0}\" -> {1}, Challenger {2}", card.Title, card.Type, Challenger);
+                            //Console.WriteLine("SPECIAL Situation \"{0}\" -> {1}, Challenger {2}", card.Title, card.Type, Challenger);
                             card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)];
                             card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)];
                             card.TypeDefend = CardType.Good; //as long as it's not CardType.None
