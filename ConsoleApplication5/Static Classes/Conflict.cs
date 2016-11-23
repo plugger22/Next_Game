@@ -90,6 +90,8 @@ namespace Next_Game
         /// </summary>
         public void InitialiseConflict()
         {
+            //debug
+            Console.WriteLine("Initialise Conflict");
             SetPlayerStrategy();
             SetTraits();
             SetSituation(Game.director.GetSituationsNormal(), Game.director.GetSituationsGame());
@@ -720,9 +722,15 @@ namespace Next_Game
                     else if (type == CardType.Bad) { foreColor = RLColor.Red;  arrayPool[2] += 1; }
                     if (newTitle != oldTitle)
                     {
+                        //number of cards of this special type
+                        int counter = 0;
+                        foreach (Card_Conflict tempCard in listCardSpecials)
+                        { if (tempCard.TypeSpecial == cardSpecial.TypeSpecial) { counter++; } }
+                        //add card
                         oldTitle = newTitle;
-                        text = string.Format("\"{0}\", {1} card{2}, {3}", cardSpecial.Title, numCards, numCards > 1 ? "s" : "", explanation);
+                        text = string.Format("\"{0}\", {1} card{2}, {3}", cardSpecial.Title, counter, counter > 1 ? "s" : "", explanation);
                         listSituationCards.Add(new Snippet(text, foreColor, backColor));
+                        
                     }
                     listCardPool.Add(cardSpecial);
                 }
@@ -967,7 +975,7 @@ namespace Next_Game
             numCards = Math.Min(5, numCards);
             arrayModifiers[2] = numCards;
             //debug
-            Console.WriteLine(Environment.NewLine + "Situation: \"{0}\", difference {1} Modifier {2} numCards {3}", description, difference, modifier, numCards);
+            Console.WriteLine("Situation: \"{0}\", difference {1} Modifier {2} numCards {3}", description, difference, modifier, numCards);
             //Type (if difference between -10 & +10 then card is neutral
             if (difference > 10) { Game_Type = CardType.Good; }
             else if (difference < -10) { Game_Type = CardType.Bad; }
@@ -998,6 +1006,7 @@ namespace Next_Game
             {
                 if (specialType > ConflictSpecial.None)
                 {
+                    
                     int defender = 1;
                     CardType type = CardType.Good;
                     if (Challenger == true) { defender = -1; type = CardType.Bad; }
@@ -1016,17 +1025,34 @@ namespace Next_Game
                         Situation situation = listFilteredSituations[rnd.Next(0, listFilteredSituations.Count)];
                         List<string> tempListGood = situation.GetGood();
                         List<string> tempListBad = situation.GetBad();
-                        int number = numCards;
-                        if (numCards == 0) { numCards = GetSituationCardNumber(); }
-                        //add cards to special card list
-                        for (int i = 0; i < number; i++)
+                        //check that the special situation isn't already present
+                        bool proceed = true;
+                        if (listCardSpecials.Count > 0)
                         {
-                            Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, situation.Name, "A Special Situation");
-                            //Console.WriteLine("SPECIAL Situation \"{0}\" -> {1}, Challenger {2}", card.Title, card.Type, Challenger);
-                            card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)];
-                            card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)];
-                            card.TypeDefend = CardType.Good; //as long as it's not CardType.None
-                            listCardSpecials.Add(card);
+                            foreach (Card_Conflict card in listCardSpecials)
+                            {
+                                if (specialType == card.TypeSpecial)
+                                { proceed = false; Game.SetError(new Error(102, "Special Situation already exists")); break; }
+                            }
+                        }
+                        //no duplicates
+                        if (proceed == true)
+                        {
+                            if (numCards == 0) { numCards = GetSituationCardNumber(); }
+                            int number = numCards;
+                            //debug
+                            Console.WriteLine("SetSpecialSituation: \"{0}\", numCards {1}, Added to listCardsSpecial", situation.Name, numCards);
+                            //add cards to special card list
+                            for (int i = 0; i < number; i++)
+                            {
+                                Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, situation.Name, "A Special Situation");
+                                //Console.WriteLine("SPECIAL Situation \"{0}\" -> {1}, Challenger {2}", card.Title, card.Type, Challenger);
+                                card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)];
+                                card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)];
+                                card.TypeDefend = CardType.Good; //as long as it's not CardType.None
+                                card.TypeSpecial = specialType;
+                                listCardSpecials.Add(card);
+                            }
                         }
                     }
                     else { Game.SetError(new Error(102, "No (or too many) special situations found that match criteria")); }

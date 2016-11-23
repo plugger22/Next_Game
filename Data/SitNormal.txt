@@ -54,7 +54,7 @@ Data: 0
 Good1: <men> were bought to halt by the sticky, glutinous mud.
 Good2: You tricked <men> into traversing the muddy ground.
 Good3: With some sharp observation you managed to avoid the muddy ground.
-Bad1: Alas, the green fields hid a muddy underbelly that your men blundered into.
+Bad1: Alas, the green fields hid a gooey underbelly that your men blundered into.
 Bad2: Unfortunately, there was no way around the treacherous, muddy ground.
 Bad3: The mud reached up and sucked hard at the legs of your knight's mounts as they struggled through.
 [end]
