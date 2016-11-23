@@ -1,6 +1,8 @@
 # Minor Houses (BannerLords)
 # RefID: (ReferenceID) a unique number (num >= 100 & num < 1000)
 # ArcID: (Archetypes) have a default value of '0' (none) unless specified
+# Seat: Name of Location 
+# Castle: strength of defences, 0 (none) to 5 (impregnable) -> typically 0 or 1 for a Minor house
 
 House: Ambrose
 Motto: Never Resting
@@ -8,6 +10,7 @@ Banner: Red Ants on a Yellow Field
 ArcID: 0
 RefID: 100
 Seat: Blackwater
+Castle: 1
 [End]
 
 House: Bolton
@@ -16,6 +19,7 @@ Banner: A Flayed Man
 ArcID: 0
 RefID: 101
 Seat: Dreadfort
+Castle: 1
 [End]
 
 House: Botley
@@ -24,6 +28,7 @@ Banner: A Mermaid
 ArcID: 0
 RefID: 102
 Seat: Lordsport
+Castle: 1
 [End]
 
 House: Bracken
@@ -32,6 +37,7 @@ Banner: A Red Stallion
 ArcID: 0
 RefID: 103
 Seat: Stone Hedge
+Castle: 1
 [End]
 
 House: Brax
@@ -40,6 +46,7 @@ Banner: A Purple Unicorn
 ArcID: 0
 RefID: 104
 Seat: Hornvale
+Castle: 1
 [End]
 
 House: Caron
@@ -48,6 +55,7 @@ Banner: Nightingales
 ArcID: 0
 RefID: 105
 Seat: Nightsong
+Castle: 1
 [End]
 
 House: Cerwyn
@@ -56,6 +64,7 @@ Banner: A Battle Axe
 ArcID: 0
 RefID: 106
 Seat: Cerwyn
+Castle: 1
 [End]
 
 House: Clegane
@@ -64,6 +73,7 @@ Banner: Three Dogs in the Yellow of Autumn Grass
 ArcID: 0
 RefID: 107
 Seat: Clegane's Keep
+Castle: 1
 [End]
 
 House: Codd
@@ -72,6 +82,7 @@ Banner: A Silver Cod on a Black Field
 ArcID: 0
 RefID: 108
 Seat: Fishfork
+Castle: 1
 [End]
 
 House: Crane
@@ -80,6 +91,7 @@ Banner: Cranes
 ArcID: 0
 RefID: 109
 Seat: Red Lake
+Castle: 1
 [End]
 
 House: Dondarrion
@@ -88,6 +100,7 @@ Banner: A Purple Lighning Bolt on a Black Field
 ArcID: 0
 RefID: 110
 Seat: Blackhaven
+Castle: 1
 [End]
 
 House: Estermont
@@ -96,6 +109,7 @@ Banner: A Sea Turtle, Green on Green
 ArcID: 0
 RefID: 111
 Seat: Greenstone
+Castle: 1
 [End]
 
 House: Fowler
@@ -104,6 +118,7 @@ Banner: Buzzard Eagle
 ArcID: 0
 RefID: 112
 Seat: Skyreach
+Castle: 1
 [End]
 
 House: Frey
@@ -112,6 +127,7 @@ Banner: Twin Towers, Blue on Silvery Grey
 ArcID: 0
 RefID: 113
 Seat: The Twins
+Castle: 1
 [End]
 
 House: Glover
@@ -120,6 +136,7 @@ Banner: A Mailed Fist, Silver on Scarlet
 ArcID: 0
 RefID: 114
 Seat: Deepwood Motte
+Castle: 1
 [End]
 
 House: Harlaw
@@ -128,6 +145,7 @@ Banner: A Silver Scythe on a Black Field
 ArcID: 0
 RefID: 115
 Seat: Ten Towers
+Castle: 1
 [End]
 
 House: Hightower
@@ -136,6 +154,7 @@ Banner: A Stepped White Tower Crowned with Fire on a Smoke Grey Field
 ArcID: 0
 RefID: 116
 Seat: Oldtown
+Castle: 1
 [End]
 
 House: Hornwood
@@ -144,6 +163,7 @@ Banner: A Bull Moose
 ArcID: 0
 RefID: 117
 Seat: Hornwood
+Castle: 1
 [End]
 
 House: Hunt
@@ -152,6 +172,7 @@ Banner: A Brown Deer, Dead, Bound and Slung beneath a Pole
 ArcID: 0
 RefID: 118
 Seat: Longbow Hall
+Castle: 1
 [End]
 
 House: Karstark
@@ -160,6 +181,7 @@ Banner: A White Sun on Black
 ArcID: 0
 RefID: 119
 Seat: Karhold
+Castle: 1
 [End]
 
 House: Leygood
@@ -168,6 +190,7 @@ Banner: Three Thunderbolts
 ArcID: 0
 RefID: 120
 Seat: Barrow Hill
+Castle: 1
 [End]
 
 House: Mooton
@@ -176,6 +199,7 @@ Banner: A Red Salmon
 ArcID: 0
 RefID: 121
 Seat: Maidenpool
+Castle: 1
 [End]
 
 House: Mormont
@@ -184,6 +208,7 @@ Banner: A Black Bear
 ArcID: 0
 RefID: 122
 Seat: Bearpit
+Castle: 1
 [End]
 
 House: Mullendore
@@ -192,6 +217,7 @@ Banner: A Cloud of Black and Orange Butterflies
 ArcID: 0
 RefID: 123
 Seat: Uplands
+Castle: 1
 [End]
 
 House: Oakheart
@@ -200,6 +226,7 @@ Banner: Green Oakleaves on a Yellow Field
 ArcID: 0
 RefID: 124
 Seat: Old Oak
+Castle: 1
 [End]
 
 House: Penrose
@@ -208,6 +235,7 @@ Banner: White Quills on an Orange Brown Field
 ArcID: 0
 RefID: 125
 Seat: Parchments
+Castle: 1
 [End]
 
 House: Redwyne
@@ -216,6 +244,7 @@ Banner: A Cluster of Grapes, Burgundy on Blue
 ArcID: 0
 RefID: 126
 Seat: The Arbor
+Castle: 1
 [End]
 
 House: Slynt
@@ -224,6 +253,7 @@ Banner: A Bloody Spear, Gold on a Black Field
 ArcID: 0
 RefID: 127
 Seat: Harrenhal
+Castle: 1
 [End]
 
 House: Tallhart
@@ -232,6 +262,7 @@ Banner: Three Sentinel Trees
 ArcID: 0
 RefID: 128
 Seat: Torrhen's Square
+Castle: 1
 [End]
 
 House: Tarly
@@ -240,6 +271,7 @@ Banner: A Striding Huntsman
 ArcID: 0
 RefID: 129
 Seat: Horn Hill
+Castle: 1
 [End]
 
 House: Tarth
@@ -248,6 +280,7 @@ Banner: A Yellow Sun and Crescent Moon on a Quartered Rose and Azure
 ArcID: 0
 RefID: 130
 Seat: Evenfall
+Castle: 1
 [End]
 
 House: Umber
@@ -256,6 +289,7 @@ Banner: A Roaring Giant in Shattered Chains
 ArcID: 0
 RefID: 131
 Seat: Last Hearth
+Castle: 1
 [End]
 
 House: Westerling
@@ -264,6 +298,7 @@ Banner: Seashells
 ArcID: 0
 RefID: 132
 Seat: The Crag
+Castle: 1
 [End]
 
 House: Wull
@@ -272,6 +307,7 @@ Banner: Three Brown Buckets on a Blue Field
 ArcID: 0
 RefID: 133
 Seat: Sodhall
+Castle: 1
 [End]
 
 House: Peake
@@ -280,6 +316,7 @@ Banner: Three Black Castles on an Orange Field
 ArcID: 0
 RefID: 134
 Seat: Starpike
+Castle: 1
 [End]
 
 House: Yronwood
@@ -288,6 +325,7 @@ Banner: A Black Porticullis On a Gold Field
 ArcID: 0
 RefID: 135
 Seat: Yronwood Castle
+Castle: 1
 [End]
 
 House: Flint
@@ -296,4 +334,5 @@ Banner: Whitecaps on a Blue Ocean with a Pair of Blue Eyes on a Yellow Field abo
 ArcID: 0
 RefID: 136
 Seat: Widow's Watch
+Castle: 1
 [End]

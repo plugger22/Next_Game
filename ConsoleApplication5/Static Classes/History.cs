@@ -135,6 +135,7 @@ namespace Next_Game
                 house.RefID = listHousePool[i].RefID;
                 house.LocName = listHousePool[i].Capital;
                 house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
+                house.CastleWalls = listHousePool[i].Castle;
                 //add house to listOfHouses
                 listOfGreatHouses.Add(house);
                 //Console.WriteLine("House {0} added to listOfGreatHouses", house.Name);
@@ -158,9 +159,9 @@ namespace Next_Game
             house.ArcID = listHousePool[index].ArcID;
             house.LocName = listHousePool[index].Capital;
             house.RefID = listHousePool[index].RefID;
+            house.CastleWalls = listHousePool[index].Castle;
             house.LocID = locID;
             house.HouseID = houseID;
-            house.CastleWalls = 1;
             house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
             //add house to listOfHouses
             listOfMinorHouses.Add(house);
@@ -2113,7 +2114,6 @@ namespace Next_Game
             Game.lore.CreateRoyalFamilyFate();
             Game.lore.CreateNewMajorHouse(listHousePool, listOfRoyalAdvisors);
             
-
             //Royal Court housekeeping and fate during transition
             foreach (Advisor advisor in tempListOfAdvisors)
             {
@@ -2136,7 +2136,6 @@ namespace Next_Game
                 //add to Royal court
                 Game.world.SetRoyalCourt(courtAdvisor);
             }
-
 
             //change Royal house to that of New King
             Game.lore.RoyalRefIDCurrent = Game.lore.RoyalRefIDNew;

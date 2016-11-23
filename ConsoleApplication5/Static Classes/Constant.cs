@@ -41,6 +41,7 @@ namespace Next_Game
         NEUTRAL_EFFECT,
         ARMY_SIZE,
         SIT_CARD_SPREAD,
+        CASTLE_CAPITAL,
         Count //keep as last
     }
 
@@ -89,6 +90,7 @@ namespace Next_Game
             arrayOfGlobals[33] = Global.NEUTRAL_EFFECT;
             arrayOfGlobals[34] = Global.ARMY_SIZE;
             arrayOfGlobals[35] = Global.SIT_CARD_SPREAD;
+            arrayOfGlobals[36] = Global.CASTLE_CAPITAL;
             }
 
         /// <summary>

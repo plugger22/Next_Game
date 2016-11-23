@@ -19,6 +19,7 @@ namespace Next_Game
         public int ArcID { get; set; }
         public int RefID { get; set; }
         public string Capital { get; set; }
+        public int Castle { get; set; }
     }
 
     //Traits
@@ -243,6 +244,7 @@ namespace Next_Game
         /// <returns></returns>
         public List<HouseStruct> GetHouses(string fileName)
         {
+            int tempNum;
             string[] arrayOfHouseNames = ImportDataFile(fileName);
             List<HouseStruct> listHouses = new List<HouseStruct>();
             bool newHouse = false;
@@ -302,6 +304,18 @@ namespace Next_Game
                                 break;
                             case "RefID":
                                 try { houseStruct.RefID = Convert.ToInt32(cleanToken); }
+                                catch (Exception e)
+                                { Game.SetError(new Error(18, e.Message)); validData = false; }
+                                break;
+                            case "Castle":
+                                try
+                                {
+                                    tempNum = Convert.ToInt32(cleanToken);
+                                    //value must be within 0 to 5 range
+                                    if (tempNum >= 0 && tempNum <= 5)
+                                    { houseStruct.Castle = tempNum; }
+                                    else { Game.SetError(new Error(18, "Invalid Castle Input (out of range)")); }
+                                }
                                 catch (Exception e)
                                 { Game.SetError(new Error(18, e.Message)); validData = false; }
                                 break;

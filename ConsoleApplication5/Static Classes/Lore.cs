@@ -946,6 +946,7 @@ namespace Next_Game
                 newMajorhouse.RefID = turncoatHouse.RefID;
                 newMajorhouse.LocName = oldkingHouse.LocName;
                 newMajorhouse.MenAtArms = oldkingHouse.MenAtArms;
+                newMajorhouse.CastleWalls = oldkingHouse.CastleWalls;
                 newMajorhouse.Branch = oldkingHouse.Branch;
                 newMajorhouse.LordID = oldBannerLord.ActID;
                 newMajorhouse.LocID = oldkingHouse.LocID;

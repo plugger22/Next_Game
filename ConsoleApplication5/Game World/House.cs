@@ -7,6 +7,7 @@ namespace Next_Game
 {
     public enum KingLoyalty {None, Old_King, New_King}
     public enum HouseSpecial { None, Inn}
+    public enum CastleDefences { None, Minimal, Weak, Average, Strong, Formidable}
 
     //
     // Base class

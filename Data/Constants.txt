@@ -26,6 +26,8 @@
 
 # MEN_AT_ARMS -> number of men of arms a Major house starts with. Bannerlords have half this number.
 6: 12000
+# CASTLE_CAPITAL -> strength of castle walls (defences) for the capital (0 to 5)
+36: 5
 
 # History ---
 

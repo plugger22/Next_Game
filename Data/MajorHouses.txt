@@ -1,6 +1,11 @@
 # Major Houses (Noble)
 # RefID: (ReferenceID) a unique number (num > 0 & num < 100)
 # ArcID: (Archetypes) have a default value of '0' (none) unless specified
+# Banner: visual description
+# Capital: name of House Location
+# Castle: strength of defences, 0 (none) to 5 (impregnable)
+
+# NOTE: Minimum of 10 Entries required
 
 House: Lannister
 Motto: Hear Me Roar!
@@ -8,6 +13,7 @@ Banner: Roaring Lion
 ArcID: 14
 RefID: 2
 Capital: Casterly Rock
+Castle: 2
 [End]
 
 House: Martell
@@ -16,6 +22,7 @@ Banner: Red Sun pierced by a Gold Spear
 ArcID: 18
 RefID: 3
 Capital: Dorne
+Castle: 3
 [End]
 
 House: Florent
@@ -24,6 +31,7 @@ Banner: Fox Head in a circle of Flowers
 ArcID: 12
 RefID: 4
 Capital: Brightwater Keep
+Castle: 4
 [End]
 
 House: Greyjoy
@@ -32,6 +40,7 @@ Banner: Golden Kraken
 ArcID: 17
 RefID: 5
 Capital: Pyke
+Castle: 5
 [End]
 
 House: Arryn
@@ -40,6 +49,7 @@ Banner: Moon and Falcon
 ArcID: 16
 RefID: 6
 Capital: Eyrie
+Castle: 5
 [End]
 
 House: Baratheon
@@ -48,6 +58,7 @@ Banner: Crowned Stag on a Golden Field
 ArcID: 19
 RefID: 7
 Capital: Bloodkeep
+Castle: 4
 [End]
 
 House: Stark
@@ -56,6 +67,7 @@ Banner: Grey Direwolf on an Ice Field
 ArcID: 11
 RefID: 8
 Capital: Winterfell
+Castle: 3
 [End]
 
 House: Tully
@@ -64,6 +76,7 @@ Banner: Leaping Silver Trout
 ArcID: 13
 RefID: 9
 Capital: Riverrun
+Castle: 2
 [End]
 
 House: Tyrell
@@ -72,6 +85,7 @@ Banner: Golden Rose on a Green Field
 ArcID: 20
 RefID: 10
 Capital: Highgarden
+Castle: 3
 [End]
 
 House: Targaryen
@@ -80,4 +94,5 @@ Banner: Three Headed Dragon
 ArcID: 21
 RefID: 11
 Capital: Valyria
+Castle: 4
 [End]
