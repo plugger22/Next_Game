@@ -40,7 +40,7 @@ namespace Next_Game.Event_System
     /// </summary>
     class Card_Conflict : Card
     {
-        public int Effect { get; set; } //eg. 1X, 2X, etc.
+        public int Effect { get; set; } //eg. 1X, 2X, etc. -> set to 1 by default, increased only through use of CardUnique enums
         public CardUnique Unique { get; set; } //unique ability (max. 1)
         public CardConflict Conflict_Type { get; set; }
         public CardType TypeAttack { get; set; } //how a situation card is treated if defender chooses an Attack strategy (default None)
@@ -56,15 +56,15 @@ namespace Next_Game.Event_System
         /// <summary>
         /// Default constructor
         /// </summary>
-        public Card_Conflict(CardConflict conflictType, CardType type, string title, string description, int effect = 1) : base (type, title, description)
+        public Card_Conflict(CardConflict conflictType, CardType type, string title, string description) : base (type, title, description)
         {
             Category = CardCategory.Conflict;
             Conflict_Type = conflictType;
-            this.Effect = effect;
             //default values of None for Types (indicates normal use, no restrictions)
             TypeAttack = CardType.None;
             TypeBalanced = CardType.None;
             TypeDefend = CardType.None;
+            Effect = 1; //use CardUnique enum to change to a higher value.
         }
 
     }

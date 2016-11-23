@@ -730,12 +730,10 @@ namespace Next_Game
                         oldTitle = newTitle;
                         text = string.Format("\"{0}\", {1} card{2}, {3}", cardSpecial.Title, counter, counter > 1 ? "s" : "", explanation);
                         listSituationCards.Add(new Snippet(text, foreColor, backColor));
-                        
                     }
                     listCardPool.Add(cardSpecial);
                 }
             }
-
             //clear master list and add headers
             listBreakdown.Clear();
             //consolidate lists

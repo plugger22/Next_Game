@@ -105,7 +105,7 @@ Type: Special
 SubType: CastleWalls
 PlyrDef: 1
 Data: 0
-Good1: One of your crossbowmen on a castle wall is worth many more of <men> milling around below.
+Good1: One of your crossbowmen  on a castle wall is worth many more of <men> milling around below.
 Good2: Strong, well built, walls that are ably defended are a formidable obstacle. Your men rain death on those below.
 Good3: You gaze down at <men> from the ramparts and watch as your bolt throwers and trebuchet tear holes in their ranks.
 Bad1: Castle walls are only effective if there are men to defend them. You choose to ignore the walls to your rear.
