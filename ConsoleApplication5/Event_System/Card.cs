@@ -9,6 +9,7 @@ namespace Next_Game.Event_System
 
     public enum CardCategory { None, Conflict, Item, Secret, Companion, Disguise }
     public enum CardConflict { None, Skill, Trait, Situation, Companion, Item, Supporter }
+    public enum CardUnique { None, Effect2X} //unique abilities
     public enum CardType { None, Good, Bad, Neutral}
     
 
@@ -40,7 +41,7 @@ namespace Next_Game.Event_System
     class Card_Conflict : Card
     {
         public int Effect { get; set; } //eg. 1X, 2X, etc.
-        public string Special { get; set; }
+        public CardUnique Unique { get; set; } //unique ability (max. 1)
         public CardConflict Conflict_Type { get; set; }
         public CardType TypeAttack { get; set; } //how a situation card is treated if defender chooses an Attack strategy (default None)
         public CardType TypeBalanced { get; set; } //how a situation card is treated if defender chooses a balanced strategy (default None)

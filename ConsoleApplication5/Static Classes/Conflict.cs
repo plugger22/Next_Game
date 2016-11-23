@@ -998,7 +998,8 @@ namespace Next_Game
         /// </summary>
         /// <param name="specialType"></param>
         /// <param name="numCards">leave at default '0' if you want a random #</param>
-        public void SetSpecialSituation(ConflictSpecial specialType, int numCards = 0)
+        /// <param name="unique">Add the enum for a unique card property</param>
+        public void SetSpecialSituation(ConflictSpecial specialType, int numCards = 0, CardUnique unique = CardUnique.None)
         {
             //get dictionary of specials
             Dictionary<int, Situation> specialDictionary = Game.director.GetSituationsSpecial();
@@ -1051,6 +1052,7 @@ namespace Next_Game
                                 card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)];
                                 card.TypeDefend = CardType.Good; //as long as it's not CardType.None
                                 card.TypeSpecial = specialType;
+                                card.Unique = unique;
                                 listCardSpecials.Add(card);
                             }
                         }
@@ -1097,12 +1099,12 @@ namespace Next_Game
                                     if (refID < 100)
                                     {
                                         //Great house
-                                        SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls);
+                                        SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls, CardUnique.Effect2X);
                                     }
                                     else if (refID > 99 && refID < 1000)
                                     {
                                         //BannerLord, weak walls, always 1
-                                        SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls);
+                                        SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls, CardUnique.Effect2X);
                                     }
                                 }
                                 else { Game.SetError(new Error(97, "RefID comes back ZERO, no Auto Special Situation created")); }

@@ -544,7 +544,7 @@ namespace Next_Game
             int card_vert_1 = ca_top_align + 2; //type of card, eg. 'skill card', y_coord
             int card_vert_2 = ca_top_align + 4; //spacer
             int card_vert_3 = ca_top_align + ca_card_height / 4; //eg. "King's Leadship" + "Immersion text"
-            //int card_vert_4 = ca_top_align + ca_card_height / 4 + 3; //Immersion text eg. "Forward Men!"
+            int card_vert_4 = ca_top_align + ca_card_height / 4 + 3; //Unique text
             int card_vert_5 = ca_top_align + ca_card_height / 4 * 3; //advantage / disadvantage
             int card_vert_6 = ca_top_align + ca_card_height / 4 * 3 + 3; //"Play for 2 points"
             int card_vert_7 = ca_top_align + ca_card_height / 4 * 3 + 6; //"Ignore for 1 point"
@@ -669,6 +669,12 @@ namespace Next_Game
                 tempList.AddRange(Game.utility.WordWrap(card.Description, ca_card_width - 4));
                 for (int i = 0; i < tempList.Count; i++)
                 { DrawCenteredText(tempList[i], ca_left_inner, card_vert_3 + i * 2, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards); }
+                //...unique ability
+                if (card.Unique > CardUnique.None)
+                {
+                    DrawCenteredText(string.Format("{0}", card.Unique), ca_left_inner, card_vert_4 + 8, ca_card_width, RLColor.Yellow, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                }
+                //...points and good/bad card
                 DrawCenteredText(textType, ca_left_inner, card_vert_5, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 if (card.Type != CardType.Neutral)
                 {
