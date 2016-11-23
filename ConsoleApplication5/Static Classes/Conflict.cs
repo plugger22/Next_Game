@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Next_Game.Event_System;
 using RLNET;
+using Next_Game.Cartographic;
 
 namespace Next_Game
 {
@@ -92,6 +93,7 @@ namespace Next_Game
             SetPlayerStrategy();
             SetTraits();
             SetSituation(Game.director.GetSituationsNormal(), Game.director.GetSituationsGame());
+            CheckSpecialSituations();
             SetOpponentStrategy();
             SetOutcome();
             SetCardPool();
@@ -348,51 +350,47 @@ namespace Next_Game
                         Game.SetError(new Error(86, "Invalid Conflict Type"));
                         break;
                 }
-                //give correct title for game specific situation, if present
-                if (String.IsNullOrEmpty(Game_Title) == false)
+                //filter suitable game situation from dictionary
+                List<Situation> listGameSituations = new List<Situation>();
+                IEnumerable<Situation> situationSet =
+                    from situation in gameDictionary
+                    where situation.Value.State == Game_State
+                    orderby situation.Value.SitNum
+                    select situation.Value;
+                listGameSituations = situationSet.ToList();
+                if (listGameSituations.Count == 0) { Game.SetError(new Error(89, "listGameSituations has no data")); }
+                else if (listGameSituations.Count == 3)
                 {
-                    
-                    //filter suitable game situation from dictionary
-                    List<Situation> listGameSituations = new List<Situation>();
-                    IEnumerable<Situation> situationSet =
-                        from situation in gameDictionary
-                        where situation.Value.State == Game_State
-                        orderby situation.Value.SitNum
-                        select situation.Value;
-                    listGameSituations = situationSet.ToList();
-                    if (listGameSituations.Count == 0) { Game.SetError(new Error(89, "listGameSituations has no data")); }
-                    else if (listGameSituations.Count == 3)
+                    string backupTitle = "unknown backup";
+                    //list ordered in sequence sitNum -1/0/1 -> player adv / neutral / opponent adv in whatever game state is being measured
+                    switch (Game_Type)
                     {
-                        string backupTitle = "unknown backup";
-                        //list ordered in sequence sitNum -1/0/1 -> player adv / neutral / opponent adv in whatever game state is being measured
-                        switch (Game_Type)
-                        {
-                            case CardType.Good:
-                                tempListGood = listGameSituations[2].GetGood();
-                                tempListBad = listGameSituations[2].GetBad();
-                                backupTitle = listGameSituations[2].Name;
-                                break;
-                            case CardType.Neutral:
-                                tempListGood = listGameSituations[1].GetGood();
-                                tempListBad = listGameSituations[1].GetBad();
-                                backupTitle = listGameSituations[1].Name;
-                                break;
-                            case CardType.Bad:
-                                tempListGood = listGameSituations[0].GetGood();
-                                tempListBad = listGameSituations[0].GetBad();
-                                backupTitle = listGameSituations[0].Name;
-                                break;
-                            default:
-                                Game.SetError(new Error(89, "invalid Game_Type"));
-                                break;
-                        }
-                        if (Game_Title == "unknown") { Game_Title = backupTitle; }
-                        arraySituation[2, 0] = Game_Title;
-                        arraySituation[2, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
-                        arraySituation[2, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
+                        case CardType.Good:
+                            tempListGood = listGameSituations[2].GetGood();
+                            tempListBad = listGameSituations[2].GetBad();
+                            backupTitle = listGameSituations[2].Name;
+                            break;
+                        case CardType.Neutral:
+                            tempListGood = listGameSituations[1].GetGood();
+                            tempListBad = listGameSituations[1].GetBad();
+                            backupTitle = listGameSituations[1].Name;
+                            break;
+                        case CardType.Bad:
+                            tempListGood = listGameSituations[0].GetGood();
+                            tempListBad = listGameSituations[0].GetBad();
+                            backupTitle = listGameSituations[0].Name;
+                            break;
+                        default:
+                            Game.SetError(new Error(89, "invalid Game_Type"));
+                            break;
                     }
-                    else { Game.SetError(new Error(89, string. Format("listGameSituations has incorrect number of entries (\"{0}\")", listGameSituations.Count))); }
+                    //give correct title for game specific situation, if present
+                    if (String.IsNullOrEmpty(Game_Title) || Game_Title == "unknown") { Game_Title = backupTitle; }
+                    arraySituation[2, 0] = Game_Title;
+                    arraySituation[2, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
+                    arraySituation[2, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
                 }
+                else { Game.SetError(new Error(89, string.Format("listGameSituations has incorrect number of entries (\"{0}\")", listGameSituations.Count))); }
                 //send to layout
                 if (arraySituation.GetUpperBound(0) == 2 && arraySituation.GetUpperBound(0) > 0)
                 { Game.layout.SetSituation(arraySituation); }
@@ -1036,6 +1034,53 @@ namespace Next_Game
                 else { Game.SetError(new Error(102, "Invalid ConflictSpecial Input (\"None\")")); }
             }
             else { Game.SetError(new Error(102, "Invalid Dictionary Input (empty)")); }
+        }
+
+        /// <summary>
+        /// checks position of player and automatically adds any relevant special situations -> cityWalls, forest & mountain terrain (adds a random # of cards)
+        /// </summary>
+        private void CheckSpecialSituations()
+        {
+            //get player as they are involved in all conflicts
+            Active player = Game.world.GetActiveActor(1);
+            if (player != null)
+            {
+                //Only check for conflict types where automatic special situations are possible
+                if (Conflict_Type == ConflictType.Combat)
+                {
+                    //Battles are terrain dependant
+                    if (Combat_Type == ConflictCombat.Battle)
+                    {
+                        Position pos = player.GetActorPosition();
+                        if (player.Status == ActorStatus.Travelling)
+                        {
+                            //get terrain type (1 - Mountain, 2 - Forest)
+                            int terrain = Game.map.GetMapInfo(MapLayer.Terrain, pos.PosX, pos.PosY);
+                            if (terrain == 1) { SetSpecialSituation(ConflictSpecial.Mountain_Country, 0); }
+                            else if (terrain == 2) { SetSpecialSituation(ConflictSpecial.Forest_Country, 0); }
+                        }
+                        else if (player.Status == ActorStatus.AtLocation)
+                        {
+                            if (player.LocID == 1) { SetSpecialSituation(ConflictSpecial.Castle_Walls, 5); } //Kings keep, max castle walls
+                            else
+                            {
+                                int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                                if (refID > 0 && refID < 100)
+                                {
+                                    //Great house
+                                    SetSpecialSituation(ConflictSpecial.Castle_Walls, 0);
+                                }
+                                else if (refID > 99 && refID < 1000)
+                                {
+                                    //BannerLord, weak walls, always 1
+                                    SetSpecialSituation(ConflictSpecial.Castle_Walls, 1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else { Game.SetError(new Error(97, "Player not found (null)")); }
         }
 
         // methods above here

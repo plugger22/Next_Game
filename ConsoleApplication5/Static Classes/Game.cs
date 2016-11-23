@@ -22,7 +22,7 @@ namespace Next_Game
 
         private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        //private static int seed = 37576;
+        //private static int seed = 12063;
 
         static Random rnd;
         
@@ -675,7 +675,7 @@ namespace Next_Game
                                         conflict.Conflict_Type = ConflictType.Combat;
                                         conflict.Combat_Type = (ConflictCombat)rnd.Next(1, 4);
                                         conflict.SetOpponent(newKing.ActID, Convert.ToBoolean(rnd.Next(2)));
-                                        conflict.SetSpecialSituation((ConflictSpecial)rnd.Next(5), rnd.Next(1, 5));
+                                        //conflict.SetSpecialSituation((ConflictSpecial)rnd.Next(5), rnd.Next(1, 5));
                                         conflict.SetGameSituation(ConflictState.Relative_Army_Size);
                                     }
                                     else
