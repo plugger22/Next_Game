@@ -160,6 +160,7 @@ namespace Next_Game
             house.RefID = listHousePool[index].RefID;
             house.LocID = locID;
             house.HouseID = houseID;
+            house.CastleWalls = 1;
             house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
             //add house to listOfHouses
             listOfMinorHouses.Add(house);

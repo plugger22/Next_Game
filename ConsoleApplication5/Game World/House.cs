@@ -23,6 +23,7 @@ namespace Next_Game
         public int ArcID { get; set; } //unique archetype for house (specified in House import files)
         public int Branch { get; set; }
         public int MenAtArms { get; set; }
+        public int CastleWalls { get; set; } //strength of castle walls (1 to 5)
         public int LordID { get; set; } //actorID of noble Lord currently in charge of house
         public KingLoyalty Loyalty_AtStart { get; set; }
         public KingLoyalty Loyalty_Current { get; set; }
@@ -206,6 +207,6 @@ namespace Next_Game
     {
 
         public InnHouse()
-        { Special = HouseSpecial.Inn; }
+        { Special = HouseSpecial.Inn; CastleWalls = 0; }
     }
 }

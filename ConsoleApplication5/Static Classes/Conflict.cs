@@ -1091,22 +1091,27 @@ namespace Next_Game
                             else
                             {
                                 int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
-                                if (refID > 0 && refID < 100)
+                                if (refID > 0)
                                 {
-                                    //Great house
-                                    SetSpecialSituation(ConflictSpecial.Castle_Walls, 0);
+                                    House house = Game.world.GetHouse(refID);
+                                    if (refID < 100)
+                                    {
+                                        //Great house
+                                        SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls);
+                                    }
+                                    else if (refID > 99 && refID < 1000)
+                                    {
+                                        //BannerLord, weak walls, always 1
+                                        SetSpecialSituation(ConflictSpecial.Castle_Walls, house.CastleWalls);
+                                    }
                                 }
-                                else if (refID > 99 && refID < 1000)
-                                {
-                                    //BannerLord, weak walls, always 1
-                                    SetSpecialSituation(ConflictSpecial.Castle_Walls, 1);
-                                }
+                                else { Game.SetError(new Error(97, "RefID comes back ZERO, no Auto Special Situation created")); }
                             }
                         }
                     }
                 }
             }
-            else { Game.SetError(new Error(97, "Player not found (null)")); }
+            else { Game.SetError(new Error(97, "Player not found (null), no Auto Special Situation created")); }
         }
 
         // methods above here
