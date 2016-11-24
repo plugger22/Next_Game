@@ -271,14 +271,13 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
-
+                    //check for random text elements in the file
                     else
                     {
                         try { cleanToken = tokens[1].Trim(); }
                         catch (System.IndexOutOfRangeException)
                         { Game.SetError(new Error(16, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag)));  cleanToken = "";}
                     }
-                    
                     if (cleanToken.Length == 0)
                     {
                         validData = false;
@@ -428,7 +427,13 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
-                    else { cleanToken = tokens[1].Trim(); }
+                    //check for random text elements in the file
+                    else
+                    {
+                        try { cleanToken = tokens[1].Trim(); }
+                        catch (System.IndexOutOfRangeException)
+                        { Game.SetError(new Error(20, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag))); cleanToken = ""; }
+                    }
                     if (cleanToken.Length == 0 && cleanTag != "Nicknames")
                     {
                         validData = false;
@@ -565,7 +570,13 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
-                    else { cleanToken = tokens[1].Trim(); }
+                    //check for random text elements in the file
+                    else
+                    {
+                        try { cleanToken = tokens[1].Trim(); }
+                        catch (System.IndexOutOfRangeException)
+                        { Game.SetError(new Error(49, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag))); cleanToken = ""; }
+                    }
                     if (cleanToken.Length == 0)
                     { Game.SetError(new Error(20, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                     else
@@ -936,7 +947,13 @@ namespace Next_Game
                     cleanTag = tokens[0].Trim();
                     //if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
-                    else { cleanToken = tokens[1].Trim(); }
+                    //check for random text elements in the file
+                    else
+                    {
+                        try { cleanToken = tokens[1].Trim(); }
+                        catch (System.IndexOutOfRangeException)
+                        { Game.SetError(new Error(20, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag))); cleanToken = ""; }
+                    }
                     if (cleanToken.Length == 0)
                     { Game.SetError(new Error(20, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                     else
@@ -1723,7 +1740,13 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
-                    else { cleanToken = tokens[1].Trim(); }
+                    //check for random text elements in the file
+                    else
+                    {
+                        try { cleanToken = tokens[1].Trim(); }
+                        catch (System.IndexOutOfRangeException)
+                        { Game.SetError(new Error(53, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag))); cleanToken = ""; }
+                    }
                     if (cleanToken.Length == 0)
                     { Game.SetError(new Error(53, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                     else
@@ -2003,7 +2026,13 @@ namespace Next_Game
                     cleanTag = tokens[0].Trim();
                     //if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
-                    else { cleanToken = tokens[1].Trim(); }
+                    //check for random text elements in the file
+                    else
+                    {
+                        try { cleanToken = tokens[1].Trim(); }
+                        catch (System.IndexOutOfRangeException)
+                        { Game.SetError(new Error(54, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag))); cleanToken = ""; }
+                    }
 
                     switch (cleanTag)
                     {
@@ -2440,7 +2469,13 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
-                    else { cleanToken = tokens[1].Trim(); }
+                    //check for random text elements in the file
+                    else
+                    {
+                        try { cleanToken = tokens[1].Trim(); }
+                        catch (System.IndexOutOfRangeException)
+                        { Game.SetError(new Error(59, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag))); cleanToken = ""; }
+                    }
                     if (cleanToken.Length == 0)
                     {
                         validData = false;
@@ -2609,7 +2644,13 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
-                    else { cleanToken = tokens[1].Trim(); }
+                    //check for random text elements in the file
+                    else
+                    {
+                        try { cleanToken = tokens[1].Trim(); }
+                        catch (System.IndexOutOfRangeException)
+                        { Game.SetError(new Error(98, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag))); cleanToken = ""; }
+                    }
                     if (cleanToken.Length == 0)
                     {
                         validData = false;
