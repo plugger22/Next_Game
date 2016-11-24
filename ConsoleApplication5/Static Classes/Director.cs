@@ -83,6 +83,7 @@ namespace Next_Game
         private Dictionary<int, Situation> dictSituationsNormal;
         private Dictionary<int, Situation> dictSituationsGame;
         private Dictionary<int, Situation> dictSituationsSpecial;
+        private Dictionary<int, Situation> dictSituationsSkill;
 
         public Director(int seed)
         {
@@ -133,6 +134,7 @@ namespace Next_Game
             dictSituationsNormal = new Dictionary<int, Situation>(); //first two situations (def. adv. & neutral)
             dictSituationsGame = new Dictionary<int, Situation>(); //third, game specific, situation
             dictSituationsSpecial = new Dictionary<int, Situation>(); //decisions-derived special situations
+            dictSituationsSkill = new Dictionary<int, Situation>(); //primary skill involved in a challenge
         }
 
         /// <summary>

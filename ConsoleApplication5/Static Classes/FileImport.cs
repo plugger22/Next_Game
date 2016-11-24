@@ -2662,6 +2662,7 @@ namespace Next_Game
                         switch (cleanTag)
                         {
                             case "Name":
+                            case "Skill":
                                 structSituation.Name = cleanToken;
                                 break;
                             case "Type":

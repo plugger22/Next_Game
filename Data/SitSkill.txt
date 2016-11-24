@@ -1,0 +1,239 @@
+# SitSkills -> Each conflict type has a primary skill
+# should be TWO entries, one if challenger (PlyrDef -1), one if not (PlyrDef 1)
+# NOTE: All fields must have a value
+# Skill: Name of Skill, eg. Leadership. Description purposes only
+# Type: (ConflictType) Combat / Social / Other 
+# SubType: if Combat -> Personal/Tournament/Battle, if Social -> Blackmail/Seduce/Befriend, if Other -> Hunting/Stealth
+# SitNum: NO sitNum as all cards are assumed to be defender advantage, sitnum 0, cards.
+# PlyrDef: '1' if player is the defender, '-1' if opponent 
+# Data: multi purpose integer, default 0
+# Good: immersion strings, 3 variations for good outcomes, short/med sentence, use tags, max 6, eg. Good6:, min1
+# Bad: immersion strings, 3 variations for bad outcomes, short/med sentence, use tags, max 6, eg. Bad6:, min 1
+
+# terminology: Use 'you' and 'your', not 'our'
+
+# Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She
+
+# Combat -> Battle ---
+
+Skill: Leadership
+Type: Combat
+SubType: Battle
+PlyrDef: 1
+Data: 0
+Good1: You stand tall in the stirrups and rally your men. The give a rousing cheer in response.
+Good2: Racing to the threatened sector your presence serves to raise the moral of your men and firm up the defences.
+Good3: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: Your men are looking at your expectantly, awaiting a speech or a sign of confidence. You ignore them.
+Bad2: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad3: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Leadership
+Type: Combat
+SubType: Battle
+PlyrDef: -1
+Data: 0
+Good1: You ride along the line of men and rouse them to greater feats of martial derring-do with your fierce oratory.
+Good2: You pause to take in the ebb and flow of the battle and weigh up the odds. By astute repositioning you greatly increase them.
+Good3: A fired up attacker is a fearsome site, running howling into battle. You do your utmost to energise them all the more.
+Bad1: It's difficult to judge the success of the attack when you are so far back from the action. Caution is costing you dearly.
+Bad2: Your men are looking to you for firm leadership but you seem fixated on posing in the saddle for an imaginary artist.
+Bad3: Decisions are tough. Get it wrong and everybody blames you. Best to not make it in the first place.
+[End]
+
+# Combat -> Personal ---
+
+Skill: Combat
+Type: Combat
+SubType: Personal
+PlyrDef: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Personal
+PlyrDef: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+# Combat -> Tournament ---
+
+Skill: Combat
+Type: Combat
+SubType: Tournament
+PlyrDef: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Tournament
+PlyrDef: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+# Social -> Blackmail ---
+
+Skill: Treachery
+Type: Social
+SubType: Blackmail
+PlyrDef: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+Skill: Treachery
+Type: Social
+SubType: Blackmail
+PlyrDef: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+# Social -> Seduce ---
+
+Skill: Charm
+Type: Social
+SubType: Seduce
+PlyrDef: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+Skill: Charm
+Type: Social
+SubType: Seduce
+PlyrDef: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+# Social -> Befriend ---
+
+Skill: Charm
+Type: Social
+SubType: Befriend
+PlyrDef: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+Skill: Charm
+Type: Social
+SubType: Befriend
+PlyrDef: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+# Other -> Hunting ---
+
+Skill: Wits
+Type: Other
+SubType: Hunting
+PlyrDef: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+Skill: Wits
+Type: Other
+SubType: Hunting
+PlyrDef: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+# Other -> Stealth ---
+
+Skill: Wits
+Type: Other
+SubType: Stealth
+PlyrDef: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+Skill: Wits
+Type: Other
+SubType: Stealth
+PlyrDef: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
