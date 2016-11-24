@@ -23,6 +23,10 @@ namespace Next_Game.Event_System
         private List<string> listGood;
         private List<string> listBad;
 
+
+        public Situation()
+        { }
+
         /// <summary>
         /// default constructor for the first two situations
         /// </summary>

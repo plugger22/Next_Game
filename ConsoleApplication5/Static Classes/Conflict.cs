@@ -405,6 +405,21 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// returns a situation containing lists of good/bad immersion texts for the primary skill involved in the challenge
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="subType"></param>
+        /// <param name="challenger">true if the Player is the challenger</param>
+        /// <returns></returns>
+        private Situation GetSkillText(ConflictType type, int subType, bool challenger)
+        {
+            Situation situation = new Situation();
+
+            return situation;
+        }
+
+        /*
+        /// <summary>
         /// returns a neutral situation description appropriate to the conflict
         /// </summary>
         /// <param name="type"></param>
@@ -413,9 +428,9 @@ namespace Next_Game
         private string GetSituationNeutral(ConflictType type, int subtype)
         {
             string description = "unknown";
-
             return description;
         }
+        */
 
         /// <summary>
         /// determine # of cards (worked on remainder / 8x / 4x / 2x / 1x for 1/2/3/4/5 cards). Only for the first two situations (def adv & neutral)
@@ -660,7 +675,10 @@ namespace Next_Game
             //...Player Primary skill
             type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += cards_player;
             for (int i = 0; i < cards_player; i++)
-            { listCardPool.Add(new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", player.Name, PrimarySkill), description)); }
+            {
+                Card_Conflict card = new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", player.Name, PrimarySkill), description);
+                listCardPool.Add(card);
+            }
             text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", player.Name, PrimarySkill, type, cards_player, skill_player);
             listPlayerCards.Add(new Snippet(text, foreColor, backColor));
             //...Opponent Primary skill

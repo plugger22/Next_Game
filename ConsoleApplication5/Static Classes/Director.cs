@@ -164,6 +164,8 @@ namespace Next_Game
             dictSituationsGame = Game.file.GetSituations("SitGame.txt");
             Console.WriteLine(Environment.NewLine + "--- Initialise Special Situations");
             dictSituationsSpecial = Game.file.GetSituations("SitSpecial.txt");
+            Console.WriteLine(Environment.NewLine + "--- Initialise Skill (Situations)");
+            dictSituationsSpecial = Game.file.GetSituations("SitSkill.txt");
             Console.WriteLine(Environment.NewLine);
             InitialiseGameStates();
         }
@@ -1702,6 +1704,9 @@ namespace Next_Game
 
         internal Dictionary<int, Situation> GetSituationsSpecial()
         { return dictSituationsSpecial; }
+
+        internal Dictionary<int, Situation> GetSituationsSkill()
+        { return dictSituationsSkill; }
 
 
         //place Director methods above here
