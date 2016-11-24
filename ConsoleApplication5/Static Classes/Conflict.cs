@@ -405,17 +405,67 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// returns a situation containing lists of good/bad immersion texts for the primary skill involved in the challenge
+        /// returns a situation containing lists of good/bad immersion texts for the primary skill involved in the challenge.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="subType"></param>
         /// <param name="challenger">true if the Player is the challenger</param>
-        /// <returns></returns>
+        /// <returns>null if no valid data</returns>
         private Situation GetSkillText(ConflictType type, int subType, bool challenger)
         {
-            Situation situation = new Situation();
+            if (type > ConflictType.None)
+            {
+                if (subType > 0)
+                {
+                    Situation situation = null;
+                    Dictionary<int, Situation> tempDictionary = Game.director.GetSituationsSkill();
+                    //get dictionary of skill situations
+                    if (tempDictionary != null && tempDictionary.Count > 0)
+                    {
+                        //work out correct Player defending status
+                        int plyrDef = 1;
+                        if (challenger == true) { plyrDef = -1; }
+                        //get correct subtype
+                        switch (type)
+                        {
+                            case ConflictType.Combat:
+                                //Get suitable situations from dictionary
+                                List<Situation> listSkillSituations = new List<Situation>();
+                                IEnumerable<Situation> situationSkillSet =
+                                    from sitTemp in tempDictionary
+                                    where sitTemp.Value.Type == ConflictType.Combat
+                                    where (int)sitTemp.Value.Type_Combat == subType
+                                    where sitTemp.Value.Defender == plyrDef
+                                select sitTemp.Value;
+                                listSkillSituations = situationSkillSet.ToList();
+                                //should be a single situation
+                                if (listSkillSituations.Count == 1)
+                                { situation = listSkillSituations[0]; }
+                                else
+                                { Game.SetError(new Error(104, "Incorrect count for Situations (listSkillSituations)")); }
+                                break;
+                            case ConflictType.Social:
 
-            return situation;
+                                break;
+                            case ConflictType.Other:
+
+                                break;
+                            default:
+                                Game.SetError(new Error(104, string.Format("Invalid type (\"{0}\")", type)));
+                                break;
+
+                        }
+                    }
+                    else
+                    { Game.SetError(new Error(104, "Invalid Dictionary input (null or empty)")); }
+                    return situation;
+                }
+                else
+                { Game.SetError(new Error(104, "Invalid subType input (Zero or less)")); }
+            }
+            else
+            { Game.SetError(new Error(104, "Invalid ConflictType input (\"None\")")); }
+            return null;
         }
 
         /*
@@ -653,7 +703,7 @@ namespace Next_Game
             RLColor foreColor = RLColor.Black;
             CardType type;
             string text;
-            int numCards;
+            int numCards, subType;
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
             Array.Clear(arrayPool, 0 , arrayPool.Length);
             //clear lists
@@ -674,10 +724,37 @@ namespace Next_Game
             string description = "Get a Random Description from a Pool of Possibilities";
             //...Player Primary skill
             type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += cards_player;
+            //get subtype
+            switch (Conflict_Type)
+            {
+                case ConflictType.Combat:
+                    subType = (int)Combat_Type;
+                    break;
+                case ConflictType.Social:
+                    subType = (int)Social_Type;
+                    break;
+                case ConflictType.Other:
+                    subType = (int)Other_Type;
+                    break;
+                default:
+                    Game.SetError(new Error(105, string.Format("Unknown Conflict_Type (\"{0}\") -> subType set to 1 ", Conflict_Type)));
+                    subType = 1; //set to a workable number to keep things going
+                    break;
+            }
+            Card_Conflict cardPlayer = new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", player.Name, PrimarySkill), description);
+            //get relevant skill situation (for lists of immersion texts)
+            Situation situation = GetSkillText(Conflict_Type, subType, Challenger);
+            List<string> tempListGood = new List<string>();
+            List<string> tempListBad = new List<string>();
+            if (situation != null)
+            { tempListGood = situation.GetGood(); tempListBad = situation.GetBad(); }
+            else { Game.SetError(new Error(105, string.Format("situation (Skill) came back Null", Conflict_Type))); }
             for (int i = 0; i < cards_player; i++)
             {
-                Card_Conflict card = new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", player.Name, PrimarySkill), description);
-                listCardPool.Add(card);
+                //get immersion texts, if present
+                if(tempListGood.Count > 0) { cardPlayer.PlayedText = tempListGood[rnd.Next(tempListGood.Count)]; }
+                if (tempListBad.Count > 0) { cardPlayer.IgnoredText = tempListBad[rnd.Next(tempListBad.Count)]; }
+                listCardPool.Add(cardPlayer);
             }
             text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", player.Name, PrimarySkill, type, cards_player, skill_player);
             listPlayerCards.Add(new Snippet(text, foreColor, backColor));
