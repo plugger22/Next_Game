@@ -34,6 +34,7 @@ namespace Next_Game
         public ConflictType Conflict_Type { get; set; }
         public ConflictCombat Combat_Type { get; set; }
         public ConflictSocial Social_Type { get; set; }
+        public ConflictOther Other_Type { get; set; }
         //Game specific Situation
         public ConflictState Game_State { get; set; }
         public CardType Game_Type { get; set; }
@@ -601,6 +602,24 @@ namespace Next_Game
                             break;
                         default:
                             Game.SetError(new Error(91, "Invalid Social Type"));
+                            break;
+                    }
+                    break;
+                case ConflictType.Other:
+                    switch (Other_Type)
+                    {
+                        case ConflictOther.Hunting:
+                            PrimarySkill = SkillType.Wits;
+                            OtherSkill_1 = SkillType.Combat;
+                            OtherSkill_2 = SkillType.Leadership;
+                            break;
+                        case ConflictOther.Stealth:
+                            PrimarySkill = SkillType.Wits;
+                            OtherSkill_1 = SkillType.Combat;
+                            OtherSkill_2 = SkillType.Treachery;
+                            break;
+                        default:
+                            Game.SetError(new Error(91, "Invalid Other Type"));
                             break;
                     }
                     break;
