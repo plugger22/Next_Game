@@ -430,30 +430,55 @@ namespace Next_Game
                         {
                             case ConflictType.Combat:
                                 //Get suitable situations from dictionary
-                                List<Situation> listSkillSituations = new List<Situation>();
-                                IEnumerable<Situation> situationSkillSet =
+                                List<Situation> listCombatSituations = new List<Situation>();
+                                IEnumerable<Situation> situationCombatSet =
                                     from sitTemp in tempDictionary
                                     where sitTemp.Value.Type == ConflictType.Combat
                                     where (int)sitTemp.Value.Type_Combat == subType
                                     where sitTemp.Value.Defender == plyrDef
                                 select sitTemp.Value;
-                                listSkillSituations = situationSkillSet.ToList();
+                                listCombatSituations = situationCombatSet.ToList();
                                 //should be a single situation
-                                if (listSkillSituations.Count == 1)
-                                { situation = listSkillSituations[0]; }
+                                if (listCombatSituations.Count == 1)
+                                { situation = listCombatSituations[0]; }
                                 else
-                                { Game.SetError(new Error(104, "Incorrect count for Situations (listSkillSituations)")); }
+                                { Game.SetError(new Error(104, "Incorrect count for Combat Situations (listSkillSituations)")); }
                                 break;
                             case ConflictType.Social:
-
+                                //Get suitable situations from dictionary
+                                List<Situation> listSocialSituations = new List<Situation>();
+                                IEnumerable<Situation> situationSocialSet =
+                                    from sitTemp in tempDictionary
+                                    where sitTemp.Value.Type == ConflictType.Combat
+                                    where (int)sitTemp.Value.Type_Combat == subType
+                                    where sitTemp.Value.Defender == plyrDef
+                                    select sitTemp.Value;
+                                listSocialSituations = situationSocialSet.ToList();
+                                //should be a single situation
+                                if (listSocialSituations.Count == 1)
+                                { situation = listSocialSituations[0]; }
+                                else
+                                { Game.SetError(new Error(104, "Incorrect count for Social Situations (listSkillSituations)")); }
                                 break;
                             case ConflictType.Other:
-
+                                //Get suitable situations from dictionary
+                                List<Situation> listOtherSituations = new List<Situation>();
+                                IEnumerable<Situation> situationOtherSet =
+                                    from sitTemp in tempDictionary
+                                    where sitTemp.Value.Type == ConflictType.Combat
+                                    where (int)sitTemp.Value.Type_Combat == subType
+                                    where sitTemp.Value.Defender == plyrDef
+                                    select sitTemp.Value;
+                                listOtherSituations = situationOtherSet.ToList();
+                                //should be a single situation
+                                if (listOtherSituations.Count == 1)
+                                { situation = listOtherSituations[0]; }
+                                else
+                                { Game.SetError(new Error(104, "Incorrect count for Other Situations (listSkillSituations)")); }
                                 break;
                             default:
                                 Game.SetError(new Error(104, string.Format("Invalid type (\"{0}\")", type)));
                                 break;
-
                         }
                     }
                     else
