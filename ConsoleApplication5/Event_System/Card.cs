@@ -49,6 +49,7 @@ namespace Next_Game.Event_System
         public ConflictSpecial TypeSpecial { get; set; } //special situation type, default 'none'
         public string PlayedText { get; set; } //randomly chosen immersion text
         public string IgnoredText { get; set; } //randomly chosen immersion text
+        public string UniqueText { get; set; } //unique ability text that shows on card, default none
 
         public Card_Conflict()
         { }

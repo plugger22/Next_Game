@@ -671,9 +671,7 @@ namespace Next_Game
                 { DrawCenteredText(tempList[i], ca_left_inner, card_vert_3 + i * 2, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards); }
                 //...unique ability
                 if (card.Unique > CardUnique.None)
-                {
-                    DrawCenteredText(string.Format("{0}", card.Unique), ca_left_inner, card_vert_4 + 8, ca_card_width, RLColor.Yellow, arrayOfCells_Cards, arrayOfForeColors_Cards);
-                }
+                { DrawCenteredText(card.UniqueText, ca_left_inner, card_vert_4 + 8, ca_card_width, RLColor.Yellow, arrayOfCells_Cards, arrayOfForeColors_Cards); }
                 //...points and good/bad card
                 DrawCenteredText(textType, ca_left_inner, card_vert_5, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 if (card.Type != CardType.Neutral)
@@ -1324,7 +1322,7 @@ namespace Next_Game
                     textImmersion = Game.utility.CheckTagsActor(textImmersion, Game.conflict.GetOpponent());
                     //word wrap
                     List<string> tempList = new List<string>();
-                    tempList.AddRange(Game.utility.WordWrap(textImmersion, ou_width - 4));
+                    tempList.AddRange(Game.utility.WordWrap(textImmersion, ou_width - 8));
                     for (int i = 0; i < tempList.Count; i++)
                     {
                         Snippet snippetImmersion = new Snippet(tempList[i], RLColor.Brown, Back_FillColor);

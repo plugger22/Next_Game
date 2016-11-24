@@ -271,7 +271,14 @@ namespace Next_Game
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
-                    else { cleanToken = tokens[1].Trim(); }
+
+                    else
+                    {
+                        try { cleanToken = tokens[1].Trim(); }
+                        catch (System.IndexOutOfRangeException)
+                        { Game.SetError(new Error(16, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag)));  cleanToken = "";}
+                    }
+                    
                     if (cleanToken.Length == 0)
                     {
                         validData = false;

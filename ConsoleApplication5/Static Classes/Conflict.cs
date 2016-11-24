@@ -728,7 +728,8 @@ namespace Next_Game
                         { if (tempCard.TypeSpecial == cardSpecial.TypeSpecial) { counter++; } }
                         //add card
                         oldTitle = newTitle;
-                        text = string.Format("\"{0}\", {1} card{2}, {3}", cardSpecial.Title, counter, counter > 1 ? "s" : "", explanation);
+                        text = string.Format("\"{0}\", {1} card{2}, {3}{4}", cardSpecial.Title, counter, counter > 1 ? "s" : "", explanation, 
+                            cardSpecial.Unique > CardUnique.None ? " (" + cardSpecial.UniqueText + ")" : "");
                         listSituationCards.Add(new Snippet(text, foreColor, backColor));
                     }
                     listCardPool.Add(cardSpecial);
@@ -1050,7 +1051,7 @@ namespace Next_Game
                                 card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)];
                                 card.TypeDefend = CardType.Good; //as long as it's not CardType.None
                                 card.TypeSpecial = specialType;
-                                card.Unique = unique;
+                                if (unique > CardUnique.None) { SetUniqueCardAbility(card, unique); }
                                 listCardSpecials.Add(card);
                             }
                         }
@@ -1112,6 +1113,39 @@ namespace Next_Game
                 }
             }
             else { Game.SetError(new Error(97, "Player not found (null), no Auto Special Situation created")); }
+        }
+
+        /// <summary>
+        /// Initialise Unique Card Ability (max one per card)
+        /// </summary>
+        /// <param name="card"></param>
+        /// <param name="unique"></param>
+        private void SetUniqueCardAbility(Card_Conflict card, CardUnique unique)
+        {
+            if (card != null)
+            {
+                if (card.Unique == CardUnique.None)
+                {
+                    if (unique != CardUnique.None)
+                    {
+                        //assign unique quality
+                        card.Unique = unique;
+                        switch (unique)
+                        {
+                            case CardUnique.Effect2X:
+                                card.Effect = 2;
+                                card.UniqueText = "Double Effect";
+                                break;
+                        }
+                    }
+                    else
+                    { Game.SetError(new Error(103, "Invalid Unique Input (\"None\")")); }
+                }
+                else
+                { Game.SetError(new Error(103, "Card already has a Unique Ability")); }
+            }
+            else
+            { Game.SetError(new Error(103, "Invalid card Input (null)")); }
         }
 
         // methods above here
