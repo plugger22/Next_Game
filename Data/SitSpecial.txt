@@ -12,7 +12,7 @@
 
 # terminology: Use 'you' and 'your', not 'our'
 
-# Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She
+# Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She, <his> his/her
 
 # Fortified Position ---
 

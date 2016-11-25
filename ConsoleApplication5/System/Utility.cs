@@ -119,9 +119,11 @@ namespace Next_Game
                         case "him":
                             replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "him" : "her");
                             break;
+                        case "she":
                         case "he":
                             replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "he" : "she");
                             break;
+                        case "She":
                         case "He":
                             replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "He" : "She");
                             break;
