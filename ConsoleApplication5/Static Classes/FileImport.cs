@@ -2806,7 +2806,8 @@ namespace Next_Game
                                 { Game.SetError(new Error(98, e.Message)); validData = false; }
                                 break;
                             case "Data":
-                                try { structSituation.Data = Convert.ToInt32(cleanToken); }
+                                try
+                                { structSituation.Data = Convert.ToInt32(cleanToken); }
                                 catch (Exception e)
                                 { Game.SetError(new Error(98, e.Message)); validData = false; }
                                 break;
@@ -2854,8 +2855,8 @@ namespace Next_Game
                                     situation.SetBad(tempListBad);
                                     tempDictionary.Add(situation.SitID, situation);
                                     if (structSituation.Type > ConflictType.None)
-                                    { Console.WriteLine("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad, SitNum {4}, Def {5}", structSituation.Name, structSituation.Type, 
-                                        tempListGood.Count, tempListBad.Count, structSituation.SitNum, structSituation.Defender); }
+                                    { Console.WriteLine("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad, SitNum {4}, Def {5}, Data {6}", structSituation.Name, structSituation.Type, 
+                                        tempListGood.Count, tempListBad.Count, structSituation.SitNum, structSituation.Defender, structSituation.Data); }
                                     else if (structSituation.State > ConflictState.None)
                                     { Console.WriteLine("\"{0}\" imported, {1} good records & {2} bad, SitNum {3}", structSituation.Name, tempListGood.Count, tempListBad.Count, 
                                         structSituation.SitNum); }
