@@ -125,6 +125,13 @@ namespace Next_Game
                         case "He":
                             replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "He" : "She");
                             break;
+                        case "his":
+                            replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "his" : "her");
+                            break;
+                        default:
+                            replaceText = "";
+                            Game.SetError(new Error(101, string.Format("Invalid tag (\"{0}\")", tag)));
+                            break;
                     }
                     if (replaceText != null)
                     {

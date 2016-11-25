@@ -59,7 +59,7 @@ Bad2: Unfortunately, there was no way around the treacherous, muddy ground.
 Bad3: The mud reached up and sucked hard at the legs of your knight's mounts as they struggled through.
 [end]
 
-# tournament Combat (player as anonymous entry -> challenger, player as Ursurper -> defender). Joust an opponent.
+# tournament Combat (player as anonymous entry -> challenger, player as Usurper -> defender). Joust an opponent.
 
 Name: Hold Back until Needed
 Type: Combat
@@ -211,7 +211,7 @@ Good2: Threats are all the more powerful for their unspoken presence. They are t
 Good3: Like the Sword of Damocles, you hint at unspoken consequences. It's enough.
 Bad1: You allude to a threat but <name> only laughs in your face. Did he misunderstand?
 Bad2: <name> looks at you, puzzled. Clearly he hasn't gotten the message. Perhaps you should have spelled it out.
-Bad3: Your attempts at alluding to terrible consequences fall flat as <name> scratches <his> head and asks 'What?'
+Bad3: Your attempts at alluding to terrible consequences fall flat as <name> scratches <hippo> head and asks 'What?'
 [end]
 
 # Seduce Social
