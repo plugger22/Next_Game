@@ -94,7 +94,7 @@ namespace Next_Game
             //debug
             Console.WriteLine("Initialise Conflict");
             SetPlayerStrategy();
-            SetTraits();
+            SetSkills();
             SetSituation(Game.director.GetSituationsNormal(), Game.director.GetSituationsGame());
             CheckSpecialSituations();
             SetOpponentStrategy();
@@ -650,9 +650,9 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Set up Primary and Secondary Traits in use
+        /// Set up Primary and Secondary Skills in use
         /// </summary>
-        private void SetTraits()
+        private void SetSkills()
         {
             switch (Conflict_Type)
             {

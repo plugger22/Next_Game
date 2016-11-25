@@ -19,7 +19,7 @@
 
 # Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She
 
-# Combat -> Battle -> Player skill ---
+# Combat -> Battle ---
 
 Skill: Leadership
 Type: Combat
@@ -47,8 +47,6 @@ Bad2: Your men are looking to you for firm leadership but you seem fixated on po
 Bad3: Decisions are tough. Get it wrong and everybody blames you. Best to not make it in the first place.
 [End]
 
-# Combat -> Battle -> Opponent skill ---
-
 Skill: Leadership
 Type: Combat
 SubType: Battle
@@ -73,4 +71,112 @@ Good3: Does <name> know what he his doing? Given his lacklustre leadership, appa
 Bad1: Is it possible that you're being out-generaled today? <name> looks to have a better grasp of the battle than you do.
 Bad2: How can you push forward a successful assault when <name> keeps repositioning his forces to block you? Can he read your mind?
 Bad3: It's tough to admit but <name> looks to be doing a better job of defending than you are of attacking. Curse <him>.
+[End]
+
+# Combat -> Personal ---
+
+Skill: Combat
+Type: Combat
+SubType: Personal
+PlyrDef: 1
+Data: 0
+Good1: You block and parry <name>'s attacks as if they were bloatflies just waiting to be swatted.
+Good2: In a blur of moving arms and steel you fend of <name> and launch a stinging counter attack.
+Good3: <name> has no answer to your raging martial prowess. You are a tiger in full flight.
+Bad1: There is a lethargy about you today that is holding back your undoubted fighting abilities. Was it last night's dinner?
+Bad2: Is there an imposter in your skin today? Why are you restraining yourself? What's wrong?
+Bad3: You realise that you strongly dislike defending. You are a natural born attacker. You feel restricted. Constrained. Chained up.
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Personal
+PlyrDef: -1
+Data: 0
+Good1: You don't think, you simply move and your steel is THERE, on target. <name> is bruised, battered and worried.
+Good2: Lunging forward you knock <name>'s weapon to one side. <He> is yours for the taking, defenceless and vulnerable.
+Good3: With a wild flurry of blows you force <name> further back. <He> manages to block your thrusts and slashes, but only some.
+Bad1: You are supposed to be attacking yet here you are on the back foot fending off <name>'s blows.
+Bad2: Your attack has all the enthusiasm of a thief for the hangman's noose. It's hard to get as excited as <name> clearly is.
+Bad3: It's a full moon. You shouldn't have picked a fight on a full moon. You put the minimum effort into your attack. Best not to offend anyone. 
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Personal
+PlyrDef: 1
+Data: 1
+Good1: <name> wields his weapon as if <he> is plowing a field. Does <he> think that you're a potato who just happens to be holding a steel weapon?
+Good2: Your sustained defence has caused <name> to break out into a heavy sweat. Any more and they are liable to collapse at your feet from exhaustion.
+Good3: <name> is struggling to get past your blocks and parries. Perhaps you are too good for them?
+Bad1: <name> lands blow after blow. You struggle to fend off the incessant assault. As good as you are <he> appears to be better.
+Bad2: Your weapon arm goes heavy and your movements lethargic. <name>'s flurry of blows have exhausted your reservoir of stamina.
+Bad3: How much longer can you keep defending in the face of <name>'s fierce assault? You feel your strength ebbing away.
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Personal
+PlyrDef: -1
+Data: 1
+Good1: <name>'s efforts at blocking your lunges and thrusts appear futile. It'll be a short fight.
+Good2: For somebody on the defence, <name> seems to be overly confident. You hammer into them and wait for the right moment.
+Good3: <name> fights on but you can tell that they are weakening. You block all but their most unexpected counter-attacks.
+Bad1: How can <name> keep holding you off with such vigour? You feel as if you are dressed in a lead suit that's anchored to the ground.
+Bad2: Your aggressive thrusts have faltered in the face of <name>'s fierce defence and even fiercer counter-attacks. You're in trouble.
+Bad3: It's supposed to be you who is landing the slashing blows, not <name>. <He> should defending, not leaping at you like a wild animal.
+[End]
+
+# Combat -> Tournament (player as anonymous entry -> challenger, player as Usurper -> defender) ---
+
+Skill: Combat
+Type: Combat
+SubType: Tournament
+PlyrDef: 1
+Data: 0
+Good1: You ride down the jousting lane and wield your lance like a giant spear of doom. <name> topples from their horse.
+Good2: It's all about instinct and timing. You've got it and that's why it's <name> flying backwards out of their saddle and not you.
+Good3: <name> should yield now. How many times can they take being knocked off the horse and being flung face down into the dirt?
+Bad1: Your timing is off. Not by much but enough that your lance misses <name>'s torso and glances harmlessly off to one side.
+Bad2: Crack! Your lance shatters as you failed to properly couch it before galloping down the jousting lane towards <name>.
+Bad3: You blink your eyes and try and stop seeing two of <name>. Dealing with one of them is bad enough. You feel hot and sweaty inside your armour.
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Tournament
+PlyrDef: -1
+Data: 0
+Good1: Spurring your horse into a fast gallop you wallop your lance squarely into <name>'s chest. <He> is jerked off his horse as if suddenly pulled.
+Good2: Jousting is all about momentum. Right now it's on your side. You leave <name> eating dirt behind you as you slow your horse to a canter.
+Good3: The crowd gasps as the point of your lance finds the front of <name>'s protective face plate. It's not easy to hit such a small, moving target.
+Bad1: Your horse twitches underneath you, letting you know that he'd like to step it up. Why haven't you? What's wrong?
+Bad2: Ahhh-Choooo! It's either the dust or the pollen count but either way your eyes are watering and you can't stop sneezing inside your helmet.
+Bad3: The suit of armour they've given you doesn't quite fit. It chafes and bites, unsettling you and disturbing your concentration. 
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Tournament
+PlyrDef: 1
+Data: 1
+Good1: <name> couldn't hit the side of a castle wall if it was right in front of him. You receive glancing blows but that's all.
+Good2: You swerve your horse at the last moment and <name>'s lance strikes a glancing blow. You manage to stay in the saddle.
+Good3: <name>'s lance keeps searching for your chest plate but you fend it off with your shield.
+Bad1: <name>'s lance finds you unprepared and you find yourself being roughly jerked out of the saddle.
+Bad2: With casual ease, <name> lowers his lance and takes you firmly in the chest. That's dirt that you're eating.
+Bad3: You wonder how you found yourself sprawled in the dirt as you can't remember <name> hitting you with <his> lance. It must have been the wind.
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Tournament
+PlyrDef: -1
+Data: 1
+Good1: <name> has had more than their fair share of luck today but, even though you've been hit, you remain mounted, ready for the next round.
+Good2: You breath a sigh of relief as <name> cracks their lance on your side armour. Your armour has survived intact but their lance hasn't.
+Good3: By leaning outwards you manage to miss <name>'s lunging lance tip although it was a close call.
+Bad1: Whump! Your head snaps backwards as <name>'s lance takes you in the neck. Your protective armour does it's job but you topple from your horse.
+Bad2: Your body is still store from your previous unhorsing. It likes being knocked out of the saddle by <name>'s lance even less this time around.
+Bad3: You're trying your best but every gallop down the jousting lane leaves you face down in the dirt and <name> mounted and waving to the crowd.
 [End]
