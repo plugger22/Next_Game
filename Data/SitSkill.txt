@@ -180,3 +180,57 @@ Bad1: Whump! Your head snaps backwards as <name>'s lance takes you in the neck. 
 Bad2: Your body is still store from your previous unhorsing. It likes being knocked out of the saddle by <name>'s lance even less this time around.
 Bad3: You're trying your best but every gallop down the jousting lane leaves you face down in the dirt and <name> mounted and waving to the crowd.
 [End]
+
+# Social -> Blackmail ---
+
+Skill: Treachery
+Type: Social
+SubType: Blackmail
+PlyrDef: 1
+Data: 0
+Good1: You refuse to heel to <name>'s threats and bluster. You are the rightful ruler of the land, not some easily manipulated lackey.
+Good2: <name> might think that they can push you in any direction but <he> doesn't realise that you are an immovable force of nature.
+Good3: Threats! Who is <name> to threaten you? What do they know of hardship and travail? You laugh at their feeble effort.
+Bad1: You have dealt with blackmailers before but you're not paying close enough attention and feel the ground sliding beneath you.
+Bad2: It's difficult to deal with odious blackmailing b*stards when you aren't feeling your best.
+Bad3: You refuse to concede to <name>'s threats but you find yourself giving ground on the smaller points.
+[End]
+
+Skill: Treachery
+Type: Social
+SubType: Blackmail
+PlyrDef: -1
+Data: 0
+Good1: Like a worm on a hook, <name> wriggles this way and that but to no avail. The hook is firmly set.
+Good2: <name> may lay claim to a higher moral code but you know that they are slowly being squeezed under your snake-like embrace.
+Good3: Manipulation is the key. <name> is nothing but a lump of clay in your hands, waiting patiently to be shaped and moulded.
+Bad1: You're not on top of your game today. Your subtle threats have been taken as crude cudgels. You can do better.
+Bad2: There is something about <name> that is making it difficult for you to press home your case. Surely you don't care about them?
+Bad3: In the blustering storm of threat and counter-threat you've lost track of who said what. Focus!
+[End]
+
+Skill: Treachery
+Type: Social
+SubType: Blackmail
+PlyrDef: 1
+Data: 1
+Good1: <name> is gradually weakening your resolve but you stand firm for now.
+Good2: You can tell that <name> is becoming frustrated at your reticence but that's how it should be.
+Good3: You prevaricate and avoid, enough to fend off <name>'s threats for now.
+Bad1: Your resistance crumbles in the face of <name> relentless threats. 
+Bad2: <name> is master of the indirect threat. Before you realise it you are nodding your head.
+Bad3: What can you do when faced with such an experienced manipulator? <name> has you over a barrel. 
+[End]
+
+Skill: Treachery
+Type: Social
+SubType: Blackmail
+PlyrDef: -1
+Data: 1
+Good1: <name> is a slippery customer but you manage to get your point across.
+Good2: While <name> isn't yet agreeing to your demands they are at least giving them serious consideration.
+Good3: <name> doesn't give ground easily but you feel that you've made an impact.
+Bad1: You cajole and threaten but <name> appears to be paying you little heed. It's incredibly annoying.
+Bad2: Threatening <name> is like p*ssing into the wind. Everything you aim at them gets thrown straight back at you.
+Bad3: You are beginning to realise the futility of attempting to threaten <name>. Are they incorruptible?
+[End]
