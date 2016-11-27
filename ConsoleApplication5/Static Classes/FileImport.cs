@@ -2624,6 +2624,7 @@ namespace Next_Game
             SituationStruct structSituation = new SituationStruct();
             string cleanToken;
             string cleanTag;
+            string subType = "unknown";
             for (int i = 0; i < arrayOfSituations.Length; i++)
             {
                 if (arrayOfSituations[i] != "" && !arrayOfSituations[i].StartsWith("#"))
@@ -2786,6 +2787,7 @@ namespace Next_Game
                                         validData = false;
                                         break;
                                 }
+                                subType = cleanToken;
                                 break;
                             case "SitNum":
                                 try { structSituation.SitNum = Convert.ToInt32(cleanToken); }
@@ -2855,7 +2857,7 @@ namespace Next_Game
                                     situation.SetBad(tempListBad);
                                     tempDictionary.Add(situation.SitID, situation);
                                     if (structSituation.Type > ConflictType.None)
-                                    { Console.WriteLine("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad, SitNum {4}, Def {5}, Data {6}", structSituation.Name, structSituation.Type, 
+                                    { Console.WriteLine("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad, SitNum {4}, Def {5}, Data {6}", structSituation.Name, subType, 
                                         tempListGood.Count, tempListBad.Count, structSituation.SitNum, structSituation.Defender, structSituation.Data); }
                                     else if (structSituation.State > ConflictState.None)
                                     { Console.WriteLine("\"{0}\" imported, {1} good records & {2} bad, SitNum {3}", structSituation.Name, tempListGood.Count, tempListBad.Count, 

@@ -242,12 +242,12 @@ Type: Social
 SubType: Seduce
 PlyrDef: 1
 Data: 0
-Good1: <name> come hither looks and sultry charm fail to arose your interest.
-Good2: It's hard to get excited by <name> when they won't acknowledge your birthright.
+Good1: <name>'s come hither looks and sultry charm fail to arose your interest.
+Good2: It's hard to get excited by <name> when <he> won't acknowledge your birthright.
 Good3: You try to imagine what it would be like to wake up next to <name> and cringe at the mental image the thought conjures up.
 Bad1: You know that you should resist but, by the heavenly light of the Golden Gods, isn't <he> lovely?
-Bad2: The allure of <name> physical presence is strong and growing. Your weakening. 
-Bad3: As the rightful ruler of the land you should be able to exercise great self control but right now you're not so sure.
+Bad2: The allure of <name>'s physical presence is strong and growing. You're weakening. 
+Bad3: As the rightful ruler of the land you should be able to exercise great self control but <name> has you doubting your self-control.
 [End]
 
 Skill: Charm
@@ -259,8 +259,8 @@ Good1: You touch <name> on the hand, the arm, the neck. You feel the glow from <
 Good2: <name> wilts at your touch, laughs at your jokes and sighs when you blow sweet nothings into <his> ear.
 Good3: Seizing the moment you lean forward and kiss <name> passionately on <his> lips.
 Bad1: Your approaches are being repelled but with less force each time.
-Bad2: You chance a sneak kiss only to have <name> pull back although with a smile on <his> face.
-Bad3: <name> suddenly slaps hard but tellingly remains within kissing distance.
+Bad2: You chance a sneak kiss only to have <name> pull back, although with a smile on <his> face.
+Bad3: <name> suddenly slaps you hard but tellingly remains within kissing distance.
 [End]
 
 Skill: Charm
@@ -268,12 +268,12 @@ Type: Social
 SubType: Seduce
 PlyrDef: 1
 Data: 1
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: As lovely as <name> appears to be, whenever <he> passes wind you can only laugh.
+Good2: <name> is all a fluster as you rebuff <he> advances but you both know that there is an inevitability about the outcome.
+Good3: It is all you can do to fend of <name> and <he> sultry charms but you manage it one more time.
+Bad1: Your inhale the scent of <name>, admire the silky smoothness of <he> skin and gape at <his> beauty. You want <he>.
+Bad2: You feel an overwhelming desire to hold and caress <name>. You reach for <him>.
+Bad3: If you don't kiss <name> soon you'll explode from an unrequited desire so strong that you can barely restrain yourself.
 [End]
 
 Skill: Charm
@@ -281,12 +281,12 @@ Type: Social
 SubType: Seduce
 PlyrDef: -1
 Data: 1
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: You manage to elicit a sad, soft smile from <name>. It's something.
+Good2: Who said you're not romantic? <name> appears to think so although you've got a lot of ground to make up.
+Good3: You reach out and touch <name>'s hand. The contact of flesh on flesh gives you some hope that <he>'ll respond.
+Bad1: All your romantic overtures have been rebuffed. <name> appears to have as much interest in you as the rear end of a horse.
+Bad2: You've been spurned! <name> sits there and laughs at your feeble attempts at seduction. How did it go so wrong?
+Bad3: If only you'd managed a smile from <name>. A small sign that you are making progress. But no, a cold shoulder is all your receive for your troubles.
 [End]
 
 
@@ -298,12 +298,12 @@ Type: Social
 SubType: Befriend
 PlyrDef: 1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: <name> wants to help you and befriend you. Can't they see that it's pointless?
+Good2: Sadly you just plain don't like <name>. There's nothing more to say.
+Good3: <name> promises this and that but how can you be friends with somebody you don't like?
+Bad1: You're not handling this situation well. You have no interest in <name> yet you smile and encourage them.
+Bad2: <name> has a way about them. Despite your best efforts they are wriggling their way under your skin.
+Bad3: Would it be the end of the world if you befriended <name>? You're not sure but you're giving it serious thought.
 [End]
 
 Skill: Charm
@@ -311,12 +311,38 @@ Type: Social
 SubType: Befriend
 PlyrDef: -1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: You are the life of the party when you want to be. <name> certainly thinks so.
+Good2: Who wouldn't want to be your friend? You are such a likeable person. <name> appears to think so.
+Good3: It's all about knowing which buttons to press. You're the master button masher. <name> can only sit there and smile.
+Bad1: You try and try. <name> peers back at you with a blank expression. It's frustrating.
+Bad2: If <name> could only see the benefits of being your friend. Why are they being so pigheaded and stubborn?
+Bad3: The ability of <name> to resist your charm is beginning to niggle. You are a wonderful person. Why don't they realise this?
+[End]
+
+Skill: Charm
+Type: Social
+SubType: Befriend
+PlyrDef: 1
+Data: 1
+Good1: <name> is going all out to befriend you. A frown here, a stern look there and you delay for a bit longer.
+Good2: While it's good to be friends sometimes a measure of reserve is the wiser approach.
+Good3: <name> looks at you askance. Why won't you be swayed to their point of view? Perhaps, but not quite yet.
+Bad1: <name> is such a lovely person. You can't think of any reason why you shouldn't be friends.
+Bad2: Yes, of course you'd like nothing better than to establish a closer relationship with <name>.
+Bad3: You laugh at <name>'s hilarious jokes. You nod at their sage remarks. You should spend more time together.
+[End]
+
+Skill: Charm
+Type: Social
+SubType: Befriend
+PlyrDef: -1
+Data: 1
+Good1: <name> gifts you a small smile, but it's a sad one.
+Good2: The resilience of <name> is to be admired. They have resisted your undoubted charms with tenacity and vigour but you feel you've gained a little ground.
+Good3: Arrrh! It's a prolonged, painful process. <name> is not easily won over. Is there a smile there, just a little one? Yes!
+Bad1: In a charm offensive you find that you've been out-charm! <name> is one step ahead of you.
+Bad2: Attempting to stem the tide might have been an easier task than trying to befriend <name>. <He> pays little attention to your overtures.
+Bad3: Have you taken on more than you can handle? <name> has ample enough charm to counter all your attempts at sidling up to them.
 [End]
 
 # Other -> Hunting ---
@@ -326,12 +352,12 @@ Type: Other
 SubType: Hunting
 PlyrDef: 1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: <name> comes charging out of the undergrowth but you're ready for it. Let it come.
+Good2: You can feel the presence of <name>. It's close. You drop into a defensive crouch.
+Good3: <name> attacks but you knew that it would. The broken branches, the muddy tracks, the odour... Let it taste your steel.
+Bad1: As <name> bursts out of the nearby bushes you have only moments to react. You knew it was close but perhaps not THAT close.
+Bad2: You've anticipated the movements of <name> but it's sudden charge catches you unaware. Almost.
+Bad3: The snorting and snuffling from the bushes are you're only warning signs. Moments later <name> lunges straight at you.
 [End]
 
 Skill: Wits
@@ -339,38 +365,36 @@ Type: Other
 SubType: Hunting
 PlyrDef: -1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: It's been tough tracking <name> through the difficult terrain but you've finally got it cornered.
+Good2: It's a battle of wits and one that you're confident of winning. <name> can't out think a human.
+Good3: <name> has twisted, turned and backtracked through the awkward terrain but to no avail. You've remained on their trail and now you're close. Very close.
+Bad1: You've been hunting <name> for long enough to realise that it's down something unusual. Backtracked maybe or has it left the area?
+Bad2: <name> is a wily opponent. One moment you're right on it's trail and the next you're casting around in the hope of finding a new one.
+Bad3: You hate to admit it but <name> may just have managed to double back and get past you. It certainly looks like that judging by the tracks.
 [End]
-
-# Other -> Stealth ---
 
 Skill: Wits
 Type: Other
-SubType: Stealth
+SubType: Hunting
 PlyrDef: 1
-Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Data: 1
+Good1: You're not entirely sure who is hunting whom here. <name> displays human-like levels of intelligence and awareness. Luckily not that of a smart human.
+Good2: It's an unpleasant sensation to be uncertain of your situation when you're in difficult terrain and <name> is prowling around. You can handle it.
+Good3: Funnily enough it's you who's having to back track. <name> must have the nose of a swine and the eyes of eagle.
+Bad1: You wonder what it is like to be hunted? What it is like to be the prey? Now you know.
+Bad2: Your experience is in hunting creatures. When it comes to avoiding a dangerous predator, on your trail in difficult terrain, you're helpless.
+Bad3: You can hear <name> stealthily moving closer. It's stalking you. Carefully. Deliberately. Your queasy stomach and frightened bowels are telling you to run! RUN!!!
 [End]
 
 Skill: Wits
 Type: Other
-SubType: Stealth
+SubType: Hunting
 PlyrDef: -1
-Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Data: 1
+Good1: Just how smart is <name>? It seems to always be one step ahead of you, slinking through the dark bushes with ease. At least you're close.
+Good2: There's movement up ahead. <name> has deliberately shaken small trees before in order to lure you in. Not this time.
+Good3: You're beginning to see ghosts. Every time you think you've found <name> it turns out to be a false alarm. But it's close, very close.
+Bad1: You haven't seen a track for some time and there's been no sign of <name>'s passing this way. Have you lost the spoor?
+Bad2: You've got a sneaky suspicion that the tracks you're following are the same one you followed earlier. <name> is a wily b*stard.
+Bad3: Where is <name>? You've seen no sign of it for ages, haven't heard it or smelt it. Nothing. It doesn't bode well.
 [End]
