@@ -70,7 +70,7 @@ Description: Hooded, piercing dark eyes and a swarthy complexion.  The Viper liv
 Age: 32
 Special: None
 ArcID: 23
-Resources: 1
+Resources: 0
 Loyalty: 3
 Combat_Effect: +2
 Combat_Trait: Silent Killer
@@ -94,7 +94,7 @@ Description: Leprosy is both a curse and a blessing. The Leper's hideous appeara
 Age: 48
 Special: None
 ArcID: 23
-Resources: 1
+Resources: 0
 Loyalty: 3
 Combat_Effect: -2
 Combat_Trait: Deformed
@@ -142,7 +142,7 @@ Description: Rumoured to be from a long lost Royal line, the striking looks and 
 Age: 25
 Special: None
 ArcID: 23
-Resources: 1
+Resources: 0
 Loyalty: 4
 Combat_Effect: -2
 Combat_Trait: Womanly
@@ -238,7 +238,7 @@ Description: Sweet, innocent and looks half her age. Seemingly abandoned and wit
 Age: 15
 Special: None
 ArcID: 23
-Resources: 1
+Resources: 0
 Loyalty: 3
 Combat_Effect: +1
 Combat_Trait: Sneaky

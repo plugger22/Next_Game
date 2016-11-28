@@ -957,6 +957,7 @@ namespace Next_Game
                 newMajorhouse.SetHousesToCapital(oldkingHouse.GetHousesToCapital());
                 newMajorhouse.SetHousesToConnector(oldkingHouse.GetHousesToConnector());
                 newMajorhouse.SetSecrets(turncoatHouse.GetSecrets());
+                newMajorhouse.Resources = oldkingHouse.Resources;
 
                 //update Map with refID and houseID for loc
                 Location locLord = Game.network.GetLocation(newMajorhouse.LocID);
@@ -982,6 +983,7 @@ namespace Next_Game
                 newMinorHouse.LocID = turncoatHouse.LocID;
                 newMinorHouse.MenAtArms = turncoatHouse.MenAtArms;
                 newMinorHouse.Branch = turncoatHouse.Branch;
+                newMinorHouse.Resources = turncoatHouse.Resources;
                 //remove from list to prevent future use
                 listUnusedMinorHouses.RemoveAt(index);
                 Console.WriteLine("{0}, {1}, RefID: {2}", minorStruct.Name, minorStruct.Motto, minorStruct.RefID);
@@ -1057,6 +1059,7 @@ namespace Next_Game
                 newLord.BornRefID = oldBannerLord.BornRefID;
                 newLord.Sex = oldBannerLord.Sex;
                 newLord.SetSecrets(oldBannerLord.GetSecrets());
+                newLord.Resources = oldBannerLord.Resources;
 
                 //remove oldBannerLord from dictionaries and add newLord
                 Game.world.RemovePassiveActor(oldBannerLord.ActID);

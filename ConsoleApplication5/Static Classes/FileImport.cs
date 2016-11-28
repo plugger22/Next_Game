@@ -2531,12 +2531,12 @@ namespace Next_Game
                                 { Game.SetError(new Error(59, e.Message)); validData = false; }
                                 break;
                             case "Resources":
-                                //should be level 1 to 5
+                                //should be level 0 to 5
                                 try
                                 {
                                     int tempNum = Convert.ToInt32(cleanToken);
                                     if (tempNum > 5) { tempNum = 5; Game.SetError(new Error(59, string.Format("Invalid Input, Resources > 5 (\"{0}\")", arrayOfFollowers[i]))); }
-                                    else if (tempNum < 1) { tempNum = 1; Game.SetError(new Error(59, string.Format("Invalid Input, Resources < 1 (\"{0}\")", arrayOfFollowers[i]))); }
+                                    else if (tempNum < 0) { tempNum = 0; Game.SetError(new Error(59, string.Format("Invalid Input, Resources < 1 (\"{0}\")", arrayOfFollowers[i]))); }
                                     structFollower.Resources = tempNum;
                                 }
                                 catch (Exception e)

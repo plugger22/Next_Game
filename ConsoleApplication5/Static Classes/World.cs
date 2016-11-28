@@ -619,15 +619,25 @@ namespace Next_Game
                     }
                 }
 
-                //Resources level for all active followers
-                if (person.Resources > 0)
+                //Resources level -> active followers
+                if (person is Active)
                 {
                     Active tempPerson = person as Active;
                     int resources = tempPerson.Resources;
                     resources = Math.Min(5, resources);
-                    resources = Math.Max(1, resources);
+                    //resources = Math.Max(1, resources);
                     listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black));
-                    listToDisplay.Add(new Snippet(string.Format("Resources: {0} ", (ResourceLevel)resources), false));
+                    listToDisplay.Add(new Snippet(string.Format("Resources ({0}) ", (ResourceLevel)resources), false));
+                    listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(resources)), RLColor.LightRed, RLColor.Black));
+                }
+                //Resources level -> Lords and BannerLords
+                else if (person.Type == ActorType.Lord || person.Type == ActorType.BannerLord)
+                {
+                    int resources = person.Resources;
+                    resources = Math.Min(5, resources);
+                    //resources = Math.Max(1, resources);
+                    listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black));
+                    listToDisplay.Add(new Snippet(string.Format("Resources ({0}) ", (ResourceLevel)resources), false));
                     listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(resources)), RLColor.LightRed, RLColor.Black));
                 }
 
@@ -794,6 +804,7 @@ namespace Next_Game
                     int eventCount = house.GetNumFollowerEvents();
                     if (loc.HouseID != 99)
                     {
+                        int resources = house.Resources;
                        //normal houses - major / minor / capital 
                         locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}", house.Name, loc.LocName, loc.LocationID), color, RLColor.Black));
                         locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
@@ -801,6 +812,8 @@ namespace Next_Game
                         locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
                         locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), false));
                         locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), RLColor.LightRed, RLColor.Black));
+                        locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));
+                        locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), RLColor.LightRed, RLColor.Black));
                         if (eventCount > 0)
                         { locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
                             RLColor.LightGray, RLColor.Black)); }
@@ -834,10 +847,13 @@ namespace Next_Game
                 
                 if (loc.IsCapital() == true)
                 {
+                    int resources = 5; //placeholder
                     locList.Add(new Snippet("KINGDOM CAPITAL", RLColor.Yellow, RLColor.Black));
                     int capitalWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
                     locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
                     locList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
+                    locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));
+                    locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), RLColor.LightRed, RLColor.Black));
                 }
                 if (loc.Connector == true)
                 { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
@@ -947,6 +963,8 @@ namespace Next_Game
                 houseList.Add(new Snippet(army));
                 houseList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)majorHouse.CastleWalls), false));
                 houseList.Add(new Snippet(string.Format("{0}", GetStars(majorHouse.CastleWalls)), RLColor.LightRed, RLColor.Black));
+                houseList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)majorHouse.Resources), false));
+                houseList.Add(new Snippet(string.Format("{0}", GetStars((int)majorHouse.Resources)), RLColor.LightRed, RLColor.Black));
                 //bannerlords
                 if (listLordLocations.Count > 0)
                 {
@@ -1067,8 +1085,12 @@ namespace Next_Game
             List<Snippet> capitalList = new List<Snippet>();
             capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", ShowLocationCoords(1)), RLColor.Yellow, RLColor.Black));
             int capitalWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
+            int capitalResources = 5; //placeholder
             capitalList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
             capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
+            //placeholder
+            capitalList.Add(new Snippet(string.Format("Kingdom Treasury Resources ({0}) ", (ResourceLevel)capitalResources), false));
+            capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalResources)), RLColor.LightRed, RLColor.Black));
             //ROYAL FAMILY
             capitalList.Add(new Snippet("Royal Family", RLColor.Brown, RLColor.Black));
             int royalRefID = Game.lore.RoyalRefIDCurrent;

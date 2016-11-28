@@ -136,6 +136,8 @@ namespace Next_Game
                 house.LocName = listHousePool[i].Capital;
                 house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS);
                 house.CastleWalls = listHousePool[i].Castle;
+                //placeholder
+                house.Resources = rnd.Next(1, 5);
                 //add house to listOfHouses
                 listOfGreatHouses.Add(house);
                 //Console.WriteLine("House {0} added to listOfGreatHouses", house.Name);
@@ -163,6 +165,8 @@ namespace Next_Game
             house.LocID = locID;
             house.HouseID = houseID;
             house.MenAtArms = Game.constant.GetValue(Global.MEN_AT_ARMS) / 2;
+            //placeholder
+            house.Resources = rnd.Next(1, 3);
             //add house to listOfHouses
             listOfMinorHouses.Add(house);
             //remove minorhouse from pool list to avoid being chosen again
@@ -431,6 +435,13 @@ namespace Next_Game
             //illegal actor type
             else
             { Game.SetError(new Error(8, "invalid ActorType")); return actor; }
+            //resources
+            if (type == ActorType.Lord || type == ActorType.BannerLord)
+            {
+                House house = Game.world.GetHouse(refID);
+                if (house != null)
+                { actor.Resources = house.Resources; }
+            }
             //age (older men, younger wives
             int age = 0;
             if (sex == ActorSex.Male)
@@ -575,6 +586,10 @@ namespace Next_Game
             actor.LocID = locID;
             actor.RefID = refID;
             actor.HouseID = houseID;
+            //resources
+            House house = Game.world.GetHouse(refID);
+            if (house != null)
+            { actor.Resources = house.Resources; }
             //add to Location
             Location loc = Game.network.GetLocation(locID);
             loc.AddActor(actor.ActID);
