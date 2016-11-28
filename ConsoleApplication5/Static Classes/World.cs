@@ -620,7 +620,7 @@ namespace Next_Game
                 }
 
                 //Resources level for all active followers
-                if (person is Active)
+                if (person.Resources > 0)
                 {
                     Active tempPerson = person as Active;
                     int resources = tempPerson.Resources;

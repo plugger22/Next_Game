@@ -30,6 +30,7 @@ namespace Next_Game
         public int Gone { get; set; } = 0; //year died or missing
         public string Description { get; set; }
         public int Delay { get; set; } = 0; // if > 0 then character delayed for some reason and unavailable
+        public int Resources { get; set; } //abstracted money, equipment and influence
         public string DelayReason { get; set; }
         public ActorStatus Status { get; set; } = 0;
         public ActorType Type { get; set; } = 0;
@@ -212,7 +213,7 @@ namespace Next_Game
         public int CrowChance { get; set; } //chance of crow getting through
         public int CrowDistance { get; set; } //distance between player and follower
         public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
-        public int Resources { get; set; } //abstracted money, equipment and influence
+        
         public bool Activated { get; set; } //can move/be given orders this turn, or not
         private List<string> crowTooltip { get; set; } //explanation of factors influencing crow chance
         

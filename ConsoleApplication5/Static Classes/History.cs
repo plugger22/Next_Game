@@ -309,6 +309,8 @@ namespace Next_Game
             //place characters at Location
             player.LocID = locID;
             player.SetActorPosition(loc.GetPosition());
+            //randomly assign resource level (placeholder)
+            player.Resources = rnd.Next(1, 6);
             player.Type = ActorType.Usurper;
             //add to Location list of Characters
             loc.AddActor(player.ActID);
