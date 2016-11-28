@@ -847,13 +847,14 @@ namespace Next_Game
                 
                 if (loc.IsCapital() == true)
                 {
-                    int resources = 5; //placeholder
+                    
                     locList.Add(new Snippet("KINGDOM CAPITAL", RLColor.Yellow, RLColor.Black));
-                    int capitalWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
+                    int capitalWalls = Game.history.CapitalWalls;
+                    int capitalResources = Game.history.CapitalTreasury;
                     locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
                     locList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
-                    locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));
-                    locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), RLColor.LightRed, RLColor.Black));
+                    locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)capitalResources), false));
+                    locList.Add(new Snippet(string.Format("{0}", GetStars((int)capitalResources)), RLColor.LightRed, RLColor.Black));
                 }
                 if (loc.Connector == true)
                 { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
@@ -1084,8 +1085,8 @@ namespace Next_Game
         {
             List<Snippet> capitalList = new List<Snippet>();
             capitalList.Add(new Snippet(string.Format("Kingskeep, Kingdom Capital {0}", ShowLocationCoords(1)), RLColor.Yellow, RLColor.Black));
-            int capitalWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
-            int capitalResources = 5; //placeholder
+            int capitalWalls = Game.history.CapitalWalls;
+            int capitalResources = Game.history.CapitalTreasury;
             capitalList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
             capitalList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
             //placeholder

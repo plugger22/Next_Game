@@ -11,6 +11,9 @@ namespace Next_Game
     //Location data flow: create in Map => Network to generate routes => History to generate names and data => World for current state and future changes
     public class History
     {
+        //Capital
+        public int CapitalWalls { get; set; } //strength of capital walls (1 to 5)
+        public int CapitalTreasury { get; set; } //size of capital treasury (resources to run the kingdom) (1 to 5)
         //actor names
         private List<Active> listOfPlayerActors;
         private List<string> listOfPlayerNames;
@@ -99,6 +102,7 @@ namespace Next_Game
             InitialiseTraits();
             //Player & Followers (set up later in World)
             InitialisePlayer();
+            InitialiseCapital();
             InitialiseFollowers(Game.file.GetFollowers("Followers.txt"));
             
         }
@@ -318,6 +322,15 @@ namespace Next_Game
             player.Type = ActorType.Usurper;
             //add to Location list of Characters
             loc.AddActor(player.ActID);
+        }
+
+        /// <summary>
+        /// Sets up all relevant details for the capital 
+        /// </summary>
+        private void InitialiseCapital()
+        {
+            CapitalWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
+            CapitalTreasury = rnd.Next(2, 6); //placeholder
         }
 
         /// <summary>

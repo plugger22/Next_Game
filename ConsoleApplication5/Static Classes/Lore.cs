@@ -983,6 +983,7 @@ namespace Next_Game
                 newMinorHouse.LocID = turncoatHouse.LocID;
                 newMinorHouse.MenAtArms = turncoatHouse.MenAtArms;
                 newMinorHouse.Branch = turncoatHouse.Branch;
+                newMinorHouse.CastleWalls = turncoatHouse.CastleWalls;
                 newMinorHouse.Resources = turncoatHouse.Resources;
                 //remove from list to prevent future use
                 listUnusedMinorHouses.RemoveAt(index);
