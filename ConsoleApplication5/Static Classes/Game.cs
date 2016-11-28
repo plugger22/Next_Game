@@ -623,7 +623,7 @@ namespace Next_Game
                             {
                                 case MenuMode.Main:
                                     //Show Player Characters
-                                    infoChannel.SetInfoList(world.ShowPlayerActorsRL(), ConsoleDisplay.Multi);
+                                    infoChannel.SetInfoList(world.ShowActiveActorsRL(), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Actor_Active:
                                     //move Player characters around map
@@ -811,7 +811,7 @@ namespace Next_Game
             if (_renderRequired == true)
             {
                 //update status console
-                infoChannel.SetInfoList(world.ShowPlayerActorsRL(), ConsoleDisplay.Status);
+                infoChannel.SetInfoList(world.ShowActiveActorsRL(), ConsoleDisplay.Status);
                 infoChannel.SetInfoList(world.ShowRecentMessagesRL(), ConsoleDisplay.Message);
                 //draw to consoles
                 map.DrawMapRL(_mapConsole);

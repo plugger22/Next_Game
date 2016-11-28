@@ -282,7 +282,7 @@ namespace Next_Game
         /// </summary>
         /// <returns>List with info on each character a single, sequential, entry in the list</returns>
         /// <param name="locationsOnly">If true only show those at Locations, default is show all</param>
-        public List<Snippet> ShowPlayerActorsRL(bool locationsOnly = false)
+        public List<Snippet> ShowActiveActorsRL(bool locationsOnly = false)
         {
             List<Snippet> listToDisplay = new List<Snippet>();
             //listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}", RLColor.Yellow, RLColor.Black));
@@ -617,6 +617,18 @@ namespace Next_Game
                         else
                         { listToDisplay.Add(new Snippet("Not activated", RLColor.Red, RLColor.Black)); }
                     }
+                }
+
+                //Resources level for all active followers
+                if (person is Active)
+                {
+                    Active tempPerson = person as Active;
+                    int resources = tempPerson.Resources;
+                    resources = Math.Min(5, resources);
+                    resources = Math.Max(1, resources);
+                    listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black));
+                    listToDisplay.Add(new Snippet(string.Format("Resources: {0} ", (ResourceLevel)resources), false));
+                    listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(resources)), RLColor.LightRed, RLColor.Black));
                 }
 
                 //family

@@ -2531,7 +2531,14 @@ namespace Next_Game
                                 { Game.SetError(new Error(59, e.Message)); validData = false; }
                                 break;
                             case "Resources":
-                                try { structFollower.Resources = Convert.ToInt32(cleanToken); }
+                                //should be level 1 to 5
+                                try
+                                {
+                                    int tempNum = Convert.ToInt32(cleanToken);
+                                    if (tempNum > 5) { tempNum = 5; Game.SetError(new Error(59, string.Format("Invalid Input, Resources > 5 (\"{0}\")", arrayOfFollowers[i]))); }
+                                    else if (tempNum < 1) { tempNum = 1; Game.SetError(new Error(59, string.Format("Invalid Input, Resources < 1 (\"{0}\")", arrayOfFollowers[i]))); }
+                                    structFollower.Resources = tempNum;
+                                }
                                 catch (Exception e)
                                 { Game.SetError(new Error(59, e.Message)); validData = false; }
                                 break;

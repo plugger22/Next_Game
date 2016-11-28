@@ -6,7 +6,7 @@
 # Description: paint a picture of the character. No default, compulsory.
 # Special: short text description of a weakness or strength (tied into Archetype and related events). Default of 'None'
 # ArcID: Archetype ID, default value of '0' for none (events that are specific to the follower, eg. a recurring weakness)
-# Resources: Starting amount of resources, default value of '0'
+# Resources: Starting amount of resources, default value of '1', range 1 to 5
 # Loyalty: Base Loyalty level (range 1 to 5) default '3'
 # ...._Effect: Description of Effect, eg. "Puzzled" (keep short). Use default of 'Normal' if nothing unusual. Tie in with Effect system if possible.
 # ...._Effect: A number (range +/- 1 or 2), eg. '+1' which gives a value of '4'. Default of '0' gives an average Effect of 3 (or none for 'Touched')
@@ -22,7 +22,7 @@ Description: A nondescript, short, middle aged man who listens in, observes, and
 Age: 40
 Special: None
 ArcID: 23
-Resources: 0
+Resources: 1
 Loyalty: 3
 Combat_Effect: -2
 Combat_Trait: Pacifist
@@ -46,7 +46,7 @@ Description: A lithe, jolly young man with great agility who can sing, dance and
 Age: 19
 Special: None
 ArcID: 23
-Resources: 0
+Resources: 1
 Loyalty: 3
 Combat_Effect: +1
 Combat_Trait: Acrobatic
@@ -70,7 +70,7 @@ Description: Hooded, piercing dark eyes and a swarthy complexion.  The Viper liv
 Age: 32
 Special: None
 ArcID: 23
-Resources: 0
+Resources: 1
 Loyalty: 3
 Combat_Effect: +2
 Combat_Trait: Silent Killer
@@ -94,7 +94,7 @@ Description: Leprosy is both a curse and a blessing. The Leper's hideous appeara
 Age: 48
 Special: None
 ArcID: 23
-Resources: 0
+Resources: 1
 Loyalty: 3
 Combat_Effect: -2
 Combat_Trait: Deformed
@@ -118,7 +118,7 @@ Description: People willingly abide his wishes without realising they have been 
 Age: 36
 Special: None
 ArcID: 23
-Resources: 0
+Resources: 1
 Loyalty: 2
 Combat_Effect: -2
 Combat_Trait: Avoids Confrontation
@@ -142,7 +142,7 @@ Description: Rumoured to be from a long lost Royal line, the striking looks and 
 Age: 25
 Special: None
 ArcID: 23
-Resources: 0
+Resources: 1
 Loyalty: 4
 Combat_Effect: -2
 Combat_Trait: Womanly
@@ -166,7 +166,7 @@ Description: Massive muscles, brawn and a plethora of scars create a slow moving
 Age: 29
 Special: None
 ArcID: 23
-Resources: 0
+Resources: 1
 Loyalty: 5
 Combat_Effect: +2
 Combat_Trait: Humungus
@@ -190,7 +190,7 @@ Description: Hunched over a walking stick, shuffling from place to place, the Cr
 Age: 63
 Special: None
 ArcID: 23
-Resources: 0
+Resources: 1
 Loyalty: 3
 Combat_Effect: -2
 Combat_Trait: Infirm
@@ -214,7 +214,7 @@ Description: Apparently from a far off land, the Haggler wheels and deals his wa
 Age: 42
 Special: None
 ArcID: 23
-Resources: 100
+Resources: 3
 Loyalty: 3
 Combat_Effect: -2
 Combat_Trait: Corpulent
@@ -238,7 +238,7 @@ Description: Sweet, innocent and looks half her age. Seemingly abandoned and wit
 Age: 15
 Special: None
 ArcID: 23
-Resources: 0
+Resources: 1
 Loyalty: 3
 Combat_Effect: +1
 Combat_Trait: Sneaky
