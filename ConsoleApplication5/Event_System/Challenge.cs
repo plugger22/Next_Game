@@ -20,6 +20,11 @@ namespace Next_Game.Event_System
         string[] arraySkills;
 
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="subType"></param>
         public Challenge(ConflictType type, int subType)
         {
             if (type > ConflictType.None)
@@ -65,9 +70,62 @@ namespace Next_Game.Event_System
                     Array.Clear(arrayStrategies, 0, arrayStrategies.Length);
                     Array.Copy(tempArray, arrayStrategies, tempArray.Length);
                 }
+                else
+                { Game.SetError(new Error(107, "Invalid input (array incorrect length)")); }
             }
+            else
+            { Game.SetError(new Error(107, "Invalid input (Null array)")); }
         }
 
+        /// <summary>
+        /// Clear then copy new data to array of Outcomes
+        /// </summary>
+        /// <param name="tempArray"></param>
+        public void SetOutcomes(string[] tempArray)
+        {
+            if (tempArray != null)
+            {
+                if (tempArray.Length == 6)
+                {
+                    Array.Clear(arrayOutcomes, 0, arrayOutcomes.Length);
+                    Array.Copy(tempArray, arrayOutcomes, tempArray.Length);
+                }
+                else
+                { Game.SetError(new Error(108, "Invalid input (array incorrect length)")); }
+            }
+            else
+            { Game.SetError(new Error(108, "Invalid input (Null array)")); }
+        }
+
+        /// <summary>
+        /// Clear then copy new data to array of Skills
+        /// </summary>
+        /// <param name="tempArray"></param>
+        public void SetSkills(string[] tempArray)
+        {
+            if (tempArray != null)
+            {
+                if (tempArray.Length == 3)
+                {
+                    Array.Clear(arraySkills, 0, arraySkills.Length);
+                    Array.Copy(tempArray, arraySkills, tempArray.Length);
+                }
+                else
+                { Game.SetError(new Error(109, "Invalid input (array incorrect length)")); }
+            }
+            else
+            { Game.SetError(new Error(109, "Invalid input (Null array)")); }
+        }
+
+
+        public string[] GetStrategies()
+        { return arrayStrategies; }
+
+        public string[] GetOutcomes()
+        { return arrayOutcomes; }
+
+        public string[] GetSkills()
+        { return arraySkills; }
 
         //place methods above here
     }
