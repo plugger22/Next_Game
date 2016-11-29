@@ -13,10 +13,10 @@ namespace Next_Game
     public enum EventType { None, Location, Travelling }
     public enum DataPoint { None, Invisibility, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
     public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
-    public enum ConflictType { None, Combat, Social, Other} //broad category
-    public enum ConflictCombat { None, Personal, Tournament, Battle} //sub category
+    public enum ConflictType { None, Combat, Social, Stealth} //broad category
+    public enum ConflictCombat { None, Personal, Tournament, Battle, Hunting} //sub category
     public enum ConflictSocial { None, Blackmail, Seduce, Befriend} //sub category
-    public enum ConflictOther { None, Hunting, Stealth} //sub category
+    public enum ConflictStealth { None, Infiltrate, Evade, Escape} //sub category
     public enum ConflictSpecial { None, Fortified_Position, Mountain_Country, Forest_Country, Castle_Walls } //special situations
     public enum ResourceLevel { None, Poor, Moderate, Substantial, Wealthy, Excessive}
    

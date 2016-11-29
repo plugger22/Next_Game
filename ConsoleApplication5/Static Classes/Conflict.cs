@@ -34,7 +34,7 @@ namespace Next_Game
         public ConflictType Conflict_Type { get; set; }
         public ConflictCombat Combat_Type { get; set; }
         public ConflictSocial Social_Type { get; set; }
-        public ConflictOther Other_Type { get; set; }
+        public ConflictStealth Stealth_Type { get; set; }
         //Game specific Situation
         public ConflictState Game_State { get; set; }
         public CardType Game_Type { get; set; }
@@ -454,8 +454,8 @@ namespace Next_Game
                                 List<Situation> listSocialSituations = new List<Situation>();
                                 IEnumerable<Situation> situationSocialSet =
                                     from sitTemp in tempDictionary
-                                    where sitTemp.Value.Type == ConflictType.Combat
-                                    where (int)sitTemp.Value.Type_Combat == subType
+                                    where sitTemp.Value.Type == ConflictType.Social
+                                    where (int)sitTemp.Value.Type_Social == subType
                                     where sitTemp.Value.Defender == plyrDef
                                     where sitTemp.Value.Data == pointOfView
                                     select sitTemp.Value;
@@ -466,13 +466,13 @@ namespace Next_Game
                                 else
                                 { Game.SetError(new Error(104, "Incorrect count for Social Situations (listSkillSituations)")); }
                                 break;
-                            case ConflictType.Other:
+                            case ConflictType.Stealth:
                                 //Get suitable situations from dictionary
                                 List<Situation> listOtherSituations = new List<Situation>();
                                 IEnumerable<Situation> situationOtherSet =
                                     from sitTemp in tempDictionary
-                                    where sitTemp.Value.Type == ConflictType.Combat
-                                    where (int)sitTemp.Value.Type_Combat == subType
+                                    where sitTemp.Value.Type == ConflictType.Stealth
+                                    where (int)sitTemp.Value.Type_Stealth == subType
                                     where sitTemp.Value.Defender == plyrDef
                                     where sitTemp.Value.Data == pointOfView
                                     select sitTemp.Value;
@@ -674,6 +674,11 @@ namespace Next_Game
                             OtherSkill_1 = SkillType.Wits;
                             OtherSkill_2 = SkillType.Treachery;
                             break;
+                        case ConflictCombat.Hunting:
+                            PrimarySkill = SkillType.Wits;
+                            OtherSkill_1 = SkillType.Combat;
+                            OtherSkill_2 = SkillType.Leadership;
+                            break;
                         default:
                             Game.SetError(new Error(91, "Invalid Combat Type"));
                             break;
@@ -702,15 +707,11 @@ namespace Next_Game
                             break;
                     }
                     break;
-                case ConflictType.Other:
-                    switch (Other_Type)
+                case ConflictType.Stealth:
+                    switch (Stealth_Type)
                     {
-                        case ConflictOther.Hunting:
-                            PrimarySkill = SkillType.Wits;
-                            OtherSkill_1 = SkillType.Combat;
-                            OtherSkill_2 = SkillType.Leadership;
-                            break;
-                        case ConflictOther.Stealth:
+                        
+                        case ConflictStealth.Infiltrate:
                             PrimarySkill = SkillType.Wits;
                             OtherSkill_1 = SkillType.Combat;
                             OtherSkill_2 = SkillType.Treachery;
@@ -766,8 +767,8 @@ namespace Next_Game
                 case ConflictType.Social:
                     subType = (int)Social_Type;
                     break;
-                case ConflictType.Other:
-                    subType = (int)Other_Type;
+                case ConflictType.Stealth:
+                    subType = (int)Stealth_Type;
                     break;
                 default:
                     Game.SetError(new Error(105, string.Format("Unknown Conflict_Type (\"{0}\") -> subType set to 1 ", Conflict_Type)));

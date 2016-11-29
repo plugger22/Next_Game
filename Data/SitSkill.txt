@@ -2,8 +2,8 @@
 # should be FOUR entries for each type, one if  Player is challenger (PlyrDef -1), one if not (PlyrDef 1), another set from POV of Opponent (Data: 1)
 # NOTE: All fields must have a value
 # Skill: Name of Skill, eg. Leadership. Description purposes only
-# Type: (ConflictType) Combat / Social / Other 
-# SubType: if Combat -> Personal/Tournament/Battle, if Social -> Blackmail/Seduce/Befriend, if Other -> Hunting/Stealth
+# Type: (ConflictType) Combat / Social / Stealth 
+# SubType: if Combat -> Personal/Tournament/Battle/Hunting, if Social -> Blackmail/Seduce/Befriend, if Stealth -> Infiltrate/Evade/Escape
 # SitNum: NO sitNum as all cards are assumed to be defender advantage, sitnum 0, cards.
 # PlyrDef: '1' if player is the defender, '-1' if opponent 
 # Data: Point of View (who's skill are we talking about) -> '0' Player's skill, '1' Opponent's skill
@@ -181,6 +181,60 @@ Bad2: Your body is still store from your previous unhorsing. It likes being knoc
 Bad3: You're trying your best but every gallop down the jousting lane leaves you face down in the dirt and <name> mounted and waving to the crowd.
 [End]
 
+# Combat -> Hunting ---
+
+Skill: Wits
+Type: Combat
+SubType: Hunting
+PlyrDef: 1
+Data: 0
+Good1: <name> comes charging out of the undergrowth but you're ready for it. Let it come.
+Good2: You can feel the presence of <name>. It's close. You drop into a defensive crouch.
+Good3: <name> attacks but you knew that it would. The broken branches, the muddy tracks, the odour... Let it taste your steel.
+Bad1: As <name> bursts out of the nearby bushes you have only moments to react. You knew it was close but perhaps not THAT close.
+Bad2: You've anticipated the movements of <name> but it's sudden charge catches you unaware. Almost.
+Bad3: The snorting and snuffling from the bushes are you're only warning signs. Moments later <name> lunges straight at you.
+[End]
+
+Skill: Wits
+Type: Combat
+SubType: Hunting
+PlyrDef: -1
+Data: 0
+Good1: It's been tough tracking <name> through the difficult terrain but you've finally got it cornered.
+Good2: It's a battle of wits and one that you're confident of winning. <name> can't out think a human.
+Good3: <name> has twisted, turned and backtracked through the awkward terrain but to no avail. You've remained on their trail and now you're close. Very close.
+Bad1: You've been hunting <name> for long enough to realise that it's down something unusual. Backtracked maybe or has it left the area?
+Bad2: <name> is a wily opponent. One moment you're right on it's trail and the next you're casting around in the hope of finding a new one.
+Bad3: You hate to admit it but <name> may just have managed to double back and get past you. It certainly looks like that judging by the tracks.
+[End]
+
+Skill: Wits
+Type: Combat
+SubType: Hunting
+PlyrDef: 1
+Data: 1
+Good1: You're not entirely sure who is hunting whom here. <name> displays human-like levels of intelligence and awareness. Luckily not that of a smart human.
+Good2: It's an unpleasant sensation to be uncertain of your situation when you're in difficult terrain and <name> is prowling around. You can handle it.
+Good3: Funnily enough it's you who's having to back track. <name> must have the nose of a swine and the eyes of eagle.
+Bad1: You wonder what it is like to be hunted? What it is like to be the prey? Now you know.
+Bad2: Your experience is in hunting creatures. When it comes to avoiding a dangerous predator, on your trail in difficult terrain, you're helpless.
+Bad3: You can hear <name> stealthily moving closer. It's stalking you. Carefully. Deliberately. Your queasy stomach and frightened bowels are telling you to run! RUN!!!
+[End]
+
+Skill: Wits
+Type: Combat
+SubType: Hunting
+PlyrDef: -1
+Data: 1
+Good1: Just how smart is <name>? It seems to always be one step ahead of you, slinking through the dark bushes with ease. At least you're close.
+Good2: There's movement up ahead. <name> has deliberately shaken small trees before in order to lure you in. Not this time.
+Good3: You're beginning to see ghosts. Every time you think you've found <name> it turns out to be a false alarm. But it's close, very close.
+Bad1: You haven't seen a track for some time and there's been no sign of <name>'s passing this way. Have you lost the spoor?
+Bad2: You've got a sneaky suspicion that the tracks you're following are the same one you followed earlier. <name> is a wily b*stard.
+Bad3: Where is <name>? You've seen no sign of it for ages, haven't heard it or smelt it. Nothing. It doesn't bode well.
+[End]
+
 # Social -> Blackmail ---
 
 Skill: Treachery
@@ -289,8 +343,6 @@ Bad2: You've been spurned! <name> sits there and laughs at your feeble attempts 
 Bad3: If only you'd managed a smile from <name>. A small sign that you are making progress. But no, a cold shoulder is all your receive for your troubles.
 [End]
 
-
-
 # Social -> Befriend ---
 
 Skill: Charm
@@ -343,58 +395,4 @@ Good3: Arrrh! It's a prolonged, painful process. <name> is not easily won over. 
 Bad1: In a charm offensive you find that you've been out-charm! <name> is one step ahead of you.
 Bad2: Attempting to stem the tide might have been an easier task than trying to befriend <name>. <He> pays little attention to your overtures.
 Bad3: Have you taken on more than you can handle? <name> has ample enough charm to counter all your attempts at sidling up to them.
-[End]
-
-# Other -> Hunting ---
-
-Skill: Wits
-Type: Other
-SubType: Hunting
-PlyrDef: 1
-Data: 0
-Good1: <name> comes charging out of the undergrowth but you're ready for it. Let it come.
-Good2: You can feel the presence of <name>. It's close. You drop into a defensive crouch.
-Good3: <name> attacks but you knew that it would. The broken branches, the muddy tracks, the odour... Let it taste your steel.
-Bad1: As <name> bursts out of the nearby bushes you have only moments to react. You knew it was close but perhaps not THAT close.
-Bad2: You've anticipated the movements of <name> but it's sudden charge catches you unaware. Almost.
-Bad3: The snorting and snuffling from the bushes are you're only warning signs. Moments later <name> lunges straight at you.
-[End]
-
-Skill: Wits
-Type: Other
-SubType: Hunting
-PlyrDef: -1
-Data: 0
-Good1: It's been tough tracking <name> through the difficult terrain but you've finally got it cornered.
-Good2: It's a battle of wits and one that you're confident of winning. <name> can't out think a human.
-Good3: <name> has twisted, turned and backtracked through the awkward terrain but to no avail. You've remained on their trail and now you're close. Very close.
-Bad1: You've been hunting <name> for long enough to realise that it's down something unusual. Backtracked maybe or has it left the area?
-Bad2: <name> is a wily opponent. One moment you're right on it's trail and the next you're casting around in the hope of finding a new one.
-Bad3: You hate to admit it but <name> may just have managed to double back and get past you. It certainly looks like that judging by the tracks.
-[End]
-
-Skill: Wits
-Type: Other
-SubType: Hunting
-PlyrDef: 1
-Data: 1
-Good1: You're not entirely sure who is hunting whom here. <name> displays human-like levels of intelligence and awareness. Luckily not that of a smart human.
-Good2: It's an unpleasant sensation to be uncertain of your situation when you're in difficult terrain and <name> is prowling around. You can handle it.
-Good3: Funnily enough it's you who's having to back track. <name> must have the nose of a swine and the eyes of eagle.
-Bad1: You wonder what it is like to be hunted? What it is like to be the prey? Now you know.
-Bad2: Your experience is in hunting creatures. When it comes to avoiding a dangerous predator, on your trail in difficult terrain, you're helpless.
-Bad3: You can hear <name> stealthily moving closer. It's stalking you. Carefully. Deliberately. Your queasy stomach and frightened bowels are telling you to run! RUN!!!
-[End]
-
-Skill: Wits
-Type: Other
-SubType: Hunting
-PlyrDef: -1
-Data: 1
-Good1: Just how smart is <name>? It seems to always be one step ahead of you, slinking through the dark bushes with ease. At least you're close.
-Good2: There's movement up ahead. <name> has deliberately shaken small trees before in order to lure you in. Not this time.
-Good3: You're beginning to see ghosts. Every time you think you've found <name> it turns out to be a false alarm. But it's close, very close.
-Bad1: You haven't seen a track for some time and there's been no sign of <name>'s passing this way. Have you lost the spoor?
-Bad2: You've got a sneaky suspicion that the tracks you're following are the same one you followed earlier. <name> is a wily b*stard.
-Bad3: Where is <name>? You've seen no sign of it for ages, haven't heard it or smelt it. Nothing. It doesn't bode well.
 [End]

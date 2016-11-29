@@ -1,0 +1,28 @@
+
+# Other -> Stealth ---
+
+Skill: Wits
+Type: Other
+SubType: Stealth
+PlyrDef: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]
+
+Skill: Wits
+Type: Other
+SubType: Stealth
+PlyrDef: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[End]

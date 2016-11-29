@@ -17,7 +17,7 @@ namespace Next_Game.Event_System
         public ConflictType Type { get; set; } //applies to first two situations
         public ConflictCombat Type_Combat { get; set; } //applies to first two situations
         public ConflictSocial Type_Social { get; set; } //applies to first two situations
-        public ConflictOther Type_Other { get; set; } //applies to first two situations
+        public ConflictStealth Type_Stealth { get; set; } //applies to first two situations
         public ConflictState State { get; set; } //only applies to game specific situations
         public ConflictSpecial Special { get; set; } //decision derived special situations
         private List<string> listGood;
@@ -36,7 +36,7 @@ namespace Next_Game.Event_System
         /// <param name="combatType"></param>
         /// <param name="socialType"></param>
         /// <param name="otherType"></param>
-        public Situation(string name, ConflictType type, int sitnum, ConflictCombat combatType = ConflictCombat.None, ConflictSocial socialType = ConflictSocial.None, ConflictOther otherType = ConflictOther.None)
+        public Situation(string name, ConflictType type, int sitnum, ConflictCombat combatType = ConflictCombat.None, ConflictSocial socialType = ConflictSocial.None, ConflictStealth otherType = ConflictStealth.None)
         {
             SitID = SituationIndex++;
             listGood = new List<string>();
@@ -46,7 +46,7 @@ namespace Next_Game.Event_System
             this.Type = type;
             Type_Combat = combatType;
             Type_Social = socialType;
-            Type_Other = otherType;
+            Type_Stealth = otherType;
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Next_Game.Event_System
             Type = ConflictType.None;
             Type_Combat = ConflictCombat.None;
             Type_Social = ConflictSocial.None;
-            Type_Other = ConflictOther.None;
+            Type_Stealth = ConflictStealth.None;
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Next_Game.Event_System
             Type = ConflictType.None;
             Type_Combat = ConflictCombat.None;
             Type_Social = ConflictSocial.None;
-            Type_Other = ConflictOther.None;
+            Type_Stealth = ConflictStealth.None;
         }
 
         /// <summary>

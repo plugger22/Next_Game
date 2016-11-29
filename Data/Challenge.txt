@@ -1,0 +1,100 @@
+# Challenge -> Base data covering strategies and skills for different types of challenges
+# should be ONE entry for each specific type of challenge
+# NOTE: All fields must have a value
+# Type: (ConflictType) Combat / Social / Other 
+# SubType: if Combat -> Personal/Tournament/Battle, if Social -> Blackmail/Seduce/Befriend, if Other -> Hunting
+# PlyrStrAgg, PlyrStrBal, PlyrStrDef : Aggressive/Balanced/Defensive strategy (text) if Player is challenger
+# OppStrAgg, OppStrBal, OppStrDef: Aggressive/Balanced/Defensive strategies (text) if Opponent is challenger
+# SkillPrime: primary skill used in challenge -> Combat / Wits / Charm / Treachery / Leadership
+# SkillSecond, SkillThird: secondary skills (both identical effect) used in challenge
+
+
+# Combat Challenges
+
+Type: Combat
+SubType: Personal
+PlyrStrAgg:
+PlyrStrBal:
+PlyrStrDef:
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: Combat
+SkillSecond: Wits
+SkillThird: Treachery
+OutWinMinor:
+OutWin:
+OutWinMajor:
+OutLossMinor:
+OutLoss:
+OutLossMajor:
+[End]
+
+Type: Combat
+SubType: Tournament
+PlyrStrAgg:
+PlyrStrBal:
+PlyrStrDef:
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: Combat
+SkillSecond: Wits
+SkillThird: Treachery
+[End]
+
+Type: Combat
+SubType: Battle
+PlyrStrAgg:
+PlyrStrBal:
+PlyrStrDef:
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: Leadership
+SkillSecond: Wits
+SkillThird: Treachery
+[End]
+
+# Social Challenges
+
+Type: Social
+SubType: Befriend
+PlyrStrAgg:
+PlyrStrBal:
+PlyrStrDef:
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: 
+SkillSecond: 
+SkillThird: 
+[End]
+
+Type: Social
+SubType: Blackmail
+PlyrStrAgg:
+PlyrStrBal:
+PlyrStrDef:
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: 
+SkillSecond: 
+SkillThird: 
+[End]
+
+Type: Social
+SubType: Seduce
+PlyrStrAgg:
+PlyrStrBal:
+PlyrStrDef:
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: 
+SkillSecond: 
+SkillThird: 
+[End]
+
+# Stealth Challenges

@@ -3,6 +3,8 @@
 # ArcID: (Archetypes) have a default value of '0' (none) unless specified
 # Banner: visual description
 # Capital: name of House Location
+# Castle: strength of castle walls (and general defences) range 0 to 5
+
 
 
 # NOTE: Minimum of 10 Entries required

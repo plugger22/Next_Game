@@ -2,7 +2,7 @@
 # NOTE: All fields must have a value
 # Name: Situation descriptor -> no more than four or five words
 # Type: (ConflictType) Combat / Social / Other / State (game specific)
-# SubType: if Combat -> Personal/Tournament/Battle, if Social -> Blackmail/Seduce/Befriend, if Other -> Hunting/Stealth
+# SubType: if Combat -> Personal/Tournament/Battle/Hunting, if Social -> Blackmail/Seduce/Befriend, if Stealth -> Infiltrate/Evade/Escape
 # SubType: if State -> ArmySize/Fame/Honour/Justice/Invisibility
 # SitNum: Situation Number -> '0' (defenders advantage), '1' (neutral)
 # SitNum: If '0' then you need 'PlyrDef:' (below) and two sit's of the same name. If '1' then a single situation is all that's needed (more are O.K)
