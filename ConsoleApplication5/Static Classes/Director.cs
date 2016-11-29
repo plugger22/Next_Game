@@ -14,9 +14,10 @@ namespace Next_Game
     public enum DataPoint { None, Invisibility, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
     public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
     public enum ConflictType { None, Combat, Social, Stealth} //broad category
-    public enum ConflictCombat { None, Personal, Tournament, Battle, Hunting} //sub category
-    public enum ConflictSocial { None, Blackmail, Seduce, Befriend} //sub category
-    public enum ConflictStealth { None, Infiltrate, Evade, Escape} //sub category
+    public enum ConflictCombat { None, Personal, Tournament, Battle, Hunting} //sub category -> a copy should be in ConflictSubType
+    public enum ConflictSocial { None, Blackmail, Seduce, Befriend} //sub category -> a copy should be in ConflictSubType
+    public enum ConflictStealth { None, Infiltrate, Evade, Escape} //sub category -> a copy should be in ConflictSubType
+    public enum ConflictSubType { None, Personal, Tournament, Battle, Hunting, Blackmail, Seduce, Befriend, Infiltrate, Evade, Escape} //combined list of all subtypes (add to as needed)
     public enum ConflictSpecial { None, Fortified_Position, Mountain_Country, Forest_Country, Castle_Walls } //special situations
     public enum ResourceLevel { None, Poor, Moderate, Substantial, Wealthy, Excessive}
    
@@ -85,6 +86,7 @@ namespace Next_Game
         private Dictionary<int, Situation> dictSituationsGame;
         private Dictionary<int, Situation> dictSituationsSpecial;
         private Dictionary<int, Situation> dictSituationsSkill;
+        private Dictionary<ConflictSubType, Challenge> dictChallenges;
 
         public Director(int seed)
         {
@@ -136,6 +138,7 @@ namespace Next_Game
             dictSituationsGame = new Dictionary<int, Situation>(); //third, game specific, situation
             dictSituationsSpecial = new Dictionary<int, Situation>(); //decisions-derived special situations
             dictSituationsSkill = new Dictionary<int, Situation>(); //primary skill involved in a challenge
+            dictChallenges = new Dictionary<ConflictSubType, Challenge>(); //challenge data unique to individual challenge types
         }
 
         /// <summary>
@@ -167,6 +170,8 @@ namespace Next_Game
             dictSituationsSpecial = Game.file.GetSituations("SitSpecial.txt");
             Console.WriteLine(Environment.NewLine + "--- Initialise Skill (Situations)");
             dictSituationsSkill = Game.file.GetSituations("SitSkill.txt");
+            Console.WriteLine(Environment.NewLine + "--- Initialise Challenges");
+            dictChallenges = Game.file.GetChallenges("Challenge.txt");
             Console.WriteLine(Environment.NewLine);
             InitialiseGameStates();
         }
