@@ -13,14 +13,132 @@
 
 Type: Combat
 SubType: Personal
+PlyrStrAgg: Go for the Throat
+PlyrStrBal: Be Flexible
+PlyrStrDef: Focus on Staying Alive
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: Combat
+SkillSecond: Wits
+SkillThird: Treachery
+OutWinMinor: Your Opponent retires with a minor wound and an injured ego
+OutWin: Your Opponent Yields and you can claim an Advantage from him
+OutWinMajor: Your Opponent Suffers a Major Wound and may die
+OutLossMinor: You suffer a minor wound and retire defeated
+OutLoss: You are Forced to Yield to a superior Opponent who can demand an Advantage
+OutLossMajor: You have been Badly Injured and Lose any Special Items
+[End]
+
+Type: Combat
+SubType: Tournament
+PlyrStrAgg: Knock them to the Ground
+PlyrStrBal: Wait for an Opportunity
+PlyrStrDef: Stay in the Saddle
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: Combat
+SkillSecond: Wits
+SkillThird: Treachery
+OutWinMinor: You make the final group but fail to go any further
+OutWin: You reach the top three jousters and gain glory and recognition
+OutWinMajor: You are named Tournament Champion and gain a Ladies Favour
+OutLossMinor: You are unhorsed midway through the tournament
+OutLoss: You are unhorsed early on by a mid ranked jouster
+OutLossMajor: You fall off your horse and break bones on your first joust. Disgrace!
+[End]
+
+Type: Combat
+SubType: Battle
+PlyrStrAgg: Take the Fight to the Enemy
+PlyrStrBal: Push but don't Overextend
+PlyrStrDef: Hold Firm
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: Leadership
+SkillSecond: Wits
+SkillThird: Treachery
+OutWinMinor: The enemy pulls back hurt but isn't defeated
+OutWin: You carry the day and the enemy retreat
+OutWinMajor: The enemy rout and suffer horrendous casualties
+OutLossMinor: You are forced to withdraw but hold your army together
+OutLoss: You army suffers substantial casualties and is defeated
+OutLossMajor: Your army breaks. You flee the field in order to save yourself
+[End]
+
+# Social Challenges
+
+Type: Social
+SubType: Befriend
+PlyrStrAgg: Do Whatever it Takes
+PlyrStrBal: Extend the Hand of Friendship
+PlyrStrDef: Approach them with Caution
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: Charm
+SkillSecond: Treachery
+SkillThird: Wits
+OutWinMinor: Your relationship improves
+OutWin: You have become firm friends
+OutWinMajor: You have gained an ardent supporter
+OutLossMinor: Your relationship deteriorates
+OutLoss: You have become disliked
+OutLossMajor: Your opponent is actively campaigning against you
+[End]
+
+Type: Social
+SubType: Blackmail
+PlyrStrAgg: Lean on Them. Hard.
+PlyrStrBal: Explain the Facts of Life
+PlyrStrDef: Gently Nudge Them
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: Treachery
+SkillSecond: Wits
+SkillThird: Charm
+OutWinMinor: You have gained a small amount of influence
+OutWin: Your opponent agrees to your demands
+OutWinMajor: Your opponent has become your minion
+OutLossMinor: You relationship has deteriorated
+OutLoss: You have been firmly rebuffed
+OutLossMajor: Your opponent is now your enemy
+[End]
+
+Type: Social
+SubType: Seduce
+PlyrStrAgg: Actively Flirt and Pursue
+PlyrStrBal: Make your Intentions Clear
+PlyrStrDef: Infer Wonderful Possibilities
+OppStrAgg: 
+OppStrBal:
+OppStrDef: 
+SkillPrime: Charm
+SkillSecond: Treachery
+SkillThird: Wits
+OutWinMinor: Your relationship has improved
+OutWin: You seduce your opponent and gain an advantage
+OutWinMajor: Your opponent has become an ardent supporter and lover
+OutLossMinor: Your relationship has deteriorated
+OutLoss: You have been firmly rebuffed
+OutLossMajor: Your opponent has taken offence and is now your enemy
+[End]
+
+# Stealth Challenges
+
+Type: Stealth
+SubType: Infiltrate
 PlyrStrAgg:
 PlyrStrBal:
 PlyrStrDef:
 OppStrAgg: 
 OppStrBal:
 OppStrDef: 
-SkillPrime: Combat
-SkillSecond: Wits
+SkillPrime: Wits
+SkillSecond: Charm
 SkillThird: Treachery
 OutWinMinor:
 OutWin:
@@ -30,71 +148,40 @@ OutLoss:
 OutLossMajor:
 [End]
 
-Type: Combat
-SubType: Tournament
+Type: Stealth
+SubType: Evade
 PlyrStrAgg:
 PlyrStrBal:
 PlyrStrDef:
 OppStrAgg: 
 OppStrBal:
 OppStrDef: 
-SkillPrime: Combat
-SkillSecond: Wits
+SkillPrime: Wits
+SkillSecond: Combat
 SkillThird: Treachery
+OutWinMinor:
+OutWin:
+OutWinMajor:
+OutLossMinor:
+OutLoss:
+OutLossMajor:
 [End]
 
-Type: Combat
-SubType: Battle
+Type: Stealth
+SubType: Escape
 PlyrStrAgg:
 PlyrStrBal:
 PlyrStrDef:
 OppStrAgg: 
 OppStrBal:
 OppStrDef: 
-SkillPrime: Leadership
-SkillSecond: Wits
-SkillThird: Treachery
+SkillPrime: Treachery
+SkillSecond: Combat
+SkillThird: Wits
+OutWinMinor:
+OutWin:
+OutWinMajor:
+OutLossMinor:
+OutLoss:
+OutLossMajor:
 [End]
-
-# Social Challenges
-
-Type: Social
-SubType: Befriend
-PlyrStrAgg:
-PlyrStrBal:
-PlyrStrDef:
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
-SkillPrime: 
-SkillSecond: 
-SkillThird: 
-[End]
-
-Type: Social
-SubType: Blackmail
-PlyrStrAgg:
-PlyrStrBal:
-PlyrStrDef:
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
-SkillPrime: 
-SkillSecond: 
-SkillThird: 
-[End]
-
-Type: Social
-SubType: Seduce
-PlyrStrAgg:
-PlyrStrBal:
-PlyrStrDef:
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
-SkillPrime: 
-SkillSecond: 
-SkillThird: 
-[End]
-
-# Stealth Challenges
