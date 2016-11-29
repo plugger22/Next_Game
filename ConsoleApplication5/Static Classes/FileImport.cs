@@ -2906,8 +2906,9 @@ namespace Next_Game
         internal Dictionary<ConflictSubType, Challenge> GetChallenges(string fileName)
         {
             Dictionary<ConflictSubType, Challenge> tempDictionary = new Dictionary<ConflictSubType, Challenge>();
-            List<string> tempListGood = new List<string>();
-            List<string> tempListBad = new List<string>();
+            string[] tempStrategy = new string[6];
+            string[] tempOutcome = new string[6];
+            string[] tempSkill = new string[3];
             string[] arrayOfChallenges = ImportDataFile(fileName);
             List<ChallengeStruct> listOfStructs = new List<ChallengeStruct>();
             bool newChallenge = false;
@@ -2930,8 +2931,9 @@ namespace Next_Game
                         dataCounter++;
                         //new structure
                         structChallenge = new ChallengeStruct();
-                        tempListGood.Clear();
-                        tempListBad.Clear();
+                        Array.Clear(tempStrategy, 0, tempStrategy.Length);
+                        Array.Clear(tempOutcome, 0, tempOutcome.Length);
+                        Array.Clear(tempSkill, 0, tempSkill.Length);
                     }
                     string[] tokens = arrayOfChallenges[i].Split(':');
                     //strip out leading spaces
@@ -2953,10 +2955,6 @@ namespace Next_Game
                     {
                         switch (cleanTag)
                         {
-                            case "Name":
-                            case "Skill":
-                                structChallenge.Name = cleanToken;
-                                break;
                             case "Type":
                                 switch (cleanToken)
                                 {
@@ -2968,10 +2966,6 @@ namespace Next_Game
                                         break;
                                     case "Stealth":
                                         structChallenge.Type = ConflictType.Stealth;
-                                        break;
-                                    case "State":
-                                    case "Special":
-                                        structChallenge.Type = ConflictType.None;
                                         break;
                                     default:
                                         structChallenge.Type = ConflictType.None;
@@ -3026,8 +3020,63 @@ namespace Next_Game
                                         { structChallenge.StealthType = ConflictStealth.Infiltrate; }
                                         else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
                                         break;
+                                    case "Evade":
+                                        if (structChallenge.Type == ConflictType.Stealth)
+                                        { structChallenge.StealthType = ConflictStealth.Evade; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
+                                        break;
+                                    case "Escape":
+                                        if (structChallenge.Type == ConflictType.Stealth)
+                                        { structChallenge.StealthType = ConflictStealth.Escape; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
+                                        break;
                                 }
                                 subType = cleanToken;
+                                break;
+                            case "PlyrStrAgg":
+                                tempStrategy[0] = cleanToken;
+                                break;
+                            case "PlyrStrBal":
+                                tempStrategy[1] = cleanToken;
+                                break;
+                            case "PlyrStrDef":
+                                tempStrategy[2] = cleanToken;
+                                break;
+                            case "OppStrAgg":
+                                tempStrategy[3] = cleanToken;
+                                break;
+                            case "OppStrBal":
+                                tempStrategy[4] = cleanToken;
+                                break;
+                            case "OppStrDef":
+                                tempStrategy[5] = cleanToken;
+                                break;
+                            case "OutWinMinor":
+                                tempOutcome[0] = cleanToken;
+                                break;
+                            case "OutWin":
+                                tempOutcome[1] = cleanToken;
+                                break;
+                            case "OutWinMajor":
+                                tempOutcome[2] = cleanToken;
+                                break;
+                            case "OutLossMinor":
+                                tempOutcome[3] = cleanToken;
+                                break;
+                            case "OutLoss":
+                                tempOutcome[4] = cleanToken;
+                                break;
+                            case "OutLossMajor":
+                                tempOutcome[5] = cleanToken;
+                                break;
+                            case "SkillPrime":
+                                tempSkill[0] = cleanToken;
+                                break;
+                            case "SkillSecond":
+                                tempSkill[1] = cleanToken;
+                                break;
+                            case "SkillThird":
+                                tempSkill[2] = cleanToken;
                                 break;
                             case "[end]":
                             case "[End]":
