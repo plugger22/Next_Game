@@ -819,7 +819,7 @@ namespace Next_Game
             RLColor foreColor = RLColor.Black;
             CardType type;
             string text;
-            int numCards, subType;
+            int numCards, subType, goodIndex, badIndex;
             //immersion text lists
             List<string> tempListGood = new List<string>();
             List<string> tempListBad = new List<string>();
@@ -860,17 +860,24 @@ namespace Next_Game
             }
             //...Player Primary skill
             type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += cards_player;
-            Card_Conflict cardPlayer = new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", player.Name, PrimarySkill), description);
             //get relevant skill situation (for lists of immersion texts)
             Situation situationPlayer = GetSkillText(Conflict_Type, subType, Challenger, true);
             if (situationPlayer != null)
             { tempListGood = situationPlayer.GetGood(); tempListBad = situationPlayer.GetBad(); }
             else { Game.SetError(new Error(105, string.Format("situation (Player Primary Skill) came back Null", Conflict_Type))); }
+            goodIndex = rnd.Next(tempListGood.Count);
+            badIndex = rnd.Next(tempListBad.Count);
             for (int i = 0; i < cards_player; i++)
             {
+                Card_Conflict cardPlayer = new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", player.Name, PrimarySkill), description);
                 //get immersion texts, if present
-                if(tempListGood.Count > 0) { cardPlayer.PlayedText = tempListGood[rnd.Next(tempListGood.Count)]; }
-                if (tempListBad.Count > 0) { cardPlayer.IgnoredText = tempListBad[rnd.Next(tempListBad.Count)]; }
+                if (tempListGood.Count > 0) { cardPlayer.PlayedText = tempListGood[goodIndex]; }
+                if (tempListBad.Count > 0) { cardPlayer.IgnoredText = tempListBad[badIndex]; }
+                //increment and rollover indexes (so there's an equal distribution of immersion texts)
+                goodIndex++; badIndex++;
+                if (goodIndex == tempListGood.Count) { goodIndex = 0; }
+                if (badIndex == tempListBad.Count) { badIndex = 0; }
+                //add card to pool
                 listCardPool.Add(cardPlayer);
             }
             text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", player.Name, PrimarySkill, type, cards_player, skill_player);
@@ -878,17 +885,24 @@ namespace Next_Game
 
             //...Opponent Primary skill
             type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += cards_opponent;
-            Card_Conflict cardOpponent = new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", opponent.Name, PrimarySkill), description);
             //get relevant skill situation (for lists of immersion texts)
             Situation situationOpponent = GetSkillText(Conflict_Type, subType, Challenger, false);
             if (situationOpponent != null)
             { tempListGood = situationOpponent.GetGood(); tempListBad = situationOpponent.GetBad(); }
             else { Game.SetError(new Error(105, string.Format("situation (Opponent Primary Skill) came back Null", Conflict_Type))); }
+            goodIndex = rnd.Next(tempListGood.Count);
+            badIndex = rnd.Next(tempListBad.Count);
             for (int i = 0; i < cards_opponent; i++)
             {
+                Card_Conflict cardOpponent = new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", opponent.Name, PrimarySkill), description);
                 //get immersion texts, if present
-                if (tempListGood.Count > 0) { cardOpponent.PlayedText = tempListGood[rnd.Next(tempListGood.Count)]; }
-                if (tempListBad.Count > 0) { cardOpponent.IgnoredText = tempListBad[rnd.Next(tempListBad.Count)]; }
+                if (tempListGood.Count > 0) { cardOpponent.PlayedText = tempListGood[goodIndex]; }
+                if (tempListBad.Count > 0) { cardOpponent.IgnoredText = tempListBad[badIndex]; }
+                //increment and rollover indexes (so there's an equal distribution of immersion texts)
+                goodIndex++; badIndex++;
+                if (goodIndex == tempListGood.Count) { goodIndex = 0; }
+                if (badIndex == tempListBad.Count) { badIndex = 0; }
+                //add card to pool
                 listCardPool.Add(cardOpponent);
             }
             text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", opponent.Name, PrimarySkill, type, cards_opponent, skill_opponent);
