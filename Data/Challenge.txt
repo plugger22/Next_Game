@@ -16,9 +16,9 @@ SubType: Personal
 PlyrStrAgg: Go for the Throat
 PlyrStrBal: Be Flexible
 PlyrStrDef: Focus on Staying Alive
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
+OppStrAgg: Go for the Throat
+OppStrBal: Be Flexible
+OppStrDef: Focus on Staying Alive
 SkillPrime: Combat
 SkillSecond: Wits
 SkillThird: Treachery
@@ -32,12 +32,12 @@ OutLossMajor: You have been Badly Injured and Lose any Special Items
 
 Type: Combat
 SubType: Tournament
-PlyrStrAgg: Knock them to the Ground
-PlyrStrBal: Wait for an Opportunity
+PlyrStrAgg: Win at all Cost
+PlyrStrBal: Take Opportunities
 PlyrStrDef: Stay in the Saddle
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
+OppStrAgg: Win at all Cost
+OppStrBal: Take Opportunities
+OppStrDef: Avoid Injury
 SkillPrime: Combat
 SkillSecond: Wits
 SkillThird: Treachery
@@ -54,9 +54,9 @@ SubType: Battle
 PlyrStrAgg: Take the Fight to the Enemy
 PlyrStrBal: Push but don't Overextend
 PlyrStrDef: Hold Firm
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
+OppStrAgg: Aggressively Defend
+OppStrBal: Balanced Defence
+OppStrDef: Protect Yourself
 SkillPrime: Leadership
 SkillSecond: Wits
 SkillThird: Treachery
@@ -68,6 +68,25 @@ OutLoss: You army suffers substantial casualties and is defeated
 OutLossMajor: Your army breaks. You flee the field in order to save yourself
 [End]
 
+Type: Combat
+SubType: Hunting
+PlyrStrAgg: Force the Pace
+PlyrStrBal: Track and Pursue
+PlyrStrDef: Exercise Caution
+OppStrAgg: Find Them. Kill Them.
+OppStrBal: Watch for Danger
+OppStrDef: Proceed Cautiously
+SkillPrime: Wits
+SkillSecond: Combat
+SkillThird: Treachery
+OutWinMinor: You hit the creature but it's not fatal. The Creature escapes.
+OutWin: You kill the creature.
+OutWinMajor: The creature is slain and you gain an advantage.
+OutLossMinor: The creature is spotted but escapes.
+OutLoss: The creature isn't spotted.
+OutLossMajor: The creature ambushes you and you're injured.
+[End]
+
 # Social Challenges
 
 Type: Social
@@ -75,9 +94,9 @@ SubType: Befriend
 PlyrStrAgg: Do Whatever it Takes
 PlyrStrBal: Extend the Hand of Friendship
 PlyrStrDef: Approach them with Caution
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
+OppStrAgg: Resist Forcefully
+OppStrBal: Diplomatically Resist
+OppStrDef: Raise the Drawbridge
 SkillPrime: Charm
 SkillSecond: Treachery
 SkillThird: Wits
@@ -94,9 +113,9 @@ SubType: Blackmail
 PlyrStrAgg: Lean on Them. Hard.
 PlyrStrBal: Explain the Facts of Life
 PlyrStrDef: Gently Nudge Them
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
+OppStrAgg: Snarl and Threaten
+OppStrBal: Don't Give Ground
+OppStrDef: Stick to Your Principles
 SkillPrime: Treachery
 SkillSecond: Wits
 SkillThird: Charm
@@ -113,9 +132,9 @@ SubType: Seduce
 PlyrStrAgg: Actively Flirt and Pursue
 PlyrStrBal: Make your Intentions Clear
 PlyrStrDef: Infer Wonderful Possibilities
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
+OppStrAgg: Be Blunt and Rude
+OppStrBal: Be Polite but Firm
+OppStrDef: Shut Them Out
 SkillPrime: Charm
 SkillSecond: Treachery
 SkillThird: Wits
@@ -131,57 +150,57 @@ OutLossMajor: Your opponent has taken offence and is now your enemy
 
 Type: Stealth
 SubType: Infiltrate
-PlyrStrAgg:
-PlyrStrBal:
-PlyrStrDef:
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
+PlyrStrAgg: Speed is the Essence
+PlyrStrBal: Look first before Proceeding
+PlyrStrDef: Give Yourself an Escape Route
+OppStrAgg: Actively Search and Detain
+OppStrBal: Stay Observant
+OppStrDef: Avoid Upsetting the Locals
 SkillPrime: Wits
 SkillSecond: Charm
 SkillThird: Treachery
-OutWinMinor:
-OutWin:
-OutWinMajor:
-OutLossMinor:
-OutLoss:
-OutLossMajor:
+OutWinMinor: You make it but have been spotted (known presence)
+OutWin: You make it without being spotted.
+OutWinMajor: You make it without being spotted and gain an advantage.
+OutLossMinor: They make it but are spotted.
+OutLoss: They make it without being spotted.
+OutLossMajor: They make it without being spotted and gain an advantage.
 [End]
 
 Type: Stealth
 SubType: Evade
-PlyrStrAgg:
-PlyrStrBal:
-PlyrStrDef:
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
+PlyrStrAgg: Run Hard and Fast
+PlyrStrBal: Use the Terrain
+PlyrStrDef: Find a Place to Hide
+OppStrAgg: Hunt Them Down
+OppStrBal: Work the Terrain
+OppStrDef: Search Slow and Methodically
 SkillPrime: Wits
 SkillSecond: Combat
 SkillThird: Treachery
-OutWinMinor:
-OutWin:
-OutWinMajor:
-OutLossMinor:
-OutLoss:
-OutLossMajor:
+OutWinMinor: You succeed but suffered a disadvantage
+OutWin: You successfully evade
+OutWinMajor: You successfully evade and gain an advantage
+OutLossMinor: You evade but are wounded.
+OutLoss: You are caught.
+OutLossMajor: You are caught and wounded.
 [End]
 
 Type: Stealth
 SubType: Escape
-PlyrStrAgg:
-PlyrStrBal:
-PlyrStrDef:
-OppStrAgg: 
-OppStrBal:
-OppStrDef: 
+PlyrStrAgg: Freedom or Death
+PlyrStrBal: Move Fast where you can
+PlyrStrDef: Move Slowly and Cautiously
+OppStrAgg: Lock down the Dungeon
+OppStrBal: Post Extra Guards
+OppStrDef: Watch Carefully
 SkillPrime: Treachery
 SkillSecond: Combat
 SkillThird: Wits
-OutWinMinor:
-OutWin:
-OutWinMajor:
-OutLossMinor:
-OutLoss:
-OutLossMajor:
+OutWinMinor: Freedom but they are after you
+OutWin: Free and Clear at last
+OutWinMajor: Freedom plus an advantage
+OutLossMinor: You're caught but not harmed
+OutLoss: You're caught and badly beaten
+OutLossMajor: You're caught, beaten and locked in a deeper, darker dungeon
 [End]
