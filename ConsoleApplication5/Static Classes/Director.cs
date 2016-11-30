@@ -1714,6 +1714,21 @@ namespace Next_Game
         internal Dictionary<int, Situation> GetSituationsSkill()
         { return dictSituationsSkill; }
 
+        /// <summary>
+        /// return a challenge from the dictionary, null if not found
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        internal Challenge GetChallenge(ConflictSubType subType)
+        {
+            Challenge challenge = null;
+            if (dictChallenges.ContainsKey(subType))
+            { challenge = dictChallenges[subType]; }
+            else
+            { Game.SetError(new Error(112, string.Format("{0} Challenge doesn't exist in dictChallenges", subType))); }
+            return challenge;
+        }
+
 
         //place Director methods above here
     }

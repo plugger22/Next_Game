@@ -25,32 +25,17 @@ namespace Next_Game.Event_System
         /// </summary>
         /// <param name="type"></param>
         /// <param name="subType"></param>
-        public Challenge(ConflictType type, int subType)
+        public Challenge(ConflictType type, ConflictCombat combat, ConflictSocial social, ConflictStealth stealth)
         {
             if (type > ConflictType.None)
             {
                 this.Type = type;
-                if (subType > 0)
-                {
-                    arrayStrategies = new string[6]; //Plyr Strategies Aggressive/Balanced/Defensive 0/1/2, Opponent Strategies, same 3/4/5
-                    arrayOutcomes = new string[6]; //Minor Win/Win/Major Win 0/1/2, Minor Loss/Loss/Major Loss 3/4/5
-                    arraySkills = new string[3]; //Primary skill 0, Secondary skills 1/2
-                    //set subtype
-                    switch (type)
-                    {
-                        case ConflictType.Combat:
-                            CombatType = (ConflictCombat)subType;
-                            break;
-                        case ConflictType.Social:
-                            SocialType = (ConflictSocial)subType;
-                            break;
-                        case ConflictType.Stealth:
-                            StealthType = (ConflictStealth)subType;
-                            break;
-                    }
-                }
-                else
-                { Game.SetError(new Error(106, "Invalid subType input (less than Zero)")); }
+                CombatType = combat;
+                SocialType = social;
+                StealthType = stealth;
+                arrayStrategies = new string[6]; //Plyr Strategies Aggressive/Balanced/Defensive 0/1/2, Opponent Strategies, same 3/4/5
+                arrayOutcomes = new string[6]; //Minor Win/Win/Major Win 0/1/2, Minor Loss/Loss/Major Loss 3/4/5
+                arraySkills = new string[3]; //Primary skill 0, Secondary skills 1/2
             }
             else
             { Game.SetError(new Error(106, "Invalid ConflictType input (\"None\")")); }

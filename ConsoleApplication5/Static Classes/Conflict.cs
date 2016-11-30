@@ -30,6 +30,7 @@ namespace Next_Game
         Active player;
         public bool Challenger { get; set; } //is the Player the Challenger?
         int numberOfCards;
+        private Challenge challenge;
         //type of conflict
         public ConflictType Conflict_Type { get; set; }
         public ConflictCombat Combat_Type { get; set; }
@@ -87,24 +88,24 @@ namespace Next_Game
         
    
         /// <summary>
-        /// Master method that handles all conflict set up
+        /// Master method that handles all conflict set up. Returns true for a valid conflict, false otherwise, if a problem
         /// </summary>
-        public void InitialiseConflict()
+        public bool InitialiseConflict()
         {
             //debug
             Console.WriteLine("Initialise Conflict");
-            SetPlayerStrategy();
-            SetSkills();
-            SetSituation(Game.director.GetSituationsNormal(), Game.director.GetSituationsGame());
-            CheckSpecialSituations();
-            SetOpponentStrategy();
-            SetOutcome();
-            SetCardPool();
-            //SetHand(); -> called from Layout.UpdateCards on first run through
-            //debug
-            //string test = Game.utility.CheckTagsActor("Why is there no joy in the world?", opponent);
-            //string sentence = Game.utility.CheckTagsActor("The mud slowed <men> to a crawl. <He> fell off his horse and <he> wasn't happy", opponent);
-            
+            if (GetChallenge() == true)
+            {
+                SetPlayerStrategy();
+                SetSkills();
+                SetSituation(Game.director.GetSituationsNormal(), Game.director.GetSituationsGame());
+                CheckSpecialSituations();
+                SetOpponentStrategy();
+                SetOutcome();
+                SetCardPool();
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -170,6 +171,88 @@ namespace Next_Game
             { Game.layout.SetStrategy(tempArray); }
             else
             { Game.SetError(new Error(86, "Invalid Strategy, Layout not updated")); }
+        }
+
+        /// <summary>
+        /// Gets relevant challenge from dictionary. Returns true if valid challenge found.
+        /// </summary>
+        private bool GetChallenge()
+        {
+            bool proceed = true;
+            ConflictSubType subType = ConflictSubType.None;
+            switch (Conflict_Type)
+            {
+                case ConflictType.Combat:
+                    switch(Combat_Type)
+                    {
+                        case ConflictCombat.Personal:
+                            subType = ConflictSubType.Personal;
+                            break;
+                        case ConflictCombat.Tournament:
+                            subType = ConflictSubType.Tournament;
+                            break;
+                        case ConflictCombat.Battle:
+                            subType = ConflictSubType.Battle;
+                            break;
+                        case ConflictCombat.Hunting:
+                            subType = ConflictSubType.Hunting;
+                            break;
+                        default:
+                            Game.SetError(new Error(111, "Invalid Combat_Type"));
+                            proceed = false;
+                            break;
+                    }
+                    break;
+                case ConflictType.Social:
+                    switch(Social_Type)
+                    {
+                        case ConflictSocial.Befriend:
+                            subType = ConflictSubType.Befriend;
+                            break;
+                        case ConflictSocial.Blackmail:
+                            subType = ConflictSubType.Blackmail;
+                            break;
+                        case ConflictSocial.Seduce:
+                            subType = ConflictSubType.Seduce;
+                            break;
+                        default:
+                            Game.SetError(new Error(111, "Invalid Social_Type"));
+                            proceed = false;
+                            break;
+                    }
+                    break;
+                case ConflictType.Stealth:
+                    switch(Stealth_Type)
+                    {
+                        case ConflictStealth.Infiltrate:
+                            subType = ConflictSubType.Infiltrate;
+                            break;
+                        case ConflictStealth.Evade:
+                            subType = ConflictSubType.Evade;
+                            break;
+                        case ConflictStealth.Escape:
+                            subType = ConflictSubType.Escape;
+                            break;
+                        default:
+                            Game.SetError(new Error(111, "Invalid Stealth_Type"));
+                            proceed = false;
+                            break;
+                    }
+                    break;
+                default:
+                    Game.SetError(new Error(111, "Invalid Conflict_Type"));
+                    proceed = false;
+                    break;
+            }
+            if (proceed == true)
+            {
+                challenge = Game.director.GetChallenge(subType);
+                if (challenge == null)
+                { Game.SetError(new Error(111, "Challenge not found (returns null)")); return false; }
+                else { return true; }
+            }
+            else
+            { Game.SetError(new Error(111, "Challenge not found, invalid Conflict_Type or SubType")); return false; }
         }
 
         /// <summary>

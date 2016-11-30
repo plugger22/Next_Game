@@ -188,9 +188,6 @@ namespace Next_Game
         public ConflictCombat CombatType { get; set; }
         public ConflictSocial SocialType { get; set; }
         public ConflictStealth StealthType { get; set; }
-        //public string[] arrayStrategies;
-        //public string[] arrayOutcomes;
-        //public string[] arraySkills;
     }
 
     /// <summary>
@@ -3105,7 +3102,7 @@ namespace Next_Game
                                     //add data
                                     if (validData == true)
                                     {
-                                        Challenge challenge = new Challenge(structChallenge.Type, subIndex);
+                                        Challenge challenge = new Challenge(structChallenge.Type, structChallenge.CombatType, structChallenge.SocialType, structChallenge.StealthType);
                                         challenge.SetStrategies(tempStrategy);
                                         challenge.SetOutcomes(tempOutcome);
                                         challenge.SetSkills(tempSkill);

@@ -689,7 +689,13 @@ namespace Next_Game
                                         //conflict.SetGameSituation(debugState, string.Format("Your {0}", debugState));
                                         conflict.SetGameSituation(debugState);
                                     }
-                                    conflict.InitialiseConflict();
+                                    if (conflict.InitialiseConflict() == false)
+                                    {
+                                        //invalid conflict setup, revert to normal
+                                        _menuMode = MenuMode.Main;
+                                        _specialMode = SpecialMode.None;
+                                        _conflictMode = ConflictMode.None;
+                                    }
                                     break;
                                 case MenuMode.Debug:
                                     //Show All Secrets log
