@@ -2914,6 +2914,7 @@ namespace Next_Game
             bool newChallenge = false;
             bool validData = true;
             int dataCounter = 0; //number of challenges
+            int subIndex = 0; //int value of subtype
             ChallengeStruct structChallenge = new ChallengeStruct();
             string cleanToken;
             string cleanTag;
@@ -2927,6 +2928,7 @@ namespace Next_Game
                     {
                         newChallenge = true;
                         validData = true;
+                        subIndex = 0;
                         //Console.WriteLine();
                         dataCounter++;
                         //new structure
@@ -2980,55 +2982,55 @@ namespace Next_Game
                                     //...Combat
                                     case "Tournament":
                                         if (structChallenge.Type == ConflictType.Combat)
-                                        { structChallenge.CombatType = ConflictCombat.Tournament; }
-                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
+                                        { structChallenge.CombatType = ConflictCombat.Tournament; subIndex = (int)structChallenge.CombatType; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); validData = false; }
                                         break;
                                     case "Personal":
                                         if (structChallenge.Type == ConflictType.Combat)
-                                        { structChallenge.CombatType = ConflictCombat.Personal; }
-                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
+                                        { structChallenge.CombatType = ConflictCombat.Personal; subIndex = (int)structChallenge.CombatType; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); validData = false; }
                                         break;
                                     case "Battle":
                                         if (structChallenge.Type == ConflictType.Combat)
-                                        { structChallenge.CombatType = ConflictCombat.Battle; }
-                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
+                                        { structChallenge.CombatType = ConflictCombat.Battle; subIndex = (int)structChallenge.CombatType; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); validData = false; }
+                                        break;
+                                    case "Hunting":
+                                        if (structChallenge.Type == ConflictType.Combat)
+                                        { structChallenge.CombatType = ConflictCombat.Hunting; subIndex = (int)structChallenge.CombatType; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); validData = false; }
                                         break;
                                     //...Social
                                     case "Blackmail":
                                         if (structChallenge.Type == ConflictType.Social)
-                                        { structChallenge.SocialType = ConflictSocial.Blackmail; }
-                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
+                                        { structChallenge.SocialType = ConflictSocial.Blackmail; subIndex = (int)structChallenge.SocialType; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); validData = false; }
                                         break;
                                     case "Seduce":
                                         if (structChallenge.Type == ConflictType.Social)
-                                        { structChallenge.SocialType = ConflictSocial.Seduce; }
-                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
+                                        { structChallenge.SocialType = ConflictSocial.Seduce; subIndex = (int)structChallenge.SocialType; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); validData = false; }
                                         break;
                                     case "Befriend":
                                         if (structChallenge.Type == ConflictType.Social)
-                                        { structChallenge.SocialType = ConflictSocial.Befriend; }
-                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
+                                        { structChallenge.SocialType = ConflictSocial.Befriend; subIndex = (int)structChallenge.SocialType; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); validData = false; }
                                         break;
-                                    //...Other
-                                    case "Hunting":
-                                        if (structChallenge.Type == ConflictType.Combat)
-                                        { structChallenge.CombatType = ConflictCombat.Hunting; }
-                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
-                                        break;
+                                    //...Stealth
                                     case "Infiltrate":
                                         if (structChallenge.Type == ConflictType.Stealth)
-                                        { structChallenge.StealthType = ConflictStealth.Infiltrate; }
-                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
+                                        { structChallenge.StealthType = ConflictStealth.Infiltrate; subIndex = (int)structChallenge.StealthType; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); validData = false; }
                                         break;
                                     case "Evade":
                                         if (structChallenge.Type == ConflictType.Stealth)
-                                        { structChallenge.StealthType = ConflictStealth.Evade; }
-                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
+                                        { structChallenge.StealthType = ConflictStealth.Evade; subIndex = (int)structChallenge.StealthType; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); validData = false; }
                                         break;
                                     case "Escape":
                                         if (structChallenge.Type == ConflictType.Stealth)
-                                        { structChallenge.StealthType = ConflictStealth.Escape; }
-                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); }
+                                        { structChallenge.StealthType = ConflictStealth.Escape; subIndex = (int)structChallenge.StealthType; }
+                                        else { Game.SetError(new Error(110, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfChallenges[i]))); validData = false; }
                                         break;
                                 }
                                 subType = cleanToken;
@@ -3083,8 +3085,32 @@ namespace Next_Game
                                 //last datapoint - save structure to list
                                 if (dataCounter > 0 && validData == true)
                                 {
-                                    
+                                    //validate data
+                                    for(int index = 0; index < tempStrategy.Length; index++)
+                                    {
+                                        if(String.IsNullOrEmpty(tempStrategy[index]) == true)
+                                        { Game.SetError(new Error(110, string.Format("Missing data in tempStrategy (record index {0})", index))); validData = false; }
+                                        if (String.IsNullOrEmpty(tempOutcome[index]) == true)
+                                        { Game.SetError(new Error(110, string.Format("Missing data in tempOutcome (record index {0})", index))); validData = false; }
+                                        if (index < tempSkill.Length)
+                                        {
+                                            if (String.IsNullOrEmpty(tempSkill[index]) == true)
+                                            { Game.SetError(new Error(110, string.Format("Missing data in tempSkill (record index {0})", index))); validData = false; }
+                                        }
+                                    }
+                                    if (subIndex <= 0)
+                                    { Game.SetError(new Error(110, "Invalid subIndex (zero or less)"));validData = false; }
                                     //add data
+                                    if (validData == true)
+                                    {
+                                        Challenge challenge = new Challenge(structChallenge.Type, subIndex);
+                                        challenge.SetStrategies(tempStrategy);
+                                        challenge.SetOutcomes(tempOutcome);
+                                        challenge.SetSkills(tempSkill);
+                                        Console.WriteLine("{0} Challenge ({1}), successfully imported", subType, challenge.Type);
+                                    }
+                                    else
+                                    { Game.SetError(new Error(110, string.Format("{0} Challenge not imported due to errors", structChallenge.Type))); }
                                    
                                 }
                                 break;
