@@ -113,64 +113,28 @@ namespace Next_Game
         /// </summary>
         private void SetPlayerStrategy()
         {
-            string[] tempArray = new string[3];
-            switch(Conflict_Type)
+            string[] tempArray = challenge.GetStrategies();
+            string[] playerArray = new string[3];
+            if (tempArray.Length == 6)
             {
-                case ConflictType.Combat:
-                    switch( Combat_Type)
-                    {
-                        case ConflictCombat.Personal:
-                            tempArray[0] = "Go for the Throat";
-                            tempArray[1] = "Be Flexible";
-                            tempArray[2] = "Focus on Staying Alive";
-                            break;
-                        case ConflictCombat.Tournament:
-                            tempArray[0] = "Knock them to the Ground";
-                            tempArray[1] = "Wait for an Opportunity";
-                            tempArray[2] = "Stay in the Saddle";
-                            break;
-                        case ConflictCombat.Battle:
-                            tempArray[0] = "Take the Fight to the Enemy";
-                            tempArray[1] = "Push but don't Overextend";
-                            tempArray[2] = "Hold Firm";
-                            break;
-                        default:
-                            Game.SetError(new Error(86, "Invalid Combat Type"));
-                            break;
-                    }
-                    break;
-                case ConflictType.Social:
-                    switch (Social_Type)
-                    {
-                        case ConflictSocial.Befriend:
-                            tempArray[0] = "Do what Whatever it Takes";
-                            tempArray[1] = "Extend the Hand of Friendship";
-                            tempArray[2] = "Approach them with Caution";
-                            break;
-                        case ConflictSocial.Blackmail:
-                            tempArray[0] = "Lean on Them. Hard.";
-                            tempArray[1] = "Explain the Facts of Life";
-                            tempArray[2] = "Gently Nudge Them";
-                            break;
-                        case ConflictSocial.Seduce:
-                            tempArray[0] = "Actively Flirt and Pursue";
-                            tempArray[1] = "Make your Intentions Clear";
-                            tempArray[2] = "Infer Wonderful Possibilities";
-                            break;
-                        default:
-                            Game.SetError(new Error(86, "Invalid Social Type"));
-                            break;
-                    }
-                    break;
-                default:
-                    Game.SetError(new Error(86, "Invalid Conflict Type"));
-                    break;
+                if (Challenger == true)
+                {
+                    playerArray[0] = tempArray[0];
+                    playerArray[1] = tempArray[1];
+                    playerArray[2] = tempArray[2];
+                }
+                else
+                {
+                    //player is defending (different strategy texts)
+                    playerArray[0] = tempArray[3];
+                    playerArray[1] = tempArray[4];
+                    playerArray[2] = tempArray[5];
+                }
+                //pass data to Layout
+                Game.layout.SetStrategy(playerArray);
             }
-            //update Layout
-            if (tempArray.Length == 3)
-            { Game.layout.SetStrategy(tempArray); }
             else
-            { Game.SetError(new Error(86, "Invalid Strategy, Layout not updated")); }
+            { Game.SetError(new Error(86, "Invalid Strategy (incorrect array size), Layout not updated")); }
         }
 
         /// <summary>
