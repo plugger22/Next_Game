@@ -2905,7 +2905,7 @@ namespace Next_Game
             Dictionary<ConflictSubType, Challenge> tempDictionary = new Dictionary<ConflictSubType, Challenge>();
             string[] tempStrategy = new string[6];
             string[] tempOutcome = new string[6];
-            string[] tempSkill = new string[3];
+            SkillType[] tempSkill = new SkillType[3];
             string[] arrayOfChallenges = ImportDataFile(fileName);
             List<ChallengeStruct> listOfStructs = new List<ChallengeStruct>();
             bool newChallenge = false;
@@ -3070,14 +3070,36 @@ namespace Next_Game
                             case "OutLossMajor":
                                 tempOutcome[5] = cleanToken;
                                 break;
+                                //skills
                             case "SkillPrime":
-                                tempSkill[0] = cleanToken;
-                                break;
                             case "SkillSecond":
-                                tempSkill[1] = cleanToken;
-                                break;
                             case "SkillThird":
-                                tempSkill[2] = cleanToken;
+                                SkillType skill = SkillType.None;
+                                switch(cleanToken)
+                                {
+                                    case "Combat":
+                                        skill = SkillType.Combat;
+                                        break;
+                                    case "Wits":
+                                        skill = SkillType.Wits;
+                                        break;
+                                    case "Charm":
+                                        skill = SkillType.Charm;
+                                        break;
+                                    case "Treachery":
+                                        skill = SkillType.Treachery;
+                                        break;
+                                    case "Leadership":
+                                        skill = SkillType.Leadership;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(110, string.Format("Invalid Skill, (\"{0}\", \"{1}\")", arrayOfChallenges[i], cleanToken)));
+                                        validData = false;
+                                        break;
+                                }
+                                if (cleanTag == "SkillSecond") { tempSkill[1] = skill; }
+                                else if (cleanTag == "SkillThird") { tempSkill[2] = skill; }
+                                else { tempSkill[0] = skill; }
                                 break;
                             case "[end]":
                             case "[End]":
@@ -3093,8 +3115,8 @@ namespace Next_Game
                                         { Game.SetError(new Error(110, string.Format("Missing data in tempOutcome (record index {0})", index))); validData = false; }
                                         if (index < tempSkill.Length)
                                         {
-                                            if (String.IsNullOrEmpty(tempSkill[index]) == true)
-                                            { Game.SetError(new Error(110, string.Format("Missing data in tempSkill (record index {0})", index))); validData = false; }
+                                            if (tempSkill[index] == SkillType.None)
+                                            { Game.SetError(new Error(110, string.Format("Missing data in tempSkill (SkillType \"None\")", index))); validData = false; }
                                         }
                                     }
                                     if (subIndex <= 0)

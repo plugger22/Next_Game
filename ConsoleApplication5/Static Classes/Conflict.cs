@@ -219,6 +219,7 @@ namespace Next_Game
             { Game.SetError(new Error(111, "Challenge not found, invalid Conflict_Type or SubType")); return false; }
         }
 
+        
         /// <summary>
         /// Determine opponent's strategy and send to layout (attack/balanced/defend)
         /// </summary>

@@ -17,7 +17,7 @@ namespace Next_Game.Event_System
         public ConflictStealth StealthType { get; set; }
         string[] arrayStrategies;
         string[] arrayOutcomes;
-        string[] arraySkills;
+        SkillType[] arraySkills;
 
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Next_Game.Event_System
                 StealthType = stealth;
                 arrayStrategies = new string[6]; //Plyr Strategies Aggressive/Balanced/Defensive 0/1/2, Opponent Strategies, same 3/4/5
                 arrayOutcomes = new string[6]; //Minor Win/Win/Major Win 0/1/2, Minor Loss/Loss/Major Loss 3/4/5
-                arraySkills = new string[3]; //Primary skill 0, Secondary skills 1/2
+                arraySkills = new SkillType[3]; //Primary skill 0, Secondary skills 1/2
             }
             else
             { Game.SetError(new Error(106, "Invalid ConflictType input (\"None\")")); }
@@ -86,7 +86,7 @@ namespace Next_Game.Event_System
         /// Clear then copy new data to array of Skills
         /// </summary>
         /// <param name="tempArray"></param>
-        public void SetSkills(string[] tempArray)
+        public void SetSkills(SkillType[] tempArray)
         {
             if (tempArray != null)
             {
@@ -109,7 +109,7 @@ namespace Next_Game.Event_System
         public string[] GetOutcomes()
         { return arrayOutcomes; }
 
-        public string[] GetSkills()
+        public SkillType[] GetSkills()
         { return arraySkills; }
 
         //place methods above here
