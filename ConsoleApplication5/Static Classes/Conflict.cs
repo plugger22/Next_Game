@@ -642,77 +642,14 @@ namespace Next_Game
         /// </summary>
         private void SetSkills()
         {
-            switch (Conflict_Type)
+            SkillType[] tempArray = challenge.GetSkills();
+            if (tempArray.Length == 3)
             {
-                case ConflictType.Combat:
-                    switch (Combat_Type)
-                    {
-                        case ConflictCombat.Personal:
-                            PrimarySkill = SkillType.Combat;
-                            OtherSkill_1 = SkillType.Wits;
-                            OtherSkill_2 = SkillType.Treachery;
-                            break;
-                        case ConflictCombat.Tournament:
-                            PrimarySkill = SkillType.Combat;
-                            OtherSkill_1 = SkillType.Wits;
-                            OtherSkill_2 = SkillType.Treachery;
-                            break;
-                        case ConflictCombat.Battle:
-                            PrimarySkill = SkillType.Leadership;
-                            OtherSkill_1 = SkillType.Wits;
-                            OtherSkill_2 = SkillType.Treachery;
-                            break;
-                        case ConflictCombat.Hunting:
-                            PrimarySkill = SkillType.Wits;
-                            OtherSkill_1 = SkillType.Combat;
-                            OtherSkill_2 = SkillType.Leadership;
-                            break;
-                        default:
-                            Game.SetError(new Error(91, "Invalid Combat Type"));
-                            break;
-                    }
-                    break;
-                case ConflictType.Social:
-                    switch (Social_Type)
-                    {
-                        case ConflictSocial.Befriend:
-                            PrimarySkill = SkillType.Charm;
-                            OtherSkill_1 = SkillType.Treachery;
-                            OtherSkill_2 = SkillType.Wits;
-                            break;
-                        case ConflictSocial.Blackmail:
-                            PrimarySkill = SkillType.Treachery;
-                            OtherSkill_1 = SkillType.Wits;
-                            OtherSkill_2 = SkillType.Charm;
-                            break;
-                        case ConflictSocial.Seduce:
-                            PrimarySkill = SkillType.Charm;
-                            OtherSkill_1 = SkillType.Treachery;
-                            OtherSkill_2 = SkillType.Wits;
-                            break;
-                        default:
-                            Game.SetError(new Error(91, "Invalid Social Type"));
-                            break;
-                    }
-                    break;
-                case ConflictType.Stealth:
-                    switch (Stealth_Type)
-                    {
-                        
-                        case ConflictStealth.Infiltrate:
-                            PrimarySkill = SkillType.Wits;
-                            OtherSkill_1 = SkillType.Combat;
-                            OtherSkill_2 = SkillType.Treachery;
-                            break;
-                        default:
-                            Game.SetError(new Error(91, "Invalid Other Type"));
-                            break;
-                    }
-                    break;
-                default:
-                    Game.SetError(new Error(91, "Invalid Conflict Type"));
-                    break;
+                PrimarySkill = tempArray[0];
+                OtherSkill_1 = tempArray[1];
+                OtherSkill_2 = tempArray[2];
             }
+            else { Game.SetError(new Error(91, "Invalid Skill array Length")); }
         }
 
         /// <summary>
