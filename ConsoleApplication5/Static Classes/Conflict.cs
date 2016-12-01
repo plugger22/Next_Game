@@ -547,20 +547,6 @@ namespace Next_Game
             return null;
         }
 
-        /*
-        /// <summary>
-        /// returns a neutral situation description appropriate to the conflict
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="subtype"></param>
-        /// <returns></returns>
-        private string GetSituationNeutral(ConflictType type, int subtype)
-        {
-            string description = "unknown";
-            return description;
-        }
-        */
-
         /// <summary>
         /// determine # of cards (worked on remainder / 8x / 4x / 2x / 1x for 1/2/3/4/5 cards). Only for the first two situations (def adv & neutral)
         /// </summary>
@@ -597,76 +583,30 @@ namespace Next_Game
         private void SetOutcome()
         {
             string[] tempArray = new string[10];
+            string[] outcomeArray = challenge.GetOutcomes();
+            if (outcomeArray.Length == 6)
+            {
+                tempArray[1] = outcomeArray[0];
+                tempArray[2] = outcomeArray[1];
+                tempArray[3] = outcomeArray[2];
+                tempArray[4] = outcomeArray[3];
+                tempArray[5] = outcomeArray[4];
+                tempArray[6] = outcomeArray[5];
+            }
+            else
+            { Game.SetError(new Error(86, "Invalid outcome Array size")); }
+            
             //descriptions of outcomes (minor/standard/major wins and losses)
             switch (Conflict_Type)
             {
                 case ConflictType.Combat:
-                    //type of conflict
                     tempArray[0] = string.Format("A {0} {1} Challenge", Combat_Type, Conflict_Type);
-                    switch (Combat_Type)
-                    {
-                        case ConflictCombat.Personal:
-                            tempArray[1] = "Your Opponent retires with a minor wound and an injured ego";
-                            tempArray[2] = "Your Opponent Yields and you can claim an Advantage from him";
-                            tempArray[3] = "Your Opponent Suffers a Major Wound and may die";
-                            tempArray[4] = "You suffer a minor wound and retire defeated";
-                            tempArray[5] = "You are Forced to Yield to a superior Opponent who can demand an Advantage";
-                            tempArray[6] = "You have been Badly Injured and Lose any Special Items";
-                            break;
-                        case ConflictCombat.Tournament:
-                            tempArray[1] = "You make the final group but fail to go any further";
-                            tempArray[2] = "You reach the top three jousters and gain glory and recognition";
-                            tempArray[3] = "You are named Tournament Champion and gain a Ladies Favour";
-                            tempArray[4] = "You are unhorsed midway through the tournament";
-                            tempArray[5] = "You are unhorsed early on by a mid ranked jouster";
-                            tempArray[6] = "You fall off your horse and break bones on your first joust. Disgrace!";
-                            break;
-                        case ConflictCombat.Battle:
-                            tempArray[1] = "The enemy pulls back hurt but isn't defeated";
-                            tempArray[2] = "You carry the day and the enemy retreat";
-                            tempArray[3] = "The enemy rout and suffer horrendous casualties";
-                            tempArray[4] = "You are forced to withdraw but hold your army together";
-                            tempArray[5] = "You army suffers substantial casualties and is defeated";
-                            tempArray[6] = "Your army breaks. You flee the field in order to save yourself";
-                            break;
-                        default:
-                            Game.SetError(new Error(86, "Invalid Combat Type"));
-                            break;
-                    }
                     break;
                 case ConflictType.Social:
-                    //type of conflict
                     tempArray[0] = string.Format("A {0} {1} Challenge", Social_Type, Conflict_Type);
-                    switch (Social_Type)
-                    {
-                        case ConflictSocial.Befriend:
-                            tempArray[1] = "Your relationship improves";
-                            tempArray[2] = "You have become firm friends";
-                            tempArray[3] = "You have gained an ardent supporter";
-                            tempArray[4] = "Your relationship deteriorates";
-                            tempArray[5] = "You have become disliked";
-                            tempArray[6] = "Your opponent is actively campaigning against you";
-                            break;
-                        case ConflictSocial.Blackmail:
-                            tempArray[1] = "You have gained a small amount of influence";
-                            tempArray[2] = "Your opponent agrees to your demands";
-                            tempArray[3] = "Your opponent has become your minion";
-                            tempArray[4] = "You relationship has deteroriated";
-                            tempArray[5] = "You have been firmly rebuffed";
-                            tempArray[6] = "Your opponent is now your enemy";
-                            break;
-                        case ConflictSocial.Seduce:
-                            tempArray[1] = "Your relationship has improved";
-                            tempArray[2] = "You seduce your opponent and gain an advantage";
-                            tempArray[3] = "Your opponent has become an ardent supporter and lover";
-                            tempArray[4] = "Your relationship has deteriorated";
-                            tempArray[5] = "You have been firmly rebuffed";
-                            tempArray[6] = "Your opponent has taken offence and is now your enemy";
-                            break;
-                        default:
-                            Game.SetError(new Error(86, "Invalid Social Type"));
-                            break;
-                    }
+                    break;
+                case ConflictType.Stealth:
+                    tempArray[0] = string.Format("A {0} {1} Challenge", Stealth_Type, Conflict_Type);
                     break;
                 default:
                     Game.SetError(new Error(86, "Invalid Conflict Type"));
