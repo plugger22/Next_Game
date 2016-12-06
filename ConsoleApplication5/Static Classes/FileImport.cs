@@ -3206,7 +3206,7 @@ namespace Next_Game
                                         challenge.SetStrategies(tempStrategy);
                                         challenge.SetOutcomes(tempOutcome);
                                         challenge.SetSkills(tempSkill);
-                                        for(j = 0; j < listOfResults.Count; j++)
+                                        for(int j = 0; j < listOfResults.Count; j++)
                                         { challenge.SetResults((ConflictResult)j, listOfResults[j]); }
                                         //add to dictionary
                                         try
