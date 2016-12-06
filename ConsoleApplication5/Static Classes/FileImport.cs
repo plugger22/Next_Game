@@ -276,7 +276,8 @@ namespace Next_Game
                         //new structure
                         houseStruct = new HouseStruct();
                     }
-                    string[] tokens = arrayOfHouseNames[i].Split(':');
+                    //string[] tokens = arrayOfHouseNames[i].Split(':');
+                    string[] tokens = arrayOfHouseNames[i].Split(new Char[] { ':', ';' });
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
@@ -376,7 +377,8 @@ namespace Next_Game
             {
                 if (arrayOfFileInput[i] != "" && !arrayOfFileInput[i].StartsWith("#"))
                 {
-                    string[] tokens = arrayOfFileInput[i].Split(':');
+                    //string[] tokens = arrayOfFileInput[i].Split(':');
+                    string[] tokens = arrayOfFileInput[i].Split(new Char[] { ':', ';' });
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     cleanToken = tokens[1].Trim();
@@ -432,7 +434,8 @@ namespace Next_Game
                         //sex
                         structTrait.Sex = sex;
                     }
-                    string[] tokens = arrayOfTraits[i].Split(':');
+                    //string[] tokens = arrayOfTraits[i].Split(':');
+                    string[] tokens = arrayOfTraits[i].Split(new Char[] { ':', ';' });
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
@@ -575,7 +578,8 @@ namespace Next_Game
                         //new Trait object
                         structEvent = new EventFollowerStruct();
                     }
-                    string[] tokens = arrayOfEvents[i].Split(':');
+                    //string[] tokens = arrayOfEvents[i].Split(':');
+                    string[] tokens = arrayOfEvents[i].Split(new Char[] { ':', ';' });
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
@@ -951,7 +955,8 @@ namespace Next_Game
                         outcomeFlag = false;
                         triggerFlag = false;
                     }
-                    string[] tokens = arrayOfEvents[i].Split(':');
+                    //string[] tokens = arrayOfEvents[i].Split(':');
+                    string[] tokens = arrayOfEvents[i].Split(new Char[] { ':', ';' });
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     //if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
@@ -1745,7 +1750,8 @@ namespace Next_Game
                         //new Trait object
                         structArc = new ArcStruct();
                     }
-                    string[] tokens = arrayOfArchetypes[i].Split(':');
+                    //string[] tokens = arrayOfArchetypes[i].Split(':');
+                    string[] tokens = arrayOfArchetypes[i].Split(new Char[] { ':', ';' });
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
@@ -2030,7 +2036,8 @@ namespace Next_Game
                         structStory = new StoryStruct();
                     }
 
-                    string[] tokens = arrayOfStories[i].Split(':');
+                    //string[] tokens = arrayOfStories[i].Split(':');
+                    string[] tokens = arrayOfStories[i].Split(new Char[] { ':', ';' });
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     //if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
@@ -2474,7 +2481,8 @@ namespace Next_Game
                         //new structure
                         structFollower = new FollowerStruct();
                     }
-                    string[] tokens = arrayOfFollowers[i].Split(':');
+                    //string[] tokens = arrayOfFollowers[i].Split(':');
+                    string[] tokens = arrayOfFollowers[i].Split(new Char[] { ':', ';' });
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
@@ -2657,7 +2665,8 @@ namespace Next_Game
                         tempListGood.Clear();
                         tempListBad.Clear();
                     }
-                    string[] tokens = arrayOfSituations[i].Split(':');
+                    //string[] tokens = arrayOfSituations[i].Split(':');
+                    string[] tokens = arrayOfSituations[i].Split(new Char[] { ':', ';' });
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
@@ -2947,7 +2956,7 @@ namespace Next_Game
                         for(int k = 0; k < (int)ConflictResult.Count; k++)
                         { listOfResults[k].Clear(); }
                     }
-                    string[] tokens = arrayOfChallenges[i].Split(':');
+                    string[] tokens = arrayOfChallenges[i].Split(new Char[] { ':', ';' });
                     //strip out leading spaces
                     cleanTag = tokens[0].Trim();
                     if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
