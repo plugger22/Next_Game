@@ -15,6 +15,7 @@ namespace Next_Game.Event_System
     class Result
     {
         private static int resultIndex = 1; //autoassigned ID's. Main focus is the Result Class
+        public string Description { get; set; }
         public int ResultID { get; set; }
         public ResultType Type { get; set; }
         public int Data { get; set; }

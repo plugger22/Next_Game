@@ -18,6 +18,7 @@ namespace Next_Game.Event_System
         string[] arrayStrategies;
         string[] arrayOutcomes;
         SkillType[] arraySkills;
+        List<List<int>> listResults;
 
 
         /// <summary>
@@ -36,6 +37,13 @@ namespace Next_Game.Event_System
                 arrayStrategies = new string[6]; //Plyr Strategies Aggressive/Balanced/Defensive 0/1/2, Opponent Strategies, same 3/4/5
                 arrayOutcomes = new string[6]; //Minor Win/Win/Major Win 0/1/2, Minor Loss/Loss/Major Loss 3/4/5
                 arraySkills = new SkillType[3]; //Primary skill 0, Secondary skills 1/2
+                listResults = new List<List<int>>();
+                //create a blank list of lists 6 entries long (one for each ConflictResult enum)
+                for(int i = 0; i < (int)ConflictResult.Count; i++)
+                {
+                    List<int> subList = new List<int>() { 0 };
+                    listResults.Add(subList);
+                }
             }
             else
             { Game.SetError(new Error(106, "Invalid ConflictType input (\"None\")")); }
@@ -102,6 +110,19 @@ namespace Next_Game.Event_System
             { Game.SetError(new Error(109, "Invalid input (Null array)")); }
         }
 
+        /// <summary>
+        /// Add new results to appropriate sublist
+        /// </summary>
+        /// <param name="result">Specify the correct sublist</param>
+        /// <param name="tempList">list of result ID's</param>
+        public void SetResults(ConflictResult result, List<int> tempList)
+        {
+            if (tempList != null)
+            { listResults[(int)result].AddRange(tempList); }
+            else
+            { Game.SetError(new Error(112, "Invalid Input List (null)")); }
+        }
+
 
         public string[] GetStrategies()
         { return arrayStrategies; }
@@ -111,6 +132,14 @@ namespace Next_Game.Event_System
 
         public SkillType[] GetSkills()
         { return arraySkills; }
+
+        /// <summary>
+        /// return specific sublist of result ID's
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public List<int> GetResults(ConflictResult result)
+        { return listResults[(int)result]; }
 
         //place methods above here
     }

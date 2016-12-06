@@ -19,6 +19,7 @@ namespace Next_Game
     public enum ConflictStealth { None, Infiltrate, Evade, Escape} //sub category -> a copy should be in ConflictSubType
     public enum ConflictSubType { None, Personal, Tournament, Battle, Hunting, Blackmail, Seduce, Befriend, Infiltrate, Evade, Escape} //combined list of all subtypes (add to as needed)
     public enum ConflictSpecial { None, Fortified_Position, Mountain_Country, Forest_Country, Castle_Walls } //special situations
+    public enum ConflictResult { None, MajorWin, Win, MinorWin, MinorLoss, Loss, MajorLoss, Count} //result of challenge
     public enum ResourceLevel { None, Poor, Moderate, Substantial, Wealthy, Excessive}
    
 
