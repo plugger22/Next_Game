@@ -3101,6 +3101,48 @@ namespace Next_Game
                                 else if (cleanTag == "SkillThird") { tempSkill[2] = skill; }
                                 else { tempSkill[0] = skill; }
                                 break;
+                            //Results
+                            case "ResWinMinor":
+                            case "ResWin":
+                            case "ResWinMajor":
+                            case "ResLossMinor":
+                            case "ResLoss":
+                            case "ResLossMajor":
+                                //get list of Events
+                                string[] arrayOfResults = cleanToken.Split(',');
+                                List<int> tempList = new List<int>();
+                                int dataInt;
+                                //loop resultID array and add all to lists
+                                string tempHandle = null;
+                                /*
+                                for (int k = 0; k < arrayOfResults.Length; k++)
+                                {
+                                    tempHandle = arrayOfResults[k].Trim();
+                                    if (String.IsNullOrEmpty(tempHandle) == false)
+                                    {
+                                        try
+                                        {
+                                            dataInt = Convert.ToInt32(tempHandle);
+                                            if (dataInt > 0)
+                                            {
+                                                //check a valid event
+                                                if (Game.director.CheckEvent(dataInt))
+                                                { tempList.Add(dataInt); }
+                                                else
+                                                { Game.SetError(new Error(53, string.Format("Invalid EventID \"{0}\" (Not found in Dictionary) for {1}", dataInt, structArc.Name))); validData = false; }
+                                            }
+                                            else
+                                            { Game.SetError(new Error(53, string.Format("Invalid EventID (Zero Value) for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                        }
+                                        catch { Game.SetError(new Error(53, string.Format("Invalid EventID (Conversion Error) for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                    }
+                                    //dodgy EventID is ignored, it doesn't invalidate the record (some records deliberately don't have nicknames)
+                                    else
+                                    { Game.SetError(new Error(53, string.Format("Invalid EventID for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                }
+                                structArc.listOfEvents = tempList;
+                                */
+                                break;
                             case "[end]":
                             case "[End]":
                                 //last datapoint - save structure to list
@@ -3157,6 +3199,29 @@ namespace Next_Game
             return tempDictionary;
         }
 
+
+        /// <summary>
+        /// Import Results data
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        internal Dictionary<int, Result> GetResults(string fileName)
+        {
+            //create test data for dictionary - debug
+            Random rnd = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+            Dictionary<int, Result> tempDictionary = new Dictionary<int, Result>();
+            for (int i = 0; i < 20; i++)
+            {
+                string text = string.Format("Test Result {0}", i);
+                ResultType type = (ResultType)rnd.Next(0, (int)ResultType.Count);
+                int data = rnd.Next(0, 100);
+                int amount = rnd.Next(0, 100);
+                EventCalc calc = (EventCalc)rnd.Next(0, (int)EventCalc.Count);
+                Result result = new Result(text, type, data, calc, amount);
+                tempDictionary.Add(result.ResultID, result);
+            }
+            return tempDictionary;
+        }
         //methods above here
     }
 }

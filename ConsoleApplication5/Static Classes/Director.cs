@@ -87,7 +87,9 @@ namespace Next_Game
         private Dictionary<int, Situation> dictSituationsGame;
         private Dictionary<int, Situation> dictSituationsSpecial;
         private Dictionary<int, Situation> dictSituationsSkill;
+        private Dictionary<int, Result> dictResults;
         private Dictionary<ConflictSubType, Challenge> dictChallenges;
+
 
         public Director(int seed)
         {
@@ -139,6 +141,7 @@ namespace Next_Game
             dictSituationsGame = new Dictionary<int, Situation>(); //third, game specific, situation
             dictSituationsSpecial = new Dictionary<int, Situation>(); //decisions-derived special situations
             dictSituationsSkill = new Dictionary<int, Situation>(); //primary skill involved in a challenge
+            dictResults = new Dictionary<int, Result>(); //predefined results of a challenge outcome
             dictChallenges = new Dictionary<ConflictSubType, Challenge>(); //challenge data unique to individual challenge types
         }
 
@@ -147,18 +150,15 @@ namespace Next_Game
         /// </summary>
         public void InitialiseDirector()
         {
-            listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters());
-            //Run FIRST
+            listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters()); //Run FIRST
             Console.WriteLine(Environment.NewLine + "--- Import Follower Events");
             dictFollowerEvents = Game.file.GetFollowerEvents("Events_Follower.txt");
             Console.WriteLine(Environment.NewLine + "--- Import Player Events");
             dictPlayerEvents = Game.file.GetPlayerEvents("Events_Player.txt");
             InitialiseGenericEvents();
-            //Run AFTER importing Events
-            Console.WriteLine(Environment.NewLine + "--- Import Archetypes");
+            Console.WriteLine(Environment.NewLine + "--- Import Archetypes"); //Run AFTER importing Events
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
-            //Run AFTER importing Archetypes
-            Console.WriteLine(Environment.NewLine + "--- Import Stories");
+            Console.WriteLine(Environment.NewLine + "--- Import Stories"); //Run AFTER importing Archetypes
             dictStories = Game.file.GetStories("Stories.txt");
             story = SetStory(1); //choose which story to use
             Console.WriteLine(Environment.NewLine + "--- Initialise Archetypes");
@@ -171,7 +171,9 @@ namespace Next_Game
             dictSituationsSpecial = Game.file.GetSituations("SitSpecial.txt");
             Console.WriteLine(Environment.NewLine + "--- Initialise Skill (Situations)");
             dictSituationsSkill = Game.file.GetSituations("SitSkill.txt");
-            Console.WriteLine(Environment.NewLine + "--- Initialise Challenges");
+            Console.WriteLine(Environment.NewLine + "--- Initialise Results");
+            dictResults = Game.file.GetResults("Result.txt");
+            Console.WriteLine(Environment.NewLine + "--- Initialise Challenges"); //run AFTER GetResults
             dictChallenges = Game.file.GetChallenges("Challenge.txt");
             Console.WriteLine(Environment.NewLine);
             InitialiseGameStates();

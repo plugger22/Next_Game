@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
 
-    public enum ResultType { None, GameVar, Actor, Resource, Item, Secret, Army}
+    public enum ResultType { None, GameVar, Actor, Resource, Item, Secret, Army, Count}
 
     /// <summary>
     /// Conflict Results (Events have outcomes). Single class, access different results via enum ResultType
@@ -22,9 +22,14 @@ namespace Next_Game.Event_System
         public EventCalc Calc { get; set; }
         public int Amount { get; set; }
 
-        public Result()
+        public Result(string description, ResultType type, int data, EventCalc calc, int amount)
         {
             ResultID = resultIndex++;
+            this.Description = description;
+            this.Type = type;
+            this.Data = data;
+            this.Calc = calc;
+            this.Amount = amount;
         }
     }
 }

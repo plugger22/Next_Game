@@ -7,6 +7,8 @@
 # OppStrAgg, OppStrBal, OppStrDef: Aggressive/Balanced/Defensive strategies (text) if Opponent is challenger
 # SkillPrime: primary skill used in challenge -> Combat / Wits / Charm / Treachery / Leadership
 # SkillSecond, SkillThird: secondary skills (both identical effect) used in challenge
+# OutWinMinor... , Text outcomes for the six possibilities (must have text in all)
+# ResWinMinor... , <int> comma delineated lists of Result ID's for each outcome (min. ONE, must correspond to resultID entries in Results.txt)
 
 
 # Combat Challenges
@@ -28,6 +30,14 @@ OutWinMajor: Your Opponent Suffers a Major Wound and may die
 OutLossMinor: You suffer a minor wound and retire defeated
 OutLoss: You are Forced to Yield to a superior Opponent who can demand an Advantage
 OutLossMajor: You have been Badly Injured and Lose any Special Items
+OutNone: 
+ResWinMinor: 2, 3, 4
+ResWin: 5
+ResWinMajor: 6, 7 
+ResLossMinor: 8
+ResLoss: 9, 10
+ResLossMajor; 11, 12, 13
+ResNone: 1
 [End]
 
 Type: Combat
@@ -47,6 +57,14 @@ OutWinMajor: You are named Tournament Champion and gain a Ladies Favour
 OutLossMinor: You are unhorsed midway through the tournament
 OutLoss: You are unhorsed early on by a mid ranked jouster
 OutLossMajor: You fall off your horse and break bones on your first joust. Disgrace!
+OutNone: 
+ResWinMinor: 2, 3, 4
+ResWin: 5
+ResWinMajor: 6, 7 
+ResLossMinor: 8
+ResLoss: 9, 10
+ResLossMajor; 11, 12, 13
+ResNone: 1
 [End]
 
 Type: Combat
@@ -66,6 +84,14 @@ OutWinMajor: The enemy rout and suffer horrendous casualties
 OutLossMinor: You are forced to withdraw but hold your army together
 OutLoss: You army suffers substantial casualties and is defeated
 OutLossMajor: Your army breaks. You flee the field in order to save yourself
+OutNone: 
+ResWinMinor: 2, 3, 4
+ResWin: 5
+ResWinMajor: 6, 7 
+ResLossMinor: 8
+ResLoss: 9, 10
+ResLossMajor; 11, 12, 13
+ResNone: 1
 [End]
 
 Type: Combat
@@ -85,6 +111,14 @@ OutWinMajor: The creature is slain and you gain an advantage.
 OutLossMinor: The creature is spotted but escapes.
 OutLoss: The creature isn't spotted.
 OutLossMajor: The creature ambushes you and you're injured.
+OutNone: 
+ResWinMinor: 2, 3, 4
+ResWin: 5
+ResWinMajor: 6, 7 
+ResLossMinor: 8
+ResLoss: 9, 10
+ResLossMajor; 11, 12, 13
+ResNone: 1
 [End]
 
 # Social Challenges
@@ -106,6 +140,14 @@ OutWinMajor: You have gained an ardent supporter
 OutLossMinor: Your relationship deteriorates
 OutLoss: You have become disliked
 OutLossMajor: Your opponent is actively campaigning against you
+OutNone: 
+ResWinMinor: 2, 3, 4
+ResWin: 5
+ResWinMajor: 6, 7 
+ResLossMinor: 8
+ResLoss: 9, 10
+ResLossMajor; 11, 12, 13
+ResNone: 1
 [End]
 
 Type: Social
@@ -125,6 +167,14 @@ OutWinMajor: Your opponent has become your minion
 OutLossMinor: You relationship has deteriorated
 OutLoss: You have been firmly rebuffed
 OutLossMajor: Your opponent is now your enemy
+OutNone: 
+ResWinMinor: 2, 3, 4
+ResWin: 5
+ResWinMajor: 6, 7 
+ResLossMinor: 8
+ResLoss: 9, 10
+ResLossMajor; 11, 12, 13
+ResNone: 1
 [End]
 
 Type: Social
@@ -144,6 +194,14 @@ OutWinMajor: Your opponent has become an ardent supporter and lover
 OutLossMinor: Your relationship has deteriorated
 OutLoss: You have been firmly rebuffed
 OutLossMajor: Your opponent has taken offence and is now your enemy
+OutNone: 
+ResWinMinor: 2, 3, 4
+ResWin: 5
+ResWinMajor: 6, 7 
+ResLossMinor: 8
+ResLoss: 9, 10
+ResLossMajor; 11, 12, 13
+ResNone: 1
 [End]
 
 # Stealth Challenges
@@ -165,6 +223,14 @@ OutWinMajor: You make it without being spotted and gain an advantage.
 OutLossMinor: They make it but are spotted.
 OutLoss: They make it without being spotted.
 OutLossMajor: They make it without being spotted and gain an advantage.
+OutNone: 
+ResWinMinor: 2, 3, 4
+ResWin: 5
+ResWinMajor: 6, 7 
+ResLossMinor: 8
+ResLoss: 9, 10
+ResLossMajor; 11, 12, 13
+ResNone: 1
 [End]
 
 Type: Stealth
@@ -184,6 +250,14 @@ OutWinMajor: You successfully evade and gain an advantage
 OutLossMinor: You evade but are wounded.
 OutLoss: You are caught.
 OutLossMajor: You are caught and wounded.
+OutNone: 
+ResWinMinor: 2, 3, 4
+ResWin: 5
+ResWinMajor: 6, 7 
+ResLossMinor: 8
+ResLoss: 9, 10
+ResLossMajor; 11, 12, 13
+ResNone: 1
 [End]
 
 Type: Stealth
@@ -203,4 +277,12 @@ OutWinMajor: Freedom plus an advantage
 OutLossMinor: You're caught but not harmed
 OutLoss: You're caught and badly beaten
 OutLossMajor: You're caught, beaten and locked in a deeper, darker dungeon
+OutNone: 
+ResWinMinor: 2, 3, 4
+ResWin: 5
+ResWinMajor: 6, 7 
+ResLossMinor: 8
+ResLoss: 9, 10
+ResLossMajor; 11, 12, 13
+ResNone: 1
 [End]
