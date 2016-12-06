@@ -109,12 +109,12 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Determine Strategy and send to Layout
+        /// Determine Strategy and send to Layout. Player strategies are always 0/1/2, Opponent 3/4/5
         /// </summary>
         private void SetPlayerStrategy()
         {
             string[] tempArray = challenge.GetStrategies();
-            string[] playerArray = new string[3];
+            string[] playerArray = new string[6];
             if (tempArray.Length == 6)
             {
                 if (Challenger == true)
@@ -122,6 +122,9 @@ namespace Next_Game
                     playerArray[0] = tempArray[0];
                     playerArray[1] = tempArray[1];
                     playerArray[2] = tempArray[2];
+                    playerArray[3] = tempArray[3];
+                    playerArray[4] = tempArray[4];
+                    playerArray[5] = tempArray[5];
                 }
                 else
                 {
@@ -129,6 +132,9 @@ namespace Next_Game
                     playerArray[0] = tempArray[3];
                     playerArray[1] = tempArray[4];
                     playerArray[2] = tempArray[5];
+                    playerArray[3] = tempArray[0];
+                    playerArray[4] = tempArray[1];
+                    playerArray[5] = tempArray[2];
                 }
                 //pass data to Layout
                 Game.layout.SetStrategy(playerArray);

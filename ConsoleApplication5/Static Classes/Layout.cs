@@ -85,7 +85,7 @@ namespace Next_Game
         private int[] arrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
         private int[,,] arrayPoints { get; set; } //0 -> Good card Influence, 1 - Good card Ignore, 2 Bad card Influence, 3 Bad card Ignore (3 x 3 is Player vs. Opponent strategies)
         private string[,] arraySituation { get; set; } // up to 3 situation factors
-        private string[] arrayStrategy { get; set; } //3 strategies - always variations of Attack, Balanced & Defend
+        private string[] arrayStrategy { get; set; } //two lots of 3 strategies - always variations of Attack, Balanced & Defend (0/1/2 - Player, 3/4/5 - Opponent)
         private string[] arrayOutcome { get; set; } // 0 is Conflict Type, 1/2/3 are Wins (minor/normal/major), 4/5/6 are Losses, 7/8 are advantage/disadvantage and recommendation, 9 Actors
         private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
         private List<Card_Conflict> listCardHand; //cards in playable hand
@@ -117,7 +117,7 @@ namespace Next_Game
         private RLColor[,] arrayOfBackColors_Popup;
         //strategy
         public int Strategy_Player { get; set; } //0 -> Aggressive, 1 -> Balanced, 2 -> Defend (set in Game.SetSpecialMode)
-        public int Strategy_Opponent { get; set; }
+        public int Strategy_Opponent { get; set; } //0 -> Aggressive, 1 -> Balanced, 2 -> Defend
 
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Next_Game
             arrayCardPool = new int[3];
             arrayPoints = new int[3, 3, 4];
             arraySituation = new string[3, 3];
-            arrayStrategy = new string[3];
+            arrayStrategy = new string[6];
             arrayOutcome = new string[10];
             listCardBreakdown = new List<Snippet>();
             listCardHand = new List<Card_Conflict>();
@@ -601,9 +601,11 @@ namespace Next_Game
                 { arrayOfCells_Cards[width_index, height_index] = 255; }
             }
             DrawCenteredText("Your Strategy", horizontal_align, vertical_align + 2, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText(arrayStrategy[Strategy_Player], horizontal_align, vertical_align + 4, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(string.Format("{0} [F{1}]", arrayStrategy[Strategy_Player], Strategy_Player + 1), horizontal_align, vertical_align + 4, ca_status_width, 
+                RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawCenteredText("Opponent's Strategy", horizontal_align, vertical_align + 6, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText(arrayStrategy[Strategy_Opponent], horizontal_align, vertical_align + 8, ca_status_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(string.Format("{0} [F{1}]", arrayStrategy[Strategy_Opponent + 3], Strategy_Opponent + 1), horizontal_align, vertical_align + 8, ca_status_width, 
+                RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             //Message
             for (int width_index = ca_left_outer + 1; width_index < ca_left_outer + text_box_width - 1; width_index++)
             {
@@ -1022,7 +1024,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Debug method
+        /// pop-up confirmation
         /// </summary>
         /// <returns></returns>
         public List<Snippet> GetDataConfirm()
@@ -1030,9 +1032,9 @@ namespace Next_Game
             int box_width = (Width - Offset_x) / 3;
             List<Snippet> listOfSnippets = new List<Snippet>();
             listOfSnippets.Add(new Snippet("You have Chosen...", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet(arrayStrategy[Strategy_Player], RLColor.Blue, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet(string.Format("{0} [F{1}]", arrayStrategy[Strategy_Player], Strategy_Player + 1), RLColor.Blue, Confirm_FillColor));
             listOfSnippets.Add(new Snippet("Your Opponent has Chosen...", RLColor.Black, Confirm_FillColor));
-            listOfSnippets.Add(new Snippet(arrayStrategy[Strategy_Opponent], RLColor.Red, Confirm_FillColor));
+            listOfSnippets.Add(new Snippet(string.Format("{0} [F{1}]", arrayStrategy[Strategy_Opponent + 3], Strategy_Opponent + 1), RLColor.Red, Confirm_FillColor));
             listOfSnippets.Add(new Snippet(""));
             //has defender forfeited their advantage?
             if (Challenger == true)
@@ -1098,43 +1100,6 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Debug method
-        /// </summary>
-        private void SetTestData()
-        {
-            //card pool
-            /*arrayCardPool[0] = 8;
-            arrayCardPool[1] = 4;
-            arrayCardPool[2] = 1;
-            //situations
-            arraySituation[0] = "Defendable Hill (Good)";
-            arraySituation[1] = "Muddy Ground (Neutral)";
-            arraySituation[2] = "Relative Army Size (Bad)";
-            //strategy
-            arrayStrategy[0] = "Take the Fight to the Enemy";
-            arrayStrategy[1] = "Aggressive Defense";
-            arrayStrategy[2] = "Hold Firm";
-            //breakdown
-            listCardBreakdown.Add(new Snippet("Your Cards", RLColor.Blue, RLColor.Black));
-            listCardBreakdown.Add(new Snippet("Daven Arryn's Leadership Skill (Good), 2 Cards, Primary Conflict Skill (Leadership 2 Stars)", RLColor.Black, RLColor.Black));
-            listCardBreakdown.Add(new Snippet("Daven Arryn's Combat Skill (Good), 1 Card, Secondary Conflict Skill (Combat 4 Stars)", RLColor.Black, RLColor.Black));
-            listCardBreakdown.Add(new Snippet("Dave Arryn's Stubborn Trait (Bad), 1 Card", RLColor.Red, RLColor.Black));
-            listCardBreakdown.Add(new Snippet("Ice, special Sword (Good), 2 Cards", RLColor.Black, RLColor.Black));
-            listCardBreakdown.Add(new Snippet("Knight Ser Raymun Jankin, 1 card, (Combat 5 Stars)", RLColor.Black, RLColor.Black));
-            listCardBreakdown.Add(new Snippet(""));
-            listCardBreakdown.Add(new Snippet("Opponent's Cards", RLColor.Blue, RLColor.Black));
-            listCardBreakdown.Add(new Snippet("King Beuves Florent's Leadership Skill (Bad), 3 Cards, Primary Conflict Skill (Leadership 3 Stars)", RLColor.Red, RLColor.Black));
-            listCardBreakdown.Add(new Snippet("Lord Tolly Targyen (Bad), 1 Card, (Leadership 5 Stars)", RLColor.Red, RLColor.Black));
-            listCardBreakdown.Add(new Snippet("Knight Ser Humfridus Hamelin (Bad), 1 Card, (Combat 5 Stars)", RLColor.Red, RLColor.Black));
-            listCardBreakdown.Add(new Snippet(""));
-            listCardBreakdown.Add(new Snippet("Situation Cards", RLColor.Blue, RLColor.Black));
-            listCardBreakdown.Add(new Snippet("Defendable Hill (Good), 2 Cards (Doesn't apply if you choose an Aggressive strategy)", RLColor.Black, RLColor.Black));
-            listCardBreakdown.Add(new Snippet("Muddy Ground (Neutral), 1 Card", RLColor.Gray, RLColor.Black));
-            listCardBreakdown.Add(new Snippet("Relative Size of Armies (Bad), 3 Cards (You 10,000 Men-At-Arms, Opponent 25,000 Men-At-Arms)", RLColor.Red, RLColor.Black));
-            */
-        }
-
-        /// <summary>
         /// Set up Card Breakdown
         /// </summary>
         /// <param name="listOfSnippets"></param>
@@ -1155,10 +1120,10 @@ namespace Next_Game
         /// <param name="arrayInput"></param>
         internal void SetStrategy(string[] arrayInput)
         {
-            if (arrayInput.Length == 3)
+            if (arrayInput.Length == 6)
             { arrayInput.CopyTo(arrayStrategy, 0); }
             else
-            { Game.SetError(new Error(85, "Invalid Strategy Array input (needs precisely 3 strategies)")); }
+            { Game.SetError(new Error(85, "Invalid Strategy Array input (needs precisely 6 strategies)")); }
         }
 
         /// <summary>
