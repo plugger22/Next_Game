@@ -111,14 +111,17 @@ namespace Next_Game.Event_System
         }
 
         /// <summary>
-        /// Add new results to appropriate sublist
+        /// Add new results to appropriate sublist which is cleared first
         /// </summary>
         /// <param name="result">Specify the correct sublist</param>
         /// <param name="tempList">list of result ID's</param>
         public void SetResults(ConflictResult result, List<int> tempList)
         {
             if (tempList != null)
-            { listResults[(int)result].AddRange(tempList); }
+            {
+                listResults[(int)result].Clear();
+                listResults[(int)result].AddRange(tempList);
+            }
             else
             { Game.SetError(new Error(112, "Invalid Input List (null)")); }
         }

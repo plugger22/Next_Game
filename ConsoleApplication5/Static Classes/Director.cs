@@ -1245,10 +1245,21 @@ namespace Next_Game
         /// <returns></returns>
         public bool CheckEvent(int eventID)
         {
-            bool status = false;
             if(dictFollowerEvents.ContainsKey(eventID))
             { return true; }
-            return status;
+            return false;
+        }
+
+        /// <summary>
+        /// query whetehr a result exists based on ID
+        /// </summary>
+        /// <param name="resultID"></param>
+        /// <returns></returns>
+        public bool CheckResult(int resultID)
+        {
+            if (dictResults.ContainsKey(resultID))
+            { return true; }
+            return false;
         }
 
         /// <summary>
@@ -1258,10 +1269,9 @@ namespace Next_Game
         /// <returns></returns>
         public bool CheckArchetype(int arcID)
         {
-            bool status = false;
             if (dictArchetypes.ContainsKey(arcID))
             { return true; }
-            return status;
+            return false;
         }
 
         /// <summary>

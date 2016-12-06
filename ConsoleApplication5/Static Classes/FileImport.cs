@@ -1942,7 +1942,7 @@ namespace Next_Game
                                     }
                                     //dodgy EventID is ignored, it doesn't invalidate the record (some records deliberately don't have nicknames)
                                     else
-                                    { Game.SetError(new Error(53, string.Format("Invalid EventID for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                    { Game.SetError(new Error(53, string.Format("Invalid EventID for {0}, {1}", structArc.Name, fileName))); }
                                 }
                                 structArc.listOfEvents = tempList;
                                 break;
@@ -2908,6 +2908,10 @@ namespace Next_Game
             SkillType[] tempSkill = new SkillType[3];
             string[] arrayOfChallenges = ImportDataFile(fileName);
             List<ChallengeStruct> listOfStructs = new List<ChallengeStruct>();
+            //set up blank result list structure
+            List<List<int>> listOfResults = new List<List<int>>();
+            for(int i = 0; i < (int)ConflictResult.Count; i++)
+            { listOfResults[i].Add(0); }
             bool newChallenge = false;
             bool validData = true;
             int dataCounter = 0; //number of challenges
@@ -2935,6 +2939,9 @@ namespace Next_Game
                         Array.Clear(tempStrategy, 0, tempStrategy.Length);
                         Array.Clear(tempOutcome, 0, tempOutcome.Length);
                         Array.Clear(tempSkill, 0, tempSkill.Length);
+                        //clear out Results ready for next challenge
+                        for(int k = 0; k < (int)ConflictResult.Count; k++)
+                        { listOfResults[k].Clear(); }
                     }
                     string[] tokens = arrayOfChallenges[i].Split(':');
                     //strip out leading spaces
@@ -3102,6 +3109,7 @@ namespace Next_Game
                                 else { tempSkill[0] = skill; }
                                 break;
                             //Results
+                            case "ResNone":
                             case "ResWinMinor":
                             case "ResWin":
                             case "ResWinMajor":
@@ -3114,7 +3122,7 @@ namespace Next_Game
                                 int dataInt;
                                 //loop resultID array and add all to lists
                                 string tempHandle = null;
-                                /*
+                                
                                 for (int k = 0; k < arrayOfResults.Length; k++)
                                 {
                                     tempHandle = arrayOfResults[k].Trim();
@@ -3126,22 +3134,50 @@ namespace Next_Game
                                             if (dataInt > 0)
                                             {
                                                 //check a valid event
-                                                if (Game.director.CheckEvent(dataInt))
+                                                if (Game.director.CheckResult(dataInt))
                                                 { tempList.Add(dataInt); }
                                                 else
-                                                { Game.SetError(new Error(53, string.Format("Invalid EventID \"{0}\" (Not found in Dictionary) for {1}", dataInt, structArc.Name))); validData = false; }
+                                                {
+                                                    Game.SetError(new Error(110, string.Format("Invalid resultID \"{0}\" (Not found in Dictionary) for {1} -> {2}", dataInt, structChallenge.Type, subType)));
+                                                    validData = false;
+                                                }
                                             }
                                             else
-                                            { Game.SetError(new Error(53, string.Format("Invalid EventID (Zero Value) for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                            { Game.SetError(new Error(110, string.Format("Invalid resultID (Zero, or less) for {0} -> {1}", structChallenge.Type, subType))); validData = false; }
                                         }
-                                        catch { Game.SetError(new Error(53, string.Format("Invalid EventID (Conversion Error) for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                        catch { Game.SetError(new Error(110, string.Format("Invalid resultID (Conversion Error) for {0} -> {1}", structChallenge.Type, subType))); validData = false; }
                                     }
-                                    //dodgy EventID is ignored, it doesn't invalidate the record (some records deliberately don't have nicknames)
+                                    //dodgy resultID is ignored, it doesn't invalidate the record
                                     else
-                                    { Game.SetError(new Error(53, string.Format("Invalid EventID for {0}, {1}", structArc.Name, fileName))); validData = false; }
+                                    { Game.SetError(new Error(110, string.Format("Invalid resultID for {0} -> {1}", structChallenge.Type, subType))); }
                                 }
-                                structArc.listOfEvents = tempList;
-                                */
+                                if (tempList.Count > 0)
+                                {
+                                    //place list in correct Result sublist
+                                    int index = -1;
+                                    switch(cleanTag)
+                                    {
+                                        case "ResNone":
+                                            index = (int)ConflictResult.None;
+                                            break;
+                                        case "ResWinMinor":
+                                        case "ResWin":
+                                        case "ResWinMajor":
+                                        case "ResLossMinor":
+                                        case "ResLoss":
+                                        case "ResLossMajor":
+                                        default:
+                                            Game.SetError(new Error(110, string.Format("No valid Tag for Result sublist (default) \"{0}\"", cleanTag)));
+                                            break;
+                                    }
+                                    if (index > -1)
+                                    { listOfResults[index].AddRange(tempList); }
+                                    else
+                                    { Game.SetError(new Error(110, "Invalid index value (\"-1\")")); }
+                                }
+                                else
+                                { Game.SetError(new Error(110, string.Format("No valid data for Result sublist \"{0}\"", cleanTag))); validData = false; }
+                                
                                 break;
                             case "[end]":
                             case "[End]":
@@ -3170,6 +3206,8 @@ namespace Next_Game
                                         challenge.SetStrategies(tempStrategy);
                                         challenge.SetOutcomes(tempOutcome);
                                         challenge.SetSkills(tempSkill);
+                                        for(j = 0; j < listOfResults.Count; j++)
+                                        { challenge.SetResults((ConflictResult)j, listOfResults[j]); }
                                         //add to dictionary
                                         try
                                         {
