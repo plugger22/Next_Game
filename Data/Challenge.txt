@@ -30,13 +30,13 @@ OutWinMajor: Your Opponent Suffers a Major Wound and may die
 OutLossMinor: You suffer a minor wound and retire defeated
 OutLoss: You are Forced to Yield to a superior Opponent who can demand an Advantage
 OutLossMajor: You have been Badly Injured and Lose any Special Items
-OutNone: 
+OutNone: debug
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
 ResLossMinor: 8
 ResLoss: 9, 10
-ResLossMajor; 11, 12, 13
+ResLossMajor: 11, 12, 13
 ResNone: 1
 [End]
 
@@ -57,13 +57,13 @@ OutWinMajor: You are named Tournament Champion and gain a Ladies Favour
 OutLossMinor: You are unhorsed midway through the tournament
 OutLoss: You are unhorsed early on by a mid ranked jouster
 OutLossMajor: You fall off your horse and break bones on your first joust. Disgrace!
-OutNone: 
+OutNone: debug
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
 ResLossMinor: 8
 ResLoss: 9, 10
-ResLossMajor; 11, 12, 13
+ResLossMajor: 11, 12, 13
 ResNone: 1
 [End]
 
@@ -84,13 +84,13 @@ OutWinMajor: The enemy rout and suffer horrendous casualties
 OutLossMinor: You are forced to withdraw but hold your army together
 OutLoss: You army suffers substantial casualties and is defeated
 OutLossMajor: Your army breaks. You flee the field in order to save yourself
-OutNone: 
+OutNone: debug
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
 ResLossMinor: 8
 ResLoss: 9, 10
-ResLossMajor; 11, 12, 13
+ResLossMajor: 11, 12, 13
 ResNone: 1
 [End]
 
@@ -111,13 +111,13 @@ OutWinMajor: The creature is slain and you gain an advantage.
 OutLossMinor: The creature is spotted but escapes.
 OutLoss: The creature isn't spotted.
 OutLossMajor: The creature ambushes you and you're injured.
-OutNone: 
+OutNone: debug
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
 ResLossMinor: 8
 ResLoss: 9, 10
-ResLossMajor; 11, 12, 13
+ResLossMajor: 11, 12, 13
 ResNone: 1
 [End]
 
@@ -140,13 +140,13 @@ OutWinMajor: You have gained an ardent supporter
 OutLossMinor: Your relationship deteriorates
 OutLoss: You have become disliked
 OutLossMajor: Your opponent is actively campaigning against you
-OutNone: 
+OutNone: debug
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
 ResLossMinor: 8
 ResLoss: 9, 10
-ResLossMajor; 11, 12, 13
+ResLossMajor: 11, 12, 13
 ResNone: 1
 [End]
 
@@ -167,13 +167,13 @@ OutWinMajor: Your opponent has become your minion
 OutLossMinor: You relationship has deteriorated
 OutLoss: You have been firmly rebuffed
 OutLossMajor: Your opponent is now your enemy
-OutNone: 
+OutNone: debug
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
 ResLossMinor: 8
 ResLoss: 9, 10
-ResLossMajor; 11, 12, 13
+ResLossMajor: 11, 12, 13
 ResNone: 1
 [End]
 
@@ -194,13 +194,13 @@ OutWinMajor: Your opponent has become an ardent supporter and lover
 OutLossMinor: Your relationship has deteriorated
 OutLoss: You have been firmly rebuffed
 OutLossMajor: Your opponent has taken offence and is now your enemy
-OutNone: 
+OutNone: debug
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
 ResLossMinor: 8
 ResLoss: 9, 10
-ResLossMajor; 11, 12, 13
+ResLossMajor: 11, 12, 13
 ResNone: 1
 [End]
 
@@ -223,13 +223,13 @@ OutWinMajor: You make it without being spotted and gain an advantage.
 OutLossMinor: They make it but are spotted.
 OutLoss: They make it without being spotted.
 OutLossMajor: They make it without being spotted and gain an advantage.
-OutNone: 
+OutNone: debug
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
 ResLossMinor: 8
 ResLoss: 9, 10
-ResLossMajor; 11, 12, 13
+ResLossMajor: 11, 12, 13
 ResNone: 1
 [End]
 
@@ -250,13 +250,13 @@ OutWinMajor: You successfully evade and gain an advantage
 OutLossMinor: You evade but are wounded.
 OutLoss: You are caught.
 OutLossMajor: You are caught and wounded.
-OutNone: 
+OutNone: debug
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
 ResLossMinor: 8
 ResLoss: 9, 10
-ResLossMajor; 11, 12, 13
+ResLossMajor: 11, 12, 13
 ResNone: 1
 [End]
 
@@ -277,12 +277,12 @@ OutWinMajor: Freedom plus an advantage
 OutLossMinor: You're caught but not harmed
 OutLoss: You're caught and badly beaten
 OutLossMajor: You're caught, beaten and locked in a deeper, darker dungeon
-OutNone: 
+OutNone: debug
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
 ResLossMinor: 8
 ResLoss: 9, 10
-ResLossMajor; 11, 12, 13
+ResLossMajor: 11, 12, 13
 ResNone: 1
 [End]

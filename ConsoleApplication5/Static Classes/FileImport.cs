@@ -2911,7 +2911,11 @@ namespace Next_Game
             //set up blank result list structure
             List<List<int>> listOfResults = new List<List<int>>();
             for(int i = 0; i < (int)ConflictResult.Count; i++)
-            { listOfResults[i].Add(0); }
+            {
+                List<int> tempSubList = new List<int>();
+                tempSubList.Add(0);
+                listOfResults.Add(tempSubList);
+            }
             bool newChallenge = false;
             bool validData = true;
             int dataCounter = 0; //number of challenges
@@ -3077,6 +3081,9 @@ namespace Next_Game
                             case "OutLossMajor":
                                 tempOutcome[5] = cleanToken;
                                 break;
+                            case "OutNone":
+                                //placeholder, yet to do
+                                break;
                                 //skills
                             case "SkillPrime":
                             case "SkillSecond":
@@ -3161,11 +3168,23 @@ namespace Next_Game
                                             index = (int)ConflictResult.None;
                                             break;
                                         case "ResWinMinor":
+                                            index = (int)ConflictResult.MinorWin;
+                                            break;
                                         case "ResWin":
+                                            index = (int)ConflictResult.Win;
+                                            break;
                                         case "ResWinMajor":
+                                            index = (int)ConflictResult.MajorWin;
+                                            break;
                                         case "ResLossMinor":
+                                            index = (int)ConflictResult.MinorLoss;
+                                            break;
                                         case "ResLoss":
+                                            index = (int)ConflictResult.Loss;
+                                            break;
                                         case "ResLossMajor":
+                                            index = (int)ConflictResult.MajorLoss;
+                                            break;
                                         default:
                                             Game.SetError(new Error(110, string.Format("No valid Tag for Result sublist (default) \"{0}\"", cleanTag)));
                                             break;
