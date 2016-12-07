@@ -58,7 +58,7 @@ OutWinMajor: You are named Tournament Champion and gain a Ladies Favour
 OutLossMinor: You are unhorsed midway through the tournament
 OutLoss: You are unhorsed early on by a mid ranked jouster
 OutLossMajor: You fall off your horse and break bones on your first joust. Disgrace!
-OutNone: You've achieved an average tournament result of no particular note.
+OutNone: You've achieved a nondescript tournament result of no particular note.
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 

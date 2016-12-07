@@ -1253,6 +1253,18 @@ namespace Next_Game
             { Game.SetError(new Error(103, "Invalid card Input (null)")); }
         }
 
+        /// <summary>
+        /// Resolves results for the particular outcome acheived
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns>A text list of describing each individual result, suitable for display</returns>
+        internal List<string> ResolveResults(ConflictResult result)
+        {
+            List<string> tempList = new List<string>();
+
+            return tempList;
+        }
+
         // methods above here
     }
 }

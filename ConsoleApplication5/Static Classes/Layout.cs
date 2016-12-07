@@ -516,6 +516,13 @@ namespace Next_Game
             listOutcome.Add(new Snippet(string.Format("Final Score {0}{1}", score > 0 ? "+" : "", score), RLColor.Black, Outcome_FillColor));
             listOutcome.Add(new Snippet(textOutcome, RLColor.Magenta, Outcome_FillColor));
             listOutcome.Add(new Snippet(textDescription, RLColor.Black, Outcome_FillColor));
+            //Results
+            List<string> resultList = Game.conflict.ResolveResults(Result);
+            if (resultList.Count > 0)
+            {
+                for (int i = 0; i < resultList.Count; i++)
+                { listOutcome.Add(new Snippet(resultList[i])); }
+            }
             //...display outcome box text
             for(int i = 0; i < listOutcome.Count(); i++)
             { DrawCenteredText(listOutcome[i].GetText(), ou_left_align, vertical_top + 2 + i * 2, ou_width, listOutcome[i].GetForeColor(), arrayOfCells_Outcome, arrayOfForeColors_Outcome); }
