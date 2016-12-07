@@ -1488,6 +1488,19 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Returns a Result from dictionary
+        /// </summary>
+        /// <param name="resultID"></param>
+        /// <returns></returns>
+        internal Result GetResult(int resultID)
+        {
+            Result result = new Result();
+            if (dictResults.TryGetValue(resultID, out result))
+            { return result; }
+            return null;
+        }
+
+        /// <summary>
         /// Returns name of Archetype based on arcID. Null if not found.
         /// </summary>
         /// <param name="arcID"></param>

@@ -521,7 +521,7 @@ namespace Next_Game
             if (resultList.Count > 0)
             {
                 for (int i = 0; i < resultList.Count; i++)
-                { listOutcome.Add(new Snippet(resultList[i])); }
+                { listOutcome.Add(new Snippet(resultList[i], RLColor.Magenta, Outcome_FillColor)); }
             }
             //...display outcome box text
             for(int i = 0; i < listOutcome.Count(); i++)

@@ -1258,10 +1258,60 @@ namespace Next_Game
         /// </summary>
         /// <param name="result"></param>
         /// <returns>A text list of describing each individual result, suitable for display</returns>
-        internal List<string> ResolveResults(ConflictResult result)
+        internal List<string> ResolveResults(ConflictResult outcome)
         {
             List<string> tempList = new List<string>();
-
+            List<int> resultList = challenge.GetResults(outcome);
+            int resultID;
+            if (resultList.Count > 0)
+            {
+                for(int i = 0; i < resultList.Count; i++)
+                {
+                    resultID = resultList[i];
+                    Result result = Game.director.GetResult(resultID);
+                    if (result != null)
+                    {
+                        //resolve the actual result
+                        ResultType type = result.Type;
+                        switch(type)
+                        {
+                            case ResultType.GameVar:
+                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
+                                break;
+                            case ResultType.Relationship:
+                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
+                                break;
+                            case ResultType.Condition:
+                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
+                                break;
+                            case ResultType.Resource:
+                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
+                                break;
+                            case ResultType.Item:
+                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
+                                break;
+                            case ResultType.Secret:
+                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
+                                break;
+                            case ResultType.Army:
+                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
+                                break;
+                            case ResultType.Event:
+                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
+                                break;
+                                //prevents infinite loop (ignored result)
+                            case ResultType.None:
+                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
+                                break;
+                            default:
+                                Game.SetError(new Error(113, string.Format("Invalid ResultType (\"{0}\")", type)));
+                                break;
+                        }
+                    }
+                    else { Game.SetError(new Error(113, string.Format("Invalid result (null returned, resultID \"{0}\")", resultID))); }
+                }
+            }
+            else { Game.SetError(new Error(113, string.Format("Invalid Input (no results from \"{0}\")", outcome))); }
             return tempList;
         }
 
