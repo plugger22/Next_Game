@@ -24,6 +24,8 @@ namespace Next_Game.Event_System
         public int Data { get; set; }
         public EventCalc Calc { get; set; }
         public int Amount { get; set; }
+        public DataPoint DataPoint { get; set; } //optional
+        public GameVar GameVar { get; set; } //optional
 
         public Result()
         { }

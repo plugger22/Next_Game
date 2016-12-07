@@ -1271,12 +1271,35 @@ namespace Next_Game
                     Result result = Game.director.GetResult(resultID);
                     if (result != null)
                     {
-                        //resolve the actual result
                         ResultType type = result.Type;
+                        int data = result.Data;
+                        int amount = result.Amount;
+                        EventCalc calc = result.Calc;
+                        //resolve the actual result
                         switch(type)
                         {
                             case ResultType.DataPoint:
-                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
+                                Console.WriteLine("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount);
+                                if (result.DataPoint > DataPoint.None)
+                                {
+                                    if (amount != 0)
+                                    {
+                                        //automatic ADD by amount. If Data > 0 then Good, otherwise Bad
+                                        if (data > 0)
+                                        {
+                                            Game.director.SetGameState(result.DataPoint, DataState.Good, amount);
+                                            string tempText = string.Format("{0} has increased by {1}", result.DataPoint, amount);
+                                            tempList.Add(tempText);
+                                        }
+                                        else
+                                        {
+                                            Game.director.SetGameState(result.DataPoint, DataState.Bad, amount);
+                                            string tempText = string.Format("{0} has decreased by {1}", result.DataPoint, amount);
+                                            tempList.Add(tempText);
+                                        }
+                                    }
+                                    else Game.SetError(new Error(113, "Invalid DataPoint Amount (zero)"));
+                                }
                                 break;
                             case ResultType.GameVar:
                                 tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
