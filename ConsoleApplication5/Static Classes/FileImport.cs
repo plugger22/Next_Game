@@ -2913,7 +2913,7 @@ namespace Next_Game
         {
             Dictionary<ConflictSubType, Challenge> tempDictionary = new Dictionary<ConflictSubType, Challenge>();
             string[] tempStrategy = new string[6];
-            string[] tempOutcome = new string[6];
+            string[] tempOutcome = new string[7]; //0/1/2 Win's, 3/4/5 Losses, 6 No result
             SkillType[] tempSkill = new SkillType[3];
             string[] arrayOfChallenges = ImportDataFile(fileName);
             List<ChallengeStruct> listOfStructs = new List<ChallengeStruct>();
@@ -3091,7 +3091,7 @@ namespace Next_Game
                                 tempOutcome[5] = cleanToken;
                                 break;
                             case "OutNone":
-                                //placeholder, yet to do
+                                tempOutcome[6] = cleanToken;
                                 break;
                                 //skills
                             case "SkillPrime":

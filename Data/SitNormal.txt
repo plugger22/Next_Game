@@ -95,9 +95,9 @@ SubType: Tournament
 SitNum: 1
 Data: 0
 Good1: The crowd spurred you onto greater martial feats with their boisterous support.
-Good2: <name> scowled at the crowds indifference to <sex>.
+Good2: <name> scowled at the crowds indifference to <him>.
 Good3: The cheers were all for you. <name> received only boos and catcalls.
-Bad1: Why do they cheer <name>. Don't they realise who you are?
+Bad1: Why do they cheer <name>? Don't they realise who you are?
 Bad2: You try your best to shut out the cacophony of noise as the crowds go wild cheering <name>.
 Bad3: It's hard to concentrate when there is so much noise. Why must they cheer <name> so much?
 [end]

@@ -28,6 +28,7 @@ namespace Next_Game
         public int InfluenceRemaining { get; set; }
         public int DefenderStrategy { get; set; } //chosen strategy of the Defender
         public CardType GameSituation { get; set; } //is the game specific situation good, bad or neutral?
+        public ConflictResult Result { get; set; }
         int cardsRemaining;
         int score;
         int points_play; //points if card played
@@ -86,7 +87,7 @@ namespace Next_Game
         private int[,,] arrayPoints { get; set; } //0 -> Good card Influence, 1 - Good card Ignore, 2 Bad card Influence, 3 Bad card Ignore (3 x 3 is Player vs. Opponent strategies)
         private string[,] arraySituation { get; set; } // up to 3 situation factors
         private string[] arrayStrategy { get; set; } //two lots of 3 strategies - always variations of Attack, Balanced & Defend (0/1/2 - Player, 3/4/5 - Opponent)
-        private string[] arrayOutcome { get; set; } // 0 is Conflict Type, 1/2/3 are Wins (minor/normal/major), 4/5/6 are Losses, 7/8 are advantage/disadvantage and recommendation, 9 Actors
+        private string[] arrayOutcome { get; set; } // 0 is Conflict Type, 1/2/3 are Wins (minor/normal/major), 4/5/6 are Losses, 7/8 are advantage/disadvantage and recommendation, 9 Actors, 10 No result
         private List<Snippet> listCardBreakdown; //breakdown of card pool by Your cards, opponents & situation
         private List<Card_Conflict> listCardHand; //cards in playable hand
         private List<Snippet> listHistory; //record of how the hand was played
@@ -189,7 +190,7 @@ namespace Next_Game
             arrayPoints = new int[3, 3, 4];
             arraySituation = new string[3, 3];
             arrayStrategy = new string[6];
-            arrayOutcome = new string[10];
+            arrayOutcome = new string[11];
             listCardBreakdown = new List<Snippet>();
             listCardHand = new List<Card_Conflict>();
             listHistory = new List<Snippet>();
@@ -224,8 +225,8 @@ namespace Next_Game
             //Outcome Layout
             ou_left_align = 10;
             ou_spacer = 4;
-            ou_outcome_height = 20;
-            ou_instruct_height = 7;
+            ou_outcome_height = 24;
+            ou_instruct_height = 5;
             ou_width = Width - Offset_x - ou_left_align * 2;
             //Layout fillcolors
             Bar_FillColor = RLColor.Gray;
@@ -479,22 +480,22 @@ namespace Next_Game
             int vertical_bottom = vertical_middle + history_height + ou_spacer;
             List<Snippet> listOutcome = new List<Snippet>();
             //outcome
-            string textDescription = "No Conclusive Outcome was obtained either way. Status unchanged.";
+            string textDescription = arrayOutcome[10]; //default 'no result'
             string textOutcome = "No Result";
             int resultOutcome = 0; // 1/2/3 for ascending level of wins and 4/5/6 for ascending level of losses. '0' for no result
             RLColor forecolor = RLColor.Black;
             //determine level of win or loss
             if (score > 0)
             {
-                if (score >= 5) { resultOutcome = 1; textOutcome = "A Minor Win"; forecolor = RLColor.Green; }
-                if (score >= 10) { resultOutcome = 2; textOutcome = "A Win"; forecolor = RLColor.Green; }
-                if (score >= 15) { resultOutcome = 3; textOutcome = "A Major Win"; forecolor = RLColor.Green; }
+                if (score >= 5) { resultOutcome = 1; textOutcome = "A Minor Win"; Result = ConflictResult.MinorWin; forecolor = RLColor.Green; }
+                if (score >= 10) { resultOutcome = 2; textOutcome = "A Win"; Result = ConflictResult.Win; forecolor = RLColor.Green; }
+                if (score >= 15) { resultOutcome = 3; textOutcome = "A Major Win"; Result = ConflictResult.MajorWin; forecolor = RLColor.Green; }
             }
             else if (score < 0)
             {
-                if (score <= -5) { resultOutcome = 4; textOutcome = "A Minor Loss"; forecolor = RLColor.Red; }
-                if (score <= -10) { resultOutcome = 5; textOutcome = "A Loss"; forecolor = RLColor.Red; }
-                if (score <= -15) { resultOutcome = 6; textOutcome = "A Major Loss"; forecolor = RLColor.Red; }
+                if (score <= -5) { resultOutcome = 4; textOutcome = "A Minor Loss"; Result = ConflictResult.MinorLoss; forecolor = RLColor.Red; }
+                if (score <= -10) { resultOutcome = 5; textOutcome = "A Loss"; Result = ConflictResult.Loss; forecolor = RLColor.Red; }
+                if (score <= -15) { resultOutcome = 6; textOutcome = "A Major Loss"; Result = ConflictResult.MajorLoss; forecolor = RLColor.Red; }
             }
             //text version of win/loss outcome
             if (resultOutcome != 0) { textDescription = arrayOutcome[resultOutcome]; }
@@ -1153,7 +1154,7 @@ namespace Next_Game
             //empty out the array 
             Array.Clear(arrayOutcome, 0, arrayOutcome.Length);
             //10 factors required
-            if (arrayInput.Length == 10)
+            if (arrayInput.Length == 11)
             { arrayInput.CopyTo(arrayOutcome, 0); }
             else
             { Game.SetError(new Error(90, "Invalid Outcome Array input (needs exactly 10 items)")); }

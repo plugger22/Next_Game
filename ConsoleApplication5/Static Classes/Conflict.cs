@@ -589,16 +589,19 @@ namespace Next_Game
         /// </summary>
         private void SetOutcome()
         {
-            string[] tempArray = new string[10];
+            string[] tempArray = new string[11];
             string[] outcomeArray = challenge.GetOutcomes();
-            if (outcomeArray.Length == 6)
+            if (outcomeArray.Length == 7)
             {
+                //win x 3 and loss x 3
                 tempArray[1] = outcomeArray[0];
                 tempArray[2] = outcomeArray[1];
                 tempArray[3] = outcomeArray[2];
                 tempArray[4] = outcomeArray[3];
                 tempArray[5] = outcomeArray[4];
                 tempArray[6] = outcomeArray[5];
+                //no result
+                tempArray[10] = outcomeArray[6];
             }
             else
             { Game.SetError(new Error(86, "Invalid outcome Array size")); }
@@ -637,10 +640,7 @@ namespace Next_Game
             else
             { tempArray[9] = string.Format("{0} {1}{2} vs. {3} {4}{5}", title, opponent.Name, handle_opponent, player.Type, player.Name, handle_player); }
             //send to layout
-            if (tempArray.Length == 10)
-            { Game.layout.SetOutcome(tempArray); }
-            else
-            { Game.SetError(new Error(89, "Invalid Situation, Layout not updated")); }
+            Game.layout.SetOutcome(tempArray);
         }
 
         /// <summary>

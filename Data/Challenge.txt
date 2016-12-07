@@ -9,6 +9,7 @@
 # SkillSecond, SkillThird: secondary skills (both identical effect) used in challenge
 # OutWinMinor... , Text outcomes for the six possibilities (must have text in all)
 # ResWinMinor... , <int> comma delineated lists of Result ID's for each outcome (min. ONE, must correspond to resultID entries in Results.txt)
+# OutNone: Text for an inconclusive result (draw). Needs to be written to handle player as both challenger and defender.
 
 
 # Combat Challenges
@@ -30,7 +31,7 @@ OutWinMajor: Your Opponent Suffers a Major Wound and may die
 OutLossMinor: You suffer a minor wound and retire defeated
 OutLoss: You are Forced to Yield to a superior Opponent who can demand an Advantage
 OutLossMajor: You have been Badly Injured and Lose any Special Items
-OutNone: debug
+OutNone: You have fought <name> to a draw. You are both exhausted.
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
@@ -57,7 +58,7 @@ OutWinMajor: You are named Tournament Champion and gain a Ladies Favour
 OutLossMinor: You are unhorsed midway through the tournament
 OutLoss: You are unhorsed early on by a mid ranked jouster
 OutLossMajor: You fall off your horse and break bones on your first joust. Disgrace!
-OutNone: debug
+OutNone: You've achieved an average tournament result of no particular note.
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
@@ -84,7 +85,7 @@ OutWinMajor: The enemy rout and suffer horrendous casualties
 OutLossMinor: You are forced to withdraw but hold your army together
 OutLoss: You army suffers substantial casualties and is defeated
 OutLossMajor: Your army breaks. You flee the field in order to save yourself
-OutNone: debug
+OutNone: The battle has been inconclusive. Only the Grim Reaper has won today.
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
@@ -111,7 +112,7 @@ OutWinMajor: The creature is slain and you gain an advantage.
 OutLossMinor: The creature is spotted but escapes.
 OutLoss: The creature isn't spotted.
 OutLossMajor: The creature ambushes you and you're injured.
-OutNone: debug
+OutNone: It's over. Hunter and Prey remain apart and go their separate ways.
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
@@ -140,7 +141,7 @@ OutWinMajor: You have gained an ardent supporter
 OutLossMinor: Your relationship deteriorates
 OutLoss: You have become disliked
 OutLossMajor: Your opponent is actively campaigning against you
-OutNone: debug
+OutNone: Indifference is the only outcome today. Nobody cares one way or another.
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
@@ -167,7 +168,7 @@ OutWinMajor: Your opponent has become your minion
 OutLossMinor: You relationship has deteriorated
 OutLoss: You have been firmly rebuffed
 OutLossMajor: Your opponent is now your enemy
-OutNone: debug
+OutNone: The Blackmail attempt has fizzled out. The mud and threats didn't stick.
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
@@ -194,7 +195,7 @@ OutWinMajor: Your opponent has become an ardent supporter and lover
 OutLossMinor: Your relationship has deteriorated
 OutLoss: You have been firmly rebuffed
 OutLossMajor: Your opponent has taken offence and is now your enemy
-OutNone: debug
+OutNone: Love and lust are not on the menu today. It didn't happen.
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
@@ -223,7 +224,7 @@ OutWinMajor: You make it without being spotted and gain an advantage.
 OutLossMinor: They make it but are spotted.
 OutLoss: They make it without being spotted.
 OutLossMajor: They make it without being spotted and gain an advantage.
-OutNone: debug
+OutNone: Nobody got past but nobody got caught.
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
@@ -250,7 +251,7 @@ OutWinMajor: You successfully evade and gain an advantage
 OutLossMinor: You evade but are wounded.
 OutLoss: You are caught.
 OutLossMajor: You are caught and wounded.
-OutNone: debug
+OutNone: An inconclusive result. You're close but not close enough.
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 
@@ -277,7 +278,7 @@ OutWinMajor: Freedom plus an advantage
 OutLossMinor: You're caught but not harmed
 OutLoss: You're caught and badly beaten
 OutLossMajor: You're caught, beaten and locked in a deeper, darker dungeon
-OutNone: debug
+OutNone: Did anyone escape today? No but nobody got caught either.
 ResWinMinor: 2, 3, 4
 ResWin: 5
 ResWinMajor: 6, 7 

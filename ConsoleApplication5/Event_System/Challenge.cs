@@ -35,7 +35,7 @@ namespace Next_Game.Event_System
                 SocialType = social;
                 StealthType = stealth;
                 arrayStrategies = new string[6]; //Plyr Strategies Aggressive/Balanced/Defensive 0/1/2, Opponent Strategies, same 3/4/5
-                arrayOutcomes = new string[6]; //Minor Win/Win/Major Win 0/1/2, Minor Loss/Loss/Major Loss 3/4/5
+                arrayOutcomes = new string[7]; //Minor Win/Win/Major Win 0/1/2, Minor Loss/Loss/Major Loss 3/4/5, No Result 6
                 arraySkills = new SkillType[3]; //Primary skill 0, Secondary skills 1/2
                 listResults = new List<List<int>>();
                 //create a blank list of lists 6 entries long (one for each ConflictResult enum)
@@ -78,7 +78,7 @@ namespace Next_Game.Event_System
         {
             if (tempArray != null)
             {
-                if (tempArray.Length == 6)
+                if (tempArray.Length == 7)
                 {
                     Array.Clear(arrayOutcomes, 0, arrayOutcomes.Length);
                     Array.Copy(tempArray, arrayOutcomes, tempArray.Length);

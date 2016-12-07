@@ -108,7 +108,7 @@ PlyrDef: 1
 Data: 1
 Good1: <name> wields his weapon as if <he> is plowing a field. Does <he> think that you're a potato who just happens to be holding a steel weapon?
 Good2: Your sustained defence has caused <name> to break out into a heavy sweat. Any more and they are liable to collapse at your feet from exhaustion.
-Good3: <name> is struggling to get past your blocks and parries. Perhaps you are too good for them?
+Good3: <name> is struggling to get past your blocks and parries. Perhaps you are too good for <him>?
 Bad1: <name> lands blow after blow. You struggle to fend off the incessant assault. As good as you are <he> appears to be better.
 Bad2: Your weapon arm goes heavy and your movements lethargic. <name>'s flurry of blows have exhausted your reservoir of stamina.
 Bad3: How much longer can you keep defending in the face of <name>'s fierce assault? You feel your strength ebbing away.
