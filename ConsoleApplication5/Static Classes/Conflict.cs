@@ -1275,6 +1275,9 @@ namespace Next_Game
                         ResultType type = result.Type;
                         switch(type)
                         {
+                            case ResultType.DataPoint:
+                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
+                                break;
                             case ResultType.GameVar:
                                 tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
@@ -1299,7 +1302,8 @@ namespace Next_Game
                             case ResultType.Event:
                                 tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
-                                //prevents infinite loop (ignored result)
+                            
+                            //prevents infinite loop (ignored result)
                             case ResultType.None:
                                 tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
