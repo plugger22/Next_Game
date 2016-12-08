@@ -1,1 +1,131 @@
 # Results -> predefined results for the various challenge outcomes
+# NOTE: All fields must have a value
+
+# Name: Description
+# RID: (ResultID) Unique number, 1+
+# Type: (ResultType) -> DataPoint / GameVar / Relationship / Condition / Resource / Item / Secret / Army / Event 
+# Data: multipurpose integer (context depends on Type)
+# Calc: (EventCalc) -> None / Add / Subtract / Random / Equals
+# Amount: integer amount applied by Calc (if Calc is 'Random' then it's random Amount, eg. if amount 100 then random d100)
+
+# DataPt: (OPTIONAL - applies if Type is DataPoint) -> Invisibility / Justice / Legend_Usurper / Legend_King / Honour_Usurper / Honour_King
+
+
+Name: Blend in More
+RID: 1
+Type: DataPoint
+DataPt: Invisibility
+Data: 0
+Calc: Random
+Amount: 100
+[End]
+
+Name: Been Spotted!
+RID: 2
+Type: DataPoint
+DataPt: Invisibility
+Data: -1
+Calc: Random
+Amount: 100
+[End]
+
+Name: The Cause is Just
+RID: 3
+Type: DataPoint
+DataPt: Justice
+Data: 1
+Calc: Random
+Amount: 50
+[End]
+
+Name: Unjustly Accused!
+RID: 4
+Type: DataPoint
+DataPt: Justice
+Data: -1
+Calc: Random
+Amount: 50
+[End]
+
+Name: We're Famous
+RID: 5
+Type: DataPoint
+DataPt: Legend_Usurper
+Data: 1
+Calc: Random
+Amount: 20
+[End]
+
+Name: Nobody heard the news
+RID: 6
+Type: DataPoint
+DataPt: Legend_Usurper
+Data: -1
+Calc: Random
+Amount: 20
+[End]
+
+Name: Long Live the King
+RID: 7
+Type: DataPoint
+DataPt: Legend_King
+Data: 1
+Calc: Random
+Amount: 50
+[End]
+
+Name: Down with the King
+RID: 8
+Type: DataPoint
+DataPt: Legend_King
+Data: -1
+Calc: Random
+Amount: 50
+[End]
+
+Name: 
+RID: 9
+Type: DataPoint
+DataPt: Honour_Usurper
+Data: 1
+Calc: Random
+Amount: 50
+[End]
+
+Name: 
+RID: 10
+Type: DataPoint
+DataPt: Honour_Usurper
+Data: -1
+Calc: Random
+Amount: 50
+[End]
+
+Name: The King Does the Right Thing
+RID: 11
+Type: DataPoint
+DataPt: Honour_King
+Data: 1
+Calc: Random
+Amount: 50
+[End]
+
+Name: The King is a Bastard
+RID: 12
+Type: DataPoint
+DataPt: Honour_King
+Data: -1
+Calc: Random
+Amount: 50
+[End]
+
+Name: The King is a Great Man
+RID: 13
+Type: DataPoint
+DataPt: Honour_King
+Data: 1
+Calc: Add
+Amount: 100
+[End]
+
+

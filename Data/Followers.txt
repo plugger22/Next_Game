@@ -1,6 +1,6 @@
 # Followers
 # NOTE: All fields must have a value
-# FID: (Follower ID) unique number
+# FID: (Follower ID) unique number, 1+
 # Sex: Male / Female
 # Role: job or role that they play, eg. 'Beggar', 'Assassin' (one or two words at most). No default, compulsory.
 # Description: paint a picture of the character. No default, compulsory.

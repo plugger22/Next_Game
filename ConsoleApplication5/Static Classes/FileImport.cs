@@ -3292,8 +3292,9 @@ namespace Next_Game
                 //ResultType type = (ResultType)rnd.Next(0, (int)ResultType.Count);
                 ResultType type = ResultType.DataPoint;
                 int data = rnd.Next(-100, 100);
-                int amount = rnd.Next(0, 100);
-                EventCalc calc = (EventCalc)rnd.Next(0, (int)EventCalc.Count);
+                int amount = 100;
+                //EventCalc calc = (EventCalc)rnd.Next(0, (int)EventCalc.Count);
+                EventCalc calc = EventCalc.Random;
                 Result result = new Result(i, text, type, data, calc, amount);
                 result.DataPoint = (DataPoint)rnd.Next(1, (int)DataPoint.Count);
                 tempDictionary.Add(result.ResultID, result);

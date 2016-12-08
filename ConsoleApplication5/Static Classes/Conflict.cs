@@ -1257,10 +1257,10 @@ namespace Next_Game
         /// Resolves results for the particular outcome acheived
         /// </summary>
         /// <param name="result"></param>
-        /// <returns>A text list of describing each individual result, suitable for display</returns>
-        internal List<string> ResolveResults(ConflictResult outcome)
+        /// <returns>A snippet list describing each individual result, suitable for display, green for good, red for bad</returns>
+        internal List<Snippet> ResolveResults(ConflictResult outcome)
         {
-            List<string> tempList = new List<string>();
+            List<Snippet> tempList = new List<Snippet>();
             List<int> resultList = challenge.GetResults(outcome);
             int resultID;
             if (resultList.Count > 0)
@@ -1275,6 +1275,13 @@ namespace Next_Game
                         int data = result.Data;
                         int amount = result.Amount;
                         EventCalc calc = result.Calc;
+                        RLColor backColor = Game.layout.Outcome_FillColor;
+                        //check for a random outcome -> then it's random 'amount', eg. amount is 100 then it's d100
+                        if (calc == EventCalc.Random)
+                        {
+                            if (amount > 1) { amount = rnd.Next(1, amount); calc = EventCalc.Add; }
+                            else if (amount < -1) { amount = rnd.Next(-1, amount); calc = EventCalc.Add; }
+                        }
                         //resolve the actual result
                         switch(type)
                         {
@@ -1291,7 +1298,7 @@ namespace Next_Game
                                             int newValue = Math.Abs(amount) + oldValue;
                                             Game.director.SetGameState(result.DataPoint, DataState.Good, newValue, true);
                                             string tempText = string.Format("{0} has increased by {1}", result.DataPoint, amount);
-                                            tempList.Add(tempText);
+                                            tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                         }
                                         else
                                         {
@@ -1299,40 +1306,30 @@ namespace Next_Game
                                             int newValue = Math.Abs(amount) + oldValue;
                                             Game.director.SetGameState(result.DataPoint, DataState.Bad, newValue, true);
                                             string tempText = string.Format("{0} has decreased by {1}", result.DataPoint, amount);
-                                            tempList.Add(tempText);
+                                            tempList.Add(new Snippet(tempText, RLColor.Red, backColor));
                                         }
                                     }
                                     else Game.SetError(new Error(113, "Invalid DataPoint Amount (zero)"));
                                 }
                                 break;
                             case ResultType.GameVar:
-                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
                             case ResultType.Relationship:
-                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
                             case ResultType.Condition:
-                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
                             case ResultType.Resource:
-                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
                             case ResultType.Item:
-                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
                             case ResultType.Secret:
-                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
                             case ResultType.Army:
-                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
                             case ResultType.Event:
-                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
-                            
                             //prevents infinite loop (ignored result)
                             case ResultType.None:
-                                tempList.Add(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 break;
                             default:
                                 Game.SetError(new Error(113, string.Format("Invalid ResultType (\"{0}\")", type)));
