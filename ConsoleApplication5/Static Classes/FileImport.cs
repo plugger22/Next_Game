@@ -3286,15 +3286,15 @@ namespace Next_Game
             //create test data for dictionary - debug
             Random rnd = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
             Dictionary<int, Result> tempDictionary = new Dictionary<int, Result>();
-            for (int i = 0; i < 20; i++)
+            for (int i = 1; i < 20; i++)
             {
                 string text = string.Format("Test Result {0}", i);
                 //ResultType type = (ResultType)rnd.Next(0, (int)ResultType.Count);
                 ResultType type = ResultType.DataPoint;
-                int data = rnd.Next(0, 100);
+                int data = rnd.Next(-100, 100);
                 int amount = rnd.Next(0, 100);
                 EventCalc calc = (EventCalc)rnd.Next(0, (int)EventCalc.Count);
-                Result result = new Result(text, type, data, calc, amount);
+                Result result = new Result(i, text, type, data, calc, amount);
                 result.DataPoint = (DataPoint)rnd.Next(1, (int)DataPoint.Count);
                 tempDictionary.Add(result.ResultID, result);
             }

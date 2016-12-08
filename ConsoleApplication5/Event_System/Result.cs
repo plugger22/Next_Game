@@ -17,9 +17,8 @@ namespace Next_Game.Event_System
     /// </summary>
     class Result
     {
-        private static int resultIndex = 1; //autoassigned ID's. Main focus is the Result Class
         public string Description { get; set; }
-        public int ResultID { get; set; }
+        public int ResultID { get; set; } //user specified
         public ResultType Type { get; set; }
         public int Data { get; set; }
         public EventCalc Calc { get; set; }
@@ -31,21 +30,33 @@ namespace Next_Game.Event_System
         { }
 
         /// <summary>
-        /// default constructor
+        /// default constructor -> resultID must be > 0, description must be a valid string and ResultType can't be 'None'
         /// </summary>
         /// <param name="description"></param>
         /// <param name="type"></param>
         /// <param name="data"></param>
         /// <param name="calc"></param>
         /// <param name="amount"></param>
-        public Result(string description, ResultType type, int data, EventCalc calc, int amount)
+        public Result(int resultID, string description, ResultType type, int data, EventCalc calc, int amount)
         {
-            ResultID = resultIndex++;
-            this.Description = description;
-            this.Type = type;
-            this.Data = data;
-            this.Calc = calc;
-            this.Amount = amount;
+            if (resultID > 0)
+            {
+                this.ResultID = resultID;
+                if (String.IsNullOrEmpty(description) == false)
+                {
+                    this.Description = description;
+                    if (type > ResultType.None)
+                    {
+                        this.Type = type;
+                        this.Data = data;
+                        this.Calc = calc;
+                        this.Amount = amount;
+                    }
+                    else { Game.SetError(new Error(114, "Invalid ResultType input (\"None\")")); }
+                }
+                else { Game.SetError(new Error(114, "Invalid description input (null or empty)")); }
+            }
+            else { Game.SetError(new Error(114, "Invalid resultID input (Zero or less)")); }
         }
     }
 }

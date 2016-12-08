@@ -127,7 +127,7 @@ ResNone: 1
 Type: Social
 SubType: Befriend
 PlyrStrAgg: Do Whatever it Takes
-PlyrStrBal: Extend the Hand of Friendship
+PlyrStrBal: Keep it Friendly
 PlyrStrDef: Approach them with Caution
 OppStrAgg: Resist Forcefully
 OppStrBal: Diplomatically Resist
