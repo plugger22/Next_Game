@@ -42,6 +42,7 @@ namespace Next_Game
         ARMY_SIZE,
         SIT_CARD_SPREAD,
         CASTLE_CAPITAL,
+        RESULT_FACTOR,
         Count //keep as last
     }
 
@@ -91,6 +92,7 @@ namespace Next_Game
             arrayOfGlobals[34] = Global.ARMY_SIZE;
             arrayOfGlobals[35] = Global.SIT_CARD_SPREAD;
             arrayOfGlobals[36] = Global.CASTLE_CAPITAL;
+            arrayOfGlobals[37] = Global.RESULT_FACTOR;
             }
 
         /// <summary>

@@ -87,7 +87,7 @@
 29: 20
 
 
-# Conflicts ---
+# Challenges ---
 
 # HAND_CARDS_NUM -> number of cards in a challenge hand
 31: 6
@@ -99,3 +99,5 @@
 34: 1000
 # SIT_CARD_SPREAD -> sets the numbers for GetSituationCardNumber, eg. 2 gives a spread of 70-16-8-4-2 for 1/2/3/4/5 cards (remainder/8X/4X/2X/1X)
 35: 3
+# RESULT_FACTOR -> 1X factor is a minor win, 2X a win, 3X a major win. -1X/-2X/-3X are minor loss, loss and major loss
+37: 5

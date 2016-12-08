@@ -29,6 +29,7 @@ namespace Next_Game
         public int DefenderStrategy { get; set; } //chosen strategy of the Defender
         public CardType GameSituation { get; set; } //is the game specific situation good, bad or neutral?
         public ConflictResult Result { get; set; }
+        int result_factor; //multiple for outcomes, eg. 1X is a minor win, 2X is a win, 3X is a major win
         int cardsRemaining;
         int score;
         int points_play; //points if card played
@@ -240,6 +241,7 @@ namespace Next_Game
             score = 0;
             currentCard = new Card_Conflict();
             PopupFlag = false;
+            result_factor = Game.constant.GetValue(Global.RESULT_FACTOR);
         }
 
         /// <summary>
@@ -335,12 +337,12 @@ namespace Next_Game
             DrawBox(score_left_align + ca_bar_offset_x, bar_top, bar_width, bar_height, Bar_FillColor, Bar_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             //...bar number markings (top)
             DrawText("0", bar_middle, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("+5", bar_middle + bar_segment - 1, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("+10", bar_middle + bar_segment * 2 - 2, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("+15", bar_middle + bar_segment * 3 - 2, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("-5", bar_middle - bar_segment - 1, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("-10", bar_middle - bar_segment * 2 - 2, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawText("-15", bar_middle - bar_segment * 3 - 2, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(string.Format("+{0}", result_factor), bar_middle + bar_segment - 1, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(string.Format("+{0}", result_factor * 2), bar_middle + bar_segment * 2 - 2, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(string.Format("+{0}", result_factor * 3), bar_middle + bar_segment * 3 - 2, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(string.Format("-{0}", result_factor), bar_middle - bar_segment - 1, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(string.Format("-{0}", result_factor * 2), bar_middle - bar_segment * 2 - 2, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawText(string.Format("-{0}", result_factor * 3), bar_middle - bar_segment * 3 - 2, ca_score_vert_align + ca_bar_offset_y - 1, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             
             //upper text box - messages
             DrawBox(ca_left_outer, vertical_pos, text_box_width, ca_message_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
@@ -454,11 +456,13 @@ namespace Next_Game
                 }
             }
             //outcomes
-            DrawCenteredText("Win Outcomes (+5/+10/+15)", left_align + 3, bottom_align + 2, box_width, RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText(string.Format("Win Outcomes (+{0}/+{1}/+{2})", result_factor, result_factor * 2, result_factor * 3), left_align + 3, bottom_align + 2, box_width, 
+                RLColor.Blue, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Minor Win:  " + arrayOutcome[1], left_align + 3, bottom_align + 4, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Win:        " + arrayOutcome[2], left_align + 3, bottom_align + 6, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Major Win:  " + arrayOutcome[3], left_align + 3, bottom_align + 8, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
-            DrawCenteredText("Lose Outcomes (-5/-10/-15)", left_align + 3, bottom_align + 12, box_width, RLColor.Red, arrayOfCells_Intro, arrayOfForeColors_Intro);
+            DrawCenteredText(string.Format("Lose Outcomes (-{0}/-{1}/-{2})", result_factor, result_factor * 2, result_factor * 3), left_align + 3, bottom_align + 12, box_width, 
+                RLColor.Red, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Minor Loss: " + arrayOutcome[4], left_align + 3, bottom_align + 14, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Loss:       " + arrayOutcome[5], left_align + 3, bottom_align + 16, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
             DrawText("Major Loss: " + arrayOutcome[6], left_align + 3, bottom_align + 18, RLColor.Black, arrayOfCells_Intro, arrayOfForeColors_Intro);
@@ -487,15 +491,15 @@ namespace Next_Game
             //determine level of win or loss
             if (score > 0)
             {
-                if (score >= 5) { resultOutcome = 1; textOutcome = "A Minor Win"; Result = ConflictResult.MinorWin; forecolor = RLColor.Green; }
-                if (score >= 10) { resultOutcome = 2; textOutcome = "A Win"; Result = ConflictResult.Win; forecolor = RLColor.Green; }
-                if (score >= 15) { resultOutcome = 3; textOutcome = "A Major Win"; Result = ConflictResult.MajorWin; forecolor = RLColor.Green; }
+                if (score >= result_factor) { resultOutcome = 1; textOutcome = "A Minor Win"; Result = ConflictResult.MinorWin; forecolor = RLColor.Green; }
+                if (score >= result_factor * 2) { resultOutcome = 2; textOutcome = "A Win"; Result = ConflictResult.Win; forecolor = RLColor.Green; }
+                if (score >= result_factor * 3) { resultOutcome = 3; textOutcome = "A Major Win"; Result = ConflictResult.MajorWin; forecolor = RLColor.Green; }
             }
             else if (score < 0)
             {
-                if (score <= -5) { resultOutcome = 4; textOutcome = "A Minor Loss"; Result = ConflictResult.MinorLoss; forecolor = RLColor.Red; }
-                if (score <= -10) { resultOutcome = 5; textOutcome = "A Loss"; Result = ConflictResult.Loss; forecolor = RLColor.Red; }
-                if (score <= -15) { resultOutcome = 6; textOutcome = "A Major Loss"; Result = ConflictResult.MajorLoss; forecolor = RLColor.Red; }
+                if (score <= -1 * result_factor) { resultOutcome = 4; textOutcome = "A Minor Loss"; Result = ConflictResult.MinorLoss; forecolor = RLColor.Red; }
+                if (score <= -1 * result_factor * 2) { resultOutcome = 5; textOutcome = "A Loss"; Result = ConflictResult.Loss; forecolor = RLColor.Red; }
+                if (score <= -1 * result_factor * 3) { resultOutcome = 6; textOutcome = "A Major Loss"; Result = ConflictResult.MajorLoss; forecolor = RLColor.Red; }
             }
             //text version of win/loss outcome
             if (resultOutcome != 0) { textDescription = arrayOutcome[resultOutcome]; }
@@ -754,11 +758,13 @@ namespace Next_Game
             //draw popUp box in card layout
             DrawBox(po_left_align, po_top_align, po_box_width, po_box_height, RLColor.Magenta, Color._popup, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
             //populate with relevant data
-            DrawCenteredText("Win Outcomes (+5/+10/+15)", po_left_align + 3, po_top_align + 2, po_box_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(string.Format("Win Outcomes (+{0}/+{1}/+{2})", result_factor, result_factor * 2, result_factor * 3), po_left_align + 3, po_top_align + 2, po_box_width, 
+                RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Minor Win:  " + arrayOutcome[1], po_left_align + 3, po_top_align + 4, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Win:        " + arrayOutcome[2], po_left_align + 3, po_top_align + 6, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Major Win:  " + arrayOutcome[3], po_left_align + 3, po_top_align + 8, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
-            DrawCenteredText("Lose Outcomes (-5/-10/-15)", po_left_align + 3, po_top_align + 10, po_box_width, RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
+            DrawCenteredText(string.Format("Lose Outcomes (-{0}/-{1}/-{2})", result_factor, result_factor * 2, result_factor * 3), po_left_align + 3, po_top_align + 10, po_box_width, 
+                RLColor.Red, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Minor Loss: " + arrayOutcome[4], po_left_align + 3, po_top_align + 12, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Loss:       " + arrayOutcome[5], po_left_align + 3, po_top_align + 14, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
             DrawText("Major Loss: " + arrayOutcome[6], po_left_align + 3, po_top_align + 16, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
