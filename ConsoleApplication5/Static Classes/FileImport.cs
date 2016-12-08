@@ -190,6 +190,18 @@ namespace Next_Game
         public ConflictStealth StealthType { get; set; }
     }
 
+    //results
+    struct ResultStruct
+    {
+        public string Name { get; set; }
+        public int ResultID { get; set; }
+        public ResultType Type { get; set; }
+        public DataPoint DataPoint { get; set; }
+        public int Data { get; set; }
+        public EventCalc Calc { get; set;}
+        public int Amount { get; set; }
+    }
+
     /// <summary>
     /// Handles all file Import duties
     /// </summary>
@@ -3283,6 +3295,7 @@ namespace Next_Game
         /// <returns></returns>
         internal Dictionary<int, Result> GetResults(string fileName)
         {
+            /*
             //create test data for dictionary - debug
             Random rnd = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
             Dictionary<int, Result> tempDictionary = new Dictionary<int, Result>();
@@ -3300,7 +3313,152 @@ namespace Next_Game
                 tempDictionary.Add(result.ResultID, result);
             }
             return tempDictionary;
+            */
+
+            int dataCounter = 0;
+            string cleanTag;
+            string cleanToken;
+            bool newResult = false;
+            bool validData = true;
+            int dataInt;
+            List<int> listResultID = new List<int>(); //used to pick up duplicate storyID's
+            Dictionary<int, Result> dictOfResults = new Dictionary<int, Result>();
+            string[] arrayOfResults = ImportDataFile(fileName);
+            ResultStruct structResult = new ResultStruct();
+            //loop imported array of strings
+            for (int i = 0; i < arrayOfResults.Length; i++)
+            {
+                if (arrayOfResults[i] != "" && !arrayOfResults[i].StartsWith("#"))
+                {
+                    //set up for a new house
+                    if (newResult == false)
+                    {
+                        newResult = true;
+                        validData = true;
+                        //Console.WriteLine();
+                        dataCounter++;
+                        //new Trait object
+                        structResult = new ResultStruct();
+                    }
+
+                    //string[] tokens = arrayOfStories[i].Split(':');
+                    string[] tokens = arrayOfResults[i].Split(new Char[] { ':', ';' });
+                    //strip out leading spaces
+                    cleanTag = tokens[0].Trim();
+                    //if (cleanTag == "End" || cleanTag == "end") { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                    //check for random text elements in the file
+                    else
+                    {
+                        try { cleanToken = tokens[1].Trim(); }
+                        catch (System.IndexOutOfRangeException)
+                        { Game.SetError(new Error(115, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag))); cleanToken = ""; }
+                    }
+
+                    switch (cleanTag)
+                    {
+                        case "Name":
+                            if (cleanToken.Length == 0)
+                            { Game.SetError(new Error(54, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            else { structResult.Name = cleanToken; }
+                            break;
+                        case "StoryID":
+                            try
+                            { structResult.StoryID = Convert.ToInt32(cleanToken); }
+                            catch
+                            { Game.SetError(new Error(54, string.Format("Invalid input for StoryID {0}, (\"{1}\")", cleanToken, structResult.Name))); validData = false; }
+                            //check for duplicate arcID's
+                            if (listResultID.Contains(structResult.StoryID))
+                            { Game.SetError(new Error(54, string.Format("Duplicate StoryID {0}, (\"{1}\")", cleanToken, structResult.Name))); validData = false; }
+                            else { listResultID.Add(structResult.StoryID); }
+                            break;
+                        case "Type":
+                            if (cleanToken.Length == 0)
+                            { Game.SetError(new Error(54, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            else
+                            {
+                                switch (cleanToken)
+                                {
+                                    case "Benevolent":
+                                        structResult.Type = StoryAI.Benevolent;
+                                        break;
+                                    case "Balanced":
+                                        structResult.Type = StoryAI.Balanced;
+                                        break;
+                                    case "Evil":
+                                        structResult.Type = StoryAI.Evil;
+                                        break;
+                                    case "Tricky":
+                                        structResult.Type = StoryAI.Tricky;
+                                        break;
+                                    default:
+                                        structResult.Type = StoryAI.None;
+                                        Game.SetError(new Error(54, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfResults[i])));
+                                        validData = false;
+                                        break;
+                                }
+                            }
+                            break;
+                        case "Ev_Follower_Loc":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0)
+                                    { structResult.Ev_Follower_Loc = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(54, string.Format("Invalid Ev_Follower_Loc \"{0}\" (Zero) for {1}", dataInt, structResult.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(54, string.Format("Invalid Ev_Follower_Loc (Conversion) for  {0}", structResult.Name))); validData = false; }
+                            }
+                            else
+                            { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Follower_Loc), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            break;
+                        case "[end]":
+                        case "[End]":
+                            //write record
+                            if (validData == true)
+                            {
+                                //pass info over to a class instance
+                                Result storyObject = new Result(structResult.Name, structResult.StoryID, structResult.Type);
+                                storyObject.Ev_Follower_Loc = structResult.Ev_Follower_Loc;
+                                storyObject.Ev_Follower_Trav = structResult.Ev_Follower_Trav;
+                                storyObject.Ev_Player_Loc = structResult.Ev_Player_Loc;
+                                storyObject.Ev_Player_Trav = structResult.Ev_Player_Trav;
+                                storyObject.Arc_Geo_Sea = structResult.Sea;
+                                storyObject.Arc_Geo_Mountain = structResult.Mountain;
+                                storyObject.Arc_Geo_Forest = structResult.Forest;
+                                storyObject.Arc_Loc_Capital = structResult.Capital;
+                                storyObject.Arc_Loc_Major = structResult.Major;
+                                storyObject.Arc_Loc_Minor = structResult.Minor;
+                                storyObject.Arc_Loc_Inn = structResult.Inn;
+                                storyObject.Arc_Road_Normal = structResult.Normal;
+                                storyObject.Arc_Road_Kings = structResult.Kings;
+                                storyObject.Arc_Road_Connector = structResult.Connector;
+                                //last datapoint - save object to list
+                                if (dataCounter > 0)
+                                { dictOfResults.Add(storyObject.StoryID, storyObject); }
+                                else { Game.SetError(new Error(54, "Invalid Input, storyObject")); }
+                            }
+                            else
+                            { Game.SetError(new Error(54, string.Format("Story, (\"{0}\" StoryID {1}), not Imported", structResult.Name, structResult.StoryID))); }
+                            break;
+                        default:
+                            Game.SetError(new Error(54, string.Format("Invalid Input, CleanTag \"{0}\", \"{1}\"", cleanTag, structResult.Name)));
+                            break;
+                    }
+
+                }
+                else { newResult = false; }
+            }
+            return dictOfResults;
         }
+
+
+
+
         //methods above here
     }
 }
