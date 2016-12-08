@@ -1217,7 +1217,7 @@ namespace Next_Game
                                     break;
                                 case ConflictMode.Cards:
                                     //repeat until hand is empty
-                                    if (layout.CheckHandStatus() == false) { _conflictMode = ConflictMode.Outcome; }
+                                    if (layout.CheckHandStatus() == false) { _conflictMode = ConflictMode.Outcome; layout.UpdateOutcome(); }
                                     layout.ResolveCard();
                                     break;
                                 case ConflictMode.Confirm:
@@ -1226,6 +1226,7 @@ namespace Next_Game
                                     break;
                                 case ConflictMode.AutoResolve:
                                     _conflictMode = ConflictMode.Outcome;
+                                    layout.UpdateOutcome();
                                     break;
                                 case ConflictMode.Outcome:
                                     layout.ResetLayout();

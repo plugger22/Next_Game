@@ -335,6 +335,7 @@ namespace Next_Game
                     }
                     break;
                 case SpecialMode.Conflict:
+                    //Note layout update routines specified here will continuously update until a key is pressed. Move to Game.cs SetSpecialMode if you want a one-off update.
                     switch (Game._conflictMode)
                     {
                         case ConflictMode.Intro:
@@ -376,7 +377,7 @@ namespace Next_Game
                             Game.layout.DrawMessage(multiConsole);
                             break;
                         case ConflictMode.Outcome:
-                            Game.layout.UpdateOutcome();
+                            //Game.layout.UpdateOutcome(); -> moved to Game.cs SetSpecialMode as otherwise multiple updates every second causes issues with snowballing results.
                             Game.layout.DrawOutcome(multiConsole);
                             break;
 

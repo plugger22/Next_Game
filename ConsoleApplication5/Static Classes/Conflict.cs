@@ -1287,13 +1287,17 @@ namespace Next_Game
                                         //automatic ADD by amount. If Data > 0 then Good, otherwise Bad
                                         if (data > 0)
                                         {
-                                            Game.director.SetGameState(result.DataPoint, DataState.Good, amount);
+                                            int oldValue = Game.director.GetGameState(result.DataPoint, DataState.Good);
+                                            int newValue = Math.Abs(amount) + oldValue;
+                                            Game.director.SetGameState(result.DataPoint, DataState.Good, newValue, true);
                                             string tempText = string.Format("{0} has increased by {1}", result.DataPoint, amount);
                                             tempList.Add(tempText);
                                         }
                                         else
                                         {
-                                            Game.director.SetGameState(result.DataPoint, DataState.Bad, amount);
+                                            int oldValue = Game.director.GetGameState(result.DataPoint, DataState.Bad);
+                                            int newValue = Math.Abs(amount) + oldValue;
+                                            Game.director.SetGameState(result.DataPoint, DataState.Bad, newValue, true);
                                             string tempText = string.Format("{0} has decreased by {1}", result.DataPoint, amount);
                                             tempList.Add(tempText);
                                         }

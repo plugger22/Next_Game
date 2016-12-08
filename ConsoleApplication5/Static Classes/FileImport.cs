@@ -3289,11 +3289,13 @@ namespace Next_Game
             for (int i = 0; i < 20; i++)
             {
                 string text = string.Format("Test Result {0}", i);
-                ResultType type = (ResultType)rnd.Next(0, (int)ResultType.Count);
+                //ResultType type = (ResultType)rnd.Next(0, (int)ResultType.Count);
+                ResultType type = ResultType.DataPoint;
                 int data = rnd.Next(0, 100);
                 int amount = rnd.Next(0, 100);
                 EventCalc calc = (EventCalc)rnd.Next(0, (int)EventCalc.Count);
                 Result result = new Result(text, type, data, calc, amount);
+                result.DataPoint = (DataPoint)rnd.Next(1, (int)DataPoint.Count);
                 tempDictionary.Add(result.ResultID, result);
             }
             return tempDictionary;

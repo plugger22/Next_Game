@@ -1520,10 +1520,19 @@ namespace Next_Game
         /// <param name="point"></param>
         /// <param name="state"></param>
         /// <param name="value"></param>
-        public void SetGameState(DataPoint point, DataState state, int value)
+        /// <param name="setChange">True if you want color highlight on UI of change</param>
+        public void SetGameState(DataPoint point, DataState state, int value, bool setChange = false)
         {
             if (point <= DataPoint.Count && state <= DataState.Count)
-            { arrayOfGameStates[(int)point, (int)state] = value; }
+            {
+                arrayOfGameStates[(int)point, (int)state] = value;
+                //change - will show color highlight on UI
+                if (setChange == true)
+                {
+                    if (state == DataState.Good) { arrayOfGameStates[(int)point, (int)DataState.Change] = 1; }
+                    else if (state == DataState.Bad) { arrayOfGameStates[(int)point, (int)DataState.Change] = -1; }
+                }
+            }
             else
             { Game.SetError(new Error(75, "Invalid Input (exceeds enum)")); }
         }

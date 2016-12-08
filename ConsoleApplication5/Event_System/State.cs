@@ -54,42 +54,42 @@ namespace Next_Game.Event_System
                         //apply change
                         newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
-                        Game.director.SetGameState(DataPoint.Invisibility, state, newData);
+                        Game.director.SetGameState(DataPoint.Invisibility, state, newData, true);
                         break;
                     case GameVar.Justice:
                         oldData = Game.director.GetGameState(DataPoint.Justice, state);
                         //apply change (positive #)
                         newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
-                        Game.director.SetGameState(DataPoint.Justice, state, newData);
+                        Game.director.SetGameState(DataPoint.Justice, state, newData, true);
                         break;
                     case GameVar.Legend_Usurper:
                         oldData = Game.director.GetGameState(DataPoint.Legend_Usurper, state);
                         //apply change (positive #)
                         newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
-                        Game.director.SetGameState(DataPoint.Legend_Usurper, state, newData);
+                        Game.director.SetGameState(DataPoint.Legend_Usurper, state, newData, true);
                         break;
                     case GameVar.Legend_King:
                         oldData = Game.director.GetGameState(DataPoint.Legend_King, state);
                         //apply change (positive #)
                         newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
-                        Game.director.SetGameState(DataPoint.Legend_King, state, newData);
+                        Game.director.SetGameState(DataPoint.Legend_King, state, newData, true);
                         break;
                     case GameVar.Honour_Usurper:
                         oldData = Game.director.GetGameState(DataPoint.Honour_Usurper, state);
                         //apply change (positive #)
                         newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
-                        Game.director.SetGameState(DataPoint.Honour_Usurper, state, newData);
+                        Game.director.SetGameState(DataPoint.Honour_Usurper, state, newData, true);
                         break;
                     case GameVar.Honour_King:
                         oldData = Game.director.GetGameState(DataPoint.Honour_King, state);
                         //apply change (positive #)
                         newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
                         //update 
-                        Game.director.SetGameState(DataPoint.Honour_King, state, newData);
+                        Game.director.SetGameState(DataPoint.Honour_King, state, newData, true);
                         break;
                     default:
                         Game.SetError(new Error(74, string.Format("Invalid input (enum \"{0}\") for eventPID {1}", gameVar, eventTxt)));
@@ -99,6 +99,7 @@ namespace Next_Game.Event_System
                 //update Change state if required
                 if (stateChanged == true)
                 {
+                    /*
                     //specific for Director DataPoint variables (game states)
                     if (gameVar <= GameVar.Honour_King)
                     {
@@ -114,7 +115,7 @@ namespace Next_Game.Event_System
                             //Bad increase
                             Game.director.SetGameState(dataPoint, DataState.Change, -1);
                         }
-                    }
+                    }*/
                     //message
                     Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2} \"{3}\" {4} from {5} to {6}", eventTxt, optionTxt, gameVar,
                         state, oldData > newData ? "decreased" : "increased", oldData, newData), 1, 0, MessageType.Event);
