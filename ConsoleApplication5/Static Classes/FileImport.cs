@@ -216,7 +216,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Standard text file importer, returns an array of data
+        /// Standard text file importer, returns an array of data, null if not found
         /// </summary>
         /// <param name="name">"filename.txt"</param>
         /// <returns></returns>
@@ -225,12 +225,16 @@ namespace Next_Game
             string[] importedText = null;
             string path = fileDirectory + fileName;
             if (File.Exists(path))
-            { importedText = File.ReadAllLines(path); }
+            {
+                importedText = File.ReadAllLines(path);
+                if (importedText.Length == 0)
+                { Game.SetError(new Error(14, string.Format("No data in file {0}", fileName))); }
+                else { return importedText; }
+            }
             else
             { Game.SetError(new Error(10, string.Format("FileImport failed, file name {0}", fileName))); }
-            if (importedText.Length == 0)
-            { Game.SetError(new Error(14, string.Format("No data in file {0}", fileName))); }
-            return importedText;
+            return null;
+            
         }
 
         /// <summary>
@@ -3321,7 +3325,7 @@ namespace Next_Game
             bool newResult = false;
             bool validData = true;
             int dataInt;
-            List<int> listResultID = new List<int>(); //used to pick up duplicate storyID's
+            List<int> listResultID = new List<int>(); //used to pick up duplicate resultID's
             Dictionary<int, Result> dictOfResults = new Dictionary<int, Result>();
             string[] arrayOfResults = ImportDataFile(fileName);
             ResultStruct structResult = new ResultStruct();
@@ -3359,62 +3363,152 @@ namespace Next_Game
                     {
                         case "Name":
                             if (cleanToken.Length == 0)
-                            { Game.SetError(new Error(54, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            { Game.SetError(new Error(115, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                             else { structResult.Name = cleanToken; }
                             break;
-                        case "StoryID":
+                        case "RID":
                             try
-                            { structResult.StoryID = Convert.ToInt32(cleanToken); }
+                            { structResult.ResultID = Convert.ToInt32(cleanToken); }
                             catch
-                            { Game.SetError(new Error(54, string.Format("Invalid input for StoryID {0}, (\"{1}\")", cleanToken, structResult.Name))); validData = false; }
+                            { Game.SetError(new Error(115, string.Format("Invalid input for ResultID {0}, (\"{1}\")", cleanToken, structResult.Name))); validData = false; }
                             //check for duplicate arcID's
-                            if (listResultID.Contains(structResult.StoryID))
-                            { Game.SetError(new Error(54, string.Format("Duplicate StoryID {0}, (\"{1}\")", cleanToken, structResult.Name))); validData = false; }
-                            else { listResultID.Add(structResult.StoryID); }
+                            if (listResultID.Contains(structResult.ResultID))
+                            { Game.SetError(new Error(115, string.Format("Duplicate ResultID {0}, (\"{1}\")", cleanToken, structResult.Name))); validData = false; }
+                            else { listResultID.Add(structResult.ResultID); }
                             break;
                         case "Type":
                             if (cleanToken.Length == 0)
-                            { Game.SetError(new Error(54, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            { Game.SetError(new Error(115, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                             else
                             {
                                 switch (cleanToken)
                                 {
-                                    case "Benevolent":
-                                        structResult.Type = StoryAI.Benevolent;
+                                    case "DataPoint":
+                                        structResult.Type = ResultType.DataPoint;
                                         break;
-                                    case "Balanced":
-                                        structResult.Type = StoryAI.Balanced;
+                                    case "GameVar":
+                                        structResult.Type = ResultType.DataPoint;
                                         break;
-                                    case "Evil":
-                                        structResult.Type = StoryAI.Evil;
+                                    case "Relationship":
+                                        structResult.Type = ResultType.DataPoint;
                                         break;
-                                    case "Tricky":
-                                        structResult.Type = StoryAI.Tricky;
+                                    case "Condition":
+                                        structResult.Type = ResultType.DataPoint;
+                                        break;
+                                    case "Resource":
+                                        structResult.Type = ResultType.DataPoint;
+                                        break;
+                                    case "Item":
+                                        structResult.Type = ResultType.DataPoint;
+                                        break;
+                                    case "Secret":
+                                        structResult.Type = ResultType.DataPoint;
+                                        break;
+                                    case "Army":
+                                        structResult.Type = ResultType.DataPoint;
                                         break;
                                     default:
-                                        structResult.Type = StoryAI.None;
-                                        Game.SetError(new Error(54, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfResults[i])));
+                                        Game.SetError(new Error(115, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfResults[i])));
                                         validData = false;
                                         break;
                                 }
                             }
                             break;
-                        case "Ev_Follower_Loc":
+                        case "Data":
                             if (cleanToken.Length > 0)
                             {
                                 try
                                 {
                                     dataInt = Convert.ToInt32(cleanToken);
-                                    if (dataInt > 0)
-                                    { structResult.Ev_Follower_Loc = dataInt; }
+                                    if (dataInt != 0)
+                                    { structResult.Data = dataInt; }
                                     else
-                                    { Game.SetError(new Error(54, string.Format("Invalid Ev_Follower_Loc \"{0}\" (Zero) for {1}", dataInt, structResult.Name))); validData = false; }
+                                    { Game.SetError(new Error(115, string.Format("Invalid Data Input \"{0}\" (Zero) for {1}", dataInt, structResult.Name))); validData = false; }
                                 }
                                 catch
-                                { Game.SetError(new Error(54, string.Format("Invalid Ev_Follower_Loc (Conversion) for  {0}", structResult.Name))); validData = false; }
+                                { Game.SetError(new Error(115, string.Format("Invalid Data (Conversion) for {0}", structResult.Name))); validData = false; }
                             }
                             else
-                            { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Follower_Loc), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            { Game.SetError(new Error(115, string.Format("Empty data field (Data), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            break;
+                        case "Calc":
+                            if (cleanToken.Length == 0)
+                            { Game.SetError(new Error(115, string.Format("Empty Calc field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            else
+                            {
+                                switch (cleanToken)
+                                {
+                                    case "Add":
+                                        structResult.Calc = EventCalc.Add;
+                                        break;
+                                    case "Subtract":
+                                        structResult.Calc = EventCalc.Subtract;
+                                        break;
+                                    case "Random":
+                                        structResult.Calc = EventCalc.Random;
+                                        break;
+                                    case "Equals":
+                                        structResult.Calc = EventCalc.Equals;
+                                        break;
+                                    case "None":
+                                        structResult.Calc = EventCalc.None;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(115, string.Format("Invalid Input, Calc (\"{0}\")", arrayOfResults[i])));
+                                        validData = false;
+                                        break;
+                                }
+                            }
+                            break;
+                        case "Amount":
+                            if (cleanToken.Length > 0)
+                            {
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt != 0)
+                                    { structResult.Amount = dataInt; }
+                                    else
+                                    { Game.SetError(new Error(115, string.Format("Invalid Amount Input \"{0}\" (Zero) for {1}", dataInt, structResult.Name))); validData = false; }
+                                }
+                                catch
+                                { Game.SetError(new Error(115, string.Format("Invalid Amount (Conversion) for {0}", structResult.Name))); validData = false; }
+                            }
+                            else
+                            { Game.SetError(new Error(115, string.Format("Empty input field (Amount), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            break;
+                            //optional tags
+                        case "DataPoint":
+                            if (cleanToken.Length == 0)
+                            { Game.SetError(new Error(115, string.Format("Empty DataPoint field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            else
+                            {
+                                switch (cleanToken)
+                                {
+                                    case "Invisibility":
+                                        structResult.DataPoint = DataPoint.Invisibility;
+                                        break;
+                                    case "Justice":
+                                        structResult.DataPoint = DataPoint.Justice;
+                                        break;
+                                    case "Legend_Usurper":
+                                        structResult.DataPoint = DataPoint.Legend_Usurper;
+                                        break;
+                                    case "Legend_King":
+                                        structResult.DataPoint = DataPoint.Legend_King;
+                                        break;
+                                    case "Honour_Usurper":
+                                        structResult.DataPoint = DataPoint.Honour_Usurper;
+                                        break;
+                                    case "Honour_King":
+                                        structResult.DataPoint = DataPoint.Honour_King;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(115, string.Format("Invalid Input, DataPoint (\"{0}\")", arrayOfResults[i])));
+                                        validData = false;
+                                        break;
+                                }
+                            }
                             break;
                         case "[end]":
                         case "[End]":
@@ -3422,31 +3516,20 @@ namespace Next_Game
                             if (validData == true)
                             {
                                 //pass info over to a class instance
-                                Result storyObject = new Result(structResult.Name, structResult.StoryID, structResult.Type);
-                                storyObject.Ev_Follower_Loc = structResult.Ev_Follower_Loc;
-                                storyObject.Ev_Follower_Trav = structResult.Ev_Follower_Trav;
-                                storyObject.Ev_Player_Loc = structResult.Ev_Player_Loc;
-                                storyObject.Ev_Player_Trav = structResult.Ev_Player_Trav;
-                                storyObject.Arc_Geo_Sea = structResult.Sea;
-                                storyObject.Arc_Geo_Mountain = structResult.Mountain;
-                                storyObject.Arc_Geo_Forest = structResult.Forest;
-                                storyObject.Arc_Loc_Capital = structResult.Capital;
-                                storyObject.Arc_Loc_Major = structResult.Major;
-                                storyObject.Arc_Loc_Minor = structResult.Minor;
-                                storyObject.Arc_Loc_Inn = structResult.Inn;
-                                storyObject.Arc_Road_Normal = structResult.Normal;
-                                storyObject.Arc_Road_Kings = structResult.Kings;
-                                storyObject.Arc_Road_Connector = structResult.Connector;
+                                Result resultObject = new Result(structResult.ResultID, structResult.Name, structResult.Type, structResult.Data, structResult.Calc, structResult.Amount);
+                                if (structResult.DataPoint > DataPoint.None)
+                                { resultObject.DataPoint = structResult.DataPoint; }
+                                
                                 //last datapoint - save object to list
                                 if (dataCounter > 0)
-                                { dictOfResults.Add(storyObject.StoryID, storyObject); }
-                                else { Game.SetError(new Error(54, "Invalid Input, storyObject")); }
+                                { dictOfResults.Add(resultObject.ResultID, resultObject); }
+                                else { Game.SetError(new Error(115, "Invalid Input, resultObject")); }
                             }
                             else
-                            { Game.SetError(new Error(54, string.Format("Story, (\"{0}\" StoryID {1}), not Imported", structResult.Name, structResult.StoryID))); }
+                            { Game.SetError(new Error(115, string.Format("Result, (\"{0}\" ResultID {1}), not Imported", structResult.Name, structResult.ResultID))); }
                             break;
                         default:
-                            Game.SetError(new Error(54, string.Format("Invalid Input, CleanTag \"{0}\", \"{1}\"", cleanTag, structResult.Name)));
+                            Game.SetError(new Error(115, string.Format("Invalid Input, CleanTag \"{0}\", \"{1}\"", cleanTag, structResult.Name)));
                             break;
                     }
 

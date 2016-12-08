@@ -4,9 +4,9 @@
 # Name: Description
 # RID: (ResultID) Unique number, 1+
 # Type: (ResultType) -> DataPoint / GameVar / Relationship / Condition / Resource / Item / Secret / Army / Event 
-# Data: multipurpose integer (context depends on Type)
-# Calc: (EventCalc) -> None / Add / Subtract / Random / Equals
-# Amount: integer amount applied by Calc (if Calc is 'Random' then it's random Amount, eg. if amount 100 then random d100)
+# Data: multipurpose integer (context depends on Type) (default '0')
+# Calc: (EventCalc) -> None / Add / Subtract / Random / Equals (default 'None')
+# Amount: integer amount applied by Calc (if Calc is 'Random' then it's random Amount, eg. if amount 100 then random d100) (default '0')
 
 # DataPoint: (OPTIONAL - applies if Type is DataPoint) -> Invisibility / Justice / Legend_Usurper / Legend_King / Honour_Usurper / Honour_King
 
@@ -15,7 +15,7 @@ Name: Blend in More
 RID: 1
 Type: DataPoint
 DataPoint: Invisibility
-Data: 0
+Data: 1
 Calc: Random
 Amount: 100
 [End]

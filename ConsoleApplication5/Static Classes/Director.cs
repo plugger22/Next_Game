@@ -172,7 +172,7 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- Initialise Skill (Situations)");
             dictSituationsSkill = Game.file.GetSituations("SitSkill.txt");
             Console.WriteLine(Environment.NewLine + "--- Initialise Results");
-            dictResults = Game.file.GetResults("Result.txt");
+            dictResults = Game.file.GetResults("Results.txt");
             Console.WriteLine(Environment.NewLine + "--- Initialise Challenges"); //run AFTER GetResults
             dictChallenges = Game.file.GetChallenges("Challenge.txt");
             Console.WriteLine(Environment.NewLine);
