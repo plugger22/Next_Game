@@ -3363,7 +3363,7 @@ namespace Next_Game
                     {
                         case "Name":
                             if (cleanToken.Length == 0)
-                            { Game.SetError(new Error(115, string.Format("Empty data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                            { Game.SetError(new Error(115, string.Format("Empty Name field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                             else { structResult.Name = cleanToken; }
                             break;
                         case "RID":
@@ -3418,13 +3418,7 @@ namespace Next_Game
                             if (cleanToken.Length > 0)
                             {
                                 try
-                                {
-                                    dataInt = Convert.ToInt32(cleanToken);
-                                    if (dataInt != 0)
-                                    { structResult.Data = dataInt; }
-                                    else
-                                    { Game.SetError(new Error(115, string.Format("Invalid Data Input \"{0}\" (Zero) for {1}", dataInt, structResult.Name))); validData = false; }
-                                }
+                                { structResult.Data = Convert.ToInt32(cleanToken); }
                                 catch
                                 { Game.SetError(new Error(115, string.Format("Invalid Data (Conversion) for {0}", structResult.Name))); validData = false; }
                             }
@@ -3520,9 +3514,27 @@ namespace Next_Game
                                 if (structResult.DataPoint > DataPoint.None)
                                 { resultObject.DataPoint = structResult.DataPoint; }
                                 
-                                //last datapoint - save object to list
+                                //last datapoint - save object to dictionary
                                 if (dataCounter > 0)
-                                { dictOfResults.Add(resultObject.ResultID, resultObject); }
+                                {
+                                    try
+                                    {
+                                        dictOfResults.Add(resultObject.ResultID, resultObject);
+                                        Console.WriteLine("RecordID {0} (\"{1}\"), successfully imported", resultObject.ResultID, resultObject.Description);
+                                    }
+                                    catch (ArgumentNullException e)
+                                    {
+                                        Game.SetError(new Error(115, string.Format("RecordID {0} (\"{1}\") not imported due to errors", 
+                                            resultObject.ResultID, resultObject.Description)));
+                                        Console.WriteLine(e.Message);
+                                    }
+                                    catch (ArgumentException e)
+                                    {
+                                        Game.SetError(new Error(115, string.Format("RecordID {0} (\"{1}\") not imported due to errors", 
+                                            resultObject.ResultID, resultObject.Description)));
+                                        Console.WriteLine(e.Message);
+                                    }
+                                }
                                 else { Game.SetError(new Error(115, "Invalid Input, resultObject")); }
                             }
                             else

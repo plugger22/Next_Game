@@ -50,7 +50,7 @@ namespace Next_Game
         public SkillType PrimarySkill { get; set; } //each skill level counts as 2 cards
         public SkillType OtherSkill_1 { get; set; } //only trait effects count
         public SkillType OtherSkill_2 { get; set; }
-        
+        //collections
         private int[] arrayPool;
         private int[] arrayModifiers; 
         private string[,] arraySituation;
@@ -93,7 +93,7 @@ namespace Next_Game
         public bool InitialiseConflict()
         {
             //debug
-            Console.WriteLine("Initialise Conflict");
+            Console.WriteLine("Initialise {0} Challenge", Conflict_Type);
             if (GetChallenge() == true)
             {
                 SetPlayerStrategy();

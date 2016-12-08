@@ -83,7 +83,7 @@ Calc: Random
 Amount: 50
 [End]
 
-Name: 
+Name: Honour and Liberty!
 RID: 9
 Type: DataPoint
 DataPoint: Honour_Usurper
@@ -92,7 +92,7 @@ Calc: Random
 Amount: 50
 [End]
 
-Name: 
+Name: Oops, shouldn't have done that
 RID: 10
 Type: DataPoint
 DataPoint: Honour_Usurper
