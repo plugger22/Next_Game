@@ -1225,7 +1225,7 @@ namespace Next_Game
                                     layout.ResolveCard();
                                     break;
                                 case ConflictMode.AutoResolve:
-                                    layout.AutoResolve();
+                                    layout.HandAutoResolve();
                                     _conflictMode = ConflictMode.Outcome;
                                     layout.UpdateOutcome();
                                     break;

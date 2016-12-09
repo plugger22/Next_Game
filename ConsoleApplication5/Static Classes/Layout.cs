@@ -32,6 +32,8 @@ namespace Next_Game
         public ConflictResult Result { get; set; }
         int result_factor; //multiple for outcomes, eg. 1X is a minor win, 2X is a win, 3X is a major win
         int cardsRemaining;
+        int cardsPlayed;
+        int handSize;
         int score;
         int points_play; //points if card played
         int points_ignore; //points if card ignored
@@ -244,6 +246,7 @@ namespace Next_Game
             PopupFlag = false;
             result_factor = Game.constant.GetValue(Global.RESULT_FACTOR);
             neutralEffect = Game.constant.GetValue(Global.NEUTRAL_EFFECT);
+            handSize = Game.constant.GetValue(Global.HAND_CARDS_NUM);
         }
 
         /// <summary>
@@ -252,7 +255,6 @@ namespace Next_Game
         public void Initialise()
         {
             //SetTestData();
-            InitialiseData();
             InitialiseIntro();
             InitialiseStrategy();
             InitialiseCards();
@@ -261,11 +263,28 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// sets up data for a new challenge
+        /// Set up layout data ready for next challenge. Called by InitialiseConflict
         /// </summary>
-        private void InitialiseData()
+        public void InitialiseData()
         {
+            InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
             EndHand = false;
+            cardsPlayed = 1;
+        }
+
+        /// <summary>
+        /// resets all relevant data at the end of a challenge
+        /// </summary>
+        internal void ResetLayout()
+        {
+            cardCounter = 0;
+            score = 0;
+            points_play = 0;
+            points_ignore = 0;
+            listCardHand.Clear();
+            listHistory.Clear();
+            messageQueue.Clear();
+            currentCard = null;
         }
 
         /// <summary>
@@ -745,7 +764,7 @@ namespace Next_Game
         /// <summary>
         /// handles autoresolution of challenges, either at the start or part way through
         /// </summary>
-        public void AutoResolve()
+        public void HandAutoResolve()
         {
             //Update Card Pool and Deal Hand if first run through
             if (CardFirstFlag == true)
@@ -757,8 +776,10 @@ namespace Next_Game
                 Game.conflict.SetHand();
                 CardFirstFlag = false;
             }
-            int numCards = listCardHand.Count();
-            for (int i = 0; i <= numCards; i++)
+            //int numCards = handSize;
+            cardsRemaining++;
+            if (cardsPlayed > 1) { cardsPlayed--; } //handles autoExec part way through hand
+            for (int i = cardsPlayed; i <= handSize; i++)
             {
                 //Card
                 points_play = 0;
@@ -771,17 +792,14 @@ namespace Next_Game
                     switch (card.Type)
                     {
                         case CardType.Good:
-                            arrayCardPool[0]--;
                             points_play = arrayPoints[Strategy_Player, Strategy_Opponent, 0] * card.Effect;
                             points_ignore = arrayPoints[Strategy_Player, Strategy_Opponent, 1] * card.Effect;
                             break;
                         case CardType.Neutral:
                             int rndNum = rnd.Next(1, neutralEffect + 1) + rnd.Next(1, neutralEffect + 1); //2d6
                             points_play = rndNum; points_ignore = rndNum * -1;
-                            arrayCardPool[1]--;
                             break;
                         case CardType.Bad:
-                            arrayCardPool[2]--;
                             points_play = arrayPoints[Strategy_Player, Strategy_Opponent, 2] * card.Effect;
                             points_ignore = arrayPoints[Strategy_Player, Strategy_Opponent, 3] * card.Effect;
                             break;
@@ -789,10 +807,10 @@ namespace Next_Game
                             Game.SetError(new Error(95, "Invalid Card Type"));
                             break;
                     }
-                    listCardHand.RemoveAt(0);
-                    cardsRemaining--;
                     //resolve card
                     ResolveCard();
+                    listCardHand.RemoveAt(0);
+                    cardsRemaining--;
                 }
             }
         }
@@ -1298,23 +1316,11 @@ namespace Next_Game
                 cardsRemaining = Math.Max(1, cardsRemaining);
             }
             else { Game.SetError(new Error(94, "Invalid tempList input (null)")); }
-            InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
         }
 
-        /// <summary>
-        /// resets all relevant data at the end of a challenge
-        /// </summary>
-        internal void ResetLayout()
-        {
-            cardCounter = 0;
-            score = 0;
-            points_play = 0;
-            points_ignore = 0;
-            listCardHand.Clear();
-            listHistory.Clear();
-            messageQueue.Clear();
-            currentCard = null;
-        }
+
+
+
 
         /// <summary>
         /// Used by game.cs to check if hand completed (returns false)
@@ -1323,7 +1329,8 @@ namespace Next_Game
         internal bool CheckHandStatus()
         {
             if (EndHand == true) { return false; }
-            if (listCardHand.Count <= 0) { EndHand = true; }
+            //if (listCardHand.Count <= 0) { EndHand = true; }
+             if (cardsPlayed > handSize) { EndHand = true; }
             return true;
         }
 
@@ -1360,6 +1367,7 @@ namespace Next_Game
             { score += points_ignore; }
             //flip next card
             NextCard = true;
+            cardsPlayed++;
             //add to history
             if (currentCard != null && currentCard.Type != CardType.None)
             {

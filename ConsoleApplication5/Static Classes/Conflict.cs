@@ -96,6 +96,7 @@ namespace Next_Game
             Console.WriteLine("Initialise {0} Challenge", Conflict_Type);
             if (GetChallenge() == true)
             {
+                Game.layout.InitialiseData();
                 SetPlayerStrategy();
                 SetSkills();
                 SetSituation(Game.director.GetSituationsNormal(), Game.director.GetSituationsGame());
