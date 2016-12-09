@@ -241,7 +241,7 @@ namespace Next_Game
             Intro_FillColor = Color._background0;
             //assorted
             score = 0;
-            currentCard = new Card_Conflict();
+            currentCard = null;
             PopupFlag = false;
             result_factor = Game.constant.GetValue(Global.RESULT_FACTOR);
             neutralEffect = Game.constant.GetValue(Global.NEUTRAL_EFFECT);
@@ -267,7 +267,9 @@ namespace Next_Game
         public void InitialiseData()
         {
             InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
+            cardsRemaining = handSize;
             cardCounter = 0;
+            NextCard = true;
         }
 
         /// <summary>
@@ -719,10 +721,12 @@ namespace Next_Game
                 else { textPlay = string.Format("Play for +2d{0} Points", neutralEffect);  textIgnore = string.Format("Ignore for -2d{0} Points", neutralEffect); }
                 DrawCenteredText(textPlay, ca_left_inner, card_vert_6, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 DrawCenteredText(textIgnore, ca_left_inner, card_vert_7, ca_card_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
+                //delete card
                 listCardHand.RemoveAt(0);
                 //update remaining cards
                 DrawCenteredText(Convert.ToString(cardsRemaining), ca_left_outer, vertical_align + 7, ca_status_width, RLColor.Black, arrayOfCells_Cards, arrayOfForeColors_Cards);
                 cardsRemaining--;
+                cardsRemaining = Math.Max(0, cardsRemaining);
                 //update remaining influence
                 DrawCenteredText(Convert.ToString(InfluenceRemaining), ca_left_outer, ca_top_align + 7, ca_status_width, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards);
             }
@@ -774,8 +778,13 @@ namespace Next_Game
                 Game.conflict.SetHand();
                 CardFirstFlag = false;
             }
-            //cardsRemaining++;
-            if (cardCounter > 1) { cardCounter--; } //handles autoExec part way through hand
+            cardsRemaining--;
+            if (currentCard != null)
+            {
+                //handles autoExec part way through hand
+                listCardHand.Insert(0, currentCard);
+                //cardCounter--;
+            } 
             for (int i = cardCounter; i <= handSize; i++)
             {
                 //Card
@@ -1346,7 +1355,7 @@ namespace Next_Game
             //last three cards will be autoplayed if ignored by player and enough influence remains
             if (cardPlayed == false)
             {
-                if (cardsRemaining <= 2 && cardsRemaining < InfluenceRemaining)
+                if (cardsRemaining < 2 && cardsRemaining < InfluenceRemaining)
                 { actionTaken = true; }
             }
             //update score and influence
