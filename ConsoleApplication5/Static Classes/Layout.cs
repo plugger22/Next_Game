@@ -25,6 +25,7 @@ namespace Next_Game
         public bool CardFirstFlag { get; set; } //used to update card pool and hand on first run through UpdateCards
         public bool PopupFlag { get; set; } //flag to prevent popup overwriting itself
         public bool Challenger { get; set; } //is the Player the Challenger?
+        public bool EndHand { get; set; } //true if all cards in a hand have been dealt
         public int InfluenceRemaining { get; set; }
         public int DefenderStrategy { get; set; } //chosen strategy of the Defender
         public CardType GameSituation { get; set; } //is the game specific situation good, bad or neutral?
@@ -37,7 +38,6 @@ namespace Next_Game
         int cardCounter; //number of cards played
         int neutralEffect; //points value of neutral cards
         Card_Conflict currentCard;
-        
         //card layout
         int ca_left_outer; //left side of status boxes (y_coord)
         int ca_right_align;
@@ -252,11 +252,20 @@ namespace Next_Game
         public void Initialise()
         {
             //SetTestData();
+            InitialiseData();
             InitialiseIntro();
             InitialiseStrategy();
             InitialiseCards();
             InitialiseOutcome();
             InitialiseMessage();
+        }
+
+        /// <summary>
+        /// sets up data for a new challenge
+        /// </summary>
+        private void InitialiseData()
+        {
+            EndHand = false;
         }
 
         /// <summary>
@@ -273,7 +282,6 @@ namespace Next_Game
             //confirmation box (centred)
             DrawBox(left_align, top_align, box_width, box_height, RLColor.Yellow, Intro_FillColor, arrayOfCells_Intro, arrayOfForeColors_Intro, arrayOfBackColors_Intro);
             DrawBox(left_align, bottom_align, box_width, box_height, RLColor.Yellow, Intro_FillColor, arrayOfCells_Intro, arrayOfForeColors_Intro, arrayOfBackColors_Intro);
-            
         }
 
         /// <summary>
@@ -573,7 +581,6 @@ namespace Next_Game
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
             RLColor foreColor;
             string textPlay, textIgnore;
-            
             //Update Card Pool and Deal Hand if first run through
             if (CardFirstFlag == true)
             {
@@ -751,7 +758,7 @@ namespace Next_Game
                 CardFirstFlag = false;
             }
             int numCards = listCardHand.Count();
-            for (int i = 0; i < numCards; i++)
+            for (int i = 0; i <= numCards; i++)
             {
                 //Card
                 points_play = 0;
@@ -1149,7 +1156,7 @@ namespace Next_Game
         /// Debug method
         /// </summary>
         /// <returns></returns>
-        public List<Snippet> GetTestDataAutoResolve()
+        /*public List<Snippet> GetTestDataAutoResolve()
         {
             List<Snippet> listOfSnippets = new List<Snippet>();
             listOfSnippets.Add(new Snippet("You have chosen to AutoResolve", RLColor.Black, Resolve_FillColor));
@@ -1165,19 +1172,34 @@ namespace Next_Game
             listOfSnippets.Add(new Snippet("The Imp showed how it was done", RLColor.Black, Resolve_FillColor));
             listOfSnippets.Add(new Snippet("The Imp was very brave", RLColor.Blue, Resolve_FillColor));
             return listOfSnippets;
-        }
+        }*/
 
         /// <summary>
         /// Provides text for AutoResolve message
         /// </summary>
         /// <returns></returns>
-        public List<Snippet> GetAutoResoveText()
+        public List<Snippet> GetAutoResolveText()
         {
             List<Snippet> listOfSnippets = new List<Snippet>();
             listOfSnippets.Add(new Snippet("You have chosen to AutoResolve", RLColor.Black, Resolve_FillColor));
             listOfSnippets.Add(new Snippet("Calculating...", RLColor.Blue, Resolve_FillColor));
-
+            listOfSnippets.Add(new Snippet("", RLColor.Black, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet(string.Format("Your Strategy is {0}", GetStrategy(Strategy_Player)), RLColor.Black, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet(string.Format("Your Opponent's Strategy is {0}", GetStrategy(Strategy_Opponent)), RLColor.Red, Resolve_FillColor));
             return listOfSnippets;
+        }
+
+        /// <summary>
+        /// returns text version of overall strategy based on int input
+        /// </summary>
+        /// <param name="strategyCode"></param>
+        /// <returns></returns>
+        private string GetStrategy(int strategyCode)
+        {
+            string strategyText = "Balanced";
+            if (strategyCode == 1) { strategyText = "Defensive"; }
+            else if (strategyCode == 0) { strategyText = "Aggressive"; }
+            return strategyText;
         }
 
         /// <summary>
@@ -1300,7 +1322,8 @@ namespace Next_Game
         /// <returns></returns>
         internal bool CheckHandStatus()
         {
-            if (listCardHand.Count < 1) { return false; }
+            if (EndHand == true) { return false; }
+            if (listCardHand.Count <= 0) { EndHand = true; }
             return true;
         }
 

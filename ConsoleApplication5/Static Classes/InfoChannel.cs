@@ -369,7 +369,7 @@ namespace Next_Game
                             Game.layout.DrawMessage(multiConsole);
                             break;
                         case ConflictMode.AutoResolve:
-                            Game.layout.UpdateMessage(Game.layout.GetTestDataAutoResolve(), Game.layout.Resolve_FillColor);
+                            Game.layout.UpdateMessage(Game.layout.GetAutoResolveText(), Game.layout.Resolve_FillColor);
                             Game.layout.DrawMessage(multiConsole);
                             break;
                         case ConflictMode.ErrorStrategy:

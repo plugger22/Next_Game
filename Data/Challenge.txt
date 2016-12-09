@@ -83,7 +83,7 @@ OutWinMinor: The enemy pulls back hurt but isn't defeated
 OutWin: You carry the day and the enemy retreat
 OutWinMajor: The enemy rout and suffer horrendous casualties
 OutLossMinor: You are forced to withdraw but hold your army together
-OutLoss: Your army suffers substantial casualties and is defeated
+OutLoss: Your  army suffers substantial casualties and is defeated
 OutLossMajor: Your army breaks. You flee the field in order to save yourself
 OutNone: The battle has been inconclusive. Only the Grim Reaper has won today.
 ResWinMinor: 2, 3, 4

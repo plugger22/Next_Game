@@ -174,7 +174,7 @@ SubType: Tournament
 PlyrDef: -1
 Data: 1
 Good1: <name> has had more than <his> fair share of luck today but, even though you've been hit, you remain mounted, ready for the next round.
-Good2: You breath a sigh of relief as <name> cracks <his> lance on your side armour. Your armour has survived intact but <his> lance hasn't.
+Good2: You breathe a sigh of relief as <name> cracks <his> lance on your side armour. Your armour has survived intact but <his> lance hasn't.
 Good3: By leaning outwards you manage to miss <name>'s lunging lance tip although it was a close call.
 Bad1: Whump! Your head snaps backwards as <name>'s lance takes you in the neck. Your protective armour does it's job but you topple from your horse.
 Bad2: Your body is still store from your previous unhorsing. It likes being knocked out of the saddle by <name>'s lance even less this time around.
