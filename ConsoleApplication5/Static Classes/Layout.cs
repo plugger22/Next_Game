@@ -35,6 +35,7 @@ namespace Next_Game
         int points_play; //points if card played
         int points_ignore; //points if card ignored
         int cardCounter; //number of cards played
+        int neutralEffect; //points value of neutral cards
         Card_Conflict currentCard;
         
         //card layout
@@ -242,6 +243,7 @@ namespace Next_Game
             currentCard = new Card_Conflict();
             PopupFlag = false;
             result_factor = Game.constant.GetValue(Global.RESULT_FACTOR);
+            neutralEffect = Game.constant.GetValue(Global.NEUTRAL_EFFECT);
         }
 
         /// <summary>
@@ -571,7 +573,7 @@ namespace Next_Game
             int bar_height = ca_score_height - (ca_bar_offset_y * 2);
             RLColor foreColor;
             string textPlay, textIgnore;
-            int neutralEffect = Game.constant.GetValue(Global.NEUTRAL_EFFECT);
+            
             //Update Card Pool and Deal Hand if first run through
             if (CardFirstFlag == true)
             {
@@ -731,6 +733,61 @@ namespace Next_Game
             if (score != 0)
             { DrawText(string.Format("{0}{1}", score > 0 ? "+" : "", score), bar_middle - 1, bar_top + bar_height, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards); }
             else { DrawText(string.Format(" {0}", score), bar_middle - 1, bar_top + bar_height, RLColor.Blue, arrayOfCells_Cards, arrayOfForeColors_Cards); }
+        }
+
+        /// <summary>
+        /// handles autoresolution of challenges, either at the start or part way through
+        /// </summary>
+        public void AutoResolve()
+        {
+            //Update Card Pool and Deal Hand if first run through
+            if (CardFirstFlag == true)
+            {
+                //is the defender using a Defence [F3] strategy?
+                if (Challenger == true) { DefenderStrategy = Strategy_Opponent; }
+                else { DefenderStrategy = Strategy_Player; }
+                Game.conflict.UpdateCardPool(DefenderStrategy);
+                Game.conflict.SetHand();
+                CardFirstFlag = false;
+            }
+            int numCards = listCardHand.Count();
+            for (int i = 0; i < numCards; i++)
+            {
+                //Card
+                points_play = 0;
+                points_ignore = 0;
+                if (listCardHand.Count > 0)
+                {
+                    //get next card, delete once done
+                    Card_Conflict card = listCardHand[0];
+                    currentCard = listCardHand[0];
+                    switch (card.Type)
+                    {
+                        case CardType.Good:
+                            arrayCardPool[0]--;
+                            points_play = arrayPoints[Strategy_Player, Strategy_Opponent, 0] * card.Effect;
+                            points_ignore = arrayPoints[Strategy_Player, Strategy_Opponent, 1] * card.Effect;
+                            break;
+                        case CardType.Neutral:
+                            int rndNum = rnd.Next(1, neutralEffect + 1) + rnd.Next(1, neutralEffect + 1); //2d6
+                            points_play = rndNum; points_ignore = rndNum * -1;
+                            arrayCardPool[1]--;
+                            break;
+                        case CardType.Bad:
+                            arrayCardPool[2]--;
+                            points_play = arrayPoints[Strategy_Player, Strategy_Opponent, 2] * card.Effect;
+                            points_ignore = arrayPoints[Strategy_Player, Strategy_Opponent, 3] * card.Effect;
+                            break;
+                        default:
+                            Game.SetError(new Error(95, "Invalid Card Type"));
+                            break;
+                    }
+                    listCardHand.RemoveAt(0);
+                    cardsRemaining--;
+                    //resolve card
+                    ResolveCard();
+                }
+            }
         }
 
         /// <summary>
@@ -1107,6 +1164,19 @@ namespace Next_Game
             listOfSnippets.Add(new Snippet("You owe your Victory to Lord Holster", RLColor.Black, Resolve_FillColor));
             listOfSnippets.Add(new Snippet("The Imp showed how it was done", RLColor.Black, Resolve_FillColor));
             listOfSnippets.Add(new Snippet("The Imp was very brave", RLColor.Blue, Resolve_FillColor));
+            return listOfSnippets;
+        }
+
+        /// <summary>
+        /// Provides text for AutoResolve message
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> GetAutoResoveText()
+        {
+            List<Snippet> listOfSnippets = new List<Snippet>();
+            listOfSnippets.Add(new Snippet("You have chosen to AutoResolve", RLColor.Black, Resolve_FillColor));
+            listOfSnippets.Add(new Snippet("Calculating...", RLColor.Blue, Resolve_FillColor));
+
             return listOfSnippets;
         }
 
