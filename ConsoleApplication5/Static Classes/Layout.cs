@@ -25,14 +25,13 @@ namespace Next_Game
         public bool CardFirstFlag { get; set; } //used to update card pool and hand on first run through UpdateCards
         public bool PopupFlag { get; set; } //flag to prevent popup overwriting itself
         public bool Challenger { get; set; } //is the Player the Challenger?
-        public bool EndHand { get; set; } //true if all cards in a hand have been dealt
         public int InfluenceRemaining { get; set; }
         public int DefenderStrategy { get; set; } //chosen strategy of the Defender
         public CardType GameSituation { get; set; } //is the game specific situation good, bad or neutral?
         public ConflictResult Result { get; set; }
         int result_factor; //multiple for outcomes, eg. 1X is a minor win, 2X is a win, 3X is a major win
         int cardsRemaining;
-        int cardsPlayed;
+        //int cardsPlayed;
         int handSize;
         int score;
         int points_play; //points if card played
@@ -268,8 +267,7 @@ namespace Next_Game
         public void InitialiseData()
         {
             InfluenceRemaining = Game.constant.GetValue(Global.PLAYER_INFLUENCE);
-            EndHand = false;
-            cardsPlayed = 1;
+            cardCounter = 0;
         }
 
         /// <summary>
@@ -776,10 +774,9 @@ namespace Next_Game
                 Game.conflict.SetHand();
                 CardFirstFlag = false;
             }
-            //int numCards = handSize;
-            cardsRemaining++;
-            if (cardsPlayed > 1) { cardsPlayed--; } //handles autoExec part way through hand
-            for (int i = cardsPlayed; i <= handSize; i++)
+            //cardsRemaining++;
+            if (cardCounter > 1) { cardCounter--; } //handles autoExec part way through hand
+            for (int i = cardCounter; i <= handSize; i++)
             {
                 //Card
                 points_play = 0;
@@ -1328,9 +1325,7 @@ namespace Next_Game
         /// <returns></returns>
         internal bool CheckHandStatus()
         {
-            if (EndHand == true) { return false; }
-            //if (listCardHand.Count <= 0) { EndHand = true; }
-             if (cardsPlayed > handSize) { EndHand = true; }
+            if (cardCounter >= handSize) { return false; }
             return true;
         }
 
@@ -1351,7 +1346,7 @@ namespace Next_Game
             //last three cards will be autoplayed if ignored by player and enough influence remains
             if (cardPlayed == false)
             {
-                if (cardsRemaining + 1 <= 2 && cardsRemaining + 1 < InfluenceRemaining)
+                if (cardsRemaining <= 2 && cardsRemaining < InfluenceRemaining)
                 { actionTaken = true; }
             }
             //update score and influence
@@ -1367,7 +1362,6 @@ namespace Next_Game
             { score += points_ignore; }
             //flip next card
             NextCard = true;
-            cardsPlayed++;
             //add to history
             if (currentCard != null && currentCard.Type != CardType.None)
             {
@@ -1388,7 +1382,6 @@ namespace Next_Game
                 //...add to message queue
                 messageQueue.Enqueue(snippetCard);
                 if (messageQueue.Count > ca_message_max) { messageQueue.Dequeue();}
-
                 //Immersion text
                 if (actionTaken == true)
                 { textImmersion = currentCard.PlayedText; }
@@ -1409,7 +1402,6 @@ namespace Next_Game
                         if (messageQueue.Count > ca_message_max) { messageQueue.Dequeue(); }
                     }
                 }
-
             }
         }
 
