@@ -1199,6 +1199,7 @@ namespace Next_Game
                         if (keyPress.Key == RLKey.Escape && (_conflictMode == ConflictMode.Strategy || _conflictMode == ConflictMode.Cards))
                         {
                             //AutoResolve Mode
+                            layout.HandAutoResolve();
                             _conflictMode = ConflictMode.AutoResolve;
                         }
                         else
@@ -1225,7 +1226,6 @@ namespace Next_Game
                                     //layout.ResolveCard();
                                     break;
                                 case ConflictMode.AutoResolve:
-                                    layout.HandAutoResolve();
                                     _conflictMode = ConflictMode.Outcome;
                                     layout.UpdateOutcome();
                                     break;

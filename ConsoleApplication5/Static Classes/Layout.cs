@@ -122,6 +122,7 @@ namespace Next_Game
         //strategy
         public int Strategy_Player { get; set; } //0 -> Aggressive, 1 -> Balanced, 2 -> Defend (set in Game.SetSpecialMode)
         public int Strategy_Opponent { get; set; } //0 -> Aggressive, 1 -> Balanced, 2 -> Defend
+        public int Strategy_Recommended { get; set; } //as above, used for player if autoresolve and they didn't choose
 
 
         /// <summary>
@@ -270,6 +271,7 @@ namespace Next_Game
             cardsRemaining = handSize;
             cardCounter = 0;
             NextCard = true;
+            Strategy_Player = -1;
         }
 
         /// <summary>
@@ -768,6 +770,8 @@ namespace Next_Game
         /// </summary>
         public void HandAutoResolve()
         {
+            //Player strategy
+            if (Strategy_Player < 0) { Strategy_Player = Strategy_Recommended; }
             //Update Card Pool and Deal Hand if first run through
             if (CardFirstFlag == true)
             {
@@ -1177,28 +1181,6 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Debug method
-        /// </summary>
-        /// <returns></returns>
-        /*public List<Snippet> GetTestDataAutoResolve()
-        {
-            List<Snippet> listOfSnippets = new List<Snippet>();
-            listOfSnippets.Add(new Snippet("You have chosen to AutoResolve", RLColor.Black, Resolve_FillColor));
-            listOfSnippets.Add(new Snippet("Calculating...", RLColor.Blue, Resolve_FillColor));
-            listOfSnippets.Add(new Snippet("Your Strategy was Aggressive", RLColor.Black, Resolve_FillColor));
-            listOfSnippets.Add(new Snippet("Your Opponents Strategy was Balanced", RLColor.Red, Resolve_FillColor));
-            listOfSnippets.Add(new Snippet("", RLColor.Black, Resolve_FillColor));
-            listOfSnippets.Add(new Snippet("The battle was tense", RLColor.Black, Resolve_FillColor));
-            listOfSnippets.Add(new Snippet("You emerged Victorious", RLColor.Blue, Resolve_FillColor));
-            listOfSnippets.Add(new Snippet("Your Opponent was captured", RLColor.Black, Resolve_FillColor));
-            listOfSnippets.Add(new Snippet("", RLColor.Blue, Resolve_FillColor));
-            listOfSnippets.Add(new Snippet("You owe your Victory to Lord Holster", RLColor.Black, Resolve_FillColor));
-            listOfSnippets.Add(new Snippet("The Imp showed how it was done", RLColor.Black, Resolve_FillColor));
-            listOfSnippets.Add(new Snippet("The Imp was very brave", RLColor.Blue, Resolve_FillColor));
-            return listOfSnippets;
-        }*/
-
-        /// <summary>
         /// Provides text for AutoResolve message
         /// </summary>
         /// <returns></returns>
@@ -1221,7 +1203,7 @@ namespace Next_Game
         private string GetStrategy(int strategyCode)
         {
             string strategyText = "Balanced";
-            if (strategyCode == 1) { strategyText = "Defensive"; }
+            if (strategyCode == 2) { strategyText = "Defensive"; }
             else if (strategyCode == 0) { strategyText = "Aggressive"; }
             return strategyText;
         }

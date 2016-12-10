@@ -103,6 +103,7 @@ namespace Next_Game
                 CheckSpecialSituations();
                 SetCardPool();
                 SetOpponentStrategy();
+                SetRecommendedStrategy();
                 SetOutcome();
                 return true;
             }
@@ -258,6 +259,31 @@ namespace Next_Game
                 if (good + rndFactor - bad > margin) { Game.layout.Strategy_Opponent = 0; } //aggressive
                 else if (bad - good > margin) { Game.layout.Strategy_Opponent = 2; } //defensive
                 else { Game.layout.Strategy_Opponent = 1; } //balanced
+            }
+        }
+
+        /// <summary>
+        /// Determines a recommended strategy based on straight card pool stats and if player is a defender, or not
+        /// </summary>
+        private void SetRecommendedStrategy()
+        {
+            int good = arrayPool[0];
+            int bad = arrayPool[2];
+            int defenderSpecific = arrayPool[3]; //defender advantage cards (only apply if defender chooses a defensive strategy)
+            int margin = Game.constant.GetValue(Global.OPPONENT_MARGIN); //threshold needed to move from a balanced strategy
+            if (Challenger == false)
+            {
+                //Player is the defender 
+                if (good - bad - defenderSpecific > margin) { Game.layout.Strategy_Recommended = 0; } //aggressive
+                else if (bad - good > margin) { Game.layout.Strategy_Recommended = 2; } //defensive
+                else { Game.layout.Strategy_Recommended = 1; } //balanced
+            }
+            else
+            {
+                //Player is attacker 
+                if (good - bad > margin) { Game.layout.Strategy_Recommended = 0; } //aggressive
+                else if (bad - good > margin) { Game.layout.Strategy_Recommended = 2; } //defensive
+                else { Game.layout.Strategy_Recommended = 1; } //balanced
             }
         }
 
@@ -649,10 +675,14 @@ namespace Next_Game
                     break;
             }
             //Who has the advantage and a recommendation
+            string strategyText = "A Balanced (\"F2\")";
+            int strategyNum = Game.layout.Strategy_Recommended;
+            if (strategyNum == 0) { strategyText = "An Aggressive (\"F1\")"; }
+            else if (strategyNum == 2) { strategyText = "A Defensive (\"F3\")"; }
             if (Challenger == true)
-            { tempArray[7] = "You are the Challenger and have the Advantage"; }
+            { tempArray[7] = "You are the Challenger"; }
             else { tempArray[7] = "You are Defending"; }
-            tempArray[8] = "An Aggressive Strategy is Recommended";
+            tempArray[8] = string.Format("{0} Strategy is Recommended", strategyText);
             //protagonists
             string title;
             if (opponent.Office == ActorOffice.None) { title = Convert.ToString(opponent.Type); }
