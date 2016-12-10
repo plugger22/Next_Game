@@ -101,9 +101,10 @@ namespace Next_Game
                 SetSkills();
                 SetSituation(Game.director.GetSituationsNormal(), Game.director.GetSituationsGame());
                 CheckSpecialSituations();
-                SetOpponentStrategy();
+                
                 SetOutcome();
                 SetCardPool();
+                SetOpponentStrategy();
                 return true;
             }
             return false;
@@ -232,8 +233,15 @@ namespace Next_Game
         /// </summary>
         private void SetOpponentStrategy()
         {
-            //placeholder 
-            Game.layout.Strategy_Opponent = rnd.Next(0, 3);
+            //NOTE: Doesn't take into account secrets
+             
+            //Game.layout.Strategy_Opponent = rnd.Next(0, 3);
+            int good = arrayPool[0];
+            int bad = arrayPool[2];
+            int margin = 2; //threshold needed to move from a balanced strategy
+            if (good - bad > margin) { Game.layout.Strategy_Opponent = 0; } //aggressive
+            else if (bad - good > margin) { Game.layout.Strategy_Opponent = 2; } //defensive
+            else { Game.layout.Strategy_Opponent = 1; } //balanced
         }
 
         /// <summary>
