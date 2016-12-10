@@ -783,7 +783,7 @@ namespace Next_Game
             {
                 //handles autoExec part way through hand
                 listCardHand.Insert(0, currentCard);
-                //cardCounter--;
+                cardsRemaining++;
             } 
             for (int i = cardCounter; i <= handSize; i++)
             {
@@ -1355,7 +1355,7 @@ namespace Next_Game
             //last three cards will be autoplayed if ignored by player and enough influence remains
             if (cardPlayed == false)
             {
-                if (cardsRemaining < 2 && cardsRemaining < InfluenceRemaining)
+                if (InfluenceRemaining > 0 && cardsRemaining < 2 &&  cardsRemaining < InfluenceRemaining)
                 { actionTaken = true; }
             }
             //update score and influence
