@@ -43,6 +43,7 @@ namespace Next_Game
         SIT_CARD_SPREAD,
         CASTLE_CAPITAL,
         RESULT_FACTOR,
+        OPPONENT_MARGIN,
         Count //keep as last
     }
 
@@ -93,6 +94,7 @@ namespace Next_Game
             arrayOfGlobals[35] = Global.SIT_CARD_SPREAD;
             arrayOfGlobals[36] = Global.CASTLE_CAPITAL;
             arrayOfGlobals[37] = Global.RESULT_FACTOR;
+            arrayOfGlobals[38] = Global.OPPONENT_MARGIN;
             }
 
         /// <summary>

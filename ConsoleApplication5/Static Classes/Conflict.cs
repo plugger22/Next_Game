@@ -237,7 +237,7 @@ namespace Next_Game
             int good = arrayPool[0];
             int bad = arrayPool[2];
             int defenderSpecific = arrayPool[3]; //defender advantage cards (only apply if defender chooses a defensive strategy)
-            int margin = 2; //threshold needed to move from a balanced strategy
+            int margin = Game.constant.GetValue(Global.OPPONENT_MARGIN); //threshold needed to move from a balanced strategy
             int opponentWits = opponent.GetSkill(SkillType.Wits);
             int opponentPrimarySkill = opponent.GetSkill(PrimarySkill);
             //higher their wits (ability to judge a situation), the less the random affect and more likely to make a straight logical decision

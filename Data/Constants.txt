@@ -101,3 +101,5 @@
 35: 3
 # RESULT_FACTOR -> 1X factor is a minor win, 2X a win, 3X a major win. -1X/-2X/-3X are minor loss, loss and major loss
 37: 5
+# OPPONENT_MARGIN -> determines opponent strategy, higher the # the more likely to choose a Balanced Strategy over the other two
+38: 2
