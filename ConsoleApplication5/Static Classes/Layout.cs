@@ -86,7 +86,7 @@ namespace Next_Game
         public RLColor Intro_FillColor { get; set; }
         public RLColor Outcome_FillColor { get; set; }
         //Dynamic Data Sets
-        private int[] arrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards
+        private int[] arrayCardPool { get; set; } //0 - # Good cards, 1 - # Neutral Cards, 2 - # Bad Cards, 3 - # Defender Specific
         private int[,,] arrayPoints { get; set; } //0 -> Good card Influence, 1 - Good card Ignore, 2 Bad card Influence, 3 Bad card Ignore (3 x 3 is Player vs. Opponent strategies)
         private string[,] arraySituation { get; set; } // up to 3 situation factors
         private string[] arrayStrategy { get; set; } //two lots of 3 strategies - always variations of Attack, Balanced & Defend (0/1/2 - Player, 3/4/5 - Opponent)
@@ -189,7 +189,7 @@ namespace Next_Game
                 }
             }
             //Dynamic Data Sets
-            arrayCardPool = new int[3];
+            arrayCardPool = new int[4];
             arrayPoints = new int[3, 3, 4];
             arraySituation = new string[3, 3];
             arrayStrategy = new string[6];
@@ -1294,8 +1294,8 @@ namespace Next_Game
         {
             //empty out array first
             Array.Clear(arrayCardPool, 0, arrayCardPool.Length);
-            //3 factors required
-            if (tempArray.Length == 3)
+            //4 factors required
+            if (tempArray.Length == 4)
             { tempArray.CopyTo(arrayCardPool, 0); }
             else
             { Game.SetError(new Error(92, "Invalid Card Pool Array Input (needs exactly 3 items")); }

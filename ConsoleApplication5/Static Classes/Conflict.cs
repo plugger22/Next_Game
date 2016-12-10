@@ -71,7 +71,7 @@ namespace Next_Game
             listCardSpecials = new List<Card_Conflict>();
             listBreakdown = new List<Snippet>();
             //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
-            arrayPool = new int[3]; //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards)
+            arrayPool = new int[4]; //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards, 3 - # defender specific cards)
             arrayModifiers = new int[3]; //modifier (DM) for GetSituationCardNumber, 0/1/2 refer to the three situation cards (def adv/neutral/game specific) -> DM for 0 & 1, # of cards for Game ('2')
             arraySituation = new string[3, 3];
             //three lists to consolidate into pool breakdown description
@@ -101,10 +101,9 @@ namespace Next_Game
                 SetSkills();
                 SetSituation(Game.director.GetSituationsNormal(), Game.director.GetSituationsGame());
                 CheckSpecialSituations();
-                
-                SetOutcome();
                 SetCardPool();
                 SetOpponentStrategy();
+                SetOutcome();
                 return true;
             }
             return false;
@@ -227,21 +226,39 @@ namespace Next_Game
             { Game.SetError(new Error(111, "Challenge not found, invalid Conflict_Type or SubType")); return false; }
         }
 
-        
+
         /// <summary>
         /// Determine opponent's strategy and send to layout (attack/balanced/defend)
         /// </summary>
         private void SetOpponentStrategy()
         {
             //NOTE: Doesn't take into account secrets
-             
-            //Game.layout.Strategy_Opponent = rnd.Next(0, 3);
+
             int good = arrayPool[0];
             int bad = arrayPool[2];
+            int defenderSpecific = arrayPool[3]; //defender advantage cards (only apply if defender chooses a defensive strategy)
             int margin = 2; //threshold needed to move from a balanced strategy
-            if (good - bad > margin) { Game.layout.Strategy_Opponent = 0; } //aggressive
-            else if (bad - good > margin) { Game.layout.Strategy_Opponent = 2; } //defensive
-            else { Game.layout.Strategy_Opponent = 1; } //balanced
+            int opponentWits = opponent.GetSkill(SkillType.Wits);
+            int opponentPrimarySkill = opponent.GetSkill(PrimarySkill);
+            //higher their wits (ability to judge a situation), the less the random affect and more likely to make a straight logical decision
+            int rndFactor = rnd.Next(0, 7 - opponentWits); 
+            //Factor is applied depending on Primary skill -> if < 3 then factor works against an aggressive strategy, if > 3 then towards & if factor = 0 then no random factor 
+            if (opponentPrimarySkill < 3) { rndFactor *= -1; } 
+            else if (opponentPrimarySkill == 3) { rndFactor = 0; } 
+            if (Challenger == true)
+            {
+                //opponent is the defender 
+                if (good + rndFactor - bad - defenderSpecific > margin) { Game.layout.Strategy_Opponent = 0; } //aggressive
+                else if (bad - good > margin) { Game.layout.Strategy_Opponent = 2; } //defensive
+                else { Game.layout.Strategy_Opponent = 1; } //balanced
+            }
+            else
+            {
+                //opponent is attacker 
+                if (good + rndFactor - bad > margin) { Game.layout.Strategy_Opponent = 0; } //aggressive
+                else if (bad - good > margin) { Game.layout.Strategy_Opponent = 2; } //defensive
+                else { Game.layout.Strategy_Opponent = 1; } //balanced
+            }
         }
 
         /// <summary>
@@ -739,7 +756,7 @@ namespace Next_Game
             }
             text = string.Format("{0}'s {1} Skill ({2}), {3} cards, Primary Challenge skill ({4} stars) ", player.Name, PrimarySkill, type, cards_player, skill_player);
             listPlayerCards.Add(new Snippet(text, foreColor, backColor));
-
+            
             //...Opponent Primary skill
             type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += cards_opponent;
             //get relevant skill situation (for lists of immersion texts)
@@ -777,7 +794,7 @@ namespace Next_Game
             //Situation Cards
             numCards = GetSituationCardNumber(arrayModifiers[0]);
             //...advantage defender card -> First situation
-            if (Challenger == true) { type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += numCards; }
+            if (Challenger == true) { type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += numCards; arrayPool[3] += numCards; }
             else { type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += numCards; }
             for (int i = 0; i < numCards; i++)
             {
@@ -833,7 +850,7 @@ namespace Next_Game
                     newTitle = cardSpecial.Title;
                     type = cardSpecial.Type;
                     if (type == CardType.Good) { foreColor = RLColor.Black; arrayPool[0] += 1;}
-                    else if (type == CardType.Bad) { foreColor = RLColor.Red;  arrayPool[2] += 1; }
+                    else if (type == CardType.Bad) { foreColor = RLColor.Red;  arrayPool[2] += 1; arrayPool[3] += 1; }
                     if (newTitle != oldTitle)
                     {
                         //number of cards of this special type
