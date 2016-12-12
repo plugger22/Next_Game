@@ -154,6 +154,8 @@ namespace Next_Game
             dictFollowerEvents = Game.file.GetFollowerEvents("Events_Follower.txt");
             Console.WriteLine(Environment.NewLine + "--- Import Player Events");
             dictPlayerEvents = Game.file.GetPlayerEvents("Events_Player.txt");
+            Console.WriteLine(Environment.NewLine + "--- Import Auto Events");
+            AddAutoEvents(Game.file.GetPlayerEvents("Events_Auto.txt"));
             InitialiseGenericEvents();
             Console.WriteLine(Environment.NewLine + "--- Import Archetypes"); //Run AFTER importing Events
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
@@ -215,7 +217,22 @@ namespace Next_Game
             { Game.director.SetGameState(DataPoint.Honour_King, DataState.Good, (3 - treachery) * multiplier); }
         }
 
-
+        /// <summary>
+        /// adds imported auto events to Player dictionary
+        /// </summary>
+        /// <param name="autoDictionary"></param>
+        public void AddAutoEvents(Dictionary<int, EventPlayer> autoDictionary)
+        {
+            if (autoDictionary.Count > 0)
+            {
+                foreach(var eventObject in autoDictionary)
+                {
+                    try
+                    { dictPlayerEvents.Add(eventObject.Value.EventID, eventObject.Value); }
+                }
+            }
+            else { Game.SetError(new Error(117, "Invalid autoDictionary input (no records)")); }
+        }
 
         /// <summary>
         /// loop all events and place Generic eventID's in their approrpriate lists for both Follower and Player event types

@@ -2,7 +2,7 @@
 # NOTE: Keep order within individual events as shown. Sequence is important for file import routine.
 
 # Name: descriptive
-# ID: (Event ID) unique number for PLAYER Events only
+# ID: (Event ID) unique number for PLAYER Events only (do not exceed ID1000)
 # Type: GeoCluster/Location/Road
 # subType:(GeoCluster -> Sea/Mountain/Forest, Location -> Capital/Major/Minor/Inn, Road -> Normal/Kings/Connector)
 # Cat: (Category) Generic/Special
@@ -15,7 +15,7 @@
 # Live: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before Live event becomes Active
 
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks. Place block header at top
-# text: option text (number is block, or option num, eg. 1 to 4). Keep it short and clear.
+# text: option text (number is block, or option num, eg. sequential from 1 to 4). Keep it short and clear.
 # reply: text shown when option selected
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
@@ -44,9 +44,9 @@
 # data: target EventID (can reference it's host decision), amount and apply (+, -, =, Random)
 # timer: which timer -> Repeat / Dormant / Live
 
-
 # [End] -> Place at the end of the event description.
 # NOTE: Leave no spaces between lines WITHIN an event. Indents (tabs) are O.K, even better is colour coding using Notepad++ (example)
+
 
 # Road -> subType is Normal / Kings / Connector ---
 

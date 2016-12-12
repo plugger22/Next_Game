@@ -85,7 +85,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Checks a string for actor related text tags and swaps them over for correct texts 
+        /// Checks a string for actor related text tags and swaps them over for correct texts (conflict card texts)
         /// </summary>
         /// <param name="text"></param>
         /// <param name="opponent"></param>
@@ -147,6 +147,18 @@ namespace Next_Game
             { Game.SetError(new Error(101, "Invalid Input (null or empty)")); }
                
             return checkedText;
+        }
+
+        /// <summary>
+        /// selection of tags used by auto events (location based data)
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        public string CheckTagsAuto(string text, int refID)
+        {
+            string checkedText = "";
+           return checkedText;
         }
 
         //methods above here
