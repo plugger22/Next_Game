@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
-    public enum EventType { None, Location, Travelling }
     public enum DataPoint { None, Invisibility, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
     public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
     public enum ConflictType { None, Combat, Social, Stealth} //broad category
@@ -411,6 +410,8 @@ namespace Next_Game
                     //Location event
                     if (rnd.Next(100) <= story.Ev_Player_Loc)
                     { DeterminePlayerEvent(player, EventType.Location); }
+                    else
+                    { DeterminePlayerEvent(player, EventType.AutoLocation); }
                 }
                 else if (player.Status == ActorStatus.Travelling)
                 {
@@ -564,16 +565,24 @@ namespace Next_Game
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
 
             //Location event
-            if (type == EventType.Location)
+            if (type == EventType.Location || type == EventType.AutoLocation)
             {
                 refID = Game.map.GetMapInfo(Cartographic.MapLayer.RefID, pos.PosX, pos.PosY);
                 houseID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
                 Location loc = Game.network.GetLocation(locID);
+
                 if (locID == 1)
                 {
                     //capital
-                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsCapital));
-                    listEventPool.AddRange(GetValidPlayerEvents(listPlyrCapitalEvents));
+                    if (type == EventType.Location)
+                    {
+                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsCapital));
+                        listEventPool.AddRange(GetValidPlayerEvents(listPlyrCapitalEvents));
+                    }
+                    else
+                    {
+                        //AutoLocation -> GetValidPlayerEvents(listAutoPlyrEvents) -> Capital
+                    }
                 }
                 else if (refID > 0 && refID < 100)
                 {
@@ -1051,6 +1060,7 @@ namespace Next_Game
             return returnValue;
         }
 
+
         /// <summary>
         /// Checks any triggers for the option and determines if it's active (triggers are all good -> returns true), or not
         /// </summary>
@@ -1287,7 +1297,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Using Story, set up archetypes for geo / loc / road's
+        /// Using Story, set up archetypes for geo / loc / road's (doesn't apply to player)
         /// </summary>
         public void InitialiseArchetypes()
         {

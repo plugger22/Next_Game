@@ -34,6 +34,8 @@ Chance: 30
 Events: 5, 6
 [End]
 
+# Roads ---
+
 ArcID: 4
 Name: Goblin Road
 Type: Road
@@ -57,6 +59,8 @@ subType: Connector
 Chance: 30
 Events: 5, 6
 [End]
+
+# Locations ---
 
 ArcID: 7
 Name: Attentive Guards
@@ -185,6 +189,8 @@ subType: Inn
 Chance: 100
 Events: 5, 6
 [End]
+
+# Followers ---
 
 ArcID: 23
 Name: The Ghosts Within
