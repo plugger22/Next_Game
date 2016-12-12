@@ -20,7 +20,7 @@ namespace Next_Game.Event_System
 
         public Trigger()
         {
-            Console.WriteLine("Blank Trigger initialised");
+            //Console.WriteLine("Blank Trigger initialised");
         }
 
         public Trigger(TriggerCheck condition, int data, int threshold, EventCalc calc)

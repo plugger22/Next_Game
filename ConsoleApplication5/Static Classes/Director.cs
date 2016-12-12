@@ -69,7 +69,10 @@ namespace Next_Game
         List<int> listGenPlyrEventsMajor;
         List<int> listGenPlyrEventsMinor;
         List<int> listGenPlyrEventsInn;
-        List<int> listAutoPlyrEvents;
+        List<int> listAutoPlyrEventsCapital;
+        List<int> listAutoPlyrEventsMajor;
+        List<int> listAutoPlyrEventsMinor;
+        List<int> listAutoPlyrEventsInn;
         //archetype player events
         List<int> listPlyrRoadEventsNormal;
         List<int> listPlyrRoadEventsKings;
@@ -124,7 +127,10 @@ namespace Next_Game
             listGenPlyrEventsMajor = new List<int>();
             listGenPlyrEventsMinor = new List<int>();
             listGenPlyrEventsInn = new List<int>();
-            listAutoPlyrEvents = new List<int>();
+            listAutoPlyrEventsCapital = new List<int>();
+            listAutoPlyrEventsMajor = new List<int>();
+            listAutoPlyrEventsMinor = new List<int>();
+            listAutoPlyrEventsInn = new List<int>();
             //archetype player events
             listPlyrRoadEventsNormal = new List<int>();
             listPlyrRoadEventsKings = new List<int>();
@@ -390,10 +396,16 @@ namespace Next_Game
                             switch (eventObject.Value.LocType)
                             {
                                 case ArcLoc.Capital:
+                                    listAutoPlyrEventsCapital.Add(eventID);
+                                    break;
                                 case ArcLoc.Major:
+                                    listAutoPlyrEventsMajor.Add(eventID);
+                                    break;
                                 case ArcLoc.Minor:
+                                    listAutoPlyrEventsMinor.Add(eventID);
+                                    break;
                                 case ArcLoc.Inn:
-                                    listAutoPlyrEvents.Add(eventID);
+                                    listAutoPlyrEventsInn.Add(eventID);
                                     break;
                                 default:
                                     Game.SetError(new Error(50, string.Format("Invalid Type, ArcLoc, Auto Event, EventPID {0}", eventID)));
@@ -623,7 +635,7 @@ namespace Next_Game
                         listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsCapital));
                         listEventPool.AddRange(GetValidPlayerEvents(listPlyrCapitalEvents));
                     }
-                    else
+                    else if (type == EventType.AutoLocation)
                     {
                         //AutoLocation -> GetValidPlayerEvents(listAutoPlyrEvents) -> Capital
                     }
@@ -631,12 +643,19 @@ namespace Next_Game
                 else if (refID > 0 && refID < 100)
                 {
                     //Major House
-                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMajor));
-                    listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
-                    House house = Game.world.GetHouse(refID);
-                    if (house != null)
-                    { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
-                    else { Game.SetError(new Error(72, "Invalid Major House (refID)")); }
+                    if (type == EventType.Location)
+                    {
+                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMajor));
+                        listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
+                        House house = Game.world.GetHouse(refID);
+                        if (house != null)
+                        { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
+                        else { Game.SetError(new Error(72, "Invalid Major House (refID)")); }
+                    }
+                    else if (type == EventType.AutoLocation)
+                    {
+                        listEventPool.AddRange(GetValidPlayerEvents(listAutoPlyrEventsMajor));
+                    }
                 }
                 else if (refID >= 100 && refID < 1000)
                 {
