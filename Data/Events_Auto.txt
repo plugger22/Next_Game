@@ -66,4 +66,12 @@ reply: You make a formal request for an audience with <lady>
 effect: EventStatus
 data: 1011
 newStatus: Active
+[option]
+text: Discretely search for friends
+reply: You make careful enquiries as to if there are any supporters of the old King
+[outcome]
+effect: EventStatus
+data: 1011
+newStatus: Active
 [End]
+

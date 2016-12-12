@@ -69,6 +69,7 @@ namespace Next_Game
         List<int> listGenPlyrEventsMajor;
         List<int> listGenPlyrEventsMinor;
         List<int> listGenPlyrEventsInn;
+        List<int> listAutoPlyrEvents;
         //archetype player events
         List<int> listPlyrRoadEventsNormal;
         List<int> listPlyrRoadEventsKings;
@@ -123,6 +124,7 @@ namespace Next_Game
             listGenPlyrEventsMajor = new List<int>();
             listGenPlyrEventsMinor = new List<int>();
             listGenPlyrEventsInn = new List<int>();
+            listAutoPlyrEvents = new List<int>();
             //archetype player events
             listPlyrRoadEventsNormal = new List<int>();
             listPlyrRoadEventsKings = new List<int>();
@@ -376,6 +378,27 @@ namespace Next_Game
                             break;
                         default:
                             Game.SetError(new Error(50, string.Format("Invalid Type, Unknown, Player Event, ID {0}", eventID)));
+                            break;
+                    }
+                }
+                else if (eventObject.Value.Category == EventCategory.Auto)
+                {
+                    eventID = eventObject.Value.EventPID;
+                    switch (eventObject.Value.Type)
+                    {
+                        case ArcType.Location:
+                            switch (eventObject.Value.LocType)
+                            {
+                                case ArcLoc.Capital:
+                                case ArcLoc.Major:
+                                case ArcLoc.Minor:
+                                case ArcLoc.Inn:
+                                    listAutoPlyrEvents.Add(eventID);
+                                    break;
+                                default:
+                                    Game.SetError(new Error(50, string.Format("Invalid Type, ArcLoc, Auto Event, EventPID {0}", eventID)));
+                                    break;
+                            }
                             break;
                     }
                 }

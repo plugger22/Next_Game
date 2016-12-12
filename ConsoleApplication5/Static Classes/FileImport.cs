@@ -1251,6 +1251,9 @@ namespace Next_Game
                                         case "Special":
                                             structEvent.Cat = EventCategory.Special;
                                             break;
+                                        case "Auto":
+                                            structEvent.Cat = EventCategory.Auto;
+                                            break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Category, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
