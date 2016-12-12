@@ -228,7 +228,11 @@ namespace Next_Game
                 foreach(var eventObject in autoDictionary)
                 {
                     try
-                    { dictPlayerEvents.Add(eventObject.Value.EventID, eventObject.Value); }
+                    { dictPlayerEvents.Add(eventObject.Value.EventPID, eventObject.Value); }
+                    catch (ArgumentNullException e)
+                    { Game.SetError(new Error(117, string.Format("Invalid eventObject (null), eventPID {0}", eventObject.Value.EventPID))); }
+                    catch (ArgumentException e)
+                    { Game.SetError(new Error(117, string.Format("Invalid eventObject (duplicate ID), eventPID {0}", eventObject.Value.EventPID))); }
                 }
             }
             else { Game.SetError(new Error(117, "Invalid autoDictionary input (no records)")); }
