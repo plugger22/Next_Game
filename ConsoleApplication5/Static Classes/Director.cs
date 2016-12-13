@@ -626,7 +626,7 @@ namespace Next_Game
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
 
             //Location event
-            if (type == EventType.Location || type == EventType.AutoLocation)
+            if (type == EventType.Location)
             {
                 refID = Game.map.GetMapInfo(Cartographic.MapLayer.RefID, pos.PosX, pos.PosY);
                 houseID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
@@ -640,10 +640,6 @@ namespace Next_Game
                         listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsCapital));
                         listEventPool.AddRange(GetValidPlayerEvents(listPlyrCapitalEvents));
                     }
-                    else if (type == EventType.AutoLocation)
-                    {
-                        //AutoLocation -> GetValidPlayerEvents(listAutoPlyrEvents) -> Capital
-                    }
                 }
                 else if (refID > 0 && refID < 100)
                 {
@@ -656,10 +652,6 @@ namespace Next_Game
                         if (house != null)
                         { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
                         else { Game.SetError(new Error(72, "Invalid Major House (refID)")); }
-                    }
-                    else if (type == EventType.AutoLocation)
-                    {
-                        listEventPool.AddRange(GetValidPlayerEvents(listAutoPlyrEventsMajor));
                     }
                 }
                 else if (refID >= 100 && refID < 1000)
@@ -684,6 +676,16 @@ namespace Next_Game
                 }
                 else
                 { Game.SetError(new Error(72, "Invalid Location Event Type")); }
+            }
+            //Auto location event (player at location)
+            else if (type == EventType.AutoLocation)
+            {
+                refID = Game.map.GetMapInfo(Cartographic.MapLayer.RefID, pos.PosX, pos.PosY);
+                houseID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
+                Location loc = Game.network.GetLocation(locID);
+                //create dynamic event
+                CreateAutoEvent();
+                //add to event pool
             }
             //Travelling event
             else if (type == EventType.Travelling)
@@ -760,6 +762,12 @@ namespace Next_Game
                 listPlyrCurrentEvents.Add(current);
             }
         }
+
+        /// <summary>
+        /// create a dynamic auto player location event 
+        /// </summary>
+        private void CreateAutoEvent()
+        { }
 
         /// <summary>
         /// Extracts all valid Follower events from a list of EventID's
