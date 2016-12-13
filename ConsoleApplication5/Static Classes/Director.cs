@@ -30,6 +30,10 @@ namespace Next_Game
         public Active Person { get; set; }
         public Event EventObject { get; set; }
         public bool Done { get; set; }
+        public int OpponentID { get; set; } //optional
+        public int LocationID { get; set; } //optional
+        public int HouseID { get; set; } //optional
+        public int RefID { get; set; } //optional
     }
 
     /// <summary>
@@ -237,9 +241,9 @@ namespace Next_Game
                 {
                     try
                     { dictPlayerEvents.Add(eventObject.Value.EventPID, eventObject.Value); }
-                    catch (ArgumentNullException e)
+                    catch (ArgumentNullException)
                     { Game.SetError(new Error(117, string.Format("Invalid eventObject (null), eventPID {0}", eventObject.Value.EventPID))); }
-                    catch (ArgumentException e)
+                    catch (ArgumentException)
                     { Game.SetError(new Error(117, string.Format("Invalid eventObject (duplicate ID), eventPID {0}", eventObject.Value.EventPID))); }
                 }
             }
@@ -616,6 +620,7 @@ namespace Next_Game
         private void DeterminePlayerEvent(Active actor, EventType type)
         {
             int geoID, terrain, road, locID, refID, houseID;
+            houseID = 0; refID = 0;
             Cartographic.Position pos = actor.GetActorPosition();
             List<Event> listEventPool = new List<Event>();
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
@@ -749,6 +754,9 @@ namespace Next_Game
                 else { Game.SetError(new Error(72, "Invalid Message (null)")); }
                 //store in list of Current Events
                 EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
+                //extra package info for AutoLocation Player Events
+                if (type == EventType.AutoLocation)
+                { current.LocationID = locID; current.HouseID = houseID; current.RefID = refID; }
                 listPlyrCurrentEvents.Add(current);
             }
         }
@@ -1248,7 +1256,11 @@ namespace Next_Game
                                         OutEventStatus tempOutcome = outcome as OutEventStatus;
                                         ChangePlayerEventStatus(tempOutcome.Data, tempOutcome.NewStatus);
                                     }
-                                    //ignore if OutNone (do nothing)
+                                    else if (outcome is OutEventChain)
+                                    {
+
+                                    }
+
                                 }
                             }
                             else { Game.SetError(new Error(73, "Invalid list of Outcomes")); }
