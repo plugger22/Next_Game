@@ -153,4 +153,21 @@ namespace Next_Game.Event_System
         }
     }
 
+
+    /// <summary>
+    /// Chain Event outcome ->  immediate trigger of specified Player event
+    /// </summary>
+    class OutEventChain : Outcome
+    {
+        /*
+        public int Opponent { get; set; }
+        public int LocID { get; set; }
+        public int HouseID { get; set; }
+        */
+        public OutEventChain(int eventID, int targetEventID) : base(eventID)
+        {
+            Data = targetEventID;
+        }
+    }
+
 }

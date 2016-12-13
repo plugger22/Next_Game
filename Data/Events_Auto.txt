@@ -23,7 +23,7 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, EventChain)
 
 # [outcome] -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -45,7 +45,7 @@
 # NOTE: Leave no spaces between lines WITHIN an event. Indents (tabs) are O.K, even better is colour coding using Notepad++ (example)
 
 
-Name: Auto MajorHouse
+Name: Auto MajorHouse Action
 ID: 1001
 Type: Location
 subType: Major
@@ -56,22 +56,49 @@ Event: You are at <loc>. How will you fill your day?
 text: Seek an Audience with <lord>
 reply: You make a formal request for an audience with <lord>
 [outcome]
-effect: EventStatus
-data: 1
-newStatus: Active
+effect: EventChain
+data: 1002
 [option]
 text: Seek an Audience with <lady>
 reply: You make a formal request for an audience with <lady>
 [outcome]
-effect: EventStatus
-data: 1011
-newStatus: Active
+effect: EventChain
+data: 1002
 [option]
 text: Discretely search for friends
 reply: You make careful enquiries as to if there are any supporters of the old King
 [outcome]
 effect: EventStatus
-data: 1011
+data: 1002
 newStatus: Active
 [End]
 
+Name: Auto MajorHouse Audience
+ID: 1002
+Type: Location
+subType: Major
+Cat: Auto
+Freq: Normal
+Event: You are granted an audience with <person> at <loc>
+[option]
+text: Befriend <person>
+reply: You attempt to form a friendly, supportive relationship with <person>
+[outcome]
+effect: EventStatus
+data: 1001
+newStatus: Active
+[option]
+text: You attempt to Seduce <person>
+reply: Using your best bedroom voice you make your move on <person>
+[outcome]
+effect: EventStatus
+data: 1001
+newStatus: Active
+[option]
+text: You attempt to Blackmail <person>
+reply: Forceful action is needed. <person> will do as you ask, or else.
+[outcome]
+effect: EventStatus
+data: 1001
+newStatus: Active
+[End]

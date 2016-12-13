@@ -1431,6 +1431,7 @@ namespace Next_Game
                                         case "Game":
                                         case "EventTimer":
                                         case "EventStatus":
+                                        case "EventChain":
                                         case "None":
                                             structOutcome.Effect = cleanToken;
                                             break;
@@ -1667,6 +1668,15 @@ namespace Next_Game
                                                                         validData = false;
                                                                     }
                                                                     break;
+                                                                case "EventChain":
+                                                                    if (outTemp.Data > 0)
+                                                                    { outObject = new OutEventChain(structEvent.EventID, outTemp.Data); }
+                                                                    else
+                                                                    {
+                                                                        Game.SetError(new Error(49, "Invalid Input, Outcome Data (EventChain), (Data <= Zero, can't create object)"));
+                                                                        validData = false;
+                                                                    }
+                                                                    break;
                                                                 case "None":
                                                                     outObject = new OutNone(structEvent.EventID);
                                                                     break;
@@ -1748,6 +1758,11 @@ namespace Next_Game
                             {
                                 OutEventStatus tempOutcome = outcomeObject as OutEventStatus;
                                 Console.WriteLine("    {0} -> Target EventID {1}, New Status {2}", cleanTag, tempOutcome.Data, tempOutcome.NewStatus);
+                            }
+                            else if (outcomeObject is OutEventChain)
+                            {
+                                OutEventChain tempOutcome = outcomeObject as OutEventChain;
+                                Console.WriteLine("    {0} -> Target EventID {1}", cleanTag, tempOutcome.Data);
                             }
                             else if (outcomeObject is OutEventTimer)
                             {
