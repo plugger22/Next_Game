@@ -751,11 +751,21 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// create a dynamic auto player location event 
+        /// create a dynamic auto player location event - assumed to be at player's current location
         /// <param name="filter">Which group of people should the event focus on (from pool of people present at the location)</param>
         /// </summary>
         private void CreateAutoEvent(EventFilter filter)
-        { }
+        {
+            //get player
+            Active actor = Game.world.GetActiveActor(1);
+            if (actor != null)
+            {
+                int locID = actor.LocID;
+                //new event
+                EventPlayer eventObject = new EventPlayer(1000, "Dynamic Auto Location", EventFrequency.Low);
+            }
+            else { Game.SetError(new Error(118, "Invalid Player (returns Null)")); }
+        }
 
         /// <summary>
         /// Extracts all valid Follower events from a list of EventID's
