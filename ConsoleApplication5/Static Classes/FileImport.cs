@@ -88,6 +88,7 @@ namespace Next_Game
         public EventCalc Calc { get; set; }
         public EventStatus NewStatus { get; set; } //specific to EventStatus outcomes
         public EventTimer Timer { get; set; } //specific to EventTimer outcomes
+        public EventFilter Filter { get; set; } //which group of people to focus on?
     }
 
     struct TriggerStruct
@@ -1479,6 +1480,27 @@ namespace Next_Game
                                             break;
                                     }
                                     break;
+                                case "filter":
+                                    switch (cleanToken)
+                                    {
+                                        case "None":
+                                            structOutcome.Filter = EventFilter.None;
+                                            break;
+                                        case "Locals":
+                                            structOutcome.Filter = EventFilter.Locals;
+                                            break;
+                                        case "Visitors":
+                                            structOutcome.Filter = EventFilter.Visitors;
+                                            break;
+                                        case "Followers":
+                                            structOutcome.Filter = EventFilter.Followers;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Filter, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                    break;
                                 case "newStatus":
                                     //specific to EventStatus outcomes
                                     switch (cleanToken)
@@ -1670,7 +1692,7 @@ namespace Next_Game
                                                                     break;
                                                                 case "EventChain":
                                                                     if (outTemp.Data > 0)
-                                                                    { outObject = new OutEventChain(structEvent.EventID, outTemp.Data); }
+                                                                    { outObject = new OutEventChain(structEvent.EventID, outTemp.Data, outTemp.Filter); }
                                                                     else
                                                                     {
                                                                         Game.SetError(new Error(49, "Invalid Input, Outcome Data (EventChain), (Data <= Zero, can't create object)"));

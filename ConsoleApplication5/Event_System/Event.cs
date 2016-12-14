@@ -11,7 +11,8 @@ namespace Next_Game.Event_System
     public enum EventStatus { None, Active, Live, Dormant, Dead} //sequential event states from dead to activated
     public enum EventCalc { None, Add, Subtract, Random, Equals, GreaterThanOrEqual, LessThanOrEqual, Count} //used within events for triggers (>, <, =) and outcomes (+, -, Random)
     public enum EventTimer { None, Repeat, Dormant, Live } //used for EventTimer outcomes to specify a timer
-    public enum EventType { None, Location, AutoLocation, Travelling } //LocAuto is an automatically generated Location based event
+    public enum EventType { None, Location, Travelling }
+    public enum EventFilter { None, Locals, Visitors, Followers} //used by auto location player events to determine which group of actors to show as options
 
     /// <summary>
     /// Base Event class

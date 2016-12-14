@@ -471,7 +471,7 @@ namespace Next_Game
                     if (rnd.Next(100) <= story.Ev_Player_Loc)
                     { DeterminePlayerEvent(player, EventType.Location); }
                     else
-                    { DeterminePlayerEvent(player, EventType.AutoLocation); }
+                    { CreateAutoEvent(EventFilter.None); }
                 }
                 else if (player.Status == ActorStatus.Travelling)
                 {
@@ -677,16 +677,6 @@ namespace Next_Game
                 else
                 { Game.SetError(new Error(72, "Invalid Location Event Type")); }
             }
-            //Auto location event (player at location)
-            else if (type == EventType.AutoLocation)
-            {
-                refID = Game.map.GetMapInfo(Cartographic.MapLayer.RefID, pos.PosX, pos.PosY);
-                houseID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
-                Location loc = Game.network.GetLocation(locID);
-                //create dynamic event
-                CreateAutoEvent();
-                //add to event pool
-            }
             //Travelling event
             else if (type == EventType.Travelling)
             {
@@ -756,17 +746,15 @@ namespace Next_Game
                 else { Game.SetError(new Error(72, "Invalid Message (null)")); }
                 //store in list of Current Events
                 EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
-                //extra package info for AutoLocation Player Events
-                if (type == EventType.AutoLocation)
-                { current.LocationID = locID; current.HouseID = houseID; current.RefID = refID; }
                 listPlyrCurrentEvents.Add(current);
             }
         }
 
         /// <summary>
         /// create a dynamic auto player location event 
+        /// <param name="filter">Which group of people should the event focus on (from pool of people present at the location)</param>
         /// </summary>
-        private void CreateAutoEvent()
+        private void CreateAutoEvent(EventFilter filter)
         { }
 
         /// <summary>
@@ -1266,7 +1254,8 @@ namespace Next_Game
                                     }
                                     else if (outcome is OutEventChain)
                                     {
-
+                                        OutEventChain tempOutcome = outcome as OutEventChain;
+                                        CreateAutoEvent(tempOutcome.Filter);
                                     }
 
                                 }

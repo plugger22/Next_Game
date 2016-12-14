@@ -159,14 +159,12 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutEventChain : Outcome
     {
-        /*
-        public int Opponent { get; set; }
-        public int LocID { get; set; }
-        public int HouseID { get; set; }
-        */
-        public OutEventChain(int eventID, int targetEventID) : base(eventID)
+        public EventFilter Filter { get; set; }
+       
+        public OutEventChain(int eventID, int targetEventID, EventFilter filter) : base(eventID)
         {
             Data = targetEventID;
+            this.Filter = filter;
         }
     }
 

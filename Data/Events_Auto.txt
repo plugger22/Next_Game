@@ -38,7 +38,10 @@
 
 # [outcome] -> EventTimer
 # data: target EventID (can reference it's host decision), amount and apply (+, -, =, Random)
-# timer: which timer -> Repeat / Dormant / Live
+# filter: EventFilter -> None (Generic), Locals (belong to current loc, eg. house), Visitors, Followers -> Which group of people to focus on?
+
+# [outcome] -> EventChain
+# data: target EventID that'll be immediately activated
 
 # [End] -> Place at the end of the event description.
 # text tags, eg. '<...>' -> loc / lord / lady / knight / castellan / maester
@@ -58,12 +61,14 @@ reply: You make a formal request for an audience with <lord>
 [outcome]
 effect: EventChain
 data: 1002
+filter: None
 [option]
 text: Seek an Audience with <lady>
 reply: You make a formal request for an audience with <lady>
 [outcome]
 effect: EventChain
 data: 1002
+filter: None
 [option]
 text: Discretely search for friends
 reply: You make careful enquiries as to if there are any supporters of the old King
