@@ -471,7 +471,7 @@ namespace Next_Game
                     if (rnd.Next(100) <= story.Ev_Player_Loc)
                     { DeterminePlayerEvent(player, EventType.Location); }
                     else
-                    { CreateAutoEvent(EventFilter.Locals); }
+                    { CreateAutoEvent(EventFilter.None); }
                 }
                 else if (player.Status == ActorStatus.Travelling)
                 {
@@ -762,7 +762,9 @@ namespace Next_Game
             {
                 Console.WriteLine("- Dynamic Auto Event");
                 List<Actor> listActors = new List<Actor>();
-                List<Actor> listFilteredActors = new List<Actor>();
+                List<Passive> listLocals = new List<Passive>();
+                List<Passive> listVisitors = new List<Passive>();
+                List<Follower> listFollowers = new List<Follower>();
                 int locID = player.LocID;
                 int locType = 0; //1 - capital, 2 - MajorHouse, 3 - MinorHouse, 4 - Inn
                 Location loc = Game.network.GetLocation(locID);
@@ -799,8 +801,31 @@ namespace Next_Game
                         }
                         else { Game.SetError(new Error(118, string.Format("Invalid tempActor ID {0} (Null)", actorIDList[i]))); }
                     }
-                    
-
+                    //filter actors accordingly
+                    for (int i = 0; i < listActors.Count; i++)
+                    {
+                        Actor actor = listActors[i];
+                        if (actor is Passive)
+                        {
+                            Passive tempPassive = actor as Passive;
+                            if (tempPassive.HouseID == houseID)
+                            {
+                                if (tempPassive.Type == ActorType.Lord || tempPassive.Age >= 15)
+                                { listLocals.Add(tempPassive); Console.WriteLine("- \"{0}\", ID {1} added to list of Locals", tempPassive.Name, tempPassive.ActID); }
+                            }
+                            else
+                            {
+                                if (tempPassive.Age >= 15)
+                                { listVisitors.Add(tempPassive); Console.WriteLine("- \"{0}\", ID {1} added to list of Visitors", tempPassive.Name, tempPassive.ActID); }
+                            }
+                        }
+                        else if (actor is Follower)
+                        {
+                            Follower tempFollower = actor as Follower;
+                            listFollowers.Add(tempFollower);
+                            Console.WriteLine("- \"{0}\", ID {1} added to list of Followers", tempFollower.Name, tempFollower.ActID);
+                        }
+                    }
                     //new event
                     EventPlayer eventObject = new EventPlayer(1000, "Dynamic Auto Location", EventFrequency.Low);
                     eventObject.Category = EventCategory.Auto;
@@ -809,26 +834,10 @@ namespace Next_Game
                     {
                         case EventFilter.None:
                             eventObject.Text = string.Format("You are at {0}. How will you fill your day?", locName);
-                            
+                            //create options
                             break;
                         case EventFilter.Locals:
                             eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
-                            
-                            //filter actors accordingly
-                            for (int i = 0; i < listActors.Count; i++)
-                            {
-                                Actor actor = listActors[i];
-                                if (actor is Passive)
-                                {
-                                    Passive tempPassive = actor as Passive;
-                                    if (tempPassive.HouseID == houseID)
-                                    {
-                                        if (tempPassive.Type == ActorType.Lord || tempPassive.Age >= 15)
-                                        { listFilteredActors.Add(tempPassive); Console.WriteLine("- \"{0}\", ID {1} added to list of Filtered Actors", tempPassive.Name, tempPassive.ActID); }
-                                    }
-                                }
-
-                            }
                             break;
                         case EventFilter.Visitors:
                             eventObject.Text = string.Format("You are at {0}. Which visitor do you wish to talk to?", locName);
