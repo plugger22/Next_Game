@@ -471,7 +471,7 @@ namespace Next_Game
                     if (rnd.Next(100) <= story.Ev_Player_Loc)
                     { DeterminePlayerEvent(player, EventType.Location); }
                     else
-                    { CreateAutoEvent(EventFilter.None); }
+                    { CreateAutoEvent(EventFilter.Locals); }
                 }
                 else if (player.Status == ActorStatus.Travelling)
                 {
@@ -757,12 +757,13 @@ namespace Next_Game
         private void CreateAutoEvent(EventFilter filter)
         {
             //get player
-            Active actor = Game.world.GetActiveActor(1);
-            if (actor != null)
+            Active player = Game.world.GetActiveActor(1);
+            if (player != null)
             {
-                Console.WriteLine("--- Dynamic Auto Event");
+                Console.WriteLine("- Dynamic Auto Event");
                 List<Actor> listActors = new List<Actor>();
-                int locID = actor.LocID;
+                List<Actor> listFilteredActors = new List<Actor>();
+                int locID = player.LocID;
                 int locType = 0; //1 - capital, 2 - MajorHouse, 3 - MinorHouse, 4 - Inn
                 Location loc = Game.network.GetLocation(locID);
                 string locName = Game.world.GetLocationName(locID);
@@ -792,13 +793,13 @@ namespace Next_Game
                     {
                         Actor tempActor = Game.world.GetAnyActor(actorIDList[i]);
                         if (tempActor != null)
-                        {
-                            if (tempActor.ActID != 1) { listActors.Add(tempActor); } //exclude player from list (they are always present)
-                            Console.WriteLine("\"{0}\", ID {1} added to list of Actors", tempActor.Name, tempActor.ActID);
+                        {   //exclude player from list (they are always present) & you
+                            if (tempActor.ActID != 1)
+                            { listActors.Add(tempActor); Console.WriteLine("\"{0}\", ID {1} added to list of Actors", tempActor.Name, tempActor.ActID); } 
                         }
                         else { Game.SetError(new Error(118, string.Format("Invalid tempActor ID {0} (Null)", actorIDList[i]))); }
                     }
-                    //filter actors accordingly
+                    
 
                     //new event
                     EventPlayer eventObject = new EventPlayer(1000, "Dynamic Auto Location", EventFrequency.Low);
@@ -808,9 +809,26 @@ namespace Next_Game
                     {
                         case EventFilter.None:
                             eventObject.Text = string.Format("You are at {0}. How will you fill your day?", locName);
+                            
                             break;
                         case EventFilter.Locals:
                             eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
+                            
+                            //filter actors accordingly
+                            for (int i = 0; i < listActors.Count; i++)
+                            {
+                                Actor actor = listActors[i];
+                                if (actor is Passive)
+                                {
+                                    Passive tempPassive = actor as Passive;
+                                    if (tempPassive.HouseID == houseID)
+                                    {
+                                        if (tempPassive.Type == ActorType.Lord || tempPassive.Age >= 15)
+                                        { listFilteredActors.Add(tempPassive); Console.WriteLine("- \"{0}\", ID {1} added to list of Filtered Actors", tempPassive.Name, tempPassive.ActID); }
+                                    }
+                                }
+
+                            }
                             break;
                         case EventFilter.Visitors:
                             eventObject.Text = string.Format("You are at {0}. Which visitor do you wish to talk to?", locName);
