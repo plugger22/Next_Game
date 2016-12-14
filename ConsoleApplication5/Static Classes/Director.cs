@@ -86,6 +86,7 @@ namespace Next_Game
         List<Follower> listOfFollowers;
         List<EventPackage> listFollCurrentEvents; //follower
         List<EventPackage> listPlyrCurrentEvents; //player
+        List<Event> listEventPool;
         private Dictionary<int, EventFollower> dictFollowerEvents;
         private Dictionary<int, EventPlayer> dictPlayerEvents;
         private Dictionary<int, Archetype> dictArchetypes;
@@ -143,6 +144,7 @@ namespace Next_Game
             //other
             listFollCurrentEvents = new List<EventPackage>(); //follower events
             listPlyrCurrentEvents = new List<EventPackage>(); //player events
+            listEventPool = new List<Event>(); //pool of events for that turn
             listOfFollowers = new List<Follower>();
             dictFollowerEvents = new Dictionary<int, EventFollower>();
             dictPlayerEvents = new Dictionary<int, EventPlayer>();
@@ -462,6 +464,9 @@ namespace Next_Game
         /// </summary>
         public void CheckPlayerEvents()
         {
+            //clear out Event pool
+            listEventPool.Clear();
+
             Active player = Game.world.GetActiveActor(1);
             if (player != null && player.Status != ActorStatus.Gone && player.Delay == 0)
             {
@@ -622,7 +627,7 @@ namespace Next_Game
             int geoID, terrain, road, locID, refID, houseID;
             houseID = 0; refID = 0;
             Cartographic.Position pos = actor.GetActorPosition();
-            List<Event> listEventPool = new List<Event>();
+            
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
 
             //Location event
@@ -748,6 +753,7 @@ namespace Next_Game
                 EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
                 listPlyrCurrentEvents.Add(current);
             }
+            
         }
 
         /// <summary>
@@ -834,7 +840,42 @@ namespace Next_Game
                     {
                         case EventFilter.None:
                             eventObject.Text = string.Format("You are at {0}. How will you fill your day?", locName);
-                            //create options
+                            //option -> audience with local House member
+                            if (listLocals.Count() > 0)
+                            {
+                                OptionInteractive option = new OptionInteractive(string.Format("Seek an Audience with a member of House {0} ({1} present)", houseName, listLocals.Count));
+                                option.ReplyGood = string.Format("House {0} is willing to consider the matter", houseName);
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            //option -> audience with Visitor
+                            if (listVisitors.Count() > 0)
+                            {
+                                OptionInteractive option = new OptionInteractive(string.Format("Seek an Audience with a Visitor to House {0} ({1} present)", houseName, listVisitors.Count));
+                                option.ReplyGood = string.Format("House {0} is willing to let you talk to whoever you wish", houseName);
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            //option -> audience with Follower
+                            if (listFollowers.Count() > 0)
+                            {
+                                OptionInteractive option = new OptionInteractive(string.Format("Talk to one of your Loyal Followers ({0} present)", listFollowers.Count));
+                                option.ReplyGood = "A conversation may well be possible";
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            //option -> seek information
+                            if (CheckGameState(DataPoint.Invisibility) < 100)
+                            {
+                                OptionInteractive option = new OptionInteractive("Ask around for Information");
+                                option.ReplyGood = "You make some discreet enquiries";
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
                             break;
                         case EventFilter.Locals:
                             eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
@@ -849,6 +890,8 @@ namespace Next_Game
                             Game.SetError(new Error(118, string.Format("Invalid EventFilter (\"{0}\")", filter)));
                             break;
                     }
+                    //Place event in the event Pool
+                    listEventPool.Add(eventObject);
                 }
                 else { Game.SetError(new Error(118, "Invalid List of Actors (Zero present at Location")); }
             }
@@ -1126,7 +1169,6 @@ namespace Next_Game
             }
             return false;
         }
-
 
         /// <summary>
         /// Resolve current Player events one at a time. Returns true if event present to be processed, false otherwise.
