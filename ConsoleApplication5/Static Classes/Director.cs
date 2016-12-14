@@ -760,6 +760,8 @@ namespace Next_Game
             Active actor = Game.world.GetActiveActor(1);
             if (actor != null)
             {
+                Console.WriteLine("--- Dynamic Auto Event");
+                List<Actor> listActors = new List<Actor>();
                 int locID = actor.LocID;
                 int locType = 0; //1 - capital, 2 - MajorHouse, 3 - MinorHouse, 4 - Inn
                 Location loc = Game.network.GetLocation(locID);
@@ -768,6 +770,7 @@ namespace Next_Game
                 string houseName = "Unknown";
                 if (houseID > 0) { houseName = Game.world.GetGreatHouseName(houseID); }
                 int refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
+
                 //what type of location?
                 if (locID == 1) { locType = 1; }
                 else if (refID > 0 && refID < 100) { locType = 2; }
@@ -776,33 +779,51 @@ namespace Next_Game
                 {
                     locType = 4;
                     //can't be locals present at an Inn, only Visitors and Followers
-                    if (filter == EventFilter.Locals) { filter = EventFilter.Visitors; }
+                    if (filter == EventFilter.Locals) { filter = EventFilter.Visitors; Game.SetError(new Error(118, "Invalid filter (Locals when at an Inn)")); }
                 }
                 else { Game.SetError(new Error(118, "Invalid locType (doesn't fit any criteria)")); }
+                //Get actors present at location
+                List<int> actorIDList = loc.GetActorList();
                 
-                
-                //new event
-                EventPlayer eventObject = new EventPlayer(1000, "Dynamic Auto Location", EventFrequency.Low);
-                eventObject.Category = EventCategory.Auto;
-                eventObject.Status = EventStatus.Active;
-                switch (filter)
+                if (actorIDList.Count > 0)
                 {
-                    case EventFilter.None:
-                        eventObject.Text = string.Format("You are at {0}. How will you fill your day?", locName);
-                        break;
-                    case EventFilter.Locals:
-                        eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
-                        break;
-                    case EventFilter.Visitors:
-                        eventObject.Text = string.Format("You are at {0}. Which visitor do you wish to talk to?", locName);
-                        break;
-                    case EventFilter.Followers:
-                        eventObject.Text = string.Format("You are at {0}. Which follower do you wish to talk to?", locName);
-                        break;
-                    default:
-                        Game.SetError(new Error(118, string.Format("Invalid EventFilter (\"{0}\")", filter)));
-                        break;
+                    //get actual actors
+                    for (int i = 0; i < actorIDList.Count; i++)
+                    {
+                        Actor tempActor = Game.world.GetAnyActor(actorIDList[i]);
+                        if (tempActor != null)
+                        {
+                            if (tempActor.ActID != 1) { listActors.Add(tempActor); } //exclude player from list (they are always present)
+                            Console.WriteLine("\"{0}\", ID {1} added to list of Actors", tempActor.Name, tempActor.ActID);
+                        }
+                        else { Game.SetError(new Error(118, string.Format("Invalid tempActor ID {0} (Null)", actorIDList[i]))); }
+                    }
+                    //filter actors accordingly
+
+                    //new event
+                    EventPlayer eventObject = new EventPlayer(1000, "Dynamic Auto Location", EventFrequency.Low);
+                    eventObject.Category = EventCategory.Auto;
+                    eventObject.Status = EventStatus.Active;
+                    switch (filter)
+                    {
+                        case EventFilter.None:
+                            eventObject.Text = string.Format("You are at {0}. How will you fill your day?", locName);
+                            break;
+                        case EventFilter.Locals:
+                            eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
+                            break;
+                        case EventFilter.Visitors:
+                            eventObject.Text = string.Format("You are at {0}. Which visitor do you wish to talk to?", locName);
+                            break;
+                        case EventFilter.Followers:
+                            eventObject.Text = string.Format("You are at {0}. Which follower do you wish to talk to?", locName);
+                            break;
+                        default:
+                            Game.SetError(new Error(118, string.Format("Invalid EventFilter (\"{0}\")", filter)));
+                            break;
+                    }
                 }
+                else { Game.SetError(new Error(118, "Invalid List of Actors (Zero present at Location")); }
             }
             else { Game.SetError(new Error(118, "Invalid Player (returns Null)")); }
         }
