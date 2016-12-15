@@ -86,7 +86,6 @@ namespace Next_Game
         List<Follower> listOfFollowers;
         List<EventPackage> listFollCurrentEvents; //follower
         List<EventPackage> listPlyrCurrentEvents; //player
-        List<Event> listEventPool;
         private Dictionary<int, EventFollower> dictFollowerEvents;
         private Dictionary<int, EventPlayer> dictPlayerEvents;
         private Dictionary<int, Archetype> dictArchetypes;
@@ -144,7 +143,6 @@ namespace Next_Game
             //other
             listFollCurrentEvents = new List<EventPackage>(); //follower events
             listPlyrCurrentEvents = new List<EventPackage>(); //player events
-            listEventPool = new List<Event>(); //pool of events for that turn
             listOfFollowers = new List<Follower>();
             dictFollowerEvents = new Dictionary<int, EventFollower>();
             dictPlayerEvents = new Dictionary<int, EventPlayer>();
@@ -423,14 +421,6 @@ namespace Next_Game
             }
         }
 
-        /// <summary>
-        /// empty out list ready for the next turn
-        /// </summary>
-        public void ClearCurrentEvents()
-        {
-            listFollCurrentEvents.Clear();
-            listPlyrCurrentEvents.Clear();
-        }
 
         /// <summary>
         /// check active (Follower only) characters for random events
@@ -464,9 +454,6 @@ namespace Next_Game
         /// </summary>
         public void CheckPlayerEvents()
         {
-            //clear out Event pool
-            listEventPool.Clear();
-
             Active player = Game.world.GetActiveActor(1);
             if (player != null && player.Status != ActorStatus.Gone && player.Delay == 0)
             {
@@ -627,7 +614,7 @@ namespace Next_Game
             int geoID, terrain, road, locID, refID, houseID;
             houseID = 0; refID = 0;
             Cartographic.Position pos = actor.GetActorPosition();
-            
+            List<Event> listEventPool = new List<Event>();
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
 
             //Location event
@@ -832,7 +819,7 @@ namespace Next_Game
                             Console.WriteLine("- \"{0}\", ID {1} added to list of Followers", tempFollower.Name, tempFollower.ActID);
                         }
                     }
-                    //new event
+                    //new event (auto location events always have eventPID of '1000' -> old version in Player dict is deleted before new one added)
                     EventPlayer eventObject = new EventPlayer(1000, "Dynamic Auto Location", EventFrequency.Low);
                     eventObject.Category = EventCategory.Auto;
                     eventObject.Status = EventStatus.Active;
@@ -890,12 +877,27 @@ namespace Next_Game
                             Game.SetError(new Error(118, string.Format("Invalid EventFilter (\"{0}\")", filter)));
                             break;
                     }
-                    //Place event in the event Pool
-                    listEventPool.Add(eventObject);
+                    //Create & Add Event Package
+                    EventPackage package = new EventPackage() { Person = player, EventObject = eventObject, Done = false };
+                    listPlyrCurrentEvents.Add(package);
+                    
+                    dictPlayerEvents.Add(1000, eventObject);
                 }
                 else { Game.SetError(new Error(118, "Invalid List of Actors (Zero present at Location")); }
             }
             else { Game.SetError(new Error(118, "Invalid Player (returns Null)")); }
+        }
+
+        /// <summary>
+        /// clean up events
+        /// </summary>
+        public void HousekeepEvents()
+        {
+            //Remove any existing auto created player events prior to next turn (Process end of turn)
+            if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }
+            //clear out current events
+            listFollCurrentEvents.Clear();
+            listPlyrCurrentEvents.Clear();
         }
 
         /// <summary>
