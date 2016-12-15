@@ -753,7 +753,7 @@ namespace Next_Game
             Active player = Game.world.GetActiveActor(1);
             if (player != null)
             {
-                Console.WriteLine("- Dynamic Auto Event");
+                Console.WriteLine("- What to do");
                 List<Actor> listActors = new List<Actor>();
                 List<Passive> listLocals = new List<Passive>();
                 List<Passive> listVisitors = new List<Passive>();
@@ -820,9 +820,8 @@ namespace Next_Game
                         }
                     }
                     //new event (auto location events always have eventPID of '1000' -> old version in Player dict is deleted before new one added)
-                    EventPlayer eventObject = new EventPlayer(1000, "Dynamic Auto Location", EventFrequency.Low);
-                    eventObject.Category = EventCategory.Auto;
-                    eventObject.Status = EventStatus.Active;
+                    EventPlayer eventObject = new EventPlayer(1000, "What to do?", EventFrequency.Low) {Category = EventCategory.Auto, Status = EventStatus.Active, Type = ArcType.Location };
+                    
                     switch (filter)
                     {
                         case EventFilter.None:
@@ -832,7 +831,7 @@ namespace Next_Game
                             {
                                 OptionInteractive option = new OptionInteractive(string.Format("Seek an Audience with a member of House {0} ({1} present)", houseName, listLocals.Count));
                                 option.ReplyGood = string.Format("House {0} is willing to consider the matter", houseName);
-                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Locals);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -866,6 +865,18 @@ namespace Next_Game
                             break;
                         case EventFilter.Locals:
                             eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
+                            //options -> one for each member present
+                            for(int i = 0; i < listLocals.Count; i++)
+                            {
+                                Passive local = listLocals[i];
+                                string actorText = string.Format("{0} {1}", local.Type, local.Name);
+                                string optionText = string.Format("Seek an audience with {0}", actorText);
+                                OptionInteractive option = new OptionInteractive(optionText);
+                                option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
                             break;
                         case EventFilter.Visitors:
                             eventObject.Text = string.Format("You are at {0}. Which visitor do you wish to talk to?", locName);
@@ -880,8 +891,13 @@ namespace Next_Game
                     //Create & Add Event Package
                     EventPackage package = new EventPackage() { Person = player, EventObject = eventObject, Done = false };
                     listPlyrCurrentEvents.Add(package);
-                    
+                    //add to Player dictionary (ResolveOutcome looks for it there) -> check not an instance present already
+                    if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }
                     dictPlayerEvents.Add(1000, eventObject);
+                    //message
+                    Message  message = new Message(string.Format("{0}, Aid {1} at {2} {3}, [{4} Event] \"{5}\"", player.Name, player.ActID, locName, Game.world.ShowLocationCoords(player.LocID),
+                          eventObject.Type, eventObject.Name), MessageType.Event);
+                    Game.world.SetMessage(message);
                 }
                 else { Game.SetError(new Error(118, "Invalid List of Actors (Zero present at Location")); }
             }

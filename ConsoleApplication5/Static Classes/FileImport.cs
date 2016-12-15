@@ -1692,7 +1692,7 @@ namespace Next_Game
                                                                     break;
                                                                 case "EventChain":
                                                                     if (outTemp.Data > 0)
-                                                                    { outObject = new OutEventChain(structEvent.EventID, outTemp.Data, outTemp.Filter); }
+                                                                    { outObject = new OutEventChain(structEvent.EventID, outTemp.Filter); }
                                                                     else
                                                                     {
                                                                         Game.SetError(new Error(49, "Invalid Input, Outcome Data (EventChain), (Data <= Zero, can't create object)"));

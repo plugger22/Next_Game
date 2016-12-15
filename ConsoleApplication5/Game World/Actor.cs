@@ -1,4 +1,5 @@
-﻿using Next_Game.Cartographic;
+﻿
+using Next_Game.Cartographic;
 using System;
 using System.Collections.Generic;
 

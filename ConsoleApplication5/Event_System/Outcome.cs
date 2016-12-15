@@ -161,9 +161,9 @@ namespace Next_Game.Event_System
     {
         public EventFilter Filter { get; set; }
        
-        public OutEventChain(int eventID, int targetEventID, EventFilter filter) : base(eventID)
+        public OutEventChain(int eventID, EventFilter filter) : base(eventID)
         {
-            Data = targetEventID;
+            Data = 0;
             this.Filter = filter;
         }
     }
