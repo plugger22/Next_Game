@@ -1471,7 +1471,7 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(73, string.Format("No options present for \"{0}\"", eventObject.Name))); }
             }
-            else { Game.SetError(new Error(73, string.Format("Invalid Event Input \"{0}\"", eventID))); }
+            else { Game.SetError(new Error(73, string.Format("Invalid Event Input \"{0}\"", eventID))); validOption = false; }
             return validOption;
         }
 
