@@ -891,6 +891,9 @@ namespace Next_Game
                     //Create & Add Event Package
                     EventPackage package = new EventPackage() { Person = player, EventObject = eventObject, Done = false };
                     listPlyrCurrentEvents.Add(package);
+                    //if more than the current event present the original one (autocreated) needs to be deleted
+                    if (listPlyrCurrentEvents.Count > 1) { listPlyrCurrentEvents.RemoveAt(0); }
+                    
                     //add to Player dictionary (ResolveOutcome looks for it there) -> check not an instance present already
                     if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }
                     dictPlayerEvents.Add(1000, eventObject);
@@ -1414,6 +1417,7 @@ namespace Next_Game
                                     {
                                         OutEventChain tempOutcome = outcome as OutEventChain;
                                         CreateAutoEvent(tempOutcome.Filter);
+                                        Game._eventID = eventObject.EventPID;
                                     }
 
                                 }
