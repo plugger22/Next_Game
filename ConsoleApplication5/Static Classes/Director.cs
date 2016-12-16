@@ -758,6 +758,7 @@ namespace Next_Game
                 List<Passive> listLocals = new List<Passive>();
                 List<Passive> listVisitors = new List<Passive>();
                 List<Follower> listFollowers = new List<Follower>();
+                int limit; //loop counter, prevents overshooting the # of available function keys
                 int locID = player.LocID;
                 int locType = 0; //1 - capital, 2 - MajorHouse, 3 - MinorHouse, 4 - Inn
                 Location loc = Game.network.GetLocation(locID);
@@ -862,16 +863,27 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
+                            //option -> lay low
+                            if (CheckGameState(DataPoint.Invisibility) < 100)
+                            {
+                                OptionInteractive option = new OptionInteractive("Lay Low");
+                                option.ReplyGood = "You find a safe house of a loyal supporter who offers you refuge";
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
                             break;
                         case EventFilter.Locals:
                             eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
                             //options -> one for each member present
-                            for(int i = 0; i < listLocals.Count; i++)
+                            limit = listLocals.Count();
+                            limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
+                            for(int i = 0; i < limit; i++)
                             {
                                 Passive local = listLocals[i];
                                 string actorText = string.Format("{0} {1}", local.Type, local.Name);
                                 string optionText = string.Format("Seek an audience with {0}", actorText);
-                                OptionInteractive option = new OptionInteractive(optionText);
+                                OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
                                 OutNone outcome = new OutNone(eventObject.EventPID);
                                 option.SetGoodOutcome(outcome);
@@ -880,9 +892,37 @@ namespace Next_Game
                             break;
                         case EventFilter.Visitors:
                             eventObject.Text = string.Format("You are at {0}. Which visitor do you wish to talk to?", locName);
+                            //options -> one for each member present
+                            limit = listVisitors.Count();
+                            limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
+                            for (int i = 0; i < limit; i++)
+                            {
+                                Passive visitor = listVisitors[i];
+                                string actorText = string.Format("{0} {1}", visitor.Type, visitor.Name);
+                                string optionText = string.Format("Seek an audience with {0}", actorText);
+                                OptionInteractive option = new OptionInteractive(optionText) { ActorID = visitor.ActID };
+                                option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
                             break;
                         case EventFilter.Followers:
                             eventObject.Text = string.Format("You are at {0}. Which follower do you wish to talk to?", locName);
+                            //options -> one for each member present
+                            limit = listFollowers.Count();
+                            limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
+                            for (int i = 0; i < limit; i++)
+                            {
+                                Follower follower = listFollowers[i];
+                                string actorText = string.Format("{0} {1}", follower.Type, follower.Name);
+                                string optionText = string.Format("Find time to talk with {0}", actorText);
+                                OptionInteractive option = new OptionInteractive(optionText) { ActorID = follower.ActID };
+                                option.ReplyGood = string.Format("{0} is happy to sit down for a chat", actorText);
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
                             break;
                         default:
                             Game.SetError(new Error(118, string.Format("Invalid EventFilter (\"{0}\")", filter)));
@@ -1471,7 +1511,11 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(73, string.Format("No options present for \"{0}\"", eventObject.Name))); }
             }
-            else { Game.SetError(new Error(73, string.Format("Invalid Event Input \"{0}\"", eventID))); validOption = false; }
+            else
+            {
+                Game.SetError(new Error(73, string.Format("Invalid Event Input \"{0}\"", eventID)));
+                validOption = false;
+            }
             return validOption;
         }
 

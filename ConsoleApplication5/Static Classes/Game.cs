@@ -1079,6 +1079,7 @@ namespace Next_Game
             switch (keyPress.Key)
             {
                 case RLKey.F1:
+                    
                     if (mode == SpecialMode.PlayerEvent)
                     {
                        if (director.ResolveOutcome(_eventID, 1) == true)
@@ -1143,6 +1144,33 @@ namespace Next_Game
                                 layout.Strategy_Player = 2;
                                 break;
                         }
+                    }
+                    break;
+                case RLKey.F4:
+                case RLKey.F5:
+                case RLKey.F6:
+                case RLKey.F7:
+                case RLKey.F8:
+                case RLKey.F9:
+                case RLKey.F10:
+                case RLKey.F11:
+                case RLKey.F12:
+                    if (mode == SpecialMode.PlayerEvent)
+                    {
+                        int codeNum = 4;
+                        switch (keyPress.Key)
+                        {
+                            case RLKey.F5: codeNum = 5; break;
+                            case RLKey.F6: codeNum = 6; break;
+                            case RLKey.F7: codeNum = 7; break;
+                            case RLKey.F8: codeNum = 8; break;
+                            case RLKey.F9: codeNum = 9; break;
+                            case RLKey.F10: codeNum = 10; break;
+                            case RLKey.F11: codeNum = 11; break;
+                            case RLKey.F12: codeNum = 12; break;
+                        }
+                        if (director.ResolveOutcome(_eventID, codeNum) == true)
+                        { _specialMode = SpecialMode.Outcome; }
                     }
                     break;
                 case RLKey.Space:
