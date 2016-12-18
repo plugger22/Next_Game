@@ -761,6 +761,7 @@ namespace Next_Game
                 int limit; //loop counter, prevents overshooting the # of available function keys
                 int locID = player.LocID;
                 int locType = 0; //1 - capital, 2 - MajorHouse, 3 - MinorHouse, 4 - Inn
+                string actorText = "unknown"; string optionText = "unknown";
                 Location loc = Game.network.GetLocation(locID);
                 string locName = Game.world.GetLocationName(locID);
                 int houseID = Game.map.GetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY());
@@ -881,8 +882,18 @@ namespace Next_Game
                             for(int i = 0; i < limit; i++)
                             {
                                 Passive local = listLocals[i];
-                                string actorText = string.Format("{0} {1}", local.Type, local.Name);
-                                string optionText = string.Format("Seek an audience with {0}", actorText);
+                                if (local is Advisor)
+                                {
+                                    Advisor advisor = local as Advisor;
+                                    if (advisor.advisorRoyal > AdvisorRoyal.None)
+                                    { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
+                                    else if (advisor.advisorNoble > AdvisorNoble.None)
+                                    { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
+                                }
+                                else if (local.Office > ActorOffice.None)
+                                { actorText = string.Format("{0} {1}", local.Office, local.Name); }
+                                else { actorText = string.Format("{0} {1}", local.Type, local.Name); }
+                                optionText = string.Format("Seek an audience with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
                                 OutNone outcome = new OutNone(eventObject.EventPID);
@@ -898,8 +909,20 @@ namespace Next_Game
                             for (int i = 0; i < limit; i++)
                             {
                                 Passive visitor = listVisitors[i];
-                                string actorText = string.Format("{0} {1}", visitor.Type, visitor.Name);
-                                string optionText = string.Format("Seek an audience with {0}", actorText);
+                                if (visitor is Advisor)
+                                {
+                                    Advisor advisor = visitor as Advisor;
+                                    if (advisor.advisorRoyal > AdvisorRoyal.None)
+                                    { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
+                                    else if (advisor.advisorNoble > AdvisorNoble.None)
+                                    { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
+                                }
+                                else if (visitor.Office > ActorOffice.None)
+                                { actorText = string.Format("{0} {1}", visitor.Office, visitor.Name); }
+                                else { actorText = string.Format("{0} {1}", visitor.Type, visitor.Name); }
+
+                                //actorText = string.Format("{0} {1}", visitor.Type, visitor.Name);
+                                optionText = string.Format("Seek an audience with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = visitor.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
                                 OutNone outcome = new OutNone(eventObject.EventPID);
@@ -915,8 +938,8 @@ namespace Next_Game
                             for (int i = 0; i < limit; i++)
                             {
                                 Follower follower = listFollowers[i];
-                                string actorText = string.Format("{0} {1}", follower.Type, follower.Name);
-                                string optionText = string.Format("Find time to talk with {0}", actorText);
+                                actorText = string.Format("{0} {1}", follower.Type, follower.Name);
+                                optionText = string.Format("Find time to talk with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = follower.ActID };
                                 option.ReplyGood = string.Format("{0} is happy to sit down for a chat", actorText);
                                 OutNone outcome = new OutNone(eventObject.EventPID);
