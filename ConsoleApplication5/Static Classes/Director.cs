@@ -766,6 +766,7 @@ namespace Next_Game
                 Console.WriteLine("- What to do");
                 List<Actor> listActors = new List<Actor>();
                 List<Passive> listLocals = new List<Passive>();
+                List<Passive> listAdvisors = new List<Passive>();
                 List<Passive> listVisitors = new List<Passive>();
                 List<Follower> listFollowers = new List<Follower>();
                 int limit; //loop counter, prevents overshooting the # of available function keys
@@ -778,7 +779,7 @@ namespace Next_Game
                 string houseName = "Unknown";
                 if (houseID > 0) { houseName = Game.world.GetGreatHouseName(houseID); }
                 int refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
-
+                int testRefID; //which refID (loc) to use when checking who's present
                 //what type of location?
                 if (locID == 1) { locType = 1; }
                 else if (refID > 0 && refID < 100) { locType = 2; }
@@ -813,11 +814,15 @@ namespace Next_Game
                         if (actor is Passive)
                         {
                             Passive tempPassive = actor as Passive;
-                            if (tempPassive.HouseID == houseID)
+                            testRefID = refID;
+                            if (locType == 1) { testRefID = Game.lore.RoyalRefIDNew; }
+                            if (tempPassive.RefID == testRefID && !(actor is Advisor))
                             {
                                 if (tempPassive.Type == ActorType.Lord || tempPassive.Age >= 15)
                                 { listLocals.Add(tempPassive); Console.WriteLine("- \"{0}\", ID {1} added to list of Locals", tempPassive.Name, tempPassive.ActID); }
                             }
+                            else if (actor is Advisor)
+                            { listAdvisors.Add(tempPassive); Console.WriteLine("- \"{0}\", ID {1} added to list of Advisors", tempPassive.Name, tempPassive.ActID); }
                             else
                             {
                                 if (tempPassive.Age >= 15)
@@ -841,9 +846,38 @@ namespace Next_Game
                             //option -> audience with local House member
                             if (listLocals.Count() > 0)
                             {
-                                OptionInteractive option = new OptionInteractive(string.Format("Seek an Audience with a member of House {0} ({1} present)", houseName, listLocals.Count));
-                                option.ReplyGood = string.Format("House {0} is willing to consider the matter", houseName);
+                                OptionInteractive option = null;
+                                if (locType != 1)
+                                {
+                                    option = new OptionInteractive(string.Format("Seek an Audience with a member of House {0} ({1} present)", houseName, listLocals.Count));
+                                    option.ReplyGood = string.Format("House {0} is willing to consider the matter", houseName);
+                                }
+                                else
+                                {
+                                    //capital
+                                    option = new OptionInteractive(string.Format("Seek an Audience with a member of the Royal Household ({0} present)", listLocals.Count));
+                                    option.ReplyGood = string.Format("The Royal Clerk has advised that the household is willing to consider the matter");
+                                }
                                 OutEventChain outcome = new OutEventChain(1000, EventFilter.Locals);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            //option -> audience with Advisor
+                            if (listAdvisors.Count() > 0)
+                            {
+                                OptionInteractive option = null;
+                                if (locType != 1)
+                                {
+                                    option = new OptionInteractive(string.Format("Seek an Audience with an Advisor to House {0} ({1} present)", houseName, listAdvisors.Count));
+                                    option.ReplyGood = string.Format("House {0} is willing to let you talk to whoever you wish", houseName);
+                                }
+                                else
+                                {
+                                    //capital
+                                    option = new OptionInteractive(string.Format("Seek an Audience with a Royal Advisor ({0} present)", listAdvisors.Count));
+                                    option.ReplyGood = string.Format("The Royal Clerk has advised that the household is willing to consider the matter");
+                                }
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Advisors);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -892,6 +926,33 @@ namespace Next_Game
                             for(int i = 0; i < limit; i++)
                             {
                                 Passive local = listLocals[i];
+                                /*if (local is Advisor)
+                                {
+                                    Advisor advisor = local as Advisor;
+                                    if (advisor.advisorRoyal > AdvisorRoyal.None)
+                                    { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
+                                    else if (advisor.advisorNoble > AdvisorNoble.None)
+                                    { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
+                                }*/
+                                if (local.Office > ActorOffice.None)
+                                { actorText = string.Format("{0} {1}", local.Office, local.Name); }
+                                else { actorText = string.Format("{0} {1}", local.Type, local.Name); }
+                                optionText = string.Format("Seek an audience with {0}", actorText);
+                                OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
+                                option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            break;
+                        case EventFilter.Advisors:
+                            eventObject.Text = string.Format("Which Advisor do you wish to talk to?");
+                            //options -> one for each member present
+                            limit = listAdvisors.Count();
+                            limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
+                            for (int i = 0; i < limit; i++)
+                            {
+                                Passive local = listAdvisors[i];
                                 if (local is Advisor)
                                 {
                                     Advisor advisor = local as Advisor;
@@ -900,9 +961,6 @@ namespace Next_Game
                                     else if (advisor.advisorNoble > AdvisorNoble.None)
                                     { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
                                 }
-                                else if (local.Office > ActorOffice.None)
-                                { actorText = string.Format("{0} {1}", local.Office, local.Name); }
-                                else { actorText = string.Format("{0} {1}", local.Type, local.Name); }
                                 optionText = string.Format("Seek an audience with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
@@ -919,15 +977,15 @@ namespace Next_Game
                             for (int i = 0; i < limit; i++)
                             {
                                 Passive visitor = listVisitors[i];
-                                if (visitor is Advisor)
+                                /*if (visitor is Advisor)
                                 {
                                     Advisor advisor = visitor as Advisor;
                                     if (advisor.advisorRoyal > AdvisorRoyal.None)
                                     { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
                                     else if (advisor.advisorNoble > AdvisorNoble.None)
                                     { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
-                                }
-                                else if (visitor.Office > ActorOffice.None)
+                                }*/
+                                if (visitor.Office > ActorOffice.None)
                                 { actorText = string.Format("{0} {1}", visitor.Office, visitor.Name); }
                                 else { actorText = string.Format("{0} {1}", visitor.Type, visitor.Name); }
 
