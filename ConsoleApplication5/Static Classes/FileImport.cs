@@ -2414,8 +2414,8 @@ namespace Next_Game
                                     Story storyObject = new Story(structStory.Name, structStory.StoryID, structStory.Type);
                                     storyObject.Ev_Follower_Loc = structStory.Ev_Follower_Loc;
                                     storyObject.Ev_Follower_Trav = structStory.Ev_Follower_Trav;
-                                    storyObject.Ev_Player_Loc = structStory.Ev_Player_Loc;
-                                    storyObject.Ev_Player_Trav = structStory.Ev_Player_Trav;
+                                    storyObject.Ev_Player_Loc_Base = structStory.Ev_Player_Loc;
+                                    storyObject.Ev_Player_Trav_Base = structStory.Ev_Player_Trav;
                                     storyObject.Arc_Geo_Sea = structStory.Sea;
                                     storyObject.Arc_Geo_Mountain = structStory.Mountain;
                                     storyObject.Arc_Geo_Forest = structStory.Forest;

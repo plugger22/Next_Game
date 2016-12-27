@@ -460,15 +460,25 @@ namespace Next_Game
                 if (player.Status == ActorStatus.AtLocation)
                 {
                     //Location event
-                    if (rnd.Next(100) <= story.Ev_Player_Loc)
-                    { DeterminePlayerEvent(player, EventType.Location); }
+                    if (rnd.Next(100) <= story.Ev_Player_Loc_Current)
+                    {
+                        DeterminePlayerEvent(player, EventType.Location);
+                        //chance of event halved after each occurence (prevents a long string of random events and gives space for necessary system events)
+                        story.Ev_Player_Loc_Current /= 2;
+                        Console.WriteLine("Chance of Player Location event {0} %", story.Ev_Player_Loc_Current);
+                    }
                     else
-                    { CreateAutoEvent(EventFilter.None); }
+                    {
+                        CreateAutoEvent(EventFilter.None);
+                        //reset back to base figure
+                        story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base; 
+                        Console.WriteLine("Chance of Player Location event {0} %", story.Ev_Player_Loc_Current);
+                    }
                 }
                 else if (player.Status == ActorStatus.Travelling)
                 {
                     //travelling event
-                    if (rnd.Next(100) <= story.Ev_Player_Trav)
+                    if (rnd.Next(100) <= story.Ev_Player_Trav_Base)
                     { DeterminePlayerEvent(player, EventType.Travelling); }
                 }
             }
