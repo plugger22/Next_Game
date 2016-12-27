@@ -886,7 +886,7 @@ namespace Next_Game
                             {
                                 OptionInteractive option = new OptionInteractive(string.Format("Seek an Audience with a Visitor to House {0} ({1} present)", houseName, listVisitors.Count));
                                 option.ReplyGood = string.Format("House {0} is willing to let you talk to whoever you wish", houseName);
-                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Visitors);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -895,7 +895,7 @@ namespace Next_Game
                             {
                                 OptionInteractive option = new OptionInteractive(string.Format("Talk to one of your Loyal Followers ({0} present)", listFollowers.Count));
                                 option.ReplyGood = "A conversation may well be possible";
-                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Followers);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
