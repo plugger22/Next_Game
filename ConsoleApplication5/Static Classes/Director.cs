@@ -1015,7 +1015,15 @@ namespace Next_Game
                                 Actor person = Game.world.GetAnyActor(actorID);
                                 if (person != null)
                                 {
-                                    actorText = string.Format("{0} {1}", person.Type, person.Name);
+                                    if (person is Advisor)
+                                    {
+                                        Advisor advisor = person as Advisor;
+                                        if (advisor.advisorRoyal > AdvisorRoyal.None) { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
+                                        else { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
+                                    }
+                                    else if (person.Office > ActorOffice.None)
+                                    { actorText = string.Format("{0} {1}", person.Office, person.Name); }
+                                    else { actorText = string.Format("{0} {1}", person.Type, person.Name); }
                                     eventObject.Name = "Interact";
                                     eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
                                     //befriend
@@ -1036,6 +1044,12 @@ namespace Next_Game
                                     OutNone outcome_3 = new OutNone(eventObject.EventPID);
                                     option_3.SetGoodOutcome(outcome_3);
                                     eventObject.SetOption(option_3);
+                                    //support
+                                    OptionInteractive option_4 = new OptionInteractive("Ask for their Allegiance") { ActorID = actorID };
+                                    option_4.ReplyGood = string.Format("{0} kneels at your feet", actorText);
+                                    OutNone outcome_4 = new OutNone(eventObject.EventPID);
+                                    option_4.SetGoodOutcome(outcome_4);
+                                    eventObject.SetOption(option_4);
                                 }
                                 else { Game.SetError(new Error(73, "Invalid actorID from AutoCreateEvent (null from dict)")); }
                             }
