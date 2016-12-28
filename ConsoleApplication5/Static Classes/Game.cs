@@ -1212,7 +1212,11 @@ namespace Next_Game
                         infoChannel.ClearConsole(ConsoleDisplay.Input);
                         infoChannel.ClearConsole(ConsoleDisplay.Multi);
                         if (director.CheckRemainingPlayerEvents())
-                        { _specialMode = SpecialMode.PlayerEvent; }
+                        {
+                            //auto chained events (one leads onto the next)
+                            _specialMode = SpecialMode.PlayerEvent;
+                            director.ResolvePlayerEvents();
+                        }
                         else if (director.CheckRemainingFollowerEvents())
                         {
                             _specialMode = SpecialMode.FollowerEvent;
