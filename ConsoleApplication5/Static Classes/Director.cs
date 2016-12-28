@@ -920,6 +920,7 @@ namespace Next_Game
                             }
                             break;
                         case EventFilter.Locals:
+                            eventObject.Name = "Talk to Locals";
                             eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
                             //options -> one for each member present
                             limit = listLocals.Count();
@@ -947,6 +948,7 @@ namespace Next_Game
                             }
                             break;
                         case EventFilter.Advisors:
+                            eventObject.Name = "Talk to Advisors";
                             eventObject.Text = string.Format("Which Advisor do you wish to talk to?");
                             //options -> one for each member present
                             limit = listAdvisors.Count();
@@ -971,6 +973,7 @@ namespace Next_Game
                             }
                             break;
                         case EventFilter.Visitors:
+                            eventObject.Name = "Talk to Visitors";
                             eventObject.Text = string.Format("You are at {0}. Which visitor do you wish to talk to?", locName);
                             //options -> one for each member present
                             limit = listVisitors.Count();
@@ -1000,6 +1003,7 @@ namespace Next_Game
                             }
                             break;
                         case EventFilter.Followers:
+                            eventObject.Name = "Talk to Followers";
                             eventObject.Text = string.Format("You are at {0}. Which follower do you wish to talk to?", locName);
                             //options -> one for each member present
                             limit = listFollowers.Count();
@@ -1551,7 +1555,6 @@ namespace Next_Game
                                         CreateAutoEvent(tempOutcome.Filter);
                                         Game._eventID = eventObject.EventPID;
                                     }
-
                                 }
                             }
                             else { Game.SetError(new Error(73, "Invalid list of Outcomes")); }
