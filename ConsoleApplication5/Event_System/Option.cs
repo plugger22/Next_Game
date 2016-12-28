@@ -101,7 +101,7 @@ namespace Next_Game.Event_System
         }
 
         /// <summary>
-        /// used for CreateAutoEvents options
+        /// used for CreateAutoEvents options where the player has choices
         /// </summary>
         /// <param name="text"></param>
         /// <param name="actorID"></param>
