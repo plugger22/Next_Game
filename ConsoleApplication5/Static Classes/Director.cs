@@ -757,7 +757,7 @@ namespace Next_Game
         /// create a dynamic auto player location event - assumed to be at player's current location
         /// <param name="filter">Which group of people should the event focus on (from pool of people present at the location)</param>
         /// </summary>
-        private void CreateAutoEvent(EventFilter filter)
+        private void CreateAutoEvent(EventFilter filter, int actorID = 0)
         {
             //get player
             Active player = Game.world.GetActiveActor(1);
@@ -928,21 +928,14 @@ namespace Next_Game
                             for(int i = 0; i < limit; i++)
                             {
                                 Passive local = listLocals[i];
-                                /*if (local is Advisor)
-                                {
-                                    Advisor advisor = local as Advisor;
-                                    if (advisor.advisorRoyal > AdvisorRoyal.None)
-                                    { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
-                                    else if (advisor.advisorNoble > AdvisorNoble.None)
-                                    { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
-                                }*/
                                 if (local.Office > ActorOffice.None)
                                 { actorText = string.Format("{0} {1}", local.Office, local.Name); }
                                 else { actorText = string.Format("{0} {1}", local.Type, local.Name); }
                                 optionText = string.Format("Seek an audience with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
-                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                //OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -967,7 +960,8 @@ namespace Next_Game
                                 optionText = string.Format("Seek an audience with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
-                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                //OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -981,14 +975,6 @@ namespace Next_Game
                             for (int i = 0; i < limit; i++)
                             {
                                 Passive visitor = listVisitors[i];
-                                /*if (visitor is Advisor)
-                                {
-                                    Advisor advisor = visitor as Advisor;
-                                    if (advisor.advisorRoyal > AdvisorRoyal.None)
-                                    { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
-                                    else if (advisor.advisorNoble > AdvisorNoble.None)
-                                    { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
-                                }*/
                                 if (visitor.Office > ActorOffice.None)
                                 { actorText = string.Format("{0} {1}", visitor.Office, visitor.Name); }
                                 else { actorText = string.Format("{0} {1}", visitor.Type, visitor.Name); }
@@ -997,7 +983,8 @@ namespace Next_Game
                                 optionText = string.Format("Seek an audience with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = visitor.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
-                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                //OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -1015,9 +1002,42 @@ namespace Next_Game
                                 optionText = string.Format("Find time to talk with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = follower.ActID };
                                 option.ReplyGood = string.Format("{0} is happy to sit down for a chat", actorText);
-                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                //OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
+                            }
+                            break;
+                        case EventFilter.Interact:
+                            //inteact with the selected individual
+                            if (actorID > 1 && Game.world.CheckActorPresent(actorID, locID ) == true)
+                            {
+                                Actor person = Game.world.GetAnyActor(actorID);
+                                if (person != null)
+                                {
+                                    actorText = string.Format("{0} {1}", person.Type, person.Name);
+                                    eventObject.Name = "Interact";
+                                    eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
+                                    //befriend
+                                    OptionInteractive option_1 = new OptionInteractive("Befriend") { ActorID = actorID };
+                                    option_1.ReplyGood = string.Format("{0} looks at you expectantly", actorText);
+                                    OutNone outcome_1 = new OutNone(eventObject.EventPID);
+                                    option_1.SetGoodOutcome(outcome_1);
+                                    eventObject.SetOption(option_1);
+                                    //blackmail
+                                    OptionInteractive option_2 = new OptionInteractive("Blackmail") { ActorID = actorID };
+                                    option_2.ReplyGood = string.Format("{0} frowns, their expression darkens", actorText);
+                                    OutNone outcome_2 = new OutNone(eventObject.EventPID);
+                                    option_2.SetGoodOutcome(outcome_2);
+                                    eventObject.SetOption(option_2);
+                                    //seduce
+                                    OptionInteractive option_3 = new OptionInteractive("Seduce") { ActorID = actorID };
+                                    option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
+                                    OutNone outcome_3 = new OutNone(eventObject.EventPID);
+                                    option_3.SetGoodOutcome(outcome_3);
+                                    eventObject.SetOption(option_3);
+                                }
+                                else { Game.SetError(new Error(73, "Invalid actorID from AutoCreateEvent (null from dict)")); }
                             }
                             break;
                         default:
@@ -1526,6 +1546,7 @@ namespace Next_Game
                     {
                         OptionInteractive option = listOptions[optionNum - 1];
                         Active actor = Game.world.GetActiveActor(1);
+                        
                         //Active option?
                         if (option.Active == true)
                         {
@@ -1551,8 +1572,9 @@ namespace Next_Game
                                     }
                                     else if (outcome is OutEventChain)
                                     {
+                                        int actorID = option.ActorID;
                                         OutEventChain tempOutcome = outcome as OutEventChain;
-                                        CreateAutoEvent(tempOutcome.Filter);
+                                        CreateAutoEvent(tempOutcome.Filter, actorID);
                                         Game._eventID = eventObject.EventPID;
                                     }
                                 }
