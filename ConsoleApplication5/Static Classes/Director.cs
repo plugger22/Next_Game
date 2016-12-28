@@ -776,9 +776,10 @@ namespace Next_Game
                 Location loc = Game.network.GetLocation(locID);
                 string locName = Game.world.GetLocationName(locID);
                 int houseID = Game.map.GetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY());
-                string houseName = "Unknown";
-                if (houseID > 0) { houseName = Game.world.GetGreatHouseName(houseID); }
                 int refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
+                string houseName = "Unknown";
+                //if (houseID > 0) { houseName = Game.world.GetGreatHouseName(houseID); }
+                if (refID > 0) { houseName = Game.world.GetHouseName(refID); }
                 int testRefID; //which refID (loc) to use when checking who's present
                 //what type of location?
                 if (locID == 1) { locType = 1; }

@@ -934,16 +934,17 @@ namespace Next_Game
                 int houseID = Game.network.GetNumUniqueHouses() + 1;
                 newMajorhouse.HouseID = houseID;
                 Console.WriteLine("Old King House {0}, {1}", oldkingHouse.Name, oldkingHouse.Motto);
-
+                //Ref ID is 99 (all relevant datapoints are changed to this, not previous bannerlord refID as this is > 100 and causes issues with code as it thinks it's still a minor house)
+                int refID = 99;
                 //set up road mapLayer
                 Game.map.InitialiseRoadLayer(oldkingHouse.LocID);
-
                 //set up new house
                 newMajorhouse.Name = turncoatHouse.Name;
                 newMajorhouse.Motto = turncoatHouse.Motto;
                 newMajorhouse.Banner = turncoatHouse.Banner;
                 newMajorhouse.ArcID = turncoatHouse.ArcID;
-                newMajorhouse.RefID = turncoatHouse.RefID;
+                //newMajorhouse.RefID = turncoatHouse.RefID;
+                newMajorhouse.RefID = refID;
                 newMajorhouse.LocName = oldkingHouse.LocName;
                 newMajorhouse.MenAtArms = oldkingHouse.MenAtArms;
                 newMajorhouse.CastleWalls = oldkingHouse.CastleWalls;
@@ -962,10 +963,11 @@ namespace Next_Game
                 //update Map with refID and houseID for loc
                 Location locLord = Game.network.GetLocation(newMajorhouse.LocID);
                 Game.map.SetMapInfo(MapLayer.HouseID, locLord.GetPosX(), locLord.GetPosY(), houseID);
-                Console.WriteLine("loc {0}:{1}, houseID: {2}", locLord.GetPosX(), locLord.GetPosY(), houseID);
+                Game.map.SetMapInfo(MapLayer.RefID, locLord.GetPosX(), locLord.GetPosY(), refID);
+                Console.WriteLine("loc {0}:{1}, houseID: {2}, refID: {3}", locLord.GetPosX(), locLord.GetPosY(), houseID, refID);
                 //update Loc details
                 locLord.HouseID = houseID;
-                locLord.RefID = oldBannerLordRefID;
+                locLord.RefID = refID;
 
                 //new MinorHouse
                 MinorHouse newMinorHouse = new MinorHouse();
@@ -1001,7 +1003,6 @@ namespace Next_Game
                 newBannerLord.Loyalty_Current = KingLoyalty.New_King;
                 newBannerLord.Lordship = Game.gameRevolt;
                 newMinorHouse.LordID = newBannerLord.ActID;
-
                 
                 //need to update house.ListOfBannerLords (remove old refID, add new)
                 List<int> tempLords = new List<int>();
@@ -1038,7 +1039,8 @@ namespace Next_Game
 
                 //need to update original Bannerlord actor (now Lord) details
                 newLord.ActID = oldBannerLord.ActID;
-                newLord.RefID = oldBannerLord.RefID;
+                //newLord.RefID = oldBannerLord.RefID;
+                newLord.RefID = refID;
                 newLord.HouseID = oldBannerLord.HouseID;
                 newLord.Name = oldBannerLord.Name;
                 newLord.Handle = oldBannerLord.Handle;
@@ -1217,7 +1219,6 @@ namespace Next_Game
         internal void ReplaceNobleLord(Noble deadLord)
         {
             string descriptor;
-
             try
             { 
                 House house = Game.world.GetHouse(deadLord.RefID);
@@ -1273,8 +1274,6 @@ namespace Next_Game
                         Record record_2 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
                         record_2.AddActor(wife.ActID);
                         Game.world.SetRecord(record_2);
-
-                        
                     }
                     //deadlord's brother steps in, as wife is dead, to become regent
                     else if (wife == null)

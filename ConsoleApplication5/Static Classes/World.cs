@@ -1690,7 +1690,20 @@ namespace Next_Game
             MajorHouse house = new MajorHouse();
             if(dictMajorHouses.TryGetValue(houseID, out house))
             { houseName = house.Name; }
+            return houseName;
+        }
 
+        /// <summary>
+        /// Returns name of house (major, minor or Inn) using Ref ID
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        public string GetHouseName(int refID)
+        {
+            string houseName = "";
+            House house = new House();
+            if (dictAllHouses.TryGetValue(refID, out house))
+            { houseName = house.Name; }
             return houseName;
         }
 
