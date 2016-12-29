@@ -102,6 +102,7 @@ namespace Next_Game.Event_System
         public ConflictCombat Combat_Type { get; set; }
         public ConflictSocial Social_Type { get; set; }
         public ConflictStealth Stealth_Type { get; set; }
+        public ConflictSubType SubType { get; set; } //descriptive purposes only
 
         public OutConflict(int eventID, int opponentID, ConflictType type, bool challenger = true) : base (eventID)
         {

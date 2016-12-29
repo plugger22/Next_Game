@@ -33,6 +33,7 @@ namespace Next_Game
         public int Delay { get; set; } = 0; // if > 0 then character delayed for some reason and unavailable
         public int Resources { get; set; } //abstracted money, equipment and influence
         public string DelayReason { get; set; }
+        public string Title { get; set; } //text description of whatever relevant title they have. Automatically set by constructors. Used for display purposes.
         public ActorStatus Status { get; set; } = 0;
         public ActorType Type { get; set; } = 0;
         public ActorOffice Office { get; set; } = 0; //official title, if any
@@ -78,6 +79,8 @@ namespace Next_Game
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
+            //set title but only if not already set by lower level constructor
+            if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
 
         /// <summary>
@@ -101,6 +104,8 @@ namespace Next_Game
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
+            //set title but only if not already set by lower level constructor
+            if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
 
         public void SetActorPosition(Position posLoc)
@@ -220,10 +225,16 @@ namespace Next_Game
         
 
         public Active()
-        { crowTooltip = new List<string>(); }
+        {
+            crowTooltip = new List<string>();
+            Title = string.Format("{0}", Type);
+        }
 
         public Active(string name, ActorType type, ActorSex sex = ActorSex.Male) : base (name, type, sex)
-        { crowTooltip = new List<string>(); }
+        {
+            crowTooltip = new List<string>();
+            Title = string.Format("{0}", Type);
+        }
 
         public void AddCrowTooltip(string tooltip)
         { if (tooltip != null) { crowTooltip.Add(tooltip); } }
@@ -243,7 +254,7 @@ namespace Next_Game
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
 
         public Player(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { Activated = true; }
+        { Activated = true; Title = string.Format("{0}", Type); }
 
         public void SetFamily (SortedDictionary<int, ActorRelation> dictFamily)
         {
@@ -266,6 +277,7 @@ namespace Next_Game
         {
             Activated = false;
             FollowerID = followerID;
+            Title = string.Format("{0}", Type);
         }
     }
 
@@ -307,10 +319,10 @@ namespace Next_Game
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
 
         public Noble()
-        { dictFamily = new SortedDictionary<int, ActorRelation>(); }
+        { dictFamily = new SortedDictionary<int, ActorRelation>(); Title = string.Format("{0}", Type); }
 
         public Noble (string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { dictFamily = new SortedDictionary<int, ActorRelation>(); }
+        { dictFamily = new SortedDictionary<int, ActorRelation>(); Title = string.Format("{0}", Type); }
 
         /// <summary>
         /// add relative to sorted Dictionary of same
@@ -338,7 +350,7 @@ namespace Next_Game
         public int Lordship { get; set; } = 0; //year made lord (Bannerlord)
 
         public BannerLord (string name, ActorType type = ActorType.BannerLord, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { }
+        { Title = string.Format("{0}", Type); }
     }
 
 
@@ -348,7 +360,7 @@ namespace Next_Game
         public int Knighthood { get; set; } //year knighted
 
         public Knight(string name, ActorType type = ActorType.Knight, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { }
+        { Title = string.Format("{0}", Type); }
     }
 
 
@@ -360,7 +372,10 @@ namespace Next_Game
         public int CommenceService { get; set; } //year commenced service with the Great House
 
         public Advisor (string name, ActorType type = ActorType.Advisor, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { }
+        {
+            if (advisorRoyal > AdvisorRoyal.None) { Title = string.Format("{0}", advisorRoyal); }
+            else if (advisorNoble > AdvisorNoble.None) { Title = string.Format("{0}", advisorNoble); }
+        }
     }
 
     //Special NPC's

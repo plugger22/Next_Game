@@ -1029,19 +1029,19 @@ namespace Next_Game
                                     //befriend
                                     OptionInteractive option_1 = new OptionInteractive("Befriend") { ActorID = actorID };
                                     option_1.ReplyGood = string.Format("{0} looks at you expectantly", actorText);
-                                    OutConflict outcome_1 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Befriend };
+                                    OutConflict outcome_1 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Befriend, SubType = ConflictSubType.Befriend};
                                     option_1.SetGoodOutcome(outcome_1);
                                     eventObject.SetOption(option_1);
                                     //blackmail
                                     OptionInteractive option_2 = new OptionInteractive("Blackmail") { ActorID = actorID };
                                     option_2.ReplyGood = string.Format("{0} frowns, their expression darkens", actorText);
-                                    OutConflict outcome_2 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Blackmail };
+                                    OutConflict outcome_2 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Blackmail, SubType = ConflictSubType.Blackmail};
                                     option_2.SetGoodOutcome(outcome_2);
                                     eventObject.SetOption(option_2);
                                     //seduce
                                     OptionInteractive option_3 = new OptionInteractive("Seduce") { ActorID = actorID };
                                     option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
-                                    OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce };
+                                    OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce, SubType = ConflictSubType.Seduce};
                                     option_3.SetGoodOutcome(outcome_3);
                                     eventObject.SetOption(option_3);
                                     //support
@@ -1544,6 +1544,7 @@ namespace Next_Game
         public int ResolveOutcome(int eventID, int optionNum)
         {
             int validOption = 1;
+            int actorID;
             string status;
             List<Snippet> eventList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
@@ -1584,7 +1585,7 @@ namespace Next_Game
                                     }
                                     else if (outcome is OutEventChain)
                                     {
-                                        int actorID = option.ActorID;
+                                        actorID = option.ActorID;
                                         OutEventChain tempOutcome = outcome as OutEventChain;
                                         CreateAutoEvent(tempOutcome.Filter, actorID);
                                         Game._eventID = eventObject.EventPID;
@@ -1592,12 +1593,21 @@ namespace Next_Game
                                     else if (outcome is OutConflict)
                                     {
                                         validOption = 2;
+                                        actorID = option.ActorID;
                                         OutConflict tempOutcome = outcome as OutConflict;
                                         Game.conflict.Conflict_Type = tempOutcome.Conflict_Type;
                                         Game.conflict.Combat_Type = tempOutcome.Combat_Type;
                                         Game.conflict.Social_Type = tempOutcome.Social_Type;
                                         Game.conflict.Stealth_Type = tempOutcome.Stealth_Type;
-                                        Game.conflict.SetOpponent(option.ActorID, tempOutcome.Challenger);
+                                        Game.conflict.SetOpponent(actorID, tempOutcome.Challenger);
+                                        //message
+                                        Actor opponent = Game.world.GetAnyActor(actorID);
+                                        if (opponent != null)
+                                        {
+                                            Message message = new Message(string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", tempOutcome.SubType, tempOutcome.Conflict_Type, 
+                                                opponent.Title, opponent.Name, opponent.ActID), MessageType.Event);
+                                            Game.world.SetMessage(message);
+                                        }
                                         //debug
                                         ConflictState debugState = (ConflictState)rnd.Next(2, 6);
                                         Game.conflict.SetGameSituation(debugState);
