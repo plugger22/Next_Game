@@ -372,10 +372,7 @@ namespace Next_Game
         public int CommenceService { get; set; } //year commenced service with the Great House
 
         public Advisor (string name, ActorType type = ActorType.Advisor, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        {
-            if (advisorRoyal > AdvisorRoyal.None) { Title = string.Format("{0}", advisorRoyal); }
-            else if (advisorNoble > AdvisorNoble.None) { Title = string.Format("{0}", advisorNoble); }
-        }
+        { } //Title set in history.CreateAdvisor
     }
 
     //Special NPC's

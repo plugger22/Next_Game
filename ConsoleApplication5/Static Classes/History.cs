@@ -743,6 +743,7 @@ namespace Next_Game
                 if ((int)advisorRoyal > 0)
                 {
                     advisor.advisorRoyal = advisorRoyal;
+                    advisor.Title = string.Format("{0}", advisorRoyal);
                     negativeTrait = SkillType.Combat;
                     if (advisorRoyal == AdvisorRoyal.Master_of_Whisperers) { positiveTrait = SkillType.Treachery; }
                     else if (advisorRoyal == AdvisorRoyal.High_Septon) { positiveTrait = SkillType.Charm; negativeTrait = SkillType.Treachery; }
@@ -758,6 +759,7 @@ namespace Next_Game
                 else if ((int)advisorNoble > 0)
                 {
                     advisor.advisorNoble = advisorNoble;
+                    advisor.Title = string.Format("{0}", advisorNoble);
                     if (advisorNoble == AdvisorNoble.Castellan) { positiveTrait = SkillType.Leadership; negativeTrait = SkillType.Treachery; }
                     else if (advisorNoble == AdvisorNoble.Septon) { positiveTrait = SkillType.Charm; negativeTrait = SkillType.Treachery; }
                     else { positiveTrait = SkillType.Wits; negativeTrait = SkillType.Combat; }
@@ -1952,6 +1954,7 @@ namespace Next_Game
                         Game.lore.OldKing = royal;
                         OldKing = royal;
                         OldKing.Office = ActorOffice.King;
+                        OldKing.Title = "King";
                         //fate
                         eventText = string.Format("King {0}, Aid {1}, has been convicted of treason and publicly beheaded, age {2}", royal.Name, royal.ActID, royal.Age);
                         record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorIncident.Died);
@@ -1961,6 +1964,7 @@ namespace Next_Game
                         Game.lore.OldQueen = royal;
                         OldQueen = royal;
                         OldQueen.Office = ActorOffice.Queen;
+                        OldQueen.Title = "Queen";
                         //fate
                         eventText = string.Format("Queen {0}, Aid {1}, has been convicted of treason and publicly beheaded, age {2}", royal.Name, royal.ActID, royal.Age);
                         record = new Record(eventText, royal.ActID, 1, royal.RefID, yearChanged, HistActorIncident.Died);
@@ -2107,11 +2111,13 @@ namespace Next_Game
                         Game.lore.NewKing = rebelActor;
                         NewKing = rebelActor;
                         NewKing.Office = ActorOffice.King;
+                        NewKing.Title = "King";
                         break;
                     case ActorType.Lady:
                         Game.lore.NewQueen = rebelActor;
                         NewQueen = rebelActor;
                         NewQueen.Office = ActorOffice.Queen;
+                        NewQueen.Title = "Queen";
                         break;
                     case ActorType.Heir:
                         Game.lore.NewHeir = rebelActor;
@@ -2166,7 +2172,6 @@ namespace Next_Game
                 //add to Royal court
                 Game.world.SetRoyalCourt(courtAdvisor);
             }
-
             //change Royal house to that of New King
             Game.lore.RoyalRefIDCurrent = Game.lore.RoyalRefIDNew;
             //replace Royal lands with that of the Replacement Great House
