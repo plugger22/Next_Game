@@ -122,4 +122,5 @@ namespace Next_Game.Event_System
         internal List<Trigger> GetTriggers()
         { return listTriggers; }
     }
+
 }

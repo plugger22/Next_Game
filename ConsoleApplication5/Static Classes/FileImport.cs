@@ -1660,7 +1660,7 @@ namespace Next_Game
                                                             switch (outTemp.Effect)
                                                             {
                                                                 case "Conflict":
-                                                                    outObject = new OutConflict(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Calc);
+                                                                    outObject = new OutConflict(structEvent.EventID, outTemp.Data, ConflictType.None ); //placeholder
                                                                     break;
                                                                 case "Game":
                                                                     //check that GameVars (DataPoints) are only 'add' or 'random'

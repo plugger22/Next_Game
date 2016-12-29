@@ -97,11 +97,17 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutConflict : Outcome
     {
-        public OutConflict(int eventID, int opponentID, int amount, EventCalc apply = EventCalc.None) : base (eventID)
+        public bool Challenger { get; set; } //is the Player the Challenger?
+        public ConflictType Conflict_Type { get; set; }
+        public ConflictCombat Combat_Type { get; set; }
+        public ConflictSocial Social_Type { get; set; }
+        public ConflictStealth Stealth_Type { get; set; }
+
+        public OutConflict(int eventID, int opponentID, ConflictType type, bool challenger = true) : base (eventID)
         {
             this.Data = opponentID;
-            this.Amount = amount;
-            this.Calc = apply;
+            Conflict_Type = type;
+            this.Challenger = challenger;
         }
 
     }

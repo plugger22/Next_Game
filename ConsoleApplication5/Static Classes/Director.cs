@@ -1029,19 +1029,19 @@ namespace Next_Game
                                     //befriend
                                     OptionInteractive option_1 = new OptionInteractive("Befriend") { ActorID = actorID };
                                     option_1.ReplyGood = string.Format("{0} looks at you expectantly", actorText);
-                                    OutNone outcome_1 = new OutNone(eventObject.EventPID);
+                                    OutConflict outcome_1 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Befriend };
                                     option_1.SetGoodOutcome(outcome_1);
                                     eventObject.SetOption(option_1);
                                     //blackmail
                                     OptionInteractive option_2 = new OptionInteractive("Blackmail") { ActorID = actorID };
                                     option_2.ReplyGood = string.Format("{0} frowns, their expression darkens", actorText);
-                                    OutNone outcome_2 = new OutNone(eventObject.EventPID);
+                                    OutConflict outcome_2 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Blackmail };
                                     option_2.SetGoodOutcome(outcome_2);
                                     eventObject.SetOption(option_2);
                                     //seduce
                                     OptionInteractive option_3 = new OptionInteractive("Seduce") { ActorID = actorID };
                                     option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
-                                    OutNone outcome_3 = new OutNone(eventObject.EventPID);
+                                    OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce };
                                     option_3.SetGoodOutcome(outcome_3);
                                     eventObject.SetOption(option_3);
                                     //support
