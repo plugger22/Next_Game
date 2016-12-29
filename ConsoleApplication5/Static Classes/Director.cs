@@ -1591,6 +1591,18 @@ namespace Next_Game
                                         CreateAutoEvent(tempOutcome.Filter, actorID);
                                         Game._eventID = eventObject.EventPID;
                                     }
+                                    else if (outcome is OutConflict)
+                                    {
+                                        OutConflict tempOutcome = outcome as OutConflict;
+                                        Game.conflict.Conflict_Type = tempOutcome.Conflict_Type;
+                                        Game.conflict.Combat_Type = tempOutcome.Combat_Type;
+                                        Game.conflict.Social_Type = tempOutcome.Social_Type;
+                                        Game.conflict.Stealth_Type = tempOutcome.Stealth_Type;
+                                        Game.conflict.SetOpponent(option.ActorID, tempOutcome.Challenger);
+                                        //debug
+                                        ConflictState debugState = (ConflictState)rnd.Next(2, 6);
+                                        Game.conflict.SetGameSituation(debugState);
+                                    }
                                 }
                             }
                             else { Game.SetError(new Error(73, "Invalid list of Outcomes")); }
