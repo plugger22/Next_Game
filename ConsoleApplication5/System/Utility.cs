@@ -111,10 +111,10 @@ namespace Next_Game
                     switch(tag)
                     {
                         case "men":
-                            replaceText = string.Format("{0} {1}'s Men-At-Arms", opponent.Office, opponent.Name);
+                            replaceText = string.Format("{0} {1}'s Men-At-Arms", opponent.Title, opponent.Name);
                             break;
                         case "name":
-                            replaceText = string.Format("{0} {1}", opponent.Office, opponent.Name);
+                            replaceText = string.Format("{0} {1}", opponent.Title, opponent.Name);
                             break;
                         case "him":
                             replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "him" : "her");
