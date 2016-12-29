@@ -1076,14 +1076,27 @@ namespace Next_Game
         private static void SpecialModeInput(RLKeyPress keyPress, SpecialMode mode)
         {
             bool exitFlag = false;
+            int returnCode = 0;
             switch (keyPress.Key)
             {
                 case RLKey.F1:
                     
                     if (mode == SpecialMode.PlayerEvent)
                     {
-                       if (director.ResolveOutcome(_eventID, 1) == true)
-                        { _specialMode = SpecialMode.Outcome; }
+                       returnCode = director.ResolveOutcome(_eventID, 1);
+                       if (returnCode == 1) { _specialMode = SpecialMode.Outcome; }
+                       else if (returnCode == 2)
+                        {
+                            //_menuMode = MenuMode.Special;
+                            _specialMode = SpecialMode.Conflict;
+                            _conflictMode = ConflictMode.Intro;
+                            if (conflict.InitialiseConflict() == false)
+                            {
+                                //invalid conflict setup, revert to normal
+                                _specialMode = SpecialMode.Outcome;
+                                _conflictMode = ConflictMode.None;
+                            }
+                        }
                     }
                     else if (mode == SpecialMode.Conflict)
                     {
@@ -1109,8 +1122,20 @@ namespace Next_Game
                 case RLKey.F2:
                     if (mode == SpecialMode.PlayerEvent)
                     {
-                        if (director.ResolveOutcome(_eventID, 2) == true)
-                        { _specialMode = SpecialMode.Outcome; }
+                        returnCode = director.ResolveOutcome(_eventID, 2);
+                        if (returnCode == 1) { _specialMode = SpecialMode.Outcome; }
+                        else if (returnCode == 2)
+                        {
+                            //_menuMode = MenuMode.Special;
+                            _specialMode = SpecialMode.Conflict;
+                            _conflictMode = ConflictMode.Intro;
+                            if (conflict.InitialiseConflict() == false)
+                            {
+                                //invalid conflict setup, revert to normal
+                                _specialMode = SpecialMode.Outcome;
+                                _conflictMode = ConflictMode.None;
+                            }
+                        }
                     }
                     else if (mode == SpecialMode.Conflict)
                     {
@@ -1132,8 +1157,20 @@ namespace Next_Game
                 case RLKey.F3:
                     if (mode == SpecialMode.PlayerEvent)
                     {
-                        if (director.ResolveOutcome(_eventID, 3) == true)
-                        { _specialMode = SpecialMode.Outcome; }
+                        returnCode = director.ResolveOutcome(_eventID, 3);
+                        if (returnCode == 1) { _specialMode = SpecialMode.Outcome; }
+                        else if (returnCode == 2)
+                        {
+                            //_menuMode = MenuMode.Special;
+                            _specialMode = SpecialMode.Conflict;
+                            _conflictMode = ConflictMode.Intro;
+                            if (conflict.InitialiseConflict() == false)
+                            {
+                                //invalid conflict setup, revert to normal
+                                _specialMode = SpecialMode.Outcome;
+                                _conflictMode = ConflictMode.None;
+                            }
+                        }
                     }
                     else if (mode == SpecialMode.Conflict)
                     {
@@ -1169,8 +1206,20 @@ namespace Next_Game
                             case RLKey.F11: codeNum = 11; break;
                             case RLKey.F12: codeNum = 12; break;
                         }
-                        if (director.ResolveOutcome(_eventID, codeNum) == true)
-                        { _specialMode = SpecialMode.Outcome; }
+                        returnCode = director.ResolveOutcome(_eventID, codeNum);
+                        if (returnCode == 1) { _specialMode = SpecialMode.Outcome; }
+                        else if (returnCode == 2)
+                        {
+                            //_menuMode = MenuMode.Special;
+                            _specialMode = SpecialMode.Conflict;
+                            _conflictMode = ConflictMode.Intro;
+                            if (conflict.InitialiseConflict() == false)
+                            {
+                                //invalid conflict setup, revert to normal
+                                _specialMode = SpecialMode.Outcome;
+                                _conflictMode = ConflictMode.None;
+                            }
+                        }
                     }
                     break;
                 case RLKey.Space:
@@ -1189,8 +1238,25 @@ namespace Next_Game
                     else if (mode == SpecialMode.PlayerEvent)
                     {
                         //default option (first option) if player ignores the event
-                        if (director.ResolveOutcome(_eventID, 1) == true)
-                        { _specialMode = SpecialMode.Outcome; }
+
+                        /*if (director.ResolveOutcome(_eventID, 1) == true)
+                        { _specialMode = SpecialMode.Outcome; }*/
+
+                        returnCode = director.ResolveOutcome(_eventID, 1);
+                        if (returnCode == 1) { _specialMode = SpecialMode.Outcome; }
+                        else if (returnCode == 2)
+                        {
+                            //_menuMode = MenuMode.Special;
+                            _specialMode = SpecialMode.Conflict;
+                            _conflictMode = ConflictMode.Intro;
+                            if (conflict.InitialiseConflict() == false)
+                            {
+                                //invalid conflict setup, revert to normal
+                                _specialMode = SpecialMode.Outcome;
+                                _conflictMode = ConflictMode.None;
+                            }
+                        }
+
                         else if (director.ResolvePlayerEvents())
                         { }
                         else

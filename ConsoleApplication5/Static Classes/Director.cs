@@ -1537,13 +1537,13 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// handles outcome resolution for player events, eg. player has chosen option 2 (pressed 'F2').Return 'true' if option Active, false if not.
+        /// handles outcome resolution for player events, eg. player has chosen option 2 (pressed 'F2').Return '1' if true, '2' if a conflict, '0' if false.
         /// </summary>
         /// <param name="eventID"></param>
         /// <param name="optionNum"></param>
-        public bool ResolveOutcome(int eventID, int optionNum)
+        public int ResolveOutcome(int eventID, int optionNum)
         {
-            bool validOption = true;
+            int validOption = 1;
             string status;
             List<Snippet> eventList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
@@ -1572,8 +1572,6 @@ namespace Next_Game
                                 {
                                     if (outcome is OutGame)
                                     { state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc); }
-                                    else if (outcome is OutConflict)
-                                    { }
                                     else if (outcome is OutEventTimer)
                                     {
                                         OutEventTimer tempOutcome = outcome as OutEventTimer;
@@ -1593,6 +1591,7 @@ namespace Next_Game
                                     }
                                     else if (outcome is OutConflict)
                                     {
+                                        validOption = 2;
                                         OutConflict tempOutcome = outcome as OutConflict;
                                         Game.conflict.Conflict_Type = tempOutcome.Conflict_Type;
                                         Game.conflict.Combat_Type = tempOutcome.Combat_Type;
@@ -1646,7 +1645,7 @@ namespace Next_Game
                         else
                         {
                             //invalid option (trigger/s didn't pass)
-                            validOption = false;
+                            validOption = 0;
                             Console.WriteLine("Inactive (greyed out) Option chosen for \"{0}\", option # {1}", eventObject.Name, optionNum);
                         }
                     }
@@ -1657,7 +1656,7 @@ namespace Next_Game
             else
             {
                 Game.SetError(new Error(73, string.Format("Invalid Event Input \"{0}\"", eventID)));
-                validOption = false;
+                validOption = 0;
             }
             return validOption;
         }
