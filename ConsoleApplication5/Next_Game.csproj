@@ -72,7 +72,6 @@
   <ItemGroup>
     <Compile Include="Event_System\Card.cs" />
     <Compile Include="Event_System\Challenge.cs" />
-    <Compile Include="Event_System\Profile.cs" />
     <Compile Include="Event_System\Result.cs" />
     <Compile Include="Event_System\Situation.cs" />
     <Compile Include="Static Classes\Conflict.cs" />
