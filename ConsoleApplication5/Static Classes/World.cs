@@ -2111,14 +2111,14 @@ namespace Next_Game
             //Create events
             Game.director.CheckPlayerEvents();
             Game.director.CheckFollowerEvents(dictActiveActors);
-            //Follower events first
-            if (Game.director.ResolveFollowerEvents())
-            { Game._specialMode = SpecialMode.FollowerEvent; }
+            //Player events first
+            if (Game.director.ResolvePlayerEvents())
+            { Game._specialMode = SpecialMode.PlayerEvent; }
             else
             {
-                //Player event last as it may lead to a conflict
-                if (Game.director.ResolvePlayerEvents())
-                { Game._specialMode = SpecialMode.PlayerEvent; }
+                //Follwer events last
+                if (Game.director.ResolveFollowerEvents())
+                { Game._specialMode = SpecialMode.FollowerEvent; }
             }
         }
 

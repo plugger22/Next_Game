@@ -1324,7 +1324,14 @@ namespace Next_Game
                                     break;
                                 case ConflictMode.Outcome:
                                     layout.ResetLayout();
-                                    exitFlag = true;
+                                    //any follower events? (they come after Player events)
+                                    if (director.CheckRemainingFollowerEvents())
+                                    {
+                                        _specialMode = SpecialMode.FollowerEvent;
+                                        director.ResolveFollowerEvents();
+                                    }
+                                    else
+                                    { exitFlag = true; }
                                     break;
                                 case ConflictMode.Popup:
                                     _conflictMode = ConflictMode.RestoreCards;
