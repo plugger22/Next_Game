@@ -1080,7 +1080,6 @@ namespace Next_Game
             switch (keyPress.Key)
             {
                 case RLKey.F1:
-                    
                     if (mode == SpecialMode.PlayerEvent)
                     {
                        returnCode = director.ResolveOutcome(_eventID, 1);
@@ -1238,10 +1237,6 @@ namespace Next_Game
                     else if (mode == SpecialMode.PlayerEvent)
                     {
                         //default option (first option) if player ignores the event
-
-                        /*if (director.ResolveOutcome(_eventID, 1) == true)
-                        { _specialMode = SpecialMode.Outcome; }*/
-
                         returnCode = director.ResolveOutcome(_eventID, 1);
                         if (returnCode == 1) { _specialMode = SpecialMode.Outcome; }
                         else if (returnCode == 2)
