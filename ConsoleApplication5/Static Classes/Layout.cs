@@ -534,6 +534,11 @@ namespace Next_Game
             }
             //text version of win/loss outcome
             if (resultOutcome != 0) { textDescription = arrayOutcome[resultOutcome]; }
+            //message
+            string protagonistText = Game.conflict.GetProtagonists();
+            Message message = new Message(string.Format("{0}, a {1} Conflict. A {2}, score of {3}{4}", protagonistText, Game.conflict.Conflict_Type, Result, 
+                score > 0 ? "+" : "", score), MessageType.Conflict);
+            Game.world.SetMessage(message);
             //clear out outcome box
             for (int width_index = ou_left_align + 1; width_index < ou_left_align + ou_width - 1; width_index++)
             {

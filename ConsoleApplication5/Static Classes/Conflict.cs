@@ -1154,6 +1154,25 @@ namespace Next_Game
         { return opponent; }
 
         /// <summary>
+        /// A conflict is always the Player vs. Opponent (or vice versa)
+        /// </summary>
+        /// <returns></returns>
+        public Actor GetPlayer()
+        { return player; }
+
+        /// <summary>
+        /// returns a string showing 'Title Player vs. Title Opponent', or vice versa depending on who challenged
+        /// </summary>
+        /// <returns></returns>
+        public string GetProtagonists()
+        {
+            string returnText = null;
+            if (Challenger == true) { returnText = string.Format("{0} {1} vs. {2} {3}", player.Title, player.Name, opponent.Title, opponent.Name ); }
+            else { returnText = string.Format("{0} {1} vs. {2} {3}", opponent.Title, opponent.Name, player.Title, player.Name); }
+            return returnText;
+        }
+
+        /// <summary>
         /// Input special, decision derived, situations. Always def.Adv. cards that help the defender. NOTE: Run AFTER SetOpponent()
         /// </summary>
         /// <param name="specialType"></param>
@@ -1310,7 +1329,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Resolves results for the particular outcome acheived
+        /// Resolves results for the particular outcome achieved
         /// </summary>
         /// <param name="result"></param>
         /// <returns>A snippet list describing each individual result, suitable for display, green for good, red for bad</returns>

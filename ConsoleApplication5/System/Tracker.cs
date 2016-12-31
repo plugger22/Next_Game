@@ -12,7 +12,7 @@ namespace Next_Game
     public enum HistKingdomIncident { None, Battle, Siege}
 
     //categorires -> Used for Messages
-    public enum MessageType {None, System, Move, Crow, Activation, Event}
+    public enum MessageType {None, System, Move, Crow, Activation, Event, Conflict}
 
    /// <summary>
    /// Base class (not used directly)
