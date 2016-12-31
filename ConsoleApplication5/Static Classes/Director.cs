@@ -1605,7 +1605,7 @@ namespace Next_Game
                                         if (opponent != null)
                                         {
                                             Message message = new Message(string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", tempOutcome.SubType, tempOutcome.Conflict_Type, 
-                                                opponent.Title, opponent.Name, opponent.ActID), MessageType.Event);
+                                                opponent.Title, opponent.Name, opponent.ActID), MessageType.Conflict);
                                             Game.world.SetMessage(message);
                                         }
                                         //debug

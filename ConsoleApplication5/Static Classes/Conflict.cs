@@ -1366,23 +1366,27 @@ namespace Next_Game
                                 {
                                     if (amount != 0)
                                     {
+                                        Message message = null;
                                         //automatic ADD by amount. If Data > 0 then Good, otherwise Bad
                                         if (data > 0)
                                         {
                                             int oldValue = Game.director.GetGameState(result.DataPoint, DataState.Good);
                                             int newValue = Math.Abs(amount) + oldValue;
                                             Game.director.SetGameState(result.DataPoint, DataState.Good, newValue, true);
-                                            string tempText = string.Format("{0} has increased by {1}", result.DataPoint, amount);
+                                            string tempText = string.Format("{0} has increased by {1} as a result of the conflict", result.DataPoint, amount);
                                             tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                            message = new Message(string.Format("{0}", tempText), MessageType.Conflict);
                                         }
                                         else
                                         {
                                             int oldValue = Game.director.GetGameState(result.DataPoint, DataState.Bad);
                                             int newValue = Math.Abs(amount) + oldValue;
                                             Game.director.SetGameState(result.DataPoint, DataState.Bad, newValue, true);
-                                            string tempText = string.Format("{0} has decreased by {1}", result.DataPoint, amount);
+                                            string tempText = string.Format("{0} has decreased by {1} as a result of the conflict", result.DataPoint, amount);
                                             tempList.Add(new Snippet(tempText, RLColor.Red, backColor));
+                                            message = new Message(string.Format("{0}", tempText), MessageType.Conflict);
                                         }
+                                        if (message != null) { Game.world.SetMessage(message); }
                                     }
                                     else Game.SetError(new Error(113, "Invalid DataPoint Amount (zero)"));
                                 }
