@@ -1911,11 +1911,9 @@ namespace Next_Game
                     int change = rnd.Next(1, 40);
                     int newLvl = actor.GetRelPlyr();
                     if (loyalty == KingLoyalty.New_King)
-                    { newLvl -= change; actor.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", 1, change * -1, newLvl)); change *= -1; }
+                    { change *= -1; newLvl += change; actor.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", 1, change, newLvl));  }
                     else if (loyalty == KingLoyalty.Old_King)
                     { newLvl += change; actor.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", 1, change, newLvl)); }
-                    //update relationship with Player
-                    actor.ChangeRelPlyr(change);
                 }
             }
 

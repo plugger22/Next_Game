@@ -281,6 +281,7 @@ namespace Next_Game
                 Text = description;
                 this.Tag = tag;
                 this.ActorID = actorID;
+                this.Change = change;
                 Level = newLevel;
             }
             else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }

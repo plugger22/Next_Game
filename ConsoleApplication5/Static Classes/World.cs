@@ -627,7 +627,7 @@ namespace Next_Game
                     int relStars = person.GetRelPlyrStars();
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Player"), false));
                     listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, false));
-                    listToDisplay.Add(new Snippet(string.Format("({0}{1})", person.GetRelPlyr() > 0 ? "+" : "", person.GetRelPlyr()), true));
+                    listToDisplay.Add(new Snippet(string.Format("({0}{1}) {2}", person.GetRelPlyr() > 0 ? "+" : "", person.GetRelPlyr(), person.GetPlayerTag()), true));
                 }
                 //Possessions -> active followers
                 if (person is Active)

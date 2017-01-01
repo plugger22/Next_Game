@@ -139,6 +139,8 @@ namespace Next_Game
         internal List<int> GetPlayerEvents()
         { return listOfPlayerEvents; }
 
+        
+
         internal int GetNumPlayerEvents()
         { return listOfPlayerEvents.Count; }
 
@@ -149,11 +151,22 @@ namespace Next_Game
         public void AddRelEventOther(Relation relMsg)
         { listRelOther.Add(relMsg); }
 
+        /// <summary>
+        /// adds event & updates relPlyr
+        /// </summary>
+        /// <param name="relMsg"></param>
         public void AddRelEventPlyr(Relation relMsg)
-        { listRelPlyr.Add(relMsg); }
+        { listRelPlyr.Add(relMsg); ChangeRelPlyr(relMsg.Change); }
 
         public List<Relation> GetRelEventPlyr()
         { return listRelPlyr; }
+
+        /// <summary>
+        /// returns Tag of most recent Player event (used for ShowActorRL display in World.cs)
+        /// </summary>
+        /// <returns></returns>
+        internal string GetPlayerTag()
+        { Relation relation = listRelPlyr[0]; return relation.Tag; }
 
         public int GetRelPlyr()
         { return relPlyr; }
@@ -169,7 +182,7 @@ namespace Next_Game
         /// updates actor's relationship with the Player 
         /// </summary>
         /// <param name="change"></param>
-        public void ChangeRelPlyr(int change)
+        private void ChangeRelPlyr(int change)
         {
             relPlyr += change;
             relPlyr = Math.Min(100, relPlyr);
