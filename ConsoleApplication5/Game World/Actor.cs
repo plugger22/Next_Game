@@ -97,7 +97,7 @@ namespace Next_Game
             Age = 30;
             this.Type = type;
             this.Sex = sex;
-            RelPlyr = 50; //nuetral
+            if (RelPlyr == 0) { RelPlyr = 50; } //nuetral
             ActID = characterIndex++;
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
@@ -202,7 +202,8 @@ namespace Next_Game
         public int GetRelPlyr()
         {
             int rel = RelPlyr;
-            rel /= 20 + 1;
+            rel /= 20;
+            rel += 1;
             rel = Math.Min(5, rel);
             return rel;
         }
@@ -285,7 +286,7 @@ namespace Next_Game
     {
         public int FollowerID { get; set; } //FID
         public string Role { get; set; } //one or two word description of who they represent, eg. Beggar, Assasssin, etc.
-        public int Loyalty_Player { get; set; } //loyalty to the player (1 to 5 stars)
+        //public int Loyalty_Player { get; set; } //loyalty to the player (1 to 5 stars) NOTE: superceded by RelPlyr instead
 
         public Follower(string name, ActorType type, int followerID, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {

@@ -7,7 +7,7 @@
 # Special: short text description of a weakness or strength (tied into Archetype and related events). Default of 'None'
 # ArcID: Archetype ID, default value of '0' for none (events that are specific to the follower, eg. a recurring weakness)
 # Resources: Starting amount of resources, default value of '1', range 1 to 5
-# Loyalty: Base Loyalty level (range 1 to 5) default '3'
+# Loyalty: Base Loyalty level (range 0 to 100) default '50'
 # ...._Effect: Description of Effect, eg. "Puzzled" (keep short). Use default of 'Normal' if nothing unusual. Tie in with Effect system if possible.
 # ...._Effect: A number (range +/- 1 or 2), eg. '+1' which gives a value of '4'. Default of '0' gives an average Effect of 3 (or none for 'Touched')
 # Touched Effect: is different, default of '0' gives a value of '0'. To be touched you must give a value of between -2 to +2 (excluding '0')
@@ -23,7 +23,7 @@ Age: 40
 Special: None
 ArcID: 23
 Resources: 1
-Loyalty: 3
+Loyalty: 55
 Combat_Effect: -2
 Combat_Trait: Pacifist
 Wits_Effect: +2
@@ -47,7 +47,7 @@ Age: 19
 Special: None
 ArcID: 23
 Resources: 1
-Loyalty: 3
+Loyalty: 45
 Combat_Effect: +1
 Combat_Trait: Acrobatic
 Wits_Effect: 0
@@ -71,7 +71,7 @@ Age: 32
 Special: None
 ArcID: 23
 Resources: 0
-Loyalty: 3
+Loyalty: 50
 Combat_Effect: +2
 Combat_Trait: Silent Killer
 Wits_Effect: +1
@@ -95,7 +95,7 @@ Age: 48
 Special: None
 ArcID: 23
 Resources: 0
-Loyalty: 3
+Loyalty: 50
 Combat_Effect: -2
 Combat_Trait: Deformed
 Wits_Effect: 0
@@ -119,7 +119,7 @@ Age: 36
 Special: None
 ArcID: 23
 Resources: 1
-Loyalty: 2
+Loyalty: 30
 Combat_Effect: -2
 Combat_Trait: Avoids Confrontation
 Wits_Effect: +1
@@ -143,7 +143,7 @@ Age: 25
 Special: None
 ArcID: 23
 Resources: 0
-Loyalty: 4
+Loyalty: 70
 Combat_Effect: -2
 Combat_Trait: Womanly
 Wits_Effect: -1
@@ -167,7 +167,7 @@ Age: 29
 Special: None
 ArcID: 23
 Resources: 1
-Loyalty: 5
+Loyalty: 90
 Combat_Effect: +2
 Combat_Trait: Humungus
 Wits_Effect: -2
@@ -191,7 +191,7 @@ Age: 63
 Special: None
 ArcID: 23
 Resources: 1
-Loyalty: 3
+Loyalty: 53
 Combat_Effect: -2
 Combat_Trait: Infirm
 Wits_Effect: +2
@@ -215,7 +215,7 @@ Age: 42
 Special: None
 ArcID: 23
 Resources: 3
-Loyalty: 3
+Loyalty: 51
 Combat_Effect: -2
 Combat_Trait: Corpulent
 Wits_Effect: +2
@@ -239,7 +239,7 @@ Age: 15
 Special: None
 ArcID: 23
 Resources: 0
-Loyalty: 3
+Loyalty: 52
 Combat_Effect: +1
 Combat_Trait: Sneaky
 Wits_Effect: +1

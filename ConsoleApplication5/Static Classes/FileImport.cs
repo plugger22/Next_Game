@@ -150,7 +150,7 @@ namespace Next_Game
         public string Special { get; set; } //weakness or strength peculiar to the follower
         public int ArcID { get; set; } //archetype for events tied into the Special trait
         public int Resources { get; set; } //any starting resources
-        public int Loyalty { get; set; } //loyalty to the player (1 to 5 stars)
+        public int Loyalty { get; set; } //loyalty to the player (0 to 100) -> same as relationship to player
         public int Combat_Effect { get; set; }
         public int Wits_Effect { get; set; }
         public int Charm_Effect { get; set; }
@@ -2662,7 +2662,14 @@ namespace Next_Game
                                     { Game.SetError(new Error(59, e.Message)); validData = false; }
                                     break;
                                 case "Loyalty":
-                                    try { structFollower.Loyalty = Convert.ToInt32(cleanToken); }
+                                    try
+                                    {
+                                        //loyalty -> range 0 to 100
+                                        int loyalty = Convert.ToInt32(cleanToken);
+                                        loyalty = Math.Min(100, loyalty);
+                                        loyalty = Math.Max(0, loyalty);
+                                        structFollower.Loyalty = loyalty;
+                                    }
                                     catch (Exception e)
                                     { Game.SetError(new Error(59, e.Message)); validData = false; }
                                     break;

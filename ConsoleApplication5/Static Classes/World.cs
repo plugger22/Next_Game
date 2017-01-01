@@ -412,13 +412,13 @@ namespace Next_Game
                 //Loyalty
                 if (person is Passive)
                 { listToDisplay.Add(new Snippet(string.Format("Loyal to the {0} (originally {1})", person.Loyalty_Current, person.Loyalty_AtStart))); }
-                else if (person is Follower)
-                {
+                /*else if (person is Follower)
+                { //NOTE: Superceded by Relationship with Player
                     Follower follower = person as Follower;
                     listToDisplay.Add(new Snippet(string.Format("Loyalty to the Usurper, {0} Stars", follower.Loyalty_Player)));
                     List<string> textToWrap = Game.utility.WordWrap(string.Format("\"{0}\"", follower.Description), 120);
                     foreach (string text in textToWrap) { listToDisplay.Add(new Snippet(text)); }
-                }
+                }*/
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
                 
 
@@ -734,6 +734,8 @@ namespace Next_Game
         internal string GetStars(int num)
         {
             string stars = null;
+            num = Math.Min(5, num);
+            num = Math.Max(1, num);
             for (int i = 0; i < num; i++)
             { stars += "o "; }
             return stars;

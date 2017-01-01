@@ -353,7 +353,7 @@ namespace Next_Game
                 {
                     //copy data across from struct to object
                     follower.Role = data.Role;
-                    follower.Loyalty_Player = data.Loyalty;
+                    follower.RelPlyr = data.Loyalty;
                     follower.Description = data.Description;
                     follower.ArcID = data.ArcID;
                     follower.Resources = data.Resources;
@@ -377,7 +377,7 @@ namespace Next_Game
                     //trait ID's not needed
                     //add to list
                     listOfActiveActors.Add(follower);
-                    Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.Loyalty_Player);
+                    Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.RelPlyr);
                 }
             }
         }
