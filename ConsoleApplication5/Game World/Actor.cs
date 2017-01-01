@@ -32,7 +32,7 @@ namespace Next_Game
         public string Description { get; set; }
         public int Delay { get; set; } = 0; // if > 0 then character delayed for some reason and unavailable
         public int Resources { get; set; } //abstracted money, equipment and influence
-        public int RelPlyr { get; set; } //relationship with Player (0 to 100), higher the better
+        private int relPlyr; //relationship with Player (0 to 100), higher the better
         public string DelayReason { get; set; }
         public string Title { get; set; } //text description of whatever relevant title they have. Automatically set by constructors. Used for display purposes.
         public ActorStatus Status { get; set; } = 0;
@@ -61,6 +61,8 @@ namespace Next_Game
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
+        private List<Relation> listRelOther; //list of relation messages relating to all actors other than the Player
+        private List<Relation> listRelPlyr; //list of relation messages relating to the Player
 
 
         //default constructor 
@@ -80,6 +82,8 @@ namespace Next_Game
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
+            listRelOther = new List<Relation>();
+            listRelPlyr = new List<Relation>();
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
@@ -97,7 +101,7 @@ namespace Next_Game
             Age = 30;
             this.Type = type;
             this.Sex = sex;
-            if (RelPlyr == 0) { RelPlyr = 50; } //nuetral
+            if (relPlyr == 0) { relPlyr = 50; } //nuetral
             ActID = characterIndex++;
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
@@ -106,6 +110,8 @@ namespace Next_Game
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
+            listRelOther = new List<Relation>();
+            listRelPlyr = new List<Relation>();
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
@@ -139,6 +145,36 @@ namespace Next_Game
         //needed for sub classes (world.cs -> ShowActorRL)
         internal SortedDictionary<int, ActorRelation> GetFamily()
         { return null; }
+
+        public void AddRelEventOther(Relation relMsg)
+        { listRelOther.Add(relMsg); }
+
+        public void AddRelEventPlyr(Relation relMsg)
+        { listRelPlyr.Add(relMsg); }
+
+        public List<Relation> GetRelEventPlyr()
+        { return listRelPlyr; }
+
+        public int GetRelPlyr()
+        { return relPlyr; }
+
+        /// <summary>
+        /// set actor's relationship with player at start
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetRelPlyr(int value)
+        { relPlyr = value; relPlyr = Math.Min(100, relPlyr); relPlyr = Math.Max(0, relPlyr); }
+
+        /// <summary>
+        /// updates actor's relationship with the Player 
+        /// </summary>
+        /// <param name="change"></param>
+        public void ChangeRelPlyr(int change)
+        {
+            relPlyr += change;
+            relPlyr = Math.Min(100, relPlyr);
+            relPlyr = Math.Max(0, relPlyr);
+        }
 
         /// <summary>
         /// checks whether particular skill has any influence effect, True if so.
@@ -199,9 +235,9 @@ namespace Next_Game
         /// returns relationship to Player as a integer between 1 and 5 (stars) by breaking down RelPlyr into chunks of 20
         /// </summary>
         /// <returns></returns>
-        public int GetRelPlyr()
+        public int GetRelPlyrStars()
         {
-            int rel = RelPlyr;
+            int rel = relPlyr;
             rel /= 20;
             rel += 1;
             rel = Math.Min(5, rel);

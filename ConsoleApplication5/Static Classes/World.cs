@@ -624,10 +624,10 @@ namespace Next_Game
                 if (!(person is Player))
                 {
                     listToDisplay.Add(new Snippet("Relationships", RLColor.Brown, RLColor.Black));
-                    int relStars = person.GetRelPlyr();
+                    int relStars = person.GetRelPlyrStars();
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Player"), false));
                     listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, false));
-                    listToDisplay.Add(new Snippet(string.Format("{0}{1}", person.RelPlyr > 0 ? "+" : "", person.RelPlyr), true));
+                    listToDisplay.Add(new Snippet(string.Format("({0}{1})", person.GetRelPlyr() > 0 ? "+" : "", person.GetRelPlyr()), true));
                 }
                 //Possessions -> active followers
                 if (person is Active)

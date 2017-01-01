@@ -353,7 +353,7 @@ namespace Next_Game
                 {
                     //copy data across from struct to object
                     follower.Role = data.Role;
-                    follower.RelPlyr = data.Loyalty;
+                    follower.SetRelPlyr(data.Loyalty);
                     follower.Description = data.Description;
                     follower.ArcID = data.ArcID;
                     follower.Resources = data.Resources;
@@ -377,7 +377,7 @@ namespace Next_Game
                     //trait ID's not needed
                     //add to list
                     listOfActiveActors.Add(follower);
-                    Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.RelPlyr);
+                    Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.GetRelPlyr());
                 }
             }
         }
@@ -1905,7 +1905,18 @@ namespace Next_Game
                 listOfActors = tempActors.ToList();
                 //set loyalty
                 foreach (Passive actor in listOfActors)
-                { actor.Loyalty_AtStart = loyalty; actor.Loyalty_Current = loyalty; }
+                {
+                    actor.Loyalty_AtStart = loyalty; actor.Loyalty_Current = loyalty;
+                    //adjust relationships with Plyr
+                    int change = rnd.Next(1, 40);
+                    int newLvl = actor.GetRelPlyr();
+                    if (loyalty == KingLoyalty.New_King)
+                    { newLvl -= change; actor.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", 1, change * -1, newLvl)); change *= -1; }
+                    else if (loyalty == KingLoyalty.Old_King)
+                    { newLvl += change; actor.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", 1, change, newLvl)); }
+                    //update relationship with Player
+                    actor.ChangeRelPlyr(change);
+                }
             }
 
             //hive off Royals into separate lists
