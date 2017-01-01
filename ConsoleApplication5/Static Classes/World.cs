@@ -625,11 +625,11 @@ namespace Next_Game
                 {
                     listToDisplay.Add(new Snippet("Relationships", RLColor.Brown, RLColor.Black));
                     int relStars = person.GetRelPlyr();
-                    string plyrText = string.Format("Player ({0}{1})", person.RelPlyr > 0 ? "+" : "", person.RelPlyr);
-                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", plyrText), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, true));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Player"), false));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, false));
+                    listToDisplay.Add(new Snippet(string.Format("{0}{1}", person.RelPlyr > 0 ? "+" : "", person.RelPlyr), true));
                 }
-                //Resources level -> active followers
+                //Possessions -> active followers
                 if (person is Active)
                 {
                     Active tempPerson = person as Active;
@@ -637,18 +637,20 @@ namespace Next_Game
                     resources = Math.Min(5, resources);
                     //resources = Math.Max(1, resources);
                     listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black));
-                    listToDisplay.Add(new Snippet(string.Format("Resources ({0}) ", (ResourceLevel)resources), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(resources)), RLColor.LightRed, RLColor.Black));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Resources"), false));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
+                    listToDisplay.Add(new Snippet(string.Format("{0}", (ResourceLevel)resources), true));
                 }
-                //Resources level -> Lords and BannerLords
+                //Possessions -> Lords and BannerLords
                 else if (person.Type == ActorType.Lord || person.Type == ActorType.BannerLord)
                 {
                     int resources = person.Resources;
                     resources = Math.Min(5, resources);
                     //resources = Math.Max(1, resources);
                     listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black));
-                    listToDisplay.Add(new Snippet(string.Format("Resources ({0}) ", (ResourceLevel)resources), false));
-                    listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(resources)), RLColor.LightRed, RLColor.Black));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Resources"), false));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
+                    listToDisplay.Add(new Snippet(string.Format("{0}", (ResourceLevel)resources), true));
                 }
                 
                 //family
