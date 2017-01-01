@@ -35,7 +35,7 @@ namespace Next_Game
         public Tracker()
         {
             trackerID = trackerIndex++;
-            //Year = Game.gameYear;
+            if (Year == 0) { Year = Game.gameYear; }
             Day = Game.gameTurn + 1;
             //initialise lists
             listOfActors = new List<int>();
@@ -227,7 +227,7 @@ namespace Next_Game
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                this.Year = Game.gameYear;
+                //this.Year = Game.gameYear;
                 this.Type = type;
                 //initialise lists
                 listOfActors = new List<int>();
@@ -254,7 +254,7 @@ namespace Next_Game
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                this.Year = Game.gameYear;
+                //this.Year = Game.gameYear;
                 this.Type = type;
                 Text = description;
             }
@@ -277,7 +277,7 @@ namespace Next_Game
         {
             if (description != null)
             {
-                this.Year = Game.gameYear;
+                //this.Year = Game.gameYear;
                 Text = description;
                 this.Tag = tag;
                 this.ActorID = actorID;
