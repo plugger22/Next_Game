@@ -359,6 +359,8 @@ namespace Next_Game
                     follower.Resources = data.Resources;
                     follower.Age = data.Age;
                     follower.Born = Game.gameStart - data.Age;
+                    //relationship
+                    follower.AddRelEventPlyr(new Relation("Loyal Follower dedicated to the cause", "Loyal Follower", 5));
                     //trait effects
                     follower.arrayOfTraitEffects[age, (int)SkillType.Combat] = data.Combat_Effect;
                     follower.arrayOfTraitEffects[age, (int)SkillType.Wits] = data.Wits_Effect;
@@ -1909,11 +1911,10 @@ namespace Next_Game
                     actor.Loyalty_AtStart = loyalty; actor.Loyalty_Current = loyalty;
                     //adjust relationships with Plyr
                     int change = rnd.Next(1, 40);
-                    int newLvl = actor.GetRelPlyr();
                     if (loyalty == KingLoyalty.New_King)
-                    { change *= -1; newLvl += change; actor.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", 1, change, newLvl));  }
+                    { change *= -1; actor.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", change));  }
                     else if (loyalty == KingLoyalty.Old_King)
-                    { newLvl += change; actor.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", 1, change, newLvl)); }
+                    { actor.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", change)); }
                 }
             }
 

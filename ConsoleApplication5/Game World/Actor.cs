@@ -152,11 +152,15 @@ namespace Next_Game
         { listRelOther.Add(relMsg); }
 
         /// <summary>
-        /// adds event & updates relPlyr
+        /// adds event & updates relPlyr & figures out new value (Level) after changes
         /// </summary>
         /// <param name="relMsg"></param>
         public void AddRelEventPlyr(Relation relMsg)
-        { listRelPlyr.Add(relMsg); ChangeRelPlyr(relMsg.Change); }
+        {
+            ChangeRelPlyr(relMsg.Change);
+            relMsg.Level = relPlyr;
+            listRelPlyr.Add(relMsg);
+        }
 
         public List<Relation> GetRelEventPlyr()
         { return listRelPlyr; }
@@ -166,7 +170,14 @@ namespace Next_Game
         /// </summary>
         /// <returns></returns>
         internal string GetPlayerTag()
-        { Relation relation = listRelPlyr[0]; return relation.Tag; }
+        {
+            if (listRelPlyr.Count > 0)
+            {
+                Relation relation = listRelPlyr[0];
+                return relation.Tag;
+            }
+            else { return ""; }
+        }
 
         public int GetRelPlyr()
         { return relPlyr; }

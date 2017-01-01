@@ -273,16 +273,41 @@ namespace Next_Game
         public int Change { get; set; } //the effect on a relationship level, eg. +25
         public int Level { get; set; } //current relationship level with that character, AFTER change has been applied
 
-        public Relation(string description, string tag, int actorID, int change, int newLevel)
+        /// <summary>
+        /// for relationships with Player
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="tag"></param>
+        /// <param name="change"></param>
+        public Relation(string description, string tag, int change)
         {
             if (description != null)
             {
-                //this.Year = Game.gameYear;
+                //Level is taken care of by Actor.cs AddRelEventPlyr
+                Text = description;
+                this.Tag = tag;
+                this.ActorID = 1; //default Player relationshp for this constructor
+                this.Change = change;
+            }
+            else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
+        }
+
+        /// <summary>
+        /// for relationships with all others
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="tag"></param>
+        /// <param name="change"></param>
+        /// <param name="actorID"></param>
+        public Relation(string description, string tag, int change, int actorID)
+        {
+            if (description != null)
+            {
+                //Level is taken care of by Actor.cs AddRelEventPlyr
                 Text = description;
                 this.Tag = tag;
                 this.ActorID = actorID;
                 this.Change = change;
-                Level = newLevel;
             }
             else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
