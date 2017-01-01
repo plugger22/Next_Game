@@ -32,6 +32,7 @@ namespace Next_Game
         public string Description { get; set; }
         public int Delay { get; set; } = 0; // if > 0 then character delayed for some reason and unavailable
         public int Resources { get; set; } //abstracted money, equipment and influence
+        public int RelPlyr { get; set; } //relationship with Player (0 to 100), higher the better
         public string DelayReason { get; set; }
         public string Title { get; set; } //text description of whatever relevant title they have. Automatically set by constructors. Used for display purposes.
         public ActorStatus Status { get; set; } = 0;
@@ -96,6 +97,7 @@ namespace Next_Game
             Age = 30;
             this.Type = type;
             this.Sex = sex;
+            RelPlyr = 50; //nuetral
             ActID = characterIndex++;
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
@@ -192,6 +194,18 @@ namespace Next_Game
         /// <returns></returns>
         public string GetTrait(SkillType skill)
         { return arrayOfTraitNames[(int)skill]; }
+
+        /// <summary>
+        /// returns relationship to Player as a integer between 1 and 5 (stars) by breaking down RelPlyr into chunks of 20
+        /// </summary>
+        /// <returns></returns>
+        public int GetRelPlyr()
+        {
+            int rel = RelPlyr;
+            rel /= 20 + 1;
+            rel = Math.Min(5, rel);
+            return rel;
+        }
 
         public void AddSecret(int secretID)
         {

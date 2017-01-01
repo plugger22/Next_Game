@@ -420,6 +420,7 @@ namespace Next_Game
                     foreach (string text in textToWrap) { listToDisplay.Add(new Snippet(text)); }
                 }
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
+                
 
                 //stats - natural ---
                 string effectText = null;
@@ -602,6 +603,7 @@ namespace Next_Game
                         }
                     }
                 }
+
                 //crow explanation for loyal followers
                 if (person is Follower)
                 {
@@ -618,7 +620,15 @@ namespace Next_Game
                         { listToDisplay.Add(new Snippet("Not activated", RLColor.Red, RLColor.Black)); }
                     }
                 }
-
+                //relationships
+                if (!(person is Player))
+                {
+                    listToDisplay.Add(new Snippet("Relationships", RLColor.Brown, RLColor.Black));
+                    int relStars = person.GetRelPlyr();
+                    string plyrText = string.Format("Player ({0}{1})", person.RelPlyr > 0 ? "+" : "", person.RelPlyr);
+                    listToDisplay.Add(new Snippet(string.Format("{0, -16}", plyrText), false));
+                    listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, true));
+                }
                 //Resources level -> active followers
                 if (person is Active)
                 {
@@ -640,7 +650,7 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet(string.Format("Resources ({0}) ", (ResourceLevel)resources), false));
                     listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(resources)), RLColor.LightRed, RLColor.Black));
                 }
-
+                
                 //family
                 SortedDictionary<int, ActorRelation> dictTempFamily = null;
                 if (person is Noble) { Noble tempPerson = person as Noble; dictTempFamily = tempPerson.GetFamily(); }
