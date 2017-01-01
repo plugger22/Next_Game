@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     //categories (can choose multiple) -> Used for Records
-    public enum HistActorIncident {None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service} //conflict -> actor involved in a battle/siege
-    public enum HistHouseIncident {None, Allegiance, Ownership}
-    public enum HistKingdomIncident { None, Battle, Siege}
+    public enum HistActorIncident { None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service } //conflict -> actor involved in a battle/siege
+    public enum HistHouseIncident { None, Allegiance, Ownership }
+    public enum HistKingdomIncident { None, Battle, Siege }
 
     //categorires -> Used for Messages
-    public enum MessageType {None, System, Move, Crow, Activation, Event, Conflict}
+    public enum MessageType { None, System, Move, Crow, Activation, Event, Conflict }
 
-   /// <summary>
-   /// Base class (not used directly)
-   /// </summary>
+    /// <summary>
+    /// Base class (not used directly)
+    /// </summary>
     public class Tracker
     {
         private static int trackerIndex = 1;
@@ -24,12 +24,12 @@ namespace Next_Game
         public int Year { get; set; }
         public int Day { get; set; } = 0; //pre-game start incidents don't need this, hence '0'
         public string Text { get; set; } //descriptor
-        
+
         public List<int> listOfActors; //actorID
         public List<int> listOfLocs; //locID
         public List<int> listOfHouses; //refID
         public List<int> listOfItems; //itemID
-        
+
 
 
         public Tracker()
@@ -42,7 +42,7 @@ namespace Next_Game
             listOfLocs = new List<int>();
             listOfHouses = new List<int>();
             listOfItems = new List<int>();
-            
+
         }
 
 
@@ -74,7 +74,7 @@ namespace Next_Game
 
     }
 
-    
+
     /// <summary>
     /// Historical Game Records
     /// </summary>
@@ -256,6 +256,31 @@ namespace Next_Game
                 this.Type = type;
                 Text = description;
             }
+        }
+
+    }
+
+    /// <summary>
+    /// all messages related to relationships. Stored with each actor
+    /// </summary>
+    public class Relation : Tracker
+    {
+        public int ActorID { get; set; } //actor to whom this relationship effect applies to (if other's involved place them in the list of Actors
+        public string Tag { get; set; } //short form description (max 4 words)
+        public int Change { get; set; } //the effect on a relationship level, eg. +25
+        public int Level { get; set; } //current relationship level with that character, AFTER change has been applied
+
+        public Relation(string description, string tag, int actorID, int change, int newLevel)
+        {
+            if (description != null)
+            {
+                this.Year = Game.gameYear;
+                Text = description;
+                this.Tag = tag;
+                this.ActorID = actorID;
+                Level = newLevel;
+            }
+            else { Game.SetError(new Error(110, "Invalid Description in Relation Constructor")); }
         }
 
     }
