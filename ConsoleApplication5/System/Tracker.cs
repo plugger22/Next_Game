@@ -129,7 +129,7 @@ namespace Next_Game
                 if (histActorIncident > 0)
                 { listOfActorIncidents.Add(histActorIncident); }
             }
-
+            else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
 
         /// <summary>
@@ -163,8 +163,8 @@ namespace Next_Game
                 { listOfHouses.Add(refID); }
                 if (histHouseIncident > 0)
                 { listOfHouseIncidents.Add(histHouseIncident); }
-
             }
+            else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
 
         /// <summary>
@@ -200,6 +200,7 @@ namespace Next_Game
                 if (histKingdomIncident > 0)
                 { listOfKingdomIncidents.Add(histKingdomIncident); }
             }
+            else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
 
         public void AddActorIncident(HistActorIncident histIncident)
@@ -240,6 +241,7 @@ namespace Next_Game
                 if (locID > 0)
                 { listOfLocs.Add(locID); }
             }
+            else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
 
         /// <summary>
@@ -256,6 +258,7 @@ namespace Next_Game
                 this.Type = type;
                 Text = description;
             }
+            else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
 
     }
@@ -280,7 +283,7 @@ namespace Next_Game
                 this.ActorID = actorID;
                 Level = newLevel;
             }
-            else { Game.SetError(new Error(110, "Invalid Description in Relation Constructor")); }
+            else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
 
     }
