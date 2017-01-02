@@ -1036,7 +1036,7 @@ namespace Next_Game
                                     OptionInteractive option_1 = new OptionInteractive("Befriend") { ActorID = actorID };
                                     option_1.ReplyGood = string.Format("{0} looks at you expectantly", actorText);
                                     List<Trigger> listTriggers_1 = new List<Trigger>();
-                                    listTriggers_1.Add(new Trigger(TriggerCheck.RelPlyr, 0, 50, EventCalc.GreaterThanOrEqual));
+                                    listTriggers_1.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), 50, EventCalc.GreaterThanOrEqual));
                                     option_1.SetTriggers(listTriggers_1);
                                     OutConflict outcome_1 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Befriend, SubType = ConflictSubType.Befriend};
                                     option_1.SetGoodOutcome(outcome_1);
@@ -1045,7 +1045,7 @@ namespace Next_Game
                                     OptionInteractive option_2 = new OptionInteractive("Blackmail") { ActorID = actorID };
                                     option_2.ReplyGood = string.Format("{0} frowns, their expression darkens", actorText);
                                     List<Trigger> listTriggers_2 = new List<Trigger>();
-                                    listTriggers_2.Add(new Trigger(TriggerCheck.RelPlyr, 0, 40, EventCalc.GreaterThanOrEqual));
+                                    listTriggers_2.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), 40, EventCalc.GreaterThanOrEqual));
                                     option_2.SetTriggers(listTriggers_2);
                                     OutConflict outcome_2 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Blackmail, SubType = ConflictSubType.Blackmail};
                                     option_2.SetGoodOutcome(outcome_2);
@@ -1054,7 +1054,7 @@ namespace Next_Game
                                     OptionInteractive option_3 = new OptionInteractive("Seduce") { ActorID = actorID };
                                     option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
                                     List<Trigger> listTriggers_3 = new List<Trigger>();
-                                    listTriggers_3.Add(new Trigger(TriggerCheck.RelPlyr, 0, 60, EventCalc.GreaterThanOrEqual));
+                                    listTriggers_3.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), 60, EventCalc.GreaterThanOrEqual));
                                     option_3.SetTriggers(listTriggers_3);
                                     OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce, SubType = ConflictSubType.Seduce};
                                     option_3.SetGoodOutcome(outcome_3);
@@ -1063,7 +1063,7 @@ namespace Next_Game
                                     OptionInteractive option_4 = new OptionInteractive("Ask for their Allegiance") { ActorID = actorID };
                                     option_4.ReplyGood = string.Format("{0} kneels at your feet", actorText);
                                     List<Trigger> listTriggers_4 = new List<Trigger>();
-                                    listTriggers_4.Add(new Trigger(TriggerCheck.RelPlyr, 0, 70, EventCalc.GreaterThanOrEqual));
+                                    listTriggers_4.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), 70, EventCalc.GreaterThanOrEqual));
                                     option_4.SetTriggers(listTriggers_4);
                                     OutNone outcome_4 = new OutNone(eventObject.EventPID);
                                     option_4.SetGoodOutcome(outcome_4);
@@ -1513,13 +1513,13 @@ namespace Next_Game
                                 Game.SetError(new Error(76, string.Format("Invalid Trigger Data (\"{0}\"), default Combat trait used instead, for Option \"{1}\"", trigger.Data, option.Text)));
                             }
                             Console.WriteLine("\"{0}\" {1} Trigger, if type {2} is {3} to {4}", option.Text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold);
-                            if (CheckTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == false)
-                                { return false; }
+                            if (CheckTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == false) { return false; }
                             break;
                         case TriggerCheck.GameVar:
-
                             //NOT YET IMPLEMENTED
-
+                            break;
+                        case TriggerCheck.RelPlyr:
+                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { return false; }
                             break;
                         default:
                             Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\"", trigger.Check, option.Text)));
