@@ -1026,30 +1026,54 @@ namespace Next_Game
                                     else { actorText = string.Format("{0} {1}", person.Type, person.Name); }
                                     eventObject.Name = "Interact";
                                     eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
+                                    //default
+                                    OptionInteractive option_0 = new OptionInteractive("Introduce Yourself") { ActorID = actorID };
+                                    option_0.ReplyGood = string.Format("{0} acknowledges your presence", actorText);
+                                    OutNone outcome_0 = new OutNone(eventObject.EventPID);
+                                    option_0.SetGoodOutcome(outcome_0);
+                                    eventObject.SetOption(option_0);
                                     //befriend
                                     OptionInteractive option_1 = new OptionInteractive("Befriend") { ActorID = actorID };
                                     option_1.ReplyGood = string.Format("{0} looks at you expectantly", actorText);
+                                    List<Trigger> listTriggers_1 = new List<Trigger>();
+                                    listTriggers_1.Add(new Trigger(TriggerCheck.RelPlyr, 0, 50, EventCalc.GreaterThanOrEqual));
+                                    option_1.SetTriggers(listTriggers_1);
                                     OutConflict outcome_1 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Befriend, SubType = ConflictSubType.Befriend};
                                     option_1.SetGoodOutcome(outcome_1);
                                     eventObject.SetOption(option_1);
                                     //blackmail
                                     OptionInteractive option_2 = new OptionInteractive("Blackmail") { ActorID = actorID };
                                     option_2.ReplyGood = string.Format("{0} frowns, their expression darkens", actorText);
+                                    List<Trigger> listTriggers_2 = new List<Trigger>();
+                                    listTriggers_2.Add(new Trigger(TriggerCheck.RelPlyr, 0, 40, EventCalc.GreaterThanOrEqual));
+                                    option_2.SetTriggers(listTriggers_2);
                                     OutConflict outcome_2 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Blackmail, SubType = ConflictSubType.Blackmail};
                                     option_2.SetGoodOutcome(outcome_2);
                                     eventObject.SetOption(option_2);
                                     //seduce
                                     OptionInteractive option_3 = new OptionInteractive("Seduce") { ActorID = actorID };
                                     option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
+                                    List<Trigger> listTriggers_3 = new List<Trigger>();
+                                    listTriggers_3.Add(new Trigger(TriggerCheck.RelPlyr, 0, 60, EventCalc.GreaterThanOrEqual));
+                                    option_3.SetTriggers(listTriggers_3);
                                     OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce, SubType = ConflictSubType.Seduce};
                                     option_3.SetGoodOutcome(outcome_3);
                                     eventObject.SetOption(option_3);
                                     //support
                                     OptionInteractive option_4 = new OptionInteractive("Ask for their Allegiance") { ActorID = actorID };
                                     option_4.ReplyGood = string.Format("{0} kneels at your feet", actorText);
+                                    List<Trigger> listTriggers_4 = new List<Trigger>();
+                                    listTriggers_4.Add(new Trigger(TriggerCheck.RelPlyr, 0, 70, EventCalc.GreaterThanOrEqual));
+                                    option_4.SetTriggers(listTriggers_4);
                                     OutNone outcome_4 = new OutNone(eventObject.EventPID);
                                     option_4.SetGoodOutcome(outcome_4);
                                     eventObject.SetOption(option_4);
+                                    //gift
+                                    OptionInteractive option_5 = new OptionInteractive("Give Information or a Gift") { ActorID = actorID };
+                                    option_5.ReplyGood = string.Format("{0} thanks you for your gift", actorText);
+                                    OutNone outcome_5 = new OutNone(eventObject.EventPID);
+                                    option_5.SetGoodOutcome(outcome_5);
+                                    eventObject.SetOption(option_5);
                                 }
                                 else { Game.SetError(new Error(73, "Invalid actorID from AutoCreateEvent (null from dict)")); }
                             }
