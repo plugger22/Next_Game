@@ -1027,7 +1027,7 @@ namespace Next_Game
                                     eventObject.Name = "Interact";
                                     eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
                                     //default
-                                    OptionInteractive option_0 = new OptionInteractive("Introduce Yourself") { ActorID = actorID };
+                                    OptionInteractive option_0 = new OptionInteractive("Make yourself known") { ActorID = actorID };
                                     option_0.ReplyGood = string.Format("{0} acknowledges your presence", actorText);
                                     OutNone outcome_0 = new OutNone(eventObject.EventPID);
                                     option_0.SetGoodOutcome(outcome_0);
