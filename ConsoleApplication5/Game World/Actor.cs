@@ -173,7 +173,7 @@ namespace Next_Game
         {
             if (listRelPlyr.Count > 0)
             {
-                Relation relation = listRelPlyr[0];
+                Relation relation = listRelPlyr[listRelPlyr.Count - 1];
                 return relation.Tag;
             }
             else { return ""; }

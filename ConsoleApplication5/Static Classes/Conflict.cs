@@ -1358,7 +1358,8 @@ namespace Next_Game
                             else if (amount < -1) { amount = rnd.Next(-1, amount); calc = EventCalc.Add; }
                         }
                         //resolve the actual result
-                        switch(type)
+                        Message message = null;
+                        switch (type)
                         {
                             case ResultType.DataPoint:
                                 Console.WriteLine("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount);
@@ -1366,7 +1367,6 @@ namespace Next_Game
                                 {
                                     if (amount != 0)
                                     {
-                                        Message message = null;
                                         //automatic ADD by amount. If Data > 0 then Good, otherwise Bad
                                         if (data > 0)
                                         {
@@ -1396,6 +1396,9 @@ namespace Next_Game
                             case ResultType.RelPlyr:
                                 //change Opponent's relationship with Player
                                 opponent.AddRelEventPlyr(new Relation(result.Description, result.Tag, result.Amount));
+                                message = new Message(string.Format("{0} {1}'s relationship with you has {2} by {3}{4}", opponent.Title, opponent.Name,
+                                   result.Amount > 0 ? "improved" : "worsened", result.Amount > 0 ? "+" : "" ), MessageType.Conflict);
+                                Game.world.SetMessage(message);
                                 break;
                             case ResultType.RelOther:
                                 break;
