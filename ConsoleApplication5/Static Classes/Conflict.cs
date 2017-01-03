@@ -1397,7 +1397,7 @@ namespace Next_Game
                                 //change Opponent's relationship with Player
                                 opponent.AddRelEventPlyr(new Relation(result.Description, result.Tag, result.Amount));
                                 message = new Message(string.Format("{0} {1}'s relationship with you has {2} by {3}{4}", opponent.Title, opponent.Name,
-                                   result.Amount > 0 ? "improved" : "worsened", result.Amount > 0 ? "+" : "" ), MessageType.Conflict);
+                                   result.Amount > 0 ? "improved" : "worsened", result.Amount > 0 ? "+" : "", result.Amount ), MessageType.Conflict);
                                 Game.world.SetMessage(message);
                                 break;
                             case ResultType.RelOther:
