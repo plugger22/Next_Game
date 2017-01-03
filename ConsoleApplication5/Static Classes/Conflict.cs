@@ -1355,7 +1355,13 @@ namespace Next_Game
                         if (calc == EventCalc.Random)
                         {
                             if (amount > 1) { amount = rnd.Next(1, amount); calc = EventCalc.Add; }
-                            else if (amount < -1) { amount = rnd.Next(-1, amount); calc = EventCalc.Add; }
+                            else if (amount < -1) { amount = rnd.Next(1, Math.Abs(amount)) * -1; calc = EventCalc.Add; }
+                            int halfAmount;
+                            Console.WriteLine("RelPlyr amount beforehand {0}", amount);
+                            //if random amount comes in at less than half the range then bump it up to half (effective range = Amount/2 -> Amount)
+                            if (result.Amount > 0) { halfAmount = result.Amount / 2; if (amount < halfAmount) { amount = halfAmount; } }
+                            if (result.Amount < 0) { halfAmount = result.Amount / 2; if (amount > halfAmount) { amount = halfAmount; } }
+                            Console.WriteLine("RelPlyr amount afterwards {0}", amount);
                         }
                         //resolve the actual result
                         Message message = null;
@@ -1395,9 +1401,9 @@ namespace Next_Game
                                 break;
                             case ResultType.RelPlyr:
                                 //change Opponent's relationship with Player
-                                opponent.AddRelEventPlyr(new Relation(result.Description, result.Tag, result.Amount));
+                                opponent.AddRelEventPlyr(new Relation(result.Description, result.Tag, amount));
                                 message = new Message(string.Format("{0} {1}'s relationship with you has {2} by {3}{4}", opponent.Title, opponent.Name,
-                                   result.Amount > 0 ? "improved" : "worsened", result.Amount > 0 ? "+" : "", result.Amount ), MessageType.Conflict);
+                                   amount > 0 ? "improved" : "worsened", amount > 0 ? "+" : "", amount ), MessageType.Conflict);
                                 Game.world.SetMessage(message);
                                 break;
                             case ResultType.RelOther:
