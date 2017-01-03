@@ -281,7 +281,7 @@ namespace Next_Game
         /// <param name="change"></param>
         public Relation(string description, string tag, int change)
         {
-            if (description != null)
+            if (description != null && tag != null)
             {
                 //Level is taken care of by Actor.cs AddRelEventPlyr
                 Text = description;
@@ -289,7 +289,12 @@ namespace Next_Game
                 this.ActorID = 1; //default Player relationshp for this constructor
                 this.Change = change;
             }
-            else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
+            else
+            {
+                Game.SetError(new Error(119, "Invalid Description, or Tag, (null) in Relation Constructor"));
+                if (String.IsNullOrEmpty(description)) { Text = "unknown"; }
+                if (String.IsNullOrEmpty(tag)) { Tag = "unknown"; }
+            }
         }
 
         /// <summary>
@@ -301,7 +306,7 @@ namespace Next_Game
         /// <param name="actorID"></param>
         public Relation(string description, string tag, int change, int actorID)
         {
-            if (description != null)
+            if (description != null && tag != null)
             {
                 //Level is taken care of by Actor.cs AddRelEventPlyr
                 Text = description;
@@ -309,7 +314,12 @@ namespace Next_Game
                 this.ActorID = actorID;
                 this.Change = change;
             }
-            else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
+            else
+            {
+                Game.SetError(new Error(119, "Invalid Description, or Tag, (null) in Relation Constructor"));
+                if (String.IsNullOrEmpty(description)) { Text = "unknown"; }
+                if (String.IsNullOrEmpty(tag)) { Tag = "unknown"; }
+            }
         }
 
     }
