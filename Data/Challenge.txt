@@ -142,12 +142,12 @@ OutLossMinor: Your relationship deteriorates
 OutLoss: You have become disliked
 OutLossMajor: Your opponent is actively campaigning against you
 OutNone: Indifference is the only outcome today. Nobody cares one way or another.
-ResWinMinor: 2, 3, 4
-ResWin: 5
-ResWinMajor: 6, 7 
-ResLossMinor: 8
-ResLoss: 9, 10
-ResLossMajor: 11, 12, 13
+ResWinMinor: 14
+ResWin: 15
+ResWinMajor: 16
+ResLossMinor: 17
+ResLoss: 18
+ResLossMajor: 19
 ResNone: 1
 [End]
 

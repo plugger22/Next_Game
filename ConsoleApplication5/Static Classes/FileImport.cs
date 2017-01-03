@@ -195,6 +195,7 @@ namespace Next_Game
     struct ResultStruct
     {
         public string Name { get; set; }
+        public string Tag { get; set; }
         public int ResultID { get; set; }
         public ResultType Type { get; set; }
         public DataPoint DataPoint { get; set; }
@@ -3460,6 +3461,11 @@ namespace Next_Game
                                 { Game.SetError(new Error(115, string.Format("Empty Name field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                                 else { structResult.Name = cleanToken; }
                                 break;
+                            case "Tag":
+                                if (cleanToken.Length == 0)
+                                { Game.SetError(new Error(115, string.Format("Empty Tag field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                                else { structResult.Tag = cleanToken; }
+                                break;
                             case "RID":
                                 try
                                 { structResult.ResultID = Convert.ToInt32(cleanToken); }
@@ -3483,8 +3489,11 @@ namespace Next_Game
                                         case "GameVar":
                                             structResult.Type = ResultType.DataPoint;
                                             break;
-                                        case "Relationship":
-                                            structResult.Type = ResultType.DataPoint;
+                                        case "RelPlyr":
+                                            structResult.Type = ResultType.RelPlyr;
+                                            break;
+                                        case "RelOther":
+                                            structResult.Type = ResultType.RelOther;
                                             break;
                                         case "Condition":
                                             structResult.Type = ResultType.DataPoint;
@@ -3607,6 +3616,7 @@ namespace Next_Game
                                     Result resultObject = new Result(structResult.ResultID, structResult.Name, structResult.Type, structResult.Data, structResult.Calc, structResult.Amount);
                                     if (structResult.DataPoint > DataPoint.None)
                                     { resultObject.DataPoint = structResult.DataPoint; }
+                                    if (String.IsNullOrEmpty(structResult.Tag) == false) { resultObject.Tag = structResult.Tag; }
 
                                     //last datapoint - save object to dictionary
                                     if (dataCounter > 0)
