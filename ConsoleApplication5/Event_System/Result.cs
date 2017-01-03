@@ -18,6 +18,7 @@ namespace Next_Game.Event_System
     class Result
     {
         public string Description { get; set; }
+        public string Tag { get; set; } //used for relationship short descriptor tags. Ignore if not required.
         public int ResultID { get; set; } //user specified
         public ResultType Type { get; set; }
         public int Data { get; set; } //multipurpose

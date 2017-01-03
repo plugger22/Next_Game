@@ -1351,7 +1351,7 @@ namespace Next_Game
                         int amount = result.Amount;
                         EventCalc calc = result.Calc;
                         RLColor backColor = Game.layout.Outcome_FillColor;
-                        //check for a random outcome -> then it's random 'amount', eg. amount is 100 then it's d100
+                        //check for a random outcome -> then it's random 'amount', eg. amount is 100 then it's d100, -100 then it's -1d100
                         if (calc == EventCalc.Random)
                         {
                             if (amount > 1) { amount = rnd.Next(1, amount); calc = EventCalc.Add; }
@@ -1394,6 +1394,8 @@ namespace Next_Game
                             case ResultType.GameVar:
                                 break;
                             case ResultType.RelPlyr:
+                                //change Opponent's relationship with Player
+                                opponent.AddRelEventPlyr(new Relation(result.Description, result.Tag, result.Amount));
                                 break;
                             case ResultType.RelOther:
                                 break;
