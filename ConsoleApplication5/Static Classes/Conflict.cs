@@ -1393,7 +1393,9 @@ namespace Next_Game
                                 break;
                             case ResultType.GameVar:
                                 break;
-                            case ResultType.Relationship:
+                            case ResultType.RelPlyr:
+                                break;
+                            case ResultType.RelOther:
                                 break;
                             case ResultType.Condition:
                                 break;
