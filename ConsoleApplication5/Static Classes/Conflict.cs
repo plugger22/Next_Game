@@ -1338,6 +1338,7 @@ namespace Next_Game
             List<Snippet> tempList = new List<Snippet>();
             List<int> resultList = challenge.GetResults(outcome);
             int resultID;
+            string tempText;
             if (resultList.Count > 0)
             {
                 for(int i = 0; i < resultList.Count; i++)
@@ -1379,7 +1380,7 @@ namespace Next_Game
                                             int oldValue = Game.director.GetGameState(result.DataPoint, DataState.Good);
                                             int newValue = Math.Abs(amount) + oldValue;
                                             Game.director.SetGameState(result.DataPoint, DataState.Good, newValue, true);
-                                            string tempText = string.Format("{0} has increased by {1} as a result of the conflict", result.DataPoint, amount);
+                                            tempText = string.Format("{0} has increased by {1} as a result of the conflict", result.DataPoint, amount);
                                             tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                             message = new Message(string.Format("{0}", tempText), MessageType.Conflict);
                                         }
@@ -1388,7 +1389,7 @@ namespace Next_Game
                                             int oldValue = Game.director.GetGameState(result.DataPoint, DataState.Bad);
                                             int newValue = Math.Abs(amount) + oldValue;
                                             Game.director.SetGameState(result.DataPoint, DataState.Bad, newValue, true);
-                                            string tempText = string.Format("{0} has decreased by {1} as a result of the conflict", result.DataPoint, amount);
+                                            tempText = string.Format("{0} has decreased by {1} as a result of the conflict", result.DataPoint, amount);
                                             tempList.Add(new Snippet(tempText, RLColor.Red, backColor));
                                             message = new Message(string.Format("{0}", tempText), MessageType.Conflict);
                                         }
@@ -1402,8 +1403,10 @@ namespace Next_Game
                             case ResultType.RelPlyr:
                                 //change Opponent's relationship with Player
                                 opponent.AddRelEventPlyr(new Relation(result.Description, result.Tag, amount));
-                                message = new Message(string.Format("{0} {1}'s relationship with you has {2} by {3}{4}", opponent.Title, opponent.Name,
-                                   amount > 0 ? "improved" : "worsened", amount > 0 ? "+" : "", amount ), MessageType.Conflict);
+                                tempText = string.Format("{0} {1}'s relationship with you has {2} by {3}{4}", opponent.Title, opponent.Name,
+                                   amount > 0 ? "improved" : "worsened", amount > 0 ? "+" : "", amount);
+                                tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                message = new Message(tempText, MessageType.Conflict);
                                 Game.world.SetMessage(message);
                                 break;
                             case ResultType.RelOther:

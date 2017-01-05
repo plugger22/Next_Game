@@ -179,6 +179,20 @@ namespace Next_Game
             else { return ""; }
         }
 
+        /// <summary>
+        /// returns Change amount of last Relationship effect (eg. the Tag)
+        /// </summary>
+        /// <returns></returns>
+        internal int GetPlayerChange()
+        {
+            if (listRelPlyr.Count > 0)
+            {
+                Relation relation = listRelPlyr[listRelPlyr.Count - 1];
+                return relation.Change;
+            }
+            else { return 0; }
+        }
+
         public int GetRelPlyr()
         { return relPlyr; }
 
