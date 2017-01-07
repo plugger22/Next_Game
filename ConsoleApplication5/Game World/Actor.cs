@@ -75,6 +75,7 @@ namespace Next_Game
             Age = 30;
             Type = ActorType.None;
             Sex = ActorSex.Male;
+            if (relPlyr == 0) { relPlyr = 50; } //nuetral
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];

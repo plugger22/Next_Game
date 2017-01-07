@@ -1002,6 +1002,7 @@ namespace Next_Game
                 newBannerLord.Loyalty_AtStart = KingLoyalty.New_King;
                 newBannerLord.Loyalty_Current = KingLoyalty.New_King;
                 newBannerLord.Lordship = Game.gameRevolt;
+                newBannerLord.AddRelEventPlyr(new Relation("Grateful to the New King for their Title", "Supports New King", -45));
                 newMinorHouse.LordID = newBannerLord.ActID;
                 
                 //need to update house.ListOfBannerLords (remove old refID, add new)
@@ -1063,6 +1064,7 @@ namespace Next_Game
                 newLord.Sex = oldBannerLord.Sex;
                 newLord.SetSecrets(oldBannerLord.GetSecrets());
                 newLord.Resources = oldBannerLord.Resources;
+                newLord.AddRelEventPlyr(new Relation("Grateful to the New King for their Title", "Supports New King", -45));
 
                 //remove oldBannerLord from dictionaries and add newLord
                 Game.world.RemovePassiveActor(oldBannerLord.ActID);
