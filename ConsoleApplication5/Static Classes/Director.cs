@@ -1055,7 +1055,7 @@ namespace Next_Game
                                     option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
                                     List<Trigger> listTriggers_3 = new List<Trigger>();
                                     listTriggers_3.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), 60, EventCalc.GreaterThanOrEqual));
-                                    listTriggers_3.Add(new Trigger(TriggerCheck.Sex, 0, (int)person.Sex, EventCalc.Equals)); //must be opposite sex
+                                    listTriggers_3.Add(new Trigger(TriggerCheck.Sex, 0, (int)person.Sex, EventCalc.NotEqual)); //must be opposite sex
                                     option_3.SetTriggers(listTriggers_3);
                                     OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce, SubType = ConflictSubType.Seduce};
                                     option_3.SetGoodOutcome(outcome_3);
@@ -1525,7 +1525,7 @@ namespace Next_Game
                             break;
                         case TriggerCheck.Sex:
                             //Threshold = (int)ActorSex -> Male 1, Female 2 (sex of actor). Must be opposite sex (seduction
-                            if (CheckTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == true) { Console.WriteLine("Trigger: Same sex, Seduction not possible"); return false; }
+                            if (CheckTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == false) { Console.WriteLine("Trigger: Same sex, Seduction not possible"); return false; }
                             break;
                         case TriggerCheck.Type:
                             //Data = ActorType, Threshold is required type. Must be equal
@@ -1560,6 +1560,13 @@ namespace Next_Game
                     break;
                 case EventCalc.Equals:
                     if (data != threshold) { validCheck = false; }
+                    break;
+                case EventCalc.NotEqual:
+                    if (data == threshold) { validCheck = false; }
+                    break;
+                case EventCalc.Add:
+                case EventCalc.Subtract:
+                case EventCalc.Random:
                     break;
                 default:
                     Game.SetError(new Error(77, string.Format("Invalid Trigger Calculation Type (\"{0}\")", comparator)));
@@ -2202,6 +2209,10 @@ namespace Next_Game
                     break;
                 case EventCalc.Equals:
                     newValue = amount;
+                    break;
+                case EventCalc.NotEqual:
+                case EventCalc.LessThanOrEqual:
+                case EventCalc.GreaterThanOrEqual:
                     break;
             }
             return newValue;
