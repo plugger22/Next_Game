@@ -353,13 +353,13 @@ namespace Next_Game
                 {
                     //copy data across from struct to object
                     follower.Role = data.Role;
-                    follower.SetRelPlyr(data.Loyalty);
                     follower.Description = data.Description;
                     follower.ArcID = data.ArcID;
                     follower.Resources = data.Resources;
                     follower.Age = data.Age;
                     follower.Born = Game.gameStart - data.Age;
                     //relationship
+                    follower.SetRelPlyr(data.Loyalty);
                     follower.AddRelEventPlyr(new Relation("Loyal Follower dedicated to the cause", "Loyal Follower", 5));
                     //trait effects
                     follower.arrayOfTraitEffects[age, (int)SkillType.Combat] = data.Combat_Effect;
@@ -601,6 +601,7 @@ namespace Next_Game
             actor.LocID = locID;
             actor.RefID = refID;
             actor.HouseID = houseID;
+            
             //resources
             House house = Game.world.GetHouse(refID);
             if (house != null)
@@ -1854,6 +1855,7 @@ namespace Next_Game
             listOfHousesByPower = sortedHouses.ToList();
             //seperate into two camps (royalists and rebels)
             bool rebel = true;
+            int amt;
             for (int i = 0; i < listOfHousesByPower.Count; i++)
             {
                 MajorHouse house = listOfHousesByPower[i];
@@ -2061,14 +2063,22 @@ namespace Next_Game
             Position pos = Game.map.GetCapital();
             List<Advisor> tempListOfAdvisors = new List<Advisor>();
             Advisor royalSepton = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.High_Septon); tempListOfAdvisors.Add(royalSepton);
+            amt = rnd.Next(40) * -1; royalSepton.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
             Advisor royalCoin = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Coin); tempListOfAdvisors.Add(royalCoin);
+            amt = rnd.Next(40) * -1; royalCoin.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
             Advisor royalLaw = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Laws); tempListOfAdvisors.Add(royalLaw);
+            amt = rnd.Next(40) * -1; royalLaw.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
             Advisor royalShip = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Ships); tempListOfAdvisors.Add(royalShip);
-            Advisor royalWhisper = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Whisperers); tempListOfAdvisors.Add(royalWhisper);
+            amt = rnd.Next(40) * -1; royalShip.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
+            Advisor royalWhisperer = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Master_of_Whisperers); tempListOfAdvisors.Add(royalWhisperer);
+            amt = rnd.Next(40) * -1; royalWhisperer.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
             Advisor royalHand = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Hand_of_the_King); tempListOfAdvisors.Add(royalHand);
+            amt = rnd.Next(40) * -1; royalHand.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
             Advisor royalGuard = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Commander_of_Kings_Guard); tempListOfAdvisors.Add(royalGuard);
+            amt = rnd.Next(40) * -1; royalGuard.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
             Advisor royalWatch = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, AdvisorRoyal.Commander_of_City_Watch); tempListOfAdvisors.Add(royalWatch);
-            
+            amt = rnd.Next(40) * -1; royalWatch.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
+
             //get all actors in Rebel House
             List<Passive> listOfRebelActors = new List<Passive>();
             IEnumerable<Passive> rebelActors =

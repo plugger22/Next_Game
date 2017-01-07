@@ -140,8 +140,6 @@ namespace Next_Game
         internal List<int> GetPlayerEvents()
         { return listOfPlayerEvents; }
 
-        
-
         internal int GetNumPlayerEvents()
         { return listOfPlayerEvents.Count; }
 
@@ -212,7 +210,7 @@ namespace Next_Game
         {
             relPlyr += change;
             relPlyr = Math.Min(100, relPlyr);
-            relPlyr = Math.Max(0, relPlyr);
+            relPlyr = Math.Max(1, relPlyr);
         }
 
         /// <summary>

@@ -932,6 +932,7 @@ namespace Next_Game
                 //new MajorHouse
                 MajorHouse newMajorhouse = new MajorHouse();
                 int houseID = Game.network.GetNumUniqueHouses() + 1;
+                int amt;
                 newMajorhouse.HouseID = houseID;
                 Console.WriteLine("Old King House {0}, {1}", oldkingHouse.Name, oldkingHouse.Motto);
                 //Ref ID is 99 (all relevant datapoints are changed to this, not previous bannerlord refID as this is > 100 and causes issues with code as it thinks it's still a minor house)
@@ -1128,22 +1129,32 @@ namespace Next_Game
                 //create castellan
                 Advisor castellan = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Castellan, AdvisorRoyal.None);
                 castellan.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; castellan.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                amt = rnd.Next(40) * -1;
+                castellan.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
                 Game.world.SetPassiveActor(castellan);
                 //create maester
                 Advisor maester = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Maester, AdvisorRoyal.None);
                 maester.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; maester.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                amt = rnd.Next(40) * -1;
+                maester.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
                 Game.world.SetPassiveActor(maester);
                 //create septon
                 Advisor septon = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Septon, AdvisorRoyal.None);
                 septon.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; septon.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                amt = rnd.Next(40) * -1;
+                septon.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
                 Game.world.SetPassiveActor(septon);
                 //create new Knight
                 Knight knight = Game.history.CreateKnight(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID);
                 knight.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; knight.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                amt = rnd.Next(40) * -1;
+                knight.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
                 Game.world.SetPassiveActor(knight);
                 //create new wife
                 Noble wife = (Noble)Game.history.CreateStartingHouseActor(newMajorhouse.Name, ActorType.Lady, locLord.GetPosition(), locLord.LocationID, newMajorhouse.RefID, houseID, ActorSex.Female, WifeStatus.First_Wife);
                 wife.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; wife.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                amt = rnd.Next(40) * -1;
+                wife.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
                 Game.world.SetPassiveActor(wife);
                 //create family
                 Game.history.CreateFamily(newLord, wife, newMinorHouse.LocName);
@@ -1197,6 +1208,7 @@ namespace Next_Game
                 BannerLord newLord = Game.history.CreateBannerLord(surname, loc.GetPosition(), deadLord.LocID, deadLord.RefID, deadLord.HouseID);
                 newLord.Loyalty_Current = KingLoyalty.New_King;
                 newLord.Loyalty_AtStart = deadLord.Loyalty_AtStart;
+                newLord.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", -25));
                 newLord.Lordship = Game.gameRevolt - 1;
                 Game.world.SetPassiveActor(newLord);
                 //update house
