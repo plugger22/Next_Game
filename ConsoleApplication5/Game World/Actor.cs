@@ -75,7 +75,7 @@ namespace Next_Game
             Age = 30;
             Type = ActorType.None;
             Sex = ActorSex.Male;
-            if (relPlyr == 0) { relPlyr = 50; } //nuetral
+            relPlyr = 50; //nuetral
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
@@ -102,7 +102,7 @@ namespace Next_Game
             Age = 30;
             this.Type = type;
             this.Sex = sex;
-            if (relPlyr == 0) { relPlyr = 50; } //nuetral
+            relPlyr = 50; //nuetral
             ActID = characterIndex++;
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
@@ -210,7 +210,7 @@ namespace Next_Game
         {
             relPlyr += change;
             relPlyr = Math.Min(100, relPlyr);
-            relPlyr = Math.Max(1, relPlyr);
+            relPlyr = Math.Max(0, relPlyr);
         }
 
         /// <summary>

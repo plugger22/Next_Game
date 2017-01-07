@@ -1453,7 +1453,7 @@ namespace Next_Game
 
             ActorSex sex;
             string houseName;
-            
+            int amt;
             //determine sex
             if (childSex == ActorSex.Male || childSex == ActorSex.Female)
             { sex = childSex; }
@@ -1479,6 +1479,9 @@ namespace Next_Game
             child.GenID = Game.gameGeneration + 1;
             child.Loyalty_AtStart = Lord.Loyalty_AtStart;
             child.Loyalty_Current = Lord.Loyalty_Current;
+            amt = rnd.Next(40);
+            if (child.Loyalty_Current == KingLoyalty.New_King) { amt *= -1; child.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", amt)); }
+            else { child.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)); }
             //family relations
             child.AddRelation(Lord.ActID, ActorRelation.Father);
             child.AddRelation(Lady.ActID, ActorRelation.Mother);
@@ -1911,12 +1914,15 @@ namespace Next_Game
                 foreach (Passive actor in listOfActors)
                 {
                     actor.Loyalty_AtStart = loyalty; actor.Loyalty_Current = loyalty;
-                    //adjust relationships with Plyr
-                    int change = rnd.Next(1, 40);
-                    if (loyalty == KingLoyalty.New_King)
-                    { change *= -1; actor.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", change));  }
-                    else if (loyalty == KingLoyalty.Old_King)
-                    { actor.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", change)); }
+                    //adjust relationships with Plyr, if hasn't already been done so
+                    if (actor.GetRelPlyr() == 50)
+                    {
+                        int change = rnd.Next(1, 40);
+                        if (loyalty == KingLoyalty.New_King)
+                        { change *= -1; actor.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", change)); }
+                        else if (loyalty == KingLoyalty.Old_King)
+                        { actor.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", change)); }
+                    }
                 }
             }
 
@@ -2186,6 +2192,7 @@ namespace Next_Game
                     Advisor newAdvisor = CreateAdvisor(pos, 1, 9999, 9999, ActorSex.Male, AdvisorNoble.None, courtPosition, 1200);
                     newAdvisor.Loyalty_AtStart = KingLoyalty.New_King;
                     newAdvisor.Loyalty_Current = KingLoyalty.New_King;
+                    amt = rnd.Next(40) * -1;  newAdvisor.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
                     Game.world.SetPassiveActor(newAdvisor);
                     courtAdvisor = newAdvisor;
                 }
