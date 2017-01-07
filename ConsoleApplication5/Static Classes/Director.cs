@@ -1055,6 +1055,7 @@ namespace Next_Game
                                     option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
                                     List<Trigger> listTriggers_3 = new List<Trigger>();
                                     listTriggers_3.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), 60, EventCalc.GreaterThanOrEqual));
+                                    listTriggers_3.Add(new Trigger(TriggerCheck.Sex, 0, (int)person.Sex, EventCalc.Equals)); //must be opposite sex
                                     option_3.SetTriggers(listTriggers_3);
                                     OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce, SubType = ConflictSubType.Seduce};
                                     option_3.SetGoodOutcome(outcome_3);
@@ -1494,15 +1495,15 @@ namespace Next_Game
             List<Trigger> listTriggers = option.GetTriggers();
             if (listTriggers.Count > 0)
             {
+                Active player = Game.world.GetActiveActor(1);
                 //check each trigger
-                foreach(Trigger trigger in listTriggers)
+                foreach (Trigger trigger in listTriggers)
                 {
                     switch (trigger.Check)
                     {
                         case TriggerCheck.None:
                             break;
                         case TriggerCheck.Trait:
-                            Active player = Game.world.GetActiveActor(1);
                             SkillType type;
                             try
                             { type = (SkillType)trigger.Data; }
@@ -1520,6 +1521,12 @@ namespace Next_Game
                             break;
                         case TriggerCheck.RelPlyr:
                             if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { return false; }
+                            break;
+                        case TriggerCheck.Sex:
+                            //trigger.Threshold = (int)ActorSex -> Male 1, Female 2 (sex of actor). Must be opposite sex
+                            if (CheckTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == true) { Console.WriteLine("Same sex! Seduction not possible"); return false; }
+                            break;
+                        case TriggerCheck.Type:
                             break;
                         default:
                             Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\"", trigger.Check, option.Text)));

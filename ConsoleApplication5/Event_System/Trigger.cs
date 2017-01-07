@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum TriggerCheck { None, Trait, GameVar, RelPlyr}
+    public enum TriggerCheck { None, Trait, GameVar, RelPlyr, Sex, Type}
 
     /// <summary>
     /// handles triggers for events and options within events
