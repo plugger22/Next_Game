@@ -719,7 +719,7 @@ namespace Next_Game
                 }
 
                 //Relationship records
-                if (person is Player == false)
+                if ((person is Player) == false)
                 {
                     List<Relation> personRelations = person.GetRelEventPlyr();
                     if (personRelations.Count > 0)

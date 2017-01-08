@@ -86,7 +86,7 @@ namespace Next_Game
         public static int _eventID = 0; //ID of current event being dealt with
         public static bool _fullConsole = false; //set to true by InfoChannel.DrawInfoConsole if multiConsole is maxxed out
         public static int _scrollIndex = 0; //used by infoChannel.DrawConsole to handle scrolling up and down
-        public static int _multiConsoleLength = 46; //max length of data in multi Console (infochannel.drawInfoConsole)
+        public static int _multiConsoleLength = 80; //max length of data in multi Console (infochannel.drawInfoConsole)
         //other
         private static RLKeyPress _keyLast = null; //last known keypress
         private static Position _posSelect1; //used for input of map positions

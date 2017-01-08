@@ -1481,7 +1481,8 @@ namespace Next_Game
             child.Loyalty_Current = Lord.Loyalty_Current;
             amt = rnd.Next(40);
             if (child.Loyalty_Current == KingLoyalty.New_King) { amt *= -1; child.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", amt)); }
-            else { child.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)); }
+            else if (child.Loyalty_Current == KingLoyalty.Old_King) { child.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)); }
+            else { child.AddRelEventPlyr(new Relation("Confused as to her loyalty", "Confused", amt)); }
             //family relations
             child.AddRelation(Lord.ActID, ActorRelation.Father);
             child.AddRelation(Lady.ActID, ActorRelation.Mother);
@@ -2138,22 +2139,27 @@ namespace Next_Game
                         NewKing = rebelActor;
                         NewKing.Office = ActorOffice.King;
                         NewKing.Title = "King";
+                        rebelActor.AddRelEventPlyr(new Relation("Assumes power and looks to crush any threats", "Assumes Power", -25));
                         break;
                     case ActorType.Lady:
                         Game.lore.NewQueen = rebelActor;
                         NewQueen = rebelActor;
                         NewQueen.Office = ActorOffice.Queen;
                         NewQueen.Title = "Queen";
+                        rebelActor.AddRelEventPlyr(new Relation("Becomes Queen and supports her Husband, the New King", "Supports her husband", -25));
                         break;
                     case ActorType.Heir:
                         Game.lore.NewHeir = rebelActor;
                         NewHeir = rebelActor;
+                        rebelActor.AddRelEventPlyr(new Relation("Father is now the New King and Heir in line to inherit", "Awaits Inherited Power", -25));
                         break;
                     case ActorType.lord:
                         rebelActor.Type = ActorType.Prince;
+                        rebelActor.AddRelEventPlyr(new Relation("Son of the New King, a believer in the family", "Son of New King", -25));
                         break;
                     case ActorType.lady:
                         rebelActor.Type = ActorType.Princess;
+                        rebelActor.AddRelEventPlyr(new Relation("Daughter of the New King, a believer in the family", "Sibling of New King", -25));
                         break;
                 }
             }

@@ -1208,7 +1208,7 @@ namespace Next_Game
                 BannerLord newLord = Game.history.CreateBannerLord(surname, loc.GetPosition(), deadLord.LocID, deadLord.RefID, deadLord.HouseID);
                 newLord.Loyalty_Current = KingLoyalty.New_King;
                 newLord.Loyalty_AtStart = deadLord.Loyalty_AtStart;
-                newLord.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", -25));
+                newLord.AddRelEventPlyr(new Relation("Loyal to the New King as Grateful for his promotion", "Supports New King", -25));
                 newLord.Lordship = Game.gameRevolt - 1;
                 Game.world.SetPassiveActor(newLord);
                 //update house
