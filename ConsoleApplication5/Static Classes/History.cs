@@ -1477,12 +1477,15 @@ namespace Next_Game
             child.BornRefID = Lord.RefID;
             child.HouseID = Lady.HouseID;
             child.GenID = Game.gameGeneration + 1;
-            child.Loyalty_AtStart = Lord.Loyalty_AtStart;
-            child.Loyalty_Current = Lord.Loyalty_Current;
-            amt = rnd.Next(40);
-            if (child.Loyalty_Current == KingLoyalty.New_King) { amt *= -1; child.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", amt)); }
-            else if (child.Loyalty_Current == KingLoyalty.Old_King) { child.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)); }
-            else { child.AddRelEventPlyr(new Relation("Confused as to her loyalty", "Confused", amt)); }
+            if (Lord.Loyalty_AtStart != KingLoyalty.None)
+            {
+                child.Loyalty_AtStart = Lord.Loyalty_AtStart;
+                child.Loyalty_Current = Lord.Loyalty_Current;
+                amt = rnd.Next(40);
+                if (child.Loyalty_Current == KingLoyalty.New_King) { amt *= -1; child.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", amt)); }
+                else if (child.Loyalty_Current == KingLoyalty.Old_King) { child.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)); }
+                else { child.AddRelEventPlyr(new Relation("Confused as to her loyalty", "Confused", 0)); }
+            }
             //family relations
             child.AddRelation(Lord.ActID, ActorRelation.Father);
             child.AddRelation(Lady.ActID, ActorRelation.Mother);
@@ -1923,6 +1926,7 @@ namespace Next_Game
                         { change *= -1; actor.AddRelEventPlyr(new Relation("Sworn to the New King", "Supports New King", change)); }
                         else if (loyalty == KingLoyalty.Old_King)
                         { actor.AddRelEventPlyr(new Relation("Sworn to the Old King", "Supports Old King", change)); }
+                        else { actor.AddRelEventPlyr(new Relation("Confused Loyalty", "Confused Loyalty", change)); }
                     }
                 }
             }

@@ -1261,9 +1261,12 @@ namespace Next_Game
                     heir.Type = ActorType.Lord;
                     heir.Realm = ActorRealm.Head_of_House;
                     heir.Lordship = year;
-                    amt = rnd.Next(40);
-                    if (deadLord.Loyalty_Current == KingLoyalty.New_King) { amt *= -1; heir.AddRelEventPlyr(new Relation("Loyal to New King", "Supports New King", amt)); }
-                    else { heir.AddRelEventPlyr(new Relation("Loyal to Old King", "Supports Old King", amt)); }
+                    if (heir.GetRelPlyr() == 50)
+                    {
+                        amt = rnd.Next(40);
+                        if (deadLord.Loyalty_Current == KingLoyalty.New_King) { amt *= -1; heir.AddRelEventPlyr(new Relation("Loyal to New King", "Supports New King", amt)); }
+                        else { heir.AddRelEventPlyr(new Relation("Loyal to Old King", "Supports Old King", amt)); }
+                    }
                     house.LordID = heir.ActID;
                     //heir is off age to take control
                     if (heir.Age >= 15)
@@ -1300,9 +1303,12 @@ namespace Next_Game
                         Position pos = loc.GetPosition();
                         //create new lord
                         Noble brother = (Noble)Game.history.CreateRegent(house.Name, pos, house.LocID, house.RefID, house.HouseID);
-                        amt = rnd.Next(40);
-                        if (deadLord.Loyalty_Current == KingLoyalty.New_King) { amt *= -1;  brother.AddRelEventPlyr(new Relation("Loyal to New King", "Supports New King", amt)); }
-                        else { brother.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)); }
+                        if (brother.GetRelPlyr() == 50)
+                        {
+                            amt = rnd.Next(40);
+                            if (deadLord.Loyalty_Current == KingLoyalty.New_King) { amt *= -1; brother.AddRelEventPlyr(new Relation("Loyal to New King", "Supports New King", amt)); }
+                            else { brother.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)); }
+                        }
                         Game.history.SetInfluence(heir, brother, SkillType.Combat);
                         Game.history.SetInfluence(heir, brother, SkillType.Wits);
                         Game.history.SetInfluence(heir, brother, SkillType.Charm);
