@@ -412,16 +412,8 @@ namespace Next_Game
                 //Loyalty
                 if (person is Passive)
                 { listToDisplay.Add(new Snippet(string.Format("Loyal to the {0} (originally {1})", person.Loyalty_Current, person.Loyalty_AtStart))); }
-                /*else if (person is Follower)
-                { //NOTE: Superceded by Relationship with Player
-                    Follower follower = person as Follower;
-                    listToDisplay.Add(new Snippet(string.Format("Loyalty to the Usurper, {0} Stars", follower.Loyalty_Player)));
-                    List<string> textToWrap = Game.utility.WordWrap(string.Format("\"{0}\"", follower.Description), 120);
-                    foreach (string text in textToWrap) { listToDisplay.Add(new Snippet(text)); }
-                }*/
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
                 
-
                 //stats - natural ---
                 string effectText = null;
                 int influencer = person.Influencer;
@@ -633,7 +625,7 @@ namespace Next_Game
                     if (change == 0) { tagText = ""; }
                     RLColor tagColor = Color._badTrait;
                     if ( relPlyr >= 50) { tagColor = Color._goodTrait; }
-                    listToDisplay.Add(new Snippet(string.Format("(Now {0}{1}) {2} {3}", relPlyr > 0 ? "+" : "", relPlyr, person.GetPlayerTag(), tagText), 
+                    listToDisplay.Add(new Snippet(string.Format("(Now {0}) {1} {2}", relPlyr, person.GetPlayerTag(), tagText), 
                         tagColor ,RLColor.Black, true));
                 }
                 //Possessions -> active followers
@@ -724,6 +716,18 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet("Personal History", RLColor.Brown, RLColor.Black));
                     foreach (string text in actorHistory)
                     { listToDisplay.Add(new Snippet(text)); }
+                }
+
+                //Relationship records
+                if (person is Player == false)
+                {
+                    List<Relation> personRelations = person.GetRelEventPlyr();
+                    if (personRelations.Count > 0)
+                    {
+                        listToDisplay.Add(new Snippet("Relationship History with Player", RLColor.Brown, RLColor.Black));
+                        foreach (Relation relationship in personRelations)
+                        { listToDisplay.Add(new Snippet(relationship.GetRelationText())); }
+                    }
                 }
             }
             else
@@ -1609,7 +1613,8 @@ namespace Next_Game
             foreach (KeyValuePair<int, int> kvp in dictHousePower)
             {
                 MajorHouse house = GetGreatHouse(kvp.Key);
-                housePower = string.Format("Hid {0} House {1} has {2} BannerLords  {3}", house.HouseID, house.Name, house.GetNumBannerLords(), ShowLocationCoords(house.LocID));
+                housePower = string.Format("Hid {0} House {1} has {2} BannerLords  {3}, Loyal to the {4} (orig {5})", house.HouseID, house.Name, house.GetNumBannerLords(), 
+                    ShowLocationCoords(house.LocID), house.Loyalty_Current, house.Loyalty_AtStart);
                 listStats.Add(new Snippet(housePower));
             }
 

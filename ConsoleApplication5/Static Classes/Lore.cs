@@ -1302,7 +1302,7 @@ namespace Next_Game
                         Noble brother = (Noble)Game.history.CreateRegent(house.Name, pos, house.LocID, house.RefID, house.HouseID);
                         amt = rnd.Next(40);
                         if (deadLord.Loyalty_Current == KingLoyalty.New_King) { amt *= -1;  brother.AddRelEventPlyr(new Relation("Loyal to New King", "Supports New King", amt)); }
-                        else { brother.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)}
+                        else { brother.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)); }
                         Game.history.SetInfluence(heir, brother, SkillType.Combat);
                         Game.history.SetInfluence(heir, brother, SkillType.Wits);
                         Game.history.SetInfluence(heir, brother, SkillType.Charm);

@@ -322,6 +322,14 @@ namespace Next_Game
             }
         }
 
+
+        /// <summary>
+        /// returns a text string of combined relation data
+        /// </summary>
+        /// <returns></returns>
+        public string GetRelationText()
+        { return string.Format("{0}, (Now {1}) {2} ({3}{4})", Year, Level, Text, Change > 0 ? "+" : "", Change); }
+
     }
 }
  

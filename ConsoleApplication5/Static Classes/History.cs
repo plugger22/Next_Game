@@ -1867,7 +1867,7 @@ namespace Next_Game
                     //Royalist
                     listOfRoyalists.Add(listOfHousesByPower[i]);
                     house.Loyalty_AtStart = KingLoyalty.Old_King;
-                    house.Loyalty_Current = KingLoyalty.New_King;
+                    house.Loyalty_Current = KingLoyalty.Old_King;
                     rebel = true;
                 }
                 else
@@ -1919,9 +1919,9 @@ namespace Next_Game
                     {
                         int change = rnd.Next(1, 40);
                         if (loyalty == KingLoyalty.New_King)
-                        { change *= -1; actor.AddRelEventPlyr(new Relation("Loyal to the New King", "Supports New King", change)); }
+                        { change *= -1; actor.AddRelEventPlyr(new Relation("Sworn to the New King", "Supports New King", change)); }
                         else if (loyalty == KingLoyalty.Old_King)
-                        { actor.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", change)); }
+                        { actor.AddRelEventPlyr(new Relation("Sworn to the Old King", "Supports Old King", change)); }
                     }
                 }
             }
