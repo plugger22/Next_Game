@@ -926,6 +926,15 @@ namespace Next_Game
                             //options -> one for each member present
                             limit = listLocals.Count();
                             limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
+                            if (listLocals.Count > 0)
+                            {
+                                //default option
+                                OptionInteractive option = new OptionInteractive("You've changed your mind and decide to Leave");
+                                option.ReplyGood = string.Format("You depart {0} without further ado", Game.world.GetHouseName(refID));
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
                             for(int i = 0; i < limit; i++)
                             {
                                 Passive local = listLocals[i];
