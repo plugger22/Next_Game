@@ -934,6 +934,9 @@ namespace Next_Game
                                 optionText = string.Format("Seek an audience with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
+                                List<Trigger> listTriggers = new List<Trigger>();
+                                listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, local.GetRelPlyr(), 40, EventCalc.GreaterThanOrEqual));
+                                option.SetTriggers(listTriggers);
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
                                 OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                 option.SetGoodOutcome(outcome);
@@ -949,17 +952,13 @@ namespace Next_Game
                             for (int i = 0; i < limit; i++)
                             {
                                 Passive local = listAdvisors[i];
-                                if (local is Advisor)
-                                {
-                                    Advisor advisor = local as Advisor;
-                                    if (advisor.advisorRoyal > AdvisorRoyal.None)
-                                    { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
-                                    else if (advisor.advisorNoble > AdvisorNoble.None)
-                                    { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
-                                }
+                                actorText = string.Format("{0} {1}", local.Title, local.Name);
                                 optionText = string.Format("Seek an audience with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
+                                List<Trigger> listTriggers = new List<Trigger>();
+                                listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, local.GetRelPlyr(), 40, EventCalc.GreaterThanOrEqual));
+                                option.SetTriggers(listTriggers);
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
                                 OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                 option.SetGoodOutcome(outcome);
@@ -975,14 +974,17 @@ namespace Next_Game
                             for (int i = 0; i < limit; i++)
                             {
                                 Passive visitor = listVisitors[i];
-                                if (visitor.Office > ActorOffice.None)
+                                /*if (visitor.Office > ActorOffice.None)
                                 { actorText = string.Format("{0} {1}", visitor.Office, visitor.Name); }
-                                else { actorText = string.Format("{0} {1}", visitor.Type, visitor.Name); }
-
+                                else { actorText = string.Format("{0} {1}", visitor.Type, visitor.Name); }*/
+                                actorText = string.Format("{0} {1}", visitor.Title, visitor.Name);
                                 //actorText = string.Format("{0} {1}", visitor.Type, visitor.Name);
                                 optionText = string.Format("Seek an audience with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = visitor.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
+                                List<Trigger> listTriggers = new List<Trigger>();
+                                listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, visitor.GetRelPlyr(), 40, EventCalc.GreaterThanOrEqual));
+                                option.SetTriggers(listTriggers);
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
                                 OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                 option.SetGoodOutcome(outcome);
