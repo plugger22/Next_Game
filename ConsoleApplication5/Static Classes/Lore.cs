@@ -850,7 +850,7 @@ namespace Next_Game
         /// determines fate of Advisors (Royal and Noble) when required
         /// </summary>
         /// <param name="advisor"></param>
-        /// <returns>true if Advisor dismissed</returns>
+        /// <returns>true if Advisor dismissed or killed</returns>
         internal bool FateOfAdvisor(Advisor advisor, Passive liege)
         {
             bool advisorDied = false;
