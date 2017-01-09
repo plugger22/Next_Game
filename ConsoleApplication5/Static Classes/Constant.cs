@@ -44,6 +44,7 @@ namespace Next_Game
         CASTLE_CAPITAL,
         RESULT_FACTOR,
         OPPONENT_MARGIN,
+        TALK_THRESHOLD,
         Count //keep as last
     }
 
@@ -95,6 +96,7 @@ namespace Next_Game
             arrayOfGlobals[36] = Global.CASTLE_CAPITAL;
             arrayOfGlobals[37] = Global.RESULT_FACTOR;
             arrayOfGlobals[38] = Global.OPPONENT_MARGIN;
+            arrayOfGlobals[39] = Global.TALK_THRESHOLD;
             }
 
         /// <summary>

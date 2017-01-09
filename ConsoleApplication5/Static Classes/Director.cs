@@ -772,6 +772,7 @@ namespace Next_Game
                 int limit; //loop counter, prevents overshooting the # of available function keys
                 int locID = player.LocID;
                 int locType = 0; //1 - capital, 2 - MajorHouse, 3 - MinorHouse, 4 - Inn
+                int talkRel = Game.constant.GetValue(Global.TALK_THRESHOLD);
                 string actorText = "unknown"; string optionText = "unknown";
                 Location loc = Game.network.GetLocation(locID);
                 string locName = Game.world.GetLocationName(locID);
@@ -935,7 +936,7 @@ namespace Next_Game
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
                                 List<Trigger> listTriggers = new List<Trigger>();
-                                listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, local.GetRelPlyr(), 40, EventCalc.GreaterThanOrEqual));
+                                listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, local.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
                                 option.SetTriggers(listTriggers);
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
                                 OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
@@ -957,7 +958,7 @@ namespace Next_Game
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
                                 List<Trigger> listTriggers = new List<Trigger>();
-                                listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, local.GetRelPlyr(), 40, EventCalc.GreaterThanOrEqual));
+                                listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, local.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
                                 option.SetTriggers(listTriggers);
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
                                 OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
@@ -983,7 +984,7 @@ namespace Next_Game
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = visitor.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
                                 List<Trigger> listTriggers = new List<Trigger>();
-                                listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, visitor.GetRelPlyr(), 40, EventCalc.GreaterThanOrEqual));
+                                listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, visitor.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
                                 option.SetTriggers(listTriggers);
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
                                 OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
