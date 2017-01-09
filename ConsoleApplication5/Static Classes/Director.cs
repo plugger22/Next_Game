@@ -1002,9 +1002,6 @@ namespace Next_Game
                             for (int i = 0; i < limit; i++)
                             {
                                 Passive visitor = listVisitors[i];
-                                /*if (visitor.Office > ActorOffice.None)
-                                { actorText = string.Format("{0} {1}", visitor.Office, visitor.Name); }
-                                else { actorText = string.Format("{0} {1}", visitor.Type, visitor.Name); }*/
                                 actorText = string.Format("{0} {1}", visitor.Title, visitor.Name);
                                 //actorText = string.Format("{0} {1}", visitor.Type, visitor.Name);
                                 optionText = string.Format("Seek an audience with {0}", actorText);
