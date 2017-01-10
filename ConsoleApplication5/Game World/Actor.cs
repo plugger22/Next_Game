@@ -58,7 +58,7 @@ namespace Next_Game
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public int[] arrayOfSkillInfluences { get; set; } //effects due to person influencing (default 0)
         //secrets & events
-        private List<int> listOfPossessions; //includes secrets, items, disguises, introductions, promises, etc.
+        private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
         private List<Relation> listRelOther; //list of relation messages relating to all actors other than the Player
@@ -80,7 +80,7 @@ namespace Next_Game
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
             arrayOfSkillInfluences = new int[(int)SkillType.Count];
-            listOfPossessions = new List<int>();
+            listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
             listRelOther = new List<Relation>();
@@ -108,7 +108,7 @@ namespace Next_Game
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
             arrayOfSkillInfluences = new int[(int)SkillType.Count];
-            listOfPossessions = new List<int>();
+            listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
             listRelOther = new List<Relation>();
@@ -281,19 +281,19 @@ namespace Next_Game
             return rel;
         }
 
-        public void AddPossession(int possessionID)
+        public void AddSecret(int possID)
         {
-            if (possessionID > 0)
-            { listOfPossessions.Add(possessionID); }
+            if (possID > 0)
+            { listOfSecrets.Add(possID); }
             else
-            { Game.SetError(new Error(7, "invalid Possession ID")); }
+            { Game.SetError(new Error(7, "invalid Possession (Secret) ID")); }
         }
 
         public List<int> GetSecrets()
-        { return listOfPossessions; }
+        { return listOfSecrets; }
 
         public void SetSecrets(List<int> secrets)
-        { if (secrets != null) { listOfPossessions.Clear(); listOfPossessions.AddRange(secrets); } }
+        { if (secrets != null) { listOfSecrets.Clear(); listOfSecrets.AddRange(secrets); } }
     }
 
 
