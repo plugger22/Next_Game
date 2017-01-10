@@ -281,12 +281,12 @@ namespace Next_Game
             return rel;
         }
 
-        public void AddPosssession(int possessionID)
+        public void AddPossession(int possessionID)
         {
             if (possessionID > 0)
             { listOfPossessions.Add(possessionID); }
             else
-            { Game.SetError(new Error(7, "invalid Secret ID")); }
+            { Game.SetError(new Error(7, "invalid Possession ID")); }
         }
 
         public List<int> GetSecrets()

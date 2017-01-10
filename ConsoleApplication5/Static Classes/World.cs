@@ -1571,7 +1571,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// populates dictionary of Secrets
+        /// populates Possession dictionary with Secrets
         /// </summary>
         private void InitialiseSecrets()
         {

@@ -1232,7 +1232,7 @@ namespace Next_Game
                 string description = string.Format("{0}, Aid {1}, was born under a Dark Moon (Touched)", person.Name, person.ActID);
                 Secret_Actor secret = new Secret_Actor(PossSecretType.Trait, person.Born, description, person.Touched, person.ActID);
                 listOfSecrets.Add(secret);
-                person.AddPosssession(secret.SecretID);
+                person.AddPossession(secret.PossID);
             }
 
             //choose NickName (handle)
@@ -1684,9 +1684,9 @@ namespace Next_Game
             {
                 Secret_Actor secret = new Secret_Actor(PossSecretType.Parents, year, secretText, secretStrength, child.ActID);
                 listOfSecrets.Add(secret);
-                Lord.AddPosssession(secret.SecretID);
-                Lady.AddPosssession(secret.SecretID);
-                child.AddPosssession(secret.SecretID);
+                Lord.AddPossession(secret.PossID);
+                Lady.AddPossession(secret.PossID);
+                child.AddPossession(secret.PossID);
             }
             //childbirth issues
             {
@@ -1718,7 +1718,7 @@ namespace Next_Game
                             descriptor = string.Format("{0}, Aid {1} suffered complications during birth and is unable to have anymore children", Lady.Name, Lady.ActID);
                             Secret_Actor secret = new Secret_Actor(PossSecretType.Fertility, year, descriptor, 2, Lady.ActID);
                             listOfSecrets.Add(secret);
-                            Lady.AddPosssession(secret.SecretID);
+                            Lady.AddPossession(secret.PossID);
                         }
                     }
                 }
