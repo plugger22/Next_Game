@@ -6,18 +6,38 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    public enum SecretType {Parents, Trait, Wound, Torture, Murder, Loyalty, Glory,Fertility };
-    public enum SecretRef { Actor, House, GeoCluster, Location, Item }
+    public enum PossessionType { None, Secret, Promise, Introduction, Disguise, Item }
+    public enum PossSecretType {Parents, Trait, Wound, Torture, Murder, Loyalty, Glory,Fertility };
+    //public enum PossSecretRef { Actor, House, GeoCluster, Location, Item }
 
-    public class Secret
+    public class Possession
     {
-        private static int secretIndex = 1; //provides a unique ID to every secret
-        public SecretType Type { get; set; }
-        public int SecretID { get; set; }
+        private static int possessionIndex = 1; //provides a unique ID to every possession
+        public int PossID { get; set; }
         public int Year { get; set; }
-        public int Strength { get; set; } //how tightly the secret is held by those involved (1 to 5 stars)
+        public PossessionType Type { get; set; }
         public string Description { get; set; }
-        public bool Active { get; set; } //only a viable secret if active = true
+        public bool Active { get; set; } //some possessions can be owned but inactive, default true
+
+        public Possession()
+        { }
+            
+        public Possession(string description, int year)
+        {
+            PossID = possessionIndex++;
+            this.Year = year;
+            this.Description = description;
+            this.Active = true;
+        }
+    }
+
+    public class Secret : Possession
+    {
+        //private static int secretIndex = 1; //provides a unique ID to every secret
+        public PossSecretType SecretType { get; set; }
+        public int Strength { get; set; } //how tightly the secret is held by those involved (1 to 5 stars)
+        
+        
 
         public Secret()
         { }
@@ -29,15 +49,11 @@ namespace Next_Game
         /// <param name="year"></param>
         /// <param name="description"></param>
         /// <param name="strength"></param>
-        public Secret(SecretType type, int year, string description, int strength)
+        public Secret(PossSecretType type, string description, int year, int strength) : base (description, year)
         {
-            SecretID = secretIndex++;
-            this.Type = type;
-            this.Year = year;
-            this.Description = description;
+            this.SecretType = type;
             this.Strength = strength;
-            this.Active = true;
-            
+            Type = PossessionType.Secret;
         }
 
     }
@@ -57,7 +73,7 @@ namespace Next_Game
         /// <param name="description"></param>
         /// <param name="strength"></param>
         /// <param name="actorID"></param>
-        public Secret_Actor(SecretType type, int year, string description, int strength, int actorID) : base(type, year, description, strength)
+        public Secret_Actor(PossSecretType type, int year, string description, int strength, int actorID) : base(type, description, year, strength)
         {
             listOfActors = new List<int>();
             listOfActors.Add(actorID);
@@ -74,7 +90,7 @@ namespace Next_Game
     {
         private List<int> listOfHouses; //which houses this affects (RefID stored, NOT houseID)
 
-        public Secret_House(SecretType type, int year, string description, int strength, int refID) : base(type, year, description, strength)
+        public Secret_House(PossSecretType type, int year, string description, int strength, int refID) : base(type, description, year, strength)
         {
             listOfHouses = new List<int>();
             listOfHouses.Add(refID);
@@ -91,7 +107,7 @@ namespace Next_Game
     {
         private List<int> listOfGeoClusters; //which Geo's this affects
 
-        public Secret_GeoCluster(SecretType type, int year, string description, int strength, int geoID) : base(type, year, description, strength)
+        public Secret_GeoCluster(PossSecretType type, int year, string description, int strength, int geoID) : base(type, description, year, strength)
         {
             listOfGeoClusters = new List<int>();
             listOfGeoClusters.Add(geoID);
@@ -108,7 +124,7 @@ namespace Next_Game
     {
         private List<int> listOfLocations; //which Loc's this effects
 
-        public Secret_Location(SecretType type, int year, string description, int strength, int locID) : base(type, year, description, strength)
+        public Secret_Location(PossSecretType type, int year, string description, int strength, int locID) : base(type, description, year, strength)
         {
             listOfLocations = new List<int>();
             listOfLocations.Add(locID);

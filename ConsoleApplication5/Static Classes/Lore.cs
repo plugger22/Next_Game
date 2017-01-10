@@ -442,9 +442,9 @@ namespace Next_Game
                                 {
                                     string wound = listOfWounds[rnd.Next(0, listOfWounds.Count)];
                                     secretText = string.Format("{0}, Aid {1}, {2}", knight.Name, knight.ActID, wound);
-                                    Secret_Actor secret = new Secret_Actor(SecretType.Wound, year, secretText, rnd.Next(1, 5), knight.ActID);
+                                    Secret_Actor secret = new Secret_Actor(PossSecretType.Wound, year, secretText, rnd.Next(1, 5), knight.ActID);
                                     Game.history.SetSecret(secret);
-                                    knight.AddSecret(secret.SecretID);
+                                    knight.AddPosssession(secret.SecretID);
                                 }
                                 break;
                             case 8:
@@ -463,9 +463,9 @@ namespace Next_Game
                                     if (rnd.Next(1, 6) < knightTreachery)
                                     {
                                         secretText = string.Format("{0}, Aid {1}, {2} {3}", knight.Name, knight.ActID, "falsely claimed heroic deeds that belonged to another", descriptor);
-                                        Secret_Actor secret = new Secret_Actor(SecretType.Glory, year, secretText, knightTreachery, knight.ActID);
+                                        Secret_Actor secret = new Secret_Actor(PossSecretType.Glory, year, secretText, knightTreachery, knight.ActID);
                                         Game.history.SetSecret(secret);
-                                        knight.AddSecret(secret.SecretID);
+                                        knight.AddPosssession(secret.SecretID);
                                         trueEvent = false;
                                     }
                                 }
@@ -479,9 +479,9 @@ namespace Next_Game
                                     if (rnd.Next(1, 6) > knightTreachery)
                                     {
                                         secretText = string.Format("{0}, Aid {1}, {2} {3}", knight.Name, knight.ActID, "was falsely accused by another of something he didn't do", descriptor);
-                                        Secret_Actor secret = new Secret_Actor(SecretType.Glory, year, secretText, knightTreachery, knight.ActID);
+                                        Secret_Actor secret = new Secret_Actor(PossSecretType.Glory, year, secretText, knightTreachery, knight.ActID);
                                         Game.history.SetSecret(secret);
-                                        knight.AddSecret(secret.SecretID);
+                                        knight.AddPosssession(secret.SecretID);
                                         trueEvent = false;
                                     }
                                 }
@@ -544,9 +544,9 @@ namespace Next_Game
                                 {
                                     string wound = listOfWounds[rnd.Next(0, listOfWounds.Count)];
                                     secretText = string.Format("{0}, Aid {1}, {2}", royal.Name, royal.ActID, wound);
-                                    Secret_Actor secret = new Secret_Actor(SecretType.Wound, year, secretText, rnd.Next(1, 5), royal.ActID);
+                                    Secret_Actor secret = new Secret_Actor(PossSecretType.Wound, year, secretText, rnd.Next(1, 5), royal.ActID);
                                     Game.history.SetSecret(secret);
-                                    royal.AddSecret(secret.SecretID);
+                                    royal.AddPosssession(secret.SecretID);
                                 }
                                 break;
                             case 6:
@@ -577,9 +577,9 @@ namespace Next_Game
                                 if (rnd.Next(0,6) < lordTreachery)
                                 {
                                     secretText = string.Format("{0}, Aid {1}, {2} {3}", royal.Name, royal.ActID, "was a traitor who deliberately changed sides during", descriptor);
-                                    Secret_Actor secret = new Secret_Actor(SecretType.Loyalty, year, secretText, lordTreachery, royal.ActID);
+                                    Secret_Actor secret = new Secret_Actor(PossSecretType.Loyalty, year, secretText, lordTreachery, royal.ActID);
                                     Game.history.SetSecret(secret);
-                                    royal.AddSecret(secret.SecretID);
+                                    royal.AddPosssession(secret.SecretID);
                                     truth = false;
                                     if (changedSides == false)
                                     {
@@ -604,9 +604,9 @@ namespace Next_Game
                                     //poor leadership, took somebody else's glory -> secret
                                     secretText = string.Format("{0}, Aid {1}, {2} {3}", royal.Name, royal.ActID, "cowardly stole somebody else's glory during", descriptor);
                                     Console.WriteLine("{0}, Aid {1}, {2} {3}", royal.Name, royal.ActID, "cowardly stole somebody else's glory during", descriptor);
-                                    Secret_Actor secret = new Secret_Actor(SecretType.Loyalty, year, secretText, lordLeadership, royal.ActID);
+                                    Secret_Actor secret = new Secret_Actor(PossSecretType.Loyalty, year, secretText, lordLeadership, royal.ActID);
                                     Game.history.SetSecret(secret);
-                                    royal.AddSecret(secret.SecretID);
+                                    royal.AddPosssession(secret.SecretID);
                                     truth = false;
                                 }
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorIncident.Leadership);
@@ -666,9 +666,9 @@ namespace Next_Game
                                 {
                                     string wound = listOfWounds[rnd.Next(0, listOfWounds.Count)];
                                     secretText = string.Format("{0}, Aid {1}, {2}", rebel.Name, rebel.ActID, wound);
-                                    Secret_Actor secret = new Secret_Actor(SecretType.Wound, year, secretText, rnd.Next(1, 5), rebel.ActID);
+                                    Secret_Actor secret = new Secret_Actor(PossSecretType.Wound, year, secretText, rnd.Next(1, 5), rebel.ActID);
                                     Game.history.SetSecret(secret);
-                                    rebel.AddSecret(secret.SecretID);
+                                    rebel.AddPosssession(secret.SecretID);
                                 }
                                 break;
                             case 6:
@@ -699,9 +699,9 @@ namespace Next_Game
                                 if (rnd.Next(0, 6) < lordTreachery)
                                 {
                                     secretText = string.Format("{0}, Aid {1}, {2} {3}", rebel.Name, rebel.ActID, "was a traitor who deliberately changed sides during", descriptor);
-                                    Secret_Actor secret = new Secret_Actor(SecretType.Loyalty, year, secretText, lordTreachery, rebel.ActID);
+                                    Secret_Actor secret = new Secret_Actor(PossSecretType.Loyalty, year, secretText, lordTreachery, rebel.ActID);
                                     Game.history.SetSecret(secret);
-                                    rebel.AddSecret(secret.SecretID);
+                                    rebel.AddPosssession(secret.SecretID);
                                     truth = false;
                                     if (changedSides == false)
                                     {
@@ -727,9 +727,9 @@ namespace Next_Game
                                     //poor leadership, took somebody else's glory -> secret
                                     secretText = string.Format("{0}, Aid {1}, {2} {3}", rebel.Name, rebel.ActID, "cowardly stole somebody else's glory during", descriptor);
                                     Console.WriteLine("{0}, Aid {1}, {2} {3}", rebel.Name, rebel.ActID, "cowardly stole somebody else's glory during", descriptor);
-                                    Secret_Actor secret = new Secret_Actor(SecretType.Loyalty, year, secretText, lordLeadership, rebel.ActID);
+                                    Secret_Actor secret = new Secret_Actor(PossSecretType.Loyalty, year, secretText, lordLeadership, rebel.ActID);
                                     Game.history.SetSecret(secret);
-                                    rebel.AddSecret(secret.SecretID);
+                                    rebel.AddPosssession(secret.SecretID);
                                     truth = false;
                                 }
                                 record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorIncident.Leadership, truth);
@@ -769,9 +769,9 @@ namespace Next_Game
                         //tortured -> secret
                         eventText += string.Format("was released unharmed by his {0} captors", Enemies);
                         secretText = string.Format("{0}, Aid {1}, was tortured by the {2}s during captivity (mentally scarred)", actor.Name, actor.ActID, Enemies);
-                        Secret_Actor secret = new Secret_Actor(SecretType.Torture, year, secretText, 2, actor.ActID);
+                        Secret_Actor secret = new Secret_Actor(PossSecretType.Torture, year, secretText, 2, actor.ActID);
                         Game.history.SetSecret(secret);
-                        actor.AddSecret(secret.SecretID);
+                        actor.AddPosssession(secret.SecretID);
                         truth = false;
                         break;
                     case 6:  
@@ -787,9 +787,9 @@ namespace Next_Game
                         if (rnd.Next(100) < 50)
                         {
                             secretText = string.Format("{0}, Aid {1}, was tortured and died in the {2} dungeons", actor.Name, actor.ActID, Enemies);
-                            Secret_Actor secret_1 = new Secret_Actor(SecretType.Murder, year, secretText, 2, actor.ActID);
+                            Secret_Actor secret_1 = new Secret_Actor(PossSecretType.Murder, year, secretText, 2, actor.ActID);
                             Game.history.SetSecret(secret_1);
-                            actor.AddSecret(secret_1.SecretID);
+                            actor.AddPosssession(secret_1.SecretID);
                             truth = false;
                         }
                         break;
@@ -883,8 +883,8 @@ namespace Next_Game
                     if (rnd.Next(0, 6) < liegeTreachery )
                     {
                         secretText = string.Format("{0} {1}, Aid {2}, defied King {3} and was {4}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name, fate);
-                        secret = new Secret_Actor(SecretType.Murder, Game.gameRevolt, secretText, liegeTreachery, advisor.ActID);
-                        advisor.AddSecret(secret.SecretID); liege.AddSecret(secret.SecretID);
+                        secret = new Secret_Actor(PossSecretType.Murder, Game.gameRevolt, secretText, liegeTreachery, advisor.ActID);
+                        advisor.AddPosssession(secret.SecretID); liege.AddPosssession(secret.SecretID);
                     }
                 }
                 else
@@ -899,8 +899,8 @@ namespace Next_Game
                     if (rnd.Next(100) < (advisorTreachery * 5))
                     {
                         secretText = string.Format("{0} {1}, Aid {2}, is a fifth column who secretly despises King {3}", advisor.advisorRoyal, advisor.Name, advisor.ActID, liege.Name);
-                        secret = new Secret_Actor(SecretType.Murder, Game.gameRevolt, secretText, advisorTreachery, advisor.ActID);
-                        advisor.AddSecret(secret.SecretID);
+                        secret = new Secret_Actor(PossSecretType.Murder, Game.gameRevolt, secretText, advisorTreachery, advisor.ActID);
+                        advisor.AddPosssession(secret.SecretID);
                     }
                 }
                 //save record & secret if applicable

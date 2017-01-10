@@ -24,7 +24,7 @@ namespace Next_Game
         private Dictionary<int, Message> dictMessages; //all Player to Game & Game to Player messages
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         private Dictionary<int, Skill> dictTraits; //all triats (key is traitID)
-        private Dictionary<int, Secret> dictSecrets; //all secrets (key is secretID)
+        private Dictionary<int, Possession> dictPossessions; //all possession (key is PossID)
         private Dictionary<int, Passive> dictRoyalCourt; //advisors and royal retainers (assumed to always be at Kingskeep) excludes family
 
         //default constructor
@@ -44,7 +44,7 @@ namespace Next_Game
             dictMessages = new Dictionary<int, Message>();
             dictGeoClusters = new Dictionary<int, GeoCluster>();
             dictTraits = new Dictionary<int, Skill>();
-            dictSecrets = new Dictionary<int, Secret>();
+            dictPossessions = new Dictionary<int, Possession>();
             dictRoyalCourt = new Dictionary<int, Passive>();
         }
 
@@ -691,9 +691,9 @@ namespace Next_Game
                 if (listOfSecrets.Count > 0)
                 {
                     listToDisplay.Add(new Snippet("Secrets", RLColor.Brown, RLColor.Black));
-                    foreach (int secretID in listOfSecrets)
+                    foreach (int possessionID in listOfSecrets)
                     {
-                        Secret secret = GetSecret(secretID);
+                        Secret secret = (Secret)GetPossession(possessionID);
                         if (secret != null)
                         {
                             listToDisplay.Add(new Snippet(string.Format("{0} {1} ", secret.Year, secret.Description), false));
@@ -1577,7 +1577,7 @@ namespace Next_Game
         {
             List<Secret> tempList = Game.history.GetSecrets();
             foreach (Secret secret in tempList)
-            { dictSecrets.Add(secret.SecretID, secret); }
+            { dictPossessions.Add(secret.PossID, secret); }
         }
 
         /// <summary>
@@ -1593,7 +1593,8 @@ namespace Next_Game
             int numBannerLords = dictAllHouses.Count - numGreatHouses - 1 - numSpecialLocs;
             int numActors = dictAllActors.Count;
             int numChildren = numActors - (numGreatHouses * 2) - numBannerLords;
-            int numSecrets = dictSecrets.Count;
+            //int numSecrets = dictSecrets.Count;
+            int numSecrets = CountPossessions(PossessionType.Secret);
             //checksum
             if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
             { Game.SetError(new Error(25, "Locations don't tally")); }
@@ -1824,11 +1825,11 @@ namespace Next_Game
             return null;
         }
 
-        internal Secret GetSecret(int secretID)
+        internal Possession GetPossession(int possessionID)
         {
-            Secret secret = new Secret();
-            if (dictSecrets.TryGetValue(secretID, out secret))
-            { return secret; }
+            Possession possession = new Possession();
+            if (dictPossessions.TryGetValue(possessionID, out possession))
+            { return possession; }
             return null;
         }
 
@@ -1979,12 +1980,13 @@ namespace Next_Game
         /// <returns></returns>
         public List<Snippet> ShowSecretsRL()
         {
-            List<string> tempList = new List<string>();
+            /*List<string> tempList = new List<string>();
             IEnumerable<string> secretList =
                 from secret in dictSecrets
                 orderby secret.Value.Year
                 select Convert.ToString(secret.Value.Year + " " + secret.Value.Description);
-            tempList = secretList.ToList();
+            tempList = secretList.ToList();*/
+            List <string> tempList = GetPossessionsList(PossessionType.Secret);
             //snippet list
             List<Snippet> listData = new List<Snippet>();
             foreach(string data in tempList)
@@ -2353,6 +2355,61 @@ namespace Next_Game
                     { actor.Value.DelayReason = null; }
                 }
             }
+        }
+
+        /// <summary>
+        /// returns number of object types in dictionary
+        /// </summary>
+        /// <param name="possType"></param>
+        /// <returns></returns>
+        internal int CountPossessions(PossessionType possType)
+        {
+            int num = 0;
+            switch (possType)
+            {
+                case PossessionType.Secret:
+                    var result = from possObject in dictPossessions
+                                 where possObject.Value is Secret
+                                 select possObject;
+                    num = result.Count();
+                    break;
+                case PossessionType.None:
+                    Game.SetError(new Error(120, "Invalid possType Input (None)"));
+                    break;
+                default:
+                    Game.SetError(new Error(120, string.Format("Invalid possType Input (\"{0}\")", possType)));
+                    break;
+            }
+            return num;
+        }
+
+        /// <summary>
+        /// returns a list of year + description of the specific object type in dictionary
+        /// </summary>
+        /// <param name="possType"></param>
+        /// <returns></returns>
+        internal List<string> GetPossessionsList(PossessionType possType)
+        {
+            List<string> tempList = new List<string>();
+            switch (possType)
+            {
+                case PossessionType.Secret:
+                    IEnumerable<string> secretList =
+                    from secret in dictPossessions
+                    where secret.Value is Secret
+                    orderby secret.Value.Year
+                    select Convert.ToString(secret.Value.Year + " " + secret.Value.Description);
+                    tempList = secretList.ToList();
+                    break;
+                case PossessionType.None:
+                    Game.SetError(new Error(121, "Invalid possType Input (None)"));
+                    break;
+                default:
+                    Game.SetError(new Error(121, string.Format("Invalid possType Input (\"{0}\")", possType)));
+                    break;
+            }
+
+            return tempList;
         }
 
         //new Methods above here
