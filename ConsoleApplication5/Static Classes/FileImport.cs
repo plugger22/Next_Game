@@ -3495,6 +3495,9 @@ namespace Next_Game
                                         case "RelOther":
                                             structResult.Type = ResultType.RelOther;
                                             break;
+                                        case "Favour":
+                                            structResult.Type = ResultType.Favour;
+                                            break;
                                         case "Condition":
                                             structResult.Type = ResultType.DataPoint;
                                             break;

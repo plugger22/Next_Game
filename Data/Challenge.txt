@@ -169,12 +169,12 @@ OutLossMinor: You relationship has deteriorated
 OutLoss: You have been firmly rebuffed
 OutLossMajor: Your opponent is now your enemy
 OutNone: The Blackmail attempt has fizzled out. The mud and threats didn't stick.
-ResWinMinor: 
-ResWin: 
-ResWinMajor: 
-ResLossMinor: 29
-ResLoss: 30
-ResLossMajor: 31, 10
+ResWinMinor: 29
+ResWin: 30
+ResWinMajor:  31
+ResLossMinor: 32
+ResLoss: 33
+ResLossMajor: 34, 10
 ResNone: 1
 [End]
 
