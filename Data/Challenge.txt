@@ -144,7 +144,7 @@ OutLossMajor: Your opponent is actively campaigning against you
 OutNone: Indifference is the only outcome today. Nobody cares one way or another.
 ResWinMinor: 14
 ResWin: 15
-ResWinMajor: 16
+ResWinMajor: 16, 5
 ResLossMinor: 17
 ResLoss: 18
 ResLossMajor: 19
@@ -169,12 +169,12 @@ OutLossMinor: You relationship has deteriorated
 OutLoss: You have been firmly rebuffed
 OutLossMajor: Your opponent is now your enemy
 OutNone: The Blackmail attempt has fizzled out. The mud and threats didn't stick.
-ResWinMinor: 2, 3, 4
-ResWin: 5
-ResWinMajor: 6, 7 
-ResLossMinor: 8
-ResLoss: 9, 10
-ResLossMajor: 11, 12, 13
+ResWinMinor: 
+ResWin: 
+ResWinMajor: 
+ResLossMinor: 29
+ResLoss: 30
+ResLossMajor: 31, 10
 ResNone: 1
 [End]
 
@@ -196,12 +196,12 @@ OutLossMinor: Your relationship has deteriorated
 OutLoss: You have been firmly rebuffed
 OutLossMajor: Your opponent has taken offence and is now your enemy
 OutNone: Love and lust are not on the menu today. It didn't happen.
-ResWinMinor: 2, 3, 4
-ResWin: 5
-ResWinMajor: 6, 7 
-ResLossMinor: 8
-ResLoss: 9, 10
-ResLossMajor: 11, 12, 13
+ResWinMinor: 20
+ResWin: 21
+ResWinMajor: 22
+ResLossMinor: 23
+ResLoss: 24
+ResLossMajor: 25
 ResNone: 1
 [End]
 

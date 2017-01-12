@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    public enum PossessionType { None, Secret, Promise, Introduction, Disguise, Item }
+    public enum PossessionType { None, Secret, Promise, Favour, Introduction, Disguise, Item }
     public enum PossSecretType {Parents, Trait, Wound, Torture, Murder, Loyalty, Glory,Fertility };
     //public enum PossSecretRef { Actor, House, GeoCluster, Location, Item }
 
@@ -30,6 +30,8 @@ namespace Next_Game
             this.Active = true;
         }
     }
+
+    // Secrets ---
 
     public class Secret : Possession
     {
@@ -132,5 +134,16 @@ namespace Next_Game
 
         public void AddLocation(int locID)
         { listOfLocations.Add(locID); }
+    }
+
+
+    // Favours ---
+
+    public class Favour : Possession
+    {
+        public int Strength { get; set; }
+
+        public Favour(string description, int year, int strength) : base(description, year)
+        { this.Strength = strength; }
     }
 }

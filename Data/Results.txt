@@ -12,13 +12,15 @@
 # Tag: (OPTIONAL - short descriptor, applies if Type is  RelPlyr or RelOther 
 
 
+# Key Stats Generic Results -> Data +ve ADD to Good, otherwise ADD to Bad
+
 Name: Blend in More
 RID: 1
 Type: DataPoint
 DataPoint: Invisibility
 Data: 1
 Calc: Random
-Amount: 100
+Amount: 40
 [End]
 
 Name: Been Spotted!
@@ -27,7 +29,7 @@ Type: DataPoint
 DataPoint: Invisibility
 Data: -1
 Calc: Random
-Amount: 100
+Amount: 40
 [End]
 
 Name: The Cause is Just
@@ -36,7 +38,7 @@ Type: DataPoint
 DataPoint: Justice
 Data: 1
 Calc: Random
-Amount: 50
+Amount: 40
 [End]
 
 Name: Unjustly Accused!
@@ -45,7 +47,7 @@ Type: DataPoint
 DataPoint: Justice
 Data: -1
 Calc: Random
-Amount: 50
+Amount: 40
 [End]
 
 Name: We're Famous
@@ -54,7 +56,7 @@ Type: DataPoint
 DataPoint: Legend_Usurper
 Data: 1
 Calc: Random
-Amount: 20
+Amount: 40
 [End]
 
 Name: Nobody heard the news
@@ -63,7 +65,7 @@ Type: DataPoint
 DataPoint: Legend_Usurper
 Data: -1
 Calc: Random
-Amount: 20
+Amount: 40
 [End]
 
 Name: Long Live the King
@@ -72,7 +74,7 @@ Type: DataPoint
 DataPoint: Legend_King
 Data: 1
 Calc: Random
-Amount: 50
+Amount: 40
 [End]
 
 Name: Down with the King
@@ -81,7 +83,7 @@ Type: DataPoint
 DataPoint: Legend_King
 Data: -1
 Calc: Random
-Amount: 50
+Amount: 40
 [End]
 
 Name: Honour and Liberty!
@@ -90,7 +92,7 @@ Type: DataPoint
 DataPoint: Honour_Usurper
 Data: 1
 Calc: Random
-Amount: 50
+Amount: 40
 [End]
 
 Name: Oops, shouldn't have done that
@@ -99,7 +101,7 @@ Type: DataPoint
 DataPoint: Honour_Usurper
 Data: -1
 Calc: Random
-Amount: 50
+Amount: 40
 [End]
 
 Name: The King Does the Right Thing
@@ -108,7 +110,7 @@ Type: DataPoint
 DataPoint: Honour_King
 Data: 1
 Calc: Random
-Amount: 50
+Amount: 40
 [End]
 
 Name: The King is a Bastard
@@ -117,7 +119,7 @@ Type: DataPoint
 DataPoint: Honour_King
 Data: -1
 Calc: Random
-Amount: 50
+Amount: 40
 [End]
 
 Name: The King is a Great Man
@@ -125,9 +127,11 @@ RID: 13
 Type: DataPoint
 DataPoint: Honour_King
 Data: 1
-Calc: Add
-Amount: 100
+Calc: Random
+Amount: 40
 [End]
+
+# Befriend Conflict Results
 
 Name: Relationship improved as a result of a successful Befriend conflict Minor Win
 RID: 14
@@ -135,7 +139,7 @@ Type: RelPlyr
 Tag: Befriend Minor Win
 Data: 0
 Calc: Random
-Amount: 40
+Amount: 30
 [End]
 
 Name: Relationship improved as a result of a successful Befriend conflict Win
@@ -144,7 +148,7 @@ Type: RelPlyr
 Tag: Befriend Win
 Data: 0
 Calc: Random
-Amount: 60
+Amount: 50
 [End]
 
 Name: Relationship improved as a result of a successful Befriend conflict Major Win
@@ -153,7 +157,7 @@ Type: RelPlyr
 Tag: Befriend Major Win
 Data: 0
 Calc: Random
-Amount: 80
+Amount: 70
 [End]
 
 Name: Relationship worsened as a result of a failed Befriend conflict Minor Loss
@@ -162,7 +166,7 @@ Type: RelPlyr
 Tag: Befriend Minor Loss
 Data: 0
 Calc: Random
-Amount: -40
+Amount: -30
 [End]
 
 Name: Relationship worsened as a result of a failed Befriend conflict Loss
@@ -171,7 +175,7 @@ Type: RelPlyr
 Tag: Befriend Loss
 Data: 0
 Calc: Random
-Amount: -60
+Amount: -50
 [End]
 
 Name: Relationship worsened as a result of a failed Befriend conflict Major Loss
@@ -180,7 +184,90 @@ Type: RelPlyr
 Tag: Befriend Major Loss
 Data: 0
 Calc: Random
-Amount: -80
+Amount: -70
 [End]
 
+# Seduce Conflict Results (gives a wider range of relationship results than Befriend)
 
+Name: Relationship improved as a result of a successful Seduce conflict Minor Win
+RID: 20
+Type: RelPlyr
+Tag: Seduce Minor Win
+Data: 0
+Calc: Random
+Amount: 50
+[End]
+
+Name: Relationship improved as a result of a successful Seduce conflict Win
+RID: 21
+Type: RelPlyr
+Tag: Seduce Win
+Data: 0
+Calc: Random
+Amount: 70
+[End]
+
+Name: Relationship improved as a result of a successful Seduce conflict Major Win
+RID: 22
+Type: RelPlyr
+Tag: Seduce Major Win
+Data: 0
+Calc: Random
+Amount: 90
+[End]
+
+Name: Relationship worsened as a result of a failed Seduce conflict Minor Loss
+RID: 23
+Type: RelPlyr
+Tag: Seduce Minor Loss
+Data: 0
+Calc: Random
+Amount: -50
+[End]
+
+Name: Relationship worsened as a result of a failed Seduce conflict Loss
+RID: 24
+Type: RelPlyr
+Tag: Seduce Loss
+Data: 0
+Calc: Random
+Amount: -70
+[End]
+
+Name: Relationship worsened as a result of a failed Seduce conflict Major Loss
+RID: 25
+Type: RelPlyr
+Tag: Seduce Major Loss
+Data: 0
+Calc: Random
+Amount: -90
+[End]
+
+# BlackMail Conflict Results (relationship with Player degrades if a Loss, no change if a win)
+
+Name: Relationship worsened as a result of a failed Blackmail conflict Minor Loss
+RID: 29
+Type: RelPlyr
+Tag: Blackmail Minor Loss
+Data: 0
+Calc: Random
+Amount: -50
+[End]
+
+Name: Relationship worsened as a result of a failed Blackmail conflict Loss
+RID: 30
+Type: RelPlyr
+Tag: Blackmail Loss
+Data: 0
+Calc: Random
+Amount: -70
+[End]
+
+Name: Relationship worsened as a result of a failed Blackmail conflict Major Loss
+RID: 31
+Type: RelPlyr
+Tag: Blackmail Major Loss
+Data: 0
+Calc: Random
+Amount: -90
+[End]
