@@ -31,6 +31,7 @@ namespace Next_Game
         }
     }
 
+
     // Secrets ---
 
     public class Secret : Possession
@@ -55,6 +56,8 @@ namespace Next_Game
         {
             this.SecretType = type;
             this.Strength = strength;
+            Strength = Math.Min(5, Strength);
+            Strength = Math.Max(1, Strength);
             Type = PossessionType.Secret;
         }
 
@@ -141,9 +144,16 @@ namespace Next_Game
 
     public class Favour : Possession
     {
-        public int Strength { get; set; }
+        public int Strength { get; set; } //strength 1 to 5
+        public int ActorID { get; set; } //which actor granted the favour
 
-        public Favour(string description, int year, int strength) : base(description, year)
-        { this.Strength = strength; }
+        public Favour( string description, int year, int strength, int actorID) : base(description, year)
+        {
+            this.Strength = strength;
+            Strength = Math.Min(5, Strength);
+            Strength = Math.Max(1, Strength);
+            if (actorID > 0) { this.ActorID = actorID; } else { Game.SetError(new Error(122, "Invalid ActorID input (zero or less)")); }
+            Type = PossessionType.Favour;
+        }
     }
 }

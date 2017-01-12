@@ -307,7 +307,6 @@ namespace Next_Game
         public int CrowChance { get; set; } //chance of crow getting through
         public int CrowDistance { get; set; } //distance between player and follower
         public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
-        
         public bool Activated { get; set; } //can move/be given orders this turn, or not
         private List<string> crowTooltip { get; set; } //explanation of factors influencing crow chance
         
@@ -340,9 +339,12 @@ namespace Next_Game
         public int CrowsNumber { get; set; }
         public int HistoryID { get; set; } //actorID of character who becomes the usurper
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
+        private List<int> listOfFavours; //stores possessionId of favours granted to Player
 
         public Player(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { Activated = true; Title = string.Format("{0}", Type); }
+        {
+            Activated = true; Title = string.Format("{0}", Type); listOfFavours = new List<int>();
+        }
 
         public void SetFamily (SortedDictionary<int, ActorRelation> dictFamily)
         {
@@ -352,6 +354,12 @@ namespace Next_Game
 
         public new SortedDictionary<int, ActorRelation> GetFamily()
         { return dictFamily; }
+
+        public void AddFavour(int possID)
+        { if (possID > 0) { listOfFavours.Add(possID); } }
+
+        public List<int> GetFavours()
+        { return listOfFavours; }
     }
 
     //Player controlled Minions

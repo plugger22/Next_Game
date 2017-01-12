@@ -1464,7 +1464,23 @@ namespace Next_Game
         internal void AddOtherHouse(House house)
         { dictAllHouses.Add(house.RefID, house); }
 
-            
+        /// <summary>
+        /// Add a possession to the dictionary, return true if successful
+        /// </summary>
+        /// <param name="possID"></param>
+        /// <param name="possObject"></param>
+        /// <returns></returns>
+        public bool AddPossession(int possID, Possession possObject)
+        {
+            try
+            { dictPossessions.Add(possID, possObject); return true; }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(123, "Invalid Possession Object (null), possID")); }
+            catch (ArgumentException)
+            { Game.SetError(new Error(123, string.Format("Invalid possessionID (duplicate ID), possID {0}", possID))); }
+            return false;
+        }
+
         /// <summary>
         /// find entry with same RefID in dictAllHouses and removes it if present (used by lore.cs CreateNewMajorHouse)
         /// </summary>

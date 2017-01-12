@@ -3,7 +3,7 @@
 
 # Name: Description
 # RID: (ResultID) Unique number, 1+
-# Type: (ResultType) -> DataPoint / GameVar / RelPlyr / RelOther / Condition / Resource / Item / Secret / Army / Event 
+# Type: (ResultType) -> DataPoint / GameVar / RelPlyr / RelOther / Condition / Resource / Item / Secret / Army / Event / Favour 
 # Data: multipurpose integer (context depends on Type) (default '0')
 # Calc: (EventCalc) -> None / Add / Subtract / Random / Equals (default 'None')
 # Amount: integer amount applied by Calc (if Calc is 'Random' then it's random Amount, eg. if amount 100 then random d100) (default '0'), neg. #'s to
@@ -243,10 +243,31 @@ Calc: Random
 Amount: -90
 [End]
 
-# BlackMail Conflict Results (relationship with Player degrades if a Loss, no change if a win)
+# BlackMail Conflict Results (relationship with Player degrades if a Loss) Plyr gains a Favour for a win (strength varies with win size)
+
+Name: Relationship improved as a result of a successful Blackmail conflict Minor Win
+RID: 29
+Type: Favour
+Tag: Blackmail Minor Win
+Data: 1
+[End]
+
+Name: Relationship improved as a result of a successful Blackmail conflict Win
+RID: 30
+Type: Favour
+Tag: Blackmail Win
+Data: 3
+[End]
+
+Name: Relationship improved as a result of a successful Blackmail conflict Major Win
+RID: 31
+Type: Favour
+Tag: Blackmail Major Win
+Data: 5
+[End]
 
 Name: Relationship worsened as a result of a failed Blackmail conflict Minor Loss
-RID: 29
+RID: 32
 Type: RelPlyr
 Tag: Blackmail Minor Loss
 Data: 0
@@ -255,7 +276,7 @@ Amount: -50
 [End]
 
 Name: Relationship worsened as a result of a failed Blackmail conflict Loss
-RID: 30
+RID: 33
 Type: RelPlyr
 Tag: Blackmail Loss
 Data: 0
@@ -264,7 +285,7 @@ Amount: -70
 [End]
 
 Name: Relationship worsened as a result of a failed Blackmail conflict Major Loss
-RID: 31
+RID: 34
 Type: RelPlyr
 Tag: Blackmail Major Loss
 Data: 0

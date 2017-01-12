@@ -27,7 +27,7 @@ namespace Next_Game
         static Random rnd;
         //protagonists
         Actor opponent;
-        Active player;
+        Player player;
         public bool Challenger { get; set; } //is the Player the Challenger?
         int numberOfCards;
         private Challenge challenge;
@@ -79,7 +79,7 @@ namespace Next_Game
             listOpponentCards = new List<Snippet>();
             listSituationCards = new List<Snippet>();
             //get player (always the player vs. somebody else)
-            player = Game.world.GetActiveActor(1);
+            player = (Player)Game.world.GetActiveActor(1);
             if (player != null) {}
             else { Game.SetError(new Error(84, "Player not found (null)")); }
             //pass Points matrix to Layout (only needed once)
@@ -1418,6 +1418,19 @@ namespace Next_Game
                             case ResultType.Item:
                                 break;
                             case ResultType.Secret:
+                                break;
+                            case ResultType.Favour:
+                                //data indicates the strength of the favour granted to Player
+                                tempText = string.Format("{0} {1} grants you a Favour", opponent.Title, opponent.Name);
+                                Favour newFavour = new Favour(tempText, Game.gameYear, data, opponent.ActID);
+                                //add to dictionary and Player's list
+                                if (Game.world.AddPossession(newFavour.PossID, newFavour) == true)
+                                {
+                                    player.AddFavour(newFavour.PossID);
+                                    tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                    message = new Message(tempText, MessageType.Conflict);
+                                    Game.world.SetMessage(message);
+                                }
                                 break;
                             case ResultType.Army:
                                 break;
