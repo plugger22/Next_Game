@@ -5,8 +5,9 @@
 # RID: (ResultID) Unique number, 1+
 # Type: (ResultType) -> DataPoint / GameVar / RelPlyr / RelOther / Condition / Resource / Item / Secret / Army / Event / Favour 
 # Data: multipurpose integer (context depends on Type) (default '0')
-# Calc: (EventCalc) -> None / Add / Subtract / Random / Equals (default 'None')
-# Amount: integer amount applied by Calc (if Calc is 'Random' then it's random Amount, eg. if amount 100 then random d100) (default '0'), neg. #'s to
+
+# Calc: OPTIONAL( EventCalc) -> None / Add / Subtract / Random / Equals (default 'None')
+# Amount: OPTIONAL int amt applied by Calc (if Calc is 'Random' then it's random Amt, eg. if amount 100 then random d100) (default '0'), neg. #'s to
 
 # DataPoint: (OPTIONAL - applies if Type is DataPoint) -> Invisibility / Justice / Legend_Usurper / Legend_King / Honour_Usurper / Honour_King
 # Tag: (OPTIONAL - short descriptor, applies if Type is  RelPlyr or RelOther 
@@ -30,6 +31,15 @@ DataPoint: Invisibility
 Data: -1
 Calc: Random
 Amount: 40
+[End]
+
+Name: You're Presence is known
+RID: 35
+Type: DataPoint
+DataPoint: Invisibility
+Data: -1
+Calc: Random
+Amount: 20
 [End]
 
 Name: The Cause is Just
@@ -245,31 +255,25 @@ Amount: -90
 
 # BlackMail Conflict Results (relationship with Player degrades if a Loss) Plyr gains a Favour for a win (data -> strength of favour)
 
-Name: Relationship improved as a result of a successful Blackmail conflict Minor Win
+Name: Favour granted as a result of a successful Blackmail conflict Minor Win
 RID: 29
 Type: Favour
 Tag: Blackmail Minor Win
 Data: 1
-Calc: None
-Amount: 0
 [End]
 
-Name: Relationship improved as a result of a successful Blackmail conflict Win
+Name: Favour granted as a result of a successful Blackmail conflict Win
 RID: 30
 Type: Favour
 Tag: Blackmail Win
 Data: 3
-Calc: None
-Amount: 0
 [End]
 
-Name: Relationship improved as a result of a successful Blackmail conflict Major Win
+Name: Favour granted as a result of a successful Blackmail conflict Major Win
 RID: 31
 Type: Favour
 Tag: Blackmail Major Win
 Data: 5
-Calc: None
-Amount: 0
 [End]
 
 Name: Relationship worsened as a result of a failed Blackmail conflict Minor Loss
@@ -298,3 +302,5 @@ Data: 0
 Calc: Random
 Amount: -90
 [End]
+
+# next is 36

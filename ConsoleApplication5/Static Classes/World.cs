@@ -702,6 +702,26 @@ namespace Next_Game
                     }
                 }
 
+                //favours (Player only)
+                if (person is Player)
+                {
+                    Player player = person as Player;
+                    List<int> listOfFavours = player.GetFavours();
+                    if (listOfFavours.Count > 0)
+                    {
+                        listToDisplay.Add(new Snippet("Favours", RLColor.Brown, RLColor.Black));
+                        foreach (int possessionID in listOfFavours)
+                        {
+                            Favour favour = (Favour)GetPossession(possessionID);
+                            if (favour != null)
+                            {
+                                listToDisplay.Add(new Snippet(string.Format("{0} {1} ", favour.Year, favour.Description), false));
+                                listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(favour.Strength)), RLColor.LightRed, RLColor.Black));
+                            }
+                        }
+                    }
+                }
+
                 //personal history
                 List<string> actorHistory = new List<string>();
                 if (person is Player)

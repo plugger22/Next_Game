@@ -175,7 +175,7 @@ ResWinMajor:  31
 ResLossMinor: 32
 ResLoss: 33
 ResLossMajor: 34, 10
-ResNone: 1
+ResNone: 35
 [End]
 
 Type: Social
