@@ -344,7 +344,10 @@ namespace Next_Game
 
         public Player(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
-            Activated = true; Title = string.Format("{0}", Type); listOfFavours = new List<int>();
+            Activated = true;
+            Title = string.Format("{0}", Type);
+            listOfFavours = new List<int>();
+            listOfIntroductions = new List<int>();
         }
 
         public void SetFamily (SortedDictionary<int, ActorRelation> dictFamily)

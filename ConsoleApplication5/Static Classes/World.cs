@@ -702,10 +702,11 @@ namespace Next_Game
                     }
                 }
 
-                //favours (Player only)
+                //player specific Soft possessions - Favours & Introductions
                 if (person is Player)
                 {
                     Player player = person as Player;
+                    //favours (Player only)
                     List<int> listOfFavours = player.GetFavours();
                     if (listOfFavours.Count > 0)
                     {
@@ -717,6 +718,21 @@ namespace Next_Game
                             {
                                 listToDisplay.Add(new Snippet(string.Format("{0} {1} ", favour.Year, favour.Description), false));
                                 listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(favour.Strength)), RLColor.LightRed, RLColor.Black));
+                            }
+                        }
+                    }
+                    //Introductions (Player only)
+                    List<int> listOfIntroductions = player.GetIntroductions();
+                    if (listOfIntroductions.Count > 0)
+                    {
+                        listToDisplay.Add(new Snippet("Introductions", RLColor.Brown, RLColor.Black));
+                        foreach (int possessionID in listOfIntroductions)
+                        {
+                            Introduction introduction = (Introduction)GetPossession(possessionID);
+                            if (introduction != null)
+                            {
+                                listToDisplay.Add(new Snippet(string.Format("{0} {1} ", introduction.Year, introduction.Description), false));
+                                listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(introduction.Strength)), RLColor.LightRed, RLColor.Black));
                             }
                         }
                     }
