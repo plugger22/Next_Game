@@ -135,12 +135,12 @@ OppStrDef: Raise the Drawbridge
 SkillPrime: Charm
 SkillSecond: Treachery
 SkillThird: Wits
-OutWinMinor: Your relationship improves
-OutWin: You have become firm friends
-OutWinMajor: You have gained an ardent supporter
-OutLossMinor: Your relationship deteriorates
-OutLoss: You have become disliked
-OutLossMajor: Your opponent is actively campaigning against you
+OutWinMinor: Your relationship improves (Rel+)
+OutWin: You have become firm friends (Rel++, Introduction)
+OutWinMajor: You have gained an ardent supporter (Rel+++, Introduction)
+OutLossMinor: Your relationship deteriorates (Rel-)
+OutLoss: You have become disliked (Rel--)
+OutLossMajor: Your opponent is actively campaigning against you (Rel---)
 OutNone: Indifference is the only outcome today. Nobody cares one way or another.
 ResWinMinor: 14
 ResWin: 15
@@ -162,12 +162,12 @@ OppStrDef: Stick to Your Principles
 SkillPrime: Treachery
 SkillSecond: Wits
 SkillThird: Charm
-OutWinMinor: You have gained a small amount of influence
-OutWin: Your opponent agrees to your demands
-OutWinMajor: Your opponent has become your minion
-OutLossMinor: You relationship has deteriorated
-OutLoss: You have been firmly rebuffed
-OutLossMajor: Your opponent is now your enemy
+OutWinMinor: You have gained a small amount of influence (Favour)
+OutWin: Your opponent agrees to your demands (Favour)
+OutWinMajor: Your opponent has become your minion (Favour)
+OutLossMinor: You relationship has deteriorated (Rel-)
+OutLoss: You have been firmly rebuffed (Rel--)
+OutLossMajor: Your opponent is now your enemy (Rel---)
 OutNone: The Blackmail attempt has fizzled out. The mud and threats didn't stick.
 ResWinMinor: 29
 ResWin: 30
@@ -189,12 +189,12 @@ OppStrDef: Shut Them Out
 SkillPrime: Charm
 SkillSecond: Treachery
 SkillThird: Wits
-OutWinMinor: Your relationship has improved
-OutWin: You seduce your opponent and gain an advantage
-OutWinMajor: Your opponent has become an ardent supporter and lover
-OutLossMinor: Your relationship has deteriorated
-OutLoss: You have been firmly rebuffed
-OutLossMajor: Your opponent has taken offence and is now your enemy
+OutWinMinor: Your relationship has improved (Rel+, Introduction)
+OutWin: You seduce your opponent and gain an advantage (Rel++, Introduction)
+OutWinMajor: Your opponent has become an ardent supporter and lover (Rel+++, Introduction)
+OutLossMinor: Your relationship has deteriorated (Rel-)
+OutLoss: You have been firmly rebuffed (Rel--)
+OutLossMajor: Your opponent has taken offence and is now your enemy (Rel---)
 OutNone: Love and lust are not on the menu today. It didn't happen.
 ResWinMinor: 20, 36
 ResWin: 21, 37

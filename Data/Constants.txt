@@ -104,4 +104,4 @@
 # OPPONENT_MARGIN -> determines opponent strategy, higher the # the more likely to choose a Balanced Strategy over the other two
 38: 2
 # TALK_THRESHOLD -> A characters relationship level (0 - 100) with the player required (>=) in order for them to agree to meet
-39: 70
+39: 50

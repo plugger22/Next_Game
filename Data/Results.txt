@@ -9,8 +9,8 @@
 # Calc: OPTIONAL( EventCalc) -> None / Add / Subtract / Random / Equals (default 'None')
 # Amount: OPTIONAL int amt applied by Calc (if Calc is 'Random' then it's random Amt, eg. if amount 100 then random d100) (default '0'), neg. #'s to
 
-# DataPoint: (OPTIONAL - applies if Type is DataPoint) -> Invisibility / Justice / Legend_Usurper / Legend_King / Honour_Usurper / Honour_King
-# Tag: (OPTIONAL - short descriptor, applies if Type is  RelPlyr or RelOther 
+# DataPoint: OPTIONAL - applies if Type is DataPoint) -> Invisibility / Justice / Legend_Usurper / Legend_King / Honour_Usurper / Honour_King
+# Tag: OPTIONAL - short descriptor, applies if Type is  RelPlyr or RelOther 
 
 
 # Key Stats Generic Results -> Data +ve ADD to Good, otherwise ADD to Bad
@@ -173,14 +173,12 @@ Amount: 70
 Name: Introduction granted as a result of a successful Befriend conflict Win
 RID: 40
 Type: Introduction
-Tag: Befriend Win
 Data: 3
 [End]
 
 Name: Introduction granted as a result of a successful Befriend conflict Major Win
 RID: 39
 Type: Introduction
-Tag: Befriend Major Win
 Data: 5
 [End]
 
@@ -250,14 +248,12 @@ Data: 1
 Name: Introduction granted as a result of a successful Seduce conflict Win
 RID: 37
 Type: Introduction
-Tag: Seduce Win
 Data: 3
 [End]
 
 Name: Favour granted as a result of a successful Seduce conflict Major Win
 RID: 38
 Type: Favour
-Tag: Seduce Major Win
 Data: 5
 [End]
 
@@ -293,21 +289,18 @@ Amount: -90
 Name: Favour granted as a result of a successful Blackmail conflict Minor Win
 RID: 29
 Type: Favour
-Tag: Blackmail Minor Win
 Data: 1
 [End]
 
 Name: Favour granted as a result of a successful Blackmail conflict Win
 RID: 30
 Type: Favour
-Tag: Blackmail Win
 Data: 3
 [End]
 
 Name: Favour granted as a result of a successful Blackmail conflict Major Win
 RID: 31
 Type: Favour
-Tag: Blackmail Major Win
 Data: 5
 [End]
 
@@ -338,4 +331,4 @@ Calc: Random
 Amount: -90
 [End]
 
-# next is 39
+# next is 41

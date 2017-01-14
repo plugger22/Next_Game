@@ -1643,6 +1643,7 @@ namespace Next_Game
                 Lord.AddRelation(child.ActID, ActorRelation.Son);
                 Lady.AddRelation(child.ActID, ActorRelation.Son);
             }
+            child.Title = string.Format("{0}", child.Type);
             //assign traits
             InitialiseActorTraits(child, Lord, Lady);
             //add to dictionaries
