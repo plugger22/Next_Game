@@ -152,7 +152,24 @@ namespace Next_Game
             this.Strength = strength;
             Strength = Math.Min(5, Strength);
             Strength = Math.Max(1, Strength);
-            if (actorID > 0) { this.ActorID = actorID; } else { Game.SetError(new Error(122, "Invalid ActorID input (zero or less)")); }
+            if (actorID > 0) { this.ActorID = actorID; } else { Game.SetError(new Error(122, "Invalid ActorID input (zero or less) Favour.cs")); }
+            Type = PossessionType.Favour;
+        }
+    }
+
+    // Introductions ---
+
+    public class Introduction : Possession
+    {
+        public int Strength { get; set; } //strength 1 to 5
+        public int ActorID { get; set; } //which actor granted the favour
+
+        public Introduction(string description, int year, int strength, int actorID) : base(description, year)
+        {
+            this.Strength = strength;
+            Strength = Math.Min(5, Strength);
+            Strength = Math.Max(1, Strength);
+            if (actorID > 0) { this.ActorID = actorID; } else { Game.SetError(new Error(122, "Invalid ActorID input (zero or less) Introduction.cs")); }
             Type = PossessionType.Favour;
         }
     }

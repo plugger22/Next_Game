@@ -340,6 +340,7 @@ namespace Next_Game
         public int HistoryID { get; set; } //actorID of character who becomes the usurper
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
         private List<int> listOfFavours; //stores possessionId of favours granted to Player
+        private List<int> listOfIntroductions; //stores possessionId of introductions granted to the Player
 
         public Player(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
@@ -360,6 +361,12 @@ namespace Next_Game
 
         public List<int> GetFavours()
         { return listOfFavours; }
+
+        public void AddIntroduction(int possID)
+        { if (possID > 0) { listOfIntroductions.Add(possID); } }
+
+        public List<int> GetIntroductions()
+        { return listOfIntroductions; }
     }
 
     //Player controlled Minions

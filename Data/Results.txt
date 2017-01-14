@@ -3,7 +3,7 @@
 
 # Name: Description
 # RID: (ResultID) Unique number, 1+
-# Type: (ResultType) -> DataPoint / GameVar / RelPlyr / RelOther / Condition / Resource / Item / Secret / Army / Event / Favour 
+# Type: (ResultType) -> DataPoint / GameVar / RelPlyr / RelOther / Condition / Resource / Item / Secret / Army / Event / Favour / Introduction
 # Data: multipurpose integer (context depends on Type) (default '0')
 
 # Calc: OPTIONAL( EventCalc) -> None / Add / Subtract / Random / Equals (default 'None')
@@ -170,6 +170,20 @@ Calc: Random
 Amount: 70
 [End]
 
+Name: Introduction granted as a result of a successful Befriend conflict Win
+RID: 40
+Type: Introduction
+Tag: Befriend Win
+Data: 3
+[End]
+
+Name: Introduction granted as a result of a successful Befriend conflict Major Win
+RID: 39
+Type: Introduction
+Tag: Befriend Major Win
+Data: 5
+[End]
+
 Name: Relationship worsened as a result of a failed Befriend conflict Minor Loss
 RID: 17
 Type: RelPlyr
@@ -224,6 +238,27 @@ Tag: Seduce Major Win
 Data: 0
 Calc: Random
 Amount: 90
+[End]
+
+Name: Introduction granted as a result of a successful Seduce conflict Minor Win
+RID: 36
+Type: Introduction
+Tag: Seduce Minor Win
+Data: 1
+[End]
+
+Name: Introduction granted as a result of a successful Seduce conflict Win
+RID: 37
+Type: Introduction
+Tag: Seduce Win
+Data: 3
+[End]
+
+Name: Favour granted as a result of a successful Seduce conflict Major Win
+RID: 38
+Type: Favour
+Tag: Seduce Major Win
+Data: 5
 [End]
 
 Name: Relationship worsened as a result of a failed Seduce conflict Minor Loss
@@ -303,4 +338,4 @@ Calc: Random
 Amount: -90
 [End]
 
-# next is 36
+# next is 39

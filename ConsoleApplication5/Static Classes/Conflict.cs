@@ -1432,6 +1432,19 @@ namespace Next_Game
                                     Game.world.SetMessage(message);
                                 }
                                 break;
+                            case ResultType.Introduction:
+                                //data indicates the strength of the introduction granted to Player
+                                tempText = string.Format("{0} {1} grants you an Introduction", opponent.Title, opponent.Name);
+                                Introduction newIntroduction = new Introduction(tempText, Game.gameYear, data, opponent.ActID);
+                                //add to dictionary and Player's list
+                                if (Game.world.AddPossession(newIntroduction.PossID, newIntroduction) == true)
+                                {
+                                    player.AddIntroduction(newIntroduction.PossID);
+                                    tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                    message = new Message(tempText, MessageType.Conflict);
+                                    Game.world.SetMessage(message);
+                                }
+                                break;
                             case ResultType.Army:
                                 break;
                             case ResultType.Event:
