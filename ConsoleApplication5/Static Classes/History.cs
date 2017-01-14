@@ -1903,7 +1903,7 @@ namespace Next_Game
                 select actor.Value;
             listOfRoyals = royalActors.ToList();
 
-            //assign starting loyalties to actors
+            //assign starting loyalties to actors & bannerlords
             for (int i = 0; i < listOfHousesByPower.Count; i++)
             {
                 MajorHouse house = listOfHousesByPower[i];
