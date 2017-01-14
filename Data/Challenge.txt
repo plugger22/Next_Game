@@ -196,12 +196,12 @@ OutLossMinor: Your relationship has deteriorated (Rel-)
 OutLoss: You have been firmly rebuffed (Rel--)
 OutLossMajor: Your opponent has taken offence and is now your enemy (Rel---)
 OutNone: Love and lust are not on the menu today. It didn't happen.
-ResWinMinor: 20, 36, 42
-ResWin: 21, 37, 42
-ResWinMajor: 22, 38, 42
-ResLossMinor: 23, 42
-ResLoss: 24, 42
-ResLossMajor: 25, 42
+ResWinMinor: 20, 36
+ResWin: 21, 37
+ResWinMajor: 22, 38
+ResLossMinor: 23
+ResLoss: 24, 41
+ResLossMajor: 25, 41
 ResNone: 1
 [End]
 

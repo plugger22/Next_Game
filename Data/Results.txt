@@ -285,7 +285,7 @@ Amount: -90
 [End]
 
 Name: Chance of a Jealous Lord finding out
-RID: 42
+RID: 41
 Type: Event
 Data: 6
 [End]

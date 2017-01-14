@@ -3516,6 +3516,9 @@ namespace Next_Game
                                         case "Army":
                                             structResult.Type = ResultType.DataPoint;
                                             break;
+                                        case "Event":
+                                            structResult.Type = ResultType.Event;
+                                            break;
                                         default:
                                             Game.SetError(new Error(115, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfResults[i])));
                                             validData = false;

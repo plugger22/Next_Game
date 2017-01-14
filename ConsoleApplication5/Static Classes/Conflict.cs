@@ -1458,7 +1458,7 @@ namespace Next_Game
                                         if (eventObject.Status == EventStatus.Dormant || eventObject.Status == EventStatus.Live)
                                         {
                                             eventObject.Status = EventStatus.Active;
-                                            tempText = string.Format("Event \"{0\" has been activated", eventObject.Name);
+                                            tempText = string.Format("Event \"{0}\" has been activated", eventObject.Name);
                                             tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                             message = new Message(tempText, MessageType.Conflict);
                                             Game.world.SetMessage(message);
