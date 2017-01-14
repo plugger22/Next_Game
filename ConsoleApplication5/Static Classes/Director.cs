@@ -1567,7 +1567,7 @@ namespace Next_Game
                             //Data = ActorType, Threshold is required type. Must be equal
                             if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { Console.WriteLine("Trigger: Incorrect ActorType"); return false; }
                             break;
-                        case TriggerCheck.Resource:
+                        case TriggerCheck.ResourcePlyr:
                             if (CheckTrigger(player.Resources, trigger.Calc, trigger.Threshold) == false) { Console.WriteLine("Trigger: Player has wrong amount of Resources"); return false; }
                             break;
                         default:
