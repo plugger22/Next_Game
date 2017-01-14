@@ -1448,6 +1448,23 @@ namespace Next_Game
                             case ResultType.Army:
                                 break;
                             case ResultType.Event:
+                                //data is the Player Event ID that is made Active (currently Dormant)
+                                if (data > 0)
+                                {
+                                    EventPlayer eventObject = Game.director.GetPlayerEvent(data);
+                                    if (eventObject != null)
+                                    {
+                                        //activate event provided it isn't already or isn't dead
+                                        if (eventObject.Status == EventStatus.Dormant || eventObject.Status == EventStatus.Live)
+                                        {
+                                            eventObject.Status = EventStatus.Active;
+                                            tempText = string.Format("Event \"{0\" has been activated", eventObject.Name);
+                                            tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                            message = new Message(tempText, MessageType.Conflict);
+                                            Game.world.SetMessage(message);
+                                        }
+                                    }
+                                }
                                 break;
                             //prevents infinite loop (ignored result)
                             case ResultType.None:
