@@ -1101,7 +1101,7 @@ namespace Next_Game
                                     option_4.ReplyGood = string.Format("{0} kneels at your feet", actorText);
                                     List<Trigger> listTriggers_4 = new List<Trigger>();
                                     listTriggers_4.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), 70, EventCalc.GreaterThanOrEqual));
-                                    listTriggers_4.Add(new Trigger(TriggerCheck.Type, (int)person.Type, (int)ActorType.Lord, EventCalc.Equals)); //must be a Lord
+                                    listTriggers_4.Add(new Trigger(TriggerCheck.ActorType, (int)person.Type, (int)ActorType.Lord, EventCalc.Equals)); //must be a Lord
                                     option_4.SetTriggers(listTriggers_4);
                                     OutNone outcome_4 = new OutNone(eventObject.EventPID);
                                     option_4.SetGoodOutcome(outcome_4);
@@ -1563,9 +1563,12 @@ namespace Next_Game
                             //Threshold = (int)ActorSex -> Male 1, Female 2 (sex of actor). Must be opposite sex (seduction
                             if (CheckTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == false) { Console.WriteLine("Trigger: Same sex, Seduction not possible"); return false; }
                             break;
-                        case TriggerCheck.Type:
+                        case TriggerCheck.ActorType:
                             //Data = ActorType, Threshold is required type. Must be equal
                             if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { Console.WriteLine("Trigger: Incorrect ActorType"); return false; }
+                            break;
+                        case TriggerCheck.Resource:
+                            if (CheckTrigger(player.Resources, trigger.Calc, trigger.Threshold) == false) { Console.WriteLine("Trigger: Player has wrong amount of Resources"); return false; }
                             break;
                         default:
                             Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\"", trigger.Check, option.Text)));
