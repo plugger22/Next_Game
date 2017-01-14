@@ -879,7 +879,6 @@ namespace Next_Game
                         if (eventCount > 0)
                         { locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
                             RLColor.LightGray, RLColor.Black)); }
-                        
                     }
                     else
                     {

@@ -1930,6 +1930,20 @@ namespace Next_Game
                         else { actor.AddRelEventPlyr(new Relation("Confused Loyalty", "Confused Loyalty", change)); }
                     }
                 }
+                //assign loyalty to Bannerlords (houses, not actors)) of NobleHouses
+                List<int> listOfBannerLords = house.GetBannerLords();
+                if (listOfBannerLords.Count > 0)
+                {
+                    foreach(int bannerID in listOfBannerLords)
+                    {
+                        MinorHouse bannerHouse = (MinorHouse)Game.world.GetHouse(bannerID);
+                        if (bannerHouse != null)
+                        {
+                            bannerHouse.Loyalty_AtStart = loyalty;
+                            bannerHouse.Loyalty_Current = loyalty;
+                        }
+                    }
+                }
             }
 
             //hive off Royals into separate lists
