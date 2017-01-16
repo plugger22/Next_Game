@@ -1,4 +1,66 @@
 
+Name: Auto MajorHouse Action
+ID: 1001
+Type: Location
+subType: Major
+Cat: Auto
+Freq: Normal
+Event: You are at <loc>. How will you fill your day?
+[option]
+text: Seek an Audience with <lord>
+reply: You make a formal request for an audience with <lord>
+[outcome]
+effect: EventChain
+data: 1002
+filter: None
+[option]
+text: Seek an Audience with <lady>
+reply: You make a formal request for an audience with <lady>
+[outcome]
+effect: EventChain
+data: 1002
+filter: None
+[option]
+text: Discretely search for friends
+reply: You make careful enquiries as to if there are any supporters of the old King
+[outcome]
+effect: EventStatus
+data: 1002
+newStatus: Active
+[End]
+
+Name: Auto MajorHouse Audience
+ID: 1002
+Type: Location
+subType: Major
+Cat: Auto
+Freq: Normal
+Event: You are granted an audience with <person> at <loc>
+[option]
+text: Befriend <person>
+reply: You attempt to form a friendly, supportive relationship with <person>
+[outcome]
+effect: EventStatus
+data: 1001
+newStatus: Active
+[option]
+text: You attempt to Seduce <person>
+reply: Using your best bedroom voice you make your move on <person>
+[outcome]
+effect: EventStatus
+data: 1001
+newStatus: Active
+[option]
+text: You attempt to Blackmail <person>
+reply: Forceful action is needed. <person> will do as you ask, or else.
+[outcome]
+effect: EventStatus
+data: 1001
+newStatus: Active
+[End]
+
+
+
 # Other -> Stealth ---
 
 Skill: Wits

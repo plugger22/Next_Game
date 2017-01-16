@@ -73,10 +73,10 @@ namespace Next_Game
         List<int> listGenPlyrEventsMajor;
         List<int> listGenPlyrEventsMinor;
         List<int> listGenPlyrEventsInn;
-        List<int> listAutoPlyrEventsCapital;
+        /*List<int> listAutoPlyrEventsCapital;
         List<int> listAutoPlyrEventsMajor;
         List<int> listAutoPlyrEventsMinor;
-        List<int> listAutoPlyrEventsInn;
+        List<int> listAutoPlyrEventsInn;*/
         //archetype player events
         List<int> listPlyrRoadEventsNormal;
         List<int> listPlyrRoadEventsKings;
@@ -132,10 +132,10 @@ namespace Next_Game
             listGenPlyrEventsMajor = new List<int>();
             listGenPlyrEventsMinor = new List<int>();
             listGenPlyrEventsInn = new List<int>();
-            listAutoPlyrEventsCapital = new List<int>();
+            /*listAutoPlyrEventsCapital = new List<int>();
             listAutoPlyrEventsMajor = new List<int>();
             listAutoPlyrEventsMinor = new List<int>();
-            listAutoPlyrEventsInn = new List<int>();
+            listAutoPlyrEventsInn = new List<int>();*/
             //archetype player events
             listPlyrRoadEventsNormal = new List<int>();
             listPlyrRoadEventsKings = new List<int>();
@@ -168,8 +168,8 @@ namespace Next_Game
             dictFollowerEvents = Game.file.GetFollowerEvents("Events_Follower.txt");
             Console.WriteLine(Environment.NewLine + "--- Import Player Events");
             dictPlayerEvents = Game.file.GetPlayerEvents("Events_Player.txt");
-            Console.WriteLine(Environment.NewLine + "--- Import Auto Events");
-            AddAutoEvents(Game.file.GetPlayerEvents("Events_Auto.txt"));
+            Console.WriteLine(Environment.NewLine + "--- Import AutoReact Events");
+            AddAutoEvents(Game.file.GetPlayerEvents("Events_AutoReact.txt"));
             InitialiseGenericEvents();
             Console.WriteLine(Environment.NewLine + "--- Import Archetypes"); //Run AFTER importing Events
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
@@ -393,7 +393,7 @@ namespace Next_Game
                             break;
                     }
                 }
-                else if (eventObject.Value.Category == EventCategory.Auto)
+                /*else if (eventObject.Value.Category == EventCategory.AutoLoc)
                 {
                     eventID = eventObject.Value.EventPID;
                     switch (eventObject.Value.Type)
@@ -419,7 +419,7 @@ namespace Next_Game
                             }
                             break;
                     }
-                }
+                }*/
             }
         }
 
@@ -841,7 +841,7 @@ namespace Next_Game
                         }
                     }
                     //new event (auto location events always have eventPID of '1000' -> old version in Player dict is deleted before new one added)
-                    EventPlayer eventObject = new EventPlayer(1000, "What to do?", EventFrequency.Low) {Category = EventCategory.Auto, Status = EventStatus.Active, Type = ArcType.Location };
+                    EventPlayer eventObject = new EventPlayer(1000, "What to do?", EventFrequency.Low) {Category = EventCategory.AutoLoc, Status = EventStatus.Active, Type = ArcType.Location };
                     
                     switch (filter)
                     {
