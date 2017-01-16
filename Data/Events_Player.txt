@@ -297,7 +297,7 @@ apply: Add
 
 # Triggered events
 
-Name: Jealous Noble Lord
+Name: Angry Noble Lord
 ID: 6
 Type: Location
 subType: Major
@@ -305,7 +305,7 @@ Cat: Generic
 Freq: Low
 Status: Dormant
 Repeat: 2
-Event: Thugs, paid for by a Jealous Noble Lord, approach with evil intent
+Event: Thugs, paid for by an Angry Noble Lord, approach with evil intent
 [option]
 text: Run like the wind
 reply: Why risk getting involved with dangerous thugs?
@@ -315,7 +315,7 @@ effect: None
 text: Attempt to Bribe the Thugs
 reply: The Thugs take your money
 [trigger]
-check: Resource
+check: ResourcePlyr
 thresh: 3
 calc: >=
 [outcome]

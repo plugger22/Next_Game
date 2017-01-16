@@ -191,7 +191,7 @@ SkillSecond: Treachery
 SkillThird: Wits
 OutWinMinor: Your relationship has improved (Rel+, Introduction)
 OutWin: You seduce your opponent and gain an advantage (Rel++, Introduction)
-OutWinMajor: Your opponent has become an ardent supporter and lover (Rel+++, Introduction)
+OutWinMajor: Your opponent has become an ardent supporter and lover (Rel+++, Favour)
 OutLossMinor: Your relationship has deteriorated (Rel-)
 OutLoss: You have been firmly rebuffed (Rel--)
 OutLossMajor: Your opponent has taken offence and is now your enemy (Rel---)

@@ -1339,6 +1339,7 @@ namespace Next_Game
             List<int> resultList = challenge.GetResults(outcome);
             int resultID;
             string tempText;
+            string testText = "";
             if (resultList.Count > 0)
             {
                 for(int i = 0; i < resultList.Count; i++)
@@ -1356,9 +1357,10 @@ namespace Next_Game
                         if (result.Test > 0)
                         {
                             int rndNum = rnd.Next(0, 100);
+                            testText = string.Format("(needed {0} %, or less, rolled {1})", result.Test, rndNum);
                             if (rndNum > result.Test)
-                            { type = ResultType.None; Console.WriteLine("{0} failed Test (needed {1}, or less, rolled {2})", result.Description, result.Test, rndNum); }
-                            else { Console.WriteLine("{0} PASSED Test (needed {1}, or less, rolled {2})", result.Description, result.Test, rndNum); }
+                            { type = ResultType.None; Console.WriteLine("{0} failed Test {1}", result.Description, testText); }
+                            else { Console.WriteLine("{0} PASSED Test {1}", result.Description, testText); }
                         }
                         //check for a random outcome -> then it's random 'amount', eg. amount is 100 then it's d100, -100 then it's -1d100
                         if (calc == EventCalc.Random)
@@ -1468,7 +1470,7 @@ namespace Next_Game
                                             eventObject.Status = EventStatus.Active;
                                             tempText = string.Format("Event \"{0}\" has been activated", eventObject.Name);
                                             tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
-                                            message = new Message(tempText, MessageType.Conflict);
+                                            message = new Message(string.Format("{0} {1}", tempText, testText), MessageType.Conflict);
                                             Game.world.SetMessage(message);
                                         }
                                     }

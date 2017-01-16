@@ -200,6 +200,7 @@ namespace Next_Game
         public ResultType Type { get; set; }
         public DataPoint DataPoint { get; set; }
         public int Data { get; set; }
+        public int Test { get; set; }
         public EventCalc Calc { get; set;}
         public int Amount { get; set; }
     }
@@ -3546,6 +3547,17 @@ namespace Next_Game
                                 else
                                 { Game.SetError(new Error(115, string.Format("Empty data field (Data), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                                 break;
+                            case "Test":
+                                if (cleanToken.Length > 0)
+                                {
+                                    try
+                                    { structResult.Test = Convert.ToInt32(cleanToken); }
+                                    catch
+                                    { Game.SetError(new Error(115, string.Format("Invalid Test (Conversion) for {0}", structResult.Name))); validData = false; }
+                                }
+                                else
+                                { Game.SetError(new Error(115, string.Format("Empty data field (Test), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                                break;
                             case "Calc":
                                 if (cleanToken.Length == 0)
                                 { Game.SetError(new Error(115, string.Format("Empty Calc field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
@@ -3632,9 +3644,9 @@ namespace Next_Game
                                 {
                                     //pass info over to a class instance
                                     Result resultObject = new Result(structResult.ResultID, structResult.Name, structResult.Type, structResult.Data, structResult.Calc, structResult.Amount);
-                                    if (structResult.DataPoint > DataPoint.None)
-                                    { resultObject.DataPoint = structResult.DataPoint; }
+                                    if (structResult.DataPoint > DataPoint.None) { resultObject.DataPoint = structResult.DataPoint; }
                                     if (String.IsNullOrEmpty(structResult.Tag) == false) { resultObject.Tag = structResult.Tag; }
+                                    if (structResult.Test > 0) { resultObject.Test = structResult.Test; }
 
                                     //last datapoint - save object to dictionary
                                     if (dataCounter > 0)
