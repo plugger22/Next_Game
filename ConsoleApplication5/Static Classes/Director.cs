@@ -88,6 +88,7 @@ namespace Next_Game
         List<EventPackage> listPlyrCurrentEvents; //player
         private Dictionary<int, EventFollower> dictFollowerEvents;
         private Dictionary<int, EventPlayer> dictPlayerEvents;
+        private Dictionary<int, EventPlayer> dictAutoEvents;
         private Dictionary<int, Archetype> dictArchetypes;
         private Dictionary<int, Story> dictStories;
         private Dictionary<int, Situation> dictSituationsNormal;
@@ -146,6 +147,7 @@ namespace Next_Game
             listOfFollowers = new List<Follower>();
             dictFollowerEvents = new Dictionary<int, EventFollower>();
             dictPlayerEvents = new Dictionary<int, EventPlayer>();
+            dictAutoEvents = new Dictionary<int, EventPlayer>();
             dictArchetypes = new Dictionary<int, Archetype>();
             dictStories = new Dictionary<int, Story>();
             dictSituationsNormal = new Dictionary<int, Situation>(); //first two situations (def. adv. & neutral)
@@ -240,14 +242,14 @@ namespace Next_Game
                 foreach(var eventObject in autoDictionary)
                 {
                     try
-                    { dictPlayerEvents.Add(eventObject.Value.EventPID, eventObject.Value); }
+                    { dictAutoEvents.Add(eventObject.Value.EventPID, eventObject.Value); Console.WriteLine("\"{0}\" successfully added to DictAutoEvents", eventObject.Value.Name); }
                     catch (ArgumentNullException)
-                    { Game.SetError(new Error(117, string.Format("Invalid eventObject (null), eventPID {0}", eventObject.Value.EventPID))); }
+                    { Game.SetError(new Error(117, string.Format("Invalid eventObject (null), eventID {0} in AddAutoEvents", eventObject.Value.EventPID))); }
                     catch (ArgumentException)
-                    { Game.SetError(new Error(117, string.Format("Invalid eventObject (duplicate ID), eventPID {0}", eventObject.Value.EventPID))); }
+                    { Game.SetError(new Error(117, string.Format("Invalid eventObject (duplicate ID), eventPID {0} in AddAutoEvents", eventObject.Value.EventPID))); }
                 }
             }
-            else { Game.SetError(new Error(117, "Invalid autoDictionary input (no records)")); }
+            else { Game.SetError(new Error(117, "Invalid auto Dictionary input (no records)")); }
         }
 
         /// <summary>
