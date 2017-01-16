@@ -196,13 +196,13 @@ OutLossMinor: Your relationship has deteriorated (Rel-)
 OutLoss: You have been firmly rebuffed (Rel--)
 OutLossMajor: Your opponent has taken offence and is now your enemy (Rel---)
 OutNone: Love and lust are not on the menu today. It didn't happen.
-ResWinMinor: 20, 36, 41
-ResWin: 21, 37, 41
-ResWinMajor: 22, 38, 41
-ResLossMinor: 23, 41
-ResLoss: 24, 41
+ResWinMinor: 20, 36
+ResWin: 21, 37
+ResWinMajor: 22, 38
+ResLossMinor: 23
+ResLoss: 24
 ResLossMajor: 25, 41
-ResNone: 1, 41
+ResNone: 1
 [End]
 
 # Stealth Challenges
