@@ -295,8 +295,8 @@ Amount: -90
 Name: Chance of a Jealous Lord finding out
 RID: 41
 Type: Event
-Data: 6
-Test: 50
+Data: 1003
+Test: 100
 [End]
 
 # BlackMail Conflict Results (relationship with Player degrades if a Loss) Plyr gains a Favour for a win (data -> strength of favour)
