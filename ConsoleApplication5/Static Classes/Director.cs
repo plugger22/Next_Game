@@ -1232,6 +1232,20 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// returns an Auto Event archetype from Auto Event dict, null if not found
+        /// </summary>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        internal EventPlayer GetAutoEvent(int eventID)
+        {
+            EventPlayer eventObject = null;
+            if (dictAutoEvents.TryGetValue(eventID, out eventObject))
+            { return eventObject; }
+            return eventObject;
+        }
+
+
+        /// <summary>
         /// Resolve current Follower events one at a time. Returns true if event present to be processed, false otherwise.
         /// </summary>
         public bool ResolveFollowerEvents()

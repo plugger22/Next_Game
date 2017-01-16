@@ -1461,17 +1461,31 @@ namespace Next_Game
                                 //data is the Player Event ID that is made Active (currently Dormant)
                                 if (data > 0)
                                 {
-                                    EventPlayer eventObject = Game.director.GetPlayerEvent(data);
-                                    if (eventObject != null)
+                                    //ordinary event
+                                    if (data < 1000)
                                     {
-                                        //activate event provided it isn't already or isn't dead
-                                        if (eventObject.Status == EventStatus.Dormant || eventObject.Status == EventStatus.Live)
+                                        EventPlayer eventObject = Game.director.GetPlayerEvent(data);
+                                        if (eventObject != null)
                                         {
-                                            eventObject.Status = EventStatus.Active;
-                                            tempText = string.Format("Event \"{0}\" has been activated", eventObject.Name);
-                                            tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
-                                            message = new Message(string.Format("{0} {1}", tempText, testText), MessageType.Conflict);
-                                            Game.world.SetMessage(message);
+                                            //activate event provided it isn't already or isn't dead
+                                            if (eventObject.Status == EventStatus.Dormant || eventObject.Status == EventStatus.Live)
+                                            {
+                                                eventObject.Status = EventStatus.Active;
+                                                tempText = string.Format("Event \"{0}\" has been activated", eventObject.Name);
+                                                tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                                message = new Message(string.Format("{0} {1}", tempText, testText), MessageType.Conflict);
+                                                Game.world.SetMessage(message);
+                                            }
+                                        }
+                                    }
+                                    //auto event
+                                    else if (data >= 1000)
+                                    {
+                                        EventPlayer eventAuto = Game.director.GetAutoEvent(data);
+                                        if (eventAuto != null)
+                                        {
+                                            //make a copy of the event
+                                            EventPlayer eventObject = new EventPlayer(eventAuto);
                                         }
                                     }
                                 }

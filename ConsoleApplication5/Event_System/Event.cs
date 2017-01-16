@@ -171,12 +171,36 @@ namespace Next_Game.Event_System
         public int EventPID { get; set; }
         private List<OptionInteractive> listOfOptions;
 
-        public EventPlayer(int eventID, string name, EventFrequency frequency) : base( name, frequency)
+        public EventPlayer(int eventID, string name, EventFrequency frequency) : base(name, frequency)
         {
             EventPID = eventID;
             listOfOptions = new List<OptionInteractive>();
             //debug
             Console.WriteLine("EventID {0}, \"{1}\", Frequency {2}", EventPID, Name, Frequency);
+        }
+
+        /// <summary>
+        /// copy constructor, used for creating new events from auto event archetypes
+        /// </summary>
+        /// <param name="other"></param>
+        public EventPlayer(EventPlayer other)
+        {
+            EventPID = Game.eventAutoID++;
+            Name = other.Name;
+            TimerLive = other.TimerLive;
+            TimerDormant = other.TimerDormant;
+            TimerRepeat = other.TimerRepeat;
+            Text = other.Text;
+            Frequency = other.Frequency;
+            Category = other.Category;
+            Status = other.Status;
+            Type = other.Type;
+            GeoType = other.GeoType;
+            LocType = other.LocType;
+            RoadType = other.RoadType;
+            HouseType = other.HouseType;
+            ActorType = other.ActorType;
+            listOfOptions = new List<OptionInteractive>(other.listOfOptions);
         }
 
         /// <summary>
