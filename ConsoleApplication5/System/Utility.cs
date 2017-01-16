@@ -98,6 +98,74 @@ namespace Next_Game
 
                 string tag, replaceText;
                 int tagStart, tagFinish, length; //indexes
+                if (opponent != null)
+                {
+                    //loop whilever tags are present
+                    while (checkedText.Contains("<") == true)
+                    {
+                        tagStart = checkedText.IndexOf("<");
+                        tagFinish = checkedText.IndexOf(">");
+                        length = tagFinish - tagStart;
+                        tag = checkedText.Substring(tagStart + 1, length - 1);
+                        //strip brackets
+                        replaceText = null;
+                        switch (tag)
+                        {
+                            case "men":
+                                replaceText = string.Format("{0} {1}'s Men-At-Arms", opponent.Title, opponent.Name);
+                                break;
+                            case "name":
+                                replaceText = string.Format("{0} {1}", opponent.Title, opponent.Name);
+                                break;
+                            case "him":
+                                replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "him" : "her");
+                                break;
+                            case "she":
+                            case "he":
+                                replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "he" : "she");
+                                break;
+                            case "She":
+                            case "He":
+                                replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "He" : "She");
+                                break;
+                            case "his":
+                                replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "his" : "her");
+                                break;
+                            default:
+                                replaceText = "";
+                                Game.SetError(new Error(101, string.Format("Invalid tag (\"{0}\")", tag)));
+                                break;
+                        }
+                        if (replaceText != null)
+                        {
+                            //swap tag for text
+                            checkedText = checkedText.Remove(tagStart, length + 1);
+                            checkedText = checkedText.Insert(tagStart, replaceText);
+                        }
+                    }
+                }
+                else { Game.SetError(new Error(101, "Invalid opponent (null) in CheckTagsActor")); }
+            }
+            else
+            { Game.SetError(new Error(101, "Invalid Input (null or empty)")); }
+               
+            return checkedText;
+        }
+
+        /// <summary>
+        /// selection of tags used by AutoReact events
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        public string CheckTagsAuto(string text, Actor opponent)
+        {
+            string checkedText = text;
+            if (String.IsNullOrEmpty(text) == false)
+            {
+
+                string tag, replaceText;
+                int tagStart, tagFinish, length; //indexes
 
                 //loop whilever tags are present
                 while (checkedText.Contains("<") == true)
@@ -108,31 +176,16 @@ namespace Next_Game
                     tag = checkedText.Substring(tagStart + 1, length - 1);
                     //strip brackets
                     replaceText = null;
-                    switch(tag)
+                    switch (tag)
                     {
-                        case "men":
-                            replaceText = string.Format("{0} {1}'s Men-At-Arms", opponent.Title, opponent.Name);
-                            break;
-                        case "name":
-                            replaceText = string.Format("{0} {1}", opponent.Title, opponent.Name);
-                            break;
-                        case "him":
-                            replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "him" : "her");
-                            break;
-                        case "she":
-                        case "he":
-                            replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "he" : "she");
-                            break;
-                        case "She":
-                        case "He":
-                            replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "He" : "She");
-                            break;
-                        case "his":
-                            replaceText = string.Format("{0}", opponent.Sex == ActorSex.Male ? "his" : "her");
+                        case "person":
+                            if (opponent != null)
+                            { replaceText = string.Format("{0} {1}", opponent.Title, opponent.Name);}
+                            else { Game.SetError(new Error(124, "Invalid opponent (null) in CheckTagsAuto")); }
                             break;
                         default:
                             replaceText = "";
-                            Game.SetError(new Error(101, string.Format("Invalid tag (\"{0}\")", tag)));
+                            Game.SetError(new Error(124, string.Format("Invalid tag (\"{0}\") in CheckTagsAuto", tag)));
                             break;
                     }
                     if (replaceText != null)
@@ -145,20 +198,8 @@ namespace Next_Game
             }
             else
             { Game.SetError(new Error(101, "Invalid Input (null or empty)")); }
-               
-            return checkedText;
-        }
 
-        /// <summary>
-        /// selection of tags used by auto events (location based data)
-        /// </summary>
-        /// <param name="text"></param>
-        /// <param name="refID"></param>
-        /// <returns></returns>
-        public string CheckTagsAuto(string text, int refID)
-        {
-            string checkedText = "";
-           return checkedText;
+            return checkedText;
         }
 
         //methods above here

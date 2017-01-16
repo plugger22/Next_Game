@@ -10,6 +10,10 @@
 # Status: (Active / Dormant (autoEvents for once the player has assumed power start off as dormant)
 # Event: (Event Text)
 
+# Repeat: (Timer) Number > 0 -> Optional tag (if not shown then default of 1000) -> Fixed number of activations before event goes dormant
+# Dormant: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before event goes dormant
+# Live: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before Live event becomes Active
+
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Place block header at top
 # text: option text (number is block, or option num, eg. sequential from 1 to 4). Keep it short and clear.
 # reply: text shown when option selected
@@ -55,7 +59,8 @@ Type: Location
 subType: Major
 Cat: AutoReact
 Freq: Normal
-Event: Thugs hired by <person> suddenly appear out of a dark corner of the street
+Event: Thugs hired by an Angry Lord as a result of your attempted seduction of <person> suddenly appear out of a dark corner of the street
+Repeat: 1
 [option]
 text: Run like the wind
 reply: Why risk getting involved with dangerous thugs?

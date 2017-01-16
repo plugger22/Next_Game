@@ -1478,7 +1478,7 @@ namespace Next_Game
                                             }
                                         }
                                     }
-                                    //auto event
+                                    //AutoReact event
                                     else if (data >= 1000)
                                     {
                                         EventPlayer eventAuto = Game.director.GetAutoEvent(data);
@@ -1486,6 +1486,13 @@ namespace Next_Game
                                         {
                                             //make a copy of the event
                                             EventPlayer eventObject = new EventPlayer(eventAuto);
+                                            //customise text (tags)
+                                            eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, opponent);
+                                            eventObject.Status = EventStatus.Active;
+                                            tempText = string.Format("Event \"{0}\" has been activated", eventObject.Name);
+                                            tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                            message = new Message(string.Format("{0} {1}", tempText, testText), MessageType.Conflict);
+                                            Game.world.SetMessage(message);
                                         }
                                     }
                                 }
