@@ -107,3 +107,42 @@ effect: EventStatus
 data: 1001
 newStatus: Active
 [End]
+
+Name: Angry Lord
+ID: 1003
+Type: Location
+subType: Major
+Cat: Auto
+Freq: Normal
+Event: Thugs hired by <person> suddenly appear out of a dark corner of the street
+[option]
+text: Run like the wind
+reply: Why risk getting involved with dangerous thugs?
+[outcome]
+effect: None
+[option]
+text: Attempt to Bribe the Thugs
+reply: The Thugs take your money
+[trigger]
+check: ResourcePlyr
+thresh: 3
+calc: >=
+[outcome]
+effect: Game
+data: 5
+amount: 12
+apply: Add
+[option]
+text: Curse all strangers
+reply: You are heard. The Thugs close in and beat you to a pulp.
+[trigger]
+check: Trait
+item: 4
+thresh: 3
+calc: >=
+[outcome]
+effect: Game
+data: -3
+amount: 2
+apply: Add
+[End]
