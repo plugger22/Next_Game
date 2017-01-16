@@ -1352,6 +1352,14 @@ namespace Next_Game
                         int amount = result.Amount;
                         EventCalc calc = result.Calc;
                         RLColor backColor = Game.layout.Outcome_FillColor;
+                        //Test result? Only applies is test passed
+                        if (result.Test > 0)
+                        {
+                            int rndNum = rnd.Next(0, 100);
+                            if (rndNum > result.Test)
+                            { type = ResultType.None; Console.WriteLine("{0} failed Test (needed {1}, or less, rolled {2})", result.Description, result.Test, rndNum); }
+                            else { Console.WriteLine("{0} PASSED Test (needed {1}, or less, rolled {2})", result.Description, result.Test, rndNum); }
+                        }
                         //check for a random outcome -> then it's random 'amount', eg. amount is 100 then it's d100, -100 then it's -1d100
                         if (calc == EventCalc.Random)
                         {
