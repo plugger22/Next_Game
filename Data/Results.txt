@@ -8,12 +8,20 @@
 
 # Calc: OPTIONAL( EventCalc) -> None / Add / Subtract / Random / Equals (default 'None')
 # Amount: OPTIONAL int amt applied by Calc (if Calc is 'Random' then it's random Amt, eg. if amount 100 then random d100) (default '0'), neg. #'s to
+# Test: OPTIONAL - integer > 0. A rnd 1d100 must be <= Test number in order for result to apply (otherwise result treated as ResultType.None & ignored)
 
-# DataPoint: OPTIONAL - applies if Type is DataPoint) -> Invisibility / Justice / Legend_Usurper / Legend_King / Honour_Usurper / Honour_King
-# Tag: OPTIONAL - short descriptor, applies if Type is  RelPlyr or RelOther 
+# Type -> DataPoint
+# DataPoint:  Invisibility / Justice / Legend_Usurper / Legend_King / Honour_Usurper / Honour_King
+# Tag: OPTIONAL -> short descriptor, applies if Type is  RelPlyr or RelOther 
+# Key Stats Generic Results, eg. Invisibility, Justice, etc. -> Data +ve ADD to Good, otherwise ADD to Bad
+
+# Type -> Introduction, Favour
+# Data: is the strength of the item, eg. 1 (weak) to 5 (strong)
+
+# Type -> Event
+# Data: is the EventID from an event in Events_Player.txt
 
 
-# Key Stats Generic Results -> Data +ve ADD to Good, otherwise ADD to Bad
 
 Name: Blend in More
 RID: 1
@@ -288,6 +296,7 @@ Name: Chance of a Jealous Lord finding out
 RID: 41
 Type: Event
 Data: 6
+Test: 50
 [End]
 
 # BlackMail Conflict Results (relationship with Player degrades if a Loss) Plyr gains a Favour for a win (data -> strength of favour)

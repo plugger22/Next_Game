@@ -24,7 +24,7 @@ namespace Next_Game.Event_System
         public int Data { get; set; } //multipurpose
         public EventCalc Calc { get; set; }
         public int Amount { get; set; }
-        public int Test { get; set; } //optional -> if > 0 then a 1d100 <= Test must occur for result to happen, otherwise ignored.
+        public int Test { get; set; } = 0; //optional -> if > 0 then a 1d100 <= Test must occur for result to happen, otherwise ignored.
         public DataPoint DataPoint { get; set; } //optional
         public GameVar GameVar { get; set; } //optional
 
