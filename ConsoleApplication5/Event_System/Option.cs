@@ -8,7 +8,7 @@ namespace Next_Game.Event_System
 {
 
     /// <summary>
-    /// Event option
+    /// Event Options
     /// </summary>
     public class Option
     {

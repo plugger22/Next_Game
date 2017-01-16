@@ -1382,7 +1382,7 @@ namespace Next_Game
                                         case "Sex":
                                             structTrigger.Check = TriggerCheck.Sex;
                                             break;
-                                        case "Resource":
+                                        case "ResourcePlyr":
                                             structTrigger.Check = TriggerCheck.ResourcePlyr;
                                             break;
                                         case "ActorType":
