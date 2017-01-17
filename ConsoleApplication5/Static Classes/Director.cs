@@ -1133,8 +1133,8 @@ namespace Next_Game
         /// </summary>
         public void HousekeepEvents()
         {
-            //remove any dormant AutoReact Events from Player event Lists and the master dictionary. Only do so if the are above a certain # (avoid memory overhead)
-            if (NumAutoReactEvents > 0)
+            //remove any dormant AutoReact Events from Player event Lists and the master dictionary. Only do so if the are above a certain # (avoid processing overhead)
+            if (NumAutoReactEvents > 10)
             {
                 List<int> tempList = new List<int>(); //temp list to hold eventPID of deleted events
                 //check dictionary first
