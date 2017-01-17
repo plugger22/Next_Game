@@ -1133,7 +1133,54 @@ namespace Next_Game
         /// </summary>
         public void HousekeepEvents()
         {
-            //Remove any existing auto created player events prior to next turn (Process end of turn)
+            //remove any dormant AutoReact Events from Player event Lists and the master dictionary. Only do so if the are above a certain # (avoid memory overhead)
+            if (NumAutoReactEvents > 10)
+            {
+                List<int> tempList = new List<int>(); //temp list to hold eventPID of deleted events
+                //check dictionary first
+                Console.WriteLine("- Director Housekeeping");
+                int counter = 0;
+                foreach (var eventObject in dictPlayerEvents)
+                {
+                    //looking for Dormant, AutoReact events 
+                    if (eventObject.Value.Status == EventStatus.Dormant && eventObject.Value.EventPID >= 2000)
+                    {
+                        tempList.Add(eventObject.Value.EventPID);
+                        counter++;
+                        Console.WriteLine("\"{0}\" autoReact Event found, Status {1}", eventObject.Value.Name, eventObject.Value.Status);
+                    }
+                    //any to remove?
+                    if (counter > 0)
+                    {
+                        foreach (int eventID in tempList)
+                        {
+                            //remove from dictionary
+                            if (dictPlayerEvents.Remove(eventID) == true)
+                            {
+                                Console.WriteLine("\"eventID {0}\" Player Event has been removed from the dictPlayerEvents", eventID);
+                                NumAutoReactEvents--;
+                            }
+                        }
+                        //remove from lists
+                        for (int i = 0; i < tempList.Count; i++)
+                        {
+                            if (listGenPlyrEventsCapital.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsCapital", i); continue; }
+                            if (listGenPlyrEventsMajor.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsMajor", i); continue; }
+                            if (listGenPlyrEventsMinor.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsMinor", i); continue; }
+                            if (listGenPlyrEventsInn.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsInn", i); continue; }
+                            if (listGenPlyrEventsForest.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsForest", i); continue; }
+                            if (listGenPlyrEventsMountain.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsMountain", i); continue; }
+                            if (listGenPlyrEventsSea.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsSea", i); continue; }
+                            if (listGenPlyrEventsNormal.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsNormal", i); continue; }
+                            if (listGenPlyrEventsKing.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsKing", i); continue; }
+                            if (listGenPlyrEventsConnector.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsConnector", i); continue; }
+                        }
+                    }
+                }
+                
+            }
+
+            //Remove any existing autoLoc created player events prior to next turn (Process end of turn)
             if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }
             //clear out current events
             listFollCurrentEvents.Clear();
@@ -2308,55 +2355,7 @@ namespace Next_Game
             return false;
         }
 
-        /// <summary>
-        /// handles all end of turn housekeeping
-        /// </summary>
-        public void Housekeeping()
-        {
-            //remove any dormant AutoReact Events from Player event Lists and the master dictionary. Only do so if the are above a certain # (avoid memory overhead)
-            if (NumAutoReactEvents > 10)
-            {
-                List<int> tempList = new List<int>(); //temp list to hold eventPID of deleted events
-                //check dictionary first
-                Console.WriteLine("- Director Housekeeping");
-                int counter = 0;
-                foreach(var eventObject in dictPlayerEvents)
-                {
-                    //looking for Dormant, AutoReact events 
-                    if (eventObject.Value.Status == EventStatus.Dormant && eventObject.Value.EventPID >= 2000)
-                    {
-                        tempList.Add(eventObject.Value.EventPID);
-                        counter++;
-                        Console.WriteLine("\"{0}\" autoReact Event found, Status {1}", eventObject.Value.Name, eventObject.Value.Status);
-                    }
-                    //any to remove?
-                    if (counter > 0)
-                    {
-                        foreach (int eventID in tempList)
-                        {
-                            //remove from dictionary
-                            if (dictPlayerEvents.Remove(eventID) == true)
-                            {
-                                Console.WriteLine("\"eventID {0}\" Player Event has been removed from the dictPlayerEvents", eventID);
-                                NumAutoReactEvents--;
-                            }
-                        }
-                    }
-                }
-                //remove from lists
 
-                listGenPlyrEventsForest;
-                listGenPlyrEventsMountain;
-                listGenPlyrEventsSea;
-                listGenPlyrEventsNormal;
-                listGenPlyrEventsKing;
-                listGenPlyrEventsConnector;
-                listGenPlyrEventsCapital;
-                listGenPlyrEventsMajor;
-                listGenPlyrEventsMinor;
-                listGenPlyrEventsInn;
-            }
-        }
 
         //place Director methods above here
     }
