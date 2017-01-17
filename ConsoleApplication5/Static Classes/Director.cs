@@ -1134,7 +1134,7 @@ namespace Next_Game
         public void HousekeepEvents()
         {
             //remove any dormant AutoReact Events from Player event Lists and the master dictionary. Only do so if the are above a certain # (avoid memory overhead)
-            if (NumAutoReactEvents > 1)
+            if (NumAutoReactEvents > 0)
             {
                 List<int> tempList = new List<int>(); //temp list to hold eventPID of deleted events
                 //check dictionary first
@@ -1149,37 +1149,38 @@ namespace Next_Game
                         counter++;
                         Console.WriteLine("\"{0}\" autoReact Event found, Status {1}", eventObject.Value.Name, eventObject.Value.Status);
                     }
-                    //any to remove?
-                    if (counter > 0)
+                }
+                //any to remove?
+                if (counter > 0)
+                {
+                    foreach (int eventID in tempList)
                     {
-                        foreach (int eventID in tempList)
+                        //remove from dictionary
+                        if (dictPlayerEvents.Remove(eventID) == true)
                         {
-                            //remove from dictionary
-                            if (dictPlayerEvents.Remove(eventID) == true)
-                            {
-                                Console.WriteLine("\"eventID {0}\" Player Event has been removed from the dictPlayerEvents", eventID);
-                                NumAutoReactEvents--;
-                            }
-                        }
-                        //remove from lists (asumes that each individual eventID will be present in only one list)
-                        for (int i = 0; i < tempList.Count; i++)
-                        {
-                            if (listGenPlyrEventsCapital.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsCapital", i); continue; }
-                            if (listGenPlyrEventsMajor.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsMajor", i); continue; }
-                            if (listGenPlyrEventsMinor.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsMinor", i); continue; }
-                            if (listGenPlyrEventsInn.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsInn", i); continue; }
-                            if (listGenPlyrEventsForest.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsForest", i); continue; }
-                            if (listGenPlyrEventsMountain.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsMountain", i); continue; }
-                            if (listGenPlyrEventsSea.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsSea", i); continue; }
-                            if (listGenPlyrEventsNormal.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsNormal", i); continue; }
-                            if (listGenPlyrEventsKing.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsKing", i); continue; }
-                            if (listGenPlyrEventsConnector.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsConnector", i); continue; }
-                            //any hit above would have skipped this code
-                            Game.SetError(new Error(126, string.Format("Warning! EventPID {0} wasn't found in any list (HousekeepEvents, tidy up AutoReact events", i)));
+                            Console.WriteLine("\"eventID {0}\" Player Event has been removed from the dictPlayerEvents", eventID);
+                            NumAutoReactEvents--;
                         }
                     }
+                    //remove from lists (asumes that each individual eventID will be present in only one list)
+                    for (int i = 0; i < tempList.Count; i++)
+                    {
+                        if (listGenPlyrEventsCapital.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsCapital", i); continue; }
+                        if (listGenPlyrEventsMajor.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsMajor", i); continue; }
+                        if (listGenPlyrEventsMinor.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsMinor", i); continue; }
+                        if (listGenPlyrEventsInn.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsInn", i); continue; }
+                        if (listGenPlyrEventsForest.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsForest", i); continue; }
+                        if (listGenPlyrEventsMountain.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsMountain", i); continue; }
+                        if (listGenPlyrEventsSea.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsSea", i); continue; }
+                        if (listGenPlyrEventsNormal.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsNormal", i); continue; }
+                        if (listGenPlyrEventsKing.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsKing", i); continue; }
+                        if (listGenPlyrEventsConnector.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsConnector", i); continue; }
+                        //any hit above would have skipped this code
+                        Game.SetError(new Error(126, string.Format("Warning! EventPID {0} wasn't found in any list (HousekeepEvents, tidy up AutoReact events", i)));
+                    }
+                    NumAutoReactEvents = Math.Max(0, NumAutoReactEvents);
                 }
-                NumAutoReactEvents = Math.Max(0, NumAutoReactEvents);
+                
             }
 
             //Remove any existing autoLoc created player events prior to next turn (Process end of turn)
