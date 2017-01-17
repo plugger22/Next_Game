@@ -1134,7 +1134,7 @@ namespace Next_Game
         public void HousekeepEvents()
         {
             //remove any dormant AutoReact Events from Player event Lists and the master dictionary. Only do so if the are above a certain # (avoid memory overhead)
-            if (NumAutoReactEvents > 10)
+            if (NumAutoReactEvents > 1)
             {
                 List<int> tempList = new List<int>(); //temp list to hold eventPID of deleted events
                 //check dictionary first
@@ -1161,7 +1161,7 @@ namespace Next_Game
                                 NumAutoReactEvents--;
                             }
                         }
-                        //remove from lists
+                        //remove from lists (asumes that each individual eventID will be present in only one list)
                         for (int i = 0; i < tempList.Count; i++)
                         {
                             if (listGenPlyrEventsCapital.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsCapital", i); continue; }
@@ -1174,10 +1174,12 @@ namespace Next_Game
                             if (listGenPlyrEventsNormal.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsNormal", i); continue; }
                             if (listGenPlyrEventsKing.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsKing", i); continue; }
                             if (listGenPlyrEventsConnector.Remove(tempList[i]) == true) { Console.WriteLine("EventPID {0} removed from listGenPlyrEventsConnector", i); continue; }
+                            //any hit above would have skipped this code
+                            Game.SetError(new Error(126, string.Format("Warning! EventPID {0} wasn't found in any list (HousekeepEvents, tidy up AutoReact events", i)));
                         }
                     }
                 }
-                
+                NumAutoReactEvents = Math.Max(0, NumAutoReactEvents);
             }
 
             //Remove any existing autoLoc created player events prior to next turn (Process end of turn)
