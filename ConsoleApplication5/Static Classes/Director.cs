@@ -1232,10 +1232,23 @@ namespace Next_Game
                     Event eventObject = dictPlayerEvents[eventID];
                     if (eventObject != null && eventObject.Status == EventStatus.Active)
                     {
-                        frequency = (int)eventObject.Frequency;
-                        //add # of events to pool equal to (int)EventFrequency
-                        for (int i = 0; i < frequency; i++)
-                        { listEvents.Add(eventObject); }
+                        bool proceed = true;
+                        //is the event limited in any way?
+                        if (eventObject.SubRef > 0)
+                        {
+                            //location -> house ID must match SubRef
+                            if (eventObject.LocType > ArcLoc.None)
+                                if (loc.HouseID != eventObject.SubRef) { proceed = false; }
+                        }
+                        {
+                            if (proceed == true)
+                            {
+                                frequency = (int)eventObject.Frequency;
+                                //add # of events to pool equal to (int)EventFrequency
+                                for (int i = 0; i < frequency; i++)
+                                { listEvents.Add(eventObject); }
+                            }
+                        }
                     }
                 }
             }
