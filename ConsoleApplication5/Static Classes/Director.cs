@@ -2318,15 +2318,32 @@ namespace Next_Game
             {
                 List<int> tempList = new List<int>(); //temp list to hold eventPID of deleted events
                 //check dictionary first
+                Console.WriteLine("- Director Housekeeping");
+                int counter = 0;
                 foreach(var eventObject in dictPlayerEvents)
                 {
+                    //looking for Dormant, AutoReact events 
                     if (eventObject.Value.Status == EventStatus.Dormant && eventObject.Value.EventPID >= 2000)
                     {
-                        //add to tempList and remove record from dictionary
                         tempList.Add(eventObject.Value.EventPID);
-                        dictPlayerEvents.Remove(eventObject.Value.EventPID);
+                        counter++;
+                        Console.WriteLine("\"{0}\" autoReact Event found, Status {1}", eventObject.Value.Name, eventObject.Value.Status);
+                    }
+                    //any to remove?
+                    if (counter > 0)
+                    {
+                        foreach (int eventID in tempList)
+                        {
+                            //remove from dictionary
+                            if (dictPlayerEvents.Remove(eventID) == true)
+                            {
+                                Console.WriteLine("\"eventID {0}\" Player Event has been removed from the dictPlayerEvents", eventID);
+                                NumAutoReactEvents--;
+                            }
+                        }
                     }
                 }
+                //remove from lists
 
                 listGenPlyrEventsForest;
                 listGenPlyrEventsMountain;
