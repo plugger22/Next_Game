@@ -185,7 +185,7 @@ namespace Next_Game.Event_System
         /// <param name="other"></param>
         public EventPlayer(EventPlayer other)
         {
-            EventPID = Game.eventAutoID++;
+            EventPID = Game.director.EventAutoID++;
             Name = other.Name;
             TimerLive = other.TimerLive;
             TimerDormant = other.TimerDormant;

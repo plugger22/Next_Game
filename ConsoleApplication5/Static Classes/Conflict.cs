@@ -1492,6 +1492,7 @@ namespace Next_Game
                                             if (Game.director.AddPlayerEvent(eventObject) == true)
                                             {
                                                 Game.director.AssignPlayerEvent(eventObject);
+                                                Game.director.NumAutoReactEvents++;
                                                 tempText = string.Format("Event \"{0}\" has been activated", eventObject.Name);
                                                 tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                                 message = new Message(string.Format("{0} {1}", tempText, testText), MessageType.Conflict);

@@ -44,6 +44,8 @@ namespace Next_Game
         static Random rnd;
         Story story;
         State state;
+        public int EventAutoID { get; set; } = 2000; //used to provide a unique Player Event ID for auto created events
+        public int NumAutoReactEvents { get; set; } = 0; //number of active autoReact events currently out there as Player events
         private int[,] arrayOfGameStates; //tracks game states (enum DataPoints), all are index 0 -> good, index 1 -> bad
         //events
         List<int> listOfActiveGeoClusters; //clusters that have a road through them (GeoID's)
@@ -2304,6 +2306,39 @@ namespace Next_Game
             catch (ArgumentException)
             { Game.SetError(new Error(125, string.Format("Invalid EventPID (duplicate ID) for \"{0}\"", eventObject.Name))); }
             return false;
+        }
+
+        /// <summary>
+        /// handles all end of turn housekeeping
+        /// </summary>
+        public void Housekeeping()
+        {
+            //remove any dormant AutoReact Events from Player event Lists and the master dictionary. Only do so if the are above a certain # (avoid memory overhead)
+            if (NumAutoReactEvents > 10)
+            {
+                List<int> tempList = new List<int>(); //temp list to hold eventPID of deleted events
+                //check dictionary first
+                foreach(var eventObject in dictPlayerEvents)
+                {
+                    if (eventObject.Value.Status == EventStatus.Dormant && eventObject.Value.EventPID >= 2000)
+                    {
+                        //add to tempList and remove record from dictionary
+                        tempList.Add(eventObject.Value.EventPID);
+                        dictPlayerEvents.Remove(eventObject.Value.EventPID);
+                    }
+                }
+
+                listGenPlyrEventsForest;
+                listGenPlyrEventsMountain;
+                listGenPlyrEventsSea;
+                listGenPlyrEventsNormal;
+                listGenPlyrEventsKing;
+                listGenPlyrEventsConnector;
+                listGenPlyrEventsCapital;
+                listGenPlyrEventsMajor;
+                listGenPlyrEventsMinor;
+                listGenPlyrEventsInn;
+            }
         }
 
         //place Director methods above here
