@@ -1489,10 +1489,15 @@ namespace Next_Game
                                             //customise text (tags)
                                             eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, opponent);
                                             eventObject.Status = EventStatus.Active;
-                                            tempText = string.Format("Event \"{0}\" has been activated", eventObject.Name);
-                                            tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
-                                            message = new Message(string.Format("{0} {1}", tempText, testText), MessageType.Conflict);
-                                            Game.world.SetMessage(message);
+                                            //assign to correct event list & master dictionary
+                                            if (Game.director.AddPlayerEvent(eventObject) == true)
+                                            {
+                                                Game.director.AssignPlayerEvent(eventObject);
+                                                tempText = string.Format("Event \"{0}\" has been activated", eventObject.Name);
+                                                tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                                message = new Message(string.Format("{0} {1}", tempText, testText), MessageType.Conflict);
+                                                Game.world.SetMessage(message);
+                                            }
                                         }
                                     }
                                 }

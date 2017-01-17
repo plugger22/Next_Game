@@ -329,169 +329,83 @@ namespace Next_Game
             //Player Events
             foreach (var eventObject in dictPlayerEvents)
             {
-                EventPlayer playerEventObject = eventObject.Value;
-                AssignPlayerEvent(playerEventObject);
-                /*if (eventObject.Value.Category == EventCategory.Generic)
+                if (eventObject.Value.Category == EventCategory.Generic)
                 {
-                    eventID = eventObject.Value.EventPID;
-                    switch (eventObject.Value.Type)
-                    {
-                        case ArcType.GeoCluster:
-                            switch (eventObject.Value.GeoType)
-                            {
-                                case ArcGeo.Forest:
-                                    listGenPlyrEventsForest.Add(eventID);
-                                    break;
-                                case ArcGeo.Mountain:
-                                    listGenPlyrEventsMountain.Add(eventID);
-                                    break;
-                                case ArcGeo.Sea:
-                                    listGenPlyrEventsSea.Add(eventID);
-                                    break;
-                                default:
-                                    Game.SetError(new Error(50, string.Format("Invalid Type, ArcGeo, Player Event, ID {0}", eventID)));
-                                    break;
-                            }
-                            break;
-                        case ArcType.Location:
-                            switch (eventObject.Value.LocType)
-                            {
-                                case ArcLoc.Capital:
-                                    listGenPlyrEventsCapital.Add(eventID);
-                                    break;
-                                case ArcLoc.Major:
-                                    listGenPlyrEventsMajor.Add(eventID);
-                                    break;
-                                case ArcLoc.Minor:
-                                    listGenPlyrEventsMinor.Add(eventID);
-                                    break;
-                                case ArcLoc.Inn:
-                                    listGenPlyrEventsInn.Add(eventID);
-                                    break;
-                                default:
-                                    Game.SetError(new Error(50, string.Format("Invalid Type, ArcLoc, Player Event, ID {0}", eventID)));
-                                    break;
-                            }
-                            break;
-                        case ArcType.Road:
-                            switch (eventObject.Value.RoadType)
-                            {
-                                case ArcRoad.Normal:
-                                    listGenPlyrEventsNormal.Add(eventID);
-                                    break;
-                                case ArcRoad.Kings:
-                                    listGenPlyrEventsKing.Add(eventID);
-                                    break;
-                                case ArcRoad.Connector:
-                                    listGenPlyrEventsConnector.Add(eventID);
-                                    break;
-                                default:
-                                    Game.SetError(new Error(50, string.Format("Invalid Type, ArcRoad, Player Event, ID {0}", eventID)));
-                                    break;
-                            }
-                            break;
-                        default:
-                            Game.SetError(new Error(50, string.Format("Invalid Type, Unknown, Player Event, ID {0}", eventID)));
-                            break;
-                    }
+                    //assign to the correct event list
+                    EventPlayer playerEventObject = eventObject.Value;
+                    AssignPlayerEvent(playerEventObject);
                 }
-                else if (eventObject.Value.Category == EventCategory.AutoLoc)
-                {
-                    eventID = eventObject.Value.EventPID;
-                    switch (eventObject.Value.Type)
-                    {
-                        case ArcType.Location:
-                            switch (eventObject.Value.LocType)
-                            {
-                                case ArcLoc.Capital:
-                                    listAutoPlyrEventsCapital.Add(eventID);
-                                    break;
-                                case ArcLoc.Major:
-                                    listAutoPlyrEventsMajor.Add(eventID);
-                                    break;
-                                case ArcLoc.Minor:
-                                    listAutoPlyrEventsMinor.Add(eventID);
-                                    break;
-                                case ArcLoc.Inn:
-                                    listAutoPlyrEventsInn.Add(eventID);
-                                    break;
-                                default:
-                                    Game.SetError(new Error(50, string.Format("Invalid Type, ArcLoc, Auto Event, EventPID {0}", eventID)));
-                                    break;
-                            }
-                            break;
-                    }
-                }*/
             }
         }
 
+        /// <summary>
+        /// Assigns Player event to correct eventList (called by InitialiseGenericEvents and AutoReact events)
+        /// </summary>
+        /// <param name="eventObject"></param>
         public void AssignPlayerEvent(EventPlayer eventObject)
         {
             int eventID;
             //assign to the correct list
-            if (eventObject.Category == EventCategory.Generic)
-            {
                 eventID = eventObject.EventPID;
-                switch (eventObject.Type)
-                {
-                    case ArcType.GeoCluster:
-                        switch (eventObject.GeoType)
-                        {
-                            case ArcGeo.Forest:
-                                listGenPlyrEventsForest.Add(eventID);
-                                break;
-                            case ArcGeo.Mountain:
-                                listGenPlyrEventsMountain.Add(eventID);
-                                break;
-                            case ArcGeo.Sea:
-                                listGenPlyrEventsSea.Add(eventID);
-                                break;
-                            default:
-                                Game.SetError(new Error(50, string.Format("Invalid Type, ArcGeo, Player Event, ID {0}", eventID)));
-                                break;
-                        }
-                        break;
-                    case ArcType.Location:
-                        switch (eventObject.LocType)
-                        {
-                            case ArcLoc.Capital:
-                                listGenPlyrEventsCapital.Add(eventID);
-                                break;
-                            case ArcLoc.Major:
-                                listGenPlyrEventsMajor.Add(eventID);
-                                break;
-                            case ArcLoc.Minor:
-                                listGenPlyrEventsMinor.Add(eventID);
-                                break;
-                            case ArcLoc.Inn:
-                                listGenPlyrEventsInn.Add(eventID);
-                                break;
-                            default:
-                                Game.SetError(new Error(50, string.Format("Invalid Type, ArcLoc, Player Event, ID {0}", eventID)));
-                                break;
-                        }
-                        break;
-                    case ArcType.Road:
-                        switch (eventObject.RoadType)
-                        {
-                            case ArcRoad.Normal:
-                                listGenPlyrEventsNormal.Add(eventID);
-                                break;
-                            case ArcRoad.Kings:
-                                listGenPlyrEventsKing.Add(eventID);
-                                break;
-                            case ArcRoad.Connector:
-                                listGenPlyrEventsConnector.Add(eventID);
-                                break;
-                            default:
-                                Game.SetError(new Error(50, string.Format("Invalid Type, ArcRoad, Player Event, ID {0}", eventID)));
-                                break;
-                        }
-                        break;
-                    default:
-                        Game.SetError(new Error(50, string.Format("Invalid Type, Unknown, Player Event, ID {0}", eventID)));
-                        break;
-                }
+            switch (eventObject.Type)
+            {
+                case ArcType.GeoCluster:
+                    switch (eventObject.GeoType)
+                    {
+                        case ArcGeo.Forest:
+                            listGenPlyrEventsForest.Add(eventID);
+                            break;
+                        case ArcGeo.Mountain:
+                            listGenPlyrEventsMountain.Add(eventID);
+                            break;
+                        case ArcGeo.Sea:
+                            listGenPlyrEventsSea.Add(eventID);
+                            break;
+                        default:
+                            Game.SetError(new Error(50, string.Format("Invalid Type, ArcGeo, Player Event, ID {0}", eventID)));
+                            break;
+                    }
+                    break;
+                case ArcType.Location:
+                    switch (eventObject.LocType)
+                    {
+                        case ArcLoc.Capital:
+                            listGenPlyrEventsCapital.Add(eventID);
+                            break;
+                        case ArcLoc.Major:
+                            listGenPlyrEventsMajor.Add(eventID);
+                            break;
+                        case ArcLoc.Minor:
+                            listGenPlyrEventsMinor.Add(eventID);
+                            break;
+                        case ArcLoc.Inn:
+                            listGenPlyrEventsInn.Add(eventID);
+                            break;
+                        default:
+                            Game.SetError(new Error(50, string.Format("Invalid Type, ArcLoc, Player Event, ID {0}", eventID)));
+                            break;
+                    }
+                    break;
+                case ArcType.Road:
+                    switch (eventObject.RoadType)
+                    {
+                        case ArcRoad.Normal:
+                            listGenPlyrEventsNormal.Add(eventID);
+                            break;
+                        case ArcRoad.Kings:
+                            listGenPlyrEventsKing.Add(eventID);
+                            break;
+                        case ArcRoad.Connector:
+                            listGenPlyrEventsConnector.Add(eventID);
+                            break;
+                        default:
+                            Game.SetError(new Error(50, string.Format("Invalid Type, ArcRoad, Player Event, ID {0}", eventID)));
+                            break;
+                    }
+                    break;
+                default:
+                    Game.SetError(new Error(50, string.Format("Invalid Type, Unknown, Player Event, ID {0}", eventID)));
+                    break;
             }
         }
 
@@ -2375,6 +2289,22 @@ namespace Next_Game
             return challenge;
         }
 
+
+        /// <summary>
+        /// add an autoReact new Player Event to the main dictionary, returns true if successful
+        /// </summary>
+        /// <param name="eventObject"></param>
+        /// <returns></returns>
+        public bool AddPlayerEvent(EventPlayer eventObject)
+        {
+            try
+            { dictPlayerEvents.Add(eventObject.EventPID, eventObject); return true; }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(125, "Invalid Player Event Object (null)")); }
+            catch (ArgumentException)
+            { Game.SetError(new Error(125, string.Format("Invalid EventPID (duplicate ID) for \"{0}\"", eventObject.Name))); }
+            return false;
+        }
 
         //place Director methods above here
     }
