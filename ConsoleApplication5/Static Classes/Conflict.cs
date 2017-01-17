@@ -1488,7 +1488,6 @@ namespace Next_Game
                                             EventPlayer eventObject = new EventPlayer(eventAuto);
                                             //customise text (tags)
                                             eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, opponent);
-                                            eventObject.Status = EventStatus.Active;
                                             //assign to correct event list & master dictionary
                                             if (Game.director.AddPlayerEvent(eventObject) == true)
                                             {

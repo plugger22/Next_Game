@@ -6,7 +6,7 @@
 # Type: Location (always)
 # subType:(Location -> Capital/Major/Minor/Inn (can only be a Location subType)
 # Cat: (Category) AutoReact (always)
-# Freq: (Frequency) Normal (doesn't really matter as long as it's not 'None')
+# Freq: (Frequency) Very_Rare/Rare/Low/Normal/High/Common/Very_Common
 # Status: (Active / Dormant (autoEvents for once the player has assumed power start off as dormant)
 # Event: (Event Text)
 
@@ -53,12 +53,13 @@
 
 
 
-Name: Angry Lord
+Name: Vengeful Lord (failed Seduction attempt)
 ID: 1003
 Type: Location
 subType: Major
 Cat: AutoReact
-Freq: Normal
+Freq: Very_Common
+Status: Active
 Event: Thugs hired by an Angry Lord as a result of your attempted seduction of <person> suddenly appear out of a dark corner of the street
 Repeat: 1
 [option]
