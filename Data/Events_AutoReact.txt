@@ -5,6 +5,7 @@
 # ID: (Event ID) unique number for AUTO Events only (numbering 1000+) -> stored in PlayerEvents dictionary (can't have a Player Event ID)
 # Type: Location (always)
 # subType:(Location -> Capital/Major/Minor/Inn (can only be a Location subType)
+# subRef: OPTIONAL -> if set to '1' it will invoke a specific trigger filter, eg. houseID, geoID (auto assigned by code)
 # Cat: (Category) AutoReact (always)
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/Common/High/Very_High
 # Status: (Active / Dormant (autoEvents for once the player has assumed power start off as dormant)
@@ -57,6 +58,7 @@ Name: Vengeful Lord (Seduction attempt)
 ID: 1003
 Type: Location
 subType: Major
+subRef: 1
 Cat: AutoReact
 Freq: Very_High
 Status: Active

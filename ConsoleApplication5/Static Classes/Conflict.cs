@@ -1471,6 +1471,24 @@ namespace Next_Game
                                             if (eventObject.Status == EventStatus.Dormant || eventObject.Status == EventStatus.Live)
                                             {
                                                 eventObject.Status = EventStatus.Active;
+                                                //subRef applies? (specific filter for event)
+                                                if (eventObject.SubRef > 0)
+                                                {
+                                                    //Loc event, needs to match houseID of opponent
+                                                    if (eventObject.LocType > ArcLoc.None)
+                                                    {
+                                                        Passive tempOpponent = opponent as Passive;
+                                                        eventObject.SubRef = tempOpponent.HouseID;
+                                                        Console.WriteLine("Event \"{0}\" assigned subRef {1} (HouseID)", eventObject.Name, eventObject.SubRef);
+                                                    }
+                                                    //Terrain cluster, needs to match GeoID of cluster
+                                                    else if (eventObject.GeoType > ArcGeo.None)
+                                                    {
+                                                        Location loc = Game.network.GetLocation(player.LocID);
+                                                        eventObject.SubRef = Game.map.GetMapInfo(MapLayer.GeoID, loc.GetPosX(), loc.GetPosY());
+                                                        Console.WriteLine("Event \"{0}\" assigned subRef {1} (GeoID)", eventObject.Name, eventObject.SubRef);
+                                                    }
+                                                }
                                                 tempText = string.Format("Event \"{0}\" has been activated", eventObject.Name);
                                                 tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                                 message = new Message(string.Format("{0} {1}", tempText, testText), MessageType.Conflict);

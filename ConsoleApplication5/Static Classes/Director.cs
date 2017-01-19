@@ -1240,8 +1240,16 @@ namespace Next_Game
                             //if data > 0 then SubRef must match the HouseID or GeoID in order for event to qualify
                             if (data > 0)
                             {
-                                if (eventObject.LocType > ArcLoc.None) { if (data != eventObject.SubRef) { proceed = false; } }
-                                else if (eventObject.GeoType > ArcGeo.None) {  if (data != eventObject.SubRef) { proceed = false; } }
+                                if (eventObject.LocType > ArcLoc.None)
+                                {
+                                    if (data != eventObject.SubRef) { proceed = false; Console.WriteLine("Event \"{0}\" failed HouseID check", eventObject.Name); }
+                                    else { Console.WriteLine("Event \"{0}\" PASSED HouseID check", eventObject.Name); }
+                                }
+                                else if (eventObject.GeoType > ArcGeo.None)
+                                {
+                                    if (data != eventObject.SubRef) { proceed = false; Console.WriteLine("Event \"{0}\" failed GeoID check", eventObject.Name); }
+                                    else { Console.WriteLine("Event \"{0}\" PASSED HouseID check", eventObject.Name); }
+                                }
                             }
                         }
                         {
