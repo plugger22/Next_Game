@@ -637,7 +637,7 @@ namespace Next_Game
                     //Major House
                     if (type == EventType.Location)
                     {
-                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMajor));
+                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMajor, houseID));
                         listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
                         House house = Game.world.GetHouse(refID);
                         if (house != null)
@@ -648,7 +648,7 @@ namespace Next_Game
                 else if (refID >= 100 && refID < 1000)
                 {
                     //Minor House
-                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMinor));
+                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMinor, houseID));
                     listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
                     House house = Game.world.GetHouse(refID);
                     if (house != null)
@@ -658,7 +658,7 @@ namespace Next_Game
                 else if (houseID == 99)
                 {
                     //Special Location - Inn
-                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsInn));
+                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsInn, houseID));
                     listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
                     House house = Game.world.GetHouse(refID);
                     if (house != null)
@@ -680,13 +680,13 @@ namespace Next_Game
                 if (locID == 0 && terrain == 1)
                 {
                     //mountains
-                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMountain));
+                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMountain, geoID));
                     listEventPool.AddRange(GetValidPlayerEvents(cluster.GetPlayerEvents()));
                 }
                 else if (locID == 0 && terrain == 2)
                 {
                     //forests
-                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsForest));
+                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsForest, geoID));
                     listEventPool.AddRange(GetValidPlayerEvents(cluster.GetPlayerEvents()));
                 }
                 else if (locID == 0 && terrain == 0)
@@ -1220,8 +1220,9 @@ namespace Next_Game
         /// Extracts all valid Player events from a list of EventID's
         /// </summary>
         /// <param name="listEventID"></param>
+        /// <param name="data">optional paramater that is multipurpose, eg. houseID for a location</param>
         /// <returns></returns>
-        private List<Event> GetValidPlayerEvents(List<int> listEventID)
+        private List<Event> GetValidPlayerEvents(List<int> listEventID, int data = 0)
         {
             int frequency;
             List<Event> listEvents = new List<Event>();
@@ -1236,9 +1237,12 @@ namespace Next_Game
                         //is the event limited in any way?
                         if (eventObject.SubRef > 0)
                         {
-                            //location -> house ID must match SubRef
-                            if (eventObject.LocType > ArcLoc.None)
-                                if (loc.HouseID != eventObject.SubRef) { proceed = false; }
+                            //if data > 0 then SubRef must match the HouseID or GeoID in order for event to qualify
+                            if (data > 0)
+                            {
+                                if (eventObject.LocType > ArcLoc.None) { if (data != eventObject.SubRef) { proceed = false; } }
+                                else if (eventObject.GeoType > ArcGeo.None) {  if (data != eventObject.SubRef) { proceed = false; } }
+                            }
                         }
                         {
                             if (proceed == true)
