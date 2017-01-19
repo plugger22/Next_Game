@@ -181,7 +181,7 @@ namespace Next_Game.Event_System
         }
 
         /// <summary>
-        /// copy constructor, used for creating new events from auto event archetypes
+        /// Copy constructor, used for creating new events from auto event archetypes
         /// </summary>
         /// <param name="other"></param>
         public EventPlayer(EventPlayer other)
@@ -196,6 +196,7 @@ namespace Next_Game.Event_System
             Category = other.Category;
             Status = other.Status;
             Type = other.Type;
+            SubRef = other.SubRef;
             GeoType = other.GeoType;
             LocType = other.LocType;
             RoadType = other.RoadType;

@@ -63,6 +63,7 @@ namespace Next_Game
         public int Repeat { get; set; }
         public int Dormant { get; set; }
         public int Live { get; set; }
+        public int SubRef { get; set; }
         public ArcType Type { get; set; }
         public ArcGeo Geo { get; set; }
         public ArcRoad Road { get; set; }
@@ -1245,6 +1246,12 @@ namespace Next_Game
                                             break;
                                     }
                                     break;
+                                case "subRef":
+                                    try
+                                    { structEvent.SubRef = Convert.ToInt32(cleanToken); }
+                                    catch
+                                    { Game.SetError(new Error(49, string.Format("Invalid input for subRef {0}, (\"{1}\")", cleanToken, structEvent.Name))); validData = false; }
+                                    break;
                                 case "Cat":
                                     switch (cleanToken)
                                     {
@@ -1636,6 +1643,8 @@ namespace Next_Game
                                             if (structEvent.Dormant > 0) { eventTemp.TimerDormant = structEvent.Dormant; }
                                             //Live Timer -> default 0 (constructor) if not present
                                             if (structEvent.Live > 0) { eventTemp.TimerLive = structEvent.Live; }
+                                            //SubRef -> default 0, only applies to AutoReact Player Events
+                                            if (structEvent.SubRef > 0) { eventTemp.SubRef = structEvent.SubRef; }
                                             //add options
                                             if (listOptions.Count > 1)
                                             {
