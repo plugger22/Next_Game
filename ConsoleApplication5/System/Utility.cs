@@ -159,7 +159,7 @@ namespace Next_Game
         /// <param name="text"></param>
         /// <param name="refID"></param>
         /// <returns></returns>
-        internal string CheckTagsAuto(string text, Actor opponent = null, GeoCluster cluster = null )
+        internal string CheckTagsAuto(string text, string swap_1 = null, Actor opponent = null, GeoCluster cluster = null )
         {
             string checkedText = text;
             if (String.IsNullOrEmpty(text) == false)
@@ -187,6 +187,10 @@ namespace Next_Game
                         case "terrain":
                             if (cluster != null) { replaceText = cluster.Name; }
                             else { Game.SetError(new Error(124, "Invalid cluster (null) in CheckTagsAuto")); }
+                            break;
+                        case "text_1":
+                            if (String.IsNullOrEmpty(swap_1) == false) { replaceText = swap_1; }
+                            else { Game.SetError(new Error(124, "Invalid Text_1 (null or empty) in CheckTagsAuto")); }
                             break;
                         default:
                             replaceText = "";

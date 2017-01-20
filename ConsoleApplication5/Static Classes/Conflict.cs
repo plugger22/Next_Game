@@ -1481,6 +1481,7 @@ namespace Next_Game
                                     //AutoReact event
                                     else if (data >= 1000)
                                     {
+                                        string multiText = "";
                                         EventPlayer eventAuto = Game.director.GetAutoEvent(data);
                                         if (eventAuto != null)
                                         {
@@ -1492,7 +1493,15 @@ namespace Next_Game
                                                 //Loc event, needs to match houseID of opponent
                                                 if (eventObject.Type == ArcType.Location)
                                                 {
-                                                    eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, opponent);
+                                                    if (Conflict_Type == ConflictType.Social)
+                                                    {
+                                                        if (Social_Type == ConflictSocial.Seduce)
+                                                        {
+                                                            multiText = "Lord"; if (opponent.Sex == ActorSex.Male) { multiText = "Lady"; }
+                                                            eventObject.Name = Game.utility.CheckTagsAuto(eventObject.Name, multiText);
+                                                        }
+                                                    }
+                                                    eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, multiText, opponent);
                                                     Passive tempOpponent = opponent as Passive;
                                                     eventObject.SubRef = tempOpponent.HouseID;
                                                     Console.WriteLine("Event \"{0}\" assigned subRef {1} (HouseID)", eventObject.Name, eventObject.SubRef);
@@ -1503,7 +1512,7 @@ namespace Next_Game
                                                     Location loc = Game.network.GetLocation(player.LocID);
                                                     eventObject.SubRef = Game.map.GetMapInfo(MapLayer.GeoID, loc.GetPosX(), loc.GetPosY());
                                                     GeoCluster cluster = Game.world.GetGeoCluster(eventObject.SubRef);
-                                                    eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, null, cluster);
+                                                    eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, null, null, cluster);
                                                     Console.WriteLine("Event \"{0}\" assigned subRef {1} (GeoID)", eventObject.Name, eventObject.SubRef);
                                                 }
                                             }
