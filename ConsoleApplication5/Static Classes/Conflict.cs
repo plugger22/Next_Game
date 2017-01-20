@@ -1486,23 +1486,24 @@ namespace Next_Game
                                         {
                                             //make a copy of the event
                                             EventPlayer eventObject = new EventPlayer(eventAuto);
-                                            //customise text (tags)
-                                            eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, opponent);
                                             //subRef applies? (specific filter for event)
                                             if (eventObject.SubRef > 0)
                                             {
                                                 //Loc event, needs to match houseID of opponent
-                                                if (eventObject.LocType > ArcLoc.None)
+                                                if (eventObject.Type == ArcType.Location)
                                                 {
+                                                    eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, opponent);
                                                     Passive tempOpponent = opponent as Passive;
                                                     eventObject.SubRef = tempOpponent.HouseID;
                                                     Console.WriteLine("Event \"{0}\" assigned subRef {1} (HouseID)", eventObject.Name, eventObject.SubRef);
                                                 }
                                                 //Terrain cluster, needs to match GeoID of cluster
-                                                else if (eventObject.GeoType > ArcGeo.None)
+                                                else if (eventObject.Type == ArcType.GeoCluster)
                                                 {
                                                     Location loc = Game.network.GetLocation(player.LocID);
                                                     eventObject.SubRef = Game.map.GetMapInfo(MapLayer.GeoID, loc.GetPosX(), loc.GetPosY());
+                                                    GeoCluster cluster = Game.world.GetGeoCluster(eventObject.SubRef);
+                                                    eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, null, cluster);
                                                     Console.WriteLine("Event \"{0}\" assigned subRef {1} (GeoID)", eventObject.Name, eventObject.SubRef);
                                                 }
                                             }

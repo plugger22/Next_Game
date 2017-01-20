@@ -49,7 +49,7 @@
 # data: target EventID that'll be immediately activated
 
 # [End] -> Place at the end of the event description.
-# text tags, eg. '<...>' -> person
+# text tags, eg. '<...>' -> person (NPC), terrain (cluster name)
 # NOTE: Leave no spaces between lines WITHIN an event. Indents (tabs) are O.K, even better is colour coding using Notepad++ (example)
 
 
@@ -61,9 +61,10 @@ subType: Major
 subRef: 1
 Cat: AutoReact
 Freq: Very_High
-Status: Active
-Event: Thugs hired by an Angry Lord as a result of your attempted seduction of <person> suddenly appear out of a dark corner of the street
+Status: Live
+Live: 1
 Repeat: 1
+Event: Thugs hired by an Angry Lord as a result of your attempted seduction of <person> suddenly appear out of a dark corner of the street
 [option]
 text: Run like the wind
 reply: Why risk getting involved with dangerous thugs?

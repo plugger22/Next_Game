@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Next_Game.Cartographic;
 
 namespace Next_Game
 {
@@ -158,7 +159,7 @@ namespace Next_Game
         /// <param name="text"></param>
         /// <param name="refID"></param>
         /// <returns></returns>
-        public string CheckTagsAuto(string text, Actor opponent)
+        internal string CheckTagsAuto(string text, Actor opponent = null, GeoCluster cluster = null )
         {
             string checkedText = text;
             if (String.IsNullOrEmpty(text) == false)
@@ -182,6 +183,10 @@ namespace Next_Game
                             if (opponent != null)
                             { replaceText = string.Format("{0} {1}", opponent.Title, opponent.Name);}
                             else { Game.SetError(new Error(124, "Invalid opponent (null) in CheckTagsAuto")); }
+                            break;
+                        case "terrain":
+                            if (cluster != null) { replaceText = cluster.Name; }
+                            else { Game.SetError(new Error(124, "Invalid cluster (null) in CheckTagsAuto")); }
                             break;
                         default:
                             replaceText = "";
