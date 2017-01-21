@@ -88,6 +88,7 @@ namespace Next_Game
         public string Effect { get; set; }
         public int Data { get; set; }
         public int Amount { get; set; }
+        public int Bad { get; set; } //if > 0, flags outcome as Bad
         public EventCalc Calc { get; set; }
         public EventStatus NewStatus { get; set; } //specific to EventStatus outcomes
         public EventTimer Timer { get; set; } //specific to EventTimer outcomes
@@ -1454,6 +1455,15 @@ namespace Next_Game
 
                                     }
                                     break;
+                                case "bad":
+                                    //if > 0 then flagged as a Bad outcome
+                                    try
+                                    {
+                                        dataInt = Convert.ToInt32(cleanToken);
+                                        structOutcome.Bad = dataInt;
+                                    }
+                                    catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Bad, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                    break;
                                 case "effect":
                                     //Outcome effect
                                     switch (cleanToken)
@@ -1742,7 +1752,10 @@ namespace Next_Game
                                                             }
                                                             //add Outcome object to Option object
                                                             if (outObject != null)
-                                                            { optionObject.SetGoodOutcome(outObject); }
+                                                            {
+                                                                if (outTemp.Bad > 0) { optionObject.SetBadOutcome(outObject);}
+                                                                else { optionObject.SetGoodOutcome(outObject); }
+                                                            }
                                                         }
                                                         //add option object to event object
                                                         eventTemp.SetOption(optionObject);

@@ -31,6 +31,7 @@
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
 # effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, EventChain)
+# bad: OPTIONAL -> any value > 0 (use '1') flags this as a bad outcome
 
 # [outcome] -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -85,6 +86,12 @@ calc: >=
 effect: Game
 data: 5
 amount: 12
+apply: Add
+[outcome]
+bad: 1
+effect: Game
+data: -5
+amount: 10
 apply: Add
 [option]
 text: Curse all strangers
