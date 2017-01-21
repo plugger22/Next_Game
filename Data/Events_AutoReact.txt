@@ -18,6 +18,8 @@
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Place block header at top
 # text: option text (number is block, or option num, eg. sequential from 1 to 4). Keep it short and clear.
 # reply: text shown when option selected
+# test: OPTIONAL if value > 0 (up to 98) then option gives Good outcomes if 1d100 <= Test and Bad if > test (must have replyBad and bad outcomes)
+# replyBad: OPTIONAL -> needed if test present and value > 0
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
 # check: Trigger Check ( None, Trait, GameVar)
@@ -72,7 +74,9 @@ reply: Why risk getting involved with dangerous thugs?
 effect: None
 [option]
 text: Attempt to Bribe the Thugs
-reply: The Thugs take your money
+reply: The Thugs take your money and leave you in peace
+test: 50
+replyBad: The Thugs, greed incensed at the sight of money, decide to rob you of all your money
 [trigger]
 check: ResourcePlyr
 thresh: 3

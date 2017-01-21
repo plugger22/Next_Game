@@ -18,6 +18,7 @@
 # text: option text (number is block, or option num, eg. sequential from 1 to 4). Keep it short and clear.
 # reply: text shown when option selected
 
+
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
 # check: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr)
 # check -> if 'Trait' then -> 1 Combat, 2 Wits, 3 Charm, 4 Treachery, 5 Leadership, 6 Touched

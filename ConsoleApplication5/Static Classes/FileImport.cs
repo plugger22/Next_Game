@@ -78,7 +78,9 @@ namespace Next_Game
     struct OptionStruct
     {
         public string Text { get; set; }
+        public int Test { get; set; }
         public string Reply { get; set; }
+        public string ReplyBad { get; set; }
     }
 
     struct OutcomeStruct
@@ -1374,8 +1376,18 @@ namespace Next_Game
                                     structOption.Text = cleanToken;
                                     break;
                                 case "reply":
-                                    //Option reply
+                                    //Option reply (default good outcome)
                                     structOption.Reply = cleanToken;
+                                    break;
+                                case "replyBad":
+                                    //Option (variable) reply for a bad outcome if test failed
+                                    structOption.ReplyBad = cleanToken;
+                                    break;
+                                case "test":
+                                    try
+                                    { structOption.Test = Convert.ToInt32(cleanToken); }
+                                    catch
+                                    { Game.SetError(new Error(49, string.Format("Invalid input for option Test {0}, (\"{1}\")", cleanToken, structEvent.Name))); validData = false; }
                                     break;
                                 case "check":
                                     //Trigger Check
@@ -1654,7 +1666,8 @@ namespace Next_Game
                                                     //at least one outcome must be present
                                                     if (listAllOutcomes.Count > 0)
                                                     {
-                                                        OptionInteractive optionObject = new OptionInteractive(optionTemp.Text) { ReplyGood = optionTemp.Reply };
+                                                        OptionInteractive optionObject = new OptionInteractive(optionTemp.Text)
+                                                        { ReplyGood = optionTemp.Reply, ReplyBad = optionTemp.ReplyBad, Test = optionTemp.Test };
 
                                                         //Triggers (optional)
                                                         List<Trigger> tempTriggers = listAllTriggers[index];
