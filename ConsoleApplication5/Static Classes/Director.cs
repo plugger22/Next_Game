@@ -1713,6 +1713,7 @@ namespace Next_Game
             {
                 //find option
                 List<OptionInteractive> listOptions = eventObject.GetOptions();
+                string optionReply = "unknown option Reply";
                 if (listOptions != null)
                 {
                     if (listOptions.Count >= optionNum)
@@ -1723,8 +1724,29 @@ namespace Next_Game
                         //Active option?
                         if (option.Active == true)
                         {
-                            //resolve option
-                            List<Outcome> listOutcomes = option.GetGoodOutcomes();
+                            List<Outcome> listOutcomes = new List<Outcome>();
+                            //resolve option -> Is it a variable (chance of a good or bad outcome) option?
+                            if (option.Test > 0)
+                            {
+                                if (String.IsNullOrEmpty(option.ReplyBad) == true)
+                                { Game.SetError(new Error(73, string.Format("Invalid Test option (no ReplyBad) for \"{0}\"", option.Text))); }
+                                else
+                                {
+                                    int rndNum = rnd.Next(0, 100);
+                                    if (rndNum <= option.Test)
+                                    {
+                                        listOutcomes = option.GetGoodOutcomes(); optionReply = option.ReplyGood;
+                                        Console.WriteLine("Option \"{0}\" Passed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum);
+                                    }
+                                    else
+                                    {
+                                        listOutcomes = option.GetBadOutcomes(); optionReply = option.ReplyBad;
+                                        Console.WriteLine("Option \"{0}\" Failed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum);
+                                    }
+                                }
+                            }
+                            else { listOutcomes = option.GetGoodOutcomes(); optionReply = option.ReplyGood; }
+                            //resolve each Outcome
                             if (listOutcomes != null)
                             {
                                 foreach (Outcome outcome in listOutcomes)
@@ -1802,7 +1824,7 @@ namespace Next_Game
                             eventList.Add(new Snippet(""));
                             eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                             eventList.Add(new Snippet(""));
-                            eventList.Add(new Snippet(string.Format("{0}", option.ReplyGood), foreColor, backColor));
+                            eventList.Add(new Snippet(string.Format("{0}", optionReply), foreColor, backColor));
                             eventList.Add(new Snippet(""));
                             eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                             eventList.Add(new Snippet(""));
