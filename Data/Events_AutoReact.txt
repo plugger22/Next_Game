@@ -80,7 +80,7 @@ test: 50
 replyBad: The Thugs, greed incensed at the sight of money, decide to rob you of all your money
 [trigger]
 check: ResourcePlyr
-thresh: 3
+thresh: 1
 calc: >=
 [outcome]
 effect: Game

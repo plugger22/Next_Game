@@ -1026,6 +1026,7 @@ namespace Next_Game
                             switch (cleanTag)
                             {
                                 case "[option]":
+                                    
                                     //option complete, save
                                     if (optionFlag == true)
                                     {
@@ -1809,6 +1810,7 @@ namespace Next_Game
                     {
                         Console.WriteLine("  Option \"{0}\"", optionObject.Text);
                         List<Outcome> listTempOutcomes = optionObject.GetGoodOutcomes();
+                        listTempOutcomes.AddRange(optionObject.GetBadOutcomes());
                         List<Trigger> listTempTriggers = optionObject.GetTriggers();
                         //triggers
                         foreach (Trigger triggerObject in listTempTriggers)
