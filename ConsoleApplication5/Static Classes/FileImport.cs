@@ -1853,7 +1853,8 @@ namespace Next_Game
                     foreach (OptionInteractive optionObject in listTempOptions)
                     {
                         Console.WriteLine("  Option \"{0}\"", optionObject.Text);
-                        List<Outcome> listTempOutcomes = optionObject.GetGoodOutcomes();
+                        List<Outcome> listTempOutcomes = new List<Outcome>(); //need to create a new list otherwise copying by reference and affects records in dictOfPlayerEvents
+                        listTempOutcomes.AddRange(optionObject.GetGoodOutcomes());
                         listTempOutcomes.AddRange(optionObject.GetBadOutcomes());
                         List<Trigger> listTempTriggers = optionObject.GetTriggers();
                         //triggers
