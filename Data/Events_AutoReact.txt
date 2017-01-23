@@ -1,4 +1,4 @@
-# Events_AutoReact -> Archetypes that are used to create Player Events where the game reacts to the Player's actions
+# Events_AutoReact -> Templates that are used to create Player Events where the game reacts to the Player's actions
 # NOTE: Keep order within individual events as shown. Sequence is important for file import routine.
 
 # Name: descriptive

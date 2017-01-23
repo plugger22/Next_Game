@@ -1766,31 +1766,41 @@ namespace Next_Game
                                     else if (outcome is OutEventChain)
                                     {
                                         actorID = option.ActorID;
-                                        OutEventChain tempOutcome = outcome as OutEventChain;
-                                        CreateAutoEvent(tempOutcome.Filter, actorID);
-                                        Game._eventID = eventObject.EventPID;
+                                        if (actorID > 0)
+                                        {
+                                            OutEventChain tempOutcome = outcome as OutEventChain;
+                                            CreateAutoEvent(tempOutcome.Filter, actorID);
+                                            Game._eventID = eventObject.EventPID;
+                                        }
+                                        else
+                                        { Game.SetError(new Error(73, string.Format("Invalid actorID for OutEventChain (zero or less) \"{0}\", option # {1}", eventObject.Name, optionNum))); }
                                     }
                                     else if (outcome is OutConflict)
                                     {
-                                        validOption = 2;
                                         actorID = option.ActorID;
-                                        OutConflict tempOutcome = outcome as OutConflict;
-                                        Game.conflict.Conflict_Type = tempOutcome.Conflict_Type;
-                                        Game.conflict.Combat_Type = tempOutcome.Combat_Type;
-                                        Game.conflict.Social_Type = tempOutcome.Social_Type;
-                                        Game.conflict.Stealth_Type = tempOutcome.Stealth_Type;
-                                        Game.conflict.SetOpponent(actorID, tempOutcome.Challenger);
-                                        //message
-                                        Actor opponent = Game.world.GetAnyActor(actorID);
-                                        if (opponent != null)
+                                        if (actorID > 0)
                                         {
-                                            Message message = new Message(string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", tempOutcome.SubType, tempOutcome.Conflict_Type, 
-                                                opponent.Title, opponent.Name, opponent.ActID), MessageType.Conflict);
-                                            Game.world.SetMessage(message);
+                                            validOption = 2;
+                                            OutConflict tempOutcome = outcome as OutConflict;
+                                            Game.conflict.Conflict_Type = tempOutcome.Conflict_Type;
+                                            Game.conflict.Combat_Type = tempOutcome.Combat_Type;
+                                            Game.conflict.Social_Type = tempOutcome.Social_Type;
+                                            Game.conflict.Stealth_Type = tempOutcome.Stealth_Type;
+                                            Game.conflict.SetOpponent(actorID, tempOutcome.Challenger);
+                                            //message
+                                            Actor opponent = Game.world.GetAnyActor(actorID);
+                                            if (opponent != null)
+                                            {
+                                                Message message = new Message(string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", tempOutcome.SubType, tempOutcome.Conflict_Type,
+                                                    opponent.Title, opponent.Name, opponent.ActID), MessageType.Conflict);
+                                                Game.world.SetMessage(message);
+                                            }
+                                            //debug
+                                            ConflictState debugState = (ConflictState)rnd.Next(2, 6);
+                                            Game.conflict.SetGameSituation(debugState);
                                         }
-                                        //debug
-                                        ConflictState debugState = (ConflictState)rnd.Next(2, 6);
-                                        Game.conflict.SetGameSituation(debugState);
+                                        else
+                                        { Game.SetError(new Error(73, string.Format("Invalid actorID for OutConflict (zero or less) \"{0}\", option # {1}", eventObject.Name, optionNum))); }
                                     }
                                 }
                             }
