@@ -81,6 +81,18 @@ namespace Next_Game
         public int Test { get; set; }
         public string Reply { get; set; }
         public string ReplyBad { get; set; }
+
+        /// <summary>
+        /// copy constructor needed to handle default option parameters
+        /// </summary>
+        /// <param name="option"></param>
+        public OptionStruct(OptionStruct option)
+        {
+            Text = option.Text;
+            Test = option.Test;
+            Reply = option.Reply;
+            ReplyBad = option.ReplyBad;
+        }
     }
 
     struct OutcomeStruct
@@ -1026,14 +1038,17 @@ namespace Next_Game
                             switch (cleanTag)
                             {
                                 case "[option]":
-                                    
                                     //option complete, save
                                     if (optionFlag == true)
                                     {
                                         if (outcomeFlag == true)
                                         { listSubOutcomes.Add(structOutcome); }
                                         listAllOutcomes.Add(listSubOutcomes);
-                                        listOptions.Add(structOption);
+                                        OptionStruct structOptionCopy = new OptionStruct(structOption);
+                                        listOptions.Add(structOptionCopy);
+                                        //zero out optional data as structOption reused
+                                        structOption.Test = 0;
+                                        structOption.ReplyBad = "";
                                         outcomeFlag = false;
                                         //add Triggers to a list in same sequential order as options (place a blank trigger in the list if none exists)
                                         if (listSubTriggers.Count > 0)
@@ -1085,6 +1100,7 @@ namespace Next_Game
                                         structOutcome.Effect = "";
                                         structOutcome.Data = 0;
                                         structOutcome.Amount = 0;
+                                        structOutcome.Bad = 0;
                                         structOutcome.Calc = EventCalc.None;
                                         structOutcome.NewStatus = EventStatus.None;
                                         structOutcome.Timer = EventTimer.None;
