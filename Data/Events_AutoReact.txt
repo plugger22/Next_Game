@@ -46,7 +46,6 @@
 
 # [outcome] -> EventTimer
 # data: target EventID (can reference it's host decision), amount and apply (+, -, =, Random)
-# filter: EventFilter -> None (Generic), Locals (belong to current loc, eg. house), Visitors, Followers -> Which group of people to focus on?
 
 # [outcome] -> EventChain
 # data: target EventID that'll be immediately activated
@@ -91,6 +90,17 @@ apply: Add
 bad: 1
 effect: Game
 data: -5
+amount: 10
+apply: Add
+[outcome]
+effect: Game
+data: 2
+amount: 20
+apply: Random
+[outcome]
+bad: 1
+effect: Game
+data: -2
 amount: 10
 apply: Add
 [option]
