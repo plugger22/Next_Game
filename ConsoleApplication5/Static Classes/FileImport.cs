@@ -83,7 +83,7 @@ namespace Next_Game
         public string ReplyBad { get; set; }
 
         /// <summary>
-        /// copy constructor needed to handle default option parameters
+        /// copy constructor
         /// </summary>
         /// <param name="option"></param>
         public OptionStruct(OptionStruct option)
@@ -105,6 +105,22 @@ namespace Next_Game
         public EventStatus NewStatus { get; set; } //specific to EventStatus outcomes
         public EventTimer Timer { get; set; } //specific to EventTimer outcomes
         public EventFilter Filter { get; set; } //which group of people to focus on?
+
+        /// <summary>
+        /// copy constructor
+        /// </summary>
+        /// <param name="outcome"></param>
+        public OutcomeStruct(OutcomeStruct outcome)
+        {
+            Effect = outcome.Effect;
+            Data = outcome.Data;
+            Amount = outcome.Amount;
+            Bad = outcome.Bad;
+            Calc = outcome.Calc;
+            NewStatus = outcome.NewStatus;
+            Timer = outcome.Timer;
+            Filter = outcome.Filter;
+        }
     }
 
     struct TriggerStruct
@@ -1042,7 +1058,18 @@ namespace Next_Game
                                     if (optionFlag == true)
                                     {
                                         if (outcomeFlag == true)
-                                        { listSubOutcomes.Add(structOutcome); }
+                                        {
+                                            OutcomeStruct structOutcomeCopy = new OutcomeStruct(structOutcome);
+                                            listSubOutcomes.Add(structOutcomeCopy);
+                                            //zero out data as the same structure is reused
+                                            structOutcome.Effect = "";
+                                            structOutcome.Data = 0;
+                                            structOutcome.Amount = 0;
+                                            structOutcome.Bad = 0;
+                                            structOutcome.Calc = EventCalc.None;
+                                            structOutcome.NewStatus = EventStatus.None;
+                                            structOutcome.Timer = EventTimer.None;
+                                        }
                                         listAllOutcomes.Add(listSubOutcomes);
                                         OptionStruct structOptionCopy = new OptionStruct(structOption);
                                         listOptions.Add(structOptionCopy);
@@ -1095,7 +1122,8 @@ namespace Next_Game
                                     //outcome complete, save
                                     if (outcomeFlag == true)
                                     {
-                                        listSubOutcomes.Add(structOutcome);
+                                        OutcomeStruct structOutcomeCopy = new OutcomeStruct(structOutcome);
+                                        listSubOutcomes.Add(structOutcomeCopy);
                                         //zero out data as the same structure is reused
                                         structOutcome.Effect = "";
                                         structOutcome.Data = 0;
