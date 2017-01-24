@@ -1149,6 +1149,9 @@ namespace Next_Game
                         counter++;
                         Console.WriteLine("\"{0}\" autoReact Event found, Status {1}", eventObject.Value.Name, eventObject.Value.Status);
                     }
+                    //decrement cool down timers
+                    else if (eventObject.Value.Status == EventStatus.Active && eventObject.Value.TimerCoolDown > 0)
+                    { eventObject.Value.TimerCoolDown--; }
                 }
                 //any to remove?
                 if (counter > 0)
@@ -1231,7 +1234,7 @@ namespace Next_Game
                 foreach (int eventID in listEventID)
                 {
                     Event eventObject = dictPlayerEvents[eventID];
-                    if (eventObject != null && eventObject.Status == EventStatus.Active)
+                    if (eventObject != null && eventObject.Status == EventStatus.Active && eventObject.TimerCoolDown == 0)
                     {
                         bool proceed = true;
                         //is the event limited in any way?

@@ -13,6 +13,7 @@
 # Repeat: (Timer) Number > 0 -> Optional tag (if not shown then default of 1000) -> Fixed number of activations before event goes dormant
 # Dormant: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before event goes dormant
 # Live: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before Live event becomes Active
+# Cool: (Timer) Number > 0 -> Optional tag (if not shown then default 0) -> number of turns of cool down before it can fire again
 
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks. Place block header at top
 # text: option text (number is block, or option num, eg. sequential from 1 to 4). Keep it short and clear.
@@ -42,7 +43,7 @@
 
 # [outcome] -> EventTimer
 # data: target EventID (can reference it's host decision), amount and apply (+, -, =, Random)
-# timer: which timer -> Repeat / Dormant / Live
+# timer: which timer -> Repeat / Dormant / Live 
 
 # [outcome] -> Conflict
 # data: OpponentID
@@ -220,6 +221,7 @@ subType: Normal
 Cat: Generic
 Freq: Low
 Repeat: 10
+Cool: 2
 Event: A dazed, naked woman is limping along the road ahead, leading a donkey.
 [option]
 text: Ride past, ignoring her
