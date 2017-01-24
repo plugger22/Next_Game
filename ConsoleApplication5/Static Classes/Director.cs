@@ -1149,10 +1149,7 @@ namespace Next_Game
                         counter++;
                         Console.WriteLine("\"{0}\" autoReact Event found, Status {1}", eventObject.Value.Name, eventObject.Value.Status);
                     }
-                    //decrement cool down timers
-                    else if (eventObject.Value.Status == EventStatus.Active && eventObject.Value.TimerCoolDown > 0)
-                    { eventObject.Value.TimerCoolDown--; Console.WriteLine("\"{0}\" event, Cooldown Timer decremented from {1} to {2}", eventObject.Value.Name, 
-                        eventObject.Value.TimerCoolDown + 1, eventObject.Value.TimerCoolDown); }
+                    
                 }
                 //any to remove?
                 if (counter > 0)
@@ -2248,6 +2245,13 @@ namespace Next_Game
                                 eventObject.Value.Status = EventStatus.Dormant;
                                 Console.WriteLine("Event \"{0}\" Dormant Timer has run down to Zero. Event is now {1}", eventObject.Value.Name, eventObject.Value.Status);
                             }
+                        }
+                        //decrement Cool down timers
+                        if (eventObject.Value.TimerCoolDown > 0)
+                        {
+                            eventObject.Value.TimerCoolDown--;
+                            Console.WriteLine("\"{0}\" event, Cooldown Timer decremented from {1} to {2}", eventObject.Value.Name, eventObject.Value.TimerCoolDown + 1, 
+                                eventObject.Value.TimerCoolDown);
                         }
                         break;
                     case EventStatus.Live:
