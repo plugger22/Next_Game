@@ -121,7 +121,7 @@ PlyrDef: -1
 Data: 1
 Good1: <name>'s efforts at blocking your lunges and thrusts appear futile. It'll be a short fight.
 Good2: For somebody on the defence, <name> seems to be overly confident. You hammer into them and wait for the right moment.
-Good3: <name> fights on but you can tell that they are weakening. You block all but <his> most unexpected counter-attacks.
+Good3: <name> fights on but you can tell that <he> is weakening. You block all but <his> most unexpected counter-attacks.
 Bad1: How can <name> keep holding you off with such vigour? You feel as if you are dressed in a lead suit that's anchored to the ground.
 Bad2: Your aggressive thrusts have faltered in the face of <name>'s fierce defence and even fiercer counter-attacks. You're in trouble.
 Bad3: It's supposed to be you who is landing the slashing blows, not <name>. <He> should defending, not leaping at you like a wild animal.

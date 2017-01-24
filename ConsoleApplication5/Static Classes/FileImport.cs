@@ -1841,7 +1841,9 @@ namespace Next_Game
                                                             {
                                                                 case "Conflict":
                                                                     outObject = new OutConflict(structEvent.EventID, outTemp.Data, outTemp.Conflict_Type, outTemp.Challenger)
-                                                                    {Conflict_Type = outTemp.Conflict_Type, Social_Type = outTemp.Social_Type, Stealth_Type = outTemp.Stealth_Type, SubType = outTemp.SubType };
+                                                                    {Conflict_Type = outTemp.Conflict_Type, Social_Type = outTemp.Social_Type, Stealth_Type = outTemp.Stealth_Type,
+                                                                        Combat_Type = outTemp.Combat_Type, SubType = outTemp.SubType };
+                                                                    optionObject.ActorID = outTemp.Data;
                                                                     break;
                                                                 case "Game":
                                                                     //check that GameVars (DataPoints) are only 'add' or 'random'
