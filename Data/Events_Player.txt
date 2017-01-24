@@ -27,7 +27,7 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, EventChain, Game)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game)
 
 # [outcome] -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -44,8 +44,11 @@
 # data: target EventID (can reference it's host decision), amount and apply (+, -, =, Random)
 # timer: which timer -> Repeat / Dormant / Live
 
-# [outcome] -> EventChain
-# data: target EventID that'll be immediately activated
+# [outcome] -> Conflict
+# data: OpponentID
+# chall: Yes / No (is the Player the challenger in this conflict?)
+# CsubType: Conflict subType (Personal / Tournament / Battle / Hunting / Blackmail / Seduce / Befriend / Infiltrate / Evade / Escape)
+
 
 # [End] -> Place at the end of the event description.
 # NOTE: Leave no spaces between lines WITHIN an event. Indents (tabs) are O.K, even better is colour coding using Notepad++ (example)
@@ -64,10 +67,10 @@ Event: You encounter a mounted group of the King's Men, armed and dangerous. The
 text: Run for it!
 reply: Giddee Up Trigger! You attempt to gallop away to safety
 [outcome]
-effect: Conflict
+effect: Game
 data: 1
 amount: 1
-apply: Subtract
+apply: Add
 [outcome]
 effect: Game
 data: 2
@@ -210,6 +213,48 @@ amount: 2
 apply: Add
 [End]
 
+Name: Naked Woman
+ID: 6
+Type: Road
+subType: Normal
+Cat: Generic
+Freq: Low
+Repeat: 10
+Event: A dazed, naked woman is limping along the road ahead, leading a donkey.
+[option]
+text: Ride past, ignoring her
+reply: You can't save the world, it's too big and mean. The woman pleads for some water as you canter past.
+[outcome]
+effect: None
+[option]
+text: Offer assistance
+reply: You immediately dismount and approach her on foot only to find that she has strange, lifeless eyes. Bright blue eyes.
+[outcome]
+effect: Game
+data: 5
+amount: 1
+apply: Add
+[option]
+text: Ride her down!
+reply: As you spur your horse into a gallop and aim directly at the helpless woman you feel no pity or remorse. Anyone woman foolish enough to wander naked down a road deserves to the form of natural justice that you are so adept at providing.
+[trigger]
+check: Trait
+item: 4
+thresh: 3
+calc: >=
+[outcome]
+effect: Game
+data: -5
+amount: 3
+apply: Add
+[outcome]
+effect: Conflict
+data: 20
+chall: Yes
+CsubType: Personal
+[End]
+
+
 # Dormant events ---
 
 Name: Naked Woman
@@ -294,3 +339,5 @@ data: 5
 amount: 1
 apply: Add
 [End]
+
+# next ID is 7

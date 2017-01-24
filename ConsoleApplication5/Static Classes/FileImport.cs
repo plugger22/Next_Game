@@ -105,6 +105,13 @@ namespace Next_Game
         public EventStatus NewStatus { get; set; } //specific to EventStatus outcomes
         public EventTimer Timer { get; set; } //specific to EventTimer outcomes
         public EventFilter Filter { get; set; } //which group of people to focus on?
+        //Conflict Outcomes
+        public bool Challenger { get; set; } //is the player the challenger?
+        public ConflictType Conflict_Type { get; set; }
+        public ConflictCombat Combat_Type { get; set; }
+        public ConflictSocial Social_Type { get; set; }
+        public ConflictStealth Stealth_Type { get; set; }
+        public ConflictSubType SubType { get; set; } //descriptive purposes only
 
         /// <summary>
         /// copy constructor
@@ -120,6 +127,13 @@ namespace Next_Game
             NewStatus = outcome.NewStatus;
             Timer = outcome.Timer;
             Filter = outcome.Filter;
+            //conflict Outcomes
+            Challenger = outcome.Challenger;
+            Conflict_Type = outcome.Conflict_Type;
+            Combat_Type = outcome.Combat_Type;
+            Social_Type = outcome.Social_Type;
+            Stealth_Type = outcome.Stealth_Type;
+            SubType = outcome.SubType;
         }
     }
 
@@ -1627,6 +1641,84 @@ namespace Next_Game
                                             break;
                                     }
                                     break;
+                                case "chall":
+                                    //conflict outcomes - is the Player the challenger?
+                                    switch (cleanToken)
+                                    {
+                                        case "Yes":
+                                        case "yes":
+                                            structOutcome.Challenger = true;
+                                            break;
+                                        case "No":
+                                        case "no":
+                                            structOutcome.Challenger = false;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Challenger, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                    break;
+                                case "CsubType":
+                                    //Conflict outcome subtype
+                                    switch (cleanToken)
+                                    {
+                                        case "Personal":
+                                            structOutcome.SubType = ConflictSubType.Personal;
+                                            structOutcome.Combat_Type = ConflictCombat.Personal;
+                                            structOutcome.Conflict_Type = ConflictType.Combat;
+                                            break;
+                                        case "Tournament":
+                                            structOutcome.SubType = ConflictSubType.Tournament;
+                                            structOutcome.Combat_Type = ConflictCombat.Tournament;
+                                            structOutcome.Conflict_Type = ConflictType.Combat;
+                                            break;
+                                        case "Battle":
+                                            structOutcome.SubType = ConflictSubType.Battle;
+                                            structOutcome.Combat_Type = ConflictCombat.Battle;
+                                            structOutcome.Conflict_Type = ConflictType.Combat;
+                                            break;
+                                        case "Hunting":
+                                            structOutcome.SubType = ConflictSubType.Hunting;
+                                            structOutcome.Combat_Type = ConflictCombat.Hunting;
+                                            structOutcome.Conflict_Type = ConflictType.Combat;
+                                            break;
+                                        case "Blackmail":
+                                            structOutcome.SubType = ConflictSubType.Blackmail;
+                                            structOutcome.Social_Type = ConflictSocial.Blackmail;
+                                            structOutcome.Conflict_Type = ConflictType.Social;
+                                            break;
+                                        case "Seduce":
+                                            structOutcome.SubType = ConflictSubType.Seduce;
+                                            structOutcome.Social_Type = ConflictSocial.Seduce;
+                                            structOutcome.Conflict_Type = ConflictType.Social;
+                                            break;
+                                        case "Befriend":
+                                            structOutcome.SubType = ConflictSubType.Befriend;
+                                            structOutcome.Social_Type = ConflictSocial.Befriend;
+                                            structOutcome.Conflict_Type = ConflictType.Social;
+                                            break;
+                                        case "Infiltrate":
+                                            structOutcome.SubType = ConflictSubType.Infiltrate;
+                                            structOutcome.Stealth_Type = ConflictStealth.Infiltrate;
+                                            structOutcome.Conflict_Type = ConflictType.Stealth;
+                                            break;
+                                        case "Evade":
+                                            structOutcome.SubType = ConflictSubType.Evade;
+                                            structOutcome.Stealth_Type = ConflictStealth.Evade;
+                                            structOutcome.Conflict_Type = ConflictType.Stealth;
+                                            break;
+                                        case "Escape":
+                                            structOutcome.SubType = ConflictSubType.Escape;
+                                            structOutcome.Stealth_Type = ConflictStealth.Escape;
+                                            structOutcome.Conflict_Type = ConflictType.Stealth;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, CsubType, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                    break;
                                 case "[end]":
                                 case "[End]":
                                     //tidy up outstanding options
@@ -1748,7 +1840,8 @@ namespace Next_Game
                                                             switch (outTemp.Effect)
                                                             {
                                                                 case "Conflict":
-                                                                    outObject = new OutConflict(structEvent.EventID, outTemp.Data, ConflictType.None ); //placeholder
+                                                                    outObject = new OutConflict(structEvent.EventID, outTemp.Data, outTemp.Conflict_Type, outTemp.Challenger)
+                                                                    {Conflict_Type = outTemp.Conflict_Type, Social_Type = outTemp.Social_Type, Stealth_Type = outTemp.Stealth_Type, SubType = outTemp.SubType };
                                                                     break;
                                                                 case "Game":
                                                                     //check that GameVars (DataPoints) are only 'add' or 'random'
@@ -1883,6 +1976,11 @@ namespace Next_Game
                             {
                                 OutEventTimer tempOutcome = outcomeObject as OutEventTimer;
                                 Console.WriteLine("    {0} -> Target EventID {1}, {2} timer, amount {3} apply {4}", cleanTag, tempOutcome.Data, tempOutcome.Timer, tempOutcome.Amount, tempOutcome.Calc);
+                            }
+                            else if (outcomeObject is OutConflict)
+                            {
+                                OutConflict tempOutcome = outcomeObject as OutConflict;
+                                Console.WriteLine("    {0} -> subType {1}, oppID {2}, Challenger {3}", cleanTag, tempOutcome.SubType, tempOutcome.Data, tempOutcome.Challenger);
                             }
                             else
                             { Console.WriteLine("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc); }
