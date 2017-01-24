@@ -63,6 +63,7 @@ namespace Next_Game
         public int Repeat { get; set; }
         public int Dormant { get; set; }
         public int Live { get; set; }
+        public int Cool { get; set; }
         public int SubRef { get; set; }
         public ArcType Type { get; set; }
         public ArcGeo Geo { get; set; }
@@ -1431,6 +1432,21 @@ namespace Next_Game
                                     }
                                     catch { Game.SetError(new Error(49, string.Format("Invalid Input, Live (timer), (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                     break;
+                                case "Cool":
+                                    //Cool down Timer (# turns before Live event becomes Active) -> Base value
+                                    try
+                                    {
+                                        structEvent.Cool = Convert.ToInt32(cleanToken);
+                                        //can't be 0 or less
+                                        if (structEvent.Cool < 0)
+                                        {
+                                            //give default value (constructor -> 1000)
+                                            structEvent.Cool = 0;
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Cool down (timer), (value < 0, set to default value instead) \"{0}\"", arrayOfEvents[i])));
+                                        }
+                                    }
+                                    catch { Game.SetError(new Error(49, string.Format("Invalid Input, Cool down (timer), (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                    break;
                                 case "text":
                                     //Option text
                                     structOption.Text = cleanToken;
@@ -1802,6 +1818,8 @@ namespace Next_Game
                                             if (structEvent.Dormant > 0) { eventTemp.TimerDormant = structEvent.Dormant; }
                                             //Live Timer -> default 0 (constructor) if not present
                                             if (structEvent.Live > 0) { eventTemp.TimerLive = structEvent.Live; }
+                                            //Cool down Timer -> default 0 (constructor) if not present
+                                            if (structEvent.Cool > 0) { eventTemp.TimerCoolBase = structEvent.Cool; }
                                             //SubRef -> default 0, only applies to AutoReact Player Events
                                             if (structEvent.SubRef > 0) { eventTemp.SubRef = structEvent.SubRef; }
                                             //add options

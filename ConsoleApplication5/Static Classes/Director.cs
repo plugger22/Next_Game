@@ -1151,7 +1151,8 @@ namespace Next_Game
                     }
                     //decrement cool down timers
                     else if (eventObject.Value.Status == EventStatus.Active && eventObject.Value.TimerCoolDown > 0)
-                    { eventObject.Value.TimerCoolDown--; }
+                    { eventObject.Value.TimerCoolDown--; Console.WriteLine("\"{0}\" event, Cooldown Timer decremented from {1} to {2}", eventObject.Value.Name, 
+                        eventObject.Value.TimerCoolDown + 1, eventObject.Value.TimerCoolDown); }
                 }
                 //any to remove?
                 if (counter > 0)
@@ -1589,6 +1590,10 @@ namespace Next_Game
                             Console.WriteLine("Event \"{0}\" Timer Repeat has run down to Zero. Event is now {1}", eventObject.Name, eventObject.Status);
                         }
                     }
+                    //reset cool down timer
+                    eventObject.TimerCoolDown = eventObject.TimerCoolBase;
+                    Console.WriteLine("Event \"{0}\" Cooldown Timer has been reset to {1}", eventObject.Name, eventObject.TimerCoolBase);
+                    //info at bottom
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("Press ENTER or ESC to ignore this event", RLColor.LightGray, backColor));
                     //housekeeping
