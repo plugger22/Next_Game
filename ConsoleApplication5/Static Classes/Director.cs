@@ -1771,14 +1771,9 @@ namespace Next_Game
                                     else if (outcome is OutEventChain)
                                     {
                                         actorID = option.ActorID;
-                                        if (actorID > 0)
-                                        {
-                                            OutEventChain tempOutcome = outcome as OutEventChain;
-                                            CreateAutoEvent(tempOutcome.Filter, actorID);
-                                            Game._eventID = eventObject.EventPID;
-                                        }
-                                        else
-                                        { Game.SetError(new Error(73, string.Format("Invalid actorID for OutEventChain (zero or less) \"{0}\", option # {1}", eventObject.Name, optionNum))); }
+                                        OutEventChain tempOutcome = outcome as OutEventChain;
+                                        CreateAutoEvent(tempOutcome.Filter, actorID);
+                                        Game._eventID = eventObject.EventPID;
                                     }
                                     else if (outcome is OutConflict)
                                     {
