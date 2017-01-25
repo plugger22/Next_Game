@@ -14,6 +14,7 @@
 # Repeat: (Timer) Number > 0 -> Optional tag (if not shown then default of 1000) -> Fixed number of activations before event goes dormant
 # Dormant: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before event goes dormant
 # Live: (Timer) Number > 0 -> Optional tag (if not shown then default of 0) -> Fixed number of turns before Live event becomes Active
+# Cool: (Timer) Number > 0 -> Optional tag (if not shown then default 0) -> number of turns of cool down before it can fire again
 
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Place block header at top
 # text: option text (number is block, or option num, eg. sequential from 1 to 4). Keep it short and clear.
