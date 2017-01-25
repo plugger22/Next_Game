@@ -5,7 +5,7 @@
 # ID: (Event ID) unique number for FOLLOWER Events only
 # Type: GeoCluster/Location/Road
 # subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Kings/Connector)
-# Cat: (Category) Generic/Special
+# Cat: (Category) Generic/Special -> Generic events apply to all, Special events are for archetypes
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/High/Common/Very_Common
 # Event: (Event Text)
 # Succeed: (Succeed text) [follower's name] ....text

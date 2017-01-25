@@ -1714,7 +1714,7 @@ namespace Next_Game
                                     }
                                     break;
                                 case "timer":
-                                    //specific to EventTimer outcomes
+                                    //specific to EventTimer outcomes -> values of '1', for example, give a 1 turn effect (internally adjusted to do so)
                                     switch (cleanToken)
                                     {
                                         case "repeat":
@@ -1924,12 +1924,12 @@ namespace Next_Game
                                             { eventTemp.Status = structEvent.Status; }
                                             //Repeat Timer -> default 1000 (constructor) if not present
                                             if (structEvent.Repeat > 0) { eventTemp.TimerRepeat = structEvent.Repeat; }
-                                            //Dormant Timer -> default 0 (constructor) if not present
-                                            if (structEvent.Dormant > 0) { eventTemp.TimerDormant = structEvent.Dormant; }
-                                            //Live Timer -> default 0 (constructor) if not present
-                                            if (structEvent.Live > 0) { eventTemp.TimerLive = structEvent.Live; }
-                                            //Cool down Timer -> default 0 (constructor) if not present
-                                            if (structEvent.Cool > 0) { eventTemp.TimerCoolBase = structEvent.Cool; }
+                                            //Dormant Timer -> default 0 (constructor) if not present, given +1 to negate immediate -1 in use
+                                            if (structEvent.Dormant > 0) { eventTemp.TimerDormant = structEvent.Dormant + 1; }
+                                            //Live Timer -> default 0 (constructor) if not present, given +1 to negate immediate -1 in use
+                                            if (structEvent.Live > 0) { eventTemp.TimerLive = structEvent.Live + 1; }
+                                            //Cool down Timer -> default 0 (constructor) if not present, given +1 to negate immediate -1 in use
+                                            if (structEvent.Cool > 0) { eventTemp.TimerCoolBase = structEvent.Cool + 1; }
                                             //SubRef -> default 0, only applies to AutoReact Player Events
                                             if (structEvent.SubRef > 0) { eventTemp.SubRef = structEvent.SubRef; }
                                             //add options

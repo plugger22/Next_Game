@@ -25,7 +25,7 @@ namespace Next_Game.Event_System
         public int TimerDormant { get; set; } = 0; //turns to change from Active -> Dormant (lasts a fixed number of turns, not activations as with TimerRepeat)
         public int TimerRepeat { get; set; } = 1000; //# times remaining for the event to repeat (if 0 then reverts to dormant)
         public int TimerCoolBase { get; set; } = 0; //# turns of cool down before event can be ready to fire again (base value, needed to reset TimerCoolDown)
-        public int TimerCoolDown { get; set; } = 0; //# turns of cool down -> event can only fire if '0'. Reset to TimerCoolBase whenever event fires. Value is +1 actual (eg. '2' for 1 turn cooldown)
+        public int TimerCoolDown { get; set; } = 0; //# turns of cool down -> event can only fire if '0'. Reset to TimerCoolBase whenever event fires. 
         public int SubRef { get; set; } //multipurpose ID to limit events to particular houseID's, geoID's etc. OPTIONAL
         public string Text { get; set; } //main text for event
         public EventFrequency Frequency { get; set; }
