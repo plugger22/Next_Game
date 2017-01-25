@@ -2036,6 +2036,11 @@ namespace Next_Game
                                 OutConflict tempOutcome = outcomeObject as OutConflict;
                                 Console.WriteLine("    {0} -> subType {1}, oppID {2}, Challenger {3}", cleanTag, tempOutcome.SubType, tempOutcome.Data, tempOutcome.Challenger);
                             }
+                            else if (outcomeObject is OutResource)
+                            {
+                                OutResource tempOutcome = outcomeObject as OutResource;
+                                Console.WriteLine("    {0} -> Player? {1}, amount {2}, apply {3}", cleanTag, tempOutcome.PlayerRes, tempOutcome.Amount, tempOutcome.Calc);
+                            }
                             else
                             { Console.WriteLine("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc); }
                         }
