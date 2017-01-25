@@ -28,7 +28,7 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource)
 
 # [outcome] -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -44,6 +44,11 @@
 # [outcome] -> EventTimer
 # data: target EventID (can reference it's host decision), amount and apply (+, -, =, Random)
 # timer: which timer -> Repeat / Dormant / Live 
+
+# [outcome] -> Resource 
+# plyrRes: Yes / No (if yes it's Player's resource level that is affected, otherwise opponents)
+# amount: how much change (keep in mind Resources are restrained within a range of 1 to 5 but this is automatically enforced by Actor.cs)
+# apply: only Add/Subtract/Equal are valid options here
 
 # [outcome] -> Conflict
 # data: OpponentID
@@ -236,6 +241,11 @@ effect: Game
 data: 5
 amount: 1
 apply: Add
+[outcome]
+effect: Resource
+plyrRes: Yes
+amount: 1
+apply: Subtract
 [option]
 text: Ride her down!
 reply: As you spur your horse into a gallop and aim directly at the helpless woman you feel no pity or remorse. Anyone woman foolish enough to wander naked down a road deserves to the form of natural justice that you are so adept at providing.

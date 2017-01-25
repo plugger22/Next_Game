@@ -102,6 +102,7 @@ namespace Next_Game
         public int Data { get; set; }
         public int Amount { get; set; }
         public int Bad { get; set; } //if > 0, flags outcome as Bad
+        public bool PlayerRes { get; set; } //if true then Player has Resources changed, otherwise opponent (OutResources only)
         public EventCalc Calc { get; set; }
         public EventStatus NewStatus { get; set; } //specific to EventStatus outcomes
         public EventTimer Timer { get; set; } //specific to EventTimer outcomes
@@ -128,6 +129,7 @@ namespace Next_Game
             NewStatus = outcome.NewStatus;
             Timer = outcome.Timer;
             Filter = outcome.Filter;
+            PlayerRes = outcome.PlayerRes;
             //conflict Outcomes
             Challenger = outcome.Challenger;
             Conflict_Type = outcome.Conflict_Type;
@@ -1548,6 +1550,7 @@ namespace Next_Game
                                         case "EventTimer":
                                         case "EventStatus":
                                         case "EventChain":
+                                        case "Resource":
                                         case "None":
                                             structOutcome.Effect = cleanToken;
                                             break;
@@ -1653,6 +1656,24 @@ namespace Next_Game
                                             break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Outcome timer, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                    break;
+                                case "plyrRes":
+                                    //Change Resource outcomes only -> if true then Player's resources are changed, otherwise opponents
+                                    switch (cleanToken)
+                                    {
+                                        case "Yes":
+                                        case "yes":
+                                            structOutcome.PlayerRes = true;
+                                            break;
+                                        case "No":
+                                        case "no":
+                                            structOutcome.PlayerRes = false;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, PlyrRes, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
                                             break;
                                     }
@@ -1897,6 +1918,15 @@ namespace Next_Game
                                                                     else
                                                                     {
                                                                         Game.SetError(new Error(49, "Invalid Input, Outcome Data (EventChain), (Data <= Zero, can't create object)"));
+                                                                        validData = false;
+                                                                    }
+                                                                    break;
+                                                                case "Resource":
+                                                                    if (outTemp.Calc == EventCalc.Add || outTemp.Calc == EventCalc.Subtract || outTemp.Calc == EventCalc.Equals)
+                                                                    { outObject = new OutResource(structEvent.EventID, outTemp.PlayerRes, outTemp.Amount, outTemp.Calc); }
+                                                                    else
+                                                                    {
+                                                                        Game.SetError(new Error(49, "Invalid Input, Outcome Calc (Resource), (only Add/Subtract/Equals allowed)"));
                                                                         validData = false;
                                                                     }
                                                                     break;
