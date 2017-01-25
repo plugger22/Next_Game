@@ -1757,19 +1757,23 @@ namespace Next_Game
                                 foreach (Outcome outcome in listOutcomes)
                                 {
                                     if (outcome is OutGame)
+                                        //Change a Game state variable, eg. Honour, Visibility, etc.
                                     { state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc); }
                                     else if (outcome is OutEventTimer)
                                     {
+                                        //Change an Event Timer
                                         OutEventTimer tempOutcome = outcome as OutEventTimer;
                                         ChangePlayerEventTimer(tempOutcome);
                                     }
                                     else if (outcome is OutEventStatus)
                                     {
+                                        //change Event Status
                                         OutEventStatus tempOutcome = outcome as OutEventStatus;
                                         ChangePlayerEventStatus(tempOutcome.Data, tempOutcome.NewStatus);
                                     }
                                     else if (outcome is OutEventChain)
                                     {
+                                        //chain events -> used by CreateAuto Loc Events
                                         actorID = option.ActorID;
                                         OutEventChain tempOutcome = outcome as OutEventChain;
                                         CreateAutoEvent(tempOutcome.Filter, actorID);
@@ -1777,15 +1781,16 @@ namespace Next_Game
                                     }
                                     else if (outcome is OutResource)
                                     {
+                                        //adjust the resource level of Player or an NPC actor
                                         OutResource tempOutcome = outcome as OutResource;
                                         if (tempOutcome.PlayerRes == false) { actorID = option.ActorID; }
                                         else { actorID = 1; }
                                         Actor person = Game.world.GetAnyActor(actorID);
-                                        if (person != null) { person}
-
+                                        if (person != null) { person.ChangeResources(tempOutcome.Amount, tempOutcome.Calc); }
                                     }
                                     else if (outcome is OutConflict)
                                     {
+                                        //seque straight into a Conflict
                                         actorID = option.ActorID;
                                         if (actorID > 0)
                                         {

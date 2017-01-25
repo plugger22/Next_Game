@@ -296,6 +296,11 @@ namespace Next_Game
         public void SetSecrets(List<int> secrets)
         { if (secrets != null) { listOfSecrets.Clear(); listOfSecrets.AddRange(secrets); } }
 
+        /// <summary>
+        /// Adjust Actor's Resource value up or down
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="calc">Can be Add / Subtract / Equals</param>
         public void ChangeResources(int amount, EventCalc calc)
         {
             string messageText = "";
@@ -307,15 +312,20 @@ namespace Next_Game
                     break;
                 case EventCalc.Subtract:
                     Resources -= amount;
-                    messageText = string.Format("{0} {1}'s Resources increased by {2} to {3} (max. 5)", Title, Name, amount, Resources);
+                    messageText = string.Format("{0} {1}'s Resources reduced by {2} to {3} (min. 1)", Title, Name, amount, Resources);
                     break;
                 case EventCalc.Equals:
                     Resources = amount;
-                    messageText = string.Format("{0} {1}'s Resources increased by {2} to {3} (max. 5)", Title, Name, amount, Resources);
+                    messageText = string.Format("{0} {1}'s Resources changed from {2} to {3} (min. 0, max. 5)", Title, Name, amount, Resources);
                     break;
                 default:
                     Game.SetError(new Error(127, string.Format("Invalid Calc (\"{0}\") in Actor.ChangeResources", calc)));
                     break;
+            }
+            if (String.IsNullOrEmpty(messageText) == false)
+            {
+                Message message = new Message(messageText, MessageType.Event);
+                Game.world.SetMessage(message);
             }
             //keep within paramters
             Resources = Math.Min(5, Resources);
