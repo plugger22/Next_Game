@@ -1762,7 +1762,7 @@ namespace Next_Game
                                         //Change a Game state variable, eg. Honour, Visibility, etc.
                                         outcomeText = state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc);
                                         if (String.IsNullOrEmpty(outcomeText) == false)
-                                        { resultList.Add(new Snippet(outcomeText)); }
+                                        { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                     }
                                     else if (outcome is OutEventTimer)
                                     {
@@ -1770,7 +1770,7 @@ namespace Next_Game
                                         OutEventTimer tempOutcome = outcome as OutEventTimer;
                                         outcomeText = ChangePlayerEventTimer(tempOutcome);
                                         if (String.IsNullOrEmpty(outcomeText) == false)
-                                        { resultList.Add(new Snippet(outcomeText)); }
+                                        { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                     }
                                     else if (outcome is OutEventStatus)
                                     {
@@ -1778,15 +1778,7 @@ namespace Next_Game
                                         OutEventStatus tempOutcome = outcome as OutEventStatus;
                                         outcomeText = ChangePlayerEventStatus(tempOutcome.Data, tempOutcome.NewStatus);
                                         if (String.IsNullOrEmpty(outcomeText) == false)
-                                        { resultList.Add(new Snippet(outcomeText)); }
-                                    }
-                                    else if (outcome is OutEventChain)
-                                    {
-                                        //chain events -> used by CreateAuto Loc Events
-                                        actorID = option.ActorID;
-                                        OutEventChain tempOutcome = outcome as OutEventChain;
-                                        CreateAutoEvent(tempOutcome.Filter, actorID);
-                                        Game._eventID = eventObject.EventPID;
+                                        { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                     }
                                     else if (outcome is OutResource)
                                     {
@@ -1799,8 +1791,16 @@ namespace Next_Game
                                         {
                                             outcomeText = person.ChangeResources(tempOutcome.Amount, tempOutcome.Calc);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
-                                            { resultList.Add(new Snippet(outcomeText)); }
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                         }
+                                    }
+                                    else if (outcome is OutEventChain)
+                                    {
+                                        //chain events -> used by CreateAuto Loc Events
+                                        actorID = option.ActorID;
+                                        OutEventChain tempOutcome = outcome as OutEventChain;
+                                        CreateAutoEvent(tempOutcome.Filter, actorID);
+                                        Game._eventID = eventObject.EventPID;
                                     }
                                     else if (outcome is OutConflict)
                                     {
