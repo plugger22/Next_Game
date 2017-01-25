@@ -1195,15 +1195,20 @@ namespace Next_Game
                                 case "Type":
                                     switch (cleanToken)
                                     {
+                                        case "geocluster":
+                                        case "geoCluster":
                                         case "GeoCluster":
                                             structEvent.Type = ArcType.GeoCluster;
                                             break;
+                                        case "location":
                                         case "Location":
                                             structEvent.Type = ArcType.Location;
                                             break;
+                                        case "road":
                                         case "Road":
                                             structEvent.Type = ArcType.Road;
                                             break;
+                                        case "actor":
                                         case "Actor":
                                             structEvent.Type = ArcType.Actor;
                                             break;
@@ -1221,12 +1226,15 @@ namespace Next_Game
                                         case ArcType.GeoCluster:
                                             switch (cleanToken)
                                             {
+                                                case "sea":
                                                 case "Sea":
                                                     structEvent.Geo = ArcGeo.Sea;
                                                     break;
+                                                case "mountain":
                                                 case "Mountain":
                                                     structEvent.Geo = ArcGeo.Mountain;
                                                     break;
+                                                case "forest":
                                                 case "Forest":
                                                     structEvent.Geo = ArcGeo.Forest;
                                                     break;
@@ -1240,15 +1248,19 @@ namespace Next_Game
                                         case ArcType.Location:
                                             switch (cleanToken)
                                             {
+                                                case "capital":
                                                 case "Capital":
                                                     structEvent.Loc = ArcLoc.Capital;
                                                     break;
+                                                case "major":
                                                 case "Major":
                                                     structEvent.Loc = ArcLoc.Major;
                                                     break;
+                                                case "minor":
                                                 case "Minor":
                                                     structEvent.Loc = ArcLoc.Minor;
                                                     break;
+                                                case "inn":
                                                 case "Inn":
                                                     structEvent.Loc = ArcLoc.Inn;
                                                     break;
@@ -1261,12 +1273,15 @@ namespace Next_Game
                                         case ArcType.Road:
                                             switch (cleanToken)
                                             {
+                                                case "normal":
                                                 case "Normal":
                                                     structEvent.Road = ArcRoad.Normal;
                                                     break;
+                                                case "kings":
                                                 case "Kings":
                                                     structEvent.Road = ArcRoad.Kings;
                                                     break;
+                                                case "connector":
                                                 case "Connector":
                                                     structEvent.Road = ArcRoad.Connector;
                                                     break;
@@ -1279,12 +1294,15 @@ namespace Next_Game
                                         case ArcType.House:
                                             switch (cleanToken)
                                             {
+                                                case "major":
                                                 case "Major":
                                                     structEvent.House = ArcHouse.Major;
                                                     break;
+                                                case "minor":
                                                 case "Minor":
                                                     structEvent.House = ArcHouse.Minor;
                                                     break;
+                                                case "inn":
                                                 case "Inn":
                                                     structEvent.House = ArcHouse.Inn;
                                                     break;
@@ -1297,9 +1315,11 @@ namespace Next_Game
                                         case ArcType.Actor:
                                             switch (cleanToken)
                                             {
+                                                case "player":
                                                 case "Player":
                                                     structEvent.Actor = ArcActor.Player;
                                                     break;
+                                                case "follower":
                                                 case "Follower":
                                                     structEvent.Actor = ArcActor.Follower;
                                                     break;
@@ -1324,12 +1344,16 @@ namespace Next_Game
                                 case "Cat":
                                     switch (cleanToken)
                                     {
+                                        case "generic":
                                         case "Generic":
                                             structEvent.Cat = EventCategory.Generic;
                                             break;
+                                        case "special":
                                         case "Special":
                                             structEvent.Cat = EventCategory.Special;
                                             break;
+                                        case "autoreact":
+                                        case "autoReact":
                                         case "AutoReact":
                                             structEvent.Cat = EventCategory.AutoReact;
                                             break;
@@ -1342,24 +1366,33 @@ namespace Next_Game
                                 case "Freq":
                                     switch (cleanToken)
                                     {
+                                        case "very_rare":
+                                        case "very_Rare":
                                         case "Very_Rare":
                                             structEvent.Frequency = EventFrequency.Very_Rare;
                                             break;
+                                        case "rare":
                                         case "Rare":
                                             structEvent.Frequency = EventFrequency.Rare;
                                             break;
+                                        case "low":
                                         case "Low":
                                             structEvent.Frequency = EventFrequency.Low;
                                             break;
+                                        case "normal":
                                         case "Normal":
                                             structEvent.Frequency = EventFrequency.Normal;
                                             break;
+                                        case "common":
                                         case "Common":
                                             structEvent.Frequency = EventFrequency.Common;
                                             break;
+                                        case "high":
                                         case "High":
                                             structEvent.Frequency = EventFrequency.High;
                                             break;
+                                        case "very_high":
+                                        case "very_High":
                                         case "Very_High":
                                             structEvent.Frequency = EventFrequency.Very_High;
                                             break;
@@ -1375,15 +1408,19 @@ namespace Next_Game
                                 case "Status":
                                     switch (cleanToken)
                                     {
+                                        case "active":
                                         case "Active":
                                             structEvent.Status = EventStatus.Active;
                                             break;
+                                        case "live":
                                         case "Live":
                                             structEvent.Status = EventStatus.Live;
                                             break;
+                                        case "dormant":
                                         case "Dormant":
                                             structEvent.Status = EventStatus.Dormant;
                                             break;
+                                        case "dead":
                                         case "Dead":
                                             structEvent.Status = EventStatus.Dead;
                                             break;
@@ -1475,18 +1512,26 @@ namespace Next_Game
                                     //Trigger Check
                                     switch (cleanToken)
                                     {
+                                        case "trait":
                                         case "Trait":
                                             structTrigger.Check = TriggerCheck.Trait;
                                             break;
+                                        case "gamevar":
+                                        case "gameVar":
                                         case "GameVar":
                                             structTrigger.Check = TriggerCheck.GameVar;
                                             break;
+                                        case "sex":
                                         case "Sex":
                                             structTrigger.Check = TriggerCheck.Sex;
                                             break;
+                                        case "resourceplyr":
+                                        case "resourcePlyr":
                                         case "ResourcePlyr":
                                             structTrigger.Check = TriggerCheck.ResourcePlyr;
                                             break;
+                                        case "actortype":
+                                        case "actorType":
                                         case "ActorType":
                                             structTrigger.Check = TriggerCheck.ActorType;
                                             break;
@@ -1549,12 +1594,22 @@ namespace Next_Game
                                     //Outcome effect
                                     switch (cleanToken)
                                     {
+                                        case "conflict":
                                         case "Conflict":
+                                        case "game":
                                         case "Game":
+                                        case "eventtimer":
+                                        case "eventTimer":
                                         case "EventTimer":
+                                        case "eventstatus":
+                                        case "eventStatus":
                                         case "EventStatus":
+                                        case "eventchain":
+                                        case "eventChain":
                                         case "EventChain":
+                                        case "resource":
                                         case "Resource":
+                                        case "none":
                                         case "None":
                                             structOutcome.Effect = cleanToken;
                                             break;
@@ -1581,18 +1636,23 @@ namespace Next_Game
                                 case "apply":
                                     switch (cleanToken)
                                     {
+                                        case "none":
                                         case "None":
                                             structOutcome.Calc = EventCalc.None;
                                             break;
+                                        case "add":
                                         case "Add":
                                             structOutcome.Calc = EventCalc.Add;
                                             break;
+                                        case "subtract":
                                         case "Subtract":
                                             structOutcome.Calc = EventCalc.Subtract;
                                             break;
+                                        case "equals":
                                         case "Equals":
                                             structOutcome.Calc = EventCalc.Equals;
                                             break;
+                                        case "random":
                                         case "Random":
                                             structOutcome.Calc = EventCalc.Random;
                                             break;
@@ -1605,15 +1665,19 @@ namespace Next_Game
                                 case "filter":
                                     switch (cleanToken)
                                     {
+                                        case "none":
                                         case "None":
                                             structOutcome.Filter = EventFilter.None;
                                             break;
+                                        case "locals":
                                         case "Locals":
                                             structOutcome.Filter = EventFilter.Locals;
                                             break;
+                                        case "visitors":
                                         case "Visitors":
                                             structOutcome.Filter = EventFilter.Visitors;
                                             break;
+                                        case "followers":
                                         case "Followers":
                                             structOutcome.Filter = EventFilter.Followers;
                                             break;
@@ -1627,15 +1691,19 @@ namespace Next_Game
                                     //specific to EventStatus outcomes
                                     switch (cleanToken)
                                     {
+                                        case "active":
                                         case "Active":
                                             structOutcome.NewStatus = EventStatus.Active;
                                             break;
+                                        case "live":
                                         case "Live":
                                             structOutcome.NewStatus = EventStatus.Live;
                                             break;
+                                        case "dormant":
                                         case "Dormant":
                                             structOutcome.NewStatus = EventStatus.Dormant;
                                             break;
+                                        case "dead":
                                         case "Dead":
                                             structOutcome.NewStatus = EventStatus.Dead;
                                             break;
@@ -1649,15 +1717,19 @@ namespace Next_Game
                                     //specific to EventTimer outcomes
                                     switch (cleanToken)
                                     {
+                                        case "repeat":
                                         case "Repeat":
                                             structOutcome.Timer = EventTimer.Repeat;
                                             break;
+                                        case "dormant":
                                         case "Dormant":
                                             structOutcome.Timer = EventTimer.Dormant;
                                             break;
+                                        case "live":
                                         case "Live":
                                             structOutcome.Timer = EventTimer.Live;
                                             break;
+                                        case "cool":
                                         case "Cool":
                                             structOutcome.Timer = EventTimer.Cool;
                                             break;
@@ -1707,51 +1779,61 @@ namespace Next_Game
                                     //Conflict outcome subtype
                                     switch (cleanToken)
                                     {
+                                        case "personal":
                                         case "Personal":
                                             structOutcome.SubType = ConflictSubType.Personal;
                                             structOutcome.Combat_Type = ConflictCombat.Personal;
                                             structOutcome.Conflict_Type = ConflictType.Combat;
                                             break;
+                                        case "tournament":
                                         case "Tournament":
                                             structOutcome.SubType = ConflictSubType.Tournament;
                                             structOutcome.Combat_Type = ConflictCombat.Tournament;
                                             structOutcome.Conflict_Type = ConflictType.Combat;
                                             break;
+                                        case "battle":
                                         case "Battle":
                                             structOutcome.SubType = ConflictSubType.Battle;
                                             structOutcome.Combat_Type = ConflictCombat.Battle;
                                             structOutcome.Conflict_Type = ConflictType.Combat;
                                             break;
+                                        case "hunting":
                                         case "Hunting":
                                             structOutcome.SubType = ConflictSubType.Hunting;
                                             structOutcome.Combat_Type = ConflictCombat.Hunting;
                                             structOutcome.Conflict_Type = ConflictType.Combat;
                                             break;
+                                        case "blackmail":
                                         case "Blackmail":
                                             structOutcome.SubType = ConflictSubType.Blackmail;
                                             structOutcome.Social_Type = ConflictSocial.Blackmail;
                                             structOutcome.Conflict_Type = ConflictType.Social;
                                             break;
+                                        case "seduce":
                                         case "Seduce":
                                             structOutcome.SubType = ConflictSubType.Seduce;
                                             structOutcome.Social_Type = ConflictSocial.Seduce;
                                             structOutcome.Conflict_Type = ConflictType.Social;
                                             break;
+                                        case "befriend":
                                         case "Befriend":
                                             structOutcome.SubType = ConflictSubType.Befriend;
                                             structOutcome.Social_Type = ConflictSocial.Befriend;
                                             structOutcome.Conflict_Type = ConflictType.Social;
                                             break;
+                                        case "infiltrate":
                                         case "Infiltrate":
                                             structOutcome.SubType = ConflictSubType.Infiltrate;
                                             structOutcome.Stealth_Type = ConflictStealth.Infiltrate;
                                             structOutcome.Conflict_Type = ConflictType.Stealth;
                                             break;
+                                        case "evade":
                                         case "Evade":
                                             structOutcome.SubType = ConflictSubType.Evade;
                                             structOutcome.Stealth_Type = ConflictStealth.Evade;
                                             structOutcome.Conflict_Type = ConflictType.Stealth;
                                             break;
+                                        case "escape":
                                         case "Escape":
                                             structOutcome.SubType = ConflictSubType.Escape;
                                             structOutcome.Stealth_Type = ConflictStealth.Escape;
