@@ -175,4 +175,25 @@ namespace Next_Game.Event_System
         }
     }
 
+    /// <summary>
+    /// Change resource level of an actor
+    /// </summary>
+    class OutResource : Outcome
+    {
+        public bool PlayerRes { get; set; } //if true adjust Player resource level, otherwise option actorID
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="eventID"></param>
+        /// <param name="playerRes">If true then it's the Player affected, otherwise opponent</param>
+        /// <param name="amount">Remember resources remain within a 1 to 5 range</param>
+        /// <param name="apply">Allowable options are Add / Subtract / Equals</param>
+        public OutResource(int eventID, bool playerRes, int amount, EventCalc apply) : base(eventID)
+        {
+            this.Amount = amount;
+            this.Calc = apply;
+        }
+
+    }
 }

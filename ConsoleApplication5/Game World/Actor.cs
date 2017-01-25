@@ -2,6 +2,7 @@
 using Next_Game.Cartographic;
 using System;
 using System.Collections.Generic;
+using Next_Game.Event_System;
 
 namespace Next_Game
 {
@@ -294,6 +295,32 @@ namespace Next_Game
 
         public void SetSecrets(List<int> secrets)
         { if (secrets != null) { listOfSecrets.Clear(); listOfSecrets.AddRange(secrets); } }
+
+        public void ChangeResources(int amount, EventCalc calc)
+        {
+            string messageText = "";
+            switch (calc)
+            {
+                case EventCalc.Add:
+                    Resources += amount;
+                    messageText = string.Format("{0} {1}'s Resources increased by {2} to {3} (max. 5)", Title, Name, amount, Resources);
+                    break;
+                case EventCalc.Subtract:
+                    Resources -= amount;
+                    messageText = string.Format("{0} {1}'s Resources increased by {2} to {3} (max. 5)", Title, Name, amount, Resources);
+                    break;
+                case EventCalc.Equals:
+                    Resources = amount;
+                    messageText = string.Format("{0} {1}'s Resources increased by {2} to {3} (max. 5)", Title, Name, amount, Resources);
+                    break;
+                default:
+                    Game.SetError(new Error(127, string.Format("Invalid Calc (\"{0}\") in Actor.ChangeResources", calc)));
+                    break;
+            }
+            //keep within paramters
+            Resources = Math.Min(5, Resources);
+            Resources = Math.Max(1, Resources);
+        }
     }
 
 

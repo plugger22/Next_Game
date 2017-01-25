@@ -1775,6 +1775,15 @@ namespace Next_Game
                                         CreateAutoEvent(tempOutcome.Filter, actorID);
                                         Game._eventID = eventObject.EventPID;
                                     }
+                                    else if (outcome is OutResource)
+                                    {
+                                        OutResource tempOutcome = outcome as OutResource;
+                                        if (tempOutcome.PlayerRes == false) { actorID = option.ActorID; }
+                                        else { actorID = 1; }
+                                        Actor person = Game.world.GetAnyActor(actorID);
+                                        if (person != null) { person}
+
+                                    }
                                     else if (outcome is OutConflict)
                                     {
                                         actorID = option.ActorID;
