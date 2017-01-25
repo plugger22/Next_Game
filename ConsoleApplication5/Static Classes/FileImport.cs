@@ -98,6 +98,8 @@ namespace Next_Game
 
     struct OutcomeStruct
     {
+        //NOTE: Update copy constructor with new Data & case '[option]' x 2 below
+
         public string Effect { get; set; }
         public int Data { get; set; }
         public int Amount { get; set; }
@@ -1086,6 +1088,7 @@ namespace Next_Game
                                             structOutcome.Calc = EventCalc.None;
                                             structOutcome.NewStatus = EventStatus.None;
                                             structOutcome.Timer = EventTimer.None;
+                                            structOutcome.PlayerRes = false;
                                         }
                                         listAllOutcomes.Add(listSubOutcomes);
                                         OptionStruct structOptionCopy = new OptionStruct(structOption);
@@ -1149,6 +1152,7 @@ namespace Next_Game
                                         structOutcome.Calc = EventCalc.None;
                                         structOutcome.NewStatus = EventStatus.None;
                                         structOutcome.Timer = EventTimer.None;
+                                        structOutcome.PlayerRes = false;
                                     }
                                     else
                                     {

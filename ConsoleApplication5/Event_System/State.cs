@@ -120,9 +120,6 @@ namespace Next_Game.Event_System
                     Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2} \"{3}\" {4} from {5} to {6}", eventTxt, optionTxt, gameVar,
                         state, oldData > newData ? "decreased" : "increased", oldData, newData), 1, 0, MessageType.Event);
                     Game.world.SetMessage(message);
-                    //debug
-                    Console.WriteLine(string.Format("Event \"{0}\", Option \"{1}\", {2} \"{3}\" {4} from {5} to {6}", eventTxt, optionTxt, gameVar,
-                        state, oldData > newData ? "decreased" : "increased", oldData, newData));
                 }
             }
             else { Game.SetError(new Error(74, string.Format("Invalid input (data \"{0}\") for eventPID {1}", outType, eventTxt))); }

@@ -193,6 +193,7 @@ namespace Next_Game.Event_System
         {
             this.Amount = amount;
             this.Calc = apply;
+            this.PlayerRes = playerRes;
         }
 
     }
