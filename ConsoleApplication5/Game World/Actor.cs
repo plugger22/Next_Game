@@ -301,7 +301,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="amount"></param>
         /// <param name="calc">Can be Add / Subtract / Equals</param>
-        public void ChangeResources(int amount, EventCalc calc)
+        public string ChangeResources(int amount, EventCalc calc)
         {
             string messageText = "";
             switch (calc)
@@ -330,6 +330,7 @@ namespace Next_Game
             //keep within paramters
             Resources = Math.Min(5, Resources);
             Resources = Math.Max(1, Resources);
+            return messageText;
         }
     }
 

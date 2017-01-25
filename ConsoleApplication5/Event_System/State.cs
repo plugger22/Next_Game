@@ -32,8 +32,9 @@ namespace Next_Game.Event_System
         /// <param name="outType">GameVar enum index. If positive then DataState.Good, if negative then DataState.Bad</param>
         /// <param name="amount">how much</param>
         /// <param name="apply">how to apply it</param>
-        public void SetState(string eventTxt, string optionTxt, int outType, int amount, EventCalc apply)
+        public string SetState(string eventTxt, string optionTxt, int outType, int amount, EventCalc apply)
         {
+            string resultText = "";
             int amountNum = Math.Abs(amount); //must be positive 
             GameVar gameVar;
             bool stateChanged = false;
@@ -99,30 +100,15 @@ namespace Next_Game.Event_System
                 //update Change state if required
                 if (stateChanged == true)
                 {
-                    /*
-                    //specific for Director DataPoint variables (game states)
-                    if (gameVar <= GameVar.Honour_King)
-                    {
-                        //Note: Director GameVar enum needs to be in same numerical order and position as State DataPoint enum
-                        DataPoint dataPoint = (DataPoint)outType;
-                        if (state == DataState.Good)
-                        {
-                            //good increase
-                            Game.director.SetGameState(dataPoint, DataState.Change, 1);
-                        }
-                        else
-                        {
-                            //Bad increase
-                            Game.director.SetGameState(dataPoint, DataState.Change, -1);
-                        }
-                    }*/
                     //message
-                    Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2} \"{3}\" {4} from {5} to {6}", eventTxt, optionTxt, gameVar,
-                        state, oldData > newData ? "decreased" : "increased", oldData, newData), 1, 0, MessageType.Event);
+                    resultText = string.Format("Event \"{0}\", Option \"{1}\", {2} \"{3}\" {4} from {5} to {6}", eventTxt, optionTxt, gameVar,
+                        state, oldData > newData ? "decreased" : "increased", oldData, newData);
+                    Message message = new Message(resultText, 1, 0, MessageType.Event);
                     Game.world.SetMessage(message);
                 }
             }
             else { Game.SetError(new Error(74, string.Format("Invalid input (data \"{0}\") for eventPID {1}", outType, eventTxt))); }
+            return resultText;
         }
 
 

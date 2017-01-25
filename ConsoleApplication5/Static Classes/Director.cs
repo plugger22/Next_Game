@@ -1708,8 +1708,9 @@ namespace Next_Game
         {
             int validOption = 1;
             int actorID;
-            string status;
+            string status, outcomeText;
             List<Snippet> eventList = new List<Snippet>();
+            List<Snippet> resultList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
             RLColor backColor = Color._background1;
             //Get eVent
@@ -1757,19 +1758,27 @@ namespace Next_Game
                                 foreach (Outcome outcome in listOutcomes)
                                 {
                                     if (outcome is OutGame)
+                                    {
                                         //Change a Game state variable, eg. Honour, Visibility, etc.
-                                    { state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc); }
+                                        outcomeText = state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc);
+                                        if (String.IsNullOrEmpty(outcomeText) == false)
+                                        { resultList.Add(new Snippet(outcomeText)); }
+                                    }
                                     else if (outcome is OutEventTimer)
                                     {
                                         //Change an Event Timer
                                         OutEventTimer tempOutcome = outcome as OutEventTimer;
-                                        ChangePlayerEventTimer(tempOutcome);
+                                        outcomeText = ChangePlayerEventTimer(tempOutcome);
+                                        if (String.IsNullOrEmpty(outcomeText) == false)
+                                        { resultList.Add(new Snippet(outcomeText)); }
                                     }
                                     else if (outcome is OutEventStatus)
                                     {
                                         //change Event Status
                                         OutEventStatus tempOutcome = outcome as OutEventStatus;
-                                        ChangePlayerEventStatus(tempOutcome.Data, tempOutcome.NewStatus);
+                                        outcomeText = ChangePlayerEventStatus(tempOutcome.Data, tempOutcome.NewStatus);
+                                        if (String.IsNullOrEmpty(outcomeText) == false)
+                                        { resultList.Add(new Snippet(outcomeText)); }
                                     }
                                     else if (outcome is OutEventChain)
                                     {
@@ -1786,7 +1795,12 @@ namespace Next_Game
                                         if (tempOutcome.PlayerRes == false) { actorID = option.ActorID; }
                                         else { actorID = 1; }
                                         Actor person = Game.world.GetAnyActor(actorID);
-                                        if (person != null) { person.ChangeResources(tempOutcome.Amount, tempOutcome.Calc); }
+                                        if (person != null)
+                                        {
+                                            outcomeText = person.ChangeResources(tempOutcome.Amount, tempOutcome.Calc);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText)); }
+                                        }
                                     }
                                     else if (outcome is OutConflict)
                                     {
@@ -1852,6 +1866,12 @@ namespace Next_Game
                             eventList.Add(new Snippet(""));
                             eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                             eventList.Add(new Snippet(""));
+                            if (resultList.Count > 0)
+                            {
+                                eventList.AddRange(resultList);
+                                eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                                eventList.Add(new Snippet(""));
+                            }
                             eventList.Add(new Snippet("Press ENTER or ESC to ignore this event", RLColor.LightGray, backColor));
                             //housekeeping
                             Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
@@ -2286,8 +2306,9 @@ namespace Next_Game
         /// </summary>
         /// <param name="targetEventID"></param>
         /// <param name="newStatus"></param>
-        private void ChangePlayerEventStatus(int targetEventID, EventStatus newStatus)
+        private string ChangePlayerEventStatus(int targetEventID, EventStatus newStatus)
         {
+            string resultText = "";
             //get player event
             EventPlayer eventObject = GetPlayerEvent(targetEventID);
             if (eventObject != null)
@@ -2297,7 +2318,8 @@ namespace Next_Game
                     if (eventObject.Status != newStatus)
                     {
                         eventObject.Status = newStatus;
-                        Console.WriteLine("\"{0}\", eventPID {1}, has changed status to \"{2}\"", eventObject.Name, eventObject.EventPID, newStatus);
+                        resultText = string.Format("\"{0}\", eventPID {1}, has changed status to \"{2}\"", eventObject.Name, eventObject.EventPID, newStatus);
+                        Console.WriteLine(resultText);
                     }
                     else
                     { Game.SetError(new Error(78, string.Format("\"{0}\" identical to existing, eventID {1} status unchanged", newStatus, targetEventID))); }
@@ -2307,14 +2329,16 @@ namespace Next_Game
             }
             else
             { Game.SetError(new Error(78, string.Format("Target Event ID {0} not found, event status unchanged", targetEventID))); }
+            return resultText;
         }
 
         /// <summary>
         /// Change Player event Timer 
         /// </summary>
         /// <param name="outcome"></param>
-        private void ChangePlayerEventTimer(OutEventTimer outcome)
+        private string ChangePlayerEventTimer(OutEventTimer outcome)
         {
+            string resultText = "";
             if (outcome != null)
             {
                 try
@@ -2327,19 +2351,22 @@ namespace Next_Game
                             oldValue = eventObject.TimerRepeat;
                             newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
                             eventObject.TimerRepeat = newValue;
-                            Console.WriteLine("\"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
+                            resultText = string.Format("\"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
+                            Console.WriteLine(resultText);
                             break;
                         case EventTimer.Dormant:
                             oldValue = eventObject.TimerDormant;
                             newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
                             eventObject.TimerDormant = newValue;
-                            Console.WriteLine("\"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
+                            resultText = string.Format("\"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
+                            Console.WriteLine(resultText);
                             break;
                         case EventTimer.Live:
                             oldValue = eventObject.TimerLive;
                             newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
                             eventObject.TimerLive = newValue;
-                            Console.WriteLine("\"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
+                            resultText = string.Format("\"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
+                            Console.WriteLine(resultText);
                             break;
                         default:
                             Game.SetError(new Error(79, string.Format("Invalid Timer \"{0}\", EventID \"{1}\"", outcome.Timer, outcome.EventID)));
@@ -2351,6 +2378,7 @@ namespace Next_Game
             }
             else
             { Game.SetError(new Error(79, "Invalid Outcome argument (null)")); }
+            return resultText;
         }
 
 
