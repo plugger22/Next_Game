@@ -1658,6 +1658,9 @@ namespace Next_Game
                                         case "Live":
                                             structOutcome.Timer = EventTimer.Live;
                                             break;
+                                        case "Cool":
+                                            structOutcome.Timer = EventTimer.Cool;
+                                            break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Outcome timer, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;

@@ -2367,6 +2367,13 @@ namespace Next_Game
                             resultText = string.Format("\"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
                             Console.WriteLine(resultText);
                             break;
+                        case EventTimer.Cool:
+                            oldValue = eventObject.TimerCoolBase;
+                            newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
+                            eventObject.TimerCoolBase = newValue;
+                            resultText = string.Format("\"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
+                            Console.WriteLine(resultText);
+                            break;
                         default:
                             Game.SetError(new Error(79, string.Format("Invalid Timer \"{0}\", EventID \"{1}\"", outcome.Timer, outcome.EventID)));
                             break;

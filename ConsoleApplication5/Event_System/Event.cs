@@ -10,7 +10,7 @@ namespace Next_Game.Event_System
     public enum EventCategory { None, Generic, Special, AutoLoc, AutoReact } //specials are used by archetypes, generics apply to all, AutoLoc (eg. do what?), AutoReact (eg. 'Angry Lord')
     public enum EventStatus { None, Active, Live, Dormant, Dead} //sequential event states from dead to activated
     public enum EventCalc { None, Add, Subtract, Random, Equals, NotEqual, GreaterThanOrEqual, LessThanOrEqual, Count} //used within events for triggers (>, <, =, !=) and outcomes (+, -, Rnd)
-    public enum EventTimer { None, Repeat, Dormant, Live } //used for EventTimer outcomes to specify a timer
+    public enum EventTimer { None, Repeat, Dormant, Live, Cool } //used for EventTimer outcomes to specify a timer -> Cool is Cooldown timer
     public enum EventType { None, Location, Travelling }
     public enum EventFilter { None, Locals, Visitors, Followers, Advisors, Interact} //used by auto location player events to determine which group of actors to show as options
 
