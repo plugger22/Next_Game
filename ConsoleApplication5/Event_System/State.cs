@@ -101,8 +101,8 @@ namespace Next_Game.Event_System
                 if (stateChanged == true)
                 {
                     //message
-                    resultText = string.Format("\"{0}\" {1} from {2} to {3}", state, oldData > newData ? "decreased" : "increased", oldData, newData);
-                    Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2} {3}", eventTxt, optionTxt, gameVar, resultText), 1, 0, MessageType.Event);
+                    resultText = string.Format("{0} \"{1}\" {2} from {3} to {4}", gameVar, state, oldData > newData ? "decreased" : "increased", oldData, newData);
+                    Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2} ", eventTxt, optionTxt, resultText), 1, 0, MessageType.Event);
                     Game.world.SetMessage(message);
                 }
             }

@@ -1726,7 +1726,6 @@ namespace Next_Game
                     {
                         OptionInteractive option = listOptions[optionNum - 1];
                         Active actor = Game.world.GetActiveActor(1);
-                        
                         //Active option?
                         if (option.Active == true)
                         {
@@ -1862,7 +1861,7 @@ namespace Next_Game
                             eventList.Add(new Snippet(""));
                             eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                             eventList.Add(new Snippet(""));
-                            eventList.Add(new Snippet(string.Format("{0}", optionReply), foreColor, backColor));
+                            eventList.Add(new Snippet(string.Format("{0}", optionReply), RLColor.LightBlue, backColor));
                             eventList.Add(new Snippet(""));
                             eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                             eventList.Add(new Snippet(""));
