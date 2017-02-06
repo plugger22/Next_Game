@@ -58,12 +58,13 @@ namespace Next_Game
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public int[] arrayOfSkillInfluences { get; set; } //effects due to person influencing (default 0)
-        //secrets & events
+        //lists
         private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
         private List<Relation> listRelOther; //list of relation messages relating to all actors other than the Player
         private List<Relation> listRelPlyr; //list of relation messages relating to the Player
+        private List<Condition> listConditions; //list of all active conditions affecting the Player
 
 
         //default constructor 
@@ -86,6 +87,7 @@ namespace Next_Game
             listOfPlayerEvents = new List<int>();
             listRelOther = new List<Relation>();
             listRelPlyr = new List<Relation>();
+            listConditions = new List<Condition>();
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
@@ -114,6 +116,7 @@ namespace Next_Game
             listOfPlayerEvents = new List<int>();
             listRelOther = new List<Relation>();
             listRelPlyr = new List<Relation>();
+            listConditions = new List<Condition>();
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }

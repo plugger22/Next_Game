@@ -74,6 +74,7 @@
     <Compile Include="Event_System\Challenge.cs" />
     <Compile Include="Event_System\Result.cs" />
     <Compile Include="Event_System\Situation.cs" />
+    <Compile Include="Game World\Condition.cs" />
     <Compile Include="Static Classes\Conflict.cs" />
     <Compile Include="Event_System\Trigger.cs" />
     <Compile Include="Event_System\State.cs" />
