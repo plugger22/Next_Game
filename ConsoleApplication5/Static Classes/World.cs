@@ -2230,7 +2230,7 @@ namespace Next_Game
             Game.map.UpdatePlayers(MoveActors());
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();
-            UpdateActiveActors();
+            UpdateActors();
             Game.gameTurn++;
         }
 
@@ -2410,19 +2410,25 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// end of turn housekeeping
+        /// handles end of turn housekeeping for all actor types
         /// </summary>
-        private void UpdateActiveActors()
+        private void UpdateActors()
         {
-            foreach(var actor in dictActiveActors)
+            foreach(var actor in dictAllActors)
             {
-                //Decrement delays
-                if (actor.Value.Delay > 0)
+                //Active actors -> decrement any delays
+                if (actor is Active)
                 {
-                    actor.Value.Delay--;
-                    if (actor.Value.Delay == 0)
-                    { actor.Value.DelayReason = null; }
+                    if (actor.Value.Delay > 0)
+                    {
+                        actor.Value.Delay--;
+                        if (actor.Value.Delay == 0)
+                        { actor.Value.DelayReason = null; }
+                    }
                 }
+                //All actors -> decrement any Condition timers
+                if (actor.Value.CheckConditions() == true)
+                { actor.Value.CheckConditionTimers(); }
             }
         }
 

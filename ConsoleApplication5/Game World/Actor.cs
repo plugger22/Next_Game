@@ -332,6 +332,22 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// polls all conditions, decrements any timers (< 999) and removes condition if timer reaches 0
+        /// </summary>
+        internal void CheckConditionTimers()
+        {
+            foreach(var condition in listConditions)
+            {
+                if (condition.Timer > 0 && condition.Timer < 999)
+                {
+                    condition.Timer--;
+                    Console.WriteLine("{0} {1} condition timer reduced from {2} to {3} (\"{4}\")", Title, Name, condition.Timer + 1, condition.Timer, condition.Text);
+                }
+            }
+
+        }
+
+        /// <summary>
         /// Adjust Actor's Resource value up or down
         /// </summary>
         /// <param name="amount"></param>
