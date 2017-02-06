@@ -601,10 +601,13 @@ namespace Next_Game
                     List<Condition> tempConditions = person.GetConditions();
                     listToDisplay.Add(new Snippet("Conditions", RLColor.Brown, RLColor.Black));
                     string tempCondition;
+                    RLColor tempColor = RLColor.White;
                     foreach(Condition condition in tempConditions)
                     {
-                        tempCondition = string.Format("\"{0}\" {1} {2}{3} ({4} turns)", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", condition.Effect, condition.Timer);
-                        listToDisplay.Add(new Snippet(tempCondition));
+                        tempCondition = string.Format("\"{0}\", {1} {2}{3}, ({4} turns)", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", condition.Effect, condition.Timer);
+                        if (condition.Effect > 0) { tempColor = Color._goodTrait; }
+                        else { tempColor = Color._badTrait; }
+                        listToDisplay.Add(new Snippet(tempCondition, tempColor, RLColor.Black));
                     }
                 }
                 //crow explanation for loyal followers

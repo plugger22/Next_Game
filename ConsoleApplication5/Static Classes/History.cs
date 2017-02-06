@@ -478,7 +478,7 @@ namespace Next_Game
             }
 
             //DEBUG -> add a test Condition to actor
-            SkillType testSkill = (SkillType)rnd.Next(0, 6);
+            SkillType testSkill = (SkillType)rnd.Next(1, 7);
             int testEffect = rnd.Next(1, 3);
             if (rnd.Next(100) < 50) { testEffect *= -1; }
             string[] testArray = new string[10] { "Drugged", "Wounded", "Sick", "Disease", "Love Struck", "Magical Potion", "Stimulated", "Bored", "Emotional", "Blessed" };

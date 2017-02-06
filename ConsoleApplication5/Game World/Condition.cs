@@ -29,8 +29,8 @@ namespace Next_Game
             { this.Skill = skill; }
             else { Game.SetError(new Error(128, "Invalid Skill input (SkillType None)")); Skill = SkillType.None; }
             if (effect != 0 && Math.Abs(effect) < 3)
-            { this.Effect = effect; Effect = 0; }
-            else { Game.SetError(new Error(128, "Invalid Effect input (value zero or > 2)")); }
+            { this.Effect = effect; }
+            else { Game.SetError(new Error(128, "Invalid Effect input (value zero or > 2)")); Effect = 0; }
             if (String.IsNullOrEmpty(text) == false)
             { this.Text = text; }
             else { Game.SetError(new Error(128, "Invalid Text input (Null or Empty string)")); Text = "Unknown"; }
