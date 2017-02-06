@@ -600,14 +600,16 @@ namespace Next_Game
                 {
                     List<Condition> tempConditions = person.GetConditions();
                     listToDisplay.Add(new Snippet("Conditions", RLColor.Brown, RLColor.Black));
-                    string tempCondition;
+                    string tempCondition_0, tempCondition_1;
                     RLColor tempColor = RLColor.White;
                     foreach(Condition condition in tempConditions)
                     {
-                        tempCondition = string.Format("\"{0}\", {1} {2}{3}, ({4} turns)", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", condition.Effect, condition.Timer);
+                        tempCondition_0 = string.Format("\"{0}\", {1} day{2} left)", condition.Text, condition.Timer, condition.Timer == 0 ? "" : "s");
+                        tempCondition_1 = string.Format("{0} {1}{2}", condition.Skill, condition.Effect > 0 ? "+" : "", condition.Effect);
                         if (condition.Effect > 0) { tempColor = Color._goodTrait; }
                         else { tempColor = Color._badTrait; }
-                        listToDisplay.Add(new Snippet(tempCondition, tempColor, RLColor.Black));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -28}",tempCondition_0), false));
+                        listToDisplay.Add(new Snippet(string.Format("{0}", tempCondition_1), tempColor, RLColor.Black));
                     }
                 }
                 //crow explanation for loyal followers
