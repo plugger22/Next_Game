@@ -476,6 +476,17 @@ namespace Next_Game
                 noble.GenID = 1;
                 noble.WifeNumber = wifeStatus;
             }
+
+            //DEBUG -> add a test Condition to actor
+            SkillType testSkill = (SkillType)rnd.Next(0, 6);
+            int testEffect = rnd.Next(1, 3);
+            if (rnd.Next(100) < 50) { testEffect *= -1; }
+            string[] testArray = new string[10] { "Drugged", "Wounded", "Sick", "Disease", "Love Struck", "Magical Potion", "Stimulated", "Bored", "Emotional", "Blessed" };
+            string testText = testArray[rnd.Next(10)];
+            int testTimer = rnd.Next(1, 20);
+            if (rnd.Next(100) < 20) { testTimer = 999; }
+            actor.AddCondition(new Condition(testSkill, testEffect, testText, testTimer));
+
             //add to Location
             Location loc = Game.network.GetLocation(locID);
             loc.AddActor(actor.ActID);

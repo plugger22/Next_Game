@@ -285,6 +285,10 @@ namespace Next_Game
             return rel;
         }
 
+        /// <summary>
+        /// Secrets
+        /// </summary>
+        /// <param name="possID"></param>
         public void AddSecret(int possID)
         {
             if (possID > 0)
@@ -298,6 +302,24 @@ namespace Next_Game
 
         public void SetSecrets(List<int> secrets)
         { if (secrets != null) { listOfSecrets.Clear(); listOfSecrets.AddRange(secrets); } }
+
+        /// <summary>
+        /// Conditions
+        /// </summary>
+        /// <param name="condition"></param>
+        internal void AddCondition(Condition condition)
+        {
+            if (condition != null)
+            {
+                if (condition.Skill != SkillType.None)
+                { listConditions.Add(condition); }
+                else { Game.SetError(new Error(129, "Invalid Condition Input (Skill is SkillType.None)")); }
+            }
+            else { Game.SetError(new Error(129, "Invalid Condition Input (null)")); }
+        }
+
+       internal List<Condition> GetConditions()
+        { return listConditions; }
 
         /// <summary>
         /// Adjust Actor's Resource value up or down
