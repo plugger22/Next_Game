@@ -599,13 +599,15 @@ namespace Next_Game
                 if (person.CheckConditions() == true)
                 {
                     List<Condition> tempConditions = person.GetConditions();
-                    listToDisplay.Add(new Snippet("Conditions", RLColor.Brown, RLColor.Black));
+                    listToDisplay.Add(new Snippet("Conditions (additional Skill modifiers)", RLColor.Brown, RLColor.Black));
                     string tempCondition_0, tempCondition_1;
                     RLColor tempColor = RLColor.White;
                     foreach(Condition condition in tempConditions)
                     {
-                        tempCondition_0 = string.Format("\"{0}\", {1} day{2} left)", condition.Text, condition.Timer, condition.Timer == 0 ? "" : "s");
-                        tempCondition_1 = string.Format("{0} {1}{2}", condition.Skill, condition.Effect > 0 ? "+" : "", condition.Effect);
+                        if (condition.Timer != 999)
+                        { tempCondition_0 = string.Format("\"{0}\", {1} day{2}", condition.Text, condition.Timer, condition.Timer == 0 ? "" : "s"); }
+                        else { tempCondition_0 = string.Format("\"{0}\"", condition.Text); }
+                        tempCondition_1 = string.Format("{0} ({1}{2})", condition.Skill, condition.Effect > 0 ? "+" : "", condition.Effect);
                         if (condition.Effect > 0) { tempColor = Color._goodTrait; }
                         else { tempColor = Color._badTrait; }
                         listToDisplay.Add(new Snippet(string.Format("{0, -28}",tempCondition_0), false));
