@@ -595,7 +595,18 @@ namespace Next_Game
                         }
                     }
                 }
-
+                //Conditions
+                if (person.CheckConditions() == true)
+                {
+                    List<Condition> tempConditions = person.GetConditions();
+                    listToDisplay.Add(new Snippet("Conditions", RLColor.Brown, RLColor.Black));
+                    string tempCondition;
+                    foreach(Condition condition in tempConditions)
+                    {
+                        tempCondition = string.Format("\"{0}\" {1} {2}{3} ({4} turns)", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", condition.Effect, condition.Timer);
+                        listToDisplay.Add(new Snippet(tempCondition));
+                    }
+                }
                 //crow explanation for loyal followers
                 if (person is Follower)
                 {

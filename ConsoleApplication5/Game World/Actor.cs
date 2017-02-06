@@ -322,6 +322,16 @@ namespace Next_Game
         { return listConditions; }
 
         /// <summary>
+        /// returns true if conditions present, false otherwise
+        /// </summary>
+        /// <returns></returns>
+        internal bool CheckConditions()
+        {
+            if (listConditions.Count > 0) { return true; }
+            return false;
+        }
+
+        /// <summary>
         /// Adjust Actor's Resource value up or down
         /// </summary>
         /// <param name="amount"></param>
