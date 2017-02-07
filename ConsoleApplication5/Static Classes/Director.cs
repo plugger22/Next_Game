@@ -1793,6 +1793,20 @@ namespace Next_Game
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                         }
                                     }
+                                    else if (outcome is OutCondition)
+                                    {
+                                        //apply a condition to the Player or an NPC actor
+                                        OutCondition tempOutcome = outcome as OutCondition;
+                                        if (tempOutcome.PlayerCondition == false) { actorID = option.ActorID; }
+                                        else { actorID = 1; }
+                                        Actor person = Game.world.GetAnyActor(actorID);
+                                        if (person != null)
+                                        {
+                                            outcomeText = person.AddCondition(tempOutcome.NewCondition);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                        }
+                                    }
                                     else if (outcome is OutEventChain)
                                     {
                                         //chain events -> used by CreateAuto Loc Events

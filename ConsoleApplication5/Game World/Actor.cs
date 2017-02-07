@@ -313,8 +313,10 @@ namespace Next_Game
         /// Conditions
         /// </summary>
         /// <param name="condition"></param>
-        internal void AddCondition(Condition condition)
+        /// <returns>text for snippet, empty string if condition failed</returns>
+        internal string AddCondition(Condition condition)
         {
+            string returnText = "";
             if (condition != null)
             {
                 if (condition.Skill != SkillType.None)
@@ -330,10 +332,12 @@ namespace Next_Game
                         condition.Effect, timerText);
                     Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
                     Game.world.SetRecord(record);
+                    returnText = conditionText;
                 }
                 else { Game.SetError(new Error(129, "Invalid Condition Input (Skill is SkillType.None)")); }
             }
             else { Game.SetError(new Error(129, "Invalid Condition Input (null)")); }
+            return returnText;
         }
 
        internal List<Condition> GetConditions()

@@ -21,7 +21,6 @@ namespace Next_Game.Event_System
         public EventCalc Calc { get; set; }
         
 
-
         public Outcome(int eventID)
         {
             OutcomeID = outcomeIndex++;
@@ -195,6 +194,28 @@ namespace Next_Game.Event_System
             this.Calc = apply;
             this.PlayerRes = playerRes;
         }
-
     }
+
+    /// <summary>
+    /// Applies a condition to an actor
+    /// </summary>
+    class OutCondition : Outcome
+    {
+        public bool PlayerCondition { get; set; } //if true condition applies to Player, otherwise opponent
+        public Condition NewCondition { get; set; }
+
+        public OutCondition(int eventID, bool playerCondition, Condition condition) : base(eventID)
+        {
+            this.PlayerCondition = playerCondition;
+            if (condition != null)
+            {
+                NewCondition.Text = condition.Text;
+                NewCondition.Skill = condition.Skill;
+                NewCondition.Effect = condition.Effect;
+                NewCondition.Timer = condition.Timer;
+            }
+            else { Game.SetError(new Error(130, "Invalid Condition input (null)")); }
+        }
+    }
+
 }
