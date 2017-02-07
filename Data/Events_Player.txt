@@ -28,7 +28,7 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource, Condition)
 
 # [outcome] -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -50,6 +50,8 @@
 # plyrRes: Yes / No (if yes it's Player's resource level that is affected, otherwise opponents)
 # amount: how much change (keep in mind Resources are restrained within a range of 1 to 5 but this is automatically enforced by Actor.cs)
 # apply: only Add/Subtract/Equal are valid options here
+
+# [outcome] -> Condition
 
 # [outcome] -> Conflict
 # data: OpponentID

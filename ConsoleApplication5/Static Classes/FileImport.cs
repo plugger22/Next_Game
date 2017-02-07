@@ -116,6 +116,8 @@ namespace Next_Game
         public ConflictSocial Social_Type { get; set; }
         public ConflictStealth Stealth_Type { get; set; }
         public ConflictSubType SubType { get; set; } //descriptive purposes only
+        //Condition Outcomes
+        //public bool PlayerCondition { get; set; } //true if condition applies to Player, otherwise other actor
 
         /// <summary>
         /// copy constructor
