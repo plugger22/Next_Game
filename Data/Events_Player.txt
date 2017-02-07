@@ -184,6 +184,13 @@ apply: Random
 effect: EventStatus
 data: 5
 newStatus: Live
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Shock
+conSkill: Wits
+conEffect: -1
+conTimer: 4
 [End]
 
 Name: Mysterious Stranger
@@ -225,6 +232,13 @@ effect: Game
 data: -3
 amount: 2
 apply: Add
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Blessed
+conSkill: Charm
+conEffect: 2
+conTimer: 10
 [End]
 
 Name: Naked Woman

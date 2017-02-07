@@ -1852,7 +1852,7 @@ namespace Next_Game
                                     try
                                     {
                                         dataInt = Convert.ToInt32(cleanToken);
-                                        if (dataInt > 0 && dataInt < 1000) { structOutcome.ConditionEffect = dataInt; }
+                                        if (dataInt > 0 && dataInt < 1000) { structOutcome.ConditionTimer = dataInt; }
                                         else
                                         {
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Outcome conTimer, (Value outside acceptable range) \"{0}\"", arrayOfEvents[i])));
