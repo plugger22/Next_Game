@@ -1800,9 +1800,41 @@ namespace Next_Game
                                     break;
                                 case "conText":
                                     //Condition outcomes - name of condition, eg. "Old Age"
+                                    structOutcome.ConditionText = cleanToken;
                                     break;
                                 case "conSkill":
                                     //Condition outcomes - type of skill affected
+                                    switch (cleanToken)
+                                    {
+                                        case "Combat":
+                                        case "combat":
+                                            structOutcome.ConditionSkill = SkillType.Combat;
+                                            break;
+                                        case "Wits":
+                                        case "wits":
+                                            structOutcome.ConditionSkill = SkillType.Wits;
+                                            break;
+                                        case "Charm":
+                                        case "charm":
+                                            structOutcome.ConditionSkill = SkillType.Charm;
+                                            break;
+                                        case "Treachery":
+                                        case "treachery":
+                                            structOutcome.ConditionSkill = SkillType.Treachery;
+                                            break;
+                                        case "Leadership":
+                                        case "leadership":
+                                            structOutcome.ConditionSkill = SkillType.Leadership;
+                                            break;
+                                        case "Touched":
+                                        case "touched":
+                                            structOutcome.ConditionSkill = SkillType.Touched;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, conSkill, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+                                    }
                                     break;
                                 case "conEffect":
                                     //Condition outcomes - effect of condition on skill
@@ -2091,6 +2123,17 @@ namespace Next_Game
                                                                         validData = false;
                                                                     }
                                                                     break;
+                                                                case "Condition":
+                                                                    if (outTemp.ConditionSkill > SkillType.None && outTemp.ConditionEffect != 0 && String.IsNullOrEmpty(outTemp.ConditionText) == false
+                                                                        && outTemp.ConditionTimer > 0)
+                                                                    { outObject = new OutCondition(structEvent.EventID, outTemp.PlayerCondition, 
+                                                                        new Condition(outTemp.ConditionSkill, outTemp.ConditionEffect, outTemp.ConditionText, outTemp.ConditionTimer)); }
+                                                                    else
+                                                                    {
+                                                                        Game.SetError(new Error(49, "Invalid Input, Outcome Condition variables (default data exists)"));
+                                                                        validData = false;
+                                                                    }
+                                                                    break;
                                                                 case "None":
                                                                     outObject = new OutNone(structEvent.EventID);
                                                                     break;
@@ -2197,6 +2240,12 @@ namespace Next_Game
                             {
                                 OutResource tempOutcome = outcomeObject as OutResource;
                                 Console.WriteLine("    {0} -> Player? {1}, amount {2}, apply {3}", cleanTag, tempOutcome.PlayerRes, tempOutcome.Amount, tempOutcome.Calc);
+                            }
+                            else if (outcomeObject is OutCondition)
+                            {
+                                OutCondition tempOutcome = outcomeObject as OutCondition;
+                                Console.WriteLine("    {0} -> Player? {1}, Condition \"{2}\", {3} {4}, Timer {5}", cleanTag, tempOutcome.PlayerCondition, tempOutcome.NewCondition.Text, 
+                                    tempOutcome.NewCondition.Skill, tempOutcome.NewCondition.Effect, tempOutcome.NewCondition.Timer);
                             }
                             else
                             { Console.WriteLine("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc); }
