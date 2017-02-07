@@ -240,9 +240,12 @@ namespace Next_Game
         /// <returns></returns>
         public int GetSkill(SkillType skill, SkillAge age = SkillAge.Fifteen, bool influenceEffect = false)
         {
-            int skillValue = 3 + arrayOfTraitEffects[(int)age, (int)skill];;
+            int skillValue = 3 + arrayOfTraitEffects[(int)age, (int)skill] + arrayOfConditions[(int)skill];
             if (influenceEffect == true)
             { skillValue += arrayOfSkillInfluences[(int)skill]; }
+            //parameter check (1 to 5)
+            skillValue = Math.Min(5, skillValue);
+            skillValue = Math.Max(1, skillValue);
             return skillValue;
         }
 
