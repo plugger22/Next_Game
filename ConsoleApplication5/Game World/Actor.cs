@@ -319,8 +319,8 @@ namespace Next_Game
                     listConditions.Add(condition);
                     //add to array
                     arrayOfConditions[(int)condition.Skill] += condition.Effect;
-                    Console.WriteLine("SYSTEM: {0} {1} arrayOfConditions[{2}] was {3} now {4}", Title, Name, condition.Skill, arrayOfConditions[(int)condition.Skill] + condition.Effect,
-                            arrayOfConditions[(int)condition.Skill]);
+                    Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{3}] was {4} now {5}", Title, Name, ActID, 
+                        condition.Skill, arrayOfConditions[(int)condition.Skill] + condition.Effect, arrayOfConditions[(int)condition.Skill]);
                     //record event
                     string timerText = string.Format("{0}", condition.Timer == 999 ? "permanent effect" : string.Format("lasts for {0} days", condition.Timer));
                     string conditionText = string.Format("\"{0}\" condition acquired, {1} {2}{3}, {4}", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", 
@@ -359,7 +359,7 @@ namespace Next_Game
                 if (condition.Timer > 0 && condition.Timer < 999)
                 {
                     condition.Timer--;
-                    Console.WriteLine("{0} {1} condition timer reduced from {2} to {3} (\"{4}\")", Title, Name, condition.Timer + 1, condition.Timer, condition.Text);
+                    Console.WriteLine("{0} {1}, ID {2}, condition timer reduced from {3} to {4} (\"{5}\")", Title, Name, ActID, condition.Timer + 1, condition.Timer, condition.Text);
                     //timer = 0, remove condition
                     if (condition.Timer == 0)
                     {
@@ -370,8 +370,8 @@ namespace Next_Game
                         Game.world.SetRecord(record);
                         //update array
                         arrayOfConditions[(int)condition.Skill] -= condition.Effect;
-                        Console.WriteLine("SYSTEM: {0} {1} arrayOfConditions[{2}] was {3} now {4}", Title, Name, condition.Skill, arrayOfConditions[(int)condition.Skill] + condition.Effect,
-                            arrayOfConditions[(int)condition.Skill]);
+                        Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{2}] was {3} now {4}", Title, Name, ActID, condition.Skill, 
+                            arrayOfConditions[(int)condition.Skill] + condition.Effect, arrayOfConditions[(int)condition.Skill]);
                         //remove condition
                         listConditions.RemoveAt(i);
                     }
