@@ -943,7 +943,7 @@ namespace Next_Game
             //ignore if no trait present (skill level = 3)
             if (numCards != 0)
             {
-                string traitText = actor.GetTrait(skill);
+                string traitText = actor.GetTraitName(skill);
                 if (numCards > 0)
                 {
                     //positive trait

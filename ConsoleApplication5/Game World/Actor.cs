@@ -58,6 +58,7 @@ namespace Next_Game
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public int[] arrayOfSkillInfluences { get; set; } //effects due to person influencing (default 0)
+        public int[] arrayOfConditions { get; set; } //net effect of any conditions
         //lists
         private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
         private List<int> listOfFollowerEvents;
@@ -82,6 +83,7 @@ namespace Next_Game
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
             arrayOfSkillInfluences = new int[(int)SkillType.Count];
+            arrayOfConditions = new int[(int)SkillType.Count];
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
@@ -111,6 +113,7 @@ namespace Next_Game
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
             arrayOfSkillInfluences = new int[(int)SkillType.Count];
+            arrayOfConditions = new int[(int)SkillType.Count];
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
@@ -269,7 +272,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="skill"></param>
         /// <returns></returns>
-        public string GetTrait(SkillType skill)
+        public string GetTraitName(SkillType skill)
         { return arrayOfTraitNames[(int)skill]; }
 
         /// <summary>
@@ -314,6 +317,10 @@ namespace Next_Game
                 if (condition.Skill != SkillType.None)
                 {
                     listConditions.Add(condition);
+                    //add to array
+                    arrayOfConditions[(int)condition.Skill] += condition.Effect;
+                    Console.WriteLine("{0} {1} arrayOfConditions[{2}] was {3} now {4}", Title, Name, condition.Skill, arrayOfConditions[(int)condition.Skill] + condition.Effect,
+                            arrayOfConditions[(int)condition.Skill]);
                     //record event
                     string timerText = string.Format("{0}", condition.Timer == 999 ? "permanent effect" : string.Format("lasts for {0} days", condition.Timer));
                     string conditionText = string.Format("\"{0}\" condition acquired, {1} {2}{3}, {4}", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", 
@@ -361,6 +368,10 @@ namespace Next_Game
                             condition.Effect > 0 ? "+" : "", condition.Effect);
                         Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
                         Game.world.SetRecord(record);
+                        //update array
+                        arrayOfConditions[(int)condition.Skill] -= condition.Effect;
+                        Console.WriteLine("{0} {1} arrayOfConditions[{2}] was {3} now {4}", Title, Name, condition.Skill, arrayOfConditions[(int)condition.Skill] + condition.Effect,
+                            arrayOfConditions[(int)condition.Skill]);
                         //remove condition
                         listConditions.RemoveAt(i);
                     }

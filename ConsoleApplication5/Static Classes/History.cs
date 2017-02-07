@@ -483,7 +483,7 @@ namespace Next_Game
             if (rnd.Next(100) < 50) { testEffect *= -1; }
             string[] testArray = new string[10] { "Drugged", "Wounded", "Sick", "Disease", "Love Struck", "Magical Potion", "Stimulated", "Bored", "Emotional", "Blessed" };
             string testText = testArray[rnd.Next(10)];
-            int testTimer = rnd.Next(1, 20);
+            int testTimer = rnd.Next(1, 6);
             if (rnd.Next(100) < 20) { testTimer = 999; }
             actor.AddCondition(new Condition(testSkill, testEffect, testText, testTimer));
 

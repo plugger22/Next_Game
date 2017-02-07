@@ -127,6 +127,8 @@ namespace Next_Game
                 { listOfHouses.Add(refID); }
                 if (histActorIncident > 0)
                 { listOfActorIncidents.Add(histActorIncident); }
+                //debug
+                Console.WriteLine("ACTOR RECORD: {0}", description);
             }
             else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
@@ -162,6 +164,8 @@ namespace Next_Game
                 { listOfHouses.Add(refID); }
                 if (histHouseIncident > 0)
                 { listOfHouseIncidents.Add(histHouseIncident); }
+                //debug
+                Console.WriteLine("HOUSE RECORD: {0}", description);
             }
             else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
@@ -198,6 +202,8 @@ namespace Next_Game
                 { listOfHouses.Add(refID); }
                 if (histKingdomIncident > 0)
                 { listOfKingdomIncidents.Add(histKingdomIncident); }
+                //debug
+                Console.WriteLine("KINGDOM RECORD: {0}", description);
             }
             else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
