@@ -202,17 +202,18 @@ namespace Next_Game.Event_System
     class OutCondition : Outcome
     {
         public bool PlayerCondition { get; set; } //if true condition applies to Player, otherwise opponent
-        public Condition NewCondition { get; set; }
+        public Condition NewCondition;
 
         public OutCondition(int eventID, bool playerCondition, Condition condition) : base(eventID)
         {
             this.PlayerCondition = playerCondition;
             if (condition != null)
             {
-                NewCondition.Text = condition.Text;
+                NewCondition = new Condition(condition.Skill, condition.Effect, condition.Text, condition.Timer);
+                /*NewCondition.Text = condition.Text;
                 NewCondition.Skill = condition.Skill;
                 NewCondition.Effect = condition.Effect;
-                NewCondition.Timer = condition.Timer;
+                NewCondition.Timer = condition.Timer;*/
             }
             else { Game.SetError(new Error(130, "Invalid Condition input (null)")); }
         }

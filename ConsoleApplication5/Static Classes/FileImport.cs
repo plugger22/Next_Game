@@ -2126,8 +2126,9 @@ namespace Next_Game
                                                                 case "Condition":
                                                                     if (outTemp.ConditionSkill > SkillType.None && outTemp.ConditionEffect != 0 && String.IsNullOrEmpty(outTemp.ConditionText) == false
                                                                         && outTemp.ConditionTimer > 0)
-                                                                    { outObject = new OutCondition(structEvent.EventID, outTemp.PlayerCondition, 
-                                                                        new Condition(outTemp.ConditionSkill, outTemp.ConditionEffect, outTemp.ConditionText, outTemp.ConditionTimer)); }
+                                                                    {
+                                                                        Condition condition = new Condition(outTemp.ConditionSkill, outTemp.ConditionEffect, outTemp.ConditionText, outTemp.ConditionTimer);
+                                                                        outObject = new OutCondition(structEvent.EventID, outTemp.PlayerCondition, condition); }
                                                                     else
                                                                     {
                                                                         Game.SetError(new Error(49, "Invalid Input, Outcome Condition variables (default data exists)"));
