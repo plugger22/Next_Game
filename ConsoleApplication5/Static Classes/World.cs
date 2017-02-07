@@ -2428,7 +2428,7 @@ namespace Next_Game
                 }
                 //All actors -> decrement any Condition timers
                 if (actor.Value.CheckConditions() == true)
-                { actor.Value.CheckConditionTimers(); }
+                { actor.Value.UpdateConditionTimers(); }
             }
         }
 

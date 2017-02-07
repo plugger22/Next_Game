@@ -312,7 +312,12 @@ namespace Next_Game
             if (condition != null)
             {
                 if (condition.Skill != SkillType.None)
-                { listConditions.Add(condition); }
+                {
+                    listConditions.Add(condition);
+                    //record event
+                    Record record = new Record(condition.Text + " condition acquired", ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
+                    Game.world.SetRecord(record);
+                }
                 else { Game.SetError(new Error(129, "Invalid Condition Input (Skill is SkillType.None)")); }
             }
             else { Game.SetError(new Error(129, "Invalid Condition Input (null)")); }
@@ -334,14 +339,27 @@ namespace Next_Game
         /// <summary>
         /// polls all conditions, decrements any timers (< 999) and removes condition if timer reaches 0
         /// </summary>
-        internal void CheckConditionTimers()
+        internal void UpdateConditionTimers()
         {
-            foreach(var condition in listConditions)
+            //foreach(var condition in listConditions)
+            //reverse loop through listConditions (may have to delete some conditions if timer = 0)
+            for (int i = listConditions.Count - 1; i >= 0; i--)
             {
+                Condition condition = listConditions[i];
                 if (condition.Timer > 0 && condition.Timer < 999)
                 {
                     condition.Timer--;
                     Console.WriteLine("{0} {1} condition timer reduced from {2} to {3} (\"{4}\")", Title, Name, condition.Timer + 1, condition.Timer, condition.Text);
+                    //timer = 0, remove condition
+                    if (condition.Timer == 0)
+                    {
+                        //record event
+                        Record record = new Record(condition.Text + " condition removed", ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
+                        Game.world.SetRecord(record);
+                        //remove condition
+                        listConditions.RemoveAt(i);
+                    }
+
                 }
             }
 

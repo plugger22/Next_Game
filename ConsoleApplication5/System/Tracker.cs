@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     //categories (can choose multiple) -> Used for Records
-    public enum HistActorIncident { None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service } //conflict -> actor involved in a battle/siege
+    public enum HistActorIncident { None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service, Condition } 
+        //conflict -> actor involved in a battle/siege
     public enum HistHouseIncident { None, Allegiance, Ownership }
     public enum HistKingdomIncident { None, Battle, Siege }
 
@@ -63,8 +64,6 @@ namespace Next_Game
             if (refID > 0)
             { listOfHouses.Add(refID); }
         }
-
-
 
         public void AddItem(int itemID)
         {
