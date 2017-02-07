@@ -315,7 +315,10 @@ namespace Next_Game
                 {
                     listConditions.Add(condition);
                     //record event
-                    Record record = new Record(condition.Text + " condition acquired", ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
+                    string timerText = string.Format("{0}", condition.Timer == 999 ? "permanent effect" : string.Format("lasts for {0} days", condition.Timer));
+                    string conditionText = string.Format("\"{0}\" condition acquired, {1} {2}{3}, {4}", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", 
+                        condition.Effect, timerText);
+                    Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
                     Game.world.SetRecord(record);
                 }
                 else { Game.SetError(new Error(129, "Invalid Condition Input (Skill is SkillType.None)")); }
@@ -354,7 +357,9 @@ namespace Next_Game
                     if (condition.Timer == 0)
                     {
                         //record event
-                        Record record = new Record(condition.Text + " condition removed", ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
+                        string conditionText = string.Format("\"{0}\", {1} {2}{3}, condition removed ", condition.Text, condition.Skill, 
+                            condition.Effect > 0 ? "+" : "", condition.Effect);
+                        Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
                         Game.world.SetRecord(record);
                         //remove condition
                         listConditions.RemoveAt(i);
