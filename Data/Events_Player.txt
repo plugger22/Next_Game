@@ -52,6 +52,11 @@
 # apply: only Add/Subtract/Equal are valid options here
 
 # [outcome] -> Condition
+# conPlyr: true (condition applies to Player) / false (condition applies to NPC actor
+# conText: Name of condition, eg. "Old Age"
+# conSkill: Which skill it applies to ( Combat / Wits / Charm / Treachery / Leadership / Touched )
+# conEffect: effect of condition on skill, only values allowed are -2 / -1 / 1 / 2
+# conTimer: How long condition applies for in days. If '999' then condition is permanent
 
 # [outcome] -> Conflict
 # data: OpponentID

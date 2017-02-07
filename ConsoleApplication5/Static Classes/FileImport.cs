@@ -117,7 +117,11 @@ namespace Next_Game
         public ConflictStealth Stealth_Type { get; set; }
         public ConflictSubType SubType { get; set; } //descriptive purposes only
         //Condition Outcomes
-        //public bool PlayerCondition { get; set; } //true if condition applies to Player, otherwise other actor
+        public bool PlayerCondition { get; set; } //true if condition applies to Player, otherwise other actor
+        public string ConditionText { get; set; } // "Old Age", for example
+        public SkillType ConditionSkill { get; set; } //Combat, Charm, Wits etc.
+        public int ConditionEffect { get; set; } //+/- 1 or 2
+        public int ConditionTimer { get; set; } //set to 999 for a permanent condition, otherwise equal to the number of days that condition applies for
 
         /// <summary>
         /// copy constructor
@@ -141,6 +145,11 @@ namespace Next_Game
             Social_Type = outcome.Social_Type;
             Stealth_Type = outcome.Stealth_Type;
             SubType = outcome.SubType;
+            PlayerCondition = outcome.PlayerCondition;
+            ConditionText = outcome.ConditionText;
+            ConditionSkill = outcome.ConditionSkill;
+            ConditionEffect = outcome.ConditionEffect;
+            ConditionTimer = outcome.ConditionTimer;
         }
     }
 
@@ -1091,6 +1100,11 @@ namespace Next_Game
                                             structOutcome.NewStatus = EventStatus.None;
                                             structOutcome.Timer = EventTimer.None;
                                             structOutcome.PlayerRes = false;
+                                            structOutcome.PlayerCondition = false;
+                                            structOutcome.ConditionText = "";
+                                            structOutcome.ConditionSkill = SkillType.None;
+                                            structOutcome.ConditionEffect = 0;
+                                            structOutcome.ConditionTimer = 0;
                                         }
                                         listAllOutcomes.Add(listSubOutcomes);
                                         OptionStruct structOptionCopy = new OptionStruct(structOption);
@@ -1155,6 +1169,11 @@ namespace Next_Game
                                         structOutcome.NewStatus = EventStatus.None;
                                         structOutcome.Timer = EventTimer.None;
                                         structOutcome.PlayerRes = false;
+                                        structOutcome.PlayerCondition = false;
+                                        structOutcome.ConditionText = "";
+                                        structOutcome.ConditionSkill = SkillType.None;
+                                        structOutcome.ConditionEffect = 0;
+                                        structOutcome.ConditionTimer = 0;
                                     }
                                     else
                                     {
@@ -1611,6 +1630,8 @@ namespace Next_Game
                                         case "EventChain":
                                         case "resource":
                                         case "Resource":
+                                        case "Condition":
+                                        case "condition":
                                         case "none":
                                         case "None":
                                             structOutcome.Effect = cleanToken;
@@ -1758,6 +1779,55 @@ namespace Next_Game
                                             validData = false;
                                             break;
                                     }
+                                    break;
+                                case "conPlyr":
+                                    //Condition outcomes - if true applies to Player, otherwise NPC actor
+                                    switch (cleanToken)
+                                    {
+                                        case "Yes":
+                                        case "yes":
+                                            structOutcome.PlayerCondition = true;
+                                            break;
+                                        case "No":
+                                        case "no":
+                                            structOutcome.PlayerCondition = false;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, conPlyr, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                    break;
+                                case "conText":
+                                    //Condition outcomes - name of condition, eg. "Old Age"
+                                    break;
+                                case "conSkill":
+                                    //Condition outcomes - type of skill affected
+                                    break;
+                                case "conEffect":
+                                    //Condition outcomes - effect of condition on skill
+                                    try
+                                    {
+                                        dataInt = Convert.ToInt32(cleanToken);
+                                        if (dataInt >= -2 && dataInt <= 2 && dataInt != 0) { structOutcome.ConditionEffect = dataInt; }
+                                        else { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome conEffect, (Value outside acceptable range) \"{0}\"", arrayOfEvents[i])));
+                                            validData = false; }
+                                    }
+                                    catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome conEffect, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                    break;
+                                case "conTimer":
+                                    //Condition outcomes - how long condition applies for
+                                    try
+                                    {
+                                        dataInt = Convert.ToInt32(cleanToken);
+                                        if (dataInt > 0 && dataInt < 1000) { structOutcome.ConditionEffect = dataInt; }
+                                        else
+                                        {
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Outcome conTimer, (Value outside acceptable range) \"{0}\"", arrayOfEvents[i])));
+                                            validData = false;
+                                        }
+                                    }
+                                    catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome conTimer, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                     break;
                                 case "chall":
                                     //conflict outcomes - is the Player the challenger?
