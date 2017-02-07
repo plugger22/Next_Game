@@ -370,7 +370,7 @@ namespace Next_Game
                         Game.world.SetRecord(record);
                         //update array
                         arrayOfConditions[(int)condition.Skill] -= condition.Effect;
-                        Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{2}] was {3} now {4}", Title, Name, ActID, condition.Skill, 
+                        Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{3}] was {4} now {5}", Title, Name, ActID, condition.Skill, 
                             arrayOfConditions[(int)condition.Skill] + condition.Effect, arrayOfConditions[(int)condition.Skill]);
                         //remove condition
                         listConditions.RemoveAt(i);
