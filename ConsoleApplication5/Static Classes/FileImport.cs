@@ -3943,7 +3943,7 @@ namespace Next_Game
                                             structResult.Type = ResultType.DataPoint;
                                             break;
                                         case "GameVar":
-                                            structResult.Type = ResultType.DataPoint;
+                                            structResult.Type = ResultType.GameVar;
                                             break;
                                         case "RelPlyr":
                                             structResult.Type = ResultType.RelPlyr;
@@ -3958,19 +3958,19 @@ namespace Next_Game
                                             structResult.Type = ResultType.Introduction;
                                             break;
                                         case "Condition":
-                                            structResult.Type = ResultType.DataPoint;
+                                            structResult.Type = ResultType.Condition;
                                             break;
                                         case "Resource":
-                                            structResult.Type = ResultType.DataPoint;
+                                            structResult.Type = ResultType.Resource;
                                             break;
                                         case "Item":
-                                            structResult.Type = ResultType.DataPoint;
+                                            structResult.Type = ResultType.Item;
                                             break;
                                         case "Secret":
-                                            structResult.Type = ResultType.DataPoint;
+                                            structResult.Type = ResultType.Secret;
                                             break;
                                         case "Army":
-                                            structResult.Type = ResultType.DataPoint;
+                                            structResult.Type = ResultType.Army;
                                             break;
                                         case "Event":
                                             structResult.Type = ResultType.Event;

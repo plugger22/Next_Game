@@ -30,35 +30,35 @@
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
 # effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource, Condition)
 
-# [outcome] -> Game
+# [outcome] effect -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
 # data -> if +ve then Good, if -ve then Bad
 # if data <= 6 then data -> 1 Threat, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King (apply: Add or Random only)
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
 # apply: how the amount is applied -> None / Add / Subtract / Equals / Random   where 'Random' is Add random range (amount). Default 'None'
 
-# [outcome] -> EventStatus
+# [outcome] effect -> EventStatus
 # data: target EventID
 # newStatus: specific to EventStatus outcomes, desired new Status of target event -> (Active, Live, Dormant, Dead)
 
-# [outcome] -> EventTimer
+# [outcome] effect -> EventTimer
 # data: target EventID (can reference it's host decision), amount and apply (+, -, =, Random)
 # timer: which timer -> Repeat / Dormant / Live / Cool 
 # amount & calc as per normal
 
-# [outcome] -> Resource 
+# [outcome] effect -> Resource 
 # plyrRes: Yes / No (if yes it's Player's resource level that is affected, otherwise opponents)
 # amount: how much change (keep in mind Resources are restrained within a range of 1 to 5 but this is automatically enforced by Actor.cs)
 # apply: only Add/Subtract/Equal are valid options here
 
-# [outcome] -> Condition
+# [outcome] effect -> Condition
 # conPlyr: Yes / No ( Yes -> condition applies to Player, No -> condition applies to NPC actor)
 # conText: Name of condition, eg. "Old Age"
 # conSkill: Which skill it applies to ( Combat / Wits / Charm / Treachery / Leadership / Touched )
 # conEffect: effect of condition on skill, only values allowed are -2 / -1 / 1 / 2
 # conTimer: How long condition applies for in days. If '999' then condition is permanent
 
-# [outcome] -> Conflict
+# [outcome] effect -> Conflict
 # data: OpponentID
 # chall: Yes / No (is the Player the challenger in this conflict?)
 # CsubType: Conflict subType (Personal / Tournament / Battle / Hunting / Blackmail / Seduce / Befriend / Infiltrate / Evade / Escape)
