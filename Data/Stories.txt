@@ -15,7 +15,7 @@ StoryID: 1
 Type: Balanced
 Ev_Follower_Loc: 10
 Ev_Follower_Trav: 30
-Ev_Player_Loc: 50
+Ev_Player_Loc: 75
 Ev_Player_Trav: 50
 Arc_Geo_Sea: 3
 Arc_Geo_Mountain: 2

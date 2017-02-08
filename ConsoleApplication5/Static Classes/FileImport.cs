@@ -1100,7 +1100,7 @@ namespace Next_Game
                                             structOutcome.NewStatus = EventStatus.None;
                                             structOutcome.Timer = EventTimer.None;
                                             structOutcome.PlayerRes = false;
-                                            structOutcome.PlayerCondition = false;
+                                            structOutcome.PlayerCondition = true;
                                             structOutcome.ConditionText = "";
                                             structOutcome.ConditionSkill = SkillType.None;
                                             structOutcome.ConditionEffect = 0;
@@ -1169,7 +1169,7 @@ namespace Next_Game
                                         structOutcome.NewStatus = EventStatus.None;
                                         structOutcome.Timer = EventTimer.None;
                                         structOutcome.PlayerRes = false;
-                                        structOutcome.PlayerCondition = false;
+                                        structOutcome.PlayerCondition = true;
                                         structOutcome.ConditionText = "";
                                         structOutcome.ConditionSkill = SkillType.None;
                                         structOutcome.ConditionEffect = 0;

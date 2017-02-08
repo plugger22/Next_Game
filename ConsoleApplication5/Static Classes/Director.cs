@@ -1795,8 +1795,9 @@ namespace Next_Game
                                     }
                                     else if (outcome is OutCondition)
                                     {
-                                        //apply a condition to the Player or an NPC actor
-                                        OutCondition tempOutcome = outcome as OutCondition;
+                                        //apply a condition to the Player or an NPC actor -> use copy constructor to pass by value, not reference
+                                        //OutCondition tempOutcome = outcome as OutCondition;
+                                        OutCondition tempOutcome = new OutCondition(outcome as OutCondition);
                                         if (tempOutcome.PlayerCondition == false) { actorID = option.ActorID; }
                                         else { actorID = 1; }
                                         Actor person = Game.world.GetAnyActor(actorID);

@@ -63,9 +63,9 @@ namespace Next_Game
         private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
-        private List<Relation> listRelOther; //list of relation messages relating to all actors other than the Player
-        private List<Relation> listRelPlyr; //list of relation messages relating to the Player
-        private List<Condition> listConditions; //list of all active conditions affecting the Player
+        private List<Relation> listOfRelOther; //list of relation messages relating to all actors other than the Player
+        private List<Relation> listOfRelPlyr; //list of relation messages relating to the Player
+        private List<Condition> listOfConditions; //list of all active conditions affecting the Player
 
 
         //default constructor 
@@ -87,9 +87,9 @@ namespace Next_Game
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
-            listRelOther = new List<Relation>();
-            listRelPlyr = new List<Relation>();
-            listConditions = new List<Condition>();
+            listOfRelOther = new List<Relation>();
+            listOfRelPlyr = new List<Relation>();
+            listOfConditions = new List<Condition>();
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
@@ -117,9 +117,9 @@ namespace Next_Game
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
-            listRelOther = new List<Relation>();
-            listRelPlyr = new List<Relation>();
-            listConditions = new List<Condition>();
+            listOfRelOther = new List<Relation>();
+            listOfRelPlyr = new List<Relation>();
+            listOfConditions = new List<Condition>();
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
@@ -155,7 +155,7 @@ namespace Next_Game
         { return null; }
 
         public void AddRelEventOther(Relation relMsg)
-        { listRelOther.Add(relMsg); }
+        { listOfRelOther.Add(relMsg); }
 
         /// <summary>
         /// adds event & updates relPlyr & figures out new value (Level) after changes
@@ -165,11 +165,11 @@ namespace Next_Game
         {
             ChangeRelPlyr(relMsg.Change);
             relMsg.Level = relPlyr;
-            listRelPlyr.Add(relMsg);
+            listOfRelPlyr.Add(relMsg);
         }
 
         public List<Relation> GetRelEventPlyr()
-        { return listRelPlyr; }
+        { return listOfRelPlyr; }
 
         /// <summary>
         /// returns Tag of most recent Player event (used for ShowActorRL display in World.cs)
@@ -177,9 +177,9 @@ namespace Next_Game
         /// <returns></returns>
         internal string GetPlayerTag()
         {
-            if (listRelPlyr.Count > 0)
+            if (listOfRelPlyr.Count > 0)
             {
-                Relation relation = listRelPlyr[listRelPlyr.Count - 1];
+                Relation relation = listOfRelPlyr[listOfRelPlyr.Count - 1];
                 return relation.Tag;
             }
             else { return ""; }
@@ -191,9 +191,9 @@ namespace Next_Game
         /// <returns></returns>
         internal int GetPlayerChange()
         {
-            if (listRelPlyr.Count > 0)
+            if (listOfRelPlyr.Count > 0)
             {
-                Relation relation = listRelPlyr[listRelPlyr.Count - 1];
+                Relation relation = listOfRelPlyr[listOfRelPlyr.Count - 1];
                 return relation.Change;
             }
             else { return 0; }
@@ -321,7 +321,7 @@ namespace Next_Game
             {
                 if (condition.Skill != SkillType.None)
                 {
-                    listConditions.Add(condition);
+                    listOfConditions.Add(condition);
                     //add to array
                     arrayOfConditions[(int)condition.Skill] += condition.Effect;
                     Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{3}] was {4} now {5}", Title, Name, ActID, 
@@ -341,7 +341,7 @@ namespace Next_Game
         }
 
        internal List<Condition> GetConditions()
-        { return listConditions; }
+        { return listOfConditions; }
 
         /// <summary>
         /// returns true if conditions present, false otherwise
@@ -349,7 +349,7 @@ namespace Next_Game
         /// <returns></returns>
         internal bool CheckConditions()
         {
-            if (listConditions.Count > 0) { return true; }
+            if (listOfConditions.Count > 0) { return true; }
             return false;
         }
 
@@ -358,11 +358,10 @@ namespace Next_Game
         /// </summary>
         internal void UpdateConditionTimers()
         {
-            //foreach(var condition in listConditions)
             //reverse loop through listConditions (may have to delete some conditions if timer = 0)
-            for (int i = listConditions.Count - 1; i >= 0; i--)
+            for (int i = listOfConditions.Count - 1; i >= 0; i--)
             {
-                Condition condition = listConditions[i];
+                Condition condition = listOfConditions[i];
                 if (condition.Timer > 0 && condition.Timer < 999)
                 {
                     condition.Timer--;
@@ -380,7 +379,7 @@ namespace Next_Game
                         Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{3}] was {4} now {5}", Title, Name, ActID, condition.Skill, 
                             arrayOfConditions[(int)condition.Skill] + condition.Effect, arrayOfConditions[(int)condition.Skill]);
                         //remove condition
-                        listConditions.RemoveAt(i);
+                        listOfConditions.RemoveAt(i);
                     }
 
                 }

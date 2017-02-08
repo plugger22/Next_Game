@@ -217,6 +217,20 @@ namespace Next_Game.Event_System
             }
             else { Game.SetError(new Error(130, "Invalid Condition input (null)")); }
         }
+
+        /// <summary>
+        /// copy constructor
+        /// </summary>
+        /// <param name="outcome"></param>
+        public OutCondition(OutCondition condition) : base(condition.EventID)
+        {
+            PlayerCondition = condition.PlayerCondition;
+            NewCondition = new Condition(condition.NewCondition.Skill, condition.NewCondition.Effect, condition.NewCondition.Text, condition.NewCondition.Timer);
+            /*NewCondition.Text = condition.NewCondition.Text;
+            NewCondition.Skill = condition.NewCondition.Skill;
+            NewCondition.Effect = condition.NewCondition.Effect;
+            NewCondition.Timer = condition.NewCondition.Timer;*/
+        }
     }
 
 }
