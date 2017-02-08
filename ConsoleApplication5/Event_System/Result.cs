@@ -25,8 +25,13 @@ namespace Next_Game.Event_System
         public EventCalc Calc { get; set; }
         public int Amount { get; set; }
         public int Test { get; set; } = 0; //optional -> if > 0 then a 1d100 <= Test must occur for result to happen, otherwise ignored.
-        public DataPoint DataPoint { get; set; } //optional
-        public GameVar GameVar { get; set; } //optional
+        public DataPoint DataPoint { get; set; } //optional -> DataPoint
+        public GameVar GameVar { get; set; } //optional -> GameVar
+        public bool ConPlayer { get; set; } //optional -> Conditions
+        public string ConText { get; set; } //optional -> Conditions
+        public SkillType ConSkill { get; set; } //optional -> Conditions
+        public int ConEffect { get; set; } //optional -> Conditions
+        public int ConTimer { get; set; } //optional -> Conditions
 
         public Result()
         { }

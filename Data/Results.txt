@@ -4,8 +4,8 @@
 # Name: Description
 # RID: (ResultID) Unique number, 1+
 # Type: (ResultType) -> DataPoint / GameVar / RelPlyr / RelOther / Condition / Resource / Item / Secret / Army / Event / Favour / Introduction
-# Data: multipurpose integer (context depends on Type) (default '0')
 
+# Data: OPTIONAL -> multipurpose integer (context depends on Type) (default '0')
 # Calc: OPTIONAL( EventCalc) -> None / Add / Subtract / Random / Equals (default 'None')
 # Amount: OPTIONAL int amt applied by Calc (if Calc is 'Random' then it's random Amt, eg. if amount 100 then random d100) (default '0'), neg. #'s to
 # Test: OPTIONAL - integer > 0. A rnd 1d100 must be <= Test number in order for result to apply (otherwise result treated as ResultType.None & ignored)

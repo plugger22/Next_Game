@@ -1422,6 +1422,18 @@ namespace Next_Game
                             case ResultType.RelOther:
                                 break;
                             case ResultType.Condition:
+                                //add a condition to either the Player or Opponent
+                                Condition condition = new Condition(result.ConSkill, result.ConEffect, result.ConText, result.ConTimer);
+                                string nameText = "unknown";
+                                //Player condition
+                                if (result.ConPlayer == true)
+                                { player.AddCondition(condition); nameText = string.Format("{0} {1}", player.Title, player.Name); }
+                                //Opponent condition
+                                else { opponent.AddCondition(condition); nameText = string.Format("{0} {1}", opponent.Title, opponent.Name); }
+                                tempText = string.Format("{0} gains the \"{1}\" Condition, {2} {3}{4}", nameText, condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", condition.Effect);
+                                tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                message = new Message(tempText, MessageType.Conflict);
+                                Game.world.SetMessage(message);
                                 break;
                             case ResultType.Resource:
                                 break;
