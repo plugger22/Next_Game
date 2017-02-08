@@ -403,6 +403,27 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// resets an existing condition timer to the new value
+        /// </summary>
+        /// <param name="checkText">Used to find the correct condition</param>
+        /// <param name="timer">new value for timer</param>
+        public void ResetConditionTimer(string checkText, int timer)
+        {
+            if (listOfConditions.Count > 0)
+            {
+                foreach (Condition condition in listOfConditions)
+                {
+                    if (condition.Text.Equals(checkText) == true)
+                    {
+                        Console.WriteLine("RESET: \"{0}\" Condition Timer was {1} now {2}", condition.Text, condition.Timer, timer);
+                        condition.Timer = timer;
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Adjust Actor's Resource value up or down
         /// </summary>
         /// <param name="amount"></param>

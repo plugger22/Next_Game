@@ -1803,12 +1803,19 @@ namespace Next_Game
                                             //does the character already have this condition?
                                             if (person.CheckConditionPresent(tempOutcome.NewCondition.Text) == false)
                                             {
+                                                //not present -> add new condition
                                                 outcomeText = person.AddCondition(tempOutcome.NewCondition);
                                                 if (String.IsNullOrEmpty(outcomeText) == false)
                                                 { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             }
                                             else
-                                            { Console.WriteLine("\"{0}\" Condition already acquired by {1}", tempOutcome.NewCondition.Text, person.Name); }
+                                            {
+                                                //existing identical condition already present. Reset existing condition timer to the max value.
+                                                person.ResetConditionTimer(tempOutcome.NewCondition.Text, tempOutcome.NewCondition.Timer);
+                                                outcomeText = string.Format("\"{0}\" Condition already acquired by {1}, Timer reset to {2}", tempOutcome.NewCondition.Text, person.Name,
+                                                    tempOutcome.NewCondition.Timer);
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                            }
                                         }
                                     }
                                     else if (outcome is OutEventChain)

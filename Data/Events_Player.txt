@@ -338,7 +338,7 @@ ID: 5
 Type: Location
 subType: Major
 Cat: Generic
-Freq: High
+Freq: Low
 Status: Dormant
 Live: 3
 Event: A passing citizen recognises you. He approaches covertly and whispers that the Hand of the King has been asking around for anyone with knowledge of you.
