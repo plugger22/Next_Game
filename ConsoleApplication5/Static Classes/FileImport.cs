@@ -265,6 +265,11 @@ namespace Next_Game
         public int Test { get; set; }
         public EventCalc Calc { get; set;}
         public int Amount { get; set; }
+        public bool ConPlayer { get; set; } //optional -> Conditions
+        public string ConText { get; set; } //optional -> Conditions
+        public SkillType ConSkill { get; set; } //optional -> Conditions
+        public int ConEffect { get; set; } //optional -> Conditions
+        public int ConTimer { get; set; } //optional -> Conditions
     }
 
     /// <summary>
@@ -4083,6 +4088,91 @@ namespace Next_Game
                                     }
                                 }
                                 break;
+                            //optional -> Condition Results
+                            case "conPlyr":
+                                //Condition outcomes - if true applies to Player, otherwise NPC actor
+                                switch (cleanToken)
+                                {
+                                    case "Yes":
+                                    case "yes":
+                                        structResult.ConPlayer = true;
+                                        break;
+                                    case "No":
+                                    case "no":
+                                        structResult.ConPlayer = false;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, conPlyr, (\"{0}\")", arrayOfResults[i])));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "conText":
+                                //Condition outcomes - name of condition, eg. "Old Age"
+                                structResult.ConText = cleanToken;
+                                break;
+                            case "conSkill":
+                                //Condition outcomes - type of skill affected
+                                switch (cleanToken)
+                                {
+                                    case "Combat":
+                                    case "combat":
+                                        structResult.ConSkill = SkillType.Combat;
+                                        break;
+                                    case "Wits":
+                                    case "wits":
+                                        structResult.ConSkill = SkillType.Wits;
+                                        break;
+                                    case "Charm":
+                                    case "charm":
+                                        structResult.ConSkill = SkillType.Charm;
+                                        break;
+                                    case "Treachery":
+                                    case "treachery":
+                                        structResult.ConSkill = SkillType.Treachery;
+                                        break;
+                                    case "Leadership":
+                                    case "leadership":
+                                        structResult.ConSkill = SkillType.Leadership;
+                                        break;
+                                    case "Touched":
+                                    case "touched":
+                                        structResult.ConSkill = SkillType.Touched;
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, conSkill, (\"{0}\")", arrayOfResults[i])));
+                                        validData = false;
+                                        break;
+                                }
+                                break;
+                            case "conEffect":
+                                //Condition outcomes - effect of condition on skill
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt >= -2 && dataInt <= 2 && dataInt != 0) { structResult.ConEffect = dataInt; }
+                                    else
+                                    {
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Outcome conEffect, (Value outside acceptable range) \"{0}\"", arrayOfResults[i])));
+                                        validData = false;
+                                    }
+                                }
+                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome conEffect, (Conversion) \"{0}\"", arrayOfResults[i]))); validData = false; }
+                                break;
+                            case "conTimer":
+                                //Condition outcomes - how long condition applies for
+                                try
+                                {
+                                    dataInt = Convert.ToInt32(cleanToken);
+                                    if (dataInt > 0 && dataInt < 1000) { structResult.ConTimer = dataInt; }
+                                    else
+                                    {
+                                        Game.SetError(new Error(49, string.Format("Invalid Input, Outcome conTimer, (Value outside acceptable range) \"{0}\"", arrayOfResults[i])));
+                                        validData = false;
+                                    }
+                                }
+                                catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome conTimer, (Conversion) \"{0}\"", arrayOfResults[i]))); validData = false; }
+                                break;
                             case "[end]":
                             case "[End]":
                                 //write record
@@ -4090,10 +4180,22 @@ namespace Next_Game
                                 {
                                     //pass info over to a class instance
                                     Result resultObject = new Result(structResult.ResultID, structResult.Name, structResult.Type, structResult.Data, structResult.Calc, structResult.Amount);
-                                    if (structResult.DataPoint > DataPoint.None) { resultObject.DataPoint = structResult.DataPoint; }
                                     if (String.IsNullOrEmpty(structResult.Tag) == false) { resultObject.Tag = structResult.Tag; }
                                     if (structResult.Test > 0) { resultObject.Test = structResult.Test; }
-
+                                    //special case Results
+                                    switch (structResult.Type)
+                                    {
+                                        case ResultType.DataPoint:
+                                            if (structResult.DataPoint > DataPoint.None) { resultObject.DataPoint = structResult.DataPoint; }
+                                            break;
+                                        case ResultType.Condition:
+                                            resultObject.ConPlayer = structResult.ConPlayer;
+                                            resultObject.ConText = structResult.ConText;
+                                            resultObject.ConSkill = structResult.ConSkill;
+                                            resultObject.ConEffect = structResult.ConEffect;
+                                            resultObject.ConTimer = structResult.ConTimer;
+                                            break;
+                                    }
                                     //last datapoint - save object to dictionary
                                     if (dataCounter > 0)
                                     {
