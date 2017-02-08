@@ -140,6 +140,7 @@ subType: Major
 Cat: Generic
 Freq: Low
 Status: Active
+Cool: 3
 Dormant: 20
 Event: You there, Halt! A group of black coated Inquisitors move purposely towards you.
 [option]
@@ -337,7 +338,7 @@ ID: 5
 Type: Location
 subType: Major
 Cat: Generic
-Freq: Low
+Freq: High
 Status: Dormant
 Live: 3
 Event: A passing citizen recognises you. He approaches covertly and whispers that the Hand of the King has been asking around for anyone with knowledge of you.

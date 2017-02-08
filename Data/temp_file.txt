@@ -1,4 +1,7 @@
 
+Status: Dormant
+Live: 3
+
 Name: Auto MajorHouse Action
 ID: 1001
 Type: Location

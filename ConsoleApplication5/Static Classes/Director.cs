@@ -1181,9 +1181,7 @@ namespace Next_Game
                     }
                     NumAutoReactEvents = Math.Max(0, NumAutoReactEvents);
                 }
-                
             }
-
             //Remove any existing autoLoc created player events prior to next turn (Process end of turn)
             if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }
             //clear out current events
