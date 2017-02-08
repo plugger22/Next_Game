@@ -388,6 +388,21 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// checks if a condition is already present (Text comparison), returns true is so
+        /// </summary>
+        /// <param name="checkText"></param>
+        /// <returns></returns>
+        public bool CheckConditionPresent(string checkText)
+        {
+            if (listOfConditions.Count > 0)
+            {
+                foreach(Condition condition in listOfConditions)
+                { if (condition.Text.Equals(checkText) == true) { return true; } }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Adjust Actor's Resource value up or down
         /// </summary>
         /// <param name="amount"></param>

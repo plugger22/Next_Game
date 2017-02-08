@@ -1793,17 +1793,22 @@ namespace Next_Game
                                     }
                                     else if (outcome is OutCondition)
                                     {
-                                        //apply a condition to the Player or an NPC actor -> use copy constructor to pass by value, not reference
-                                        //OutCondition tempOutcome = outcome as OutCondition;
+                                        //apply a condition to the Player or an NPC actor -> use copy constructor to pass by value, not reference (otherwise all timers are indentical)
                                         OutCondition tempOutcome = new OutCondition(outcome as OutCondition);
                                         if (tempOutcome.PlayerCondition == false) { actorID = option.ActorID; }
                                         else { actorID = 1; }
                                         Actor person = Game.world.GetAnyActor(actorID);
                                         if (person != null)
                                         {
-                                            outcomeText = person.AddCondition(tempOutcome.NewCondition);
-                                            if (String.IsNullOrEmpty(outcomeText) == false)
-                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            //does the character already have this condition?
+                                            if (person.CheckConditionPresent(tempOutcome.NewCondition.Text) == false)
+                                            {
+                                                outcomeText = person.AddCondition(tempOutcome.NewCondition);
+                                                if (String.IsNullOrEmpty(outcomeText) == false)
+                                                { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            }
+                                            else
+                                            { Console.WriteLine("\"{0}\" Condition already acquired by {1}", tempOutcome.NewCondition.Text, person.Name); }
                                         }
                                     }
                                     else if (outcome is OutEventChain)
