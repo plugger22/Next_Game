@@ -158,7 +158,7 @@ Amount: 40
 
 # Befriend Conflict Results
 
-Name: Relationship improved as a result of a successful Befriend conflict Minor Win
+Name: Rel improved due to Befriend Minor Win
 RID: 14
 Type: RelPlyr
 Tag: Befriend Minor Win
@@ -167,7 +167,7 @@ Calc: Random
 Amount: 30
 [End]
 
-Name: Relationship improved as a result of a successful Befriend conflict Win
+Name: Rel improved due to Befriend Win
 RID: 15
 Type: RelPlyr
 Tag: Befriend Win
@@ -176,7 +176,7 @@ Calc: Random
 Amount: 50
 [End]
 
-Name: Relationship improved as a result of a successful Befriend conflict Major Win
+Name: Rel improved due to Befriend Major Win
 RID: 16
 Type: RelPlyr
 Tag: Befriend Major Win
@@ -185,19 +185,19 @@ Calc: Random
 Amount: 70
 [End]
 
-Name: Introduction granted as a result of a successful Befriend conflict Win
+Name: Intro given due to Befriend Win
 RID: 40
 Type: Introduction
 Data: 3
 [End]
 
-Name: Introduction granted as a result of a successful Befriend conflict Major Win
+Name: Intro given due to a Befriend Major Win
 RID: 39
 Type: Introduction
 Data: 5
 [End]
 
-Name: Relationship worsened as a result of a failed Befriend conflict Minor Loss
+Name: Rel worsened due to Befriend Minor Loss
 RID: 17
 Type: RelPlyr
 Tag: Befriend Minor Loss
@@ -206,7 +206,7 @@ Calc: Random
 Amount: -30
 [End]
 
-Name: Relationship worsened as a result of a failed Befriend conflict Loss
+Name: Rel worsened due to Befriend Loss
 RID: 18
 Type: RelPlyr
 Tag: Befriend Loss
@@ -215,7 +215,7 @@ Calc: Random
 Amount: -50
 [End]
 
-Name: Relationship worsened as a result of a failed Befriend conflict Major Loss
+Name: Rel worsened due to Befriend Major Loss
 RID: 19
 Type: RelPlyr
 Tag: Befriend Major Loss
@@ -226,7 +226,7 @@ Amount: -70
 
 # Seduce Conflict Results (gives a wider range of relationship results than Befriend)
 
-Name: Relationship improved as a result of a successful Seduce conflict Minor Win
+Name: Rel improved due to Seduce Minor Win
 RID: 20
 Type: RelPlyr
 Tag: Seduce Minor Win
@@ -235,7 +235,7 @@ Calc: Random
 Amount: 50
 [End]
 
-Name: Relationship improved as a result of a successful Seduce conflict Win
+Name: Rel improved due to Seduce Win
 RID: 21
 Type: RelPlyr
 Tag: Seduce Win
@@ -244,7 +244,7 @@ Calc: Random
 Amount: 70
 [End]
 
-Name: Relationship improved as a result of a successful Seduce conflict Major Win
+Name: Rel improved due to Seduce Major Win
 RID: 22
 Type: RelPlyr
 Tag: Seduce Major Win
@@ -253,26 +253,26 @@ Calc: Random
 Amount: 90
 [End]
 
-Name: Introduction granted as a result of a successful Seduce conflict Minor Win
+Name: Intro given due to Seduce Minor Win
 RID: 36
 Type: Introduction
 Tag: Seduce Minor Win
 Data: 1
 [End]
 
-Name: Introduction granted as a result of a successful Seduce conflict Win
+Name: Intro given due to Seduce Win
 RID: 37
 Type: Introduction
 Data: 3
 [End]
 
-Name: Favour granted as a result of a successful Seduce conflict Major Win
+Name: Favour given due to Seduce Major Win
 RID: 38
 Type: Favour
 Data: 5
 [End]
 
-Name: Relationship worsened as a result of a failed Seduce conflict Minor Loss
+Name: Rel worsened due to Seduce Minor Loss
 RID: 23
 Type: RelPlyr
 Tag: Seduce Minor Loss
@@ -281,7 +281,7 @@ Calc: Random
 Amount: -50
 [End]
 
-Name: Relationship worsened as a result of a failed Seduce conflict Loss
+Name: Rel worsened due to Seduce Loss
 RID: 24
 Type: RelPlyr
 Tag: Seduce Loss
@@ -290,7 +290,7 @@ Calc: Random
 Amount: -70
 [End]
 
-Name: Relationship worsened as a result of a failed Seduce conflict Major Loss
+Name: Rel worsened due to Seduce Major Loss
 RID: 25
 Type: RelPlyr
 Tag: Seduce Major Loss
@@ -308,25 +308,25 @@ Test: 100
 
 # BlackMail Conflict Results (relationship with Player degrades if a Loss) Plyr gains a Favour for a win (data -> strength of favour)
 
-Name: Favour granted as a result of a successful Blackmail conflict Minor Win
+Name: Favour given due to Blackmail Minor Win
 RID: 29
 Type: Favour
 Data: 1
 [End]
 
-Name: Favour granted as a result of a successful Blackmail conflict Win
+Name: Favour given due to Blackmail Win
 RID: 30
 Type: Favour
 Data: 3
 [End]
 
-Name: Favour granted as a result of a successful Blackmail conflict Major Win
+Name: Favour given due to Blackmail Major Win
 RID: 31
 Type: Favour
 Data: 5
 [End]
 
-Name: Relationship worsened as a result of a failed Blackmail conflict Minor Loss
+Name: Rel worsened due to Blackmail Minor Loss
 RID: 32
 Type: RelPlyr
 Tag: Blackmail Minor Loss
@@ -335,7 +335,7 @@ Calc: Random
 Amount: -50
 [End]
 
-Name: Relationship worsened as a result of a failed Blackmail conflict Loss
+Name: Rel worsened due to Blackmail Loss
 RID: 33
 Type: RelPlyr
 Tag: Blackmail Loss
@@ -344,7 +344,7 @@ Calc: Random
 Amount: -70
 [End]
 
-Name: Relationship worsened as a result of a failed Blackmail conflict Major Loss
+Name: Rel worsened due to Blackmail Major Loss
 RID: 34
 Type: RelPlyr
 Tag: Blackmail Major Loss
@@ -353,4 +353,28 @@ Calc: Random
 Amount: -90
 [End]
 
-# next is 42
+# Personal Combat 
+
+Name: Wounded in Combat
+RID: 42
+Type: Condition
+Tag: Combat Loss
+conPlyr: Yes
+conText: Wounded
+conSkill: Combat
+conEffect: -1
+conTimer: 5
+[End]
+
+Name: Pumped up after a win in Combat
+RID: 43
+Type: Condition
+Tag: Combat Win
+conPlyr: Yes
+conText: Exalted
+conSkill: Combat
+conEffect: 1
+conTimer: 5
+[End]
+
+# next is 44 (missing 26, 27, 28)
