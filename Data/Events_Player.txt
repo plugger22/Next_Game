@@ -106,7 +106,7 @@ calc: =
 [trigger]
 check: Trait
 item: 6
-thresh: 0
+thresh: 1
 calc: >=
 [outcome]
 effect: Game
@@ -174,7 +174,7 @@ reply: Surprise is the key. Wait until they are almost upon you, draw your sword
 [trigger]
 check: Trait
 item: 1
-thresh: 1
+thresh: 3
 calc: >=
 [outcome]
 effect: Game
@@ -226,7 +226,7 @@ reply: You are heard. The Stranger has taken note of your insolence.
 [trigger]
 check: Trait
 item: 4
-thresh: 1
+thresh: 3
 calc: >=
 [outcome]
 effect: Game
