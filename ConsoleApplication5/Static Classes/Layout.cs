@@ -518,6 +518,7 @@ namespace Next_Game
             string textDescription = arrayOutcome[10]; //default 'no result'
             string textOutcome = "No Result";
             int resultOutcome = 0; // 1/2/3 for ascending level of wins and 4/5/6 for ascending level of losses. '0' for no result
+            Result = ConflictResult.None;
             RLColor forecolor = RLColor.Black;
             //determine level of win or loss
             if (score > 0)

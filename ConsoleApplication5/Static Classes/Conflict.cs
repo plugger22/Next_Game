@@ -1425,19 +1425,27 @@ namespace Next_Game
                                 //add a condition to either the Player or Opponent
                                 Condition condition = new Condition(result.ConSkill, result.ConEffect, result.ConText, result.ConTimer);
                                 string nameText = "unknown";
-                                Actor tempActor;
+                                Actor tempActor = null;
                                 //Player condition
                                 if (result.ConPlayer == true) { tempActor = player; }
                                 //Opponent condition
                                 else { tempActor = opponent; }
                                 //Does the character already have this condition?
                                 if (tempActor.CheckConditionPresent(condition.Text) == false)
-                                { tempActor.AddCondition(condition); }
+                                {
+                                    tempActor.AddCondition(condition);
+                                    nameText = string.Format("{0} {1}", tempActor.Title, tempActor.Name);
+                                    tempText = string.Format("{0} gains the \"{1}\" Condition, {2} {3}{4}", nameText, condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", 
+                                        condition.Effect);
+                                }
                                 //existing identical condition already present -> Reset existing condition timer to the max value.
-                                else { tempActor.ResetConditionTimer(condition.Text, condition.Timer); }
+                                else
+                                {
+                                    tempActor.ResetConditionTimer(condition.Text, condition.Timer);
+                                    nameText = string.Format("{0} {1}", tempActor.Title, tempActor.Name);
+                                    tempText = string.Format("\"{0}\" Condition already acquired by {1}, Timer reset to {2}", condition.Text, nameText, condition.Timer);
+                                }
                                 //housekeeping
-                                nameText = string.Format("{0} {1}", tempActor.Title, tempActor.Name);
-                                tempText = string.Format("{0} gains the \"{1}\" Condition, {2} {3}{4}", nameText, condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", condition.Effect);
                                 tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                 message = new Message(tempText, MessageType.Conflict);
                                 Game.world.SetMessage(message);
