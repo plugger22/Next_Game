@@ -1812,7 +1812,7 @@ namespace Next_Game
                                             {
                                                 //existing identical condition already present. Reset existing condition timer to the max value.
                                                 person.ResetConditionTimer(tempOutcome.NewCondition.Text, tempOutcome.NewCondition.Timer);
-                                                outcomeText = string.Format("\"{0}\" Condition already acquired by {1}, Timer reset to {2}", tempOutcome.NewCondition.Text, person.Name,
+                                                outcomeText = string.Format("\"{0}\" Condition already acquired by {1}, Timer reset to {2} days", tempOutcome.NewCondition.Text, person.Name,
                                                     tempOutcome.NewCondition.Timer);
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                             }

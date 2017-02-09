@@ -381,10 +381,8 @@ namespace Next_Game
                         //remove condition
                         listOfConditions.RemoveAt(i);
                     }
-
                 }
             }
-
         }
 
         /// <summary>
@@ -416,6 +414,11 @@ namespace Next_Game
                     if (condition.Text.Equals(checkText) == true)
                     {
                         Console.WriteLine("RESET: \"{0}\" Condition Timer was {1} now {2}", condition.Text, condition.Timer, timer);
+                        //record event
+                        string conditionText = string.Format("\"{0}\" condition already acquired, timer reset from {1} to {2} days", condition.Text, condition.Timer, timer);
+                        Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
+                        Game.world.SetRecord(record);
+                        //reset timer
                         condition.Timer = timer;
                         break;
                     }
