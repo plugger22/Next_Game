@@ -513,7 +513,6 @@ namespace Next_Game
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
 
-
                     //treachery
                     trait = SkillType.Treachery;
                     effectText = person.GetTraitEffectText(trait, age);
@@ -605,7 +604,7 @@ namespace Next_Game
                     foreach(Condition condition in tempConditions)
                     {
                         if (condition.Timer != 999)
-                        { tempCondition_0 = string.Format("\"{0}\", {1} day{2}", condition.Text, condition.Timer, condition.Timer == 0 ? "" : "s"); }
+                        { tempCondition_0 = string.Format("\"{0}\", {1} day{2}", condition.Text, condition.Timer, condition.Timer == 1 ? "" : "s"); }
                         else { tempCondition_0 = string.Format("\"{0}\"", condition.Text); }
                         tempCondition_1 = string.Format("{0} ({1}{2})", condition.Skill, condition.Effect > 0 ? "+" : "", condition.Effect);
                         if (condition.Effect > 0) { tempColor = Color._goodTrait; }
