@@ -2415,21 +2415,21 @@ namespace Next_Game
         /// </summary>
         private void UpdateActors()
         {
+            //All actors -> decrement any Condition timers
             foreach(var actor in dictAllActors)
             {
-                //Active actors -> decrement any delays
-                if (actor is Active)
-                {
-                    if (actor.Value.Delay > 0)
-                    {
-                        actor.Value.Delay--;
-                        if (actor.Value.Delay == 0)
-                        { actor.Value.DelayReason = null; }
-                    }
-                }
-                //All actors -> decrement any Condition timers
                 if (actor.Value.CheckConditions() == true)
                 { actor.Value.UpdateConditionTimers(); }
+            }
+            //Active actors -> decrement any delays
+            foreach (var actor in dictActiveActors)
+            {
+                if (actor.Value.Delay > 0)
+                {
+                    actor.Value.Delay--;
+                    if (actor.Value.Delay == 0)
+                    { actor.Value.DelayReason = null; }
+                }
             }
         }
 
