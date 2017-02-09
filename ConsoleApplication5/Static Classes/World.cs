@@ -889,7 +889,9 @@ namespace Next_Game
                         locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                         locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
                         locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
-                        locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current)));
+                        RLColor loyaltyColor = Color._goodTrait;
+                        if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
+                        locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
                         locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), false));
                         locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), RLColor.LightRed, RLColor.Black));
                         locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));

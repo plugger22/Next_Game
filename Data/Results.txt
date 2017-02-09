@@ -353,6 +353,28 @@ Calc: Random
 Amount: -90
 [End]
 
+Name: Shocked by Blackmail attempt
+RID: 26
+Type: Condition
+Tag: Blackmail Loss
+conPlyr: Yes
+conText: Shocked
+conSkill: Wits
+conEffect: -1
+conTimer: 5
+[End]
+
+Name: Power mad after Blackmail
+RID: 27
+Type: Condition
+Tag: Blackmail Win
+conPlyr: Yes
+conText: Power Mad
+conSkill: Wits
+conEffect: 2
+conTimer: 5
+[End]
+
 # Personal Combat 
 
 Name: Wounded in Combat
@@ -377,4 +399,4 @@ conEffect: 1
 conTimer: 5
 [End]
 
-# next is 44 (missing 26, 27, 28)
+# next is 44 (missing 28)
