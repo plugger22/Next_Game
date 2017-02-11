@@ -105,3 +105,10 @@
 38: 2
 # TALK_THRESHOLD -> A characters relationship level (0 - 100) with the player required (>=) in order for them to agree to meet
 39: 50
+
+# Relationships ---
+
+# HOUSE_REL_GOOD -> % chance of good house, past history, relationship (Bad is same % as good, None is 100 - Good x 2), eg. good 30, bad 30, none 40
+40: 30
+# HOUSE_REL_EFFECT -> 1dx relationship effect for any, past history, relationship incident
+41: 30

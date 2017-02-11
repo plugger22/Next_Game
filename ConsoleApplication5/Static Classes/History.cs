@@ -21,7 +21,7 @@ namespace Next_Game
         private List<string> listOfFemaleFirstNames;
         private List<string> listOfSurnames;
         //house names
-        private List<MajorHouse> listOfGreatHouses;
+        private List<MajorHouse> listOfMajorHouses;
         private List<House> listOfMinorHouses;
         private List<House> listOfSpecialHouses;
         private List<HouseStruct> listHousePool; //used for text file imports and random choice of houses
@@ -39,6 +39,9 @@ namespace Next_Game
         private List<string> listOfWounds;
         private List<string> listOfInjuries;
         private List<string> listOfDiseases;
+        //Relationships
+        private List<string> listOfHouseRelsGood;
+        private List<string> listOfHouseRelsBad;
         static Random rnd;
 
         /// <summary>
@@ -53,7 +56,7 @@ namespace Next_Game
             listOfMaleFirstNames = new List<string>();
             listOfFemaleFirstNames = new List<string>();
             listOfSurnames = new List<string>();
-            listOfGreatHouses = new List<MajorHouse>();
+            listOfMajorHouses = new List<MajorHouse>();
             listOfMinorHouses = new List<House>();
             listOfSpecialHouses = new List<House>();
             listHousePool = new List<HouseStruct>();
@@ -67,6 +70,8 @@ namespace Next_Game
             listOfWounds = new List<string>();
             listOfInjuries = new List<string>();
             listOfDiseases = new List<string>();
+            listOfHouseRelsGood = new List<string>();
+            listOfHouseRelsBad = new List<string>();
         }
 
 
@@ -143,7 +148,7 @@ namespace Next_Game
                 //placeholder
                 house.Resources = rnd.Next(1, 5);
                 //add house to listOfHouses
-                listOfGreatHouses.Add(house);
+                listOfMajorHouses.Add(house);
                 //Console.WriteLine("House {0} added to listOfGreatHouses", house.Name);
             }
         }
@@ -493,7 +498,7 @@ namespace Next_Game
             //house at birth (males the same, females from an adjacent house)
             actor.BornRefID = refID;
             int wifeHouseID = houseID;
-            int highestHouseID = listOfGreatHouses.Count;
+            int highestHouseID = listOfMajorHouses.Count;
             if (sex == ActorSex.Female && highestHouseID >= 2)
             {
                 /*if (rnd.Next(100) < 50)
@@ -517,7 +522,7 @@ namespace Next_Game
                 MajorHouse wifeHome = null;
                 do
                 {
-                    wifeHome = listOfGreatHouses[rnd.Next(0, highestHouseID)];
+                    wifeHome = listOfMajorHouses[rnd.Next(0, highestHouseID)];
                     counter++;
                 }
                 while (wifeHome.RefID == refID && counter < 4);
@@ -1809,7 +1814,7 @@ namespace Next_Game
         /// </summary>
         /// <returns></returns>
         internal List<MajorHouse> GetGreatHouses()
-        { return listOfGreatHouses; }
+        { return listOfMajorHouses; }
 
         /// <summary>
         /// return list of Minor Houses
@@ -1867,7 +1872,7 @@ namespace Next_Game
             List<MajorHouse> listOfHousesByPower = new List<MajorHouse>();
             //sorted list of houses by Power (# of locations, largest at the top)
             IEnumerable<MajorHouse> sortedHouses =
-                from house in listOfGreatHouses
+                from house in listOfMajorHouses
                 let numLocs = house.GetNumBannerLords()
                 orderby numLocs descending
                 select house;
@@ -2364,6 +2369,68 @@ namespace Next_Game
                 {
                     actor.Value.Age += elapsedTime;
                     //Console.WriteLine("{0}, Aid {1}, has is now age {2}", actor.Value.Name, actor.Value.ActID, actor.Value.Age);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set up web of relationships between Houses
+        /// </summary>
+        public void InitialisePastHistoryHouses()
+        {
+            //good
+            listOfHouseRelsGood.Add("Helped out in times of Trouble");
+            listOfHouseRelsGood.Add("Saved the day in a past Battle");
+            listOfHouseRelsGood.Add("Blood bonds forged between past Lords");
+            listOfHouseRelsGood.Add("Gifted lands to our House");
+            listOfHouseRelsGood.Add("Proved to be a reliable ally on many past occasions");
+            listOfHouseRelsGood.Add("Foiled an evil plot against one of our ancestors");
+            listOfHouseRelsGood.Add("Provided valuable Political support in previous councils");
+            listOfHouseRelsGood.Add("A valued, long term trading partner");
+            listOfHouseRelsGood.Add("Saved the life of one of our ancestoral Lords on a hunting trip");
+            listOfHouseRelsGood.Add("Save the life of one of our ancestoral Lords during a bandit attack");
+            listOfHouseRelsGood.Add("Provided a good education to wards of the House");
+            listOfHouseRelsGood.Add("A strong friendship existed between past Lords of both Houses");
+            //bad
+            listOfHouseRelsBad.Add("An ancestral Lord was humiliated by a their daughter being spurned at the Altar");
+            listOfHouseRelsBad.Add("The child ward of a past Lord was murdered while in their care");
+            listOfHouseRelsBad.Add("Accused of Stealing herds of our Livestock");
+            listOfHouseRelsBad.Add("Raided our lands and carried off women from the villages");
+            listOfHouseRelsBad.Add("Fought a small war over disputed land");
+            listOfHouseRelsBad.Add("Abandoned a past Lord, in his time of need, on the field of Battle");
+            listOfHouseRelsBad.Add("Allegedly attempted to infiltrate an Assassin into the court of an Ancestral Lord");
+            listOfHouseRelsBad.Add("Engaged in a longstanding blood feud over matters long forgotten");
+            listOfHouseRelsBad.Add("Contested our claim of ownership to a valuable parcel of land");
+            listOfHouseRelsBad.Add("Claim our Lands by virtue of a distant, and dubious, marriage");
+            listOfHouseRelsBad.Add("Rumoured to mate with livestock as a disgusting rite-of-passage");
+
+            //set up constants
+            int relEffect = Game.constant.GetValue(Global.HOUSE_REL_EFFECT);
+            int chanceGood = Game.constant.GetValue(Global.HOUSE_REL_GOOD);
+            chanceGood = Math.Min(50, chanceGood);
+            chanceGood = Math.Max(1, chanceGood);
+            //loop Major Houses
+            foreach (MajorHouse house in listOfMajorHouses)
+            {
+                //create a new list 
+                List<MajorHouse> listTempHouses = new List<MajorHouse>();
+                listTempHouses.AddRange(listOfMajorHouses);
+                //find and remove current house
+                for(int i = 0; i < listTempHouses.Count; i++)
+                {
+                    MajorHouse tempHouse = listTempHouses[i];
+                    if (tempHouse.HouseID == house.HouseID)
+                    { listTempHouses.RemoveAt(i); break; }
+                }
+                //randomly choose a good, bad or none past relationship
+                int rndNum = rnd.Next(100);
+                if (rndNum <= chanceGood)
+                {
+                    //good past relationship
+                }
+                else if (rndNum <= (chanceGood * 2))
+                {
+                    //bad past relationship
                 }
             }
         }

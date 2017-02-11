@@ -45,6 +45,8 @@ namespace Next_Game
         RESULT_FACTOR,
         OPPONENT_MARGIN,
         TALK_THRESHOLD,
+        HOUSE_REL_GOOD,
+        HOUSE_REL_EFFECT,
         Count //keep as last
     }
 
@@ -97,6 +99,8 @@ namespace Next_Game
             arrayOfGlobals[37] = Global.RESULT_FACTOR;
             arrayOfGlobals[38] = Global.OPPONENT_MARGIN;
             arrayOfGlobals[39] = Global.TALK_THRESHOLD;
+            arrayOfGlobals[40] = Global.HOUSE_REL_GOOD;
+            arrayOfGlobals[41] = Global.HOUSE_REL_EFFECT;
             }
 
         /// <summary>
