@@ -2408,8 +2408,11 @@ namespace Next_Game
 
             //set up constants
             int rndIndex;
+            
             int relEffect = 0;
             string relText;
+            int yearStart = Game.constant.GetValue(Global.GAME_PAST);
+            int yearEnd = Game.constant.GetValue(Global.GAME_REVOLT);
             int effectConstant = Game.constant.GetValue(Global.HOUSE_REL_EFFECT);
             int chanceGood = Game.constant.GetValue(Global.HOUSE_REL_GOOD);
             chanceGood = Math.Min(50, chanceGood);
@@ -2418,45 +2421,53 @@ namespace Next_Game
             //loop Major Houses
             foreach (MajorHouse house in listOfMajorHouses)
             {
-                //create a new list 
-                List<MajorHouse> listTempHouses = new List<MajorHouse>();
-                listTempHouses.AddRange(listOfMajorHouses);
-                //find and remove current house
-                for(int i = 0; i < listTempHouses.Count; i++)
+                if (listOfHouseRelsGood.Count > 0 && listOfHouseRelsBad.Count > 0)
                 {
-                    MajorHouse tempHouse = listTempHouses[i];
-                    if (tempHouse.HouseID == house.HouseID)
-                    { listTempHouses.RemoveAt(i); break; }
+                    //create a new list 
+                    List<MajorHouse> listTempHouses = new List<MajorHouse>();
+                    listTempHouses.AddRange(listOfMajorHouses);
+                    //find and remove current house
+                    for (int i = 0; i < listTempHouses.Count; i++)
+                    {
+                        MajorHouse tempHouse = listTempHouses[i];
+                        if (tempHouse.HouseID == house.HouseID)
+                        { listTempHouses.RemoveAt(i); break; }
+                    }
+                    //randomly choose a good, bad or none past relationship
+                    relText = "";
+                    int rndNum = rnd.Next(100);
+                    if (rndNum <= chanceGood)
+                    {
+                        //good past relationship
+                        rndIndex = rnd.Next(0, listOfHouseRelsGood.Count);
+                        relText = listOfHouseRelsGood[rndIndex];
+                        listOfHouseRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
+                        relEffect = 1;
+                    }
+                    else if (rndNum <= (chanceGood * 2))
+                    {
+                        //bad past relationship
+                        rndIndex = rnd.Next(0, listOfHouseRelsBad.Count);
+                        relText = listOfHouseRelsBad[rndIndex];
+                        listOfHouseRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
+                        relEffect = -1;
+                    }
+                    //relationship between houses present?
+                    if (String.IsNullOrEmpty(relText) == false)
+                    {
+                        //year occurred
+                        int year = rnd.Next(yearStart - 1, yearEnd);
+                        //effect
+                        relEffect *= rnd.Next(1, effectConstant);
+                        //choose a random house from list
+                        int tempIndex = rnd.Next(0, listTempHouses.Count);
+                        MajorHouse rndHouse = listTempHouses[tempIndex];
+                        Console.WriteLine("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year);
+                    }
+                    Console.WriteLine("House {0}, refID {1}, Relations", house.Name, house.RefID);
                 }
-                //randomly choose a good, bad or none past relationship
-                relText = "";
-                int rndNum = rnd.Next(100);
-                if (rndNum <= chanceGood)
-                {
-                    //good past relationship
-                    rndIndex = rnd.Next(0, listOfHouseRelsGood.Count);
-                    relText = listOfHouseRelsGood[rndIndex];
-                    listOfHouseRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
-                    relEffect = 1;
-                }
-                else if (rndNum <= (chanceGood * 2))
-                {
-                    //bad past relationship
-                    rndIndex = rnd.Next(0, listOfHouseRelsBad.Count);
-                    relText = listOfHouseRelsBad[rndIndex];
-                    listOfHouseRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
-                    relEffect = -1;
-                }
-                //relationship between houses present?
-                if (String.IsNullOrEmpty(relText) == false)
-                {
-                    relEffect *= rnd.Next(1, effectConstant);
-                    //choose a random house from list
-                    int tempIndex = rnd.Next(0, listTempHouses.Count);
-                    MajorHouse rndHouse = listTempHouses[tempIndex];
-                    Console.WriteLine("- House {0}, ID {1}, \"{2}\" {3}{4}", rndHouse.Name, rndHouse.HouseID, relText, relEffect > 0 ? "+" : "", relEffect);
-                }
-                Console.WriteLine("House {0}, ID {1}, Relations", house.Name, house.HouseID);
+                else
+                { Game.SetError(new Error(131, "List of Good or Bad Rel Reasons (Major House Past History) exhausted")); }
             }
             
         }

@@ -47,6 +47,7 @@ namespace Next_Game
         TALK_THRESHOLD,
         HOUSE_REL_GOOD,
         HOUSE_REL_EFFECT,
+        GAME_PAST,
         Count //keep as last
     }
 
@@ -101,6 +102,7 @@ namespace Next_Game
             arrayOfGlobals[39] = Global.TALK_THRESHOLD;
             arrayOfGlobals[40] = Global.HOUSE_REL_GOOD;
             arrayOfGlobals[41] = Global.HOUSE_REL_EFFECT;
+            arrayOfGlobals[42] = Global.GAME_PAST;
             }
 
         /// <summary>
