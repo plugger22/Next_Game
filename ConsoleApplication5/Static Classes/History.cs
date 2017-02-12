@@ -109,6 +109,8 @@ namespace Next_Game
             InitialisePlayer();
             InitialiseCapital();
             InitialiseFollowers(Game.file.GetFollowers("Followers.txt"));
+            //Past Relationship Histories
+            InitialisePastHistoryHouses();
             
         }
 
@@ -2405,10 +2407,14 @@ namespace Next_Game
             listOfHouseRelsBad.Add("Rumoured to mate with livestock as a disgusting rite-of-passage");
 
             //set up constants
-            int relEffect = Game.constant.GetValue(Global.HOUSE_REL_EFFECT);
+            int rndIndex;
+            int relEffect = 0;
+            string relText;
+            int effectConstant = Game.constant.GetValue(Global.HOUSE_REL_EFFECT);
             int chanceGood = Game.constant.GetValue(Global.HOUSE_REL_GOOD);
             chanceGood = Math.Min(50, chanceGood);
             chanceGood = Math.Max(1, chanceGood);
+            Console.WriteLine(Environment.NewLine + "--- Past History Houses");
             //loop Major Houses
             foreach (MajorHouse house in listOfMajorHouses)
             {
@@ -2423,16 +2429,36 @@ namespace Next_Game
                     { listTempHouses.RemoveAt(i); break; }
                 }
                 //randomly choose a good, bad or none past relationship
+                relText = "";
                 int rndNum = rnd.Next(100);
                 if (rndNum <= chanceGood)
                 {
                     //good past relationship
+                    rndIndex = rnd.Next(0, listOfHouseRelsGood.Count);
+                    relText = listOfHouseRelsGood[rndIndex];
+                    listOfHouseRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
+                    relEffect = 1;
                 }
                 else if (rndNum <= (chanceGood * 2))
                 {
                     //bad past relationship
+                    rndIndex = rnd.Next(0, listOfHouseRelsBad.Count);
+                    relText = listOfHouseRelsBad[rndIndex];
+                    listOfHouseRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
+                    relEffect = -1;
                 }
+                //relationship between houses present?
+                if (String.IsNullOrEmpty(relText) == false)
+                {
+                    relEffect *= rnd.Next(1, effectConstant);
+                    //choose a random house from list
+                    int tempIndex = rnd.Next(0, listTempHouses.Count);
+                    MajorHouse rndHouse = listTempHouses[tempIndex];
+                    Console.WriteLine("- House {0}, ID {1}, \"{2}\" {3}{4}", rndHouse.Name, rndHouse.HouseID, relText, relEffect > 0 ? "+" : "", relEffect);
+                }
+                Console.WriteLine("House {0}, ID {1}, Relations", house.Name, house.HouseID);
             }
+            
         }
 
         //add methods above
