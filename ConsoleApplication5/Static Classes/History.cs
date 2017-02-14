@@ -2418,9 +2418,12 @@ namespace Next_Game
             chanceGood = Math.Min(50, chanceGood);
             chanceGood = Math.Max(1, chanceGood);
             Console.WriteLine(Environment.NewLine + "--- Past History Houses");
+            List<Relation> tempList = new List<Relation>();
             //loop Major Houses
             foreach (MajorHouse house in listOfMajorHouses)
             {
+                //zero out temp list
+                tempList.Clear();
                 if (listOfHouseRelsGood.Count > 0 && listOfHouseRelsBad.Count > 0)
                 {
                     //create a new list 
@@ -2463,11 +2466,17 @@ namespace Next_Game
                         int tempIndex = rnd.Next(0, listTempHouses.Count);
                         MajorHouse rndHouse = listTempHouses[tempIndex];
                         Console.WriteLine("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year);
+                        //add to list
+                        Relation relation = new Relation(relText, "", relEffect) { RefID = rndHouse.RefID, ActorID = 0 };
+                        tempList.Add(relation);
                     }
                     Console.WriteLine("House {0}, refID {1}, Relations", house.Name, house.RefID);
                 }
                 else
                 { Game.SetError(new Error(131, "List of Good or Bad Rel Reasons (Major House Past History) exhausted")); }
+                //export relations to House
+                if (tempList.Count > 0)
+                { house.SetRelations(tempList); }
             }
             
         }

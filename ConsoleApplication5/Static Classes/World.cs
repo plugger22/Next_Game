@@ -1009,7 +1009,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Display House data to main infoConsole (input either houseID or refID, will check houseID first)
+        /// Display Major House data to main infoConsole (input either houseID or refID, will check houseID first)
         /// </summary>
         /// <param name="houseID"></param>
         /// <param name="refID"></param>
@@ -1142,6 +1142,18 @@ namespace Next_Game
                                 break;
                         }
                         houseList.Add(new Snippet(personText + locString, locColor, RLColor.Black));
+                    }
+                }
+                //Relationships
+                List<Relation> tempListRelations = majorHouse.GetRelations(majorHouse.RefID);
+                if (tempListRelations != null)
+                {
+                    houseList.Add(new Snippet("Relations with Other Houses", RLColor.Brown, RLColor.Black));
+                    foreach(Relation relation in tempListRelations)
+                    {
+                        string houseText = string.Format("{0}: \"{1}\" in the year {2}, effect {3}{4}", GetHouseName(relation.RefID), relation.Text, relation.Year,
+                            relation.Change > 0 ? "+" : "", relation.Change);
+                        houseList.Add(new Snippet(houseText));
                     }
                 }
                 //house history
