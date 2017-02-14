@@ -26,6 +26,8 @@ namespace Next_Game
         MAP_SIZE,
         GAME_START,
         GAME_REVOLT,
+        GAME_STATE,
+        GAME_PAST,
         MAP_DIVISOR,
         CONNECTOR_MIN,
         CONNECTOR_MAX,
@@ -35,7 +37,6 @@ namespace Next_Game
         FOREST_LARGE,
         NUM_FOLLOWERS,
         TRAIT_MULTIPLIER,
-        GAME_STATE,
         HAND_CARDS_NUM,
         PLAYER_INFLUENCE,
         NEUTRAL_EFFECT,
@@ -47,7 +48,8 @@ namespace Next_Game
         TALK_THRESHOLD,
         HOUSE_REL_GOOD,
         HOUSE_REL_EFFECT,
-        GAME_PAST,
+        HOUSE_REL_NUM,
+        
         Count //keep as last
     }
 
@@ -103,6 +105,7 @@ namespace Next_Game
             arrayOfGlobals[40] = Global.HOUSE_REL_GOOD;
             arrayOfGlobals[41] = Global.HOUSE_REL_EFFECT;
             arrayOfGlobals[42] = Global.GAME_PAST;
+            arrayOfGlobals[43] = Global.HOUSE_REL_NUM;
             }
 
         /// <summary>

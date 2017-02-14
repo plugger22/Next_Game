@@ -141,7 +141,7 @@ namespace Next_Game
     }
 
     //
-    // Great house ---
+    // Major (Great) house ---
     //
     class MajorHouse : House
     {

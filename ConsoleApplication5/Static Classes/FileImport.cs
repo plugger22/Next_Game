@@ -3015,6 +3015,67 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Import Relationship lists (Houses and Actors)
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        internal string[][] GetRelations(string fileName)
+        {
+            //master jagged array which will be returned, NOTE: add to enum 'RelListType' (Tracker.cs) for each unique new Relationship lis
+            string[][] arrayOfNames = new string[(int)RelListType.Count][];
+            string tempString;
+            //temporary sub lists for each category of geoNames
+            List<string> listOfHousePastGood = new List<string>();
+            List<string> listOfHousePastBad = new List<string>();
+            //import data from file
+            string[] arrayOfRelTexts = ImportDataFile(fileName);
+            if (arrayOfRelTexts != null)
+            {
+
+                //read location names from array into list
+                string nameType = null;
+                char[] charsToTrim = { '[', ']' };
+                for (int i = 0; i < arrayOfRelTexts.Length; i++)
+                {
+                    if (arrayOfRelTexts[i] != "" && !arrayOfRelTexts[i].StartsWith("#"))
+                    {
+                        //which sublist are we dealing with
+                        tempString = arrayOfRelTexts[i];
+                        //trim off leading and trailing whitespace
+                        tempString = tempString.Trim();
+                        if (tempString.StartsWith("["))
+                        { nameType = tempString.Trim(charsToTrim); }
+                        else if (nameType != null)
+                        {
+                            //place in the correct list
+                            switch (nameType)
+                            {
+                                case "Major House Good":
+                                    listOfHousePastGood.Add(tempString);
+                                    break;
+                                case "Major House Bad":
+                                    listOfHousePastBad.Add(tempString);
+                                    break;
+                                default:
+                                    Game.SetError(new Error(133, string.Format("Invalid Relationship Category {0}, record {1}", nameType, i)));
+                                    break;
+                            }
+                        }
+                    }
+                }
+                //size jagged array
+                arrayOfNames[(int)RelListType.HousePastGood] = new string[listOfHousePastGood.Count];
+                arrayOfNames[(int)RelListType.HousePastBad] = new string[listOfHousePastBad.Count];
+                //populate from lists
+                arrayOfNames[(int)RelListType.HousePastGood] = listOfHousePastGood.ToArray();
+                arrayOfNames[(int)RelListType.HousePastBad] = listOfHousePastBad.ToArray();
+            }
+            else
+            { Game.SetError(new Error(23, string.Format("File not found (\"{0}\")", fileName))); }
+            return arrayOfNames;
+        }
+
+        /// <summary>
         /// Import Followers
         /// </summary>
         /// <param name="fileName"></param>

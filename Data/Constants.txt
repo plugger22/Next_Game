@@ -114,3 +114,5 @@
 40: 30
 # HOUSE_REL_EFFECT -> 1dx relationship effect for any, past history, relationship incident
 41: 30
+# HOUSE_REL_NUM -> number of rolls for each house for possible relations with others
+43: 3

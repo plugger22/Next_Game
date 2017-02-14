@@ -11,9 +11,10 @@ namespace Next_Game
         //conflict -> actor involved in a battle/siege
     public enum HistHouseIncident { None, Allegiance, Ownership }
     public enum HistKingdomIncident { None, Battle, Siege }
-
     //categorires -> Used for Messages
     public enum MessageType { None, System, Move, Crow, Activation, Event, Conflict }
+    //Relationship List Categories
+    public enum RelListType { HousePastGood, HousePastBad, Count }
 
     /// <summary>
     /// Base class (not used directly)
