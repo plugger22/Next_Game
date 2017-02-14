@@ -590,6 +590,18 @@ namespace Next_Game
                                     _inputState = 1;
                                     _mouseOn = true;
                                     break;
+                                case MenuMode.Debug:
+                                    //Show House Relations
+                                    List<string> tempList = history.GetHouseMasterRels();
+                                    if (tempList != null && tempList.Count > 0)
+                                    {
+                                        List<Snippet> tempSnippets = new List<Snippet>();
+                                        foreach(string text in tempList)
+                                        { tempSnippets.Add(new Snippet(text)); }
+                                        infoChannel.SetInfoList( tempSnippets, ConsoleDisplay.Multi);
+                                        infoChannel.InsertHeader(new Snippet("--- House Relationships ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    }
+                                    break;
                             }
                             break;
                         case RLKey.K:

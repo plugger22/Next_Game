@@ -42,6 +42,7 @@ namespace Next_Game
         //Relationships
         private List<string> listOfHouseRelsGood;
         private List<string> listOfHouseRelsBad;
+        private List<string> listOfHouseRelsMaster; //debug purposes only, all past house relations 
         static Random rnd;
 
         /// <summary>
@@ -72,6 +73,7 @@ namespace Next_Game
             listOfDiseases = new List<string>();
             listOfHouseRelsGood = new List<string>();
             listOfHouseRelsBad = new List<string>();
+            listOfHouseRelsMaster = new List<string>();
         }
 
 
@@ -2409,7 +2411,7 @@ namespace Next_Game
             //set up constants
             int rndIndex;
             int relEffect = 0;
-            string relText;
+            string relText, masterText;
             int yearStart = Game.constant.GetValue(Global.GAME_PAST);
             int yearEnd = Game.constant.GetValue(Global.GAME_REVOLT);
             int effectConstant = Game.constant.GetValue(Global.HOUSE_REL_EFFECT);
@@ -2468,9 +2470,14 @@ namespace Next_Game
                         int tempIndex = rnd.Next(0, listTempHouses.Count);
                         MajorHouse rndHouse = listTempHouses[tempIndex];
                         Console.WriteLine("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year);
-                        //add to list
+                        //add to House list
                         Relation relation = new Relation(relText, "", relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
                         tempListRelations.Add(relation);
+                        //add to Master list
+                        masterText = string.Format("{0} {1} -> {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);
+                        listOfHouseRelsMaster.Add(masterText);
+                        Console.WriteLine("MASTER: {0}", masterText);
+
                     }
                     Console.WriteLine("House {0}, refID {1}, Relations", house.Name, house.RefID);
                 }
@@ -2480,8 +2487,11 @@ namespace Next_Game
                 if (tempListRelations.Count > 0)
                 { house.SetRelations(tempListRelations); }
             }
-            
         }
+
+
+        internal List<string> GetHouseMasterRels()
+        { return listOfHouseRelsMaster; }
 
         //add methods above
     }
