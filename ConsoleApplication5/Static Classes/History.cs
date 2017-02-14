@@ -2386,29 +2386,28 @@ namespace Next_Game
             listOfHouseRelsGood.Add("Blood bonds forged between past Lords");
             listOfHouseRelsGood.Add("Gifted lands to our House");
             listOfHouseRelsGood.Add("Proved to be a reliable ally on many past occasions");
-            listOfHouseRelsGood.Add("Foiled an evil plot against one of our ancestors");
+            listOfHouseRelsGood.Add("Foiled an evil plot against a past Lord");
             listOfHouseRelsGood.Add("Provided valuable Political support in previous councils");
             listOfHouseRelsGood.Add("A valued, long term trading partner");
             listOfHouseRelsGood.Add("Saved the life of one of our ancestoral Lords on a hunting trip");
-            listOfHouseRelsGood.Add("Save the life of one of our ancestoral Lords during a bandit attack");
+            listOfHouseRelsGood.Add("Savde the life of one of our past Lords during a bandit attack");
             listOfHouseRelsGood.Add("Provided a good education to wards of the House");
             listOfHouseRelsGood.Add("A strong friendship existed between past Lords of both Houses");
             //bad
-            listOfHouseRelsBad.Add("An ancestral Lord was humiliated by a their daughter being spurned at the Altar");
+            listOfHouseRelsBad.Add("An ancestral Lord was humiliated by their daughter being spurned at the Altar");
             listOfHouseRelsBad.Add("The child ward of a past Lord was murdered while in their care");
             listOfHouseRelsBad.Add("Accused of Stealing herds of our Livestock");
-            listOfHouseRelsBad.Add("Raided our lands and carried off women from the villages");
-            listOfHouseRelsBad.Add("Fought a small war over disputed land");
+            listOfHouseRelsBad.Add("Raided our lands and carried off women from our villages");
+            listOfHouseRelsBad.Add("Fought a small skirmish with us over disputed land");
             listOfHouseRelsBad.Add("Abandoned a past Lord, in his time of need, on the field of Battle");
             listOfHouseRelsBad.Add("Allegedly attempted to infiltrate an Assassin into the court of an Ancestral Lord");
             listOfHouseRelsBad.Add("Engaged in a longstanding blood feud over matters long forgotten");
             listOfHouseRelsBad.Add("Contested our claim of ownership to a valuable parcel of land");
-            listOfHouseRelsBad.Add("Claim our Lands by virtue of a distant, and dubious, marriage");
+            listOfHouseRelsBad.Add("Claim our Lands by virtue of a distant, dubious, marriage");
             listOfHouseRelsBad.Add("Rumoured to mate with livestock as a disgusting rite-of-passage");
 
             //set up constants
             int rndIndex;
-            
             int relEffect = 0;
             string relText;
             int yearStart = Game.constant.GetValue(Global.GAME_PAST);
@@ -2417,6 +2416,8 @@ namespace Next_Game
             int chanceGood = Game.constant.GetValue(Global.HOUSE_REL_GOOD);
             chanceGood = Math.Min(50, chanceGood);
             chanceGood = Math.Max(1, chanceGood);
+            int interval = yearEnd - yearStart - 50;
+            interval = Math.Max(50, interval);
             Console.WriteLine(Environment.NewLine + "--- Past History Houses");
             List<Relation> tempList = new List<Relation>();
             //loop Major Houses
@@ -2459,7 +2460,8 @@ namespace Next_Game
                     if (String.IsNullOrEmpty(relText) == false)
                     {
                         //year occurred
-                        int year = rnd.Next(yearStart - 1, yearEnd);
+                        
+                        int year = yearStart + rnd.Next(interval);
                         //effect
                         relEffect *= rnd.Next(1, effectConstant);
                         //choose a random house from list
@@ -2467,7 +2469,7 @@ namespace Next_Game
                         MajorHouse rndHouse = listTempHouses[tempIndex];
                         Console.WriteLine("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year);
                         //add to list
-                        Relation relation = new Relation(relText, "", relEffect) { RefID = rndHouse.RefID, ActorID = 0 };
+                        Relation relation = new Relation(relText, "", relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
                         tempList.Add(relation);
                     }
                     Console.WriteLine("House {0}, refID {1}, Relations", house.Name, house.RefID);

@@ -81,7 +81,7 @@
 # GAME_STATE -> honour (treachery) & legend (combat) good ( trait > 3) or bad (trait < 3), per point difference from baseline of 3
 30: 2
 # GAME_PAST -> base year for past history events (happen between this year and the GAME_REVOLT)
-42: 1100
+42: 1000
 
 # Decisions ---
 

@@ -1145,13 +1145,13 @@ namespace Next_Game
                     }
                 }
                 //Relationships
-                List<Relation> tempListRelations = majorHouse.GetRelations(majorHouse.RefID);
-                if (tempListRelations != null)
+                List<Relation> tempListRelations = majorHouse.GetRelations();
+                if (tempListRelations != null && tempListRelations.Count > 0)
                 {
                     houseList.Add(new Snippet("Relations with Other Houses", RLColor.Brown, RLColor.Black));
                     foreach(Relation relation in tempListRelations)
                     {
-                        string houseText = string.Format("{0}: \"{1}\" in the year {2}, effect {3}{4}", GetHouseName(relation.RefID), relation.Text, relation.Year,
+                        string houseText = string.Format("{0} House {1}, \"{2}\", Rel {3}{4}", relation.Year, GetHouseName(relation.RefID), relation.Text, 
                             relation.Change > 0 ? "+" : "", relation.Change);
                         houseList.Add(new Snippet(houseText));
                     }

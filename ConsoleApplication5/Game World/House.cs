@@ -114,12 +114,16 @@ namespace Next_Game
             else { Game.SetError(new Error(132, "Invalid List of Relations Input (null or empty)")); }
         }
 
+
+        internal List<Relation> GetRelations()
+        { return listOfRelations; }
+
         /// <summary>
         /// Return a list of Relations that apply to the House with the input refID. Returns null if none.
         /// </summary>
         /// <param name="refID"></param>
         /// <returns></returns>
-        internal List<Relation> GetRelations(int refID)
+        internal List<Relation> GetSpecificRelations(int refID)
         {
             List<Relation> tempList = null;
             if (listOfRelations.Count > 0)
@@ -127,7 +131,7 @@ namespace Next_Game
                 tempList = new List<Relation>();
                 IEnumerable<Relation> houseRels =
                     from relation in listOfRelations
-                    where refID == relation.RefID
+                    where relation.RefID == refID
                     orderby relation.Year
                     select relation;
                 tempList = houseRels.ToList();
