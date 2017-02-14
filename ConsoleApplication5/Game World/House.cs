@@ -34,6 +34,7 @@ namespace Next_Game
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
+        private List<Relation> listOfRelations; //relationships with other houses (can have multiple relations with another house)
 
         /// <summary>
         /// default constructor
@@ -44,6 +45,7 @@ namespace Next_Game
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
+            listOfRelations = new List<Relation>();
         }
 
 
@@ -101,6 +103,37 @@ namespace Next_Game
             { Game.SetError(new Error(57, "Invalid list of Secrets input (null)")); }
         }
 
+        /// <summary>
+        /// import a list of Relations and add to House Relations List
+        /// </summary>
+        /// <param name="tempList"></param>
+        internal void SetRelations(List<Relation> tempList)
+        {
+            if (tempList != null && tempList.Count > 0)
+            { listOfRelations.AddRange(tempList); }
+            else { Game.SetError(new Error(132, "Invalid List of Relations Input (null or empty)")); }
+        }
+
+        /// <summary>
+        /// Return a list of Relations that apply to the House with the input refID. Returns null if none.
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        internal List<Relation> GetRelations(int refID)
+        {
+            List<Relation> tempList = null;
+            if (listOfRelations.Count > 0)
+            {
+                tempList = new List<Relation>();
+                IEnumerable<Relation> houseRels =
+                    from relation in listOfRelations
+                    where refID == relation.RefID
+                    orderby relation.Year
+                    select relation;
+                tempList = houseRels.ToList();
+            }
+            return tempList;
+        }
     }
 
     //

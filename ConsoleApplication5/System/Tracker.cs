@@ -269,11 +269,12 @@ namespace Next_Game
     }
 
     /// <summary>
-    /// all messages related to relationships. Stored with each actor
+    /// all messages related to relationships. Stored with each actor. Also used to track relationship levels.
     /// </summary>
     public class Relation : Tracker
     {
         public int ActorID { get; set; } //actor to whom this relationship effect applies to (if other's involved place them in the list of Actors
+        public int RefID { get; set; } //house to whom this relationship effect applies (used for House -> House relationships)
         public string Tag { get; set; } //short form description (max 4 words)
         public int Change { get; set; } //the effect on a relationship level, eg. +25
         public int Level { get; set; } //current relationship level with that character, AFTER change has been applied

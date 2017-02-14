@@ -1,6 +1,31 @@
+Notes:
 
-Status: Dormant
-Live: 3
+Here's a few fixes to deal with a number of small issues that have arisen since last months Beta patch. Having sent the file to Vic it will be up to him as to when a new Beta patch arrives.
+
+1. Text added to tool tip in Relationship tab to highlight data that is valid at the start of the turn but that may have changed since.
+
+2. Detailed Panzergruppe Reports will no longer display if the PG has no remaining units apart from the PG HQ (which automatically reconstitutes if overrun)
+
+3. Tweaked the rule that has Soviet units auto-surrendering after a certain time of being cut-off (which they did historically once they had expended their ammunition). Now any Soviet units in the Black Sea ports of Odessa and Sevastopol will be exempt from this rule as they have adequate supplies, by sea, to fight on. This will make taking Odessa and Sevastopol more of challenge if defended by the Soviets. Units adjacent to these ports, or nearby, won't benefit from the exemption, only those inside the ports will do so.
+
+To maintain a reasonable balance the new, exempt-from-surrender rules, will only apply to PBEM games and games where the Player is commanding the Soviets and the AI is set to any difficulty higher than normal. For those that play on the standard, normal AI, settings, there is no change.
+
+Riga, being on the Baltic Sea and more susceptible to the Luftwaffe, will continue to play as normal regardless of settings, eg. Garrisons will never surrender but any Divisions may do so after a period of being Cut-Off.
+
+Cheers,
+Cameron
+
+Hi Vic,
+
+Here are some more updates.
+
+- link -
+
+With the last update you appear to have killed off the button in the Event editor, "Click to export events as text log files". Makes it difficult.
+
+Cheers,
+Cameron
+
 
 Name: Auto MajorHouse Action
 ID: 1001
