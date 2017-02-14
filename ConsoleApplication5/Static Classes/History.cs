@@ -2419,12 +2419,12 @@ namespace Next_Game
             int interval = yearEnd - yearStart - 50;
             interval = Math.Max(50, interval);
             Console.WriteLine(Environment.NewLine + "--- Past History Houses");
-            List<Relation> tempList = new List<Relation>();
+            List<Relation> tempListRelations = new List<Relation>();
             //loop Major Houses
             foreach (MajorHouse house in listOfMajorHouses)
             {
                 //zero out temp list
-                tempList.Clear();
+                tempListRelations.Clear();
                 if (listOfHouseRelsGood.Count > 0 && listOfHouseRelsBad.Count > 0)
                 {
                     //create a new list 
@@ -2434,7 +2434,7 @@ namespace Next_Game
                     for (int i = 0; i < listTempHouses.Count; i++)
                     {
                         MajorHouse tempHouse = listTempHouses[i];
-                        if (tempHouse.HouseID == house.HouseID)
+                        if (tempHouse.RefID == house.RefID)
                         { listTempHouses.RemoveAt(i); break; }
                     }
                     //randomly choose a good, bad or none past relationship
@@ -2470,15 +2470,15 @@ namespace Next_Game
                         Console.WriteLine("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year);
                         //add to list
                         Relation relation = new Relation(relText, "", relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
-                        tempList.Add(relation);
+                        tempListRelations.Add(relation);
                     }
                     Console.WriteLine("House {0}, refID {1}, Relations", house.Name, house.RefID);
                 }
                 else
                 { Game.SetError(new Error(131, "List of Good or Bad Rel Reasons (Major House Past History) exhausted")); }
                 //export relations to House
-                if (tempList.Count > 0)
-                { house.SetRelations(tempList); }
+                if (tempListRelations.Count > 0)
+                { house.SetRelations(tempListRelations); }
             }
             
         }
