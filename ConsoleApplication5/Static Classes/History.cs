@@ -2385,38 +2385,9 @@ namespace Next_Game
         /// </summary>
         public void InitialisePastHistoryHouses()
         {
-            /*
-            //good
-            listOfHouseRelsGood.Add("Helped out in times of Trouble");
-            listOfHouseRelsGood.Add("Saved the day in a past Battle");
-            listOfHouseRelsGood.Add("Blood bonds forged between past Lords");
-            listOfHouseRelsGood.Add("Gifted lands to our House");
-            listOfHouseRelsGood.Add("Proved to be a reliable ally on many past occasions");
-            listOfHouseRelsGood.Add("Foiled an evil plot against a past Lord");
-            listOfHouseRelsGood.Add("Provided valuable Political support in previous councils");
-            listOfHouseRelsGood.Add("A valued, long term trading partner");
-            listOfHouseRelsGood.Add("Saved the life of one of our ancestoral Lords on a hunting trip");
-            listOfHouseRelsGood.Add("Saved the life of one of our past Lords during a bandit attack");
-            listOfHouseRelsGood.Add("Provided a good education to wards of the House");
-            listOfHouseRelsGood.Add("A strong friendship existed between past Lords of both Houses");
-            //bad
-            listOfHouseRelsBad.Add("An ancestral Lord was humiliated by their daughter being spurned at the Altar");
-            listOfHouseRelsBad.Add("The child ward of a past Lord was murdered while in their care");
-            listOfHouseRelsBad.Add("Accused of Stealing herds of our Livestock");
-            listOfHouseRelsBad.Add("Raided our lands and carried off women from our villages");
-            listOfHouseRelsBad.Add("Fought a small skirmish with us over disputed land");
-            listOfHouseRelsBad.Add("Abandoned a past Lord, in his time of need, on the field of Battle");
-            listOfHouseRelsBad.Add("Allegedly attempted to infiltrate an Assassin into the court of an Ancestral Lord");
-            listOfHouseRelsBad.Add("Engaged in a longstanding blood feud over matters long forgotten");
-            listOfHouseRelsBad.Add("Contested our claim of ownership to a valuable parcel of land");
-            listOfHouseRelsBad.Add("Claim our Lands by virtue of a distant, dubious, marriage");
-            listOfHouseRelsBad.Add("Rumoured to mate with livestock as a disgusting rite-of-passage");
-            */
-            
             //convert array data to lists
             listOfHouseRelsGood = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastGood].ToList());
             listOfHouseRelsBad = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastBad].ToList());
-
             //set up constants
             int rndIndex;
             int relEffect = 0;
