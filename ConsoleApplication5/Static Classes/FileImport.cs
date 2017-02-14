@@ -3050,10 +3050,10 @@ namespace Next_Game
                             //place in the correct list
                             switch (nameType)
                             {
-                                case "Major House Good":
+                                case "Major_House_Good":
                                     listOfHousePastGood.Add(tempString);
                                     break;
-                                case "Major House Bad":
+                                case "Major_House_Bad":
                                     listOfHousePastBad.Add(tempString);
                                     break;
                                 default:

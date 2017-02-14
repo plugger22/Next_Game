@@ -11,6 +11,7 @@ namespace Next_Game
     //Location data flow: create in Map => Network to generate routes => History to generate names and data => World for current state and future changes
     public class History
     {
+        static Random rnd;
         //Capital
         public int CapitalWalls { get; set; } //strength of capital walls (1 to 5)
         public int CapitalTreasury { get; set; } //size of capital treasury (resources to run the kingdom) (1 to 5)
@@ -43,7 +44,7 @@ namespace Next_Game
         private List<string> listOfHouseRelsGood;
         private List<string> listOfHouseRelsBad;
         private List<string> listOfHouseRelsMaster; //debug purposes only, all past house relations 
-        static Random rnd;
+        private string[][] arrayOfRelTexts;
 
         /// <summary>
         ///default constructor
@@ -74,6 +75,7 @@ namespace Next_Game
             listOfHouseRelsGood = new List<string>();
             listOfHouseRelsBad = new List<string>();
             listOfHouseRelsMaster = new List<string>();
+            arrayOfRelTexts = new string[(int)RelListType.Count][];
         }
 
 
@@ -112,6 +114,7 @@ namespace Next_Game
             InitialiseCapital();
             InitialiseFollowers(Game.file.GetFollowers("Followers.txt"));
             //Past Relationship Histories
+            arrayOfRelTexts = Game.file.GetRelations("RelLists.txt");
             InitialisePastHistoryHouses();
             
         }
@@ -2382,6 +2385,7 @@ namespace Next_Game
         /// </summary>
         public void InitialisePastHistoryHouses()
         {
+            /*
             //good
             listOfHouseRelsGood.Add("Helped out in times of Trouble");
             listOfHouseRelsGood.Add("Saved the day in a past Battle");
@@ -2392,7 +2396,7 @@ namespace Next_Game
             listOfHouseRelsGood.Add("Provided valuable Political support in previous councils");
             listOfHouseRelsGood.Add("A valued, long term trading partner");
             listOfHouseRelsGood.Add("Saved the life of one of our ancestoral Lords on a hunting trip");
-            listOfHouseRelsGood.Add("Savde the life of one of our past Lords during a bandit attack");
+            listOfHouseRelsGood.Add("Saved the life of one of our past Lords during a bandit attack");
             listOfHouseRelsGood.Add("Provided a good education to wards of the House");
             listOfHouseRelsGood.Add("A strong friendship existed between past Lords of both Houses");
             //bad
@@ -2407,6 +2411,11 @@ namespace Next_Game
             listOfHouseRelsBad.Add("Contested our claim of ownership to a valuable parcel of land");
             listOfHouseRelsBad.Add("Claim our Lands by virtue of a distant, dubious, marriage");
             listOfHouseRelsBad.Add("Rumoured to mate with livestock as a disgusting rite-of-passage");
+            */
+            
+            //convert array data to lists
+            listOfHouseRelsGood = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastGood].ToList());
+            listOfHouseRelsBad = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastBad].ToList());
 
             //set up constants
             int rndIndex;
