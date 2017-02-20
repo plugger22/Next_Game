@@ -117,6 +117,7 @@ namespace Next_Game
             arrayOfRelTexts = Game.file.GetRelations("RelLists.txt");
             InitialisePastHistoryHouses();
             
+            
         }
 
         /// <summary>
@@ -2484,11 +2485,48 @@ namespace Next_Game
         {
             int houseID;
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetAllMajorHouses();
+            Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
             
             //loop dictonary
             foreach(var house in dictMajorHouses)
             {
                 houseID = house.Key;
+                //get list of all actors in that house
+                IEnumerable<Passive> houseActors =
+                    from actor in dictPassiveActors
+                    where actor.Value.HouseID == houseID
+                    orderby actor.Value.ActID
+                    select actor.Value;
+                List<Passive> tempActors = houseActors.ToList();
+                
+                //Process list of all actors in house
+                if (tempActors.Count > 0)
+                {
+                    Passive lord = null;
+                    //find Lord (must be alive and kicking)
+                    for(int i = 0; i < tempActors.Count; i++)
+                    {
+                        Passive actor = tempActors[i];
+                        if (actor.Type == ActorType.Lord && actor.Status != ActorStatus.Gone)
+                        { lord = actor; break; }
+                    }
+                    //Lord found?
+                    if (lord != null)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("{0} {1}, actID {2}, houseID {3}, \"{4}\"", lord.Title, lord.Name, lord.ActID, lord.HouseID, Game.world.GetMajorHouseName(houseID));
+                        //loop list and establish relations
+                        for (int i = 0; i < tempActors.Count; i++)
+                        {
+                            Passive actor = tempActors[i];
+                            if (actor.Type != ActorType.Lord && actor.Status != ActorStatus.Gone)
+                            {
+                                Console.WriteLine("  {0} {1}, actID {2}, houseID {3}", actor.Title, actor.Name, actor.ActID, actor.HouseID);
+                            }
+                        }
+                    }
+                }
+                               
             }
         }
 

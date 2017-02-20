@@ -134,10 +134,6 @@ namespace Next_Game
             listGenPlyrEventsMajor = new List<int>();
             listGenPlyrEventsMinor = new List<int>();
             listGenPlyrEventsInn = new List<int>();
-            /*listAutoPlyrEventsCapital = new List<int>();
-            listAutoPlyrEventsMajor = new List<int>();
-            listAutoPlyrEventsMinor = new List<int>();
-            listAutoPlyrEventsInn = new List<int>();*/
             //archetype player events
             listPlyrRoadEventsNormal = new List<int>();
             listPlyrRoadEventsKings = new List<int>();

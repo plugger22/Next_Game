@@ -131,7 +131,8 @@ namespace Next_Game
             timer_2.Start();
             InitialiseSecrets();
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
-            
+            Game.history.InitialiseLordRelations();
+
         }
 
         /// <summary>
@@ -1281,6 +1282,9 @@ namespace Next_Game
             { person = dictPassiveActors[actorID]; }
             return person;
         }
+
+        internal Dictionary<int, Passive> GetAllPassiveActors()
+        { return dictPassiveActors; }
 
         /// <summary>
         /// return an Active actor from dictActiveActors, otherwise null
