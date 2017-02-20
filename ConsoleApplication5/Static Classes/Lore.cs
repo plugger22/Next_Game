@@ -1051,6 +1051,7 @@ namespace Next_Game
                 newLord.arrayOfSkillInfluences = oldBannerLord.arrayOfSkillInfluences;
                 newLord.arrayOfTraitNames = oldBannerLord.arrayOfTraitNames;
                 newLord.Type = ActorType.Lord;
+                newLord.Title = string.Format("{0}", ActorType.Lord);
                 newLord.Realm = ActorRealm.Head_of_Noble_House;
                 newLord.LocID = locLord.LocationID;
                 newLord.Status = ActorStatus.AtLocation;

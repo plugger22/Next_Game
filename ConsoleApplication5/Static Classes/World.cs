@@ -131,8 +131,9 @@ namespace Next_Game
             timer_2.Start();
             InitialiseSecrets();
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
+            timer_2.Start();
             Game.history.InitialiseLordRelations();
-
+            Game.StopTimer(timer_2, "W: InitialiseLordRelations");
         }
 
         /// <summary>
