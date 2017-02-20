@@ -538,7 +538,7 @@ namespace Next_Game
                 if (actor is Noble)
                 {
                     Noble noble = actor as Noble;
-                    noble.MaidenName = Game.world.GetGreatHouseName(wifeHouseID);
+                    noble.MaidenName = Game.world.GetMajorHouseName(wifeHouseID);
                     //fertile?
                     if (age >= 13 && age <= 40)
                     { noble.Fertile = true; }
@@ -579,9 +579,9 @@ namespace Next_Game
                 noble.Lordship = actor.Born + lordshipAge;
                 descriptor = "unknown";
                 if (actor.Type == ActorType.Lord)
-                { descriptor = string.Format("{0} assumes Lordship of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge); }
+                { descriptor = string.Format("{0} assumes Lordship of House {1}, age {2}", actor.Name, Game.world.GetMajorHouseName(actor.HouseID), lordshipAge); }
                 else if (actor.Type == ActorType.BannerLord)
-                { descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge); }
+                { descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetMajorHouseName(actor.HouseID), lordshipAge); }
                 Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, noble.Lordship, HistActorIncident.Lordship);
                 Game.world.SetRecord(record);
             }
@@ -591,7 +591,7 @@ namespace Next_Game
                 BannerLord bannerlord = actor as BannerLord;
                 int lordshipAge = rnd.Next(20, age - 2);
                 bannerlord.Lordship = actor.Born + lordshipAge;
-                descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetGreatHouseName(actor.HouseID), lordshipAge);
+                descriptor = string.Format("{0} assumes Lordship, BannerLord of House {1}, age {2}", actor.Name, Game.world.GetMajorHouseName(actor.HouseID), lordshipAge);
                 Record record = new Record(descriptor, actor.ActID, actor.LocID, actor.RefID, bannerlord.Lordship, HistActorIncident.Lordship);
                 Game.world.SetRecord(record);
             }
@@ -713,7 +713,7 @@ namespace Next_Game
             knight.Realm = ActorRealm.None;
             InitialiseActorTraits(knight, null, null, SkillType.Combat, SkillType.Treachery);
             //record
-            string descriptor = string.Format("{0} knighted and swears allegiance to House {1}, age {2}", knight.Name, Game.world.GetGreatHouseName(knight.HouseID), knighted);
+            string descriptor = string.Format("{0} knighted and swears allegiance to House {1}, age {2}", knight.Name, Game.world.GetMajorHouseName(knight.HouseID), knighted);
             Record record = new Record(descriptor, knight.ActID, knight.LocID, knight.RefID, knight.Knighthood, HistActorIncident.Knighthood);
             Game.world.SetRecord(record);
             return knight;
@@ -790,7 +790,7 @@ namespace Next_Game
                     else if (advisorNoble == AdvisorNoble.Septon) { positiveTrait = SkillType.Charm; negativeTrait = SkillType.Treachery; }
                     else { positiveTrait = SkillType.Wits; negativeTrait = SkillType.Combat; }
                     //record
-                    descriptor = string.Format("{0} {1}, Aid {2}, entered the service of House {3}, age {4}", advisor.advisorNoble, advisor.Name, advisor.ActID, Game.world.GetGreatHouseName(houseID), startAge);
+                    descriptor = string.Format("{0} {1}, Aid {2}, entered the service of House {3}, age {4}", advisor.advisorNoble, advisor.Name, advisor.ActID, Game.world.GetMajorHouseName(houseID), startAge);
                     Record record = new Record(descriptor, advisor.ActID, locID, refID, yearCommenced, HistActorIncident.Service );
                     Game.world.SetRecord(record);
                 }
@@ -1488,7 +1488,7 @@ namespace Next_Game
                 { sex = ActorSex.Female; }
             }
             //get a random first name
-            string actorName = GetActorName(Game.world.GetGreatHouseName(Lord.HouseID), sex, Lady.RefID);
+            string actorName = GetActorName(Game.world.GetMajorHouseName(Lord.HouseID), sex, Lady.RefID);
             Noble child = new Noble(actorName, ActorType.None, sex);
             int age = Game.gameRevolt - year;
             age = Math.Max(age, 0);
@@ -1520,7 +1520,7 @@ namespace Next_Game
             //new child is DAUGHTER
             if (sex == ActorSex.Female)
             {
-                child.MaidenName = Game.world.GetGreatHouseName(Lord.HouseID);
+                child.MaidenName = Game.world.GetMajorHouseName(Lord.HouseID);
                 child.Fertile = true;
                 child.Type = ActorType.lady;
 
@@ -2476,6 +2476,21 @@ namespace Next_Game
 
         internal List<string> GetHouseMasterRels()
         { return listOfHouseRelsMaster; }
+
+        /// <summary>
+        /// sets up relations between NPC actors and their Lords
+        /// </summary>
+        public void InitialiseLordRelations()
+        {
+            int houseID;
+            Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetAllMajorHouses();
+            
+            //loop dictonary
+            foreach(var house in dictMajorHouses)
+            {
+                houseID = house.Key;
+            }
+        }
 
         //add methods above
     }

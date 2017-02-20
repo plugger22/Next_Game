@@ -406,7 +406,7 @@ namespace Next_Game
                     string houseName;
                     if (knight.HouseID == Game.lore.OldHouseID) { houseName = Game.lore.OldHouseName; }
                     //deals with case of knight belonging to old King (he's been deleted from dictMajorHouses)
-                    else { houseName = GetGreatHouseName(knight.HouseID); }
+                    else { houseName = GetMajorHouseName(knight.HouseID); }
                     listToDisplay.Add(new Snippet(string.Format("Has sworn allegiance to House {0}", houseName )));
                 }
                 //Loyalty
@@ -694,7 +694,7 @@ namespace Next_Game
                             //needed 'cause old King's house has been removed from the dictionaries
                             if (relPerson.HouseID == Game.lore.OldHouseID)
                             { houseName = Game.lore.OldHouseName; }
-                            else { houseName = GetGreatHouseName(relPerson.HouseID); }
+                            else { houseName = GetMajorHouseName(relPerson.HouseID); }
                             string text = string.Format("{0} Aid {1}: {2} {3}{4} of House {5}, Age {6}",
                               kvp.Value, relPerson.ActID, relPerson.Type, relPerson.Name, maidenName, houseName, relAge);
 
@@ -921,7 +921,7 @@ namespace Next_Game
                 //bannerlord details if applicable
                 if (houseCapital == false)
                 {
-                    string locDetails = string.Format("{0} {1}", description, GetGreatHouseName(loc.HouseID));
+                    string locDetails = string.Format("{0} {1}", description, GetMajorHouseName(loc.HouseID));
                     locList.Add(new Snippet(locDetails));
                 }
                 
@@ -1019,7 +1019,7 @@ namespace Next_Game
             MajorHouse majorHouse = null;
             //check input type
             if (houseID > 0)
-            { majorHouse = GetGreatHouse(houseID); }
+            { majorHouse = GetMajorHouse(houseID); }
             else if (refID > 0)
             { House house = GetHouse(refID); majorHouse = house as MajorHouse; }
             else
@@ -1696,7 +1696,7 @@ namespace Next_Game
             string housePower;
             foreach (KeyValuePair<int, int> kvp in dictHousePower)
             {
-                MajorHouse house = GetGreatHouse(kvp.Key);
+                MajorHouse house = GetMajorHouse(kvp.Key);
                 housePower = string.Format("Hid {0} House {1} has {2} BannerLords  {3}, Loyal to the {4} (orig {5})", house.HouseID, house.Name, house.GetNumBannerLords(), 
                     ShowLocationCoords(house.LocID), house.Loyalty_Current, house.Loyalty_AtStart);
                 listStats.Add(new Snippet(housePower));
@@ -1794,7 +1794,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="houseID"></param>
         /// <returns></returns>
-        public string GetGreatHouseName(int houseID)
+        public string GetMajorHouseName(int houseID)
         {
             string houseName = "";
             MajorHouse house = new MajorHouse();
@@ -1817,12 +1817,15 @@ namespace Next_Game
             return houseName;
         }
 
+        internal Dictionary<int, MajorHouse> GetAllMajorHouses()
+        { return dictMajorHouses; }
+
         /// <summary>
         /// Returns Great house if found, otherwise null, keyed of
         /// </summary>
         /// <param name="houseID"></param>
         /// <returns></returns>
-        internal MajorHouse GetGreatHouse(int houseID)
+        internal MajorHouse GetMajorHouse(int houseID)
         {
             MajorHouse house = new MajorHouse();
             if (dictMajorHouses.TryGetValue(houseID, out house))

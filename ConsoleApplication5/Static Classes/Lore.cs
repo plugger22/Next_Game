@@ -223,7 +223,7 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- Royalist Locations (Battle site pool");
             foreach(Location loc in orderedLocs)
             {
-                string houseName = Game.world.GetGreatHouseName(loc.HouseID);
+                string houseName = Game.world.GetMajorHouseName(loc.HouseID);
                 string locName = loc.LocName;
                 Console.WriteLine("{0} -> {1}, distance {2}", houseName, locName, loc.DistanceToCapital);
             }
@@ -1012,7 +1012,7 @@ namespace Next_Game
                 if (oldBannerLord.HouseID == oldkingHouse.HouseID)
                 { liegeLordHouse = newMajorhouse;  }
                 else
-                { liegeLordHouse = Game.world.GetGreatHouse(oldBannerLord.HouseID); }
+                { liegeLordHouse = Game.world.GetMajorHouse(oldBannerLord.HouseID); }
                 Console.WriteLine("Liege Lord House {0}", liegeLordHouse.Name);
                 tempLords.AddRange(liegeLordHouse.GetBannerLords());
                 index = tempLords.FindIndex(a => a == oldBannerLordRefID);
