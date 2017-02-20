@@ -34,6 +34,7 @@ namespace Next_Game
         public int Delay { get; set; } = 0; // if > 0 then character delayed for some reason and unavailable
         public int Resources { get; set; } //abstracted money, equipment and influence
         private int relPlyr; //relationship with Player (0 to 100), higher the better
+        private int relLord; //relationship with their Lord (0 to 100), higher the better (ignore if a Lord)
         public string DelayReason { get; set; }
         public string Title { get; set; } //text description of whatever relevant title they have. Automatically set by constructors. Used for display purposes.
         public ActorStatus Status { get; set; } = 0;
@@ -63,7 +64,7 @@ namespace Next_Game
         private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
-        private List<Relation> listOfRelOther; //list of relation messages relating to all actors other than the Player
+        private List<Relation> listOfRelLord; //list of relation messages relating to all actors other than the Player
         private List<Relation> listOfRelPlyr; //list of relation messages relating to the Player
         private List<Condition> listOfConditions; //list of all active conditions affecting the Player
 
@@ -87,7 +88,7 @@ namespace Next_Game
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
-            listOfRelOther = new List<Relation>();
+            listOfRelLord = new List<Relation>();
             listOfRelPlyr = new List<Relation>();
             listOfConditions = new List<Condition>();
             //set title but only if not already set by lower level constructor
@@ -117,7 +118,7 @@ namespace Next_Game
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
-            listOfRelOther = new List<Relation>();
+            listOfRelLord = new List<Relation>();
             listOfRelPlyr = new List<Relation>();
             listOfConditions = new List<Condition>();
             //set title but only if not already set by lower level constructor
@@ -155,7 +156,7 @@ namespace Next_Game
         { return null; }
 
         public void AddRelEventOther(Relation relMsg)
-        { listOfRelOther.Add(relMsg); }
+        { listOfRelLord.Add(relMsg); }
 
         /// <summary>
         /// adds event & updates relPlyr & figures out new value (Level) after changes
