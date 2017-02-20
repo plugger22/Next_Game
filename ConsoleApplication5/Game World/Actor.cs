@@ -288,12 +288,21 @@ namespace Next_Game
         { return arrayOfTraitNames[(int)skill]; }
 
         /// <summary>
-        /// returns relationship to Player as a integer between 1 and 5 (stars) by breaking down RelPlyr into chunks of 20
+        /// returns relationship (Player) as a integer between 1 and 5 (stars) by breaking down input (0 - 100) into chunks of 20
         /// </summary>
         /// <returns></returns>
         public int GetRelPlyrStars()
         {
             int rel = relPlyr;
+            rel /= 20;
+            rel += 1;
+            rel = Math.Min(5, rel);
+            return rel;
+        }
+
+        public int GetRelLordStars()
+        {
+            int rel = relLord;
             rel /= 20;
             rel += 1;
             rel = Math.Min(5, rel);

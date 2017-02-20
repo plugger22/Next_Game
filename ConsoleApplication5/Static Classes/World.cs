@@ -635,6 +635,7 @@ namespace Next_Game
                 if (!(person is Player))
                 {
                     listToDisplay.Add(new Snippet("Relationships", RLColor.Brown, RLColor.Black));
+                    //with Player
                     int relStars = person.GetRelPlyrStars();
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Player"), false));
                     listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, false));
@@ -646,6 +647,20 @@ namespace Next_Game
                     if ( relPlyr >= 50) { tagColor = Color._goodTrait; }
                     listToDisplay.Add(new Snippet(string.Format("(Now {0}) {1} {2}", relPlyr, person.GetPlayerTag(), tagText), 
                         tagColor ,RLColor.Black, true));
+                    //with Lord
+                    if (person.Type != ActorType.Lord)
+                    {
+                        relStars = person.GetRelLordStars();
+                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Lord"), false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, false));
+                        change = person.GetPlayerChange();
+                        int relLord = person.GetRelLord();
+                        tagText = string.Format("({0}{1})", change > 0 ? "+" : "", change);
+                        if (change == 0) { tagText = ""; }
+                        if (relLord >= 50) { tagColor = Color._goodTrait; }
+                        listToDisplay.Add(new Snippet(string.Format("(Now {0})", relLord),
+                            tagColor, RLColor.Black, true));
+                    }
                 }
                 //Possessions -> active followers
                 if (person is Active)

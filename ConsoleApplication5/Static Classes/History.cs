@@ -2558,7 +2558,7 @@ namespace Next_Game
                                         Game.SetError(new Error(134, string.Format("Invalid ActorType (\"{0}\") for {1} {2}, ActID {3}", actor.Type, actor.Title, actor.Name, actor.ActID)));
                                         break;
                                 }
-                                Console.WriteLine("   Relationship with Lord {0} {1}", relLord, relLord >= 90 || relLord <= 10 ? "***" : "");
+                                Console.WriteLine("   Relationship with Lord {0} {1}", relLord, relLord > 80 || relLord < 20 ? "***" : "");
                                 if (relLord > 0)
                                 { actor.SetRelLord(relLord); }
                             }
@@ -2581,6 +2581,8 @@ namespace Next_Game
             int relValue = 0;
             int diff = Math.Abs(actorSkill - lordSkill);
             int multiplier = 5; //amount to multiply difference (used as a DM to random roll)
+            int neutralLow = 25; //neutral values, random range
+            int neutralHigh = 76;
             //high treachery, values lower qualities than their own
             if (lordTreachery > 3)
             {
@@ -2589,7 +2591,7 @@ namespace Next_Game
                 else if (actorSkill < lordSkill)
                 { relValue = rnd.Next(1, 51); }
                 else
-                { relValue = rnd.Next(30, 71); }
+                { relValue = rnd.Next(neutralLow, neutralHigh); }
             }
             //low treachery, values higher qualities than their own
             else if (lordTreachery < 3)
@@ -2599,14 +2601,15 @@ namespace Next_Game
                 else if (actorSkill < lordSkill)
                 { relValue = rnd.Next(50, 101); }
                 else
-                { relValue = rnd.Next(30, 71); }
+                { relValue = rnd.Next(neutralLow, neutralHigh); }
             }
-            //neutral treachery, no particular preference, range 30 - 70
+            //neutral treachery, no particular preference, range 25 - 76
             else
-            { relValue = rnd.Next(30, 71); }
-            //allow for difference (the idea is to get a wider spread of results)
+            { relValue = rnd.Next(neutralLow, neutralHigh); }
+            //allow for any difference (the idea is to get a wider spread of results)
             if (relValue > 50) { relValue = relValue + (diff * multiplier); }
             else if (relValue < 50) { relValue = relValue - (diff * multiplier); }
+            //relValue could be > 100 or < 1 but that's O.K as the actor.SetRelLord takes care of it
             return relValue;
         }
 
