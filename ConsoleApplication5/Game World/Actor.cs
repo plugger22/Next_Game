@@ -79,7 +79,8 @@ namespace Next_Game
             Age = 30;
             Type = ActorType.None;
             Sex = ActorSex.Male;
-            relPlyr = 50; //nuetral
+            relPlyr = 50; //neutral
+            relLord = 50; //neutral
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
@@ -108,7 +109,8 @@ namespace Next_Game
             Age = 30;
             this.Type = type;
             this.Sex = sex;
-            relPlyr = 50; //nuetral
+            relPlyr = 50; //neutral
+            relLord = 50; //neutral
             ActID = characterIndex++;
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
@@ -203,12 +205,18 @@ namespace Next_Game
         public int GetRelPlyr()
         { return relPlyr; }
 
+        public int GetRelLord()
+        { return relLord; }
+
         /// <summary>
         /// set actor's relationship with player at start
         /// </summary>
         /// <param name="value"></param>
         public void SetRelPlyr(int value)
         { relPlyr = value; relPlyr = Math.Min(100, relPlyr); relPlyr = Math.Max(0, relPlyr); }
+
+        public void SetRelLord(int value)
+        { relLord = value; relLord = Math.Min(100, relLord); relLord = Math.Max(0, relLord); }
 
         /// <summary>
         /// updates actor's relationship with the Player 

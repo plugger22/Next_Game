@@ -2483,12 +2483,10 @@ namespace Next_Game
         /// </summary>
         public void InitialiseLordRelations()
         {
-            int houseID, playerTreachery, relLord;
+            int houseID, lordTreachery, relLord;
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetAllMajorHouses();
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
-            Active player = Game.world.GetActiveActor(1);
-            playerTreachery = player.GetSkill(SkillType.Treachery);
-            Console.WriteLine(Environment.NewLine + "{0} {1}, {2}, actID {3}, Treachery {4}", player.Title, player.Name, player.Handle, player.ActID, playerTreachery);
+            
             //loop dictonary
             foreach(var house in dictMajorHouses)
             {
@@ -2515,8 +2513,10 @@ namespace Next_Game
                     //Lord found?
                     if (lord != null)
                     {
-                        Console.WriteLine();
-                        Console.WriteLine("{0} {1}, actID {2}, houseID {3}, \"{4}\"", lord.Title, lord.Name, lord.ActID, lord.HouseID, Game.world.GetMajorHouseName(houseID));
+                        //treachery of Lord
+                        lordTreachery = lord.GetSkill(SkillType.Treachery);
+                        Console.WriteLine(Environment.NewLine + "{0} {1}, {2}, actID {3}, Treachery {4}, \"{5}\", houseID {6}", lord.Title, lord.Name, lord.Handle, lord.ActID, lordTreachery, 
+                            Game.world.GetMajorHouseName(houseID), lord.HouseID);
                         //loop list and establish relations
                         for (int i = 0; i < tempActors.Count; i++)
                         {
@@ -2528,37 +2528,39 @@ namespace Next_Game
                                 switch (actor.Type)
                                 {
                                     case ActorType.Lady:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), player.GetSkill(SkillType.Charm), playerTreachery);
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), lord.GetSkill(SkillType.Charm), lordTreachery);
                                         break;
                                     case ActorType.lady:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), player.GetSkill(SkillType.Charm), playerTreachery);
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), lord.GetSkill(SkillType.Charm), lordTreachery);
                                         break;
                                     case ActorType.Heir:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), player.GetSkill(SkillType.Wits), playerTreachery);
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
                                         break;
                                     case ActorType.Prince:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), player.GetSkill(SkillType.Wits), playerTreachery);
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
                                         break;
                                     case ActorType.Princess:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), player.GetSkill(SkillType.Charm), playerTreachery);
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), lord.GetSkill(SkillType.Charm), lordTreachery);
                                         break;
                                     case ActorType.lord:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), player.GetSkill(SkillType.Wits), playerTreachery);
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
                                         break;
                                     case ActorType.Knight:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Combat), player.GetSkill(SkillType.Combat), playerTreachery);
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Combat), lord.GetSkill(SkillType.Combat), lordTreachery);
                                         break;
                                     case ActorType.Advisor:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), player.GetSkill(SkillType.Wits), playerTreachery);
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
                                         break;
                                     case ActorType.BannerLord:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Leadership), player.GetSkill(SkillType.Leadership), playerTreachery);
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Leadership), lord.GetSkill(SkillType.Leadership), lordTreachery);
                                         break;
                                     default:
                                         Game.SetError(new Error(134, string.Format("Invalid ActorType (\"{0}\") for {1} {2}, ActID {3}", actor.Type, actor.Title, actor.Name, actor.ActID)));
                                         break;
                                 }
-                                Console.WriteLine("   Relationship with Lord {0}", relLord);
+                                Console.WriteLine("   Relationship with Lord {0} {1}", relLord, relLord >= 90 || relLord <= 10 ? "***" : "");
+                                if (relLord > 0)
+                                { actor.SetRelLord(relLord); }
                             }
                         }
                     }
@@ -2571,28 +2573,30 @@ namespace Next_Game
         /// sub method to handle calc's for an NPC's relationship with their Lord (used by IniitialiseLordRelations)
         /// </summary>
         /// <param name="actorSkill"></param>
-        /// <param name="playerSkill"></param>
-        /// <param name="playerTreachery"></param>
+        /// <param name="lordSkill"></param>
+        /// <param name="lordTreachery"></param>
         /// <returns></returns>
-        private int GetLordRel(int actorSkill, int playerSkill, int playerTreachery)
+        private int GetLordRel(int actorSkill, int lordSkill, int lordTreachery)
         {
             int relValue = 0;
+            int diff = Math.Abs(actorSkill - lordSkill);
+            int multiplier = 5; //amount to multiply difference (used as a DM to random roll)
             //high treachery, values lower qualities than their own
-            if (playerTreachery > 3)
+            if (lordTreachery > 3)
             {
-                if (actorSkill < playerSkill)
+                if (actorSkill < lordSkill)
                 { relValue = rnd.Next(50, 101); }
-                else if (actorSkill < playerSkill)
+                else if (actorSkill < lordSkill)
                 { relValue = rnd.Next(1, 51); }
                 else
                 { relValue = rnd.Next(30, 71); }
             }
             //low treachery, values higher qualities than their own
-            else if (playerTreachery < 3)
+            else if (lordTreachery < 3)
             {
-                if (actorSkill < playerSkill)
+                if (actorSkill < lordSkill)
                 { relValue = rnd.Next(1,51); }
-                else if (actorSkill < playerSkill)
+                else if (actorSkill < lordSkill)
                 { relValue = rnd.Next(50, 101); }
                 else
                 { relValue = rnd.Next(30, 71); }
@@ -2600,6 +2604,9 @@ namespace Next_Game
             //neutral treachery, no particular preference, range 30 - 70
             else
             { relValue = rnd.Next(30, 71); }
+            //allow for difference (the idea is to get a wider spread of results)
+            if (relValue > 50) { relValue = relValue + (diff * multiplier); }
+            else if (relValue < 50) { relValue = relValue - (diff * multiplier); }
             return relValue;
         }
 

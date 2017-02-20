@@ -105,7 +105,7 @@ namespace Next_Game
         public static void Main(string[] args)
         {
             rnd = new Random(seed);
-            Console.SetWindowSize(180, 80); //debug console
+            Console.SetWindowSize(180, 90); //debug console
             //initialise game objects
             Stopwatch timer_1 = new Stopwatch();
             constant = new Constant();
