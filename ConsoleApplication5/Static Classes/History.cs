@@ -2483,12 +2483,12 @@ namespace Next_Game
         /// </summary>
         public void InitialiseLordRelations()
         {
-            int houseID, playerTreachery;
+            int houseID, playerTreachery, relLord;
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetAllMajorHouses();
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
             Active player = Game.world.GetActiveActor(1);
             playerTreachery = player.GetSkill(SkillType.Treachery);
-            Console.WriteLine(Environment.NewLine + "{0} {1} {2}, actID {3}, Treachery {4}", player.Title, player.Name, player.Handle, player.ActID, playerTreachery);
+            Console.WriteLine(Environment.NewLine + "{0} {1}, {2}, actID {3}, Treachery {4}", player.Title, player.Name, player.Handle, player.ActID, playerTreachery);
             //loop dictonary
             foreach(var house in dictMajorHouses)
             {
@@ -2524,12 +2524,83 @@ namespace Next_Game
                             if (actor.Type != ActorType.Lord && actor.Status != ActorStatus.Gone)
                             {
                                 Console.WriteLine("  {0} {1}, actID {2}, houseID {3}", actor.Title, actor.Name, actor.ActID, actor.HouseID);
+                                relLord = 0;
+                                switch (actor.Type)
+                                {
+                                    case ActorType.Lady:
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), player.GetSkill(SkillType.Charm), playerTreachery);
+                                        break;
+                                    case ActorType.lady:
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), player.GetSkill(SkillType.Charm), playerTreachery);
+                                        break;
+                                    case ActorType.Heir:
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), player.GetSkill(SkillType.Wits), playerTreachery);
+                                        break;
+                                    case ActorType.Prince:
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), player.GetSkill(SkillType.Wits), playerTreachery);
+                                        break;
+                                    case ActorType.Princess:
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), player.GetSkill(SkillType.Charm), playerTreachery);
+                                        break;
+                                    case ActorType.lord:
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), player.GetSkill(SkillType.Wits), playerTreachery);
+                                        break;
+                                    case ActorType.Knight:
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Combat), player.GetSkill(SkillType.Combat), playerTreachery);
+                                        break;
+                                    case ActorType.Advisor:
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), player.GetSkill(SkillType.Wits), playerTreachery);
+                                        break;
+                                    case ActorType.BannerLord:
+                                        relLord = GetLordRel(actor.GetSkill(SkillType.Leadership), player.GetSkill(SkillType.Leadership), playerTreachery);
+                                        break;
+                                    default:
+                                        Game.SetError(new Error(134, string.Format("Invalid ActorType (\"{0}\") for {1} {2}, ActID {3}", actor.Type, actor.Title, actor.Name, actor.ActID)));
+                                        break;
+                                }
+                                Console.WriteLine("   Relationship with Lord {0}", relLord);
                             }
                         }
                     }
                 }
                                
             }
+        }
+
+        /// <summary>
+        /// sub method to handle calc's for an NPC's relationship with their Lord (used by IniitialiseLordRelations)
+        /// </summary>
+        /// <param name="actorSkill"></param>
+        /// <param name="playerSkill"></param>
+        /// <param name="playerTreachery"></param>
+        /// <returns></returns>
+        private int GetLordRel(int actorSkill, int playerSkill, int playerTreachery)
+        {
+            int relValue = 0;
+            //high treachery, values lower qualities than their own
+            if (playerTreachery > 3)
+            {
+                if (actorSkill < playerSkill)
+                { relValue = rnd.Next(50, 101); }
+                else if (actorSkill < playerSkill)
+                { relValue = rnd.Next(1, 51); }
+                else
+                { relValue = rnd.Next(30, 71); }
+            }
+            //low treachery, values higher qualities than their own
+            else if (playerTreachery < 3)
+            {
+                if (actorSkill < playerSkill)
+                { relValue = rnd.Next(1,51); }
+                else if (actorSkill < playerSkill)
+                { relValue = rnd.Next(50, 101); }
+                else
+                { relValue = rnd.Next(30, 71); }
+            }
+            //neutral treachery, no particular preference, range 30 - 70
+            else
+            { relValue = rnd.Next(30, 71); }
+            return relValue;
         }
 
         //add methods above
