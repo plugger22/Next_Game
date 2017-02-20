@@ -1870,7 +1870,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Determine the starting Rebellion that is the foundation of the Backstory
+        /// Determine the starting Rebellion that is the foundation of the Backstory. Run from InitialiseWorld due to sequencing issues
         /// </summary>
         /// <param name="dictPassiveActors"></param>
         internal void InitialiseOverthrow(Dictionary<int, Passive> dictPassiveActors)
@@ -2483,10 +2483,12 @@ namespace Next_Game
         /// </summary>
         public void InitialiseLordRelations()
         {
-            int houseID;
+            int houseID, playerTreachery;
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetAllMajorHouses();
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
-            
+            Active player = Game.world.GetActiveActor(1);
+            playerTreachery = player.GetSkill(SkillType.Treachery);
+            Console.WriteLine(Environment.NewLine + "{0} {1} {2}, actID {3}, Treachery {4}", player.Title, player.Name, player.Handle, player.ActID, playerTreachery);
             //loop dictonary
             foreach(var house in dictMajorHouses)
             {

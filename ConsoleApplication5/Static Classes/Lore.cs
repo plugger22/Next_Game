@@ -1260,6 +1260,7 @@ namespace Next_Game
                 {
                     //heir assumes Lordship
                     heir.Type = ActorType.Lord;
+                    heir.Title = string.Format("{0}", ActorType.Lord);
                     heir.Realm = ActorRealm.Head_of_House;
                     heir.Lordship = year;
                     if (heir.GetRelPlyr() == 50)

@@ -132,7 +132,7 @@ namespace Next_Game
             InitialiseSecrets();
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
             timer_2.Start();
-            Game.history.InitialiseLordRelations();
+            Game.history.InitialiseLordRelations(); //needs to be here for sequencing issues
             Game.StopTimer(timer_2, "W: InitialiseLordRelations");
         }
 
