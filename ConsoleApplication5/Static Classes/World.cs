@@ -1855,6 +1855,9 @@ namespace Next_Game
         internal Dictionary<int, MajorHouse> GetAllMajorHouses()
         { return dictMajorHouses; }
 
+        internal Dictionary<int, Passive> GetRoyalCourt()
+        { return dictRoyalCourt; }
+
         /// <summary>
         /// Returns Great house if found, otherwise null, keyed of
         /// </summary>

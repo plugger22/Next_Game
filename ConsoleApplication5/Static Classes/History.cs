@@ -2521,6 +2521,19 @@ namespace Next_Game
                         //Lord found?
                         if (lord != null)
                         {
+                            //Lord is the King?
+                            if (lord.Office == ActorOffice.King)
+                            {
+                                //need to add Royal court to list of tempActors
+                                IEnumerable<Passive> royalActors =
+                                from actor in dictPassiveActors
+                                where actor.Value.HouseID == 9999
+                                select actor.Value;
+                                List<Passive> tempRoyalCourt = royalActors.ToList();
+                                if(tempRoyalCourt.Count > 0)
+                                { tempActors.AddRange(tempRoyalCourt); }
+                                else { Game.SetError(new Error(134, "No members of the Royal Court Found")); }
+                            }
                             //treachery of Lord
                             lordTreachery = lord.GetSkill(SkillType.Treachery);
                             Console.WriteLine(Environment.NewLine + "{0} {1}, {2}, actID {3}, Treachery {4}, \"{5}\", houseID {6}", lord.Title, lord.Name, lord.Handle, lord.ActID, lordTreachery,
