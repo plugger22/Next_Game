@@ -2493,122 +2493,127 @@ namespace Next_Game
             List<string> listLord_3 = new List<string>(arrayOfRelTexts[(int)RelListType.Lord_3].ToList());
             List<string> listLord_4 = new List<string>(arrayOfRelTexts[(int)RelListType.Lord_4].ToList());
             List<string> listLord_5 = new List<string>(arrayOfRelTexts[(int)RelListType.Lord_5].ToList());
-            //loop dictonary
-            foreach (var house in dictMajorHouses)
+            if (dictMajorHouses != null & dictPassiveActors != null)
             {
-                houseID = house.Key;
-                //get list of all actors in that house
-                IEnumerable<Passive> houseActors =
-                    from actor in dictPassiveActors
-                    where actor.Value.HouseID == houseID
-                    orderby actor.Value.ActID
-                    select actor.Value;
-                List<Passive> tempActors = houseActors.ToList();
-                
-                //Process list of all actors in house
-                if (tempActors.Count > 0)
+                //loop dictonary
+                foreach (var house in dictMajorHouses)
                 {
-                    Passive lord = null;
-                    //find Lord (must be alive and kicking)
-                    for(int i = 0; i < tempActors.Count; i++)
+                    houseID = house.Key;
+                    //get list of all actors in that house
+                    IEnumerable<Passive> houseActors =
+                        from actor in dictPassiveActors
+                        where actor.Value.HouseID == houseID
+                        orderby actor.Value.ActID
+                        select actor.Value;
+                    List<Passive> tempActors = houseActors.ToList();
+
+                    //Process list of all actors in house
+                    if (tempActors.Count > 0)
                     {
-                        Passive actor = tempActors[i];
-                        if (actor.Type == ActorType.Lord && actor.Status != ActorStatus.Gone)
-                        { lord = actor; break; }
-                    }
-                    //Lord found?
-                    if (lord != null)
-                    {
-                        //treachery of Lord
-                        lordTreachery = lord.GetSkill(SkillType.Treachery);
-                        Console.WriteLine(Environment.NewLine + "{0} {1}, {2}, actID {3}, Treachery {4}, \"{5}\", houseID {6}", lord.Title, lord.Name, lord.Handle, lord.ActID, lordTreachery, 
-                            Game.world.GetMajorHouseName(houseID), lord.HouseID);
-                        //loop list and establish relations
+                        Passive lord = null;
+                        //find Lord (must be alive and kicking)
                         for (int i = 0; i < tempActors.Count; i++)
                         {
                             Passive actor = tempActors[i];
-                            if (actor.Type != ActorType.Lord && actor.Status != ActorStatus.Gone)
+                            if (actor.Type == ActorType.Lord && actor.Status != ActorStatus.Gone)
+                            { lord = actor; break; }
+                        }
+                        //Lord found?
+                        if (lord != null)
+                        {
+                            //treachery of Lord
+                            lordTreachery = lord.GetSkill(SkillType.Treachery);
+                            Console.WriteLine(Environment.NewLine + "{0} {1}, {2}, actID {3}, Treachery {4}, \"{5}\", houseID {6}", lord.Title, lord.Name, lord.Handle, lord.ActID, lordTreachery,
+                                Game.world.GetMajorHouseName(houseID), lord.HouseID);
+                            //loop list and establish relations
+                            for (int i = 0; i < tempActors.Count; i++)
                             {
-                                Console.WriteLine("  {0} {1}, actID {2}, houseID {3}", actor.Title, actor.Name, actor.ActID, actor.HouseID);
-                                relLord = 0;
-                                switch (actor.Type)
+                                Passive actor = tempActors[i];
+                                if (actor.Type != ActorType.Lord && actor.Status != ActorStatus.Gone)
                                 {
-                                    case ActorType.Lady:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), lord.GetSkill(SkillType.Charm), lordTreachery);
-                                        break;
-                                    case ActorType.lady:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), lord.GetSkill(SkillType.Charm), lordTreachery);
-                                        break;
-                                    case ActorType.Heir:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
-                                        break;
-                                    case ActorType.Prince:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
-                                        break;
-                                    case ActorType.Princess:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Charm), lord.GetSkill(SkillType.Charm), lordTreachery);
-                                        break;
-                                    case ActorType.lord:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
-                                        break;
-                                    case ActorType.Knight:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Combat), lord.GetSkill(SkillType.Combat), lordTreachery);
-                                        break;
-                                    case ActorType.Advisor:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
-                                        break;
-                                    case ActorType.BannerLord:
-                                        relLord = GetLordRel(actor.GetSkill(SkillType.Leadership), lord.GetSkill(SkillType.Leadership), lordTreachery);
-                                        break;
-                                    default:
-                                        Game.SetError(new Error(134, string.Format("Invalid ActorType (\"{0}\") for {1} {2}, ActID {3}", actor.Type, actor.Title, actor.Name, actor.ActID)));
-                                        break;
-                                }
-                                Console.WriteLine("   Relationship with Lord {0} {1}", relLord, relLord > 80 || relLord < 20 ? "***" : "");
-                                //instigate Relationship
-                                if (relLord > 0)
-                                {
-                                    //actor.SetRelLord(relLord);
-                                    lordStars = relLord;
-                                    lordStars /= 20;
-                                    lordStars += 1;
-                                    lordStars = Math.Min(5, lordStars);
-                                    //get a random tag from the appropriate list
-                                    //lordStars = actor.GetRelLordStars();
-                                    relTag = "";
-                                    switch (lordStars)
+                                    Console.WriteLine("  {0} {1}, actID {2}, houseID {3}", actor.Title, actor.Name, actor.ActID, actor.HouseID);
+                                    relLord = 0;
+                                    switch (actor.Type)
                                     {
-                                        case 1:
-                                            relTag = listLord_1[rnd.Next(0, listLord_1.Count)];
+                                        case ActorType.Lady:
+                                            relLord = GetLordRel(actor.GetSkill(SkillType.Charm), lord.GetSkill(SkillType.Charm), lordTreachery);
                                             break;
-                                        case 2:
-                                            relTag = listLord_2[rnd.Next(0, listLord_2.Count)];
+                                        case ActorType.lady:
+                                            relLord = GetLordRel(actor.GetSkill(SkillType.Charm), lord.GetSkill(SkillType.Charm), lordTreachery);
                                             break;
-                                        case 3:
-                                            relTag = listLord_3[rnd.Next(0, listLord_3.Count)];
+                                        case ActorType.Heir:
+                                            relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
                                             break;
-                                        case 4:
-                                            relTag = listLord_4[rnd.Next(0, listLord_4.Count)];
+                                        case ActorType.Prince:
+                                            relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
                                             break;
-                                        case 5:
-                                            relTag = listLord_5[rnd.Next(0, listLord_5.Count)];
+                                        case ActorType.Princess:
+                                            relLord = GetLordRel(actor.GetSkill(SkillType.Charm), lord.GetSkill(SkillType.Charm), lordTreachery);
+                                            break;
+                                        case ActorType.lord:
+                                            relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
+                                            break;
+                                        case ActorType.Knight:
+                                            relLord = GetLordRel(actor.GetSkill(SkillType.Combat), lord.GetSkill(SkillType.Combat), lordTreachery);
+                                            break;
+                                        case ActorType.Advisor:
+                                            relLord = GetLordRel(actor.GetSkill(SkillType.Wits), lord.GetSkill(SkillType.Wits), lordTreachery);
+                                            break;
+                                        case ActorType.BannerLord:
+                                            relLord = GetLordRel(actor.GetSkill(SkillType.Leadership), lord.GetSkill(SkillType.Leadership), lordTreachery);
                                             break;
                                         default:
-                                            Game.SetError(new Error(134, string.Format("Invalid lordStars in Switch Statement (\"{0}\")", lordStars)));
+                                            Game.SetError(new Error(134, string.Format("Invalid ActorType (\"{0}\") for {1} {2}, ActID {3}", actor.Type, actor.Title, actor.Name, actor.ActID)));
                                             break;
                                     }
-                                    relChange = relLord - 50;
-                                    if (String.IsNullOrEmpty(relTag) == true) { Game.SetError(new Error(134, "Invalid relTag (empty)")); relTag = "Unknown"; }
-                                    relText = string.Format("Lord is {0}", relTag);
-                                    Relation lordRel = new Relation(relText, relTag, relChange, lord.ActID);
-                                    actor.AddRelEventLord(lordRel);
+                                    Console.WriteLine("   Relationship with Lord {0} {1}", relLord, relLord > 80 || relLord < 20 ? "***" : "");
+                                    //instigate Relationship
+                                    if (relLord >= 0)
+                                    {
+                                        //actor.SetRelLord(relLord);
+                                        lordStars = relLord;
+                                        lordStars /= 20;
+                                        lordStars += 1;
+                                        lordStars = Math.Min(5, lordStars);
+                                        //get a random tag from the appropriate list
+                                        //lordStars = actor.GetRelLordStars();
+                                        relTag = "";
+                                        switch (lordStars)
+                                        {
+                                            case 1:
+                                                relTag = listLord_1[rnd.Next(0, listLord_1.Count)];
+                                                break;
+                                            case 2:
+                                                relTag = listLord_2[rnd.Next(0, listLord_2.Count)];
+                                                break;
+                                            case 3:
+                                                relTag = listLord_3[rnd.Next(0, listLord_3.Count)];
+                                                break;
+                                            case 4:
+                                                relTag = listLord_4[rnd.Next(0, listLord_4.Count)];
+                                                break;
+                                            case 5:
+                                                relTag = listLord_5[rnd.Next(0, listLord_5.Count)];
+                                                break;
+                                            default:
+                                                Game.SetError(new Error(134, string.Format("Invalid lordStars in Switch Statement (\"{0}\")", lordStars)));
+                                                break;
+                                        }
+                                        relChange = relLord - 50;
+                                        if (String.IsNullOrEmpty(relTag) == true) { Game.SetError(new Error(134, "Invalid relTag (empty)")); relTag = "Unknown"; }
+                                        relText = string.Format("Lord is {0}", relTag);
+                                        Relation lordRel = new Relation(relText, relTag, relChange, lord.ActID);
+                                        actor.AddRelEventLord(lordRel);
+                                    }
+                                    else { Game.SetError(new Error(134, "relLord less than zero (invalid value)")); }
                                 }
                             }
                         }
+                        else { Game.SetError(new Error(134, "Lord not found in tempActors List (null)")); }
                     }
-                }
-                               
+                }                
             }
+            else { Game.SetError(new Error(134, "Invalid Dictionary (Major Houses or Passive Actors) -> Null")); }
         }
 
   
@@ -2632,7 +2637,7 @@ namespace Next_Game
                 if (actorSkill < lordSkill)
                 { relValue = rnd.Next(50, 101); }
                 else if (actorSkill < lordSkill)
-                { relValue = rnd.Next(1, 51); }
+                { relValue = rnd.Next(0, 51); }
                 else
                 { relValue = rnd.Next(neutralLow, neutralHigh); }
             }
@@ -2640,7 +2645,7 @@ namespace Next_Game
             else if (lordTreachery < 3)
             {
                 if (actorSkill < lordSkill)
-                { relValue = rnd.Next(1,51); }
+                { relValue = rnd.Next(0,51); }
                 else if (actorSkill < lordSkill)
                 { relValue = rnd.Next(50, 101); }
                 else
@@ -2652,7 +2657,7 @@ namespace Next_Game
             //allow for any difference (the idea is to get a wider spread of results)
             if (relValue > 50) { relValue = relValue + (diff * multiplier); }
             else if (relValue < 50) { relValue = relValue - (diff * multiplier); }
-            //relValue could be > 100 or < 1 but that's O.K as the actor.SetRelLord takes care of it
+            //relValue could be > 100 or < 0 but that's O.K as the actor.SetRelLord takes care of it
             return relValue;
         }
 
