@@ -615,7 +615,7 @@ namespace Next_Game
                         listToDisplay.Add(new Snippet(string.Format("{0}", tempCondition_1), tempColor, RLColor.Black));
                     }
                 }
-                //crow explanation for loyal followers
+                //Crow explanation for loyal followers
                 if (person is Follower)
                 {
                     Active tempPerson = person as Active;
@@ -653,12 +653,12 @@ namespace Next_Game
                         relStars = person.GetRelLordStars();
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Lord"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, false));
-                        change = person.GetPlayerChange();
+                        change = person.GetLordChange();
                         int relLord = person.GetRelLord();
                         tagText = string.Format("({0}{1})", change > 0 ? "+" : "", change);
                         if (change == 0) { tagText = ""; }
                         if (relLord >= 50) { tagColor = Color._goodTrait; }
-                        listToDisplay.Add(new Snippet(string.Format("(Now {0})", relLord),
+                        listToDisplay.Add(new Snippet(string.Format("(Now {0}) {1} {2}", relLord, person.GetLordTag(), tagText),
                             tagColor, RLColor.Black, true));
                     }
                 }

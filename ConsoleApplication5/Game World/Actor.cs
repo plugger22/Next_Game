@@ -171,8 +171,18 @@ namespace Next_Game
             listOfRelPlyr.Add(relMsg);
         }
 
+        public void AddRelEventLord(Relation relMsg)
+        {
+            ChangeRelLord(relMsg.Change);
+            relMsg.Level = relLord;
+            listOfRelLord.Add(relMsg);
+        }
+
         public List<Relation> GetRelEventPlyr()
         { return listOfRelPlyr; }
+
+        public List<Relation> GetRelEventLord()
+        { return listOfRelLord; }
 
         /// <summary>
         /// returns Tag of most recent Player event (used for ShowActorRL display in World.cs)
@@ -188,6 +198,16 @@ namespace Next_Game
             else { return ""; }
         }
 
+        internal string GetLordTag()
+        {
+            if (listOfRelLord.Count > 0)
+            {
+                Relation relation = listOfRelLord[listOfRelLord.Count - 1];
+                return relation.Tag;
+            }
+            else { return ""; }
+        }
+
         /// <summary>
         /// returns Change amount of last Relationship effect (eg. the Tag)
         /// </summary>
@@ -197,6 +217,16 @@ namespace Next_Game
             if (listOfRelPlyr.Count > 0)
             {
                 Relation relation = listOfRelPlyr[listOfRelPlyr.Count - 1];
+                return relation.Change;
+            }
+            else { return 0; }
+        }
+
+        internal int GetLordChange()
+        {
+            if (listOfRelLord.Count > 0)
+            {
+                Relation relation = listOfRelLord[listOfRelLord.Count - 1];
                 return relation.Change;
             }
             else { return 0; }
@@ -227,6 +257,13 @@ namespace Next_Game
             relPlyr += change;
             relPlyr = Math.Min(100, relPlyr);
             relPlyr = Math.Max(0, relPlyr);
+        }
+
+        private void ChangeRelLord(int change)
+        {
+            relLord += change;
+            relLord = Math.Min(100, relLord);
+            relLord = Math.Max(0, relLord);
         }
 
         /// <summary>

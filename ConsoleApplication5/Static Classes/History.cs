@@ -2484,6 +2484,7 @@ namespace Next_Game
         public void InitialiseLordRelations()
         {
             int houseID, lordTreachery, relLord;
+            string relText, relTag;
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetAllMajorHouses();
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
             
@@ -2559,14 +2560,34 @@ namespace Next_Game
                                         break;
                                 }
                                 Console.WriteLine("   Relationship with Lord {0} {1}", relLord, relLord > 80 || relLord < 20 ? "***" : "");
+                                //instigate Relationship
                                 if (relLord > 0)
-                                { actor.SetRelLord(relLord); }
+                                {
+                                    actor.SetRelLord(relLord);
+                                    relTag = GetLordRelTag(relLord);
+                                    if (String.IsNullOrEmpty(relTag) == true) { Game.SetError(new Error(134, "Invalid relTag (empty)")); relTag = "Unknown"; }
+                                    relText = string.Format("Lord is {0}", relTag);
+                                    Relation lordRel = new Relation(relText, relTag, relLord - 50, lord.ActID);
+                                    actor.AddRelEventLord(lordRel);
+                                }
                             }
                         }
                     }
                 }
                                
             }
+        }
+
+        /// <summary>
+        /// returns Tag of Lord's relationship with the character (from POV of character)
+        /// </summary>
+        /// <param name="relValue"></param>
+        /// <returns></returns>
+        private string GetLordRelTag(int relValue)
+        {
+            string relTag = "";
+
+            return relTag;
         }
 
         /// <summary>
