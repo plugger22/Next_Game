@@ -2483,7 +2483,7 @@ namespace Next_Game
         /// </summary>
         public void InitialiseLordRelations()
         {
-            int houseID, lordTreachery, relLord, lordStars;
+            int houseID, lordTreachery, relLord, lordStars, relChange;
             string relText, relTag;
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetAllMajorHouses();
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
@@ -2568,9 +2568,13 @@ namespace Next_Game
                                 //instigate Relationship
                                 if (relLord > 0)
                                 {
-                                    actor.SetRelLord(relLord);
+                                    //actor.SetRelLord(relLord);
+                                    lordStars = relLord;
+                                    lordStars /= 20;
+                                    lordStars += 1;
+                                    lordStars = Math.Min(5, lordStars);
                                     //get a random tag from the appropriate list
-                                    lordStars = actor.GetRelLordStars();
+                                    //lordStars = actor.GetRelLordStars();
                                     relTag = "";
                                     switch (lordStars)
                                     {
@@ -2593,9 +2597,10 @@ namespace Next_Game
                                             Game.SetError(new Error(134, string.Format("Invalid lordStars in Switch Statement (\"{0}\")", lordStars)));
                                             break;
                                     }
+                                    relChange = relLord - 50;
                                     if (String.IsNullOrEmpty(relTag) == true) { Game.SetError(new Error(134, "Invalid relTag (empty)")); relTag = "Unknown"; }
                                     relText = string.Format("Lord is {0}", relTag);
-                                    Relation lordRel = new Relation(relText, relTag, relLord - 50, lord.ActID);
+                                    Relation lordRel = new Relation(relText, relTag, relChange, lord.ActID);
                                     actor.AddRelEventLord(lordRel);
                                 }
                             }

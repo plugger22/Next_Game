@@ -657,6 +657,7 @@ namespace Next_Game
                         int relLord = person.GetRelLord();
                         tagText = string.Format("({0}{1})", change > 0 ? "+" : "", change);
                         if (change == 0) { tagText = ""; }
+                        tagColor = Color._badTrait;
                         if (relLord >= 50) { tagColor = Color._goodTrait; }
                         listToDisplay.Add(new Snippet(string.Format("(Now {0}) {1} {2}", relLord, person.GetLordTag(), tagText),
                             tagColor, RLColor.Black, true));

@@ -305,7 +305,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// for relationships with all others
+        /// for relationships with all others (their Lord)
         /// </summary>
         /// <param name="description"></param>
         /// <param name="tag"></param>
