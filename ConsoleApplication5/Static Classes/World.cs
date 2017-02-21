@@ -1247,7 +1247,6 @@ namespace Next_Game
                 capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", kvp.Value.ActID, actorOffice, kvp.Value.Name, kvp.Value.Age, ShowLocationCoords(1))));
             }
             //OTHERS
-            capitalList.Add(new Snippet("Others", RLColor.Brown, RLColor.Black));
             List<Actor> assortedActors = new List<Actor>();
             IEnumerable<Actor> listOfActors =
                 from actor in dictActiveActors
@@ -1256,23 +1255,27 @@ namespace Next_Game
                 select actor.Value;
             assortedActors = listOfActors.ToList();
             //add to list
-            RLColor textColor;
-            foreach (Actor actor in assortedActors)
+            if (assortedActors.Count > 0)
             {
-                if (actor.Office > ActorOffice.None)
-                { actorOffice = Convert.ToString(actor.Office); }
-                else { actorOffice = Convert.ToString(actor.Type); }
-                //highlight active players
-                textColor = RLColor.White;
-                if (actor is Active)
+                capitalList.Add(new Snippet("Others", RLColor.Brown, RLColor.Black));
+                RLColor textColor;
+                foreach (Actor actor in assortedActors)
                 {
-                    if (actor is Player)
-                    { textColor = Color._player; }
-                    else
-                    { textColor = Color._active; }
+                    if (actor.Office > ActorOffice.None)
+                    { actorOffice = Convert.ToString(actor.Office); }
+                    else { actorOffice = Convert.ToString(actor.Type); }
+                    //highlight active players
+                    textColor = RLColor.White;
+                    if (actor is Active)
+                    {
+                        if (actor is Player)
+                        { textColor = Color._player; }
+                        else
+                        { textColor = Color._active; }
+                    }
+                    capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", actor.ActID, actorOffice, actor.Name, actor.Age, ShowLocationCoords(1)),
+                        textColor, RLColor.Black));
                 }
-                capitalList.Add(new Snippet(string.Format("Aid {0} {1} {2}, age {3} at Kingskeep {4}", actor.ActID, actorOffice, actor.Name, actor.Age, ShowLocationCoords(1)), 
-                    textColor, RLColor.Black));
             }
             return capitalList;
         }

@@ -2657,7 +2657,10 @@ namespace Next_Game
             //allow for any difference (the idea is to get a wider spread of results)
             if (relValue > 50) { relValue = relValue + (diff * multiplier); }
             else if (relValue < 50) { relValue = relValue - (diff * multiplier); }
-            //relValue could be > 100 or < 0 but that's O.K as the actor.SetRelLord takes care of it
+            //limit check 0 to 100
+            relValue = Math.Min(100, relValue);
+            relValue = Math.Max(0, relValue);
+            //return
             return relValue;
         }
 
