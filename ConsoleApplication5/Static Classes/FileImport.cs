@@ -3027,6 +3027,11 @@ namespace Next_Game
             //temporary sub lists for each category of geoNames
             List<string> listOfHousePastGood = new List<string>();
             List<string> listOfHousePastBad = new List<string>();
+            List<string> listOfLord_1 = new List<string>();
+            List<string> listOfLord_2 = new List<string>();
+            List<string> listOfLord_3 = new List<string>();
+            List<string> listOfLord_4 = new List<string>();
+            List<string> listOfLord_5 = new List<string>();
             //import data from file
             string[] arrayOfRelTexts = ImportDataFile(fileName);
             if (arrayOfRelTexts != null)
@@ -3056,6 +3061,21 @@ namespace Next_Game
                                 case "Major_House_Bad":
                                     listOfHousePastBad.Add(tempString);
                                     break;
+                                case "Lord_1":
+                                    listOfLord_1.Add(tempString);
+                                    break;
+                                case "Lord_2":
+                                    listOfLord_2.Add(tempString);
+                                    break;
+                                case "Lord_3":
+                                    listOfLord_3.Add(tempString);
+                                    break;
+                                case "Lord_4":
+                                    listOfLord_4.Add(tempString);
+                                    break;
+                                case "Lord_5":
+                                    listOfLord_5.Add(tempString);
+                                    break;
                                 default:
                                     Game.SetError(new Error(133, string.Format("Invalid Relationship Category {0}, record {1}", nameType, i)));
                                     break;
@@ -3066,9 +3086,19 @@ namespace Next_Game
                 //size jagged array
                 arrayOfNames[(int)RelListType.HousePastGood] = new string[listOfHousePastGood.Count];
                 arrayOfNames[(int)RelListType.HousePastBad] = new string[listOfHousePastBad.Count];
+                arrayOfNames[(int)RelListType.Lord_1] = new string[listOfLord_1.Count];
+                arrayOfNames[(int)RelListType.Lord_2] = new string[listOfLord_2.Count];
+                arrayOfNames[(int)RelListType.Lord_3] = new string[listOfLord_3.Count];
+                arrayOfNames[(int)RelListType.Lord_4] = new string[listOfLord_4.Count];
+                arrayOfNames[(int)RelListType.Lord_5] = new string[listOfLord_5.Count];
                 //populate from lists
                 arrayOfNames[(int)RelListType.HousePastGood] = listOfHousePastGood.ToArray();
                 arrayOfNames[(int)RelListType.HousePastBad] = listOfHousePastBad.ToArray();
+                arrayOfNames[(int)RelListType.Lord_1] = listOfLord_1.ToArray();
+                arrayOfNames[(int)RelListType.Lord_2] = listOfLord_2.ToArray();
+                arrayOfNames[(int)RelListType.Lord_3] = listOfLord_3.ToArray();
+                arrayOfNames[(int)RelListType.Lord_4] = listOfLord_4.ToArray();
+                arrayOfNames[(int)RelListType.Lord_5] = listOfLord_5.ToArray();
             }
             else
             { Game.SetError(new Error(23, string.Format("File not found (\"{0}\")", fileName))); }

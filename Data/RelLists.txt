@@ -1,5 +1,7 @@
 # RelLists -> lists for texts for the various relationship tables
 
+# Past history for relationships between Major Houses
+
 [Major_House_Good]
 Helped out in times of Trouble
 Saved the day in a past Battle
@@ -26,3 +28,91 @@ Engaged in a long standing blood feud
 Contested our claim of ownership to a valuable parcel of land
 Claim our Lands by virtue of a distant, dubious, marriage
 Rumoured to mate with livestock as a disgusting rite-of-passage
+
+# Tags for the 5 different levels of relationships between a Lord and their family and advisors
+
+[Lord_1]
+Contemptuous
+Dismissive
+Condescending
+Derisive
+Disdainful
+Disrespectful
+Insulting
+Scornful
+Sneering
+Mocking
+Rude
+Sarcastic
+Degrading
+Disparaging
+Hurtful
+Offensive
+Repulsed
+Exasperated
+
+[Lord_2]
+Impatient
+Frustrated
+Irritable
+Testy
+Demanding
+Brusque
+Annoyed
+Petulant
+Prickly
+Intolerant
+Picky
+Strict
+Difficult
+Querulous
+
+[Lord_3]
+Non-Committal
+Ambiguous
+Careful
+Circumspect
+Discreet
+Equivocal
+Judicious
+Enigmatic
+Opaque
+Unclear
+Vague
+Uncertain
+Puzzled
+Cordial
+Vigilant
+Prudent
+Guarded
+Watchful
+
+[Lord_4]
+Friendly
+Accommodating
+Understanding
+Affable
+Affectionate
+Amiable
+Familiar
+Helpful
+Receptive
+Sociable
+Kind
+Compassionate
+Considerate
+Sympathetic
+Tolerant
+Attentive
+
+[Lord_5]
+Fawning
+Loving
+Devoted
+Doting
+Generous
+Passionate
+Caring
+Admiring
+Warm
+

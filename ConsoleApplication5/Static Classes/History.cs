@@ -2483,13 +2483,18 @@ namespace Next_Game
         /// </summary>
         public void InitialiseLordRelations()
         {
-            int houseID, lordTreachery, relLord;
+            int houseID, lordTreachery, relLord, lordStars;
             string relText, relTag;
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetAllMajorHouses();
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
-            
+            //initialise list of Tags
+            List<string> listLord_1 = new List<string>(arrayOfRelTexts[(int)RelListType.Lord_1].ToList());
+            List<string> listLord_2 = new List<string>(arrayOfRelTexts[(int)RelListType.Lord_2].ToList());
+            List<string> listLord_3 = new List<string>(arrayOfRelTexts[(int)RelListType.Lord_3].ToList());
+            List<string> listLord_4 = new List<string>(arrayOfRelTexts[(int)RelListType.Lord_4].ToList());
+            List<string> listLord_5 = new List<string>(arrayOfRelTexts[(int)RelListType.Lord_5].ToList());
             //loop dictonary
-            foreach(var house in dictMajorHouses)
+            foreach (var house in dictMajorHouses)
             {
                 houseID = house.Key;
                 //get list of all actors in that house
@@ -2564,7 +2569,30 @@ namespace Next_Game
                                 if (relLord > 0)
                                 {
                                     actor.SetRelLord(relLord);
-                                    relTag = GetLordRelTag(relLord);
+                                    //get a random tag from the appropriate list
+                                    lordStars = actor.GetRelLordStars();
+                                    relTag = "";
+                                    switch (lordStars)
+                                    {
+                                        case 1:
+                                            relTag = listLord_1[rnd.Next(0, listLord_1.Count)];
+                                            break;
+                                        case 2:
+                                            relTag = listLord_2[rnd.Next(0, listLord_2.Count)];
+                                            break;
+                                        case 3:
+                                            relTag = listLord_3[rnd.Next(0, listLord_3.Count)];
+                                            break;
+                                        case 4:
+                                            relTag = listLord_4[rnd.Next(0, listLord_4.Count)];
+                                            break;
+                                        case 5:
+                                            relTag = listLord_5[rnd.Next(0, listLord_5.Count)];
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(134, string.Format("Invalid lordStars in Switch Statement (\"{0}\")", lordStars)));
+                                            break;
+                                    }
                                     if (String.IsNullOrEmpty(relTag) == true) { Game.SetError(new Error(134, "Invalid relTag (empty)")); relTag = "Unknown"; }
                                     relText = string.Format("Lord is {0}", relTag);
                                     Relation lordRel = new Relation(relText, relTag, relLord - 50, lord.ActID);
@@ -2578,18 +2606,7 @@ namespace Next_Game
             }
         }
 
-        /// <summary>
-        /// returns Tag of Lord's relationship with the character (from POV of character)
-        /// </summary>
-        /// <param name="relValue"></param>
-        /// <returns></returns>
-        private string GetLordRelTag(int relValue)
-        {
-            string relTag = "";
-
-            return relTag;
-        }
-
+  
         /// <summary>
         /// sub method to handle calc's for an NPC's relationship with their Lord (used by IniitialiseLordRelations)
         /// </summary>
