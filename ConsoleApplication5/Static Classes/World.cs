@@ -792,6 +792,7 @@ namespace Next_Game
                 //Relationship records
                 if ((person is Player) == false)
                 {
+                    //with Player
                     List<Relation> personRelations = person.GetRelEventPlyr();
                     if (personRelations.Count > 0)
                     {
@@ -799,7 +800,17 @@ namespace Next_Game
                         foreach (Relation relationship in personRelations)
                         { listToDisplay.Add(new Snippet(relationship.GetRelationText())); }
                     }
+                    //with Lord
+                    personRelations.Clear();
+                    personRelations = person.GetRelEventLord();
+                    if (personRelations.Count > 0)
+                    {
+                        listToDisplay.Add(new Snippet("Relationship History with Lord", RLColor.Brown, RLColor.Black));
+                        foreach (Relation relationship in personRelations)
+                        { listToDisplay.Add(new Snippet(relationship.GetRelationText())); }
+                    }
                 }
+
             }
             else
             { listToDisplay.Add(new Snippet(string.Format("No Character with ID {0} exists", actorID ), RLColor.LightRed, RLColor.Black)); }
