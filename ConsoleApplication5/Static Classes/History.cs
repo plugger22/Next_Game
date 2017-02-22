@@ -2454,30 +2454,35 @@ namespace Next_Game
                         int rndNum = rnd.Next(100);
                         if (rndNum <= chanceGood)
                         {
-                            //good past relationship
-                            rndIndex = rnd.Next(0, listOfHouseRelsGood.Count);
-                            //split into text and tag
-                            string[] tokens = listOfHouseRelsGood[rndIndex].Split('@');
-                            cleanTag = tokens[0].Trim();
-                            if (cleanTag.Length > 0) { relText = cleanTag; }
-                            cleanTag = tokens[1].Trim();
-                            if (cleanTag.Length > 0) { tagText = cleanTag; }
-                            listOfHouseRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
-                            relEffect = 1;
-                                
+                            if (listOfHouseRelsGood.Count > 0)
+                            {
+                                //good past relationship
+                                rndIndex = rnd.Next(0, listOfHouseRelsGood.Count);
+                                //split into text and tag
+                                string[] tokens = listOfHouseRelsGood[rndIndex].Split('@');
+                                cleanTag = tokens[0].Trim();
+                                if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing relText (Good), tag \"{0}\"", tokens[1]))); }
+                                cleanTag = tokens[1].Trim();
+                                if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing relTag (Good), text \"{0}\"", tokens[0]))); }
+                                listOfHouseRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
+                                relEffect = 1;
+                            }
                         }
                         else if (rndNum <= (chanceGood * 2))
                         {
-                            //bad past relationship
-                            rndIndex = rnd.Next(0, listOfHouseRelsBad.Count);
-                            //split into text and tag
-                            string[] tokens = listOfHouseRelsBad[rndIndex].Split('@');
-                            cleanTag = tokens[0].Trim();
-                            if (cleanTag.Length > 0) { relText = cleanTag; }
-                            cleanTag = tokens[1].Trim();
-                            if (cleanTag.Length > 0) { tagText = cleanTag; }
-                            listOfHouseRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
-                            relEffect = -1;
+                            if (listOfHouseRelsBad.Count > 0)
+                            {
+                                //bad past relationship
+                                rndIndex = rnd.Next(0, listOfHouseRelsBad.Count);
+                                //split into text and tag
+                                string[] tokens = listOfHouseRelsBad[rndIndex].Split('@');
+                                cleanTag = tokens[0].Trim();
+                                if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing relText (Bad), tag \"{0}\"", tokens[1]))); }
+                                cleanTag = tokens[1].Trim();
+                                if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing relTag (Bad), text \"{0}\"", tokens[0]))); }
+                                listOfHouseRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
+                                relEffect = -1;
+                            }
                         }
                         //relationship between houses present?
                         if (String.IsNullOrEmpty(relText) == false)
