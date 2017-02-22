@@ -1274,8 +1274,8 @@ namespace Next_Game
                         Record record_0 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
                         Game.world.SetRecord(record_0);
                     }
-                    //underage heir, his mother becomes Regent
-                    else if (wife != null)
+                    //underage heir, his mother (Lord's wife) becomes Regent, if of age and if alive and kicking
+                    else if (wife != null && wife.Age >= 15 && wife.Status != ActorStatus.Gone)
                     {
                         //record
                         descriptor = string.Format("{0}, Aid {1}, assumes Lordship (with a Regent) of House {2}, age {3}", heir.Name, heir.ActID, house.Name, heir.Age);
@@ -1295,8 +1295,8 @@ namespace Next_Game
                         record_2.AddActor(wife.ActID);
                         Game.world.SetRecord(record_2);
                     }
-                    //deadlord's brother steps in, as wife is dead, to become regent
-                    else if (wife == null)
+                    //deadlord's brother steps in, as wife is dead, or a minor, to become regent
+                    else
                     {
                         Location loc = Game.network.GetLocation(house.LocID);
                         Position pos = loc.GetPosition();

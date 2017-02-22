@@ -707,7 +707,7 @@ namespace Next_Game
                             maidenName = "";
                             if (relPerson.MaidenName != null)
                             { maidenName = string.Format(" (nee {0})", relPerson.MaidenName); }
-                            int relAge = Game.gameRevolt - relPerson.Born;
+                            int relAge = Game.gameStart - relPerson.Born;
                             string houseName;
                             //needed 'cause old King's house has been removed from the dictionaries
                             if (relPerson.HouseID == Game.lore.OldHouseID)

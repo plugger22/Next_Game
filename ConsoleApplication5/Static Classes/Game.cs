@@ -20,9 +20,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        //private static int seed = 3305;
+        private static int seed = 65038;
 
         static Random rnd;
         
@@ -1464,10 +1464,10 @@ namespace Next_Game
         private static void InitialiseGameVariables()
         {
             gameTurn = 0; //each turn represents a day
-            gameStart = constant.GetValue(Global.GAME_START); //start of game from Player's point of view
             gameRevolt = constant.GetValue(Global.GAME_REVOLT); //year of revolt (old king replaced by the new king)
-            gameExile = gameStart - gameRevolt; //time elapsed between revolt and return of the heir (start of game)
-            gameYear = constant.GetValue(Global.GAME_START);
+            gameStart = constant.GetValue(Global.GAME_EXILE) + gameRevolt; //start of game from Player's point of view
+            gameExile = constant.GetValue(Global.GAME_EXILE); //time elapsed between revolt and return of the heir (start of game)
+            gameYear = gameStart;
             gameGeneration = 1; //current generation (25 years each)
             mapSize = constant.GetValue(Global.MAP_SIZE);
         }

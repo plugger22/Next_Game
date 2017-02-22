@@ -24,7 +24,7 @@ namespace Next_Game
         MAP_FREQUENCY,
         MAP_SPACING,
         MAP_SIZE,
-        GAME_START,
+        GAME_EXILE,
         GAME_REVOLT,
         GAME_STATE,
         GAME_PAST,
@@ -81,7 +81,7 @@ namespace Next_Game
             arrayOfGlobals[16] = Global.MAP_FREQUENCY;
             arrayOfGlobals[17] = Global.MAP_SPACING;
             arrayOfGlobals[18] = Global.MAP_SIZE;
-            arrayOfGlobals[19] = Global.GAME_START;
+            arrayOfGlobals[19] = Global.GAME_EXILE;
             arrayOfGlobals[20] = Global.GAME_REVOLT;
             arrayOfGlobals[21] = Global.MAP_DIVISOR;
             arrayOfGlobals[22] = Global.CONNECTOR_MIN;
