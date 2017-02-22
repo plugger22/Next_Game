@@ -641,7 +641,7 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, false));
                     int change = person.GetPlayerChange();
                     int relPlyr = person.GetRelPlyr();
-                    string tagText = string.Format("({0}{1})", change > 0 ? "+" : "", change);
+                    string tagText = string.Format("(Change {0}{1})", change > 0 ? "+" : "", change);
                     if (change == 0) { tagText = ""; }
                     RLColor tagColor = Color._badTrait;
                     if ( relPlyr >= 50) { tagColor = Color._goodTrait; }
@@ -655,7 +655,7 @@ namespace Next_Game
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(relStars)), RLColor.LightRed, RLColor.Black, false));
                         change = person.GetLordChange();
                         int relLord = person.GetRelLord();
-                        tagText = string.Format("({0}{1})", change > 0 ? "+" : "", change);
+                        tagText = string.Format("(Change {0}{1})", change > 0 ? "+" : "", change);
                         if (change == 0) { tagText = ""; }
                         tagColor = Color._badTrait;
                         if (relLord >= 50) { tagColor = Color._goodTrait; }

@@ -1431,8 +1431,7 @@ namespace Next_Game
             // kids
             CreateStartingChildren(lord, lady, place);
             //wife has influence over husband (only if smarter)
-            //SetWifeInfluence(lord, lady);
-            SetInfluence(lord, lady, SkillType.Wits);
+            /*SetInfluence(lord, lady, SkillType.Wits);*/
         }
 
 
@@ -2324,7 +2323,7 @@ namespace Next_Game
 
 
         /// <summary>
-        /// Generic function for one actor to influence another
+        /// Generic function for one actor to influence another -> NOTE: No Longer in Use 22Feb17
         /// </summary>
         /// <param name="minion"></param>
         /// <param name="master"></param>
@@ -2373,7 +2372,7 @@ namespace Next_Game
         {
             int elapsedTime = Game.gameExile;
             string descriptor;
-            int startAge;
+            int startAge, comeOfAge;
             //Console.WriteLine(Environment.NewLine + "--- Age all Current Passive Actors");
             foreach(var actor in dictPassiveActors)
             {
@@ -2385,15 +2384,24 @@ namespace Next_Game
                     //check for an underage Lord assuming power once they get to 15
                     if (actor.Value.Type == ActorType.Lord && startAge < 15)
                     {
-                        int comeOfAge = (15 - startAge) + Game.gameStart;
+                        comeOfAge = (15 - startAge) + Game.gameRevolt;
                         //record
-                        descriptor = string.Format("{0}, Aid {1}, son of {2}, assumes Lordship of House {3}, age {4}", heir.Name, heir.ActID, deadLord.Name, house.Name, heir.Age);
-                        Record record_0 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
-                        Game.world.SetRecord(record_0);
+                        descriptor = string.Format("{0}, Aid {1}, comes of age and rules House {2} in his own right, age 15", actor.Value.Name, actor.Value.ActID, 
+                            Game.world.GetMajorHouseName(actor.Value.HouseID));
+                        Record record = new Record(descriptor, actor.Value.ActID, actor.Value.LocID, actor.Value.RefID, comeOfAge, HistActorIncident.Lordship);
+                        Game.world.SetRecord(record);
                     }
                     //check for a Regent that is no longer needed
-
-                    //Console.WriteLine("{0}, Aid {1}, has is now age {2}", actor.Value.Name, actor.Value.ActID, actor.Value.Age);
+                    else if (actor.Value.Realm == ActorRealm.Regent)
+                    {
+                        actor.Value.Realm = ActorRealm.None;
+                        comeOfAge = actor.Value.RegencyPeriod + Game.gameRevolt;
+                        //record
+                        descriptor = string.Format("{0}, Aid {1}, is no longer Regent to House {2} as the Heir has come of age", actor.Value.Name, actor.Value.ActID,
+                            Game.world.GetMajorHouseName(actor.Value.HouseID));
+                        Record record = new Record(descriptor, actor.Value.ActID, actor.Value.LocID, actor.Value.RefID, comeOfAge , HistActorIncident.Lordship);
+                        Game.world.SetRecord(record);
+                    }
                 }
             }
         }

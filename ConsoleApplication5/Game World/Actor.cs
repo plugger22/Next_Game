@@ -30,6 +30,7 @@ namespace Next_Game
         public int Age { get; set; }
         public int Born { get; set; } //year born
         public int Gone { get; set; } = 0; //year died or missing
+        public int RegencyPeriod { get; set; } = 0; //if character is a regent, how long is it for?
         public string Description { get; set; }
         public int Delay { get; set; } = 0; // if > 0 then character delayed for some reason and unavailable
         public int Resources { get; set; } //abstracted money, equipment and influence
