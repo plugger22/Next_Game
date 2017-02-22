@@ -111,8 +111,8 @@
 # Relationships ---
 
 # HOUSE_REL_GOOD -> % chance of good house, past history, relationship (Bad is same % as good, None is 100 - Good x 2), eg. good 30, bad 30, none 40
-40: 30
-# HOUSE_REL_EFFECT -> 1dx relationship effect for any, past history, relationship incident
+40: 35
+# HOUSE_REL_EFFECT -> 1dx relationship effect for any, past history, relationship incident, eg. 30 gives a range of 1 to 30 (1d30)
 41: 30
 # HOUSE_REL_NUM -> number of rolls for each house for possible relations with others
 43: 2

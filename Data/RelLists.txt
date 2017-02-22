@@ -30,7 +30,39 @@ Contested our claim of ownership to a valuable parcel of land @ Contested Land C
 Claim our Title by virtue of a distant, dubious, marriage @ Claim our Title
 Rumoured to mate with livestock as a disgusting rite-of-passage @ Sheep Humpers
 
-# Tags for the 5 different levels of relationships between a Lord and their family and adivisors
+# Past History for relations between a Major House and it's Bannerlords
+# FORMAT -> relationship_text @ relationship_tag (2 or 3 words), note '@' symbol between the two
+
+[BannerLords_Good]
+Rescued our Ancestral Lord from a raging River @ Rescued our Lord
+Rescued our Ancestral Lord from marauding Sell Swords @ Rescued our Lord
+Saved our Ancestral Lord from dying of the Bloody Flux @  Saved our Lord
+Reliable and proven Men-At-Arms in past battles @ Reliable Fighters
+A past BannerLord displayed exceptional Loyalty to our House @  Exceptional Loyalty
+A past BannerLord came to our Houses aid when it was needed most @ Aided our House
+Have tried to rid their lands of Bandits over the years @ Eradicate Bandits
+Have managed their lands in a sensible and progressive manner @ Sensible Managers
+Have proven to be virtuous and upstanding members of our House @ Virtuous and Upstanding
+Provided valuable advice in a past crisis @ Provided Valuable Advice
+Have been meticulous in repaying past loans from our House @ Repaid Past Loans
+Have produced many fine and fertile wives for our sons @ Fertile Wives
+
+[BannerLords_Bad]
+Refused to answer the Banners when called @ Refused Banners
+Practise interbreeding and marry their own Sisters @ Interbreed with Sisters
+Unreliable in battle and prone to holding back @ Unreliable in Battle
+Moonlight as highway robbers and exert an unofficial toll on trade @ Highway Robbers
+Have been openly contemptuous of our House in the past @ Contemptuous Behaviour
+Spread disease to neighbouring lands through poor sanitation practices @ Spread Disease
+Illegally graze their animals on neighbouring land @ Illegal Practices
+Refused to recognise the authority of our past Ancestral Lord @ Don't Recognise Authority
+Deliberately breed Dire Wolves and let them feed on our livestock @ Breed Dire Wolves
+Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten @ Past Injustice
+Refused to acknowledge, or pay back, a past loan from our Ancestral Lord @ Ignored Past Loan
+Went ahead with a scandalous marriage that brought shame upon our House @ Scandalous Marriage
+Have proven to be fickle and wayward allies in our times of need @ Fickle Allies
+
+# Tags for the 5 different levels of relationships between a Lord and their family and advisors
 
 [Lord_1]
 Contemptuous
