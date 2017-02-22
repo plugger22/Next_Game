@@ -3027,8 +3027,8 @@ namespace Next_Game
             //temporary sub lists for each category of geoNames
             List<string> listOfHousePastGood = new List<string>();
             List<string> listOfHousePastBad = new List<string>();
-            List<string> listOfBannerLordsGood = new List<string>();
-            List<string> listOfBannerLordsBad = new List<string>();
+            List<string> listOfBannerGood = new List<string>();
+            List<string> listOfBannerBad = new List<string>();
             List<string> listOfLord_1 = new List<string>();
             List<string> listOfLord_2 = new List<string>();
             List<string> listOfLord_3 = new List<string>();
@@ -3064,10 +3064,10 @@ namespace Next_Game
                                     listOfHousePastBad.Add(tempString);
                                     break;
                                 case "BannerLords_Good":
-                                    listOfBannerLordsGood.Add(tempString);
+                                    listOfBannerGood.Add(tempString);
                                     break;
                                 case "BannerLords_Bad":
-                                    listOfBannerLordsBad.Add(tempString);
+                                    listOfBannerBad.Add(tempString);
                                     break;
                                 case "Lord_1":
                                     listOfLord_1.Add(tempString);
@@ -3094,8 +3094,8 @@ namespace Next_Game
                 //size jagged array
                 arrayOfNames[(int)RelListType.HousePastGood] = new string[listOfHousePastGood.Count];
                 arrayOfNames[(int)RelListType.HousePastBad] = new string[listOfHousePastBad.Count];
-                arrayOfNames[(int)RelListType.BannerPastGood] = new string[listOfBannerLordsGood.Count];
-                arrayOfNames[(int)RelListType.BannerPastBad] = new string[listOfBannerLordsBad.Count];
+                arrayOfNames[(int)RelListType.BannerPastGood] = new string[listOfBannerGood.Count];
+                arrayOfNames[(int)RelListType.BannerPastBad] = new string[listOfBannerBad.Count];
                 arrayOfNames[(int)RelListType.Lord_1] = new string[listOfLord_1.Count];
                 arrayOfNames[(int)RelListType.Lord_2] = new string[listOfLord_2.Count];
                 arrayOfNames[(int)RelListType.Lord_3] = new string[listOfLord_3.Count];
@@ -3104,8 +3104,8 @@ namespace Next_Game
                 //populate from lists
                 arrayOfNames[(int)RelListType.HousePastGood] = listOfHousePastGood.ToArray();
                 arrayOfNames[(int)RelListType.HousePastBad] = listOfHousePastBad.ToArray();
-                arrayOfNames[(int)RelListType.BannerPastGood] = listOfBannerLordsGood.ToArray();
-                arrayOfNames[(int)RelListType.BannerPastBad] = listOfBannerLordsBad.ToArray();
+                arrayOfNames[(int)RelListType.BannerPastGood] = listOfBannerGood.ToArray();
+                arrayOfNames[(int)RelListType.BannerPastBad] = listOfBannerBad.ToArray();
                 arrayOfNames[(int)RelListType.Lord_1] = listOfLord_1.ToArray();
                 arrayOfNames[(int)RelListType.Lord_2] = listOfLord_2.ToArray();
                 arrayOfNames[(int)RelListType.Lord_3] = listOfLord_3.ToArray();

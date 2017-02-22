@@ -2411,7 +2411,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Set up web of relationships between Houses
+        /// Set up web of relationships between Houses (Major -> Major & Major -> BannerLord)
         /// </summary>
         public void InitialisePastHistoryHouses()
         {
@@ -2436,6 +2436,8 @@ namespace Next_Game
             interval = Math.Max(50, interval);
             Console.WriteLine(Environment.NewLine + "--- Past History Houses");
             List<Relation> tempListRelations = new List<Relation>();
+            List<MajorHouse> listTempHouses = new List<MajorHouse>();
+            List<int> tempBannerLords = new List<int>();
             //loop Major Houses
             foreach (MajorHouse house in listOfMajorHouses)
             {
@@ -2443,8 +2445,7 @@ namespace Next_Game
                 tempListRelations.Clear();
                 if (listOfHouseRelsGood.Count > 0 && listOfHouseRelsBad.Count > 0)
                 {
-                    //create a new list 
-                    List<MajorHouse> listTempHouses = new List<MajorHouse>();
+                    listTempHouses.Clear();
                     listTempHouses.AddRange(listOfMajorHouses);
                     //find and remove current house
                     for (int i = 0; i < listTempHouses.Count; i++)
@@ -2467,9 +2468,9 @@ namespace Next_Game
                                 //split into text and tag
                                 string[] tokens = listOfHouseRelsGood[rndIndex].Split('@');
                                 cleanTag = tokens[0].Trim();
-                                if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing relText (Good), tag \"{0}\"", tokens[1]))); }
+                                if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House relText (Good), tag \"{0}\"", tokens[1]))); }
                                 cleanTag = tokens[1].Trim();
-                                if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing relTag (Good), text \"{0}\"", tokens[0]))); }
+                                if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House relTag (Good), text \"{0}\"", tokens[0]))); }
                                 listOfHouseRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
                                 relEffect = 1;
                             }
@@ -2483,9 +2484,9 @@ namespace Next_Game
                                 //split into text and tag
                                 string[] tokens = listOfHouseRelsBad[rndIndex].Split('@');
                                 cleanTag = tokens[0].Trim();
-                                if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing relText (Bad), tag \"{0}\"", tokens[1]))); }
+                                if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House relText (Bad), tag \"{0}\"", tokens[1]))); }
                                 cleanTag = tokens[1].Trim();
-                                if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing relTag (Bad), text \"{0}\"", tokens[0]))); }
+                                if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House relTag (Bad), text \"{0}\"", tokens[0]))); }
                                 listOfHouseRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
                                 relEffect = -1;
                             }
@@ -2494,7 +2495,6 @@ namespace Next_Game
                         if (String.IsNullOrEmpty(relText) == false)
                         {
                             //year occurred
-
                             int year = yearStart + rnd.Next(interval);
                             //effect
                             relEffect *= rnd.Next(1, effectConstant);
@@ -2509,10 +2509,79 @@ namespace Next_Game
                             masterText = string.Format("{0} {1} -> {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);
                             listOfHouseRelsMaster.Add(masterText);
                             Console.WriteLine("MASTER: {0}", masterText);
-
                         }
                     }
                     Console.WriteLine("House {0}, refID {1}, Relations", house.Name, house.RefID);
+
+                    //Bannerlord Relations with House
+                    tempBannerLords.Clear();
+                    tempBannerLords.AddRange(house.GetBannerLords());
+                    if (tempBannerLords.Count > 0)
+                    {
+                        //loop through Bannerlords - One Roll per BannerLord
+                        for (int i = 0; i < tempBannerLords.Count; i++)
+                        {
+                            //randomly choose a good, bad or none past relationship
+                            relText = ""; tagText = "";
+                            int rndNum = rnd.Next(100);
+                            if (rndNum <= chanceGood)
+                            {
+                                if (listOfBannerRelsGood.Count > 0)
+                                {
+                                    //good past relationship
+                                    rndIndex = rnd.Next(0, listOfBannerRelsGood.Count);
+                                    //split into text and tag
+                                    string[] tokens = listOfBannerRelsGood[rndIndex].Split('@');
+                                    cleanTag = tokens[0].Trim();
+                                    if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner relText (Good), tag \"{0}\"", tokens[1]))); }
+                                    cleanTag = tokens[1].Trim();
+                                    if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner relTag (Good), text \"{0}\"", tokens[0]))); }
+                                    listOfBannerRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
+                                    relEffect = 1;
+                                }
+                                else if (rndNum <= (chanceGood * 2))
+                                {
+                                    if (listOfBannerRelsBad.Count > 0)
+                                    {
+                                        //bad past relationship
+                                        rndIndex = rnd.Next(0, listOfBannerRelsBad.Count);
+                                        //split into text and tag
+                                        string[] tokens = listOfBannerRelsBad[rndIndex].Split('@');
+                                        cleanTag = tokens[0].Trim();
+                                        if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner relText (Bad), tag \"{0}\"", tokens[1]))); }
+                                        cleanTag = tokens[1].Trim();
+                                        if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner relTag (Bad), text \"{0}\"", tokens[0]))); }
+                                        listOfBannerRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
+                                        relEffect = -1;
+                                    }
+                                }
+                                //relationship between Major House & BannerLord present?
+                                if (String.IsNullOrEmpty(relText) == false)
+                                {
+                                    //year occurred
+                                    int year = yearStart + rnd.Next(interval);
+                                    //effect
+                                    relEffect *= rnd.Next(1, effectConstant);
+                                    //choose a random house from list
+                                    int tempIndex = rnd.Next(0, tempBannerLords.Count);
+                                    int refID = tempBannerLords[tempIndex];
+                                    MinorHouse rndHouse = (MinorHouse)Game.world.GetHouse(refID);
+                                    if (rndHouse != null)
+                                    {
+                                        Console.WriteLine("- BannerLord House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year);
+                                        //add to House list
+                                        Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
+                                        tempListRelations.Add(relation);
+                                        //add to Master list
+                                        masterText = string.Format("{0} {1} -> {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);
+                                        listOfHouseRelsMaster.Add(masterText);
+                                        Console.WriteLine("MASTER: {0}", masterText);
+                                    }
+                                    else { Game.SetError(new Error(131, "MinorHouse Invalid (null)")); }
+                                }
+                            }
+                        }
+                    }
                 }
                 else
                 { Game.SetError(new Error(131, "List of Good or Bad Rel Reasons (Major House Past History) exhausted")); }
