@@ -120,8 +120,6 @@ namespace Next_Game
             //Past Relationship Histories
             arrayOfRelTexts = Game.file.GetRelations("RelLists.txt");
             InitialisePastHistoryHouses();
-            
-            
         }
 
         /// <summary>
@@ -2515,7 +2513,8 @@ namespace Next_Game
 
                     //Bannerlord Relations with House
                     tempBannerLords.Clear();
-                    tempBannerLords.AddRange(house.GetBannerLords());
+                    MajorHouse tempMajorHouse = (MajorHouse)Game.world.GetHouse(house.RefID);
+                    tempBannerLords.AddRange(tempMajorHouse.GetBannerLords());
                     if (tempBannerLords.Count > 0)
                     {
                         //loop through Bannerlords - One Roll per BannerLord
