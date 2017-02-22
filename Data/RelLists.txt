@@ -1,35 +1,36 @@
 # RelLists -> lists for texts for the various relationship tables
 
 # Past history for relationships between Major Houses
+# FORMAT -> relationship_text @ relationship_tag (2 or 3 words), note '@' symbol between the two
 
 [Major_House_Good]
-Helped out in times of Trouble
-Saved the day in a past Battle
-Blood bonds forged between past Lords
-Gifted lands to our House
-Proved to be a reliable ally on many past occasions
-Foiled an evil plot against a past Lord
-Provided valuable Political support in previous councils
-A valued, long term trading partner
-Saved the life of one of our Ancestral Lords on a hunting trip
-Saved the life of one of our past Lords during a bandit attack
-Provided a good education to wards of the House
-A strong friendship existed between past Lords of both Houses
+Helped out in times of Trouble @ Helped out
+Saved the day in a past Battle @ Saved the Day
+Blood bonds forged between past Lords @ Blood Bonds
+Gifted lands to our House @ Gifted Lands
+Proved to be a reliable ally on many past occasions @ Reliable Ally
+Foiled an evil plot against a past Lord @ Foiled Plot
+Provided valuable Political support in previous councils @ Political Support
+A valued, long term trading partner @ Valued Trading Partner
+Saved the life of one of our Ancestral Lords on a hunting trip @ Saved Lord
+Saved the life of one of our past Lords during a bandit attack @ Saved Lord
+Provided a good education to wards of the House @ Educated Wards
+A strong friendship existed between past Lords of both Houses @ Strong Friendship
 
 [Major_House_Bad]
-An ancestral Lord was humiliated by their daughter being spurned at the Altar
-The child ward of a past Lord was murdered while in their care
-Accused of Stealing herds of our Livestock
-Raided our lands and carried off women from our villages
-Fought a small skirmish with us over disputed land
-Abandoned a past Lord, in his time of need, on the field of Battle
-Allegedly attempted to infiltrate an Assassin into the court of an Ancestral Lord
-Engaged in a long standing blood feud
-Contested our claim of ownership to a valuable parcel of land
-Claim our Lands by virtue of a distant, dubious, marriage
-Rumoured to mate with livestock as a disgusting rite-of-passage
+An ancestral Lord was humiliated by their daughter being spurned at the Altar @ Humiliated our Daughter
+The child ward of a past Lord was murdered while in their care @ Murdered our Ward
+Accused of Stealing herds of our Livestock @ Stole Livestock
+Raided our lands and carried off women from our villages @ Raided our Lands
+Fought a small skirmish with us over disputed land @ Fought a Skirmish
+Abandoned a past Lord, in his time of need, on the field of Battle @ Ran from Battle
+Allegedly attempted to infiltrate an Assassin into the court of an Ancestral Lord @ Assassination Attempt
+Engaged in a long standing blood feud @ Blood Feud
+Contested our claim of ownership to a valuable parcel of land @ Contested Land Claims
+Claim our Title by virtue of a distant, dubious, marriage @ Claim our Title
+Rumoured to mate with livestock as a disgusting rite-of-passage @ Sheep Humpers
 
-# Tags for the 5 different levels of relationships between a Lord and their family and advisors
+# Tags for the 5 different levels of relationships between a Lord and their family and adivisors
 
 [Lord_1]
 Contemptuous

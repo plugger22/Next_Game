@@ -2417,12 +2417,13 @@ namespace Next_Game
             //set up constants
             int rndIndex;
             int relEffect = 0;
-            string relText, masterText;
+            string relText, tagText, masterText;
             int yearStart = Game.constant.GetValue(Global.GAME_PAST);
             int yearEnd = Game.constant.GetValue(Global.GAME_REVOLT);
             int effectConstant = Game.constant.GetValue(Global.HOUSE_REL_EFFECT);
             int chanceGood = Game.constant.GetValue(Global.HOUSE_REL_GOOD);
             int numRolls = Game.constant.GetValue(Global.HOUSE_REL_NUM);
+            string cleanTag;
             chanceGood = Math.Min(50, chanceGood);
             chanceGood = Math.Max(1, chanceGood);
             int interval = yearEnd - yearStart - 50;
@@ -2449,21 +2450,32 @@ namespace Next_Game
                     //randomly choose a good, bad or none past relationship
                     for (int i = 0; i < numRolls; i++)
                     {
-                        relText = "";
+                        relText = ""; tagText = "";
                         int rndNum = rnd.Next(100);
                         if (rndNum <= chanceGood)
                         {
                             //good past relationship
                             rndIndex = rnd.Next(0, listOfHouseRelsGood.Count);
-                            relText = listOfHouseRelsGood[rndIndex];
+                            //split into text and tag
+                            string[] tokens = listOfHouseRelsGood[rndIndex].Split('@');
+                            cleanTag = tokens[0].Trim();
+                            if (cleanTag.Length > 0) { relText = cleanTag; }
+                            cleanTag = tokens[1].Trim();
+                            if (cleanTag.Length > 0) { tagText = cleanTag; }
                             listOfHouseRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
                             relEffect = 1;
+                                
                         }
                         else if (rndNum <= (chanceGood * 2))
                         {
                             //bad past relationship
                             rndIndex = rnd.Next(0, listOfHouseRelsBad.Count);
-                            relText = listOfHouseRelsBad[rndIndex];
+                            //split into text and tag
+                            string[] tokens = listOfHouseRelsBad[rndIndex].Split('@');
+                            cleanTag = tokens[0].Trim();
+                            if (cleanTag.Length > 0) { relText = cleanTag; }
+                            cleanTag = tokens[1].Trim();
+                            if (cleanTag.Length > 0) { tagText = cleanTag; }
                             listOfHouseRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
                             relEffect = -1;
                         }
@@ -2480,7 +2492,7 @@ namespace Next_Game
                             MajorHouse rndHouse = listTempHouses[tempIndex];
                             Console.WriteLine("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year);
                             //add to House list
-                            Relation relation = new Relation(relText, "", relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
+                            Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
                             tempListRelations.Add(relation);
                             //add to Master list
                             masterText = string.Format("{0} {1} -> {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);

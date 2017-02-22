@@ -158,8 +158,8 @@ namespace Next_Game
         internal SortedDictionary<int, ActorRelation> GetFamily()
         { return null; }
 
-        public void AddRelEventOther(Relation relMsg)
-        { listOfRelLord.Add(relMsg); }
+        /*public void AddRelEventOther(Relation relMsg)
+        { listOfRelLord.Add(relMsg); }*/
 
         /// <summary>
         /// adds event & updates relPlyr & figures out new value (Level) after changes
