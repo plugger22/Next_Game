@@ -645,7 +645,7 @@ namespace Next_Game
                     if (change == 0) { tagText = ""; }
                     RLColor tagColor = Color._badTrait;
                     if ( relPlyr >= 50) { tagColor = Color._goodTrait; }
-                    listToDisplay.Add(new Snippet(string.Format("(Now {0}) {1} {2}", relPlyr, person.GetPlayerTag(), tagText), 
+                    listToDisplay.Add(new Snippet(string.Format("{0}, Rel {1}, {2}", person.GetPlayerTag(), relPlyr, tagText), 
                         tagColor ,RLColor.Black, true));
                     //with Lord
                     if (person.Type != ActorType.Lord)
@@ -659,7 +659,7 @@ namespace Next_Game
                         if (change == 0) { tagText = ""; }
                         tagColor = Color._badTrait;
                         if (relLord >= 50) { tagColor = Color._goodTrait; }
-                        listToDisplay.Add(new Snippet(string.Format("(Now {0}) {1} {2}", relLord, person.GetLordTag(), tagText),
+                        listToDisplay.Add(new Snippet(string.Format("{0}, Rel {1}, {2}", person.GetLordTag(), relLord, tagText),
                             tagColor, RLColor.Black, true));
                     }
                 }
@@ -793,20 +793,20 @@ namespace Next_Game
                 if ((person is Player) == false)
                 {
                     //with Player
-                    List<Relation> personRelations = person.GetRelEventPlyr();
-                    if (personRelations.Count > 0)
+                    List<Relation> playerRelations = person.GetRelEventPlyr();
+                    if (playerRelations.Count > 0)
                     {
                         listToDisplay.Add(new Snippet("Relationship History with Player", RLColor.Brown, RLColor.Black));
-                        foreach (Relation relationship in personRelations)
+                        foreach (Relation relationship in playerRelations)
                         { listToDisplay.Add(new Snippet(relationship.GetRelationText())); }
                     }
                     //with Lord
-                    personRelations.Clear();
-                    personRelations = person.GetRelEventLord();
-                    if (personRelations.Count > 0)
+                    List<Relation> lordRelations = person.GetRelEventLord();
+                    lordRelations = person.GetRelEventLord();
+                    if (lordRelations.Count > 0)
                     {
                         listToDisplay.Add(new Snippet("Relationship History with Lord", RLColor.Brown, RLColor.Black));
-                        foreach (Relation relationship in personRelations)
+                        foreach (Relation relationship in lordRelations)
                         { listToDisplay.Add(new Snippet(relationship.GetRelationText())); }
                     }
                 }
