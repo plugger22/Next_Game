@@ -335,7 +335,7 @@ namespace Next_Game
         /// </summary>
         /// <returns></returns>
         public string GetRelationText()
-        { return string.Format("{0} (Now {1}) {2} (Change {3}{4})", Year, Level, Text, Change > 0 ? "+" : "", Change); }
+        { return string.Format("{0} \"{1}\", Rel {2}, (Change {3}{4})", Year, Text, Level, Change > 0 ? "+" : "", Change); }
 
     }
 }

@@ -2096,7 +2096,7 @@ namespace Next_Game
                 }
                 Game.world?.SetRecord(record);
             }
-            //Coronation for New king
+            //Coronation for King
             if (OldKing == null)
             { Game.SetError(new Error(28, "No King Present")); }
             else
@@ -2260,8 +2260,11 @@ namespace Next_Game
 
         }
 
-
-        internal void ReplaceDeadLords(Dictionary<int, House> dictHouses)
+        /// <summary>
+        /// Not used ???
+        /// </summary>
+        /// <param name="dictHouses"></param>
+        internal void ShowDeadLords(Dictionary<int, House> dictHouses)
         {
             int lordID;
             Console.WriteLine(Environment.NewLine + "--- Dead Lords");

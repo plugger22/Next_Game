@@ -389,8 +389,6 @@ namespace Next_Game
                 string textToWrap = text_1 + text_2;
                 listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
 
-                
-
                 //events ---
 
                 for (int k = 0; k < Game.constant.GetValue(Global.BATTLE_EVENTS); k++)
@@ -497,8 +495,6 @@ namespace Next_Game
                     //Royalist Lords
                     if (listOfTempRoyals.Count > 1)
                     {
-                        
-
                         int rndNum = rnd.Next(10);
                         int listIndex = rnd.Next(1, listOfTempRoyals.Count); //don't pick King (index 0)
                         int royalID = listOfTempRoyals[listIndex];
