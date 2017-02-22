@@ -44,6 +44,8 @@ namespace Next_Game
         private List<string> listOfHouseRelsGood;
         private List<string> listOfHouseRelsBad;
         private List<string> listOfHouseRelsMaster; //debug purposes only, all past house relations 
+        private List<string> listOfBannerRelsGood;
+        private List<string> listOfBannerRelsBad;
         private string[][] arrayOfRelTexts;
 
         /// <summary>
@@ -75,6 +77,8 @@ namespace Next_Game
             listOfHouseRelsGood = new List<string>();
             listOfHouseRelsBad = new List<string>();
             listOfHouseRelsMaster = new List<string>();
+            listOfBannerRelsGood = new List<string>();
+            listOfBannerRelsBad = new List<string>();
             arrayOfRelTexts = new string[(int)RelListType.Count][];
         }
 
@@ -2414,6 +2418,8 @@ namespace Next_Game
             //convert array data to lists
             listOfHouseRelsGood = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastGood].ToList());
             listOfHouseRelsBad = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastBad].ToList());
+            listOfBannerRelsGood = new List<string>(arrayOfRelTexts[(int)RelListType.BannerPastGood]).ToList();
+            listOfBannerRelsBad = new List<string>(arrayOfRelTexts[(int)RelListType.BannerPastBad]).ToList();
             //set up constants
             int rndIndex;
             int relEffect = 0;

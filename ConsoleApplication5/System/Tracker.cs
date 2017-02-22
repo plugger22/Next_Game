@@ -14,7 +14,7 @@ namespace Next_Game
     //categorires -> Used for Messages
     public enum MessageType { None, System, Move, Crow, Activation, Event, Conflict }
     //Relationship List Categories
-    public enum RelListType { HousePastGood, HousePastBad, Lord_1, Lord_2, Lord_3, Lord_4, Lord_5, Count }
+    public enum RelListType { HousePastGood, HousePastBad, BannerPastGood, BannerPastBad, Lord_1, Lord_2, Lord_3, Lord_4, Lord_5, Count }
 
     /// <summary>
     /// Base class (not used directly)
