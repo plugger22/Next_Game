@@ -2372,13 +2372,27 @@ namespace Next_Game
         public void AgePassiveCharacters(Dictionary<int, Passive> dictPassiveActors)
         {
             int elapsedTime = Game.gameExile;
+            string descriptor;
+            int startAge;
             //Console.WriteLine(Environment.NewLine + "--- Age all Current Passive Actors");
             foreach(var actor in dictPassiveActors)
             {
                 //actor currently alive at time of revolt?
                 if (actor.Value.Status != ActorStatus.Gone)
                 {
+                    startAge = actor.Value.Age;
                     actor.Value.Age += elapsedTime;
+                    //check for an underage Lord assuming power once they get to 15
+                    if (actor.Value.Type == ActorType.Lord && startAge < 15)
+                    {
+                        int comeOfAge = (15 - startAge) + Game.gameStart;
+                        //record
+                        descriptor = string.Format("{0}, Aid {1}, son of {2}, assumes Lordship of House {3}, age {4}", heir.Name, heir.ActID, deadLord.Name, house.Name, heir.Age);
+                        Record record_0 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
+                        Game.world.SetRecord(record_0);
+                    }
+                    //check for a Regent that is no longer needed
+
                     //Console.WriteLine("{0}, Aid {1}, has is now age {2}", actor.Value.Name, actor.Value.ActID, actor.Value.Age);
                 }
             }
