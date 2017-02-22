@@ -440,10 +440,10 @@ namespace Next_Game
                     //combat
                     trait = SkillType.Combat;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckSkillInfluenced(trait))
+                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) /* && person.CheckSkillInfluenced(trait)*/)
                     {
-                        abilityStars = person.GetSkill(trait, age, true);
-                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
+                        abilityStars = person.GetSkill(trait, age);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                         influenceDisplay = true;
                     }
                     else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }
@@ -466,10 +466,10 @@ namespace Next_Game
                     //Wits
                     trait = SkillType.Wits;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckSkillInfluenced(trait))
+                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID)/* && person.CheckSkillInfluenced(trait)*/)
                     {
-                        abilityStars = person.GetSkill(trait, age, true);
-                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
+                        abilityStars = person.GetSkill(trait, age);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                         influenceDisplay = true;
                     }
                     else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }
@@ -492,10 +492,10 @@ namespace Next_Game
                     //charm
                     trait = SkillType.Charm;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckSkillInfluenced(trait))
+                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID)/* && person.CheckSkillInfluenced(trait)*/)
                     {
-                        abilityStars = person.GetSkill(trait, age, true);
-                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
+                        abilityStars = person.GetSkill(trait, age);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                         influenceDisplay = true;
                     }
                     else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }
@@ -518,10 +518,10 @@ namespace Next_Game
                     //treachery
                     trait = SkillType.Treachery;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckSkillInfluenced(trait))
+                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID)/* && person.CheckSkillInfluenced(trait)*/)
                     {
-                        abilityStars = person.GetSkill(trait, age, true);
-                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
+                        abilityStars = person.GetSkill(trait, age);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                         influenceDisplay = true;
                     }
                     else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }
@@ -544,10 +544,10 @@ namespace Next_Game
                     //Leadership
                     trait = SkillType.Leadership;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckSkillInfluenced(trait))
+                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID)/* && person.CheckSkillInfluenced(trait)*/)
                     {
-                        abilityStars = person.GetSkill(trait, age, true);
-                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
+                        abilityStars = person.GetSkill(trait, age);
+                        influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                         influenceDisplay = true;
                     }
                     else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }
@@ -572,10 +572,10 @@ namespace Next_Game
                     {
                         trait = SkillType.Touched;
                         effectText = person.GetTraitEffectText(trait, age);
-                        if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckSkillInfluenced(trait))
+                        if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID)/* && person.CheckSkillInfluenced(trait)*/)
                         {
-                            abilityStars = person.GetSkill(trait, age, true);
-                            influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age, true));
+                            abilityStars = person.GetSkill(trait, age);
+                            influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                             influenceDisplay = true;
                         }
                         else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }

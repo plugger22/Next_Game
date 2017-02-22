@@ -2329,7 +2329,7 @@ namespace Next_Game
         /// <param name="master"></param>
         /// <param name="trait"></param>
         /// <param name="positiveOnly">if true the influence only applies if the master has a higher trait level than the minion</param>
-        internal void SetInfluence(Passive minion, Passive master, SkillType trait, bool positiveOnly = false)
+        /*internal void SetInfluence(Passive minion, Passive master, SkillType trait, bool positiveOnly = false)
         {
             int minionTrait = minion.GetSkill(trait);
             int masterTrait = master.GetSkill(trait);
@@ -2356,7 +2356,7 @@ namespace Next_Game
             }
             else
             { Console.WriteLine("- {0}, Aid {1} has NO adjusted {2} due to {3}'s, Aid {4}, influence (same value)", minion.Name, minion.ActID, trait, master.Name, master.ActID); }
-        }
+        }*/
 
         /// <summary>
         /// only used by lore backstory as will be out of synch with world dictOfSecrets otherwise

@@ -19,7 +19,7 @@ namespace Next_Game
     public enum ConflictSubType { None, Personal, Tournament, Battle, Hunting, Blackmail, Seduce, Befriend, Infiltrate, Evade, Escape} //combined list of all subtypes (add to as needed)
     public enum ConflictSpecial { None, Fortified_Position, Mountain_Country, Forest_Country, Castle_Walls } //special situations
     public enum ConflictResult { None, MinorWin, Win, MajorWin, MinorLoss, Loss, MajorLoss, Count} //result of challenge
-    public enum ResourceLevel { Meagre, Poor, Moderate, Substantial, Wealthy, Excessive}
+    public enum ResourceLevel { None, Meagre, Moderate, Substantial, Wealthy, Excessive}
    
 
     /// <summary>

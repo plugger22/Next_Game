@@ -98,8 +98,8 @@ namespace Next_Game
             //check how smart old king was (takes into account wife's possible influence)
             int oldKing_Wits;
             int influencer = OldKing.Influencer;
-            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1) && OldKing.CheckSkillInfluenced(SkillType.Wits))
-            { oldKing_Wits = OldKing.GetSkill(SkillType.Wits, SkillAge.Fifteen, true); }
+            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1)/* && OldKing.CheckSkillInfluenced(SkillType.Wits)*/)
+            { oldKing_Wits = OldKing.GetSkill(SkillType.Wits); }
             else { oldKing_Wits = OldKing.GetSkill(SkillType.Wits); }
             //dumb king (2 pool entries if wits 2 stars and 5 entries if wits 1 star)
             if (oldKing_Wits == 2) { for (int i = 0; i < 2; i++) { listWhyPool.Add(RevoltReason.Stupid_OldKing); } } 
@@ -108,8 +108,8 @@ namespace Next_Game
             //check new king treachery
             int newKing_Treachery;
             influencer = NewKing.Influencer;
-            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1) && NewKing.CheckSkillInfluenced(SkillType.Treachery))
-            { newKing_Treachery = NewKing.GetSkill(SkillType.Treachery, SkillAge.Fifteen, true); }
+            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1)/* && NewKing.CheckSkillInfluenced(SkillType.Treachery)*/)
+            { newKing_Treachery = NewKing.GetSkill(SkillType.Treachery); }
             else { newKing_Treachery = NewKing.GetSkill(SkillType.Treachery); }
             //treacherous new king grabs power (2 pool entries if 4 starts, 5 entries if treachery 5 stars)
             if (newKing_Treachery == 4) { for (int i = 0; i < 2; i++) { listWhyPool.Add(RevoltReason.Treacherous_NewKing); } }
@@ -837,7 +837,7 @@ namespace Next_Game
             //get Lord's treachery (adjusts number fielded) low treachery -> many, high treachery -> few
             int lordID = house.LordID;
             Passive lord = Game.world.GetPassiveActor(lordID);
-            menAtArms = (float)(6 - lord.GetSkill(SkillType.Treachery, SkillAge.Fifteen, true)) / 5 * (float)house.MenAtArms;
+            menAtArms = (float)(6 - lord.GetSkill(SkillType.Treachery)) / 5 * (float)house.MenAtArms;
             Console.WriteLine("Aid {0}, {1} has provided {2} men", lord.ActID, lord.Name, menAtArms);
             return Convert.ToInt32(menAtArms);
         }
@@ -1044,7 +1044,7 @@ namespace Next_Game
                 newLord.Handle = oldBannerLord.Handle;
                 newLord.arrayOfSkillID = oldBannerLord.arrayOfSkillID;
                 newLord.arrayOfTraitEffects = oldBannerLord.arrayOfTraitEffects;
-                newLord.arrayOfSkillInfluences = oldBannerLord.arrayOfSkillInfluences;
+                //newLord.arrayOfSkillInfluences = oldBannerLord.arrayOfSkillInfluences;
                 newLord.arrayOfTraitNames = oldBannerLord.arrayOfTraitNames;
                 newLord.Type = ActorType.Lord;
                 newLord.Title = string.Format("{0}", ActorType.Lord);

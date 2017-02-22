@@ -59,7 +59,7 @@ namespace Next_Game
         public int[] arrayOfSkillID { get; set; } //array index corresponds to skill type in Skill.cs SkillType enum, eg. Combat = 1
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
-        public int[] arrayOfSkillInfluences { get; set; } //effects due to person influencing (default 0)
+        //public int[] arrayOfSkillInfluences { get; set; } //effects due to person influencing (default 0)
         public int[] arrayOfConditions { get; set; } //net effect of any conditions
         //lists
         private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
@@ -85,7 +85,7 @@ namespace Next_Game
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
-            arrayOfSkillInfluences = new int[(int)SkillType.Count];
+            //arrayOfSkillInfluences = new int[(int)SkillType.Count];
             arrayOfConditions = new int[(int)SkillType.Count];
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
@@ -116,7 +116,7 @@ namespace Next_Game
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
-            arrayOfSkillInfluences = new int[(int)SkillType.Count];
+            //arrayOfSkillInfluences = new int[(int)SkillType.Count];
             arrayOfConditions = new int[(int)SkillType.Count];
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
@@ -272,12 +272,12 @@ namespace Next_Game
         /// </summary>
         /// <param name="skill"></param>
         /// <returns></returns>
-        public bool CheckSkillInfluenced(SkillType skill)
+        /*public bool CheckSkillInfluenced(SkillType skill)
         {
             if (arrayOfSkillInfluences[(int)skill] != 0)
             { return true; }
             return false;
-        }
+        }*/
 
         /// <summary>
         /// returns net value of a specified skill (with/without influence) Need to check if influence applies first
@@ -285,11 +285,11 @@ namespace Next_Game
         /// <param name="skill"></param>
         /// <param name="influenceEffect">True if you want the influenced skill</param>
         /// <returns></returns>
-        public int GetSkill(SkillType skill, SkillAge age = SkillAge.Fifteen, bool influenceEffect = false)
+        public int GetSkill(SkillType skill, SkillAge age = SkillAge.Fifteen /*, bool influenceEffect = false*/)
         {
             int skillValue = 3 + arrayOfTraitEffects[(int)age, (int)skill] + arrayOfConditions[(int)skill];
-            if (influenceEffect == true)
-            { skillValue += arrayOfSkillInfluences[(int)skill]; }
+            /*if (influenceEffect == true)
+            { skillValue += arrayOfSkillInfluences[(int)skill]; }*/
             //parameter check (1 to 5)
             skillValue = Math.Min(5, skillValue);
             skillValue = Math.Max(1, skillValue);
@@ -303,14 +303,13 @@ namespace Next_Game
         /// <param name="skill"></param>
         /// <param name="influenceEffect">True if you want the influenced trait</param>
         /// <returns></returns>
-        public string GetTraitEffectText(SkillType skill, SkillAge age = SkillAge.Fifteen, bool influenceEffect = false)
+        public string GetTraitEffectText(SkillType skill, SkillAge age = SkillAge.Fifteen/*, bool influenceEffect = false*/)
         {
             string text = null;
             string plus = null;
-            int effect = 0;
-            if (influenceEffect == true)
-            { effect = arrayOfSkillInfluences[(int)skill]; }
-            else { effect = arrayOfTraitEffects[(int)age, (int)skill]; }
+            /*if (influenceEffect == true)
+            { effect = arrayOfSkillInfluences[(int)skill]; }*/
+            int effect = arrayOfTraitEffects[(int)age, (int)skill];
             if (effect > 0) { plus = "+"; }
             else if (effect == 0) { return text; }
             text = "(" + plus + Convert.ToString(effect) + ")";

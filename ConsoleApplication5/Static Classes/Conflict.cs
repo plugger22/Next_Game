@@ -739,8 +739,8 @@ namespace Next_Game
             listOpponentCards.Add(new Snippet("Opponent's Cards", RLColor.Blue, backColor));
             listSituationCards.Add(new Snippet("Situation Cards", RLColor.Blue, backColor));
             //primary skills (2 cards per skill level)
-            int skill_player = player.GetSkill(PrimarySkill, SkillAge.Fifteen, true);
-            int skill_opponent = opponent.GetSkill(PrimarySkill, SkillAge.Fifteen, true);
+            int skill_player = player.GetSkill(PrimarySkill);
+            int skill_opponent = opponent.GetSkill(PrimarySkill);
             int cards_player = skill_player * 2;
             int cards_opponent = skill_opponent * 2;
             //create cards, add to pool and breakdown lists

@@ -75,7 +75,7 @@
 # Game ---
 
 # GAME_EXILE -> number of years after Game_Revolt when actual game play begins (time Player has spent in exile)
-19: 25
+19: 20
 # GAME_REVOLT -> baseline year for 1st generation (time of revolt)
 20: 1200
 # GAME_STATE -> honour (treachery) & legend (combat) good ( trait > 3) or bad (trait < 3), per point difference from baseline of 3
