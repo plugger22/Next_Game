@@ -126,16 +126,14 @@ namespace Next_Game
             InitialiseTraits();
             Game.StopTimer(timer_2, "W: InitialiseTraits");
             timer_2.Start();
-            InitialiseWorldHistory();
+            //need to be here for sequencing issues
+            Game.history.InitialiseOverthrow(dictPassiveActors);
+            Game.history.InitialiseLordRelations();
+            Game.history.InitialisePastHistoryHouses();
             Game.StopTimer(timer_2, "W: InitialiseWorldHistory");
             timer_2.Start();
             InitialiseSecrets();
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
-            timer_2.Start();
-            //need to be here for sequencing issues
-            Game.history.InitialiseLordRelations(); 
-            Game.history.InitialisePastHistoryHouses();
-            Game.StopTimer(timer_2, "W: InitialiseRelations");
         }
 
         /// <summary>
@@ -2168,11 +2166,15 @@ namespace Next_Game
             return type;
         }
 
+        /*
         internal void InitialiseWorldHistory()
         {
             //Generate History
             Game.history.InitialiseOverthrow(dictPassiveActors);
-        }
+            //need to be here for sequencing issues
+            Game.history.InitialiseLordRelations();
+            Game.history.InitialisePastHistoryHouses();
+        }*/
 
         /// <summary>
         /// debug: highlights duplicate names in imported files
