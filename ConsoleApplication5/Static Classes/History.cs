@@ -2593,22 +2593,34 @@ namespace Next_Game
             //Add special relations for each Major House in regard to their view of the newly appointed TurnCoat major house
             year = Game.gameRevolt;
             relText = "";
-            tagText = "Betrayed Old King";
             int turnCoatRefID = Game.lore.TurnCoatRefIDNew;
+            int newKingRefID = Game.lore.RoyalRefIDNew;
             string turnCoatName = Game.world.GetHouseName(turnCoatRefID);
             Console.WriteLine(Environment.NewLine + "--- Turncoat Relations");
             foreach (MajorHouse house in listOfMajorHouses)
-            { 
-                //effect is always negative -> halved if Loyal to the New King
-                if (house.Loyalty_Current == KingLoyalty.New_King)
+            {
+                if (house.RefID != newKingRefID)
                 {
-                   relText = "Their traitorous actions, while beneficial, leave a bad taste in our mouth";
-                   relEffect = rnd.Next(1, effectConstant / 2) * -1;
+                    //effect is always negative -> halved if Loyal to the New King
+                    if (house.Loyalty_Current == KingLoyalty.New_King)
+                    {
+                        relText = "Their traitorous actions, while beneficial, leave a bad taste in our mouth";
+                        tagText = "Wary of Traitor";
+                        relEffect = rnd.Next(1, effectConstant / 2) * -1;
+                    }
+                    else
+                    {
+                        relText = "The Turncoat Traitor and his House should burn in Hell";
+                        tagText = "Betrayed Old King";
+                        relEffect = rnd.Next(10, effectConstant) * -1;
+                    }
                 }
                 else
                 {
-                    relText = "The Turncoat Traitor and his House should burn in Hell";
-                    relEffect = rnd.Next(10, effectConstant) * -1;
+                    //New King -> positive
+                    relText = "The King is grateful for the assistance provided during the Revolt";
+                    tagText = "Grateful King";
+                    relEffect = rnd.Next(10, effectConstant);
                 }
                 //add relation
                 if (String.IsNullOrEmpty(relText) == false)
