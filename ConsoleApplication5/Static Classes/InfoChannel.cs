@@ -262,10 +262,9 @@ namespace Next_Game
                     { lineCounter++; length = 0; }
                     else
                     { length += snippet.GetText().Length; }
-
                 }
                 //multi console interface texts at bottom
-                if (consoleDisplay == ConsoleDisplay.Multi && lineCounter == dataLength)
+                if (consoleDisplay == ConsoleDisplay.Multi && lineCounter >= (dataLength - 2))
                 {
                     Snippet blank = new Snippet("");
                     infoConsole.Print(margin, lineCounter * 2 + margin, blank.GetText(), blank.GetForeColor(), blank.GetBackColor());

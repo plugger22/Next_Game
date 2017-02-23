@@ -130,7 +130,7 @@ namespace Next_Game
             Game.history.InitialiseOverthrow(dictPassiveActors);
             Game.history.InitialiseLordRelations();
             Game.history.InitialisePastHistoryHouses();
-            Game.StopTimer(timer_2, "W: InitialiseWorldHistory");
+            Game.StopTimer(timer_2, "W: InitialiseHistory");
             timer_2.Start();
             InitialiseSecrets();
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
