@@ -20,6 +20,7 @@ namespace Next_Game
         public int RoyalRefIDOld { get; set; } // refID
         public int RoyalRefIDNew { get; set; } // refID
         public int RoyalRefIDCurrent { get; set; } // refID
+        public int TurnCoatRefIDNew { get; set; }
         public int TurnCoat { get; set; } //actID of Turncoat Bannerlord who takes over lands of old king
         public int OldHouseID { get; set; } //HouseID of Old King (needed 'cause it's  removed from the house dictionaries once the new king takes over)
         public string OldHouseName { get; set; } //House name of old King
@@ -933,6 +934,7 @@ namespace Next_Game
                 Console.WriteLine("Old King House {0}, {1}", oldkingHouse.Name, oldkingHouse.Motto);
                 //Ref ID is 99 (all relevant datapoints are changed to this, not previous bannerlord refID as this is > 100 and causes issues with code as it thinks it's still a minor house)
                 int refID = 99;
+                TurnCoatRefIDNew = refID;
                 //set up road mapLayer
                 Game.map.InitialiseRoadLayer(oldkingHouse.LocID);
                 //set up new house

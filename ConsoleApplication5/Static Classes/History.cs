@@ -2592,6 +2592,15 @@ namespace Next_Game
                 if (tempListRelations.Count > 0)
                 { house.SetRelations(tempListRelations); }
             }
+
+            //Add special relations for each Major House in regard to their view of the newly appointed TurnCoat major house
+            foreach (MajorHouse house in listOfMajorHouses)
+            {
+                if (house.Loyalty_Current == KingLoyalty.New_King)
+                { }
+                else
+                { }
+            }
         }
 
 
