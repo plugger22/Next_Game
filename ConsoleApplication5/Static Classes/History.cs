@@ -2568,12 +2568,12 @@ namespace Next_Game
                                 MinorHouse rndHouse = (MinorHouse)Game.world.GetHouse(refID);
                                 if (rndHouse != null)
                                 {
-                                    Console.WriteLine("- BannerLord House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year);
+                                    Console.WriteLine("- Minor House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year);
                                     //add to House list
                                     Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
                                     tempListRelations.Add(relation);
                                     //add to Master list
-                                    masterText = string.Format("{0} {1} -> {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);
+                                    masterText = string.Format("{0} {1} -> (Minor) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);
                                     listOfHouseRelsMaster.Add(masterText);
                                     //Console.WriteLine("MASTER: {0}", masterText);
                                 }

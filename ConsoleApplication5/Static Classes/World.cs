@@ -1180,12 +1180,16 @@ namespace Next_Game
                 if (tempListRelations != null && tempListRelations.Count > 0)
                 {
                     houseList.Add(new Snippet("Relations with Other Houses", RLColor.Brown, RLColor.Black));
-                    foreach(Relation relation in tempListRelations)
-                    {
-                        string houseText = string.Format("{0} House {1}, \"{2}\", Rel {3}{4}", relation.Year, GetHouseName(relation.RefID), relation.Text, 
+                    //display relations in chronological order
+                    IEnumerable<string> relRecords =
+                        from relation in tempListRelations
+                        orderby relation.Year
+                        select string.Format("{0} House {1}, \"{2}\", Rel {3}{4}", relation.Year, GetHouseName(relation.RefID), relation.Text,
                             relation.Change > 0 ? "+" : "", relation.Change);
-                        houseList.Add(new Snippet(houseText));
-                    }
+                    List<string> tempRelRecords = relRecords.ToList();
+                    //add snippets
+                    foreach (string relText in tempRelRecords)
+                    { houseList.Add(new Snippet(relText)); }
                 }
                 //house history
                 List < string > houseHistory = GetHouseRecords(majorHouse.RefID);
