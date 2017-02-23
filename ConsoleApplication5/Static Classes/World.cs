@@ -1281,6 +1281,28 @@ namespace Next_Game
                         textColor, RLColor.Black));
                 }
             }
+            //Relationships (identical for the King's house)
+            MajorHouse majorHouse = (MajorHouse)GetHouse(Game.lore.RoyalRefIDNew);
+            if (majorHouse != null)
+            {
+                List<Relation> tempListRelations = majorHouse.GetRelations();
+                if (tempListRelations != null && tempListRelations.Count > 0)
+                {
+                    capitalList.Add(new Snippet("Relations with Other Houses", RLColor.Brown, RLColor.Black));
+                    //display relations in chronological order
+                    IEnumerable<string> relRecords =
+                        from relation in tempListRelations
+                        orderby relation.Year
+                        select string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
+                        GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
+                    List<string> tempRelRecords = relRecords.ToList();
+                    //add snippets
+                    foreach (string relText in tempRelRecords)
+                    { capitalList.Add(new Snippet(relText)); }
+                }
+            }
+            else { Game.SetError(new Error(136, "New King's House not found (null)")); }
+
             return capitalList;
         }
 
