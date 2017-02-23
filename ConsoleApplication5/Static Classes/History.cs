@@ -2418,7 +2418,7 @@ namespace Next_Game
             listOfBannerRelsGood = new List<string>(arrayOfRelTexts[(int)RelListType.BannerPastGood]).ToList();
             listOfBannerRelsBad = new List<string>(arrayOfRelTexts[(int)RelListType.BannerPastBad]).ToList();
             //set up constants
-            int rndIndex;
+            int rndIndex, year;
             int relEffect = 0;
             string relText, tagText, masterText;
             int yearStart = Game.constant.GetValue(Global.GAME_PAST);
@@ -2492,7 +2492,7 @@ namespace Next_Game
                         if (String.IsNullOrEmpty(relText) == false)
                         {
                             //year occurred
-                            int year = yearStart + rnd.Next(interval);
+                            year = yearStart + rnd.Next(interval);
                             //effect
                             relEffect *= rnd.Next(1, effectConstant);
                             //choose a random house from list
@@ -2561,12 +2561,9 @@ namespace Next_Game
                                 if (String.IsNullOrEmpty(relText) == false)
                                 {
                                     //year occurred
-                                    int year = yearStart + rnd.Next(interval);
+                                    year = yearStart + rnd.Next(interval);
                                     //effect
                                     relEffect *= rnd.Next(1, effectConstant);
-                                    //choose a random house from list
-                                    /*int tempIndex = rnd.Next(0, tempBannerLords.Count);
-                                    int refID = tempBannerLords[tempIndex];*/
                                     int refID = tempBannerLords[i];
                                     MinorHouse rndHouse = (MinorHouse)Game.world.GetHouse(refID);
                                     if (rndHouse != null)
@@ -2594,12 +2591,35 @@ namespace Next_Game
             }
 
             //Add special relations for each Major House in regard to their view of the newly appointed TurnCoat major house
+            year = Game.gameRevolt;
+            relText = "";
+            tagText = "Betrayed Old King";
+            int turnCoatRefID = Game.lore.TurnCoatRefIDNew;
+            string turnCoatName = Game.world.GetHouseName(turnCoatRefID);
+            Console.WriteLine(Environment.NewLine + "--- Turncoat Relations");
             foreach (MajorHouse house in listOfMajorHouses)
-            {
+            { 
+                //effect is always negative -> halved if Loyal to the New King
                 if (house.Loyalty_Current == KingLoyalty.New_King)
-                { }
+                {
+                   relText = "Their traitorous actions, while beneficial, leave a bad taste in our mouth";
+                   relEffect = rnd.Next(1, effectConstant / 2) * -1;
+                }
                 else
-                { }
+                {
+                    relText = "The Turncoat Traitor and his House should burn in Hell";
+                    relEffect = rnd.Next(10, effectConstant) * -1;
+                }
+                //add relation
+                if (String.IsNullOrEmpty(relText) == false)
+                {
+                    Relation relation = new Relation(relText, tagText, relEffect) { RefID = turnCoatRefID, ActorID = 0, Year = year };
+                    house.AddRelations(relation);
+                    //add to Master list
+                    masterText = string.Format("{0} {1} -> (Major) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, turnCoatName, relation.Text, relEffect > 0 ? "+" : "", relEffect);
+                    listOfHouseRelsMaster.Add(masterText);
+                    Console.WriteLine("{0}", masterText);
+                }
             }
         }
 

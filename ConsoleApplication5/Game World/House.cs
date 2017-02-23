@@ -114,6 +114,12 @@ namespace Next_Game
             else { Game.SetError(new Error(132, "Invalid List of Relations Input (null or empty)")); }
         }
 
+        internal void AddRelations(Relation relation)
+        {
+            if (relation != null)
+            { listOfRelations.Add(relation); }
+            else { Game.SetError(new Error(135, "Invalid Relation (null)")); }
+        }
 
         internal List<Relation> GetRelations()
         { return listOfRelations; }
