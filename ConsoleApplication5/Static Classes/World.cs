@@ -1184,8 +1184,8 @@ namespace Next_Game
                     IEnumerable<string> relRecords =
                         from relation in tempListRelations
                         orderby relation.Year
-                        select string.Format("{0} House {1}, \"{2}\", Rel {3}{4}", relation.Year, GetHouseName(relation.RefID), relation.Text,
-                            relation.Change > 0 ? "+" : "", relation.Change);
+                        select string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
+                        GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
                     List<string> tempRelRecords = relRecords.ToList();
                     //add snippets
                     foreach (string relText in tempRelRecords)
