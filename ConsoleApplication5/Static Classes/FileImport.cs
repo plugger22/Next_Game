@@ -469,27 +469,35 @@ namespace Next_Game
                 Console.WriteLine("--- Initialise Constants");
                 string cleanToken = null;
                 string cleanTag = null;
+                string cleanLow = null;
+                string cleanHigh = null;
                 int index = 0;
                 int value = 0;
+                int low = 0;
+                int high = 0;
                 Global enumTag = Global.None;
                 for (int i = 0; i < arrayOfFileInput.Length; i++)
                 {
                     if (arrayOfFileInput[i] != "" && !arrayOfFileInput[i].StartsWith("#"))
                     {
                         //string[] tokens = arrayOfFileInput[i].Split(':');
-                        string[] tokens = arrayOfFileInput[i].Split(new Char[] { ':', ';' });
+                        string[] tokens = arrayOfFileInput[i].Split(new Char[] { ':', ';', '@' });
                         //strip out leading spaces
                         cleanTag = tokens[0].Trim();
                         cleanToken = tokens[1].Trim();
+                        cleanLow = tokens[2].Trim();
+                        cleanHigh = tokens[3].Trim();
                         //convert to #'s
                         try
                         {
                             index = Convert.ToInt32(cleanTag);
                             value = Convert.ToInt32(cleanToken);
+                            low = Convert.ToInt32(cleanLow);
+                            high = Convert.ToInt32(cleanHigh);
                             //get correct enum from Global array
                             enumTag = Game.constant.GetGlobal(index);
                             //initialise data in Constants array
-                            Game.constant.SetData(enumTag, value);
+                            Game.constant.SetData(enumTag, value, low, high);
                         }
                         catch (Exception e)
                         { Game.SetError(new Error(17, e.Message)); }

@@ -57,11 +57,13 @@ namespace Next_Game
     {
         private readonly Global[] arrayOfGlobals; //holds enums which provide indexes for arrayOfConstants
         private readonly int[] arrayOfConstants; //data which that's used in code, index is a Global enum
+        private readonly int[,] arrayOfLimits; //holds min and max acceptable values for each, equivalent index, Constant
 
         public Constant()
             {
             arrayOfGlobals = new Global[(int)Global.Count];
             arrayOfConstants = new int[(int)Global.Count];
+            arrayOfLimits = new int[(int)Global.Count, 2];
             //set up array of Globals
             arrayOfGlobals[1] = Global.INHERIT_TRAIT;
             arrayOfGlobals[2] = Global.CHILDBIRTH_DEATH;
@@ -121,7 +123,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public Global GetGlobal( int index)
+        public Global GetGlobal(int index)
         {
             if (index < arrayOfGlobals.Length && index > 0)
             { return arrayOfGlobals[index]; }
@@ -134,12 +136,17 @@ namespace Next_Game
         /// </summary>
         /// <param name="index"></param>
         /// <param name="data"></param>
-        public void SetData( Global index, int data)
+        public void SetData( Global index, int data, int low, int high)
         {
             if ((int)index < arrayOfConstants.Length)
             {
+                //if out of range, generate error and assign Low value
+                if (data < low || data > high)
+                { Game.SetError(new Error(9, string.Format("{0} out of MinMax Range, data {1}, Min {2} Max {3} Auto assigned Min value", index, data, low, high))); data = low; }
                 arrayOfConstants[(int)index] = data;
-                Console.WriteLine("{0} -> {1}", index, data);
+                arrayOfLimits[(int)index, 0] = low;
+                arrayOfLimits[(int)index, 1] = high;
+                Console.WriteLine("{0} -> {1} Min {2} Max {3}", index, data, low, high);
             }
             else
             { Game.SetError(new Error(9, string.Format("{0} out of range, data {1}", index, data))); }
