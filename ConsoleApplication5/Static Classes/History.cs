@@ -348,95 +348,63 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// add followers to listofActiveActors from imported data
+        /// add followers to listofActiveActors from imported data. We want 8 followers from the pool (assigned ActID 2 to 9). World.cs InitialiseActiveActors chooses which ones to start with.
         /// </summary>
         /// <param name="listOfStructs"></param>
         internal void InitialiseFollowers(List<FollowerStruct> listOfStructs)
         {
+            int numImportedFollowers = 8; 
+            int index;
             Console.WriteLine(Environment.NewLine + "--- Import Followers");
             int age = (int)SkillAge.Fifteen;
-            //Convert FollowerStructs into Follower objects
-            foreach (var data in listOfStructs)
+            //randomly choose a follower from list (we need a max of 8)
+            if (listOfStructs.Count >= 8)
             {
-                Follower follower = null;
-                try
-                { follower = new Follower(data.Name, ActorType.Follower, data.FID, data.Sex); }
-                catch (Exception e)
-                { Game.SetError(new Error(59, e.Message)); continue; /*skip this record*/}
-                if (follower != null)
+                for (int i = 0; i < numImportedFollowers; i++)
                 {
-                    //copy data across from struct to object
-                    follower.Role = data.Role;
-                    follower.Description = data.Description;
-                    follower.ArcID = data.ArcID;
-                    follower.Resources = data.Resources;
-                    follower.Age = data.Age;
-                    follower.Born = Game.gameStart - data.Age;
-                    //relationship
-                    follower.SetRelPlyr(data.Loyalty);
-                    follower.AddRelEventPlyr(new Relation("Loyal Follower dedicated to the cause", "Loyal Follower", 5));
-                    //trait effects
-                    follower.arrayOfTraitEffects[age, (int)SkillType.Combat] = data.Combat_Effect;
-                    follower.arrayOfTraitEffects[age, (int)SkillType.Wits] = data.Wits_Effect;
-                    follower.arrayOfTraitEffects[age, (int)SkillType.Charm] = data.Charm_Effect;
-                    follower.arrayOfTraitEffects[age, (int)SkillType.Treachery] = data.Treachery_Effect;
-                    follower.arrayOfTraitEffects[age, (int)SkillType.Leadership] = data.Leadership_Effect;
-                    follower.arrayOfTraitEffects[age, (int)SkillType.Touched] = data.Touched_Effect;
-                    if (data.Touched_Effect != 0) { follower.Touched = 3; }
-                    //trait names
-                    follower.arrayOfTraitNames[(int)SkillType.Combat] = data.Combat_Trait;
-                    follower.arrayOfTraitNames[(int)SkillType.Wits] = data.Wits_Trait;
-                    follower.arrayOfTraitNames[(int)SkillType.Charm] = data.Charm_Trait;
-                    follower.arrayOfTraitNames[(int)SkillType.Treachery] = data.Treachery_Trait;
-                    follower.arrayOfTraitNames[(int)SkillType.Leadership] = data.Leadership_Trait;
-                    follower.arrayOfTraitNames[(int)SkillType.Touched] = data.Touched_Trait;
-                    //trait ID's not needed
-                    //add to list
-                    listOfActiveActors.Add(follower);
-                    Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.GetRelPlyr());
+                    index = rnd.Next(0, listOfStructs.Count);
+                    FollowerStruct data = listOfStructs[index];
+                    //Convert FollowerStructs into Follower objects
+                    Follower follower = new Follower(data.Name, ActorType.Follower, data.FID, data.Sex);
+
+                    if (follower != null)
+                    {
+                        //copy data across from struct to object
+                        follower.Role = data.Role;
+                        follower.Description = data.Description;
+                        follower.ArcID = data.ArcID;
+                        follower.Resources = data.Resources;
+                        follower.Age = data.Age;
+                        follower.Born = Game.gameStart - data.Age;
+                        //relationship
+                        follower.SetRelPlyr(data.Loyalty);
+                        follower.AddRelEventPlyr(new Relation("Loyal Follower dedicated to the cause", "Loyal Follower", 5));
+                        //trait effects
+                        follower.arrayOfTraitEffects[age, (int)SkillType.Combat] = data.Combat_Effect;
+                        follower.arrayOfTraitEffects[age, (int)SkillType.Wits] = data.Wits_Effect;
+                        follower.arrayOfTraitEffects[age, (int)SkillType.Charm] = data.Charm_Effect;
+                        follower.arrayOfTraitEffects[age, (int)SkillType.Treachery] = data.Treachery_Effect;
+                        follower.arrayOfTraitEffects[age, (int)SkillType.Leadership] = data.Leadership_Effect;
+                        follower.arrayOfTraitEffects[age, (int)SkillType.Touched] = data.Touched_Effect;
+                        if (data.Touched_Effect != 0) { follower.Touched = 3; }
+                        //trait names
+                        follower.arrayOfTraitNames[(int)SkillType.Combat] = data.Combat_Trait;
+                        follower.arrayOfTraitNames[(int)SkillType.Wits] = data.Wits_Trait;
+                        follower.arrayOfTraitNames[(int)SkillType.Charm] = data.Charm_Trait;
+                        follower.arrayOfTraitNames[(int)SkillType.Treachery] = data.Treachery_Trait;
+                        follower.arrayOfTraitNames[(int)SkillType.Leadership] = data.Leadership_Trait;
+                        follower.arrayOfTraitNames[(int)SkillType.Touched] = data.Touched_Trait;
+                        //trait ID's not needed
+                        //add to list
+                        listOfActiveActors.Add(follower);
+                        Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.GetRelPlyr());
+                    }
+                    //remove struct from list
+                    listOfStructs.RemoveAt(index);
                 }
             }
+            else { Game.SetError(new Error(59, "Insufficient Follower Structures available (less than the Eight rqr'd)")); }
         }
-
-        /*
-        /// <summary>
-        /// create a base list of Player controlled Characters
-        /// </summary>
-        /// <param name="numCharacters" how many characters do you want?></param>
-        public void CreatePlayerActors(int numCharacters)
-        {
-            string actorName;
-            //rough and ready creation of a handful of basic player characters
-            for (int i = 0; i < numCharacters; i++)
-            {
-
-            //debug -> temp method to create Player
-
-                int index;
-                index = rnd.Next(0, listOfPlayerNames.Count);
-                //get name
-                actorName = listOfPlayerNames[index];
-                //delete record in list to prevent duplicate names
-                try
-                { listOfPlayerNames.RemoveAt(index); }
-                catch (Exception e)
-                { Game.SetError(new Error(61, e.Message)); }
-                //new character
-                //ActorType type = ActorType.Loyal_Follower;
-                Active person = null;
-                //set player as ursuper
-                //if (i == 0)
-                //{
-                    ActorType type = ActorType.Ursuper;
-                    person = new Player(actorName, type) as Player;
-                //}
-                //else
-                //{ person = new Follower(actorName, type, 0); }
-                //listOfPlayerActors.Add(person);
-
-           // }
-        }
-        */
 
 
         /// <summary>

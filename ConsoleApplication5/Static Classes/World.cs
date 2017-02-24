@@ -48,6 +48,36 @@ namespace Next_Game
             dictRoyalCourt = new Dictionary<int, Passive>();
         }
 
+
+        /// <summary>
+        /// main method to initialise all world collections
+        /// </summary>
+        public void InitialiseWorld()
+        {
+            Stopwatch timer_2 = new Stopwatch();
+            timer_2.Start();
+            InitialiseGeoClusters();
+            Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
+            timer_2.Start();
+            InitialiseActiveActors(Game.history.GetActiveActors());
+            Game.StopTimer(timer_2, "W: InitiatePlayerActors");
+            timer_2.Start();
+            InitialiseHouses();
+            Game.StopTimer(timer_2, "W: InitialiseHouses");
+            timer_2.Start();
+            InitialiseTraits();
+            Game.StopTimer(timer_2, "W: InitialiseTraits");
+            timer_2.Start();
+            //need to be here for sequencing issues
+            Game.history.InitialiseOverthrow(dictPassiveActors);
+            Game.history.InitialiseLordRelations();
+            Game.history.InitialisePastHistoryHouses();
+            Game.StopTimer(timer_2, "W: InitialiseHistory");
+            timer_2.Start();
+            InitialiseSecrets();
+            Game.StopTimer(timer_2, "W: InitialiseSecrets");
+        }
+
         /// <summary>
         /// Sets up actors in dictionaries and places them on the map.
         /// </summary>
@@ -105,35 +135,6 @@ namespace Next_Game
                     { Game.SetError(new Error(63, "Invalid Player in listOfActiveActors")); }
                 }
             }
-        }
-
-        /// <summary>
-        /// main method to initialise all world collections
-        /// </summary>
-        public void InitialiseWorld()
-        {
-            Stopwatch timer_2 = new Stopwatch();
-            timer_2.Start();
-            InitialiseGeoClusters();
-            Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
-            timer_2.Start();
-            InitialiseActiveActors(Game.history.GetActiveActors());
-            Game.StopTimer(timer_2, "W: InitiatePlayerActors");
-            timer_2.Start();
-            InitialiseHouses();
-            Game.StopTimer(timer_2, "W: InitialiseHouses");
-            timer_2.Start();
-            InitialiseTraits();
-            Game.StopTimer(timer_2, "W: InitialiseTraits");
-            timer_2.Start();
-            //need to be here for sequencing issues
-            Game.history.InitialiseOverthrow(dictPassiveActors);
-            Game.history.InitialiseLordRelations();
-            Game.history.InitialisePastHistoryHouses();
-            Game.StopTimer(timer_2, "W: InitialiseHistory");
-            timer_2.Start();
-            InitialiseSecrets();
-            Game.StopTimer(timer_2, "W: InitialiseSecrets");
         }
 
         /// <summary>
