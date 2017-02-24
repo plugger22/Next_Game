@@ -649,7 +649,7 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet(string.Format("{0}, Rel {1}, {2}", person.GetPlayerTag(), relPlyr, tagText), 
                         tagColor ,RLColor.Black, true));
                     //with Lord
-                    if (person.Type != ActorType.Lord)
+                    if (person.Type != ActorType.Lord && person is Passive)
                     {
                         relStars = person.GetRelLordStars();
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Lord"), false));
