@@ -7,17 +7,18 @@ namespace Next_Game.Cartographic
 
     //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
     //Topography - 1 is sea, 2 is land
-    public enum MapLayer { Base, Player, NPC, LocID, Debug, HouseID, Capitals, RefID, Geography, Terrain, GeoID, Road, Count } //Count must be last
+    public enum MapLayer { Base, Movement, NPC, LocID, Debug, HouseID, Capitals, RefID, Geography, Terrain, GeoID, Road, Count } //Count must be last
      
     //Main Map class (single instance, it's job is to set everything up at the start)
     public class Map
     {
+        private static Random rnd;
         private int mapSize;
         private int[,,] mapGrid;
         private int[,,] mapCell;
         private static int capitalX;
         private static int capitalY;
-        private static Random rnd;
+        private static int flashTimer; //controls flashing indicators on map
         private int[,] arrayOfConnectors = new int[5,6];
         private List<Route> listOfRoutes = new List<Route>(); //list of all routes (excludes Connectors)
         private List<Route> listOfConnectors = new List<Route>(); //list of all special branch Connector routes
@@ -33,10 +34,11 @@ namespace Next_Game.Cartographic
         //default constructor assumes a square map/grid & random seed
         public Map(int mapSize, int seed)
         {
+            rnd = new Random(seed);
             this.mapSize = mapSize;
             mapGrid = new int[(int)MapLayer.Count + 1, mapSize, mapSize];
             mapCell = new int[mapSize, mapSize, 10];
-            rnd = new Random(seed);
+            flashTimer = 0;
             //DrawMapRL
             margin = 2;
             offsetVertical = margin + 2;
@@ -909,7 +911,9 @@ namespace Next_Game.Cartographic
             int roadLayer = 0;
             int[] subCell = new int[10]; //cell array (character ALT code), 1 to 9 (ignore cell[0])
             int houseID; //House Id for houses layer
-            
+            //Timer for flashing symbols (flashes on '1', resets on '2')
+            flashTimer++;
+            if (flashTimer > 1) { flashTimer = 0; }
             
             //margin and the vertical & horizontal offsets are class instances
             
@@ -940,7 +944,7 @@ namespace Next_Game.Cartographic
 
                     //get layer data
                     mainLayer = mapGrid[(int)MapLayer.Base, column, row];
-                    playerLayer = mapGrid[(int)MapLayer.Player, column, row];
+                    playerLayer = mapGrid[(int)MapLayer.Movement, column, row];
                     geoLayer = mapGrid[(int)MapLayer.Geography, column, row];
                     terrainLayer = mapGrid[(int)MapLayer.Terrain, column, row];
                     roadLayer = mapGrid[(int)MapLayer.Road, column, row];
@@ -2678,17 +2682,17 @@ namespace Next_Game.Cartographic
         /// Update MapGrid [Player] layer with a dictionary of current Player positions
         /// </summary>
         /// <param name="dictUpdatePlayers">Position coord and mapMarker for Player Move Object</param>
-        public void UpdatePlayers(Dictionary<Position, int> dictUpdatePlayers)
+        public void UpdateActiveCharacters(Dictionary<Position, int> dictUpdatePlayers)
         {
             //clear out the Player layer of the grid first
             for(int row = 0; row < mapSize; row++)
             {
                 for (int column = 0; column < mapSize; column++)
-                { mapGrid[(int)MapLayer.Player, row, column] = 0; }
+                { mapGrid[(int)MapLayer.Movement, row, column] = 0; }
             }
             //update with new data
             foreach(KeyValuePair<Position, int> entry in dictUpdatePlayers)
-            { mapGrid[(int)MapLayer.Player, entry.Key.PosX, entry.Key.PosY] = entry.Value; }
+            { mapGrid[(int)MapLayer.Movement, entry.Key.PosX, entry.Key.PosY] = entry.Value; }
         }
 
         /// <summary>

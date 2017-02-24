@@ -46,6 +46,7 @@ Have proven to be virtuous and upstanding members of our House @ Virtuous and Up
 Provided valuable advice in a past crisis @ Provided Valuable Advice
 Have been meticulous in repaying past loans from our House @ Repaid Past Loans
 Have produced many fine and fertile wives for our sons @ Fertile Wives
+Bad Blood from perceived injustices on their part due to past rulings @ Bad Blood
 
 [BannerLords_Bad]
 Refused to answer the Banners when called @ Refused Banners

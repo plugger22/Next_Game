@@ -2311,7 +2311,7 @@ namespace Next_Game
         {
             Console.WriteLine(Environment.NewLine + "--- End Turn Day {0}", Game.gameTurn + 1);
             Game.map.UpdateMap();
-            Game.map.UpdatePlayers(MoveActors());
+            Game.map.UpdateActiveCharacters(MoveActors());
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();
             UpdateActors();
