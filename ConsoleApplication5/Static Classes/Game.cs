@@ -753,6 +753,9 @@ namespace Next_Game
                         case RLKey.Number4:
                         case RLKey.Number5:
                         case RLKey.Number6:
+                        case RLKey.Number7:
+                        case RLKey.Number8:
+                        case RLKey.Number9:
                             if (_inputMode == InputMode.Normal)
                             {
                                 switch (_menuMode)

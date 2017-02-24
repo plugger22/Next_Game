@@ -88,7 +88,7 @@ namespace Next_Game
                     menuArrayText[1, 3] = "[G] Show Generator Stats";
                     menuArrayText[1, 4] = "[A] Show Actor";
                     //sub Menu commands
-                    menuArrayText[3, 0] = "[1..6] Character MENU";
+                    menuArrayText[3, 0] = "[1..9] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
                     menuArrayText[3, 2] = "[R] Records MENU";
                     menuArrayText[3, 3] = "[L] Lore MENU";
