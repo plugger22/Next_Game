@@ -2091,13 +2091,13 @@ namespace Next_Game.Cartographic
 
 
         /// <summary>
-        /// used to randomly place player characters at start (debug)
+        /// used to randomly place player characters at start (debug) -> Excludes Capital
         /// </summary>
         /// <returns>LocID</returns>
         internal int GetRandomLocation()
         {
             List<int> listOfKeys = new List<int>(dictLocations.Keys);
-            int randomKey = rnd.Next(0, listOfKeys.Count);
+            int randomKey = rnd.Next(1, listOfKeys.Count);
             return listOfKeys[randomKey];
         }
 

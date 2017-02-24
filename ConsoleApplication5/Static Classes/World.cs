@@ -107,6 +107,8 @@ namespace Next_Game
                         //place characters at Location
                         follower.LocID = locID;
                         follower.SetActorPosition(loc.GetPosition());
+                        //set to activated
+                        follower.Activated = true;
                         //add to Location list of Characters
                         loc.AddActor(follower.ActID);
                     }
@@ -122,14 +124,14 @@ namespace Next_Game
                         //player goes in first
                         Game.world.SetActiveActor(player);
                         listOfActiveActors.RemoveAt(0);
-                        //assign to random location on map
-                        locID = Game.network.GetRandomLocation();
+                        //assign to random location on map -> NOTE: Already done in history.cs InitialisePlayer
+                        /*locID = Game.network.GetRandomLocation();
                         Location loc = Game.network.GetLocation(locID);
                         //place characters at Location
                         player.LocID = locID;
                         player.SetActorPosition(loc.GetPosition());
                         //add to Location list of Characters
-                        loc.AddActor(player.ActID);
+                        loc.AddActor(player.ActID);*/
                     }
                     else
                     { Game.SetError(new Error(63, "Invalid Player in listOfActiveActors")); }
