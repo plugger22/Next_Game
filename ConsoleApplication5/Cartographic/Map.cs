@@ -913,7 +913,7 @@ namespace Next_Game.Cartographic
             int houseID; //House Id for houses layer
             //Timer for flashing symbols (flashes on '1', resets on '2')
             flashTimer++;
-            if (flashTimer > 1) { flashTimer = 0; }
+            if (flashTimer > 10) { flashTimer = 0; }
             
             //margin and the vertical & horizontal offsets are class instances
             
@@ -1121,12 +1121,15 @@ namespace Next_Game.Cartographic
                                 }
                             }
                         }
-
-                        //Party Movement - Player
+                        //Party Movement - Active Characters
                         if (playerLayer > 0)
                         {
                             //# represent group at location (static) or moving. Show yellow for capital, cyan for loc and green for enroute
                             subCell[5] = playerLayer + 48;
+                            //flashing yellow box highlight
+                            if (flashTimer > 7)
+                            { backColor5 = RLColor.Yellow; }
+                            //vary forecolor depending on location & terrain
                             if (mainLayer == 2)
                             { foreColor5 = RLColor.Black; } //capital
                             else if (mainLayer == 1)

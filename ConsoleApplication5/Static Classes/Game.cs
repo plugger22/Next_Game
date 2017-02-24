@@ -54,6 +54,8 @@ namespace Next_Game
         private static readonly int _messageHeight = 20;
         private static RLConsole _messageConsole; //bottom right
 
+        private static int _updateTimer = 0; //controls redraws
+
         public static int gameTurn, gameGeneration, gameStart, gameRevolt, gameExile, gameYear, mapSize;
 
         //core objects
@@ -829,6 +831,13 @@ namespace Next_Game
         // Event handler for RLNET's Render event
         private static void OnRootConsoleRender(object sender, UpdateEventArgs e)
         {
+            if (_renderRequired == false)
+            {
+                //redraw screen every so often regardless of wether update is required in order to get consistently flashing symbols onscreen
+                _updateTimer++;
+                if (_updateTimer > 100)
+                { _renderRequired = true;  _updateTimer = 0; }
+            }
             // Tell RLNET to draw the console that we set
             if (_renderRequired == true)
             {
