@@ -88,7 +88,7 @@ namespace Next_Game
             int numFollowers = Game.constant.GetValue(Global.NUM_FOLLOWERS);
             int locID, index;
             
-            for (int i = 0; i < numFollowers; i++)
+            for (int i = 0; i <= numFollowers; i++)
             {
                 if (i > 0)
                 {
