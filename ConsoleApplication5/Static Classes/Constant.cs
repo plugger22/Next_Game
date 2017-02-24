@@ -142,7 +142,10 @@ namespace Next_Game
             {
                 //if out of range, generate error and assign Low value
                 if (data < low || data > high)
-                { Game.SetError(new Error(9, string.Format("{0} out of MinMax Range, data {1}, Min {2} Max {3} Auto assigned Min value", index, data, low, high))); data = low; }
+                {
+                    Game.SetError(new Error(9, string.Format("{0} out of MinMax Range, data {1}, Min {2} Max {3} Auto assigned Min (\"{4}\")", index, data, low, high, low)));
+                    data = low;
+                }
                 arrayOfConstants[(int)index] = data;
                 arrayOfLimits[(int)index, 0] = low;
                 arrayOfLimits[(int)index, 1] = high;
