@@ -1203,7 +1203,11 @@ namespace Next_Game.Cartographic
                                         subCell[6] = 32;
                                         subCell[8] = 32;
                                         //flash Player's location
-                                        if (Game.world.)
+                                        if (locationLayer > 0 && Game.world.GetPlayerLocStatus(locationLayer) == true)
+                                        {
+                                            if (flashTimer > 7)
+                                            { foreColor5 = RLColor.Yellow; }
+                                        }
                                     }
                                     break;
                                 //kingdom capital - filled square (large)
@@ -1217,6 +1221,12 @@ namespace Next_Game.Cartographic
                                     subCell[4] = 32;
                                     subCell[6] = 32;
                                     subCell[8] = 32;
+                                    //flash Player's location
+                                    if (locationLayer > 0 && Game.world.GetPlayerLocStatus(locationLayer) == true)
+                                    {
+                                        if (flashTimer > 7)
+                                        { foreColor5 = RLColor.Yellow; }
+                                    }
                                     break;
                                 //road vertical - vertical line (should be 179 but uses 196 for some reason)
                                 case 10:

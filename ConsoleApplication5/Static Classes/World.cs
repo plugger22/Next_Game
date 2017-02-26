@@ -1416,8 +1416,15 @@ namespace Next_Game
         public bool GetPlayerLocStatus(int locID)
         {
             //check player in dictionary
-            if (dictActiveActors.)
-            Active player = dictActiveActors[1];
+            if (dictActiveActors.ContainsKey(1))
+            {
+                Active player = dictActiveActors[1];
+                if (player.Status == ActorStatus.AtLocation)
+                {
+                    if (player.LocID == locID)
+                    { return true; }
+                }
+            }
             return false;
         }
 
