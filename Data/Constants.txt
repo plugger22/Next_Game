@@ -1,6 +1,6 @@
 # Constants
 # FORMAT - first line -> '# Explanation'
-# FORMAT - second line -> 'x : y @ L @ H' where x is the index code (DON'T CHANGE) and y is value, L & H are Min and Max possible values
+# FORMAT - second line -> 'x : y @ L @ H' where x is the index code (DON'T CHANGE) and y is value, L & H are MIN and MAX possible values
 # blank lines and spaces are ignored
 # all values are 1+ (a zero value is invalid)
 

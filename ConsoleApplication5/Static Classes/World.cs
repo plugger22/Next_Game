@@ -1384,16 +1384,16 @@ namespace Next_Game
         /// <summary>
         /// returns string showing character name and status (at 'x' loc, travelling)
         /// </summary>
-        /// <param name="charID"></param>
+        /// <param name="actID"></param>
         /// <returns></returns>
-        public Snippet GetActorStatusRL(int charID)
+        public Snippet GetActorStatusRL(int actID)
         {
             Actor person = new Actor();
             string charReturn = "Character doesn't exist!";
             //check character exists
-            if (dictActiveActors.ContainsKey(charID))
+            if (dictActiveActors.ContainsKey(actID))
             {
-                person = dictActiveActors[charID];
+                person = dictActiveActors[actID];
                 charReturn = person.Name;
                 if (person.Status != ActorStatus.AtLocation)
                 { charReturn += " isn't currently available"; }
@@ -1406,7 +1406,19 @@ namespace Next_Game
                 }
             }
             return new Snippet(charReturn);
+        }
 
+        /// <summary>
+        /// returns true if Player at specified location and their status is 'AtLocation' (used by DrawMapRL)
+        /// </summary>
+        /// <param name="locID"></param>
+        /// <returns></returns>
+        public bool GetPlayerLocStatus(int locID)
+        {
+            //check player in dictionary
+            if (dictActiveActors.)
+            Active player = dictActiveActors[1];
+            return false;
         }
 
         /// <summary>
@@ -1431,13 +1443,13 @@ namespace Next_Game
         }
 
         
-        public int GetActiveActorLocByID(int charID)
+        public int GetActiveActorLocByID(int actID)
         {
             int locID = 0;
             //find in dictionary
-            if (dictActiveActors.ContainsKey(charID))
+            if (dictActiveActors.ContainsKey(actID))
             {
-                Active person = dictActiveActors[charID];
+                Active person = dictActiveActors[actID];
                 locID = person.LocID;
             }
             return locID;

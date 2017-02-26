@@ -905,10 +905,11 @@ namespace Next_Game.Cartographic
             RLColor backColor8 = Color._land;
             RLColor backColor9 = Color._land;
             int mainLayer = 0;
-            int playerLayer = 0;
+            int movementLayer = 0;
             int geoLayer = 0;
             int terrainLayer = 0;
             int roadLayer = 0;
+            int locationLayer = 0;
             int[] subCell = new int[10]; //cell array (character ALT code), 1 to 9 (ignore cell[0])
             int houseID; //House Id for houses layer
             //Timer for flashing symbols (flashes on '1', resets on '2')
@@ -944,10 +945,11 @@ namespace Next_Game.Cartographic
 
                     //get layer data
                     mainLayer = mapGrid[(int)MapLayer.Base, column, row];
-                    playerLayer = mapGrid[(int)MapLayer.Movement, column, row];
+                    movementLayer = mapGrid[(int)MapLayer.Movement, column, row];
                     geoLayer = mapGrid[(int)MapLayer.Geography, column, row];
                     terrainLayer = mapGrid[(int)MapLayer.Terrain, column, row];
                     roadLayer = mapGrid[(int)MapLayer.Road, column, row];
+                    locationLayer = mapGrid[(int)MapLayer.LocID, column, row];
 
                     //default values for subcells
                     for (int i = 1; i < 10; i++)
@@ -1122,10 +1124,10 @@ namespace Next_Game.Cartographic
                             }
                         }
                         //Party Movement - Active Characters
-                        if (playerLayer > 0)
+                        if (movementLayer > 0)
                         {
                             //# represent group at location (static) or moving. Show yellow for capital, cyan for loc and green for enroute
-                            subCell[5] = playerLayer + 48;
+                            subCell[5] = movementLayer + 48;
                             //flashing yellow box highlight
                             if (flashTimer > 7)
                             { backColor5 = RLColor.Yellow; }
@@ -1200,6 +1202,8 @@ namespace Next_Game.Cartographic
                                         subCell[4] = 32;
                                         subCell[6] = 32;
                                         subCell[8] = 32;
+                                        //flash Player's location
+                                        if (Game.world.)
                                     }
                                     break;
                                 //kingdom capital - filled square (large)
