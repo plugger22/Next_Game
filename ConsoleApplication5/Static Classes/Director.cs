@@ -1753,9 +1753,15 @@ namespace Next_Game
                                     if (outcome is OutGame)
                                     {
                                         //Change a Game state variable, eg. Honour, Visibility, etc.
-                                        outcomeText = state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc);
-                                        if (String.IsNullOrEmpty(outcomeText) == false)
-                                        { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                        if (outcome.Data > 1)
+                                        { outcomeText = state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc); }
+                                        //change known/unknown status
+                                        else if (outcome.Data == 1)
+                                        {
+                                            outcomeText = Game.world.SetActiveActorKnownStatus(1);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                        }
                                     }
                                     else if (outcome is OutEventTimer)
                                     {

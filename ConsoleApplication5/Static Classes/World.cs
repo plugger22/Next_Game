@@ -1441,9 +1441,35 @@ namespace Next_Game
                 Active active = dictActiveActors[actID];
                 if (active.Status != ActorStatus.Gone)
                 { return active.Revert; }
+                else { Game.SetError(new Error(137, string.Format("Active Actor, actID {0},  \"Gone\"", active.ActID))); }
             }
             else { Game.SetError(new Error(137, "Active Actor not found in dictActiveActors")); }
             return 0;
+        }
+
+
+        public string SetActiveActorKnownStatus(int actID)
+        {
+            string resultText = "";
+            int maxRevert = Game.constant.GetValue(Global.KNOWN_REVERT);
+            //check active actor in dictionary
+            if (dictActiveActors.ContainsKey(actID))
+            {
+                Active active = dictActiveActors[actID];
+                if (active.Status != ActorStatus.Gone)
+                {
+                    //if already known resert Revert timer to the max.
+                    if (active.Known == true)
+                    { resultText = string.Format("{0} {1} has had their Known timer increased to the maximum ({2} days)", active.Title, active.Name, maxRevert); }
+                    else
+                    { active.Known = true; resultText = string.Format("{0} {1} is now KNOWN (will revert in {2} days)", active.Title, active.Name, maxRevert); }
+                    active.Revert = maxRevert;
+                    return resultText;
+                }
+                else { Game.SetError(new Error(138, string.Format("Active Actor, actID {0},  \"Gone\"", active.ActID))); }
+            }
+            else { Game.SetError(new Error(138, "Active Actor not found in dictActiveActors")); }
+            return resultText;
         }
 
         /// <summary>
