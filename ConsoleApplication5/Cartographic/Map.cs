@@ -7,7 +7,7 @@ namespace Next_Game.Cartographic
 
     //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
     //Topography - 1 is sea, 2 is land
-    public enum MapLayer { Base, Movement, NPC, LocID, Debug, HouseID, Capitals, RefID, Geography, Terrain, GeoID, Road, Followers, Count } //Count must be last
+    public enum MapLayer { Base, Movement, NPC, LocID, Debug, HouseID, Capitals, RefID, Geography, Terrain, GeoID, Road, Followers, Enemies, Count } //Count must be last
      
     //Main Map class (single instance, it's job is to set everything up at the start)
     public class Map
@@ -911,6 +911,7 @@ namespace Next_Game.Cartographic
             int roadLayer = 0;
             int locationLayer = 0;
             int followerLayer = 0;
+            int enemiesLayer = 0;
             int[] subCell = new int[10]; //cell array (character ALT code), 1 to 9 (ignore cell[0])
             int houseID; //House Id for houses layer
             //Timer for flashing symbols (flashes on '1', resets on '2')
@@ -952,7 +953,7 @@ namespace Next_Game.Cartographic
                     roadLayer = mapGrid[(int)MapLayer.Road, column, row];
                     locationLayer = mapGrid[(int)MapLayer.LocID, column, row];
                     followerLayer = mapGrid[(int)MapLayer.Followers, column, row];
-
+                    enemiesLayer = mapGrid[(int)MapLayer.Enemies, column, row];
                     //default values for subcells
                     for (int i = 1; i < 10; i++)
                     { subCell[i] = 32; }
@@ -1128,18 +1129,20 @@ namespace Next_Game.Cartographic
                         //Party Movement - Active Characters
                         if (movementLayer > 0)
                         {
+                            backColor5 = RLColor.Yellow;
+                            foreColor5 = RLColor.Black;
                             //# represent group at location (static) or moving. Show yellow for capital, cyan for loc and green for enroute
                             subCell[5] = movementLayer + 48;
                             //flashing yellow box highlight for Player only
                             if (flashTimer > 7 && movementLayer == 1)
                             { backColor5 = RLColor.Yellow; }
                             //vary forecolor depending on location & terrain
-                            if (mainLayer == 2)
+                            /*if (mainLayer == 2)
                             { foreColor5 = RLColor.Black; } //capital
                             else if (mainLayer == 1)
                             { foreColor5 = Color._house; } //location
                             else
-                            { foreColor5 = RLColor.LightRed; } //in enroute
+                            { foreColor5 = RLColor.LightRed; } //in enroute*/
                             //place roads right next to player if present
                             switch (mainLayer)
                             {
@@ -1386,7 +1389,7 @@ namespace Next_Game.Cartographic
                                     break;
                             }
                             //information layer
-                            if (Game._infoMode == true)
+                            if (Game._infoMode == InfoMode.Followers)
                             {
                                 if (followerLayer > 0)
                                 {
@@ -1403,7 +1406,29 @@ namespace Next_Game.Cartographic
                                         case 9:
                                             subCell[5] = followerLayer + 48;
                                             foreColor5 = RLColor.Black;
-                                            backColor5 = RLColor.LightGreen;
+                                            backColor5 = RLColor.Yellow;
+                                            break;
+                                    }
+                                }
+                            }
+                            else if (Game._infoMode == InfoMode.Enemies)
+                            {
+                                if (enemiesLayer > 0)
+                                {
+                                    switch (enemiesLayer)
+                                    {
+                                        //Followers
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                        case 5:
+                                        case 6:
+                                        case 7:
+                                        case 8:
+                                        case 9:
+                                            subCell[5] = enemiesLayer + 48;
+                                            foreColor5 = RLColor.Yellow;
+                                            backColor5 = RLColor.LightRed;
                                             break;
                                     }
                                 }

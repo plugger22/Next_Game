@@ -2324,8 +2324,9 @@ namespace Next_Game
                 if (Game.director.ResolveFollowerEvents())
                 { Game._specialMode = SpecialMode.FollowerEvent; }
             }
-            //position of all active followers on map
+            //position of all key characters on map
             UpdateFollowerPositions();
+            UpdateEnemiesPositions();
         }
 
         /// <summary>
@@ -2609,6 +2610,26 @@ namespace Next_Game
                     Game.map.SetMapInfo(MapLayer.Followers, pos.PosX, pos.PosY, follower.Key);
                 }
             }
+        }
+
+        /// <summary>
+        /// shows all known enemies
+        /// </summary>
+        private void UpdateEnemiesPositions()
+        {
+            Game.map.ClearMapLayer(MapLayer.Enemies);
+            //debug
+            int mapSize = Game.constant.GetValue(Global.MAP_SIZE);
+            for (int i = 0; i < 3; i++)
+            {
+                int posX = rnd.Next(0, mapSize);
+                int posY = rnd.Next(0, mapSize);
+                int num = rnd.Next(1, 4);
+                Game.map.SetMapInfo(MapLayer.Enemies, posX, posY, num);
+            }
+            //is KNOWN, is age < 4 days => show
+
+            //dictEnemies
         }
 
 

@@ -15,6 +15,7 @@ namespace Next_Game
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome} //if MenuMode.Special then this is the type of special
     public enum ConflictMode { None, Intro, Strategy, Cards, Outcome, Confirm, AutoResolve, ErrorStrategy, Popup, RestoreCards} //submodes within SpecialMode.Conflict, determines GUI
+    public enum InfoMode { None, Followers, Enemies}; //which characters to highlight on the map
 
     public static class Game
     {
@@ -85,9 +86,9 @@ namespace Next_Game
         public static InputMode _inputMode = InputMode.Normal; //non-standard input modes, default none
         public static SpecialMode _specialMode = SpecialMode.None; //special, multiConsole display modes
         public static ConflictMode _conflictMode = ConflictMode.None; //conflict secondary display modes
+        public static InfoMode _infoMode = InfoMode.None; //toggled on/off to display character information on map (followers, inquisitors, etc)
         public static int _eventID = 0; //ID of current event being dealt with
         public static bool _fullConsole = false; //set to true by InfoChannel.DrawInfoConsole if multiConsole is maxxed out
-        public static bool _infoMode = false; //toggled on/off to display character information on map (followers, inquisitors, etc)
         public static int _scrollIndex = 0; //used by infoChannel.DrawConsole to handle scrolling up and down
         public static int _multiConsoleLength = 48; //max length of data in multi Console (infochannel.drawInfoConsole) - Scrolling beyond this
         
@@ -611,9 +612,19 @@ namespace Next_Game
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
-                                    //Toggle display of key characters on the map ON/OFF
-                                    if (_infoMode == true) { _infoMode = false; }
-                                    else { _infoMode = true; }
+                                    //Toggle display of key characters; Off -> Followers -> Enemies -> Off
+                                    switch(_infoMode)
+                                    {
+                                        case InfoMode.None:
+                                            _infoMode = InfoMode.Followers;
+                                            break;
+                                        case InfoMode.Followers:
+                                            _infoMode = InfoMode.Enemies;
+                                            break;
+                                        case InfoMode.Enemies:
+                                            _infoMode = InfoMode.None;
+                                            break;
+                                    }
                                     break;
                             }
                             break;
