@@ -12,7 +12,7 @@ namespace Next_Game
     public enum HistHouseIncident { None, Allegiance, Ownership }
     public enum HistKingdomIncident { None, Battle, Siege }
     //categorires -> Used for Messages
-    public enum MessageType { None, System, Move, Crow, Activation, Event, Conflict }
+    public enum MessageType { None, System, Move, Crow, Activation, Event, Conflict, Known }
     //Relationship List Categories
     public enum RelListType { HousePastGood, HousePastBad, BannerPastGood, BannerPastBad, Lord_1, Lord_2, Lord_3, Lord_4, Lord_5, Count }
 

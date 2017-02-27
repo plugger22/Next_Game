@@ -1464,6 +1464,7 @@ namespace Next_Game
                     else
                     { active.Known = true; resultText = string.Format("{0} {1} is now KNOWN (will revert in {2} days)", active.Title, active.Name, maxRevert); }
                     active.Revert = maxRevert;
+                    
                     return resultText;
                 }
                 else { Game.SetError(new Error(138, string.Format("Active Actor, actID {0},  \"Gone\"", active.ActID))); }
@@ -2375,9 +2376,10 @@ namespace Next_Game
                 if (Game.director.ResolveFollowerEvents())
                 { Game._specialMode = SpecialMode.FollowerEvent; }
             }
-            //position of all key characters on map
+            //update position of all key characters on map layers
             UpdateFollowerPositions();
             UpdateEnemiesPositions();
+            UpdateActiveActors();
         }
 
         /// <summary>
@@ -2681,6 +2683,30 @@ namespace Next_Game
             //is KNOWN, is age < 4 days => show
 
             //dictEnemies
+        }
+
+        /// <summary>
+        /// start of turn Housekeeping for Active Actors
+        /// </summary>
+        private void UpdateActiveActors()
+        {
+            foreach(var actor in dictActiveActors)
+            {
+                //if Known, decrement their revert status
+                if (actor.Value.Known == true)
+                {
+                    actor.Value.Revert--;
+                    Console.WriteLine("{0} {1} has had their Revert Timer reduced from {2} to {3}", actor.Value.Title, actor.Value.Name, actor.Value.Revert + 1, actor.Value.Revert);
+                    if (actor.Value.Revert < 1)
+                    {
+                        actor.Value.Known = false;
+                        string eventText = string.Format("{0} {1} is no longer \"Known\" as sufficient time has passed", actor.Value.Title, actor.Value.Name);
+                        Message message = new Message(eventText, MessageType.Known);
+                        SetMessage(message);
+                        Console.WriteLine(eventText);
+                    }
+                }
+            }
         }
 
 

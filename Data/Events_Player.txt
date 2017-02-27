@@ -32,8 +32,8 @@
 
 # [outcome] effect -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
-# data -> if +ve then Good, if -ve then Bad
-# if data <= 6 then data -> 1 Threat, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King (apply: Add or Random only)
+# data -> if +ve then Good, if -ve then Bad (for '1' known/unknown, if +ve then UNKNOWN, if -ve then KNOWN (ignore Amount and Apply)
+# if data <= 6 then data -> 1 Known/Unknown, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King (apply: Add or Random only)
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
 # apply: how the amount is applied -> None / Add / Subtract / Equals / Random   where 'Random' is Add random range (amount). Default 'None'
 
@@ -83,8 +83,6 @@ reply: Giddee Up Trigger! You attempt to gallop away to safety
 [outcome]
 effect: Game
 data: 1
-amount: 1
-apply: Add
 [outcome]
 effect: Game
 data: 2

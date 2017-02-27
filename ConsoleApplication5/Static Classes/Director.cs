@@ -1702,7 +1702,8 @@ namespace Next_Game
         {
             int validOption = 1;
             int actorID;
-            string status, outcomeText;
+            string status;
+            string outcomeText = "";
             List<Snippet> eventList = new List<Snippet>();
             List<Snippet> resultList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
@@ -1759,9 +1760,12 @@ namespace Next_Game
                                         else if (outcome.Data == 1)
                                         {
                                             outcomeText = Game.world.SetActiveActorKnownStatus(1);
-                                            if (String.IsNullOrEmpty(outcomeText) == false)
-                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            //message
+                                            Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText), 1, 0, MessageType.Event);
+                                            Game.world.SetMessage(message);
                                         }
+                                        if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                     }
                                     else if (outcome is OutEventTimer)
                                     {
