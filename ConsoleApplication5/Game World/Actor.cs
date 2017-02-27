@@ -532,6 +532,7 @@ namespace Next_Game
         public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
         public bool Activated { get; set; } //can move/be given orders this turn, or not
         public bool Known { get; set; } //Presence is known or unknown?
+        public int Revert { get; set; } //# of turns before Known status reverts to unknown
         private List<string> crowTooltip { get; set; } //explanation of factors influencing crow chance
         
 

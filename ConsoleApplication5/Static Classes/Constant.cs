@@ -49,7 +49,7 @@ namespace Next_Game
         HOUSE_REL_GOOD,
         HOUSE_REL_EFFECT,
         HOUSE_REL_NUM,
-        
+        KNOWN_REVERT,
         Count //keep as last
     }
 
@@ -108,6 +108,7 @@ namespace Next_Game
             arrayOfGlobals[41] = Global.HOUSE_REL_EFFECT;
             arrayOfGlobals[42] = Global.GAME_PAST;
             arrayOfGlobals[43] = Global.HOUSE_REL_NUM;
+            arrayOfGlobals[44] = Global.KNOWN_REVERT;
             }
 
         /// <summary>

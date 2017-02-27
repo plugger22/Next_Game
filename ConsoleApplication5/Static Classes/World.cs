@@ -1429,21 +1429,21 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// returns 'Known' bool for specified active actor
+        /// returns Revert # of days for specified active actor. A value of 0 indicates a status of Unknown (eg. 'Known' = false)
         /// </summary>
         /// <param name="actID"></param>
         /// <returns></returns>
-        public bool GetActiveActorKnownStatus(int actID)
+        public int GetActiveActorKnownStatus(int actID)
         {
             //check active actor in dictionary
             if (dictActiveActors.ContainsKey(actID))
             {
                 Active active = dictActiveActors[actID];
                 if (active.Status != ActorStatus.Gone)
-                { return active.Known; }
+                { return active.Revert; }
             }
             else { Game.SetError(new Error(137, "Active Actor not found in dictActiveActors")); }
-            return false;
+            return 0;
         }
 
         /// <summary>
@@ -1888,8 +1888,9 @@ namespace Next_Game
             listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Honour (King)", data, good, bad), foreground, RLColor.Black));
 
             //show Visibility status
-            if (GetActiveActorKnownStatus(1) == true)
-            { listStats.Add(new Snippet("Known", Color._badTrait, RLColor.Black)); }
+            int knownStatus = GetActiveActorKnownStatus(1);
+            if (knownStatus > 0)
+            { listStats.Add(new Snippet(string.Format("Known, reverts in {0} days", knownStatus) , Color._badTrait, RLColor.Black)); }
             else { listStats.Add(new Snippet("Unknown (the Inquisitors don't know your location)", Color._goodTrait, RLColor.Black)); }
 
             //display data
