@@ -13,7 +13,7 @@ namespace Next_Game
         static Random rnd;
         private List<Move> moveList; //list of characters moving through the world
         private readonly Queue<Snippet> messageQueue; //short term queue to display recent messages
-        private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID
+        private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID (non-activated followers aren't in dictionary)
         private Dictionary<int, Passive> dictPassiveActors; //list of all NPC actors keyed of actorID
         private Dictionary<int, Actor> dictAllActors; //list of all Actors keyed of actorID
         private Dictionary<int, MajorHouse> dictMajorHouses; //list of all Greathouses keyed off houseID
@@ -2600,13 +2600,13 @@ namespace Next_Game
         /// </summary>
         private void UpdateFollowerPositions()
         {
+            Game.map.ClearMapLayer(MapLayer.Followers);
             foreach(var follower in dictActiveActors)
             {
                 if (follower.Key > 0 && follower.Value.Status != ActorStatus.Gone)
                 {
                     Position pos = follower.Value.GetActorPosition();
                     Game.map.SetMapInfo(MapLayer.Followers, pos.PosX, pos.PosY, follower.Key);
-
                 }
             }
         }

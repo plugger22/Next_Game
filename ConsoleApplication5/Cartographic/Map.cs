@@ -1130,8 +1130,8 @@ namespace Next_Game.Cartographic
                         {
                             //# represent group at location (static) or moving. Show yellow for capital, cyan for loc and green for enroute
                             subCell[5] = movementLayer + 48;
-                            //flashing yellow box highlight
-                            if (flashTimer > 7)
+                            //flashing yellow box highlight for Player only
+                            if (flashTimer > 7 && movementLayer == 1)
                             { backColor5 = RLColor.Yellow; }
                             //vary forecolor depending on location & terrain
                             if (mainLayer == 2)
@@ -2727,14 +2727,23 @@ namespace Next_Game.Cartographic
         public void UpdateActiveCharacters(Dictionary<Position, int> dictUpdatePlayers)
         {
             //clear out the Movement layer of the grid first
-            for(int row = 0; row < mapSize; row++)
-            {
-                for (int column = 0; column < mapSize; column++)
-                { mapGrid[(int)MapLayer.Movement, row, column] = 0; }
-            }
+            ClearMapLayer(MapLayer.Movement);
             //update with new data
             foreach(KeyValuePair<Position, int> entry in dictUpdatePlayers)
             { mapGrid[(int)MapLayer.Movement, entry.Key.PosX, entry.Key.PosY] = entry.Value; }
+        }
+
+        /// <summary>
+        /// Zero out a mapgrid layer
+        /// </summary>
+        /// <param name="layer"></param>
+        public void ClearMapLayer(MapLayer layer)
+        {
+            for (int row = 0; row < mapSize; row++)
+            {
+                for (int column = 0; column < mapSize; column++)
+                { mapGrid[(int)layer, row, column] = 0; }
+            }
         }
 
         /// <summary>
