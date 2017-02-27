@@ -2324,6 +2324,8 @@ namespace Next_Game
                 if (Game.director.ResolveFollowerEvents())
                 { Game._specialMode = SpecialMode.FollowerEvent; }
             }
+            //position of all active followers on map
+            UpdateFollowerPositions();
         }
 
         /// <summary>
@@ -2592,6 +2594,23 @@ namespace Next_Game
 
             return tempList;
         }
+
+        /// <summary>
+        /// checks all active followers and updates their position on the map 'Information' layer (used to show characters if the Information toggle is pressed ("I")
+        /// </summary>
+        private void UpdateFollowerPositions()
+        {
+            foreach(var follower in dictActiveActors)
+            {
+                if (follower.Key > 0 && follower.Value.Status != ActorStatus.Gone)
+                {
+                    Position pos = follower.Value.GetActorPosition();
+                    Game.map.SetMapInfo(MapLayer.Followers, pos.PosX, pos.PosY, follower.Key);
+
+                }
+            }
+        }
+
 
         //new Methods above here
     }

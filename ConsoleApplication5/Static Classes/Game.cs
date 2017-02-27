@@ -87,6 +87,7 @@ namespace Next_Game
         public static ConflictMode _conflictMode = ConflictMode.None; //conflict secondary display modes
         public static int _eventID = 0; //ID of current event being dealt with
         public static bool _fullConsole = false; //set to true by InfoChannel.DrawInfoConsole if multiConsole is maxxed out
+        public static bool _infoMode = false; //toggled on/off to display character information on map (followers, inquisitors, etc)
         public static int _scrollIndex = 0; //used by infoChannel.DrawConsole to handle scrolling up and down
         public static int _multiConsoleLength = 48; //max length of data in multi Console (infochannel.drawInfoConsole) - Scrolling beyond this
         
@@ -481,7 +482,7 @@ namespace Next_Game
                                     infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- ALL RECORDS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
-                                
+
                             }
                             break;
                         case RLKey.C:
@@ -598,11 +599,21 @@ namespace Next_Game
                                     if (tempList != null && tempList.Count > 0)
                                     {
                                         List<Snippet> tempSnippets = new List<Snippet>();
-                                        foreach(string text in tempList)
+                                        foreach (string text in tempList)
                                         { tempSnippets.Add(new Snippet(text)); }
-                                        infoChannel.SetInfoList( tempSnippets, ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(tempSnippets, ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- House Relationships ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     }
+                                    break;
+                            }
+                            break;
+                        case RLKey.I:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    //Toggle display of key characters on the map ON/OFF
+                                    if (_infoMode == true) { _infoMode = false; }
+                                    else { _infoMode = true; }
                                     break;
                             }
                             break;

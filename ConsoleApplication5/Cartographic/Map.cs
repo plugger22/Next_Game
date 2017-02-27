@@ -7,7 +7,7 @@ namespace Next_Game.Cartographic
 
     //Capitals - all zero except where capital and shows house #, eg. '3'. Excludes Kings Capital
     //Topography - 1 is sea, 2 is land
-    public enum MapLayer { Base, Movement, NPC, LocID, Debug, HouseID, Capitals, RefID, Geography, Terrain, GeoID, Road, Count } //Count must be last
+    public enum MapLayer { Base, Movement, NPC, LocID, Debug, HouseID, Capitals, RefID, Geography, Terrain, GeoID, Road, Followers, Count } //Count must be last
      
     //Main Map class (single instance, it's job is to set everything up at the start)
     public class Map
@@ -910,6 +910,7 @@ namespace Next_Game.Cartographic
             int terrainLayer = 0;
             int roadLayer = 0;
             int locationLayer = 0;
+            int followerLayer = 0;
             int[] subCell = new int[10]; //cell array (character ALT code), 1 to 9 (ignore cell[0])
             int houseID; //House Id for houses layer
             //Timer for flashing symbols (flashes on '1', resets on '2')
@@ -950,6 +951,7 @@ namespace Next_Game.Cartographic
                     terrainLayer = mapGrid[(int)MapLayer.Terrain, column, row];
                     roadLayer = mapGrid[(int)MapLayer.Road, column, row];
                     locationLayer = mapGrid[(int)MapLayer.LocID, column, row];
+                    followerLayer = mapGrid[(int)MapLayer.Followers, column, row];
 
                     //default values for subcells
                     for (int i = 1; i < 10; i++)
@@ -1382,6 +1384,29 @@ namespace Next_Game.Cartographic
                                     else
                                     { num %= 10; subCell[5] = num + 48; foreColor5 = RLColor.Magenta; }
                                     break;
+                            }
+                            //information layer
+                            if (Game._infoMode == true)
+                            {
+                                if (followerLayer > 0)
+                                {
+                                    switch (followerLayer)
+                                    {
+                                        //Followers
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                        case 5:
+                                        case 6:
+                                        case 7:
+                                        case 8:
+                                        case 9:
+                                            subCell[5] = followerLayer + 48;
+                                            foreColor5 = RLColor.Black;
+                                            backColor5 = RLColor.LightGreen;
+                                            break;
+                                    }
+                                }
                             }
                         }
                     }
@@ -2696,12 +2721,12 @@ namespace Next_Game.Cartographic
         }
 
         /// <summary>
-        /// Update MapGrid [Player] layer with a dictionary of current Player positions
+        /// Update MapGrid [Movement] layer with a dictionary of current Player positions
         /// </summary>
         /// <param name="dictUpdatePlayers">Position coord and mapMarker for Player Move Object</param>
         public void UpdateActiveCharacters(Dictionary<Position, int> dictUpdatePlayers)
         {
-            //clear out the Player layer of the grid first
+            //clear out the Movement layer of the grid first
             for(int row = 0; row < mapSize; row++)
             {
                 for (int column = 0; column < mapSize; column++)
