@@ -132,7 +132,7 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// Change Known Status (Known/Unknown). Data +ve then Known, Data -ve then Unknown
+    /// Change Known Status (Known/Unknown). Data +ve then UnKnown, Data -ve then known
     /// </summary>
     class OutKnown : Outcome
     {

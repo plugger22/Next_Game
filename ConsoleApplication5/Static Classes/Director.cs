@@ -1754,19 +1754,19 @@ namespace Next_Game
                                     switch (outcome.Type)
                                     {
                                         case OutcomeType.Game:
-                                            //Change a Game state variable, eg. Honour, Visibility, etc.
-                                            if (outcome.Data > 1)
-                                            { outcomeText = state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc); }
-                                            //change known/unknown status
-                                            else if (outcome.Data == 1)
-                                            {
-                                                outcomeText = Game.world.SetActiveActorKnownStatus(1);
-                                                //message
-                                                Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText), 1, 0, MessageType.Event);
-                                                Game.world.SetMessage(message);
-                                            }
+                                            //Change a Game state variable, eg. Honour, Justice, etc.
+                                            outcomeText = state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            break;
+                                        case OutcomeType.Known:
+                                            //change an Active Actor's Known/Unknown status
+                                            outcomeText = Game.world.SetActiveActorKnownStatus(1);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            //message
+                                            Message messageKnown = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText), 1, 0, MessageType.Event);
+                                            Game.world.SetMessage(messageKnown);
                                             break;
                                         case OutcomeType.EventTimer:
                                             //Change an Event Timer
@@ -1844,9 +1844,9 @@ namespace Next_Game
                                                 Actor opponent = Game.world.GetAnyActor(actorID);
                                                 if (opponent != null)
                                                 {
-                                                    Message message = new Message(string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", conflictOutcome.SubType, 
+                                                    Message messageConflict = new Message(string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", conflictOutcome.SubType, 
                                                         conflictOutcome.Conflict_Type, opponent.Title, opponent.Name, opponent.ActID), MessageType.Conflict);
-                                                    Game.world.SetMessage(message);
+                                                    Game.world.SetMessage(messageConflict);
                                                 }
                                                 //debug
                                                 ConflictState debugState = (ConflictState)rnd.Next(2, 6);
