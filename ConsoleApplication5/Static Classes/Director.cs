@@ -1751,114 +1751,110 @@ namespace Next_Game
                             {
                                 foreach (Outcome outcome in listOutcomes)
                                 {
-                                    if (outcome is OutGame)
+                                    switch (outcome.Type)
                                     {
-                                        //Change a Game state variable, eg. Honour, Visibility, etc.
-                                        if (outcome.Data > 1)
-                                        { outcomeText = state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc); }
-                                        //change known/unknown status
-                                        else if (outcome.Data == 1)
-                                        {
-                                            outcomeText = Game.world.SetActiveActorKnownStatus(1);
-                                            //message
-                                            Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText), 1, 0, MessageType.Event);
-                                            Game.world.SetMessage(message);
-                                        }
-                                        if (String.IsNullOrEmpty(outcomeText) == false)
-                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
-                                    }
-                                    else if (outcome is OutEventTimer)
-                                    {
-                                        //Change an Event Timer
-                                        OutEventTimer tempOutcome = outcome as OutEventTimer;
-                                        outcomeText = ChangePlayerEventTimer(tempOutcome);
-                                        if (String.IsNullOrEmpty(outcomeText) == false)
-                                        { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
-                                    }
-                                    else if (outcome is OutEventStatus)
-                                    {
-                                        //change Event Status
-                                        OutEventStatus tempOutcome = outcome as OutEventStatus;
-                                        outcomeText = ChangePlayerEventStatus(tempOutcome.Data, tempOutcome.NewStatus);
-                                        if (String.IsNullOrEmpty(outcomeText) == false)
-                                        { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
-                                    }
-                                    else if (outcome is OutResource)
-                                    {
-                                        //adjust the resource level of Player or an NPC actor
-                                        OutResource tempOutcome = outcome as OutResource;
-                                        if (tempOutcome.PlayerRes == false) { actorID = option.ActorID; }
-                                        else { actorID = 1; }
-                                        Actor person = Game.world.GetAnyActor(actorID);
-                                        if (person != null)
-                                        {
-                                            outcomeText = person.ChangeResources(tempOutcome.Amount, tempOutcome.Calc);
+                                        case OutcomeType.Game:
+                                            //Change a Game state variable, eg. Honour, Visibility, etc.
+                                            if (outcome.Data > 1)
+                                            { outcomeText = state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc); }
+                                            //change known/unknown status
+                                            else if (outcome.Data == 1)
+                                            {
+                                                outcomeText = Game.world.SetActiveActorKnownStatus(1);
+                                                //message
+                                                Message message = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText), 1, 0, MessageType.Event);
+                                                Game.world.SetMessage(message);
+                                            }
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
-                                        }
-                                    }
-                                    else if (outcome is OutCondition)
-                                    {
-                                        //apply a condition to the Player or an NPC actor -> use copy constructor to pass by value, not reference (otherwise all timers are indentical)
-                                        OutCondition tempOutcome = new OutCondition(outcome as OutCondition);
-                                        if (tempOutcome.PlayerCondition == false) { actorID = option.ActorID; }
-                                        else { actorID = 1; }
-                                        Actor person = Game.world.GetAnyActor(actorID);
-                                        if (person != null)
-                                        {
-                                            //does the character already have this condition?
-                                            if (person.CheckConditionPresent(tempOutcome.NewCondition.Text) == false)
+                                            break;
+                                        case OutcomeType.EventTimer:
+                                            //Change an Event Timer
+                                            OutEventTimer timerOutcome = outcome as OutEventTimer;
+                                            outcomeText = ChangePlayerEventTimer(timerOutcome);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            break;
+                                        case OutcomeType.EventStatus:
+                                            //change Event Status
+                                            OutEventStatus statusOutcome = outcome as OutEventStatus;
+                                            outcomeText = ChangePlayerEventStatus(statusOutcome.Data, statusOutcome.NewStatus);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            break;
+                                        case OutcomeType.Resource:
+                                            //adjust the resource level of Player or an NPC actor
+                                            OutResource resourceOutcome = outcome as OutResource;
+                                            if (resourceOutcome.PlayerRes == false) { actorID = option.ActorID; }
+                                            else { actorID = 1; }
+                                            Actor personRes = Game.world.GetAnyActor(actorID);
+                                            if (personRes != null)
                                             {
-                                                //not present -> add new condition
-                                                outcomeText = person.AddCondition(tempOutcome.NewCondition);
+                                                outcomeText = personRes.ChangeResources(resourceOutcome.Amount, resourceOutcome.Calc);
                                                 if (String.IsNullOrEmpty(outcomeText) == false)
                                                 { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             }
+                                            break;
+                                        case OutcomeType.Condition:
+                                            //apply a condition to the Player or an NPC actor -> use copy constructor to pass by value, not reference (otherwise all timers are indentical)
+                                            OutCondition conditionOutcome = new OutCondition(outcome as OutCondition);
+                                            if (conditionOutcome.PlayerCondition == false) { actorID = option.ActorID; }
+                                            else { actorID = 1; }
+                                            Actor personCon = Game.world.GetAnyActor(actorID);
+                                            if (personCon != null)
+                                            {
+                                                //does the character already have this condition?
+                                                if (personCon.CheckConditionPresent(conditionOutcome.NewCondition.Text) == false)
+                                                {
+                                                    //not present -> add new condition
+                                                    outcomeText = personCon.AddCondition(conditionOutcome.NewCondition);
+                                                    if (String.IsNullOrEmpty(outcomeText) == false)
+                                                    { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                                }
+                                                else
+                                                {
+                                                    //existing identical condition already present. Reset existing condition timer to the max value.
+                                                    personCon.ResetConditionTimer(conditionOutcome.NewCondition.Text, conditionOutcome.NewCondition.Timer);
+                                                    outcomeText = string.Format("\"{0}\" Condition already acquired by {1}, Timer reset to {2} days", conditionOutcome.NewCondition.Text, personCon.Name,
+                                                        conditionOutcome.NewCondition.Timer);
+                                                    resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                }
+                                            }
+                                            break;
+                                        case OutcomeType.EventChain:
+                                            //chain events -> used by CreateAuto Loc Events
+                                            actorID = option.ActorID;
+                                            OutEventChain chainOutcome = outcome as OutEventChain;
+                                            CreateAutoEvent(chainOutcome.Filter, actorID);
+                                            Game._eventID = eventObject.EventPID;
+                                            break;
+                                        case OutcomeType.Conflict:
+                                            //seque straight into a Conflict
+                                            actorID = option.ActorID;
+                                            if (actorID > 0)
+                                            {
+                                                validOption = 2;
+                                                OutConflict conflictOutcome = outcome as OutConflict;
+                                                Game.conflict.Conflict_Type = conflictOutcome.Conflict_Type;
+                                                Game.conflict.Combat_Type = conflictOutcome.Combat_Type;
+                                                Game.conflict.Social_Type = conflictOutcome.Social_Type;
+                                                Game.conflict.Stealth_Type = conflictOutcome.Stealth_Type;
+                                                Game.conflict.SetOpponent(actorID, conflictOutcome.Challenger);
+                                                //message
+                                                Actor opponent = Game.world.GetAnyActor(actorID);
+                                                if (opponent != null)
+                                                {
+                                                    Message message = new Message(string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", conflictOutcome.SubType, 
+                                                        conflictOutcome.Conflict_Type, opponent.Title, opponent.Name, opponent.ActID), MessageType.Conflict);
+                                                    Game.world.SetMessage(message);
+                                                }
+                                                //debug
+                                                ConflictState debugState = (ConflictState)rnd.Next(2, 6);
+                                                Game.conflict.SetGameSituation(debugState);
+                                            }
                                             else
-                                            {
-                                                //existing identical condition already present. Reset existing condition timer to the max value.
-                                                person.ResetConditionTimer(tempOutcome.NewCondition.Text, tempOutcome.NewCondition.Timer);
-                                                outcomeText = string.Format("\"{0}\" Condition already acquired by {1}, Timer reset to {2} days", tempOutcome.NewCondition.Text, person.Name,
-                                                    tempOutcome.NewCondition.Timer);
-                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
-                                            }
-                                        }
-                                    }
-                                    else if (outcome is OutEventChain)
-                                    {
-                                        //chain events -> used by CreateAuto Loc Events
-                                        actorID = option.ActorID;
-                                        OutEventChain tempOutcome = outcome as OutEventChain;
-                                        CreateAutoEvent(tempOutcome.Filter, actorID);
-                                        Game._eventID = eventObject.EventPID;
-                                    }
-                                    else if (outcome is OutConflict)
-                                    {
-                                        //seque straight into a Conflict
-                                        actorID = option.ActorID;
-                                        if (actorID > 0)
-                                        {
-                                            validOption = 2;
-                                            OutConflict tempOutcome = outcome as OutConflict;
-                                            Game.conflict.Conflict_Type = tempOutcome.Conflict_Type;
-                                            Game.conflict.Combat_Type = tempOutcome.Combat_Type;
-                                            Game.conflict.Social_Type = tempOutcome.Social_Type;
-                                            Game.conflict.Stealth_Type = tempOutcome.Stealth_Type;
-                                            Game.conflict.SetOpponent(actorID, tempOutcome.Challenger);
-                                            //message
-                                            Actor opponent = Game.world.GetAnyActor(actorID);
-                                            if (opponent != null)
-                                            {
-                                                Message message = new Message(string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", tempOutcome.SubType, tempOutcome.Conflict_Type,
-                                                    opponent.Title, opponent.Name, opponent.ActID), MessageType.Conflict);
-                                                Game.world.SetMessage(message);
-                                            }
-                                            //debug
-                                            ConflictState debugState = (ConflictState)rnd.Next(2, 6);
-                                            Game.conflict.SetGameSituation(debugState);
-                                        }
-                                        else
-                                        { Game.SetError(new Error(73, string.Format("Invalid actorID for OutConflict (zero or less) \"{0}\", option # {1}", eventObject.Name, optionNum))); }
+                                            { Game.SetError(new Error(73, string.Format("Invalid actorID for OutConflict (zero or less) \"{0}\", option # {1}", eventObject.Name, optionNum))); }
+                                            break;
                                     }
                                 }
                             }

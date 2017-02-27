@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-
+    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition };
 
     /// <summary>
     /// Option outcome, event system
@@ -19,6 +19,7 @@ namespace Next_Game.Event_System
         public int Data { get; set; } //optional multipurpose type for use with resolve
         public int Amount { get; set; }
         public EventCalc Calc { get; set; }
+        public OutcomeType Type { get; set; }
         
 
         public Outcome(int eventID)
@@ -46,6 +47,7 @@ namespace Next_Game.Event_System
             if (delay > 0)
             { this.Delay = delay; }
             else { Game.SetError(new Error(67, "Invalid Input (Delay) in OutDelay")); }
+            Type = OutcomeType.Delay;
         }
 
         /// <summary>
@@ -88,6 +90,7 @@ namespace Next_Game.Event_System
             Data = 0;
             Amount = 0;
             Calc = EventCalc.None;
+            Type = OutcomeType.None;
         }
     }
 
@@ -108,6 +111,7 @@ namespace Next_Game.Event_System
             this.Data = opponentID;
             Conflict_Type = type;
             this.Challenger = challenger;
+            Type = OutcomeType.Conflict;
         }
 
     }
@@ -123,8 +127,20 @@ namespace Next_Game.Event_System
             this.Data = type;
             this.Amount = amount;
             this.Calc = apply;
+            Type = OutcomeType.Game;
         }
+    }
 
+    /// <summary>
+    /// Change Known Status (Known/Unknown). Data +ve then Known, Data -ve then Unknown
+    /// </summary>
+    class OutKnown : Outcome
+    {
+        public OutKnown(int eventID, int known) : base(eventID)
+        {
+            Data = known;
+            Type = OutcomeType.Known;
+        }
     }
 
 
@@ -141,6 +157,7 @@ namespace Next_Game.Event_System
             this.Amount = amount;
             this.Calc = apply;
             this.Timer = timer;
+            Type = OutcomeType.EventTimer;
         }
     }
 
@@ -156,6 +173,7 @@ namespace Next_Game.Event_System
         {
             NewStatus = status;
             Data = targetEventID;
+            Type = OutcomeType.EventStatus;
         }
     }
 
@@ -171,6 +189,7 @@ namespace Next_Game.Event_System
         {
             Data = 0;
             this.Filter = filter;
+            Type = OutcomeType.EventChain;
         }
     }
 
@@ -193,6 +212,7 @@ namespace Next_Game.Event_System
             this.Amount = amount;
             this.Calc = apply;
             this.PlayerRes = playerRes;
+            Type = OutcomeType.Resource;
         }
     }
 
@@ -216,6 +236,7 @@ namespace Next_Game.Event_System
                 NewCondition.Timer = condition.Timer;*/
             }
             else { Game.SetError(new Error(130, "Invalid Condition input (null)")); }
+            Type = OutcomeType.Condition;
         }
 
         /// <summary>
