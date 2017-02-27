@@ -1135,7 +1135,7 @@ namespace Next_Game.Cartographic
                             subCell[5] = movementLayer + 48;
                             //flashing yellow box highlight for Player only
                             if (flashTimer > 7 && movementLayer == 1)
-                            { backColor5 = RLColor.Yellow; }
+                            { backColor5 = RLColor.LightGray; }
                             //vary forecolor depending on location & terrain
                             /*if (mainLayer == 2)
                             { foreColor5 = RLColor.Black; } //capital
