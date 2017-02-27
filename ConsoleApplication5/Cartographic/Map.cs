@@ -1427,8 +1427,8 @@ namespace Next_Game.Cartographic
                                         case 8:
                                         case 9:
                                             subCell[5] = enemiesLayer + 48;
-                                            foreColor5 = RLColor.White;
-                                            backColor5 = RLColor.LightRed;
+                                            foreColor5 = RLColor.Yellow;
+                                            backColor5 = RLColor.Black;
                                             break;
                                     }
                                 }
