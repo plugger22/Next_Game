@@ -531,6 +531,7 @@ namespace Next_Game
         public int CrowDistance { get; set; } //distance between player and follower
         public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
         public bool Activated { get; set; } //can move/be given orders this turn, or not
+        public bool Known { get; set; } //Presence is known or unknown?
         private List<string> crowTooltip { get; set; } //explanation of factors influencing crow chance
         
 
@@ -538,12 +539,14 @@ namespace Next_Game
         {
             crowTooltip = new List<string>();
             Title = string.Format("{0}", Type);
+            Known = false;
         }
 
         public Active(string name, ActorType type, ActorSex sex = ActorSex.Male) : base (name, type, sex)
         {
             crowTooltip = new List<string>();
             Title = string.Format("{0}", Type);
+            Known = false;
         }
 
         public void AddCrowTooltip(string tooltip)

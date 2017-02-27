@@ -1429,6 +1429,24 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// returns 'Known' bool for specified active actor
+        /// </summary>
+        /// <param name="actID"></param>
+        /// <returns></returns>
+        public bool GetActiveActorKnownStatus(int actID)
+        {
+            //check active actor in dictionary
+            if (dictActiveActors.ContainsKey(actID))
+            {
+                Active active = dictActiveActors[actID];
+                if (active.Status != ActorStatus.Gone)
+                { return active.Known; }
+            }
+            else { Game.SetError(new Error(137, "Active Actor not found in dictActiveActors")); }
+            return false;
+        }
+
+        /// <summary>
         /// selects an active actor for movement orders if at a location and activated
         /// </summary>
         /// <param name="charID"></param>
@@ -1815,14 +1833,14 @@ namespace Next_Game
             //Date
             listStats.Add(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black));
             //Invisibility
-            data = Game.director.CheckGameState(DataPoint.Invisibility);
+            /*data = Game.director.CheckGameState(DataPoint.Invisibility);
             good = Game.director.GetGameState(DataPoint.Invisibility, DataState.Good);
             bad = Game.director.GetGameState(DataPoint.Invisibility, DataState.Bad);
             change = Game.director.CheckGameStateChange(DataPoint.Invisibility);
             foreground = RLColor.White;
             if (change > 0 ) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }
-            listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Invisibility (You)", data, good, bad), foreground, RLColor.Black));
+            listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Invisibility (You)", data, good, bad), foreground, RLColor.Black));*/
             //justice
             data = Game.director.CheckGameState(DataPoint.Justice);
             good = Game.director.GetGameState(DataPoint.Justice, DataState.Good);
@@ -1868,6 +1886,12 @@ namespace Next_Game
             if (change > 0) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }
             listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Honour (King)", data, good, bad), foreground, RLColor.Black));
+
+            //show Visibility status
+            if (GetActiveActorKnownStatus(1) == true)
+            { listStats.Add(new Snippet("Known", Color._badTrait, RLColor.Black)); }
+            else { listStats.Add(new Snippet("Unknown (the Inquisitors don't know your location)", Color._goodTrait, RLColor.Black)); }
+
             //display data
             Game.infoChannel.SetInfoList(listStats, ConsoleDisplay.Input);
         }
