@@ -1406,7 +1406,8 @@ namespace Next_Game.Cartographic
                                         case 9:
                                             subCell[5] = followerLayer + 48;
                                             foreColor5 = RLColor.Black;
-                                            backColor5 = RLColor.Yellow;
+                                            if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
+                                            else { backColor5 = RLColor.Yellow; }
                                             break;
                                     }
                                 }
@@ -1428,7 +1429,8 @@ namespace Next_Game.Cartographic
                                         case 9:
                                             subCell[5] = enemiesLayer + 48;
                                             foreColor5 = RLColor.Yellow;
-                                            backColor5 = RLColor.Black;
+                                            if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
+                                            else { backColor5 = RLColor.Black; }
                                             break;
                                     }
                                 }
