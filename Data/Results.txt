@@ -21,6 +21,9 @@
 # Type -> Event
 # Data: is the EventID from an event in Events_Player.txt
 
+# Type -> Known (changes Player's Known status)
+# Data: +ve -> player Unknown, -ve -> player Known
+
 # Type -> Condition
 # conPlyr: Yes / No ( Yes -> condition applies to Player, No -> condition applies to NPC actor)
 # conText: Name of condition, eg. "Old Age"
@@ -32,29 +35,20 @@
 
 Name: Blend in More
 RID: 1
-Type: DataPoint
-DataPoint: Invisibility
+Type: Known
 Data: 1
-Calc: Random
-Amount: 40
 [End]
 
 Name: Been Spotted!
 RID: 2
-Type: DataPoint
-DataPoint: Invisibility
+Type: Known
 Data: -1
-Calc: Random
-Amount: 40
 [End]
 
 Name: You're Presence is known
 RID: 35
-Type: DataPoint
-DataPoint: Invisibility
+Type: Known
 Data: -1
-Calc: Random
-Amount: 20
 [End]
 
 Name: The Cause is Just

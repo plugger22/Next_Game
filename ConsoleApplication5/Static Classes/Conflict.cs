@@ -1402,12 +1402,16 @@ namespace Next_Game
                                             tempList.Add(new Snippet(tempText, RLColor.Red, backColor));
                                             message = new Message(string.Format("{0}", tempText), MessageType.Conflict);
                                         }
-                                        if (message != null) { Game.world.SetMessage(message); }
                                     }
                                     else Game.SetError(new Error(113, "Invalid DataPoint Amount (zero)"));
                                 }
                                 break;
                             case ResultType.GameVar:
+                                break;
+                            case ResultType.Known:
+                                //change Player's Known status
+                                tempText = Game.world.SetActiveActorKnownStatus(1, result.Data);
+                                message = new Message(tempText, MessageType.Conflict);
                                 break;
                             case ResultType.RelPlyr:
                                 //change Opponent's relationship with Player
@@ -1416,7 +1420,6 @@ namespace Next_Game
                                    amount > 0 ? "improved" : "worsened", amount > 0 ? "+" : "", amount);
                                 tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                 message = new Message(tempText, MessageType.Conflict);
-                                Game.world.SetMessage(message);
                                 break;
                             case ResultType.RelOther:
                                 break;
@@ -1447,7 +1450,6 @@ namespace Next_Game
                                 //housekeeping
                                 tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                 message = new Message(tempText, MessageType.Conflict);
-                                Game.world.SetMessage(message);
                                 break;
                             case ResultType.Resource:
                                 break;
@@ -1465,7 +1467,6 @@ namespace Next_Game
                                     player.AddFavour(newFavour.PossID);
                                     tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                     message = new Message(tempText, MessageType.Conflict);
-                                    Game.world.SetMessage(message);
                                 }
                                 break;
                             case ResultType.Introduction:
@@ -1478,7 +1479,6 @@ namespace Next_Game
                                     player.AddIntroduction(newIntroduction.PossID);
                                     tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                     message = new Message(tempText, MessageType.Conflict);
-                                    Game.world.SetMessage(message);
                                 }
                                 break;
                             case ResultType.Army:
@@ -1500,7 +1500,6 @@ namespace Next_Game
                                                 tempText = string.Format("Event \"{0}\" has been activated", eventObject.Name);
                                                 tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                                 message = new Message(string.Format("{0} {1}", tempText, testText), MessageType.Conflict);
-                                                Game.world.SetMessage(message);
                                             }
                                         }
                                     }
@@ -1550,7 +1549,6 @@ namespace Next_Game
                                                 tempText = string.Format("Event \"{0}\" has been activated", eventObject.Name);
                                                 tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                                 message = new Message(string.Format("{0} {1}", tempText, testText), MessageType.Conflict);
-                                                Game.world.SetMessage(message);
                                             }
                                         }
                                     }
@@ -1563,6 +1561,7 @@ namespace Next_Game
                                 Game.SetError(new Error(113, string.Format("Invalid ResultType (\"{0}\")", type)));
                                 break;
                         }
+                        if (message != null) { Game.world.SetMessage(message); }
                     }
                     else { Game.SetError(new Error(113, string.Format("Invalid result (null returned, resultID \"{0}\")", resultID))); }
                 }

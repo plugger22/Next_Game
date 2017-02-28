@@ -1448,7 +1448,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// change an Active Actors known status -> data +ve then switch to UNKNOWN, if -ve then KNOWN (if already Known then reset Revert timer to max value). Returns Null if insuccessful
+        /// change an Active Actors known status -> data +ve then switch to UNKNOWN, if -ve then KNOWN (if already Known then reset Revert timer to max value). Returns MT if insuccessful
         /// </summary>
         /// <param name="actID"></param>
         /// <param name="data"></param>
