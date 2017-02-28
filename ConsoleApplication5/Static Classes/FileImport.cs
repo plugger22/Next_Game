@@ -4072,6 +4072,9 @@ namespace Next_Game
                                         case "GameVar":
                                             structResult.Type = ResultType.GameVar;
                                             break;
+                                        case "Known":
+                                            structResult.Type = ResultType.Known;
+                                            break;
                                         case "RelPlyr":
                                             structResult.Type = ResultType.RelPlyr;
                                             break;
