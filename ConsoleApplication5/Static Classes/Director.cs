@@ -478,10 +478,11 @@ namespace Next_Game
         private void DetermineFollowerEvent(Active actor, EventType type)
         {
             int geoID, terrain, road, locID, refID, houseID;
+            string tempText;
             Cartographic.Position pos = actor.GetActorPosition();
             List<Event> listEventPool = new List<Event>();
-            locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
-
+            locID = actor.LocID;
+            refID = 0;
             //Location event
             if (type == EventType.Location)
             {
@@ -580,19 +581,25 @@ namespace Next_Game
                 int rndNum = rnd.Next(0, listEventPool.Count);
                 Event eventTemp = listEventPool[rndNum];
                 EventFollower eventChosen = eventTemp as EventFollower;
-                Message message = null;
+                Message message = null; tempText = "";
                 if (type == EventType.Travelling)
                 {
-                    message = new Message(string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
-                      type, eventChosen.Name), MessageType.Event);
+                    tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
+                      type, eventChosen.Name);
+                    message = new Message(tempText, MessageType.Event);
                 }
                 else if (type == EventType.Location)
                 {
-                    message = new Message(string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
-                      type, eventChosen.Name), MessageType.Event);
+                    tempText = string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
+                      type, eventChosen.Name);
+                    message = new Message(tempText, MessageType.Event);
                 }
                 if (message != null)
-                { Game.world.SetMessage(message); }
+                {
+                    Game.world.SetMessage(message);
+                    if (String.IsNullOrEmpty(tempText) == false)
+                    { Game.world.SetCurrentRecord(new Record(tempText, actor.ActID, actor.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Event)); }
+                }
                 else { Game.SetError(new Error(52, "Invalid Message (null)")); }
                 //store in list of Current Events
                 EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
@@ -607,6 +614,7 @@ namespace Next_Game
         private void DeterminePlayerEvent(Active actor, EventType type)
         {
             int geoID, terrain, road, locID, refID, houseID;
+            string tempText;
             houseID = 0; refID = 0;
             Cartographic.Position pos = actor.GetActorPosition();
             List<Event> listEventPool = new List<Event>();
@@ -717,19 +725,25 @@ namespace Next_Game
                 int rndNum = rnd.Next(0, listEventPool.Count);
                 Event eventTemp = listEventPool[rndNum];
                 EventPlayer eventChosen = eventTemp as EventPlayer;
-                Message message = null;
+                Message message = null; tempText = "";
                 if (type == EventType.Travelling)
                 {
-                    message = new Message(string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
-                      type, eventChosen.Name), MessageType.Event);
+                    tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
+                      type, eventChosen.Name);
+                    message = new Message(tempText, MessageType.Event);
                 }
                 else if (type == EventType.Location)
                 {
-                    message = new Message(string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
-                      type, eventChosen.Name), MessageType.Event);
+                    tempText = string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
+                      type, eventChosen.Name);
+                    message = new Message(tempText, MessageType.Event);
                 }
                 if (message != null)
-                { Game.world.SetMessage(message); }
+                {
+                    Game.world.SetMessage(message);
+                    if (String.IsNullOrEmpty(tempText) == false)
+                    { Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Event)); }
+                }
                 else { Game.SetError(new Error(72, "Invalid Message (null)")); }
                 //store in list of Current Events
                 EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
@@ -764,6 +778,7 @@ namespace Next_Game
                 int houseID = Game.map.GetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY());
                 int refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
                 string houseName = "Unknown";
+                string tempText;
                 //if (houseID > 0) { houseName = Game.world.GetGreatHouseName(houseID); }
                 if (refID > 0) { houseName = Game.world.GetHouseName(refID); }
                 int testRefID; //which refID (loc) to use when checking who's present
@@ -1115,9 +1130,11 @@ namespace Next_Game
                     if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }
                     dictPlayerEvents.Add(1000, eventObject);
                     //message
-                    Message  message = new Message(string.Format("{0}, Aid {1} at {2} {3}, [{4} Event] \"{5}\"", player.Name, player.ActID, locName, Game.world.ShowLocationCoords(player.LocID),
-                          eventObject.Type, eventObject.Name), MessageType.Event);
+                    tempText = string.Format("{0}, Aid {1} at {2} {3}, [{4} Event] \"{5}\"", player.Name, player.ActID, locName, Game.world.ShowLocationCoords(player.LocID),
+                          eventObject.Type, eventObject.Name);
+                    Message  message = new Message(tempText, MessageType.Event);
                     Game.world.SetMessage(message);
+                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Event));
                 }
                 else { Game.SetError(new Error(118, "Invalid List of Actors (Zero present at Location")); }
             }
@@ -1704,6 +1721,7 @@ namespace Next_Game
             int actorID;
             string status;
             string outcomeText = "";
+            string tempText = "";
             List<Snippet> eventList = new List<Snippet>();
             List<Snippet> resultList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
@@ -1721,6 +1739,7 @@ namespace Next_Game
                     {
                         OptionInteractive option = listOptions[optionNum - 1];
                         Active actor = Game.world.GetActiveActor(1);
+                        int refID = Game.network.GetRefID(actor.LocID);
                         //Active option?
                         if (option.Active == true)
                         {
@@ -1765,8 +1784,10 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             //message
-                                            Message messageKnown = new Message(string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText), 1, 0, MessageType.Event);
+                                            tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
+                                            Message messageKnown = new Message(tempText, 1, 0, MessageType.Event);
                                             Game.world.SetMessage(messageKnown);
+                                            Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Event));
                                             break;
                                         case OutcomeType.EventTimer:
                                             //Change an Event Timer
@@ -1844,9 +1865,11 @@ namespace Next_Game
                                                 Actor opponent = Game.world.GetAnyActor(actorID);
                                                 if (opponent != null)
                                                 {
-                                                    Message messageConflict = new Message(string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", conflictOutcome.SubType, 
-                                                        conflictOutcome.Conflict_Type, opponent.Title, opponent.Name, opponent.ActID), MessageType.Conflict);
+                                                    tempText = string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", conflictOutcome.SubType,
+                                                        conflictOutcome.Conflict_Type, opponent.Title, opponent.Name, opponent.ActID);
+                                                    Message messageConflict = new Message(tempText, MessageType.Conflict);
                                                     Game.world.SetMessage(messageConflict);
+                                                    Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Challenge));
                                                 }
                                                 //debug
                                                 ConflictState debugState = (ConflictState)rnd.Next(2, 6);
