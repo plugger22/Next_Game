@@ -28,6 +28,8 @@ namespace Next_Game
         private Dictionary<int, Skill> dictTraits; //all triats (key is traitID)
         private Dictionary<int, Possession> dictPossessions; //all possession (key is PossID)
         private Dictionary<int, Passive> dictRoyalCourt; //advisors and royal retainers (assumed to always be at Kingskeep) excludes family
+        private Dictionary<int, int> dictConvertLocToRef; //dictionary to convert LocID's to RefID's (key is LocID, value is RefID)
+        private Dictionary<int, int> dictConvertRefToLoc; //dictionary to convert RefID's to LocID's (key is RefID, value is LocID)
 
         //default constructor
         public World(int seed)
@@ -50,6 +52,8 @@ namespace Next_Game
             dictTraits = new Dictionary<int, Skill>();
             dictPossessions = new Dictionary<int, Possession>();
             dictRoyalCourt = new Dictionary<int, Passive>();
+            dictConvertLocToRef = new Dictionary<int, int>();
+            dictConvertRefToLoc = new Dictionary<int, int>();
         }
 
 
@@ -67,6 +71,7 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitiatePlayerActors");
             timer_2.Start();
             InitialiseHouses();
+            InitialiseConversionDicts();
             Game.StopTimer(timer_2, "W: InitialiseHouses");
             timer_2.Start();
             InitialiseTraits();
@@ -231,7 +236,7 @@ namespace Next_Game
                                     person.Status = ActorStatus.AtLocation;
                                     person.SetActorPosition(posDestination);
                                     person.LocID = locID;
-                                    int refID = Game.network.GetRefID(locID);
+                                    int refID = GetRefID(locID);
                                     string tempText = string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, loc.LocName);
                                     Message message = new Message(tempText, person.ActID, loc.LocationID, MessageType.Move);
                                     SetMessage(message);
@@ -2063,7 +2068,7 @@ namespace Next_Game
                     from actID in actor.Value.listOfActors
                     where actID == actorID
                     orderby actor.Value.Year
-                    select Convert.ToString(actor.Value.Day + ", " + actor.Value.Year + " " + actor.Value.Text);
+                    select Convert.ToString("Day " + actor.Value.Day + ", " + actor.Value.Year + " " + actor.Value.Text);
                 //place filtered data into list
                 actorRecords = actorCurrent.ToList();
             }
@@ -2087,7 +2092,7 @@ namespace Next_Game
                     from actID in actor.Value.listOfActors
                     where actID == actorID
                     orderby actor.Value.Year
-                    select Convert.ToString(actor.Value.Day + ", " + actor.Value.Year + " " + actor.Value.Text);
+                    select Convert.ToString("Day " + actor.Value.Day + ", " + actor.Value.Year + " " + actor.Value.Text);
                 //place filtered data into list
                 actorRecords = actorPlayer.ToList();
             }
@@ -2831,7 +2836,7 @@ namespace Next_Game
                         string eventText = string.Format("{0} {1} is no longer \"Known\" as sufficient time has passed", actor.Value.Title, actor.Value.Name);
                         Message message = new Message(eventText, MessageType.Known);
                         SetMessage(message);
-                        int refID = Game.network.GetRefID(actor.Value.LocID);
+                        int refID = GetRefID(actor.Value.LocID);
                         if (actor.Value.ActID == 1)
                         { SetPlayerRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Known)); }
                         else if (actor.Value.ActID > 1)
@@ -2848,6 +2853,77 @@ namespace Next_Game
             }
         }
 
+        /// <summary>
+        /// set up the two refID -> LocID (& vice versa) dictionaries at start of game
+        /// </summary>
+        private void InitialiseConversionDicts()
+        {
+            List<Location> listOfLocations = Game.map.GetLocations();
+            if (listOfLocations != null)
+            {
+                int refID, locID;
+                foreach (Location loc in listOfLocations)
+                {
+                    locID = loc.LocationID;
+                    //set up conversion dictionaries
+                    refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
+                    if (refID > 0)
+                    {
+                        try
+                        { dictConvertLocToRef.Add(locID, refID); }
+                        catch (ArgumentException)
+                        { Game.SetError(new Error(145, "Invalid LocID, Record already exists")); }
+                        try
+                        { dictConvertRefToLoc.Add(refID, locID); }
+                        catch (ArgumentException)
+                        { Game.SetError(new Error(145, "Invalid RefID, Record already exists")); }
+                    }
+                }
+            }
+            else { Game.SetError(new Error(145, "Invalid listOfLocations (null)")); }
+        }
+
+        /// <summary>
+        /// get corresponding RefID from LocID. Returns 0 if not found.
+        /// </summary>
+        /// <param name="locID"></param>
+        /// <returns></returns>
+        internal int GetRefID(int locID)
+        {
+            if (locID > 0)
+            {
+                try
+                {
+                    if (dictConvertLocToRef.ContainsKey(locID) == true)
+                    { return dictConvertLocToRef[locID]; }
+                    else { Game.SetError(new Error(146, "Invalid LocID (record not found")); }
+                }
+                catch (ArgumentNullException)
+                { Game.SetError(new Error(146, "Invalid LocID (null)")); }
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// get corresponding LocID from RefID. Returns 0 if not found.
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        internal int GetLocID(int refID)
+        {
+            if (refID > 0)
+            {
+                try
+                {
+                    if (dictConvertRefToLoc.ContainsValue(refID) == true)
+                    { return dictConvertRefToLoc[refID]; }
+                    else { Game.SetError(new Error(147, "Invalid refID (record not found")); }
+                }
+                catch (ArgumentNullException)
+                { Game.SetError(new Error(147, "Invalid refID (null)")); }
+            }
+            return 0;
+        }
 
         //new Methods above here
     }

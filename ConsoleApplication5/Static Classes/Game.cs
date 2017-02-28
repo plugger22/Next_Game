@@ -431,7 +431,7 @@ namespace Next_Game
                                                 if ((_posSelect1 != null && _posSelect2 != null) && (_posSelect1.PosX != _posSelect2.PosX || _posSelect1.PosY != _posSelect2.PosY))
                                                 {
                                                     int locID = map.GetMapInfo(MapLayer.LocID, _posSelect2.PosX, _posSelect2.PosY);
-                                                    int refID = network.GetRefID(locID);
+                                                    int refID = world.GetRefID(locID);
                                                     List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
                                                     string infoText = world.InitiateMoveActors(_charIDSelected, _posSelect1, _posSelect2, pathToTravel);
                                                     Message message = new Message(infoText, _charIDSelected, locID, MessageType.Move);

@@ -545,7 +545,7 @@ namespace Next_Game
             Active player = Game.world.GetActiveActor(1);
             if (player != null)
             {
-                int refID = Game.network.GetRefID(player.LocID);
+                int refID = Game.world.GetRefID(player.LocID);
                 Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Challenge));
             }
             //clear out outcome box

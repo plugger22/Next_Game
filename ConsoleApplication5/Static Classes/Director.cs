@@ -1739,7 +1739,7 @@ namespace Next_Game
                     {
                         OptionInteractive option = listOptions[optionNum - 1];
                         Active actor = Game.world.GetActiveActor(1);
-                        int refID = Game.network.GetRefID(actor.LocID);
+                        int refID = Game.world.GetRefID(actor.LocID);
                         //Active option?
                         if (option.Active == true)
                         {
