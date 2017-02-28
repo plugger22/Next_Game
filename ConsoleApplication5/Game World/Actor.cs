@@ -533,6 +533,7 @@ namespace Next_Game
         public bool Activated { get; set; } //can move/be given orders this turn, or not
         public bool Known { get; set; } //Presence is known or unknown?
         public int Revert { get; set; } //# of turns before Known status reverts to unknown
+        public int TurnsUnknown { get; set; } //# of continuous turns spent 'Unknown' (used by conflict for game situations)
         private List<string> crowTooltip { get; set; } //explanation of factors influencing crow chance
         
 

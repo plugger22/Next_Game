@@ -1471,6 +1471,8 @@ namespace Next_Game
                         else
                         { active.Known = true; resultText = string.Format("{0} {1} is now KNOWN (will revert in {2} days)", active.Title, active.Name, maxRevert); }
                         active.Revert = maxRevert;
+                        //reset TurnsUnknown timer back to zero
+                        active.TurnsUnknown = 0;
                     }
                     else if (data > 0)
                     {
@@ -2705,7 +2707,7 @@ namespace Next_Game
         /// </summary>
         private void UpdateActiveActors()
         {
-            foreach(var actor in dictActiveActors)
+            foreach (var actor in dictActiveActors)
             {
                 //if Known, decrement their revert status
                 if (actor.Value.Known == true)
@@ -2720,6 +2722,12 @@ namespace Next_Game
                         SetMessage(message);
                         Console.WriteLine(eventText);
                     }
+                }
+                else if (actor.Value.Known == false)
+                {
+                    actor.Value.TurnsUnknown++;
+                    Console.WriteLine("{0} {1} has had their TurnsUnknown Timer increased from {2} to {3}", 
+                        actor.Value.Title, actor.Value.Name, actor.Value.TurnsUnknown - 1, actor.Value.TurnsUnknown);
                 }
             }
         }

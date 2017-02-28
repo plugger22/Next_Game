@@ -3,7 +3,7 @@
 # NOTE: All fields must have a value
 # Name: Situation descriptor -> no more than four or five words
 # Type: 'State'
-# SubType: State -> ArmySize/Fame/Honour/Justice/Invisibility
+# SubType: State -> ArmySize/Fame/Honour/Justice/Known
 # SitNum: Situation Number -> Note: DIFFERENT to SitNormal -> '1' player has advantage, '0' no advantage, '-1' opponent has advantage
 # Data: multi purpose integer, default 0
 # Good: immersion strings, 3 variations for good outcomes, short/med sentence, use tags, max 6, eg. Good6:, min1
@@ -193,11 +193,11 @@ Bad2: The King has, according to general opinion, a much stronger claim to the t
 Bad3: Is there any justice in the world? It appears not. The King has a firm hold on his throne and the people agree that it is his to sit upon as he wishes.
 [End]
 
-# Invisibility -> player advantage
+# Invisibility -> player advantage (player is UNKNOWN)
 
-Name: Relative Invisibility
+Name: Known Status
 Type: State
-SubType: Invisibility
+SubType: Known
 SitNum: 1
 Data: 0
 Good1: You keep a low profile. That's the way you like it.
@@ -208,11 +208,11 @@ Bad2: Why insist that are the rightful King when it is silence and anonymity tha
 Bad3: Yes, you have a low profile but not today. Did you have beans for breakfast?
 [End]
 
-# Invisibility -> no advantage
+# Invisibility -> no advantage (not used)
 
-Name: Relative Invisibility
+Name: Known Status
 Type: State
-SubType: Invisibility
+SubType: Known
 SitNum: 0
 Data: 0
 Good1: Those that know of you keep their counsel to themselves as you blend in.
@@ -223,11 +223,11 @@ Bad2: Your profile isn't as low as you'd like. Already you've been recognised.
 Bad3: They know who you are. What do you expect as you've made no effort to conceal your identity.
 [End]
 
-# Invisibility -> opponent advantage
+# Invisibility -> opponent advantage (player is KNOWN)
 
-Name: Relative Invisibility
+Name: Known Status
 Type: State
-SubType: Invisibility
+SubType: Known
 SitNum: -1
 Data: 0
 Good1: Everybody seems to know you. Or do they? You have them confused, doubting their own eyes. It's a skill.

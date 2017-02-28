@@ -3489,11 +3489,11 @@ namespace Next_Game
                                             { structSituation.State = ConflictState.Relative_Justice; }
                                             else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
-                                        /*case "Invisibility":
+                                        case "Known":
                                             if (structSituation.Type == ConflictType.None)
-                                            { structSituation.State = ConflictState.Relative_Invisibility; }
+                                            { structSituation.State = ConflictState.Known_Status; }
                                             else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
-                                            break;*/
+                                            break;
                                         //...Special
                                         case "FortifiedPosition":
                                             if (structSituation.Type == ConflictType.None)
