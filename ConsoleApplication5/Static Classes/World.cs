@@ -2148,7 +2148,7 @@ namespace Next_Game
                     //CUSTOM (debugging purposes)
                     recordList =
                         from record in dictRecords
-                        from eventType in record.Value.listOfActorIncidents
+                        from eventType in record.Value.listOfHistoricalActorIncidents
                         where eventType == HistActorIncident.Lordship
                         //where record.Value.Actual == false
                         orderby record.Value.Year
@@ -2159,7 +2159,7 @@ namespace Next_Game
                     //deaths
                     recordList =
                         from record in dictRecords
-                        from eventType in record.Value.listOfActorIncidents
+                        from eventType in record.Value.listOfHistoricalActorIncidents
                         where eventType == HistActorIncident.Died
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
@@ -2169,7 +2169,7 @@ namespace Next_Game
                     //Marriages
                     recordList =
                         from record in dictRecords
-                        from eventType in record.Value.listOfActorIncidents
+                        from eventType in record.Value.listOfHistoricalActorIncidents
                         where eventType == HistActorIncident.Married
                         orderby record.Value.Year
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);

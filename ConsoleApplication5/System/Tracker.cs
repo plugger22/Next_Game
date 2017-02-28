@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     //categories (can choose multiple) -> Used for Records
-    public enum HistActorIncident { None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service, Condition } 
+    public enum HistActorIncident { None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service} 
+    public enum CurrentActorIncident { None, Condition, Event, Challenge, Travel }
         //conflict -> actor involved in a battle/siege
     public enum HistHouseIncident { None, Allegiance, Ownership }
     public enum HistKingdomIncident { None, Battle, Siege }
@@ -81,20 +82,22 @@ namespace Next_Game
     public class Record : Tracker
     {
         public bool Actual { get; set; } = true; //Is the record a true representation of actual incidents or a false one?
-        public List<HistActorIncident> listOfActorIncidents; //categories
+        public List<HistActorIncident> listOfHistoricalActorIncidents; //categories
         public List<HistHouseIncident> listOfHouseIncidents;
         public List<HistKingdomIncident> listOfKingdomIncidents;
+        public List<CurrentActorIncident> listOfCurrentActorIncidents;
 
 
         public Record()
         {
-            listOfActorIncidents = new List<HistActorIncident>();
+            listOfHistoricalActorIncidents = new List<HistActorIncident>();
             listOfHouseIncidents = new List<HistHouseIncident>();
             listOfKingdomIncidents = new List<HistKingdomIncident>();
-        }
+            listOfCurrentActorIncidents = new List<CurrentActorIncident>();
+    }
 
         /// <summary>
-        /// Actor Incident
+        /// Actor Incident -> Historical
         /// </summary>
         /// <param name="description"></param>
         /// <param name="actorID"></param>
@@ -115,9 +118,10 @@ namespace Next_Game
                 listOfLocs = new List<int>();
                 listOfHouses = new List<int>();
                 listOfItems = new List<int>();
-                listOfActorIncidents = new List<HistActorIncident>();
+                listOfHistoricalActorIncidents = new List<HistActorIncident>();
                 listOfHouseIncidents = new List<HistHouseIncident>();
                 listOfKingdomIncidents = new List<HistKingdomIncident>();
+                listOfCurrentActorIncidents = new List<CurrentActorIncident>();
                 //lists
                 Text = description;
                 if (actorID > 0)
@@ -127,7 +131,50 @@ namespace Next_Game
                 if (refID > 0)
                 { listOfHouses.Add(refID); }
                 if (histActorIncident > 0)
-                { listOfActorIncidents.Add(histActorIncident); }
+                { listOfHistoricalActorIncidents.Add(histActorIncident); }
+                //debug
+                Console.WriteLine("ACTOR RECORD: ID {0}, {1}", actorID, description);
+            }
+            else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
+        }
+
+        /// <summary>
+        /// Actor Incident -> Current
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="actorID"></param>
+        /// <param name="locID"></param>
+        /// <param name="refID"></param>
+        /// <param name="year"></param>
+        /// <param name="histActorIncident"></param>
+        /// <param name="happened"></param>
+        public Record(string description, int actorID, int locID, int refID, int year, int day, CurrentActorIncident currentActorIncident = CurrentActorIncident.None, bool happened = true)
+        {
+            //it's a valid record only if there is a descriptive text
+            if (description != null)
+            {
+                this.Year = year;
+                this.Day = day;
+                Actual = happened;
+                //initialise lists
+                listOfActors = new List<int>();
+                listOfLocs = new List<int>();
+                listOfHouses = new List<int>();
+                listOfItems = new List<int>();
+                listOfHistoricalActorIncidents = new List<HistActorIncident>();
+                listOfHouseIncidents = new List<HistHouseIncident>();
+                listOfKingdomIncidents = new List<HistKingdomIncident>();
+                listOfCurrentActorIncidents = new List<CurrentActorIncident>();
+                //lists
+                Text = description;
+                if (actorID > 0)
+                { listOfActors.Add(actorID); }
+                if (locID > 0)
+                { listOfLocs.Add(locID); }
+                if (refID > 0)
+                { listOfHouses.Add(refID); }
+                if (currentActorIncident > 0)
+                { listOfCurrentActorIncidents.Add(currentActorIncident); }
                 //debug
                 Console.WriteLine("ACTOR RECORD: ID {0}, {1}", actorID, description);
             }
@@ -154,9 +201,10 @@ namespace Next_Game
                 listOfLocs = new List<int>();
                 listOfHouses = new List<int>();
                 listOfItems = new List<int>();
-                listOfActorIncidents = new List<HistActorIncident>();
+                listOfHistoricalActorIncidents = new List<HistActorIncident>();
                 listOfHouseIncidents = new List<HistHouseIncident>();
                 listOfKingdomIncidents = new List<HistKingdomIncident>();
+
                 //lists
                 Text = description;
                 if (locID > 0)
@@ -192,9 +240,10 @@ namespace Next_Game
                 listOfLocs = new List<int>();
                 listOfHouses = new List<int>();
                 listOfItems = new List<int>();
-                listOfActorIncidents = new List<HistActorIncident>();
+                listOfHistoricalActorIncidents = new List<HistActorIncident>();
                 listOfHouseIncidents = new List<HistHouseIncident>();
                 listOfKingdomIncidents = new List<HistKingdomIncident>();
+                listOfCurrentActorIncidents = new List<CurrentActorIncident>();
                 //lists
                 Text = description;
                 if (locID > 0)
@@ -210,7 +259,7 @@ namespace Next_Game
         }
 
         public void AddActorIncident(HistActorIncident histIncident)
-        { listOfActorIncidents.Add(histIncident); }
+        { listOfHistoricalActorIncidents.Add(histIncident); }
     }
 
 

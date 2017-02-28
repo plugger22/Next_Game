@@ -385,7 +385,7 @@ namespace Next_Game
                     string timerText = string.Format("{0}", condition.Timer == 999 ? "permanent effect" : string.Format("lasts for {0} days", condition.Timer));
                     string conditionText = string.Format("\"{0}\" condition acquired, {1} {2}{3}, {4}", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", 
                         condition.Effect, timerText);
-                    Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
+                    Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, Game.gameTurn, CurrentActorIncident.Condition);
                     Game.world.SetRecord(record);
                     returnText = conditionText;
                 }
@@ -427,7 +427,7 @@ namespace Next_Game
                         //record event
                         string conditionText = string.Format("\"{0}\", {1} {2}{3}, condition removed ", condition.Text, condition.Skill, 
                             condition.Effect > 0 ? "+" : "", condition.Effect);
-                        Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
+                        Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, Game.gameTurn, CurrentActorIncident.Condition);
                         Game.world.SetRecord(record);
                         //update array
                         arrayOfConditions[(int)condition.Skill] -= condition.Effect;
@@ -471,7 +471,7 @@ namespace Next_Game
                         Console.WriteLine("RESET: \"{0}\" Condition Timer was {1} now {2}", condition.Text, condition.Timer, timer);
                         //record event
                         string conditionText = string.Format("\"{0}\" condition already acquired, timer reset from {1} to {2} days", condition.Text, condition.Timer, timer);
-                        Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, HistActorIncident.Condition);
+                        Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, Game.gameTurn, CurrentActorIncident.Condition);
                         Game.world.SetRecord(record);
                         //reset timer
                         condition.Timer = timer;
