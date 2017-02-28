@@ -20,8 +20,9 @@ namespace Next_Game
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
         private Dictionary<int, int> dictMajorHouseID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
         private Dictionary<int, int> dictHousePower; // list of Great Houses, Sorted (key is House ID, value is # of bannerlords (power))
-        private Dictionary<int, Record> dictHistoricalRecords; //all historical records in a central collection (key is eventID)
-        private Dictionary<int, Record> dictCurrentRecords; //all current records in a central collection (key is eventID)
+        private Dictionary<int, Record> dictHistoricalRecords; //all historical records (including Players) in a central collection (key is trackerID)
+        private Dictionary<int, Record> dictCurrentRecords; //all current records (non-Player) in a central collection (key is trackerID)
+        private Dictionary<int, Record> dictPlayerRecords; //all current Player records, (key is trackerID)
         private Dictionary<int, Message> dictMessages; //all Player to Game & Game to Player messages
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         private Dictionary<int, Skill> dictTraits; //all triats (key is traitID)
@@ -43,6 +44,7 @@ namespace Next_Game
             dictHousePower = new Dictionary<int, int>();
             dictHistoricalRecords = new Dictionary<int, Record>();
             dictCurrentRecords = new Dictionary<int, Record>();
+            dictPlayerRecords = new Dictionary<int, Record>();
             dictMessages = new Dictionary<int, Message>();
             dictGeoClusters = new Dictionary<int, GeoCluster>();
             dictTraits = new Dictionary<int, Skill>();
@@ -2004,22 +2006,74 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Query to return list of strings containing selected actor's personal history
+        /// Query to return list of strings containing selected actor's personal history (includes those of Player)
         /// </summary>
         /// <param name="actorID"></param>
         /// <returns></returns>
         private List<string> GetActorHistoricalRecords(int actorID)
         {
             List<string> actorRecords = new List<string>();
-            //query
-            IEnumerable<string> actorHistory =
-                from actor in dictHistoricalRecords
-                from actID in actor.Value.listOfActors
-                where actID == actorID
-                orderby actor.Value.Year
-                select Convert.ToString(actor.Value.Year + " " + actor.Value.Text);
-            //place filtered data into list
-            actorRecords = actorHistory.ToList();
+            if (actorID > 0)
+            {
+                //query
+                IEnumerable<string> actorHistory =
+                    from actor in dictHistoricalRecords
+                    from actID in actor.Value.listOfActors
+                    where actID == actorID
+                    orderby actor.Value.Year
+                    select Convert.ToString(actor.Value.Year + " " + actor.Value.Text);
+                //place filtered data into list
+                actorRecords = actorHistory.ToList();
+            }
+            else { Game.SetError(new Error(144, "Invalid actorID (0 or less)")); }
+            return actorRecords;
+        }
+
+        /// <summary>
+        /// Query to return list of strings containing selected actor's current game-start onwards records (excludes those of Player)
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <returns></returns>
+        private List<string> GetActorCurrentRecords(int actorID)
+        {
+            List<string> actorRecords = new List<string>();
+            if (actorID > 1)
+            {
+                //query
+                IEnumerable<string> actorCurrent =
+                    from actor in dictCurrentRecords
+                    from actID in actor.Value.listOfActors
+                    where actID == actorID
+                    orderby actor.Value.Year
+                    select Convert.ToString(actor.Value.Day + ", " + actor.Value.Year + " " + actor.Value.Text);
+                //place filtered data into list
+                actorRecords = actorCurrent.ToList();
+            }
+            else { Game.SetError(new Error(142, "Invalid actorID (1 or less)")); }
+            return actorRecords;
+        }
+
+        /// <summary>
+        /// Query to return list of strings containing Player's current game-start onwards records
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <returns></returns>
+        private List<string> GetPlayerCurrentRecords(int actorID)
+        {
+            List<string> actorRecords = new List<string>();
+            if (actorID == 1)
+            {
+                //query
+                IEnumerable<string> actorPlayer =
+                    from actor in dictPlayerRecords
+                    from actID in actor.Value.listOfActors
+                    where actID == actorID
+                    orderby actor.Value.Year
+                    select Convert.ToString(actor.Value.Day + ", " + actor.Value.Year + " " + actor.Value.Text);
+                //place filtered data into list
+                actorRecords = actorPlayer.ToList();
+            }
+            else { Game.SetError(new Error(142, "Invalid actorID (Not that of the Players)")); }
             return actorRecords;
         }
 
@@ -2075,9 +2129,47 @@ namespace Next_Game
             return null;
         }
 
-
+        /// <summary>
+        /// Pre-Game start records for everybody including Player
+        /// </summary>
+        /// <param name="record"></param>
         internal void SetHistoricalRecord(Record record)
-        { if (record != null) { dictHistoricalRecords.Add(record.trackerID, record); } }
+        {
+            try
+            { dictHistoricalRecords.Add(record.trackerID, record); }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(139, "Invalid record (null)")); }
+            catch (ArgumentException)
+            { Game.SetError(new Error(139, string.Format("Invalid Record TrackerID \"{0}\" (duplicate)", record.trackerID))); }
+        }
+
+        /// <summary>
+        /// Game start onwards records for everybody except the Player
+        /// </summary>
+        /// <param name="record"></param>
+        internal void SetCurrentRecord(Record record)
+        {
+            try
+            { dictCurrentRecords.Add(record.trackerID, record); }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(140, "Invalid record (null)")); }
+            catch (ArgumentException)
+            { Game.SetError(new Error(140, string.Format("Invalid Record TrackerID \"{0}\" (duplicate)", record.trackerID))); }
+        }
+
+        /// <summary>
+        /// Game start onwards records for the Player
+        /// </summary>
+        /// <param name="record"></param>
+        internal void SetPlayerRecord(Record record)
+        {
+            try
+            { dictPlayerRecords.Add(record.trackerID, record); }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(141, "Invalid record (null)")); }
+            catch (ArgumentException)
+            { Game.SetError(new Error(141, string.Format("Invalid Record TrackerID \"{0}\" (duplicate)", record.trackerID))); }
+        }
 
         /// <summary>
         /// handle a new message appropriately
