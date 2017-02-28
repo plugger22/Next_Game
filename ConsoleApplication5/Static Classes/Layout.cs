@@ -537,9 +537,17 @@ namespace Next_Game
             if (resultOutcome != 0) { textDescription = arrayOutcome[resultOutcome]; }
             //message
             string protagonistText = Game.conflict.GetProtagonists();
-            Message message = new Message(string.Format("{0}, a {1} Conflict. {2}, score of {3}{4}", protagonistText, Game.conflict.Conflict_Type, textOutcome, 
-                score > 0 ? "+" : "", score), MessageType.Conflict);
+            string tempText = string.Format("{0}, a {1} Conflict. {2}, score of {3}{4}", protagonistText, Game.conflict.Conflict_Type, textOutcome,
+                score > 0 ? "+" : "", score);
+            Message message = new Message(tempText, MessageType.Conflict);
             Game.world.SetMessage(message);
+            //record
+            Active player = Game.world.GetActiveActor(1);
+            if (player != null)
+            {
+                int refID = Game.network.GetRefID(player.LocID);
+                Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Challenge));
+            }
             //clear out outcome box
             for (int width_index = ou_left_align + 1; width_index < ou_left_align + ou_width - 1; width_index++)
             {

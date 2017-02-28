@@ -231,9 +231,14 @@ namespace Next_Game
                                     person.Status = ActorStatus.AtLocation;
                                     person.SetActorPosition(posDestination);
                                     person.LocID = locID;
-                                    Message message = new Message(string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, loc.LocName), person.ActID,
-                                        loc.LocationID, MessageType.Move);
+                                    int refID = Game.network.GetRefID(locID);
+                                    string tempText = string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, loc.LocName);
+                                    Message message = new Message(tempText, person.ActID, loc.LocationID, MessageType.Move);
                                     SetMessage(message);
+                                    if (person.ActID == 1)
+                                    { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Travel)); }
+                                    else if (person.ActID > 1)
+                                    { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Travel)); }
                                 }
                                 else
                                 { Game.SetError(new Error(42, "Character not found")); }
@@ -2612,7 +2617,6 @@ namespace Next_Game
                                         player.CrowsNumber--;
                                         messageText = string.Format("Crow sent to {0}, Aid {1}, at {2} ({3}% chance of arriving, roll {4}, {5})", actor.Name, actor.ActID, locName, chance,
                                             num, num < chance ? "Arrived" : "Failed");
-                                        //Game.messageLog.Add(new Snippet(messageText));
                                         Message message = new Message(messageText, actor.ActID, actor.LocID, MessageType.Crow);
                                         SetMessage(message);
                                         if (num < chance)
@@ -2814,6 +2818,11 @@ namespace Next_Game
                         string eventText = string.Format("{0} {1} is no longer \"Known\" as sufficient time has passed", actor.Value.Title, actor.Value.Name);
                         Message message = new Message(eventText, MessageType.Known);
                         SetMessage(message);
+                        int refID = Game.network.GetRefID(actor.Value.LocID);
+                        if (actor.Value.ActID == 1)
+                        { SetPlayerRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Known)); }
+                        else if (actor.Value.ActID > 1)
+                        { SetCurrentRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Known)); }
                         Console.WriteLine(eventText);
                     }
                 }

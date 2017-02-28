@@ -8,7 +8,7 @@ namespace Next_Game
 {
     //categories (can choose multiple) -> Used for Records
     public enum HistActorIncident { None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service} 
-    public enum CurrentActorIncident { None, Condition, Event, Challenge, Travel, Resource }
+    public enum CurrentActorIncident { None, Condition, Event, Challenge, Travel, Resource, Known }
         //conflict -> actor involved in a battle/siege
     public enum HistHouseIncident { None, Allegiance, Ownership }
     public enum HistKingdomIncident { None, Battle, Siege }
@@ -77,7 +77,7 @@ namespace Next_Game
 
 
     /// <summary>
-    /// Historical Game Records
+    /// Historical & Current Game Records specific to actors, houses and kingdom
     /// </summary>
     public class Record : Tracker
     {
