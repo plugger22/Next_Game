@@ -20,7 +20,8 @@ namespace Next_Game
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
         private Dictionary<int, int> dictMajorHouseID; //list of Great Houses, unsorted (Key is House ID, value is # of bannerlords)
         private Dictionary<int, int> dictHousePower; // list of Great Houses, Sorted (key is House ID, value is # of bannerlords (power))
-        private Dictionary<int, Record> dictRecords; //all historical records in a central collection (key is eventID)
+        private Dictionary<int, Record> dictHistoricalRecords; //all historical records in a central collection (key is eventID)
+        private Dictionary<int, Record> dictCurrentRecords; //all current records in a central collection (key is eventID)
         private Dictionary<int, Message> dictMessages; //all Player to Game & Game to Player messages
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         private Dictionary<int, Skill> dictTraits; //all triats (key is traitID)
@@ -40,7 +41,8 @@ namespace Next_Game
             dictAllHouses = new Dictionary<int, House>();
             dictMajorHouseID = new Dictionary<int, int>();
             dictHousePower = new Dictionary<int, int>();
-            dictRecords = new Dictionary<int, Record>();
+            dictHistoricalRecords = new Dictionary<int, Record>();
+            dictCurrentRecords = new Dictionary<int, Record>();
             dictMessages = new Dictionary<int, Message>();
             dictGeoClusters = new Dictionary<int, GeoCluster>();
             dictTraits = new Dictionary<int, Skill>();
@@ -782,9 +784,9 @@ namespace Next_Game
                 {
                     //Player -> get original (pre-game start history)
                     Player player = person as Player;
-                    actorHistory = GetActorRecords(player.HistoryID);
+                    actorHistory = GetActorHistoricalRecords(player.HistoryID);
                 }
-                actorHistory.AddRange(GetActorRecords(person.ActID));
+                actorHistory.AddRange(GetActorHistoricalRecords(person.ActID));
                 if (actorHistory.Count > 0)
                 {
                     listToDisplay.Add(new Snippet("Personal History", RLColor.Brown, RLColor.Black));
@@ -1193,7 +1195,7 @@ namespace Next_Game
                     { houseList.Add(new Snippet(relText)); }
                 }
                 //house history
-                List < string > houseHistory = GetHouseRecords(majorHouse.RefID);
+                List < string > houseHistory = GetHistoricalHouseRecords(majorHouse.RefID);
                 if (houseHistory.Count > 0)
                 {
                     houseList.Add(new Snippet("House History", RLColor.Brown, RLColor.Black));
@@ -2006,12 +2008,12 @@ namespace Next_Game
         /// </summary>
         /// <param name="actorID"></param>
         /// <returns></returns>
-        private List<string> GetActorRecords(int actorID)
+        private List<string> GetActorHistoricalRecords(int actorID)
         {
             List<string> actorRecords = new List<string>();
             //query
             IEnumerable<string> actorHistory =
-                from actor in dictRecords
+                from actor in dictHistoricalRecords
                 from actID in actor.Value.listOfActors
                 where actID == actorID
                 orderby actor.Value.Year
@@ -2026,12 +2028,12 @@ namespace Next_Game
         /// </summary>
         /// <param name="refID"></param>
         /// <returns></returns>
-        private List<string> GetHouseRecords(int refID)
+        private List<string> GetHistoricalHouseRecords(int refID)
         {
             List<string> houseRecords = new List<string>();
             //query
             IEnumerable<string> houseHistory =
-                from house in dictRecords
+                from house in dictHistoricalRecords
                 from _refID in house.Value.listOfHouses
                 where _refID == refID
                 orderby house.Value.Year
@@ -2074,8 +2076,8 @@ namespace Next_Game
         }
 
 
-        internal void SetRecord(Record record)
-        { if (record != null) { dictRecords.Add(record.trackerID, record); } }
+        internal void SetHistoricalRecord(Record record)
+        { if (record != null) { dictHistoricalRecords.Add(record.trackerID, record); } }
 
         /// <summary>
         /// handle a new message appropriately
@@ -2129,7 +2131,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="keyPress"></param>
         /// <returns></returns>
-        internal List<Snippet> GetRecordSet(RLKeyPress keyPress)
+        internal List<Snippet> GetHistoricalRecordSet(RLKeyPress keyPress)
         {
             List<string> tempList = new List<string>();
             List<Snippet> snippetList = new List<Snippet>();
@@ -2139,7 +2141,7 @@ namespace Next_Game
                 case RLKey.A:
                     //All records
                     recordList =
-                        from record in dictRecords
+                        from record in dictHistoricalRecords
                         orderby record.Value.Year, record.Value.trackerID
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
@@ -2147,7 +2149,7 @@ namespace Next_Game
                 case RLKey.C:
                     //CUSTOM (debugging purposes)
                     recordList =
-                        from record in dictRecords
+                        from record in dictHistoricalRecords
                         from eventType in record.Value.listOfHistoricalActorIncidents
                         where eventType == HistActorIncident.Lordship
                         //where record.Value.Actual == false
@@ -2158,7 +2160,7 @@ namespace Next_Game
                 case RLKey.D:
                     //deaths
                     recordList =
-                        from record in dictRecords
+                        from record in dictHistoricalRecords
                         from eventType in record.Value.listOfHistoricalActorIncidents
                         where eventType == HistActorIncident.Died
                         orderby record.Value.Year
@@ -2168,7 +2170,7 @@ namespace Next_Game
                 case RLKey.G:
                     //Marriages
                     recordList =
-                        from record in dictRecords
+                        from record in dictHistoricalRecords
                         from eventType in record.Value.listOfHistoricalActorIncidents
                         where eventType == HistActorIncident.Married
                         orderby record.Value.Year
@@ -2178,7 +2180,7 @@ namespace Next_Game
                 case RLKey.K:
                     //Kingdom events
                     recordList =
-                        from record in dictRecords
+                        from record in dictHistoricalRecords
                         from eventType in record.Value.listOfKingdomIncidents
                         where eventType == HistKingdomIncident.Battle || eventType == HistKingdomIncident.Siege
                         orderby record.Value.Year

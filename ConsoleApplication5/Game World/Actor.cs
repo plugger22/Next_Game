@@ -63,8 +63,8 @@ namespace Next_Game
         public int[] arrayOfConditions { get; set; } //net effect of any conditions
         //lists
         private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
-        private List<int> listOfFollowerEvents;
-        private List<int> listOfPlayerEvents;
+        private List<int> listOfFollowerEvents; //archetype events
+        private List<int> listOfPlayerEvents; //archetype events
         private List<Relation> listOfRelLord; //list of relation messages relating to all actors other than the Player
         private List<Relation> listOfRelPlyr; //list of relation messages relating to the Player
         private List<Condition> listOfConditions; //list of all active conditions affecting the Player
@@ -386,7 +386,7 @@ namespace Next_Game
                     string conditionText = string.Format("\"{0}\" condition acquired, {1} {2}{3}, {4}", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", 
                         condition.Effect, timerText);
                     Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, Game.gameTurn, CurrentActorIncident.Condition);
-                    Game.world.SetRecord(record);
+                    Game.world.SetHistoricalRecord(record);
                     returnText = conditionText;
                 }
                 else { Game.SetError(new Error(129, "Invalid Condition Input (Skill is SkillType.None)")); }
@@ -428,7 +428,7 @@ namespace Next_Game
                         string conditionText = string.Format("\"{0}\", {1} {2}{3}, condition removed ", condition.Text, condition.Skill, 
                             condition.Effect > 0 ? "+" : "", condition.Effect);
                         Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, Game.gameTurn, CurrentActorIncident.Condition);
-                        Game.world.SetRecord(record);
+                        Game.world.SetHistoricalRecord(record);
                         //update array
                         arrayOfConditions[(int)condition.Skill] -= condition.Effect;
                         Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{3}] was {4} now {5}", Title, Name, ActID, condition.Skill, 
@@ -472,7 +472,7 @@ namespace Next_Game
                         //record event
                         string conditionText = string.Format("\"{0}\" condition already acquired, timer reset from {1} to {2} days", condition.Text, condition.Timer, timer);
                         Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, Game.gameTurn, CurrentActorIncident.Condition);
-                        Game.world.SetRecord(record);
+                        Game.world.SetHistoricalRecord(record);
                         //reset timer
                         condition.Timer = timer;
                         break;

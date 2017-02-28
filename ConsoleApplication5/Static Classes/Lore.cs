@@ -318,7 +318,7 @@ namespace Next_Game
                 //create record
                 string details = string.Format("{0} {1}", descriptor, Game.world.ShowLocationCoords(loc.LocationID));
                 Record record = new Record(details, loc.LocationID, loc.RefID, year, kingdomEvent);
-                Game.world.SetRecord(record);
+                Game.world.SetHistoricalRecord(record);
                 //add to list of battles to enable actor events to be fleshed out
                 listOfUprisingBattles.Add(descriptor);
                 //debug
@@ -490,7 +490,7 @@ namespace Next_Game
                                 Game.SetError(new Error(31, "Invalid case"));
                                 break;
                         }
-                        if (record_knight != null) { record_knight.AddActorIncident(HistActorIncident.Conflict); Game.world.SetRecord(record_knight); }
+                        if (record_knight != null) { record_knight.AddActorIncident(HistActorIncident.Conflict); Game.world.SetHistoricalRecord(record_knight); }
                     }
 
                     //Royalist Lords
@@ -612,7 +612,7 @@ namespace Next_Game
                                 Game.SetError(new Error(31, "Invalid case"));
                                 break;
                         }
-                        if (record_royal != null) { record_royal.AddActorIncident(HistActorIncident.Conflict); Game.world.SetRecord(record_royal); }
+                        if (record_royal != null) { record_royal.AddActorIncident(HistActorIncident.Conflict); Game.world.SetHistoricalRecord(record_royal); }
                     }
 
                     //Rebel Lords
@@ -735,7 +735,7 @@ namespace Next_Game
                                 Game.SetError(new Error(31, "Invalid case"));
                                 break;
                         }
-                        if (record_rebel != null) { record_rebel.AddActorIncident(HistActorIncident.Conflict); Game.world.SetRecord(record_rebel); }
+                        if (record_rebel != null) { record_rebel.AddActorIncident(HistActorIncident.Conflict); Game.world.SetHistoricalRecord(record_rebel); }
                     }
                 }
             }
@@ -808,7 +808,7 @@ namespace Next_Game
                 Record record_actor = new Record(eventText, actor.ActID, 0, actor.RefID, Game.gameRevolt, HistActorIncident.Captured, truth);
                 if (actorEvent == HistActorIncident.Died)
                 { record_actor.AddActorIncident(HistActorIncident.Died); }
-                Game.world.SetRecord(record_actor);
+                Game.world.SetHistoricalRecord(record_actor);
             }
         }
 
@@ -901,7 +901,7 @@ namespace Next_Game
                     }
                 }
                 //save record & secret if applicable
-                Game.world.SetRecord(record);
+                Game.world.SetHistoricalRecord(record);
                 Game.history.SetSecret(secret);
             }
             return advisorDied;
@@ -1114,7 +1114,7 @@ namespace Next_Game
                         descriptor = string.Format("{0} {1}, Aid {2} was {3} on orders of the new Lord {4}", advisor.advisorNoble, advisor.Name, advisor.ActID, fate, newLord.Name);
                         Record record_6 = new Record(descriptor, advisor.ActID, advisor.LocID, advisor.RefID, Game.gameRevolt, HistActorIncident.Service);
                         record_6.AddActorIncident(HistActorIncident.Died);
-                        Game.world.SetRecord(record_6);
+                        Game.world.SetHistoricalRecord(record_6);
                     }
                     else
                     {
@@ -1122,7 +1122,7 @@ namespace Next_Game
                         //record - fate of old king advisor
                         descriptor = string.Format("{0} {1}, Aid {2} was {3} on orders of the new Lord {4}", advisor.advisorNoble, advisor.Name, advisor.ActID, fate, newLord.Name);
                         Record record_6 = new Record(descriptor, advisor.ActID, advisor.LocID, advisor.RefID, Game.gameRevolt, HistActorIncident.Service);
-                        Game.world.SetRecord(record_6);
+                        Game.world.SetHistoricalRecord(record_6);
                     }
                 }
                 //create castellan
@@ -1161,27 +1161,27 @@ namespace Next_Game
                 //record - new bannerlord
                 descriptor = string.Format("{0}, Aid {1}, assumes Lordship, BannerLord of House {2}, age {3}", newBannerLord.Name, newBannerLord.ActID, newMinorHouse.Name, newBannerLord.Age);
                 Record record_0 = new Record(descriptor, newBannerLord.ActID, newBannerLord.LocID, newBannerLord.RefID, newBannerLord.Lordship, HistActorIncident.Lordship);
-                Game.world.SetRecord(record_0);
+                Game.world.SetHistoricalRecord(record_0);
                 //record - old bannerlord does the dirty (public knowledge, hence no secret)
                 descriptor = string.Format("{0}, Aid {1}, dramatically changed sides during {2} and captured Old King {3} ", oldBannerLord.Name, oldBannerLord.ActID, listOfUprisingBattles[listOfUprisingBattles.Count - 1], OldKing.Name);
                 Record record_5 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameRevolt, HistActorIncident.Lordship);
-                Game.world.SetRecord(record_5);
+                Game.world.SetHistoricalRecord(record_5);
                 //record - old bannerlord promoted
                 descriptor = string.Format("{0}, Aid {1}, has been elevated to a Noble Lord by decree of King {2}", oldBannerLord.Name, oldBannerLord.ActID, NewKing.Name);
                 Record record_1 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameRevolt, HistActorIncident.Lordship);
-                Game.world.SetRecord(record_1);
+                Game.world.SetHistoricalRecord(record_1);
                 //House record - new House created
                 descriptor = string.Format("King {0} has gifted all property and lands belonging to House {1} to House {2}", NewKing.Name, oldkingHouse.Name, newMajorhouse.Name);
                 Record record_4 = new Record(descriptor, newMajorhouse.LocID, newMajorhouse.RefID, Game.gameRevolt, HistHouseIncident.Ownership);
-                Game.world.SetRecord(record_4);
+                Game.world.SetHistoricalRecord(record_4);
                 //record - new GreatLord
                 descriptor = string.Format("{0}, Aid {1}, assumes Lordship of House {2}, age {3}", oldBannerLord.Name, oldBannerLord.ActID, newMajorhouse.Name, oldBannerLord.Age);
                 Record record_2 = new Record(descriptor, oldBannerLord.ActID, oldBannerLord.LocID, oldBannerLord.RefID, Game.gameRevolt, HistActorIncident.Lordship);
-                Game.world.SetRecord(record_2);
+                Game.world.SetHistoricalRecord(record_2);
                 //House record - old King's house stolen
                 descriptor = string.Format("The false King {0} has stolen all property and lands belonging to House {1}", NewKing.Name, oldkingHouse.Name);
                 Record record_3 = new Record(descriptor, OldKing.LocID, OldKing.RefID, Game.gameRevolt, HistHouseIncident.Ownership);
-                Game.world.SetRecord(record_3);
+                Game.world.SetHistoricalRecord(record_3);
 
                 //resentment of other new king loyal noble lords at promotion of bannerlord
 
@@ -1216,7 +1216,7 @@ namespace Next_Game
                 //record of lordship & taking over
                 string descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Lordship of House {3}, age {4}", newLord.Name, newLord.ActID, deadLord.Name, house.Name, newLord.Age);
                 Record record_0 = new Record(descriptor, newLord.ActID, newLord.LocID, newLord.RefID, newLord.Lordship, HistActorIncident.Lordship);
-                Game.world.SetRecord(record_0);
+                Game.world.SetHistoricalRecord(record_0);
 
                 //debug
                 Console.WriteLine("New Bannerlord for House {0} -> {1}, Aid {2}", house.Name, newLord.Name, newLord.ActID);
@@ -1274,7 +1274,7 @@ namespace Next_Game
                         //record
                         descriptor = string.Format("{0}, Aid {1}, son of {2}, assumes Lordship of House {3}, age {4}", heir.Name, heir.ActID, deadLord.Name, house.Name, heir.Age);
                         Record record_0 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
-                        Game.world.SetRecord(record_0);
+                        Game.world.SetHistoricalRecord(record_0);
                     }
                     //underage heir, his mother (Lord's wife) becomes Regent, if of age and if alive and kicking
                     else if (wife != null && wife.Age >= 15 && wife.Status != ActorStatus.Gone)
@@ -1282,7 +1282,7 @@ namespace Next_Game
                         //record
                         descriptor = string.Format("{0}, Aid {1}, assumes Lordship (with a Regent) of House {2}, age {3}", heir.Name, heir.ActID, house.Name, heir.Age);
                         Record record_1 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
-                        Game.world.SetRecord(record_1);
+                        Game.world.SetHistoricalRecord(record_1);
                         //wife as regent
                         wife.Realm = ActorRealm.Regent;
                         /*Game.history.SetInfluence(heir, wife, SkillType.Combat);
@@ -1295,7 +1295,7 @@ namespace Next_Game
                         descriptor = string.Format("{0}, Aid {1}, wife of {2}, assumes Regency of House {3}, age {4}", wife.Name, wife.ActID, deadLord.Name, house.Name, wife.Age);
                         Record record_2 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
                         record_2.AddActor(wife.ActID);
-                        Game.world.SetRecord(record_2);
+                        Game.world.SetHistoricalRecord(record_2);
                     }
                     //deadlord's brother steps in, as wife is dead, or a minor, to become regent
                     else
@@ -1320,7 +1320,7 @@ namespace Next_Game
                         descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Regency of House {3}, age {4}", brother.Name, brother.ActID, deadLord.Name, house.Name, brother.Age);
                         Record record_3 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
                         record_3.AddActor(brother.ActID);
-                        Game.world.SetRecord(record_3);
+                        Game.world.SetHistoricalRecord(record_3);
                     }
                 }
                 else

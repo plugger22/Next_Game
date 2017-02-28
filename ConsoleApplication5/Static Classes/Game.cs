@@ -480,7 +480,7 @@ namespace Next_Game
                                     break;
                                 case MenuMode.Record:
                                     //All Actors
-                                    infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- ALL RECORDS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
 
@@ -506,7 +506,7 @@ namespace Next_Game
                                     break;
                                 case MenuMode.Record:
                                     //Custom report (debugging)
-                                    infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- CUSTOM", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                             }
@@ -522,7 +522,7 @@ namespace Next_Game
                                     break;
                                 case MenuMode.Record:
                                     //Dead Actors
-                                    infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- all DEATHS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Debug:
@@ -569,7 +569,7 @@ namespace Next_Game
                                     break;
                                 case MenuMode.Record:
                                     //Marriages
-                                    infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- all MARRIAGES", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Debug:
@@ -633,7 +633,7 @@ namespace Next_Game
                             {
                                 case MenuMode.Record:
                                     //Kingdom Events
-                                    infoChannel.SetInfoList(world.GetRecordSet(keyPress), ConsoleDisplay.Multi);
+                                    infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- all KINGDOM EVENTS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Debug:
