@@ -514,6 +514,11 @@ namespace Next_Game
             {
                 Message message = new Message(messageText, MessageType.Event);
                 Game.world.SetMessage(message);
+                int refID = Game.network.GetRefID(LocID);
+                if (ActID == 1)
+                { Game.world.SetPlayerRecord(new Record(messageText, ActID, LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Resource)); }
+                else if (ActID > 1)
+                { Game.world.SetCurrentRecord(new Record(messageText, ActID, LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Resource)); }
             }
             //keep within paramters
             Resources = Math.Min(5, Resources);

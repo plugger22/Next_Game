@@ -2124,14 +2124,17 @@ namespace Next_Game.Cartographic
         /// <returns></returns>
         internal int GetRefID(int locID)
         {
-            try
+            if (locID > 0)
             {
-                if (dictConvertLocToRef.ContainsKey(locID) == true)
-                { return dictConvertLocToRef[locID]; }
-                else { Game.SetError(new Error(146, "Invalid LocID (record not found")); }
+                try
+                {
+                    if (dictConvertLocToRef.ContainsKey(locID) == true)
+                    { return dictConvertLocToRef[locID]; }
+                    else { Game.SetError(new Error(146, "Invalid LocID (record not found")); }
+                }
+                catch (ArgumentNullException)
+                { Game.SetError(new Error(146, "Invalid LocID (null)")); }
             }
-            catch (ArgumentNullException)
-            { Game.SetError(new Error(146, "Invalid LocID (null)")); }
             return 0;
         }
 
@@ -2142,14 +2145,17 @@ namespace Next_Game.Cartographic
         /// <returns></returns>
         internal int GetLocID(int refID)
         {
-            try
+            if (refID > 0)
             {
-                if (dictConvertRefToLoc.ContainsValue(refID) == true)
-                { return dictConvertRefToLoc[refID]; }
-                else { Game.SetError(new Error(147, "Invalid refID (record not found")); }
+                try
+                {
+                    if (dictConvertRefToLoc.ContainsValue(refID) == true)
+                    { return dictConvertRefToLoc[refID]; }
+                    else { Game.SetError(new Error(147, "Invalid refID (record not found")); }
+                }
+                catch (ArgumentNullException)
+                { Game.SetError(new Error(147, "Invalid refID (null)")); }
             }
-            catch (ArgumentNullException)
-            { Game.SetError(new Error(147, "Invalid refID (null)")); }
             return 0;
         }
 
