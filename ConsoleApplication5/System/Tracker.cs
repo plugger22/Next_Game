@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    //categories (can choose multiple) -> Used for Records
+    //categories (can choose multiple) -> Used for Historical Records
     public enum HistActorIncident { None, Born, Died, Married, Conflict, Lordship, Birthing, Knighthood, Coronation, Captured, Wounded, Leadership, Heroic_Deed, Service} 
-    public enum CurrentActorIncident { None, Condition, Event, Challenge, Travel, Resource, Known }
-        //conflict -> actor involved in a battle/siege
     public enum HistHouseIncident { None, Allegiance, Ownership }
     public enum HistKingdomIncident { None, Battle, Siege }
-    //categorires -> Used for Messages
+    //categorires -> Used for Messages & current Records
     public enum MessageType { None, System, Move, Crow, Activation, Event, Conflict, Known }
+    public enum CurrentActorIncident { None, Condition, Event, Challenge, Travel, Resource, Known }
     //Relationship List Categories
     public enum RelListType { HousePastGood, HousePastBad, BannerPastGood, BannerPastBad, Lord_1, Lord_2, Lord_3, Lord_4, Lord_5, Count }
 

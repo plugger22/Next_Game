@@ -801,6 +801,19 @@ namespace Next_Game
                     { listToDisplay.Add(new Snippet(text)); }
                 }
 
+                //Current events
+                List<string> actorCurrent = new List<string>();
+                if (person is Player)
+                { actorCurrent.AddRange(GetPlayerCurrentRecords(person.ActID)); }
+                else
+                { actorCurrent.AddRange(GetActorCurrentRecords(person.ActID)); }
+                if (actorCurrent.Count > 0)
+                {
+                    listToDisplay.Add(new Snippet("Current Events", RLColor.Brown, RLColor.Black));
+                    foreach (string text in actorCurrent)
+                    { listToDisplay.Add(new Snippet(text)); }
+                }
+
                 //Relationship records
                 if ((person is Player) == false)
                 {
