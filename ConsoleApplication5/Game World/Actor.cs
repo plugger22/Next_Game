@@ -386,7 +386,8 @@ namespace Next_Game
                     string conditionText = string.Format("\"{0}\" condition acquired, {1} {2}{3}, {4}", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", 
                         condition.Effect, timerText);
                     Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, Game.gameTurn, CurrentActorIncident.Condition);
-                    Game.world.SetHistoricalRecord(record);
+                    if (ActID > 1) { Game.world.SetCurrentRecord(record); }
+                    else if (ActID == 1) { Game.world.SetPlayerRecord(record); }
                     returnText = conditionText;
                 }
                 else { Game.SetError(new Error(129, "Invalid Condition Input (Skill is SkillType.None)")); }
@@ -428,7 +429,8 @@ namespace Next_Game
                         string conditionText = string.Format("\"{0}\", {1} {2}{3}, condition removed ", condition.Text, condition.Skill, 
                             condition.Effect > 0 ? "+" : "", condition.Effect);
                         Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, Game.gameTurn, CurrentActorIncident.Condition);
-                        Game.world.SetHistoricalRecord(record);
+                        if (ActID > 1) { Game.world.SetCurrentRecord(record); }
+                        else if (ActID == 1) { Game.world.SetPlayerRecord(record); }
                         //update array
                         arrayOfConditions[(int)condition.Skill] -= condition.Effect;
                         Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{3}] was {4} now {5}", Title, Name, ActID, condition.Skill, 
@@ -472,7 +474,8 @@ namespace Next_Game
                         //record event
                         string conditionText = string.Format("\"{0}\" condition already acquired, timer reset from {1} to {2} days", condition.Text, condition.Timer, timer);
                         Record record = new Record(conditionText, ActID, LocID, 0, Game.gameYear, Game.gameTurn, CurrentActorIncident.Condition);
-                        Game.world.SetHistoricalRecord(record);
+                        if (ActID > 1) { Game.world.SetCurrentRecord(record); }
+                        else if (ActID == 1) { Game.world.SetPlayerRecord(record); }
                         //reset timer
                         condition.Timer = timer;
                         break;

@@ -65,10 +65,13 @@ namespace Next_Game.Event_System
                 {
                     actor.Delay += Delay;
                     actor.DelayReason = eventObject.Name;
+                    int refID = Game.network.GetRefID(actor.LocID);
                     //message
-                    Message message = new Message(string.Format("{0} has been {1} (\"{2}\") for {3} {4}", actor.Name, eventObject.Type == ArcType.Location ? "indisposed" : "delayed",
-                        actor.DelayReason, Delay, Delay == 1 ? "Day" : "Day's"), MessageType.Move);
+                    string messageText = string.Format("{0} has been {1} (\"{2}\") for {3} {4}", actor.Name, eventObject.Type == ArcType.Location ? "indisposed" : "delayed",
+                        actor.DelayReason, Delay, Delay == 1 ? "Day" : "Day's");
+                    Message message = new Message(messageText, MessageType.Move);
                     Game.world.SetMessage(message);
+                    Game.world.SetCurrentRecord(new Record(messageText, actor.ActID, actor.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Event));
                 }
                 else { Game.SetError(new Error(67, "Event not found using EventID in OutDelay.cs")); }
             }

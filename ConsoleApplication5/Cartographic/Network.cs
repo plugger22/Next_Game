@@ -22,6 +22,8 @@ namespace Next_Game.Cartographic
         //Interface class to enable dictionary keys (Position) to be compared
         List<string> listOfLocationNames = new List<string>(); //list of all location names
         Dictionary<int, Location> dictLocations;
+        private Dictionary<int, int> dictConvertLocToRef; //dictionary to convert LocID's to RefID's (key is LocID, value is RefID)
+        private Dictionary<int, int> dictConvertRefToLoc; //dictionary to convert RefID's to LocID's (key is RefID, value is LocID)
         //see NetGrid enum above
         private int[,] arrayOfNetworkAnalysis;
         //four lists (sorted by distance to capital) of locations, one for each branch.
@@ -44,6 +46,8 @@ namespace Next_Game.Cartographic
         {
             //posEqC = new PositionEqualityComparer();
             dictLocations = new Dictionary<int, Location>();
+            dictConvertLocToRef = new Dictionary<int, int>();
+            dictConvertRefToLoc = new Dictionary<int, int>();
             rnd = new Random(seed);
             //set up data structures
             ListOfRoutes = Game.map.GetRoutes();
@@ -68,12 +72,24 @@ namespace Next_Game.Cartographic
             //one entry for each location, keyed off it's ID
             if ( dictLocations != null)
             {
+                int refID;
                 foreach(Location loc in ListOfLocations)
                 {
-                    //name
-                    //loc.LocName = GetRandomLocationName();
-                    //add to dictionary
+                    //add to Loc dictionary
                     dictLocations.Add(loc.LocationID, loc);
+                    //set up conversion dictionaries
+                    refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
+                    if (refID > 0)
+                    {
+                        try
+                        { dictConvertLocToRef.Add(loc.LocationID, refID); }
+                        catch (ArgumentException)
+                        { Game.SetError(new Error(145, "Invalid LocID, Record already exists")); }
+                        try
+                        { dictConvertRefToLoc.Add(refID, loc.LocationID); }
+                        catch (ArgumentException)
+                        { Game.SetError(new Error(145, "Invalid RefID, Record already exists")); }
+                    }
                     //tally up number of locations on each branch
                     int branch = loc.GetCapitalRouteDirection();
                     arrayOfNetworkAnalysis[branch, 0]++;
@@ -2099,6 +2115,42 @@ namespace Next_Game.Cartographic
             List<int> listOfKeys = new List<int>(dictLocations.Keys);
             int randomKey = rnd.Next(1, listOfKeys.Count);
             return listOfKeys[randomKey];
+        }
+
+        /// <summary>
+        /// get corresponding RefID from LocID. Returns 0 if not found.
+        /// </summary>
+        /// <param name="locID"></param>
+        /// <returns></returns>
+        internal int GetRefID(int locID)
+        {
+            try
+            {
+                if (dictConvertLocToRef.ContainsKey(locID) == true)
+                { return dictConvertLocToRef[locID]; }
+                else { Game.SetError(new Error(146, "Invalid LocID (record not found")); }
+            }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(146, "Invalid LocID (null)")); }
+            return 0;
+        }
+
+        /// <summary>
+        /// get corresponding LocID from RefID. Returns 0 if not found.
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        internal int GetLocID(int refID)
+        {
+            try
+            {
+                if (dictConvertRefToLoc.ContainsValue(refID) == true)
+                { return dictConvertRefToLoc[refID]; }
+                else { Game.SetError(new Error(147, "Invalid refID (record not found")); }
+            }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(147, "Invalid refID (null)")); }
+            return 0;
         }
 
         //methods above here
