@@ -1632,6 +1632,8 @@ namespace Next_Game
                                         case "Conflict":
                                         case "game":
                                         case "Game":
+                                        case "known":
+                                        case "Known":
                                         case "eventtimer":
                                         case "eventTimer":
                                         case "EventTimer":
@@ -2099,6 +2101,15 @@ namespace Next_Game
                                                                         outTemp.Calc = EventCalc.Add;
                                                                     }
                                                                     outObject = new OutGame(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Calc);
+                                                                    break;
+                                                                case "Known":
+                                                                    if (outTemp.Data != 0)
+                                                                    { outObject = new OutKnown(structEvent.EventID, outTemp.Data); }
+                                                                    else
+                                                                    {
+                                                                        Game.SetError(new Error(49, "Invalid Input, Outcome Data, (Known), can't create object)"));
+                                                                        validData = false;
+                                                                    }
                                                                     break;
                                                                 case "EventTimer":
                                                                     if (outTemp.Data > 0)
@@ -3478,11 +3489,11 @@ namespace Next_Game
                                             { structSituation.State = ConflictState.Relative_Justice; }
                                             else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
                                             break;
-                                        case "Invisibility":
+                                        /*case "Invisibility":
                                             if (structSituation.Type == ConflictType.None)
                                             { structSituation.State = ConflictState.Relative_Invisibility; }
                                             else { Game.SetError(new Error(98, string.Format("Invalid Input, SubType (\"{0}\") Doesn't match Type", arrayOfSituations[i]))); }
-                                            break;
+                                            break;*/
                                         //...Special
                                         case "FortifiedPosition":
                                             if (structSituation.Type == ConflictType.None)
@@ -4174,9 +4185,6 @@ namespace Next_Game
                                 {
                                     switch (cleanToken)
                                     {
-                                        case "Invisibility":
-                                            structResult.DataPoint = DataPoint.Invisibility;
-                                            break;
                                         case "Justice":
                                             structResult.DataPoint = DataPoint.Justice;
                                             break;

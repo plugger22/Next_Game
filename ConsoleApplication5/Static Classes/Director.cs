@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
-    public enum DataPoint { None, Invisibility, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
+    public enum DataPoint { None, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
     public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
     public enum ConflictType { None, Combat, Social, Stealth} //broad category
     public enum ConflictCombat { None, Personal, Tournament, Battle, Hunting} //sub category -> a copy should be in ConflictSubType
@@ -887,7 +887,7 @@ namespace Next_Game
                                 eventObject.SetOption(option);
                             }
                             //option -> seek information
-                            if (CheckGameState(DataPoint.Invisibility) < 100)
+                            if (player.Known == false )
                             {
                                 OptionInteractive option = new OptionInteractive("Ask around for Information");
                                 option.ReplyGood = "You make some discreet enquiries";
@@ -896,7 +896,7 @@ namespace Next_Game
                                 eventObject.SetOption(option);
                             }
                             //option -> lay low
-                            if (CheckGameState(DataPoint.Invisibility) < 100)
+                            if (player.Known == false)
                             {
                                 OptionInteractive option = new OptionInteractive("Lay Low");
                                 option.ReplyGood = "You find a safe house of a loyal supporter who offers you refuge";
@@ -1761,7 +1761,7 @@ namespace Next_Game
                                             break;
                                         case OutcomeType.Known:
                                             //change an Active Actor's Known/Unknown status
-                                            outcomeText = Game.world.SetActiveActorKnownStatus(1);
+                                            outcomeText = Game.world.SetActiveActorKnownStatus(1, outcome.Data);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             //message

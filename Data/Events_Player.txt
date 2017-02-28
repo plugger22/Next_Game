@@ -28,14 +28,17 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource, Condition)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource, Condition, Known)
 
 # [outcome] effect -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
-# data -> if +ve then Good, if -ve then Bad (for '1' known/unknown, if +ve then UNKNOWN, if -ve then KNOWN (ignore Amount and Apply)
-# if data <= 6 then data -> 1 Known/Unknown, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King (apply: Add or Random only)
+# data -> if +ve then Good, if -ve then Bad
+# if data <= 5 then data -> 1 Justice, 2 Legend_Urs, 3 Legend_King, 4 Honour_Urs, 5 Honour_King (apply: Add or Random only)
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
 # apply: how the amount is applied -> None / Add / Subtract / Equals / Random   where 'Random' is Add random range (amount). Default 'None'
+
+# [outcome] effect -> Known
+# data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to UNKNOWN
 
 # [outcome] effect -> EventStatus
 # data: target EventID
@@ -81,8 +84,8 @@ Event: You encounter a mounted group of the King's Men, armed and dangerous. The
 text: Run for it!
 reply: Giddee Up Trigger! You attempt to gallop away to safety
 [outcome]
-effect: Game
-data: 1
+effect: Known
+data: -1
 [outcome]
 effect: Game
 data: 2
@@ -94,23 +97,16 @@ reply: You approach the King's Men with an easy smile and a confident demeanour.
 [trigger]
 check: Trait
 item: 3
-thresh: 3
-calc: >=
-[trigger]
-check: Trait
-item: 4
-thresh: 5
-calc: =
-[trigger]
-check: Trait
-item: 6
-thresh: 1
+thresh: 2
 calc: >=
 [outcome]
 effect: Game
 data: 5
 amount: 2
 apply: Add
+[outcome]
+effect: Known
+data: 1
 [option]
 text: Bluff your way through
 reply: You approach the King's Men with a haughty manner, demanding that they make way for the King's Tax Collector.
@@ -121,7 +117,7 @@ thresh: 3
 calc: >=
 [outcome]
 effect: Game
-data: 6
+data: 4
 amount: 20
 apply: Add
 [outcome]
@@ -163,7 +159,7 @@ thresh: 3
 calc: >=
 [outcome]
 effect: Game
-data: 6
+data: 5
 amount: 10
 apply: Random
 [option]
@@ -248,7 +244,7 @@ Cat: Generic
 Freq: Low
 Repeat: 10
 Cool: 2
-Event: A dazed, naked woman is limping along the road ahead, leading a donkey.
+Event: A dazed, naked woman is limping along the road ahead, in a distressed state.
 [option]
 text: Ride past, ignoring her
 reply: You can't save the world, it's too big and mean. The woman pleads for some water as you canter past.
@@ -313,7 +309,7 @@ text: Offer assistance
 reply: You immediately dismount and approach her on foot only to find that she has strange, lifeless eyes. Bright blue eyes.
 [outcome]
 effect: Game
-data: 5
+data: 4
 amount: 1
 apply: Add
 [option]
@@ -326,7 +322,7 @@ thresh: 3
 calc: >=
 [outcome]
 effect: Game
-data: -5
+data: -4
 amount: 3
 apply: Add
 [End]
@@ -344,16 +340,14 @@ Event: A passing citizen recognises you. He approaches covertly and whispers tha
 text: Thank the Citizen
 reply: You express your gratitude but the citizen scurries off down a lane way before you can finish.
 [outcome]
-effect: Game
+effect: Known
 data: -1
-amount: 1
-apply: Add
 [option]
 text: Deal with his Insolence
 reply: You slap the surprised citizen who recoils backwards before regaining his balance and yelling at the top of his voice "Guards! Guards!". You have no choice but to run for your life.
 [outcome]
 effect: Game
-data: -1
+data: -2
 amount: 2
 apply: Add
 [outcome]
@@ -372,7 +366,7 @@ thresh: 3
 calc: >=
 [outcome]
 effect: Game
-data: 5
+data: 3
 amount: 1
 apply: Add
 [End]

@@ -1447,8 +1447,13 @@ namespace Next_Game
             return 0;
         }
 
-
-        public string SetActiveActorKnownStatus(int actID)
+        /// <summary>
+        /// change an Active Actors known status -> data +ve then switch to UNKNOWN, if -ve then KNOWN (if already Known then reset Revert timer to max value). Returns Null if insuccessful
+        /// </summary>
+        /// <param name="actID"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public string SetActiveActorKnownStatus(int actID, int data)
         {
             string resultText = "";
             int maxRevert = Game.constant.GetValue(Global.KNOWN_REVERT);
@@ -1458,13 +1463,23 @@ namespace Next_Game
                 Active active = dictActiveActors[actID];
                 if (active.Status != ActorStatus.Gone)
                 {
-                    //if already known resert Revert timer to the max.
-                    if (active.Known == true)
-                    { resultText = string.Format("{0} {1} has had their Known timer increased to the maximum ({2} days)", active.Title, active.Name, maxRevert); }
-                    else
-                    { active.Known = true; resultText = string.Format("{0} {1} is now KNOWN (will revert in {2} days)", active.Title, active.Name, maxRevert); }
-                    active.Revert = maxRevert;
-                    
+                    if (data < 0)
+                    {
+                        //Known -> if already known resert Revert timer to the max.
+                        if (active.Known == true)
+                        { resultText = string.Format("{0} {1} has had their Known timer increased to the maximum ({2} days)", active.Title, active.Name, maxRevert); }
+                        else
+                        { active.Known = true; resultText = string.Format("{0} {1} is now KNOWN (will revert in {2} days)", active.Title, active.Name, maxRevert); }
+                        active.Revert = maxRevert;
+                    }
+                    else if (data > 0)
+                    {
+                        //Unknown
+                        active.Known = false;
+                        active.Revert = 0;
+                        resultText = string.Format("{0} {1} is now UNKNOWN", active.Title, active.Name);
+                    }
+                    else { Game.SetError(new Error(138, "Invalid Data Input (zero)")); }
                     return resultText;
                 }
                 else { Game.SetError(new Error(138, string.Format("Active Actor, actID {0},  \"Gone\"", active.ActID))); }

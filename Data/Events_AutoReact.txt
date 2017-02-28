@@ -22,6 +22,10 @@
 # test: OPTIONAL if value > 0 (up to 98) then option gives Good outcomes if 1d100 <= Test and Bad if > test (must have replyBad and bad outcomes)
 # replyBad: OPTIONAL -> needed if test present and value > 0
 
+# TO MAKE AN OPTION variable, eg. good or bad outcome depending on die roll
+# [option] -> use 'test:' and 'replybad:'
+# [outcome] -> use 'bad: 1' for bad outcome (make sure there is a good one as well, so minimum 2 outcomes, one good, one bad)
+
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
 # check: Trigger Check ( None, Trait, GameVar)
 # check -> if 'Trait' then -> 1 Combat, 2 Wits, 3 Charm, 4 Treachery, 5 Leadership, 6 Touched
@@ -31,15 +35,18 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, EventChain)
-# bad: OPTIONAL -> any value > 0 (use '1') flags this as a bad outcome
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, EventChain, Known)
+# bad: OPTIONAL -> any value > 0 (use '1') flags this as a bad outcome (can have multiple)
 
 # [outcome] -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
 # data -> if +ve then Good, if -ve then Bad
-# if data <= 6 then data -> 1 Threat, 2 Justice, 3 Legend_Urs, 4 Legend_King, 5 Honour_Urs, 6 Honour_King (apply: Add or Random only)
+# if data <= 5 then data -> 1 Justice, 2 Legend_Urs, 3 Legend_King, 4 Honour_Urs, 5 Honour_King (apply: Add or Random only)
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
 # apply: how the amount is applied -> None / Add / Subtract / Equals / Random   where 'Random' is Add random range (amount). Default 'None'
+
+# [outcome] effect -> Known
+# data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to UNKNOWN
 
 # [outcome] -> EventStatus
 # data: target EventID
@@ -90,26 +97,22 @@ thresh: 1
 calc: >=
 [outcome]
 effect: Game
-data: 5
+data: 4
 amount: 12
 apply: Add
 [outcome]
 bad: 1
 effect: Game
-data: -5
+data: -4
 amount: 10
 apply: Add
 [outcome]
-effect: Game
-data: 2
-amount: 20
-apply: Random
+effect: Known
+data: -1
 [outcome]
 bad: 1
-effect: Game
-data: -2
-amount: 10
-apply: Add
+effect: Known
+data: -1
 [option]
 text: Curse all strangers
 reply: You are heard. The Thugs close in and beat you to a pulp.
@@ -120,7 +123,7 @@ thresh: 3
 calc: >=
 [outcome]
 effect: Game
-data: -3
+data: -2
 amount: 2
 apply: Add
 [End]

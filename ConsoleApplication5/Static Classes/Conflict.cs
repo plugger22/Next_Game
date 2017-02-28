@@ -16,7 +16,6 @@ namespace Next_Game
         Relative_Fame, //social conflicts
         Relative_Honour, //social conflicts
         Relative_Justice,
-        Relative_Invisibility,
     }
 
     /// <summary>
@@ -1120,12 +1119,12 @@ namespace Next_Game
                     modifier = Math.Abs(difference);
                     description = string.Format("relative Justice of Your Cause is {0}{1} %", difference > 0 ? "+" : "", difference);
                     break;
-                case ConflictState.Relative_Invisibility:
+                /*case ConflictState.Relative_Invisibility:
                     //Relative Invisibility of the Usurper
                     difference = Game.director.CheckGameState(DataPoint.Invisibility) - 50;
                     modifier = Math.Abs(difference);
                     description = string.Format("relative Invisibility of Your Cause is {0}{1} %", difference > 0 ? "+" : "", difference);
-                    break;
+                    break;*/
             }
             //First couple of situation modifiers
             arrayModifiers[0] = mod_0;
