@@ -70,6 +70,7 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
             timer_2.Start();
             InitialiseActiveActors(Game.history.GetActiveActors());
+            InitialiseEnemyActors();
             Game.StopTimer(timer_2, "W: InitiatePlayerActors");
             timer_2.Start();
             InitialiseHouses();
