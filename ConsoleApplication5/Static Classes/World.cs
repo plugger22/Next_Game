@@ -161,43 +161,39 @@ namespace Next_Game
             //viable Character & Position?
             if (charID > 0 && posOrigin != null && posDestination != null && path != null)
             {
-                try
+                //find in dictionary
+                if (dictAllActors.ContainsKey(charID))
                 {
-                    //find in dictionary
-                    if (dictActiveActors.ContainsKey(charID))
+                    Actor person = dictAllActors[charID];
+                    List<int> party = new List<int>(); //list of charID's of all characters in party
+                    party.Add(charID);
+                    string name = person.Name;
+                    int speed = person.Speed;
+                    int distance = path.Count;
+                    int time = (distance / speed) + 1; //prevents 0 result
+                    //return string
+                    string originLocation = GetLocationName(posOrigin);
+                    string destinationLocation = GetLocationName(posDestination);
+                    returnText = string.Format("It will take {0} days for {1} to travel from {2} to {3}. The Journey has commenced.", time, name, originLocation, destinationLocation);
+                    //remove character from current location 
+                    int locID_Origin = Game.map.GetMapInfo(MapLayer.LocID, posOrigin.PosX, posOrigin.PosY);
+                    Location loc = Game.network.GetLocation(locID_Origin);
+                    if (loc != null)
                     {
-                        Active person = dictActiveActors[charID];
-                        List<int> party = new List<int>(); //list of charID's of all characters in party
-                        party.Add(charID);
-                        string name = person.Name;
-                        int speed = person.Speed;
-                        int distance = path.Count;
-                        int time = (distance / speed) + 1; //prevents 0 result
-                        string originLocation = GetLocationName(posOrigin);
-                        string destinationLocation = GetLocationName(posDestination);
-                        returnText = string.Format("It will take {0} days for {1} to travel from {2} to {3}. The Journey has commenced.", time, name, originLocation, destinationLocation);
-                        //remove character from current location 
-                        int locID_Origin = Game.map.GetMapInfo(MapLayer.LocID, posOrigin.PosX, posOrigin.PosY);
-                        Location loc = Game.network.GetLocation(locID_Origin);
-                        if (loc != null)
-                        {
-                            loc.RemoveActor(charID);
-                            //create new move object
-                            Move moveObject = new Move(path, party, speed, true, Game.gameTurn);
-                            //insert into moveList
-                            moveList.Add(moveObject);
-                            //update character status to 'travelling'
-                            person.Status = ActorStatus.Travelling;
-                            //update characterLocationID (now becomes destination)
-                            int locID_Destination = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
-                            person.LocID = locID_Destination;
-                        }
-                        else
-                        { returnText = "ERROR: The Journey has been cancelled (world.InitiateMoveCharacters"; }
+                        loc.RemoveActor(charID);
+                        //create new move object
+                        Move moveObject = new Move(path, party, speed, true, Game.gameTurn);
+                        //insert into moveList
+                        moveList.Add(moveObject);
+                        //update character status to 'travelling'
+                        person.Status = ActorStatus.Travelling;
+                        //update characterLocationID (now becomes destination)
+                        int locID_Destination = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
+                        person.LocID = locID_Destination;
                     }
+                    else
+                    { returnText = "ERROR: The Journey has been cancelled (world.InitiateMoveCharacters"; }
                 }
-                catch (ArgumentNullException)
-                { Game.SetError(new Error(155, "Invalid charID (null)")); }
             }
             return returnText;
         }
@@ -233,10 +229,10 @@ namespace Next_Game
                             {
                                 loc.AddActor(charID);
                                 //find character and update details
-                                if (dictActiveActors.ContainsKey(charID))
+                                if (dictAllActors.ContainsKey(charID))
                                 {
-                                    Active person = new Active();
-                                    person = dictActiveActors[charID];
+                                    Actor person = new Actor();
+                                    person = dictAllActors[charID];
                                     person.Status = ActorStatus.AtLocation;
                                     person.SetActorPosition(posDestination);
                                     person.LocID = locID;
@@ -270,9 +266,9 @@ namespace Next_Game
                         {
                             int charID = characterList[j];
                             //find in dictionary
-                            if (dictActiveActors.ContainsKey(charID))
+                            if (dictAllActors.ContainsKey(charID))
                             {
-                                Active person = dictActiveActors[charID];
+                                Actor person = dictAllActors[charID];
                                 person.SetActorPosition(pos);
                             }
                         }

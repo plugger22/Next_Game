@@ -1982,13 +1982,8 @@ namespace Next_Game
         /// <returns></returns>
         public bool CheckArchetype(int arcID)
         {
-            try
-            {
-                if (dictArchetypes.ContainsKey(arcID))
-                { return true; }
-            }
-            catch (ArgumentNullException)
-            { Game.SetError(new Error(154, "Invalid arcID (null)")); }
+            if (dictArchetypes.ContainsKey(arcID))
+            { return true; }
             return false;
         }
 
