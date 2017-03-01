@@ -1958,8 +1958,13 @@ namespace Next_Game
         /// <returns></returns>
         public bool CheckEvent(int eventID)
         {
-            if(dictFollowerEvents.ContainsKey(eventID))
-            { return true; }
+            try
+            {
+                if (dictFollowerEvents.ContainsKey(eventID))
+                { return true; }
+            }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(153, "Invalid eventID (null)")); }
             return false;
         }
 
@@ -1970,8 +1975,13 @@ namespace Next_Game
         /// <returns></returns>
         public bool CheckResult(int resultID)
         {
-            if (dictResults.ContainsKey(resultID))
-            { return true; }
+            try
+            {
+                if (dictResults.ContainsKey(resultID))
+                { return true; }
+            }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(152, "Invalid resultID (null)"));}
             return false;
         }
 
@@ -1982,8 +1992,13 @@ namespace Next_Game
         /// <returns></returns>
         public bool CheckArchetype(int arcID)
         {
-            if (dictArchetypes.ContainsKey(arcID))
-            { return true; }
+            try
+            {
+                if (dictArchetypes.ContainsKey(arcID))
+                { return true; }
+            }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(154, "Invalid arcID (null)")); }
             return false;
         }
 
@@ -2496,10 +2511,15 @@ namespace Next_Game
         internal Challenge GetChallenge(ConflictSubType subType)
         {
             Challenge challenge = null;
-            if (dictChallenges.ContainsKey(subType))
-            { challenge = dictChallenges[subType]; }
-            else
-            { Game.SetError(new Error(112, string.Format("{0} Challenge doesn't exist in dictChallenges", subType))); }
+            try
+            {
+                if (dictChallenges.ContainsKey(subType))
+                { challenge = dictChallenges[subType]; }
+                else
+                { Game.SetError(new Error(112, string.Format("{0} Challenge doesn't exist in dictChallenges", subType))); }
+            }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(112, "Invalid subType (null)")); }
             return challenge;
         }
 

@@ -1250,10 +1250,15 @@ namespace Next_Game.Cartographic
             if (input.Equals("L"))
             {
                 int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
-                if (dictLocations.ContainsKey(locID))
-                { loc = dictLocations[locID]; loc.ShowStatus(); }
-                else
-                { Console.WriteLine("Debug: Location {0}:{1} doesn't exist in the dictLocations", pos.PosX, pos.PosY); }
+                try
+                {
+                    if (dictLocations.ContainsKey(locID))
+                    { loc = dictLocations[locID]; loc.ShowStatus(); }
+                    else
+                    { Console.WriteLine("Debug: Location {0}:{1} doesn't exist in the dictLocations", pos.PosX, pos.PosY); }
+                }
+                catch (ArgumentNullException)
+                { Game.SetError(new Error(148, "Invalid LocID key (null)")); }
             }
         }
 
@@ -1288,15 +1293,22 @@ namespace Next_Game.Cartographic
 
 
         /// <summary>
-        /// Get a location from Dictionary of Locations via locID
+        /// Get a location from Dictionary of Locations via locID, returns empty location (locID = 0) if not found
         /// </summary>
         /// <param name="locID"></param>
         /// <returns></returns>
         internal Location GetLocation(int locID)
         {
             Location loc = new Location();
-            if (dictLocations.ContainsKey(locID))
-            { loc = dictLocations[locID]; }
+            try
+            {
+                if (dictLocations.ContainsKey(locID))
+                { loc = dictLocations[locID]; }
+                else
+                { Game.SetError(new Error(149, "locID not found in dictionary")); }
+            }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(149, "Invalid locID (null)")); }
             return loc;
         }
 
@@ -1323,26 +1335,35 @@ namespace Next_Game.Cartographic
             pos.PosY = Convert.ToInt32(tokens[1]);
             int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
             //check a valid location, return null if not
-            if (!dictLocations.ContainsKey(locID))
-            { pos = null; }
+            try
+            {
+                if (dictLocations.ContainsKey(locID) == false)
+                { pos = null; }
+            }
+            catch(ArgumentNullException)
+            { Game.SetError(new Error(150, "Invalid locID (null)")); pos = null; }
             return pos;
         }
 
 
-        //test function to provide route to capital from input location
+        //test function to provide route to capital from input location, returns null if not found
         private List<Route> RouteToCapital(Position pos)
         {
-            List<Route> listOfRoutes = new List<Route>();
-            listOfRoutes = null;
+            List<Route> listOfRoutes = null;
             Location loc = new Location();
             int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
-            if (dictLocations.ContainsKey(locID))
+            try
             {
-                loc = dictLocations[locID];
-                listOfRoutes = loc.GetRouteToCapital();
+                if (dictLocations.ContainsKey(locID) == true)
+                {
+                    loc = dictLocations[locID];
+                    listOfRoutes = loc.GetRouteToCapital();
+                }
+                else
+                { Console.WriteLine("Debug: Location {0}:{1} doesn't exist in the dictLocations", pos.PosX, pos.PosY); }
             }
-            else
-            { Console.WriteLine("Debug: Location {0}:{1} doesn't exist in the dictLocations", pos.PosX, pos.PosY); }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(151, "Invalid locID (null)")); }
             return listOfRoutes;
         }
 
