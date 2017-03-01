@@ -546,7 +546,7 @@ namespace Next_Game
             if (player != null)
             {
                 int refID = Game.world.GetRefID(player.LocID);
-                Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Challenge));
+                Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
             }
             //clear out outcome box
             for (int width_index = ou_left_align + 1; width_index < ou_left_align + ou_width - 1; width_index++)

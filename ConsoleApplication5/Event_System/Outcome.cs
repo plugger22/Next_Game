@@ -71,7 +71,7 @@ namespace Next_Game.Event_System
                         actor.DelayReason, Delay, Delay == 1 ? "Day" : "Day's");
                     Message message = new Message(messageText, MessageType.Move);
                     Game.world.SetMessage(message);
-                    Game.world.SetCurrentRecord(new Record(messageText, actor.ActID, actor.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Event));
+                    Game.world.SetCurrentRecord(new Record(messageText, actor.ActID, actor.LocID, refID, CurrentActorIncident.Event));
                 }
                 else { Game.SetError(new Error(67, "Event not found using EventID in OutDelay.cs")); }
             }

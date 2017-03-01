@@ -598,7 +598,7 @@ namespace Next_Game
                 {
                     Game.world.SetMessage(message);
                     if (String.IsNullOrEmpty(tempText) == false)
-                    { Game.world.SetCurrentRecord(new Record(tempText, actor.ActID, actor.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Event)); }
+                    { Game.world.SetCurrentRecord(new Record(tempText, actor.ActID, actor.LocID, refID, CurrentActorIncident.Event)); }
                 }
                 else { Game.SetError(new Error(52, "Invalid Message (null)")); }
                 //store in list of Current Events
@@ -742,7 +742,7 @@ namespace Next_Game
                 {
                     Game.world.SetMessage(message);
                     if (String.IsNullOrEmpty(tempText) == false)
-                    { Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Event)); }
+                    { Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, CurrentActorIncident.Event)); }
                 }
                 else { Game.SetError(new Error(72, "Invalid Message (null)")); }
                 //store in list of Current Events
@@ -1134,7 +1134,7 @@ namespace Next_Game
                           eventObject.Type, eventObject.Name);
                     Message  message = new Message(tempText, MessageType.Event);
                     Game.world.SetMessage(message);
-                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Event));
+                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                 }
                 else { Game.SetError(new Error(118, "Invalid List of Actors (Zero present at Location")); }
             }
@@ -1787,7 +1787,7 @@ namespace Next_Game
                                             tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
                                             Message messageKnown = new Message(tempText, 1, 0, MessageType.Event);
                                             Game.world.SetMessage(messageKnown);
-                                            Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Event));
+                                            Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, CurrentActorIncident.Event));
                                             break;
                                         case OutcomeType.EventTimer:
                                             //Change an Event Timer
@@ -1869,7 +1869,7 @@ namespace Next_Game
                                                         conflictOutcome.Conflict_Type, opponent.Title, opponent.Name, opponent.ActID);
                                                     Message messageConflict = new Message(tempText, MessageType.Conflict);
                                                     Game.world.SetMessage(messageConflict);
-                                                    Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Challenge));
+                                                    Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, CurrentActorIncident.Challenge));
                                                 }
                                                 //debug
                                                 ConflictState debugState = (ConflictState)rnd.Next(2, 6);

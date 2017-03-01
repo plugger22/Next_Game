@@ -245,9 +245,9 @@ namespace Next_Game
                                     Message message = new Message(tempText, person.ActID, loc.LocationID, MessageType.Move);
                                     SetMessage(message);
                                     if (person.ActID == 1)
-                                    { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Travel)); }
+                                    { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
                                     else if (person.ActID > 1)
-                                    { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Travel)); }
+                                    { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
                                 }
                                 else
                                 { Game.SetError(new Error(42, "Character not found")); }
@@ -2842,9 +2842,9 @@ namespace Next_Game
                         SetMessage(message);
                         int refID = GetRefID(actor.Value.LocID);
                         if (actor.Value.ActID == 1)
-                        { SetPlayerRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Known)); }
+                        { SetPlayerRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, CurrentActorIncident.Known)); }
                         else if (actor.Value.ActID > 1)
-                        { SetCurrentRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Known)); }
+                        { SetCurrentRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, CurrentActorIncident.Known)); }
                         Console.WriteLine(eventText);
                     }
                 }

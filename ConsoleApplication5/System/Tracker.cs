@@ -147,13 +147,11 @@ namespace Next_Game
         /// <param name="year"></param>
         /// <param name="histActorIncident"></param>
         /// <param name="happened"></param>
-        public Record(string description, int actorID, int locID, int refID, int year, int day, CurrentActorIncident currentActorIncident = CurrentActorIncident.None, bool happened = true)
+        public Record(string description, int actorID, int locID, int refID, CurrentActorIncident currentActorIncident = CurrentActorIncident.None, bool happened = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                this.Year = year;
-                this.Day = day;
                 Actual = happened;
                 //initialise lists
                 listOfActors = new List<int>();

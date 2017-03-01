@@ -21,9 +21,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        private static int seed = 2587;
+        //private static int seed = 2587;
 
         static Random rnd;
         
@@ -437,9 +437,9 @@ namespace Next_Game
                                                     Message message = new Message(infoText, _charIDSelected, locID, MessageType.Move);
                                                     world.SetMessage(message);
                                                     if (_charIDSelected == 1)
-                                                    { Game.world.SetPlayerRecord(new Record(infoText, _charIDSelected, locID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Travel)); }
+                                                    { Game.world.SetPlayerRecord(new Record(infoText, _charIDSelected, locID, refID, CurrentActorIncident.Travel)); }
                                                     else if (_charIDSelected > 1)
-                                                    { Game.world.SetCurrentRecord(new Record(infoText, _charIDSelected, locID, refID, Game.gameYear, Game.gameTurn, CurrentActorIncident.Travel)); }
+                                                    { Game.world.SetCurrentRecord(new Record(infoText, _charIDSelected, locID, refID, CurrentActorIncident.Travel)); }
                                                     infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
                                                     //show route
                                                     map.UpdateMap();
