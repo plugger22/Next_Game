@@ -21,6 +21,7 @@ namespace Next_Game
         private List<string> listOfMaleFirstNames;
         private List<string> listOfFemaleFirstNames;
         private List<string> listOfSurnames;
+        private List<string> listOfInquisitors;
         //house names
         private List<MajorHouse> listOfMajorHouses;
         private List<House> listOfMinorHouses;
@@ -60,6 +61,7 @@ namespace Next_Game
             listOfMaleFirstNames = new List<string>();
             listOfFemaleFirstNames = new List<string>();
             listOfSurnames = new List<string>();
+            listOfInquisitors = new List<string>();
             listOfMajorHouses = new List<MajorHouse>();
             listOfMinorHouses = new List<House>();
             listOfSpecialHouses = new List<House>();
@@ -94,6 +96,7 @@ namespace Next_Game
             listOfFemaleFirstNames.AddRange(Game.file.GetStrings("FirstFemale.txt"));
             //listOfPlayerNames.AddRange(Game.file.GetStrings("PlayerNames.txt"));
             listOfSurnames.AddRange(Game.file.GetStrings("Surnames.txt"));
+            listOfInquisitors.AddRange(Game.file.GetStrings("Inquisitors.txt"));
             //Major houses
             listHousePool.AddRange(Game.file.GetHouses("MajorHouses.txt"));
             InitialiseMajorHouses(numHousesRequired);
@@ -2306,6 +2309,15 @@ namespace Next_Game
                 select "Surnames: " + grouped.Key;
             listOfTempDuplicates = tempDuplicates.ToList();
             listOfAllDuplicates.AddRange(listOfTempDuplicates);
+            //inquisitors
+            tempDuplicates =
+                from name in listOfInquisitors
+                group name by name into grouped
+                where grouped.Count() > 1
+                select "Surnames: " + grouped.Key;
+            listOfTempDuplicates = tempDuplicates.ToList();
+            listOfAllDuplicates.AddRange(listOfTempDuplicates);
+            //return
             return listOfAllDuplicates;
         }
 
