@@ -56,7 +56,7 @@ namespace Next_Game
         public int Treachery { get; set; } = 3;
         public int Leadership { get; set; } = 3;
         public int Touched { get; set; } = 0;
-        public int Influencer { get; set; } = 0; //ActorID of person who is influencing traits (can only be one)
+        //public int Influencer { get; set; } = 0; //ActorID of person who is influencing traits (can only be one)
         public int[] arrayOfSkillID { get; set; } //array index corresponds to skill type in Skill.cs SkillType enum, eg. Combat = 1
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1

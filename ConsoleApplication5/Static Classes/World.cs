@@ -111,7 +111,7 @@ namespace Next_Game
                         //remove from list
                         listOfActiveActors.RemoveAt(index);
                         //add to list and Dictionaries in World
-                        Game.world.SetActiveActor(follower);
+                        SetActiveActor(follower);
                         //assign to random location on map
                         locID = Game.network.GetRandomLocation();
                         Location loc = Game.network.GetLocation(locID);
@@ -133,7 +133,7 @@ namespace Next_Game
                     if (player != null)
                     {
                         //player goes in first
-                        Game.world.SetActiveActor(player);
+                        SetActiveActor(player);
                         listOfActiveActors.RemoveAt(0);
                         //assign to random location on map -> EDIT: Already done in history.cs InitialisePlayer
                         /*locID = Game.network.GetRandomLocation();
@@ -156,13 +156,37 @@ namespace Next_Game
         private void InitialiseEnemyActors()
         {
             int numInquisitors = 3;
+            int locID = 1; 
             //loop for # of inquisitors
             for (int i = 0; i < numInquisitors; i++)
             {
                 //create new inquisitor -> random name
                 string name = Game.history.GetInquisitorName();
+                bool proceed = true;
                 if (String.IsNullOrEmpty(name) == false)
-                { }
+                {
+                    Inquisitor inquisitor = new Inquisitor(name);
+                    try
+                    {
+                        //add to dictionaries
+                        dictAllActors.Add(inquisitor.ActID, inquisitor);
+                        dictEnemyActors.Add(inquisitor.ActID, inquisitor);
+                    }
+                    catch (ArgumentNullException)
+                    { Game.SetError(new Error(148, "Invalid Inquisitor (null)")); proceed = false; }
+                    catch (ArgumentException)
+                    { Game.SetError(new Error(148, "Invalid Inquisitor ActID (already in dictionary)")); proceed = false; }
+                    //continue?
+                    if (proceed == true)
+                    {
+                        //assign to the capital
+                        Location loc = Game.network.GetLocation(locID);
+                        //place characters at Location
+                        inquisitor.LocID = locID;
+                        inquisitor.SetActorPosition(loc.GetPosition());
+                        loc.AddActor(inquisitor.ActID);
+                    }
+                }
             }
         }
 
@@ -453,15 +477,17 @@ namespace Next_Game
                 
                 //stats - natural ---
                 string effectText = null;
-                int influencer = person.Influencer;
+
+                /*int influencer = person.Influencer;
                 string influenceActor = null;
                 string influenceText = null;
-                bool influenceDisplay = false;
+                bool influenceDisplay = false;*/
+
                 int abilityStars;
                 RLColor traitColor;
                 SkillType trait;
-                if (influencer > 0)
-                { Passive infl_actor = GetPassiveActor(influencer); influenceActor = Convert.ToString(infl_actor.Type) + " " + infl_actor.Name; }
+                /*if (influencer > 0)
+                { Passive infl_actor = GetPassiveActor(influencer); influenceActor = Convert.ToString(infl_actor.Type) + " " + infl_actor.Name; }*/
                 //age of actor
                 SkillAge age = SkillAge.Fifteen;
                 if (person.Age >= 5 && person.Age < 15)
@@ -475,130 +501,135 @@ namespace Next_Game
                     //combat
                     trait = SkillType.Combat;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) /* && person.CheckSkillInfluenced(trait)*/)
+                    /*if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID))
                     {
                         abilityStars = person.GetSkill(trait, age);
                         influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                         influenceDisplay = true;
                     }
                     else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }
-                    effectText += influenceText;
+                    effectText += influenceText;*/
+                    abilityStars = person.GetSkill(trait, age);
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
                     else { traitColor = Color._goodTrait; }
                     //display
                     newLine = true;
-                    if (abilityStars != 3 || influenceDisplay == true)
+                    if (abilityStars != 3 /*|| influenceDisplay == true*/)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3 || influenceDisplay == true)
+                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
 
                     //Wits
                     trait = SkillType.Wits;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID)/* && person.CheckSkillInfluenced(trait)*/)
+                    /*if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckSkillInfluenced(trait))
                     {
                         abilityStars = person.GetSkill(trait, age);
                         influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                         influenceDisplay = true;
                     }
                     else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }
-                    effectText += influenceText;
+                    effectText += influenceText;*/
+                    abilityStars = person.GetSkill(trait, age);
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
                     else { traitColor = Color._goodTrait; }
                     //display
                     newLine = true;
-                    if (abilityStars != 3 || influenceDisplay == true)
+                    if (abilityStars != 3 /*|| influenceDisplay == true*/)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3 || influenceDisplay == true)
+                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
                         {  listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
 
                     //charm
                     trait = SkillType.Charm;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID)/* && person.CheckSkillInfluenced(trait)*/)
+                    /*if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckSkillInfluenced(trait))
                     {
                         abilityStars = person.GetSkill(trait, age);
                         influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                         influenceDisplay = true;
                     }
                     else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }
-                    effectText += influenceText;
+                    effectText += influenceText;*/
+                    abilityStars = person.GetSkill(trait, age);
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
                     else { traitColor = Color._goodTrait; }
                     //display
                     newLine = true;
-                    if (abilityStars != 3 || influenceDisplay == true)
+                    if (abilityStars != 3 /*|| influenceDisplay == true*/)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3 || influenceDisplay == true)
+                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
 
                     //treachery
                     trait = SkillType.Treachery;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID)/* && person.CheckSkillInfluenced(trait)*/)
+                    /*if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckSkillInfluenced(trait))
                     {
                         abilityStars = person.GetSkill(trait, age);
                         influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                         influenceDisplay = true;
                     }
                     else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }
-                    effectText += influenceText;
+                    effectText += influenceText;*/
+                    abilityStars = person.GetSkill(trait, age);
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
                     else { traitColor = Color._goodTrait; }
                     //display
                     newLine = true;
-                    if (abilityStars != 3 || influenceDisplay == true)
+                    if (abilityStars != 3 /*|| influenceDisplay == true*/)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3 || influenceDisplay == true)
+                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
 
                     //Leadership
                     trait = SkillType.Leadership;
                     effectText = person.GetTraitEffectText(trait, age);
-                    if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID)/* && person.CheckSkillInfluenced(trait)*/)
+                    /*if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckSkillInfluenced(trait))
                     {
                         abilityStars = person.GetSkill(trait, age);
                         influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                         influenceDisplay = true;
                     }
                     else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }
-                    effectText += influenceText;
+                    effectText += influenceText;*/
+                    abilityStars = person.GetSkill(trait, age);
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
                     else { traitColor = Color._goodTrait; }
                     //display
                     newLine = true;
-                    if (abilityStars != 3 || influenceDisplay == true)
+                    if (abilityStars != 3 /*|| influenceDisplay == true*/)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3 || influenceDisplay == true)
+                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
 
@@ -607,26 +638,28 @@ namespace Next_Game
                     {
                         trait = SkillType.Touched;
                         effectText = person.GetTraitEffectText(trait, age);
-                        if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID)/* && person.CheckSkillInfluenced(trait)*/)
+                        /*
+                        if (influencer > 0 && locID > 0 && CheckActorPresent(influencer, locID) && person.CheckSkillInfluenced(trait))
                         {
                             abilityStars = person.GetSkill(trait, age);
                             influenceText = string.Format(" influenced by {0} {1}", influenceActor, person.GetTraitEffectText(trait, age));
                             influenceDisplay = true;
                         }
                         else { abilityStars = person.GetSkill(trait, age); influenceText = null; influenceDisplay = false; }
-                        effectText += influenceText;
+                        effectText += influenceText;*/
+                        abilityStars = person.GetSkill(trait, age);
                         if (abilityStars < 3) { traitColor = Color._badTrait; }
                         else if (abilityStars == 3) { traitColor = Color._star; }
                         else { traitColor = Color._goodTrait; }
                         //display
                         newLine = true;
-                        if (abilityStars != 3 || influenceDisplay == true)
+                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
                         { newLine = false; }
                         if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                         {
                             listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Touched"), false));
                             listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                            if (abilityStars != 3 || influenceDisplay == true)
+                            if (abilityStars != 3 /*|| influenceDisplay == true*/)
                             { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                         }
                     }
@@ -2252,8 +2285,15 @@ namespace Next_Game
         /// <param name="actor"></param>
         internal void SetActiveActor(Active actor)
         {
-            dictActiveActors.Add(actor.ActID, actor);
-            dictAllActors.Add(actor.ActID, actor);
+            try
+            {
+                dictActiveActors.Add(actor.ActID, actor);
+                dictAllActors.Add(actor.ActID, actor);
+            }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(150, "Invalid actor (null)")); }
+            catch (ArgumentException)
+            { Game.SetError(new Error(150, "Invalid actor.ActID (duplicate key exists)")); }
         }
 
         internal void SetRoyalCourt(Passive actor)

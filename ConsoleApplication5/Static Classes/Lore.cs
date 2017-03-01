@@ -98,20 +98,22 @@ namespace Next_Game
 
             //check how smart old king was (takes into account wife's possible influence)
             int oldKing_Wits;
-            int influencer = OldKing.Influencer;
-            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1)/* && OldKing.CheckSkillInfluenced(SkillType.Wits)*/)
+            /*int influencer = OldKing.Influencer;
+            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1))
             { oldKing_Wits = OldKing.GetSkill(SkillType.Wits); }
-            else { oldKing_Wits = OldKing.GetSkill(SkillType.Wits); }
+            else { oldKing_Wits = OldKing.GetSkill(SkillType.Wits); }*/
+            oldKing_Wits = OldKing.GetSkill(SkillType.Wits);
             //dumb king (2 pool entries if wits 2 stars and 5 entries if wits 1 star)
             if (oldKing_Wits == 2) { for (int i = 0; i < 2; i++) { listWhyPool.Add(RevoltReason.Stupid_OldKing); } } 
             else if (oldKing_Wits == 1) { for (int i = 0; i < 5; i++) { listWhyPool.Add(RevoltReason.Stupid_OldKing); } }
 
             //check new king treachery
             int newKing_Treachery;
-            influencer = NewKing.Influencer;
-            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1)/* && NewKing.CheckSkillInfluenced(SkillType.Treachery)*/)
+            /*influencer = NewKing.Influencer;
+            if (influencer > 0 && Game.world.CheckActorPresent(influencer, 1))
             { newKing_Treachery = NewKing.GetSkill(SkillType.Treachery); }
-            else { newKing_Treachery = NewKing.GetSkill(SkillType.Treachery); }
+            else { newKing_Treachery = NewKing.GetSkill(SkillType.Treachery); }*/
+            newKing_Treachery = NewKing.GetSkill(SkillType.Treachery);
             //treacherous new king grabs power (2 pool entries if 4 starts, 5 entries if treachery 5 stars)
             if (newKing_Treachery == 4) { for (int i = 0; i < 2; i++) { listWhyPool.Add(RevoltReason.Treacherous_NewKing); } }
             else if (newKing_Treachery == 5) { for (int i = 0; i < 5; i++) { listWhyPool.Add(RevoltReason.Treacherous_NewKing); } }
