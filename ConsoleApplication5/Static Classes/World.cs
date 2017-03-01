@@ -15,6 +15,7 @@ namespace Next_Game
         private readonly Queue<Snippet> messageQueue; //short term queue to display recent messages
         private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID (non-activated followers aren't in dictionary)
         private Dictionary<int, Passive> dictPassiveActors; //list of all NPC actors keyed of actorID
+        private Dictionary<int, Enemy> dictEnemyActors; //list of all Enemy actors keyed of actorID
         private Dictionary<int, Actor> dictAllActors; //list of all Actors keyed of actorID
         private Dictionary<int, MajorHouse> dictMajorHouses; //list of all Greathouses keyed off houseID
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
@@ -39,6 +40,7 @@ namespace Next_Game
             messageQueue = new Queue<Snippet>();
             dictActiveActors = new Dictionary<int, Active>();
             dictPassiveActors = new Dictionary<int, Passive>();
+            dictEnemyActors = new Dictionary<int, Enemy>();
             dictAllActors = new Dictionary<int, Actor>();
             dictMajorHouses = new Dictionary<int, MajorHouse>();
             dictAllHouses = new Dictionary<int, House>();
@@ -149,6 +151,22 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// set up inquisitors and any other enemies
+        /// </summary>
+        private void InitialiseEnemyActors()
+        {
+            int numInquisitors = 3;
+            //loop for # of inquisitors
+            for (int i = 0; i < numInquisitors; i++)
+            {
+                //create new inquisitor -> random name
+                string name = Game.history.GetInquisitorName();
+                if (String.IsNullOrEmpty(name) == false)
+                { }
+            }
+        }
+
+        /// <summary>
         /// Initiate character Movement (creates a Move object)
         /// </summary>
         /// <param name="charID">Character</param>
@@ -174,7 +192,7 @@ namespace Next_Game
                     //return string
                     string originLocation = GetLocationName(posOrigin);
                     string destinationLocation = GetLocationName(posDestination);
-                    returnText = string.Format("It will take {0} days for {1} to travel from {2} to {3}. The Journey has commenced.", time, name, originLocation, destinationLocation);
+                    returnText = string.Format("{0} commences a {1} day journey from {2} to {3}", name, time, originLocation, destinationLocation);
                     //remove character from current location 
                     int locID_Origin = Game.map.GetMapInfo(MapLayer.LocID, posOrigin.PosX, posOrigin.PosY);
                     Location loc = Game.network.GetLocation(locID_Origin);
@@ -192,7 +210,7 @@ namespace Next_Game
                         person.LocID = locID_Destination;
                     }
                     else
-                    { returnText = "ERROR: The Journey has been cancelled (world.InitiateMoveCharacters"; }
+                    { returnText = "ERROR: The Journey has been cancelled (loc is Null)"; }
                 }
             }
             return returnText;

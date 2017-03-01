@@ -6,18 +6,19 @@ using Next_Game.Event_System;
 
 namespace Next_Game
 {
-    public enum ActorStatus {AtLocation, Travelling, Gone}; //'Gone' encompasses dead and missing
+    public enum ActorStatus { AtLocation, Travelling, Gone }; //'Gone' encompasses dead and missing
     //lord and lady are children of Lords, Heir is first in line to inherit. NOTE: keep Knight immediately after Bannerlord with Advisor and Special behind Knight.
-    public enum ActorType {None, Usurper, Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special, Beast }; 
-    public enum ActorOffice {None, Usurper, King, Queen, Lord_of_the_North, Lord_of_the_East, Lord_of_the_South, Lord_of_the_West }
-    public enum ActorRealm {None, Head_of_Noble_House, Head_of_House, Regent}
-    public enum AdvisorRoyal {None, Master_of_Coin, Master_of_Whisperers, Master_of_Laws, Master_of_Ships, High_Septon, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch }
-    public enum AdvisorNoble {None, Maester, Castellan, Septon}
-    public enum ActorSex {None, Male, Female, Count};
-    public enum ActorParents {Normal, Bastard, Adopted};
-    public enum ActorGone {None, Missing, Childbirth, Battle, Executed, Murdered, Accident, Disease, Injuries} //how died (or gone missing)?
-    public enum WifeStatus {None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife}
-    public enum ActorRelation {None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister}
+    public enum ActorType { None, Usurper, Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special, Beast, Enemy };
+    public enum ActorOffice { None, Usurper, King, Queen, Lord_of_the_North, Lord_of_the_East, Lord_of_the_South, Lord_of_the_West }
+    public enum ActorRealm { None, Head_of_Noble_House, Head_of_House, Regent }
+    public enum AdvisorRoyal { None, Master_of_Coin, Master_of_Whisperers, Master_of_Laws, Master_of_Ships, High_Septon, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch }
+    public enum AdvisorNoble { None, Maester, Castellan, Septon }
+    public enum ActorSex { None, Male, Female, Count };
+    public enum ActorParents { Normal, Bastard, Adopted };
+    public enum ActorGone { None, Missing, Childbirth, Battle, Executed, Murdered, Accident, Disease, Injuries } //how died (or gone missing)?
+    public enum WifeStatus { None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife }
+    public enum ActorRelation { None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister }
+    public enum EnemyType { None, Inquisitor };
 
     public class Actor
     {
@@ -379,11 +380,11 @@ namespace Next_Game
                     listOfConditions.Add(condition);
                     //add to array
                     arrayOfConditions[(int)condition.Skill] += condition.Effect;
-                    Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{3}] was {4} now {5}", Title, Name, ActID, 
+                    Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{3}] was {4} now {5}", Title, Name, ActID,
                         condition.Skill, arrayOfConditions[(int)condition.Skill] + condition.Effect, arrayOfConditions[(int)condition.Skill]);
                     //record event
                     string timerText = string.Format("{0}", condition.Timer == 999 ? "permanent effect" : string.Format("lasts for {0} days", condition.Timer));
-                    string conditionText = string.Format("\"{0}\" condition acquired, {1} {2}{3}, {4}", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "", 
+                    string conditionText = string.Format("\"{0}\" condition acquired, {1} {2}{3}, {4}", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "",
                         condition.Effect, timerText);
                     Record record = new Record(conditionText, ActID, LocID, 0, CurrentActorIncident.Condition);
                     if (ActID > 1) { Game.world.SetCurrentRecord(record); }
@@ -396,7 +397,7 @@ namespace Next_Game
             return returnText;
         }
 
-       internal List<Condition> GetConditions()
+        internal List<Condition> GetConditions()
         { return listOfConditions; }
 
         /// <summary>
@@ -426,14 +427,14 @@ namespace Next_Game
                     if (condition.Timer == 0)
                     {
                         //record event
-                        string conditionText = string.Format("\"{0}\", {1} {2}{3}, condition removed ", condition.Text, condition.Skill, 
+                        string conditionText = string.Format("\"{0}\", {1} {2}{3}, condition removed ", condition.Text, condition.Skill,
                             condition.Effect > 0 ? "+" : "", condition.Effect);
                         Record record = new Record(conditionText, ActID, LocID, 0, CurrentActorIncident.Condition);
                         if (ActID > 1) { Game.world.SetCurrentRecord(record); }
                         else if (ActID == 1) { Game.world.SetPlayerRecord(record); }
                         //update array
                         arrayOfConditions[(int)condition.Skill] -= condition.Effect;
-                        Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{3}] was {4} now {5}", Title, Name, ActID, condition.Skill, 
+                        Console.WriteLine("SYSTEM: {0} {1}, ID {2}, arrayOfConditions[{3}] was {4} now {5}", Title, Name, ActID, condition.Skill,
                             arrayOfConditions[(int)condition.Skill] + condition.Effect, arrayOfConditions[(int)condition.Skill]);
                         //remove condition
                         listOfConditions.RemoveAt(i);
@@ -451,7 +452,7 @@ namespace Next_Game
         {
             if (listOfConditions.Count > 0)
             {
-                foreach(Condition condition in listOfConditions)
+                foreach (Condition condition in listOfConditions)
                 { if (condition.Text.Equals(checkText) == true) { return true; } }
             }
             return false;
@@ -543,7 +544,7 @@ namespace Next_Game
         public int Revert { get; set; } //# of turns before Known status reverts to unknown
         public int TurnsUnknown { get; set; } //# of continuous turns spent 'Unknown' (used by conflict for game situations)
         private List<string> crowTooltip { get; set; } //explanation of factors influencing crow chance
-        
+
 
         public Active()
         {
@@ -552,7 +553,7 @@ namespace Next_Game
             Known = false;
         }
 
-        public Active(string name, ActorType type, ActorSex sex = ActorSex.Male) : base (name, type, sex)
+        public Active(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
             crowTooltip = new List<string>();
             Title = string.Format("{0}", Type);
@@ -586,7 +587,7 @@ namespace Next_Game
             listOfIntroductions = new List<int>();
         }
 
-        public void SetFamily (SortedDictionary<int, ActorRelation> dictFamily)
+        public void SetFamily(SortedDictionary<int, ActorRelation> dictFamily)
         {
             if (dictFamily != null)
             { this.dictFamily = dictFamily; }
@@ -633,7 +634,7 @@ namespace Next_Game
         public int RefID { get; set; } = 0; //house assignment, eg. Lannister (not HouseID).
         public int HouseID { get; set; } = 0; //dynamically assigned great house alignment 
         public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
-         
+
 
         public Passive()
         { }
@@ -663,7 +664,7 @@ namespace Next_Game
         public Noble()
         { dictFamily = new SortedDictionary<int, ActorRelation>(); Title = string.Format("{0}", Type); }
 
-        public Noble (string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        public Noble(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { dictFamily = new SortedDictionary<int, ActorRelation>(); Title = string.Format("{0}", Type); }
 
         /// <summary>
@@ -691,7 +692,7 @@ namespace Next_Game
     {
         public int Lordship { get; set; } = 0; //year made lord (Bannerlord)
 
-        public BannerLord (string name, ActorType type = ActorType.BannerLord, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        public BannerLord(string name, ActorType type = ActorType.BannerLord, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { Title = string.Format("{0}", Type); }
     }
 
@@ -713,17 +714,16 @@ namespace Next_Game
         public AdvisorNoble advisorNoble { get; set; } = AdvisorNoble.None;
         public int CommenceService { get; set; } //year commenced service with the Great House
 
-        public Advisor (string name, ActorType type = ActorType.Advisor, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        public Advisor(string name, ActorType type = ActorType.Advisor, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { } //Title set in history.CreateAdvisor
     }
 
     //Special NPC's
     public class Special : Passive
     {
-        public Special (string name, ActorType type = ActorType.Special, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        public Special(string name, ActorType type = ActorType.Special, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }
     }
-
 
     //Beasts
     public class Beast : Actor
@@ -732,4 +732,32 @@ namespace Next_Game
         public Beast(string name, ActorType type = ActorType.Beast, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }
     }
+
+
+    // --- Enemy Class
+
+    public class Enemy : Actor
+    {
+        public EnemyType enemyType { get; set; } = EnemyType.None;
+        public bool Known { get; set; } = false; //known or unknown?
+
+        public Enemy(string name, ActorType type = ActorType.Enemy, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        { }
+    }
+
+    /// <summary>
+    /// Inquisitor
+    /// </summary>
+    public class Inquisitor : Enemy
+    {
+        
+
+        public Inquisitor(string name, ActorType type = ActorType.Enemy, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        {
+            enemyType = EnemyType.Inquisitor;
+        }
+    }
+
+
 }
+

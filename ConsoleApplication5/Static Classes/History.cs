@@ -2838,6 +2838,20 @@ namespace Next_Game
             return relValue;
         }
 
+        /// <summary>
+        /// returns a random name from the list. Deletes chosen name.
+        /// </summary>
+        /// <returns></returns>
+        internal string GetInquisitorName()
+        {
+            string name = "";
+            int index = rnd.Next(0, listOfInquisitors.Count);
+            name = listOfInquisitors[index];
+            //delete chosen name to prevent repeats
+            listOfInquisitors.RemoveAt(index);
+            return name;
+        }
+
         //add methods above
     }
 }
