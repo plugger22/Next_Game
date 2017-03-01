@@ -17,7 +17,7 @@ namespace Next_Game
         public int CapitalTreasury { get; set; } //size of capital treasury (resources to run the kingdom) (1 to 5)
         //actor names
         private List<Active> listOfPlayerActors;
-        private List<string> listOfPlayerNames;
+        //private List<string> listOfPlayerNames;
         private List<string> listOfMaleFirstNames;
         private List<string> listOfFemaleFirstNames;
         private List<string> listOfSurnames;
@@ -56,7 +56,7 @@ namespace Next_Game
         {
             rnd = new Random(seed);
             listOfPlayerActors = new List<Active>();
-            listOfPlayerNames = new List<string>();
+            //listOfPlayerNames = new List<string>();
             listOfMaleFirstNames = new List<string>();
             listOfFemaleFirstNames = new List<string>();
             listOfSurnames = new List<string>();
@@ -92,7 +92,7 @@ namespace Next_Game
             // First Male and Female names
             listOfMaleFirstNames.AddRange(Game.file.GetStrings("FirstMale.txt"));
             listOfFemaleFirstNames.AddRange(Game.file.GetStrings("FirstFemale.txt"));
-            listOfPlayerNames.AddRange(Game.file.GetStrings("PlayerNames.txt"));
+            //listOfPlayerNames.AddRange(Game.file.GetStrings("PlayerNames.txt"));
             listOfSurnames.AddRange(Game.file.GetStrings("Surnames.txt"));
             //Major houses
             listHousePool.AddRange(Game.file.GetHouses("MajorHouses.txt"));
@@ -1972,6 +1972,22 @@ namespace Next_Game
             foreach(Noble royal in listOfRoyalNobles)
             {
                 //change location (all)
+                int locID = royal.LocID;
+                //special case mother died in childbirth, loop family dict and find a valid locID to use instead
+                if (locID == 0)
+                {
+                    SortedDictionary<int, ActorRelation> dictTempFamily = royal.GetFamily();
+                    foreach (var member in dictTempFamily)
+                    {
+                        Actor actor = Game.world.GetAnyActor(member.Key);
+                        if (actor != null)
+                        {
+                            if (actor.LocID > 0)
+                            { royal.LocID = actor.LocID; break; }
+                        }
+                    }
+                }
+               
                 kingsKeep.AddActor(royal.ActID);
                 Location oldLoc = Game.network.GetLocation(royal.LocID);
                 //avoid removing dead wives or children
@@ -2256,16 +2272,18 @@ namespace Next_Game
         {
             List<string> listOfTempDuplicates = new List<string>();
             List<string> listOfAllDuplicates = new List<string>();
+
             //player names
-            IEnumerable<string> tempDuplicates =
+            /*IEnumerable<string> tempDuplicates =
                 from name in listOfPlayerNames
                 group name by name into grouped
                 where grouped.Count() > 1
                 select "PlayerNames: " + grouped.Key;
             listOfTempDuplicates = tempDuplicates.ToList();
-            listOfAllDuplicates.AddRange(listOfTempDuplicates);
+            listOfAllDuplicates.AddRange(listOfTempDuplicates);*/
+
             //male first names
-            tempDuplicates =
+            IEnumerable<string> tempDuplicates =
                 from name in listOfMaleFirstNames
                 group name by name into grouped
                 where grouped.Count() > 1

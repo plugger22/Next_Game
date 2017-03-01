@@ -205,7 +205,7 @@ namespace Next_Game
         /// <summary>
         /// Handles movement of all Player characters througout world
         /// </summary>
-        /// <returns>returns a dictionary of mapMarkers and coordinates for the "Player" mapGrid layer</returns>
+        /// <returns>returns a dictionary of mapMarkers and coordinates for the "Movement" mapGrid layer</returns>
         internal Dictionary<Position, int> MoveActors()
         {
             //create a dictionary of position and map markers to return (passed up to game thence to map to update mapgrid

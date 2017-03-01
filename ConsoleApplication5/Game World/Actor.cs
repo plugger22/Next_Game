@@ -154,7 +154,7 @@ namespace Next_Game
         internal int GetNumPlayerEvents()
         { return listOfPlayerEvents.Count; }
 
-        //needed for sub classes (world.cs -> ShowActorRL)
+        //needed for sub classes (world.cs -> ShowActorRL) Duplicate methods in subclasses, return null is correct
         internal SortedDictionary<int, ActorRelation> GetFamily()
         { return null; }
 
