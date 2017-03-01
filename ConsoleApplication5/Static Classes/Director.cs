@@ -1958,13 +1958,8 @@ namespace Next_Game
         /// <returns></returns>
         public bool CheckEvent(int eventID)
         {
-            try
-            {
-                if (dictFollowerEvents.ContainsKey(eventID))
-                { return true; }
-            }
-            catch (ArgumentNullException)
-            { Game.SetError(new Error(153, "Invalid eventID (null)")); }
+            if (dictFollowerEvents.ContainsKey(eventID))
+            { return true; }
             return false;
         }
 
@@ -1975,13 +1970,8 @@ namespace Next_Game
         /// <returns></returns>
         public bool CheckResult(int resultID)
         {
-            try
-            {
-                if (dictResults.ContainsKey(resultID))
-                { return true; }
-            }
-            catch (ArgumentNullException)
-            { Game.SetError(new Error(152, "Invalid resultID (null)"));}
+            if (dictResults.ContainsKey(resultID))
+            { return true; }
             return false;
         }
 

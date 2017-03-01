@@ -1647,8 +1647,10 @@ namespace Next_Game
             bool actualEvent = true;
             string secretText = null;
             int secretStrength = 3; //for both being a bastard and adopted
-
-            houseName = Game.world.GetLocationName(Lady.LocID);
+            //allow for possibility lady died during childbirth
+            int locID = Lady.LocID;
+            if (locID == 0) { locID = Lord.LocID; }
+            houseName = Game.world.GetLocationName(locID);
             //covers case of wife who died at time of birth when adding heirs in world.CheckGreatLords()
             if (Lady.LocID == 0 && String.IsNullOrEmpty(place)) { houseName = Game.world.GetLocationName(Lord.LocID); }
             //child born in specified place, not home of lord or lady
