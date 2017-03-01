@@ -165,7 +165,7 @@ namespace Next_Game
                 bool proceed = true;
                 if (String.IsNullOrEmpty(name) == false)
                 {
-                    Inquisitor inquisitor = new Inquisitor(name);
+                    Inquisitor inquisitor = new Inquisitor(name) { Combat = 5, Wits = 5, Charm = 1, Treachery = 5, Leadership = 1, Touched = rnd.Next(0, 5) };
                     try
                     {
                         //add to dictionaries

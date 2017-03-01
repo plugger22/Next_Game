@@ -755,6 +755,7 @@ namespace Next_Game
         public Inquisitor(string name, ActorType type = ActorType.Enemy, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
             enemyType = EnemyType.Inquisitor;
+            Name = "Brother " + name;
         }
     }
 
