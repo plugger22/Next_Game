@@ -8,7 +8,7 @@ namespace Next_Game
 {
     public enum ActorStatus { AtLocation, Travelling, Gone }; //'Gone' encompasses dead and missing
     //lord and lady are children of Lords, Heir is first in line to inherit. NOTE: keep Knight immediately after Bannerlord with Advisor and Special behind Knight.
-    public enum ActorType { None, Usurper, Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special, Beast, Enemy };
+    public enum ActorType { None, Usurper, Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special, Beast, Inquisitor };
     public enum ActorOffice { None, Usurper, King, Queen, Lord_of_the_North, Lord_of_the_East, Lord_of_the_South, Lord_of_the_West }
     public enum ActorRealm { None, Head_of_Noble_House, Head_of_House, Regent }
     public enum AdvisorRoyal { None, Master_of_Coin, Master_of_Whisperers, Master_of_Laws, Master_of_Ships, High_Septon, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch }
@@ -18,7 +18,6 @@ namespace Next_Game
     public enum ActorGone { None, Missing, Childbirth, Battle, Executed, Murdered, Accident, Disease, Injuries } //how died (or gone missing)?
     public enum WifeStatus { None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife }
     public enum ActorRelation { None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister }
-    public enum EnemyType { None, Inquisitor };
 
     public class Actor
     {
@@ -738,10 +737,9 @@ namespace Next_Game
 
     public class Enemy : Actor
     {
-        public EnemyType enemyType { get; set; } = EnemyType.None;
         public bool Known { get; set; } = false; //known or unknown?
 
-        public Enemy(string name, ActorType type = ActorType.Enemy, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        public Enemy(string name, ActorType type = ActorType.None, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }
     }
 
@@ -752,9 +750,8 @@ namespace Next_Game
     {
         
 
-        public Inquisitor(string name, ActorType type = ActorType.Enemy, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        public Inquisitor(string name, ActorType type = ActorType.Inquisitor, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
-            enemyType = EnemyType.Inquisitor;
             Name = "Brother " + name;
         }
     }

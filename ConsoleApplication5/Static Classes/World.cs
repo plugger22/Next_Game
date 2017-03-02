@@ -166,7 +166,7 @@ namespace Next_Game
                 bool proceed = true;
                 if (String.IsNullOrEmpty(name) == false)
                 {
-                    Inquisitor inquisitor = new Inquisitor(name) { Combat = 5, Wits = 5, Charm = 1, Treachery = 5, Leadership = 1, Touched = rnd.Next(0, 5) };
+                    Inquisitor inquisitor = new Inquisitor(name) { Age = rnd.Next(25, 65) };
                     try
                     {
                         //add to dictionaries
@@ -701,7 +701,7 @@ namespace Next_Game
                     }
                 }
                 //relationships
-                if (!(person is Player))
+                if (!(person is Player) && !(person is Enemy))
                 {
                     listToDisplay.Add(new Snippet("Relationships", RLColor.Brown, RLColor.Black));
                     //with Player
