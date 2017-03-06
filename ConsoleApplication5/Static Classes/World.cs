@@ -388,6 +388,7 @@ namespace Next_Game
             if (dictAllActors.TryGetValue(actorID, out person))
             {
                 int locID = person.LocID;
+                int refID = GetRefID(locID);
                 //advisors can be one of three different categories
                 if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
                 else { actorType = Convert.ToString(person.Type); }
@@ -409,11 +410,12 @@ namespace Next_Game
                 switch(person.Status)
                 {
                     case ActorStatus.AtLocation:
-                        locString = string.Format("Located at {0} {1}, Lid {2}", GetLocationName(locID), ShowLocationCoords(locID), locID);
+                        locString = string.Format("Located at {0} {1}, Lid {2}, Rid {3}", GetLocationName(locID), ShowLocationCoords(locID), locID, refID);
                         break;
                     case ActorStatus.Travelling:
                         Position pos = person.GetActorPosition();
-                        locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}", pos.PosX, pos.PosY, GetLocationName(locID), ShowLocationCoords(locID), locID);
+                        locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}, Rid {5}", pos.PosX, pos.PosY, GetLocationName(locID), ShowLocationCoords(locID), 
+                            locID, refID);
                         break;
                     case ActorStatus.Gone:
                         locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
@@ -969,7 +971,7 @@ namespace Next_Game
                     {
                         int resources = house.Resources;
                        //normal houses - major / minor / capital 
-                        locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}", house.Name, loc.LocName, loc.LocationID), color, RLColor.Black));
+                        locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}, Rid {3}", house.Name, loc.LocName, loc.LocationID, loc.RefID), color, RLColor.Black));
                         locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                         locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
                         locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));

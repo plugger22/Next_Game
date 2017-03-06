@@ -831,10 +831,10 @@ namespace Next_Game
             int rndRange;
             int startRange = 0; //used for random selection of traits
             int endRange = 0;
-            Skill rndTrait;
-            int chanceOfTrait;
+            //Skill rndTrait;
+            //int chanceOfTrait;
             int traitID;
-            int effect;
+            //int effect;
             
             //Combat ---
             if (father != null && mother != null)
@@ -879,30 +879,7 @@ namespace Next_Game
                 if (traitPositive == SkillType.Combat) { startRange = 0; endRange = rndRange / 2; }
                 else if (traitNegative == SkillType.Combat) { startRange = rndRange / 2; endRange = rndRange; }
                 else { startRange = 0; endRange = rndRange; }
-
-                if (rndRange > 0)
-                {
-                    
-                    rndTrait = arrayOfTraits[(int)SkillType.Combat, (int)person.Sex][rnd.Next(startRange, endRange)];
-                    //trait roll (trait only assigned if passes roll, otherwise no trait)
-                    chanceOfTrait = rndTrait.Chance;
-                    if (rnd.Next(100) < chanceOfTrait)
-                    {
-                        string name = rndTrait.Name;
-                        effect = rndTrait.Effect;
-                        traitID = rndTrait.SkillID;
-                        SkillAge age = rndTrait.Age;
-                        //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                        //update trait arrays
-                        person.arrayOfSkillID[(int)SkillType.Combat] = traitID;
-                        person.arrayOfTraitEffects[(int)age, (int)SkillType.Combat] = effect;
-                        person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Combat] = effect; //any age 5 effect also needs to set for age 15
-                        person.arrayOfTraitNames[(int)SkillType.Combat] = name;
-                        tempHandles.AddRange(rndTrait.GetNickNames());
-                    }
-                }
-                else
-                { Game.SetError(new Error(13, "Invalid Range")); }
+                tempHandles.AddRange(GetRandomTrait(person, SkillType.Combat, SkillAge.Fifteen, rndRange, startRange, endRange));
             }
 
             //Wits ---
@@ -951,29 +928,7 @@ namespace Next_Game
                 if (traitPositive == SkillType.Wits) { startRange = 0; endRange = rndRange / 2; }
                 else if (traitNegative == SkillType.Wits) { startRange = rndRange / 2; endRange = rndRange; }
                 else { startRange = 0; endRange = rndRange; }
-
-                if (rndRange > 0)
-                {
-                    rndTrait = arrayOfTraits[(int)SkillType.Wits, (int)person.Sex][rnd.Next(startRange, endRange)];
-                    //trait roll (trait only assigned if passes roll, otherwise no trait)
-                    chanceOfTrait = rndTrait.Chance;
-                    if (rnd.Next(100) < chanceOfTrait)
-                    {
-                        string name = rndTrait.Name;
-                        effect = rndTrait.Effect;
-                        traitID = rndTrait.SkillID;
-                        SkillAge age = rndTrait.Age;
-                        //Console.WriteLine("Wits {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                        //update trait arrays
-                        person.arrayOfSkillID[(int)SkillType.Wits] = traitID;
-                        person.arrayOfTraitEffects[(int)age, (int)SkillType.Wits] = effect;
-                        person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Wits] = effect; //any age 5 effect also needs to set for age 15
-                        person.arrayOfTraitNames[(int)SkillType.Wits] = name;
-                        tempHandles.AddRange(rndTrait.GetNickNames());
-                    }
-                }
-                else
-                { Game.SetError(new Error(13, "Invalid Range")); }
+                tempHandles.AddRange(GetRandomTrait(person, SkillType.Wits, SkillAge.Fifteen, rndRange, startRange, endRange));
             }
 
             //Charm ---
@@ -1021,29 +976,7 @@ namespace Next_Game
                 if (traitPositive == SkillType.Charm) { startRange = 0; endRange = rndRange / 2; }
                 else if (traitNegative == SkillType.Charm) { startRange = rndRange / 2; endRange = rndRange; }
                 else { startRange = 0; endRange = rndRange; }
-
-                if (rndRange > 0)
-                {
-                    rndTrait = arrayOfTraits[(int)SkillType.Charm, (int)person.Sex][rnd.Next(startRange, endRange)];
-                    //trait roll (trait only assigned if passes roll, otherwise no trait)
-                    chanceOfTrait = rndTrait.Chance;
-                    if (rnd.Next(100) < chanceOfTrait)
-                    {
-                        string name = rndTrait.Name;
-                        effect = rndTrait.Effect;
-                        traitID = rndTrait.SkillID;
-                        SkillAge age = rndTrait.Age;
-                        //Console.WriteLine("Charm {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                        //update trait arrays
-                        person.arrayOfSkillID[(int)SkillType.Charm] = traitID;
-                        person.arrayOfTraitEffects[(int)age, (int)SkillType.Charm] = effect;
-                        person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Charm] = effect; //any age 5 effect also needs to set for age 15
-                        person.arrayOfTraitNames[(int)SkillType.Charm] = name;
-                        tempHandles.AddRange(rndTrait.GetNickNames());
-                    }
-                }
-                else
-                { Game.SetError(new Error(13, "Invalid Range")); }
+                tempHandles.AddRange(GetRandomTrait(person, SkillType.Charm, SkillAge.Fifteen, rndRange, startRange, endRange));
             }
 
             //Treachery ---
@@ -1091,29 +1024,7 @@ namespace Next_Game
                 if (traitPositive == SkillType.Treachery) { startRange = 0; endRange = rndRange / 2; }
                 else if (traitNegative == SkillType.Treachery) { startRange = rndRange / 2; endRange = rndRange; }
                 else { startRange = 0; endRange = rndRange; }
-                
-                if (rndRange > 0)
-                {
-                    rndTrait = arrayOfTraits[(int)SkillType.Treachery, (int)person.Sex][rnd.Next(startRange, endRange)];
-                    //trait roll (trait only assigned if passes roll, otherwise no trait)
-                    chanceOfTrait = rndTrait.Chance;
-                    if (rnd.Next(100) < chanceOfTrait)
-                    {
-                        string name = rndTrait.Name;
-                        effect = rndTrait.Effect;
-                        traitID = rndTrait.SkillID;
-                        SkillAge age = rndTrait.Age;
-                        //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                        //update trait arrays
-                        person.arrayOfSkillID[(int)SkillType.Treachery] = traitID;
-                        person.arrayOfTraitEffects[(int)age, (int)SkillType.Treachery] = effect;
-                        person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Treachery] = effect; //any age 5 effect also needs to set for age 15
-                        person.arrayOfTraitNames[(int)SkillType.Treachery] = name;
-                        tempHandles.AddRange(rndTrait.GetNickNames());
-                    }
-                }
-                else
-                { Game.SetError(new Error(13, "Invalid Range")); }
+                tempHandles.AddRange(GetRandomTrait(person, SkillType.Treachery, SkillAge.Fifteen, rndRange, startRange, endRange));
             }
 
             //Leadership ---
@@ -1161,29 +1072,7 @@ namespace Next_Game
                 if (traitPositive == SkillType.Leadership) { startRange = 0; endRange = rndRange / 2; }
                 else if (traitNegative == SkillType.Leadership) { startRange = rndRange / 2; endRange = rndRange; }
                 else { startRange = 0; endRange = rndRange; }
-
-                if (rndRange > 0)
-                {
-                    rndTrait = arrayOfTraits[(int)SkillType.Leadership, (int)person.Sex][rnd.Next(startRange, endRange)];
-                    //trait roll (trait only assigned if passes roll, otherwise no trait)
-                    chanceOfTrait = rndTrait.Chance;
-                    if (rnd.Next(100) < chanceOfTrait)
-                    {
-                        string name = rndTrait.Name;
-                        effect = rndTrait.Effect;
-                        traitID = rndTrait.SkillID;
-                        SkillAge age = rndTrait.Age;
-                        //Console.WriteLine("Leadership {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                        //update trait arrays
-                        person.arrayOfSkillID[(int)SkillType.Leadership] = traitID;
-                        person.arrayOfTraitEffects[(int)age, (int)SkillType.Leadership] = effect;
-                        person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Leadership] = effect; //any age 5 effect also needs to set for age 15
-                        person.arrayOfTraitNames[(int)SkillType.Leadership] = name;
-                        tempHandles.AddRange(rndTrait.GetNickNames());
-                    }
-                }
-                else
-                { Game.SetError(new Error(13, "Invalid Range")); }
+                tempHandles.AddRange(GetRandomTrait(person, SkillType.Leadership, SkillAge.Fifteen, rndRange, startRange, endRange));
             }
 
             //Touched ---
@@ -1238,28 +1127,7 @@ namespace Next_Game
                     if (traitPositive == SkillType.Touched) { startRange = 0; endRange = rndRange / 2; }
                     else if (traitNegative == SkillType.Touched) { startRange = rndRange / 2; endRange = rndRange; }
                     else { startRange = 0; endRange = rndRange; }
-
-                    if (rndRange > 0)
-                    {
-                        rndTrait = arrayOfTraits[(int)SkillType.Touched, (int)person.Sex][rnd.Next(startRange, endRange)];
-                        //trait roll (trait only assigned if passes roll, otherwise no trait)
-                        chanceOfTrait = rndTrait.Chance;
-                        if (rnd.Next(100) < chanceOfTrait)
-                        {
-                            string name = rndTrait.Name;
-                            effect = rndTrait.Effect;
-                            traitID = rndTrait.SkillID;
-                            SkillAge age = rndTrait.Age;
-                            //Console.WriteLine("Touched {0}, ID {1} Effect {2} Actor ID {3} {4}", name, traitID, effect, person.ActID, person.Sex);
-                            //update trait arrays
-                            person.arrayOfSkillID[(int)SkillType.Touched] = traitID;
-                            person.arrayOfTraitEffects[(int)age, (int)SkillType.Touched] = effect;
-                            person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Touched] = effect; //any age 5 effect also needs to set for age 15
-                            person.arrayOfTraitNames[(int)SkillType.Touched] = name;
-                        }
-                    }
-                    else
-                    { Game.SetError(new Error(13, "Invalid Range")); }
+                    tempHandles.AddRange(GetRandomTrait(person, SkillType.Touched, SkillAge.Fifteen, rndRange, startRange, endRange));
                 }
             }
             //if touched create a secret
@@ -1276,7 +1144,45 @@ namespace Next_Game
             { person.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
         }
 
-
+        /// <summary>
+        /// Sub method to handle random traits
+        /// </summary>
+        /// <param name="person"></param>
+        /// <param name="skill"></param>
+        /// <param name="skillAge"></param>
+        /// <param name="startRange"></param>
+        /// <param name="endRange"></param>
+        private List<string> GetRandomTrait(Actor person, SkillType skill, SkillAge skillAge, int rndRange, int startRange, int endRange)
+        {
+            int traitID;
+            int effect;
+            List<string> tempHandles = new List<string>();
+            
+            if (rndRange > 0)
+            {
+                Skill rndTrait = arrayOfTraits[(int)skill, (int)person.Sex][rnd.Next(startRange, endRange)];
+                //trait roll (trait only assigned if passes roll, otherwise no trait)
+                int chanceOfTrait = rndTrait.Chance;
+                if (rnd.Next(100) < chanceOfTrait)
+                {
+                    string name = rndTrait.Name;
+                    effect = rndTrait.Effect;
+                    traitID = rndTrait.SkillID;
+                    SkillAge age = rndTrait.Age;
+                    //Console.WriteLine("{0}, ID {1} Effect {2} Actor {3} {4}", name, traitID, effect, person.ActID, person.Sex);
+                    //update trait arrays
+                    person.arrayOfSkillID[(int)skill] = traitID;
+                    person.arrayOfTraitEffects[(int)age, (int)skill] = effect;
+                    person.arrayOfTraitEffects[(int)skillAge, (int)skill] = effect; //any age 5 effect also needs to set for age 15
+                    person.arrayOfTraitNames[(int)skill] = name;
+                    tempHandles.AddRange(rndTrait.GetNickNames());
+                }
+            }
+            else
+            { Game.SetError(new Error(153, "Invalid Range (zero or less)")); }
+            //return
+            return tempHandles;
+        }
 
         /// <summary>
         /// sets up a bunch of list with filtered Male + All or Female + All traits to enable quick random access (rather than having to run a query each time)
