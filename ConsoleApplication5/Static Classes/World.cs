@@ -70,7 +70,6 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
             timer_2.Start();
             InitialiseActiveActors(Game.history.GetActiveActors());
-            InitialiseEnemyActors();
             Game.StopTimer(timer_2, "W: InitiatePlayerActors");
             timer_2.Start();
             InitialiseHouses();
@@ -81,6 +80,7 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitialiseTraits");
             timer_2.Start();
             //need to be here for sequencing issues
+            InitialiseEnemyActors();
             Game.history.InitialiseOverthrow(dictPassiveActors);
             Game.history.InitialiseLordRelations();
             Game.history.InitialisePastHistoryHouses();
@@ -157,37 +157,11 @@ namespace Next_Game
         private void InitialiseEnemyActors()
         {
             int numInquisitors = Game.constant.GetValue(Global.INQUISITORS);
-            int locID = 1; 
             //loop for # of inquisitors
             for (int i = 0; i < numInquisitors; i++)
             {
-                //create new inquisitor -> random name
-                string name = Game.history.GetInquisitorName();
-                bool proceed = true;
-                if (String.IsNullOrEmpty(name) == false)
-                {
-                    Inquisitor inquisitor = new Inquisitor(name) { Age = rnd.Next(25, 65) };
-                    try
-                    {
-                        //add to dictionaries
-                        dictAllActors.Add(inquisitor.ActID, inquisitor);
-                        dictEnemyActors.Add(inquisitor.ActID, inquisitor);
-                    }
-                    catch (ArgumentNullException)
-                    { Game.SetError(new Error(148, "Invalid Inquisitor (null)")); proceed = false; }
-                    catch (ArgumentException)
-                    { Game.SetError(new Error(148, "Invalid Inquisitor ActID (already in dictionary)")); proceed = false; }
-                    //continue?
-                    if (proceed == true)
-                    {
-                        //assign to the capital
-                        Location loc = Game.network.GetLocation(locID);
-                        //place characters at Location
-                        inquisitor.LocID = locID;
-                        inquisitor.SetActorPosition(loc.GetPosition());
-                        loc.AddActor(inquisitor.ActID);
-                    }
-                }
+                //create at capital
+                Game.history.CreateInquisitor(1);
             }
         }
 
@@ -701,7 +675,7 @@ namespace Next_Game
                     }
                 }
                 //relationships
-                if (!(person is Player) && !(person is Enemy))
+                if (!(person is Player))
                 {
                     listToDisplay.Add(new Snippet("Relationships", RLColor.Brown, RLColor.Black));
                     //with Player
@@ -717,7 +691,7 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet(string.Format("{0}, Rel {1}, {2}", person.GetPlayerTag(), relPlyr, tagText), 
                         tagColor ,RLColor.Black, true));
                     //with Lord
-                    if (person.Type != ActorType.Lord && person is Passive && person.Status != ActorStatus.Gone)
+                    if (person.Type != ActorType.Lord && person is Passive || person is Inquisitor && person.Status != ActorStatus.Gone)
                     {
                         relStars = person.GetRelLordStars();
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Lord"), false));
@@ -2937,6 +2911,9 @@ namespace Next_Game
             if (listOfLocations != null)
             {
                 int refID, locID;
+                //add KingsKeep (refID 9999)
+                dictConvertLocToRef.Add(1, 9999);
+                dictConvertRefToLoc.Add(9999, 1);
                 foreach (Location loc in listOfLocations)
                 {
                     locID = loc.LocationID;
