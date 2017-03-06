@@ -156,7 +156,7 @@ namespace Next_Game
         /// </summary>
         private void InitialiseEnemyActors()
         {
-            int numInquisitors = 3;
+            int numInquisitors = Game.constant.GetValue(Global.INQUISITORS);
             int locID = 1; 
             //loop for # of inquisitors
             for (int i = 0; i < numInquisitors; i++)
@@ -2517,10 +2517,26 @@ namespace Next_Game
                     dictAllActors.Add(actor.ActID, actor);
                     dictPassiveActors.Add(actor.ActID, actor);
                 }
-                catch (Exception e)
-                { Game.SetError(new Error(60, e.Message)); }
+                catch (ArgumentException)
+                { Game.SetError(new Error(60, string.Format("Invalid Passive ActorID (duplicate ID) for \"{0}\"", actor.Name))); }
             }
             else { Game.SetError(new Error(38, "null Actor input")); }
+        }
+
+
+        public void AddEnemyActor(Enemy actor)
+        {
+            if (actor != null)
+            {
+                try
+                {
+                    dictAllActors.Add(actor.ActID, actor);
+                    dictEnemyActors.Add(actor.ActID, actor);
+                }
+                catch (ArgumentException)
+                { Game.SetError(new Error(151, string.Format("Invalid Enemy ActorID (duplicate ID) for \"{0}\"", actor.Name))); }
+            }
+            else { Game.SetError(new Error(151, "Invalid Enemy Actor input (null)")); }
         }
 
         /// <summary>

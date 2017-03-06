@@ -1,4 +1,4 @@
-# Story
+# Story -> Director related items only
 
 # Name: description
 # StoryID: unique number
@@ -8,6 +8,7 @@
 # Ev_Player_Loc: number (1 to 100) -> chance of the Player experiencing a random event while at a location
 # Ev_Player_Trav: number (1 to 100) -> chance of the Player experiencing a random event while travelling 
 # Arc_... : Archetype ID for Generic archetype that applies (leave blank if none) 
+# Inquisitors: number of inquisitors at game start
 
 
 Name: Steady Eddy

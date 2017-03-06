@@ -409,6 +409,32 @@ namespace Next_Game
             else { Game.SetError(new Error(59, "Insufficient Follower Structures available (less than the Eight rqr'd)")); }
         }
 
+        /// <summary>
+        /// create an Inquisitor
+        /// </summary>
+        public void CreateInquisitor(int locID)
+        {
+            //create new inquisitor -> random name
+            string name = GetInquisitorName();
+            bool proceed = true;
+            if (String.IsNullOrEmpty(name) == false)
+            {
+                Inquisitor inquisitor = new Inquisitor(name) { Age = rnd.Next(25, 65) };
+                
+                //continue?
+                if (proceed == true)
+                {
+                    //assign to the capital
+                    Location loc = Game.network.GetLocation(locID);
+                    //place characters at Location
+                    inquisitor.LocID = locID;
+                    inquisitor.SetActorPosition(loc.GetPosition());
+                    loc.AddActor(inquisitor.ActID);
+                    //add actor to relevant dictionaries (All and Enemies)
+                    Game.world.AddEnemyActor(inquisitor);
+                }
+            }
+        }
 
         /// <summary>
         /// Initialise Passive Actors at game start (populate world) - Nobles, Bannerlords only & add to location

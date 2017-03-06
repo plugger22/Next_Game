@@ -50,6 +50,7 @@ namespace Next_Game
         HOUSE_REL_EFFECT,
         HOUSE_REL_NUM,
         KNOWN_REVERT,
+        INQUISITORS,
         Count //keep as last
     }
 
@@ -109,6 +110,7 @@ namespace Next_Game
             arrayOfGlobals[42] = Global.GAME_PAST;
             arrayOfGlobals[43] = Global.HOUSE_REL_NUM;
             arrayOfGlobals[44] = Global.KNOWN_REVERT;
+            arrayOfGlobals[45] = Global.INQUISITORS;
             }
 
         /// <summary>

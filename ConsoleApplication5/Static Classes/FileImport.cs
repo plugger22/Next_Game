@@ -3157,7 +3157,7 @@ namespace Next_Game
                 {
                     if (arrayOfFollowers[i] != "" && !arrayOfFollowers[i].StartsWith("#"))
                     {
-                        //set up for a new house
+                        //set up for a new follower
                         if (newFollower == false)
                         {
                             newFollower = true;
@@ -3167,7 +3167,6 @@ namespace Next_Game
                             //new structure
                             structFollower = new FollowerStruct();
                         }
-                        //string[] tokens = arrayOfFollowers[i].Split(':');
                         string[] tokens = arrayOfFollowers[i].Split(new Char[] { ':', ';' });
                         //strip out leading spaces
                         cleanTag = tokens[0].Trim();
