@@ -546,9 +546,8 @@ namespace Next_Game
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
-                                    //Show Full message log
-                                    infoChannel.SetInfoList(world.ShowMessagesRL(), ConsoleDisplay.Multi);
-                                    infoChannel.InsertHeader(new Snippet("--- Message Log ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    //Show Enemies
+                                    infoChannel.SetInfoList(world.ShowEnemiesRL(), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Debug:
                                     //Show ALL Errors
@@ -619,7 +618,7 @@ namespace Next_Game
                             {
                                 case MenuMode.Main:
                                     //Toggle display of key characters; Off -> Followers -> Enemies -> Off
-                                    switch(_infoMode)
+                                    switch (_infoMode)
                                     {
                                         case InfoMode.None:
                                             _infoMode = InfoMode.Followers;
@@ -657,9 +656,19 @@ namespace Next_Game
                             }
                             break;
                         case RLKey.M:
-                            //Draw Map: applies to all menu modes
-                            map.UpdateMap(false, true);
-                            map.ShowHouses();
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    //Show Full message log
+                                    infoChannel.SetInfoList(world.ShowMessagesRL(), ConsoleDisplay.Multi);
+                                    infoChannel.InsertHeader(new Snippet("--- Message Log ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
+                                case MenuMode.Debug:
+                                    //Draw Map: applies to all menu modes
+                                    map.UpdateMap(false, true);
+                                    map.ShowHouses();
+                                    break;
+                            }
                             break;
                         case RLKey.P:
                             switch (_menuMode)

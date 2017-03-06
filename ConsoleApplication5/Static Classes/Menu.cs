@@ -78,16 +78,16 @@ namespace Next_Game
                     menuArrayCategories[1] = "Info ---";
                     menuArrayCategories[3] = "Switch ---";
                     //Main menu commands
-                    menuArrayText[0, 0] = "[M] Map";
-                    menuArrayText[0, 1] = "[C] Crow";
-                    menuArrayText[0, 2] = "[ENTER] End Turn";
+                    menuArrayText[0, 0] = "[C] Crow";
+                    menuArrayText[0, 1] = "[ENTER] End Turn";
                     //Info category commands
                     menuArrayText[1, 0] = "[P] Show Player Actors";
-                    menuArrayText[1, 1] = "[E] Show Messages";
+                    menuArrayText[1, 1] = "[M] Show Messages";
                     menuArrayText[1, 2] = "[H] Show House";
                     menuArrayText[1, 3] = "[G] Show Generator Stats";
                     menuArrayText[1, 4] = "[A] Show Actor";
-                    menuArrayText[1, 5] = "[I] Show Followers on Map";
+                    menuArrayText[1, 5] = "[I] Toggle Followers & Enemies";
+                    menuArrayText[1, 6] = "[E] Show Enemies";
                     //sub Menu commands
                     menuArrayText[3, 0] = "[1..9] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
@@ -148,7 +148,7 @@ namespace Next_Game
                     menuArrayText[0, 0] = "[G] Draw Route";
                     menuArrayText[0, 1] = "[D] Route Debug";
                     menuArrayText[0, 2] = "[R] Routes";
-                    menuArrayText[0, 3] = "[M] Map";
+                    menuArrayText[0, 3] = "[M] Map (House ID's)";
 
                     menuArrayText[1, 0] = "[S] Show Secrets";
                     menuArrayText[1, 1] = "[E] Show Errors";

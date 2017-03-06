@@ -321,29 +321,27 @@ namespace Next_Game
         public List<Snippet> ShowActiveActorsRL(bool locationsOnly = false)
         {
             List<Snippet> listToDisplay = new List<Snippet>();
-            //listToDisplay.Add(new Snippet($"Day of our Lord {GameTurn}", RLColor.Yellow, RLColor.Black));
             listToDisplay.Add(new Snippet("--- Player Characters", RLColor.Yellow, RLColor.Black));
-            int status, chance;
-            int locID;
-            string locName;
-            string coordinates, distText, crowText;
+            int chance, locID;
+            ActorStatus status;
+            string locName, coordinates, distText, crowText;
             string locStatus = "who knows?";
             string charString; //overall string
             RLColor textColor = RLColor.White;
 
             foreach (var actor in dictActiveActors)
             {
-                status = (int)actor.Value.Status;
+                status = actor.Value.Status;
                 locID = actor.Value.LocID;
                 locName = GetLocationName(locID);
-                if (status == (int)ActorStatus.AtLocation)
+                if (status == ActorStatus.AtLocation)
                 { locStatus = "At " + locName; }
-                else if (status == (int)ActorStatus.Travelling)
+                else if (status == ActorStatus.Travelling)
                 { locStatus = "Moving to " + locName; }
                 //get location coords
                 Location loc = Game.network.GetLocation(locID);
                 //only show chosen characters (at Location or not depending on parameter)
-                if (locationsOnly == true && status == (int)ActorStatus.AtLocation || !locationsOnly)
+                if (locationsOnly == true && status == ActorStatus.AtLocation || !locationsOnly)
                 {
                     Position pos = actor.Value.GetActorPosition();
                     coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
@@ -374,6 +372,67 @@ namespace Next_Game
             return listToDisplay;
         }
 
+        /// <summary>
+        /// Display a list of all enemies
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowEnemiesRL()
+        {
+            ActorStatus status;
+            int locID;
+            string locName, coordinates;
+            string charString = "Unknown";
+            string locStatus = "Unknown";
+            List<string> listInquistors = new List<string>();
+            List<string> listOthers = new List<string>(); //all other enemies
+            RLColor textColor = RLColor.White;
+            List<Snippet> listToDisplay = new List<Snippet>();
+            
+            foreach (var actor in dictEnemyActors)
+            {
+                status = actor.Value.Status;
+                locID = actor.Value.LocID;
+                locName = GetLocationName(locID);
+                if (status == ActorStatus.AtLocation)
+                { locStatus = "At " + locName; }
+                else if (status == ActorStatus.Travelling)
+                { locStatus = "Moving to " + locName; }
+                //get location coords
+                Location loc = Game.network.GetLocation(locID);
+                //split enemies into two lists for display purposes
+                if (status == ActorStatus.AtLocation)
+                {
+                    coordinates = string.Format("(Loc {0}:{1})", loc.GetPosX(), loc.GetPosY());
+                    if (actor.Value is Inquisitor)
+                    {
+                        //Inquisitor
+                        charString = string.Format("Aid {0,-2} {1,-28} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
+                        listInquistors.Add(charString);
+                    }
+                    else
+                    {
+                        //All other Enemies
+                        charString = string.Format("Aid {0,-2} {1,-28} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
+                        listOthers.Add(charString);
+                    }
+                }
+            }
+            //set up display list
+            if (listInquistors.Count > 0)
+            {
+                listToDisplay.Add(new Snippet("--- Inquisitors", RLColor.Yellow, RLColor.Black));
+                for (int i = 0; i < listInquistors.Count; i++)
+                { listToDisplay.Add(new Snippet(listInquistors[i])); }
+            }
+            if (listOthers.Count > 0)
+            {
+                listToDisplay.Add(new Snippet(""));
+                listToDisplay.Add(new Snippet("--- Other Enemies", RLColor.Yellow, RLColor.Black));
+                for (int i = 0; i < listOthers.Count; i++)
+                { listToDisplay.Add(new Snippet(listOthers[i])); }
+            }
+            return listToDisplay;
+        }
 
         /// <summary>
         /// Display a single Actor in detail
