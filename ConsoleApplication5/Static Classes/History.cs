@@ -414,36 +414,40 @@ namespace Next_Game
         /// </summary>
         public void CreateInquisitor(int locID)
         {
-            int refID = Game.world.GetRefID(locID);
-            //create new inquisitor -> random name
-            string name = GetInquisitorName();
-            bool proceed = true;
-            if (String.IsNullOrEmpty(name) == false)
+            if (locID > 0)
             {
-                int ageYears = rnd.Next(25, 65);
-                Inquisitor inquisitor = new Inquisitor(name) { Age = ageYears, Born = Game.gameYear - ageYears };
-                
-                //continue?
-                if (proceed == true)
+                int refID = Game.world.GetRefID(locID);
+                //create new inquisitor -> random name
+                string name = GetInquisitorName();
+                bool proceed = true;
+                if (String.IsNullOrEmpty(name) == false)
                 {
-                    //assign to the capital
-                    Location loc = Game.network.GetLocation(locID);
-                    //relationship
-                    inquisitor.AddRelEventPlyr(new Relation("Sworn to hunt down Player", "Agents of Doom", -50));
-                    inquisitor.AddRelEventLord(new Relation("Loyal to the point of death", "Totally loyal", +50));
-                    //personal history
-                    int year = Game.gameRevolt;
-                    Record record = new Record("Took the irrevocable oath of lifetime celibacy and obedience to the Dark Brotherhood of Inquisitioners", inquisitor.ActID, locID, refID, year, 
-                        HistActorIncident.Service);
-                    Game.world.SetHistoricalRecord(record);
-                    //place characters at Location
-                    inquisitor.LocID = locID;
-                    inquisitor.SetActorPosition(loc.GetPosition());
-                    loc.AddActor(inquisitor.ActID);
-                    //add actor to relevant dictionaries (All and Enemies)
-                    Game.world.AddEnemyActor(inquisitor);
+                    int ageYears = rnd.Next(25, 65);
+                    Inquisitor inquisitor = new Inquisitor(name) { Age = ageYears, Born = Game.gameYear - ageYears };
+                    InitialiseActorTraits(inquisitor, null, null, SkillType.Touched, SkillType.Charm);
+                    //continue?
+                    if (proceed == true)
+                    {
+                        //assign to the capital
+                        Location loc = Game.network.GetLocation(locID);
+                        //relationship
+                        inquisitor.AddRelEventPlyr(new Relation("Sworn to hunt down Player", "Agents of Doom", -50));
+                        inquisitor.AddRelEventLord(new Relation("Loyal to the point of death", "Totally loyal", +50));
+                        //personal history
+                        int year = Game.gameRevolt;
+                        Record record = new Record("Took the irrevocable oath of lifetime celibacy and obedience to the Dark Brotherhood of Inquisitioners", inquisitor.ActID, locID, refID, year,
+                            HistActorIncident.Service);
+                        Game.world.SetHistoricalRecord(record);
+                        //place characters at Location
+                        inquisitor.LocID = locID;
+                        inquisitor.SetActorPosition(loc.GetPosition());
+                        loc.AddActor(inquisitor.ActID);
+                        //add actor to relevant dictionaries (All and Enemies)
+                        Game.world.AddEnemyActor(inquisitor);
+                    }
                 }
             }
+            else { Game.SetError(new Error(152, "Invalid locID (zero or less")); }
         }
 
         /// <summary>

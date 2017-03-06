@@ -1693,6 +1693,9 @@ namespace Next_Game
                     kvp.Value.LordID = bannerLord.ActID;
                 }
             }
+            //assign 9999 refId to the capital
+            Location capital = Game.network.GetLocation(1);
+            Game.map.SetMapInfo(MapLayer.RefID, capital.GetPosX(), capital.GetPosY(), 9999);
         }
 
         /// <summary>
