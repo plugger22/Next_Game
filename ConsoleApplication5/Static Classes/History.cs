@@ -1201,13 +1201,13 @@ namespace Next_Game
                 tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Wits, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
                 //Charm
                 rndRange = arrayOfTraits[(int)SkillType.Charm, (int)inquisitor.Sex].Length;
-                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Charm, SkillAge.Fifteen, rndRange, rndRange / 2, 0));
+                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Charm, SkillAge.Fifteen, rndRange, rndRange / 2, rndRange));
                 //Treachery
                 rndRange = arrayOfTraits[(int)SkillType.Treachery, (int)inquisitor.Sex].Length;
                 tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Treachery, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
                 //Leadership
                 rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)inquisitor.Sex].Length;
-                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, 0));
+                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, rndRange));
                 //Touched
                 rndRange = arrayOfTraits[(int)SkillType.Touched, (int)inquisitor.Sex].Length;
                 tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Touched, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
