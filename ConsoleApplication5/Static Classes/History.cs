@@ -424,7 +424,7 @@ namespace Next_Game
                 {
                     int ageYears = rnd.Next(25, 65);
                     Inquisitor inquisitor = new Inquisitor(name) { Age = ageYears, Born = Game.gameYear - ageYears };
-                    InitialiseActorTraits(inquisitor, null, null, SkillType.Touched, SkillType.Charm);
+                    InitialiseInquisitorTraits(inquisitor);
                     //continue?
                     if (proceed == true)
                     {
@@ -1182,6 +1182,40 @@ namespace Next_Game
             { Game.SetError(new Error(153, "Invalid Range (zero or less)")); }
             //return
             return tempHandles;
+        }
+
+        /// <summary>
+        /// sets up custom Inquistor traits (all positive except leadership which is neutral and charm which is negative)
+        /// </summary>
+        /// <param name="inquisitor"></param>
+        public void InitialiseInquisitorTraits(Inquisitor inquisitor)
+        {
+            if (inquisitor != null)
+            {
+                List<string> tempHandles = new List<string>();
+                //Combat
+                int rndRange = arrayOfTraits[(int)SkillType.Combat, (int)inquisitor.Sex].Length;
+                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Combat, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                //Wits
+                rndRange = arrayOfTraits[(int)SkillType.Wits, (int)inquisitor.Sex].Length;
+                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Wits, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                //Charm
+                rndRange = arrayOfTraits[(int)SkillType.Charm, (int)inquisitor.Sex].Length;
+                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Charm, SkillAge.Fifteen, rndRange, rndRange / 2, 0));
+                //Treachery
+                rndRange = arrayOfTraits[(int)SkillType.Treachery, (int)inquisitor.Sex].Length;
+                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Treachery, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                //Leadership
+                rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)inquisitor.Sex].Length;
+                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, 0));
+                //Touched
+                rndRange = arrayOfTraits[(int)SkillType.Touched, (int)inquisitor.Sex].Length;
+                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Touched, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                //choose NickName (handle)
+                if (tempHandles.Count > 0)
+                { inquisitor.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
+            }
+            else { Game.SetError(new Error(154, "Invalid Inquisitor (null)")); }
         }
 
         /// <summary>
