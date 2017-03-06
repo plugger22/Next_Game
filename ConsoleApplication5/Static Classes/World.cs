@@ -2914,9 +2914,6 @@ namespace Next_Game
             if (listOfLocations != null)
             {
                 int refID, locID;
-                //add KingsKeep (refID 9999)
-                dictConvertLocToRef.Add(1, 9999);
-                dictConvertRefToLoc.Add(9999, 1);
                 foreach (Location loc in listOfLocations)
                 {
                     locID = loc.LocationID;
