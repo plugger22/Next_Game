@@ -410,7 +410,9 @@ namespace Next_Game
                         if (enemy.Value.Known == true || debugMode == true)
                         {
                             //known status
-                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates);
+                            if (debugMode == true)
+                            { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} Goal -> {4}", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Goal); }
+                            else { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
                             listInquistors.Add(new Snippet(charString, RLColor.White, RLColor.Black));
                         }
                         else
@@ -436,7 +438,10 @@ namespace Next_Game
                         if (enemy.Value.Known == true || debugMode == true)
                         {
                             //known status
-                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates);
+                            if (debugMode == true)
+                            { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} Goal -> {4}", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Goal); }
+                            else
+                            { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
                             listOthers.Add(new Snippet(charString, RLColor.White, RLColor.Black));
                         }
                         else
@@ -3171,7 +3176,7 @@ namespace Next_Game
             ActorGoal newGoal = ActorGoal.None;
             if (enemy != null)
             {
-                if (playerLocID < 1)
+                if (playerLocID > 0)
                 {
                     if (knownStatus > 0)
                     {
@@ -3200,7 +3205,8 @@ namespace Next_Game
                         enemy.GoalTurns = 0;
                         //assign new goal
                         enemy.Goal = newGoal;
-                        Console.WriteLine("{0} {1}, ActID {2}, {3}, assigned new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID));
+                        Console.WriteLine("{0} {1}, ActID {2}, {3}, assigned new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID), 
+                            enemy.Goal);
                     }
                 }
                 Game.SetError(new Error(156, string.Format("Invalid playerLocID (zero or less), existing goal retained for actID {0}", enemy.ActID)));
