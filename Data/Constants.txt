@@ -122,4 +122,13 @@
 # HOUSE_REL_NUM -> number of rolls for each house for possible relations with others
 43: 2 @ 1 @ 3
 
-# Next valid number -> 46
+# AI ---
+
+# AI_SEARCH -> % chance of continuing a search goal (tested each turn)
+46: 50 @ 1 @ 99
+# AI_HIDE -> % chance of continuing a hide goal (tested each turn)
+47: 80 @ 1 @ 99
+# AI_WAIT -> % chance of continuing a wait goal (tested each turn)
+48: 75 @ 1 @ 99
+
+# Next valid number -> 49

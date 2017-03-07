@@ -429,6 +429,7 @@ namespace Next_Game
                     //set up status
                     inquisitor.Known = false;
                     inquisitor.Turns = 1;
+                    inquisitor.Goal = ActorGoal.Wait;
                     //relationship
                     inquisitor.AddRelEventPlyr(new Relation("Sworn to hunt down Player", "Agents of Doom", -50));
                     inquisitor.AddRelEventLord(new Relation("Loyal to the point of death", "Totally loyal", +50));

@@ -18,6 +18,7 @@ namespace Next_Game
     public enum ActorGone { None, Missing, Childbirth, Battle, Executed, Murdered, Accident, Disease, Injuries } //how died (or gone missing)?
     public enum WifeStatus { None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife }
     public enum ActorRelation { None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister }
+    public enum ActorGoal { None, Wait, Hide, Search, Move} //specific for AI controlled actors
 
     public class Actor
     {
@@ -740,6 +741,8 @@ namespace Next_Game
         public bool Known { get; set; } = false; //known or unknown?
         //public Position LastKnown { get; set; } //last known position -> updated every turn that actor is known
         public int Turns { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
+        public ActorGoal Goal { get; set; } //current goal (mission) for an AI controlled actor
+        public int GoalTurns { get; set; } //number of turns currently spent on existing goal
 
         public Enemy(string name, ActorType type = ActorType.None, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }

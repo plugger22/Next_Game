@@ -51,6 +51,9 @@ namespace Next_Game
         HOUSE_REL_NUM,
         KNOWN_REVERT,
         INQUISITORS,
+        AI_SEARCH,
+        AI_HIDE,
+        AI_WAIT,
         Count //keep as last
     }
 
@@ -111,7 +114,10 @@ namespace Next_Game
             arrayOfGlobals[43] = Global.HOUSE_REL_NUM;
             arrayOfGlobals[44] = Global.KNOWN_REVERT;
             arrayOfGlobals[45] = Global.INQUISITORS;
-            }
+            arrayOfGlobals[46] = Global.AI_SEARCH;
+            arrayOfGlobals[47] = Global.AI_HIDE;
+            arrayOfGlobals[48] = Global.AI_WAIT;
+        }
 
         /// <summary>
         /// returns constant value

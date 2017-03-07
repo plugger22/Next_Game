@@ -388,10 +388,10 @@ namespace Next_Game
             List<Snippet> listOthers = new List<Snippet>(); //all other enemies
             List<Snippet> listToDisplay = new List<Snippet>();
             //loop dict of enemies
-            foreach (var actor in dictEnemyActors)
+            foreach (var enemy in dictEnemyActors)
             {
-                status = actor.Value.Status;
-                locID = actor.Value.LocID;
+                status = enemy.Value.Status;
+                locID = enemy.Value.LocID;
                 locName = GetLocationName(locID);
                 
                 if (status == ActorStatus.AtLocation)
@@ -404,28 +404,28 @@ namespace Next_Game
                 if (status == ActorStatus.AtLocation)
                 {
                     coordinates = string.Format("(Loc {0}:{1})", loc.GetPosX(), loc.GetPosY());
-                    if (actor.Value is Inquisitor)
+                    if (enemy.Value is Inquisitor)
                     {
                         //Inquisitor
-                        if (actor.Value.Known == true || debugMode == true)
+                        if (enemy.Value.Known == true || debugMode == true)
                         {
                             //known status
-                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
+                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates);
                             listInquistors.Add(new Snippet(charString, RLColor.White, RLColor.Black));
                         }
                         else
                         {
-                            if (actor.Value.Turns <= 5)
+                            if (enemy.Value.Turns <= 5)
                             {
                                 //unknown status and info is 5 turns or less old
-                                charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", actor.Key, actor.Value.Name, locStatus, coordinates, actor.Value.Turns,
-                                    actor.Value.Turns == 1 ? "" : "s");
+                                charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Turns,
+                                    enemy.Value.Turns == 1 ? "" : "s");
                                 listInquistors.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
                             }
                             else
                             {
                                 //unknown status and beyond the time horizon
-                                charString = string.Format("Aid {0,-3} {1,-28} Whereabouts unknown", actor.Key, actor.Value.Name);
+                                charString = string.Format("Aid {0,-3} {1,-28} Whereabouts unknown", enemy.Key, enemy.Value.Name);
                                 listInquistors.Add(new Snippet(charString, RLColor.LightGray, RLColor.Black));
                             }
                         }
@@ -433,25 +433,25 @@ namespace Next_Game
                     else
                     {
                         //All other Enemies
-                        if (actor.Value.Known == true || debugMode == true)
+                        if (enemy.Value.Known == true || debugMode == true)
                         {
                             //known status
-                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
+                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates);
                             listOthers.Add(new Snippet(charString, RLColor.White, RLColor.Black));
                         }
                         else
                         {
-                            if (actor.Value.Turns <= 5)
+                            if (enemy.Value.Turns <= 5)
                             {
                                 //unknown status and info is 5 turns or less old
-                                charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", actor.Key, actor.Value.Name, locStatus, coordinates, actor.Value.Turns,
-                                    actor.Value.Turns == 1 ? "" : "s");
+                                charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Turns,
+                                    enemy.Value.Turns == 1 ? "" : "s");
                                 listOthers.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
                             }
                             else
                             {
                                 //unknown status and beyond the time horizon
-                                charString = string.Format("Aid {0,-3} {1,-28} Whereabouts unknown", actor.Key, actor.Value.Name);
+                                charString = string.Format("Aid {0,-3} {1,-28} Whereabouts unknown", enemy.Key, enemy.Value.Name);
                                 listOthers.Add(new Snippet(charString, RLColor.LightGray, RLColor.Black));
                             }
                         }
@@ -2664,6 +2664,8 @@ namespace Next_Game
                 if (Game.director.ResolveFollowerEvents())
                 { Game._specialMode = SpecialMode.FollowerEvent; }
             }
+            //Enemies
+            SetEnemyActivity();
             //update position of all key characters on map layers
             UpdateFollowerPositions();
             UpdateEnemiesPositions();
@@ -3068,6 +3070,97 @@ namespace Next_Game
             }
             return 0;
         }
+
+        /// <summary>
+        /// handles AI for all enemies, also updates status (known, etc.)
+        /// </summary>
+        private void SetEnemyActivity()
+        {
+            int playerLocID = GetActiveActorLocByID(1);
+            int knownStatus = GetActiveActorKnownStatus(1); //if '0' then unknown
+            int ai_search = Game.constant.GetValue(Global.AI_SEARCH);
+            int ai_hide = Game.constant.GetValue(Global.AI_HIDE);
+            int ai_wait = Game.constant.GetValue(Global.AI_WAIT);
+            //loop enemy dictionary
+            foreach (var enemy in dictEnemyActors)
+            {
+                if (enemy.Value is Inquisitor)
+                {
+                    //inquisitors -> if Move then automatic, otherwise chance of assigning a new goal
+                    if (enemy.Value.Goal != ActorGoal.Move)
+                    {
+                        enemy.Value.GoalTurns++;
+                        switch (enemy.Value.Goal)
+                        {
+                            case ActorGoal.None:
+                                //auto assign new goal
+                                SetEnemyGoal(enemy.Value);
+                                break;
+                            case ActorGoal.Wait:
+                                if (knownStatus > 0)
+                                {
+                                    //Player Known -> if actor at different location then new goal
+                                    if (enemy.Value.LocID != playerLocID)
+                                    { SetEnemyGoal(enemy.Value); }
+                                }
+                                else
+                                {
+                                    //Player Unknown
+                                    if (rnd.Next(100) < ai_wait)
+                                    { SetEnemyGoal(enemy.Value); }
+                                }
+                                break;
+                            case ActorGoal.Search:
+                                if (knownStatus > 0)
+                                {
+                                    //Player Known -> if actor at different location then new goal
+                                    if (enemy.Value.LocID != playerLocID)
+                                    { SetEnemyGoal(enemy.Value); }
+                                }
+                                else
+                                {
+                                    //Player Unknown
+                                    if (rnd.Next(100) < ai_search)
+                                    { SetEnemyGoal(enemy.Value); }
+                                }
+                                break;
+                            case ActorGoal.Hide:
+                                if (knownStatus > 0)
+                                {
+                                    //Player Known -> if actor at different location then new goal
+                                    if (enemy.Value.LocID != playerLocID)
+                                    { SetEnemyGoal(enemy.Value); }
+                                }
+                                else
+                                {
+                                    //Player Unknown
+                                    if (rnd.Next(100) < ai_hide)
+                                    { SetEnemyGoal(enemy.Value); }
+                                }
+                                break;
+                            default:
+                                Game.SetError(new Error(155, string.Format("Invalid Enemy Goal (\"{0}\")", enemy.Value.Goal)));
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    //all other enemies
+                }
+            }
+        }
+
+        /// <summary>
+        /// sub method to provide a new goal when required -> Incorporates all necessary AI logic
+        /// </summary>
+        /// <param name="enemy"></param>
+        private void SetEnemyGoal(Enemy enemy)
+        {
+            //reset Goal turns
+            enemy.GoalTurns = 0;
+        }
+
 
         //new Methods above here
     }
