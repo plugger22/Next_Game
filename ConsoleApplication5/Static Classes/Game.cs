@@ -546,7 +546,7 @@ namespace Next_Game
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
-                                    //Show Enemies
+                                    //Show Enemies (what player knows)
                                     infoChannel.SetInfoList(world.ShowEnemiesRL(), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Debug:
@@ -693,6 +693,17 @@ namespace Next_Game
                                     //Show Duplicates (imported files)
                                     infoChannel.SetInfoList(world.ShowDuplicatesRL(), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- Duplicates (Imported Files)", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
+                        case RLKey.Q:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Main:
+                                    break;
+                                case MenuMode.Debug:
+                                    //Show Enemies (full info)
+                                    infoChannel.SetInfoList(world.ShowEnemiesRL(true), ConsoleDisplay.Multi);
                                     break;
                             }
                             break;

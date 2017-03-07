@@ -375,24 +375,25 @@ namespace Next_Game
         /// <summary>
         /// Display a list of all enemies
         /// </summary>
+        /// <param name="debugMode">If true shows actual data, if false shows only what the Player knows</param>
         /// <returns></returns>
-        public List<Snippet> ShowEnemiesRL()
+        public List<Snippet> ShowEnemiesRL(bool debugMode = false)
         {
             ActorStatus status;
             int locID;
             string locName, coordinates;
             string charString = "Unknown";
             string locStatus = "Unknown";
-            List<string> listInquistors = new List<string>();
-            List<string> listOthers = new List<string>(); //all other enemies
-            RLColor textColor = RLColor.White;
+            List<Snippet> listInquistors = new List<Snippet>();
+            List<Snippet> listOthers = new List<Snippet>(); //all other enemies
             List<Snippet> listToDisplay = new List<Snippet>();
-            
+            //loop dict of enemies
             foreach (var actor in dictEnemyActors)
             {
                 status = actor.Value.Status;
                 locID = actor.Value.LocID;
                 locName = GetLocationName(locID);
+                
                 if (status == ActorStatus.AtLocation)
                 { locStatus = "At " + locName; }
                 else if (status == ActorStatus.Travelling)
@@ -406,14 +407,54 @@ namespace Next_Game
                     if (actor.Value is Inquisitor)
                     {
                         //Inquisitor
-                        charString = string.Format("Aid {0,-2} {1,-28} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
-                        listInquistors.Add(charString);
+                        if (actor.Value.Known == true || debugMode == true)
+                        {
+                            //known status
+                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
+                            listInquistors.Add(new Snippet(charString, RLColor.White, RLColor.Black));
+                        }
+                        else
+                        {
+                            if (actor.Value.Turns <= 5)
+                            {
+                                //unknown status and info is 5 turns or less old
+                                charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", actor.Key, actor.Value.Name, locStatus, coordinates, actor.Value.Turns,
+                                    actor.Value.Turns == 1 ? "" : "s");
+                                listInquistors.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
+                            }
+                            else
+                            {
+                                //unknown status and beyond the time horizon
+                                charString = string.Format("Aid {0,-3} {1,-28} Whereabouts unknown", actor.Key, actor.Value.Name);
+                                listInquistors.Add(new Snippet(charString, RLColor.LightGray, RLColor.Black));
+                            }
+                        }
                     }
                     else
                     {
                         //All other Enemies
-                        charString = string.Format("Aid {0,-2} {1,-28} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
-                        listOthers.Add(charString);
+                        if (actor.Value.Known == true || debugMode == true)
+                        {
+                            //known status
+                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
+                            listOthers.Add(new Snippet(charString, RLColor.White, RLColor.Black));
+                        }
+                        else
+                        {
+                            if (actor.Value.Turns <= 5)
+                            {
+                                //unknown status and info is 5 turns or less old
+                                charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", actor.Key, actor.Value.Name, locStatus, coordinates, actor.Value.Turns,
+                                    actor.Value.Turns == 1 ? "" : "s");
+                                listOthers.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
+                            }
+                            else
+                            {
+                                //unknown status and beyond the time horizon
+                                charString = string.Format("Aid {0,-3} {1,-28} Whereabouts unknown", actor.Key, actor.Value.Name);
+                                listOthers.Add(new Snippet(charString, RLColor.LightGray, RLColor.Black));
+                            }
+                        }
                     }
                 }
             }
@@ -422,14 +463,14 @@ namespace Next_Game
             {
                 listToDisplay.Add(new Snippet("--- Inquisitors", RLColor.Yellow, RLColor.Black));
                 for (int i = 0; i < listInquistors.Count; i++)
-                { listToDisplay.Add(new Snippet(listInquistors[i])); }
+                { listToDisplay.Add(listInquistors[i]); }
             }
             if (listOthers.Count > 0)
             {
                 listToDisplay.Add(new Snippet(""));
                 listToDisplay.Add(new Snippet("--- Other Enemies", RLColor.Yellow, RLColor.Black));
                 for (int i = 0; i < listOthers.Count; i++)
-                { listToDisplay.Add(new Snippet(listOthers[i])); }
+                { listToDisplay.Add(listOthers[i]); }
             }
             return listToDisplay;
         }

@@ -738,6 +738,8 @@ namespace Next_Game
     public class Enemy : Actor
     {
         public bool Known { get; set; } = false; //known or unknown?
+        //public Position LastKnown { get; set; } //last known position -> updated every turn that actor is known
+        public int Turns { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
 
         public Enemy(string name, ActorType type = ActorType.None, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }

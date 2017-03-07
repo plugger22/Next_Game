@@ -156,6 +156,7 @@ namespace Next_Game
                     menuArrayText[1, 3] = "[P] Show Duplicates";
                     menuArrayText[1, 4] = "[K] Show Old King's House";
                     menuArrayText[1, 5] = "[H] Show House Relations";
+                    menuArrayText[1, 6] = "[Q] Show Enemies (all)";
 
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
