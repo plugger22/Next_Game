@@ -266,7 +266,6 @@ namespace Next_Game
                                     {
                                         Enemy enemy = person as Enemy;
                                         enemy.Goal = ActorGoal.Search;
-                                        enemy.Turns = 0;
                                         Console.WriteLine("[{0}] {1}, ActID {2}, currently at {3}, new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, loc.LocName, enemy.Goal);
                                     }
                                 }
@@ -407,11 +406,39 @@ namespace Next_Game
                 status = enemy.Value.Status;
                 locID = enemy.Value.LocID;
                 locName = GetLocationName(locID);
-                
-                if (status == ActorStatus.AtLocation)
-                { locStatus = "At " + locName; }
-                else if (status == ActorStatus.Travelling)
-                { locStatus = "Moving to " + locName; }
+                //known
+                if (enemy.Value.Known == true || debugMode == true)
+                {
+                    if (status == ActorStatus.AtLocation)
+                    { locStatus = "At " + locName; }
+                    else if (status == ActorStatus.Travelling)
+                    { locStatus = "Moving to " + locName; }
+                }
+                //unknown
+                else
+                {
+                    locID = enemy.Value.LastKnownLocID;
+                    locName = GetLocationName(locID);
+                    if (enemy.Value.LastKnownGoal == ActorGoal.Move)
+                    { locStatus = "Moving to " + locName; }
+                    else
+                    {
+                        string activity = "?";
+                        switch (enemy.Value.LastKnownGoal)
+                        {
+                            case ActorGoal.Hide:
+                                activity = "Hiding";
+                                break;
+                            case ActorGoal.Search:
+                                activity = "Searching";
+                                break;
+                            case ActorGoal.Wait:
+                                activity = "Waiting";
+                                break;
+                        }
+                        locStatus = activity + " at " + locName;
+                    }
+                }
                 //get location coords
                 Location loc = Game.network.GetLocation(locID);
                 coordinates = string.Format("(Loc {0}:{1})", loc.GetPosX(), loc.GetPosY());
@@ -3111,7 +3138,7 @@ namespace Next_Game
             {
                 //update status
                 if (enemy.Value.Known == false) { enemy.Value.Turns++; }
-                else { enemy.Value.Turns = 0; }
+                else { enemy.Value.Turns = 0; enemy.Value.LastKnownLocID = enemy.Value.LocID; enemy.Value.LastKnownGoal = enemy.Value.Goal; }
                 //continue on with existing goal or get a new one?
                 if (enemy.Value is Inquisitor)
                 {

@@ -739,7 +739,8 @@ namespace Next_Game
     public class Enemy : Actor
     {
         public bool Known { get; set; } = false; //known or unknown?
-        //public Position LastKnown { get; set; } //last known position -> updated every turn that actor is known
+        public int LastKnownLocID { get; set; } //last known position -> updated every turn that actor is known
+        public ActorGoal LastKnownGoal { get; set; } //last known activity status -> updated every turn actor is known
         public int Turns { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
         public ActorGoal Goal { get; set; } //current goal (mission) for an AI controlled actor
         public int GoalTurns { get; set; } //number of turns currently spent on existing goal
