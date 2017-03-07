@@ -2751,13 +2751,13 @@ namespace Next_Game.Cartographic
         /// Update MapGrid [Movement] layer with a dictionary of current Player positions
         /// </summary>
         /// <param name="dictUpdatePlayers">Position coord and mapMarker for Player Move Object</param>
-        public void UpdateActiveCharacters(Dictionary<Position, int> dictUpdatePlayers)
+        /*public void UpdateActiveCharacters(Dictionary<Position, int> dictUpdatePlayers)
         {
             //clear out the Movement layer of the grid first
             ClearMapLayer(MapLayer.Movement);
             foreach(KeyValuePair<Position, int> entry in dictUpdatePlayers)
             { mapGrid[(int)MapLayer.Movement, entry.Key.PosX, entry.Key.PosY] = entry.Value; }
-        }
+        }*/
 
         /// <summary>
         /// Zero out a mapgrid layer

@@ -2710,8 +2710,8 @@ namespace Next_Game
             //Enemies
             SetEnemyActivity();
             //update position of all key characters on map layers
-            UpdateFollowerPositions();
-            UpdateEnemiesPositions();
+            //UpdateFollowerPositions();
+            //UpdateEnemiesPositions();
             UpdateActiveActors();
         }
 
@@ -2731,7 +2731,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// updates all relevant map layers for the different actors (key is mapMarker which is also the ActID of the character moving)
+        /// updates all relevant map layers for the different actors (key is mapMarker which is also the ActID of the character moving) Enemies are only shown if known
         /// </summary>
         private void UpdateActorMapStatus(Dictionary<int, Position> dictMoveActors)
         {
@@ -2752,7 +2752,7 @@ namespace Next_Game
                         if (person is Follower)
                         {
                             //followers always have an actID of between 2 and 9 so no need to convert
-                            Game.map.SetMapInfo(MapLayer.Follower, pos.Value.PosX, pos.Value.PosY, pos.Key);
+                            Game.map.SetMapInfo(MapLayer.Followers, pos.Value.PosX, pos.Value.PosY, pos.Key);
                         }
                     }
                     else if (person is Enemy)
