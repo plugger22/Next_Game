@@ -261,6 +261,14 @@ namespace Next_Game
                                     { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
                                     else if (person.ActID > 1)
                                     { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
+                                    //enemy
+                                    if (person is Enemy)
+                                    {
+                                        Enemy enemy = person as Enemy;
+                                        enemy.Goal = ActorGoal.Search;
+                                        enemy.Turns = 0;
+                                        Console.WriteLine("[{0}] {1}, ActID {2}, currently at {3}, new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, loc.LocName, enemy.Goal);
+                                    }
                                 }
                                 else
                                 { Game.SetError(new Error(42, "Character not found")); }
@@ -275,7 +283,10 @@ namespace Next_Game
                     //still enroute
                     {
                         //update dictionary
-                        dictMapMarkers.Add(moveObject.GetCurrentPosition(), moveObject.MapMarker);
+                        try
+                        { dictMapMarkers.Add(moveObject.GetCurrentPosition(), moveObject.MapMarker); }
+                        catch (ArgumentException)
+                        { Game.SetError(new Error(42, "Error adding to dictMapMarkers (duplicate key -> Normal)")); }
                         //update Characters in list (charPos)
                         Position pos = moveObject.GetCurrentPosition();
                         List<int> characterList = new List<int>(moveObject.GetCharacterList());
@@ -294,7 +305,10 @@ namespace Next_Game
                 else if (moveObject.Status == PartyStatus.Delayed)
                 {
                     /*message about delay?*/
-                    dictMapMarkers.Add(moveObject.GetCurrentPosition(), moveObject.MapMarker);
+                    try
+                    { dictMapMarkers.Add(moveObject.GetCurrentPosition(), moveObject.MapMarker); }
+                    catch (ArgumentException)
+                    { Game.SetError(new Error(42, "Error adding to dictMapMarkers (duplicate key -> Delayed)")); }
                 }
             }
             //reverse loop through list of Moveobjects and delete any that are marked as 'Done'
@@ -400,65 +414,62 @@ namespace Next_Game
                 { locStatus = "Moving to " + locName; }
                 //get location coords
                 Location loc = Game.network.GetLocation(locID);
+                coordinates = string.Format("(Loc {0}:{1})", loc.GetPosX(), loc.GetPosY());
                 //split enemies into two lists for display purposes
-                if (status == ActorStatus.AtLocation)
+                if (enemy.Value is Inquisitor)
                 {
-                    coordinates = string.Format("(Loc {0}:{1})", loc.GetPosX(), loc.GetPosY());
-                    if (enemy.Value is Inquisitor)
+                    //Inquisitor
+                    if (enemy.Value.Known == true || debugMode == true)
                     {
-                        //Inquisitor
-                        if (enemy.Value.Known == true || debugMode == true)
-                        {
-                            //known status
-                            if (debugMode == true)
-                            { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} Goal -> {4}", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Goal); }
-                            else { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
-                            listInquistors.Add(new Snippet(charString, RLColor.White, RLColor.Black));
-                        }
-                        else
-                        {
-                            if (enemy.Value.Turns <= 5)
-                            {
-                                //unknown status and info is 5 turns or less old
-                                charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Turns,
-                                    enemy.Value.Turns == 1 ? "" : "s");
-                                listInquistors.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
-                            }
-                            else
-                            {
-                                //unknown status and beyond the time horizon
-                                charString = string.Format("Aid {0,-3} {1,-28} Whereabouts unknown", enemy.Key, enemy.Value.Name);
-                                listInquistors.Add(new Snippet(charString, RLColor.LightGray, RLColor.Black));
-                            }
-                        }
+                        //known status
+                        if (debugMode == true)
+                        { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} Goal -> {4}", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Goal); }
+                        else { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
+                        listInquistors.Add(new Snippet(charString, RLColor.White, RLColor.Black));
                     }
                     else
                     {
-                        //All other Enemies
-                        if (enemy.Value.Known == true || debugMode == true)
+                        if (enemy.Value.Turns <= 5)
                         {
-                            //known status
-                            if (debugMode == true)
-                            { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} Goal -> {4}", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Goal); }
-                            else
-                            { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
-                            listOthers.Add(new Snippet(charString, RLColor.White, RLColor.Black));
+                            //unknown status and info is 5 turns or less old
+                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Turns,
+                                enemy.Value.Turns == 1 ? "" : "s");
+                            listInquistors.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
                         }
                         else
                         {
-                            if (enemy.Value.Turns <= 5)
-                            {
-                                //unknown status and info is 5 turns or less old
-                                charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Turns,
-                                    enemy.Value.Turns == 1 ? "" : "s");
-                                listOthers.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
-                            }
-                            else
-                            {
-                                //unknown status and beyond the time horizon
-                                charString = string.Format("Aid {0,-3} {1,-28} Whereabouts unknown", enemy.Key, enemy.Value.Name);
-                                listOthers.Add(new Snippet(charString, RLColor.LightGray, RLColor.Black));
-                            }
+                            //unknown status and beyond the time horizon
+                            charString = string.Format("Aid {0,-3} {1,-28} Whereabouts unknown", enemy.Key, enemy.Value.Name);
+                            listInquistors.Add(new Snippet(charString, RLColor.LightGray, RLColor.Black));
+                        }
+                    }
+                }
+                else
+                {
+                    //All other Enemies
+                    if (enemy.Value.Known == true || debugMode == true)
+                    {
+                        //known status
+                        if (debugMode == true)
+                        { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} Goal -> {4}", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Goal); }
+                        else
+                        { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
+                        listOthers.Add(new Snippet(charString, RLColor.White, RLColor.Black));
+                    }
+                    else
+                    {
+                        if (enemy.Value.Turns <= 5)
+                        {
+                            //unknown status and info is 5 turns or less old
+                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Turns,
+                                enemy.Value.Turns == 1 ? "" : "s");
+                            listOthers.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
+                        }
+                        else
+                        {
+                            //unknown status and beyond the time horizon
+                            charString = string.Format("Aid {0,-3} {1,-28} Whereabouts unknown", enemy.Key, enemy.Value.Name);
+                            listOthers.Add(new Snippet(charString, RLColor.LightGray, RLColor.Black));
                         }
                     }
                 }
@@ -3098,6 +3109,10 @@ namespace Next_Game
             //loop enemy dictionary
             foreach (var enemy in dictEnemyActors)
             {
+                //update status
+                if (enemy.Value.Known == false) { enemy.Value.Turns++; }
+                else { enemy.Value.Turns = 0; }
+                //continue on with existing goal or get a new one?
                 if (enemy.Value is Inquisitor)
                 {
                     //inquisitors -> if Move then automatic, otherwise chance of assigning a new goal
@@ -3180,14 +3195,19 @@ namespace Next_Game
                 {
                     if (knownStatus > 0)
                     {
-                        //Player Known -> not at same location, auto Move
+                        //Player Known -> not at same location
                         if (enemy.LocID != playerLocID)
                         {
-                            Location loc = Game.network.GetLocation(playerLocID);
-                            Position posOrigin = enemy.GetActorPosition();
-                            Position posDestination = loc.GetPosition();
-                            List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
-                            InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
+                            if (rnd.Next(100) < 50)
+                            {
+                                Location loc = Game.network.GetLocation(playerLocID);
+                                Position posOrigin = enemy.GetActorPosition();
+                                Position posDestination = loc.GetPosition();
+                                List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
+                                InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
+                                newGoal = ActorGoal.Move;
+                            }
+                            else { newGoal = ActorGoal.Wait; }
                         }
                         //Player Known -> same location
                         else { newGoal = ActorGoal.Search; }
@@ -3195,8 +3215,19 @@ namespace Next_Game
                     else
                     {
                         //Player Unknown -> randomly assign a goal (placeholder)
-                        if (rnd.Next(100) < 40) { newGoal = ActorGoal.Search; }
-                        else { newGoal = ActorGoal.Wait; }
+                        int rndNum = rnd.Next(100);
+                        if (rndNum < 30) { newGoal = ActorGoal.Search; }
+                        else if (rndNum > 70) { newGoal = ActorGoal.Wait;}
+                        else
+                        {
+                            int locID = Game.network.GetRandomLocation();
+                            Location loc = Game.network.GetLocation(locID);
+                            Position posOrigin = enemy.GetActorPosition();
+                            Position posDestination = loc.GetPosition();
+                            List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
+                            InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
+                            newGoal = ActorGoal.Move;
+                        }
                     }
 
                     //reset Goal turns if new goal different to old goal
@@ -3205,13 +3236,13 @@ namespace Next_Game
                         enemy.GoalTurns = 0;
                         //assign new goal
                         enemy.Goal = newGoal;
-                        Console.WriteLine("{0} {1}, ActID {2}, {3}, assigned new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID), 
+                        Console.WriteLine("[{0}] {1}, ActID {2}, {3}, assigned new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
                             enemy.Goal);
                     }
                 }
-                Game.SetError(new Error(156, string.Format("Invalid playerLocID (zero or less), existing goal retained for actID {0}", enemy.ActID)));
+                else { Game.SetError(new Error(156, string.Format("Invalid playerLocID (zero or less), existing goal retained for actID {0}", enemy.ActID))); }
             }
-            Game.SetError(new Error(156, "Invalid enemy input (null), existing goal retained"));
+            else { Game.SetError(new Error(156, "Invalid enemy input (null), existing goal retained")); }
         }
 
 
