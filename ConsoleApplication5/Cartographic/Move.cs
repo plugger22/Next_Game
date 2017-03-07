@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 //Done is triggered on arrival at destination and is used to clear out the moveObject from the list of such
 public enum PartyStatus {Active, Delayed, Done};
-public enum PartyVisibility { Visible, Invisible}; //does the party show on the map (visibility is from the Player's point of view)
+//public enum PartyVisibility { Visible, Invisible}; //does the party show on the map (visibility is from the Player's point of view)
 
 namespace Next_Game.Cartographic
 {
@@ -16,8 +16,8 @@ namespace Next_Game.Cartographic
         int speed; //speed party travels in cells per turn
         int currentPosIndex; //index for positionList to track parties current position
         int turnDeparted;
-        public PartyStatus Status {get; set; }
-        public PartyVisibility Visibility { get; set; } //does the party show on the map?
+        public PartyStatus Status { get; set; }
+        //public PartyVisibility Visibility { get; set; } //does the party show on the map?
         bool playerInParty; //is a player controlled character in the party? (different color or symbol on map)
         public int MapMarker { get; set; } //# of party on map which is equal to the highest ranked member in party (lowest ID as ID 1 is the player)
 
@@ -33,7 +33,7 @@ namespace Next_Game.Cartographic
         /// <param name="playerInParty"></param>
         /// <param name="turnDeparted"></param>
         /// <param name="visibility">default Visible</param>
-        public Move(List<Position> listPos, List<int> listParty, int speed, bool playerInParty, int turnDeparted, PartyVisibility visibility = PartyVisibility.Visible)
+        public Move(List<Position> listPos, List<int> listParty, int speed, bool playerInParty, int turnDeparted)
         {
             pathList = new List<Position>(listPos);
             characterList = new List<int>(listParty);
@@ -42,8 +42,9 @@ namespace Next_Game.Cartographic
             currentPosIndex = 0;
             this.playerInParty = playerInParty;
             this.turnDeparted = turnDeparted;
+            MapMarker = characterList[0];
             //find highest ranked party member by ID (lowest)
-            if (playerInParty)
+            /*if (playerInParty)
             {
                 MapMarker = Int32.MaxValue;
                 for (int i = 0; i < characterList.Count; i++)
@@ -54,7 +55,7 @@ namespace Next_Game.Cartographic
             }
             else
             //TODO need a way of numbering NPC parties
-            { MapMarker = 0; }
+            { MapMarker = 0; }*/
         }
 
         /// <summary>
@@ -66,9 +67,9 @@ namespace Next_Game.Cartographic
             bool atDestination = false;
             int tempSpeed = speed;
             //reduce speed by 1 at start to avoid a speed + 1 move
-            if(currentPosIndex == 0 && speed > 1)
+            if (currentPosIndex == 0 && speed > 1)
             { tempSpeed--; }
-            if(currentPosIndex + tempSpeed + 1 >= pathList.Count)
+            if (currentPosIndex + tempSpeed + 1 >= pathList.Count)
             //at destination
             {
                 currentPosIndex = pathList.Count - 1;
@@ -84,8 +85,8 @@ namespace Next_Game.Cartographic
         public Position GetCurrentPosition()
         {
             Position pos = new Position();
-            if(Status != PartyStatus.Done)
-            { pos = pathList[currentPosIndex];}
+            if (Status != PartyStatus.Done)
+            { pos = pathList[currentPosIndex]; }
             else
             //end of the road
             { pos = pathList[pathList.Count - 1]; }
@@ -108,7 +109,7 @@ namespace Next_Game.Cartographic
         /// </summary>
         public void UpdatePartyStatus()
         {
-            foreach(int actorID in characterList)
+            foreach (int actorID in characterList)
             {
                 Actor actor = Game.world.GetAnyActor(actorID);
                 if (actor != null)
@@ -121,8 +122,5 @@ namespace Next_Game.Cartographic
                 else { Game.SetError(new Error(51, "Invalid Actor in characterList")); }
             }
         }
-
-        //public PartyStatus GetPartyStatus()
-        //{ return partyStatus; }
     }
 }

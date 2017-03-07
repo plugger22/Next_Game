@@ -219,10 +219,10 @@ namespace Next_Game
         /// Handles movement of all Player characters througout world
         /// </summary>
         /// <returns>returns a dictionary of mapMarkers and coordinates for the "Movement" mapGrid layer</returns>
-        internal Dictionary<Position, int> MoveActors()
+        internal Dictionary<int, Position> MoveActors()
         {
             //create a dictionary of position and map markers to return (passed up to game thence to map to update mapgrid
-            Dictionary<Position, int> dictMapMarkers = new Dictionary<Position, int>();
+            Dictionary<int, Position> dictMapMarkers = new Dictionary<int, Position>();
             //loop moveList. Update each move object - update Character Location ID
             for(int i = 0; i < moveList.Count; i++)
             {
@@ -283,7 +283,7 @@ namespace Next_Game
                     {
                         //update dictionary
                         try
-                        { dictMapMarkers.Add(moveObject.GetCurrentPosition(), moveObject.MapMarker); }
+                        { dictMapMarkers.Add(moveObject.MapMarker, moveObject.GetCurrentPosition()); }
                         catch (ArgumentException)
                         { Game.SetError(new Error(42, "Error adding to dictMapMarkers (duplicate key -> Normal)")); }
                         //update Characters in list (charPos)
@@ -305,7 +305,7 @@ namespace Next_Game
                 {
                     /*message about delay?*/
                     try
-                    { dictMapMarkers.Add(moveObject.GetCurrentPosition(), moveObject.MapMarker); }
+                    { dictMapMarkers.Add(moveObject.MapMarker, moveObject.GetCurrentPosition()); }
                     catch (ArgumentException)
                     { Game.SetError(new Error(42, "Error adding to dictMapMarkers (duplicate key -> Delayed)")); }
                 }
@@ -2722,8 +2722,8 @@ namespace Next_Game
         {
             Console.WriteLine(Environment.NewLine + "--- End Turn Day {0}", Game.gameTurn + 1);
             Game.map.UpdateMap();
-            Game.map.UpdateActiveCharacters(MoveActors());
-            //UpdateActorMapStatus(MoveActors());
+            //Game.map.UpdateActiveCharacters(MoveActors());
+            UpdateActorMapStatus(MoveActors());
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();
             UpdateActors();
@@ -2731,11 +2731,44 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// updates all relevant map layers for the different actors
+        /// updates all relevant map layers for the different actors (key is mapMarker which is also the ActID of the character moving)
         /// </summary>
-        private void UpdateActorMapStatus()
+        private void UpdateActorMapStatus(Dictionary<int, Position> dictMoveActors)
         {
-
+            //clear out the Movement layer of the grid first
+            Game.map.ClearMapLayer(MapLayer.Movement);
+            Game.map.ClearMapLayer(MapLayer.Followers);
+            Game.map.ClearMapLayer(MapLayer.Enemies);
+            //loop dictionary of move actors
+            foreach (var pos in dictMoveActors)
+            {
+                //get actor
+                Actor person = GetAnyActor(pos.Key);
+                if (person != null)
+                {
+                    if (person is Active)
+                    {
+                        Game.map.SetMapInfo(MapLayer.Movement, pos.Value.PosX, pos.Value.PosY, pos.Key);
+                        if (person is Follower)
+                        {
+                            //followers always have an actID of between 2 and 9 so no need to convert
+                            Game.map.SetMapInfo(MapLayer.Follower, pos.Value.PosX, pos.Value.PosY, pos.Key);
+                        }
+                    }
+                    else if (person is Enemy)
+                    {
+                        Enemy enemy = person as Enemy;
+                        if (enemy.Known == true)
+                        {
+                            //convert enemy actID into a single digit
+                            int marker = pos.Key;
+                            marker = marker % (10);
+                            Game.map.SetMapInfo(MapLayer.Enemies, pos.Value.PosX, pos.Value.PosY, marker);
+                        }
+                    }
+                } 
+                else { Game.SetError(new Error(157, "Invalid key (ActID) in dictMoveActors (not found in dict)")); } 
+            }
         }
 
         /// <summary>
