@@ -2755,7 +2755,6 @@ namespace Next_Game.Cartographic
         {
             //clear out the Movement layer of the grid first
             ClearMapLayer(MapLayer.Movement);
-            //update with new data
             foreach(KeyValuePair<Position, int> entry in dictUpdatePlayers)
             { mapGrid[(int)MapLayer.Movement, entry.Key.PosX, entry.Key.PosY] = entry.Value; }
         }

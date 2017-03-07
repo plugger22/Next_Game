@@ -2680,10 +2680,19 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- End Turn Day {0}", Game.gameTurn + 1);
             Game.map.UpdateMap();
             Game.map.UpdateActiveCharacters(MoveActors());
+            //UpdateActorMapStatus(MoveActors());
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();
             UpdateActors();
             Game.gameTurn++;
+        }
+
+        /// <summary>
+        /// updates all relevant map layers for the different actors
+        /// </summary>
+        private void UpdateActorMapStatus()
+        {
+
         }
 
         /// <summary>

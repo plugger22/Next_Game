@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 //Done is triggered on arrival at destination and is used to clear out the moveObject from the list of such
 public enum PartyStatus {Active, Delayed, Done};
+public enum PartyVisibility { Visible, Invisible}; //does the party show on the map (visibility is from the Player's point of view)
 
 namespace Next_Game.Cartographic
 {
@@ -16,14 +17,23 @@ namespace Next_Game.Cartographic
         int currentPosIndex; //index for positionList to track parties current position
         int turnDeparted;
         public PartyStatus Status {get; set; }
+        public PartyVisibility Visibility { get; set; } //does the party show on the map?
         bool playerInParty; //is a player controlled character in the party? (different color or symbol on map)
         public int MapMarker { get; set; } //# of party on map which is equal to the highest ranked member in party (lowest ID as ID 1 is the player)
 
         public Move()
         { }
 
-        //main constructor
-        public Move(List<Position> listPos, List<int> listParty, int speed, bool playerInParty, int turnDeparted)
+        /// <summary>
+        /// Main constructor
+        /// </summary>
+        /// <param name="listPos"></param>
+        /// <param name="listParty"></param>
+        /// <param name="speed"></param>
+        /// <param name="playerInParty"></param>
+        /// <param name="turnDeparted"></param>
+        /// <param name="visibility">default Visible</param>
+        public Move(List<Position> listPos, List<int> listParty, int speed, bool playerInParty, int turnDeparted, PartyVisibility visibility = PartyVisibility.Visible)
         {
             pathList = new List<Position>(listPos);
             characterList = new List<int>(listParty);
