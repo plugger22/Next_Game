@@ -3094,20 +3094,20 @@ namespace Next_Game
                         {
                             case ActorGoal.None:
                                 //auto assign new goal
-                                SetEnemyGoal(enemy.Value);
+                                SetEnemyGoal(enemy.Value, knownStatus, playerLocID);
                                 break;
                             case ActorGoal.Wait:
                                 if (knownStatus > 0)
                                 {
                                     //Player Known -> if actor at different location then new goal
                                     if (enemy.Value.LocID != playerLocID)
-                                    { SetEnemyGoal(enemy.Value); }
+                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
                                 }
                                 else
                                 {
                                     //Player Unknown
                                     if (rnd.Next(100) < ai_wait)
-                                    { SetEnemyGoal(enemy.Value); }
+                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
                                 }
                                 break;
                             case ActorGoal.Search:
@@ -3115,13 +3115,13 @@ namespace Next_Game
                                 {
                                     //Player Known -> if actor at different location then new goal
                                     if (enemy.Value.LocID != playerLocID)
-                                    { SetEnemyGoal(enemy.Value); }
+                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
                                 }
                                 else
                                 {
                                     //Player Unknown
                                     if (rnd.Next(100) < ai_search)
-                                    { SetEnemyGoal(enemy.Value); }
+                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
                                 }
                                 break;
                             case ActorGoal.Hide:
@@ -3129,13 +3129,13 @@ namespace Next_Game
                                 {
                                     //Player Known -> if actor at different location then new goal
                                     if (enemy.Value.LocID != playerLocID)
-                                    { SetEnemyGoal(enemy.Value); }
+                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
                                 }
                                 else
                                 {
                                     //Player Unknown
                                     if (rnd.Next(100) < ai_hide)
-                                    { SetEnemyGoal(enemy.Value); }
+                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
                                 }
                                 break;
                             default:
@@ -3153,12 +3153,50 @@ namespace Next_Game
 
         /// <summary>
         /// sub method to provide a new goal when required -> Incorporates all necessary AI logic
+        /// <param name="knowStatus">if '0' then player status is Unknown</param>
+        /// <param name="playerLocID">current locID or Player's destination locId if travelling</param>
         /// </summary>
         /// <param name="enemy"></param>
-        private void SetEnemyGoal(Enemy enemy)
+        private void SetEnemyGoal(Enemy enemy, int knownStatus, int playerLocID)
         {
-            //reset Goal turns
-            enemy.GoalTurns = 0;
+            ActorGoal newGoal = ActorGoal.None;
+            if (enemy != null)
+            {
+                if (playerLocID < 1)
+                {
+                    if (knownStatus > 0)
+                    {
+                        //Player Known -> not at same location, auto Move
+                        if (enemy.LocID != playerLocID)
+                        {
+                            Location loc = Game.network.GetLocation(playerLocID);
+                            Position posOrigin = enemy.GetActorPosition();
+                            Position posDestination = loc.GetPosition();
+                            List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
+                            InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
+                        }
+                        //Player Known -> same location
+                        else { newGoal = ActorGoal.Search; }
+                    }
+                    else
+                    {
+                        //Player Unknown -> randomly assign a goal (placeholder)
+                        if (rnd.Next(100) < 40) { newGoal = ActorGoal.Search; }
+                        else { newGoal = ActorGoal.Wait; }
+                    }
+
+                    //reset Goal turns if new goal different to old goal
+                    if (newGoal != enemy.Goal)
+                    {
+                        enemy.GoalTurns = 0;
+                        //assign new goal
+                        enemy.Goal = newGoal;
+                        Console.WriteLine("{0} {1}, ActID {2}, {3}, assigned new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID));
+                    }
+                }
+                Game.SetError(new Error(156, string.Format("Invalid playerLocID (zero or less), existing goal retained for actID {0}", enemy.ActID)));
+            }
+            Game.SetError(new Error(156, "Invalid enemy input (null), existing goal retained"));
         }
 
 
