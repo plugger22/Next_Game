@@ -741,7 +741,8 @@ namespace Next_Game
     {
         public bool Known { get; set; } = false; //known or unknown?
         public int Revert { get; set; } //# of turns before Known status reverts to unknown
-        public int LastKnownLocID { get; set; } //last known position -> updated every turn that actor is known
+        public int LastKnownLocID { get; set; } //last known locId (could be destination if moving) -> updated every turn that actor is known
+        public Position LastKnownPos { get; set; } //last known Position -> updated every turn that actor is known
         public ActorGoal LastKnownGoal { get; set; } //last known activity status -> updated every turn actor is known
         public int TurnsUnknown { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
         public ActorGoal Goal { get; set; } //current goal (mission) for an AI controlled actor

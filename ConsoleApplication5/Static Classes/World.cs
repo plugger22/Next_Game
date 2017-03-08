@@ -457,7 +457,7 @@ namespace Next_Game
                 }
                 //get location coords
                 Location loc = Game.network.GetLocation(locID);
-                coordinates = string.Format("(Loc {0}:{1})", loc.GetPosX(), loc.GetPosY());
+                coordinates = string.Format("(Pos {0}:{1})", loc.GetPosX(), loc.GetPosY());
                 //split enemies into two lists for display purposes
                 if (enemy.Value is Inquisitor)
                 {
@@ -466,7 +466,7 @@ namespace Next_Game
                     {
                         //known status
                         if (debugMode == true)
-                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-18}  Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
+                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12}  Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
                             enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal); }
                         else { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
                         listInquistors.Add(new Snippet(charString, RLColor.White, RLColor.Black));
@@ -495,7 +495,7 @@ namespace Next_Game
                     {
                         //known status
                         if (debugMode == true)
-                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-18} Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
+                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12} Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
                             enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal); }
                         else
                         { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
@@ -3074,8 +3074,8 @@ namespace Next_Game
                     }
                     else if (enemy.Value.TurnsUnknown <= expire)
                     {
-                        //show enemy with a map marker indicating how many days old the information is
-                        Position pos = enemy.Value.GetActorPosition();
+                        //show enemy with a map marker indicating how many days old the information is (show last known position, not current one).
+                        Position pos = enemy.Value.LastKnownPos;
                         if (pos != null)
                         { Game.map.SetMapInfo(MapLayer.Enemies, pos.PosX, pos.PosY, enemy.Value.TurnsUnknown); }
                     }
@@ -3210,6 +3210,7 @@ namespace Next_Game
                     //known
                     enemy.Value.TurnsUnknown = 0;
                     enemy.Value.LastKnownLocID = enemy.Value.LocID;
+                    enemy.Value.LastKnownPos = enemy.Value.GetActorPosition();
                     enemy.Value.LastKnownGoal = enemy.Value.Goal;
                     enemy.Value.Revert--;
                     if (enemy.Value.Revert <= 0)

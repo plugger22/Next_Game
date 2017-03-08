@@ -431,6 +431,7 @@ namespace Next_Game
                     inquisitor.TurnsUnknown = 1;
                     inquisitor.Goal = ActorGoal.Wait;
                     inquisitor.LastKnownLocID = locID;
+                    inquisitor.LastKnownPos = loc.GetPosition();
                     inquisitor.LastKnownGoal = ActorGoal.Wait;
                     //relationship
                     inquisitor.AddRelEventPlyr(new Relation("Sworn to hunt down Player", "Agents of Doom", -50));
