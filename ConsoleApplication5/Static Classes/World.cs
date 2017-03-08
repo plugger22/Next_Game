@@ -1672,7 +1672,7 @@ namespace Next_Game
         public string SetActiveActorKnownStatus(int actID, int data)
         {
             string resultText = "";
-            int maxRevert = 0;
+            int maxRevert = Game.constant.GetValue(Global.KNOWN_REVERT);
             //check active actor in dictionary
             if (dictActiveActors.ContainsKey(actID))
             {
@@ -1681,7 +1681,7 @@ namespace Next_Game
                 {
                     if (data < 0)
                     {
-                        //Known -> if already known resert Revert timer to the max.
+                        //KNOWN -> if already known resert Revert timer to the max.
                         if (active.Known == true)
                         { resultText = string.Format("{0} {1} has had their Known timer increased to the maximum ({2} days)", active.Title, active.Name, maxRevert); }
                         else
@@ -1689,6 +1689,7 @@ namespace Next_Game
                         active.Revert = maxRevert;
                         //reset TurnsUnknown timer back to zero
                         active.TurnsUnknown = 0;
+                        active.LastKnownLocID = active.LocID;
                     }
                     else if (data > 0)
                     {
@@ -3092,10 +3093,12 @@ namespace Next_Game
                 //if Known, decrement their revert status
                 if (actor.Value.Known == true)
                 {
+                    actor.Value.LastKnownLocID = actor.Value.LocID;
                     actor.Value.Revert--;
                     Console.WriteLine("{0} {1} has had their Revert Timer reduced from {2} to {3}", actor.Value.Title, actor.Value.Name, actor.Value.Revert + 1, actor.Value.Revert);
-                    if (actor.Value.Revert < 1)
+                    if (actor.Value.Revert <= 0)
                     {
+                        //Reverts from Known to Unknown state
                         actor.Value.Known = false;
                         string eventText = string.Format("{0} {1} is no longer \"Known\" as sufficient time has passed", actor.Value.Title, actor.Value.Name);
                         Message message = new Message(eventText, MessageType.Known);
@@ -3196,7 +3199,7 @@ namespace Next_Game
                 //debug -> random chance of enemy being known
                 if (enemy.Value.Known == false && rnd.Next(100) < 20)
                 {
-                    enemy.Value.Known = true; enemy.Value.Revert = 0;
+                    enemy.Value.Known = true; enemy.Value.Revert = revert;
                     Console.WriteLine("[{0}] {1} ActID {2} has become KNOWN", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
                 }
 
@@ -3208,8 +3211,8 @@ namespace Next_Game
                     enemy.Value.TurnsUnknown = 0;
                     enemy.Value.LastKnownLocID = enemy.Value.LocID;
                     enemy.Value.LastKnownGoal = enemy.Value.Goal;
-                    enemy.Value.Revert++;
-                    if (enemy.Value.Revert >= revert)
+                    enemy.Value.Revert--;
+                    if (enemy.Value.Revert <= 0)
                     {
                         enemy.Value.Revert = 0; enemy.Value.Known = false; enemy.Value.TurnsUnknown++;
                         Console.WriteLine("[{0}] {1} ActID {2} has reverted to Unknown status (timer elapsed)", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
