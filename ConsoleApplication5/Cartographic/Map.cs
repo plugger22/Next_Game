@@ -1137,9 +1137,9 @@ namespace Next_Game.Cartographic
                             if (movementLayer == 1 && flashTimer > 7)
                             { backColor5 = RLColor.LightGray; }
                             //Red and White for Enemies (assumed to be known)
-                            else if (movementLayer == 999)
+                            if (movementLayer == 999)
                             {
-                                backColor5 = RLColor.LightRed;  foreColor5 = RLColor.Yellow;
+                                backColor5 = RLColor.Black;  foreColor5 = RLColor.Yellow;
                                 //convert double digit #, into a single digit -> '0' (indicates known)
                                 subCell[5] = 0 + 48;
                             }
@@ -1416,23 +1416,11 @@ namespace Next_Game.Cartographic
                             {
                                 if (enemiesLayer > 0)
                                 {
-                                    switch (enemiesLayer)
-                                    {
-                                        //Followers
-                                        case 2:
-                                        case 3:
-                                        case 4:
-                                        case 5:
-                                        case 6:
-                                        case 7:
-                                        case 8:
-                                        case 9:
-                                            subCell[5] = enemiesLayer + 48;
-                                            foreColor5 = RLColor.Yellow;
-                                            if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
-                                            else { backColor5 = RLColor.Black; }
-                                            break;
-                                    }
+                                    subCell[5] = enemiesLayer + 48;
+                                    foreColor5 = RLColor.Yellow;
+                                    if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
+                                    else { backColor5 = RLColor.Black; }
+                                    break;
                                 }
                             }
                         }

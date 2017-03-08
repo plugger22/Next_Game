@@ -3164,7 +3164,11 @@ namespace Next_Game
             foreach (var enemy in dictEnemyActors)
             {
                 //debug -> random chance of enemy being known
-                if (rnd.Next(100) < 20) { enemy.Value.Known = true; }
+                if (rnd.Next(100) < 20)
+                {
+                    enemy.Value.Known = true;
+                    Console.WriteLine("[{0}] {1} ActID {2} has become KNOWN", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
+                }
 
                 //update status -> unknown
                 if (enemy.Value.Known == false) { enemy.Value.TurnsUnknown++; enemy.Value.Revert = 0; }
