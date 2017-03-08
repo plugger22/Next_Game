@@ -2738,8 +2738,8 @@ namespace Next_Game
             int marker;
             //clear out the Movement layer of the grid first
             Game.map.ClearMapLayer(MapLayer.Movement);
-            Game.map.ClearMapLayer(MapLayer.Followers);
-            Game.map.ClearMapLayer(MapLayer.Enemies);
+            //Game.map.ClearMapLayer(MapLayer.Followers);
+            //Game.map.ClearMapLayer(MapLayer.Enemies);
             //loop dictionary of move actors
             foreach (var pos in dictMoveActors)
             {
@@ -2751,13 +2751,14 @@ namespace Next_Game
                     marker = pos.Key;
                     if (person is Enemy)
                     {
-                        //enemies are shown as '0' indicating Known status (eg. # of days old info)
+                        //enemies are shown as '999' indicating Known status (converted to '0' by map.DrawMapRL)
                         Enemy enemy = person as Enemy;
                         if (enemy.Known == true)
-                        { marker = 0; }
+                        { marker = 999; }
+                        else { marker = -1; }
                     }
                     //show on map only if known
-                    if (marker >= 0)
+                    if (marker > 0)
                     { Game.map.SetMapInfo(MapLayer.Movement, pos.Value.PosX, pos.Value.PosY, marker); }
             } 
                 else { Game.SetError(new Error(157, "Invalid key (ActID) in dictMoveActors (not found in dict)")); } 
@@ -3038,18 +3039,17 @@ namespace Next_Game
         private void UpdateEnemiesPositions()
         {
             Game.map.ClearMapLayer(MapLayer.Enemies);
-            //debug
-            int mapSize = Game.constant.GetValue(Global.MAP_SIZE);
-            for (int i = 0; i < 3; i++)
+            //loop dictionary -> only place on map layer if known
+            foreach (var enemy in dictEnemyActors)
             {
-                int posX = rnd.Next(0, mapSize);
-                int posY = rnd.Next(0, mapSize);
-                int num = rnd.Next(1, 4);
-                Game.map.SetMapInfo(MapLayer.Enemies, posX, posY, num);
+                if (enemy.Value.Known == true)
+                {
+                    //show enemy with a map marker indicating how many days old the information is
+                    Position pos = enemy.Value.GetActorPosition();
+                    if (pos != null)
+                    { Game.map.SetMapInfo(MapLayer.Enemies, pos.PosX, pos.PosY, enemy.Value.Revert); }
+                }
             }
-            //is KNOWN, is age < 4 days => show
-
-            //dictEnemies
         }
 
         /// <summary>

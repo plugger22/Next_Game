@@ -1134,11 +1134,15 @@ namespace Next_Game.Cartographic
                             //# represent group at location (static) or moving. Show yellow for capital, cyan for loc and green for enroute
                             subCell[5] = movementLayer + 48;
                             //flashing yellow box highlight for Player only
-                            if (flashTimer > 7 && movementLayer == 1)
+                            if (movementLayer == 1 && flashTimer > 7)
                             { backColor5 = RLColor.LightGray; }
-                            //Red and White for Enemies (assumed to be known, hence # is '0' 
-                            if (movementLayer == 0)
-                            { backColor5 = RLColor.Red;  foreColor5 = RLColor.White; }
+                            //Red and White for Enemies (assumed to be known)
+                            else if (movementLayer == 999)
+                            {
+                                backColor5 = RLColor.LightRed;  foreColor5 = RLColor.Yellow;
+                                //convert double digit #, into a single digit -> '0' (indicates known)
+                                subCell[5] = 0 + 48;
+                            }
                             //place roads right next to player if present
                             switch (mainLayer)
                             {
