@@ -2713,6 +2713,7 @@ namespace Next_Game
         public void ProcessStartTurn()
         {
             Console.WriteLine(Environment.NewLine + "--- Start Turn Day {0}", Game.gameTurn + 1);
+            UpdateActorMoveStatus(MoveActors());
             CalculateCrows();
             //Create events
             Game.director.CheckPlayerEvents();
@@ -2741,8 +2742,6 @@ namespace Next_Game
         {
             Console.WriteLine(Environment.NewLine + "--- End Turn Day {0}", Game.gameTurn + 1);
             Game.map.UpdateMap();
-            //Game.map.UpdateActiveCharacters(MoveActors());
-            UpdateActorMoveStatus(MoveActors());
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();
             UpdateActors();
@@ -3352,6 +3351,51 @@ namespace Next_Game
             else { Game.SetError(new Error(156, "Invalid enemy input (null), existing goal retained")); }
         }
 
+
+        /// <summary>
+        /// checks if player is found by Inquisitors when in the same location/position
+        /// </summary>
+        internal bool CheckIfFound(Position pos)
+        {
+            bool found = false;
+            int knownDM = 0; //modifier for search if player known
+            Active player = GetActiveActor(1);
+            if (player != null)
+            {
+                if (player.Known == true) { knownDM = 30; }
+                foreach (var enemy in dictEnemyActors)
+                {
+                    if (enemy.Value.Status != ActorStatus.Gone && enemy.Value.GetActorPosition() == pos)
+                    {
+                        //in same spot
+                        Console.WriteLine("[{0}] {1}, ActID {2}, is in the same place as the Player (loc {3}:{4})", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                        //figure out if spotted and handle disguise and safe house star reduction
+                        switch (enemy.Value.Goal)
+                        {
+                            case ActorGoal.Hide:
+                                if (rnd.Next(100) < (30 + knownDM))
+                                { found = true; }
+                                break;
+                            case ActorGoal.Move:
+                                if (rnd.Next(100) < (20 + knownDM))
+                                { found = true; }
+                                break;
+                            case ActorGoal.Search:
+                                if (rnd.Next(100) < (60 + knownDM))
+                                { found = true; }
+                                break;
+                            case ActorGoal.Wait:
+                                if (rnd.Next(100) < (20 + knownDM))
+                                { found = true; }
+                                break;
+                        }
+                    }
+                }
+            }
+            if (found == true)
+            { Console.WriteLine("[SEARCH] Player has been FOUND by an Inquisitor (loc {0}:{1})", pos.PosX, pos.PosY); }
+            return found;
+        }
 
         //new Methods above here
     }
