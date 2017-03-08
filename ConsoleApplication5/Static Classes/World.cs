@@ -394,6 +394,7 @@ namespace Next_Game
         {
             ActorStatus status;
             int locID;
+            int expire = Game.constant.GetValue(Global.KNOWN_REVERT);
             string locName, coordinates;
             string charString = "Unknown";
             string locStatus = "Unknown";
@@ -410,7 +411,22 @@ namespace Next_Game
                 if (enemy.Value.Known == true || debugMode == true)
                 {
                     if (status == ActorStatus.AtLocation)
-                    { locStatus = "At " + locName; }
+                    {
+                        string activity = "?";
+                        switch (enemy.Value.Goal)
+                        {
+                            case ActorGoal.Hide:
+                                activity = "Hiding";
+                                break;
+                            case ActorGoal.Search:
+                                activity = "Searching";
+                                break;
+                            case ActorGoal.Wait:
+                                activity = "Waiting";
+                                break;
+                        }
+                        locStatus = activity + " at " + locName;
+                    }
                     else if (status == ActorStatus.Travelling)
                     { locStatus = "Moving to " + locName; }
                 }
@@ -450,15 +466,16 @@ namespace Next_Game
                     {
                         //known status
                         if (debugMode == true)
-                        { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} Goal -> {4}", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Goal); }
+                        { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}, Status -> {4}, Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
+                            enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal); }
                         else { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
                         listInquistors.Add(new Snippet(charString, RLColor.White, RLColor.Black));
                     }
                     else
                     {
-                        if (enemy.Value.TurnsUnknown <= 5)
+                        if (enemy.Value.TurnsUnknown <= expire)
                         {
-                            //unknown status and info is 5 turns or less old
+                            //unknown status and info is 'x' turns or less old
                             charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.TurnsUnknown,
                                 enemy.Value.TurnsUnknown == 1 ? "" : "s");
                             listInquistors.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
@@ -478,16 +495,17 @@ namespace Next_Game
                     {
                         //known status
                         if (debugMode == true)
-                        { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} Goal -> {4}", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Goal); }
+                        { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}, Status -> {4}, Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
+                            enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal); }
                         else
                         { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
                         listOthers.Add(new Snippet(charString, RLColor.White, RLColor.Black));
                     }
                     else
                     {
-                        if (enemy.Value.TurnsUnknown <= 5)
+                        if (enemy.Value.TurnsUnknown <= expire)
                         {
-                            //unknown status and info is 5 turns or less old
+                            //unknown status and info is 'x' turns or less old
                             charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.TurnsUnknown,
                                 enemy.Value.TurnsUnknown == 1 ? "" : "s");
                             listOthers.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
@@ -2723,7 +2741,7 @@ namespace Next_Game
             Console.WriteLine(Environment.NewLine + "--- End Turn Day {0}", Game.gameTurn + 1);
             Game.map.UpdateMap();
             //Game.map.UpdateActiveCharacters(MoveActors());
-            UpdateActorMapStatus(MoveActors());
+            UpdateActorMoveStatus(MoveActors());
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();
             UpdateActors();
@@ -2733,7 +2751,7 @@ namespace Next_Game
         /// <summary>
         /// updates Movement map layer for the different actors (key is mapMarker which is also the ActID of the character moving) Enemies are only shown if known
         /// </summary>
-        private void UpdateActorMapStatus(Dictionary<int, Position> dictMoveActors)
+        private void UpdateActorMoveStatus(Dictionary<int, Position> dictMoveActors)
         {
             int marker;
             //clear out the Movement layer of the grid first
@@ -3166,7 +3184,7 @@ namespace Next_Game
                 //debug -> random chance of enemy being known
                 if (rnd.Next(100) < 20)
                 {
-                    enemy.Value.Known = true;
+                    enemy.Value.Known = true; enemy.Value.Revert = 0;
                     Console.WriteLine("[{0}] {1} ActID {2} has become KNOWN", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
                 }
 

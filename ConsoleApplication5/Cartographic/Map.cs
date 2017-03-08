@@ -1140,8 +1140,8 @@ namespace Next_Game.Cartographic
                             if (movementLayer == 999)
                             {
                                 backColor5 = RLColor.Black;  foreColor5 = RLColor.Yellow;
-                                //convert double digit #, into a single digit -> '0' (indicates known)
-                                subCell[5] = 0 + 48;
+                                //convert double digit #, into a single digit -> '1' (indicates known)
+                                subCell[5] = 1 + 48;
                             }
                             //place roads right next to player if present
                             switch (mainLayer)
