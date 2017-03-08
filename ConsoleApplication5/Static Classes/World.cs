@@ -456,11 +456,11 @@ namespace Next_Game
                     }
                     else
                     {
-                        if (enemy.Value.Turns <= 5)
+                        if (enemy.Value.TurnsUnknown <= 5)
                         {
                             //unknown status and info is 5 turns or less old
-                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Turns,
-                                enemy.Value.Turns == 1 ? "" : "s");
+                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.TurnsUnknown,
+                                enemy.Value.TurnsUnknown == 1 ? "" : "s");
                             listInquistors.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
                         }
                         else
@@ -485,11 +485,11 @@ namespace Next_Game
                     }
                     else
                     {
-                        if (enemy.Value.Turns <= 5)
+                        if (enemy.Value.TurnsUnknown <= 5)
                         {
                             //unknown status and info is 5 turns or less old
-                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.Turns,
-                                enemy.Value.Turns == 1 ? "" : "s");
+                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.TurnsUnknown,
+                                enemy.Value.TurnsUnknown == 1 ? "" : "s");
                             listOthers.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
                         }
                         else
@@ -2710,8 +2710,8 @@ namespace Next_Game
             //Enemies
             SetEnemyActivity();
             //update position of all key characters on map layers
-            //UpdateFollowerPositions();
-            //UpdateEnemiesPositions();
+            UpdateFollowerPositions();
+            UpdateEnemiesPositions();
             UpdateActiveActors();
         }
 
@@ -2731,10 +2731,11 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// updates all relevant map layers for the different actors (key is mapMarker which is also the ActID of the character moving) Enemies are only shown if known
+        /// updates Movement map layer for the different actors (key is mapMarker which is also the ActID of the character moving) Enemies are only shown if known
         /// </summary>
         private void UpdateActorMapStatus(Dictionary<int, Position> dictMoveActors)
         {
+            int marker;
             //clear out the Movement layer of the grid first
             Game.map.ClearMapLayer(MapLayer.Movement);
             Game.map.ClearMapLayer(MapLayer.Followers);
@@ -2742,31 +2743,23 @@ namespace Next_Game
             //loop dictionary of move actors
             foreach (var pos in dictMoveActors)
             {
+                marker = -1;
                 //get actor
                 Actor person = GetAnyActor(pos.Key);
                 if (person != null)
                 {
-                    if (person is Active)
+                    marker = pos.Key;
+                    if (person is Enemy)
                     {
-                        Game.map.SetMapInfo(MapLayer.Movement, pos.Value.PosX, pos.Value.PosY, pos.Key);
-                        if (person is Follower)
-                        {
-                            //followers always have an actID of between 2 and 9 so no need to convert
-                            Game.map.SetMapInfo(MapLayer.Followers, pos.Value.PosX, pos.Value.PosY, pos.Key);
-                        }
-                    }
-                    else if (person is Enemy)
-                    {
+                        //enemies are shown as '0' indicating Known status (eg. # of days old info)
                         Enemy enemy = person as Enemy;
                         if (enemy.Known == true)
-                        {
-                            //convert enemy actID into a single digit
-                            int marker = pos.Key;
-                            marker = marker % (10);
-                            Game.map.SetMapInfo(MapLayer.Enemies, pos.Value.PosX, pos.Value.PosY, marker);
-                        }
+                        { marker = 0; }
                     }
-                } 
+                    //show on map only if known
+                    if (marker >= 0)
+                    { Game.map.SetMapInfo(MapLayer.Movement, pos.Value.PosX, pos.Value.PosY, marker); }
+            } 
                 else { Game.SetError(new Error(157, "Invalid key (ActID) in dictMoveActors (not found in dict)")); } 
             }
         }
@@ -3166,12 +3159,28 @@ namespace Next_Game
             int ai_search = Game.constant.GetValue(Global.AI_SEARCH);
             int ai_hide = Game.constant.GetValue(Global.AI_HIDE);
             int ai_wait = Game.constant.GetValue(Global.AI_WAIT);
+            int revert = Game.constant.GetValue(Global.KNOWN_REVERT);
             //loop enemy dictionary
             foreach (var enemy in dictEnemyActors)
             {
-                //update status
-                if (enemy.Value.Known == false) { enemy.Value.Turns++; }
-                else { enemy.Value.Turns = 0; enemy.Value.LastKnownLocID = enemy.Value.LocID; enemy.Value.LastKnownGoal = enemy.Value.Goal; }
+                //debug -> random chance of enemy being known
+                if (rnd.Next(100) < 20) { enemy.Value.Known = true; }
+
+                //update status -> unknown
+                if (enemy.Value.Known == false) { enemy.Value.TurnsUnknown++; enemy.Value.Revert = 0; }
+                else
+                {
+                    //known
+                    enemy.Value.TurnsUnknown = 0;
+                    enemy.Value.LastKnownLocID = enemy.Value.LocID;
+                    enemy.Value.LastKnownGoal = enemy.Value.Goal;
+                    enemy.Value.Revert++;
+                    if (enemy.Value.Revert >= revert)
+                    {
+                        enemy.Value.Revert = 0; enemy.Value.Known = false; enemy.Value.TurnsUnknown++;
+                        Console.WriteLine("[{0}] {1} ActID {2} has reverted to Unknown status (timer elapsed)", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
+                    }
+                }
                 //continue on with existing goal or get a new one?
                 if (enemy.Value is Inquisitor)
                 {

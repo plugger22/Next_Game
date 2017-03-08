@@ -428,7 +428,7 @@ namespace Next_Game
                     Location loc = Game.network.GetLocation(locID);
                     //set up status
                     inquisitor.Known = false;
-                    inquisitor.Turns = 1;
+                    inquisitor.TurnsUnknown = 1;
                     inquisitor.Goal = ActorGoal.Wait;
                     inquisitor.LastKnownLocID = locID;
                     inquisitor.LastKnownGoal = ActorGoal.Wait;

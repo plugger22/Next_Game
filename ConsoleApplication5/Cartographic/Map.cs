@@ -1126,7 +1126,7 @@ namespace Next_Game.Cartographic
                                 }
                             }
                         }
-                        //Party Movement - Active Characters
+                        //Party Movement - Active & Enemy Characters
                         if (movementLayer > 0)
                         {
                             backColor5 = RLColor.Yellow;
@@ -1136,13 +1136,9 @@ namespace Next_Game.Cartographic
                             //flashing yellow box highlight for Player only
                             if (flashTimer > 7 && movementLayer == 1)
                             { backColor5 = RLColor.LightGray; }
-                            //vary forecolor depending on location & terrain
-                            /*if (mainLayer == 2)
-                            { foreColor5 = RLColor.Black; } //capital
-                            else if (mainLayer == 1)
-                            { foreColor5 = Color._house; } //location
-                            else
-                            { foreColor5 = RLColor.LightRed; } //in enroute*/
+                            //Red and White for Enemies (assumed to be known, hence # is '0' 
+                            if (movementLayer == 0)
+                            { backColor5 = RLColor.Red;  foreColor5 = RLColor.White; }
                             //place roads right next to player if present
                             switch (mainLayer)
                             {
