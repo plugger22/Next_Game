@@ -1420,7 +1420,6 @@ namespace Next_Game.Cartographic
                                     foreColor5 = RLColor.Yellow;
                                     if (flashTimer > 7) { backColor5 = RLColor.LightGray; }
                                     else { backColor5 = RLColor.Black; }
-                                    break;
                                 }
                             }
                         }
