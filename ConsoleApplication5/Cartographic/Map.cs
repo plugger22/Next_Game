@@ -1137,7 +1137,7 @@ namespace Next_Game.Cartographic
                             if (movementLayer == 1 && flashTimer > 7)
                             { backColor5 = RLColor.LightGray; }
                             //Red and White for Enemies (assumed to be known)
-                            if (movementLayer == 999)
+                            else if (movementLayer == 999)
                             {
                                 backColor5 = RLColor.Black;  foreColor5 = RLColor.Yellow;
                                 //convert double digit #, into a single digit -> '1' (indicates known)

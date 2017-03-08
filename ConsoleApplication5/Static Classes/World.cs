@@ -466,7 +466,7 @@ namespace Next_Game
                     {
                         //known status
                         if (debugMode == true)
-                        { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}, Status -> {4}, Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
+                        { charString = string.Format("Aid {0,-3} {1,-20} {2,-35}{3,-15} Status -> {4}, Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
                             enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal); }
                         else { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
                         listInquistors.Add(new Snippet(charString, RLColor.White, RLColor.Black));
@@ -476,7 +476,7 @@ namespace Next_Game
                         if (enemy.Value.TurnsUnknown <= expire)
                         {
                             //unknown status and info is 'x' turns or less old
-                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.TurnsUnknown,
+                            charString = string.Format("Aid {0,-3} {1,-20} {2,-35}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.TurnsUnknown,
                                 enemy.Value.TurnsUnknown == 1 ? "" : "s");
                             listInquistors.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
                         }
@@ -495,10 +495,10 @@ namespace Next_Game
                     {
                         //known status
                         if (debugMode == true)
-                        { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}, Status -> {4}, Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
+                        { charString = string.Format("Aid {0,-3} {1,-20} {2,-35}{3,-15} Status -> {4}, Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
                             enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal); }
                         else
-                        { charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
+                        { charString = string.Format("Aid {0,-3} {1,-20} {2,-35}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
                         listOthers.Add(new Snippet(charString, RLColor.White, RLColor.Black));
                     }
                     else
@@ -506,14 +506,14 @@ namespace Next_Game
                         if (enemy.Value.TurnsUnknown <= expire)
                         {
                             //unknown status and info is 'x' turns or less old
-                            charString = string.Format("Aid {0,-3} {1,-28} {2,-30}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.TurnsUnknown,
+                            charString = string.Format("Aid {0,-3} {1,-20} {2,-35}{3,-15} {4} day{5} old information", enemy.Key, enemy.Value.Name, locStatus, coordinates, enemy.Value.TurnsUnknown,
                                 enemy.Value.TurnsUnknown == 1 ? "" : "s");
                             listOthers.Add(new Snippet(charString, RLColor.LightRed, RLColor.Black));
                         }
                         else
                         {
                             //unknown status and beyond the time horizon
-                            charString = string.Format("Aid {0,-3} {1,-28} Whereabouts unknown", enemy.Key, enemy.Value.Name);
+                            charString = string.Format("Aid {0,-3} {1,-20} Whereabouts unknown", enemy.Key, enemy.Value.Name);
                             listOthers.Add(new Snippet(charString, RLColor.LightGray, RLColor.Black));
                         }
                     }
@@ -3057,15 +3057,26 @@ namespace Next_Game
         private void UpdateEnemiesPositions()
         {
             Game.map.ClearMapLayer(MapLayer.Enemies);
+            int expire = Game.constant.GetValue(Global.KNOWN_REVERT);
             //loop dictionary -> only place on map layer if known
             foreach (var enemy in dictEnemyActors)
             {
-                if (enemy.Value.Known == true)
+                if (enemy.Value.Status != ActorStatus.Gone)
                 {
-                    //show enemy with a map marker indicating how many days old the information is
-                    Position pos = enemy.Value.GetActorPosition();
-                    if (pos != null)
-                    { Game.map.SetMapInfo(MapLayer.Enemies, pos.PosX, pos.PosY, enemy.Value.Revert); }
+                    if (enemy.Value.Known == true)
+                    {
+                        //show enemy with a map marker indicating how many days old the information is -> 1 day old as Known
+                        Position pos = enemy.Value.GetActorPosition();
+                        if (pos != null)
+                        { Game.map.SetMapInfo(MapLayer.Enemies, pos.PosX, pos.PosY, 1); }
+                    }
+                    else if (enemy.Value.TurnsUnknown <= expire)
+                    {
+                        //show enemy with a map marker indicating how many days old the information is
+                        Position pos = enemy.Value.GetActorPosition();
+                        if (pos != null)
+                        { Game.map.SetMapInfo(MapLayer.Enemies, pos.PosX, pos.PosY, enemy.Value.TurnsUnknown); }
+                    }
                 }
             }
         }
@@ -3182,7 +3193,7 @@ namespace Next_Game
             foreach (var enemy in dictEnemyActors)
             {
                 //debug -> random chance of enemy being known
-                if (rnd.Next(100) < 20)
+                if (enemy.Value.Known == false && rnd.Next(100) < 20)
                 {
                     enemy.Value.Known = true; enemy.Value.Revert = 0;
                     Console.WriteLine("[{0}] {1} ActID {2} has become KNOWN", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
