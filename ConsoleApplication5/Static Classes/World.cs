@@ -2714,6 +2714,7 @@ namespace Next_Game
         {
             Console.WriteLine(Environment.NewLine + "--- Start Turn Day {0}", Game.gameTurn + 1);
             UpdateActorMoveStatus(MoveActors());
+            CheckStationaryActiveActors();
             CalculateCrows();
             //Create events
             Game.director.CheckPlayerEvents();
@@ -3353,48 +3354,78 @@ namespace Next_Game
 
 
         /// <summary>
-        /// checks if player is found by Inquisitors when in the same location/position
+        /// checks if player/follower is found by Inquisitors when in the same location/position
         /// </summary>
-        internal bool CheckIfFound(Position pos)
+        internal bool CheckIfFound(Position pos, int charID)
         {
             bool found = false;
             int knownDM = 0; //modifier for search if player known
-            Active player = GetActiveActor(1);
-            if (player != null)
+            //active characters only
+            if (charID > 0 && charID < 10)
             {
-                if (player.Known == true) { knownDM = 30; }
-                foreach (var enemy in dictEnemyActors)
+                Active person = GetActiveActor(charID);
+                if (person != null)
                 {
-                    if (enemy.Value.Status != ActorStatus.Gone && enemy.Value.GetActorPosition() == pos)
+                    if (person.Known == true) { knownDM = 30; }
+                    foreach (var enemy in dictEnemyActors)
                     {
-                        //in same spot
-                        Console.WriteLine("[{0}] {1}, ActID {2}, is in the same place as the Player (loc {3}:{4})", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
-                        //figure out if spotted and handle disguise and safe house star reduction
-                        switch (enemy.Value.Goal)
+                        if (enemy.Value.Status != ActorStatus.Gone && enemy.Value.GetActorPosition() == pos)
                         {
-                            case ActorGoal.Hide:
-                                if (rnd.Next(100) < (30 + knownDM))
-                                { found = true; }
-                                break;
-                            case ActorGoal.Move:
-                                if (rnd.Next(100) < (20 + knownDM))
-                                { found = true; }
-                                break;
-                            case ActorGoal.Search:
-                                if (rnd.Next(100) < (60 + knownDM))
-                                { found = true; }
-                                break;
-                            case ActorGoal.Wait:
-                                if (rnd.Next(100) < (20 + knownDM))
-                                { found = true; }
-                                break;
+                            //in same spot
+                            Console.WriteLine("[{0}] {1}, ActID {2}, is in the same place as the Player (loc {3}:{4})", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                            //figure out if spotted and handle disguise and safe house star reduction
+                            switch (enemy.Value.Goal)
+                            {
+                                case ActorGoal.Hide:
+                                    if (rnd.Next(100) < (30 + knownDM))
+                                    { found = true; }
+                                    break;
+                                case ActorGoal.Move:
+                                    if (rnd.Next(100) < (20 + knownDM))
+                                    { found = true; }
+                                    break;
+                                case ActorGoal.Search:
+                                    if (rnd.Next(100) < (60 + knownDM))
+                                    { found = true; }
+                                    break;
+                                case ActorGoal.Wait:
+                                    if (rnd.Next(100) < (20 + knownDM))
+                                    { found = true; }
+                                    break;
+                            }
+                        }
+                    }
+                    if (found == true)
+                    { Console.WriteLine("[SEARCH] {0} {1} has been FOUND by an Inquisitor (loc {2}:{3})", person.Title, person.Name, pos.PosX, pos.PosY); }
+                }
+            }
+            return found;
+        }
+
+        /// <summary>
+        /// Checks Active actors who haven't moved to see if they have been found
+        /// </summary>
+        private void CheckStationaryActiveActors()
+        {
+            //loop active actors 
+            foreach (var actor in dictActiveActors)
+            {
+                if (actor.Value.Status != ActorStatus.Gone)
+                {
+                    Position pos = actor.Value.GetActorPosition();
+                    if (pos != null)
+                    {
+                        if (actor.Value is Player)
+                        { CheckIfFound(pos, actor.Value.ActID); }
+                        else
+                        {
+                            //must be a Follower
+                            if (actor.Value.Known == true)
+                            { CheckIfFound(pos, actor.Value.ActID); }
                         }
                     }
                 }
             }
-            if (found == true)
-            { Console.WriteLine("[SEARCH] Player has been FOUND by an Inquisitor (loc {0}:{1})", pos.PosX, pos.PosY); }
-            return found;
         }
 
         //new Methods above here

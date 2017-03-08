@@ -66,22 +66,13 @@ namespace Next_Game.Cartographic
         {
             bool atDestination = false;
             int tempSpeed = speed;
+            int charID;
             //reduce speed by 1 at start to avoid a speed + 1 move
             if (currentPosIndex == 0 && speed > 1)
             { tempSpeed--; }
             //step along path
             for (int i = 0; i < tempSpeed; i++)
             {
-                /*if (currentPosIndex + tempSpeed + 1 >= pathList.Count)
-                //at destination
-                {
-                    currentPosIndex = pathList.Count - 1;
-                    atDestination = true;
-                }
-                else
-                //still enroute
-                { currentPosIndex += tempSpeed; }*/
-
                 if ((currentPosIndex + i + 1) >= pathList.Count)
                 {
                     //at destination
@@ -93,13 +84,14 @@ namespace Next_Game.Cartographic
                     //still enroute
                     currentPosIndex++; 
                 }
-                //check for being in the same place as an enemy
-                if (playerInParty == true)
+                //check for being in the same place as an enemy -> Active characters only
+                charID = characterList[0];
+                if (charID > 0 && charID < 10)
                 {
                     Position pos = pathList[currentPosIndex];
                     //loop enemydict and check if a match
                     if (pos != null)
-                    { Game.world.CheckIfFound(pos); }
+                    { Game.world.CheckIfFound(pos, charID); }
                 }
 
                 //need to check for enemy movements as well
