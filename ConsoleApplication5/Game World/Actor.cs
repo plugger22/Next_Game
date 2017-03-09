@@ -578,10 +578,15 @@ namespace Next_Game
         public void ClearCrowTooltips()
         { crowTooltip.Clear(); }
 
-        public void AddEnemy(int actID)
+        public void AddEnemy(int enemyID)
         {
-            if (actID > 0)
-            { listOfEnemies.Add(actID); }
+            if (enemyID > 0)
+            {
+                //don't add if already present
+                if (listOfEnemies.Contains(enemyID) == false)
+                { listOfEnemies.Add(enemyID); }
+                else { Console.WriteLine("[DEBUG] listOfEnemies for {0} {1}, ActID {2}, already contains Enemy ActID {3}", Title, Name, ActID, enemyID); }
+            }
             else { Game.SetError(new Error(158, "Invalid actID input (zero or less)")); }
         }
 

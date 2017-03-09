@@ -3062,25 +3062,29 @@ namespace Next_Game
         private void UpdateEnemiesPositions()
         {
             Game.map.ClearMapLayer(MapLayer.Enemies);
+            Game.map.ClearMapLayer(MapLayer.EnemiesDebug);
             int expire = Game.constant.GetValue(Global.KNOWN_REVERT);
             //loop dictionary -> only place on map layer if known
             foreach (var enemy in dictEnemyActors)
             {
                 if (enemy.Value.Status != ActorStatus.Gone)
                 {
+                    Position pos = enemy.Value.GetActorPosition();
+                    //add to enemiesDebug layer regardless (shows all enemies at current positions)
+                    Game.map.SetMapInfo(MapLayer.EnemiesDebug, pos.PosX, pos.PosY, 1);
+                    //normal enemies Layer (only what is known by the player)
                     if (enemy.Value.Known == true)
                     {
                         //show enemy with a map marker indicating how many days old the information is -> 1 day old as Known
-                        Position pos = enemy.Value.GetActorPosition();
                         if (pos != null)
                         { Game.map.SetMapInfo(MapLayer.Enemies, pos.PosX, pos.PosY, 1); }
                     }
                     else if (enemy.Value.TurnsUnknown <= expire)
                     {
                         //show enemy with a map marker indicating how many days old the information is (show last known position, not current one).
-                        Position pos = enemy.Value.LastKnownPos;
-                        if (pos != null)
-                        { Game.map.SetMapInfo(MapLayer.Enemies, pos.PosX, pos.PosY, enemy.Value.TurnsUnknown); }
+                        Position pos_1 = enemy.Value.LastKnownPos;
+                        if (pos_1 != null)
+                        { Game.map.SetMapInfo(MapLayer.Enemies, pos_1.PosX, pos_1.PosY, enemy.Value.TurnsUnknown); }
                     }
                 }
             }

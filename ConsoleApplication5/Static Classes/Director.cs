@@ -845,10 +845,12 @@ namespace Next_Game
                     {
                         case EventFilter.None:
                             eventObject.Text = string.Format("You are at {0}. How will you fill your day?", locName);
+                            
                             //option -> audience with local House member
                             if (listLocals.Count() > 0)
                             {
                                 OptionInteractive option = null;
+                                
                                 if (locType != 1)
                                 {
                                     option = new OptionInteractive(string.Format("Seek an Audience with a member of House {0} ({1} present)", houseName, listLocals.Count));
@@ -919,6 +921,12 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
+                            //option -> Leave
+                            OptionInteractive option_L = new OptionInteractive("Leave");
+                            option_L.ReplyGood = "It's a mistake to be here. Time to go.";
+                            OutNone outcome_L = new OutNone(eventObject.EventPID);
+                            option_L.SetGoodOutcome(outcome_L);
+                            eventObject.SetOption(option_L);
                             break;
                         case EventFilter.Locals:
                             eventObject.Name = "Talk to Locals";

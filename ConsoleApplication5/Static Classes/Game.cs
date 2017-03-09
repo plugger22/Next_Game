@@ -82,7 +82,7 @@ namespace Next_Game
         private static string _multiData = null; //multi key input is stored here
         private static int _inputState = 0; //used to differentiate suquential levels of input for individual commands
         private static int _actorID = 0; //used for special MenuMode.Actor_Passive to flip between actors using <- & ->
-        private static MenuMode _menuMode = MenuMode.Main; //menu mode in operation (corresponds to enum above)
+        public static MenuMode _menuMode = MenuMode.Main; //menu mode in operation (corresponds to enum above)
         public static InputMode _inputMode = InputMode.Normal; //non-standard input modes, default none
         public static SpecialMode _specialMode = SpecialMode.None; //special, multiConsole display modes
         public static ConflictMode _conflictMode = ConflictMode.None; //conflict secondary display modes
@@ -617,7 +617,9 @@ namespace Next_Game
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
-                                    //Toggle display of key characters; Off -> Followers -> Enemies -> Off
+                                case MenuMode.Debug:
+                                    //Toggle display of key characters; Off -> Followers -> Enemies -> Off (handled directly by Map.DrawMapRL)
+                                    //If in Debug mode All enemies are shown in current position, otherwise only those known or recently known (marker is how many days old info is)
                                     switch (_infoMode)
                                     {
                                         case InfoMode.None:
