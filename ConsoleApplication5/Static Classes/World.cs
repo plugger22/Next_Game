@@ -3369,34 +3369,43 @@ namespace Next_Game
                     if (person.Known == true) { knownDM = 30; }
                     foreach (var enemy in dictEnemyActors)
                     {
-                        if (enemy.Value.Status != ActorStatus.Gone && enemy.Value.GetActorPosition() == pos)
+                        if (enemy.Value.Status != ActorStatus.Gone)
                         {
-                            //in same spot
-                            Console.WriteLine("[{0}] {1}, ActID {2}, is in the same place as the Player (loc {3}:{4})", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
-                            //figure out if spotted and handle disguise and safe house star reduction
-                            switch (enemy.Value.Goal)
+                            Position posEnemy = enemy.Value.GetActorPosition();
+                            if (posEnemy != null && pos != null)
                             {
-                                case ActorGoal.Hide:
-                                    if (rnd.Next(100) < (30 + knownDM))
-                                    { found = true; }
-                                    break;
-                                case ActorGoal.Move:
-                                    if (rnd.Next(100) < (20 + knownDM))
-                                    { found = true; }
-                                    break;
-                                case ActorGoal.Search:
-                                    if (rnd.Next(100) < (60 + knownDM))
-                                    { found = true; }
-                                    break;
-                                case ActorGoal.Wait:
-                                    if (rnd.Next(100) < (20 + knownDM))
-                                    { found = true; }
-                                    break;
+                                //debug
+                                Console.WriteLine("[Debug] Enemy, ID {0} at {1}:{2}, Player at {3}:{4}", enemy.Value.ActID, posEnemy.PosX, posEnemy.PosY, pos.PosX, pos.PosY);
+                                if (posEnemy.PosX == pos.PosX && posEnemy.PosY == pos.PosY)
+                                {
+                                    //in same spot
+                                    Console.WriteLine("[Found] {0} {1}, ActID {2}, is in the same place as the Player (loc {3}:{4})", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                                    //figure out if spotted and handle disguise and safe house star reduction
+                                    switch (enemy.Value.Goal)
+                                    {
+                                        case ActorGoal.Hide:
+                                            if (rnd.Next(100) < (30 + knownDM))
+                                            { found = true; }
+                                            break;
+                                        case ActorGoal.Move:
+                                            if (rnd.Next(100) < (20 + knownDM))
+                                            { found = true; }
+                                            break;
+                                        case ActorGoal.Search:
+                                            if (rnd.Next(100) < (60 + knownDM))
+                                            { found = true; }
+                                            break;
+                                        case ActorGoal.Wait:
+                                            if (rnd.Next(100) < (20 + knownDM))
+                                            { found = true; }
+                                            break;
+                                    }
+                                }
                             }
                         }
                     }
                     if (found == true)
-                    { Console.WriteLine("[SEARCH] {0} {1} has been FOUND by an Inquisitor (loc {2}:{3})", person.Title, person.Name, pos.PosX, pos.PosY); }
+                    { Console.WriteLine("[SEARCH] {0} {1} has been successfully FOUND by an Inquisitor (loc {2}:{3})", person.Title, person.Name, pos.PosX, pos.PosY); }
                 }
             }
             return found;
