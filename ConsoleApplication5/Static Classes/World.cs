@@ -3411,6 +3411,7 @@ namespace Next_Game
                             //add enemy to list of enemies who have found actor & set found status to true
                             person.AddEnemy(enemy.Value.ActID);
                             person.Found = true;
+                            Console.WriteLine("[DEBUG] {0} {1}, ActID {2} as Found -> True and Enemy ActID {3} added", person.Title, person.Name, person.ActID, enemy.Value.ActID);
                         }
                     }
                     if (found == true)
