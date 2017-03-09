@@ -2745,7 +2745,7 @@ namespace Next_Game
             Game.map.UpdateMap();
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();
-            UpdateActors();
+            HousekeepActors();
             Game.gameTurn++;
         }
 
@@ -2961,7 +2961,7 @@ namespace Next_Game
         /// <summary>
         /// handles end of turn housekeeping for all actor types
         /// </summary>
-        private void UpdateActors()
+        private void HousekeepActors()
         {
             //All actors -> decrement any Condition timers
             foreach(var actor in dictAllActors)
@@ -2977,6 +2977,9 @@ namespace Next_Game
                     actor.Value.Delay--;
                     if (actor.Value.Delay == 0)
                     { actor.Value.DelayReason = null; }
+                    //reset Found and listOfEnemies (search routines)
+                    actor.Value.Found = false;
+                    actor.Value.ResetEnemies();
                 }
             }
         }
@@ -3402,6 +3405,12 @@ namespace Next_Game
                                     }
                                 }
                             }
+                        }
+                        if (found == true)
+                        {
+                            //add enemy to list of enemies who have found actor & set found status to true
+                            person.AddEnemy(enemy.Value.ActID);
+                            person.Found = true;
                         }
                     }
                     if (found == true)

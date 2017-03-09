@@ -544,31 +544,49 @@ namespace Next_Game
         public int Revert { get; set; } //# of turns before Known status reverts to unknown
         public int TurnsUnknown { get; set; } //# of continuous turns spent 'Unknown' (used by conflict for game situations)
         public int LastKnownLocID { get; set; } //updated every turn Actor is known
-        private List<string> crowTooltip { get; set; } //explanation of factors influencing crow chance
+        public bool Found { get; set; } //found by enemies if true, reset each at end of each turn
+        private List<int> listOfEnemies; //if found, contains actID of all enemies who found you, cleared at end of each turn
+        private List<string> crowTooltip;//explanation of factors influencing crow chance
 
 
         public Active()
         {
+            listOfEnemies = new List<int>();
             crowTooltip = new List<string>();
             Title = string.Format("{0}", Type);
             Known = false;
+            Found = false;
         }
 
         public Active(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
+            listOfEnemies = new List<int>();
             crowTooltip = new List<string>();
             Title = string.Format("{0}", Type);
             Known = false;
         }
 
         public void AddCrowTooltip(string tooltip)
-        { if (tooltip != null) { crowTooltip.Add(tooltip); } }
+        {
+            if (String.IsNullOrEmpty(tooltip) == false) { crowTooltip.Add(tooltip); }
+            else { Game.SetError(new Error(159, "Invalid tooltip input (null or Empty)")); }
+        }
 
         public List<string> GetCrowTooltips()
         { return crowTooltip; }
 
         public void ClearCrowTooltips()
         { crowTooltip.Clear(); }
+
+        public void AddEnemy(int actID)
+        {
+            if (actID > 0)
+            { listOfEnemies.Add(actID); }
+            else { Game.SetError(new Error(158, "Invalid actID input (zero or less)")); }
+        }
+
+        public void ResetEnemies()
+        { listOfEnemies.Clear(); }
     }
 
     //Player avatar
