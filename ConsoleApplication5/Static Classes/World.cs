@@ -3462,25 +3462,30 @@ namespace Next_Game
                                         else if (active.CheckEnemyOnList(enemy.Value.ActID) == false)
                                         {
                                             //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
-                                            active.Known = true; active.Revert = known_revert;
-                                            description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
-                                                enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
-                                            Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
-                                            SetPlayerRecord(record);
-                                            SetMessage(new Message(description, MessageType.Search));
+                                            if (active.AddEnemy(enemy.Value.ActID) == true)
+                                            {
+                                                active.Known = true; active.Revert = known_revert;
+                                                description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
+                                                    enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                                                Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
+                                                SetPlayerRecord(record);
+                                                SetMessage(new Message(description, MessageType.Search));
+                                            }
 
                                         }
                                     }
                                     else if (active is Follower)
                                     {
                                         //can only be captured (assumed to be Known)
-                                        active.AddEnemy(enemy.Value.ActID);
-                                        active.Known = true; active.Revert = known_revert;
-                                        description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
-                                            enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
-                                        Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
-                                        SetCurrentRecord(record);
-                                        SetMessage(new Message(description, MessageType.Search));
+                                        if (active.AddEnemy(enemy.Value.ActID) == true)
+                                        {
+                                            active.Known = true; active.Revert = known_revert;
+                                            description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
+                                                enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                                            Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
+                                            SetCurrentRecord(record);
+                                            SetMessage(new Message(description, MessageType.Search));
+                                        }
                                     }
                                 }
                             }
@@ -3588,25 +3593,30 @@ namespace Next_Game
                                     else if (active.Value.CheckEnemyOnList(enemy.ActID) == false)
                                     {
                                         //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
-                                        active.Value.Known = true; active.Value.Revert = known_revert;
-                                        description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
-                                            enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
-                                        Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
-                                        SetPlayerRecord(record);
-                                        SetMessage(new Message(description, MessageType.Search));
+                                        if (active.Value.AddEnemy(enemy.ActID) == true)
+                                        {
+                                            active.Value.Known = true; active.Value.Revert = known_revert;
+                                            description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                                enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
+                                            Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
+                                            SetPlayerRecord(record);
+                                            SetMessage(new Message(description, MessageType.Search));
+                                        }
 
                                     }
                                 }
                                 else if (active.Value is Follower)
                                 {
                                     //can only be captured (assumed to be Known)
-                                    active.Value.AddEnemy(enemy.ActID);
-                                    active.Value.Known = true; active.Value.Revert = known_revert;
-                                    description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
-                                        enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
-                                    Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
-                                    SetCurrentRecord(record);
-                                    SetMessage(new Message(description, MessageType.Search));
+                                    if (active.Value.AddEnemy(enemy.ActID) == true)
+                                    {
+                                        active.Value.Known = true; active.Value.Revert = known_revert;
+                                        description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                            enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
+                                        Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
+                                        SetCurrentRecord(record);
+                                        SetMessage(new Message(description, MessageType.Search));
+                                    }
                                 }
                             }
                         }

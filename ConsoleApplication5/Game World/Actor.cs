@@ -579,7 +579,7 @@ namespace Next_Game
         { crowTooltip.Clear(); }
 
         /// <summary>
-        /// Add enemy to list
+        /// Add enemy to list, returns true if successfull, false if already on list
         /// </summary>
         /// <param name="enemyID"></param>
         public bool AddEnemy(int enemyID)
