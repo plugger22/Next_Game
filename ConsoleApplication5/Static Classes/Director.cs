@@ -908,7 +908,8 @@ namespace Next_Game
                             {
                                 OptionInteractive option = new OptionInteractive("Ask around for Information");
                                 option.ReplyGood = "You make some discreet enquiries";
-                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                //OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutKnown outcome = new OutKnown(eventObject.EventPID, -1);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }

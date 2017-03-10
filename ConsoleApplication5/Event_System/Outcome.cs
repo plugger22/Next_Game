@@ -243,7 +243,7 @@ namespace Next_Game.Event_System
         }
 
         /// <summary>
-        /// copy constructor
+        /// Copy constructor
         /// </summary>
         /// <param name="outcome"></param>
         public OutCondition(OutCondition condition) : base(condition.EventID)

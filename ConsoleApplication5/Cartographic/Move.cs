@@ -106,9 +106,6 @@ namespace Next_Game.Cartographic
                     else { Game.SetError(new Error(160, string.Format("Invalid charID \"{0}\" Position (null)", charID))); }
                 }
                 else { Game.SetError(new Error(160, string.Format("Invalid charID \"{0}\" (null)", charID))); }
-
-                //need to check for enemy movements as well
-
             }
             return atDestination;
         }
