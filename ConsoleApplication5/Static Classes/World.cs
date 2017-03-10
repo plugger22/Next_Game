@@ -1083,12 +1083,20 @@ namespace Next_Game
             return locName;
         }
 
+        /// <summary>
+        /// returns blank string if not found
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         internal string GetLocationName(Position pos)
         {
-            string locName = "unknown";
+            string locName = "";
             int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
-            Location loc = Game.network.GetLocation(locID);
-            locName = loc.LocName;
+            if (locID > 0)
+            {
+                Location loc = Game.network.GetLocation(locID);
+                locName = loc.LocName;
+            }
             return locName;
         }
 
@@ -3419,14 +3427,48 @@ namespace Next_Game
                             }
                             if (found == true)
                             {
+                                Console.WriteLine("[SEARCH] {0} {1} has been successfully FOUND by an Inquisitor (loc {2}:{3})", active.Title, active.Name, pos.PosX, pos.PosY);
                                 //add enemy to list of enemies who have found actor & set found status to true
                                 active.AddEnemy(enemy.Value.ActID);
                                 active.Found = true;
                                 Console.WriteLine("[Debug -> Search] {0} {1}, ActID {2} as Found -> True and Enemy ActID {3} added", active.Title, active.Name, active.ActID, enemy.Value.ActID);
+                                //Stuff that happens when found
+                                string description = "Unknown";
+                                int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
+                                int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                                if (active is Player)
+                                {
+                                    //if unknown then becomes known
+                                    if (active.Known == false)
+                                    {
+                                        active.Known = true; active.Revert = Game.constant.GetValue(Global.KNOWN_REVERT);
+                                        description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
+                                            enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                                        Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Known);
+                                        SetPlayerRecord(record);
+                                    }
+                                    else
+                                    {
+                                        //if already known then challenge/capture
+                                        active.Known = true; active.Revert = Game.constant.GetValue(Global.KNOWN_REVERT);
+                                        description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
+                                            enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                                        Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
+                                        SetPlayerRecord(record);
+
+                                    }
+                                }
+                                else if (active is Follower)
+                                {
+                                    //can only be captured (assumed to be Known)
+                                    active.Known = true; active.Revert = Game.constant.GetValue(Global.KNOWN_REVERT);
+                                    description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
+                                        enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                                    Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
+                                    SetCurrentRecord(record);
+                                }
                             }
                         }
-                        if (found == true)
-                        { Console.WriteLine("[SEARCH] {0} {1} has been successfully FOUND by an Inquisitor (loc {2}:{3})", active.Title, active.Name, pos.PosX, pos.PosY); }
                     }
                     else { Game.SetError(new Error(161, string.Format("Invalid actor (NOT Active) charID \"{0}\"", charID))); }
                 }
@@ -3502,6 +3544,41 @@ namespace Next_Game
                             active.Value.AddEnemy(enemy.ActID);
                             active.Value.Found = true;
                             Console.WriteLine("[Debug -> Search] {0} {1}, ActID {2} is Found -> True and Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID);
+                            //Stuff that happens when found
+                            string description = "Unknown";
+                            int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
+                            int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                            if (active.Value is Player)
+                            {
+                                //if unknown then becomes known
+                                if (active.Value.Known == false)
+                                {
+                                    active.Value.Known = true; active.Value.Revert = Game.constant.GetValue(Global.KNOWN_REVERT);
+                                    description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                        enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
+                                    Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Known);
+                                    SetPlayerRecord(record);
+                                }
+                                else
+                                {
+                                    //if already known then challenge/capture
+                                    active.Value.Known = true; active.Value.Revert = Game.constant.GetValue(Global.KNOWN_REVERT);
+                                    description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                        enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
+                                    Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
+                                    SetPlayerRecord(record);
+
+                                }
+                            }
+                            else if (active.Value is Follower)
+                            {
+                                //can only be captured (assumed to be Known)
+                                active.Value.Known = true; active.Value.Revert = Game.constant.GetValue(Global.KNOWN_REVERT);
+                                description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                    enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
+                                Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
+                                SetCurrentRecord(record);
+                            }
                         }
                     }
                 }
