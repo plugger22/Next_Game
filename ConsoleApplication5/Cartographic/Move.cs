@@ -84,7 +84,7 @@ namespace Next_Game.Cartographic
                     //still enroute
                     currentPosIndex++; 
                 }
-                //check for being in the same place as an enemy -> Active characters only
+                //check for being in the same place as an enemy
                 charID = characterList[0];
                 Actor person = Game.world.GetAnyActor(charID);
                 if (person != null)
@@ -94,12 +94,13 @@ namespace Next_Game.Cartographic
                     {
                         if (person is Active)
                         {
-                            //loop enemydict and check if a match
+                            //Active character moving
                             Game.world.CheckIfFoundActive(pos, charID);
                         }
                         else if (person is Enemy)
                         {
-                            
+                            //Enemy character moving
+                            Game.world.CheckIfFoundEnemy(pos, charID);
                         }
                     }
                     else { Game.SetError(new Error(160, string.Format("Invalid charID \"{0}\" Position (null)", charID))); }

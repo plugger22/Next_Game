@@ -3362,32 +3362,38 @@ namespace Next_Game
 
         /// <summary>
         /// checks Active Character when moving for presence of Enemy in same place
+        /// <param name="charID">ActID of active character</param>
+        /// <param name="pos">Current Position of active character</param>
         /// </summary>
         internal bool CheckIfFoundActive(Position pos, int charID)
         {
             bool found = false;
-            int knownDM = 0; //modifier for search if player known
+            int knownDM = 0; //modifier for search if active character known
             //active characters only
-            Actor actor = GetActiveActor(charID);
-            if (actor != null)
+            Actor actor = GetAnyActor(charID);
+            if (actor != null && actor.Status != ActorStatus.Gone)
             {
                 if (actor is Active)
                 {
-                    Active person = actor as Active;
-                    if (person.Known == true) { knownDM = 30; }
-                    foreach (var enemy in dictEnemyActors)
+                    Active active = actor as Active;
+                    //find player in any situation, find follower only if Known
+                    if (active is Player || (active is Follower && active.Known == true))
                     {
-                        if (enemy.Value.Status != ActorStatus.Gone)
+                        foreach (var enemy in dictEnemyActors)
                         {
                             Position posEnemy = enemy.Value.GetActorPosition();
                             if (posEnemy != null && pos != null)
                             {
                                 //debug
-                                Console.WriteLine("[Debug] Enemy, ID {0} at {1}:{2}, Player at {3}:{4}", enemy.Value.ActID, posEnemy.PosX, posEnemy.PosY, pos.PosX, pos.PosY);
+                                Console.WriteLine("[Debug -> Search] Enemy, {0}, ID {1} at {2}:{3}, Active {4}, ID {5}, at {6}:{7}", enemy.Value.Name, enemy.Value.ActID, posEnemy.PosX, posEnemy.PosY,
+                                    active.Name, active.ActID, pos.PosX, pos.PosY);
                                 if (posEnemy.PosX == pos.PosX && posEnemy.PosY == pos.PosY)
                                 {
                                     //in same spot
-                                    Console.WriteLine("[Found] {0} {1}, ActID {2}, is in the same place as the Player (loc {3}:{4})", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                                    Console.WriteLine("[Found] {0} {1}, ActID {2}, is in the same place as Active {3}, ID {4}, (loc {5}:{6})", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID,
+                                        active.Name, active.ActID, pos.PosX, pos.PosY);
+
+                                    if (active.Known == true) { knownDM = 30; }
                                     //figure out if spotted and handle disguise and safe house star reduction
                                     switch (enemy.Value.Goal)
                                     {
@@ -3409,23 +3415,99 @@ namespace Next_Game
                                             break;
                                     }
                                 }
+                                else { Game.SetError(new Error(161, string.Format("Invalid Enemy (actID {0}) Pos (null) or Active (actID {1}) Pos (null)", enemy.Value.ActID, active.ActID))); }
                             }
-                            else { Game.SetError(new Error(161, string.Format("Invalid Enemy (actID {0}) Pos (null) or Active (actID {1}) Pos (null)", enemy.Value.ActID, person.ActID))); }
+                            if (found == true)
+                            {
+                                //add enemy to list of enemies who have found actor & set found status to true
+                                active.AddEnemy(enemy.Value.ActID);
+                                active.Found = true;
+                                Console.WriteLine("[Debug -> Search] {0} {1}, ActID {2} as Found -> True and Enemy ActID {3} added", active.Title, active.Name, active.ActID, enemy.Value.ActID);
+                            }
+                        }
+                        if (found == true)
+                        { Console.WriteLine("[SEARCH] {0} {1} has been successfully FOUND by an Inquisitor (loc {2}:{3})", active.Title, active.Name, pos.PosX, pos.PosY); }
+                    }
+                    else { Game.SetError(new Error(161, string.Format("Invalid actor (NOT Active) charID \"{0}\"", charID))); }
+                }
+            }
+            else { Game.SetError(new Error(161, string.Format("Invalid actor (null or ActorStatus.Gone) charID \"{0}\", Status {1}", charID, actor.Status))); }
+            return found;
+        }
+
+        /// <summary>
+        /// checks Enemy Character when moving for presence of Active character in same place
+        /// <param name="charID">ActID of Enemy character</param>
+        /// <param name="pos">Current Position of Enemy character</param>
+        /// </summary>
+        internal bool CheckIfFoundEnemy(Position pos, int charID)
+        {
+            bool found = false;
+            int knownDM = 0; //modifier for search if player known
+            //active characters only
+            Actor actor = GetAnyActor(charID);
+            if (actor != null && actor.Status != ActorStatus.Gone)
+            {
+                if (actor is Enemy)
+                {
+                    Enemy enemy = actor as Enemy;
+                    //loop Active Actors and check if in same position as enemy
+                    foreach (var active in dictActiveActors)
+                    {
+                        Position posActive = active.Value.GetActorPosition();
+                        if (posActive != null && pos != null)
+                        {
+                            //find player in any situation, find follower only if Known
+                            if (active.Value is Player || (active.Value is Follower && active.Value.Known == true))
+                            {
+                                //debug
+                                Console.WriteLine("[Debug -> Search] Active {0}, ID {1} at {2}:{3}, Enemy at {4}:{5} ({6}, ID {7}", active.Value.Name, active.Value.ActID,
+                                    posActive.PosX, posActive.PosY, pos.PosX, pos.PosY, enemy.Name, enemy.ActID);
+                                if (posActive.PosX == pos.PosX && posActive.PosY == pos.PosY)
+                                {
+                                    //in same spot
+                                    Console.WriteLine("[Found] {0} {1}, ActID {2}, is in the same place as the Enemy (loc {3}:{4} ({5}, ID {6})", active.Value.Title, active.Value.Name,
+                                        active.Value.ActID, pos.PosX, pos.PosY, enemy.Name, enemy.ActID);
+
+                                    //figure out if spotted and handle disguise and safe house star reduction
+                                    if (active.Value.Known == true) { knownDM = 30; }
+                                    switch (enemy.Goal)
+                                    {
+                                        case ActorGoal.Hide:
+                                            if (rnd.Next(100) < (30 + knownDM))
+                                            { found = true; }
+                                            break;
+                                        case ActorGoal.Move:
+                                            if (rnd.Next(100) < (20 + knownDM))
+                                            { found = true; }
+                                            break;
+                                        case ActorGoal.Search:
+                                            if (rnd.Next(100) < (60 + knownDM))
+                                            { found = true; }
+                                            break;
+                                        case ActorGoal.Wait:
+                                            if (rnd.Next(100) < (20 + knownDM))
+                                            { found = true; }
+                                            break;
+                                    }
+                                }
+                                else { Game.SetError(new Error(161, string.Format("Invalid Enemy (actID {0}) Pos (null) or Active (actID {1}) Pos (null)", enemy.ActID, active.Value.ActID))); }
+                            }
                         }
                         if (found == true)
                         {
+                            Console.WriteLine("[SEARCH] {0} {1} has been FOUND by {2}, ActID {3}, (loc {4}:{5})", active.Value.Title, active.Value.Name, enemy.Name, enemy.ActID,
+                                pos.PosX, pos.PosY);
                             //add enemy to list of enemies who have found actor & set found status to true
-                            person.AddEnemy(enemy.Value.ActID);
-                            person.Found = true;
-                            Console.WriteLine("[DEBUG] {0} {1}, ActID {2} as Found -> True and Enemy ActID {3} added", person.Title, person.Name, person.ActID, enemy.Value.ActID);
+                            active.Value.AddEnemy(enemy.ActID);
+                            active.Value.Found = true;
+                            Console.WriteLine("[Debug -> Search] {0} {1}, ActID {2} is Found -> True and Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID);
                         }
                     }
-                    if (found == true)
-                    { Console.WriteLine("[SEARCH] {0} {1} has been successfully FOUND by an Inquisitor (loc {2}:{3})", person.Title, person.Name, pos.PosX, pos.PosY); }
                 }
-                else { Game.SetError(new Error(161, string.Format("Invalid actor (null) charID \"{0}\"", charID))); }
+                else { Game.SetError(new Error(161, string.Format("Invalid actor (NOT Enemy) charID \"{0}\"", charID))); }
             }
-            else { Game.SetError(new Error(161, string.Format("Invalid actor (NOT Active) charID \"{0}\"", charID))); }
+            else { Game.SetError(new Error(161,  string.Format("Invalid actor (null or ActorStatus.Gone) charID \"{0}\", Status {1}", charID, actor.Status))); }
             return found;
         }
 
