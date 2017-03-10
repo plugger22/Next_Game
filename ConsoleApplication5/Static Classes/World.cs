@@ -3361,18 +3361,19 @@ namespace Next_Game
 
 
         /// <summary>
-        /// checks if player/follower is found by Inquisitors when in the same location/position
+        /// checks Active Character when moving for presence of Enemy in same place
         /// </summary>
-        internal bool CheckIfFound(Position pos, int charID)
+        internal bool CheckIfFoundActive(Position pos, int charID)
         {
             bool found = false;
             int knownDM = 0; //modifier for search if player known
             //active characters only
-            if (charID > 0 && charID < 10)
+            Actor actor = GetActiveActor(charID);
+            if (actor != null)
             {
-                Active person = GetActiveActor(charID);
-                if (person != null)
+                if (actor is Active)
                 {
+                    Active person = actor as Active;
                     if (person.Known == true) { knownDM = 30; }
                     foreach (var enemy in dictEnemyActors)
                     {
@@ -3409,6 +3410,7 @@ namespace Next_Game
                                     }
                                 }
                             }
+                            else { Game.SetError(new Error(161, string.Format("Invalid Enemy (actID {0}) Pos (null) or Active (actID {1}) Pos (null)", enemy.Value.ActID, person.ActID))); }
                         }
                         if (found == true)
                         {
@@ -3421,7 +3423,9 @@ namespace Next_Game
                     if (found == true)
                     { Console.WriteLine("[SEARCH] {0} {1} has been successfully FOUND by an Inquisitor (loc {2}:{3})", person.Title, person.Name, pos.PosX, pos.PosY); }
                 }
+                else { Game.SetError(new Error(161, string.Format("Invalid actor (null) charID \"{0}\"", charID))); }
             }
+            else { Game.SetError(new Error(161, string.Format("Invalid actor (NOT Active) charID \"{0}\"", charID))); }
             return found;
         }
 
@@ -3439,12 +3443,12 @@ namespace Next_Game
                     if (pos != null)
                     {
                         if (actor.Value is Player)
-                        { CheckIfFound(pos, actor.Value.ActID); }
+                        { CheckIfFoundActive(pos, actor.Value.ActID); }
                         else
                         {
                             //must be a Follower
                             if (actor.Value.Known == true)
-                            { CheckIfFound(pos, actor.Value.ActID); }
+                            { CheckIfFoundActive(pos, actor.Value.ActID); }
                         }
                     }
                 }
