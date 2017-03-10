@@ -3204,9 +3204,9 @@ namespace Next_Game
         {
             int playerLocID = GetActiveActorLocByID(1);
             int knownStatus = GetActiveActorKnownStatus(1); //if '0' then unknown
-            int ai_search = Game.constant.GetValue(Global.AI_SEARCH);
-            int ai_hide = Game.constant.GetValue(Global.AI_HIDE);
-            int ai_wait = Game.constant.GetValue(Global.AI_WAIT);
+            int ai_search = Game.constant.GetValue(Global.AI_CONTINUE_SEARCH);
+            int ai_hide = Game.constant.GetValue(Global.AI_CONTINUE_HIDE);
+            int ai_wait = Game.constant.GetValue(Global.AI_CONTINUE_WAIT);
             int revert = Game.constant.GetValue(Global.KNOWN_REVERT);
             //loop enemy dictionary
             foreach (var enemy in dictEnemyActors)
@@ -3377,6 +3377,11 @@ namespace Next_Game
         {
             bool found = false;
             int knownDM = 0; //modifier for search if active character known
+            int ai_known = Game.constant.GetValue(Global.AI_SEARCH_KNOWN);
+            int ai_hide = Game.constant.GetValue(Global.AI_SEARCH_HIDE);
+            int ai_move = Game.constant.GetValue(Global.AI_SEARCH_MOVE);
+            int ai_search = Game.constant.GetValue(Global.AI_SEARCH_SEARCH);
+            int ai_wait = Game.constant.GetValue(Global.AI_SEARCH_WAIT);
             //active characters only
             Actor actor = GetAnyActor(charID);
             if (actor != null && actor.Status != ActorStatus.Gone)
@@ -3402,24 +3407,24 @@ namespace Next_Game
                                     Console.WriteLine("[Found] {0} {1}, ActID {2}, is in the same place as Active {3}, ID {4}, (loc {5}:{6})", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID,
                                         active.Name, active.ActID, pos.PosX, pos.PosY);
 
-                                    if (active.Known == true) { knownDM = 30; }
+                                    if (active.Known == true) { knownDM = ai_known; }
                                     //figure out if spotted and handle disguise and safe house star reduction
                                     switch (enemy.Value.Goal)
                                     {
                                         case ActorGoal.Hide:
-                                            if (rnd.Next(100) < (30 + knownDM))
+                                            if (rnd.Next(100) < (ai_hide + knownDM))
                                             { found = true; }
                                             break;
                                         case ActorGoal.Move:
-                                            if (rnd.Next(100) < (20 + knownDM))
+                                            if (rnd.Next(100) < (ai_move + knownDM))
                                             { found = true; }
                                             break;
                                         case ActorGoal.Search:
-                                            if (rnd.Next(100) < (60 + knownDM))
+                                            if (rnd.Next(100) < (ai_search + knownDM))
                                             { found = true; }
                                             break;
                                         case ActorGoal.Wait:
-                                            if (rnd.Next(100) < (20 + knownDM))
+                                            if (rnd.Next(100) < (ai_wait + knownDM))
                                             { found = true; }
                                             break;
                                     }
@@ -3491,6 +3496,11 @@ namespace Next_Game
         internal bool CheckIfFoundEnemy(Position pos, int charID)
         {
             bool found = false;
+            int ai_known = Game.constant.GetValue(Global.AI_SEARCH_KNOWN);
+            int ai_hide = Game.constant.GetValue(Global.AI_SEARCH_HIDE);
+            int ai_move = Game.constant.GetValue(Global.AI_SEARCH_MOVE);
+            int ai_search = Game.constant.GetValue(Global.AI_SEARCH_SEARCH);
+            int ai_wait = Game.constant.GetValue(Global.AI_SEARCH_WAIT);
             int knownDM = 0; //modifier for search if player known
             //active characters only
             Actor actor = GetAnyActor(charID);
@@ -3519,23 +3529,23 @@ namespace Next_Game
                                         active.Value.ActID, pos.PosX, pos.PosY, enemy.Name, enemy.ActID);
 
                                     //figure out if spotted and handle disguise and safe house star reduction
-                                    if (active.Value.Known == true) { knownDM = 30; }
+                                    if (active.Value.Known == true) { knownDM = ai_known; }
                                     switch (enemy.Goal)
                                     {
                                         case ActorGoal.Hide:
-                                            if (rnd.Next(100) < (30 + knownDM))
+                                            if (rnd.Next(100) < (ai_hide + knownDM))
                                             { found = true; }
                                             break;
                                         case ActorGoal.Move:
-                                            if (rnd.Next(100) < (20 + knownDM))
+                                            if (rnd.Next(100) < (ai_move + knownDM))
                                             { found = true; }
                                             break;
                                         case ActorGoal.Search:
-                                            if (rnd.Next(100) < (60 + knownDM))
+                                            if (rnd.Next(100) < (ai_search + knownDM))
                                             { found = true; }
                                             break;
                                         case ActorGoal.Wait:
-                                            if (rnd.Next(100) < (20 + knownDM))
+                                            if (rnd.Next(100) < (ai_wait + knownDM))
                                             { found = true; }
                                             break;
                                     }
