@@ -578,6 +578,10 @@ namespace Next_Game
         public void ClearCrowTooltips()
         { crowTooltip.Clear(); }
 
+        /// <summary>
+        /// Add enemy to list
+        /// </summary>
+        /// <param name="enemyID"></param>
         public void AddEnemy(int enemyID)
         {
             if (enemyID > 0)
@@ -590,9 +594,22 @@ namespace Next_Game
             else { Game.SetError(new Error(158, "Invalid actID input (zero or less)")); }
         }
 
+        /// <summary>
+        /// If enemy already in list then returns true, otherwise false
+        /// </summary>
+        /// <param name="enemyID"></param>
+        /// <returns></returns>
+        public bool CheckEnemyOnList(int enemyID)
+        {
+            if (listOfEnemies.Contains(enemyID) == true)
+            { return true; }
+            return false;
+        }
+
         public void ResetEnemies()
         { listOfEnemies.Clear(); }
     }
+
 
     //Player avatar
     public class Player : Active
