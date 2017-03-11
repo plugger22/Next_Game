@@ -563,6 +563,7 @@ namespace Next_Game
         public Active(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
             listOfEnemies = new List<int>();
+            listOfSearched = new List<int>();
             crowTooltip = new List<string>();
             Title = string.Format("{0}", Type);
             Known = false;

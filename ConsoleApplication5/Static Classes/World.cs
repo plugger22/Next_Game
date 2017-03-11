@@ -1694,7 +1694,7 @@ namespace Next_Game
                         if (active.Known == true)
                         { resultText = string.Format("{0} {1} has had their Known timer increased to the maximum ({2} days)", active.Title, active.Name, maxRevert); }
                         else
-                        { active.Known = true; resultText = string.Format("{0} {1} is now KNOWN (will revert in {2} days)", active.Title, active.Name, maxRevert); }
+                        { active.Known = true; resultText = string.Format("{0} {1} is now KNOWN ({2} days)", active.Title, active.Name, maxRevert); }
                         active.Revert = maxRevert;
                         //reset TurnsUnknown timer back to zero
                         active.TurnsUnknown = 0;
