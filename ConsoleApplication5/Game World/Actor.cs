@@ -546,12 +546,14 @@ namespace Next_Game
         public int LastKnownLocID { get; set; } //updated every turn Actor is known
         public bool Found { get; set; } //found by enemies if true, reset each at end of each turn
         private List<int> listOfEnemies; //if found, contains actID of all enemies who found you, cleared at end of each turn
+        private List<int> listOfSearched; //tracks every enemy who searches (in same place) for character to prevent enemies making multiple searches each turn. Reset at end of turn.
         private List<string> crowTooltip;//explanation of factors influencing crow chance
 
 
         public Active()
         {
             listOfEnemies = new List<int>();
+            listOfSearched = new List<int>();
             crowTooltip = new List<string>();
             Title = string.Format("{0}", Type);
             Known = false;
@@ -596,6 +598,23 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Add enemy to list (same spot, made a search), returns true if successfull, false if already on list
+        /// </summary>
+        /// <param name="enemyID"></param>
+        public bool AddSearched(int enemyID)
+        {
+            if (enemyID > 0)
+            {
+                //don't add if already present
+                if (listOfSearched.Contains(enemyID) == false)
+                { listOfSearched.Add(enemyID); return true; }
+                else { Console.WriteLine("[DEBUG] listOfSearched for {0} {1}, ActID {2}, already contains Enemy ActID {3}", Title, Name, ActID, enemyID); }
+            }
+            else { Game.SetError(new Error(163, "Invalid actID input (zero or less)")); }
+            return false;
+        }
+
+        /// <summary>
         /// If enemy already in list then returns true, otherwise false
         /// </summary>
         /// <param name="enemyID"></param>
@@ -607,8 +626,23 @@ namespace Next_Game
             return false;
         }
 
+        /// <summary>
+        /// If enemy already in list then returns true, otherwise false
+        /// </summary>
+        /// <param name="enemyID"></param>
+        /// <returns></returns>
+        public bool CheckSearchedOnList(int enemyID)
+        {
+            if (listOfSearched.Contains(enemyID) == true)
+            { return true; }
+            return false;
+        }
+
         public void ResetEnemies()
         { listOfEnemies.Clear(); }
+
+        public void ResetSearched()
+        { listOfSearched.Clear(); }
     }
 
 
