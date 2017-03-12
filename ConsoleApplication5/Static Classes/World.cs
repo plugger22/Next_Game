@@ -3736,8 +3736,15 @@ namespace Next_Game
                     poolOfEnemies -= branchEnemies;
                 }
             }
+            //any unallocated actors get placed in the capital
+            if (poolOfEnemies > 0)
+            { arrayAI[1, 0] += poolOfEnemies; }
+
+            //display arrayAI
+            Console.WriteLine(Environment.NewLine + "--- Array AI");
+            for(int i = 0; i <= arrayAI.GetUpperBound(1); i++)
+            { Console.WriteLine("{0} {1} -> Current {2} -> Desired {3}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i]); }
             
-            //work out how many enemies should be in each branch
 
         }
 
