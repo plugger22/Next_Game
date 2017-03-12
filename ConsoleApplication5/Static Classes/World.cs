@@ -3706,11 +3706,12 @@ namespace Next_Game
             for(int i = 1; i < arrayTemp.Length; i++)
             {
                 if (Game.network.GetBranchConnectorStatus(i) == true)
-                { arrayTemp[i] += connectorBonus; adjustedNumLocs += arrayTemp[i]; }
+                { arrayTemp[i] += connectorBonus;}
+                adjustedNumLocs += arrayTemp[i];
             }
             //work out how many enemies should stay in the captial (normal operations)
             int totalEnemies = Game.constant.GetValue(Global.INQUISITORS);
-            int enemiesInCapital = totalEnemies * Game.constant.GetValue(Global.AI_CAPITAL) / 100;
+            int enemiesInCapital = (int)Math.Round((double)(totalEnemies * Game.constant.GetValue(Global.AI_CAPITAL)) / 100);
             int remainingEnemies = totalEnemies - enemiesInCapital;
             //boundary check
             if (remainingEnemies == 0)
@@ -3720,14 +3721,20 @@ namespace Next_Game
             }
             arrayAI[1, 0] = enemiesInCapital;
             //assign the desired number of enemies to each relevant branch
-            int percent, branchEnemies; 
-            int totalBranchEnemies = 0;
+            int percent, branchEnemies;
+            int poolOfEnemies = remainingEnemies; 
             for(int i = 1; i < arrayTemp.Length; i++)
             {
-                percent = arrayTemp[i] / adjustedNumLocs * 100;
-                branchEnemies = remainingEnemies * percent / 100;
-                totalBranchEnemies += branchEnemies;
-                arrayAI[1, i] = totalBranchEnemies;
+                if (poolOfEnemies > 0)
+                {
+                    percent = (int)Math.Round((double)(arrayTemp[i] * 100) / adjustedNumLocs);
+                    branchEnemies = (int)Math.Round((double)(remainingEnemies * percent) / 100);
+                    //check we aren't over allocating
+                    if (branchEnemies > poolOfEnemies) { branchEnemies = poolOfEnemies; }
+                    arrayAI[1, i] = branchEnemies;
+                    //track total number of allocated enemies
+                    poolOfEnemies -= branchEnemies;
+                }
             }
             
             //work out how many enemies should be in each branch
