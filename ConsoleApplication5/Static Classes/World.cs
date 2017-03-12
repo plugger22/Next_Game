@@ -3722,19 +3722,29 @@ namespace Next_Game
             arrayAI[1, 0] = enemiesInCapital;
             //assign the desired number of enemies to each relevant branch
             int percent, branchEnemies;
-            int poolOfEnemies = remainingEnemies; 
-            for(int i = 1; i < arrayTemp.Length; i++)
+            int poolOfEnemies = remainingEnemies;
+            for (int i = 1; i < arrayTemp.Length; i++)
             {
-                if (poolOfEnemies > 0)
+                percent = (int)Math.Round((double)(arrayTemp[i] * 100) / adjustedNumLocs);
+                branchEnemies = (int)Math.Round((double)(remainingEnemies * percent) / 100);
+                //check we aren't over allocating
+                if (branchEnemies > poolOfEnemies)
                 {
-                    percent = (int)Math.Round((double)(arrayTemp[i] * 100) / adjustedNumLocs);
-                    branchEnemies = (int)Math.Round((double)(remainingEnemies * percent) / 100);
-                    //check we aren't over allocating
-                    if (branchEnemies > poolOfEnemies) { branchEnemies = poolOfEnemies; }
-                    arrayAI[1, i] = branchEnemies;
-                    //track total number of allocated enemies
-                    poolOfEnemies -= branchEnemies;
+                    if (poolOfEnemies == 0)
+                    {
+                        if (enemiesInCapital > 0)
+                        {
+                            //move an enemy from Capital duty to branch duty
+                            arrayAI[1, 0]--;
+                        }
+                        else { branchEnemies = 0; }
+                    }
+                    else { branchEnemies = poolOfEnemies; }
                 }
+
+                arrayAI[1, i] = branchEnemies;
+                //track total number of allocated enemies
+                poolOfEnemies -= branchEnemies;
             }
             //any unallocated actors get placed in the capital
             if (poolOfEnemies > 0)
