@@ -2112,6 +2112,31 @@ namespace Next_Game.Cartographic
             return branches;
         }
 
+        /// <summary>
+        /// returns total # of Loc's on a specified branch
+        /// </summary>
+        /// <param name="branch"></param>
+        /// <returns></returns>
+        internal int GetNumLocsByBranch(int branch)
+        {
+            if (branch > 0 && branch < 5)
+            { return arrayOfNetworkAnalysis[branch, 0]; }
+            else { Game.SetError(new Error(164, "Invalid branch input (outside of 1 to 4 range)")); }
+            return 0;
+        }
+
+        /// <summary>
+        /// returns true if branch has a connector, false otherwise
+        /// </summary>
+        /// <returns></returns>
+        internal bool GetBranchConnectorStatus(int branch)
+        {
+            if (branch > 0 && branch < 5)
+            { if (ArrayOfConnectors[branch, 1] > 0) { return true; } }
+            else { Game.SetError(new Error(166, "Invalid branch input (outside of 1 to 4 range)")); }
+            return false;
+        }
+
         //methods above here
     }
 }

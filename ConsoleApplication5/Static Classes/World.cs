@@ -3689,9 +3689,30 @@ namespace Next_Game
         /// </summary>
         private void InitialiseAI()
         {
+            int connectorBonus = Game.constant.GetValue(Global.AI_CONNECTOR);
+            //work out branch priorities
             int numBranches = Game.network.GetNumBranches();
-            int numLocs = Game.network.GetNumLocations();
-
+            int numLocs = Game.network.GetNumLocations() - 1; //ignore capital
+            int[] arrayTemp = new int[numBranches]; // 0 -> 3 for branch numbering (1 to 4 in arrayAI with 0 being Capital)
+            //allocate # loc's to each branch
+            int tempNumLocs = 0;
+            for(int i = 0; i < numBranches; i++)
+            { arrayTemp[i] = Game.network.GetNumLocsByBranch(i + 1); tempNumLocs += arrayTemp[i]; }
+            //tallies match?
+            if (tempNumLocs != numLocs)
+            { Game.SetError(new Error(165, string.Format("Number of locations don't tally (tempNumLocs (GetNumLocsByBranch) {0} numLocs (GetNumLocations) {1})", tempNumLocs, numLocs))); }
+            //allow for connectors (provide more flexibility and make a branch more valuable to the enemy if present)
+            for(int i = 0; i < numBranches; i++)
+            {
+                if (Game.network.GetBranchConnectorStatus(i + 1) == true)
+                {
+                    //num of locs in a branch gets a % bonus, min 1
+                    int tempLocs = arrayTemp[i];
+                    int tempBonus = connectorBonus * tempLocs / 100;
+                    tempBonus = Math.Max(tempBonus, 1);
+                    arrayTemp[i] += tempBonus;
+                }
+            }
             //work out how many enemies should stay in the captial (normal operations)
             int totalEnemies = Game.constant.GetValue(Global.INQUISITORS);
             int enemiesInCapital = totalEnemies * Game.constant.GetValue(Global.AI_CAPITAL) / 100;

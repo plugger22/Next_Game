@@ -141,6 +141,8 @@
 # AI_SEARCH_WAIT -> % chance to find active character when enemy has the Wait goal
 53: 20 @ 5 @ 80
 # AI_CAPITAL -> Min % of total Enemies who should remain in the Capital during normal operations (player location unknown)
-54: 25 @ 10 @ 50
+54: 20 @ 10 @ 50
+# AI_CONNECTOR -> % multiplier to num of Loc's on a branch whenever a Connector is present (more flexibility -> greater value as a branch)
+55: 25 @ 0 @ 50
 
-# Next valid number -> 55
+# Next valid number -> 56
