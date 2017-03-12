@@ -142,7 +142,7 @@
 53: 20 @ 5 @ 80
 # AI_CAPITAL -> Min % of total Enemies who should remain in the Capital during normal operations (player location unknown)
 54: 20 @ 10 @ 50
-# AI_CONNECTOR -> % multiplier to num of Loc's on a branch whenever a Connector is present (more flexibility -> greater value as a branch)
-55: 25 @ 0 @ 50
+# AI_CONNECTOR -> num of bonus Loc's on a branch (priority array) whenever a Connector is present (more flexibility -> greater value as a branch)
+55: 4 @ 0 @ 10
 
 # Next valid number -> 56
