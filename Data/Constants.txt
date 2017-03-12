@@ -86,7 +86,7 @@
 # KNOWN_REVERT -> number of turns before Known status reverts to Unknown (player and enemies) (also how long old info shown for)
 44: 4 @ 1 @ 5
 # INQUISITORS -> base number of inquisitors at game start (normal difficulty)
-45: 4 @ 1 @ 6
+45: 4 @ 2 @ 8
 
 # Decisions ---
 
@@ -140,5 +140,7 @@
 52: 60 @ 5 @ 80
 # AI_SEARCH_WAIT -> % chance to find active character when enemy has the Wait goal
 53: 20 @ 5 @ 80
+# AI_CAPITAL -> Min % of total Enemies who should remain in the Capital during normal operations (player location unknown)
+54: 25 @ 10 @ 50
 
-# Next valid number -> 54
+# Next valid number -> 55

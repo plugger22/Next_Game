@@ -8,7 +8,7 @@ using RLNET;
 
 namespace Next_Game.Cartographic
 {
-    public enum NetGrid { Locations, Connections, Houses, WorkingLocs, Specials, Count } //arrayOfNetworkAnalysis
+    public enum NetGrid { Locations, Connections, Houses, WorkingLocs, Specials, Count } //arrayOfNetworkAnalysis -> Connections is the # Connections for first Loc out from Capital on branch
 
     public class Network
     {
@@ -2100,7 +2100,17 @@ namespace Next_Game.Cartographic
             return listOfKeys[randomKey];
         }
 
-
+        /// <summary>
+        /// returns the # of Branches (1 to 4) by checking for any branch with zero locations
+        /// </summary>
+        /// <returns></returns>
+        internal int GetNumBranches()
+        {
+            int branches = 4;
+            for (int i = 1; i <= arrayOfNetworkAnalysis.GetUpperBound(0); i++)
+            { if (arrayOfNetworkAnalysis[i, 0] == 0) { branches--; } }
+            return branches;
+        }
 
         //methods above here
     }

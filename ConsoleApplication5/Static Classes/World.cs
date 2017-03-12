@@ -12,6 +12,7 @@ namespace Next_Game
     {
         static Random rnd;
         private List<Move> moveList; //list of characters moving through the world
+        private int[,] arrayAI; //'0' -> # enemies at capital, '1,2,3,4' -> # enemies patrolling each branch, [0,] -> actual, [1,] -> desired
         private readonly Queue<Snippet> messageQueue; //short term queue to display recent messages
         private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID (non-activated followers aren't in dictionary)
         private Dictionary<int, Passive> dictPassiveActors; //list of all NPC actors keyed of actorID
@@ -37,6 +38,7 @@ namespace Next_Game
         {
             rnd = new Random(seed);
             moveList = new List<Move>();
+            arrayAI = new int[2, 5];
             messageQueue = new Queue<Snippet>();
             dictActiveActors = new Dictionary<int, Active>();
             dictPassiveActors = new Dictionary<int, Passive>();
@@ -88,6 +90,9 @@ namespace Next_Game
             timer_2.Start();
             InitialiseSecrets();
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
+            timer_2.Start();
+            InitialiseAI();
+            Game.StopTimer(timer_2, "W: InitialiseAI");
         }
 
         /// <summary>
@@ -3677,6 +3682,22 @@ namespace Next_Game
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Analyses map and sets up the desired part of the AI array (# enemies at capital and # enemies to allocate to each branch)
+        /// </summary>
+        private void InitialiseAI()
+        {
+            int numBranches = Game.network.GetNumBranches();
+            int numLocs = Game.network.GetNumLocations();
+
+            //work out how many enemies should stay in the captial (normal operations)
+            int totalEnemies = Game.constant.GetValue(Global.INQUISITORS);
+            int enemiesInCapital = totalEnemies * Game.constant.GetValue(Global.AI_CAPITAL) / 100;
+            arrayAI[1, 0] = enemiesInCapital;
+            //work out how many enemies should be in each branch
+
         }
 
         //new Methods above here
