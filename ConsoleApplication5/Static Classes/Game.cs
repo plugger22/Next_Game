@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using RLNET;
 using Next_Game.Cartographic;
 using Next_Game.Event_System;
+using System.Globalization;
+using System.IO;
 
 namespace Next_Game
 {
@@ -146,6 +148,10 @@ namespace Next_Game
             layout = new Layout(seed, 130, 100, 2, 3, RLColor.Black, RLColor.Yellow);
             layout.Initialise();
             conflict = new Conflict(seed);
+            //debug -> write seed to file
+            DateTime date1 = DateTime.Now;
+            string seedInfo = string.Format("Seed {0} -> {1}", seed, date1.ToString("f", CultureInfo.CreateSpecificCulture("en-AU"))) + Environment.NewLine;
+            File.AppendAllText("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Seed.txt", seedInfo);
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);

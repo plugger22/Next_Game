@@ -3743,7 +3743,8 @@ namespace Next_Game
             //display arrayAI
             Console.WriteLine(Environment.NewLine + "--- Array AI");
             for(int i = 0; i <= arrayAI.GetUpperBound(1); i++)
-            { Console.WriteLine("{0} {1} -> Current {2} -> Desired {3}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i]); }
+            { Console.WriteLine("{0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i], 
+                arrayTemp[i]); }
             
 
         }
