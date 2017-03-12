@@ -132,7 +132,7 @@ namespace Next_Game
                 if (histActorIncident > 0)
                 { listOfHistoricalActorIncidents.Add(histActorIncident); }
                 //debug
-                Console.WriteLine("ACTOR RECORD: ID {0}, {1}", actorID, description);
+                Console.WriteLine("ACTOR RECORD: {0}", description);
             }
             else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }

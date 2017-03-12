@@ -823,6 +823,10 @@ namespace Next_Game
         public int TurnsUnknown { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
         public ActorGoal Goal { get; set; } //current goal (mission) for an AI controlled actor
         public int GoalTurns { get; set; } //number of turns currently spent on existing goal
+        //ai related
+        public int AssignedBranch { get; set; } //branch allocated at start of game, '0' indicates capital
+        public bool MoveOut { get; set; } //direction of movement along branch, 'true' -> outward from capital, 'false' -> inwards to Capital
+        public bool HuntMode { get; set; } //'true' -> actively hunting player, 'false' -> patrolling branch
 
         public Enemy(string name, ActorType type = ActorType.None, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }

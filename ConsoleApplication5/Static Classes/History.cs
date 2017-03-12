@@ -429,7 +429,8 @@ namespace Next_Game
                     //set up status
                     inquisitor.Known = false;
                     inquisitor.TurnsUnknown = 1;
-                    inquisitor.Goal = ActorGoal.Wait;
+                    if (inquisitor.AssignedBranch == 0) { inquisitor.Goal = ActorGoal.Wait; }
+                    else { inquisitor.Goal = ActorGoal.Move; }
                     inquisitor.LastKnownLocID = locID;
                     inquisitor.LastKnownPos = loc.GetPosition();
                     inquisitor.LastKnownGoal = ActorGoal.Wait;
@@ -438,7 +439,8 @@ namespace Next_Game
                     inquisitor.AddRelEventLord(new Relation("Loyal to the point of death", "Totally loyal", +50));
                     //personal history
                     int year = Game.gameRevolt;
-                    Record record = new Record("Took the irrevocable oath of lifetime celibacy and obedience to the Dark Brotherhood of Inquisitioners", inquisitor.ActID, locID, refID, year,
+                    string description = string.Format("{0}, ActID {1}, Took an oath to the Dark Brotherhood of Inquisitioners", inquisitor.Name, inquisitor.ActID);
+                    Record record = new Record(description, inquisitor.ActID, locID, refID, year,
                         HistActorIncident.Service);
                     Game.world.SetHistoricalRecord(record);
                     //place characters at Location

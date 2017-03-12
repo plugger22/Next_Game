@@ -12,7 +12,7 @@ namespace Next_Game
     {
         static Random rnd;
         private List<Move> moveList; //list of characters moving through the world
-        private int[,] arrayAI; //'0' -> # enemies at capital, '1,2,3,4' -> # enemies patrolling each branch, [0,] -> actual, [1,] -> desired
+        private int[,] arrayAI; //'0' -> # enemies at capital, '1,2,3,4' -> # enemies patrolling each branch, [0,] -> actual, [1,] -> desired [2,] -> temp data
         private readonly Queue<Snippet> messageQueue; //short term queue to display recent messages
         private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID (non-activated followers aren't in dictionary)
         private Dictionary<int, Passive> dictPassiveActors; //list of all NPC actors keyed of actorID
@@ -38,7 +38,7 @@ namespace Next_Game
         {
             rnd = new Random(seed);
             moveList = new List<Move>();
-            arrayAI = new int[2, 5];
+            arrayAI = new int[3, 5];
             messageQueue = new Queue<Snippet>();
             dictActiveActors = new Dictionary<int, Active>();
             dictPassiveActors = new Dictionary<int, Passive>();
@@ -82,7 +82,6 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitialiseTraits");
             timer_2.Start();
             //need to be here for sequencing issues
-            InitialiseEnemyActors();
             Game.history.InitialiseOverthrow(dictPassiveActors);
             Game.history.InitialiseLordRelations();
             Game.history.InitialisePastHistoryHouses();
@@ -92,6 +91,7 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
             timer_2.Start();
             InitialiseAI();
+            InitialiseEnemyActors();
             Game.StopTimer(timer_2, "W: InitialiseAI");
         }
 
@@ -157,16 +157,34 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// set up inquisitors and any other enemies
+        /// set up inquisitors and any other enemies -> NOTE: must come AFTER InitialiseAI
         /// </summary>
         private void InitialiseEnemyActors()
         {
             int numInquisitors = Game.constant.GetValue(Global.INQUISITORS);
+            Console.WriteLine(Environment.NewLine + "--- Initialise Enemies");
             //loop for # of inquisitors
             for (int i = 0; i < numInquisitors; i++)
             {
                 //create at capital
                 Game.history.CreateInquisitor(1);
+            }
+            //assign specific enemies to tasks (based on InitialiseAI)
+            Console.WriteLine(Environment.NewLine + "--- Assign Enemies");
+            foreach (var enemy in dictEnemyActors)
+            {
+                enemy.Value.MoveOut = true;
+                enemy.Value.HuntMode = false;
+                for (int i = 0; i <= arrayAI.GetUpperBound(1); i++)
+                {
+                    if (arrayAI[2, i] > 0)
+                    {
+                        enemy.Value.AssignedBranch = i;
+                        arrayAI[2, i]--;
+                        Console.WriteLine("[{0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i);
+                        break;
+                    }
+                }
             }
         }
 
@@ -472,8 +490,8 @@ namespace Next_Game
                     {
                         //known status
                         if (debugMode == true)
-                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12}  Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
-                            enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal); }
+                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12}  Goal -> {5,-8} Branch -> {6}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
+                            enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal, enemy.Value.AssignedBranch); }
                         else { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
                         listInquistors.Add(new Snippet(charString, RLColor.White, RLColor.Black));
                     }
@@ -3749,14 +3767,15 @@ namespace Next_Game
             //any unallocated actors get placed in the capital
             if (poolOfEnemies > 0)
             { arrayAI[1, 0] += poolOfEnemies; }
+            //copy finalised data from range 1 to range 2 (temp data used for assigning enemies in InitialiseEnemyActors)
+            for (int i = 0; i <= arrayAI.GetUpperBound(1); i++)
+            { arrayAI[2, i] = arrayAI[1, i]; }
 
-            //display arrayAI
-            Console.WriteLine(Environment.NewLine + "--- Array AI");
+                //display arrayAI
+                Console.WriteLine(Environment.NewLine + "--- Array AI");
             for(int i = 0; i <= arrayAI.GetUpperBound(1); i++)
             { Console.WriteLine("{0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i], 
                 arrayTemp[i]); }
-            
-
         }
 
         //new Methods above here
