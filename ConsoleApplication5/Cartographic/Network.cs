@@ -732,9 +732,9 @@ namespace Next_Game.Cartographic
 
         }
 
-        //Main Route Finding Algorithim from A to B anywhere on the map.
-        //Returns List<Route> to enable a Map object to draw the route on the map
-        //data validation of A & B positions is done by Network.RouteInput()
+        ///Main Route Finding Algorithim from A to B anywhere on the map (Note: Loc -> Loc, NOT Pos -> Loc)
+        ///Returns List<Route> to enable a Map object to draw the route on the map
+        ///data validation of A & B positions is done by Network.RouteInput()
         internal List<Route> GetRouteAnywhere(Position posOrigin, Position posDestination)
         {
             List<Route> listOfDirectRoutes = new List<Route>(); //default straight shot routes
