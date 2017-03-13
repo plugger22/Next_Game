@@ -61,6 +61,7 @@ namespace Next_Game
         AI_SEARCH_WAIT,
         AI_CAPITAL,
         AI_CONNECTOR,
+        AI_HUNT_THRESHOLD,
         Count //keep as last
     }
 
@@ -131,6 +132,7 @@ namespace Next_Game
             arrayOfGlobals[53] = Global.AI_SEARCH_WAIT;
             arrayOfGlobals[54] = Global.AI_CAPITAL;
             arrayOfGlobals[55] = Global.AI_CONNECTOR;
+            arrayOfGlobals[56] = Global.AI_HUNT_THRESHOLD;
         }
 
         /// <summary>

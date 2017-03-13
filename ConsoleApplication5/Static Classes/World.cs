@@ -1696,6 +1696,25 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// returns num days since player was last Known
+        /// </summary>
+        /// <param name="actID"></param>
+        /// <returns></returns>
+        public int GetActiveActorTrackingStatus(int actID)
+        {
+            //check active actor in dictionary
+            if (dictActiveActors.ContainsKey(actID))
+            {
+                Active active = dictActiveActors[actID];
+                if (active.Status != ActorStatus.Gone)
+                { return active.TurnsUnknown; }
+                else { Game.SetError(new Error(137, string.Format("Active Actor, actID {0},  \"Gone\"", active.ActID))); }
+            }
+            else { Game.SetError(new Error(137, "Active Actor not found in dictActiveActors")); }
+            return 0;
+        }
+
+        /// <summary>
         /// change an Active Actors known status -> data +ve then switch to UNKNOWN, if -ve then KNOWN (if already Known then reset Revert timer to 0). Returns MT if insuccessful
         /// </summary>
         /// <param name="actID"></param>
@@ -1761,6 +1780,11 @@ namespace Next_Game
         }
 
         
+        /// <summary>
+        /// returns current Loc (their destination if travelling)
+        /// </summary>
+        /// <param name="actID"></param>
+        /// <returns></returns>
         public int GetActiveActorLocByID(int actID)
         {
             int locID = 0;
@@ -1769,6 +1793,23 @@ namespace Next_Game
             {
                 Active person = dictActiveActors[actID];
                 locID = person.LocID;
+            }
+            return locID;
+        }
+
+        /// <summary>
+        /// returns Last Known Loc of Active Actor (their destination if travelling)
+        /// </summary>
+        /// <param name="actID"></param>
+        /// <returns></returns>
+        public int GetActiveActorLastKnownLoc(int actID)
+        {
+            int locID = 0;
+            //find in dictionary
+            if (dictActiveActors.ContainsKey(actID))
+            {
+                Active person = dictActiveActors[actID];
+                locID = person.LastKnownLocID;
             }
             return locID;
         }
@@ -2761,6 +2802,7 @@ namespace Next_Game
                 { Game._specialMode = SpecialMode.FollowerEvent; }
             }
             //Enemies
+            UpdateControllerAI();
             SetEnemyActivity();
             //update position of all key characters on map layers
             UpdateFollowerPositions();
@@ -3134,6 +3176,7 @@ namespace Next_Game
                 if (actor.Value.Known == true)
                 {
                     actor.Value.LastKnownLocID = actor.Value.LocID;
+                    actor.Value.TurnsUnknown = 0;
                     actor.Value.Revert--;
                     Console.WriteLine("{0} {1} has had their Revert Timer reduced from {2} to {3}", actor.Value.Title, actor.Value.Name, actor.Value.Revert + 1, actor.Value.Revert);
                     if (actor.Value.Revert <= 0)
@@ -3228,7 +3271,7 @@ namespace Next_Game
         private void SetEnemyActivity()
         {
             int playerLocID = GetActiveActorLocByID(1);
-            int knownStatus = GetActiveActorKnownStatus(1); //if '0' then unknown
+            int knownStatus = GetActiveActorTrackingStatus(1); //if '0' then Known, if > 0 then # of days since last known
             int ai_search = Game.constant.GetValue(Global.AI_CONTINUE_SEARCH);
             int ai_hide = Game.constant.GetValue(Global.AI_CONTINUE_HIDE);
             int ai_wait = Game.constant.GetValue(Global.AI_CONTINUE_WAIT);
@@ -3325,6 +3368,36 @@ namespace Next_Game
                     //all other enemies
                 }
             }
+        }
+
+        /// <summary>
+        /// Master AI controller, checked each turn, determines HuntMode for each enemy based on big picture analysis
+        /// </summary>
+        private void UpdateControllerAI()
+        {
+            int threshold = Game.constant.GetValue(Global.AI_HUNT_THRESHOLD); //max # turns since Player last known that AI will continue to hunt
+            int knownStatus = GetActiveActorTrackingStatus(1); //if '0' then Known, if > 0 then # of days since last known
+            int playerLocID, distance;
+            //Player location is current, if known, or last known if not. Will be destination if travelling.
+            if (knownStatus == 0) { playerLocID = GetActiveActorLocByID(1); }
+            else { playerLocID = GetActiveActorLastKnownLoc(1); }
+            if (playerLocID > 0)
+            {
+                
+                if (knownStatus <= threshold)
+                {
+                    //Known
+                    foreach(var enemy in dictEnemyActors)
+                    {
+                        //create a sorted list of enemies by dist to player
+                    }
+                }
+                else
+                {
+                    //Unknown
+                }
+            }
+            else { Game.SetError(new Error(167, "Warning -> LocID of Player has returned Zero")); }
         }
 
         /// <summary>
@@ -3759,7 +3832,6 @@ namespace Next_Game
                     }
                     else { branchEnemies = poolOfEnemies; }
                 }
-
                 arrayAI[1, i] = branchEnemies;
                 //track total number of allocated enemies
                 poolOfEnemies -= branchEnemies;
