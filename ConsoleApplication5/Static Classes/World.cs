@@ -11,7 +11,7 @@ namespace Next_Game
     public class World
     {
         static Random rnd;
-        private List<Move> moveList; //list of characters moving through the world
+        private List<Move> listMoveObjects; //actors moving through the world
         private int[,] arrayAI; //'0' -> # enemies at capital, '1,2,3,4' -> # enemies patrolling each branch, [0,] -> actual, [1,] -> desired [2,] -> temp data
         private readonly Queue<Snippet> messageQueue; //short term queue to display recent messages
         private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID (non-activated followers aren't in dictionary)
@@ -37,7 +37,7 @@ namespace Next_Game
         public World(int seed)
         {
             rnd = new Random(seed);
-            moveList = new List<Move>();
+            listMoveObjects = new List<Move>();
             arrayAI = new int[3, 5];
             messageQueue = new Queue<Snippet>();
             dictActiveActors = new Dictionary<int, Active>();
@@ -224,7 +224,7 @@ namespace Next_Game
                         //create new move object
                         Move moveObject = new Move(path, party, speed, true, Game.gameTurn);
                         //insert into moveList
-                        moveList.Add(moveObject);
+                        listMoveObjects.Add(moveObject);
                         //update character status to 'travelling'
                         person.Status = ActorStatus.Travelling;
                         //update characterLocationID (now becomes destination)
@@ -247,11 +247,11 @@ namespace Next_Game
             //create a dictionary of position and map markers to return (passed up to game thence to map to update mapgrid
             Dictionary<int, Position> dictMapMarkers = new Dictionary<int, Position>();
             //loop moveList. Update each move object - update Character Location ID
-            for(int i = 0; i < moveList.Count; i++)
+            for(int i = 0; i < listMoveObjects.Count; i++)
             {
                 //move speed clicks down list of positions (ignore locations at present)
                 Move moveObject = new Move();
-                moveObject = moveList[i];
+                moveObject = listMoveObjects[i];
                 moveObject.UpdatePartyStatus();
                 if (moveObject.Status == PartyStatus.Active)
                 {
@@ -334,12 +334,12 @@ namespace Next_Game
                 }
             }
             //reverse loop through list of Moveobjects and delete any that are marked as 'Done'
-            for(int i = moveList.Count; i > 0; i--)
+            for(int i = listMoveObjects.Count; i > 0; i--)
             {
-                if (moveList[i - 1].Status == PartyStatus.Done)
+                if (listMoveObjects[i - 1].Status == PartyStatus.Done)
                 {
                     try
-                    { moveList.RemoveAt(i - 1); }
+                    { listMoveObjects.RemoveAt(i - 1); }
                     catch (Exception e)
                     { Game.SetError(new Error(61, e.Message)); }
                 }
@@ -3377,19 +3377,44 @@ namespace Next_Game
         {
             int threshold = Game.constant.GetValue(Global.AI_HUNT_THRESHOLD); //max # turns since Player last known that AI will continue to hunt
             int knownStatus = GetActiveActorTrackingStatus(1); //if '0' then Known, if > 0 then # of days since last known
-            int playerLocID, distance, key;
+            int playerLocID, distance;
+            int turnsToDestination = 0; //# of turns for Player to reach their destination if travelling (used to adjust threshold)
+            Console.WriteLine("- AI Controller -> Enemies sorted by distance to Player");
+            //get player
+            Player player = (Player)GetActiveActor(1);
+            if (player != null)
+            {
+                //Travelling? Allow for time taken to reach destination
+                if (player.Status == ActorStatus.Travelling)
+                {
+                    //loop List of Move objects looking for Player's party
+                    for (int i = 0; i < listMoveObjects.Count; i++)
+                    {
+                        Move moveObject = listMoveObjects[i];
+                        if (moveObject.PlayerInParty == true)
+                        {
+                            //player found, determine how many route segments left
+                            turnsToDestination = moveObject.CheckTurnsToDestination();
+                            Console.WriteLine("[Notification - ControllerAI] Player is Travelling -> {0} turns from their destination", turnsToDestination);
+                            break;
+                        }
+                    }
+                }
+            }
+            //threshold is adjusted upwards if Player enroute to a destination
+            threshold += turnsToDestination;
             //Player location is current, if known, or last known if not. Will be destination if travelling.
             if (knownStatus == 0) { playerLocID = GetActiveActorLocByID(1); }
             else { playerLocID = GetActiveActorLastKnownLoc(1); }
             if (playerLocID > 0)
             {
-                
+                //can only hunt a recently known player for so long before reverting back to normal behaviour (there is a time taken test below which tests threshold on a tighter basis)
                 if (knownStatus <= threshold)
                 {
                     //Known
                     Location loc = Game.network.GetLocation(playerLocID);
                     Position playerPos = loc.GetPosition();
-                    Console.WriteLine("- AI Controller -> Enemies sorted by distance to Player");
+                    //dictionary to handle sorted distance data
                     Dictionary<int, int> tempDict = new Dictionary<int, int>();
                     foreach(var enemy in dictEnemyActors)
                     {
@@ -3413,13 +3438,24 @@ namespace Next_Game
                             enemyPos.PosX, enemyPos.PosY))); }
                     }
                     //sort dictionary by distance
-                    if (tempDict.Count > 1)
+                    if (tempDict.Count > 0)
                     {
                         var sorted = from pair in tempDict orderby pair.Value ascending select pair;
                         foreach (var pair in sorted)
-                        { Console.WriteLine("Enemy ID {0}   distance -> {1}", pair.Key, pair.Value );  }
+                        {
+                            Enemy enemy = (Enemy)GetAnyActor(pair.Key);
+                            if (enemy != null)
+                            {
+                                //can enemy reach player loc within threshold time? (distance / speed = # of turns <= threshold # of turns allowed
+                                if (pair.Value / enemy.Speed <= threshold)
+                                { enemy.HuntMode = true; }
+                                else { enemy.HuntMode = false; }
+                                Console.WriteLine("Enemy ID {0}  distance -> {1}  Threshold -> {2}  Mode -> {3}", pair.Key, pair.Value, threshold, enemy.HuntMode == true ? "Hunt" : "Normal"); 
+                            }
+                            else { Game.SetError(new Error(167, string.Format("Invalid enemy, ID {0} (null)", pair.Key))); }
+                        }
                     }
-                    else { Console.WriteLine("[Notification -> AI Controller] tempDictionary has too few records to sort (1 or less)"); }
+                    else { Console.WriteLine("[Notification -> AI Controller] tempDictionary has too few records to sort (zero)"); }
                 }
                 else
                 {

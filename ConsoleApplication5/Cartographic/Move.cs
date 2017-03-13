@@ -18,7 +18,7 @@ namespace Next_Game.Cartographic
         int turnDeparted;
         public PartyStatus Status { get; set; }
         //public PartyVisibility Visibility { get; set; } //does the party show on the map?
-        bool playerInParty; //is a player controlled character in the party? (different color or symbol on map)
+        public bool PlayerInParty { get; set; } //is a player controlled character in the party? (different color or symbol on map)
         public int MapMarker { get; set; } //# of party on map which is equal to the highest ranked member in party (lowest ID as ID 1 is the player)
 
         public Move()
@@ -39,8 +39,8 @@ namespace Next_Game.Cartographic
             characterList = new List<int>(listParty);
             this.speed = speed;
             Status = PartyStatus.Active;
-            currentPosIndex = 0;
-            this.playerInParty = playerInParty;
+            currentPosIndex = 0; //how far the party currently is along the path List
+            this.PlayerInParty = playerInParty;
             this.turnDeparted = turnDeparted;
             MapMarker = characterList[0];
             //find highest ranked party member by ID (lowest)
@@ -57,6 +57,13 @@ namespace Next_Game.Cartographic
             //TODO need a way of numbering NPC parties
             { MapMarker = 0; }*/
         }
+
+        /// <summary>
+        /// gives # of turns to reach destination from current position
+        /// </summary>
+        /// <returns></returns>
+        internal int CheckTurnsToDestination()
+        { return pathList.Count / speed; }
 
         /// <summary>
         /// Moves party at speed clicks down list of Positions
