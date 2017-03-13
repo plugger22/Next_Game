@@ -1383,7 +1383,7 @@ namespace Next_Game.Cartographic
         }
 
         //returns distance for a given list of routes
-        private int GetDistance(List<Route> listOfRoutes)
+        internal int GetDistance(List<Route> listOfRoutes)
         {
             int distance = 0;
             foreach(Route route in listOfRoutes)

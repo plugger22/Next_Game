@@ -3377,7 +3377,7 @@ namespace Next_Game
         {
             int threshold = Game.constant.GetValue(Global.AI_HUNT_THRESHOLD); //max # turns since Player last known that AI will continue to hunt
             int knownStatus = GetActiveActorTrackingStatus(1); //if '0' then Known, if > 0 then # of days since last known
-            int playerLocID, distance;
+            int playerLocID, distance, key;
             //Player location is current, if known, or last known if not. Will be destination if travelling.
             if (knownStatus == 0) { playerLocID = GetActiveActorLocByID(1); }
             else { playerLocID = GetActiveActorLastKnownLoc(1); }
@@ -3387,10 +3387,35 @@ namespace Next_Game
                 if (knownStatus <= threshold)
                 {
                     //Known
+                    Location loc = Game.network.GetLocation(playerLocID);
+                    Position playerPos = loc.GetPosition();
+                    
+                    Dictionary<int, int> tempDict = new Dictionary<int, int>();
                     foreach(var enemy in dictEnemyActors)
                     {
-                        //create a sorted list of enemies by dist to player
+                        //store enemies in tempDict by dist to player (key is ActID, value distance)
+                        Position enemyPos = enemy.Value.GetActorPosition();
+                        if (playerPos != null && enemyPos != null)
+                        {
+                            List<Route> route = Game.network.GetRouteAnywhere(enemyPos, playerPos);
+                            distance = Game.network.GetDistance(route);
+                            try
+                            { tempDict.Add(enemy.Value.ActID, distance); }
+                            catch (ArgumentException)
+                            { Game.SetError(new Error(167, string.Format("Invalid enemy ID {0} (duplicate)", enemy.Value.ActID))); }
+                        }
+                        else { Game.SetError(new Error(167, string.Format("Invalid Player ({0}:{1}) or Enemy Position ({2}:{3})", playerPos.PosX, playerPos.PosY,
+                            enemyPos.PosX, enemyPos.PosY))); }
                     }
+                    //sort dictionary by distance
+                    if (tempDict.Count > 1)
+                    {
+                        Console.WriteLine(Environment.NewLine + "--- AI Controller -> Enemies sorted by distance to Player");
+                        var sorted = from pair in tempDict orderby pair.Value ascending select pair;
+                        foreach (var pair in sorted)
+                        { Console.WriteLine("Enemy ID {0}   distance -> {1}", pair.Key, pair.Value );  }
+                    }
+                    else { Game.SetError(new Error(167, "tempDictionary has too few records to sort (1 or less)")); }
                 }
                 else
                 {
