@@ -63,7 +63,7 @@ namespace Next_Game.Cartographic
         /// </summary>
         /// <returns></returns>
         internal int CheckTurnsToDestination()
-        { return pathList.Count / speed; }
+        { return (pathList.Count - currentPosIndex) / speed; }
 
         /// <summary>
         /// Moves party at speed clicks down list of Positions

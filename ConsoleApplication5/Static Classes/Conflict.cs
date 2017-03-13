@@ -1465,7 +1465,7 @@ namespace Next_Game
                                 //housekeeping
                                 tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                 message = new Message(tempText, MessageType.Conflict);
-                                Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
+                                //Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
                                 break;
                             case ResultType.Resource:
                                 break;
