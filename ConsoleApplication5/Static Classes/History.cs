@@ -333,6 +333,7 @@ namespace Next_Game
             Location loc = Game.network.GetLocation(locID);
             //place characters at Location
             player.LocID = locID;
+            player.LastKnownLocID = locID;
             player.SetActorPosition(loc.GetPosition());
             //randomly assign resource level (placeholder)
             player.Resources = rnd.Next(1, 6);

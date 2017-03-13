@@ -123,6 +123,7 @@ namespace Next_Game
                         Location loc = Game.network.GetLocation(locID);
                         //place characters at Location
                         follower.LocID = locID;
+                        follower.LastKnownLocID = locID;
                         follower.SetActorPosition(loc.GetPosition());
                         //set to activated
                         follower.Activated = true;
