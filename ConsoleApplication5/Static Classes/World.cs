@@ -3494,7 +3494,7 @@ namespace Next_Game
         private void SetEnemyGoal(Enemy enemy, bool huntStatus, int playerLocID, int turnsUnknown)
         {
             bool huntMoveFlag = false; 
-            int rndNum, refID;
+            int rndNum, refID, tempDistance, enemyDistance, tempLoc;
             int branch = -1;
             ActorGoal newGoal = ActorGoal.None;
             if (enemy != null)
@@ -3587,32 +3587,59 @@ namespace Next_Game
                             Console.WriteLine("[{0}] {1}, ActID {2}, {3}, assigned new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
                                 enemy.Goal);
                         }
+                        //
+                        // --- Handle all Move logic here
+                        //
                         if (newGoal == ActorGoal.Move)
                         {
-                            //handle all Move logic here
+                            Position posOrigin = enemy.GetActorPosition();
                             List<int> listNeighbours = loc.GetNeighboursLocID();
                             int destinationLocID = 0;
+                            //
+                            //-- HUNT mode
+                            //
                             if (huntMoveFlag == true)
                             {
+                                // - Move One Node closer to Player's last known location
                                 if (turnsUnknown > 3 && rnd.Next(100) < 50)
                                 {
-                                    //chance of moving one step closer to player rather than straight to them
+                                    Location locTarget = Game.network.GetLocation(playerLocID);
+                                    Position posTarget = locTarget.GetPosition();
+                                    List<Position> pathTemp = Game.network.GetPathAnywhere(posOrigin, posTarget);
+                                    //loop path looking for the first viable location along path
+                                    for(int i = 0; i < pathTemp.Count; i++)
+                                    {
+                                        Position posTemp = pathTemp[i];
+                                        if (posTemp != null)
+                                        {
+                                            tempLoc = Game.map.GetMapInfo(MapLayer.LocID, posTemp.PosX, posTemp.PosY);
+                                            if (tempLoc > 0)
+                                            { destinationLocID = tempLoc;  break; }
+                                        }
+                                        else { Game.SetError(new Error(156, "Invalid Position (null) in pathTemp")); }
+                                    }
+                                    //error check
+                                    if (destinationLocID == 0)
+                                    {
+                                        destinationLocID = playerLocID;
+                                        Console.WriteLine("[Alert -> Move] {0}, ActID [1} has been assigned a default PlayerLocID [move One Node closer] as no viable node was found");
+                                    }
                                 }
+                                // - Move Directly to Player's last known location
                                 else
-                                {
-                                    //Move directly to Player's last known position
-                                    destinationLocID = playerLocID;
-                                }
+                                { destinationLocID = playerLocID; }
                             }
+                            //
+                            // -- NORMAL Mode
+                            //
                             else
                             {
-                                //Normal Mode -> player unknown
+                                // - Correct Branch
                                 if (enemy.AssignedBranch == branch)
                                 {
-                                    //enemy on correct branch
+                                    //Not at Capital
                                     if (enemy.LocID > 1)
                                     {
-                                        //Not at Capital
                                         List<int> tempLocList = new List<int>();
                                         //change direction of travel?
                                         bool reverseStatus = false;
@@ -3630,38 +3657,70 @@ namespace Next_Game
                                         }
                                         if (reverseStatus == true)
                                         {
+                                            Console.WriteLine("[Alert -> Move] {0}, ActID {1} has reversed their MoveOut status from {2} to {3}", enemy.Name, enemy.ActID, enemy.MoveOut,
+                                                enemy.MoveOut == true ? "False" : "True");
                                             if (enemy.MoveOut == true) { enemy.MoveOut = false; }
                                             else { enemy.MoveOut = true; }
                                         }
+                                        enemyDistance = loc.DistanceToCapital;
                                         for (int i = 0; i < listNeighbours.Count; i++)
                                         {
-                                            if (enemy.MoveOut == true)
+                                            Location locTemp = Game.network.GetLocation(listNeighbours[i]);
+                                            if (locTemp != null)
                                             {
-                                                //move outwards towards capital
+                                                tempDistance = locTemp.DistanceToCapital;
+
+                                                if (enemy.MoveOut == true)
+                                                {
+                                                    //move outwards towards capital -> select any that are further out (also check not going across a connector)
+                                                    if (tempDistance > enemyDistance && locTemp.GetBranch() == enemy.AssignedBranch)
+                                                    { tempLocList.Add(listNeighbours[i]); }
+                                                }
+                                                else
+                                                {
+                                                    //move inwards towards capital -> select any that are further in
+                                                    if(tempDistance < enemyDistance)
+                                                    { tempLocList.Add(listNeighbours[i]); }
+                                                }
                                             }
                                             else
-                                            {
-                                                //move inwards towards capital
-                                            }
+                                            { Game.SetError(new Error(156, "Invalid LocID (zero or less) [Not at Capital] in ListOfNeighbours")); }
+                                        }
+                                        //any viable selections?
+                                        if (tempLocList.Count > 0)
+                                        {
+                                            //randomly select a destination
+                                            destinationLocID = tempLocList[rnd.Next(0, tempLocList.Count)];
+                                        }
+                                        else
+                                        {
+                                            //else must have reached the end of a branch -> reverse move direction to prevent an endless loop
+                                            Console.WriteLine("[Alert -> Move] {0}, ActID {1} has reversed their MoveOut status [end of the Road] from {2} to {3}", enemy.Name, enemy.ActID, 
+                                                enemy.MoveOut, enemy.MoveOut == true ? "False" : "True");
+                                            if (enemy.MoveOut == true) { enemy.MoveOut = false; }
+                                            else { enemy.MoveOut = true; }
+                                            //NOTE: destinationLocID left unassigned (default '0') so that a random selection will be made at the end.
                                         }
                                     }
+                                    //At Capital
                                     else if (enemy.LocID == 1)
                                     {
                                         //Currently at the Capital -> Shouldn't get to this situation (see above)
                                         Console.WriteLine("[Alert -> Move] Normal Mode, {0}, ActID {1} At Capital with correct branch -> Unassigned", enemy.Name, enemy.ActID);
                                     }
                                 }
+                                // - Incorrect Branch
                                 else if (enemy.AssignedBranch != branch && branch > -1)
                                 {
-                                    //enemy on incorrect branch
+                                    //Not at Capital
                                     if (enemy.LocID > 1)
                                     {
                                         //return to Capital
                                         destinationLocID = 1;
                                     }
+                                    //At Capital
                                     else if (enemy.LocID == 1)
                                     {
-                                        //at Capital, need to move to correct branch
                                         for (int i = 0; i < listNeighbours.Count; i++)
                                         {
                                             if (listNeighbours[i] > 0)
@@ -3671,14 +3730,14 @@ namespace Next_Game
                                                 { destinationLocID = listNeighbours[i]; break; }
                                             }
                                             else
-                                            { Game.SetError(new Error(156, "Invalid LocID (zero or less) in ListOfNeighbours")); }
+                                            { Game.SetError(new Error(156, "Invalid LocID (zero or less) [at Capital] in ListOfNeighbours")); }
                                         }
                                     }
                                 }
                                 else
                                 { Game.SetError(new Error(156, "Invalid branch value (default of -1)")); }
                             }
-                            //valid destination found? otherwise assign random neighbour
+                            //valid destination found ? -> otherwise assign random neighbour
                             if (destinationLocID == 0)
                             {
                                 destinationLocID = listNeighbours[rnd.Next(0, listNeighbours.Count)];
@@ -3686,7 +3745,6 @@ namespace Next_Game
                             }
                             //Move enemy
                             Location locMove = Game.network.GetLocation(destinationLocID);
-                            Position posOrigin = enemy.GetActorPosition();
                             Position posDestination = locMove.GetPosition();
                             List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
                             InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
