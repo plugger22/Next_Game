@@ -22,7 +22,7 @@ namespace Next_Game
         public int LocID { get; set; } //unique to location
         public int RefID { get; set; } //unique to house (great or minor)
         public int ArcID { get; set; } //unique archetype for house (specified in House import files)
-        public int Branch { get; set; }
+        public int Branch { get; set; } //branch # House on -> 0 is Capital, 1 is North, 2 is East, 3 is South, 4 is West
         public int MenAtArms { get; set; }
         public int CastleWalls { get; set; } //strength of castle walls (1 to 5)
         public int LordID { get; set; } //actorID of noble Lord currently in charge of house

@@ -73,7 +73,7 @@ namespace Next_Game.Cartographic
                     //add to Loc dictionary
                     dictLocations.Add(loc.LocationID, loc);
                     //tally up number of locations on each branch
-                    int branch = loc.GetCapitalRouteDirection();
+                    int branch = loc.GetBranch();
                     arrayOfNetworkAnalysis[branch, 0]++;
                     //add to correct branch list
                     switch( branch)
@@ -138,7 +138,7 @@ namespace Next_Game.Cartographic
                     int direction = 0;
                     if( dictLocations.TryGetValue(locID, out loc))
                     {
-                        direction = loc.GetCapitalRouteDirection();
+                        direction = loc.GetBranch();
                         arrayOfCapitalNeighbours[direction] = loc.GetPosition();
                     }
                 }
@@ -149,7 +149,7 @@ namespace Next_Game.Cartographic
             {
                 Location loc = ListOfLocations[i];
                 Position posDestination = loc.GetPosition();
-                int direction = loc.GetCapitalRouteDirection();
+                int direction = loc.GetBranch();
                 Position posFirst = arrayOfCapitalNeighbours[direction];
                 List<Route> listOfRoutesToDestination = new List<Route>();
                 listOfRoutesToDestination = GetRouteOnSameBranch(posCapital, posDestination, posFirst);
@@ -198,7 +198,7 @@ namespace Next_Game.Cartographic
                     {
                         Location loc = ListOfLocations[i];
                         //correct branch
-                        if (loc.GetCapitalRouteDirection() == index)
+                        if (loc.GetBranch() == index)
                         {
                             //not Connector = true (posOrigin)
                             if (loc.Connector == false)
@@ -779,7 +779,7 @@ namespace Next_Game.Cartographic
                     distanceToCapital = destinationLoc.DistanceToCapital;
                     distanceToConnector = destinationLoc.DistanceToConnector;
                     //connector exists?
-                    originBranch = destinationLoc.GetCapitalRouteDirection();
+                    originBranch = destinationLoc.GetBranch();
                     if(ArrayOfConnectors[originBranch,0] > 0)
                     {
                         //get Position
@@ -826,7 +826,7 @@ namespace Next_Game.Cartographic
                     distanceToCapital = originLoc.DistanceToCapital;
                     distanceToConnector = originLoc.DistanceToConnector;
                     //connector exists?
-                    originBranch = originLoc.GetCapitalRouteDirection();
+                    originBranch = originLoc.GetBranch();
                     if (ArrayOfConnectors[originBranch, 0] > 0)
                     {
                         //get Position of Connector origin loc
@@ -881,8 +881,8 @@ namespace Next_Game.Cartographic
             else
             {
                 //get branch directions from capital
-                originBranch = originLoc.GetCapitalRouteDirection();
-                destinationBranch = destinationLoc.GetCapitalRouteDirection();
+                originBranch = originLoc.GetBranch();
+                destinationBranch = destinationLoc.GetBranch();
                 //Both on same branch
                 if(originBranch == destinationBranch)
                 {
@@ -894,7 +894,7 @@ namespace Next_Game.Cartographic
                     distanceToConnector = originLoc.DistanceToConnector;
                     distanceToDestination = destinationLoc.DistanceToCapital;
                     //connector exists?
-                    originBranch = originLoc.GetCapitalRouteDirection();
+                    originBranch = originLoc.GetBranch();
                     if (ArrayOfConnectors[originBranch, 0] > 0)
                     {
                         //get Position
@@ -1083,7 +1083,7 @@ namespace Next_Game.Cartographic
                                 distanceToCapital = originLoc.DistanceToCapital;
                                 distanceToConnector = originLoc.DistanceToConnector;
                                 //connector exists?
-                                originBranch = originLoc.GetCapitalRouteDirection();
+                                originBranch = originLoc.GetBranch();
                                 //get Position
                                 Position pos = new Position();
                                 pos.PosX = ArrayOfConnectors[originBranch, 4];
@@ -2060,7 +2060,7 @@ namespace Next_Game.Cartographic
                 loc.RefID = house.RefID;
                 //update capital Loc ID & branch
                 house.LocID = capitalLocID;
-                house.Branch = loc.GetCapitalRouteDirection();
+                house.Branch = loc.GetBranch();
                 //update all house locations for house
                 for(int k = 0; k < listIndividualHouseLocID[houseID].Count; k++)
                 {

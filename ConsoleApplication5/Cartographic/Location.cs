@@ -10,7 +10,7 @@ namespace Next_Game.Cartographic
         public int PosX { get; set;}
         public int PosY { get; set; }
         public float Distance { get; set; } //multi-purpose
-        public int CapitalRoute { get; set; } //on which route from the capital is the position? (0 - Capital, 1 - North, 2 - East, 3 - South, 4 - West)
+        public int Branch { get; set; } //on which route from the capital is the position? (0 - Capital, 1 - North, 2 - East, 3 - South, 4 - West)
 
         public Position()
         { }
@@ -143,7 +143,7 @@ namespace Next_Game.Cartographic
 
             LocName = "testville";
             locPos = new Position();
-            locPos.PosX = pos.PosX; locPos.PosY = pos.PosY; locPos.CapitalRoute = dir;
+            locPos.PosX = pos.PosX; locPos.PosY = pos.PosY; locPos.Branch = dir;
             Capital = capital;
             Connector = false;
             LocationID = locationIndex++;
@@ -282,9 +282,9 @@ namespace Next_Game.Cartographic
         public List<Route> GetRouteFromConnector()
         { return routeFromConnector; }
 
-        //get CapitalRoute direction
-        public int GetCapitalRouteDirection()
-        { return locPos.CapitalRoute; }
+        //get Branch direction
+        public int GetBranch()
+        { return locPos.Branch; }
 
         //get Position of Location
         public Position GetPosition()

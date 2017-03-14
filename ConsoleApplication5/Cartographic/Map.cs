@@ -2556,7 +2556,7 @@ namespace Next_Game.Cartographic
                     if (loc.Connections == 1)
                     {
                         //add to list only if the locations branch is false (hasn't yet had a connector assigned)
-                        int dir = loc.GetCapitalRouteDirection();
+                        int dir = loc.GetBranch();
                         if (branches[dir] == false)
                         {
                             listOfSingleConnectionLocs.Add(loc);
@@ -2575,7 +2575,7 @@ namespace Next_Game.Cartographic
                 for(outer = 0; outer < listOfSingleConnectionLocs.Count; outer++ )
                 {
                     Location locOrigin = listOfSingleConnectionLocs[outer];
-                    capitalDirection = locOrigin.GetCapitalRouteDirection();
+                    capitalDirection = locOrigin.GetBranch();
                     //INNER loop list of single Connectors (find a destination)
                     for (inner = 0; inner < listOfSingleConnectionLocs.Count; inner++)
                     {
@@ -2585,7 +2585,7 @@ namespace Next_Game.Cartographic
                         if(outer != inner)
                         {
                             //not on the same branch
-                            if(capitalDirection != locDestination.GetCapitalRouteDirection())
+                            if(capitalDirection != locDestination.GetBranch())
                             {
                                 //distance <= map size / i (gradually expanding distance search)
                                 x1 = locOrigin.GetPosX();
@@ -2625,8 +2625,8 @@ namespace Next_Game.Cartographic
                 {
                     Location loc1 = listOfSingleConnectionLocs[outer];
                     Location loc2 = listOfSingleConnectionLocs[inner];
-                    int direction1 = loc1.GetCapitalRouteDirection();
-                    int direction2 = loc2.GetCapitalRouteDirection();
+                    int direction1 = loc1.GetBranch();
+                    int direction2 = loc2.GetBranch();
                     //flag branches array to indicate that these branches already have a connection (excluded from next list of Single Connectors)
                     branches[direction1] = true;
                     branches[direction2] = true;

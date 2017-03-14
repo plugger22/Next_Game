@@ -3267,112 +3267,6 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// handles AI for all enemies, also updates status (known, etc.)
-        /// </summary>
-        private void SetEnemyActivity()
-        {
-            int playerLocID = GetActiveActorLocByID(1);
-            bool huntStatus;
-            int ai_search = Game.constant.GetValue(Global.AI_CONTINUE_SEARCH);
-            int ai_hide = Game.constant.GetValue(Global.AI_CONTINUE_HIDE);
-            int ai_wait = Game.constant.GetValue(Global.AI_CONTINUE_WAIT);
-            int revert = Game.constant.GetValue(Global.KNOWN_REVERT);
-            Console.WriteLine("- Set Enemy Activity");
-            //loop enemy dictionary
-            foreach (var enemy in dictEnemyActors)
-            {
-                //debug -> random chance of enemy being known
-                if (enemy.Value.Known == false && rnd.Next(100) < 20)
-                {
-                    enemy.Value.Known = true; enemy.Value.Revert = revert;
-                    Console.WriteLine("[{0}] {1} ActID {2} has become KNOWN", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
-                }
-
-                //update status -> unknown
-                if (enemy.Value.Known == false) { enemy.Value.TurnsUnknown++; enemy.Value.Revert = 0; }
-                else
-                {
-                    //known
-                    enemy.Value.TurnsUnknown = 0;
-                    enemy.Value.LastKnownLocID = enemy.Value.LocID;
-                    enemy.Value.LastKnownPos = enemy.Value.GetActorPosition();
-                    enemy.Value.LastKnownGoal = enemy.Value.Goal;
-                    enemy.Value.Revert--;
-                    if (enemy.Value.Revert <= 0)
-                    {
-                        enemy.Value.Revert = 0; enemy.Value.Known = false; enemy.Value.TurnsUnknown++;
-                        Console.WriteLine("[{0}] {1} ActID {2} has reverted to Unknown status (timer elapsed)", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
-                    }
-                }
-                //continue on with existing goal or get a new one?
-                if (enemy.Value is Inquisitor)
-                {
-                    //inquisitors -> if Move then automatic (continues on with Move)
-                    if (enemy.Value.Goal != ActorGoal.Move)
-                    {
-                        huntStatus = enemy.Value.HuntMode;
-                        enemy.Value.GoalTurns++;
-                        switch (enemy.Value.Goal)
-                        {
-                            case ActorGoal.None:
-                                //auto assign new goal
-                                SetEnemyGoal(enemy.Value, huntStatus, playerLocID);
-                                break;
-                            case ActorGoal.Wait:
-                                if (huntStatus == true)
-                                {
-                                    //Player Known -> Will Search if same Loc
-                                    SetEnemyGoal(enemy.Value, huntStatus, playerLocID);
-                                }
-                                else
-                                {
-                                    //Player Unknown
-                                    if (rnd.Next(100) < ai_wait)
-                                    { SetEnemyGoal(enemy.Value, huntStatus, playerLocID); }
-                                }
-                                break;
-                            case ActorGoal.Search:
-                                if (huntStatus == true)
-                                {
-                                    //Player Known -> if actor at different location then new goal
-                                    if (enemy.Value.LocID != playerLocID)
-                                    { SetEnemyGoal(enemy.Value, huntStatus, playerLocID); }
-                                }
-                                else
-                                {
-                                    //Player Unknown
-                                    if (rnd.Next(100) < ai_search)
-                                    { SetEnemyGoal(enemy.Value, huntStatus, playerLocID); }
-                                }
-                                break;
-                            case ActorGoal.Hide:
-                                if (huntStatus == true)
-                                {
-                                    //Player Known -> if actor at different location then new goal
-                                    if (enemy.Value.LocID != playerLocID)
-                                    { SetEnemyGoal(enemy.Value, huntStatus, playerLocID); }
-                                }
-                                else
-                                {
-                                    //Player Unknown
-                                    if (rnd.Next(100) < ai_hide)
-                                    { SetEnemyGoal(enemy.Value, huntStatus, playerLocID); }
-                                }
-                                break;
-                            default:
-                                Game.SetError(new Error(155, string.Format("Invalid Enemy Goal (\"{0}\")", enemy.Value.Goal)));
-                                break;
-                        }
-                    }
-                }
-                else
-                {
-                    //all other enemies
-                }
-            }
-        }
-
-        /// <summary>
         /// Master AI controller, checked each turn, determines HuntMode for each enemy based on big picture analysis
         /// </summary>
         private void UpdateAIController()
@@ -3479,63 +3373,185 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// handles AI for all enemies, also updates status (known, etc.)
+        /// </summary>
+        private void SetEnemyActivity()
+        {
+            Player player = (Player)GetActiveActor(1);
+            if (player != null)
+            {
+                int playerLocID = player.LocID;
+                int turnsUnknown = player.TurnsUnknown;
+                bool huntStatus;
+                int ai_search = Game.constant.GetValue(Global.AI_CONTINUE_SEARCH);
+                int ai_hide = Game.constant.GetValue(Global.AI_CONTINUE_HIDE);
+                int ai_wait = Game.constant.GetValue(Global.AI_CONTINUE_WAIT);
+                int revert = Game.constant.GetValue(Global.KNOWN_REVERT);
+                Console.WriteLine("- Set Enemy Activity");
+                //loop enemy dictionary
+                foreach (var enemy in dictEnemyActors)
+                {
+                    //debug -> random chance of enemy being known
+                    if (enemy.Value.Known == false && rnd.Next(100) < 20)
+                    {
+                        enemy.Value.Known = true; enemy.Value.Revert = revert;
+                        Console.WriteLine("[{0}] {1} ActID {2} has become KNOWN", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
+                    }
+
+                    //update status -> unknown
+                    if (enemy.Value.Known == false) { enemy.Value.TurnsUnknown++; enemy.Value.Revert = 0; }
+                    else
+                    {
+                        //known
+                        enemy.Value.TurnsUnknown = 0;
+                        enemy.Value.LastKnownLocID = enemy.Value.LocID;
+                        enemy.Value.LastKnownPos = enemy.Value.GetActorPosition();
+                        enemy.Value.LastKnownGoal = enemy.Value.Goal;
+                        enemy.Value.Revert--;
+                        if (enemy.Value.Revert <= 0)
+                        {
+                            enemy.Value.Revert = 0; enemy.Value.Known = false; enemy.Value.TurnsUnknown++;
+                            Console.WriteLine("[{0}] {1} ActID {2} has reverted to Unknown status (timer elapsed)", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
+                        }
+                    }
+                    //continue on with existing goal or get a new one?
+                    if (enemy.Value is Inquisitor)
+                    {
+                        //inquisitors -> if Move then automatic (continues on with Move)
+                        if (enemy.Value.Goal != ActorGoal.Move)
+                        {
+                            huntStatus = enemy.Value.HuntMode;
+                            enemy.Value.GoalTurns++;
+                            switch (enemy.Value.Goal)
+                            {
+                                case ActorGoal.None:
+                                    //auto assign new goal
+                                    SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown);
+                                    break;
+                                case ActorGoal.Wait:
+                                    if (huntStatus == true)
+                                    {
+                                        //Player Known -> Will Search if same Loc
+                                        SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown);
+                                    }
+                                    else
+                                    {
+                                        //Player Unknown
+                                        if (rnd.Next(100) < ai_wait)
+                                        { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
+                                    }
+                                    break;
+                                case ActorGoal.Search:
+                                    if (huntStatus == true)
+                                    {
+                                        //Player Known -> if actor at different location then new goal
+                                        if (enemy.Value.LocID != playerLocID)
+                                        { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
+                                    }
+                                    else
+                                    {
+                                        //Player Unknown
+                                        if (rnd.Next(100) < ai_search)
+                                        { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
+                                    }
+                                    break;
+                                case ActorGoal.Hide:
+                                    if (huntStatus == true)
+                                    {
+                                        //Player Known -> if actor at different location then new goal
+                                        if (enemy.Value.LocID != playerLocID)
+                                        { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
+                                    }
+                                    else
+                                    {
+                                        //Player Unknown
+                                        if (rnd.Next(100) < ai_hide)
+                                        { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
+                                    }
+                                    break;
+                                default:
+                                    Game.SetError(new Error(155, string.Format("Invalid Enemy Goal (\"{0}\")", enemy.Value.Goal)));
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //all other enemies
+                    }
+                }
+            }
+            else { Game.SetError(new Error(155, "Invalid Player (null)")); }
+        }
+
+        /// <summary>
         /// sub method to provide a new goal when required -> Incorporates all necessary AI logic
         /// <param name="knowStatus">if '0' then player status is Unknown</param>
         /// <param name="playerLocID">current locID or Player's destination locId if travelling</param>
+        /// <param name="turnsUnknown">Number of Turns player has been unknown for ('0' -> known)</param>
         /// </summary>
         /// <param name="enemy"></param>
-        private void SetEnemyGoal(Enemy enemy, bool huntStatus, int playerLocID)
+        private void SetEnemyGoal(Enemy enemy, bool huntStatus, int playerLocID, int turnsUnknown)
         {
             bool huntMoveFlag = false;
-            int rndNum;
+            int rndNum, refID;
+            int branch = -1;
             ActorGoal newGoal = ActorGoal.None;
             if (enemy != null)
             {
                 if (playerLocID > 0)
                 {
-                    if (huntStatus == true)
+                    //get location of enemy
+                    Location loc = Game.network.GetLocation(enemy.LocID);
+                    if (loc != null)
                     {
-                        //Player Known, Hunt Mode -> not at same location
-                        if (enemy.LocID != playerLocID)
-                        {
-                            newGoal = ActorGoal.Move;
-                            huntMoveFlag = true;
-                        }
-                        //Player Known, Hunt Mode -> Same location -> Search
-                        else { newGoal = ActorGoal.Search; }
-                    }
-                    else
-                    {
-                        //Normal Mode -> Player Unknown
-                        int refID = GetRefID(enemy.LocID);
+                        //get branch info
+                        refID = GetRefID(enemy.LocID);
                         if (refID > 0)
                         {
                             House house = GetHouse(refID);
-                            rndNum = rnd.Next(100);
-                            //Possible goals depend on location type
-                            if (house != null)
+                            branch = house.Branch;
+                            //Mode -> Hunt or Normal (set by UpdateAIController)
+                            if (huntStatus == true)
                             {
-                                if (house is MajorHouse || refID == 9999)
+                                //Player Known, Hunt Mode -> not at same location
+                                if (enemy.LocID != playerLocID)
                                 {
-                                    //Major House or Capital -> Wait 30, Hide 20, Move 50
-                                    if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
-                                    else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
-                                    else { newGoal = ActorGoal.Hide; }
+                                    newGoal = ActorGoal.Move;
+                                    huntMoveFlag = true;
                                 }
-                                else if (house is MinorHouse)
+                                //Player Known, Hunt Mode -> Same location -> Search
+                                else { newGoal = ActorGoal.Search; }
+                            }
+                            else
+                            {
+                                //Normal Mode -> Player Unknown
+                                rndNum = rnd.Next(100);
+                                //Possible goals depend on location type
+                                if (house != null)
                                 {
-                                    //Minor House -> Wait 30, Move 70
-                                    if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
-                                    else { newGoal = ActorGoal.Move; }
+                                    if (house is MajorHouse || refID == 9999)
+                                    {
+                                        //Major House or Capital -> Wait 30, Hide 20, Move 50
+                                        if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
+                                        else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
+                                        else { newGoal = ActorGoal.Hide; }
+                                    }
+                                    else if (house is MinorHouse)
+                                    {
+                                        //Minor House -> Wait 30, Move 70
+                                        if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
+                                        else { newGoal = ActorGoal.Move; }
+                                    }
+                                    else if (house is InnHouse)
+                                    {
+                                        //Inn -> Wait 20, Hide 30, Move 50
+                                        if (rndNum <= 20) { newGoal = ActorGoal.Wait; }
+                                        else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
+                                        else { newGoal = ActorGoal.Hide; }
+                                    }
+                                    else { Game.SetError(new Error(156, "Invalid House type (not in list)")); }
                                 }
-                                else if (house is InnHouse)
-                                {
-                                    //Inn -> Wait 20, Hide 30, Move 50
-                                    if (rndNum <= 20) { newGoal = ActorGoal.Wait; }
-                                    else if (rndNum >= 50) { newGoal = ActorGoal.Move};
-                                    else { newGoal = ActorGoal.Hide; }
-                                }
-                                else { Game.SetError(new Error(156, "Invalid House type (not in list)")); }
                             }
                         }
                         else
@@ -3544,41 +3560,67 @@ namespace Next_Game
                             //give default goal of Move
                             newGoal = ActorGoal.Move;
                         }
-                    }
 
-                    //reset Goal turns if new goal different to old goal
-                    if (newGoal != enemy.Goal)
-                    {
-                        enemy.GoalTurns = 0;
-                        //assign new goal
-                        enemy.Goal = newGoal;
-                        Console.WriteLine("[{0}] {1}, ActID {2}, {3}, assigned new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
-                            enemy.Goal);
-                    }
-                    if (newGoal == ActorGoal.Move)
-                    {
-                        //handle move logic here
-                        if (huntMoveFlag == true)
+                        //reset Goal turns if new goal different to old goal
+                        if (newGoal != enemy.Goal)
                         {
+                            enemy.GoalTurns = 0;
+                            //assign new goal
+                            enemy.Goal = newGoal;
+                            Console.WriteLine("[{0}] {1}, ActID {2}, {3}, assigned new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
+                                enemy.Goal);
+                        }
+                        if (newGoal == ActorGoal.Move)
+                        {
+                            //handle all Move logic here
+                            List<int> listNeighbours = loc.GetNeighboursLocID();
+                            int destinationLocID = 0;
+                            if (huntMoveFlag == true)
+                            {
+                                if (turnsUnknown > 3)
+                                {
+                                    //chance of moving one step closer to player rather than straight to them
+                                }
 
-                            //chance of moving one step closer to player rather than straight to them
+                                //Move directly to Player's last known position
+                                destinationLocID = playerLocID;
+                                
+                            }
+                            else
+                            {
 
-                            //Move directly to Player's last known position
-                            Location loc = Game.network.GetLocation(playerLocID);
+                                if (enemy.AssignedBranch == branch)
+                                {
+                                    //enemy on correct branch
+                                }
+                                else if (enemy.AssignedBranch != branch && branch > -1)
+                                {
+                                    //enemy on incorrect branch
+                                }
+                                else
+                                {
+                                    Game.SetError(new Error(156, "Invalid branch value (default of -1)"));
+                                    //move to random neighbouring node
+                                     
+
+                                }
+
+
+                                //normal mode, move along correct branch in assigned direction
+
+                                //chance of direction change (slightly greater chance of change to inwards than outwards to keep inquisitors closer to the Capital)
+                            }
+                            //Move enemy
+                            Location locMove = Game.network.GetLocation(destinationLocID);
                             Position posOrigin = enemy.GetActorPosition();
-                            Position posDestination = loc.GetPosition();
+                            Position posDestination = locMove.GetPosition();
                             List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
                             InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
                         }
-                        else
-                        {
-                            //normal mode, move along correct branch in assigned direction
-
-                            //chance of direction change (slightly greater chance of change to inwards than outwards to keep inquisitors closer to the Capital)
-                        }
                     }
+                    else { Game.SetError(new Error(156, string.Format("Invalid playerLocID (zero or less), existing goal retained for actID {0}", enemy.ActID))); }
                 }
-                else { Game.SetError(new Error(156, string.Format("Invalid playerLocID (zero or less), existing goal retained for actID {0}", enemy.ActID))); }
+                else { Game.SetError(new Error(156, string.Format("Invalid Enemy Location (null), for LocID {0}, Enemy ID {1}", enemy.LocID, enemy.ActID))); }
             }
             else { Game.SetError(new Error(156, "Invalid enemy input (null), existing goal retained")); }
         }
