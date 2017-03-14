@@ -3530,9 +3530,9 @@ namespace Next_Game
                                 //Possible goals depend on location type
                                 if (house != null)
                                 {
-                                    if (house is MajorHouse || refID == 9999)
+                                    if (house is MajorHouse)
                                     {
-                                        //Major House or Capital -> Wait 30, Hide 20, Move 50
+                                        //Major House -> Wait 30, Hide 20, Move 50
                                         if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
                                         else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
                                         else { newGoal = ActorGoal.Hide; }
@@ -3549,6 +3549,23 @@ namespace Next_Game
                                         if (rndNum <= 20) { newGoal = ActorGoal.Wait; }
                                         else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
                                         else { newGoal = ActorGoal.Hide; }
+                                    }
+                                    else if (enemy.LocID == 1)
+                                    {
+                                        //Capital
+                                        if (enemy.AssignedBranch == 0)
+                                        {
+                                            //Capital (where enemy should be) -> Wait 70, Hide 30
+                                            if (rndNum <= 70) { newGoal = ActorGoal.Wait; }
+                                            else { newGoal = ActorGoal.Hide; }
+                                        }
+                                        else
+                                        {
+                                            //Capital -> Wait 30, Hide 20, Move 50
+                                            if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
+                                            else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
+                                            else { newGoal = ActorGoal.Hide; }
+                                        }
                                     }
                                     else { Game.SetError(new Error(156, "Invalid House type (not in list)")); }
                                 }
@@ -3586,31 +3603,86 @@ namespace Next_Game
                                     //Move directly to Player's last known position
                                     destinationLocID = playerLocID;
                                 }
-                                
                             }
                             else
                             {
-
+                                //Normal Mode -> player unknown
                                 if (enemy.AssignedBranch == branch)
                                 {
                                     //enemy on correct branch
+                                    if (enemy.LocID > 1)
+                                    {
+                                        //Not at Capital
+                                        List<int> tempLocList = new List<int>();
+                                        //change direction of travel?
+                                        bool reverseStatus = false;
+                                        switch(enemy.MoveOut)
+                                        {
+                                            case true:
+                                                //slightly higher chance of reversing outward movement in order to keep inquisitors closer to the capital
+                                                if (rnd.Next(100) < 15)
+                                                { reverseStatus = true; }
+                                                break;
+                                            case false:
+                                                if (rnd.Next(100) < 10)
+                                                { reverseStatus = true; }
+                                                break;
+                                        }
+                                        if (reverseStatus == true)
+                                        {
+                                            if (enemy.MoveOut == true) { enemy.MoveOut = false; }
+                                            else { enemy.MoveOut = true; }
+                                        }
+                                        for (int i = 0; i < listNeighbours.Count; i++)
+                                        {
+                                            if (enemy.MoveOut == true)
+                                            {
+                                                //move outwards towards capital
+                                            }
+                                            else
+                                            {
+                                                //move inwards towards capital
+                                            }
+                                        }
+                                    }
+                                    else if (enemy.LocID == 1)
+                                    {
+                                        //Currently at the Capital -> Shouldn't get to this situation (see above)
+                                        Console.WriteLine("[Alert -> Move] Normal Mode, {0}, ActID {1} At Capital with correct branch -> Unassigned", enemy.Name, enemy.ActID);
+                                    }
                                 }
                                 else if (enemy.AssignedBranch != branch && branch > -1)
                                 {
                                     //enemy on incorrect branch
+                                    if (enemy.LocID > 1)
+                                    {
+                                        //return to Capital
+                                        destinationLocID = 1;
+                                    }
+                                    else if (enemy.LocID == 1)
+                                    {
+                                        //at Capital, need to move to correct branch
+                                        for (int i = 0; i < listNeighbours.Count; i++)
+                                        {
+                                            if (listNeighbours[i] > 0)
+                                            {
+                                                Location locTemp = Game.network.GetLocation(listNeighbours[i]);
+                                                if (locTemp.GetBranch() == enemy.AssignedBranch)
+                                                { destinationLocID = listNeighbours[i]; break; }
+                                            }
+                                            else
+                                            { Game.SetError(new Error(156, "Invalid LocID (zero or less) in ListOfNeighbours")); }
+                                        }
+                                    }
                                 }
                                 else
-                                {
-                                    Game.SetError(new Error(156, "Invalid branch value (default of -1)"));
-                                    //move to random neighbouring node
-                                     
-
-                                }
-
-
-                                //normal mode, move along correct branch in assigned direction
-
-                                //chance of direction change (slightly greater chance of change to inwards than outwards to keep inquisitors closer to the Capital)
+                                { Game.SetError(new Error(156, "Invalid branch value (default of -1)")); }
+                            }
+                            //valid destination found? otherwise assign random neighbour
+                            if (destinationLocID == 0)
+                            {
+                                destinationLocID = listNeighbours[rnd.Next(0, listNeighbours.Count)];
+                                Console.WriteLine("[Alert -> Move] No valid destination found for {0}, ActID {1} at Capital. Assigned Random neighbour", enemy.Name, enemy.ActID);
                             }
                             //Move enemy
                             Location locMove = Game.network.GetLocation(destinationLocID);
