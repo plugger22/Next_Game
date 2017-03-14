@@ -3493,7 +3493,7 @@ namespace Next_Game
         /// <param name="enemy"></param>
         private void SetEnemyGoal(Enemy enemy, bool huntStatus, int playerLocID, int turnsUnknown)
         {
-            bool huntMoveFlag = false;
+            bool huntMoveFlag = false; 
             int rndNum, refID;
             int branch = -1;
             ActorGoal newGoal = ActorGoal.None;
@@ -3577,13 +3577,15 @@ namespace Next_Game
                             int destinationLocID = 0;
                             if (huntMoveFlag == true)
                             {
-                                if (turnsUnknown > 3)
+                                if (turnsUnknown > 3 && rnd.Next(100) < 50)
                                 {
                                     //chance of moving one step closer to player rather than straight to them
                                 }
-
-                                //Move directly to Player's last known position
-                                destinationLocID = playerLocID;
+                                else
+                                {
+                                    //Move directly to Player's last known position
+                                    destinationLocID = playerLocID;
+                                }
                                 
                             }
                             else
