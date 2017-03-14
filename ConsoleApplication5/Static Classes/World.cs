@@ -3364,7 +3364,7 @@ namespace Next_Game
                         if (enemy.Value.Status == ActorStatus.AtLocation)
                         {
                             enemy.Value.HuntMode = false;
-                            Console.WriteLine("[AI -> Player Unknown] {0} {1}, Act ID {2} reverts to Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
+                            Console.WriteLine("[AI -> Player Unknown] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
                         }
                     }
                 }
@@ -3380,6 +3380,7 @@ namespace Next_Game
             Player player = (Player)GetActiveActor(1);
             if (player != null)
             {
+                int turnsDM; //DM for the # of turns spent on the same goal (prevents enemy being locked into a set goal due to bad rolls)
                 int playerLocID = player.LocID;
                 int turnsUnknown = player.TurnsUnknown;
                 bool huntStatus;
@@ -3421,6 +3422,7 @@ namespace Next_Game
                         if (enemy.Value.Goal != ActorGoal.Move)
                         {
                             huntStatus = enemy.Value.HuntMode;
+                            turnsDM = enemy.Value.GoalTurns; //+1 % chance of changing goal per turn spent on existing goal
                             enemy.Value.GoalTurns++;
                             switch (enemy.Value.Goal)
                             {
@@ -3437,7 +3439,7 @@ namespace Next_Game
                                     else
                                     {
                                         //Player Unknown
-                                        if (rnd.Next(100) < ai_wait)
+                                        if (rnd.Next(100) < (ai_wait + turnsDM))
                                         { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
                                     }
                                     break;
@@ -3451,7 +3453,7 @@ namespace Next_Game
                                     else
                                     {
                                         //Player Unknown
-                                        if (rnd.Next(100) < ai_search)
+                                        if (rnd.Next(100) < (ai_search + turnsDM))
                                         { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
                                     }
                                     break;
@@ -3465,7 +3467,7 @@ namespace Next_Game
                                     else
                                     {
                                         //Player Unknown
-                                        if (rnd.Next(100) < ai_hide)
+                                        if (rnd.Next(100) < (ai_hide + turnsDM))
                                         { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
                                     }
                                     break;
@@ -3494,7 +3496,7 @@ namespace Next_Game
         private void SetEnemyGoal(Enemy enemy, bool huntStatus, int playerLocID, int turnsUnknown)
         {
             bool huntMoveFlag = false; 
-            int rndNum, refID, tempDistance, enemyDistance, tempLoc;
+            int rndNum, refID, tempDistance, enemyDistance, tempLocID;
             int branch = -1;
             ActorGoal newGoal = ActorGoal.None;
             if (enemy != null)
@@ -3509,8 +3511,14 @@ namespace Next_Game
                         refID = GetRefID(enemy.LocID);
                         if (refID > 0)
                         {
-                            House house = GetHouse(refID);
-                            branch = house.Branch;
+                            House house = null;
+                            if (refID == 9999) //capital
+                            { branch = 0; }
+                            else
+                            {
+                                house = GetHouse(refID);
+                                branch = house.Branch;
+                            }
                             //Mode -> Hunt or Normal (set by UpdateAIController)
                             if (huntStatus == true)
                             {
@@ -3550,8 +3558,10 @@ namespace Next_Game
                                         else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
                                         else { newGoal = ActorGoal.Hide; }
                                     }
-                                    else if (enemy.LocID == 1)
-                                    {
+                                    else { Game.SetError(new Error(156, "Invalid House type (not in list)")); }
+                                }
+                                else if (refID == 9999)
+                                {
                                         //Capital
                                         if (enemy.AssignedBranch == 0)
                                         {
@@ -3566,8 +3576,6 @@ namespace Next_Game
                                             else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
                                             else { newGoal = ActorGoal.Hide; }
                                         }
-                                    }
-                                    else { Game.SetError(new Error(156, "Invalid House type (not in list)")); }
                                 }
                             }
                         }
@@ -3612,9 +3620,13 @@ namespace Next_Game
                                         Position posTemp = pathTemp[i];
                                         if (posTemp != null)
                                         {
-                                            tempLoc = Game.map.GetMapInfo(MapLayer.LocID, posTemp.PosX, posTemp.PosY);
-                                            if (tempLoc > 0)
-                                            { destinationLocID = tempLoc;  break; }
+                                            tempLocID = Game.map.GetMapInfo(MapLayer.LocID, posTemp.PosX, posTemp.PosY);
+                                            if (tempLocID > 0)
+                                            {
+                                                Console.WriteLine("[Move] {0}, ActID {1} -> One Node closer to Player -> {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                                    GetLocationName(tempLocID), tempLocID);
+                                                destinationLocID = tempLocID;  break;
+                                            }
                                         }
                                         else { Game.SetError(new Error(156, "Invalid Position (null) in pathTemp")); }
                                     }
@@ -3627,7 +3639,11 @@ namespace Next_Game
                                 }
                                 // - Move Directly to Player's last known location
                                 else
-                                { destinationLocID = playerLocID; }
+                                {
+                                    Console.WriteLine("[Move] {0}, ActID {1} -> Player's last known location -> {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                                   GetLocationName(playerLocID), playerLocID);
+                                    destinationLocID = playerLocID;
+                                }
                             }
                             //
                             // -- NORMAL Mode
@@ -3691,6 +3707,8 @@ namespace Next_Game
                                         {
                                             //randomly select a destination
                                             destinationLocID = tempLocList[rnd.Next(0, tempLocList.Count)];
+                                            Console.WriteLine("[Move] {0}, ActID {1} -> Move {2} -> {3}, LocID {4}", enemy.Name, enemy.ActID, enemy.MoveOut == true ? "Outwards" : "Inwards",
+                                                   GetLocationName(destinationLocID), destinationLocID);
                                         }
                                         else
                                         {
@@ -3717,6 +3735,8 @@ namespace Next_Game
                                     {
                                         //return to Capital
                                         destinationLocID = 1;
+                                        Console.WriteLine("[Move] {0}, ActID {1} -> Return to Capital -> {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                                   GetLocationName(destinationLocID), destinationLocID);
                                     }
                                     //At Capital
                                     else if (enemy.LocID == 1)
@@ -3727,7 +3747,12 @@ namespace Next_Game
                                             {
                                                 Location locTemp = Game.network.GetLocation(listNeighbours[i]);
                                                 if (locTemp.GetBranch() == enemy.AssignedBranch)
-                                                { destinationLocID = listNeighbours[i]; break; }
+                                                {
+                                                    destinationLocID = listNeighbours[i];
+                                                    Console.WriteLine("[Move] {0}, ActID {1} -> Capital to Correct Branch -> {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                                    GetLocationName(destinationLocID), destinationLocID);
+                                                    break;
+                                                }
                                             }
                                             else
                                             { Game.SetError(new Error(156, "Invalid LocID (zero or less) [at Capital] in ListOfNeighbours")); }
@@ -3914,7 +3939,7 @@ namespace Next_Game
             int ai_search = Game.constant.GetValue(Global.AI_SEARCH_SEARCH);
             int ai_wait = Game.constant.GetValue(Global.AI_SEARCH_WAIT);
             int knownDM = 0; //modifier for search if player known
-            //active characters only
+            //get enemy
             Actor actor = GetAnyActor(charID);
             if (actor != null && actor.Status != ActorStatus.Gone)
             {
@@ -4035,7 +4060,7 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(161, string.Format("Invalid actor (NOT Enemy) charID \"{0}\"", charID))); }
             }
-            else { Game.SetError(new Error(161,  string.Format("Invalid actor (null or ActorStatus.Gone) charID \"{0}\", Status {1}", charID, actor.Status))); }
+            else { Game.SetError(new Error(161,  string.Format("Invalid Enemy actor (null or ActorStatus.Gone) charID \"{0}\", Status {1}", charID, actor.Status))); }
             return found;
         }
 
