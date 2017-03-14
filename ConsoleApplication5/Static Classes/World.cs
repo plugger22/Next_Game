@@ -2803,7 +2803,7 @@ namespace Next_Game
                 { Game._specialMode = SpecialMode.FollowerEvent; }
             }
             //Enemies
-            UpdateControllerAI();
+            UpdateAIController();
             SetEnemyActivity();
             //update position of all key characters on map layers
             UpdateFollowerPositions();
@@ -3277,6 +3277,7 @@ namespace Next_Game
             int ai_hide = Game.constant.GetValue(Global.AI_CONTINUE_HIDE);
             int ai_wait = Game.constant.GetValue(Global.AI_CONTINUE_WAIT);
             int revert = Game.constant.GetValue(Global.KNOWN_REVERT);
+            Console.WriteLine("- Set Enemy Activity");
             //loop enemy dictionary
             foreach (var enemy in dictEnemyActors)
             {
@@ -3374,13 +3375,13 @@ namespace Next_Game
         /// <summary>
         /// Master AI controller, checked each turn, determines HuntMode for each enemy based on big picture analysis
         /// </summary>
-        private void UpdateControllerAI()
+        private void UpdateAIController()
         {
             int threshold = Game.constant.GetValue(Global.AI_HUNT_THRESHOLD); //max # turns since Player last known that AI will continue to hunt
             int knownStatus = GetActiveActorTrackingStatus(1); //if '0' then Known, if > 0 then # of days since last known
             int playerLocID, distance;
             int turnsToDestination = 0; //# of turns for Player to reach their destination if travelling (used to adjust threshold)
-            Console.WriteLine("- AI Controller -> Enemies sorted by distance to Player");
+            Console.WriteLine("- AI Controller");
             //get player
             Player player = (Player)GetActiveActor(1);
             if (player != null)
@@ -3417,7 +3418,7 @@ namespace Next_Game
                     Position playerPos = loc.GetPosition();
                     //dictionary to handle sorted distance data
                     Dictionary<int, int> tempDict = new Dictionary<int, int>();
-                    foreach(var enemy in dictEnemyActors)
+                    foreach (var enemy in dictEnemyActors)
                     {
                         //store enemies in tempDict by dist to player (key is ActID, value distance)
                         Position enemyPos = enemy.Value.GetActorPosition();
@@ -3435,8 +3436,11 @@ namespace Next_Game
                             }
                             else { Console.WriteLine("[{0}] {1}, ActID {2} is Travelling to {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, GetLocationName(enemy.Value.LocID)); }
                         }
-                        else { Game.SetError(new Error(167, string.Format("Invalid Player ({0}:{1}) or Enemy Position ({2}:{3})", playerPos.PosX, playerPos.PosY,
-                            enemyPos.PosX, enemyPos.PosY))); }
+                        else
+                        {
+                            Game.SetError(new Error(167, string.Format("Invalid Player ({0}:{1}) or Enemy Position ({2}:{3})", playerPos.PosX, playerPos.PosY,
+                         enemyPos.PosX, enemyPos.PosY)));
+                        }
                     }
                     //sort dictionary by distance
                     if (tempDict.Count > 0)
@@ -3451,7 +3455,7 @@ namespace Next_Game
                                 if (pair.Value / enemy.Speed <= threshold)
                                 { enemy.HuntMode = true; }
                                 else { enemy.HuntMode = false; }
-                                Console.WriteLine("Enemy ID {0}  distance -> {1}  Threshold -> {2}  Mode -> {3}", pair.Key, pair.Value, threshold, enemy.HuntMode == true ? "Hunt" : "Normal"); 
+                                Console.WriteLine("Enemy ID {0}  distance -> {1}  Threshold -> {2}  Mode -> {3}", pair.Key, pair.Value, threshold, enemy.HuntMode == true ? "Hunt" : "Normal");
                             }
                             else { Game.SetError(new Error(167, string.Format("Invalid enemy, ID {0} (null)", pair.Key))); }
                         }
@@ -3460,7 +3464,15 @@ namespace Next_Game
                 }
                 else
                 {
-                    //Unknown
+                    //Unknown -> all enemies at a location are set to normal mode (huntmode 'false')
+                    foreach (var enemy in dictEnemyActors)
+                    {
+                        if (enemy.Value.Status == ActorStatus.AtLocation)
+                        {
+                            enemy.Value.HuntMode = false;
+                            Console.WriteLine("[AI -> Player Unknown] {0} {1}, Act ID {2} reverts to Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
+                        }
+                    }
                 }
             }
             else { Game.SetError(new Error(167, "Warning -> LocID of Player has returned Zero")); }

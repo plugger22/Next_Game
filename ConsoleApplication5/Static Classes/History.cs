@@ -334,6 +334,7 @@ namespace Next_Game
             //place characters at Location
             player.LocID = locID;
             player.LastKnownLocID = locID;
+            player.TurnsUnknown = 100; //start player off unknown
             player.SetActorPosition(loc.GetPosition());
             //randomly assign resource level (placeholder)
             player.Resources = rnd.Next(1, 6);
