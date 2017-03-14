@@ -3486,7 +3486,8 @@ namespace Next_Game
         /// <param name="enemy"></param>
         private void SetEnemyGoal(Enemy enemy, bool huntStatus, int playerLocID)
         {
-            int huntWait = Game.constant.GetValue(Global.AI_HUNT_WAIT);
+            bool huntMoveFlag = false;
+            int rndNum;
             ActorGoal newGoal = ActorGoal.None;
             if (enemy != null)
             {
@@ -3497,39 +3498,52 @@ namespace Next_Game
                         //Player Known, Hunt Mode -> not at same location
                         if (enemy.LocID != playerLocID)
                         {
-                            //small chance enemy might wait and take a blocking position, otherwise move directly to last known player location
-                            if (rnd.Next(100) < huntWait)
-                            {
-                                Location loc = Game.network.GetLocation(playerLocID);
-                                Position posOrigin = enemy.GetActorPosition();
-                                Position posDestination = loc.GetPosition();
-                                List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
-                                InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
-                                newGoal = ActorGoal.Move;
-                            }
-                            else { newGoal = ActorGoal.Wait; }
+                            newGoal = ActorGoal.Move;
+                            huntMoveFlag = true;
                         }
                         //Player Known, Hunt Mode -> Same location -> Search
                         else { newGoal = ActorGoal.Search; }
                     }
                     else
                     {
-                        //Player Unknown, Normal Mode -> randomly assign a goal (placeholder)
-                        /*int rndNum = rnd.Next(100);
-                        if (rndNum < 30) { newGoal = ActorGoal.Search; }
-                        else if (rndNum > 70) { newGoal = ActorGoal.Wait;}
+                        //Normal Mode -> Player Unknown
+                        int refID = GetRefID(enemy.LocID);
+                        if (refID > 0)
+                        {
+                            House house = GetHouse(refID);
+                            rndNum = rnd.Next(100);
+                            //Possible goals depend on location type
+                            if (house != null)
+                            {
+                                if (house is MajorHouse || refID == 9999)
+                                {
+                                    //Major House or Capital -> Wait 30, Hide 20, Move 50
+                                    if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
+                                    else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
+                                    else { newGoal = ActorGoal.Hide; }
+                                }
+                                else if (house is MinorHouse)
+                                {
+                                    //Minor House -> Wait 30, Move 70
+                                    if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
+                                    else { newGoal = ActorGoal.Move; }
+                                }
+                                else if (house is InnHouse)
+                                {
+                                    //Inn -> Wait 20, Hide 30, Move 50
+                                    if (rndNum <= 20) { newGoal = ActorGoal.Wait; }
+                                    else if (rndNum >= 50) { newGoal = ActorGoal.Move};
+                                    else { newGoal = ActorGoal.Hide; }
+                                }
+                                else { Game.SetError(new Error(156, "Invalid House type (not in list)")); }
+                            }
+                        }
                         else
                         {
-                            int locID = Game.network.GetRandomLocation();
-                            Location loc = Game.network.GetLocation(locID);
-                            Position posOrigin = enemy.GetActorPosition();
-                            Position posDestination = loc.GetPosition();
-                            List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
-                            InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
+                            Game.SetError(new Error(156, string.Format("Enemy {0}, ID {1}, LocID {2} has an Invalid RefID (zero or less)", enemy.Name, enemy.ActID, enemy.LocID)));
+                            //give default goal of Move
                             newGoal = ActorGoal.Move;
-                        }*/
-
-
+                        }
                     }
 
                     //reset Goal turns if new goal different to old goal
@@ -3540,6 +3554,28 @@ namespace Next_Game
                         enemy.Goal = newGoal;
                         Console.WriteLine("[{0}] {1}, ActID {2}, {3}, assigned new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
                             enemy.Goal);
+                    }
+                    if (newGoal == ActorGoal.Move)
+                    {
+                        //handle move logic here
+                        if (huntMoveFlag == true)
+                        {
+
+                            //chance of moving one step closer to player rather than straight to them
+
+                            //Move directly to Player's last known position
+                            Location loc = Game.network.GetLocation(playerLocID);
+                            Position posOrigin = enemy.GetActorPosition();
+                            Position posDestination = loc.GetPosition();
+                            List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
+                            InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
+                        }
+                        else
+                        {
+                            //normal mode, move along correct branch in assigned direction
+
+                            //chance of direction change (slightly greater chance of change to inwards than outwards to keep inquisitors closer to the Capital)
+                        }
                     }
                 }
                 else { Game.SetError(new Error(156, string.Format("Invalid playerLocID (zero or less), existing goal retained for actID {0}", enemy.ActID))); }
