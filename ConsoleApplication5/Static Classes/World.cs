@@ -3272,7 +3272,7 @@ namespace Next_Game
         private void SetEnemyActivity()
         {
             int playerLocID = GetActiveActorLocByID(1);
-            int knownStatus = GetActiveActorTrackingStatus(1); //if '0' then Known, if > 0 then # of days since last known
+            bool huntStatus;
             int ai_search = Game.constant.GetValue(Global.AI_CONTINUE_SEARCH);
             int ai_hide = Game.constant.GetValue(Global.AI_CONTINUE_HIDE);
             int ai_wait = Game.constant.GetValue(Global.AI_CONTINUE_WAIT);
@@ -3307,56 +3307,56 @@ namespace Next_Game
                 //continue on with existing goal or get a new one?
                 if (enemy.Value is Inquisitor)
                 {
-                    //inquisitors -> if Move then automatic, otherwise chance of assigning a new goal
+                    //inquisitors -> if Move then automatic (continues on with Move)
                     if (enemy.Value.Goal != ActorGoal.Move)
                     {
+                        huntStatus = enemy.Value.HuntMode;
                         enemy.Value.GoalTurns++;
                         switch (enemy.Value.Goal)
                         {
                             case ActorGoal.None:
                                 //auto assign new goal
-                                SetEnemyGoal(enemy.Value, knownStatus, playerLocID);
+                                SetEnemyGoal(enemy.Value, huntStatus, playerLocID);
                                 break;
                             case ActorGoal.Wait:
-                                if (knownStatus > 0)
+                                if (huntStatus == true)
                                 {
-                                    //Player Known -> if actor at different location then new goal
-                                    if (enemy.Value.LocID != playerLocID)
-                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
+                                    //Player Known -> Will Search if same Loc
+                                    SetEnemyGoal(enemy.Value, huntStatus, playerLocID);
                                 }
                                 else
                                 {
                                     //Player Unknown
                                     if (rnd.Next(100) < ai_wait)
-                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
+                                    { SetEnemyGoal(enemy.Value, huntStatus, playerLocID); }
                                 }
                                 break;
                             case ActorGoal.Search:
-                                if (knownStatus > 0)
+                                if (huntStatus == true)
                                 {
                                     //Player Known -> if actor at different location then new goal
                                     if (enemy.Value.LocID != playerLocID)
-                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
+                                    { SetEnemyGoal(enemy.Value, huntStatus, playerLocID); }
                                 }
                                 else
                                 {
                                     //Player Unknown
                                     if (rnd.Next(100) < ai_search)
-                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
+                                    { SetEnemyGoal(enemy.Value, huntStatus, playerLocID); }
                                 }
                                 break;
                             case ActorGoal.Hide:
-                                if (knownStatus > 0)
+                                if (huntStatus == true)
                                 {
                                     //Player Known -> if actor at different location then new goal
                                     if (enemy.Value.LocID != playerLocID)
-                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
+                                    { SetEnemyGoal(enemy.Value, huntStatus, playerLocID); }
                                 }
                                 else
                                 {
                                     //Player Unknown
                                     if (rnd.Next(100) < ai_hide)
-                                    { SetEnemyGoal(enemy.Value, knownStatus, playerLocID); }
+                                    { SetEnemyGoal(enemy.Value, huntStatus, playerLocID); }
                                 }
                                 break;
                             default:
@@ -3484,19 +3484,21 @@ namespace Next_Game
         /// <param name="playerLocID">current locID or Player's destination locId if travelling</param>
         /// </summary>
         /// <param name="enemy"></param>
-        private void SetEnemyGoal(Enemy enemy, int knownStatus, int playerLocID)
+        private void SetEnemyGoal(Enemy enemy, bool huntStatus, int playerLocID)
         {
+            int huntWait = Game.constant.GetValue(Global.AI_HUNT_WAIT);
             ActorGoal newGoal = ActorGoal.None;
             if (enemy != null)
             {
                 if (playerLocID > 0)
                 {
-                    if (knownStatus > 0)
+                    if (huntStatus == true)
                     {
-                        //Player Known -> not at same location
+                        //Player Known, Hunt Mode -> not at same location
                         if (enemy.LocID != playerLocID)
                         {
-                            if (rnd.Next(100) < 50)
+                            //small chance enemy might wait and take a blocking position, otherwise move directly to last known player location
+                            if (rnd.Next(100) < huntWait)
                             {
                                 Location loc = Game.network.GetLocation(playerLocID);
                                 Position posOrigin = enemy.GetActorPosition();
@@ -3507,13 +3509,13 @@ namespace Next_Game
                             }
                             else { newGoal = ActorGoal.Wait; }
                         }
-                        //Player Known -> same location
+                        //Player Known, Hunt Mode -> Same location -> Search
                         else { newGoal = ActorGoal.Search; }
                     }
                     else
                     {
-                        //Player Unknown -> randomly assign a goal (placeholder)
-                        int rndNum = rnd.Next(100);
+                        //Player Unknown, Normal Mode -> randomly assign a goal (placeholder)
+                        /*int rndNum = rnd.Next(100);
                         if (rndNum < 30) { newGoal = ActorGoal.Search; }
                         else if (rndNum > 70) { newGoal = ActorGoal.Wait;}
                         else
@@ -3525,7 +3527,9 @@ namespace Next_Game
                             List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
                             InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
                             newGoal = ActorGoal.Move;
-                        }
+                        }*/
+
+
                     }
 
                     //reset Goal turns if new goal different to old goal

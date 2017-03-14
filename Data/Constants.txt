@@ -146,5 +146,7 @@
 55: 4 @ 0 @ 10
 # AI_HUNT_THRESHOLD -> max num of turns since player last known that AI will continue to hunt for player (if within range)
 56: 6 @ 4 @ 12
+# AI_HUNT_WAIT -> % chance of enemy getting 'Wait' goal vs. moving directly to Player's last known location while hunting
+57: 10 @ 5 @ 20
 
-# Next valid number -> 57
+# Next valid number -> 58
