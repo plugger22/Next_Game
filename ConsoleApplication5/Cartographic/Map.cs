@@ -449,7 +449,7 @@ namespace Next_Game.Cartographic
                     { largestCells = tallyArray[i]; quadrant = i; }
                 }
             }
-            //try 10 times
+            //try set # of times
             for (int i = 0; i < numAttempts; i++)
             {
                 bool constrained = false; //if true, restrict terrain to cluster with highest land cell count
@@ -1653,7 +1653,7 @@ namespace Next_Game.Cartographic
             InitialiseConnectors();
             InitialiseMapLayers();
             InitialiseGeography();
-            InitialiseTerrain(60, 70, 80, true);
+            InitialiseTerrain(100, 70, 80, true); //Mar'17 -> increased numAttempts from 60 to 100
         }
 
         private void LocationSweeper()

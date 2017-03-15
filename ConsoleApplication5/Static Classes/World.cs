@@ -3351,7 +3351,8 @@ namespace Next_Game
                                 if (pair.Value / enemy.Speed <= threshold)
                                 { enemy.HuntMode = true; }
                                 else { enemy.HuntMode = false; }
-                                Console.WriteLine("Enemy ID {0}  distance -> {1}  Threshold -> {2}  Mode -> {3}", pair.Key, pair.Value, threshold, enemy.HuntMode == true ? "Hunt" : "Normal");
+                                Console.WriteLine("[Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value, threshold, 
+                                    enemy.HuntMode == true ? "Hunt" : "Normal");
                             }
                             else { Game.SetError(new Error(167, string.Format("Invalid enemy, ID {0} (null)", pair.Key))); }
                         }
@@ -3599,7 +3600,7 @@ namespace Next_Game
                             enemy.GoalTurns = 0;
                             //assign new goal
                             enemy.Goal = newGoal;
-                            Console.WriteLine("[New Goal] {0}, ActID {1}, {2}, assigned new Goal -> {4}", enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
+                            Console.WriteLine("[New Goal] {0}, ActID {1}, {2}, assigned new Goal -> {3}", enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
                                 enemy.Goal);
                         }
                         //
