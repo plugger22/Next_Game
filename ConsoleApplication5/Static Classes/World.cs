@@ -285,11 +285,12 @@ namespace Next_Game
                                     { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
                                     else if (person.ActID > 1)
                                     { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
-                                    //enemy
+                                    //enemy -> arrives at destination, assign goal
                                     if (person is Enemy)
                                     {
                                         Enemy enemy = person as Enemy;
-                                        enemy.Goal = ActorGoal.Search;
+                                        if (enemy.HuntMode == true) { enemy.Goal = ActorGoal.Search; }
+                                        else { enemy.Goal = ActorGoal.Wait; }
                                         Console.WriteLine("[{0}] {1}, ActID {2}, currently at {3}, new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, loc.LocName, enemy.Goal);
                                     }
                                 }
@@ -3397,7 +3398,7 @@ namespace Next_Game
                     if (enemy.Value.Known == false && rnd.Next(100) < 20)
                     {
                         enemy.Value.Known = true; enemy.Value.Revert = revert;
-                        Console.WriteLine("[{0}] {1} ActID {2} has become KNOWN", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
+                        Console.WriteLine("[Known] {0} ActID {1} has become KNOWN", enemy.Value.Name, enemy.Value.ActID);
                     }
 
                     //update status -> unknown
@@ -3440,8 +3441,9 @@ namespace Next_Game
                                     else
                                     {
                                         //Player Unknown
-                                        if (rnd.Next(100) < (ai_wait + turnsDM))
+                                        if (rnd.Next(100) > (ai_wait + turnsDM))
                                         { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
+                                        else { Console.WriteLine("[Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal); }
                                     }
                                     break;
                                 case ActorGoal.Search:
@@ -3454,8 +3456,9 @@ namespace Next_Game
                                     else
                                     {
                                         //Player Unknown
-                                        if (rnd.Next(100) < (ai_search + turnsDM))
+                                        if (rnd.Next(100) > (ai_search + turnsDM))
                                         { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
+                                        else { Console.WriteLine("[Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal); }
                                     }
                                     break;
                                 case ActorGoal.Hide:
@@ -3468,8 +3471,9 @@ namespace Next_Game
                                     else
                                     {
                                         //Player Unknown
-                                        if (rnd.Next(100) < (ai_hide + turnsDM))
+                                        if (rnd.Next(100) > (ai_hide + turnsDM))
                                         { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
+                                        else { Console.WriteLine("[Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal); }
                                     }
                                     break;
                                 default:
@@ -3498,7 +3502,7 @@ namespace Next_Game
         {
             bool huntMoveFlag = false; 
             int rndNum, refID, tempDistance, enemyDistance, tempLocID;
-            int branch = -1;
+            int currentBranch = -1;
             ActorGoal newGoal = ActorGoal.None;
             if (enemy != null)
             {
@@ -3514,12 +3518,14 @@ namespace Next_Game
                         {
                             House house = null;
                             if (refID == 9999) //capital
-                            { branch = 0; }
+                            { currentBranch = 0; }
                             else
                             {
                                 house = GetHouse(refID);
-                                branch = house.Branch;
+                                currentBranch = house.Branch;
                             }
+                            //debug
+                            Console.WriteLine("[Branch] {0}, ActID {1} Assigned Branch -> {2} Current Branch -> {3}", enemy.Name, enemy.ActID, enemy.AssignedBranch, currentBranch);
                             //Mode -> Hunt or Normal (set by UpdateAIController)
                             if (huntStatus == true)
                             {
@@ -3652,7 +3658,7 @@ namespace Next_Game
                             else
                             {
                                 // - Correct Branch
-                                if (enemy.AssignedBranch == branch)
+                                if (enemy.AssignedBranch == currentBranch)
                                 {
                                     //Not at Capital
                                     if (enemy.LocID > 1)
@@ -3729,7 +3735,7 @@ namespace Next_Game
                                     }
                                 }
                                 // - Incorrect Branch
-                                else if (enemy.AssignedBranch != branch && branch > -1)
+                                else if (enemy.AssignedBranch != currentBranch && currentBranch > -1)
                                 {
                                     //Not at Capital
                                     if (enemy.LocID > 1)

@@ -127,9 +127,9 @@
 # AI_CONTINUE_SEARCH -> % chance of continuing a search goal (tested each turn)
 46: 50 @ 1 @ 99
 # AI_CONTINUE_HIDE -> % chance of continuing a hide goal (tested each turn)
-47: 80 @ 1 @ 99
+47: 70 @ 1 @ 99
 # AI_CONTINUE_WAIT -> % chance of continuing a wait goal (tested each turn)
-48: 75 @ 1 @ 99
+48: 60 @ 1 @ 99
 # AI_SEARCH_KNOWN -> % DM to add to search chance (improves) when active character is 'Known'
 49: 30 @ 5 @ 50
 # AI_SEARCH_HIDE -> % chance to find active character when enemy has the Hide goal

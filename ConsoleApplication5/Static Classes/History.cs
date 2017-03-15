@@ -228,6 +228,7 @@ namespace Next_Game
                     specialInn.LocName = listSpecialHousePool[index].Name;
                     specialInn.RefID = listSpecialHousePool[index].RefID;
                     specialInn.LocID = loc.LocationID;
+                    specialInn.Branch = loc.GetBranch();
                     specialInn.HouseID = loc.HouseID;
                     specialInn.MenAtArms = 0;
                     //add house to listOfHouses
