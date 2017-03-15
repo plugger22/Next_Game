@@ -1165,7 +1165,7 @@ namespace Next_Game
                     {
                         int resources = house.Resources;
                        //normal houses - major / minor / capital 
-                        locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}, Rid {3}", house.Name, loc.LocName, loc.LocationID, loc.RefID), color, RLColor.Black));
+                        locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}, Rid {3}, Branch {4}", house.Name, loc.LocName, loc.LocationID, loc.RefID, loc.GetBranch()), color, RLColor.Black));
                         locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                         locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
                         locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
@@ -1183,7 +1183,7 @@ namespace Next_Game
                     else
                     {
                         //special Inn
-                        locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}", house.Name, loc.LocationID, loc.RefID), color, RLColor.Black));
+                        locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}, Branch {3}", house.Name, loc.LocationID, loc.RefID, loc.GetBranch(), color, RLColor.Black)));
                         locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                         locList.Add(new Snippet(string.Format("Signage \"{0}\"", house.Banner)));
                         locList.Add(new Snippet(string.Format("Found at {0}", ShowLocationCoords(locID))));
