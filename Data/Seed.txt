@@ -35,3 +35,5 @@ Seed 64169 -> Wednesday, 15 March 2017 1:16 PM
 Seed 49429 -> Wednesday, 15 March 2017 1:21 PM
 Seed 1465 -> Wednesday, 15 March 2017 1:21 PM
 Seed 9283 -> Wednesday, 15 March 2017 1:24 PM
+Seed 689 -> Wednesday, 15 March 2017 2:54 PM
+Seed 40786 -> Wednesday, 15 March 2017 2:58 PM

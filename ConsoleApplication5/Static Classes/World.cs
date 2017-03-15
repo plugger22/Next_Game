@@ -3414,7 +3414,7 @@ namespace Next_Game
                         if (enemy.Value.Revert <= 0)
                         {
                             enemy.Value.Revert = 0; enemy.Value.Known = false; enemy.Value.TurnsUnknown++;
-                            Console.WriteLine("[{0}] {1} ActID {2} has reverted to Unknown status (timer elapsed)", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
+                            Console.WriteLine("[Unknown] {0} ActID {1} has reverted to Unknown status (timer elapsed)", enemy.Value.Name, enemy.Value.ActID);
                         }
                     }
                     //continue on with existing goal or get a new one?
@@ -3599,7 +3599,7 @@ namespace Next_Game
                             enemy.GoalTurns = 0;
                             //assign new goal
                             enemy.Goal = newGoal;
-                            Console.WriteLine("[{0}] {1}, ActID {2}, {3}, assigned new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
+                            Console.WriteLine("[New Goal] {0}, ActID {1}, {2}, assigned new Goal -> {4}", enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
                                 enemy.Goal);
                         }
                         //
@@ -3773,7 +3773,8 @@ namespace Next_Game
                             if (destinationLocID == 0)
                             {
                                 destinationLocID = listNeighbours[rnd.Next(0, listNeighbours.Count)];
-                                Console.WriteLine("[Alert -> Move] No valid destination found for {0}, ActID {1} at Capital. Assigned Random neighbour", enemy.Name, enemy.ActID);
+                                Console.WriteLine("[Alert -> Move] No valid destination found for {0}, ActID {1}. Assigned Random neighbour, {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                    GetLocationName(destinationLocID), destinationLocID);
                             }
                             //Move enemy
                             Location locMove = Game.network.GetLocation(destinationLocID);

@@ -199,6 +199,8 @@ namespace Next_Game
             Location loc = Game.network.GetLocation(locID);
             loc.LocName = house.LocName;
             loc.RefID = house.RefID;
+            //branch
+            house.Branch = loc.GetBranch();
         }
 
         /// <summary>
