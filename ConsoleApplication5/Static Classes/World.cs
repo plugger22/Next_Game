@@ -3171,6 +3171,7 @@ namespace Next_Game
         /// </summary>
         private void UpdateActiveActors()
         {
+            Console.WriteLine("- UpdateActiveActors");
             foreach (var actor in dictActiveActors)
             {
                 //if Known, decrement their revert status
