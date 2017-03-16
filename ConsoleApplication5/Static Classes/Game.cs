@@ -245,6 +245,12 @@ namespace Next_Game
                             infoChannel.SetInfoList(world.SendCrow(playerID), ConsoleDisplay.Multi);
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
                             break;
+                        case 3:
+                            //Spy -> Show specific Actor
+                            int actorID = Convert.ToInt32(_multiData);
+                            infoChannel.SetInfoList(world.ShowSpyRL(_actorID), ConsoleDisplay.Multi);
+                            infoChannel.ClearConsole(ConsoleDisplay.Input);
+                            break;
                     }
                     //reset
                     keyPress = null; //to prevent Enter keypress from causing the date to tick up
@@ -795,17 +801,49 @@ namespace Next_Game
                                     break;
                                 case MenuMode.Debug:
                                     //Spy -> Show All Bloodhound data, grouped by turns
-                                    infoChannel.SetInfoList(world.ShowSpyAllRL(), ConsoleDisplay.Multi);
+                                    infoChannel.SetInfoList(world.ShowSpyAllRL(true, true), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
+                        case RLKey.V:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Debug:
+                                    //Spy -> Bloodhound -> show specific Actor
+                                    infoChannel.ClearConsole(ConsoleDisplay.Input);
+                                    infoChannel.AppendInfoList(new Snippet("---Input Actor ID ", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
+                                    infoChannel.AppendInfoList(new Snippet("Press ENTER when done, BACKSPACE to change, ESC to exit"), ConsoleDisplay.Input);
+                                    _inputMode = InputMode.MultiKey;
+                                    _multiCaller = 3;
                                     break;
                             }
                             break;
                         case RLKey.X:
                             //exit application from Main Menu
-                            if (_menuMode == MenuMode.Main)
+                            switch (_menuMode)
                             {
-                                _rootConsole.Close();
-                                //Environment.Exit(1); - not needed and causes OpenTK error
-                                break;
+                                case MenuMode.Main:
+                                    _rootConsole.Close();
+                                    //Environment.Exit(1); - not needed and causes OpenTK error
+                                    break;
+                            }
+                            break;
+                        case RLKey.Y:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Debug:
+                                    //Spy -> Show Active Actors Bloodhound data, grouped by turns
+                                    infoChannel.SetInfoList(world.ShowSpyAllRL(true, false), ConsoleDisplay.Multi);
+                                    break;
+                            }
+                            break;
+                        case RLKey.Z:
+                            switch (_menuMode)
+                            {
+                                case MenuMode.Debug:
+                                    //Spy -> Show Enemy Actors Bloodhound data, grouped by turns
+                                    infoChannel.SetInfoList(world.ShowSpyAllRL(false, true), ConsoleDisplay.Multi);
+                                    break;
                             }
                             break;
                         //Player controlled character selected

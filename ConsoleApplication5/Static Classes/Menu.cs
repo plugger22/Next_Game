@@ -163,9 +163,8 @@ namespace Next_Game
                     //Debug Spy commands
                     menuArrayText[2, 0] = "[U] Show All";
                     menuArrayText[2, 1] = "[V] Show Actor";
-                    menuArrayText[2, 2] = "[X] Show Active";
-                    menuArrayText[2, 3] = "[Y] Show Enemies";
-                    menuArrayText[2, 4] = "[Z] Show Turn";
+                    menuArrayText[2, 2] = "[Y] Show Active";
+                    menuArrayText[2, 3] = "[Z] Show Enemies";
                     //Debug Switch commands
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";

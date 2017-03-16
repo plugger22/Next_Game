@@ -2654,12 +2654,18 @@ namespace Next_Game
         /// Generate a list of all Bloodhound Actor info grouped by turns
         /// </summary>
         /// <returns></returns>
-        public List<Snippet> ShowSpyAllRL()
+        public List<Snippet> ShowSpyAllRL(bool showActive, bool showEnemy)
         {
             int turn;
             string description;
             List<Snippet> listData = new List<Snippet>();
-            listData.Add(new Snippet("--- Spy ALL", RLColor.Yellow, RLColor.Black));
+            if (showActive == true)
+            {
+                if (showEnemy == true)
+                { listData.Add(new Snippet("--- Spy ALL", RLColor.Yellow, RLColor.Black)); }
+                else { listData.Add(new Snippet("--- Spy ACTIVE Actors", RLColor.Yellow, RLColor.Black)); }
+            }
+            else { listData.Add(new Snippet("--- Spy ENEMY Actors", RLColor.Yellow, RLColor.Black)); }
             List<ActorSpy> listTempActive = new List<ActorSpy>();
             List<ActorSpy> listTempEnemy = new List<ActorSpy>();
             foreach(var bloodhound in dictBloodHound)
@@ -2673,20 +2679,55 @@ namespace Next_Game
                 listTempEnemy.AddRange(bloodhound.Value.GetEnemyActors());
                 //snippets -> active actors
                 listData.Add(new Snippet(string.Format("Day {0}", turn), RLColor.LightRed, RLColor.Black));
-                foreach(ActorSpy spy in listTempActive)
+                if (showActive == true)
                 {
-                    description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-10} Goal -> {6, -10}", spy.ActID, GetActorName(spy.ActID), spy.Pos.PosX,
-                        spy.Pos.PosY, spy.Status, spy.Known, "n.a");
-                    listData.Add(new Snippet(description));
+                    foreach (ActorSpy spy in listTempActive)
+                    {
+                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-10} Goal -> {6, -10}", spy.ActID, GetActorName(spy.ActID), spy.Pos.PosX,
+                            spy.Pos.PosY, spy.Status, spy.Known, "n.a");
+                        listData.Add(new Snippet(description));
+                    }
                 }
                 //snippets -> enemy actors
-                foreach (ActorSpy spy in listTempEnemy)
+                if (showEnemy == true)
                 {
-                    description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-10} Goal -> {6, -10}", spy.ActID, GetActorName(spy.ActID), spy.Pos.PosX,
-                        spy.Pos.PosY, spy.Status, spy.Known, spy.Goal);
-                    listData.Add(new Snippet(description));
+                    foreach (ActorSpy spy in listTempEnemy)
+                    {
+                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-10} Goal -> {6, -10}", spy.ActID, GetActorName(spy.ActID), spy.Pos.PosX,
+                            spy.Pos.PosY, spy.Status, spy.Known, spy.Goal);
+                        listData.Add(new Snippet(description));
+                    }
                 }
             }
+            return listData;
+        }
+
+        /// <summary>
+        /// Show bloodhound data, turn by turn, for a specific active, or enemy, actor (input ActID)
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowSpyRL(int actID)
+        {
+            List<Snippet> listData = new List<Snippet>();
+            if (actID > 0)
+            {
+                List<ActorSpy> tempList = new List<ActorSpy>();
+                if (actID < 10)
+                {
+                    //Active
+                    IEnumerable<ActorSpy> actorData =
+                        from bloodhound in dictBloodHound
+                        from spy in bloodhound.Value.GetActiveActors()
+                        where spy.ActID == actID
+                        select spy;
+                    tempList = actorData.ToList();
+                }
+                else
+                {
+                    //Enemy
+                }
+            }
+            else { listData.Add(new Snippet("Warning! Invalid ActorID Input", RLColor.LightRed, RLColor.Black)); }
             return listData;
         }
 
