@@ -454,7 +454,7 @@ namespace Next_Game
                     }
                     else
                     {
-                        CreateAutoEvent(EventFilter.None);
+                        CreateAutoLocEvent(EventFilter.None);
                         //reset back to base figure
                         story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base; 
                         Console.WriteLine("Chance of Player Location event {0} %", story.Ev_Player_Loc_Current);
@@ -753,10 +753,18 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Create a dynamic auto player event (at player's current location) whenever they are about to be captured by an enemy
+        /// </summary>
+        private void CreateAutoEnemyEvent()
+        {
+
+        }
+
+        /// <summary>
         /// create a dynamic auto player location event - assumed to be at player's current location
         /// <param name="filter">Which group of people should the event focus on (from pool of people present at the location)</param>
         /// </summary>
-        private void CreateAutoEvent(EventFilter filter, int actorID = 0)
+        private void CreateAutoLocEvent(EventFilter filter, int actorID = 0)
         {
             //get player
             Active player = Game.world.GetActiveActor(1);
@@ -1855,7 +1863,7 @@ namespace Next_Game
                                             //chain events -> used by CreateAuto Loc Events
                                             actorID = option.ActorID;
                                             OutEventChain chainOutcome = outcome as OutEventChain;
-                                            CreateAutoEvent(chainOutcome.Filter, actorID);
+                                            CreateAutoLocEvent(chainOutcome.Filter, actorID);
                                             Game._eventID = eventObject.EventPID;
                                             break;
                                         case OutcomeType.Conflict:
