@@ -31,7 +31,7 @@ OutWinMajor: Your Opponent Suffers a Major Wound and may die
 OutLossMinor: You suffer a minor wound and retire defeated
 OutLoss: You are Forced to Yield to a superior Opponent who can demand an Advantage
 OutLossMajor: You have been Badly Injured and Lose any Special Items
-OutNone: You have fought <name> to a draw. You are both exhausted.
+OutNone: You have fought your Opponent to a draw. You are both exhausted.
 ResWinMinor: 2, 3, 4, 43
 ResWin: 5, 43
 ResWinMajor: 6, 7 , 43

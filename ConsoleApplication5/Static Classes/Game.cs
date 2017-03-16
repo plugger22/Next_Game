@@ -248,7 +248,7 @@ namespace Next_Game
                         case 3:
                             //Spy -> Show specific Actor
                             int actorID = Convert.ToInt32(_multiData);
-                            infoChannel.SetInfoList(world.ShowSpyRL(_actorID), ConsoleDisplay.Multi);
+                            infoChannel.SetInfoList(world.ShowSpyRL(actorID), ConsoleDisplay.Multi);
                             infoChannel.ClearConsole(ConsoleDisplay.Input);
                             break;
                     }

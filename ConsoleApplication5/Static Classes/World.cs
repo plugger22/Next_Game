@@ -2708,10 +2708,11 @@ namespace Next_Game
         /// <returns></returns>
         public List<Snippet> ShowSpyRL(int actID)
         {
+            string description;
             List<Snippet> listData = new List<Snippet>();
+            List<ActorSpy> tempList = new List<ActorSpy>();
             if (actID > 0)
             {
-                List<ActorSpy> tempList = new List<ActorSpy>();
                 if (actID < 10)
                 {
                     //Active
@@ -2725,7 +2726,30 @@ namespace Next_Game
                 else
                 {
                     //Enemy
+                    IEnumerable<ActorSpy> actorData =
+                        from bloodhound in dictBloodHound
+                        from spy in bloodhound.Value.GetEnemyActors()
+                        where spy.ActID == actID
+                        select spy;
+                    tempList = actorData.ToList();
                 }
+                //any records found?
+                if (tempList.Count > 0)
+                {
+                    RLColor foreColor;
+                    listData.Add(new Snippet(string.Format("--- Spy ACTOR ID {0}", actID), RLColor.Yellow, RLColor.Black));
+                    //set up formatted Snippet list
+                    foreach (ActorSpy spy in tempList)
+                    {
+                        if (spy.Known == true) { foreColor = Color._badTrait; }
+                        else { foreColor = RLColor.White; }
+                        description = string.Format("Day {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-10} Goal -> {6, -10}", spy.Turn, GetActorName(spy.ActID), spy.Pos.PosX,
+                                spy.Pos.PosY, spy.Status, spy.Known, spy.Goal);
+                        listData.Add(new Snippet(description, foreColor, RLColor.Black));
+                    }
+                }
+                else
+                { listData.Add(new Snippet(string.Format("No records found for ActID {0}", actID))); }
             }
             else { listData.Add(new Snippet("Warning! Invalid ActorID Input", RLColor.LightRed, RLColor.Black)); }
             return listData;
