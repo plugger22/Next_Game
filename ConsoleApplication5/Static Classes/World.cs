@@ -3200,6 +3200,7 @@ namespace Next_Game
                 }
                 //reset Found and listOfEnemies (search routines)
                 actor.Value.Found = false;
+                actor.Value.Capture = false;
                 actor.Value.ResetEnemies();
                 actor.Value.ResetSearched();
             }
@@ -4038,8 +4039,8 @@ namespace Next_Game
                                                     //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
                                                     if (active.AddEnemy(enemy.Value.ActID) == true)
                                                     {
-                                                        active.Known = true; active.Revert = known_revert;
-                                                        description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
+                                                        active.Known = true; active.Revert = known_revert; active.Capture = true;
+                                                        description = string.Format("{0} {1}, ActID {2}, is about to be Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
                                                             enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
                                                         Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
                                                         SetPlayerRecord(record);
@@ -4194,8 +4195,8 @@ namespace Next_Game
                                                 //can only be captured (assumed to be Known)
                                                 if (active.Value.AddEnemy(enemy.ActID) == true)
                                                 {
-                                                    active.Value.Known = true; active.Value.Revert = known_revert;
-                                                    description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                                    active.Value.Known = true; active.Value.Revert = known_revert; active.Value.Capture = true;
+                                                    description = string.Format("{0} {1}, ActID {2}, is about to be Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
                                                         enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
                                                     Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
                                                     SetCurrentRecord(record);

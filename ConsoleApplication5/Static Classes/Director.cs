@@ -774,6 +774,7 @@ namespace Next_Game
                 int enemyID = 0;
                 int highestThreat = 0;
                 Enemy enemy = null;
+                
                 foreach (int actID in listEnemies)
                 {
                     Enemy tempEnemy = Game.world.GetEnemyActor(actID);
@@ -784,12 +785,60 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(173, string.Format("Invalid enemy (null) for ActID \"{0}\"", actID))); }
                 }
+
                 if (enemy != null)
                 {
-
+                    string eventName = "Unknown";
+                    string eventText = "Unknown";
+                    //type of enemy
+                    if (enemy is Inquisitor)
+                    {
+                        eventName = "Enemy Afoot?";
+                        eventText = "The Dark Hooded man staring intently at you is an Inquisitor. " + enemy.Name + " calls on you to YIELD!";
+                    }
+                    else if (enemy is Nemesis)
+                    {
+                        eventName = "Nemesis Catches Up";
+                        eventText = "The Gods must be truly angry as your Nemesis, " + enemy.Name + " is now before you.";
+                    }
                     //need to figure out how to handle eventCategory
+                    EventPlayer eventObject = new EventPlayer(1000, eventName, EventFrequency.Low)
+                    { Category = EventCategory.AutoCreate, Status = EventStatus.Active, Type = ArcType.Actor, Text = eventText };
+                    //default option
+                    OptionInteractive option_1 = new OptionInteractive("Lay down your Weapons");
+                    option_1.ReplyGood = string.Format("{0} forcibly restrains you and leads you to the nearest dungeon", enemy.Name);
+                    OutNone outcome_1 = new OutNone(1000);
+                    option_1.SetGoodOutcome(outcome_1);
+                    eventObject.SetOption(option_1);
+                    //fight option
+                    OptionInteractive option_2 = new OptionInteractive("Draw your Sword!");
+                    option_2.ReplyGood = string.Format("{0} reaches for his weapon and lunges at you", enemy.Name);
+                    OutNone outcome_2 = new OutNone(1000);
+                    option_2.SetGoodOutcome(outcome_2);
+                    eventObject.SetOption(option_2);
+                    //flee option
+                    OptionInteractive option_3 = new OptionInteractive("Run like the Wind!");
+                    option_3.ReplyGood = string.Format("{0} curses and gives pursuit", enemy.Name);
+                    OutNone outcome_3 = new OutNone(1000);
+                    option_3.SetGoodOutcome(outcome_3);
+                    eventObject.SetOption(option_3);
+                    //Create & Add Event Package
+                    EventPackage package = new EventPackage() { Person = player, EventObject = eventObject, Done = false };
+                    listPlyrCurrentEvents.Add(package);
+                    //if more than the current event present the original one (autocreated) needs to be deleted
+                    if (listPlyrCurrentEvents.Count > 1) { listPlyrCurrentEvents.RemoveAt(0); }
 
-                    EventPlayer eventObject = new EventPlayer(1000, "Enemy Afoot?", EventFrequency.Low) { Category = EventCategory.AutoLoc, Status = EventStatus.Active, Type = ArcType.Location };
+                    //add to Player dictionary (ResolveOutcome looks for it there) -> check not an instance present already
+                    if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }
+                    dictPlayerEvents.Add(1000, eventObject);
+                    //message
+                    string locText = "Unknown";
+                    if (player.Status == ActorStatus.AtLocation) { locText = "at " + Game.world.GetLocationName(player.LocID);}
+                    else if (player.Status == ActorStatus.Travelling) { locText = "travelling to " + Game.world.GetLocationName(player.LocID); }
+                    string tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", player.Name, player.ActID, locText, eventObject.Type, eventObject.Name);
+                    Message message = new Message(tempText, MessageType.Event);
+                    Game.world.SetMessage(message);
+                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, Game.world.GetRefID(player.LocID), CurrentActorIncident.Event));
                 }
                 else { Game.SetError(new Error(173, "Invalid enemy (null) from search for the highest threat rated enemy loop")); }
                 
@@ -885,7 +934,7 @@ namespace Next_Game
                         }
                     }
                     //new event (auto location events always have eventPID of '1000' -> old version in Player dict is deleted before new one added)
-                    EventPlayer eventObject = new EventPlayer(1000, "What to do?", EventFrequency.Low) {Category = EventCategory.AutoLoc, Status = EventStatus.Active, Type = ArcType.Location };
+                    EventPlayer eventObject = new EventPlayer(1000, "What to do?", EventFrequency.Low) {Category = EventCategory.AutoCreate, Status = EventStatus.Active, Type = ArcType.Location };
                     
                     switch (filter)
                     {

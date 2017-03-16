@@ -83,7 +83,7 @@
     <Compile Include="Game World\Actor.cs" />
     <Compile Include="Archive\Archive.cs" />
     <Compile Include="Cartographic\GeoCluster.cs" />
-    <Compile Include="Game World\Archetype.cs" />
+    <Compile Include="Event_System\Archetype.cs" />
     <Compile Include="Event_System\Story.cs" />
     <Compile Include="Event_System\Event.cs" />
     <Compile Include="Game World\Possession.cs" />
