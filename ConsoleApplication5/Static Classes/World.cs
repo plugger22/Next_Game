@@ -12,6 +12,8 @@ namespace Next_Game
     {
         static Random rnd;
         private List<Move> listMoveObjects; //actors moving through the world
+        private List<ActorSpy> listTempActiveActors; //bloodhound temp lists
+        private List<ActorSpy> listTempEnemyActors; //bloodhound temp lists
         private int[,] arrayAI; //'0' -> # enemies at capital, '1,2,3,4' -> # enemies patrolling each branch, [0,] -> actual, [1,] -> desired [2,] -> temp data
         private readonly Queue<Snippet> messageQueue; //short term queue to display recent messages
         private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID (non-activated followers aren't in dictionary)
@@ -32,12 +34,15 @@ namespace Next_Game
         private Dictionary<int, Passive> dictRoyalCourt; //advisors and royal retainers (assumed to always be at Kingskeep) excludes family
         private Dictionary<int, int> dictConvertLocToRef; //dictionary to convert LocID's to RefID's (key is LocID, value is RefID)
         private Dictionary<int, int> dictConvertRefToLoc; //dictionary to convert RefID's to LocID's (key is RefID, value is LocID)
+        private Dictionary<int, BloodHound> dictBloodHound; //dictionary of all active & enemy actors movements (key is Turn #)
 
         //default constructor
         public World(int seed)
         {
             rnd = new Random(seed);
             listMoveObjects = new List<Move>();
+            listTempActiveActors = new List<ActorSpy>();
+            listTempEnemyActors = new List<ActorSpy>();
             arrayAI = new int[3, 5];
             messageQueue = new Queue<Snippet>();
             dictActiveActors = new Dictionary<int, Active>();
@@ -58,6 +63,7 @@ namespace Next_Game
             dictRoyalCourt = new Dictionary<int, Passive>();
             dictConvertLocToRef = new Dictionary<int, int>();
             dictConvertRefToLoc = new Dictionary<int, int>();
+            dictBloodHound = new Dictionary<int, BloodHound>();
         }
 
 
@@ -2810,6 +2816,7 @@ namespace Next_Game
             UpdateFollowerPositions();
             UpdateEnemiesPositions();
             UpdateActiveActors();
+            UpdateBloodHound(); //needs to be right at the end of ProcessStartTurn
         }
 
         /// <summary>
@@ -4175,6 +4182,36 @@ namespace Next_Game
             { Console.WriteLine("{0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i], 
                 arrayTemp[i]); }
         }
+
+        /// <summary>
+        /// tracks active and enemy actors at the start of each turn
+        /// </summary>
+        private void UpdateBloodHound()
+        {
+            BloodHound bloodhound = new BloodHound();
+            //active actors
+            foreach(var active in dictActiveActors)
+            {
+                listTempActiveActors.Clear();
+                ActorSpy activeSpy = new ActorSpy(active.Value.ActID, active.Value.GetActorPosition(), active.Value.Status, active.Value.Known);
+                listTempActiveActors.Add(activeSpy);
+            }
+            bloodhound.SetActiveActors(listTempActiveActors);
+            //enemy actors
+            foreach(var enemy in dictEnemyActors)
+            {
+                listTempEnemyActors.Clear();
+                ActorSpy enemySpy = new ActorSpy(enemy.Value.ActID, enemy.Value.GetActorPosition(), enemy.Value.Status, enemy.Value.Known, enemy.Value.Goal);
+                listTempEnemyActors.Add(enemySpy);
+            }
+            bloodhound.SetEnemyActors(listTempEnemyActors);
+            //add to dictionary
+            try
+            { dictBloodHound.Add(Game.gameTurn, bloodhound); }
+            catch(ArgumentException)
+            { Game.SetError(new Error(171, string.Format("Invalid gameTurn \"{0}\", (duplicate Entry) -> Bloodhound entry Not added", Game.gameTurn))); }
+        }
+
 
         //new Methods above here
     }
