@@ -40,6 +40,7 @@ namespace Next_Game
                     this.ActID = actID;
                     this.Pos= pos;
                     this.Status = status;
+                    this.Known = known;
                     this.Goal = goal;
                 }
                 else { Game.SetError(new Error(168, string.Format("Invalid Position input (Pos {0}:{1})", pos.PosX, pos.PosY))); }
@@ -99,6 +100,11 @@ namespace Next_Game
             else { Game.SetError(new Error(170, "Invalid tempList input (Empty)")); }
         }
 
+        internal List<ActorSpy> GetActiveActors()
+        { return listActiveActors; }
+
+        internal List<ActorSpy> GetEnemyActors()
+        { return listEnemyActors; }
 
         //add new methods above here
     }

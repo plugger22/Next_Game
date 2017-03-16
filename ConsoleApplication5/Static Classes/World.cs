@@ -1704,6 +1704,24 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Get any actor's name. Returns empty string if not found
+        /// </summary>
+        /// <param name="actID"></param>
+        /// <returns></returns>
+        public string GetActorName(int actID)
+        {
+            string name = "";
+            //check active actor in dictionary
+            if (dictAllActors.ContainsKey(actID))
+            {
+                Actor actor = dictAllActors[actID];
+                return string.Format("{0}", actor.Name);
+            }
+            else { Game.SetError(new Error(172, "Actor not found in dictAllActors")); }
+            return name;
+        }
+
+        /// <summary>
         /// returns num days since player was last Known
         /// </summary>
         /// <param name="actID"></param>
@@ -2629,6 +2647,46 @@ namespace Next_Game
             List<Snippet> listData = new List<Snippet>();
             foreach(string data in tempList)
             { listData.Add(new Snippet(data)); }
+            return listData;
+        }
+
+        /// <summary>
+        /// Generate a list of all Bloodhound Actor info grouped by turns
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowSpyAllRL()
+        {
+            int turn;
+            string description;
+            List<Snippet> listData = new List<Snippet>();
+            listData.Add(new Snippet("--- Spy ALL", RLColor.Yellow, RLColor.Black));
+            List<ActorSpy> listTempActive = new List<ActorSpy>();
+            List<ActorSpy> listTempEnemy = new List<ActorSpy>();
+            foreach(var bloodhound in dictBloodHound)
+            {
+                turn = bloodhound.Key;
+                //clear lists
+                listTempActive.Clear();
+                listTempEnemy.Clear();
+                //get a new turn's worth of data
+                listTempActive.AddRange(bloodhound.Value.GetActiveActors());
+                listTempEnemy.AddRange(bloodhound.Value.GetEnemyActors());
+                //snippets -> active actors
+                listData.Add(new Snippet(string.Format("Day {0}", turn), RLColor.LightRed, RLColor.Black));
+                foreach(ActorSpy spy in listTempActive)
+                {
+                    description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-10} Goal -> {6, -10}", spy.ActID, GetActorName(spy.ActID), spy.Pos.PosX,
+                        spy.Pos.PosY, spy.Status, spy.Known, "n.a");
+                    listData.Add(new Snippet(description));
+                }
+                //snippets -> enemy actors
+                foreach (ActorSpy spy in listTempEnemy)
+                {
+                    description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-10} Goal -> {6, -10}", spy.ActID, GetActorName(spy.ActID), spy.Pos.PosX,
+                        spy.Pos.PosY, spy.Status, spy.Known, spy.Goal);
+                    listData.Add(new Snippet(description));
+                }
+            }
             return listData;
         }
 
@@ -4189,10 +4247,12 @@ namespace Next_Game
         private void UpdateBloodHound()
         {
             BloodHound bloodhound = new BloodHound();
+            //clear out temp lists
+            listTempActiveActors.Clear();
+            listTempEnemyActors.Clear();
             //active actors
             foreach(var active in dictActiveActors)
             {
-                listTempActiveActors.Clear();
                 ActorSpy activeSpy = new ActorSpy(active.Value.ActID, active.Value.GetActorPosition(), active.Value.Status, active.Value.Known);
                 listTempActiveActors.Add(activeSpy);
             }
@@ -4200,7 +4260,6 @@ namespace Next_Game
             //enemy actors
             foreach(var enemy in dictEnemyActors)
             {
-                listTempEnemyActors.Clear();
                 ActorSpy enemySpy = new ActorSpy(enemy.Value.ActID, enemy.Value.GetActorPosition(), enemy.Value.Status, enemy.Value.Known, enemy.Value.Goal);
                 listTempEnemyActors.Add(enemySpy);
             }

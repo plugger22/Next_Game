@@ -793,6 +793,10 @@ namespace Next_Game
                                     infoChannel.SetInfoList(world.GetLoreSet(keyPress), ConsoleDisplay.Multi);
                                     infoChannel.InsertHeader(new Snippet("--- Uprising LORE", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                     break;
+                                case MenuMode.Debug:
+                                    //Spy -> Show All Bloodhound data, grouped by turns
+                                    infoChannel.SetInfoList(world.ShowSpyAllRL(), ConsoleDisplay.Multi);
+                                    break;
                             }
                             break;
                         case RLKey.X:

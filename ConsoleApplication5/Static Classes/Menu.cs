@@ -80,6 +80,7 @@ namespace Next_Game
                     //Main menu commands
                     menuArrayText[0, 0] = "[C] Crow";
                     menuArrayText[0, 1] = "[ENTER] End Turn";
+                    menuArrayText[0, 2] = "[I] Toggle Info";
                     //Info category commands
                     menuArrayText[1, 0] = "[P] Show Player Actors";
                     menuArrayText[1, 1] = "[M] Show Messages";
@@ -87,7 +88,6 @@ namespace Next_Game
                     menuArrayText[1, 3] = "[G] Show Generator Stats";
                     menuArrayText[1, 4] = "[A] Show Actor";
                     menuArrayText[1, 5] = "[E] Show Enemies";
-                    menuArrayText[1, 6] = "[I] Toggle Followers & Enemies";
                     
                     //sub Menu commands
                     menuArrayText[3, 0] = "[1..9] Character MENU";
@@ -144,22 +144,29 @@ namespace Next_Game
                     //input categories
                     menuArrayCategories[0] = "Debug Map ---";
                     menuArrayCategories[1] = "Info ---";
+                    menuArrayCategories[2] = "Spy ---";
                     menuArrayCategories[3] = "Switch ---";
-                    //Debug menu commands
+                    //Debug Map commands
                     menuArrayText[0, 0] = "[G] Draw Route";
                     menuArrayText[0, 1] = "[D] Route Debug";
                     menuArrayText[0, 2] = "[R] Routes";
                     menuArrayText[0, 3] = "[M] Map (House ID's)";
-
+                    menuArrayText[0, 4] = "[I] Toggle Info";
+                    //Debug Info commands
                     menuArrayText[1, 0] = "[S] Show Secrets";
                     menuArrayText[1, 1] = "[E] Show Errors";
                     menuArrayText[1, 2] = "[T] Show Timers";
-                    menuArrayText[1, 3] = "[P] Show Duplicates";
-                    menuArrayText[1, 4] = "[K] Show Old King's House";
-                    menuArrayText[1, 5] = "[H] Show House Relations";
-                    menuArrayText[1, 6] = "[Q] Show Enemies (all)";
-                    menuArrayText[1, 7] = "[I] Toggle Followers & Enemies";
-
+                    menuArrayText[1, 3] = "[P] Show Dup's";
+                    menuArrayText[1, 4] = "[K] Show Old K's Hse";
+                    menuArrayText[1, 5] = "[H] Show Hse Rels";
+                    menuArrayText[1, 6] = "[Q] Show Enemies";
+                    //Debug Spy commands
+                    menuArrayText[2, 0] = "[U] Show All";
+                    menuArrayText[2, 1] = "[V] Show Actor";
+                    menuArrayText[2, 2] = "[X] Show Active";
+                    menuArrayText[2, 3] = "[Y] Show Enemies";
+                    menuArrayText[2, 4] = "[Z] Show Turn";
+                    //Debug Switch commands
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
