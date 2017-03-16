@@ -1617,6 +1617,20 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// return an Enemy actor from dictenemyActors, otherwise null
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <returns></returns>
+        internal Enemy GetEnemyActor(int actorID)
+        {
+            Enemy person = new Enemy();
+            if (dictEnemyActors.ContainsKey(actorID))
+            { person = dictEnemyActors[actorID]; }
+            else { person = null; }
+            return person;
+        }
+
+        /// <summary>
         /// returns any actor -> Passive or Active
         /// </summary>
         /// <param name="actorID"></param>
@@ -1911,7 +1925,7 @@ namespace Next_Game
                 //create family
                 Game.history.CreateFamily(actorLord, actorLady);
                 //check if lady died in childbirth
-               /* if (actorLady.Status == ActorStatus.Dead)
+               /* if (actorLady.Status == ActorStatus.Gone)
                 {
                     int yearWifeDied = actorLady.Died;
                     //40% chance of remarrying
@@ -2920,6 +2934,9 @@ namespace Next_Game
             UpdateActorMoveStatus(MoveActors());
             CheckStationaryActiveActors();
             CalculateCrows();
+            //Enemies
+            UpdateAIController();
+            SetEnemyActivity();
             //Create events
             Game.director.CheckPlayerEvents();
             Game.director.CheckFollowerEvents(dictActiveActors);
@@ -2932,9 +2949,6 @@ namespace Next_Game
                 if (Game.director.ResolveFollowerEvents())
                 { Game._specialMode = SpecialMode.FollowerEvent; }
             }
-            //Enemies
-            UpdateAIController();
-            SetEnemyActivity();
             //update position of all key characters on map layers
             UpdateFollowerPositions();
             UpdateEnemiesPositions();

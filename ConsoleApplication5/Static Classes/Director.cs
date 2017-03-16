@@ -442,29 +442,36 @@ namespace Next_Game
             Active player = Game.world.GetActiveActor(1);
             if (player != null && player.Status != ActorStatus.Gone && player.Delay == 0)
             {
-                if (player.Status == ActorStatus.AtLocation)
+                //check first if any enemy is about to capture the Player
+                if (player.Capture == true)
+                {  CreateAutoEnemyEvent(); }
+                else
                 {
-                    //Location event
-                    if (rnd.Next(100) <= story.Ev_Player_Loc_Current)
+                    //Situation Normal...
+                    if (player.Status == ActorStatus.AtLocation)
                     {
-                        DeterminePlayerEvent(player, EventType.Location);
-                        //chance of event halved after each occurence (prevents a long string of random events and gives space for necessary system events)
-                        story.Ev_Player_Loc_Current /= 2;
-                        Console.WriteLine("Chance of Player Location event {0} %", story.Ev_Player_Loc_Current);
+                        //Location event
+                        if (rnd.Next(100) <= story.Ev_Player_Loc_Current)
+                        {
+                            DeterminePlayerEvent(player, EventType.Location);
+                            //chance of event halved after each occurence (prevents a long string of random events and gives space for necessary system events)
+                            story.Ev_Player_Loc_Current /= 2;
+                            Console.WriteLine("Chance of Player Location event {0} %", story.Ev_Player_Loc_Current);
+                        }
+                        else
+                        {
+                            CreateAutoLocEvent(EventFilter.None);
+                            //reset back to base figure
+                            story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
+                            Console.WriteLine("Chance of Player Location event {0} %", story.Ev_Player_Loc_Current);
+                        }
                     }
-                    else
+                    else if (player.Status == ActorStatus.Travelling)
                     {
-                        CreateAutoLocEvent(EventFilter.None);
-                        //reset back to base figure
-                        story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base; 
-                        Console.WriteLine("Chance of Player Location event {0} %", story.Ev_Player_Loc_Current);
+                        //travelling event
+                        if (rnd.Next(100) <= story.Ev_Player_Trav_Base)
+                        { DeterminePlayerEvent(player, EventType.Travelling); }
                     }
-                }
-                else if (player.Status == ActorStatus.Travelling)
-                {
-                    //travelling event
-                    if (rnd.Next(100) <= story.Ev_Player_Trav_Base)
-                    { DeterminePlayerEvent(player, EventType.Travelling); }
                 }
             }
             else
@@ -757,7 +764,38 @@ namespace Next_Game
         /// </summary>
         private void CreateAutoEnemyEvent()
         {
+            //get player
+            Active player = Game.world.GetActiveActor(1);
+            if (player != null)
+            {
+                //assumes Player.Captured == true and Player.listOfEnemies.Count > 0
+                List<int> listEnemies = player.GetListOfEnemies();
+                //find enemy with highest threat rating
+                int enemyID = 0;
+                int highestThreat = 0;
+                Enemy enemy = null;
+                foreach (int actID in listEnemies)
+                {
+                    Enemy tempEnemy = Game.world.GetEnemyActor(actID);
+                    if (enemy != null)
+                    {
+                        if (tempEnemy.Threat > highestThreat)
+                        { highestThreat = tempEnemy.Threat; enemyID = tempEnemy.ActID; enemy = tempEnemy; }
+                    }
+                    else { Game.SetError(new Error(173, string.Format("Invalid enemy (null) for ActID \"{0}\"", actID))); }
+                }
+                if (enemy != null)
+                {
 
+                    //need to figure out how to handle eventCategory
+
+                    EventPlayer eventObject = new EventPlayer(1000, "Enemy Afoot?", EventFrequency.Low) { Category = EventCategory.AutoLoc, Status = EventStatus.Active, Type = ArcType.Location };
+                }
+                else { Game.SetError(new Error(173, "Invalid enemy (null) from search for the highest threat rated enemy loop")); }
+                
+            }
+            else
+            { Game.SetError(new Error(173, "Invalid Player (null)")); }
         }
 
         /// <summary>

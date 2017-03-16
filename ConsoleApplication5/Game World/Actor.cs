@@ -6,9 +6,9 @@ using Next_Game.Event_System;
 
 namespace Next_Game
 {
-    public enum ActorStatus { AtLocation, Travelling, Gone }; //'Gone' encompasses dead and missing
+    public enum ActorStatus { AtLocation, Travelling, Captured, Gone }; //'Gone' encompasses dead and missing
     //lord and lady are children of Lords, Heir is first in line to inherit. NOTE: keep Knight immediately after Bannerlord with Advisor and Special behind Knight.
-    public enum ActorType { None, Usurper, Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special, Beast, Inquisitor };
+    public enum ActorType { None, Usurper, Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special, Beast, Inquisitor, Nemesis };
     public enum ActorOffice { None, Usurper, King, Queen, Lord_of_the_North, Lord_of_the_East, Lord_of_the_South, Lord_of_the_West }
     public enum ActorRealm { None, Head_of_Noble_House, Head_of_House, Regent }
     public enum AdvisorRoyal { None, Master_of_Coin, Master_of_Whisperers, Master_of_Laws, Master_of_Ships, High_Septon, Hand_of_the_King, Commander_of_Kings_Guard, Commander_of_City_Watch }
@@ -545,6 +545,7 @@ namespace Next_Game
         public int TurnsUnknown { get; set; } //# of continuous turns spent 'Unknown' (used by conflict for game situations)
         public int LastKnownLocID { get; set; } //updated every turn Actor is known
         public bool Found { get; set; } //found by enemies if true, reset each at end of each turn
+        public bool Capture { get; set; } //if found when already Known, then 'true' and enemy about to capture active actor, reset at the end of each turn
         private List<int> listOfEnemies; //if found, contains actID of all enemies who found you, cleared at end of each turn
         private List<int> listOfSearched; //tracks every enemy who searches (in same place) for character to prevent enemies making multiple searches each turn. Reset at end of turn.
         private List<string> crowTooltip;//explanation of factors influencing crow chance
@@ -626,6 +627,9 @@ namespace Next_Game
             { return true; }
             return false;
         }
+
+        public List<int> GetListOfEnemies()
+        { return listOfEnemies; }
 
         /// <summary>
         /// If enemy already in list then returns true, otherwise false
@@ -827,6 +831,11 @@ namespace Next_Game
         public int AssignedBranch { get; set; } //branch allocated at start of game, '0' indicates capital
         public bool MoveOut { get; set; } //direction of movement along branch, 'true' -> outward from capital, 'false' -> inwards to Capital
         public bool HuntMode { get; set; } //'true' -> actively hunting player, 'false' -> patrolling branch
+        //other
+        public int Threat { get; set; } //how big a threat to Player (if multiple enemies find player in a turn, highest threat enemy deals with him in an CreateAutoEnemyEvent
+
+        public Enemy()
+        { }
 
         public Enemy(string name, ActorType type = ActorType.None, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }
@@ -838,11 +847,25 @@ namespace Next_Game
     public class Inquisitor : Enemy
     {
         
-
         public Inquisitor(string name, ActorType type = ActorType.Inquisitor, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
             Name = "Brother " + name;
+            Threat = 1;
         }
+    }
+
+    /// <summary>
+    /// That which the Gods send down to smite the Player when they overstay their welcome
+    /// </summary>
+    public class Nemesis : Enemy
+    {
+
+        public Nemesis(string name, ActorType type = ActorType.Nemesis, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        {
+            this.Name = name;
+            Threat = 2;
+        }
+
     }
 
 
