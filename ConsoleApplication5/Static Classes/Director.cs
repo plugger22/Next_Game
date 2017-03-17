@@ -794,8 +794,8 @@ namespace Next_Game
                         //type of enemy
                         if (enemy is Inquisitor)
                         {
-                            eventName = "Enemy Afoot?";
-                            eventText = "The Dark Hooded man staring intently at you is an Inquisitor. " + enemy.Name + " calls on you to YIELD!";
+                            eventName = "Enemy Afoot";
+                            eventText = "The Dark Hooded man staring intently at you is an Inquisitor. " + enemy.Name + " calls on you to YIELD";
                         }
                         else if (enemy is Nemesis)
                         {
@@ -806,21 +806,21 @@ namespace Next_Game
                         EventPlayer eventObject = new EventPlayer(1000, eventName, EventFrequency.Low)
                         { Category = EventCategory.AutoCreate, Status = EventStatus.Active, Type = ArcType.Actor, Text = eventText };
                         //default option
-                        OptionInteractive option_1 = new OptionInteractive("Lay down your Weapons");
+                        OptionInteractive option_1 = new OptionInteractive("Lay down your Weapons") { ActorID = enemy.ActID };
                         option_1.ReplyGood = string.Format("{0} forcibly restrains you and leads you to the nearest dungeon", enemy.Name);
-                        OutNone outcome_1 = new OutNone(1000);
+                        OutNone outcome_1 = new OutNone(eventObject.EventPID);
                         option_1.SetGoodOutcome(outcome_1);
                         eventObject.SetOption(option_1);
                         //fight option
-                        OptionInteractive option_2 = new OptionInteractive("Draw your Sword!");
+                        OptionInteractive option_2 = new OptionInteractive("Draw your Sword") { ActorID = enemy.ActID }; 
                         option_2.ReplyGood = string.Format("{0} reaches for his weapon and lunges at you", enemy.Name);
-                        OutNone outcome_2 = new OutNone(1000);
+                        OutConflict outcome_2 = new OutConflict(eventObject.EventPID, enemy.ActID, ConflictType.Combat) { Combat_Type = ConflictCombat.Personal, SubType = ConflictSubType.Personal };
                         option_2.SetGoodOutcome(outcome_2);
                         eventObject.SetOption(option_2);
                         //flee option
-                        OptionInteractive option_3 = new OptionInteractive("Run like the Wind!");
-                        option_3.ReplyGood = string.Format("{0} curses and gives pursuit", enemy.Name);
-                        OutNone outcome_3 = new OutNone(1000);
+                        OptionInteractive option_3 = new OptionInteractive("Run like the Wind") { ActorID = enemy.ActID };
+                        option_3.ReplyGood = string.Format("{0} spits, curses and gives pursuit", enemy.Name);
+                        OutConflict outcome_3 = new OutConflict(eventObject.EventPID, enemy.ActID, ConflictType.Stealth) { Stealth_Type = ConflictStealth.Evade, SubType = ConflictSubType.Evade };
                         option_3.SetGoodOutcome(outcome_3);
                         eventObject.SetOption(option_3);
                         //Create & Add Event Package
