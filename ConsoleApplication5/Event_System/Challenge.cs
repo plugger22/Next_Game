@@ -56,11 +56,21 @@ namespace Next_Game.Event_System
         /// <param name="other"></param>
         public Challenge(Challenge other)
         {
+
             Type = other.Type;
             CombatType = other.CombatType;
             SocialType = other.SocialType;
             StealthType = other.StealthType;
-            //arrayStrategies = new string[](other.arrayStrategies);
+            //initialise collections prior to copying otherwise a null collection error occurs for each attempt
+            arrayStrategies = new string[6];
+            arrayOutcomes = new string[7];
+            arraySkills = new SkillType[3];
+            listResults = new List<List<int>>();
+            for (int i = 0; i < (int)ConflictResult.Count; i++)
+            {
+                List<int> subList = new List<int>() { 0 };
+                listResults.Add(subList);
+            }
             other.arrayStrategies.CopyTo(arrayStrategies, 0);
             other.arrayOutcomes.CopyTo(arrayOutcomes, 0);
             other.arraySkills.CopyTo(arraySkills, 0);

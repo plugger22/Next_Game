@@ -232,7 +232,7 @@ namespace Next_Game
                         string[] originalArray = challenge.GetStrategies();
                         for(int i = 0; i < copyArray.Length; i++)
                         {
-                            if (copyArray[i].Length > 0)
+                            if (copyArray[i]?.Length > 0)
                             { originalArray[i] = copyArray[i]; }
                         }
                         //outcomes
@@ -240,7 +240,7 @@ namespace Next_Game
                         originalArray = challenge.GetOutcomes();
                         for(int i = 0; i < copyArray.Length; i++)
                         {
-                            if (copyArray[i].Length > 0)
+                            if (copyArray[i]?.Length > 0)
                             { originalArray[i] = copyArray[i]; }
                         }
                         //skills
