@@ -227,12 +227,36 @@ namespace Next_Game
                     if (Game.director.CheckChallenge(ConflictSubType.Special) == true)
                     {
                         Challenge overide = Game.director.GetChallenge(ConflictSubType.Special);
-                        //where data exists in overideChallenge it overwrites existing data
-                        string[] tempArray = overide.GetStrategies();
-                        for(int i = 0; i < tempArray.Length; i++)
+                        //where data exists in overideChallenge it overwrites existing data -> Strategy
+                        string[] copyArray = overide.GetStrategies();
+                        string[] originalArray = challenge.GetStrategies();
+                        for(int i = 0; i < copyArray.Length; i++)
                         {
-                            if (tempArray[i].Length > 0)
-                            { }
+                            if (copyArray[i].Length > 0)
+                            { originalArray[i] = copyArray[i]; }
+                        }
+                        //outcomes
+                        copyArray = overide.GetOutcomes();
+                        originalArray = challenge.GetOutcomes();
+                        for(int i = 0; i < copyArray.Length; i++)
+                        {
+                            if (copyArray[i].Length > 0)
+                            { originalArray[i] = copyArray[i]; }
+                        }
+                        //skills
+                        SkillType[] copySkillArray = overide.GetSkills();
+                        SkillType[] originalSkillArray = challenge.GetSkills();
+                        for (int i = 0; i < copySkillArray.Length; i++)
+                        {
+                            if (copySkillArray[i] > SkillType.None)
+                            { originalSkillArray[i] = copySkillArray[i]; }
+                        }
+                        //results
+                        for (int i = 0; i < (int)ConflictResult.Count; i++)
+                        {
+                            List<int> subList = overide.GetResults((ConflictResult)i);
+                            if (subList.Count > 0)
+                            { challenge.SetResults((ConflictResult)i, subList); }
                         }
                     }
                     return true;

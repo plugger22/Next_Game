@@ -60,6 +60,7 @@ namespace Next_Game.Event_System
             CombatType = other.CombatType;
             SocialType = other.SocialType;
             StealthType = other.StealthType;
+            //arrayStrategies = new string[](other.arrayStrategies);
             other.arrayStrategies.CopyTo(arrayStrategies, 0);
             other.arrayOutcomes.CopyTo(arrayOutcomes, 0);
             other.arraySkills.CopyTo(arraySkills, 0);
@@ -174,6 +175,7 @@ namespace Next_Game.Event_System
         /// <returns></returns>
         public List<int> GetResults(ConflictResult result)
         { return listResults[(int)result]; }
+
 
 
         //place methods above here
