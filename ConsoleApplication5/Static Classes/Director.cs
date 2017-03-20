@@ -818,11 +818,11 @@ namespace Next_Game
                         string[] overideOutcomes = new string[7] {
                         "You manage to escape, barely",
                         "You opponent is left flat footed and winded as you make your escape",
-                        "You leave your opponent sprawled on the ground, dazed and befuddled, as you calmly take your leave",
+                        "You leave your opponent sprawled, dazed, on the ground as you calmly depart",
                         "You have been captured, but luckily your are uninjured",
                         "You have been captured and sustain minor injuries",
                         "You have been captured and have been badly injured",
-                        "While undefeated in combat, your opponent manages, with help, to render you weaponless. You have been captured."};
+                        "Breathing hard, your opponent manages to render you weaponless. You have been captured."};
                         outcome_2.challenge.SetOutcomes(overideOutcomes);
                         outcome_2.challenge.SetOveride(true);
                         option_2.SetGoodOutcome(outcome_2);
