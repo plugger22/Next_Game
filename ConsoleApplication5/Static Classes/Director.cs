@@ -16,7 +16,7 @@ namespace Next_Game
     public enum ConflictCombat { None, Personal, Tournament, Battle, Hunting} //sub category -> a copy should be in ConflictSubType
     public enum ConflictSocial { None, Blackmail, Seduce, Befriend} //sub category -> a copy should be in ConflictSubType
     public enum ConflictStealth { None, Infiltrate, Evade, Escape} //sub category -> a copy should be in ConflictSubType
-    public enum ConflictSubType { None, Personal, Tournament, Battle, Hunting, Blackmail, Seduce, Befriend, Infiltrate, Evade, Escape} //combined list of all subtypes (add to as needed)
+    public enum ConflictSubType { None, Personal, Tournament, Battle, Hunting, Blackmail, Seduce, Befriend, Infiltrate, Evade, Escape, Special} //combined list of all subtypes (add to as needed)
     public enum ConflictSpecial { None, Fortified_Position, Mountain_Country, Forest_Country, Castle_Walls } //special situations
     public enum ConflictResult { None, MinorWin, Win, MajorWin, MinorLoss, Loss, MajorLoss, Count} //result of challenge
     public enum ResourceLevel { None, Meagre, Moderate, Substantial, Wealthy, Excessive}
@@ -1980,7 +1980,16 @@ namespace Next_Game
                                                 //create a new challenge in dictionary that's used to overide data in standard challenge
                                                 if (conflictOutcome.challenge.GetOveride() == true)
                                                 {
-
+                                                    //is there an existing special challenge (overide) in the dictionary? delete is so
+                                                    if (dictChallenges.ContainsKey(ConflictSubType.Special) == true)
+                                                    { dictChallenges.Remove(ConflictSubType.Special); }
+                                                    //create new Special challenge & copy data across from OutConflict.challenge
+                                                    Challenge challenge = new Challenge(conflictOutcome.challenge);
+                                                    //add to dictionary
+                                                    try
+                                                    { dictChallenges.Add(ConflictSubType.Special, challenge); }
+                                                    catch (ArgumentException)
+                                                    { Game.SetError(new Error(73, "Invalid challenge key when adding to dictChallenges (duplicate)")); }
                                                 }
                                                 //message
                                                 Actor opponent = Game.world.GetAnyActor(actorID);
@@ -2629,6 +2638,16 @@ namespace Next_Game
             return challenge;
         }
 
+        /// <summary>
+        /// returns true if a specified conflict subType exists in dictionary
+        /// </summary>
+        /// <returns></returns>
+        internal bool CheckChallenge(ConflictSubType type)
+        {
+            if (dictChallenges.ContainsKey(type) == true)
+            { return true; }
+            return false;
+        }
 
         /// <summary>
         /// add an autoReact new Player Event to the main dictionary, returns true if successful

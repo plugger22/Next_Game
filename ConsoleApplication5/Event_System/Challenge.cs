@@ -51,6 +51,27 @@ namespace Next_Game.Event_System
         }
 
         /// <summary>
+        /// Copy constructor, used for copying overide challenge data from Outcome to a new Special mode challenge in dictChallenges
+        /// </summary>
+        /// <param name="other"></param>
+        public Challenge(Challenge other)
+        {
+            Type = other.Type;
+            CombatType = other.CombatType;
+            SocialType = other.SocialType;
+            StealthType = other.StealthType;
+            other.arrayStrategies.CopyTo(arrayStrategies, 0);
+            other.arrayOutcomes.CopyTo(arrayOutcomes, 0);
+            other.arraySkills.CopyTo(arraySkills, 0);
+            for(int i = 0; i < (int)ConflictResult.Count; i++)
+            {
+                List<int> subList = new List<int>() { 0 };
+                subList.AddRange(other.listResults[i]);
+                listResults.Add(subList);
+            }
+        }
+
+        /// <summary>
         /// If true indicates that this challenge is used to overide data in whatever other challenge is selected
         /// </summary>
         /// <param name="flag"></param>
@@ -153,6 +174,7 @@ namespace Next_Game.Event_System
         /// <returns></returns>
         public List<int> GetResults(ConflictResult result)
         { return listResults[(int)result]; }
+
 
         //place methods above here
     }

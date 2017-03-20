@@ -221,7 +221,22 @@ namespace Next_Game
                 challenge = Game.director.GetChallenge(subType);
                 if (challenge == null)
                 { Game.SetError(new Error(111, "Challenge not found (returns null)")); return false; }
-                else { return true; }
+                else
+                {
+                    //Is there a Special challenge in the dictionary (used to overide standard challenge data)
+                    if (Game.director.CheckChallenge(ConflictSubType.Special) == true)
+                    {
+                        Challenge overide = Game.director.GetChallenge(ConflictSubType.Special);
+                        //where data exists in overideChallenge it overwrites existing data
+                        string[] tempArray = overide.GetStrategies();
+                        for(int i = 0; i < tempArray.Length; i++)
+                        {
+                            if (tempArray[i].Length > 0)
+                            { }
+                        }
+                    }
+                    return true;
+                }
             }
             else
             { Game.SetError(new Error(111, "Challenge not found, invalid Conflict_Type or SubType")); return false; }
