@@ -108,6 +108,7 @@ namespace Next_Game.Event_System
         public ConflictSocial Social_Type { get; set; }
         public ConflictStealth Stealth_Type { get; set; }
         public ConflictSubType SubType { get; set; } //descriptive purposes only
+        public Challenge challenge; //used for adding data that overides the default challenge settings
 
         public OutConflict(int eventID, int opponentID, ConflictType type, bool challenger = true) : base (eventID)
         {
@@ -115,7 +116,14 @@ namespace Next_Game.Event_System
             Conflict_Type = type;
             this.Challenger = challenger;
             Type = OutcomeType.Conflict;
+            challenge = new Challenge(ConflictType.Special, ConflictCombat.None, ConflictSocial.None, ConflictStealth.None); //special mode Challenge (purely for data overides)
         }
+
+        //SetResults
+
+        //SetOutcomes
+
+        //SetSituation
 
     }
 

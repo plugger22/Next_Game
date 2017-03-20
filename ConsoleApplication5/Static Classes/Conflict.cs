@@ -94,7 +94,7 @@ namespace Next_Game
         {
             //debug
             Console.WriteLine("Initialise {0} Challenge", Conflict_Type);
-            if (GetChallenge() == true)
+            if (GetChallenge() == true) //get relevant challenge data
             {
                 Game.layout.InitialiseData();
                 SetPlayerStrategy();

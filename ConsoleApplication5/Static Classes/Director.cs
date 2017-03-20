@@ -12,7 +12,7 @@ namespace Next_Game
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
     public enum DataPoint { None, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfGameStates primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
     public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
-    public enum ConflictType { None, Combat, Social, Stealth} //broad category
+    public enum ConflictType { None, Combat, Social, Stealth, Special} //broad category (special is solely for overriding default challenge data -> used by autocreate events only)
     public enum ConflictCombat { None, Personal, Tournament, Battle, Hunting} //sub category -> a copy should be in ConflictSubType
     public enum ConflictSocial { None, Blackmail, Seduce, Befriend} //sub category -> a copy should be in ConflictSubType
     public enum ConflictStealth { None, Infiltrate, Evade, Escape} //sub category -> a copy should be in ConflictSubType
@@ -815,6 +815,16 @@ namespace Next_Game
                         OptionInteractive option_2 = new OptionInteractive("Draw your Sword") { ActorID = enemy.ActID }; 
                         option_2.ReplyGood = string.Format("{0} reaches for his weapon and lunges at you", enemy.Name);
                         OutConflict outcome_2 = new OutConflict(eventObject.EventPID, enemy.ActID, ConflictType.Combat) { Combat_Type = ConflictCombat.Personal, SubType = ConflictSubType.Personal };
+                        string[] overideOutcomes = new string[7] {
+                        "You manage to escape, barely",
+                        "You opponent is left flat footed and winded as you make your escape",
+                        "You leave your opponent sprawled on the ground, dazed and befuddled, as you calmly take your leave",
+                        "You have been captured, but luckily your are uninjured",
+                        "You have been captured and sustain minor injuries",
+                        "You have been captured and have been badly injured",
+                        "While undefeated in combat, your opponent manages, with help, to render you weaponless. You have been captured."};
+                        outcome_2.challenge.SetOutcomes(overideOutcomes);
+                        outcome_2.challenge.SetOveride(true);
                         option_2.SetGoodOutcome(outcome_2);
                         eventObject.SetOption(option_2);
                         //flee option
@@ -1960,13 +1970,18 @@ namespace Next_Game
                                             actorID = option.ActorID;
                                             if (actorID > 0)
                                             {
-                                                validOption = 2;
+                                                validOption = 2; //activates conflict in Game.cs SetSpecialModeInput()
                                                 OutConflict conflictOutcome = outcome as OutConflict;
                                                 Game.conflict.Conflict_Type = conflictOutcome.Conflict_Type;
                                                 Game.conflict.Combat_Type = conflictOutcome.Combat_Type;
                                                 Game.conflict.Social_Type = conflictOutcome.Social_Type;
                                                 Game.conflict.Stealth_Type = conflictOutcome.Stealth_Type;
                                                 Game.conflict.SetOpponent(actorID, conflictOutcome.Challenger);
+                                                //create a new challenge in dictionary that's used to overide data in standard challenge
+                                                if (conflictOutcome.challenge.GetOveride() == true)
+                                                {
+
+                                                }
                                                 //message
                                                 Actor opponent = Game.world.GetAnyActor(actorID);
                                                 if (opponent != null)

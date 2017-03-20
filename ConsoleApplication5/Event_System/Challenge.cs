@@ -11,6 +11,7 @@ namespace Next_Game.Event_System
     /// </summary>
     class Challenge
     {
+        private bool overide; //if true this challenge is used to overide data in another challenge
         public ConflictType Type { get; set; }
         public ConflictCombat CombatType { get; set; }
         public ConflictSocial SocialType { get; set; }
@@ -49,6 +50,15 @@ namespace Next_Game.Event_System
             { Game.SetError(new Error(106, "Invalid ConflictType input (\"None\")")); }
         }
 
+        /// <summary>
+        /// If true indicates that this challenge is used to overide data in whatever other challenge is selected
+        /// </summary>
+        /// <param name="flag"></param>
+        public void SetOveride(bool flag)
+        { overide = flag; }
+
+        public bool GetOveride()
+        { return overide; }
 
         /// <summary>
         /// Clear then copy new data to array of Strategies
@@ -71,9 +81,9 @@ namespace Next_Game.Event_System
         }
 
         /// <summary>
-        /// Clear then copy new data to array of Outcomes
+        /// Clear then copy new data to array of Outcomes. 
         /// </summary>
-        /// <param name="tempArray"></param>
+        /// <param name="tempArray">tempArray[7], Minor Win/Win/Major Win 0/1/2, Minor Loss/Loss/Major Loss 3/4/5, No Result 6</param>
         public void SetOutcomes(string[] tempArray)
         {
             if (tempArray != null)
