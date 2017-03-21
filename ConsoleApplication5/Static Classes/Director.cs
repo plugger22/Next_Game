@@ -822,7 +822,7 @@ namespace Next_Game
                         "You have been captured, but luckily your are uninjured",
                         "You have been captured and sustain minor injuries",
                         "You have been captured and have been badly injured",
-                        "Breathing hard, your opponent manages to render you weaponless. You have been captured."};
+                        "Breathing hard, your opponent scowls at you."};
                         outcome_2.challenge.SetOutcomes(overideOutcomes);
                         outcome_2.challenge.SetOveride(true);
                         option_2.SetGoodOutcome(outcome_2);

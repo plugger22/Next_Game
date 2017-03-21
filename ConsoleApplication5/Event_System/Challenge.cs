@@ -76,9 +76,10 @@ namespace Next_Game.Event_System
             other.arraySkills.CopyTo(arraySkills, 0);
             for(int i = 0; i < (int)ConflictResult.Count; i++)
             {
-                List<int> subList = new List<int>() { 0 };
+                List<int> subList = new List<int>();
                 subList.AddRange(other.listResults[i]);
-                listResults.Add(subList);
+                listResults[i].Clear();
+                listResults[i].AddRange(subList);
             }
         }
 
