@@ -310,48 +310,76 @@ Good2: The cook is to be congratulated. The delicious dishes are working their m
 Good3: You and <name> would both happily befriend the Undead after such a feast. Magnificent!
 Bad1: You might have eaten worse food once before but it's hard to remember where. <name> is already looking queasy.
 Bad2: Food should be enjoyed, not shovelled down in great haste because the impatient cook wants to rush home to his nubile wife.
-Bad3: What do you know? All the trouble you went to in order to organise a delicious lunch and it turns out that <name> can't stomach pickled swan.
+Bad3: What do you know? All the trouble you went to in order to organise a delicious lunch and it turns out that <name> can't stomach curried swan.
 [end]
 
-# Evade Stealth
+# Evade Stealth -> Defender is the person being chased
 
-Name: Crowded Terrain
+Name: A Crowded Market
 Type: Stealth
 SubType: Evade
 SitNum: 0
 PlyrDef: 1
-Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Data: 1
+Good1: It's a typical busy market day. You dodge and weave through the stalls.
+Good2: The raucous market day crowd serves to conceal you from <name>.
+Good3: The hustle and bustle of the market works to your advantage.
+Bad1: <name> appears to know <his> way around the market. Every time you turn a corner there <he> is.
+Bad2: There are crowds of people but they are all gesturing at you as you run past.
+Bad3: You've lost sight of <name> in the throng of people. Is <he> behind you or in front? Something is wrong.
 [end]
 
-Name: Crowded Terrain
+Name: A Crowded Market
 Type: Stealth
 SubType: Evade
 SitNum: 0
 PlyrDef: -1
-Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Data: 1
+Good1: The crowd ebbs and flows but you can see the path <name> took by the disturbance that ripples outwards.
+Good2: Even though there are a lot of people at the market, <name> stands out like sore thumb. <He> doesn't belong here.
+Good3: The crowd is your friend. They point and yell about the direction that <name> has gone.
+Bad1: It's a busy day at the market. You peer and squint but <name>'s whereabouts are a mystery.
+Bad2: You race through the market but the throng of people thwarts your progress. <name> is getting away!
+Bad3: The noise of the milling crowds drown out your pleas for help. <name> has disappeared into the throng.
 [end]
 
-Name: Long Shadows
+Name: Morning Mist
+Type: Stealth
+SubType: Evade
+SitNum: 0
+PlyrDef: 1
+Data: 2
+Good1: The watery tentacles of mist flash and waver in the sun, hiding you from <name>.
+Good2: The mist is as good as a room full of mirrors. One moment you are there, the next you are invisible.
+Good3: <name> is already confused, floundering around in the wispy white wonderland that the mist has created.
+Bad1: Inexplicably the mist extends up from the ground and cuts out at your shoulders. <name> can clearly see your head.
+Bad2: The wind pulls the concealing mist tendrils apart as you attempt to disappear within it's watery embrace.
+Bad3: The mist isn't a blanket white cover but instead a patchy, moth-eaten quilt that <name> is using to their advantage.
+[end]
+
+Name: Morning Mist
+Type: Stealth
+SubType: Evade
+SitNum: 0
+PlyrDef: -1
+Data: 2
+Good1: The Weather Gods are with you today. The wind gusts push the mist to one side and you spot <name>.
+Good2: It isn't hard to see where <name> has gone. The mist swirls in small eddies in <his> wake.
+Good3: <name> is racing for the high ground but it's the low that offers concealment in the mist. More fool <him>.
+Bad1: Oh for a decent gust of wind. <name> is lost to you within the thick white fog of the mist.
+Bad2: Once <name> dived into the white wall of mist you lost all contact with <him>. What to do?
+Bad3: Fortune favours the bad. Why did there have to a white, concealing, mist ready and waiting to swallow up <name>?
+[end]
+
+Name: Shadows
 Type: Stealth
 SubType: Evade
 SitNum: 1
 Data: 0
-Good1: 
-Good2: 
-Good3: 
-Bad1: 
-Bad2: 
-Bad3: 
+Good1: The shadows stretch and cover the ground with dark patches of concealment that are working to your advantage.
+Good2: They are long and dark. You can make them work for you. They are your friend.
+Good3: It is said that the shadows emanate from the Prince of Darkness but you know that isn't true. They are there to help.
+Bad1: Damn those shadows. The light flashes light and dark, everything is confused, jittery.
+Bad2: Shadows creep, slide and slither across the landscape like evil serpents extending themselves. Oh for a lance.
+Bad3: You blink your eyes, trying to rid yourself of the mottled light that is tricking your brain into not seeing what's there.
 [end]

@@ -835,10 +835,10 @@ namespace Next_Game
                         option_2.SetGoodOutcome(outcome_2);
                         eventObject.SetOption(option_2);
 
-                        //flee option
+                        //flee option -> player is the defender
                         OptionInteractive option_3 = new OptionInteractive("Run like the Wind") { ActorID = enemy.ActID };
                         option_3.ReplyGood = string.Format("{0} spits, curses and gives pursuit", enemy.Name);
-                        OutConflict outcome_3 = new OutConflict(eventObject.EventPID, enemy.ActID, ConflictType.Stealth) { Stealth_Type = ConflictStealth.Evade, SubType = ConflictSubType.Evade };
+                        OutConflict outcome_3 = new OutConflict(eventObject.EventPID, enemy.ActID, ConflictType.Stealth, false) { Stealth_Type = ConflictStealth.Evade, SubType = ConflictSubType.Evade };
                         //customise conflict data -> Outcome texts and results
                         string[] overideOutcomes_3 = new string[7] {
                         "It was very close but you've given them the slip. You're exhausted",
