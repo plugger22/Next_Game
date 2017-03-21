@@ -382,7 +382,7 @@ conPlyr: Yes
 conText: Wounded
 conSkill: Combat
 conEffect: -1
-conTimer: 5
+conTimer: 20
 [End]
 
 Name: Pumped up after a win in Combat
@@ -402,10 +402,35 @@ Name: Free at Last
 RID: 44
 Type: Freedom
 Data: 1
+[End]
 
 Name: Captured
 RID: 45
 Type: Freedom
 Data: -1
+[End]
 
-# next is 46 (missing 28)
+Name: Dazed in Combat
+RID: 28
+Type: Condition
+Tag: Combat Loss
+conPlyr: Yes
+conText: Dazed
+conSkill: Combat
+conEffect: -1
+conTimer: 10
+[End]
+
+Name: Exhausted
+RID: 46
+Type: Condition
+Tag: Wits Loss
+conPlyr: Yes
+conText: Exhausted
+conSkill: Wits
+conEffect: -1
+conTimer: 10
+[End]
+
+
+# next is 47

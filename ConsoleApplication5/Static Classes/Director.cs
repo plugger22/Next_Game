@@ -811,29 +811,48 @@ namespace Next_Game
                         OutNone outcome_1 = new OutNone(eventObject.EventPID);
                         option_1.SetGoodOutcome(outcome_1);
                         eventObject.SetOption(option_1);
+
                         //fight option
                         OptionInteractive option_2 = new OptionInteractive("Draw your Sword") { ActorID = enemy.ActID }; 
                         option_2.ReplyGood = string.Format("{0} reaches for his weapon and lunges at you", enemy.Name);
                         OutConflict outcome_2 = new OutConflict(eventObject.EventPID, enemy.ActID, ConflictType.Combat) { Combat_Type = ConflictCombat.Personal, SubType = ConflictSubType.Personal };
-                        string[] overideOutcomes = new string[7] {
-                        "You manage to escape, barely",
+                        //customise conflict data -> Outcome texts and results
+                        string[] overideOutcomes_2 = new string[7] {
+                        "Dazed, you manage to escape, barely",
                         "You opponent is left flat footed and winded as you make your escape",
                         "You leave your opponent sprawled, dazed, on the ground as you calmly depart",
                         "You have been captured, but luckily your are uninjured",
                         "You have been captured and sustain minor injuries",
                         "You have been captured and have been badly injured",
                         "Breathing hard, your opponent scowls at you."};
-                        outcome_2.challenge.SetOutcomes(overideOutcomes);
+                        outcome_2.challenge.SetOutcomes(overideOutcomes_2);
+                        outcome_2.challenge.SetResults(ConflictResult.MinorWin, new List<int> { 28 });
                         outcome_2.challenge.SetResults(ConflictResult.MinorLoss, new List<int> { 45 });
                         outcome_2.challenge.SetResults(ConflictResult.Loss, new List<int> { 45, 28 });
                         outcome_2.challenge.SetResults(ConflictResult.MajorLoss, new List<int> { 45, 42 });
                         outcome_2.challenge.SetOveride(true);
                         option_2.SetGoodOutcome(outcome_2);
                         eventObject.SetOption(option_2);
+
                         //flee option
                         OptionInteractive option_3 = new OptionInteractive("Run like the Wind") { ActorID = enemy.ActID };
                         option_3.ReplyGood = string.Format("{0} spits, curses and gives pursuit", enemy.Name);
                         OutConflict outcome_3 = new OutConflict(eventObject.EventPID, enemy.ActID, ConflictType.Stealth) { Stealth_Type = ConflictStealth.Evade, SubType = ConflictSubType.Evade };
+                        //customise conflict data -> Outcome texts and results
+                        string[] overideOutcomes_3 = new string[7] {
+                        "It was very close but you've given them the slip. You're exhausted",
+                        "You are free and clear",
+                        "You are as slippery as an eel. They have no clue where you are",
+                        "You tried and failed. You've been captured",
+                        "You have been captured and sustained minor injuries",
+                        "You have been captured and have been  injured",
+                        "They know where you are but they can't reach you. It's an impasse."};
+                        outcome_3.challenge.SetOutcomes(overideOutcomes_3);
+                        outcome_3.challenge.SetResults(ConflictResult.MinorWin, new List<int> { 46 });
+                        outcome_3.challenge.SetResults(ConflictResult.MinorLoss, new List<int> { 45 });
+                        outcome_3.challenge.SetResults(ConflictResult.Loss, new List<int> { 45, 46});
+                        outcome_3.challenge.SetResults(ConflictResult.MajorLoss, new List<int> { 45, 42 });
+                        outcome_3.challenge.SetOveride(true);
                         option_3.SetGoodOutcome(outcome_3);
                         eventObject.SetOption(option_3);
                         //Create & Add Event Package
