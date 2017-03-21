@@ -312,3 +312,46 @@ Bad1: You might have eaten worse food once before but it's hard to remember wher
 Bad2: Food should be enjoyed, not shovelled down in great haste because the impatient cook wants to rush home to his nubile wife.
 Bad3: What do you know? All the trouble you went to in order to organise a delicious lunch and it turns out that <name> can't stomach pickled swan.
 [end]
+
+# Evade Stealth
+
+Name: Crowded Terrain
+Type: Stealth
+SubType: Evade
+SitNum: 0
+PlyrDef: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[end]
+
+Name: Crowded Terrain
+Type: Stealth
+SubType: Evade
+SitNum: 0
+PlyrDef: -1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[end]
+
+Name: Long Shadows
+Type: Stealth
+SubType: Evade
+SitNum: 1
+Data: 0
+Good1: 
+Good2: 
+Good3: 
+Bad1: 
+Bad2: 
+Bad3: 
+[end]
