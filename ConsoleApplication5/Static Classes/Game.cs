@@ -931,7 +931,7 @@ namespace Next_Game
         {
             if (_renderRequired == false)
             {
-                //redraw screen every so often regardless of wether update is required in order to get consistently flashing symbols onscreen
+                //redraw screen every so often regardless of whether update is required in order to get consistently flashing symbols onscreen
                 _updateTimer++;
                 if (_updateTimer > 100)
                 { _renderRequired = true;  _updateTimer = 0; }

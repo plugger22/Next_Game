@@ -1103,8 +1103,14 @@ namespace Next_Game
             {
                 for (int i = 0; i < text.Length; i++)
                 {
-                    arrayOfCells[coord_X + i, coord_Y] = text[i];
-                    arrayOfForeColors[coord_X + i, coord_Y] = foreColor;
+                    //truncates text if overlength (otherwise index out of bounds error)
+                    if ((i + coord_X) <= (arrayOfCells.GetUpperBound(0) - coord_X) )
+                    {
+                        arrayOfCells[coord_X + i, coord_Y] = text[i];
+                        arrayOfForeColors[coord_X + i, coord_Y] = foreColor;
+                    }
+                    else
+                    { break; }
                 }
             }
             else { Game.SetError(new Error(87, "String input is invalid (null)")); }
