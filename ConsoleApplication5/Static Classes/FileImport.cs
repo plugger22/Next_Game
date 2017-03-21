@@ -1647,6 +1647,8 @@ namespace Next_Game
                                         case "Resource":
                                         case "Condition":
                                         case "condition":
+                                        case "Freedom":
+                                        case "freedom":
                                         case "none":
                                         case "None":
                                             structOutcome.Effect = cleanToken;
@@ -4103,6 +4105,9 @@ namespace Next_Game
                                             break;
                                         case "Event":
                                             structResult.Type = ResultType.Event;
+                                            break;
+                                        case "Freedom":
+                                            structResult.Type = ResultType.Freedom;
                                             break;
                                         default:
                                             Game.SetError(new Error(115, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfResults[i])));

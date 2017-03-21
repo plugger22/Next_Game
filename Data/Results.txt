@@ -3,7 +3,7 @@
 
 # Name: Description
 # RID: (ResultID) Unique number, 1+
-# Type: (ResultType) -> DataPoint / GameVar / RelPlyr / RelOther / Condition / Resource / Item / Secret / Army / Event / Favour / Introduction
+# Type: (ResultType) -> DataPoint/GameVar/RelPlyr/RelOther/Condition/Resource/Item/Secret/Army/Event/Favour/Introduction/Freedom
 
 # Data: OPTIONAL -> multipurpose integer (context depends on Type) (default '0')
 # Calc: OPTIONAL( EventCalc) -> None / Add / Subtract / Random / Equals (default 'None')
@@ -30,6 +30,9 @@
 # conSkill: Which skill it applies to ( Combat / Wits / Charm / Treachery / Leadership / Touched )
 # conEffect: effect of condition on skill, only values allowed are -2 / -1 / 1 / 2
 # conTimer: How long condition applies for in days. If '999' then condition is permanent
+
+# Type -> Freedom
+# Data: To set Player free -> data > 0 ('1'), to set Player to 'Captured' -> data < 0 ('-1')
 
 
 
@@ -393,4 +396,14 @@ conEffect: 1
 conTimer: 5
 [End]
 
-# next is 44 (missing 28)
+Name: Free at Last
+RID: 44
+Type: Freedom
+Data: 1
+
+Name: Captured
+RID: 45
+Type: Freedom
+Data: -1
+
+# next is 46 (missing 28)

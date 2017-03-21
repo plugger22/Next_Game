@@ -1614,6 +1614,18 @@ namespace Next_Game
                             //prevents infinite loop (ignored result)
                             case ResultType.None:
                                 break;
+                            case ResultType.Freedom:
+                                //data > 0, player status -> AtLocation, data < 0, player status -> Captured, data 0 -> ignored
+                                if (data > 0)
+                                {
+                                    //only valid if Player is already captured -> at a location
+                                    if (player.Status == ActorStatus.Captured)
+                                    { player.Status = ActorStatus.AtLocation; }
+                                    else { Game.SetError(new Error(113, "Player Status isn't currently 'Captured'(Result)")); }
+                                }
+                                else if (data < 0) { player.Status = ActorStatus.Captured; }
+                                else { Game.SetError(new Error(113, "Invalid Data value (zero) for Freedom Result")); }
+                                break;
                             default:
                                 Game.SetError(new Error(113, string.Format("Invalid ResultType (\"{0}\")", type)));
                                 break;

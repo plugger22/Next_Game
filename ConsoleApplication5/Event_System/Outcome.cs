@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition };
+    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom };
 
     /// <summary>
     /// Option outcome, event system
@@ -151,6 +151,18 @@ namespace Next_Game.Event_System
         {
             Data = known;
             Type = OutcomeType.Known;
+        }
+    }
+
+    /// <summary>
+    /// if Data > 0, player if free'd (ActorStatus.AtLocation), if Data > 0, player is Captured (ActorStatus.Captured) NOTE: Only applies to Player
+    /// </summary>
+    class OutFreedom : Outcome
+    {
+        public OutFreedom(int eventID, int free) : base(eventID)
+        {
+            Data = free;
+            Type = OutcomeType.Freedom;
         }
     }
 

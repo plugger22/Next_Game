@@ -1854,8 +1854,8 @@ namespace Next_Game
                     if (listOptions.Count >= optionNum)
                     {
                         OptionInteractive option = listOptions[optionNum - 1];
-                        Active actor = Game.world.GetActiveActor(1);
-                        int refID = Game.world.GetRefID(actor.LocID);
+                        Active player = Game.world.GetActiveActor(1);
+                        int refID = Game.world.GetRefID(player.LocID);
                         //Active option?
                         if (option.Active == true)
                         {
@@ -1903,7 +1903,19 @@ namespace Next_Game
                                             tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
                                             Message messageKnown = new Message(tempText, 1, 0, MessageType.Event);
                                             Game.world.SetMessage(messageKnown);
-                                            Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, CurrentActorIncident.Event));
+                                            Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            break;
+                                        case OutcomeType.Freedom:
+                                            //change a player's status
+                                            if (outcome.Data > 0)
+                                            {
+                                                //only valid if Player is already captured -> must be at a location
+                                                if (player.Status == ActorStatus.Captured)
+                                                { player.Status = ActorStatus.AtLocation; }
+                                                else { Game.SetError(new Error(73, "Player Status isn't currently 'Captured' (Outcome)")); }
+                                            }
+                                            else if (outcome.Data < 0) { player.Status = ActorStatus.Captured; }
+                                            else { Game.SetError(new Error(73, "Invalid Data value (zero) for OutcomeType -> Freedom")); }
                                             break;
                                         case OutcomeType.EventTimer:
                                             //Change an Event Timer
@@ -1999,7 +2011,7 @@ namespace Next_Game
                                                         conflictOutcome.Conflict_Type, opponent.Title, opponent.Name, opponent.ActID);
                                                     Message messageConflict = new Message(tempText, MessageType.Conflict);
                                                     Game.world.SetMessage(messageConflict);
-                                                    Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, CurrentActorIncident.Challenge));
+                                                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
                                                 }
                                                 //debug
                                                 ConflictState debugState = (ConflictState)rnd.Next(2, 6);
@@ -2013,22 +2025,22 @@ namespace Next_Game
                             }
                             else { Game.SetError(new Error(73, "Invalid list of Outcomes")); }
                             //display message
-                            Position pos = actor.GetActorPosition();
+                            Position pos = player.GetActorPosition();
                             switch (eventObject.Type)
                             {
                                 case ArcType.GeoCluster:
                                 case ArcType.Road:
-                                    eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
-                                        Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
+                                    eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", player.Name, player.ActID, pos.PosX, pos.PosY,
+                                        Game.world.GetLocationName(player.LocID)), RLColor.LightGray, backColor));
                                     break;
                                 case ArcType.Location:
-                                    eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
+                                    eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", player.Name, player.ActID, Game.world.GetLocationName(player.LocID),
                                         pos.PosX, pos.PosY), RLColor.LightGray, backColor));
                                     break;
                                 case ArcType.Actor:
-                                    if (actor.Status == ActorStatus.AtLocation) { status = Game.world.GetLocationName(actor.LocID) + " "; }
+                                    if (player.Status == ActorStatus.AtLocation) { status = Game.world.GetLocationName(player.LocID) + " "; }
                                     else { status = null; }
-                                    eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2}(Loc {3}:{4})", actor.Name, actor.ActID, status,
+                                    eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2}(Loc {3}:{4})", player.Name, player.ActID, status,
                                         pos.PosX, pos.PosY), RLColor.LightGray, backColor));
                                     break;
                             }
