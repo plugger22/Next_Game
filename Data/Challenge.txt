@@ -34,8 +34,8 @@ OutLossMajor: You have been Badly Injured and Lose any Special Items
 OutNone: You have fought your Opponent to a draw. You are both exhausted.
 ResWinMinor: 2, 3, 4, 43
 ResWin: 5, 43
-ResWinMajor: 6, 7 , 43
-ResLossMinor: 8, 42
+ResWinMajor: 5, 8 , 43
+ResLossMinor: 7, 42
 ResLoss: 9, 10, 42
 ResLossMajor: 11, 12, 13, 42
 ResNone: 1

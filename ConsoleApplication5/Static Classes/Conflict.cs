@@ -9,15 +9,7 @@ using Next_Game.Cartographic;
 
 namespace Next_Game
 {
-    public enum ConflictState   //game specific states that are used for situations
-    {
-        None,
-        Relative_Army_Size, //battle conflicts
-        Relative_Fame, //social conflicts
-        Relative_Honour, //social conflicts
-        Relative_Justice,
-        Known_Status //known or unknown?
-    }
+    
 
     /// <summary>
     /// Handles the card Conflict system. Single class as there is only ever a single instance in existence.
@@ -707,7 +699,7 @@ namespace Next_Game
                     tempArray[0] = string.Format("A {0} {1} Challenge", Social_Type, Conflict_Type);
                     break;
                 case ConflictType.Stealth:
-                    tempArray[0] = string.Format("A {0} {1} Challenge", Stealth_Type, Conflict_Type);
+                    tempArray[0] = string.Format("An {0} {1} Challenge", Stealth_Type, Conflict_Type);
                     break;
                 default:
                     Game.SetError(new Error(86, "Invalid Conflict Type"));
@@ -1166,6 +1158,7 @@ namespace Next_Game
                     else
                     { modifier = player.TurnsUnknown * 20; difference = 100; description = "you are Unknown (Good)"; }
                     modifier = Math.Min(100, modifier);
+                    description = string.Format("how well you are Known in the Land {0}{1} %", difference > 0 ? "+" : "", difference);
                     /*difference = Game.director.CheckGameState(DataPoint.Invisibility) - 50;
                     modifier = Math.Abs(difference);
                     description = string.Format("relative Invisibility of Your Cause is {0}{1} %", difference > 0 ? "+" : "", difference);*/

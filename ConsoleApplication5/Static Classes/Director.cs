@@ -19,6 +19,7 @@ namespace Next_Game
     public enum ConflictSubType { None, Personal, Tournament, Battle, Hunting, Blackmail, Seduce, Befriend, Infiltrate, Evade, Escape, Special} //combined list of all subtypes (add to as needed)
     public enum ConflictSpecial { None, Fortified_Position, Mountain_Country, Forest_Country, Castle_Walls } //special situations
     public enum ConflictResult { None, MinorWin, Win, MajorWin, MinorLoss, Loss, MajorLoss, Count} //result of challenge
+    public enum ConflictState { None, Relative_Army_Size, Relative_Fame, Relative_Honour, Relative_Justice, Known_Status } //game specific states that are used for situations
     public enum ResourceLevel { None, Meagre, Moderate, Substantial, Wealthy, Excessive}
    
 
@@ -802,10 +803,10 @@ namespace Next_Game
                             eventName = "Nemesis Catches Up";
                             eventText = "The Gods must be truly angry as your Nemesis, " + enemy.Name + " is now before you.";
                         }
-                        //need to figure out how to handle eventCategory
                         EventPlayer eventObject = new EventPlayer(1000, eventName, EventFrequency.Low)
                         { Category = EventCategory.AutoCreate, Status = EventStatus.Active, Type = ArcType.Actor, Text = eventText };
-                        //default option
+
+                        //default option -> Surrender
                         OptionInteractive option_1 = new OptionInteractive("Lay down your Weapons") { ActorID = enemy.ActID };
                         option_1.ReplyGood = string.Format("{0} forcibly restrains you and leads you to the nearest dungeon", enemy.Name);
                         OutNone outcome_1 = new OutNone(eventObject.EventPID);
@@ -844,8 +845,8 @@ namespace Next_Game
                         "You are free and clear",
                         "You are as slippery as an eel. They have no clue where you are",
                         "You tried and failed. You've been captured",
-                        "You have been captured and sustained minor injuries",
-                        "You have been captured and have been  injured",
+                        "You have been captured and are exhausted",
+                        "You have been captured and have been injured",
                         "They know where you are but they can't reach you. It's an impasse."};
                         outcome_3.challenge.SetOutcomes(overideOutcomes_3);
                         outcome_3.challenge.SetResults(ConflictResult.MinorWin, new List<int> { 46 });
@@ -855,12 +856,12 @@ namespace Next_Game
                         outcome_3.challenge.SetOveride(true);
                         option_3.SetGoodOutcome(outcome_3);
                         eventObject.SetOption(option_3);
+
                         //Create & Add Event Package
                         EventPackage package = new EventPackage() { Person = player, EventObject = eventObject, Done = false };
                         listPlyrCurrentEvents.Add(package);
                         //if more than the current event present the original one (autocreated) needs to be deleted
                         if (listPlyrCurrentEvents.Count > 1) { listPlyrCurrentEvents.RemoveAt(0); }
-
                         //add to Player dictionary (ResolveOutcome looks for it there) -> check not an instance present already
                         if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }
                         dictPlayerEvents.Add(1000, eventObject);
@@ -2035,9 +2036,42 @@ namespace Next_Game
                                                     Game.world.SetMessage(messageConflict);
                                                     Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
                                                 }
-                                                //debug
-                                                ConflictState debugState = (ConflictState)rnd.Next(2, 6);
-                                                Game.conflict.SetGameSituation(debugState);
+                                                //which state to use?
+                                                ConflictState state = ConflictState.None;
+                                                switch (conflictOutcome.Conflict_Type)
+                                                {
+                                                    case ConflictType.Combat:
+                                                        switch(conflictOutcome.Combat_Type)
+                                                        {
+                                                            case ConflictCombat.Battle:
+                                                                state = ConflictState.Relative_Army_Size;
+                                                                break;
+                                                            case ConflictCombat.Personal:
+                                                            case ConflictCombat.Tournament:
+                                                            case ConflictCombat.Hunting:
+                                                                state = ConflictState.Relative_Fame;
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ConflictType.Social:
+                                                        switch(conflictOutcome.Social_Type)
+                                                        {
+                                                            case ConflictSocial.Befriend:
+                                                                state = ConflictState.Relative_Honour;
+                                                                break;
+                                                            case ConflictSocial.Seduce:
+                                                            case ConflictSocial.Blackmail:
+                                                                state = ConflictState.Relative_Fame;
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ConflictType.Stealth:
+                                                        state = ConflictState.Known_Status;
+                                                        break;
+                                                }
+                                                if (state == ConflictState.None)
+                                                { Game.SetError(new Error(73, "Invalid state (ConflictState.None) -> changed to Justice")); state = ConflictState.Relative_Justice; } 
+                                                Game.conflict.SetGameSituation(state);
                                             }
                                             else
                                             { Game.SetError(new Error(73, string.Format("Invalid actorID for OutConflict (zero or less) \"{0}\", option # {1}", eventObject.Name, optionNum))); }
