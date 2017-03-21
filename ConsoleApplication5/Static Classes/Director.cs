@@ -824,6 +824,9 @@ namespace Next_Game
                         "You have been captured and have been badly injured",
                         "Breathing hard, your opponent scowls at you."};
                         outcome_2.challenge.SetOutcomes(overideOutcomes);
+                        outcome_2.challenge.SetResults(ConflictResult.MinorLoss, new List<int> { 45 });
+                        outcome_2.challenge.SetResults(ConflictResult.Loss, new List<int> { 45, 28 });
+                        outcome_2.challenge.SetResults(ConflictResult.MajorLoss, new List<int> { 45, 42 });
                         outcome_2.challenge.SetOveride(true);
                         option_2.SetGoodOutcome(outcome_2);
                         eventObject.SetOption(option_2);

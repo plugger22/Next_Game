@@ -396,6 +396,8 @@ conEffect: 1
 conTimer: 5
 [End]
 
+# AutoCreate -> Enemies
+
 Name: Free at Last
 RID: 44
 Type: Freedom
