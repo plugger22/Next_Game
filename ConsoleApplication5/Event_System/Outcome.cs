@@ -155,7 +155,7 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// if Data > 0, player if free'd (ActorStatus.AtLocation), if Data > 0, player is Captured (ActorStatus.Captured) NOTE: Only applies to Player
+    /// if Data > 0, player if free'd (ActorStatus.AtLocation), if Data < 0, player is Captured (ActorStatus.Captured) NOTE: Only applies to Player
     /// </summary>
     class OutFreedom : Outcome
     {

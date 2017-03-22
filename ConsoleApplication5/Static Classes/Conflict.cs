@@ -277,7 +277,8 @@ namespace Next_Game
             //Factor is applied depending on Primary skill -> if < 3 then factor works against an aggressive strategy, if > 3 then towards & if factor = 0 then no random factor 
             if (opponentPrimarySkill < 3) { rndFactor *= -1; } 
             else if (opponentPrimarySkill == 3) { rndFactor = 0; }
-            
+            Console.WriteLine("[Conflict -> Debug] Good -> {0} Bad -> {1} Margin -> {2} rndFactor -> {3} Opp Wits -> {4} Opp PSkill -> {5} Def Spec -> {6} Challenger -> {7}", good, bad, margin,
+                        rndFactor, opponentWits, opponentPrimarySkill, defenderSpecific, Challenger);
             if (Challenger == true)
             {
                 //opponent is the defender 
@@ -297,8 +298,6 @@ namespace Next_Game
                 {
                     //balanced
                     Game.layout.Strategy_Opponent = 1;
-                    Console.WriteLine("[Conflict -> Opp Def's] Good -> {0} Bad -> {1} Margin -> {2} rndFactor -> {3} Opp Wits -> {4} Opp PSkill -> {5} Def Spec -> {6} Challenger -> {7}", good, bad, margin,
-                        rndFactor, opponentWits, opponentPrimarySkill, defenderSpecific, Challenger);
                 } 
             }
             else
@@ -322,8 +321,6 @@ namespace Next_Game
                 {
                     //balanced
                     Game.layout.Strategy_Opponent = 1;
-                    Console.WriteLine("[Conflict -> Plyr Def's] Good -> {0} Bad -> {1} Margin -> {2} rndFactor -> {3} Opp Wits -> {4} Opp PSkill -> {5} Def Spec -> {6} Challenger -> {7}", good, bad, margin,
-                       rndFactor, opponentWits, opponentPrimarySkill, defenderSpecific, Challenger);
                 }
             }
         }
@@ -1740,7 +1737,8 @@ namespace Next_Game
                         if (message != null)
                         { Game.world.SetMessage(message); }
                     }
-                    else { Game.SetError(new Error(113, string.Format("Invalid result (null returned, resultID \"{0}\")", resultID))); }
+                    else
+                    { Game.SetError(new Error(113, string.Format("[Notification] Invalid, or Missing, result (null returned, resultID \"{0}\")", resultID))); }
                 }
             }
             else { Game.SetError(new Error(113, string.Format("Invalid Input (no results from \"{0}\")", outcome))); }

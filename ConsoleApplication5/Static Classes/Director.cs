@@ -809,7 +809,7 @@ namespace Next_Game
                         //default option -> Surrender
                         OptionInteractive option_1 = new OptionInteractive("Lay down your Weapons") { ActorID = enemy.ActID };
                         option_1.ReplyGood = string.Format("{0} forcibly restrains you and leads you to the nearest dungeon", enemy.Name);
-                        OutNone outcome_1 = new OutNone(eventObject.EventPID);
+                        OutFreedom outcome_1 = new OutFreedom(eventObject.EventPID, -1);
                         option_1.SetGoodOutcome(outcome_1);
                         eventObject.SetOption(option_1);
 
@@ -1926,8 +1926,7 @@ namespace Next_Game
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             //message
                                             tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
-                                            Message messageKnown = new Message(tempText, 1, 0, MessageType.Event);
-                                            Game.world.SetMessage(messageKnown);
+                                            Game.world.SetMessage(new Message(tempText, 1, 0, MessageType.Event));
                                             Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             break;
                                         case OutcomeType.Freedom:
@@ -1936,9 +1935,16 @@ namespace Next_Game
                                             {
                                                 //only valid if Player is already captured -> must be at a location
                                                 if (player.Status == ActorStatus.Captured)
-                                                { player.Status = ActorStatus.AtLocation; }
+                                                {
+                                                    //free'd from captivity
+                                                    player.Status = ActorStatus.AtLocation;
+                                                    tempText = string.Format("{0} {1} has escaped from the dungeons of {2}", player.Title, player.Name, Game.world.GetLocationName(player.LocID));
+                                                    Game.world.SetMessage(new Message(tempText, 1, 0, MessageType.Event));
+                                                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                }
                                                 else { Game.SetError(new Error(73, "Player Status isn't currently 'Captured' (Outcome)")); }
                                             }
+                                            //captured -> records and message handled by called Method
                                             else if (outcome.Data < 0) { Game.world.SetPlayerCaptured(option.ActorID); }
                                             else { Game.SetError(new Error(73, "Invalid Data value (zero) for OutcomeType -> Freedom")); }
                                             break;
@@ -2034,8 +2040,7 @@ namespace Next_Game
                                                 {
                                                     tempText = string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", conflictOutcome.SubType,
                                                         conflictOutcome.Conflict_Type, opponent.Title, opponent.Name, opponent.ActID);
-                                                    Message messageConflict = new Message(tempText, MessageType.Conflict);
-                                                    Game.world.SetMessage(messageConflict);
+                                                    Game.world.SetMessage(new Message(tempText, MessageType.Conflict));
                                                     Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
                                                 }
                                                 //which state to use?
