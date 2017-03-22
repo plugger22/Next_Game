@@ -11,9 +11,9 @@
 # Bad: immersion strings, 3 variations for bad outcomes, short/med sentence, use tags, max 6, eg. Bad6:, min 1 -> You Ignore the card
 
 # PlyrDef 1, Data 0 -> Player defending, Player Primary skill (refer to the Player's leadership)
-# PlyrDef 0, Data 0 -> Player attacking, Player Primary skill (refer to the Player's leadership)
+# PlyrDef -1, Data 0 -> Player attacking, Player Primary skill (refer to the Player's leadership)
 # PlyrDef 1, Data 1 -> Player defending, Opponent Primary skill (refer to the Opponent's leadership)
-# PlyrDef 0, Data 1 -> Player attacking, Opponent Primary skill (refer to the Opponent's leadership)
+# PlyrDef -1, Data 1 -> Player attacking, Opponent Primary skill (refer to the Opponent's leadership)
 
 # terminology: Use 'you' and 'your', not 'our'
 
@@ -395,4 +395,63 @@ Good3: Arrrh! It's a prolonged, painful process. <name> is not easily won over. 
 Bad1: In a charm offensive you find that you've been out-charm! <name> is one step ahead of you.
 Bad2: Attempting to stem the tide might have been an easier task than trying to befriend <name>. <He> pays little attention to your overtures.
 Bad3: Have you taken on more than you can handle? <name> has ample enough charm to counter all your attempts at sidling up to them.
+[End]
+
+# PlyrDef 1, Data 0 -> Player defending, Player Primary skill (refer to the Player's leadership)
+# PlyrDef -1, Data 0 -> Player attacking, Player Primary skill (refer to the Player's leadership)
+# PlyrDef 1, Data 1 -> Player defending, Opponent Primary skill (refer to the Opponent's leadership)
+# PlyrDef -1, Data 1 -> Player attacking, Opponent Primary skill (refer to the Opponent's leadership)
+
+# Stealth -> Evade ---
+
+Skill: Wits
+Type: Stealth
+SubType: Evade
+PlyrDef: 1
+Data: 0
+Good1: You are on the run but it's nothing that you haven't done before. You take a deep breath and calm your racing pulse.
+Good2: Even though <name> is on your heels, you are confident that there's a way out. There's always a way.
+Good3: Stay calm. Yes, <name> is close but you need to think your way through the situation, not just blindly run.
+Bad1: You feel like a mouse being played with by a cat. Everything idea that you've tried has been countered by <name>.
+Bad2: Puffing, breathing hard, you bend over double and try and think which is the best way to go. It's hard to think of anything right now.
+Bad3: The nearness of <name> makes it hard to stay calm. No matter how fast your run, there <he> is.
+[End]
+
+Skill: Wits
+Type: Stealth
+SubType: Evade
+PlyrDef: -1
+Data: 0
+Good1: The advantage goes to the pursuer. Prey can only run and panic while the hunter can calmly think and act.
+Good2: <name> jinks and janks but it's to no avail. You can anticipate their moves in advance by the movement of their head.
+Good3: Chasing down <name> isn't just about out running them. Out thinking them plays a large role. You're good at that.
+Bad1: You'd expect to have a mental edge when you're chasing someone but that doesn't take into account being winded from all the running.
+Bad2: It's easy to over think the situation. <name> is moving fast and erratically but is <he> doing it consciously? What if it's random?
+Bad3: Your mind has turned to fuzz in the face of the sheer physical challenge of running down <name>. You need to get it working.
+[End]
+
+Skill: Wits
+Type: Stealth
+SubType: Evade
+PlyrDef: 1
+Data: 1
+Good1: As you run you plan where to go next. You're confident that <name> isn't doing that. All <he> can manage right now is to run.
+Good2: You might not being able to out run them but you sure can out think them. Glancing over your shoulder you notice <name>'s confusion.
+Good3: <name>'s brain must have turned to mush judging by how badly <he> is anticipating your darting progress through the obstacles.
+Bad1: How did <name> figure that out? <He> is moving to cut you off before you have even decided to go in a particular direction.
+Bad2: Panting hard, you realise that you might have underestimated <name>'s determination and ability to out wit you. It's a worry.
+Bad3: Clearly <name> is thinking one move ahead of you. No matter where you go, there <he> is in hot pursuit. Closing fast.
+[End]
+
+Skill: Wits
+Type: Stealth
+SubType: Evade
+PlyrDef: -1
+Data: 1
+Good1: Not only can you out run <name> but you can out think him. <He> is a spud. Slow afoot and slow witted. It's only a matter of time.
+Good2: You've got <name> beat. <He> can run all <he> likes but you're inside <his> head. <He> isn't as smart as <he> looks.
+Good3: Why does <name> keep running? Doesn't <he> realise that you have the superior mind? There is nothing <he> can do that will surprise you.
+Bad1: Perhaps <name> is a little smarter than you give him credit for. <He> seems to be able to out run and out wit you with ease.
+Bad2: Is <name> that clever? Surely not. But why are you continually surprised when he runs in an unexpected direction?
+Bad3: You grudgingly admit that <name> might be a bit more switched on than yourself. Either that or <he> must be able to think more clearly.
 [End]
