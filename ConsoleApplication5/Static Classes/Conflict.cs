@@ -276,13 +276,30 @@ namespace Next_Game
             int rndFactor = rnd.Next(0, 7 - opponentWits); 
             //Factor is applied depending on Primary skill -> if < 3 then factor works against an aggressive strategy, if > 3 then towards & if factor = 0 then no random factor 
             if (opponentPrimarySkill < 3) { rndFactor *= -1; } 
-            else if (opponentPrimarySkill == 3) { rndFactor = 0; } 
+            else if (opponentPrimarySkill == 3) { rndFactor = 0; }
+            
             if (Challenger == true)
             {
                 //opponent is the defender 
-                if (good + rndFactor - bad - defenderSpecific > margin) { Game.layout.Strategy_Opponent = 0; } //aggressive
-                else if (bad - good > margin) { Game.layout.Strategy_Opponent = 2; } //defensive
-                else { Game.layout.Strategy_Opponent = 1; } //balanced
+                if (good + rndFactor - bad - defenderSpecific > margin)
+                {
+                    //aggressive
+                    Game.layout.Strategy_Opponent = 0;
+                    Console.WriteLine("[Conflict -> Opp Defends] Good {0} + rndFactor {1} - bad {2} - defSpec {3} > margin {4}", good, rndFactor, bad, defenderSpecific, margin);
+                }
+                else if (bad - good > margin)
+                {
+                    //defensive
+                    Game.layout.Strategy_Opponent = 2;
+                    Console.WriteLine("[Conflict -> Opp Defends] Bad {0} - Good {1} > margin {2}", bad, good, margin);
+                }
+                else
+                {
+                    //balanced
+                    Game.layout.Strategy_Opponent = 1;
+                    Console.WriteLine("[Conflict -> Opp Defends] Good -> {0} Bad -> {1} Margin -> {2} rndFactor -> {3} Opp Wits -> {4} Opp PSkill -> {5} Def Spec -> {6} Challenger -> {7}", good, bad, margin,
+                        rndFactor, opponentWits, opponentPrimarySkill, defenderSpecific, Challenger);
+                } 
             }
             else
             {
