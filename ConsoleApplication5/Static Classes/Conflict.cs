@@ -486,6 +486,73 @@ namespace Next_Game
                             }
                         }
                         break;
+                    case ConflictType.Stealth:
+                        //Get suitable situations from dictionary
+                        List<Situation> listFilteredStealthSituations = new List<Situation>();
+                        IEnumerable<Situation> situationStealthSet =
+                            from situation in normalDictionary
+                            where situation.Value.Type == ConflictType.Stealth
+                            where situation.Value.Type_Stealth == Stealth_Type
+                            //orderby situation.Value.SitID
+                            select situation.Value;
+                        listFilteredStealthSituations = situationStealthSet.ToList();
+                        if (listFilteredStealthSituations.Count == 0) { Game.SetError(new Error(89, "listFilteredStealthSituations has no data")); }
+                        else
+                        {
+                            //filter for Defensive Advantage card (1st situation)
+                            List<Situation> listFirstSituations = new List<Situation>();
+                            IEnumerable<Situation> firstSituationSet =
+                                from situation in listFilteredStealthSituations
+                                where situation.SitNum == 0
+                                where situation.Defender == whoDefends
+                                select situation;
+                            listFirstSituations = firstSituationSet.ToList();
+                            if (listFirstSituations.Count == 0) { Game.SetError(new Error(89, "listFirstSituations (Stealth) has no data")); invalidData = true; }
+
+                            if (invalidData == false)
+                            {
+                                Situation situationFirst = listFirstSituations[rnd.Next(0, listFirstSituations.Count)];
+                                tempListGood = situationFirst.GetGood();
+                                tempListBad = situationFirst.GetBad();
+                                //place data in array (name and immersion texts for played/ignored outcomes)
+                                arraySituation[0, 0] = situationFirst.Name;
+                                arraySituation[0, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
+                                arraySituation[0, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
+                            }
+                            else
+                            {
+                                //set default empty data if nothing found
+                                arraySituation[0, 0] = "";
+                                arraySituation[0, 1] = "";
+                                arraySituation[0, 2] = "";
+                            }
+                            //filter for Neutral card (2nd situation)
+                            List<Situation> listSecondSituations = new List<Situation>();
+                            IEnumerable<Situation> secondSituationSet =
+                                from situation in listFilteredStealthSituations
+                                where situation.SitNum == 1
+                                select situation;
+                            listSecondSituations = secondSituationSet.ToList();
+                            if (listSecondSituations.Count == 0)
+                            {
+                                //set default empty data if nothing found
+                                Game.SetError(new Error(89, "listSecondSituations (Stealth) has no data"));
+                                arraySituation[1, 0] = "";
+                                arraySituation[1, 1] = "";
+                                arraySituation[1, 2] = "";
+                            }
+                            else
+                            {
+                                Situation situationSecond = listSecondSituations[rnd.Next(0, listSecondSituations.Count)];
+                                tempListGood = situationSecond.GetGood();
+                                tempListBad = situationSecond.GetBad();
+                                //place data in array (name and immersion texts for played/ignored outcomes)
+                                arraySituation[1, 0] = situationSecond.Name;
+                                arraySituation[1, 1] = tempListGood[rnd.Next(0, tempListGood.Count)];
+                                arraySituation[1, 2] = tempListBad[rnd.Next(0, tempListBad.Count)];
+                            }
+                        }
+                        break;
                     default:
                         Game.SetError(new Error(86, "Invalid Conflict Type"));
                         break;
@@ -1616,7 +1683,7 @@ namespace Next_Game
                                     { player.Status = ActorStatus.AtLocation; }
                                     else { Game.SetError(new Error(113, "Player Status isn't currently 'Captured'(Result)")); }
                                 }
-                                else if (data < 0) { player.Status = ActorStatus.Captured; }
+                                else if (data < 0) { Game.world.SetPlayerCaptured(opponent.ActID); }
                                 else { Game.SetError(new Error(113, "Invalid Data value (zero) for Freedom Result")); }
                                 break;
                             default:

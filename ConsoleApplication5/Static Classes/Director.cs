@@ -1937,7 +1937,7 @@ namespace Next_Game
                                                 { player.Status = ActorStatus.AtLocation; }
                                                 else { Game.SetError(new Error(73, "Player Status isn't currently 'Captured' (Outcome)")); }
                                             }
-                                            else if (outcome.Data < 0) { player.Status = ActorStatus.Captured; }
+                                            else if (outcome.Data < 0) { Game.world.SetPlayerCaptured(option.ActorID); }
                                             else { Game.SetError(new Error(73, "Invalid Data value (zero) for OutcomeType -> Freedom")); }
                                             break;
                                         case OutcomeType.EventTimer:

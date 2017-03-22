@@ -236,12 +236,12 @@ ResNone: 1
 
 Type: Stealth
 SubType: Evade
-PlyrStrAgg: Run Hard and Fast
-PlyrStrBal: Use the Terrain
-PlyrStrDef: Find a Place to Hide
-OppStrAgg: Hunt Them Down
-OppStrBal: Work the Terrain
-OppStrDef: Search Slow and Methodically
+PlyrStrAgg: Hunt Them Down
+PlyrStrBal: Work the Terrain
+PlyrStrDef: Search Carefully
+OppStrAgg: Run Hard and Fast
+OppStrBal: Use the Terrain
+OppStrDef: Find a Place to Hide
 SkillPrime: Wits
 SkillSecond: Combat
 SkillThird: Treachery

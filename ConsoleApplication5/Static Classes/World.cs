@@ -372,46 +372,58 @@ namespace Next_Game
             string locStatus = "who knows?";
             string charString; //overall string
             RLColor textColor = RLColor.White;
-
+            //loop actors
             foreach (var actor in dictActiveActors)
             {
                 status = actor.Value.Status;
-                locID = actor.Value.LocID;
-                locName = GetLocationName(locID);
-                if (status == ActorStatus.AtLocation)
-                { locStatus = "At " + locName; }
-                else if (status == ActorStatus.Travelling)
-                { locStatus = "Moving to " + locName; }
-                //get location coords
-                Location loc = Game.network.GetLocation(locID);
-                //only show chosen characters (at Location or not depending on parameter)
-                if (locationsOnly == true && status == ActorStatus.AtLocation || !locationsOnly)
+                //ignore dead actors
+                if (status != ActorStatus.Gone)
                 {
-                    Position pos = actor.Value.GetActorPosition();
-                    coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
-                    if (actor.Value is Player)
+                    locID = actor.Value.LocID;
+                    locName = GetLocationName(locID);
+                    switch (status)
                     {
-                        //player (no distance display)
-                        textColor = Color._player;
-                        charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
+                        case ActorStatus.AtLocation:
+                            locStatus = "At " + locName;
+                            break;
+                        case ActorStatus.Travelling:
+                            locStatus = "Moving to " + locName;
+                            break;
+                        case ActorStatus.Captured:
+                            locStatus = "Held at " + locName;
+                            break;
                     }
-                    else
+                    //get location coords
+                    Location loc = Game.network.GetLocation(locID);
+                    //only show chosen characters (at Location or not depending on parameter)
+                    if (locationsOnly == true && status == ActorStatus.AtLocation || !locationsOnly)
                     {
-                        if (actor.Value.Delay == 0)
+                        Position pos = actor.Value.GetActorPosition();
+                        coordinates = string.Format("(Loc {0}:{1})", pos.PosX, pos.PosY);
+                        if (actor.Value is Player)
                         {
-                            if (actor.Value.Activated == true) { textColor = Color._active; }
-                            else { textColor = RLColor.White; }
+                            //player (no distance display)
+                            textColor = Color._player;
+                            charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
                         }
-                        else { textColor = RLColor.LightGray; }
-                        //distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
-                        distText = string.Format("{0} {1}", "dist:", actor.Value.CrowDistance);
-                        chance = actor.Value.CrowChance + actor.Value.CrowBonus;
-                        chance = Math.Min(100, chance);
-                        crowText = string.Format("{0} {1}{2}", "crow:", chance, "%");
-                        charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11} {5,-12} {6,-12}", actor.Key, actor.Value.Name, locStatus, coordinates, distText, crowText,
-                            actor.Value.Known == true ? "Known" : "Unknown");
+                        else
+                        {
+                            if (actor.Value.Delay == 0)
+                            {
+                                if (actor.Value.Activated == true) { textColor = Color._active; }
+                                else { textColor = RLColor.White; }
+                            }
+                            else { textColor = RLColor.LightGray; }
+                            //distance = Game.utility.GetDistance(posPlayer.PosX, posPlayer.PosY, pos.PosX, pos.PosY);
+                            distText = string.Format("{0} {1}", "dist:", actor.Value.CrowDistance);
+                            chance = actor.Value.CrowChance + actor.Value.CrowBonus;
+                            chance = Math.Min(100, chance);
+                            crowText = string.Format("{0} {1}{2}", "crow:", chance, "%");
+                            charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11} {5,-12} {6,-12}", actor.Key, actor.Value.Name, locStatus, coordinates, distText, crowText,
+                                actor.Value.Known == true ? "Known" : "Unknown");
+                        }
+                        listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                     }
-                    listToDisplay.Add(new Snippet(charString, textColor, RLColor.Black));
                 }
             }
             return listToDisplay;
@@ -4351,7 +4363,21 @@ namespace Next_Game
             { Game.SetError(new Error(171, string.Format("Invalid gameTurn \"{0}\", (duplicate Entry) -> Bloodhound entry Not added", Game.gameTurn))); }
         }
 
-
+        /// <summary>
+        /// handles logistics when Player is captured
+        /// </summary>
+        /// <param name="actID"></param>
+        /// <param name="enemyID">actID of enemy who captured the player</param>
+        public void SetPlayerCaptured(int enemyID)
+        {
+            Player player = (Player)GetActiveActor(1);
+            if (player != null)
+            {
+                player.Status = ActorStatus.Captured;
+                //assign nearest major House / capital locID as the place where the player is held
+            }
+            else { Game.SetError(new Error(174, "Invalid Player (null)")); }
+        }
         //new Methods above here
     }
 }
