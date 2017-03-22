@@ -4052,7 +4052,7 @@ namespace Next_Game
                                                     if (active.AddEnemy(enemy.Value.ActID) == true)
                                                     {
                                                         active.Known = true; active.Revert = known_revert; active.Capture = true;
-                                                        description = string.Format("{0} {1}, ActID {2}, is about to be Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
+                                                        description = string.Format("{0} {1}, ActID {2}, is at risk of being Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
                                                             enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
                                                         Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
                                                         SetPlayerRecord(record);
@@ -4067,7 +4067,7 @@ namespace Next_Game
                                                 if (active.AddEnemy(enemy.Value.ActID) == true)
                                                 {
                                                     active.Known = true; active.Revert = known_revert;
-                                                    description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
+                                                    description = string.Format("{0} {1}, ActID {2}, is at risk of being Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
                                                         enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
                                                     Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
                                                     SetCurrentRecord(record);
@@ -4193,7 +4193,7 @@ namespace Next_Game
                                                     if (active.Value.AddEnemy(enemy.ActID) == true)
                                                     {
                                                         active.Value.Known = true; active.Value.Revert = known_revert;
-                                                        description = string.Format("{0} {1}, ActID {2}, has been Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                                        description = string.Format("{0} {1}, ActID {2}, is at risk of being Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
                                                             enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
                                                         Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
                                                         SetPlayerRecord(record);
@@ -4208,7 +4208,7 @@ namespace Next_Game
                                                 if (active.Value.AddEnemy(enemy.ActID) == true)
                                                 {
                                                     active.Value.Known = true; active.Value.Revert = known_revert; active.Value.Capture = true;
-                                                    description = string.Format("{0} {1}, ActID {2}, is about to be Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                                    description = string.Format("{0} {1}, ActID {2}, is at risk of being Captured by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
                                                         enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
                                                     Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
                                                     SetCurrentRecord(record);
@@ -4374,7 +4374,21 @@ namespace Next_Game
             if (player != null)
             {
                 player.Status = ActorStatus.Captured;
-                //assign nearest major House / capital locID as the place where the player is held
+
+                Enemy enemy = GetEnemyActor(enemyID);
+                if (enemy != null)
+                {
+                    //assign nearest major House / capital locID as the place where the player is held -> update LocID to reflect this
+
+                    int refID = GetRefID(player.LocID);
+                    //administration
+                    string description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is being held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID, player.LocID);
+                    SetMessage(new Message(description, MessageType.Search));
+                    SetPlayerRecord(new Record(description, player.ActID, player.LocID, refID, CurrentActorIncident.Search));
+                    SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, refID, CurrentActorIncident.Search));
+                    
+                }
+                else { Game.SetError(new Error(174, "Invalid Enemy (null)")); }
             }
             else { Game.SetError(new Error(174, "Invalid Player (null)")); }
         }

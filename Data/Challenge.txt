@@ -281,7 +281,7 @@ OutLossMajor: You're caught, beaten and locked in a deeper, darker dungeon
 OutNone: Did anyone escape today? No but nobody got caught either.
 ResWinMinor: 2, 3, 4
 ResWin: 5
-ResWinMajor: 6, 7 
+ResWinMajor: 5, 8
 ResLossMinor: 8
 ResLoss: 9, 10
 ResLossMajor: 11, 12, 13

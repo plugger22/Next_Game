@@ -821,12 +821,13 @@ namespace Next_Game
                         string[] overideOutcomes_2 = new string[7] {
                         "Dazed, you manage to escape, barely",
                         "You opponent is left flat footed and winded as you make your escape",
-                        "You leave your opponent sprawled, dazed, on the ground as you calmly depart",
+                        "You are a veritable Ghost. A legend among men.",
                         "You have been captured, but luckily your are uninjured",
                         "You have been captured and sustain minor injuries",
                         "You have been captured and have been badly injured",
                         "Breathing hard, your opponent scowls at you."};
                         outcome_2.challenge.SetOutcomes(overideOutcomes_2);
+                        outcome_2.challenge.SetResults(ConflictResult.MajorWin, new List<int> { 5, 8 });
                         outcome_2.challenge.SetResults(ConflictResult.MinorWin, new List<int> { 28 });
                         outcome_2.challenge.SetResults(ConflictResult.MinorLoss, new List<int> { 45 });
                         outcome_2.challenge.SetResults(ConflictResult.Loss, new List<int> { 45, 28 });
