@@ -4022,7 +4022,9 @@ namespace Next_Game
 
                                         if (found == true)
                                         {
-                                            Console.WriteLine("[SEARCH -> Active] {0} {1} has been FOUND by {2}, ActID {3}, (loc {4}:{5})", active.Title, active.Name, enemy.Value.Name, enemy.Value.ActID,
+                                            string locName = GetLocationName(pos);
+                                            if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); }
+                                            Console.WriteLine("[SEARCH -> Active] {0} {1} has been FOUND by {2}, ActID {3} at loc {4}:{5}", active.Title, active.Name, enemy.Value.Name, enemy.Value.ActID,
                                             pos.PosX, pos.PosY);
                                             active.Found = true;
                                             Console.WriteLine("[Debug -> ListEnemy] {0} {1}, ActID {2} as Found -> True and Enemy ActID {3} added", active.Title, active.Name, active.ActID, enemy.Value.ActID);
@@ -4039,8 +4041,8 @@ namespace Next_Game
                                                     if (active.AddEnemy(enemy.Value.ActID) == true)
                                                     {
                                                         active.Known = true; active.Revert = known_revert;
-                                                        description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
-                                                            enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                                                        description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
+                                                            enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
                                                         Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Known);
                                                         SetPlayerRecord(record);
                                                         SetMessage(new Message(description, MessageType.Search));
@@ -4052,8 +4054,8 @@ namespace Next_Game
                                                     if (active.AddEnemy(enemy.Value.ActID) == true)
                                                     {
                                                         active.Known = true; active.Revert = known_revert; active.Capture = true;
-                                                        description = string.Format("{0} {1}, ActID {2}, has been spotted by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
-                                                            enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                                                        description = string.Format("{0} {1}, ActID {2}, has been spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
+                                                            enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
                                                         Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
                                                         SetPlayerRecord(record);
                                                         SetMessage(new Message(description, MessageType.Search));
@@ -4067,8 +4069,8 @@ namespace Next_Game
                                                 if (active.AddEnemy(enemy.Value.ActID) == true)
                                                 {
                                                     active.Known = true; active.Revert = known_revert;
-                                                    description = string.Format("{0} {1}, ActID {2}, has been spotted by {3} {4}, ActID {5} at Loc {6}:{7}", active.Title, active.Name, active.ActID,
-                                                        enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, pos.PosX, pos.PosY);
+                                                    description = string.Format("{0} {1}, ActID {2}, has been spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
+                                                        enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
                                                     Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
                                                     SetCurrentRecord(record);
                                                     SetMessage(new Message(description, MessageType.Search));
@@ -4163,15 +4165,17 @@ namespace Next_Game
                                         { Console.WriteLine("[Debug -> ListSearched] {0} {1}, ActID {2} Searched -> Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID); }
 
                                         if (found == true)
-                                        { 
-                                        Console.WriteLine("[SEARCH -> Enemy] {0} {1} has been FOUND by {2}, ActID {3}, (loc {4}:{5})", active.Value.Title, active.Value.Name, enemy.Name, enemy.ActID,
-                                            pos.PosX, pos.PosY);
-                                        active.Value.Found = true;
-                                        Console.WriteLine("[Debug -> ListEnemies] {0} {1}, ActID {2} is Found -> True and Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID);
-                                        //Stuff that happens when found
-                                        string description = "Unknown";
-                                        int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
-                                        int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                                        {
+                                            string locName = GetLocationName(pos);
+                                            if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); }
+                                            Console.WriteLine("[SEARCH -> Enemy] {0} {1} has been FOUND by {2}, ActID {3} at{4}", active.Value.Title, active.Value.Name, enemy.Name, enemy.ActID,
+                                            locName);
+                                            active.Value.Found = true;
+                                            Console.WriteLine("[Debug -> ListEnemies] {0} {1}, ActID {2} is Found -> True and Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID);
+                                            //Stuff that happens when found
+                                            string description = "Unknown";
+                                            int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
+                                            int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
                                             if (active.Value is Player)
                                             {
                                                 //if unknown then becomes known
@@ -4180,8 +4184,8 @@ namespace Next_Game
                                                     if (active.Value.AddEnemy(enemy.ActID) == true)
                                                     {
                                                         active.Value.Known = true; active.Value.Revert = known_revert;
-                                                        description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, 
-                                                            active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
+                                                        description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, 
+                                                            active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
                                                         Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Known);
                                                         SetPlayerRecord(record);
                                                         SetMessage(new Message(description, MessageType.Search));
@@ -4193,8 +4197,8 @@ namespace Next_Game
                                                     if (active.Value.AddEnemy(enemy.ActID) == true)
                                                     {
                                                         active.Value.Known = true; active.Value.Revert = known_revert;
-                                                        description = string.Format("{0} {1}, ActID {2}, has been spotted by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
-                                                            enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
+                                                        description = string.Format("{0} {1}, ActID {2}, has been spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                                            enemy.Title, enemy.Name, enemy.ActID, locName);
                                                         Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
                                                         SetPlayerRecord(record);
                                                         SetMessage(new Message(description, MessageType.Search));
@@ -4208,8 +4212,8 @@ namespace Next_Game
                                                 if (active.Value.AddEnemy(enemy.ActID) == true)
                                                 {
                                                     active.Value.Known = true; active.Value.Revert = known_revert; active.Value.Capture = true;
-                                                    description = string.Format("{0} {1}, ActID {2}, has been spotted by {3} {4}, ActID {5} at Loc {6}:{7}", active.Value.Title, active.Value.Name, active.Value.ActID,
-                                                        enemy.Title, enemy.Name, enemy.ActID, pos.PosX, pos.PosY);
+                                                    description = string.Format("{0} {1}, ActID {2}, has been spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                                        enemy.Title, enemy.Name, enemy.ActID, locName);
                                                     Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
                                                     SetCurrentRecord(record);
                                                     SetMessage(new Message(description, MessageType.Search));

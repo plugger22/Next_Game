@@ -822,9 +822,9 @@ namespace Next_Game
                         "Dazed, you manage to escape, barely",
                         "You opponent is left flat footed and winded as you make your escape",
                         "You stand over your defiant enemy before departing. Your legend grows.",
-                        "You have been captured, but luckily your are uninjured",
-                        "You have been captured and sustain minor injuries",
-                        "You have been captured and have been badly injured",
+                        "You have been caught, but luckily your are uninjured",
+                        "You have been caught and sustain minor injuries",
+                        "You have been caught and have been badly injured",
                         "Breathing hard, your opponent scowls at you."};
                         outcome_2.challenge.SetOutcomes(overideOutcomes_2);
                         outcome_2.challenge.SetResults(ConflictResult.MajorWin, new List<int> { 5 });
@@ -845,9 +845,9 @@ namespace Next_Game
                         "It was very close but you've given them the slip. You're exhausted",
                         "You are free and clear",
                         "You are a veritable Ghost. A legend among men.",
-                        "You tried and failed. You've been captured",
-                        "You have been captured and are exhausted",
-                        "You have been captured and have been injured",
+                        "You tried and failed. You've been caught",
+                        "You have been caught and are exhausted",
+                        "You have been caught and have been injured",
                         "They know where you are but they can't reach you. It's an impasse."};
                         outcome_3.challenge.SetOutcomes(overideOutcomes_3);
                         outcome_3.challenge.SetResults(ConflictResult.MajorWin, new List<int> { 5 });

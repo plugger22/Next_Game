@@ -272,7 +272,7 @@ namespace Next_Game
             int margin = Game.constant.GetValue(Global.OPPONENT_MARGIN); //threshold needed to move from a balanced strategy
             int opponentWits = opponent.GetSkill(SkillType.Wits);
             int opponentPrimarySkill = opponent.GetSkill(PrimarySkill);
-            //higher their wits (ability to judge a situation), the less the random affect and more likely to make a straight logical decision
+            //higher their wits (ability to judge a situation), the less the random affect and more likely to make a straight logical decision (Wits 1 star -> 0 - 5, Wits 5 stars -> 0 - 1)
             int rndFactor = rnd.Next(0, 7 - opponentWits); 
             //Factor is applied depending on Primary skill -> if < 3 then factor works against an aggressive strategy, if > 3 then towards & if factor = 0 then no random factor 
             if (opponentPrimarySkill < 3) { rndFactor *= -1; } 
@@ -285,28 +285,46 @@ namespace Next_Game
                 {
                     //aggressive
                     Game.layout.Strategy_Opponent = 0;
-                    Console.WriteLine("[Conflict -> Opp Defends] Good {0} + rndFactor {1} - bad {2} - defSpec {3} > margin {4}", good, rndFactor, bad, defenderSpecific, margin);
+                    Console.WriteLine("[Conflict -> Opp Def's] Good {0} + rndFactor {1} - bad {2} - defSpec {3} > margin {4}", good, rndFactor, bad, defenderSpecific, margin);
                 }
                 else if (bad - good > margin)
                 {
                     //defensive
                     Game.layout.Strategy_Opponent = 2;
-                    Console.WriteLine("[Conflict -> Opp Defends] Bad {0} - Good {1} > margin {2}", bad, good, margin);
+                    Console.WriteLine("[Conflict -> Opp Def's] Bad {0} - Good {1} > margin {2}", bad, good, margin);
                 }
                 else
                 {
                     //balanced
                     Game.layout.Strategy_Opponent = 1;
-                    Console.WriteLine("[Conflict -> Opp Defends] Good -> {0} Bad -> {1} Margin -> {2} rndFactor -> {3} Opp Wits -> {4} Opp PSkill -> {5} Def Spec -> {6} Challenger -> {7}", good, bad, margin,
+                    Console.WriteLine("[Conflict -> Opp Def's] Good -> {0} Bad -> {1} Margin -> {2} rndFactor -> {3} Opp Wits -> {4} Opp PSkill -> {5} Def Spec -> {6} Challenger -> {7}", good, bad, margin,
                         rndFactor, opponentWits, opponentPrimarySkill, defenderSpecific, Challenger);
                 } 
             }
             else
             {
                 //opponent is attacker 
-                if (good + rndFactor - bad > margin) { Game.layout.Strategy_Opponent = 0; } //aggressive
-                else if (bad - good > margin) { Game.layout.Strategy_Opponent = 2; } //defensive
-                else { Game.layout.Strategy_Opponent = 1; } //balanced
+                //if (good + rndFactor - bad > margin)
+                if (bad + rndFactor - good > margin)
+                {
+                    //aggressive
+                    Game.layout.Strategy_Opponent = 0;
+                    Console.WriteLine("[Conflict -> Plyr Def's] Bad {0} + rndFactor {1} - good {2} > margin {3}", bad, rndFactor, good, margin);
+                }
+                //else if (bad - good > margin)
+                else if (bad - good <= 0)
+                {
+                    //defensive
+                    Game.layout.Strategy_Opponent = 2;
+                    Console.WriteLine("[Conflict -> Plyr Def's] Bad {0} - Good {1} <= 0", bad, good, margin);
+                }
+                else
+                {
+                    //balanced
+                    Game.layout.Strategy_Opponent = 1;
+                    Console.WriteLine("[Conflict -> Plyr Def's] Good -> {0} Bad -> {1} Margin -> {2} rndFactor -> {3} Opp Wits -> {4} Opp PSkill -> {5} Def Spec -> {6} Challenger -> {7}", good, bad, margin,
+                       rndFactor, opponentWits, opponentPrimarySkill, defenderSpecific, Challenger);
+                }
             }
         }
 
