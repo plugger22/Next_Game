@@ -1676,15 +1676,27 @@ namespace Next_Game
                                 break;
                             case ResultType.Freedom:
                                 //data > 0, player status -> AtLocation, data < 0, player status -> Captured, data 0 -> ignored
+                                tempText = "";
+                                RLColor tempColor = RLColor.Green;
                                 if (data > 0)
                                 {
                                     //only valid if Player is already captured -> at a location
                                     if (player.Status == ActorStatus.Captured)
-                                    { player.Status = ActorStatus.AtLocation; }
+                                    {
+                                        player.Status = ActorStatus.AtLocation;
+                                        tempText = string.Format("You have managed to escape the {0} dungeons", player.LocID);
+                                    }
                                     else { Game.SetError(new Error(113, "Player Status isn't currently 'Captured'(Result)")); }
                                 }
-                                else if (data < 0) { Game.world.SetPlayerCaptured(opponent.ActID); }
+                                else if (data < 0)
+                                {
+                                    tempColor = RLColor.Red;
+                                    tempText = string.Format("You have been Captured by {0} {1}, ActID {2}", opponent.Title, opponent.Name, opponent.ActID);
+                                    Game.world.SetPlayerCaptured(opponent.ActID);
+                                }
                                 else { Game.SetError(new Error(113, "Invalid Data value (zero) for Freedom Result")); }
+                                if (String.IsNullOrEmpty(tempText) == false)
+                                { tempList.Add(new Snippet(tempText, tempColor, backColor)); }
                                 break;
                             default:
                                 Game.SetError(new Error(113, string.Format("Invalid ResultType (\"{0}\")", type)));

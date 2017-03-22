@@ -3,7 +3,7 @@
 
 # Name: Description
 # RID: (ResultID) Unique number, 1+
-# Type: (ResultType) -> DataPoint/GameVar/RelPlyr/RelOther/Condition/Resource/Item/Secret/Army/Event/Favour/Introduction/Freedom
+# Type: (ResultType) -> DataPoint/GameVar/RelPlyr/RelOther/Condition/Resource/Item/Secret/Army/Event/Favour/Introduction/Freedom/Known
 
 # Data: OPTIONAL -> multipurpose integer (context depends on Type) (default '0')
 # Calc: OPTIONAL( EventCalc) -> None / Add / Subtract / Random / Equals (default 'None')
@@ -60,7 +60,7 @@ Type: DataPoint
 DataPoint: Justice
 Data: 1
 Calc: Random
-Amount: 40
+Amount: 10
 [End]
 
 Name: Unjustly Accused!
@@ -69,7 +69,7 @@ Type: DataPoint
 DataPoint: Justice
 Data: -1
 Calc: Random
-Amount: 40
+Amount: 10
 [End]
 
 Name: We're Famous
@@ -78,7 +78,7 @@ Type: DataPoint
 DataPoint: Legend_Usurper
 Data: 1
 Calc: Random
-Amount: 40
+Amount: 10
 [End]
 
 Name: Nobody heard the news
@@ -87,7 +87,7 @@ Type: DataPoint
 DataPoint: Legend_Usurper
 Data: -1
 Calc: Random
-Amount: 40
+Amount: 10
 [End]
 
 Name: Long Live the King
@@ -96,7 +96,7 @@ Type: DataPoint
 DataPoint: Legend_King
 Data: 1
 Calc: Random
-Amount: 40
+Amount: 10
 [End]
 
 Name: Down with the King
@@ -105,7 +105,7 @@ Type: DataPoint
 DataPoint: Legend_King
 Data: -1
 Calc: Random
-Amount: 40
+Amount: 10
 [End]
 
 Name: Honour and Liberty!
@@ -114,7 +114,7 @@ Type: DataPoint
 DataPoint: Honour_Usurper
 Data: 1
 Calc: Random
-Amount: 40
+Amount: 10
 [End]
 
 Name: Oops, shouldn't have done that
@@ -123,7 +123,7 @@ Type: DataPoint
 DataPoint: Honour_Usurper
 Data: -1
 Calc: Random
-Amount: 40
+Amount: 10
 [End]
 
 Name: The King Does the Right Thing
@@ -132,7 +132,7 @@ Type: DataPoint
 DataPoint: Honour_King
 Data: 1
 Calc: Random
-Amount: 40
+Amount: 10
 [End]
 
 Name: The King is a Bastard
@@ -141,7 +141,7 @@ Type: DataPoint
 DataPoint: Honour_King
 Data: -1
 Calc: Random
-Amount: 40
+Amount: 10
 [End]
 
 Name: The King is a Great Man
@@ -150,7 +150,7 @@ Type: DataPoint
 DataPoint: Honour_King
 Data: 1
 Calc: Random
-Amount: 40
+Amount: 10
 [End]
 
 # Befriend Conflict Results
