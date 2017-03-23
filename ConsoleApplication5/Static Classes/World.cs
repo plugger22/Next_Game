@@ -4411,7 +4411,33 @@ namespace Next_Game
                 if (enemy != null)
                 {
                     //assign nearest major House / capital locID as the place where the player is held
-                    int heldLocID = player.LocID;
+                    int heldLocID = 0;
+                    int tempLocID = player.LocID;
+                    if (tempLocID == 1) { heldLocID = 1; }
+                    else
+                    {
+                        Location loc = Game.network.GetLocation(tempLocID);
+                        if (loc != null)
+                        {
+                            //not at Capital -> At Major House?
+                            House house = GetHouse(loc.RefID);
+                            if (house != null)
+                            {
+                                if (house is MajorHouse)
+                                { heldLocID = tempLocID; }
+                                else
+                                {
+                                    //find nearest Major house/Capital
+                                    List<Route> routeToCapital = loc.GetRouteToCapital();
+                                }
+                            }
+                            else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from tempLocID \"{0}\"", tempLocID))); }
+                        }
+                        else { Game.SetError(new Error(174, string.Format("Invalid Location returned (null) from tempLocID \"{0}\"", tempLocID))); }
+                    }
+                    //found a dungeon?
+                    if (tempLocID > 0) { heldLocID = tempLocID; }
+                    else { Game.SetError(new Error(174, "Unable to find a suitable location for Incarceration -> Default to KingsKeep")); heldLocID = 1; }
                     int refID = GetRefID(heldLocID);
                     //administration
                     string description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID,
@@ -4421,12 +4447,14 @@ namespace Next_Game
                     SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, refID, CurrentActorIncident.Search));
 
                     //update Player LocID for heldLocID
-                    
+                    player.LocID = heldLocID;
                 }
                 else { Game.SetError(new Error(174, "Invalid Enemy (null)")); }
             }
             else { Game.SetError(new Error(174, "Invalid Player (null)")); }
         }
+
+
         //new Methods above here
     }
 }
