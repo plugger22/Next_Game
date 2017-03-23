@@ -23,3 +23,8 @@ Seed 62633 -> Wednesday, 22 March 2017 8:17 PM
 Seed 21541 -> Wednesday, 22 March 2017 8:35 PM
 Seed 48945 -> Wednesday, 22 March 2017 8:52 PM
 Seed 17390 -> Wednesday, 22 March 2017 9:08 PM
+Seed 47696 -> Thursday, 23 March 2017 9:52 AM
+Seed 27199 -> Thursday, 23 March 2017 10:00 AM
+Seed 62909 -> Thursday, 23 March 2017 10:42 AM Check move bug
+Seed 32237 -> Thursday, 23 March 2017 10:54 AM
+Seed 25512 -> Thursday, 23 March 2017 11:21 AM

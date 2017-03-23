@@ -85,7 +85,7 @@ namespace Next_Game
         public bool InitialiseConflict()
         {
             //debug
-            Console.WriteLine("Initialise {0} Challenge", Conflict_Type);
+            Console.WriteLine("- Initialise {0} Challenge", Conflict_Type);
             if (GetChallenge() == true) //get relevant challenge data
             {
                 Game.layout.InitialiseData();
@@ -382,10 +382,19 @@ namespace Next_Game
                 int whoDefends;
                 if (Challenger == true) { whoDefends = -1; }
                 else { whoDefends = 1; }
+                //get Player's status (convert Travelling to 1, AtLocation to 2) -> used to filter situations if required (by Data)
+                int status = 0;
+                Active player = Game.world.GetActiveActor(1);
+                if (player != null)
+                {
+                    if (player.Status == ActorStatus.Travelling) { status = 1; }
+                    else if (player.Status == ActorStatus.AtLocation) { status = 2; }
+                }
+                else { Game.SetError(new Error(86, "Invalid Player (null)")); }
                 switch (Conflict_Type)
                 {
                     case ConflictType.Combat:
-                        //Get suitable situations from dictionary
+                        //Get all Combat situations of the correct subType from dictionary
                         List<Situation> listFilteredCombatSituations = new List<Situation>();
                         IEnumerable<Situation> situationCombatSet =
                             from situation in normalDictionary
@@ -402,10 +411,12 @@ namespace Next_Game
                             IEnumerable<Situation> firstSituationSet =
                                 from situation in listFilteredCombatSituations
                                 where situation.SitNum == 0
+                                where situation.Data == 0 || situation.Data == status
                                 where situation.Defender == whoDefends
                                 select situation;
                             listFirstSituations = firstSituationSet.ToList();
-                            if (listFirstSituations.Count == 0) { Game.SetError(new Error(89, "listFirstSituations (Combat) has no data")); invalidData = true; }
+                            if (listFirstSituations.Count == 0)
+                            { Game.SetError(new Error(89, "listFirstSituations (Combat) has no data")); invalidData = true; }
 
                             if (invalidData == false)
                             {
@@ -429,6 +440,7 @@ namespace Next_Game
                             IEnumerable<Situation> secondSituationSet =
                                 from situation in listFilteredCombatSituations
                                 where situation.SitNum == 1
+                                where situation.Data == 0 || situation.Data == status
                                 select situation;
                             listSecondSituations = secondSituationSet.ToList();
                             if (listSecondSituations.Count == 0)
@@ -452,7 +464,7 @@ namespace Next_Game
                         }
                         break;
                     case ConflictType.Social:
-                        //Get suitable situations from dictionary
+                        //Get all Social situations of the correct subType from dictionary
                         List<Situation> listFilteredSocialSituations = new List<Situation>();
                         IEnumerable<Situation> situationSocialSet =
                             from situation in normalDictionary
@@ -470,9 +482,11 @@ namespace Next_Game
                                 from situation in listFilteredSocialSituations
                                 where situation.SitNum == 0
                                 where situation.Defender == whoDefends
+                                where situation.Data == 0 || situation.Data == status
                                 select situation;
                             listFirstSituations = firstSituationSet.ToList();
-                            if (listFirstSituations.Count == 0) { Game.SetError(new Error(89, "listFirstSituations (Social) has no data")); invalidData = true; }
+                            if (listFirstSituations.Count == 0)
+                            { Game.SetError(new Error(89, "listFirstSituations (Social) has no data")); invalidData = true; }
 
                             if (invalidData == false)
                             {
@@ -496,6 +510,7 @@ namespace Next_Game
                             IEnumerable<Situation> secondSituationSet =
                                 from situation in listFilteredSocialSituations
                                 where situation.SitNum == 1
+                                where situation.Data == 0 || situation.Data == status
                                 select situation;
                             listSecondSituations = secondSituationSet.ToList();
                             if (listSecondSituations.Count == 0)
@@ -519,7 +534,7 @@ namespace Next_Game
                         }
                         break;
                     case ConflictType.Stealth:
-                        //Get suitable situations from dictionary
+                        //Get all Stealth situations of the correct subType from dictionary
                         List<Situation> listFilteredStealthSituations = new List<Situation>();
                         IEnumerable<Situation> situationStealthSet =
                             from situation in normalDictionary
@@ -537,9 +552,11 @@ namespace Next_Game
                                 from situation in listFilteredStealthSituations
                                 where situation.SitNum == 0
                                 where situation.Defender == whoDefends
+                                where situation.Data == 0 || situation.Data == status
                                 select situation;
                             listFirstSituations = firstSituationSet.ToList();
-                            if (listFirstSituations.Count == 0) { Game.SetError(new Error(89, "listFirstSituations (Stealth) has no data")); invalidData = true; }
+                            if (listFirstSituations.Count == 0)
+                            { Game.SetError(new Error(89, "listFirstSituations (Stealth) has no data")); invalidData = true; }
 
                             if (invalidData == false)
                             {
@@ -563,6 +580,7 @@ namespace Next_Game
                             IEnumerable<Situation> secondSituationSet =
                                 from situation in listFilteredStealthSituations
                                 where situation.SitNum == 1
+                                where situation.Data == 0 || situation.Data == status
                                 select situation;
                             listSecondSituations = secondSituationSet.ToList();
                             if (listSecondSituations.Count == 0)
@@ -1738,7 +1756,7 @@ namespace Next_Game
                         { Game.world.SetMessage(message); }
                     }
                     else
-                    { Game.SetError(new Error(113, string.Format("[Notification] Invalid, or Missing, result (null returned, resultID \"{0}\")", resultID))); }
+                    { Console.WriteLine("[Result -> Notification] Invalid, or Missing, result (null returned, resultID \"{0}\")", resultID); }
                 }
             }
             else { Game.SetError(new Error(113, string.Format("Invalid Input (no results from \"{0}\")", outcome))); }

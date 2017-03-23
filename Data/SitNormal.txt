@@ -7,7 +7,7 @@
 # SitNum: Situation Number -> '0' (defenders advantage), '1' (neutral)
 # SitNum: If '0' then you need 'PlyrDef:' (below) and two sit's of the same name. If '1' then a single situation is all that's needed (more are O.K)
 # PlyrDef: '1' if player is the defender, '-1' if opponent (only applies to 1st situation (def. adv.), eg. SitNum '0', ignored for SitNum '1'
-# Data: multi purpose integer, default 0
+# Data: multi purpose integer, default 0 (any Loc, or default Loc), '1' -> Status.Travelling, '2' -> Status.AtLocation
 # Good: immersion strings, 3 variations for good outcomes, short/med sentence, use tags, max 6, eg. Good6:, min1
 # Bad: immersion strings, 3 variations for bad outcomes, short/med sentence, use tags, max 6, eg. Bad6:, min 1
 
@@ -313,14 +313,14 @@ Bad2: Food should be enjoyed, not shovelled down in great haste because the impa
 Bad3: What do you know? All the trouble you went to in order to organise a delicious lunch and it turns out that <name> can't stomach curried swan.
 [end]
 
-# Evade Stealth -> Defender is the person being chased
+# Evade Stealth -> Defender is the person being chased  (Data 1 -> Status.Travelling, Data 2 -> Status.AtLocation, Data 0 -> Either)
 
 Name: A Crowded Market
 Type: Stealth
 SubType: Evade
 SitNum: 0
 PlyrDef: 1
-Data: 1
+Data: 2
 Good1: It's a typical busy market day. You dodge and weave through the stalls.
 Good2: The raucous market day crowd serves to conceal you from <name>.
 Good3: The hustle and bustle of the market works to your advantage.
@@ -334,7 +334,7 @@ Type: Stealth
 SubType: Evade
 SitNum: 0
 PlyrDef: -1
-Data: 1
+Data: 2
 Good1: The crowd ebbs and flows but you can see the path <name> took by the disturbance that ripples outwards.
 Good2: Even though there are a lot of people at the market, <name> stands out like sore thumb. <He> doesn't belong here.
 Good3: The crowd is your friend. They point and yell about the direction that <name> has gone.
@@ -348,7 +348,7 @@ Type: Stealth
 SubType: Evade
 SitNum: 0
 PlyrDef: 1
-Data: 2
+Data: 1
 Good1: The watery tentacles of mist flash and waver in the sun, hiding you from <name>.
 Good2: The mist is as good as a room full of mirrors. One moment you are there, the next you are invisible.
 Good3: <name> is already confused, floundering around in the wispy white wonderland that the mist has created.
@@ -362,7 +362,7 @@ Type: Stealth
 SubType: Evade
 SitNum: 0
 PlyrDef: -1
-Data: 2
+Data: 1
 Good1: The Weather Gods are with you today. The wind gusts push the mist to one side and you spot <name>.
 Good2: It isn't hard to see where <name> has gone. The mist swirls in small eddies in <his> wake.
 Good3: <name> is racing for the high ground but it's the low that offers concealment in the mist. More fool <him>.
