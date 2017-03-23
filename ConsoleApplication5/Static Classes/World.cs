@@ -625,7 +625,7 @@ namespace Next_Game
                             locID, refID);
                         break;
                     case ActorStatus.Captured:
-                        locString = string.Format("Incarcerated in the bowels of the {0} dungeons", GetLocationName(locID);
+                        locString = string.Format("Incarcerated in the bowels of the {0} dungeons", GetLocationName(locID));
                         break;
                     case ActorStatus.Gone:
                         locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);

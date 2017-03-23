@@ -18,7 +18,6 @@ namespace Next_Game
         public string Method { get; } //calling method
         public int Line { get; } //line of code
 
-
         public Error()
         { }
 

@@ -1516,10 +1516,25 @@ namespace Next_Game
         /// <param name="error"></param>
         internal static void SetError(Error error)
         {
-            dictErrors?.Add(error.errorID, error);
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
-            Console.ForegroundColor = ConsoleColor.Gray;
+            try
+            {
+                dictErrors?.Add(error.errorID, error);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
+            catch(ArgumentNullException)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(string.Format("[ERROR] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID));
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
+            catch(ArgumentException)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(string.Format("[ERROR] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID));
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
         }
         
         /// <summary>
