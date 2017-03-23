@@ -1204,111 +1204,119 @@ namespace Next_Game
                 RLColor color = RLColor.Cyan;
                 bool houseCapital = false;
                 Location loc = Game.network.GetLocation(locID);
-                House house = GetHouse(loc.RefID);
-                //if a House Capital show in Yellow
-                if(Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) > 0 )
-                { color = RLColor.Yellow; houseCapital = true; }
-                //ignore the capital and special locations for the moment until they are included in dictAllHouses
-                if (house != null)
+                if (loc != null)
                 {
-                    int eventCount = house.GetNumFollowerEvents();
-                    if (loc.HouseID != 99)
+                    House house = GetHouse(loc.RefID);
+                    //if a House Capital show in Yellow
+                    if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) > 0)
+                    { color = RLColor.Yellow; houseCapital = true; }
+                    //ignore the capital and special locations for the moment until they are included in dictAllHouses
+                    if (house != null)
                     {
-                        int resources = house.Resources;
-                       //normal houses - major / minor / capital 
-                        locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}, Rid {3}, Branch {4}", house.Name, loc.LocName, loc.LocationID, loc.RefID, loc.GetBranch()), color, RLColor.Black));
-                        locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
-                        locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
-                        locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
-                        RLColor loyaltyColor = Color._goodTrait;
-                        if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
-                        locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
-                        locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), false));
-                        locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), RLColor.LightRed, RLColor.Black));
-                        locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));
-                        locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), RLColor.LightRed, RLColor.Black));
-                        if (eventCount > 0)
-                        { locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
-                            RLColor.LightGray, RLColor.Black)); }
-                    }
-                    else
-                    {
-                        //special Inn
-                        locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}, Branch {3}", house.Name, loc.LocationID, loc.RefID, loc.GetBranch(), color, RLColor.Black)));
-                        locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
-                        locList.Add(new Snippet(string.Format("Signage \"{0}\"", house.Banner)));
-                        locList.Add(new Snippet(string.Format("Found at {0}", ShowLocationCoords(locID))));
-                        if (eventCount > 0)
-                        { locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
-                            RLColor.LightGray, RLColor.Black)); }
-                    }
-                }
-                //correct location description
-                if (loc.HouseID == 99)
-                { description = "A homely Inn"; }
-                else if (loc.LocationID == 1)
-                { description = loc.LocName + ": the Home of the King"; }
-                else if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) == 0)
-                { description = "BannerLord of House"; }
-                //bannerlord details if applicable
-                if (houseCapital == false)
-                {
-                    string locDetails = string.Format("{0} {1}", description, GetMajorHouseName(loc.HouseID));
-                    locList.Add(new Snippet(locDetails));
-                }
-                
-                if (loc.IsCapital() == true)
-                {
-                    
-                    locList.Add(new Snippet("KINGDOM CAPITAL", RLColor.Yellow, RLColor.Black));
-                    int capitalWalls = Game.history.CapitalWalls;
-                    int capitalResources = Game.history.CapitalTreasury;
-                    locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
-                    locList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
-                    locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)capitalResources), false));
-                    locList.Add(new Snippet(string.Format("{0}", GetStars((int)capitalResources)), RLColor.LightRed, RLColor.Black));
-                }
-                if (loc.Connector == true)
-                { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
-
-                //characters at location
-                List<int> charList = loc.GetActorList();
-                charList.Sort();
-                if (charList.Count > 0)
-                {
-                    RLColor textColor = RLColor.White;
-                    int row = 3;
-                    locList.Add(new Snippet(string.Format("Characters at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
-                    string actorDetails;
-                    string actorType;
-                    foreach (int charID in charList)
-                    {
-                        row++;
-                        if (dictAllActors.ContainsKey(charID))
+                        int eventCount = house.GetNumFollowerEvents();
+                        if (loc.HouseID != 99)
                         {
-                            textColor = RLColor.White;
-                            //Actor person = new Actor();
-                            Actor person = dictAllActors[charID];
-                            //advisors can be one of three different categories
-                            if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
-                            else { actorType = Convert.ToString(person.Type); }
-                            if ((int)person.Office > 0)
-                            { actorType = Convert.ToString(person.Office); }
-                            actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, actorType, person.Name, person.Age);
-                            //player controlled (change color of text)?
-                            if (person is Active)
+                            int resources = house.Resources;
+                            //normal houses - major / minor / capital 
+                            locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}, Rid {3}, Branch {4}", house.Name, loc.LocName, loc.LocationID, loc.RefID, loc.GetBranch()), color, RLColor.Black));
+                            locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
+                            locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
+                            locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
+                            RLColor loyaltyColor = Color._goodTrait;
+                            if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
+                            locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
+                            locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), false));
+                            locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), RLColor.LightRed, RLColor.Black));
+                            locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));
+                            locList.Add(new Snippet(string.Format("{0}", GetStars((int)resources)), RLColor.LightRed, RLColor.Black));
+                            if (eventCount > 0)
                             {
-                                if (person is Player)
-                                { textColor = Color._player; }
-                                else
-                                { textColor = Color._active; }
+                                locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
+                                  RLColor.LightGray, RLColor.Black));
                             }
                         }
                         else
-                        {   actorDetails = string.Format("unknown ID " + Convert.ToString(charID)); }
-                        locList.Add(new Snippet(actorDetails, textColor, RLColor.Black));
+                        {
+                            //special Inn
+                            locList.Add(new Snippet(string.Format("{0} Inn, LocID {1}, RefID {2}, Branch {3}", house.Name, loc.LocationID, loc.RefID, loc.GetBranch(), color, RLColor.Black)));
+                            locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
+                            locList.Add(new Snippet(string.Format("Signage \"{0}\"", house.Banner)));
+                            locList.Add(new Snippet(string.Format("Found at {0}", ShowLocationCoords(locID))));
+                            if (eventCount > 0)
+                            {
+                                locList.Add(new Snippet(string.Format("Archetype \"{0}\" with {1} events", Game.director.GetArchetypeName(house.ArcID), eventCount),
+                                  RLColor.LightGray, RLColor.Black));
+                            }
+                        }
+                    }
+                    //correct location description
+                    if (loc.HouseID == 99)
+                    { description = "A homely Inn"; }
+                    else if (loc.LocationID == 1)
+                    { description = loc.LocName + ": the Home of the King"; }
+                    else if (Game.map.GetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY()) == 0)
+                    { description = "BannerLord of House"; }
+                    //bannerlord details if applicable
+                    if (houseCapital == false)
+                    {
+                        string locDetails = string.Format("{0} {1}", description, GetMajorHouseName(loc.HouseID));
+                        locList.Add(new Snippet(locDetails));
+                    }
+
+                    if (loc.IsCapital() == true)
+                    {
+
+                        locList.Add(new Snippet("KINGDOM CAPITAL", RLColor.Yellow, RLColor.Black));
+                        int capitalWalls = Game.history.CapitalWalls;
+                        int capitalResources = Game.history.CapitalTreasury;
+                        locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)capitalWalls), false));
+                        locList.Add(new Snippet(string.Format("{0}", GetStars(capitalWalls)), RLColor.LightRed, RLColor.Black));
+                        locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)capitalResources), false));
+                        locList.Add(new Snippet(string.Format("{0}", GetStars((int)capitalResources)), RLColor.LightRed, RLColor.Black));
+                    }
+                    if (loc.Connector == true)
+                    { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
+
+                    //characters at location
+                    List<int> charList = loc.GetActorList();
+                    charList.Sort();
+                    if (charList.Count > 0)
+                    {
+                        RLColor textColor = RLColor.White;
+                        int row = 3;
+                        locList.Add(new Snippet(string.Format("Characters at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
+                        string actorDetails;
+                        string actorType;
+                        foreach (int charID in charList)
+                        {
+                            row++;
+                            if (dictAllActors.ContainsKey(charID))
+                            {
+                                textColor = RLColor.White;
+                                //Actor person = new Actor();
+                                Actor person = dictAllActors[charID];
+                                //advisors can be one of three different categories
+                                if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
+                                else { actorType = Convert.ToString(person.Type); }
+                                if ((int)person.Office > 0)
+                                { actorType = Convert.ToString(person.Office); }
+                                actorDetails = string.Format("Aid {0} {1} {2}, age {3}", person.ActID, actorType, person.Name, person.Age);
+                                //player controlled (change color of text)?
+                                if (person is Active)
+                                {
+                                    if (person is Player)
+                                    { textColor = Color._player; }
+                                    else
+                                    { textColor = Color._active; }
+                                }
+                            }
+                            else
+                            { actorDetails = string.Format("unknown ID " + Convert.ToString(charID)); }
+                            locList.Add(new Snippet(actorDetails, textColor, RLColor.Black));
+                        }
                     }
                 }
+                else { Game.SetError(new Error(187, "Invalid Loc (null)")); }
             }
             else if (locID == 0)
             {
@@ -1355,7 +1363,7 @@ namespace Next_Game
             else if (refID > 0)
             { House house = GetHouse(refID); majorHouse = house as MajorHouse; }
             else
-            { Game.SetError(new Error(36, "Invalid input data")); return null; }
+            { Game.SetError(new Error(36, "Invalid input data (houseID and refID are both Zero, or less)")); return null; }
             List<Snippet> houseList = new List<Snippet>();
             if (majorHouse != null)
             {
@@ -1386,10 +1394,14 @@ namespace Next_Game
                     foreach (int locID in listLordLocations)
                     {
                         Location loc = Game.network.GetLocation(locID);
-                        refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
-                        House house = GetHouse(refID);
-                        bannerLord = string.Format("House {0} at {1} {2}", house.Name, GetLocationName(locID), ShowLocationCoords(locID));
-                        houseList.Add(new Snippet(bannerLord));
+                        if (loc != null)
+                        {
+                            refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
+                            House house = GetHouse(refID);
+                            bannerLord = string.Format("House {0} at {1} {2}", house.Name, GetLocationName(locID), ShowLocationCoords(locID));
+                            houseList.Add(new Snippet(bannerLord));
+                        }
+                        else { Game.SetError(new Error(36, "Invalid Loc (null) BannerLord not added to list")); }
                     }
                 }
                 //family - get list of all actorID's in family
@@ -1925,7 +1937,8 @@ namespace Next_Game
                 locID = record.Value.LocID;
                 refID = record.Value.RefID;
                 Location loc = Game.network.GetLocation(locID);
-                Game.map.SetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY(), refID);
+                if (loc != null) { Game.map.SetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY(), refID); }
+                else { Game.SetError(new Error(188, "Invalid Loc (null) Map Layer not updated"));}
             }
             //populate list of Bannerlord RefID's in Great Houses
             foreach (MajorHouse house in listOfGreatHouses)
@@ -1937,8 +1950,12 @@ namespace Next_Game
                     foreach (int minorLocID in bannerLords)
                     {
                         Location loc = Game.network.GetLocation(minorLocID);
-                        minorRefID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
-                        house.AddBannerLord(minorRefID);
+                        if (loc != null)
+                        {
+                            minorRefID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
+                            house.AddBannerLord(minorRefID);
+                        }
+                        else { Game.SetError(new Error(188, "Invalid minorLoc (null) Bannerlord not added to Great House list")); }
                     }
                 }
             }
@@ -1948,26 +1965,30 @@ namespace Next_Game
             {
                 //create Lord and Lady for house
                 Location loc = Game.network.GetLocation(kvp.Value.LocID);
-                Position pos = loc.GetPosition();
-                Noble actorLord = (Noble)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
-                Noble actorLady = (Noble)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
-                    ActorSex.Female, WifeStatus.First_Wife);
-                //add Lord to House
-                kvp.Value.LordID = actorLord.ActID;
-                //create a knight, castellan and maester for each Major house
-                Knight actorKnight = Game.history.CreateKnight(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
-                Advisor actorCastellan = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Castellan);
-                Advisor actorMaester = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Maester);
-                Advisor actorSepton = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Septon);
-                //add to dictionaries of actors
-                SetPassiveActor(actorLord);
-                SetPassiveActor(actorLady);
-                SetPassiveActor(actorKnight);
-                SetPassiveActor(actorCastellan);
-                SetPassiveActor(actorMaester);
-                SetPassiveActor(actorSepton);
-                //create family
-                Game.history.CreateFamily(actorLord, actorLady);
+                if (loc != null)
+                {
+                    Position pos = loc.GetPosition();
+                    Noble actorLord = (Noble)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.Lord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                    Noble actorLady = (Noble)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID,
+                        ActorSex.Female, WifeStatus.First_Wife);
+                    //add Lord to House
+                    kvp.Value.LordID = actorLord.ActID;
+                    //create a knight, castellan and maester for each Major house
+                    Knight actorKnight = Game.history.CreateKnight(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                    Advisor actorCastellan = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Castellan);
+                    Advisor actorMaester = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Maester);
+                    Advisor actorSepton = Game.history.CreateAdvisor(pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, ActorSex.Male, AdvisorNoble.Septon);
+                    //add to dictionaries of actors
+                    SetPassiveActor(actorLord);
+                    SetPassiveActor(actorLady);
+                    SetPassiveActor(actorKnight);
+                    SetPassiveActor(actorCastellan);
+                    SetPassiveActor(actorMaester);
+                    SetPassiveActor(actorSepton);
+                    //create family
+                    Game.history.CreateFamily(actorLord, actorLady);
+                }
+                else { Game.SetError(new Error(188, "Invalid Loc (null) Lord and Lady not created")); }
                 //check if lady died in childbirth
                /* if (actorLady.Status == ActorStatus.Gone)
                 {
@@ -2005,18 +2026,24 @@ namespace Next_Game
                 {
                     //create BannerLord for house
                     Location loc = Game.network.GetLocation(kvp.Value.LocID);
-                    Position pos = loc.GetPosition();
-                    BannerLord bannerLord = (BannerLord)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
-                    //add to dictionaries of actors
-                    dictPassiveActors.Add(bannerLord.ActID, bannerLord);
-                    dictAllActors.Add(bannerLord.ActID, bannerLord);
-                    //add Lord to house
-                    kvp.Value.LordID = bannerLord.ActID;
+                    if (loc != null)
+                    {
+                        Position pos = loc.GetPosition();
+                        BannerLord bannerLord = (BannerLord)Game.history.CreateStartingHouseActor(kvp.Value.Name, ActorType.BannerLord, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID);
+                        //add to dictionaries of actors
+                        dictPassiveActors.Add(bannerLord.ActID, bannerLord);
+                        dictAllActors.Add(bannerLord.ActID, bannerLord);
+                        //add Lord to house
+                        kvp.Value.LordID = bannerLord.ActID;
+                    }
+                    else { Game.SetError(new Error(188, "Invalid Loc (null) Bannerlord not created")); }
                 }
             }
             //assign 9999 refId to the capital
             Location capital = Game.network.GetLocation(1);
-            Game.map.SetMapInfo(MapLayer.RefID, capital.GetPosX(), capital.GetPosY(), 9999);
+            if (capital != null)
+            { Game.map.SetMapInfo(MapLayer.RefID, capital.GetPosX(), capital.GetPosY(), 9999); }
+            else { Game.SetError(new Error(188, "Invalid CapitalLoc (null) RefID not updated")); }
         }
 
         /// <summary>
@@ -2892,7 +2919,9 @@ namespace Next_Game
         public bool CheckActorPresent(int actorID, int locID)
         {
             Location loc = Game.network.GetLocation(locID);
-            return loc.CheckActorStatus(actorID);
+            if (loc != null) { return loc.CheckActorStatus(actorID); }
+            else { Game.SetError(new Error(189, "Invalid Loc (null)")); }
+            return false;
         }
 
         /// <summary>
@@ -3500,53 +3529,57 @@ namespace Next_Game
                 {
                     //Known
                     Location loc = Game.network.GetLocation(playerLocID);
-                    Position playerPos = loc.GetPosition();
-                    //dictionary to handle sorted distance data
-                    Dictionary<int, int> tempDict = new Dictionary<int, int>();
-                    foreach (var enemy in dictEnemyActors)
+                    if (loc != null)
                     {
-                        //store enemies in tempDict by dist to player (key is ActID, value distance)
-                        Position enemyPos = enemy.Value.GetActorPosition();
-                        if (playerPos != null && enemyPos != null)
+                        Position playerPos = loc.GetPosition();
+                        //dictionary to handle sorted distance data
+                        Dictionary<int, int> tempDict = new Dictionary<int, int>();
+                        foreach (var enemy in dictEnemyActors)
                         {
-                            //only check enemies at a location (those who are travelling will have to wait)
-                            if (enemy.Value.Status == ActorStatus.AtLocation)
+                            //store enemies in tempDict by dist to player (key is ActID, value distance)
+                            Position enemyPos = enemy.Value.GetActorPosition();
+                            if (playerPos != null && enemyPos != null)
                             {
-                                List<Route> route = Game.network.GetRouteAnywhere(enemyPos, playerPos);
-                                distance = Game.network.GetDistance(route);
-                                try
-                                { tempDict.Add(enemy.Value.ActID, distance); }
-                                catch (ArgumentException)
-                                { Game.SetError(new Error(167, string.Format("Invalid enemy ID {0} (duplicate)", enemy.Value.ActID))); }
+                                //only check enemies at a location (those who are travelling will have to wait)
+                                if (enemy.Value.Status == ActorStatus.AtLocation)
+                                {
+                                    List<Route> route = Game.network.GetRouteAnywhere(enemyPos, playerPos);
+                                    distance = Game.network.GetDistance(route);
+                                    try
+                                    { tempDict.Add(enemy.Value.ActID, distance); }
+                                    catch (ArgumentException)
+                                    { Game.SetError(new Error(167, string.Format("Invalid enemy ID {0} (duplicate)", enemy.Value.ActID))); }
+                                }
+                                else { Console.WriteLine(" [{0}] {1}, ActID {2} is Travelling to {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, GetLocationName(enemy.Value.LocID)); }
                             }
-                            else { Console.WriteLine(" [{0}] {1}, ActID {2} is Travelling to {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, GetLocationName(enemy.Value.LocID)); }
-                        }
-                        else
-                        {
-                            Game.SetError(new Error(167, string.Format("Invalid Player ({0}:{1}) or Enemy Position ({2}:{3})", playerPos.PosX, playerPos.PosY,
-                         enemyPos.PosX, enemyPos.PosY)));
-                        }
-                    }
-                    //sort dictionary by distance
-                    if (tempDict.Count > 0)
-                    {
-                        var sorted = from pair in tempDict orderby pair.Value ascending select pair;
-                        foreach (var pair in sorted)
-                        {
-                            Enemy enemy = (Enemy)GetAnyActor(pair.Key);
-                            if (enemy != null)
+                            else
                             {
-                                //can enemy reach player loc within threshold time? (distance / speed = # of turns <= threshold # of turns allowed
-                                if (pair.Value / enemy.Speed <= threshold)
-                                { enemy.HuntMode = true; }
-                                else { enemy.HuntMode = false; }
-                                Console.WriteLine(" [AI -> Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value, threshold, 
-                                    enemy.HuntMode == true ? "Hunt" : "Normal");
+                                Game.SetError(new Error(167, string.Format("Invalid Player ({0}:{1}) or Enemy Position ({2}:{3})", playerPos.PosX, playerPos.PosY,
+                             enemyPos.PosX, enemyPos.PosY)));
                             }
-                            else { Game.SetError(new Error(167, string.Format("Invalid enemy, ID {0} (null)", pair.Key))); }
                         }
+                        //sort dictionary by distance
+                        if (tempDict.Count > 0)
+                        {
+                            var sorted = from pair in tempDict orderby pair.Value ascending select pair;
+                            foreach (var pair in sorted)
+                            {
+                                Enemy enemy = (Enemy)GetAnyActor(pair.Key);
+                                if (enemy != null)
+                                {
+                                    //can enemy reach player loc within threshold time? (distance / speed = # of turns <= threshold # of turns allowed
+                                    if (pair.Value / enemy.Speed <= threshold)
+                                    { enemy.HuntMode = true; }
+                                    else { enemy.HuntMode = false; }
+                                    Console.WriteLine(" [AI -> Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value, threshold,
+                                        enemy.HuntMode == true ? "Hunt" : "Normal");
+                                }
+                                else { Game.SetError(new Error(167, string.Format("Invalid enemy, ID {0} (null)", pair.Key))); }
+                            }
+                        }
+                        else { Console.WriteLine(" [AI -> Notification] tempDictionary has too few records to sort (zero)"); }
                     }
-                    else { Console.WriteLine(" [AI -> Notification] tempDictionary has too few records to sort (zero)"); }
+                    else { Game.SetError(new Error(167, "Invalid Loc (null) Dictionary not updated")); }
                 }
                 else
                 {
@@ -3809,10 +3842,12 @@ namespace Next_Game
                                 if (turnsUnknown > 3 && rnd.Next(100) < 50)
                                 {
                                     Location locTarget = Game.network.GetLocation(playerLocID);
+                                    if (locTarget != null)
+                                    { 
                                     Position posTarget = locTarget.GetPosition();
                                     List<Position> pathTemp = Game.network.GetPathAnywhere(posOrigin, posTarget);
                                     //loop path looking for the first viable location along path
-                                    for(int i = 0; i < pathTemp.Count; i++)
+                                    for (int i = 0; i < pathTemp.Count; i++)
                                     {
                                         Position posTemp = pathTemp[i];
                                         if (posTemp != null)
@@ -3822,7 +3857,7 @@ namespace Next_Game
                                             {
                                                 Console.WriteLine(" [Goal -> Move] {0}, ActID {1} -> One Node closer to Player -> {2}, LocID {3}", enemy.Name, enemy.ActID,
                                                     GetLocationName(tempLocID), tempLocID);
-                                                destinationLocID = tempLocID;  break;
+                                                destinationLocID = tempLocID; break;
                                             }
                                         }
                                         else { Game.SetError(new Error(156, "Invalid Position (null) in pathTemp")); }
@@ -3833,6 +3868,8 @@ namespace Next_Game
                                         destinationLocID = playerLocID;
                                         Console.WriteLine(" [Goal -> Alert] {0}, ActID [1} has been assigned a default PlayerLocID [move One Node closer] as no viable node was found");
                                     }
+                                }
+                                else { Game.SetError(new Error(156, "Invalid locTarget (null) Viable Node not searched for")); }
                                 }
                                 // - Move Directly to Player's last known location
                                 else
@@ -3943,13 +3980,17 @@ namespace Next_Game
                                             if (listNeighbours[i] > 0)
                                             {
                                                 Location locTemp = Game.network.GetLocation(listNeighbours[i]);
-                                                if (locTemp.GetBranch() == enemy.AssignedBranch)
+                                                if (locTemp != null)
                                                 {
-                                                    destinationLocID = listNeighbours[i];
-                                                    Console.WriteLine(" [Goal -> Move] {0}, ActID {1} -> Capital to Correct Branch -> {2}, LocID {3}", enemy.Name, enemy.ActID,
-                                                    GetLocationName(destinationLocID), destinationLocID);
-                                                    break;
+                                                    if (locTemp.GetBranch() == enemy.AssignedBranch)
+                                                    {
+                                                        destinationLocID = listNeighbours[i];
+                                                        Console.WriteLine(" [Goal -> Move] {0}, ActID {1} -> Capital to Correct Branch -> {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                                        GetLocationName(destinationLocID), destinationLocID);
+                                                        break;
+                                                    }
                                                 }
+                                                else { Game.SetError(new Error(156, "Invalid Loc (null) Enemy Goal not set")); }
                                             }
                                             else
                                             { Game.SetError(new Error(156, "Invalid LocID (zero or less) [at Capital] in ListOfNeighbours")); }
@@ -3968,9 +4009,13 @@ namespace Next_Game
                             }
                             //Move enemy
                             Location locMove = Game.network.GetLocation(destinationLocID);
-                            Position posDestination = locMove.GetPosition();
-                            List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
-                            InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
+                            if (locMove != null)
+                            {
+                                Position posDestination = locMove.GetPosition();
+                                List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
+                                InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
+                            }
+                            else { Game.SetError(new Error(156, "Invalid locMove (null) Enemy isn't Moved")); }
                         }
                     }
                     else { Game.SetError(new Error(156, string.Format("Invalid playerLocID (zero or less), existing goal retained for actID {0}", enemy.ActID))); }

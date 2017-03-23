@@ -2184,7 +2184,8 @@ namespace Next_Game
                 //change location (all)
                 if (rebelActor.Status != ActorStatus.Gone)
                 {
-                    kingsKeep.AddActor(rebelActor.ActID);
+                    if (kingsKeep != null) { kingsKeep.AddActor(rebelActor.ActID); }
+                    else { Game.SetError(new Error(27, "Invalid kingsKeep Loc (null) Rebel not added to Loc")); }
                     Location oldLoc = Game.network.GetLocation(rebelActor.LocID);
                     if (oldLoc != null) { oldLoc.RemoveActor(rebelActor.ActID); }
                     else { Game.SetError(new Error(27, "Invalid oldLoc Loc (null) Dead Rebel Actor not removed from loc")); }
