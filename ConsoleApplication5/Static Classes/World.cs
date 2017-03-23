@@ -230,20 +230,24 @@ namespace Next_Game
                     Location loc = Game.network.GetLocation(locID_Origin);
                     if (loc != null)
                     {
-                        //check an existing Move object doesn't already exist (Player only), e.g if user issued > 1 move orders during a turn
-                        if (charID == 1)
+                        //check an existing Move object doesn't already exist, e.g if user issued > 1 move orders during a turn
+                        //reverse loop, deleting any that contain the Player as you go
+                        for (int i = listMoveObjects.Count - 1; i >= 0; i--)
                         {
-                            //reverse loop, deleting any that contain the Player as you go
-                            for (int i = listMoveObjects.Count - 1; i >= 0; i--)
+                            Move tempMove = listMoveObjects[i];
+                            if (tempMove.GetPrimaryCharacter() == charID)
                             {
-                                Move tempMove = listMoveObjects[i];
-                                if (tempMove.PlayerInParty == true)
+                                Position pos = tempMove.GetCurrentPosition();
+                                Console.WriteLine("[Move -> Alert] Move Object DELETED PlayerInParty -> {0}, charID {1} at Loc {2}:{3}", tempMove.PlayerInParty, tempMove.GetPrimaryCharacter(),
+                                    pos.PosX, pos.PosY);
+                                Active tempActive = Game.world.GetActiveActor(charID);
+                                if (tempActive != null)
                                 {
-                                    Position pos = tempMove.GetCurrentPosition();
-                                    Console.WriteLine("[Move -> Alert] Move Object DELETED PlayerInParty -> {0}, charID {1} at Loc {2}:{3}", tempMove.PlayerInParty, tempMove.GetPrimaryCharacter(),
-                                        pos.PosX, pos.PosY);
-                                    listMoveObjects.RemoveAt(i);
+                                    Game.world.SetMessage(new Message(string.Format("{0} {1}'s journey to {2} has been cancelled", tempActive.Title, tempActive.Name, tempMove.GetDestination()),
+                                      MessageType.Move));
                                 }
+                                else { Game.SetError(new Error(175, "Invalid Player (null)")); }
+                                listMoveObjects.RemoveAt(i);
                             }
                         }
                         //housekeep all move tasks
@@ -273,8 +277,9 @@ namespace Next_Game
         {
             //create a dictionary of position and map markers to return (passed up to game thence to map to update mapgrid
             Dictionary<int, Position> dictMapMarkers = new Dictionary<int, Position>();
+            Console.WriteLine(string.Format("- Move Actors ({0} Records)", listMoveObjects.Count));
             //loop moveList. Update each move object - update Character Location ID
-            for(int i = 0; i < listMoveObjects.Count; i++)
+            for (int i = 0; i < listMoveObjects.Count; i++)
             {
                 //move speed clicks down list of positions (ignore locations at present)
                 Move moveObject = new Move();
@@ -298,7 +303,6 @@ namespace Next_Game
                                 //find character and update details
                                 if (dictAllActors.ContainsKey(charID))
                                 {
-                                    Console.WriteLine("- Move Actor");
                                     Actor person = new Actor();
                                     person = dictAllActors[charID];
                                     person.Status = ActorStatus.AtLocation;
@@ -4108,7 +4112,7 @@ namespace Next_Game
                             else { Game.SetError(new Error(161, string.Format("Invalid Enemy (actID {0}) Pos (null) or Active (actID {1}) Pos (null)", enemy.Value.ActID, active.ActID))); }
                         }
                     }
-                    else { Game.SetError(new Error(161, string.Format("Invalid actor (NOT Active) charID \"{0}\"", charID))); }
+                    else { Console.WriteLine(" [Search -> Notification] Invalid actor (NOT Player || NOT Follower && Known) {0}, ActID {1}", active.Name, active.ActID); }
                 }
             }
             else { Game.SetError(new Error(161, string.Format("Invalid actor (null or ActorStatus.Gone) charID \"{0}\", Status {1}", charID, actor.Status))); }

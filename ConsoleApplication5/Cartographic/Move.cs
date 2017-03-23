@@ -165,5 +165,18 @@ namespace Next_Game.Cartographic
                 else { Game.SetError(new Error(51, "Invalid Actor in characterList")); }
             }
         }
+
+        /// <summary>
+        /// returns name of destination location
+        /// </summary>
+        /// <returns></returns>
+        public string GetDestination()
+        {
+            string destination = "Unknown";
+            Position pos = pathList[pathList.Count - 1];
+            if (pos != null)
+            { destination = Game.world.GetLocationName(pos); }
+            return destination;
+        }
     }
 }
