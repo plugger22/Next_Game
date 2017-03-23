@@ -664,20 +664,24 @@ namespace Next_Game
             actor.LocID = locID;
             actor.RefID = refID;
             actor.HouseID = houseID;
-            
+
             //resources
             House house = Game.world.GetHouse(refID);
             if (house != null)
             { actor.Resources = house.Resources; }
             //add to Location
             Location loc = Game.network.GetLocation(locID);
-            loc.AddActor(actor.ActID);
-            //house at birth (males the same)
-            actor.BornRefID = refID;
-            //create records of being born
-            string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
-            Record recordBannerLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorIncident.Born);
-            Game.world.SetHistoricalRecord(recordBannerLord);
+            if (loc != null)
+            {
+                loc.AddActor(actor.ActID);
+                //house at birth (males the same)
+                actor.BornRefID = refID;
+                //create records of being born
+                string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
+                Record recordBannerLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorIncident.Born);
+                Game.world.SetHistoricalRecord(recordBannerLord);
+            }
+            else { Game.SetError(new Error(179, "Invalid Loc (null) Bannerlord not added to Loc")); }
             //assign traits
             InitialiseActorTraits(actor);
             return actor;
@@ -709,13 +713,17 @@ namespace Next_Game
             actor.HouseID = houseID;
             //add to Location
             Location loc = Game.network.GetLocation(locID);
-            loc.AddActor(actor.ActID);
-            //house at birth (males the same)
-            actor.BornRefID = refID;
-            //create records of being born
-            string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
-            Record recordBannerLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorIncident.Born);
-            Game.world.SetHistoricalRecord(recordBannerLord);
+            if (loc != null)
+            {
+                loc.AddActor(actor.ActID);
+                //house at birth (males the same)
+                actor.BornRefID = refID;
+                //create records of being born
+                string descriptor = string.Format("{0}, Aid {1}, born at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
+                Record recordBannerLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorIncident.Born);
+                Game.world.SetHistoricalRecord(recordBannerLord);
+            }
+            else { Game.SetError(new Error(180, "Invalid Loc (null) Regent not placed at Loc")); }
             //assign traits
             InitialiseActorTraits(actor);
             return actor;
@@ -743,19 +751,23 @@ namespace Next_Game
             knight.Knighthood = Game.gameRevolt - (age - knighted);
             //add to Location
             Location loc = Game.network.GetLocation(locID);
-            loc.AddActor(knight.ActID);
-            //data
-            knight.SetActorPosition(pos);
-            knight.LocID = locID;
-            knight.RefID = refID;
-            knight.HouseID = houseID;
-            knight.Type = ActorType.Knight;
-            knight.Realm = ActorRealm.None;
+            if (loc != null)
+            {
+                loc.AddActor(knight.ActID);
+                //data
+                knight.SetActorPosition(pos);
+                knight.LocID = locID;
+                knight.RefID = refID;
+                knight.HouseID = houseID;
+                knight.Type = ActorType.Knight;
+                knight.Realm = ActorRealm.None;
+                //record
+                string descriptor = string.Format("{0} knighted and swears allegiance to House {1}, age {2}", knight.Name, Game.world.GetMajorHouseName(knight.HouseID), knighted);
+                Record record = new Record(descriptor, knight.ActID, knight.LocID, knight.RefID, knight.Knighthood, HistActorIncident.Knighthood);
+                Game.world.SetHistoricalRecord(record);
+            }
+            else { Game.SetError(new Error(181, "Invalid Loc (null) Knight not added to Loc")); }
             InitialiseActorTraits(knight, null, null, SkillType.Combat, SkillType.Treachery);
-            //record
-            string descriptor = string.Format("{0} knighted and swears allegiance to House {1}, age {2}", knight.Name, Game.world.GetMajorHouseName(knight.HouseID), knighted);
-            Record record = new Record(descriptor, knight.ActID, knight.LocID, knight.RefID, knight.Knighthood, HistActorIncident.Knighthood);
-            Game.world.SetHistoricalRecord(record);
             return knight;
         }
 
@@ -802,7 +814,9 @@ namespace Next_Game
                 advisor.CommenceService = yearCommenced;
                 //add to Location
                 Location loc = Game.network.GetLocation(locID);
-                loc.AddActor(advisor.ActID);
+                if (loc != null)
+                { loc.AddActor(advisor.ActID); }
+                else { Game.SetError(new Error(11, "Invalid Loc (null) Advisor not added to Loc")); }
                 //traits
                 SkillType positiveTrait = SkillType.None;
                 SkillType negativeTrait = SkillType.None;
@@ -1652,7 +1666,8 @@ namespace Next_Game
             Game.world.SetPassiveActor(child);
             //store at location
             Location loc = Game.network.GetLocation(Lord.LocID);
-            loc.AddActor(child.ActID);
+            if (loc != null) { loc.AddActor(child.ActID); }
+            else { Game.SetError(new Error(182, "Invalid Loc (null) Child not added to Loc")); }
             //record event
             bool actualEvent = true;
             string secretText = null;
@@ -1845,7 +1860,8 @@ namespace Next_Game
             actor.ReasonGone = reason;
             //remove actor from location
             Location loc = Game.network.GetLocation(actor.LocID);
-            loc.RemoveActor(actor.ActID);
+            if (loc != null) { loc.RemoveActor(actor.ActID); }
+            else { Game.SetError(new Error(183, "Invalid Loc (null) Actor not removed from Loc")); }
             actor.LocID = 0;
         }
 
@@ -1997,12 +2013,16 @@ namespace Next_Game
                         }
                     }
                 }
-               
-                kingsKeep.AddActor(royal.ActID);
+                if (kingsKeep != null) { kingsKeep.AddActor(royal.ActID); }
+                else { Game.SetError(new Error(27, "Invalid kingsKeep Loc (null) Royal not added to Loc")); }
                 Location oldLoc = Game.network.GetLocation(royal.LocID);
-                //avoid removing dead wives or children
-                if (royal.Status == ActorStatus.AtLocation)
-                { oldLoc.RemoveActor(royal.ActID); }
+                if (oldLoc != null)
+                {
+                    //avoid removing dead wives or children
+                    if (royal.Status == ActorStatus.AtLocation)
+                    { oldLoc.RemoveActor(royal.ActID); }
+                }
+                else { Game.SetError(new Error(27, "Invalid oldLoc Loc (null) Dead Royal not removed from Loc")); }
                 royal.LocID = 1;
                 Record record = null;
                 //specific roles & also handle fate of royal family
@@ -2166,7 +2186,8 @@ namespace Next_Game
                 {
                     kingsKeep.AddActor(rebelActor.ActID);
                     Location oldLoc = Game.network.GetLocation(rebelActor.LocID);
-                    oldLoc.RemoveActor(rebelActor.ActID);
+                    if (oldLoc != null) { oldLoc.RemoveActor(rebelActor.ActID); }
+                    else { Game.SetError(new Error(27, "Invalid oldLoc Loc (null) Dead Rebel Actor not removed from loc")); }
                     rebelActor.LocID = 1;
                 }
 
