@@ -207,13 +207,21 @@ namespace Next_Game
             //get list of royalist Locations
             List<Location> royalistLocs = new List<Location>();
             //add kingskeep as first record
-            royalistLocs.Add(Game.network.GetLocation(1));
+            Location capital = Game.network.GetLocation(1);
+            if (capital != null) { royalistLocs.Add(capital); }
+            else { Game.SetError(new Error(31, "Invalid capital Loc (null) Royalist Location (Kingskeep) not added")); }
             foreach(MajorHouse house in listOfRoyalists)
             {
-                royalistLocs.Add(Game.network.GetLocation(house.LocID));
+                Location majorLoc = Game.network.GetLocation(house.LocID);
+                if (majorLoc != null) { royalistLocs.Add(majorLoc); }
+                else { Game.SetError(new Error(31, "Invalid majorLoc Loc (null) Major Royalist house not added")); }
                 List<int> bannerLordLocs = house.GetBannerLordLocations();
                 foreach(int locID in bannerLordLocs)
-                { royalistLocs.Add(Game.network.GetLocation(locID)); }
+                {
+                    Location royalLoc = Game.network.GetLocation(locID);
+                    if (royalLoc != null) { royalistLocs.Add(royalLoc); }
+                    else { Game.SetError(new Error(31, "Invalid royalLoc Loc (null) Royalist bannerlord not added")); }
+                }
             }
             //order by distance from capital
             List<Location> orderedLocs = new List<Location>();
@@ -918,7 +926,7 @@ namespace Next_Game
             Passive oldBannerLord = Game.world.GetPassiveActor(TurnCoat);
             Console.WriteLine("turncoatActor {0}, {1}, ActID: {2} RefID: {3} Loc: {4}", oldBannerLord.Name, oldBannerLord.Handle, oldBannerLord.ActID, oldBannerLord.RefID, 
                 Game.world.GetLocationName(oldBannerLord.LocID));
-           
+
             if (oldBannerLord != null && oldBannerLord.Status == ActorStatus.AtLocation)
             {
                 string descriptor;
@@ -963,12 +971,16 @@ namespace Next_Game
 
                 //update Map with refID and houseID for loc
                 Location locLord = Game.network.GetLocation(newMajorhouse.LocID);
-                Game.map.SetMapInfo(MapLayer.HouseID, locLord.GetPosX(), locLord.GetPosY(), houseID);
-                Game.map.SetMapInfo(MapLayer.RefID, locLord.GetPosX(), locLord.GetPosY(), refID);
-                Console.WriteLine("loc {0}:{1}, houseID: {2}, refID: {3}", locLord.GetPosX(), locLord.GetPosY(), houseID, refID);
-                //update Loc details
-                locLord.HouseID = houseID;
-                locLord.RefID = refID;
+                if (locLord != null)
+                {
+                    Game.map.SetMapInfo(MapLayer.HouseID, locLord.GetPosX(), locLord.GetPosY(), houseID);
+                    Game.map.SetMapInfo(MapLayer.RefID, locLord.GetPosX(), locLord.GetPosY(), refID);
+                    Console.WriteLine("loc {0}:{1}, houseID: {2}, refID: {3}", locLord.GetPosX(), locLord.GetPosY(), houseID, refID);
+                    //update Loc details
+                    locLord.HouseID = houseID;
+                    locLord.RefID = refID;
+                }
+                else { Game.SetError(new Error(33, "Invalid locLord Loc (null) Map not updated")); }
 
                 //new MinorHouse
                 MinorHouse newMinorHouse = new MinorHouse();
@@ -994,7 +1006,9 @@ namespace Next_Game
 
                 //need a new Bannerlord Actor
                 int bannerLocID = newMinorHouse.LocID;
-                Location locBannerLord = Game.network.GetLocation(bannerLocID); 
+                Location locBannerLord = Game.network.GetLocation(bannerLocID);
+                if (locBannerLord == null) { Game.SetError(new Error(33, "Invalid locBannerLord Loc (null) Major issues ahead")); }
+
                 Console.WriteLine("bannerlord comes from {0}, LocID: {1} ({2}:{3})", Game.world.GetLocationName(bannerLocID), bannerLocID, locBannerLord.GetPosX(), locBannerLord.GetPosY());
                 Position pos = locBannerLord.GetPosition();
                 BannerLord newBannerLord = Game.history.CreateBannerLord(minorStruct.Name, pos, bannerLocID, minorStruct.RefID, houseID);
@@ -1005,12 +1019,13 @@ namespace Next_Game
                 newBannerLord.Lordship = Game.gameRevolt;
                 newBannerLord.AddRelEventPlyr(new Relation("Grateful to the New King for their Title", "Supports New King", -45));
                 newMinorHouse.LordID = newBannerLord.ActID;
-                
+
+
                 //need to update house.ListOfBannerLords (remove old refID, add new)
                 List<int> tempLords = new List<int>();
                 MajorHouse liegeLordHouse = null;
                 if (oldBannerLord.HouseID == oldkingHouse.HouseID)
-                { liegeLordHouse = newMajorhouse;  }
+                { liegeLordHouse = newMajorhouse; }
                 else
                 { liegeLordHouse = Game.world.GetMajorHouse(oldBannerLord.HouseID); }
                 Console.WriteLine("Liege Lord House {0}", liegeLordHouse.Name);
@@ -1027,13 +1042,17 @@ namespace Next_Game
 
                 //loop through turncoat bannerlords and update loc details
                 List<int> tempList = newMajorhouse.GetBannerLordLocations();
-                foreach( int locID in tempList)
+                foreach (int locID in tempList)
                 {
                     Location locTemp = Game.network.GetLocation(locID);
-                    Game.map.SetMapInfo(MapLayer.HouseID, locTemp.GetPosX(), locTemp.GetPosY(), houseID);
-                    Console.WriteLine("BannerLord loc {0}:{1}, houseID: {2}", locTemp.GetPosX(), locTemp.GetPosY(), houseID);
-                    //update Loc details
-                    locTemp.HouseID = houseID;
+                    if (locTemp != null)
+                    {
+                        Game.map.SetMapInfo(MapLayer.HouseID, locTemp.GetPosX(), locTemp.GetPosY(), houseID);
+                        Console.WriteLine("BannerLord loc {0}:{1}, houseID: {2}", locTemp.GetPosX(), locTemp.GetPosY(), houseID);
+                        //update Loc details
+                        locTemp.HouseID = houseID;
+                    }
+                    else { Game.SetError(new Error(33, "Invalid locTemp Loc (null) Turncoat Bannerlords not updated")); }
                 }
 
                 //need to create a new Noble actor with details of old BannerLord (must have same ActID)
@@ -1073,7 +1092,8 @@ namespace Next_Game
                 Game.world.AddPassiveActor(newLord);
 
                 //update actors for different locations
-                locLord.AddActor(newLord.ActID);
+                if (locLord != null) { locLord.AddActor(newLord.ActID); }
+                else { Game.SetError(new Error(33, "Invalid locLord (null) Actors not added to Loc")); }
                 locBannerLord.RemoveActor(oldBannerLord.ActID);
 
                 //remove old Bannerlord house from dictAllHouses
@@ -1103,9 +1123,9 @@ namespace Next_Game
                 Console.WriteLine("Updating MapLayer -> loc {0}:{1}, refID: {2}", locBannerLord.GetPosX(), locBannerLord.GetPosY(), newMinorHouse.RefID);
                 //update Loc details
                 locBannerLord.RefID = newMinorHouse.RefID;
-                
+
                 //advisors - castellan, in oldkings house need replacing
-                foreach( Advisor advisor in listOfRoyalAdvisors)
+                foreach (Advisor advisor in listOfRoyalAdvisors)
                 {
                     string fate = "dismissed";
                     if (rnd.Next(100) < 40)
@@ -1127,38 +1147,42 @@ namespace Next_Game
                         Game.world.SetHistoricalRecord(record_6);
                     }
                 }
-                //create castellan
-                Advisor castellan = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Castellan, AdvisorRoyal.None);
-                castellan.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; castellan.Loyalty_Current = newMajorhouse.Loyalty_Current;
-                amt = rnd.Next(40) * -1;
-                castellan.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
-                Game.world.SetPassiveActor(castellan);
-                //create maester
-                Advisor maester = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Maester, AdvisorRoyal.None);
-                maester.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; maester.Loyalty_Current = newMajorhouse.Loyalty_Current;
-                amt = rnd.Next(40) * -1;
-                maester.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
-                Game.world.SetPassiveActor(maester);
-                //create septon
-                Advisor septon = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Septon, AdvisorRoyal.None);
-                septon.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; septon.Loyalty_Current = newMajorhouse.Loyalty_Current;
-                amt = rnd.Next(40) * -1;
-                septon.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
-                Game.world.SetPassiveActor(septon);
-                //create new Knight
-                Knight knight = Game.history.CreateKnight(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID);
-                knight.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; knight.Loyalty_Current = newMajorhouse.Loyalty_Current;
-                amt = rnd.Next(40) * -1;
-                knight.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
-                Game.world.SetPassiveActor(knight);
-                //create new wife
-                Noble wife = (Noble)Game.history.CreateStartingHouseActor(newMajorhouse.Name, ActorType.Lady, locLord.GetPosition(), locLord.LocationID, newMajorhouse.RefID, houseID, ActorSex.Female, WifeStatus.First_Wife);
-                wife.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; wife.Loyalty_Current = newMajorhouse.Loyalty_Current;
-                amt = rnd.Next(40) * -1;
-                wife.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
-                Game.world.SetPassiveActor(wife);
-                //create family
-                Game.history.CreateFamily(newLord, wife, newMinorHouse.LocName);
+                if (locLord != null)
+                {
+                    //create castellan
+                    Advisor castellan = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Castellan, AdvisorRoyal.None);
+                    castellan.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; castellan.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                    amt = rnd.Next(40) * -1;
+                    castellan.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
+                    Game.world.SetPassiveActor(castellan);
+                    //create maester
+                    Advisor maester = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Maester, AdvisorRoyal.None);
+                    maester.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; maester.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                    amt = rnd.Next(40) * -1;
+                    maester.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
+                    Game.world.SetPassiveActor(maester);
+                    //create septon
+                    Advisor septon = Game.history.CreateAdvisor(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID, ActorSex.Male, AdvisorNoble.Septon, AdvisorRoyal.None);
+                    septon.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; septon.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                    amt = rnd.Next(40) * -1;
+                    septon.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
+                    Game.world.SetPassiveActor(septon);
+                    //create new Knight
+                    Knight knight = Game.history.CreateKnight(locLord.GetPosition(), newMajorhouse.LocID, newMajorhouse.RefID, houseID);
+                    knight.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; knight.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                    amt = rnd.Next(40) * -1;
+                    knight.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
+                    Game.world.SetPassiveActor(knight);
+                    //create new wife
+                    Noble wife = (Noble)Game.history.CreateStartingHouseActor(newMajorhouse.Name, ActorType.Lady, locLord.GetPosition(), locLord.LocationID, newMajorhouse.RefID, houseID, ActorSex.Female, WifeStatus.First_Wife);
+                    wife.Loyalty_AtStart = newMajorhouse.Loyalty_AtStart; wife.Loyalty_Current = newMajorhouse.Loyalty_Current;
+                    amt = rnd.Next(40) * -1;
+                    wife.AddRelEventPlyr(new Relation("Grateful to the New King for their position", "Supports New King", amt));
+                    Game.world.SetPassiveActor(wife);
+                    //create family
+                    Game.history.CreateFamily(newLord, wife, newMinorHouse.LocName);
+                }
+                else { Game.SetError(new Error(33, "Invalid locLord Loc (null) Advisors and wife not created")); }
 
                 //record - new bannerlord
                 descriptor = string.Format("{0}, Aid {1}, assumes Lordship, BannerLord of House {2}, age {3}", newBannerLord.Name, newBannerLord.ActID, newMinorHouse.Name, newBannerLord.Age);
@@ -1206,6 +1230,7 @@ namespace Next_Game
                 if (surname == null)
                 { surname = house.Name; }
                 Location loc = Game.network.GetLocation(deadLord.LocID);
+                if (loc == null) { Game.SetError(new Error(39, "Invalid Loc (null) Major issues ahead")); }
                 BannerLord newLord = Game.history.CreateBannerLord(surname, loc.GetPosition(), deadLord.LocID, deadLord.RefID, deadLord.HouseID);
                 newLord.Loyalty_Current = KingLoyalty.New_King;
                 newLord.Loyalty_AtStart = deadLord.Loyalty_AtStart;
@@ -1303,26 +1328,30 @@ namespace Next_Game
                     else
                     {
                         Location loc = Game.network.GetLocation(house.LocID);
-                        Position pos = loc.GetPosition();
-                        //create new lord
-                        Noble brother = (Noble)Game.history.CreateRegent(house.Name, pos, house.LocID, house.RefID, house.HouseID);
-                        if (brother.GetRelPlyr() == 50)
+                        if (loc != null)
                         {
-                            amt = rnd.Next(40);
-                            if (deadLord.Loyalty_Current == KingLoyalty.New_King) { amt *= -1; brother.AddRelEventPlyr(new Relation("Loyal to New King", "Supports New King", amt)); }
-                            else { brother.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)); }
+                            Position pos = loc.GetPosition();
+                            //create new lord
+                            Noble brother = (Noble)Game.history.CreateRegent(house.Name, pos, house.LocID, house.RefID, house.HouseID);
+                            if (brother.GetRelPlyr() == 50)
+                            {
+                                amt = rnd.Next(40);
+                                if (deadLord.Loyalty_Current == KingLoyalty.New_King) { amt *= -1; brother.AddRelEventPlyr(new Relation("Loyal to New King", "Supports New King", amt)); }
+                                else { brother.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)); }
+                            }
+                            /*Game.history.SetInfluence(heir, brother, SkillType.Combat);
+                            Game.history.SetInfluence(heir, brother, SkillType.Wits);
+                            Game.history.SetInfluence(heir, brother, SkillType.Charm);
+                            Game.history.SetInfluence(heir, brother, SkillType.Leadership);
+                            Game.history.SetInfluence(heir, brother, SkillType.Treachery);*/
+                            brother.RegencyPeriod = 15 - heir.Age;
+                            //record
+                            descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Regency of House {3}, age {4}", brother.Name, brother.ActID, deadLord.Name, house.Name, brother.Age);
+                            Record record_3 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
+                            record_3.AddActor(brother.ActID);
+                            Game.world.SetHistoricalRecord(record_3);
                         }
-                        /*Game.history.SetInfluence(heir, brother, SkillType.Combat);
-                        Game.history.SetInfluence(heir, brother, SkillType.Wits);
-                        Game.history.SetInfluence(heir, brother, SkillType.Charm);
-                        Game.history.SetInfluence(heir, brother, SkillType.Leadership);
-                        Game.history.SetInfluence(heir, brother, SkillType.Treachery);*/
-                        brother.RegencyPeriod = 15 - heir.Age;
-                        //record
-                        descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Regency of House {3}, age {4}", brother.Name, brother.ActID, deadLord.Name, house.Name, brother.Age);
-                        Record record_3 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
-                        record_3.AddActor(brother.ActID);
-                        Game.world.SetHistoricalRecord(record_3);
+                        else { Game.SetError(new Error(41, "Invalid Loc (null) New Lord not created")); }
                     }
                 }
                 else
