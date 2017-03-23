@@ -1288,7 +1288,7 @@ namespace Next_Game.Cartographic
 
 
         /// <summary>
-        /// Get a location from Dictionary of Locations via locID, returns empty location (locID = 0) if not found
+        /// Get a location from Dictionary of Locations via locID, returns null if not found
         /// </summary>
         /// <param name="locID"></param>
         /// <returns></returns>
@@ -1297,8 +1297,7 @@ namespace Next_Game.Cartographic
             Location loc = new Location();
             if (dictLocations.ContainsKey(locID))
             { loc = dictLocations[locID]; }
-            else
-            { Game.SetError(new Error(149, "locID not found in dictionary")); }
+            else { loc = null; }
             return loc;
         }
 
@@ -1948,12 +1947,13 @@ namespace Next_Game.Cartographic
                     {
                         locID = listIndividualHouseLocID[outer][inner];
                         Location tempLoc = GetLocation(locID);
-                        if (locID > 0)
+                        if (locID > 0 && tempLoc != null)
                         {
                             tempArrayConnections[inner] = tempLoc.Connections;
                             tempArrayRoutes[inner] = tempLoc.GetNumRoutesToCapital();
                             //Console.WriteLine("LocID {0} has {1} connections and is {2} routes from the Capital", locID, tempLoc.Connections, tempLoc.GetNumRoutesToCapital());
                         }
+                        else { Game.SetError(new Error(176, "Invalid tempLoc_1 (null)")); }
                     }
                     //if only a single loc then it must be the house capital
                     if(numLocs == 1)
@@ -1961,8 +1961,12 @@ namespace Next_Game.Cartographic
                         //only loc must automatically be the capital
                         locID = listIndividualHouseLocID[outer][0];
                         Location loc = GetLocation(locID);
-                        Game.map.SetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY(), outer);
-                        arrayOfCapitals[outer] = locID;
+                        if (loc != null)
+                        {
+                            Game.map.SetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY(), outer);
+                            arrayOfCapitals[outer] = locID;
+                        }
+                        else { Game.SetError(new Error(176, "Invalid House Capital loc_2 (null)")); }
                     }
                     //which location will be capital? (highest # connections first, if equal then loc furtherst from Capital)
                     else if (numLocs > 1)
@@ -1983,8 +1987,12 @@ namespace Next_Game.Cartographic
                         //capital is index value in List
                         locID = listIndividualHouseLocID[outer][indexValue];
                         Location loc = GetLocation(locID);
-                        Game.map.SetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY(), outer);
-                        arrayOfCapitals[outer] = locID;
+                        if (loc != null)
+                        {
+                            Game.map.SetMapInfo(MapLayer.Capitals, loc.GetPosX(), loc.GetPosY(), outer);
+                            arrayOfCapitals[outer] = locID;
+                        }
+                        else { Game.SetError(new Error(176, "Invalid capital loc_3 (null)")); }
                     }
                 }
             }
@@ -2056,35 +2064,39 @@ namespace Next_Game.Cartographic
                 //change name of Location to house name
                 capitalLocID = arrayOfCapitals[houseID];
                 Location loc = GetLocation(capitalLocID);
-                loc.LocName = house.LocName;
-                loc.RefID = house.RefID;
-                //update capital Loc ID & branch
-                house.LocID = capitalLocID;
-                house.Branch = loc.GetBranch();
-                //update all house locations for house
-                for(int k = 0; k < listIndividualHouseLocID[houseID].Count; k++)
+                if (loc != null)
                 {
-                    locID = listIndividualHouseLocID[houseID][k];
-                    //if not capital, add to house list
-                    if( locID != capitalLocID && locID > 0)
+                    loc.LocName = house.LocName;
+                    loc.RefID = house.RefID;
+                    //update capital Loc ID & branch
+                    house.LocID = capitalLocID;
+                    house.Branch = loc.GetBranch();
+                    //update all house locations for house
+                    for (int k = 0; k < listIndividualHouseLocID[houseID].Count; k++)
                     {
-                        house.AddBannerLordLocation(locID);
-                        //assign a Minor House (bannerlord)
-                        Game.history.InitialiseMinorHouse(locID, houseID);
+                        locID = listIndividualHouseLocID[houseID][k];
+                        //if not capital, add to house list
+                        if (locID != capitalLocID && locID > 0)
+                        {
+                            house.AddBannerLordLocation(locID);
+                            //assign a Minor House (bannerlord)
+                            Game.history.InitialiseMinorHouse(locID, houseID);
+                        }
+                    }
+                    //Work out unique Loc's from house capital to kingdom capital
+                    List<Route> tempListOfRoutes = loc.GetRouteToCapital();
+                    //Console.WriteLine("--- House {0}", houseID);
+                    foreach (Route route in tempListOfRoutes)
+                    {
+                        Position pos = route.GetLoc1();
+                        minorHouseID = Game.map.GetMapInfo(MapLayer.HouseID, pos.PosX, pos.PosY);
+                        //called method checks for locID = 0 & duplicate houseID's
+                        if (minorHouseID != houseID && minorHouseID != 99)
+                        { house.AddHousesToCapital(minorHouseID); }
+                        //Console.WriteLine("House {0}", minorHouseID);
                     }
                 }
-                //Work out unique Loc's from house capital to kingdom capital
-                List<Route> tempListOfRoutes = loc.GetRouteToCapital();
-                //Console.WriteLine("--- House {0}", houseID);
-                foreach(Route route in tempListOfRoutes)
-                {
-                    Position pos = route.GetLoc1();
-                    minorHouseID = Game.map.GetMapInfo(MapLayer.HouseID, pos.PosX, pos.PosY);
-                    //called method checks for locID = 0 & duplicate houseID's
-                    if (minorHouseID != houseID && minorHouseID != 99)
-                    { house.AddHousesToCapital(minorHouseID); }
-                    //Console.WriteLine("House {0}", minorHouseID);
-                }
+                else { Game.SetError(new Error(177, "Invalid loc (null)")); }
             }
         }
 

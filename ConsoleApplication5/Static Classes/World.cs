@@ -4412,6 +4412,7 @@ namespace Next_Game
                 {
                     //assign nearest major House / capital locID as the place where the player is held
                     int heldLocID = 0;
+                    int ref1, ref2;
                     int tempLocID = player.LocID;
                     if (tempLocID == 1) { heldLocID = 1; }
                     else
@@ -4423,12 +4424,56 @@ namespace Next_Game
                             House house = GetHouse(loc.RefID);
                             if (house != null)
                             {
-                                if (house is MajorHouse)
-                                { heldLocID = tempLocID; }
-                                else
+                                if ((house is MajorHouse) == false)
                                 {
-                                    //find nearest Major house/Capital
+                                    //find nearest Major house/Capital moving Inwards
                                     List<Route> routeToCapital = loc.GetRouteToCapital();
+                                    int distIn = 0; int refIn = 0;
+                                    for (int i = 0; i < routeToCapital.Count; i++)
+                                    {
+                                        Route route = routeToCapital[i];
+                                        if (route != null)
+                                        {
+                                            Position pos1 = route.GetLoc1();
+                                            Position pos2 = route.GetLoc2();
+                                            ref1 = Game.map.GetMapInfo(MapLayer.RefID, pos1.PosX, pos1.PosY);
+                                            if (ref1 > 0 && ref1 < 100)
+                                            { refIn = ref1;  distIn = i; break; }
+                                            ref2 = Game.map.GetMapInfo(MapLayer.RefID, pos2.PosX, pos2.PosY);
+                                            if (ref2 > 0 && ref2 < 100)
+                                            { refIn = ref2;  distIn = i;  break; }
+                                        }
+                                    }
+                                    //find nearest Major house moving Outwards
+                                    List<Route> routeToConnector = loc.GetRouteToConnector();
+                                    int distOut = 0; int refOut = 0;
+                                    for (int i = 0; i < routeToConnector.Count; i++)
+                                    {
+                                        Route route = routeToConnector[i];
+                                        if (route != null)
+                                        {
+                                            Position pos1 = route.GetLoc1();
+                                            Position pos2 = route.GetLoc2();
+                                            ref1 = Game.map.GetMapInfo(MapLayer.RefID, pos1.PosX, pos1.PosY);
+                                            if (ref1 > 0 && ref1 < 100)
+                                            { refOut = ref1; distOut = i; break; }
+                                            ref2 = Game.map.GetMapInfo(MapLayer.RefID, pos2.PosX, pos2.PosY);
+                                            if (ref2 > 0 && ref2 < 100)
+                                            { refOut = ref2; distOut = i; break; }
+                                        }
+                                    }
+                                    //Compare in and out and find closest, favouring inwards (if equal distance)
+                                    if (refIn > 0 && refOut == 0) { tempLocID = refIn; }
+                                    else if (refOut > 0 && refIn == 0) { tempLocID = refOut; }
+                                    else if (distIn <= distOut) { tempLocID = refIn; }
+                                    else if (distIn > distOut) { tempLocID = refOut; }
+                                    else
+                                    {
+                                     Game.SetError(new Error(174, string.Format("Unable to get a valid dungeon loc, refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3}, default to Capital",
+                                     refIn, distIn, refOut, distOut)));
+                                    }
+                                    Console.WriteLine("[Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempLocID -> {4} at {5}",
+                                        refIn, distIn, refOut, distOut, tempLocID, GetLocationName(tempLocID));
                                 }
                             }
                             else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from tempLocID \"{0}\"", tempLocID))); }

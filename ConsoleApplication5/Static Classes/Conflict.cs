@@ -1702,10 +1702,14 @@ namespace Next_Game
                                                 else if (eventObject.Type == ArcType.GeoCluster)
                                                 {
                                                     Location loc = Game.network.GetLocation(player.LocID);
-                                                    eventObject.SubRef = Game.map.GetMapInfo(MapLayer.GeoID, loc.GetPosX(), loc.GetPosY());
-                                                    GeoCluster cluster = Game.world.GetGeoCluster(eventObject.SubRef);
-                                                    eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, null, null, cluster);
-                                                    Console.WriteLine("Event \"{0}\" assigned subRef {1} (GeoID)", eventObject.Name, eventObject.SubRef);
+                                                    if (loc != null)
+                                                    {
+                                                        eventObject.SubRef = Game.map.GetMapInfo(MapLayer.GeoID, loc.GetPosX(), loc.GetPosY());
+                                                        GeoCluster cluster = Game.world.GetGeoCluster(eventObject.SubRef);
+                                                        eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, null, null, cluster);
+                                                        Console.WriteLine("Event \"{0}\" assigned subRef {1} (GeoID)", eventObject.Name, eventObject.SubRef);
+                                                    }
+                                                    else { Game.SetError(new Error(113, "Invalid Terrain Cluster Loc (null)")); }
                                                 }
                                             }
                                             //assign to correct event list & master dictionary

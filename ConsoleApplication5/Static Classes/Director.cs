@@ -498,44 +498,48 @@ namespace Next_Game
                 refID = Game.map.GetMapInfo(Cartographic.MapLayer.RefID, pos.PosX, pos.PosY);
                 houseID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
                 Location loc = Game.network.GetLocation(locID);
-                if (locID == 1)
+                if (loc != null)
                 {
-                    //capital
-                    listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsCapital));
-                    listEventPool.AddRange(GetValidFollowerEvents(listFollCapitalEvents));
+                    if (locID == 1)
+                    {
+                        //capital
+                        listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsCapital));
+                        listEventPool.AddRange(GetValidFollowerEvents(listFollCapitalEvents));
+                    }
+                    else if (refID > 0 && refID < 100)
+                    {
+                        //Major House
+                        listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsMajor));
+                        listEventPool.AddRange(GetValidFollowerEvents(loc.GetFollowerEvents()));
+                        House house = Game.world.GetHouse(refID);
+                        if (house != null)
+                        { listEventPool.AddRange(GetValidFollowerEvents(house.GetFollowerEvents())); }
+                        else { Game.SetError(new Error(52, "Invalid Major House (refID)")); }
+                    }
+                    else if (refID >= 100 && refID < 1000)
+                    {
+                        //Minor House
+                        listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsMinor));
+                        listEventPool.AddRange(GetValidFollowerEvents(loc.GetFollowerEvents()));
+                        House house = Game.world.GetHouse(refID);
+                        if (house != null)
+                        { listEventPool.AddRange(GetValidFollowerEvents(house.GetFollowerEvents())); }
+                        else { Game.SetError(new Error(52, "Invalid Minor House (refID)")); }
+                    }
+                    else if (houseID == 99)
+                    {
+                        //Special Location - Inn
+                        listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsInn));
+                        listEventPool.AddRange(GetValidFollowerEvents(loc.GetFollowerEvents()));
+                        House house = Game.world.GetHouse(refID);
+                        if (house != null)
+                        { listEventPool.AddRange(GetValidFollowerEvents(house.GetFollowerEvents())); }
+                        else { Game.SetError(new Error(52, "Invalid Inn (refID)")); }
+                    }
+                    else
+                    { Game.SetError(new Error(52, "Invalid Location Event Type")); }
                 }
-                else if (refID > 0 && refID < 100)
-                {
-                    //Major House
-                    listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsMajor));
-                    listEventPool.AddRange(GetValidFollowerEvents(loc.GetFollowerEvents()));
-                    House house = Game.world.GetHouse(refID);
-                    if (house != null)
-                    { listEventPool.AddRange(GetValidFollowerEvents(house.GetFollowerEvents())); }
-                    else { Game.SetError(new Error(52, "Invalid Major House (refID)")); }
-                }
-                else if (refID >= 100 && refID < 1000)
-                {
-                    //Minor House
-                    listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsMinor));
-                    listEventPool.AddRange(GetValidFollowerEvents(loc.GetFollowerEvents()));
-                    House house = Game.world.GetHouse(refID);
-                    if (house != null)
-                    { listEventPool.AddRange(GetValidFollowerEvents(house.GetFollowerEvents())); }
-                    else { Game.SetError(new Error(52, "Invalid Minor House (refID)")); }
-                }
-                else if (houseID == 99)
-                {
-                    //Special Location - Inn
-                    listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsInn));
-                    listEventPool.AddRange(GetValidFollowerEvents(loc.GetFollowerEvents()));
-                    House house = Game.world.GetHouse(refID);
-                    if (house != null)
-                    { listEventPool.AddRange(GetValidFollowerEvents(house.GetFollowerEvents())); }
-                    else { Game.SetError(new Error(52, "Invalid Inn (refID)")); }
-                }
-                else
-                { Game.SetError(new Error(52, "Invalid Location Event Type")); }
+                else { Game.SetError(new Error(52, "Invalid loc (null)")); }
             }
             //Travelling event
             else if (type == EventType.Travelling)
@@ -635,51 +639,54 @@ namespace Next_Game
                 refID = Game.map.GetMapInfo(Cartographic.MapLayer.RefID, pos.PosX, pos.PosY);
                 houseID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
                 Location loc = Game.network.GetLocation(locID);
-
-                if (locID == 1)
+                if (loc != null)
                 {
-                    //capital
-                    if (type == EventType.Location)
+                    if (locID == 1)
                     {
-                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsCapital));
-                        listEventPool.AddRange(GetValidPlayerEvents(listPlyrCapitalEvents));
+                        //capital
+                        if (type == EventType.Location)
+                        {
+                            listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsCapital));
+                            listEventPool.AddRange(GetValidPlayerEvents(listPlyrCapitalEvents));
+                        }
                     }
-                }
-                else if (refID > 0 && refID < 100)
-                {
-                    //Major House
-                    if (type == EventType.Location)
+                    else if (refID > 0 && refID < 100)
                     {
-                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMajor, houseID));
+                        //Major House
+                        if (type == EventType.Location)
+                        {
+                            listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMajor, houseID));
+                            listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
+                            House house = Game.world.GetHouse(refID);
+                            if (house != null)
+                            { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
+                            else { Game.SetError(new Error(72, "Invalid Major House (refID)")); }
+                        }
+                    }
+                    else if (refID >= 100 && refID < 1000)
+                    {
+                        //Minor House
+                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMinor, houseID));
                         listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
                         House house = Game.world.GetHouse(refID);
                         if (house != null)
                         { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
-                        else { Game.SetError(new Error(72, "Invalid Major House (refID)")); }
+                        else { Game.SetError(new Error(72, "Invalid Minor House (refID)")); }
                     }
+                    else if (houseID == 99)
+                    {
+                        //Special Location - Inn
+                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsInn, houseID));
+                        listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
+                        House house = Game.world.GetHouse(refID);
+                        if (house != null)
+                        { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
+                        else { Game.SetError(new Error(72, "Invalid Inn (refID)")); }
+                    }
+                    else
+                    { Game.SetError(new Error(72, "Invalid Location Event Type")); }
                 }
-                else if (refID >= 100 && refID < 1000)
-                {
-                    //Minor House
-                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMinor, houseID));
-                    listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
-                    House house = Game.world.GetHouse(refID);
-                    if (house != null)
-                    { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
-                    else { Game.SetError(new Error(72, "Invalid Minor House (refID)")); }
-                }
-                else if (houseID == 99)
-                {
-                    //Special Location - Inn
-                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsInn, houseID));
-                    listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
-                    House house = Game.world.GetHouse(refID);
-                    if (house != null)
-                    { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
-                    else { Game.SetError(new Error(72, "Invalid Inn (refID)")); }
-                }
-                else
-                { Game.SetError(new Error(72, "Invalid Location Event Type")); }
+                else { Game.SetError(new Error(72, "Invalid Loc (null)")); }
             }
             //Travelling event
             else if (type == EventType.Travelling)
@@ -905,9 +912,11 @@ namespace Next_Game
                 int locID = player.LocID;
                 int locType = 0; //1 - capital, 2 - MajorHouse, 3 - MinorHouse, 4 - Inn
                 int talkRel = Game.constant.GetValue(Global.TALK_THRESHOLD);
-                string actorText = "unknown"; string optionText = "unknown";
+                string actorText = "unknown"; string optionText = "unknown"; string locName = "unknown";
                 Location loc = Game.network.GetLocation(locID);
-                string locName = Game.world.GetLocationName(locID);
+                if (loc != null)
+                { locName = Game.world.GetLocationName(locID); }
+                else { Game.SetError(new Error(73, "Invalid Loc (null)")); }
                 int houseID = Game.map.GetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY());
                 int refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
                 string houseName = "Unknown";

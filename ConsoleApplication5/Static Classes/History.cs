@@ -197,10 +197,14 @@ namespace Next_Game
             { Game.SetError(new Error(61, e.Message)); }
             //update location details
             Location loc = Game.network.GetLocation(locID);
-            loc.LocName = house.LocName;
-            loc.RefID = house.RefID;
-            //branch
-            house.Branch = loc.GetBranch();
+            if (loc != null)
+            {
+                loc.LocName = house.LocName;
+                loc.RefID = house.RefID;
+                //branch
+                house.Branch = loc.GetBranch();
+            }
+            else { Game.SetError(new Error(61, "Invalid Loc (null)")); }
         }
 
         /// <summary>
@@ -334,16 +338,20 @@ namespace Next_Game
             //assign to random location on map
             locID = Game.network.GetRandomLocation();
             Location loc = Game.network.GetLocation(locID);
-            //place characters at Location
-            player.LocID = locID;
-            player.LastKnownLocID = locID;
-            player.TurnsUnknown = 100; //start player off unknown
-            player.SetActorPosition(loc.GetPosition());
-            //randomly assign resource level (placeholder)
-            player.Resources = rnd.Next(1, 6);
-            player.Type = ActorType.Usurper;
-            //add to Location list of Characters
-            loc.AddActor(player.ActID);
+            if (loc != null)
+            {
+                //place characters at Location
+                player.LocID = locID;
+                player.LastKnownLocID = locID;
+                player.TurnsUnknown = 100; //start player off unknown
+                player.SetActorPosition(loc.GetPosition());
+                //randomly assign resource level (placeholder)
+                player.Resources = rnd.Next(1, 6);
+                player.Type = ActorType.Usurper;
+                //add to Location list of Characters
+                loc.AddActor(player.ActID);
+            }
+            else { Game.SetError(new Error(178, "Invalid Loc (null)")); }
         }
 
         /// <summary>
@@ -431,30 +439,34 @@ namespace Next_Game
                     InitialiseInquisitorTraits(inquisitor);
                     //assign to the capital
                     Location loc = Game.network.GetLocation(locID);
-                    //set up status
-                    inquisitor.Known = false;
-                    inquisitor.TurnsUnknown = 1;
-                    //wait if at capital, move if assigned to a branch
-                    if (inquisitor.AssignedBranch == 0) { inquisitor.Goal = ActorGoal.Wait; }
-                    else { inquisitor.Goal = ActorGoal.Move; }
-                    inquisitor.LastKnownLocID = locID;
-                    inquisitor.LastKnownPos = loc.GetPosition();
-                    inquisitor.LastKnownGoal = ActorGoal.Wait;
-                    //relationship
-                    inquisitor.AddRelEventPlyr(new Relation("Sworn to hunt down Player", "Agents of Doom", -50));
-                    inquisitor.AddRelEventLord(new Relation("Loyal to the point of death", "Totally loyal", +50));
-                    //personal history
-                    int year = Game.gameRevolt;
-                    string description = string.Format("{0}, ActID {1}, Took a lifetime oath of service to the Dark Brotherhood of Inquisitioners", inquisitor.Name, inquisitor.ActID);
-                    Record record = new Record(description, inquisitor.ActID, locID, refID, year,
-                        HistActorIncident.Service);
-                    Game.world.SetHistoricalRecord(record);
-                    //place characters at Location
-                    inquisitor.LocID = locID;
-                    inquisitor.SetActorPosition(loc.GetPosition());
-                    loc.AddActor(inquisitor.ActID);
-                    //add actor to relevant dictionaries (All and Enemies)
-                    Game.world.AddEnemyActor(inquisitor);
+                    if (loc != null)
+                    {
+                        //set up status
+                        inquisitor.Known = false;
+                        inquisitor.TurnsUnknown = 1;
+                        //wait if at capital, move if assigned to a branch
+                        if (inquisitor.AssignedBranch == 0) { inquisitor.Goal = ActorGoal.Wait; }
+                        else { inquisitor.Goal = ActorGoal.Move; }
+                        inquisitor.LastKnownLocID = locID;
+                        inquisitor.LastKnownPos = loc.GetPosition();
+                        inquisitor.LastKnownGoal = ActorGoal.Wait;
+                        //relationship
+                        inquisitor.AddRelEventPlyr(new Relation("Sworn to hunt down Player", "Agents of Doom", -50));
+                        inquisitor.AddRelEventLord(new Relation("Loyal to the point of death", "Totally loyal", +50));
+                        //personal history
+                        int year = Game.gameRevolt;
+                        string description = string.Format("{0}, ActID {1}, Took a lifetime oath of service to the Dark Brotherhood of Inquisitioners", inquisitor.Name, inquisitor.ActID);
+                        Record record = new Record(description, inquisitor.ActID, locID, refID, year,
+                            HistActorIncident.Service);
+                        Game.world.SetHistoricalRecord(record);
+                        //place characters at Location
+                        inquisitor.LocID = locID;
+                        inquisitor.SetActorPosition(loc.GetPosition());
+                        loc.AddActor(inquisitor.ActID);
+                        //add actor to relevant dictionaries (All and Enemies)
+                        Game.world.AddEnemyActor(inquisitor);
+                    }
+                    else { Game.SetError(new Error(152, "Invalid Loc (null)")); }
                 }
             }
             else { Game.SetError(new Error(152, "Invalid locID (zero or less")); }
@@ -524,7 +536,8 @@ namespace Next_Game
 
             //add to Location
             Location loc = Game.network.GetLocation(locID);
-            loc.AddActor(actor.ActID);
+            if (loc != null) { loc.AddActor(actor.ActID); }
+            else { Game.SetError(new Error(8, "Invalid Noble Loc (null)"));}
             //house at birth (males the same, females from an adjacent house)
             actor.BornRefID = refID;
             int wifeHouseID = houseID;
@@ -580,10 +593,14 @@ namespace Next_Game
                 //location born (different for lady)
                 House ladyHouse = Game.world.GetHouse(actor.BornRefID);
                 Location locLady = Game.network.GetLocation(ladyHouse.LocID);
-                Noble lady = actor as Noble;
-                descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", lady.Name, lady.MaidenName, actor.ActID, locLady.LocName);
-                Record recordLady = new Record(descriptor, lady.ActID, locLady.LocationID, lady.BornRefID, lady.Born, HistActorIncident.Born);
-                Game.world.SetHistoricalRecord(recordLady);
+                if (locLady != null)
+                {
+                    Noble lady = actor as Noble;
+                    descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", lady.Name, lady.MaidenName, actor.ActID, locLady.LocName);
+                    Record recordLady = new Record(descriptor, lady.ActID, locLady.LocationID, lady.BornRefID, lady.Born, HistActorIncident.Born);
+                    Game.world.SetHistoricalRecord(recordLady);
+                }
+                else { Game.SetError(new Error(8, "Invalid locLady (null)")); }
             }
             else if (type == ActorType.BannerLord)
             {

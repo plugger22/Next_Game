@@ -2826,13 +2826,17 @@ namespace Next_Game.Cartographic
             if (oldkingLocID > 0)
             {
                 Location oldkingLoc = Game.network.GetLocation(oldkingLocID);
-                List<Route> listRoute = oldkingLoc.GetRouteFromCapital();
-                foreach (Route route in listRoute)
+                if (oldkingLoc != null)
                 {
-                    List<Position> pathList = route.GetPath();
-                    foreach (Position posRoad in pathList)
-                    { Game.map.SetMapInfo(MapLayer.Road, posRoad.PosX, posRoad.PosY, 2); }
+                    List<Route> listRoute = oldkingLoc.GetRouteFromCapital();
+                    foreach (Route route in listRoute)
+                    {
+                        List<Position> pathList = route.GetPath();
+                        foreach (Position posRoad in pathList)
+                        { Game.map.SetMapInfo(MapLayer.Road, posRoad.PosX, posRoad.PosY, 2); }
+                    }
                 }
+                else { Game.SetError(new Error(45, "Invalid oldKingLoc (null)")); }
             }
             else { Game.SetError(new Error(45, "Invalid Old King LocID")); }
 
