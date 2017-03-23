@@ -127,14 +127,18 @@ namespace Next_Game
                         //assign to random location on map
                         locID = Game.network.GetRandomLocation();
                         Location loc = Game.network.GetLocation(locID);
-                        //place characters at Location
-                        follower.LocID = locID;
-                        follower.LastKnownLocID = locID;
-                        follower.SetActorPosition(loc.GetPosition());
-                        //set to activated
-                        follower.Activated = true;
-                        //add to Location list of Characters
-                        loc.AddActor(follower.ActID);
+                        if (loc != null)
+                        {
+                            //place characters at Location
+                            follower.LocID = locID;
+                            follower.LastKnownLocID = locID;
+                            follower.SetActorPosition(loc.GetPosition());
+                            //set to activated
+                            follower.Activated = true;
+                            //add to Location list of Characters
+                            loc.AddActor(follower.ActID);
+                        }
+                        else { Game.SetError(new Error(63, "Invalid Loc (null) Active Actor not placed on map")); }
                     }
                     else
                     { Game.SetError(new Error(63, "Invalid Actor in listOfActiveActors")); }
@@ -149,13 +153,6 @@ namespace Next_Game
                         SetActiveActor(player);
                         listOfActiveActors.RemoveAt(0);
                         //assign to random location on map -> EDIT: Already done in history.cs InitialisePlayer
-                        /*locID = Game.network.GetRandomLocation();
-                        Location loc = Game.network.GetLocation(locID);
-                        //place characters at Location
-                        player.LocID = locID;
-                        player.SetActorPosition(loc.GetPosition());
-                        //add to Location list of Characters
-                        loc.AddActor(player.ActID);*/
                     }
                     else
                     { Game.SetError(new Error(63, "Invalid Player in listOfActiveActors")); }
@@ -418,8 +415,8 @@ namespace Next_Game
                             locStatus = "Held at " + locName;
                             break;
                     }
-                    //get location coords
-                    Location loc = Game.network.GetLocation(locID);
+                    /*//get location coords
+                    Location loc = Game.network.GetLocation(locID);*/
                     //only show chosen characters (at Location or not depending on parameter)
                     if (locationsOnly == true && status == ActorStatus.AtLocation || !locationsOnly)
                     {
@@ -464,7 +461,8 @@ namespace Next_Game
             ActorStatus status;
             int locID;
             int expire = Game.constant.GetValue(Global.KNOWN_REVERT);
-            string locName, coordinates;
+            string locName = "Unknown";
+            string coordinates = "Unknown";
             string charString = "Unknown";
             string locStatus = "Unknown";
             List<Snippet> listInquistors = new List<Snippet>();
@@ -526,7 +524,8 @@ namespace Next_Game
                 }
                 //get location coords
                 Location loc = Game.network.GetLocation(locID);
-                coordinates = string.Format("(Pos {0}:{1})", loc.GetPosX(), loc.GetPosY());
+                if (loc != null) { coordinates = string.Format("(Pos {0}:{1})", loc.GetPosX(), loc.GetPosY()); }
+                else { Game.SetError(new Error(184, "Invalid Loc (null) default Cordinate text used")); }
                 //split enemies into two lists for display purposes
                 if (enemy.Value is Inquisitor)
                 {
@@ -1149,9 +1148,11 @@ namespace Next_Game
 
         internal string GetLocationName(int locID)
         {
-            string locName = null;
+            string locName = "Unknown";
             Location loc = Game.network.GetLocation(locID);
-            locName = loc.LocName;
+            if (loc != null)
+            { locName = loc.LocName; }
+            else { Game.SetError(new Error(185, "Invalid Loc (null) -> By LocID")); }
             return locName;
         }
 
@@ -1162,12 +1163,13 @@ namespace Next_Game
         /// <returns></returns>
         internal string GetLocationName(Position pos)
         {
-            string locName = "";
+            string locName = "Unknown";
             int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
             if (locID > 0)
             {
                 Location loc = Game.network.GetLocation(locID);
-                locName = loc.LocName;
+                if (loc != null) { locName = loc.LocName; }
+                else { Game.SetError(new Error(185, "Invalid Loc (null) -> By Position")); }
             }
             return locName;
         }
@@ -1179,8 +1181,10 @@ namespace Next_Game
         /// <returns>returns '(loc 20:4)' format string</returns>
         public string ShowLocationCoords(int locID)
         {
+            string coords = "Unknown";
             Location loc = Game.network.GetLocation(locID);
-            string coords = string.Format("(loc {0}:{1})", loc.GetPosX(), loc.GetPosY());
+            if (loc != null) { coords = string.Format("(loc {0}:{1})", loc.GetPosX(), loc.GetPosY()); }
+            else { Game.SetError(new Error(186, "Invalid Loc (null) Unknown Coordinates")); }
             return coords;
         }
 
