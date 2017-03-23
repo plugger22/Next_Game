@@ -216,6 +216,8 @@ namespace Next_Game
                     List<int> party = new List<int>(); //list of charID's of all characters in party
                     party.Add(charID);
                     string name = person.Name;
+                    bool playerInParty = false;
+                    if (charID == 1) { playerInParty = true; }
                     int speed = person.Speed;
                     int distance = path.Count;
                     int time = (distance / speed) + 1; //prevents 0 result
@@ -228,9 +230,26 @@ namespace Next_Game
                     Location loc = Game.network.GetLocation(locID_Origin);
                     if (loc != null)
                     {
+                        //check an existing Move object doesn't already exist (Player only), e.g if user issued > 1 move orders during a turn
+                        if (charID == 1)
+                        {
+                            //reverse loop, deleting any that contain the Player as you go
+                            for (int i = listMoveObjects.Count - 1; i >= 0; i--)
+                            {
+                                Move tempMove = listMoveObjects[i];
+                                if (tempMove.PlayerInParty == true)
+                                {
+                                    Position pos = tempMove.GetCurrentPosition();
+                                    Console.WriteLine("[Move -> Alert] Move Object DELETED PlayerInParty -> {0}, charID {1} at Loc {2}:{3}", tempMove.PlayerInParty, tempMove.GetPrimaryCharacter(),
+                                        pos.PosX, pos.PosY);
+                                    listMoveObjects.RemoveAt(i);
+                                }
+                            }
+                        }
+                        //housekeep all move tasks
                         loc.RemoveActor(charID);
                         //create new move object
-                        Move moveObject = new Move(path, party, speed, true, Game.gameTurn);
+                        Move moveObject = new Move(path, party, speed, playerInParty, Game.gameTurn);
                         //insert into moveList
                         listMoveObjects.Add(moveObject);
                         //update character status to 'travelling'

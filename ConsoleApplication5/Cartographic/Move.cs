@@ -129,9 +129,16 @@ namespace Next_Game.Cartographic
             return pos;
         }
 
-        //return Character List
+        ///return Character List
         public List<int> GetCharacterList()
         { return characterList; }
+
+        /// <summary>
+        /// returns main character in party 
+        /// </summary>
+        /// <returns></returns>
+        public int GetPrimaryCharacter()
+        { return characterList[0]; }
 
         /// <summary>
         /// directly set Party status
