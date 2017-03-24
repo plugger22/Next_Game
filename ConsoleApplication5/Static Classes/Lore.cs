@@ -319,7 +319,10 @@ namespace Next_Game
                 if (i == numBattles - 1) { index = 0; }
                 else { index = rnd.Next(1, orderedLocs.Count / 2); }
                 Location loc = orderedLocs[index];
-                orderedLocs.RemoveAt(index);
+                try
+                { orderedLocs.RemoveAt(index); }
+                catch (ArgumentOutOfRangeException)
+                { Game.SetError(new Error(32, "Invalid index for orderedLocs.RemoveAt, location not removed")); }
                 //40% chance of a siege, otherwise a battle
                 if (rnd.Next(100) < 40)
                 { kingdomEvent = HistKingdomIncident.Siege; descriptor = string.Format("The Siege of {0}", loc.LocName); }
@@ -1033,7 +1036,10 @@ namespace Next_Game
                 index = tempLords.FindIndex(a => a == oldBannerLordRefID);
                 if (index > -1)
                 {
-                    tempLords.RemoveAt(index);
+                    try
+                    { tempLords.RemoveAt(index); }
+                    catch (ArgumentOutOfRangeException)
+                    { Game.SetError(new Error(33, "Invalid index for tempLords.RemoveAt, Lord not removed")); }
                     tempLords.Add(minorStruct.RefID);
                     liegeLordHouse.SetBannerLords(tempLords);
                     Console.WriteLine("Remove index: {0}, Add RefID: {1}", index, minorStruct.RefID);

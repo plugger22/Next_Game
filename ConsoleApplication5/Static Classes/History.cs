@@ -137,10 +137,7 @@ namespace Next_Game
             {
                 index = rnd.Next(0, count);
                 Console.WriteLine("Great House {0} removed", listHousePool[index].Name);
-                try
-                { listHousePool.RemoveAt(index); }
-                catch (Exception e)
-                { Game.SetError(new Error(61, e.Message)); }
+                listHousePool.RemoveAt(index);
                 count = listHousePool.Count;
             }
             Console.WriteLine();
@@ -191,10 +188,7 @@ namespace Next_Game
             //add house to listOfHouses
             listOfMinorHouses.Add(house);
             //remove minorhouse from pool list to avoid being chosen again
-            try
-            { listHousePool.RemoveAt(index); }
-            catch (Exception e)
-            { Game.SetError(new Error(61, e.Message)); }
+            listHousePool.RemoveAt(index);
             //update location details
             Location loc = Game.network.GetLocation(locID);
             if (loc != null)
@@ -242,10 +236,7 @@ namespace Next_Game
                     Game.world.AddOtherHouse(specialInn);
                     Console.WriteLine("\"{0}\" Inn initialised, RefID {1}, LocID {2}, HouseID {3}", specialInn.Name, specialInn.RefID, specialInn.LocID, specialInn.HouseID);
                     //remove minorhouse from pool list to avoid being chosen again
-                    try
-                    { listSpecialHousePool.RemoveAt(index); }
-                    catch (Exception e)
-                    { Game.SetError(new Error(61, e.Message)); }
+                    listSpecialHousePool.RemoveAt(index);
                     //update location details
                     loc.LocName = specialInn.LocName;
                     loc.RefID = specialInn.RefID;
@@ -311,10 +302,7 @@ namespace Next_Game
                         randomNum = rnd.Next(0, tempList.Count);
                         cluster.Name = tempList[randomNum];
                         //delete from list to prevent reuse
-                        try
-                        { tempList.RemoveAt(randomNum); }
-                        catch (Exception e)
-                        { Game.SetError(new Error(61, e.Message)); }
+                        tempList.RemoveAt(randomNum);
                     }
                     else
                     {
