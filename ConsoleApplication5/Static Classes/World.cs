@@ -3517,85 +3517,103 @@ namespace Next_Game
                         }
                     }
                 }
-            }
-            //threshold is adjusted upwards if Player enroute to a destination
-            threshold += turnsToDestination;
-            //Player location is current, if known, or last known if not. Will be destination if travelling.
-            if (knownStatus == 0) { playerLocID = GetActiveActorLocByID(1); }
-            else { playerLocID = GetActiveActorLastKnownLoc(1); }
-            if (playerLocID > 0)
-            {
-                //can only hunt a recently known player for so long before reverting back to normal behaviour (there is a time taken test below which tests threshold on a tighter basis)
-                if (knownStatus <= threshold)
+
+                //ignore all this if player Incarcerated in a dungeon?
+                if (player.Status == ActorStatus.AtLocation || player.Status == ActorStatus.Travelling)
                 {
-                    //Known
-                    Location loc = Game.network.GetLocation(playerLocID);
-                    if (loc != null)
+                    //threshold is adjusted upwards if Player enroute to a destination
+                    threshold += turnsToDestination;
+                    //Player location is current, if known, or last known if not. Will be destination if travelling.
+                    if (knownStatus == 0) { playerLocID = GetActiveActorLocByID(1); }
+                    else { playerLocID = GetActiveActorLastKnownLoc(1); }
+                    if (playerLocID > 0)
                     {
-                        Position playerPos = loc.GetPosition();
-                        //dictionary to handle sorted distance data
-                        Dictionary<int, int> tempDict = new Dictionary<int, int>();
-                        foreach (var enemy in dictEnemyActors)
+                        //can only hunt a recently known player for so long before reverting back to normal behaviour (there is a time taken test below which tests threshold on a tighter basis)
+                        if (knownStatus <= threshold)
                         {
-                            //store enemies in tempDict by dist to player (key is ActID, value distance)
-                            Position enemyPos = enemy.Value.GetActorPosition();
-                            if (playerPos != null && enemyPos != null)
+                            //Known
+                            Location loc = Game.network.GetLocation(playerLocID);
+                            if (loc != null)
                             {
-                                //only check enemies at a location (those who are travelling will have to wait)
+                                Position playerPos = loc.GetPosition();
+                                //dictionary to handle sorted distance data
+                                Dictionary<int, int> tempDict = new Dictionary<int, int>();
+                                foreach (var enemy in dictEnemyActors)
+                                {
+                                    //store enemies in tempDict by dist to player (key is ActID, value distance)
+                                    Position enemyPos = enemy.Value.GetActorPosition();
+                                    if (playerPos != null && enemyPos != null)
+                                    {
+                                        //only check enemies at a location (those who are travelling will have to wait)
+                                        if (enemy.Value.Status == ActorStatus.AtLocation)
+                                        {
+                                            List<Route> route = Game.network.GetRouteAnywhere(enemyPos, playerPos);
+                                            distance = Game.network.GetDistance(route);
+                                            try
+                                            { tempDict.Add(enemy.Value.ActID, distance); }
+                                            catch (ArgumentException)
+                                            { Game.SetError(new Error(167, string.Format("Invalid enemy ID {0} (duplicate)", enemy.Value.ActID))); }
+                                        }
+                                        else { Console.WriteLine(" [{0}] {1}, ActID {2} is Travelling to {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, GetLocationName(enemy.Value.LocID)); }
+                                    }
+                                    else
+                                    {
+                                        Game.SetError(new Error(167, string.Format("Invalid Player ({0}:{1}) or Enemy Position ({2}:{3})", playerPos.PosX, playerPos.PosY,
+                                     enemyPos.PosX, enemyPos.PosY)));
+                                    }
+                                }
+                                //sort dictionary by distance
+                                if (tempDict.Count > 0)
+                                {
+                                    var sorted = from pair in tempDict orderby pair.Value ascending select pair;
+                                    foreach (var pair in sorted)
+                                    {
+                                        Enemy enemy = (Enemy)GetAnyActor(pair.Key);
+                                        if (enemy != null)
+                                        {
+                                            //can enemy reach player loc within threshold time? (distance / speed = # of turns <= threshold # of turns allowed
+                                            if (pair.Value / enemy.Speed <= threshold)
+                                            { enemy.HuntMode = true; }
+                                            else { enemy.HuntMode = false; }
+                                            Console.WriteLine(" [AI -> Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value, threshold,
+                                                enemy.HuntMode == true ? "Hunt" : "Normal");
+                                        }
+                                        else { Game.SetError(new Error(167, string.Format("Invalid enemy, ID {0} (null)", pair.Key))); }
+                                    }
+                                }
+                                else { Console.WriteLine(" [AI -> Notification] tempDictionary has too few records to sort (zero)"); }
+                            }
+                            else { Game.SetError(new Error(167, "Invalid Loc (null) Dictionary not updated")); }
+                        }
+                        else
+                        {
+                            //Unknown -> all enemies at a location are set to normal mode (huntmode 'false')
+                            foreach (var enemy in dictEnemyActors)
+                            {
                                 if (enemy.Value.Status == ActorStatus.AtLocation)
                                 {
-                                    List<Route> route = Game.network.GetRouteAnywhere(enemyPos, playerPos);
-                                    distance = Game.network.GetDistance(route);
-                                    try
-                                    { tempDict.Add(enemy.Value.ActID, distance); }
-                                    catch (ArgumentException)
-                                    { Game.SetError(new Error(167, string.Format("Invalid enemy ID {0} (duplicate)", enemy.Value.ActID))); }
+                                    enemy.Value.HuntMode = false;
+                                    Console.WriteLine(" [AI -> Player Unknown] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
                                 }
-                                else { Console.WriteLine(" [{0}] {1}, ActID {2} is Travelling to {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, GetLocationName(enemy.Value.LocID)); }
-                            }
-                            else
-                            {
-                                Game.SetError(new Error(167, string.Format("Invalid Player ({0}:{1}) or Enemy Position ({2}:{3})", playerPos.PosX, playerPos.PosY,
-                             enemyPos.PosX, enemyPos.PosY)));
                             }
                         }
-                        //sort dictionary by distance
-                        if (tempDict.Count > 0)
-                        {
-                            var sorted = from pair in tempDict orderby pair.Value ascending select pair;
-                            foreach (var pair in sorted)
-                            {
-                                Enemy enemy = (Enemy)GetAnyActor(pair.Key);
-                                if (enemy != null)
-                                {
-                                    //can enemy reach player loc within threshold time? (distance / speed = # of turns <= threshold # of turns allowed
-                                    if (pair.Value / enemy.Speed <= threshold)
-                                    { enemy.HuntMode = true; }
-                                    else { enemy.HuntMode = false; }
-                                    Console.WriteLine(" [AI -> Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value, threshold,
-                                        enemy.HuntMode == true ? "Hunt" : "Normal");
-                                }
-                                else { Game.SetError(new Error(167, string.Format("Invalid enemy, ID {0} (null)", pair.Key))); }
-                            }
-                        }
-                        else { Console.WriteLine(" [AI -> Notification] tempDictionary has too few records to sort (zero)"); }
                     }
-                    else { Game.SetError(new Error(167, "Invalid Loc (null) Dictionary not updated")); }
+                    else { Game.SetError(new Error(167, "Warning -> LocID of Player has returned Zero")); }
                 }
-                else
+                else if (player.Status == ActorStatus.Captured)
                 {
-                    //Unknown -> all enemies at a location are set to normal mode (huntmode 'false')
+                    //Incarcerated in a dungeon -> all enemies at a location are set to normal mode (huntmode 'false')
                     foreach (var enemy in dictEnemyActors)
                     {
                         if (enemy.Value.Status == ActorStatus.AtLocation)
                         {
                             enemy.Value.HuntMode = false;
-                            Console.WriteLine(" [AI -> Player Unknown] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
+                            Console.WriteLine(" [AI -> Player Captured] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID);
                         }
                     }
                 }
             }
-            else { Game.SetError(new Error(167, "Warning -> LocID of Player has returned Zero")); }
+            else { Game.SetError(new Error(167, "Invalid player (Null), set Enemy AI bypassed")); }
         }
 
         /// <summary>
@@ -4045,7 +4063,7 @@ namespace Next_Game
             int ai_wait = Game.constant.GetValue(Global.AI_SEARCH_WAIT);
             //active characters only
             Actor actor = GetAnyActor(charID);
-            if (actor != null && actor.Status != ActorStatus.Gone)
+            if (actor != null && actor.Status != ActorStatus.Gone && actor.Status != ActorStatus.Captured)
             {
                 if (actor is Active)
                 {
@@ -4187,7 +4205,7 @@ namespace Next_Game
             int knownDM = 0; //modifier for search if player known
             //get enemy
             Actor actor = GetAnyActor(charID);
-            if (actor != null && actor.Status != ActorStatus.Gone)
+            if (actor != null && actor.Status != ActorStatus.Gone && actor.Status != ActorStatus.Captured)
             {
                 if (actor is Enemy)
                 {
@@ -4452,6 +4470,7 @@ namespace Next_Game
         /// <param name="enemyID">actID of enemy who captured the player</param>
         public void SetPlayerCaptured(int enemyID)
         {
+            Console.WriteLine("- SetPlayerCaptured");
             Player player = (Player)GetActiveActor(1);
             if (player != null)
             {
@@ -4472,7 +4491,7 @@ namespace Next_Game
                 }
                 //change status
                 player.Status = ActorStatus.Captured;
-                Console.WriteLine("- SetPlayerCaptured");
+                
                 Enemy enemy = GetEnemyActor(enemyID);
                 if (enemy != null)
                 {
@@ -4480,7 +4499,7 @@ namespace Next_Game
                     int heldLocID = 0;
                     int tempRefID = 0;
                     int refID = 0;
-                    if (player.LocID == 1) { heldLocID = 1; Console.WriteLine("[Captured] dungeon -> Capital"); }
+                    if (player.LocID == 1) { tempRefID = 9999; Console.WriteLine("[Captured] dungeon -> Capital"); }
                     else
                     {
                         Location loc = Game.network.GetLocation(player.LocID);
@@ -4535,25 +4554,30 @@ namespace Next_Game
                                             if (listBranchLocs[i].LocationID == player.LocID)
                                             { playerLocIndex = i; break; }
                                         }
-                                        //loop through branch list starting from player's current loc, moving outwards, looking for a Major House (start at player's current loc to avoid index overshoot)
-                                        for(int i = playerLocIndex; i < listBranchLocs.Count; i++)
+                                        //found Player's loc in the list?
+                                        if (playerLocIndex > -1)
                                         {
-                                            House tempHouse = GetHouse(listBranchLocs[i].RefID);
-                                            if (tempHouse is MajorHouse)
+                                            //loop through branch list starting from player's current loc, moving outwards (redundantly start at player's current loc to avoid possible index overshoot)
+                                            for (int i = playerLocIndex; i < listBranchLocs.Count; i++)
                                             {
-                                                //found the first Major House along
-                                                distOut = listBranchLocs[i].DistanceToCapital - loc.DistanceToCapital;
-                                                refOut = listBranchLocs[i].RefID;
-                                                break;
+                                                House tempHouse = GetHouse(listBranchLocs[i].RefID);
+                                                if (tempHouse is MajorHouse)
+                                                {
+                                                    //found the first Major House along
+                                                    distOut = listBranchLocs[i].DistanceToCapital - loc.DistanceToCapital;
+                                                    refOut = listBranchLocs[i].RefID;
+                                                    break;
+                                                }
                                             }
                                         }
+                                        else { Game.SetError(new Error(174, "Player's Loc not found in search through listBranchLocs.Search outwards Cancelled")); }
                                     }
                                     else { Game.SetError(new Error(174, "Invalid listBranchLocs (Null or Zero Count) Search outwards cancelled")); }
                                     //Compare in and out and find closest, favouring inwards (if equal distance)
                                     if (refIn > 0 && refOut == 0) { tempRefID = refIn; Console.WriteLine("[Captured] dungeon -> In (no out)"); }
                                     else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Console.WriteLine("[Captured] dungeon -> Out (no in)"); }
                                     else if (distIn <= distOut) { tempRefID = refIn; Console.WriteLine("[Captured] dungeon -> In (distance <= out)"); }
-                                    else if (distIn > distOut) { tempRefID = refOut; Console.WriteLine("[Captured] dungeon -> Out (distance < in"); }
+                                    else if (distIn > distOut) { tempRefID = refOut; Console.WriteLine("[Captured] dungeon -> Out (distance < in)"); }
                                     else
                                     {
                                      Game.SetError(new Error(174, string.Format("Unable to get a valid dungeon loc, refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3}, default to Capital",
@@ -4572,9 +4596,9 @@ namespace Next_Game
                     if (tempRefID > 0)
                     { heldLocID = GetLocID(tempRefID); }
                     else { Game.SetError(new Error(174, "Unable to find a suitable location for Incarceration -> Default to KingsKeep")); heldLocID = 1; }
-                    //update Player LocID (dungeon) and set to Unknown
+                    //update Player LocID (dungeon), set Known to true (should be already)
                     player.LocID = heldLocID;
-                    player.Known = false;
+                    player.Known = true;
                     //administration
                     string description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID,
                         GetLocationName(heldLocID));
