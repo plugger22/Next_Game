@@ -2590,7 +2590,7 @@ namespace Next_Game
                 //add to dictionary
                 dictMessages.Add(message.trackerID, message);
                 //debug
-                Console.WriteLine("Day {0}, {1}, {2} [{3}]", message.Day, message.Year, message.Text, message.Type);
+                Console.WriteLine("Message -> [{0}] Day {1}, {2}, {3}", message.Type, message.Day, message.Year, message.Text);
             }
         }
 
@@ -3433,6 +3433,7 @@ namespace Next_Game
             if (listOfLocations != null)
             {
                 int refID, locID;
+                //get all other Loc & Ref data directly from map
                 foreach (Location loc in listOfLocations)
                 {
                     locID = loc.LocationID;
@@ -3479,7 +3480,7 @@ namespace Next_Game
         {
             if (refID > 0)
             {
-                    if (dictConvertRefToLoc.ContainsValue(refID) == true)
+                    if (dictConvertRefToLoc.ContainsKey(refID) == true)
                     { return dictConvertRefToLoc[refID]; }
                     else { Game.SetError(new Error(147, "Invalid refID (record not found")); }
             }
@@ -4529,14 +4530,14 @@ namespace Next_Game
                     if (tempRefID > 0)
                     { heldLocID = GetLocID(tempRefID); }
                     else { Game.SetError(new Error(174, "Unable to find a suitable location for Incarceration -> Default to KingsKeep")); heldLocID = 1; }
+                    //update Player LocID for heldLocID
+                    player.LocID = heldLocID;
                     //administration
                     string description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID,
                         GetLocationName(heldLocID));
                     SetMessage(new Message(description, MessageType.Search));
                     SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
                     SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
-                    //update Player LocID for heldLocID
-                    player.LocID = heldLocID;
                 }
                 else { Game.SetError(new Error(174, "Invalid Enemy (null)")); }
             }
