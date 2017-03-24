@@ -445,7 +445,7 @@ namespace Next_Game
                                                     int locID = map.GetMapInfo(MapLayer.LocID, _posSelect2.PosX, _posSelect2.PosY);
                                                     int refID = world.GetRefID(locID);
                                                     List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
-                                                    string infoText = world.InitiateMoveActors(_charIDSelected, _posSelect1, _posSelect2, pathToTravel);
+                                                    string infoText = world.InitiateMoveActor(_charIDSelected, _posSelect1, _posSelect2, pathToTravel);
                                                     Message message = new Message(infoText, _charIDSelected, locID, MessageType.Move);
                                                     world.SetMessage(message);
                                                     if (_charIDSelected == 1)

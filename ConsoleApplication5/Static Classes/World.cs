@@ -199,7 +199,7 @@ namespace Next_Game
         /// <param name="posOrigin"></param>
         /// <param name="posDestination"></param>
         /// <param name="path">sequenced List of Positions to destination</param>
-        internal string InitiateMoveActors(int charID, Position posOrigin, Position posDestination, List<Position> path)
+        internal string InitiateMoveActor(int charID, Position posOrigin, Position posDestination, List<Position> path)
         {
             string returnText = "Error in World.InitiateMoveCharacters";
             //viable Character & Position?
@@ -4014,7 +4014,7 @@ namespace Next_Game
                             {
                                 Position posDestination = locMove.GetPosition();
                                 List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
-                                InitiateMoveActors(enemy.ActID, posOrigin, posDestination, pathToTravel);
+                                InitiateMoveActor(enemy.ActID, posOrigin, posDestination, pathToTravel);
                             }
                             else { Game.SetError(new Error(156, "Invalid locMove (null) Enemy isn't Moved")); }
                         }
@@ -4455,6 +4455,22 @@ namespace Next_Game
             Player player = (Player)GetActiveActor(1);
             if (player != null)
             {
+                //player travelling when captured?
+                if (player.Status == ActorStatus.Travelling)
+                {
+                    //loop list Move Objects and delete the Players
+                    for(int i = 0; i < listMoveObjects.Count; i++)
+                    {
+                        Move moveObject = listMoveObjects[i];
+                        if (moveObject.PlayerInParty == true)
+                        {
+                            Console.WriteLine(" [Capture -> Move Object] {0} {1}'s journey to {2} has been deleted", player.Title, player.Name, moveObject.GetDestination());
+                            listMoveObjects.RemoveAt(i);
+                            break;
+                        }
+                    }
+                }
+                //change status
                 player.Status = ActorStatus.Captured;
                 Console.WriteLine("- SetPlayerCaptured");
                 Enemy enemy = GetEnemyActor(enemyID);
@@ -4530,8 +4546,9 @@ namespace Next_Game
                     if (tempRefID > 0)
                     { heldLocID = GetLocID(tempRefID); }
                     else { Game.SetError(new Error(174, "Unable to find a suitable location for Incarceration -> Default to KingsKeep")); heldLocID = 1; }
-                    //update Player LocID for heldLocID
+                    //update Player LocID (dungeon) and set to Unknown
                     player.LocID = heldLocID;
+                    player.Known = false;
                     //administration
                     string description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID,
                         GetLocationName(heldLocID));
