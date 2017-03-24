@@ -4455,18 +4455,18 @@ namespace Next_Game
             if (player != null)
             {
                 player.Status = ActorStatus.Captured;
-
+                Console.WriteLine("- SetPlayerCaptured");
                 Enemy enemy = GetEnemyActor(enemyID);
                 if (enemy != null)
                 {
                     //assign nearest major House / capital locID as the place where the player is held
                     int heldLocID = 0;
-                    int ref1, ref2;
-                    int tempLocID = player.LocID;
-                    if (tempLocID == 1) { heldLocID = 1; }
+                    int tempRefID = 0;
+                    int refID = 0;
+                    if (player.LocID == 1) { heldLocID = 1; Console.WriteLine("[Captured] dungeon -> Capital"); }
                     else
                     {
-                        Location loc = Game.network.GetLocation(tempLocID);
+                        Location loc = Game.network.GetLocation(player.LocID);
                         if (loc != null)
                         {
                             //not at Capital -> At Major House?
@@ -4477,69 +4477,64 @@ namespace Next_Game
                                 {
                                     //find nearest Major house/Capital moving Inwards
                                     List<Route> routeToCapital = loc.GetRouteToCapital();
+                                    List<Position> pathToCapital = routeToCapital[0].GetPath();
                                     int distIn = 0; int refIn = 0;
-                                    for (int i = 0; i < routeToCapital.Count; i++)
+                                    for (int i = 0; i < pathToCapital.Count; i++)
                                     {
-                                        Route route = routeToCapital[i];
-                                        if (route != null)
+                                        Position pos = pathToCapital[i];
+                                        if (pos != null)
                                         {
-                                            Position pos1 = route.GetLoc1();
-                                            Position pos2 = route.GetLoc2();
-                                            ref1 = Game.map.GetMapInfo(MapLayer.RefID, pos1.PosX, pos1.PosY);
-                                            if (ref1 > 0 && ref1 < 100)
-                                            { refIn = ref1;  distIn = i; break; }
-                                            ref2 = Game.map.GetMapInfo(MapLayer.RefID, pos2.PosX, pos2.PosY);
-                                            if (ref2 > 0 && ref2 < 100)
-                                            { refIn = ref2;  distIn = i;  break; }
+                                            refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                                            if (refID > 0)
+                                            {
+                                                if (refID == 9999 || refID < 100)
+                                                { refIn = refID; distIn = i; break; }
+                                            }
                                         }
                                     }
                                     //find nearest Major house moving Outwards
                                     List<Route> routeToConnector = loc.GetRouteToConnector();
+                                    List<Position> pathToConnector = routeToConnector[0].GetPath();
                                     int distOut = 0; int refOut = 0;
-                                    for (int i = 0; i < routeToConnector.Count; i++)
+                                    for (int i = 0; i < pathToConnector.Count; i++)
                                     {
-                                        Route route = routeToConnector[i];
-                                        if (route != null)
+                                        Position pos = pathToConnector[i];
+                                        if (pos != null)
                                         {
-                                            Position pos1 = route.GetLoc1();
-                                            Position pos2 = route.GetLoc2();
-                                            ref1 = Game.map.GetMapInfo(MapLayer.RefID, pos1.PosX, pos1.PosY);
-                                            if (ref1 > 0 && ref1 < 100)
-                                            { refOut = ref1; distOut = i; break; }
-                                            ref2 = Game.map.GetMapInfo(MapLayer.RefID, pos2.PosX, pos2.PosY);
-                                            if (ref2 > 0 && ref2 < 100)
-                                            { refOut = ref2; distOut = i; break; }
+                                            refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                                            if (refID > 0 && refID < 100)
+                                            { refOut = refID; distOut = i; break; }
                                         }
                                     }
                                     //Compare in and out and find closest, favouring inwards (if equal distance)
-                                    if (refIn > 0 && refOut == 0) { tempLocID = refIn; }
-                                    else if (refOut > 0 && refIn == 0) { tempLocID = refOut; }
-                                    else if (distIn <= distOut) { tempLocID = refIn; }
-                                    else if (distIn > distOut) { tempLocID = refOut; }
+                                    if (refIn > 0 && refOut == 0) { tempRefID = refIn; Console.WriteLine("[Captured] dungeon -> In (no out)"); }
+                                    else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Console.WriteLine("[Captured] dungeon -> Out (no in)"); }
+                                    else if (distIn <= distOut) { tempRefID = refIn; Console.WriteLine("[Captured] dungeon -> In (distance <= out)"); }
+                                    else if (distIn > distOut) { tempRefID = refOut; Console.WriteLine("[Captured] dungeon -> Out (distance < in"); }
                                     else
                                     {
                                      Game.SetError(new Error(174, string.Format("Unable to get a valid dungeon loc, refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3}, default to Capital",
                                      refIn, distIn, refOut, distOut)));
                                     }
-                                    Console.WriteLine("[Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempLocID -> {4} at {5}",
-                                        refIn, distIn, refOut, distOut, tempLocID, GetLocationName(tempLocID));
+                                    Console.WriteLine("[Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempRefID -> {4}",
+                                        refIn, distIn, refOut, distOut, tempRefID);
                                 }
+                                else { Console.WriteLine("[Captured] Major House dungeon"); }
                             }
-                            else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from tempLocID \"{0}\"", tempLocID))); }
+                            else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from player.LocID \"{0}\"", player.LocID))); }
                         }
-                        else { Game.SetError(new Error(174, string.Format("Invalid Location returned (null) from tempLocID \"{0}\"", tempLocID))); }
+                        else { Game.SetError(new Error(174, string.Format("Invalid Location returned (null) from player.LocID \"{0}\"", player.LocID))); }
                     }
                     //found a dungeon?
-                    if (tempLocID > 0) { heldLocID = tempLocID; }
+                    if (tempRefID > 0)
+                    { heldLocID = GetLocID(tempRefID); }
                     else { Game.SetError(new Error(174, "Unable to find a suitable location for Incarceration -> Default to KingsKeep")); heldLocID = 1; }
-                    int refID = GetRefID(heldLocID);
                     //administration
                     string description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID,
                         GetLocationName(heldLocID));
                     SetMessage(new Message(description, MessageType.Search));
-                    SetPlayerRecord(new Record(description, player.ActID, player.LocID, refID, CurrentActorIncident.Search));
-                    SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, refID, CurrentActorIncident.Search));
-
+                    SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
+                    SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
                     //update Player LocID for heldLocID
                     player.LocID = heldLocID;
                 }

@@ -5,8 +5,8 @@ namespace Next_Game.Cartographic
 {
     class Route
     {
-        private Position loc1;  //closest to capital (start of route)
-        private Position loc2;  //furthest from capital (end of route)
+        private Position loc1;  //closest to capital (start of route) -> same whether a to or from capital route
+        private Position loc2;  //furthest from capital (end of route) -> same whether a to or from capital route
         private int routeDistance;
         private readonly List<Position> path = new List<Position>();
         
@@ -23,7 +23,7 @@ namespace Next_Game.Cartographic
             loc2 = path[routeDistance - 1]; //last closest is furthest location from capital
         }
 
-        //Get Location Coords
+        //Get Location Coords -> Two end points of the Route, note loc1 is always the closest to the capital, loc2 the furtherst
         public Position GetLoc1() { return loc1; }
         public Position GetLoc2() { return loc2; }
 
