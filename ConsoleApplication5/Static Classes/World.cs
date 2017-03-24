@@ -4510,7 +4510,7 @@ namespace Next_Game
                                         }
                                     }
                                     //find nearest Major house moving Outwards
-                                    List<Route> routeToConnector = loc.GetRouteToConnector();
+                                    /*List<Route> routeToConnector = loc.GetRouteToConnector();
                                     List<Position> pathToConnector = routeToConnector[0].GetPath();
                                     int distOut = 0; int refOut = 0;
                                     for (int i = 0; i < pathToConnector.Count; i++)
@@ -4522,7 +4522,33 @@ namespace Next_Game
                                             if (refID > 0 && refID < 100)
                                             { refOut = refID; distOut = i; break; }
                                         }
+                                    }*/
+                                    int branch = loc.GetBranch();
+                                    List<Location> listBranchLocs = Game.network.GetBranchLocs(branch);
+                                    int distOut = 0; int refOut = 0;
+                                    int playerLocIndex = -1;
+                                    if (listBranchLocs != null && listBranchLocs.Count > 0)
+                                    {
+                                        //loop through list and find player's current location
+                                        for(int i = 0; i < listBranchLocs.Count; i++)
+                                        {
+                                            if (listBranchLocs[i].LocationID == player.LocID)
+                                            { playerLocIndex = i; break; }
+                                        }
+                                        //loop through branch list starting from player's current loc, moving outwards, looking for a Major House (start at player's current loc to avoid index overshoot)
+                                        for(int i = playerLocIndex; i < listBranchLocs.Count; i++)
+                                        {
+                                            House tempHouse = GetHouse(listBranchLocs[i].RefID);
+                                            if (tempHouse is MajorHouse)
+                                            {
+                                                //found the first Major House along
+                                                distOut = listBranchLocs[i].DistanceToCapital - loc.DistanceToCapital;
+                                                refOut = listBranchLocs[i].RefID;
+                                                break;
+                                            }
+                                        }
                                     }
+                                    else { Game.SetError(new Error(174, "Invalid listBranchLocs (Null or Zero Count) Search outwards cancelled")); }
                                     //Compare in and out and find closest, favouring inwards (if equal distance)
                                     if (refIn > 0 && refOut == 0) { tempRefID = refIn; Console.WriteLine("[Captured] dungeon -> In (no out)"); }
                                     else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Console.WriteLine("[Captured] dungeon -> Out (no in)"); }

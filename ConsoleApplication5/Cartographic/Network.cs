@@ -25,7 +25,7 @@ namespace Next_Game.Cartographic
         //see NetGrid enum above
         private int[,] arrayOfNetworkAnalysis;
         //four lists (sorted by distance to capital) of locations, one for each branch.
-        private List<Location> listNorthBranch;
+        private List<Location> listNorthBranch; //sorted by distance -> closest (index 0) to furthest from Capital (same for other three branch lists)
         private List<Location> listEastBranch;
         private List<Location> listSouthBranch;
         private List<Location> listWestBranch;
@@ -2129,6 +2129,36 @@ namespace Next_Game.Cartographic
             { if (ArrayOfConnectors[branch, 1] > 0) { return true; } }
             else { Game.SetError(new Error(166, "Invalid branch input (outside of 1 to 4 range)")); }
             return false;
+        }
+
+        /// <summary>
+        /// returns List<locations>, by value, for a specific branch (1 -> North, 2 -> East, 3 -> South, 4 -> West) Null if none found</locations>
+        /// </summary>
+        /// <param name="branch"></param>
+        /// <returns></returns>
+        internal List<Location> GetBranchLocs(int branch)
+        {
+            List<Location> branchList = new List<Location>();
+            switch(branch)
+            {
+                case 1:
+                    branchList.AddRange(listNorthBranch);
+                    break;
+                case 2:
+                    branchList.AddRange(listEastBranch);
+                    break;
+                case 3:
+                    branchList.AddRange(listSouthBranch);
+                    break;
+                case 4:
+                    branchList.AddRange(listWestBranch);
+                    break;
+                default:
+                    branchList = null;
+                    Game.SetError(new Error(190, string.Format("Invalid branch input \"{0}\"", branch)));
+                    break;
+            }
+            return branchList;
         }
 
         //methods above here
