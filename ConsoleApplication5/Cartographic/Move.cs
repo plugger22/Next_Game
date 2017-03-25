@@ -75,12 +75,13 @@ namespace Next_Game.Cartographic
             int tempSpeed = speed;
             int charID;
             //reduce speed by 1 at start to avoid a speed + 1 move
-            if (currentPosIndex == 0 && speed > 1)
-            { tempSpeed--; }
+            //if (currentPosIndex == 0 && speed > 1)
+            //{ tempSpeed--; }
             //step along path
-            for (int i = 0; i < tempSpeed; i++)
+            //for (int i = 0; i < tempSpeed; i++)
+            for(int i = 0; i < speed; i++)
             {
-                if ((currentPosIndex + i + 1) >= pathList.Count)
+                /*if ((currentPosIndex + i + 1) >= pathList.Count)
                 {
                     //at destination
                     currentPosIndex = pathList.Count - 1;
@@ -90,7 +91,7 @@ namespace Next_Game.Cartographic
                 {
                     //still enroute
                     currentPosIndex++; 
-                }
+                }*/
                 //check for being in the same place as an enemy
                 charID = characterList[0];
                 Actor person = Game.world.GetAnyActor(charID);
@@ -111,6 +112,19 @@ namespace Next_Game.Cartographic
                         }
                     }
                     else { Game.SetError(new Error(160, string.Format("Invalid charID \"{0}\" Position (null)", charID))); }
+
+                    //move actgor along path
+                    if ((currentPosIndex + i + 1) >= pathList.Count)
+                    {
+                        //at destination
+                        currentPosIndex = pathList.Count - 1;
+                        atDestination = true;
+                    }
+                    else
+                    {
+                        //still enroute
+                        currentPosIndex++;
+                    }
                 }
                 else { Game.SetError(new Error(160, string.Format("Invalid charID \"{0}\" (null)", charID))); }
             }

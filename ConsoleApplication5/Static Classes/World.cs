@@ -4210,7 +4210,7 @@ namespace Next_Game
             int knownDM = 0; //modifier for search if player known
             //get enemy
             Actor actor = GetAnyActor(charID);
-            if (actor != null && actor.Status != ActorStatus.Gone && actor.Status != ActorStatus.Captured)
+            if (actor != null && actor.Status != ActorStatus.Gone)
             {
                 if (actor is Enemy)
                 {
@@ -4284,7 +4284,7 @@ namespace Next_Game
                                                 {
                                                     if (active.Value.AddEnemy(enemy.ActID) == true)
                                                     {
-                                                        active.Value.Known = true; active.Value.Revert = known_revert;
+                                                        active.Value.Known = true; active.Value.Revert = known_revert; active.Value.Capture = true;
                                                         description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, 
                                                             active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
                                                         Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Known);
