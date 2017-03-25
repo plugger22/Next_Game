@@ -145,7 +145,7 @@
 # AI_CONNECTOR -> num of bonus Loc's on a branch (priority array) whenever a Connector is present (more flexibility -> greater value as a branch)
 55: 4 @ 0 @ 10
 # AI_HUNT_THRESHOLD -> max num of turns since player last known that AI will continue to hunt for player (if within range)
-56: 6 @ 4 @ 12
+56: 4 @ 4 @ 12
 
 
 # Next valid number -> 57

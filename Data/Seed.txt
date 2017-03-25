@@ -8,4 +8,6 @@ Seed 32986 -> Saturday, 25 March 2017 8:17 PM
 Seed 32986 -> Saturday, 25 March 2017 8:31 PM
 Seed 32986 -> Saturday, 25 March 2017 8:50 PM
 Seed 32986 -> Saturday, 25 March 2017 8:53 PM
-Seed 32986 -> Saturday, 25 March 2017 8:56 PM
+Seed 32986 -> Saturday, 25 March 2017 8:56 PM -> testing checkifFoundEnemy changes (if known -> capture)
+Seed 32986 -> Sunday, 26 March 2017 9:42 AM
+Seed 32986 -> Sunday, 26 March 2017 9:57 AM

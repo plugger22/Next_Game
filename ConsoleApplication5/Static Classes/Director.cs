@@ -443,7 +443,7 @@ namespace Next_Game
             Active player = Game.world.GetActiveActor(1);
             if (player != null && player.Status != ActorStatus.Gone && player.Delay == 0)
             {
-                Console.WriteLine("- Check Player Events");
+                Console.WriteLine("- CheckPlayerEvents");
                 //check first if any enemy is about to capture the Player
                 if (player.Capture == true)
                 {  CreateAutoEnemyEvent(); }

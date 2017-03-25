@@ -274,13 +274,28 @@ namespace Next_Game
         {
             //create a dictionary of position and map markers to return (passed up to game thence to map to update mapgrid
             Dictionary<int, Position> dictMapMarkers = new Dictionary<int, Position>();
-            Console.WriteLine(string.Format("- Move Actors ({0} Records)", listMoveObjects.Count));
+            Console.WriteLine(string.Format("- MoveActors ({0} Records)", listMoveObjects.Count));
             //loop moveList. Update each move object - update Character Location ID
             for (int i = 0; i < listMoveObjects.Count; i++)
             {
+
+                //get move object
+                Move moveObject = listMoveObjects[i];
+                //debug
+                int actorID = moveObject.GetPrimaryCharacter();
+                Actor actor = GetAnyActor(actorID);
+                if (actor != null)
+                {
+                    Position pos = moveObject.GetCurrentPosition();
+                    if (pos != null)
+                    {
+                        Console.WriteLine(" [Move -> MoveObject] {0} {1}, ActID {2} travelling to {3} (current Loc {4}:{5})", actor.Title, actor.Name, actor.ActID,
+                            moveObject.GetDestination(), pos.PosX, pos.PosY);
+                    }
+                    else { Game.SetError(new Error(42, "Invalid pos (null) in actor console printout")); }
+                }
+                else { Game.SetError(new Error(42, "Invalid Actor (null) in actor console printout")); }
                 //move speed clicks down list of positions (ignore locations at present)
-                Move moveObject = new Move();
-                moveObject = listMoveObjects[i];
                 moveObject.UpdatePartyStatus();
                 if (moveObject.Status == PartyStatus.Active)
                 {
@@ -3496,7 +3511,7 @@ namespace Next_Game
             int knownStatus = GetActiveActorTrackingStatus(1); //if '0' then Known, if > 0 then # of days since last known
             int playerLocID, distance;
             int turnsToDestination = 0; //# of turns for Player to reach their destination if travelling (used to adjust threshold)
-            Console.WriteLine("- AI Controller");
+            Console.WriteLine("- UpdateAIController");
             //get player
             Player player = (Player)GetActiveActor(1);
             if (player != null)
@@ -3554,7 +3569,8 @@ namespace Next_Game
                                             catch (ArgumentException)
                                             { Game.SetError(new Error(167, string.Format("Invalid enemy ID {0} (duplicate)", enemy.Value.ActID))); }
                                         }
-                                        else { Console.WriteLine(" [{0}] {1}, ActID {2} is Travelling to {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, GetLocationName(enemy.Value.LocID)); }
+                                        else { Console.WriteLine(" [AI -> Notification] {0} {1}, ActID {2} is Travelling to {3}", enemy.Value.Title, enemy.Value.Name, 
+                                            enemy.Value.ActID, GetLocationName(enemy.Value.LocID)); }
                                     }
                                     else
                                     {
@@ -3632,7 +3648,7 @@ namespace Next_Game
                 int ai_hide = Game.constant.GetValue(Global.AI_CONTINUE_HIDE);
                 int ai_wait = Game.constant.GetValue(Global.AI_CONTINUE_WAIT);
                 int revert = Game.constant.GetValue(Global.KNOWN_REVERT);
-                Console.WriteLine("- Set Enemy Activity");
+                Console.WriteLine("- SetEnemyActivity");
                 //loop enemy dictionary
                 foreach (var enemy in dictEnemyActors)
                 {
@@ -4592,7 +4608,7 @@ namespace Next_Game
                                                     int checkDistance = Game.network.GetDistance(route);
                                                     if (checkDistance > distOut)
                                                     {
-                                                        Console.WriteLine("[Captured -> CheckDistance] distOut increased from {0} to {1}", distOut, checkDistance);
+                                                        Console.WriteLine(" [Captured -> CheckDistance] distOut increased from {0} to {1}", distOut, checkDistance);
                                                         distOut = checkDistance;
                                                     }
                                                     break;
@@ -4603,19 +4619,19 @@ namespace Next_Game
                                     }
                                     else { Game.SetError(new Error(174, "Invalid listBranchLocs (Null or Zero Count) Search outwards cancelled")); }
                                     //Compare in and out and find closest, favouring inwards (if equal distance)
-                                    if (refIn > 0 && refOut == 0) { tempRefID = refIn; Console.WriteLine("[Captured] dungeon -> In (no out)"); }
-                                    else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Console.WriteLine("[Captured] dungeon -> Out (no in)"); }
-                                    else if (distIn <= distOut) { tempRefID = refIn; Console.WriteLine("[Captured] dungeon -> In (distance <= out)"); }
-                                    else if (distIn > distOut) { tempRefID = refOut; Console.WriteLine("[Captured] dungeon -> Out (distance < in)"); }
+                                    if (refIn > 0 && refOut == 0) { tempRefID = refIn; Console.WriteLine(" [Captured] dungeon -> In (no out)"); }
+                                    else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Console.WriteLine(" [Captured] dungeon -> Out (no in)"); }
+                                    else if (distIn <= distOut) { tempRefID = refIn; Console.WriteLine(" [Captured] dungeon -> In (distance <= out)"); }
+                                    else if (distIn > distOut) { tempRefID = refOut; Console.WriteLine(" [Captured] dungeon -> Out (distance < in)"); }
                                     else
                                     {
                                      Game.SetError(new Error(174, string.Format("Unable to get a valid dungeon loc, refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3}, default to Capital",
                                      refIn, distIn, refOut, distOut)));
                                     }
-                                    Console.WriteLine("[Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempRefID -> {4}",
+                                    Console.WriteLine(" [Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempRefID -> {4}",
                                         refIn, distIn, refOut, distOut, tempRefID);
                                 }
-                                else { Console.WriteLine("[Captured] Major House dungeon"); }
+                                else { Console.WriteLine(" [Captured] Major House dungeon"); }
                             }
                             else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from player.LocID \"{0}\"", player.LocID))); }
                         }
