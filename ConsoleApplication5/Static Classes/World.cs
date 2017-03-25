@@ -81,7 +81,6 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitiatePlayerActors");
             timer_2.Start();
             InitialiseHouses();
-            
             Game.StopTimer(timer_2, "W: InitialiseHouses");
             timer_2.Start();
             InitialiseTraits();
@@ -96,10 +95,10 @@ namespace Next_Game
             InitialiseSecrets();
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
             timer_2.Start();
+            InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors
             InitialiseAI();
             InitialiseEnemyActors();
             Game.StopTimer(timer_2, "W: InitialiseAI");
-            InitialiseConversionDicts();
         }
 
         /// <summary>
