@@ -2768,8 +2768,8 @@ namespace Next_Game
                 {
                     foreach (ActorSpy spy in listTempActive)
                     {
-                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-10} Goal -> {6, -10}", spy.ActID, GetActorName(spy.ActID), spy.Pos.PosX,
-                            spy.Pos.PosY, spy.Status, spy.Known, "n.a");
+                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, GetActorName(spy.ActID), 
+                            spy.Pos.PosX, spy.Pos.PosY, spy.Status, spy.Known, "n.a", "n.a");
                         listData.Add(new Snippet(description));
                     }
                 }
@@ -2778,8 +2778,8 @@ namespace Next_Game
                 {
                     foreach (ActorSpy spy in listTempEnemy)
                     {
-                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-10} Goal -> {6, -10}", spy.ActID, GetActorName(spy.ActID), spy.Pos.PosX,
-                            spy.Pos.PosY, spy.Status, spy.Known, spy.Goal);
+                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, GetActorName(spy.ActID), spy.Pos.PosX,
+                            spy.Pos.PosY, spy.Status, spy.Known, spy.Goal, spy.HuntMode == true ? "Hunt" : "normal");
                         listData.Add(new Snippet(description));
                     }
                 }
@@ -2828,8 +2828,8 @@ namespace Next_Game
                     {
                         if (spy.Known == true) { foreColor = Color._badTrait; }
                         else { foreColor = RLColor.White; }
-                        description = string.Format("Day {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-10} Goal -> {6, -10}", spy.Turn, GetActorName(spy.ActID), spy.Pos.PosX,
-                                spy.Pos.PosY, spy.Status, spy.Known, spy.Goal);
+                        description = string.Format("Day {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.Turn, GetActorName(spy.ActID), 
+                            spy.Pos.PosX, spy.Pos.PosY, spy.Status, spy.Known, spy.Goal, spy.HuntMode == true ? "Hunt" : "normal");
                         listData.Add(new Snippet(description, foreColor, RLColor.Black));
                     }
                 }
@@ -4071,7 +4071,7 @@ namespace Next_Game
                     //find player in any situation, find follower only if Known
                     if (active is Player || (active is Follower && active.Known == true))
                     {
-                        Console.WriteLine("- Checks Active characters while moving");
+                        Console.WriteLine("- CheckIfFoundActive");
                         foreach (var enemy in dictEnemyActors)
                         {
                             found = false;
@@ -4156,7 +4156,12 @@ namespace Next_Game
                                                         SetPlayerRecord(record);
                                                         SetMessage(new Message(description, MessageType.Search));
                                                     }
-
+                                                }
+                                                else if (active.CheckEnemyOnList(enemy.Value.ActID) == true)
+                                                {
+                                                    //enemy has already found Player this turn
+                                                    Console.WriteLine(" [Search -> Previous] {0} {1}, ActID {2} has already Found Player his turn -> Result Cancelled", enemy.Value.Title,
+                                                        enemy.Value.Name, enemy.Value.ActID);
                                                 }
                                             }
                                             else if (active is Follower)
@@ -4210,7 +4215,7 @@ namespace Next_Game
                 if (actor is Enemy)
                 {
                     Enemy enemy = actor as Enemy;
-                    Console.WriteLine("- Check Enemy Characters while Moving");
+                    Console.WriteLine("- CheckIfFoundEnemy");
                     //loop Active Actors and check if in same position as enemy
                     foreach (var active in dictActiveActors)
                     {
@@ -4299,7 +4304,11 @@ namespace Next_Game
                                                         SetPlayerRecord(record);
                                                         SetMessage(new Message(description, MessageType.Search));
                                                     }
-
+                                                }
+                                                else if (active.Value.CheckEnemyOnList(enemy.ActID) == true)
+                                                {
+                                                    //enemy has already found player this turn
+                                                    Console.WriteLine(" [Search -> Previous] {0} {1}, ActID {2} has previously Found the Player -> Result Cancelled", enemy.Title, enemy.Name, enemy.ActID);
                                                 }
                                             }
                                             else if (active.Value is Follower)
@@ -4335,12 +4344,13 @@ namespace Next_Game
         /// </summary>
         private void CheckStationaryActiveActors()
         {
+            Console.WriteLine("- CheckStationaryActiveActors");
             //loop active actors 
             foreach (var actor in dictActiveActors)
             {
-                Console.WriteLine("- Check Stationary Active Actors");
                 if (actor.Value.Status == ActorStatus.AtLocation)
                 {
+                    Console.WriteLine(" [Search -> Stationary] {0} {1}, ActID {2} is AtLocation", actor.Value.Title, actor.Value.Name, actor.Value.ActID);
                     Position pos = actor.Value.GetActorPosition();
                     if (pos != null)
                     {
@@ -4355,6 +4365,7 @@ namespace Next_Game
                         else { Game.SetError(new Error(162, string.Format("Unknown Actor type for \"{0} {1}\" ID {2}", actor.Value.Title, actor.Value.Name, actor.Value.ActID))); }
                     }
                 }
+                else { Console.WriteLine(" [Search -> Stationary] {0} {1}, ActID {2} is {3}", actor.Value.Title, actor.Value.Name, actor.Value.ActID, actor.Value.Status); }
             }
         }
 
@@ -4452,7 +4463,7 @@ namespace Next_Game
             //enemy actors
             foreach(var enemy in dictEnemyActors)
             {
-                ActorSpy enemySpy = new ActorSpy(enemy.Value.ActID, enemy.Value.GetActorPosition(), enemy.Value.Status, enemy.Value.Known, enemy.Value.Goal);
+                ActorSpy enemySpy = new ActorSpy(enemy.Value.ActID, enemy.Value.GetActorPosition(), enemy.Value.Status, enemy.Value.Known, enemy.Value.Goal, enemy.Value.HuntMode);
                 listTempEnemyActors.Add(enemySpy);
             }
             bloodhound.SetEnemyActors(listTempEnemyActors);
@@ -4499,7 +4510,7 @@ namespace Next_Game
                     int heldLocID = 0;
                     int tempRefID = 0;
                     int refID = 0;
-                    if (player.LocID == 1) { tempRefID = 9999; Console.WriteLine("[Captured] dungeon -> Capital"); }
+                    if (player.LocID == 1) { tempRefID = 9999; Console.WriteLine(" [Captured] dungeon -> Capital"); }
                     else
                     {
                         Location loc = Game.network.GetLocation(player.LocID);

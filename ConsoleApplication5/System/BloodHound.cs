@@ -17,8 +17,9 @@ namespace Next_Game
         public int ActID { get; set; }
         public Position Pos { get; set; } //position at start of turn
         public ActorStatus Status { get; set; } //at end of ProcessStartTurn
-        public bool Known { get; set; } //actor known or not (all) -> at end of ProcessStartTurn
         public ActorGoal Goal { get; set; } //enemy Actors only -> at end of ProcessStartTurn
+        public bool Known { get; set; } //actor known or not (all) -> at end of ProcessStartTurn
+        public bool HuntMode { get; set; } //enemy Actors only -> at end of ProcessStartTurn
 
         /// <summary>
         /// default constructor
@@ -30,7 +31,7 @@ namespace Next_Game
         /// <param name="status"></param>
         /// <param name="known"></param>
         /// <param name="goal"></param>
-        public ActorSpy(int actID, Position pos, ActorStatus status, bool known, ActorGoal goal = ActorGoal.None)
+        public ActorSpy(int actID, Position pos, ActorStatus status, bool known, ActorGoal goal = ActorGoal.None, bool huntMode = false)
         {
             if (actID > 0)
             {
@@ -42,6 +43,7 @@ namespace Next_Game
                     this.Status = status;
                     this.Known = known;
                     this.Goal = goal;
+                    this.HuntMode = huntMode;
                 }
                 else { Game.SetError(new Error(168, string.Format("Invalid Position input (Pos {0}:{1})", pos.PosX, pos.PosY))); }
             }
