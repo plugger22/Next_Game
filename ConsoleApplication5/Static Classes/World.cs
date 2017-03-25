@@ -4144,24 +4144,28 @@ namespace Next_Game
                                                         SetMessage(new Message(description, MessageType.Search));
                                                     }
                                                 }
-                                                else if (active.CheckEnemyOnList(enemy.Value.ActID) == false)
+                                                else if (active.Known == true)
                                                 {
-                                                    //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
-                                                    if (active.AddEnemy(enemy.Value.ActID) == true)
+                                                    if (active.CheckEnemyOnList(enemy.Value.ActID) == false)
                                                     {
-                                                        active.Known = true; active.Revert = known_revert; active.Capture = true;
-                                                        description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
-                                                            enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
-                                                        Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
-                                                        SetPlayerRecord(record);
-                                                        SetMessage(new Message(description, MessageType.Search));
+                                                        //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
+                                                        if (active.AddEnemy(enemy.Value.ActID) == true)
+                                                        {
+                                                            active.Revert = known_revert; active.Capture = true;
+                                                            description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
+                                                                enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
+                                                            Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
+                                                            SetPlayerRecord(record);
+                                                            SetMessage(new Message(description, MessageType.Search));
+                                                        }
+                                                        else
+                                                        {
+                                                            //enemy has already found Player this turn
+                                                            Console.WriteLine(" [Search -> Previous] {0} {1}, ActID {2} has already Found Player this turn -> Result Cancelled", enemy.Value.Title,
+                                                                enemy.Value.Name, enemy.Value.ActID);
+                                                        }
                                                     }
-                                                }
-                                                else if (active.CheckEnemyOnList(enemy.Value.ActID) == true)
-                                                {
-                                                    //enemy has already found Player this turn
-                                                    Console.WriteLine(" [Search -> Previous] {0} {1}, ActID {2} has already Found Player his turn -> Result Cancelled", enemy.Value.Title,
-                                                        enemy.Value.Name, enemy.Value.ActID);
+
                                                 }
                                             }
                                             else if (active is Follower)
@@ -4232,7 +4236,7 @@ namespace Next_Game
                                 if (posActive.PosX == pos.PosX && posActive.PosY == pos.PosY)
                                 {
                                     //in same spot
-                                    Console.WriteLine(" [Search -> Alert] {0} {1}, ActID {2}, is in the same place as the Enemy (loc {3}:{4} ({5}, ID {6})", active.Value.Title, active.Value.Name,
+                                    Console.WriteLine(" [Search -> Alert] {0} {1}, ActID {2}, is in the same place as the Enemy, loc {3}:{4} ({5}, ID {6})", active.Value.Title, active.Value.Name,
                                         active.Value.ActID, pos.PosX, pos.PosY, enemy.Name, enemy.ActID);
                                     //only search if enemy hasn't already searched for this actor this turn
                                     if (active.Value.CheckSearchedOnList(enemy.ActID) == false)
@@ -4268,8 +4272,9 @@ namespace Next_Game
                                         if (found == true)
                                         {
                                             string locName = GetLocationName(pos);
+                                            if (locName.Equals("Unknown") == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); } //travelling
                                             if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); }
-                                            Console.WriteLine(" [SEARCH -> Enemy] {0} {1} has been Spotted by {2}, ActID {3} at{4}", active.Value.Title, active.Value.Name, enemy.Name, enemy.ActID,
+                                            Console.WriteLine(" [SEARCH -> Enemy] {0} {1} has been Spotted by {2}, ActID {3} at {4}", active.Value.Title, active.Value.Name, enemy.Name, enemy.ActID,
                                             locName);
                                             active.Value.Found = true;
                                             Console.WriteLine(" [Search -> ListEnemies] {0} {1}, ActID {2} is Found -> True and Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID);
@@ -4284,32 +4289,37 @@ namespace Next_Game
                                                 {
                                                     if (active.Value.AddEnemy(enemy.ActID) == true)
                                                     {
-                                                        active.Value.Known = true; active.Value.Revert = known_revert; active.Value.Capture = true;
-                                                        description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, 
+                                                        active.Value.Known = true; active.Value.Revert = known_revert; 
+                                                        description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name,
                                                             active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
                                                         Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Known);
                                                         SetPlayerRecord(record);
                                                         SetMessage(new Message(description, MessageType.Search));
                                                     }
                                                 }
-                                                else if (active.Value.CheckEnemyOnList(enemy.ActID) == false)
+                                                else if (active.Value.Known == true)
                                                 {
-                                                    //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
-                                                    if (active.Value.AddEnemy(enemy.ActID) == true)
+                                                    if (active.Value.CheckEnemyOnList(enemy.ActID) == false)
                                                     {
-                                                        active.Value.Known = true; active.Value.Revert = known_revert;
-                                                        description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, active.Value.ActID,
-                                                            enemy.Title, enemy.Name, enemy.ActID, locName);
-                                                        Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
-                                                        SetPlayerRecord(record);
-                                                        SetMessage(new Message(description, MessageType.Search));
+                                                        //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
+                                                        if (active.Value.AddEnemy(enemy.ActID) == true)
+                                                        {
+                                                            active.Value.Revert = known_revert; active.Value.Capture = true;
+                                                            description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                                                enemy.Title, enemy.Name, enemy.ActID, locName);
+                                                            Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
+                                                            SetPlayerRecord(record);
+                                                            SetMessage(new Message(description, MessageType.Search));
+                                                        }
+                                                    }
+                                                    else 
+                                                    {
+                                                        //enemy has already found player this turn
+                                                        Console.WriteLine(" [Search -> Previous] {0} {1}, ActID {2} has previously Found the Player -> Result Cancelled", enemy.Title, enemy.Name, 
+                                                            enemy.ActID);
                                                     }
                                                 }
-                                                else if (active.Value.CheckEnemyOnList(enemy.ActID) == true)
-                                                {
-                                                    //enemy has already found player this turn
-                                                    Console.WriteLine(" [Search -> Previous] {0} {1}, ActID {2} has previously Found the Player -> Result Cancelled", enemy.Title, enemy.Name, enemy.ActID);
-                                                }
+                                                
                                             }
                                             else if (active.Value is Follower)
                                             {
