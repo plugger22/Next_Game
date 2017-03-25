@@ -23,9 +23,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        private static int seed = 32986;
+        //private static int seed = 32986;
 
         static Random rnd;
         
@@ -93,7 +93,9 @@ namespace Next_Game
         public static bool _fullConsole = false; //set to true by InfoChannel.DrawInfoConsole if multiConsole is maxxed out
         public static int _scrollIndex = 0; //used by infoChannel.DrawConsole to handle scrolling up and down
         public static int _multiConsoleLength = 48; //max length of data in multi Console (infochannel.drawInfoConsole) - Scrolling beyond this
-        
+        //errors
+        private static string _errorLast = ""; //text of the last generated error (game.SetError)
+        private static int _errorCounter = 0; //counts instances of identical errors (game.SetError)
         //other
         private static RLKeyPress _keyLast = null; //last known keypress
         private static Position _posSelect1; //used for input of map positions
@@ -1519,20 +1521,29 @@ namespace Next_Game
             try
             {
                 dictErrors?.Add(error.errorID, error);
+                //check if identical to previous error
+                if (error.Text.Equals(_errorLast) == true)
+                { _errorCounter++; }
+                else
+                { _errorCounter = 0; _errorLast = error.Text; }
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
+                //print first 9 occurences of error
+                if (_errorCounter < 10)
+                { Console.WriteLine("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line); }
+                //print message regarding ongoing repeats and then ignore the rest
+                else if (_errorCounter == 10) { Console.WriteLine("Multiple repeats of same error..."); }
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
             catch(ArgumentNullException)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(string.Format("[ERROR] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID));
+                Console.WriteLine(string.Format(" [SetError] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID));
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
             catch(ArgumentException)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(string.Format("[ERROR] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID));
+                Console.WriteLine(string.Format(" [SetError] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID));
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
         }
