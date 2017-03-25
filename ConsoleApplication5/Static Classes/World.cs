@@ -81,7 +81,7 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitiatePlayerActors");
             timer_2.Start();
             InitialiseHouses();
-            InitialiseConversionDicts();
+            
             Game.StopTimer(timer_2, "W: InitialiseHouses");
             timer_2.Start();
             InitialiseTraits();
@@ -99,6 +99,7 @@ namespace Next_Game
             InitialiseAI();
             InitialiseEnemyActors();
             Game.StopTimer(timer_2, "W: InitialiseAI");
+            InitialiseConversionDicts();
         }
 
         /// <summary>
@@ -4577,6 +4578,14 @@ namespace Next_Game
                                                     //found the first Major House along
                                                     distOut = listBranchLocs[i].DistanceToCapital - loc.DistanceToCapital;
                                                     refOut = listBranchLocs[i].RefID;
+                                                    //need to check the actual distance as it could be on a seperate branch and be much further than initially assumed
+                                                    List<Route> route = Game.network.GetRouteAnywhere(loc.GetPosition(), listBranchLocs[i].GetPosition());
+                                                    int checkDistance = Game.network.GetDistance(route);
+                                                    if (checkDistance > distOut)
+                                                    {
+                                                        Console.WriteLine("[Captured -> CheckDistance] distOut increased from {0} to {1}", distOut, checkDistance);
+                                                        distOut = checkDistance;
+                                                    }
                                                     break;
                                                 }
                                             }
