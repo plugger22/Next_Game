@@ -199,11 +199,11 @@ namespace Next_Game
         /// <param name="posOrigin"></param>
         /// <param name="posDestination"></param>
         /// <param name="path">sequenced List of Positions to destination</param>
-        internal string InitiateMoveActor(int charID, Position posOrigin, Position posDestination, List<Position> path)
+        internal string InitiateMoveActor(int charID, Position posOrigin, Position posDestination/*, List<Position> path*/)
         {
             string returnText = "Error in World.InitiateMoveCharacters";
             //viable Character & Position?
-            if (charID > 0 && posOrigin != null && posDestination != null && path != null)
+            if (charID > 0 && posOrigin != null && posDestination != null/* && path != null*/)
             {
                 //find in dictionary
                 if (dictAllActors.ContainsKey(charID))
@@ -212,8 +212,9 @@ namespace Next_Game
                     Actor person = dictAllActors[charID];
                     if (person != null)
                     {
-                        if (person.Status != ActorStatus.AtLocation)
+                        if (person.Status == ActorStatus.AtLocation)
                         {
+                            List<Position> path = Game.network.GetPathAnywhere(posOrigin, posDestination);
                             List<int> party = new List<int>(); //list of charID's of all characters in party
                             party.Add(charID);
                             string name = person.Name;
@@ -263,6 +264,16 @@ namespace Next_Game
                                 //update characterLocationID (now becomes destination)
                                 int locID_Destination = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
                                 person.LocID = locID_Destination;
+                                //admin
+                                SetMessage(new Message(returnText, person.ActID, locID_Destination, MessageType.Move));
+                                int refID = GetRefID(locID_Destination);
+                                if (charID == 1)
+                                { Game.world.SetPlayerRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
+                                else if (charID > 1)
+                                { Game.world.SetCurrentRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
+                                //show route
+                                Game.map.UpdateMap();
+                                Game.map.DrawRoutePath(path);
                             }
                             else
                             { returnText = "ERROR: The Journey has been cancelled (Destination not Found)"; }
@@ -2319,15 +2330,6 @@ namespace Next_Game
             RLColor foreground;
             //Date
             listStats.Add(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black));
-            //Invisibility
-            /*data = Game.director.CheckGameState(DataPoint.Invisibility);
-            good = Game.director.GetGameState(DataPoint.Invisibility, DataState.Good);
-            bad = Game.director.GetGameState(DataPoint.Invisibility, DataState.Bad);
-            change = Game.director.CheckGameStateChange(DataPoint.Invisibility);
-            foreground = RLColor.White;
-            if (change > 0 ) { foreground = increase; }
-            else if (change < 0) { foreground = decrease; }
-            listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Invisibility (You)", data, good, bad), foreground, RLColor.Black));*/
             //justice
             data = Game.director.CheckGameState(DataPoint.Justice);
             good = Game.director.GetGameState(DataPoint.Justice, DataState.Good);
@@ -3199,83 +3201,93 @@ namespace Next_Game
             Active actor = GetActiveActor(actorID);
             Player player = (Player)GetActiveActor(1);
             int bonus = Game.constant.GetValue(Global.CROW_BONUS);
-            if (player.CrowsNumber > 0)
+            if (player.Status == ActorStatus.AtLocation)
             {
-                if (actor != null)
+                if (player.CrowsNumber > 0)
                 {
-                    if (actorID != 1)
+                    if (actor != null)
                     {
-                        if (actor.Status == ActorStatus.AtLocation)
+                        if (actorID != 1)
                         {
-                            if (actor.LocID != player.LocID)
+                            if (actor.Status == ActorStatus.AtLocation)
                             {
-                                if (actor.Delay == 0)
+                                if (actor.LocID != player.LocID)
                                 {
-                                    if (actor.Activated == false)
+                                    if (actor.Delay == 0)
                                     {
-                                        locName = GetLocationName(actor.LocID);
-                                        num = rnd.Next(100);
-                                        chance = actor.CrowChance + actor.CrowBonus;
-                                        description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", chance, num);
-                                        listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0}, Aid {1}, at {2} (distance {3} leagues)", actor.Name, actor.ActID, locName, actor.CrowDistance)));
-                                        player.CrowsNumber--;
-                                        messageText = string.Format("Crow sent to {0}, Aid {1}, at {2} ({3}% chance of arriving, roll {4}, {5})", actor.Name, actor.ActID, locName, chance,
-                                            num, num < chance ? "Arrived" : "Failed");
-                                        Message message = new Message(messageText, actor.ActID, actor.LocID, MessageType.Crow);
-                                        SetMessage(message);
-                                        if (num < chance)
+                                        if (actor.Activated == false)
                                         {
-                                            //success!
-                                            actor.Activated = true;
-                                            actor.CrowBonus = 0;
-                                            listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
-                                            //Game.messageLog.Add(new Snippet(string.Format("Crow arrived, {0} activated", actor.Name)));
-                                            Message message_1 = new Message(string.Format("{0}, Aid {1}, has been Activated", actor.Name, actor.ActID), MessageType.Activation);
-                                            SetMessage(message_1);
+                                            locName = GetLocationName(actor.LocID);
+                                            num = rnd.Next(100);
+                                            chance = actor.CrowChance + actor.CrowBonus;
+                                            description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", chance, num);
+                                            listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0}, Aid {1}, at {2} (distance {3} leagues)", actor.Name, actor.ActID, locName, actor.CrowDistance)));
+                                            player.CrowsNumber--;
+                                            messageText = string.Format("Crow sent to {0}, Aid {1}, at {2} ({3}% chance of arriving, roll {4}, {5})", actor.Name, actor.ActID, locName, chance,
+                                                num, num < chance ? "Arrived" : "Failed");
+                                            Message message = new Message(messageText, actor.ActID, actor.LocID, MessageType.Crow);
+                                            SetMessage(message);
+                                            if (num < chance)
+                                            {
+                                                //success!
+                                                actor.Activated = true;
+                                                actor.CrowBonus = 0;
+                                                listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
+                                                //Game.messageLog.Add(new Snippet(string.Format("Crow arrived, {0} activated", actor.Name)));
+                                                Message message_1 = new Message(string.Format("{0}, Aid {1}, has been Activated", actor.Name, actor.ActID), MessageType.Activation);
+                                                SetMessage(message_1);
+                                            }
+                                            else
+                                            //failed the roll, apply bonus
+                                            {
+                                                actor.Activated = false;
+                                                listSnippet.Add(new Snippet(string.Format("The Crow failed to arrive ({0})", description)));
+                                                actor.CrowBonus += bonus;
+                                                actor.AddCrowTooltip(string.Format("An additional bonus of +{0}% applies from a previous failed crow that might have been delayed", bonus));
+                                            }
+                                            listSnippet.Add(new Snippet(string.Format("You have {0} {1} remaining", player.CrowsNumber, player.CrowsNumber == 1 ? "Crow" : "Crows")));
                                         }
                                         else
-                                        //failed the roll, apply bonus
-                                        {
-                                            actor.Activated = false;
-                                            listSnippet.Add(new Snippet(string.Format("The Crow failed to arrive ({0})", description)));
-                                            actor.CrowBonus += bonus;
-                                            actor.AddCrowTooltip(string.Format("An additional bonus of +{0}% applies from a previous failed crow that might have been delayed", bonus));
-                                        }
-                                        listSnippet.Add(new Snippet(string.Format("You have {0} {1} remaining", player.CrowsNumber, player.CrowsNumber == 1 ? "Crow" : "Crows")));
+                                        //already activated
+                                        { listSnippet.Add(new Snippet(string.Format("{0} is already activated and awaiting your orders!", actor.Name))); }
                                     }
                                     else
-                                    //already activated
-                                    { listSnippet.Add(new Snippet(string.Format("{0} is already activated and awaiting your orders!", actor.Name))); }
+                                    {
+                                        //actor delayed
+                                        { listSnippet.Add(new Snippet(string.Format("Crow can NOT be dispatched to {0} as they are delayed (\"{1}\"", actor.Name, actor.DelayReason))); }
+                                    }
                                 }
                                 else
                                 {
-                                    //actor delayed
-                                    { listSnippet.Add(new Snippet(string.Format("Crow can NOT be dispatched to {0} as they are delayed (\"{1}\"", actor.Name, actor.DelayReason))); }
+                                    //at same location as player
+                                    listSnippet.Add(new Snippet(string.Format("No crow required as {0} is present at the same location as yourself", actor.Name)));
+                                    actor.Activated = true;
                                 }
                             }
                             else
-                            {
-                                //at same location as player
-                                listSnippet.Add(new Snippet(string.Format("No crow required as {0} is present at the same location as yourself", actor.Name)));
-                                actor.Activated = true;
-                            }
+                            //actor not at a location
+                            { listSnippet.Add(new Snippet(string.Format("Crow can NOT be dispatched to {0} as they aren't at a location", actor.Name))); }
                         }
                         else
-                        //actor not at a location
-                        { listSnippet.Add(new Snippet(string.Format("Crow can NOT be dispatched to {0} as they aren't at a location", actor.Name))); }
+                        //sending a crow to yourself
+                        { listSnippet.Add(new Snippet("There is no need to send a crow to yourself!")); }
                     }
                     else
-                    //sending a crow to yourself
-                    { listSnippet.Add(new Snippet("There is no need to send a crow to yourself!")); }
+                    //invalid actor
+                    { listSnippet.Add(new Snippet("Unknown Actor. No crow sent.")); }
                 }
                 else
-                //invalid actor
-                { listSnippet.Add(new Snippet("Unknown Actor. No crow sent.")); }
+                //run out of crows
+                { listSnippet.Add(new Snippet("You have run out of crows. More will be available next turn")); }
             }
             else
-            //run out of crows
-            { listSnippet.Add(new Snippet("You have run out of crows. More will be available next turn")); }
-
+            {
+                //Main error states
+                if (player.Status == ActorStatus.Travelling) { listSnippet.Add(new Snippet("You are unable to dispatch crows while you are Travelling")); }
+                else if (player.Status == ActorStatus.Captured) { listSnippet.Add(new Snippet("You are unable to dispatch crows while you are Incarcerated")); }
+                else if (player.Status == ActorStatus.Gone) { listSnippet.Add(new Snippet("You are unable to dispatch crows from the AfterLife")); }
+                else { listSnippet.Add(new Snippet(string.Format("Your Status isn't recognised (\"{0}\") and crows are consequently unavailable", player.Status))); }
+            }
             return listSnippet;
         }
 
@@ -3321,15 +3333,14 @@ namespace Next_Game
                     //incarcerated?
                     if (actor.Value.Status == ActorStatus.Captured)
                     {
-                        actor.Value.Known = true;
-                        actor.Value.Revert = 1;
+                        actor.Value.Known = true; actor.Value.Revert = 2;
                         //raise Legend_King each turn player is held in dungeon
                         int legendLoss = Game.constant.GetValue(Global.LOSS_OF_LEGEND);
-                        int currentValue = Game.director.GetGameState(DataPoint.Legend_Usurper, DataState.Bad);
-                        int newValue = Math.Abs(Game.director.ChangeData(currentValue, legendLoss , Event_System.EventCalc.Add));
-                        Game.director.SetGameState(DataPoint.Legend_Usurper, DataState.Bad, newValue, true);
+                        int currentValue = Game.director.GetGameState(DataPoint.Legend_King, DataState.Good);
+                        int newValue = Math.Abs(Game.director.ChangeData(currentValue, legendLoss, Event_System.EventCalc.Add));
+                        Game.director.SetGameState(DataPoint.Legend_King, DataState.Good, newValue, true);
                         //message
-                        string description = string.Format("The Legend of {0} {1} grows (by +{2}) while the Usurper is incarcerated", Game.lore.NewKing.Title, Game.lore.NewKing.Name, legendLoss);
+                        string description = string.Format("The Legend of {0} {1} grows ( +{2} ) while the Usurper is incarcerated", Game.lore.NewKing.Title, Game.lore.NewKing.Name, legendLoss);
                         SetMessage(new Message(description, MessageType.Incarceration));
                     }
                 }
@@ -4089,8 +4100,8 @@ namespace Next_Game
                             if (locMove != null)
                             {
                                 Position posDestination = locMove.GetPosition();
-                                List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
-                                InitiateMoveActor(enemy.ActID, posOrigin, posDestination, pathToTravel);
+                                //List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
+                                InitiateMoveActor(enemy.ActID, posOrigin, posDestination);
                             }
                             else { Game.SetError(new Error(156, "Invalid locMove (null) Enemy isn't Moved")); }
                         }

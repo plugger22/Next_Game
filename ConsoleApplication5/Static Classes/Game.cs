@@ -444,20 +444,20 @@ namespace Next_Game
                                             {
                                                 if ((_posSelect1 != null && _posSelect2 != null) && (_posSelect1.PosX != _posSelect2.PosX || _posSelect1.PosY != _posSelect2.PosY))
                                                 {
-                                                    int locID = map.GetMapInfo(MapLayer.LocID, _posSelect2.PosX, _posSelect2.PosY);
-                                                    int refID = world.GetRefID(locID);
-                                                    List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
-                                                    string infoText = world.InitiateMoveActor(_charIDSelected, _posSelect1, _posSelect2, pathToTravel);
-                                                    Message message = new Message(infoText, _charIDSelected, locID, MessageType.Move);
+                                                    //int locID = map.GetMapInfo(MapLayer.LocID, _posSelect2.PosX, _posSelect2.PosY);
+                                                    //int refID = world.GetRefID(locID);
+                                                    //List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
+                                                    /*string infoText = */world.InitiateMoveActor(_charIDSelected, _posSelect1, _posSelect2/*, pathToTravel*/);
+                                                    /*Message message = new Message(infoText, _charIDSelected, locID, MessageType.Move);
                                                     world.SetMessage(message);
                                                     if (_charIDSelected == 1)
                                                     { Game.world.SetPlayerRecord(new Record(infoText, _charIDSelected, locID, refID, CurrentActorIncident.Travel)); }
                                                     else if (_charIDSelected > 1)
                                                     { Game.world.SetCurrentRecord(new Record(infoText, _charIDSelected, locID, refID, CurrentActorIncident.Travel)); }
-                                                    infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);
-                                                    //show route
+                                                    infoChannel.AppendInfoList(new Snippet(infoText), ConsoleDisplay.Input);*/
+                                                    /*//show route
                                                     map.UpdateMap();
-                                                    map.DrawRoutePath(pathToTravel);
+                                                    map.DrawRoutePath(pathToTravel);*/
                                                 }
                                                 else
                                                 { infoChannel.AppendInfoList(new Snippet("Destination the same as Origin. Journey Cancelled!", RLColor.Red, RLColor.Black), ConsoleDisplay.Input); }
