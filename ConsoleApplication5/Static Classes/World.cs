@@ -1758,13 +1758,14 @@ namespace Next_Game
         { return dictActiveActors; }
       
         /// <summary>
-        /// returns string showing character name and status (at 'x' loc, travelling)
+        /// returns string showing character name (at 'x' loc)
         /// </summary>
         /// <param name="actID"></param>
         /// <returns></returns>
         public Snippet GetActorStatusRL(int actID)
         {
             Actor person = new Actor();
+            RLColor foreColor = RLColor.White;
             string charReturn = "Character doesn't exist!";
             //check character exists
             if (dictActiveActors.ContainsKey(actID))
@@ -1772,7 +1773,7 @@ namespace Next_Game
                 person = dictActiveActors[actID];
                 charReturn = person.Name;
                 if (person.Status != ActorStatus.AtLocation)
-                { charReturn += " isn't currently available"; }
+                { charReturn += " isn't currently available (must be at a Location in order to be Moved)"; foreColor = RLColor.LightRed; }
                 else
                 {
                     Position pos = person.GetActorPosition();
@@ -1781,7 +1782,7 @@ namespace Next_Game
                     charReturn += string.Format(" (loc {0}:{1})", pos.PosX, pos.PosY);
                 }
             }
-            return new Snippet(charReturn);
+            return new Snippet(charReturn, foreColor, RLColor.Black);
         }
 
         /// <summary>
@@ -1821,6 +1822,21 @@ namespace Next_Game
             }
             else { Game.SetError(new Error(137, "Active Actor not found in dictActiveActors")); }
             return 0;
+        }
+
+        /// <summary>
+        /// returns true if specified actor has the indicated status, otherwise false
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public bool CheckActorStatus(int actorID, ActorStatus status)
+        {
+            Actor actor = GetAnyActor(actorID);
+            if (actor != null)
+            { if (actor.Status == status) { return true; } }
+            else { Game.SetError(new Error(191, string.Format("Invalid Actor input (null), ActID {0}, status {1}", actorID, status))); }
+            return false;
         }
 
         /// <summary>
@@ -2379,7 +2395,7 @@ namespace Next_Game
             //show Visibility status
             int knownStatus = GetActiveActorKnownStatus(1);
             if (knownStatus > 0)
-            { listStats.Add(new Snippet(string.Format("Known, reverts in {0} days", knownStatus) , Color._badTrait, RLColor.Black)); }
+            { listStats.Add(new Snippet(string.Format("Known, reverts in {0} day{1}", knownStatus, knownStatus == 1 ? "" : "s") , Color._badTrait, RLColor.Black)); }
             else { listStats.Add(new Snippet("Unknown (the Inquisitors don't know your location)", Color._goodTrait, RLColor.Black)); }
 
             //display data
@@ -3283,10 +3299,10 @@ namespace Next_Game
             else
             {
                 //Main error states
-                if (player.Status == ActorStatus.Travelling) { listSnippet.Add(new Snippet("You are unable to dispatch crows while you are Travelling")); }
-                else if (player.Status == ActorStatus.Captured) { listSnippet.Add(new Snippet("You are unable to dispatch crows while you are Incarcerated")); }
-                else if (player.Status == ActorStatus.Gone) { listSnippet.Add(new Snippet("You are unable to dispatch crows from the AfterLife")); }
-                else { listSnippet.Add(new Snippet(string.Format("Your Status isn't recognised (\"{0}\") and crows are consequently unavailable", player.Status))); }
+                if (player.Status == ActorStatus.Travelling) { listSnippet.Add(new Snippet("You are unable to dispatch crows while you are Travelling", RLColor.LightRed, RLColor.Black)); }
+                else if (player.Status == ActorStatus.Captured) { listSnippet.Add(new Snippet("You are unable to dispatch crows while you are Incarcerated", RLColor.LightRed, RLColor.Black)); }
+                else if (player.Status == ActorStatus.Gone) { listSnippet.Add(new Snippet("You are unable to dispatch crows from the AfterLife", RLColor.LightRed, RLColor.Black)); }
+                else { listSnippet.Add(new Snippet(string.Format("Your Status isn't recognised (\"{0}\") and crows are consequently unavailable", player.Status), RLColor.LightRed, RLColor.Black)); }
             }
             return listSnippet;
         }
@@ -3340,7 +3356,7 @@ namespace Next_Game
                         int newValue = Math.Abs(Game.director.ChangeData(currentValue, legendLoss, Event_System.EventCalc.Add));
                         Game.director.SetGameState(DataPoint.Legend_King, DataState.Good, newValue, true);
                         //message
-                        string description = string.Format("The Legend of {0} {1} grows ( +{2} ) while the Usurper is incarcerated", Game.lore.NewKing.Title, Game.lore.NewKing.Name, legendLoss);
+                        string description = string.Format("The Legend of {0} {1} grows (+{2}) while the Usurper is incarcerated", Game.lore.NewKing.Title, Game.lore.NewKing.Name, legendLoss);
                         SetMessage(new Message(description, MessageType.Incarceration));
                     }
                 }

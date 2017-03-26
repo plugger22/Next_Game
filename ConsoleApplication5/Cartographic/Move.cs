@@ -75,11 +75,10 @@ namespace Next_Game.Cartographic
             int tempSpeed = speed;
             int charID;
             //reduce speed by 1 at start to avoid a speed + 1 move
-            //if (currentPosIndex == 0 && speed > 1)
-            //{ tempSpeed--; }
+            if (currentPosIndex == 0 && speed > 1)
+            { tempSpeed--; }
             //step along path
-            //for (int i = 0; i < tempSpeed; i++)
-            for(int i = 0; i < speed; i++)
+            for(int i = 0; i < tempSpeed; i++)
             {
                 /*if ((currentPosIndex + i + 1) >= pathList.Count)
                 {

@@ -447,7 +447,8 @@ namespace Next_Game
                                                     //int locID = map.GetMapInfo(MapLayer.LocID, _posSelect2.PosX, _posSelect2.PosY);
                                                     //int refID = world.GetRefID(locID);
                                                     //List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
-                                                    /*string infoText = */world.InitiateMoveActor(_charIDSelected, _posSelect1, _posSelect2/*, pathToTravel*/);
+                                                    /*string infoText = */
+                                                    world.InitiateMoveActor(_charIDSelected, _posSelect1, _posSelect2/*, pathToTravel*/);
                                                     /*Message message = new Message(infoText, _charIDSelected, locID, MessageType.Move);
                                                     world.SetMessage(message);
                                                     if (_charIDSelected == 1)
@@ -694,16 +695,19 @@ namespace Next_Game
                                     infoChannel.SetInfoList(world.ShowActiveActorsRL(), ConsoleDisplay.Multi);
                                     break;
                                 case MenuMode.Actor_Active:
-                                    //move Player characters around map
+                                    //move Active characters around map (must be AtLocation in order to move)
                                     List<Snippet> charList = new List<Snippet>();
                                     charList.Add(world.GetActorStatusRL(_charIDSelected));
-                                    _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
-                                    if (_posSelect1 != null)
-                                    { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); _mouseOn = true; }
-                                    else
-                                    { charList.Add(new Snippet("The character is not currently at your disposal", RLColor.Red, RLColor.Black)); _mouseOn = false; }
+                                    if (world.CheckActorStatus(_charIDSelected, ActorStatus.AtLocation) == true)
+                                    {
+                                        _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
+                                        if (_posSelect1 != null)
+                                        { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); _mouseOn = true; }
+                                        else
+                                        { charList.Add(new Snippet("The character is not currently at your disposal", RLColor.Red, RLColor.Black)); _mouseOn = false; }
+                                        _inputState = 1;
+                                    }
                                     infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
-                                    _inputState = 1;
                                     break;
                                 case MenuMode.Debug:
                                     //Show Duplicates (imported files)
