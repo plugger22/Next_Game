@@ -210,57 +210,81 @@ namespace Next_Game
                 {
                     Console.WriteLine("- Move Actor");
                     Actor person = dictAllActors[charID];
-                    List<int> party = new List<int>(); //list of charID's of all characters in party
-                    party.Add(charID);
-                    string name = person.Name;
-                    bool playerInParty = false;
-                    if (charID == 1) { playerInParty = true; }
-                    int speed = person.Speed;
-                    int distance = path.Count;
-                    int time = (distance / speed) + 1; //prevents 0 result
-                    //return string
-                    string originLocation = GetLocationName(posOrigin);
-                    string destinationLocation = GetLocationName(posDestination);
-                    returnText = string.Format("{0} commences a {1} day journey from {2} to {3}", name, time, originLocation, destinationLocation);
-                    //remove character from current location 
-                    int locID_Origin = Game.map.GetMapInfo(MapLayer.LocID, posOrigin.PosX, posOrigin.PosY);
-                    Location loc = Game.network.GetLocation(locID_Origin);
-                    if (loc != null)
+                    if (person != null)
                     {
-                        //check an existing Move object doesn't already exist, e.g if user issued > 1 move orders during a turn
-                        //reverse loop, deleting any that contain the Player as you go
-                        for (int i = listMoveObjects.Count - 1; i >= 0; i--)
+                        if (person.Status != ActorStatus.AtLocation)
                         {
-                            Move tempMove = listMoveObjects[i];
-                            if (tempMove.GetPrimaryCharacter() == charID)
+                            List<int> party = new List<int>(); //list of charID's of all characters in party
+                            party.Add(charID);
+                            string name = person.Name;
+                            bool playerInParty = false;
+                            if (charID == 1)
+                            { playerInParty = true; }
+                            int speed = person.Speed;
+                            int distance = path.Count;
+                            int time = (distance / speed) + 1; //prevents 0 result
+                                                               //return string
+                            string originLocation = GetLocationName(posOrigin);
+                            string destinationLocation = GetLocationName(posDestination);
+                            returnText = string.Format("{0} commences a {1} day journey from {2} to {3}", name, time, originLocation, destinationLocation);
+                            //remove character from current location 
+                            int locID_Origin = Game.map.GetMapInfo(MapLayer.LocID, posOrigin.PosX, posOrigin.PosY);
+                            Location loc = Game.network.GetLocation(locID_Origin);
+                            if (loc != null)
                             {
-                                Position pos = tempMove.GetCurrentPosition();
-                                Console.WriteLine("[Move -> Alert] Move Object DELETED PlayerInParty -> {0}, charID {1} at Loc {2}:{3}", tempMove.PlayerInParty, tempMove.GetPrimaryCharacter(),
-                                    pos.PosX, pos.PosY);
-                                Active tempActive = Game.world.GetActiveActor(charID);
-                                if (tempActive != null)
+                                //check an existing Move object doesn't already exist, e.g if user issued > 1 move orders during a turn
+                                //reverse loop, deleting any that contain the Player as you go
+                                for (int i = listMoveObjects.Count - 1; i >= 0; i--)
                                 {
-                                    Game.world.SetMessage(new Message(string.Format("{0} {1}'s journey to {2} has been cancelled", tempActive.Title, tempActive.Name, tempMove.GetDestination()),
-                                      MessageType.Move));
+                                    Move tempMove = listMoveObjects[i];
+                                    if (tempMove.GetPrimaryCharacter() == charID)
+                                    {
+                                        Position pos = tempMove.GetCurrentPosition();
+                                        Console.WriteLine("[Move -> Alert] Move Object DELETED PlayerInParty -> {0}, charID {1} at Loc {2}:{3}", tempMove.PlayerInParty, tempMove.GetPrimaryCharacter(),
+                                            pos.PosX, pos.PosY);
+                                        Active tempActive = Game.world.GetActiveActor(charID);
+                                        if (tempActive != null)
+                                        {
+                                            Game.world.SetMessage(new Message(string.Format("{0} {1}'s journey to {2} has been cancelled", tempActive.Title, tempActive.Name, tempMove.GetDestination()),
+                                              MessageType.Move));
+                                        }
+                                        else { Game.SetError(new Error(175, "Invalid Player (null)")); }
+                                        listMoveObjects.RemoveAt(i);
+                                    }
                                 }
-                                else { Game.SetError(new Error(175, "Invalid Player (null)")); }
-                                listMoveObjects.RemoveAt(i);
+                                //housekeep all move tasks
+                                loc.RemoveActor(charID);
+                                //create new move object
+                                Move moveObject = new Move(path, party, speed, playerInParty, Game.gameTurn);
+                                //insert into moveList
+                                listMoveObjects.Add(moveObject);
+                                //update character status to 'travelling'
+                                person.Status = ActorStatus.Travelling;
+                                //update characterLocationID (now becomes destination)
+                                int locID_Destination = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
+                                person.LocID = locID_Destination;
                             }
+                            else
+                            { returnText = "ERROR: The Journey has been cancelled (Destination not Found)"; }
                         }
-                        //housekeep all move tasks
-                        loc.RemoveActor(charID);
-                        //create new move object
-                        Move moveObject = new Move(path, party, speed, playerInParty, Game.gameTurn);
-                        //insert into moveList
-                        listMoveObjects.Add(moveObject);
-                        //update character status to 'travelling'
-                        person.Status = ActorStatus.Travelling;
-                        //update characterLocationID (now becomes destination)
-                        int locID_Destination = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
-                        person.LocID = locID_Destination;
+                        else
+                        {
+                            //main error conditions
+                            if (person.Status == ActorStatus.Travelling)
+                            { Console.WriteLine("[Move -> Error] {0} {1}, ActID {2}, currently Travelling. Move Cancelled", person.Title, person.Name, person.ActID);
+                                returnText = "ERROR: The Journey has been cancelled (Actor Travelling)"; }
+                            else if (person.Status == ActorStatus.Captured)
+                            { Console.WriteLine("[Move -> Error] {0} {1}, ActID {2}, currently Captured. Move Cancelled", person.Title, person.Name, person.ActID);
+                                returnText = "ERROR: The Journey has been cancelled (Actor Captured)"; }
+                            else if (person.Status == ActorStatus.Gone)
+                            { Console.WriteLine("[Move -> Error] {0} {1}, ActID {2}, is Deceased. Move Cancelled", person.Title, person.Name, person.ActID);
+                                returnText = "ERROR: The Journey has been cancelled (Actor Deceased)"; }
+                            else
+                            { Game.SetError(new Error(175, string.Format("{0} {1}, ActID {2} Status \"{3}\" Unknown. Move Cancelled", person.Title, person.Name, person.ActID, person.Status)));
+                                returnText = "ERROR: The Journey has been cancelled (Actor Status Unknown)"; }
+                        }
                     }
-                    else
-                    { returnText = "ERROR: The Journey has been cancelled (loc is Null)"; }
+                    else { Game.SetError(new Error(175, "Invalid Actor (null) Move Cancelled")); returnText = "ERROR: The Journey has been cancelled (Actor not Found)"; }
                 }
             }
             return returnText;
@@ -3291,6 +3315,24 @@ namespace Next_Game
                 actor.Value.Capture = false;
                 actor.Value.ResetEnemies();
                 actor.Value.ResetSearched();
+                //Player
+                if (actor.Value.ActID == 1)
+                {
+                    //incarcerated?
+                    if (actor.Value.Status == ActorStatus.Captured)
+                    {
+                        actor.Value.Known = true;
+                        actor.Value.Revert = 1;
+                        //raise Legend_King each turn player is held in dungeon
+                        int legendLoss = Game.constant.GetValue(Global.LOSS_OF_LEGEND);
+                        int currentValue = Game.director.GetGameState(DataPoint.Legend_Usurper, DataState.Bad);
+                        int newValue = Math.Abs(Game.director.ChangeData(currentValue, legendLoss , Event_System.EventCalc.Add));
+                        Game.director.SetGameState(DataPoint.Legend_Usurper, DataState.Bad, newValue, true);
+                        //message
+                        string description = string.Format("The Legend of {0} {1} grows (by +{2}) while the Usurper is incarcerated", Game.lore.NewKing.Title, Game.lore.NewKing.Name, legendLoss);
+                        SetMessage(new Message(description, MessageType.Incarceration));
+                    }
+                }
             }
         }
 

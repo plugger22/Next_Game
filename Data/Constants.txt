@@ -147,5 +147,10 @@
 # AI_HUNT_THRESHOLD -> max num of turns since player last known that AI will continue to hunt for player (if within range)
 56: 4 @ 4 @ 12
 
+# Incarceration ---
 
-# Next valid number -> 57
+# LOSS_OF_LEGEND -> amount of increase to 'Good' value of Legend_King each turn the Usurper is held in a dungeon by the King
+57: 1 @ 0 @ 4
+
+
+# Next valid number -> 58

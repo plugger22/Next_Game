@@ -49,13 +49,6 @@ namespace Next_Game.Event_System
                 OptionInteractive option = new OptionInteractive();
                 switch (gameVar)
                 {
-                    /*case GameVar.Invisibility:
-                        oldData = Game.director.GetGameState(DataPoint.Invisibility, state);
-                        //apply change
-                        newData = Math.Abs(Game.director.ChangeData(oldData, amountNum, apply));
-                        //update 
-                        Game.director.SetGameState(DataPoint.Invisibility, state, newData, true);
-                        break;*/
                     case GameVar.Justice:
                         oldData = Game.director.GetGameState(DataPoint.Justice, state);
                         //apply change (positive #)

@@ -12,3 +12,8 @@ Seed 32986 -> Saturday, 25 March 2017 8:56 PM -> testing checkifFoundEnemy chang
 Seed 32986 -> Sunday, 26 March 2017 9:42 AM
 Seed 32986 -> Sunday, 26 March 2017 9:57 AM
 Seed 32986 -> Sunday, 26 March 2017 10:54 AM
+Seed 64899 -> Sunday, 26 March 2017 2:09 PM
+Seed 326 -> Sunday, 26 March 2017 2:10 PM
+Seed 46226 -> Sunday, 26 March 2017 2:11 PM
+Seed 20565 -> Sunday, 26 March 2017 2:11 PM
+Seed 21531 -> Sunday, 26 March 2017 2:18 PM

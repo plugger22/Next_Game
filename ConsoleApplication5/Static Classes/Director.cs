@@ -2446,7 +2446,7 @@ namespace Next_Game
 
 
         /// <summary>
-        /// Set data in arrayOfGameStates
+        /// Set data in arrayOfGameStates -> value is an absolute value, not a modifier. Call GetGameState & ChangeData first.
         /// </summary>
         /// <param name="point"></param>
         /// <param name="state"></param>
@@ -2465,7 +2465,7 @@ namespace Next_Game
                 }
             }
             else
-            { Game.SetError(new Error(75, "Invalid Input (exceeds enum)")); }
+            { Game.SetError(new Error(75, "Invalid DataPoint, or DataState, Input (exceeds enum)")); }
         }
 
         /// <summary>
