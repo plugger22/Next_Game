@@ -902,7 +902,7 @@ namespace Next_Game
             Active player = Game.world.GetActiveActor(1);
             if (player != null)
             {
-                Console.WriteLine("- What to do");
+                Console.WriteLine("- CreateAutoLocEvent");
                 List<Actor> listActors = new List<Actor>();
                 List<Passive> listLocals = new List<Passive>();
                 List<Passive> listAdvisors = new List<Passive>();
@@ -947,7 +947,7 @@ namespace Next_Game
                         if (tempActor != null)
                         {   //exclude player from list (they are always present) & you
                             if (tempActor.ActID != 1)
-                            { listActors.Add(tempActor); Console.WriteLine( "\"{0}\", ID {1} added to list of Actors", tempActor.Name, tempActor.ActID); } 
+                            { listActors.Add(tempActor); Console.WriteLine( " [AutoEvent -> ActorList] \"{0}\", ID {1} added to list of Actors", tempActor.Name, tempActor.ActID); } 
                         }
                         else { Game.SetError(new Error(118, string.Format("Invalid tempActor ID {0} (Null)", actorIDList[i]))); }
                     }
@@ -963,21 +963,21 @@ namespace Next_Game
                             if (tempPassive.RefID == testRefID && !(actor is Advisor))
                             {
                                 if (tempPassive.Type == ActorType.Lord || tempPassive.Age >= 15)
-                                { listLocals.Add(tempPassive); Console.WriteLine(" \"{0}\", ID {1} added to list of Locals", tempPassive.Name, tempPassive.ActID); }
+                                { listLocals.Add(tempPassive); Console.WriteLine(" [AutoEvent -> LocalList] \"{0}\", ID {1} added to list of Locals", tempPassive.Name, tempPassive.ActID); }
                             }
                             else if (actor is Advisor)
-                            { listAdvisors.Add(tempPassive); Console.WriteLine(" \"{0}\", ID {1} added to list of Advisors", tempPassive.Name, tempPassive.ActID); }
+                            { listAdvisors.Add(tempPassive); Console.WriteLine(" [AutoEvent -> AdvisorList] \"{0}\", ID {1} added to list of Advisors", tempPassive.Name, tempPassive.ActID); }
                             else
                             {
                                 if (tempPassive.Age >= 15)
-                                { listVisitors.Add(tempPassive); Console.WriteLine(" \"{0}\", ID {1} added to list of Visitors", tempPassive.Name, tempPassive.ActID); }
+                                { listVisitors.Add(tempPassive); Console.WriteLine(" [AutoEvent -> VisitorList] \"{0}\", ID {1} added to list of Visitors", tempPassive.Name, tempPassive.ActID); }
                             }
                         }
                         else if (actor is Follower)
                         {
                             Follower tempFollower = actor as Follower;
                             listFollowers.Add(tempFollower);
-                            Console.WriteLine(" \"{0}\", ID {1} added to list of Followers", tempFollower.Name, tempFollower.ActID);
+                            Console.WriteLine(" [AutoEvent -> FollowerList] \"{0}\", ID {1} added to list of Followers", tempFollower.Name, tempFollower.ActID);
                         }
                     }
                     //new event (auto location events always have eventPID of '1000' -> old version in Player dict is deleted before new one added)
@@ -1302,7 +1302,7 @@ namespace Next_Game
             {
                 List<int> tempList = new List<int>(); //temp list to hold eventPID of deleted events
                 //check dictionary first
-                Console.WriteLine("- Director Housekeeping");
+                Console.WriteLine("- HouseKeepEvents");
                 int counter = 0;
                 foreach (var eventObject in dictPlayerEvents)
                 {
@@ -1391,7 +1391,7 @@ namespace Next_Game
             List<Event> listEvents = new List<Event>();
             if (listEventID != null)
             {
-                Console.WriteLine("- Get Valid Player Events");
+                Console.WriteLine("- GetValidPlayerEvents");
                 foreach (int eventID in listEventID)
                 {
                     Event eventObject = dictPlayerEvents[eventID];
@@ -1416,14 +1416,13 @@ namespace Next_Game
                                 }
                             }
                         }
+                        else { Console.WriteLine (" Event \"{0}\" has no attached Conditions", eventObject.Name); }
+                        if (proceed == true)
                         {
-                            if (proceed == true)
-                            {
-                                frequency = (int)eventObject.Frequency;
-                                //add # of events to pool equal to (int)EventFrequency
-                                for (int i = 0; i < frequency; i++)
-                                { listEvents.Add(eventObject); }
-                            }
+                            frequency = (int)eventObject.Frequency;
+                            //add # of events to pool equal to (int)EventFrequency
+                            for (int i = 0; i < frequency; i++)
+                            { listEvents.Add(eventObject); }
                         }
                     }
                 }
@@ -1490,7 +1489,7 @@ namespace Next_Game
                 EventPackage package = listFollCurrentEvents[i];
                 if (package.Done == false)
                 {
-                    Console.WriteLine("- Follower Event");
+                    Console.WriteLine("- ResolveFollowerEvents");
                     EventFollower eventObject = (EventFollower)package.EventObject;
                     List<OptionAuto> listOptions = eventObject.GetOptions();
                     //assume only a single option
@@ -1682,7 +1681,7 @@ namespace Next_Game
                 EventPackage package = listPlyrCurrentEvents[i];
                 if (package.Done == false)
                 {
-                    Console.WriteLine("- Player Event");
+                    Console.WriteLine("- ResolvePlayerEvents");
                     EventPlayer eventObject = (EventPlayer)package.EventObject;
                     Active actor = package.Person;
                     Game._eventID = eventObject.EventPID;
@@ -2246,7 +2245,7 @@ namespace Next_Game
                                     cluster.SetFollowerEvents(arcSea.GetEvents());
                                     cluster.Archetype = arcSea.ArcID;
                                     //debug
-                                    Console.WriteLine("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcSea.Name, arcSea.ArcID);
+                                    Console.WriteLine(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcSea.Name, arcSea.ArcID);
                                 }
                             }
                             break;
@@ -2260,7 +2259,7 @@ namespace Next_Game
                                     cluster.SetFollowerEvents(arcMountain.GetEvents());
                                     cluster.Archetype = arcMountain.ArcID;
                                     //debug
-                                    Console.WriteLine("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcMountain.Name, arcMountain.ArcID);
+                                    Console.WriteLine(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcMountain.Name, arcMountain.ArcID);
                                 }
                             }
                             break;
@@ -2274,7 +2273,7 @@ namespace Next_Game
                                     cluster.SetFollowerEvents(arcForest.GetEvents());
                                     cluster.Archetype = arcForest.ArcID;
                                     //debug
-                                    Console.WriteLine("{0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcForest.Name, arcForest.ArcID);
+                                    Console.WriteLine(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcForest.Name, arcForest.ArcID);
                                 }
                             }
                             break;
@@ -2524,7 +2523,7 @@ namespace Next_Game
         /// </summary>
         internal void CheckEventTimers()
         {
-            Console.WriteLine("- Check Event Timers");
+            Console.WriteLine("- CheckEventTimers");
             //PLAYER events
             foreach (var eventObject in dictPlayerEvents)
             {
@@ -2585,7 +2584,7 @@ namespace Next_Game
                 {
                     if (eventObject.Status != newStatus)
                     {
-                        Console.WriteLine("- Change Player Event Status");
+                        Console.WriteLine("- ChangePlayerEventStatus");
                         eventObject.Status = newStatus;
                         resultText = string.Format(" \"{0}\", eventPID {1}, has changed status to \"{2}\"", eventObject.Name, eventObject.EventPID, newStatus);
                         Console.WriteLine(resultText);
@@ -2612,7 +2611,7 @@ namespace Next_Game
             {
                 try
                 {
-                    Console.WriteLine("- Change Player Event Timer");
+                    Console.WriteLine("- ChangePlayerEventTimer");
                     EventPlayer eventObject = GetPlayerEvent(outcome.EventID);
                     int oldValue, newValue;
                     switch (outcome.Timer)

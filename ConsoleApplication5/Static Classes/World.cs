@@ -624,8 +624,8 @@ namespace Next_Game
                     {
                         //known status
                         if (debugMode == true)
-                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12} Goal -> {5}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
-                            enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal); }
+                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12}  Goal -> {5,-8} Branch -> {6}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
+                            enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal, enemy.Value.AssignedBranch); }
                         else
                         { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
                         listOthers.Add(new Snippet(charString, RLColor.White, RLColor.Black));
@@ -3674,8 +3674,8 @@ namespace Next_Game
                                             if ((pair.Value / enemy.Speed) <= (threshold * enemyDM))
                                             { enemy.HuntMode = true; }
                                             else { enemy.HuntMode = false; }
-                                            Console.WriteLine(" [AI -> Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value, threshold,
-                                                enemy.HuntMode == true ? "Hunt" : "Normal");
+                                            Console.WriteLine(" [AI -> Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value, 
+                                                threshold * enemyDM, enemy.HuntMode == true ? "Hunt" : "Normal");
                                         }
                                         else { Game.SetError(new Error(167, string.Format("Invalid enemy, ID {0} (null)", pair.Key))); }
                                     }
@@ -3759,7 +3759,7 @@ namespace Next_Game
                         }
                     }
                     //continue on with existing goal or get a new one?
-                    if (enemy.Value is Inquisitor)
+                    if (enemy.Value is Inquisitor || enemy.Value is Nemesis)
                     {
                         //inquisitors -> if Move then automatic (continues on with Move)
                         if (enemy.Value.Goal != ActorGoal.Move)
