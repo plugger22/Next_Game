@@ -173,20 +173,31 @@ namespace Next_Game
                 //create at capital
                 Game.history.CreateInquisitor(1);
             }
+            //create The Nemesis
+            Game.history.CreateNemesis(1);
             //assign specific enemies to tasks (based on InitialiseAI)
             Console.WriteLine(Environment.NewLine + "--- Assign Enemies");
+            
             foreach (var enemy in dictEnemyActors)
             {
                 enemy.Value.MoveOut = true;
                 enemy.Value.HuntMode = false;
                 for (int i = 0; i <= arrayAI.GetUpperBound(1); i++)
                 {
-                    if (arrayAI[2, i] > 0)
+                    if (enemy.Value is Inquisitor)
                     {
-                        enemy.Value.AssignedBranch = i;
-                        arrayAI[2, i]--;
+                        if (arrayAI[2, i] > 0)
+                        {
+                            enemy.Value.AssignedBranch = i;
+                            arrayAI[2, i]--;
+                            Console.WriteLine(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i);
+                            break;
+                        }
+                    }
+                    else if (enemy.Value is Nemesis)
+                    {
+                        enemy.Value.AssignedBranch = 0;
                         Console.WriteLine(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i);
-                        break;
                     }
                 }
             }
@@ -3578,7 +3589,7 @@ namespace Next_Game
         {
             int threshold = Game.constant.GetValue(Global.AI_HUNT_THRESHOLD); //max # turns since Player last known that AI will continue to hunt
             int knownStatus = GetActiveActorTrackingStatus(1); //if '0' then Known, if > 0 then # of days since last known
-            int playerLocID, distance;
+            int playerLocID, distance, enemyDM;
             int turnsToDestination = 0; //# of turns for Player to reach their destination if travelling (used to adjust threshold)
             Console.WriteLine("- UpdateAIController");
             //get player
@@ -3656,8 +3667,11 @@ namespace Next_Game
                                         Enemy enemy = (Enemy)GetAnyActor(pair.Key);
                                         if (enemy != null)
                                         {
+                                            //set nemesis to have double the normal threshold (will hunt at twice the distance from the player than an inquisitor)
+                                            enemyDM = 1;
+                                            if (enemy is Nemesis) { enemyDM = 2; }
                                             //can enemy reach player loc within threshold time? (distance / speed = # of turns <= threshold # of turns allowed
-                                            if (pair.Value / enemy.Speed <= threshold)
+                                            if ((pair.Value / enemy.Speed) <= (threshold * enemyDM))
                                             { enemy.HuntMode = true; }
                                             else { enemy.HuntMode = false; }
                                             Console.WriteLine(" [AI -> Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value, threshold,
@@ -4236,9 +4250,14 @@ namespace Next_Game
                                                         //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
                                                         if (active.AddEnemy(enemy.Value.ActID) == true)
                                                         {
-                                                            active.Revert = known_revert; active.Capture = true;
+                                                            active.Revert = known_revert;
                                                             description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
-                                                                enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
+                                                                    enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
+                                                            if (enemy.Value.Activated == true)
+                                                            {
+                                                                //only activated enemies can capture (Inquisitors ae always activated, Nemesis only if the gods are angry)
+                                                                active.Capture = true;
+                                                            }
                                                             Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
                                                             SetPlayerRecord(record);
                                                             SetMessage(new Message(description, MessageType.Search));
@@ -4258,12 +4277,16 @@ namespace Next_Game
                                                 //can only be captured (assumed to be Known)
                                                 if (active.AddEnemy(enemy.Value.ActID) == true)
                                                 {
-                                                    active.Known = true; active.Revert = known_revert;
-                                                    description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
-                                                        enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
-                                                    Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
-                                                    SetCurrentRecord(record);
-                                                    SetMessage(new Message(description, MessageType.Search));
+                                                    
+                                                    if (enemy.Value is Inquisitor)
+                                                    {
+                                                        active.Known = true; active.Revert = known_revert;
+                                                        description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
+                                                            enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
+                                                        Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
+                                                        SetCurrentRecord(record);
+                                                        SetMessage(new Message(description, MessageType.Search));
+                                                    }
                                                 }
                                             }
                                         }
@@ -4389,9 +4412,14 @@ namespace Next_Game
                                                         //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
                                                         if (active.Value.AddEnemy(enemy.ActID) == true)
                                                         {
-                                                            active.Value.Revert = known_revert; active.Value.Capture = true;
-                                                            description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, active.Value.ActID,
-                                                                enemy.Title, enemy.Name, enemy.ActID, locName);
+                                                            active.Value.Revert = known_revert;
+                                                            description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, 
+                                                                active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
+                                                            if (enemy.Activated == true)
+                                                            {
+                                                                //only activated enemies can capture (Inquisitors are always activated, Nemesis only when gods are angry)
+                                                                 active.Value.Capture = true;
+                                                            }
                                                             Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
                                                             SetPlayerRecord(record);
                                                             SetMessage(new Message(description, MessageType.Search));
@@ -4411,12 +4439,15 @@ namespace Next_Game
                                                 //can only be captured (assumed to be Known)
                                                 if (active.Value.AddEnemy(enemy.ActID) == true)
                                                 {
-                                                    active.Value.Known = true; active.Value.Revert = known_revert; active.Value.Capture = true;
-                                                    description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, active.Value.ActID,
-                                                        enemy.Title, enemy.Name, enemy.ActID, locName);
-                                                    Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
-                                                    SetCurrentRecord(record);
-                                                    SetMessage(new Message(description, MessageType.Search));
+                                                    if (enemy is Inquisitor)
+                                                    {
+                                                        active.Value.Known = true; active.Value.Revert = known_revert; active.Value.Capture = true;
+                                                        description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, active.Value.ActID,
+                                                            enemy.Title, enemy.Name, enemy.ActID, locName);
+                                                        Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
+                                                        SetCurrentRecord(record);
+                                                        SetMessage(new Message(description, MessageType.Search));
+                                                    }
                                                 }
                                             }
                                         }
@@ -4531,9 +4562,8 @@ namespace Next_Game
             //copy finalised data from range 1 to range 2 (temp data used for assigning enemies in InitialiseEnemyActors)
             for (int i = 0; i <= arrayAI.GetUpperBound(1); i++)
             { arrayAI[2, i] = arrayAI[1, i]; }
-
-                //display arrayAI
-                Console.WriteLine(Environment.NewLine + "--- Array AI");
+            //display arrayAI
+            Console.WriteLine(Environment.NewLine + "--- Array AI");
             for(int i = 0; i <= arrayAI.GetUpperBound(1); i++)
             { Console.WriteLine(" {0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i], 
                 arrayTemp[i]); }
@@ -4601,124 +4631,118 @@ namespace Next_Game
                 Enemy enemy = GetEnemyActor(enemyID);
                 if (enemy != null)
                 {
-                    //assign nearest major House / capital locID as the place where the player is held
-                    int heldLocID = 0;
-                    int tempRefID = 0;
-                    int refID = 0;
-                    if (player.LocID == 1) { tempRefID = 9999; Console.WriteLine(" [Captured] dungeon -> Capital"); }
-                    else
+                    if (enemy is Inquisitor)
                     {
-                        Location loc = Game.network.GetLocation(player.LocID);
-                        if (loc != null)
+                        //assign nearest major House / capital locID as the place where the player is held
+                        int heldLocID = 0;
+                        int tempRefID = 0;
+                        int refID = 0;
+                        if (player.LocID == 1) { tempRefID = 9999; Console.WriteLine(" [Captured] dungeon -> Capital"); }
+                        else
                         {
-                            //not at Capital -> At Major House?
-                            House house = GetHouse(loc.RefID);
-                            if (house != null)
+                            Location loc = Game.network.GetLocation(player.LocID);
+                            if (loc != null)
                             {
-                                if ((house is MajorHouse) == false)
+                                //not at Capital -> At Major House?
+                                House house = GetHouse(loc.RefID);
+                                if (house != null)
                                 {
-                                    //find nearest Major house/Capital moving Inwards
-                                    List<Route> routeToCapital = loc.GetRouteToCapital();
-                                    List<Position> pathToCapital = routeToCapital[0].GetPath();
-                                    int distIn = 0; int refIn = 0;
-                                    for (int i = 0; i < pathToCapital.Count; i++)
+                                    if ((house is MajorHouse) == false)
                                     {
-                                        Position pos = pathToCapital[i];
-                                        if (pos != null)
+                                        //find nearest Major house/Capital moving Inwards
+                                        List<Route> routeToCapital = loc.GetRouteToCapital();
+                                        List<Position> pathToCapital = routeToCapital[0].GetPath();
+                                        int distIn = 0; int refIn = 0;
+                                        for (int i = 0; i < pathToCapital.Count; i++)
                                         {
-                                            refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
-                                            if (refID > 0)
+                                            Position pos = pathToCapital[i];
+                                            if (pos != null)
                                             {
-                                                if (refID == 9999 || refID < 100)
-                                                { refIn = refID; distIn = i; break; }
-                                            }
-                                        }
-                                    }
-                                    //find nearest Major house moving Outwards
-                                    /*List<Route> routeToConnector = loc.GetRouteToConnector();
-                                    List<Position> pathToConnector = routeToConnector[0].GetPath();
-                                    int distOut = 0; int refOut = 0;
-                                    for (int i = 0; i < pathToConnector.Count; i++)
-                                    {
-                                        Position pos = pathToConnector[i];
-                                        if (pos != null)
-                                        {
-                                            refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
-                                            if (refID > 0 && refID < 100)
-                                            { refOut = refID; distOut = i; break; }
-                                        }
-                                    }*/
-                                    int branch = loc.GetBranch();
-                                    List<Location> listBranchLocs = Game.network.GetBranchLocs(branch);
-                                    int distOut = 0; int refOut = 0;
-                                    int playerLocIndex = -1;
-                                    if (listBranchLocs != null && listBranchLocs.Count > 0)
-                                    {
-                                        //loop through list and find player's current location
-                                        for(int i = 0; i < listBranchLocs.Count; i++)
-                                        {
-                                            if (listBranchLocs[i].LocationID == player.LocID)
-                                            { playerLocIndex = i; break; }
-                                        }
-                                        //found Player's loc in the list?
-                                        if (playerLocIndex > -1)
-                                        {
-                                            //loop through branch list starting from player's current loc, moving outwards (redundantly start at player's current loc to avoid possible index overshoot)
-                                            for (int i = playerLocIndex; i < listBranchLocs.Count; i++)
-                                            {
-                                                House tempHouse = GetHouse(listBranchLocs[i].RefID);
-                                                if (tempHouse is MajorHouse)
+                                                refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
+                                                if (refID > 0)
                                                 {
-                                                    //found the first Major House along
-                                                    distOut = listBranchLocs[i].DistanceToCapital - loc.DistanceToCapital;
-                                                    refOut = listBranchLocs[i].RefID;
-                                                    //need to check the actual distance as it could be on a seperate branch and be much further than initially assumed
-                                                    List<Route> route = Game.network.GetRouteAnywhere(loc.GetPosition(), listBranchLocs[i].GetPosition());
-                                                    int checkDistance = Game.network.GetDistance(route);
-                                                    if (checkDistance > distOut)
-                                                    {
-                                                        Console.WriteLine(" [Captured -> CheckDistance] distOut increased from {0} to {1}", distOut, checkDistance);
-                                                        distOut = checkDistance;
-                                                    }
-                                                    break;
+                                                    if (refID == 9999 || refID < 100)
+                                                    { refIn = refID; distIn = i; break; }
                                                 }
                                             }
                                         }
-                                        else { Game.SetError(new Error(174, "Player's Loc not found in search through listBranchLocs.Search outwards Cancelled")); }
+                                        //find nearest Major house moving Outwards
+                                        int branch = loc.GetBranch();
+                                        List<Location> listBranchLocs = Game.network.GetBranchLocs(branch);
+                                        int distOut = 0; int refOut = 0;
+                                        int playerLocIndex = -1;
+                                        if (listBranchLocs != null && listBranchLocs.Count > 0)
+                                        {
+                                            //loop through list and find player's current location
+                                            for (int i = 0; i < listBranchLocs.Count; i++)
+                                            {
+                                                if (listBranchLocs[i].LocationID == player.LocID)
+                                                { playerLocIndex = i; break; }
+                                            }
+                                            //found Player's loc in the list?
+                                            if (playerLocIndex > -1)
+                                            {
+                                                //loop through branch list starting from player's current loc, moving outwards (redundantly start at player's current loc to avoid possible index overshoot)
+                                                for (int i = playerLocIndex; i < listBranchLocs.Count; i++)
+                                                {
+                                                    House tempHouse = GetHouse(listBranchLocs[i].RefID);
+                                                    if (tempHouse is MajorHouse)
+                                                    {
+                                                        //found the first Major House along
+                                                        distOut = listBranchLocs[i].DistanceToCapital - loc.DistanceToCapital;
+                                                        refOut = listBranchLocs[i].RefID;
+                                                        //need to check the actual distance as it could be on a seperate branch and be much further than initially assumed
+                                                        List<Route> route = Game.network.GetRouteAnywhere(loc.GetPosition(), listBranchLocs[i].GetPosition());
+                                                        int checkDistance = Game.network.GetDistance(route);
+                                                        if (checkDistance > distOut)
+                                                        {
+                                                            Console.WriteLine(" [Captured -> CheckDistance] distOut increased from {0} to {1}", distOut, checkDistance);
+                                                            distOut = checkDistance;
+                                                        }
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            else { Game.SetError(new Error(174, "Player's Loc not found in search through listBranchLocs.Search outwards Cancelled")); }
+                                        }
+                                        else { Game.SetError(new Error(174, "Invalid listBranchLocs (Null or Zero Count) Search outwards cancelled")); }
+                                        //Compare in and out and find closest, favouring inwards (if equal distance)
+                                        if (refIn > 0 && refOut == 0) { tempRefID = refIn; Console.WriteLine(" [Captured] dungeon -> In (no out)"); }
+                                        else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Console.WriteLine(" [Captured] dungeon -> Out (no in)"); }
+                                        else if (distIn <= distOut) { tempRefID = refIn; Console.WriteLine(" [Captured] dungeon -> In (distance <= out)"); }
+                                        else if (distIn > distOut) { tempRefID = refOut; Console.WriteLine(" [Captured] dungeon -> Out (distance < in)"); }
+                                        else
+                                        {
+                                            Game.SetError(new Error(174, string.Format("Unable to get a valid dungeon loc, refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3}, default to Capital",
+                                            refIn, distIn, refOut, distOut)));
+                                        }
+                                        Console.WriteLine(" [Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempRefID -> {4}",
+                                            refIn, distIn, refOut, distOut, tempRefID);
                                     }
-                                    else { Game.SetError(new Error(174, "Invalid listBranchLocs (Null or Zero Count) Search outwards cancelled")); }
-                                    //Compare in and out and find closest, favouring inwards (if equal distance)
-                                    if (refIn > 0 && refOut == 0) { tempRefID = refIn; Console.WriteLine(" [Captured] dungeon -> In (no out)"); }
-                                    else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Console.WriteLine(" [Captured] dungeon -> Out (no in)"); }
-                                    else if (distIn <= distOut) { tempRefID = refIn; Console.WriteLine(" [Captured] dungeon -> In (distance <= out)"); }
-                                    else if (distIn > distOut) { tempRefID = refOut; Console.WriteLine(" [Captured] dungeon -> Out (distance < in)"); }
-                                    else
-                                    {
-                                     Game.SetError(new Error(174, string.Format("Unable to get a valid dungeon loc, refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3}, default to Capital",
-                                     refIn, distIn, refOut, distOut)));
-                                    }
-                                    Console.WriteLine(" [Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempRefID -> {4}",
-                                        refIn, distIn, refOut, distOut, tempRefID);
+                                    else { Console.WriteLine(" [Captured] Major House dungeon"); }
                                 }
-                                else { Console.WriteLine(" [Captured] Major House dungeon"); }
+                                else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from player.LocID \"{0}\"", player.LocID))); }
                             }
-                            else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from player.LocID \"{0}\"", player.LocID))); }
+                            else { Game.SetError(new Error(174, string.Format("Invalid Location returned (null) from player.LocID \"{0}\"", player.LocID))); }
                         }
-                        else { Game.SetError(new Error(174, string.Format("Invalid Location returned (null) from player.LocID \"{0}\"", player.LocID))); }
+                        //found a dungeon?
+                        if (tempRefID > 0)
+                        { heldLocID = GetLocID(tempRefID); }
+                        else { Game.SetError(new Error(174, "Unable to find a suitable location for Incarceration -> Default to KingsKeep")); heldLocID = 1; }
+                        //update Player LocID (dungeon), set Known to true (should be already)
+                        player.LocID = heldLocID;
+                        player.Known = true;
+                        //administration
+                        string description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID,
+                            GetLocationName(heldLocID));
+                        SetMessage(new Message(description, MessageType.Search));
+                        SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
+                        SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
                     }
-                    //found a dungeon?
-                    if (tempRefID > 0)
-                    { heldLocID = GetLocID(tempRefID); }
-                    else { Game.SetError(new Error(174, "Unable to find a suitable location for Incarceration -> Default to KingsKeep")); heldLocID = 1; }
-                    //update Player LocID (dungeon), set Known to true (should be already)
-                    player.LocID = heldLocID;
-                    player.Known = true;
-                    //administration
-                    string description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID,
-                        GetLocationName(heldLocID));
-                    SetMessage(new Message(description, MessageType.Search));
-                    SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
-                    SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
+                    else if (enemy is Nemesis)
+                    {
+                        //Nemsis capturing Player logic goes here -> TODO
+                    }
                 }
                 else { Game.SetError(new Error(174, "Invalid Enemy (null)")); }
             }

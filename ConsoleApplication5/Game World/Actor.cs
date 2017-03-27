@@ -819,6 +819,7 @@ namespace Next_Game
 
     public class Enemy : Actor
     {
+        public bool Activated { get; set; } //Nemesis set to false at start, Inquisitor set to true. Can't capture unless activated.
         public bool Known { get; set; } = false; //known or unknown?
         public int Revert { get; set; } //# of turns before Known status reverts to unknown
         public int LastKnownLocID { get; set; } //last known locId (could be destination if moving) -> updated every turn that actor is known
@@ -851,6 +852,7 @@ namespace Next_Game
         {
             Name = "Brother " + name;
             Threat = 1;
+            Activated = true;
         }
     }
 
@@ -859,11 +861,13 @@ namespace Next_Game
     /// </summary>
     public class Nemesis : Enemy
     {
+        
 
         public Nemesis(string name, ActorType type = ActorType.Nemesis, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
             this.Name = name;
             Threat = 2;
+            Activated = false;
         }
 
     }

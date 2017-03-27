@@ -424,7 +424,7 @@ namespace Next_Game
                 {
                     int ageYears = rnd.Next(25, 65);
                     Inquisitor inquisitor = new Inquisitor(name) { Age = ageYears, Born = Game.gameYear - ageYears };
-                    InitialiseInquisitorTraits(inquisitor);
+                    InitialiseEnemyTraits(inquisitor);
                     //assign to the capital
                     Location loc = Game.network.GetLocation(locID);
                     if (loc != null)
@@ -453,6 +453,59 @@ namespace Next_Game
                         loc.AddActor(inquisitor.ActID);
                         //add actor to relevant dictionaries (All and Enemies)
                         Game.world.AddEnemyActor(inquisitor);
+                    }
+                    else { Game.SetError(new Error(152, "Invalid Loc (null)")); }
+                }
+            }
+            else { Game.SetError(new Error(152, "Invalid locID (zero or less")); }
+        }
+
+        /// <summary>
+        /// create the Nemesis
+        /// </summary>
+        public void CreateNemesis(int locID)
+        {
+            if (locID > 0)
+            {
+                int refID = Game.world.GetRefID(locID);
+                //create new inquisitor -> random name
+                string name = "The Relentless";
+                if (String.IsNullOrEmpty(name) == false)
+                {
+                    int ageYears = rnd.Next(65, 105);
+                    Nemesis nemesis = new Nemesis(name) { Age = ageYears, Born = Game.gameYear - ageYears };
+                    InitialiseEnemyTraits(nemesis);
+                    //assign to the capital
+                    Location loc = Game.network.GetLocation(locID);
+                    if (loc != null)
+                    {
+                        //handle (overides the trait derived one)
+                        nemesis.Handle = "Who Cannot be Named";
+
+                        //set up status
+                        nemesis.Known = false;
+                        nemesis.TurnsUnknown = 1;
+                        //wait if at capital, move if assigned to a branch
+                        if (nemesis.AssignedBranch == 0) { nemesis.Goal = ActorGoal.Wait; }
+                        else { nemesis.Goal = ActorGoal.Move; }
+                        nemesis.LastKnownLocID = locID;
+                        nemesis.LastKnownPos = loc.GetPosition();
+                        nemesis.LastKnownGoal = ActorGoal.Wait;
+                        //relationship
+                        nemesis.AddRelEventPlyr(new Relation("Answers only to the Gods", "Irrelevant", -50));
+                        nemesis.AddRelEventLord(new Relation("Answers only to the Gods", "Irrelevant", -50));
+                        //personal history
+                        int year = Game.gameRevolt;
+                        string description = string.Format("{0}, ActID {1}, was created in the image of Man by the Gods above", nemesis.Name, nemesis.ActID);
+                        Record record = new Record(description, nemesis.ActID, locID, refID, year,
+                            HistActorIncident.Service);
+                        Game.world.SetHistoricalRecord(record);
+                        //place characters at Location
+                        nemesis.LocID = locID;
+                        nemesis.SetActorPosition(loc.GetPosition());
+                        loc.AddActor(nemesis.ActID);
+                        //add actor to relevant dictionaries (All and Enemies)
+                        Game.world.AddEnemyActor(nemesis);
                     }
                     else { Game.SetError(new Error(152, "Invalid Loc (null)")); }
                 }
@@ -1217,34 +1270,68 @@ namespace Next_Game
         /// sets up custom Inquistor traits (all positive except leadership which is neutral and charm which is negative)
         /// </summary>
         /// <param name="inquisitor"></param>
-        public void InitialiseInquisitorTraits(Inquisitor inquisitor)
+        public void InitialiseEnemyTraits(Enemy enemy)
         {
-            if (inquisitor != null)
+            if (enemy is Inquisitor)
             {
-                List<string> tempHandles = new List<string>();
-                //Combat
-                int rndRange = arrayOfTraits[(int)SkillType.Combat, (int)inquisitor.Sex].Length;
-                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Combat, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                //Wits
-                rndRange = arrayOfTraits[(int)SkillType.Wits, (int)inquisitor.Sex].Length;
-                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Wits, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                //Charm
-                rndRange = arrayOfTraits[(int)SkillType.Charm, (int)inquisitor.Sex].Length;
-                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Charm, SkillAge.Fifteen, rndRange, rndRange / 2, rndRange));
-                //Treachery
-                rndRange = arrayOfTraits[(int)SkillType.Treachery, (int)inquisitor.Sex].Length;
-                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Treachery, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                //Leadership
-                rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)inquisitor.Sex].Length;
-                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, rndRange));
-                //Touched
-                rndRange = arrayOfTraits[(int)SkillType.Touched, (int)inquisitor.Sex].Length;
-                tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Touched, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                //choose NickName (handle)
-                if (tempHandles.Count > 0)
-                { inquisitor.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
+                Inquisitor inquisitor = enemy as Inquisitor;
+                if (inquisitor != null)
+                {
+                    List<string> tempHandles = new List<string>();
+                    //Combat
+                    int rndRange = arrayOfTraits[(int)SkillType.Combat, (int)inquisitor.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Combat, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                    //Wits
+                    rndRange = arrayOfTraits[(int)SkillType.Wits, (int)inquisitor.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Wits, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                    //Charm
+                    rndRange = arrayOfTraits[(int)SkillType.Charm, (int)inquisitor.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Charm, SkillAge.Fifteen, rndRange, rndRange / 2, rndRange));
+                    //Treachery
+                    rndRange = arrayOfTraits[(int)SkillType.Treachery, (int)inquisitor.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Treachery, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                    //Leadership
+                    rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)inquisitor.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, rndRange));
+                    //Touched
+                    rndRange = arrayOfTraits[(int)SkillType.Touched, (int)inquisitor.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Touched, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                    //choose NickName (handle)
+                    if (tempHandles.Count > 0)
+                    { inquisitor.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
+                }
+                else { Game.SetError(new Error(154, "Invalid Inquisitor (null)")); }
             }
-            else { Game.SetError(new Error(154, "Invalid Inquisitor (null)")); }
+            else if (enemy is Nemesis)
+            {
+                Nemesis nemesis = enemy as Nemesis;
+                if (nemesis != null)
+                {
+                    List<string> tempHandles = new List<string>();
+                    //Combat
+                    int rndRange = arrayOfTraits[(int)SkillType.Combat, (int)nemesis.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Combat, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                    //Wits
+                    rndRange = arrayOfTraits[(int)SkillType.Wits, (int)nemesis.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Wits, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                    //Charm
+                    rndRange = arrayOfTraits[(int)SkillType.Charm, (int)nemesis.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Charm, SkillAge.Fifteen, rndRange, rndRange / 2, rndRange));
+                    //Treachery
+                    rndRange = arrayOfTraits[(int)SkillType.Treachery, (int)nemesis.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Treachery, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                    //Leadership
+                    rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)nemesis.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, rndRange));
+                    //Touched
+                    rndRange = arrayOfTraits[(int)SkillType.Touched, (int)nemesis.Sex].Length;
+                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Touched, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
+                    //choose NickName (handle)
+                    if (tempHandles.Count > 0)
+                    { nemesis.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
+                }
+                else { Game.SetError(new Error(154, "Invalid nemesis (null)")); }
+            }
         }
 
         /// <summary>
