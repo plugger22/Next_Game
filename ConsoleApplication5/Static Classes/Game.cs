@@ -120,34 +120,44 @@ namespace Next_Game
             constant = new Constant();
             utility = new Utility();
             logStart = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogStart.txt");
-            file = new FileImport("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/");
-            file.GetConstants("Constants.txt");
-            InitialiseGameVariables();
-            timer_1.Start();
-            map = new Map(mapSize, seed);
-            map.InitialiseMap(constant.GetValue(Global.MAP_FREQUENCY), constant.GetValue(Global.MAP_SPACING));
-            StopTimer(timer_1, "Map Initialisation");
-            timer_1.Start();
-            network = new Network(seed);
-            network.InitialiseNetwork();
-            StopTimer(timer_1, "Network Initialisation");
-            lore = new Lore(seed);
-            timer_1.Start();
-            history = new History(seed);
-            history.InitialiseHistory(network.GetNumUniqueHouses());
-            //history.CreatePlayerActors(6);
-            StopTimer(timer_1, "History Initialisation");
-            world = new World(seed);
-            world.InitialiseWorld();
-            infoChannel = new InfoChannel();
-            timer_1.Start();
-            director = new Director(seed);
-            director.InitialiseDirector();
-            StopTimer(timer_1, "Director Initialisation");
-            world.ShowGeneratorStatsRL();
-            Message message = new Message($"Game world created with seed {seed}", MessageType.System);
-            world.SetMessage(message);
-            logStart.Dispose();
+            try
+            {
+                //game initialisation -> logStart
+                file = new FileImport("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/");
+                file.GetConstants("Constants.txt");
+                InitialiseGameVariables();
+                timer_1.Start();
+                map = new Map(mapSize, seed);
+                map.InitialiseMap(constant.GetValue(Global.MAP_FREQUENCY), constant.GetValue(Global.MAP_SPACING));
+                StopTimer(timer_1, "Map Initialisation");
+                timer_1.Start();
+                network = new Network(seed);
+                network.InitialiseNetwork();
+                StopTimer(timer_1, "Network Initialisation");
+                lore = new Lore(seed);
+                timer_1.Start();
+                history = new History(seed);
+                history.InitialiseHistory(network.GetNumUniqueHouses());
+                //history.CreatePlayerActors(6);
+                StopTimer(timer_1, "History Initialisation");
+                world = new World(seed);
+                world.InitialiseWorld();
+                infoChannel = new InfoChannel();
+                timer_1.Start();
+                director = new Director(seed);
+                director.InitialiseDirector();
+                StopTimer(timer_1, "Director Initialisation");
+                world.ShowGeneratorStatsRL();
+                Message message = new Message($"Game world created with seed {seed}", MessageType.System);
+                world.SetMessage(message);
+            }
+            catch(Exception e)
+            { Console.WriteLine(e.Message); }
+            finally
+            {
+                //tidy up before crash
+                logStart.Dispose();
+            }
             world.ProcessStartGame();
             //layout & conflict
             layout = new Layout(seed, 130, 100, 2, 3, RLColor.Black, RLColor.Yellow);

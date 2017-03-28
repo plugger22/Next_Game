@@ -1,5 +1,69 @@
-//Exile Game Initialisation commenced at: 28/03/2017 14:23:57
-Great House Florent removed
-Great House Tully removed
-//Exile Game Initialisation completed at: 28/03/2017 14:23:57
-//Elapsed Time 561 ms
+//Exile Game Initialisation commenced at: 28/03/2017 15:20:50
+---  InitialiseMajorHouses (History.cs) ---
+Great House Martell removed
+Great House Baratheon removed
+-0-
+Major House Lannister added at Casterly Rock, RefID 2 ArcID 14
+Major House Florent added at Brightwater Keep, RefID 4 ArcID 12
+Major House Greyjoy added at Pyke, RefID 5 ArcID 17
+Major House Arryn added at Eyrie, RefID 6 ArcID 16
+Major House Stark added at Winterfell, RefID 8 ArcID 11
+Major House Tully added at Riverrun, RefID 9 ArcID 13
+Major House Tyrell added at Highgarden, RefID 10 ArcID 20
+Major House Targaryen added at Valyria, RefID 11 ArcID 21
+---  InitialiseGeoClusters (History.cs) ---
+30 Geoclusters initialised
+---  InitialisePlayer (History.cs) ---
+Usurper William Tell, ActID William Tell, Resources 1
+---  InitialiseCapital (History.cs) ---
+CapitalWalls 5, CapitalTreasury 3
+---  InitialiseFollowers (History.cs) ---
+The Viper, Aid 2, FID 3, "Assassin" Loyalty 55
+The Leper, Aid 3, FID 4, "Beggar" Loyalty 55
+The Beast, Aid 4, FID 7, "Enforcer" Loyalty 95
+The Crone, Aid 5, FID 8, "Old Woman" Loyalty 58
+The Duchess, Aid 6, FID 6, "Seductress" Loyalty 75
+The Dark Eminence, Aid 7, FID 5, "Manipulator" Loyalty 35
+The Waif, Aid 8, FID 10, "Lost Child" Loyalty 57
+The Haggler, Aid 9, FID 9, "Merchant" Loyalty 56
+---  UpdateHouses (Network.cs) ---
+- Initialise BannerLords for House Lannister
+- Initialise BannerLords for House Florent
+Minor House Westerling added at The Crag, RefID 132 LocID 3 ArcID 0
+Minor House Bracken added at Stone Hedge, RefID 103 LocID 5 ArcID 0
+- Initialise BannerLords for House Greyjoy
+Minor House Botley added at Lordsport, RefID 102 LocID 11 ArcID 0
+Minor House Yronwood added at Yronwood Castle, RefID 135 LocID 12 ArcID 0
+Minor House Redwyne added at The Arbor, RefID 126 LocID 7 ArcID 0
+Minor House Fowler added at Skyreach, RefID 112 LocID 9 ArcID 0
+Minor House Glover added at Deepwood Motte, RefID 114 LocID 13 ArcID 0
+Minor House Frey added at The Twins, RefID 113 LocID 8 ArcID 0
+Minor House Karstark added at Karhold, RefID 119 LocID 10 ArcID 0
+- Initialise BannerLords for House Arryn
+Minor House Estermont added at Greenstone, RefID 111 LocID 35 ArcID 0
+Minor House Bolton added at Dreadfort, RefID 101 LocID 37 ArcID 0
+Minor House Clegane added at Clegane's Keep, RefID 107 LocID 38 ArcID 0
+- Initialise BannerLords for House Stark
+Minor House Ambrose added at Blackwater, RefID 100 LocID 22 ArcID 0
+Minor House Mullendore added at Uplands, RefID 123 LocID 21 ArcID 0
+Minor House Hornwood added at Hornwood, RefID 117 LocID 23 ArcID 0
+Minor House Flint added at Widow's Watch, RefID 136 LocID 24 ArcID 0
+- Initialise BannerLords for House Tully
+Minor House Mooton added at Maidenpool, RefID 121 LocID 26 ArcID 0
+Minor House Tarly added at Horn Hill, RefID 129 LocID 32 ArcID 0
+Minor House Wull added at Sodhall, RefID 133 LocID 34 ArcID 0
+- Initialise BannerLords for House Tyrell
+Minor House Peake added at Starpike, RefID 134 LocID 28 ArcID 0
+Minor House Codd added at Fishfork, RefID 108 LocID 29 ArcID 0
+Minor House Hightower added at Oldtown, RefID 116 LocID 30 ArcID 0
+Minor House Umber added at Last Hearth, RefID 131 LocID 31 ArcID 0
+- Initialise BannerLords for House Targaryen
+Minor House Caron added at Nightsong, RefID 105 LocID 16 ArcID 0
+Minor House Tarth added at Evenfall, RefID 130 LocID 19 ArcID 0
+Minor House Cerwyn added at Cerwyn, RefID 106 LocID 18 ArcID 0
+--- InitialiseSpecialHouse (History.cs) ---
+"The Raucous Rat" Inn initialised, RefID 1001, LocID 2, HouseID 99
+"One Eyed Pete's" Inn initialised, RefID 1006, LocID 15, HouseID 99
+"The Pickled Prune" Inn initialised, RefID 1005, LocID 25, HouseID 99
+//Exile Game Initialisation completed at: 28/03/2017 15:20:51
+//Elapsed Time 553 ms

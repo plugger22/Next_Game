@@ -2012,6 +2012,7 @@ namespace Next_Game.Cartographic
         /// <param name="listOfHouses"></param>
         internal void UpdateHouses(List<MajorHouse> listOfHouses)
         {
+            Game.logStart.Write("---  UpdateHouses (Network.cs) ---");
             //List<House> returnListOfHouses = listOfHouses;
             Console.WriteLine();
             //set up a quick list for randomly assigning houses to houseID's
@@ -2054,6 +2055,7 @@ namespace Next_Game.Cartographic
                     house.LocID = capitalLocID;
                     house.Branch = loc.GetBranch();
                     //update all house locations for house
+                    Game.logStart.Write(string.Format("- Initialise BannerLords for House {0}", house.Name));
                     for (int k = 0; k < listIndividualHouseLocID[houseID].Count; k++)
                     {
                         locID = listIndividualHouseLocID[houseID][k];

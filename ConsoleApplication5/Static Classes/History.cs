@@ -130,6 +130,7 @@ namespace Next_Game
         /// <param name="numHousesRequired">Will thin out surplus houses if required</param>
         private void InitialiseMajorHouses(int numHousesRequired)
         {
+            Game.logStart.Write("---  InitialiseMajorHouses (History.cs) ---");
             //remove surplus houses from pool
             int count = listHousePool.Count;
             int index = 0;
@@ -142,7 +143,7 @@ namespace Next_Game
                 listHousePool.RemoveAt(index);
                 count = listHousePool.Count;
             }
-            Console.WriteLine();
+            Game.logStart.Write("-0-");
             //loop through structures and initialise House classes
             for (int i = 0; i < listHousePool.Count; i++)
             {
@@ -160,7 +161,7 @@ namespace Next_Game
                 house.Resources = rnd.Next(1, 5);
                 //add house to listOfHouses
                 listOfMajorHouses.Add(house);
-                //Console.WriteLine("House {0} added to listOfGreatHouses", house.Name);
+                Game.logStart.Write(string.Format("Major House {0} added at {1}, RefID {2} ArcID {3}", house.Name, house.LocName, house.RefID, house.ArcID));
             }
         }
 
@@ -171,6 +172,7 @@ namespace Next_Game
         /// <param name="houseID"></param>
         public void InitialiseMinorHouse(int locID, int houseID)
         {
+            
             //get random minorhouse
             int index = rnd.Next(0, listHousePool.Count);
             MinorHouse house = new MinorHouse();
@@ -201,6 +203,7 @@ namespace Next_Game
                 house.Branch = loc.GetBranch();
             }
             else { Game.SetError(new Error(61, "Invalid Loc (null)")); }
+            Game.logStart.Write(string.Format("Minor House {0} added at {1}, RefID {2} LocID {3} ArcID {4}", house.Name, house.LocName, house.RefID, house.LocID, house.ArcID));
         }
 
         /// <summary>
@@ -210,7 +213,7 @@ namespace Next_Game
         {
             List<Location> listLocations = Game.network.GetLocationsList();
             int index;
-
+            Game.logStart.Write("--- InitialiseSpecialHouse (History.cs) ---");
             //NOTE: Assumes at present the only special house type is an Inn 
 
             //loop locations looking for specials (houseID = 99)
@@ -236,7 +239,7 @@ namespace Next_Game
                     //add house to listOfHouses
                     listOfSpecialHouses.Add(specialInn);
                     Game.world.AddOtherHouse(specialInn);
-                    Console.WriteLine("\"{0}\" Inn initialised, RefID {1}, LocID {2}, HouseID {3}", specialInn.Name, specialInn.RefID, specialInn.LocID, specialInn.HouseID);
+                    Game.logStart.Write(string.Format("\"{0}\" Inn initialised, RefID {1}, LocID {2}, HouseID {3}", specialInn.Name, specialInn.RefID, specialInn.LocID, specialInn.HouseID));
                     //remove minorhouse from pool list to avoid being chosen again
                     listSpecialHousePool.RemoveAt(index);
                     //update location details
@@ -251,6 +254,7 @@ namespace Next_Game
         /// </summary>
         public void InitialiseGeoClusters()
         {
+            Game.logStart.Write("---  InitialiseGeoClusters (History.cs) ---");
             listOfGeoClusters = Game.map.GetGeoCluster();
             List<string> tempList = new List<string>();
             int randomNum;
@@ -313,6 +317,7 @@ namespace Next_Game
                     }
                 }
             }
+            Game.logStart.Write(string.Format("{0} Geoclusters initialised", listOfGeoClusters.Count));
         }
 
         /// <summary>
@@ -320,6 +325,7 @@ namespace Next_Game
         /// </summary>
         private void InitialisePlayer()
         {
+            Game.logStart.Write("---  InitialisePlayer (History.cs) ---");
             int locID;
             //create player (place holder)
             Player player = new Player("William Tell", ActorType.Usurper);
@@ -340,6 +346,7 @@ namespace Next_Game
                 player.Type = ActorType.Usurper;
                 //add to Location list of Characters
                 loc.AddActor(player.ActID);
+                Game.logStart.Write(string.Format("{0} {1}, ActID {1}, Resources {2}", player.Title, player.Name, player.ActID, player.Resources));
             }
             else { Game.SetError(new Error(178, "Invalid Loc (null)")); }
         }
@@ -349,8 +356,10 @@ namespace Next_Game
         /// </summary>
         private void InitialiseCapital()
         {
+            Game.logStart.Write("---  InitialiseCapital (History.cs) ---");
             CapitalWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
             CapitalTreasury = rnd.Next(2, 6); //placeholder
+            Game.logStart.Write(string.Format("CapitalWalls {0}, CapitalTreasury {1}", CapitalWalls, CapitalTreasury));
         }
 
         /// <summary>
@@ -361,7 +370,8 @@ namespace Next_Game
         {
             int numImportedFollowers = 8; 
             int index;
-            Console.WriteLine(Environment.NewLine + "--- Import Followers");
+            //Console.WriteLine(Environment.NewLine + "--- Import Followers");
+            Game.logStart.Write("---  InitialiseFollowers (History.cs) ---");
             int age = (int)SkillAge.Fifteen;
             //randomly choose a follower from list (we need a max of 8)
             if (listOfStructs.Count >= 8)
@@ -403,7 +413,8 @@ namespace Next_Game
                         //trait ID's not needed
                         //add to list
                         listOfActiveActors.Add(follower);
-                        Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.GetRelPlyr());
+                        Game.logStart.Write(string.Format("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.GetRelPlyr()));
+                        //Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.GetRelPlyr());
                     }
                     //remove struct from list
                     listOfStructs.RemoveAt(index);
