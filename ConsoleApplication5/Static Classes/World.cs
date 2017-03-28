@@ -165,8 +165,8 @@ namespace Next_Game
         /// </summary>
         private void InitialiseEnemyActors()
         {
+            Game.logStart.Write("--- InitialiseEnemyActors (World.cs) ---");
             int numInquisitors = Game.constant.GetValue(Global.INQUISITORS);
-            Console.WriteLine(Environment.NewLine + "--- Initialise Enemies");
             //loop for # of inquisitors
             for (int i = 0; i < numInquisitors; i++)
             {

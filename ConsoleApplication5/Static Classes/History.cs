@@ -161,7 +161,7 @@ namespace Next_Game
                 house.Resources = rnd.Next(1, 5);
                 //add house to listOfHouses
                 listOfMajorHouses.Add(house);
-                Game.logStart.Write(string.Format("Major House {0} added at {1}, RefID {2} ArcID {3}", house.Name, house.LocName, house.RefID, house.ArcID));
+                Game.logStart.Write(string.Format("Major House {0} added at {1}, RefID {2}, ArcID {3}", house.Name, house.LocName, house.RefID, house.ArcID));
             }
         }
 
@@ -203,7 +203,7 @@ namespace Next_Game
                 house.Branch = loc.GetBranch();
             }
             else { Game.SetError(new Error(61, "Invalid Loc (null)")); }
-            Game.logStart.Write(string.Format("Minor House {0} added at {1}, RefID {2} LocID {3} ArcID {4}", house.Name, house.LocName, house.RefID, house.LocID, house.ArcID));
+            Game.logStart.Write(string.Format("Minor House {0} added at {1}, RefID {2}, LocID {3}, ArcID {4}", house.Name, house.LocName, house.RefID, house.LocID, house.ArcID));
         }
 
         /// <summary>
@@ -413,7 +413,8 @@ namespace Next_Game
                         //trait ID's not needed
                         //add to list
                         listOfActiveActors.Add(follower);
-                        Game.logStart.Write(string.Format("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.GetRelPlyr()));
+                        Game.logStart.Write(string.Format("{0}, Aid {1}, FID {2}, ArcID {3}, \"{4}\" Loyalty {5}", follower.Name, follower.ActID, follower.FollowerID, 
+                            follower.ArcID, follower.Role, follower.GetRelPlyr()));
                         //Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.GetRelPlyr());
                     }
                     //remove struct from list

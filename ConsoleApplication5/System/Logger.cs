@@ -48,7 +48,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// write to file and Console
+        /// write to file and Console. NOTE: IF a header, eg. "--- Process..." then new line auto inserted prior and color auto White -> no need to specify either
         /// </summary>
         /// <param name="text"></param>
         /// <param name="color">Color that text will output to Console</param>
@@ -67,6 +67,9 @@ namespace Next_Game
                 //write to Console
                 if (writeToConsole == true)
                 {
+                    //if a header, eg. "--- ProcessStartTurn ---", then auo insert new line prior and make Color white
+                    if (text.Contains("---") == true)
+                    { Console.WriteLine(); color = ConsoleColor.White; }
                     Console.ForegroundColor = color;
                     Console.WriteLine(text);
                     Console.ForegroundColor = ConsoleColor.Gray;
