@@ -16,6 +16,7 @@ namespace Next_Game
         public int Code { get; } //3 digit error code
         public string Text { get; } //description
         public string Method { get; } //calling method
+        public string Object { get; } //calling object
         public int Line { get; } //line of code
 
         public Error()
@@ -29,6 +30,7 @@ namespace Next_Game
         /// <param name="sourceLineNumber"></param>
         public Error(int errorCode, string text = "not specified",
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
             errorID = errorIndex++;
@@ -36,6 +38,7 @@ namespace Next_Game
             this.Text = text;
             Method = memberName;
             Line = sourceLineNumber;
+            Object = sourceFilePath;
         }
 
 

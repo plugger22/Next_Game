@@ -37,7 +37,7 @@ namespace Next_Game
                 timer.Start();
                 //write header (time & data stamp
                 culture = new CultureInfo("en-GB");
-                Write(string.Format("//Exile Game file ops commenced at: {0}", DateTime.Now.ToString(culture)), ConsoleColor.Red);
+                Write(string.Format("//Exile Game file ops commenced at: {0}", DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
             }
             catch(PathTooLongException)
             { Game.SetError(new Error(192, string.Format("Path Too Long (\"{0}\") -> file not created", path))); }
@@ -51,7 +51,9 @@ namespace Next_Game
         /// write to file and Console
         /// </summary>
         /// <param name="text"></param>
-        public void Write(string text, ConsoleColor color = ConsoleColor.Gray)
+        /// <param name="color">Color that text will output to Console</param>
+        /// <param name="writeToConsole">If true, dual output to file & console, otherwise file only</param>
+        public void Write(string text, bool writeToConsole = true, ConsoleColor color = ConsoleColor.Gray)
         {
             if (String.IsNullOrEmpty(text) == false)
             {
@@ -63,9 +65,12 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(192, string.Format("File does not exist -> Write (\"{0}\") -> Text not written", path))); }
                 //write to Console
-                Console.ForegroundColor = color;
-                Console.WriteLine(text);
-                Console.ForegroundColor = ConsoleColor.Gray;
+                if (writeToConsole == true)
+                {
+                    Console.ForegroundColor = color;
+                    Console.WriteLine(text);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                }
             }
         }
 
@@ -82,7 +87,7 @@ namespace Next_Game
                     fileStream = File.OpenWrite(path);
                     //write header (time & data stamp
                     culture = new CultureInfo("en-GB");
-                    Write(string.Format("//Exile Game File opened at: {0}", DateTime.Now.ToString(culture)), ConsoleColor.Red);
+                    Write(string.Format("//Exile Game File opened at: {0}", DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
                 }
                 catch (PathTooLongException)
                 { Game.SetError(new Error(192, string.Format("Path Too Long (\"{0}\") -> file not created", path))); }
@@ -101,10 +106,10 @@ namespace Next_Game
         {
             if (File.Exists(path) == true)
             {
-                Write(string.Format("//Exile Game Initialisation completed at: {0}", DateTime.Now.ToString(culture)), ConsoleColor.Red);
+                Write(string.Format("//Exile Game Initialisation completed at: {0}", DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
                 timer.Stop();
                 TimeSpan ts = timer.Elapsed;
-                Write(string.Format("//Exile Elapsed Time {0} ms", ts.Milliseconds), ConsoleColor.Red);
+                Write(string.Format("//Exile Elapsed Time {0} ms", ts.Milliseconds), true, ConsoleColor.Red);
                 writer.Close();
             }
             else { Game.SetError(new Error(192, string.Format("File does not exist -> Close (\"{0}\") -> Text not written", path))); }
@@ -117,10 +122,10 @@ namespace Next_Game
         {
             if (File.Exists(path) == true)
             {
-                Write(string.Format("//Exile Game file ops completed at: {0}", DateTime.Now.ToString(culture)), ConsoleColor.Red);
+                Write(string.Format("//Exile Game file ops completed at: {0}", DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
                 timer.Stop();
                 TimeSpan ts = timer.Elapsed;
-                Write(string.Format("//Elapsed Time {0} ms", ts.Milliseconds), ConsoleColor.Red);
+                Write(string.Format("//Elapsed Time {0} ms", ts.Milliseconds), true, ConsoleColor.Red);
                 writer.Close();
             }
             else { Game.SetError(new Error(192, string.Format("File does not exist -> Dispose (\"{0}\") -> Text not written", path))); }
