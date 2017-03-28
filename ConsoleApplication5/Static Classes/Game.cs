@@ -76,6 +76,7 @@ namespace Next_Game
         public static Utility utility;
         public static Layout layout;
         public static Conflict conflict;
+        public static Logger logStart;
         
         //flags & vars
         private static bool _renderRequired = true; //redraw Console?
@@ -118,6 +119,7 @@ namespace Next_Game
             Stopwatch timer_1 = new Stopwatch();
             constant = new Constant();
             utility = new Utility();
+            logStart = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogStart.txt");
             file = new FileImport("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/");
             file.GetConstants("Constants.txt");
             InitialiseGameVariables();
@@ -157,6 +159,7 @@ namespace Next_Game
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
+            logStart.Close();
             // This must be the exact name of the bitmap font file we are using or it will error.
             string fontFileName = "terminal8x8.png";
             // The title will appear at the top of the console window

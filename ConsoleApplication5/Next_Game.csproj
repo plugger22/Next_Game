@@ -92,6 +92,7 @@
     <Compile Include="System\Box.cs" />
     <Compile Include="Static Classes\Layout.cs" />
     <Compile Include="System\BloodHound.cs" />
+    <Compile Include="System\Logger.cs" />
     <Compile Include="System\Utility.cs" />
     <Compile Include="System\Error.cs" />
     <Compile Include="Static Classes\FileImport.cs" />

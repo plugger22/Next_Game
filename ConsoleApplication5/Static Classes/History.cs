@@ -136,7 +136,9 @@ namespace Next_Game
             while (count > numHousesRequired)
             {
                 index = rnd.Next(0, count);
-                Console.WriteLine("Great House {0} removed", listHousePool[index].Name);
+                
+                Game.logStart.Write(string.Format("Great House {0} removed", listHousePool[index].Name));
+                //Console.WriteLine("Great House {0} removed", listHousePool[index].Name);
                 listHousePool.RemoveAt(index);
                 count = listHousePool.Count;
             }
