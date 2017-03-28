@@ -77,6 +77,7 @@ namespace Next_Game
         public static Layout layout;
         public static Conflict conflict;
         public static Logger logStart;
+        public static Logger logError;
         
         //flags & vars
         private static bool _renderRequired = true; //redraw Console?
@@ -120,6 +121,7 @@ namespace Next_Game
             constant = new Constant();
             utility = new Utility();
             logStart = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogStart.txt");
+            logError = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogError.txt");
             try
             {
                 //game initialisation -> logStart
@@ -152,7 +154,7 @@ namespace Next_Game
                 world.SetMessage(message);
             }
             catch(Exception e)
-            { Console.WriteLine(e.Message); }
+            { logStart.Write(e.Message); logError.Write(e.Message); }
             finally
             {
                 //tidy up before crash
@@ -842,6 +844,7 @@ namespace Next_Game
                             switch (_menuMode)
                             {
                                 case MenuMode.Main:
+                                    logError.Dispose();
                                     _rootConsole.Close();
                                     //Environment.Exit(1); - not needed and causes OpenTK error
                                     break;
@@ -1543,25 +1546,42 @@ namespace Next_Game
                 { _errorCounter++; }
                 else
                 { _errorCounter = 0; _errorLast = error.Text; }
-                Console.ForegroundColor = ConsoleColor.Yellow;
                 //print first 9 occurences of error
                 if (_errorCounter < 10)
-                { Console.WriteLine("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line); }
+                {
+                    //Console.WriteLine("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line);
+                    //write to log files
+                    logError.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line), ConsoleColor.Yellow);
+                    if (logStart != null)
+                    { logStart.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line), ConsoleColor.Yellow); }
+                }
                 //print message regarding ongoing repeats and then ignore the rest
-                else if (_errorCounter == 10) { Console.WriteLine("Multiple repeats of same error..."); }
-                Console.ForegroundColor = ConsoleColor.Gray;
+                else if (_errorCounter == 10)
+                {
+                    //Console.WriteLine("Multiple repeats of same error...");
+                    logError.Write("Multiple repeats of same error...");
+                    if (logStart != null)
+                    { logStart.Write("Multiple repeats of same error..."); }
+                }
+                
             }
             catch(ArgumentNullException)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(string.Format(" [SetError] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID));
-                Console.ForegroundColor = ConsoleColor.Gray;
+                //Console.ForegroundColor = ConsoleColor.Yellow;
+                //Console.WriteLine(string.Format(" [SetError] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID));
+                logError.Write(string.Format(" [SetError] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID), ConsoleColor.Yellow);
+                if (logStart != null)
+                { logStart.Write(string.Format(" [SetError] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID), ConsoleColor.Yellow); }
+                //Console.ForegroundColor = ConsoleColor.Gray;
             }
             catch(ArgumentException)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(string.Format(" [SetError] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID));
-                Console.ForegroundColor = ConsoleColor.Gray;
+                //Console.ForegroundColor = ConsoleColor.Yellow;
+                //Console.WriteLine(string.Format(" [SetError] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID));
+                logError.Write(string.Format(" [SetError] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID), ConsoleColor.Yellow);
+                if (logStart != null)
+                { logStart.Write(string.Format(" [SetError] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID), ConsoleColor.Yellow); }
+                //Console.ForegroundColor = ConsoleColor.Gray;
             }
         }
         
