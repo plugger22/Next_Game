@@ -147,6 +147,7 @@ namespace Next_Game
             world.ShowGeneratorStatsRL();
             Message message = new Message($"Game world created with seed {seed}", MessageType.System);
             world.SetMessage(message);
+            logStart.Dispose();
             world.ProcessStartGame();
             //layout & conflict
             layout = new Layout(seed, 130, 100, 2, 3, RLColor.Black, RLColor.Yellow);
@@ -159,7 +160,6 @@ namespace Next_Game
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
-            logStart.Close();
             // This must be the exact name of the bitmap font file we are using or it will error.
             string fontFileName = "terminal8x8.png";
             // The title will appear at the top of the console window

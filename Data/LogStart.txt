@@ -1,3 +1,5 @@
-Great House Targaryen removed
-Great House Tyrell removed
-reat House Greyjoy removed
+//Exile Game Initialisation commenced at: 28/03/2017 14:23:57
+Great House Florent removed
+Great House Tully removed
+//Exile Game Initialisation completed at: 28/03/2017 14:23:57
+//Elapsed Time 561 ms
