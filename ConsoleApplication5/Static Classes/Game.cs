@@ -953,9 +953,8 @@ namespace Next_Game
                 }
             }
             catch (Exception exception)
-            { logStart.Write(exception.Message); logError.Write(exception.Message); }
-            finally
             {
+                logStart.Write(exception.Message); logError.Write(exception.Message);
                 //tidy up before crash
                 logError.Dispose();
                 logTurn.Dispose();

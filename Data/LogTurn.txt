@@ -1,5 +1,4 @@
 //Exile Game file ops commenced at: 29/03/2017 14:20:20
 ERROR_95 "No Cards Remaining in listCardHand" Method: UpdateCards Line: 749
-C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Layout.cs
 //Exile Game file ops completed at: 29/03/2017 14:22:49
-//Elapsed Time 678 ms
+//Elapsed Time 106 ms
