@@ -1583,7 +1583,7 @@ namespace Next_Game
                     if (logStart != null)
                     { logStart.Write("Multiple repeats of same error...", true, ConsoleColor.Red); }
                     else if (logTurn != null)
-                    { logTurn.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow); }
+                    { logTurn.Write(string.Format("Multiple repeats of same error..."), true, ConsoleColor.Yellow); }
                 }
                 
             }

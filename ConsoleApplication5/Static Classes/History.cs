@@ -130,7 +130,7 @@ namespace Next_Game
         /// <param name="numHousesRequired">Will thin out surplus houses if required</param>
         private void InitialiseMajorHouses(int numHousesRequired)
         {
-            Game.logStart.Write("---  InitialiseMajorHouses (History.cs) ---");
+            Game.logStart.Write("---  InitialiseMajorHouses (History.cs)");
             //remove surplus houses from pool
             int count = listHousePool.Count;
             int index = 0;
@@ -213,7 +213,7 @@ namespace Next_Game
         {
             List<Location> listLocations = Game.network.GetLocationsList();
             int index;
-            Game.logStart.Write("--- InitialiseSpecialHouse (History.cs) ---");
+            Game.logStart.Write("--- InitialiseSpecialHouse (History.cs)");
             //NOTE: Assumes at present the only special house type is an Inn 
 
             //loop locations looking for specials (houseID = 99)
@@ -254,7 +254,7 @@ namespace Next_Game
         /// </summary>
         public void InitialiseGeoClusters()
         {
-            Game.logStart.Write("---  InitialiseGeoClusters (History.cs) ---");
+            Game.logStart.Write("---  InitialiseGeoClusters (History.cs)");
             listOfGeoClusters = Game.map.GetGeoCluster();
             List<string> tempList = new List<string>();
             int randomNum;
@@ -325,7 +325,7 @@ namespace Next_Game
         /// </summary>
         private void InitialisePlayer()
         {
-            Game.logStart.Write("---  InitialisePlayer (History.cs) ---");
+            Game.logStart.Write("---  InitialisePlayer (History.cs)");
             int locID;
             //create player (place holder)
             Player player = new Player("William Tell", ActorType.Usurper);
@@ -356,7 +356,7 @@ namespace Next_Game
         /// </summary>
         private void InitialiseCapital()
         {
-            Game.logStart.Write("---  InitialiseCapital (History.cs) ---");
+            Game.logStart.Write("---  InitialiseCapital (History.cs)");
             CapitalWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
             CapitalTreasury = rnd.Next(2, 6); //placeholder
             Game.logStart.Write(string.Format("CapitalWalls {0}, CapitalTreasury {1}", CapitalWalls, CapitalTreasury));
@@ -370,8 +370,7 @@ namespace Next_Game
         {
             int numImportedFollowers = 8; 
             int index;
-            //Console.WriteLine(Environment.NewLine + "--- Import Followers");
-            Game.logStart.Write("---  InitialiseFollowers (History.cs) ---");
+            Game.logStart.Write("---  InitialiseFollowers (History.cs)");
             int age = (int)SkillAge.Fifteen;
             //randomly choose a follower from list (we need a max of 8)
             if (listOfStructs.Count >= 8)
@@ -481,7 +480,7 @@ namespace Next_Game
         {
             if (locID > 0)
             {
-                Game.logStart.Write("---  CreateNemesis (History.cs) ---");
+                Game.logStart.Write("---  CreateNemesis (History.cs)");
                 int refID = Game.world.GetRefID(locID);
                 //create new inquisitor -> random name
                 string name = "The Unrelenting";
@@ -933,7 +932,7 @@ namespace Next_Game
             int traitID;
             //int effect;
             
-            //Combat ---
+            //Combat
             if (father != null && mother != null)
             {
                 Noble parent = new Noble();
@@ -978,7 +977,7 @@ namespace Next_Game
                 tempHandles.AddRange(GetRandomTrait(person, SkillType.Combat, SkillAge.Fifteen, rndRange, startRange, endRange));
             }
 
-            //Wits ---
+            //Wits
             if (father != null && mother != null)
             {
                 //parental wits trait (if any)
@@ -1026,7 +1025,7 @@ namespace Next_Game
                 tempHandles.AddRange(GetRandomTrait(person, SkillType.Wits, SkillAge.Fifteen, rndRange, startRange, endRange));
             }
 
-            //Charm ---
+            //Charm
             if (father != null && mother != null)
             {
                 //parental Charm trait (if any)
@@ -1073,7 +1072,7 @@ namespace Next_Game
                 tempHandles.AddRange(GetRandomTrait(person, SkillType.Charm, SkillAge.Fifteen, rndRange, startRange, endRange));
             }
 
-            //Treachery ---
+            //Treachery
             if (father != null && mother != null)
             {
                 //parental Treachery trait (if any)
@@ -1120,7 +1119,7 @@ namespace Next_Game
                 tempHandles.AddRange(GetRandomTrait(person, SkillType.Treachery, SkillAge.Fifteen, rndRange, startRange, endRange));
             }
 
-            //Leadership ---
+            //Leadership
             if (father != null && mother != null)
             {
                 //parental Leadership trait (if any)
@@ -1167,7 +1166,7 @@ namespace Next_Game
                 tempHandles.AddRange(GetRandomTrait(person, SkillType.Leadership, SkillAge.Fifteen, rndRange, startRange, endRange));
             }
 
-            //Touched ---
+            //Touched
             if (father != null && mother != null)
             {
                 //parental Touched trait (if any)
@@ -2487,7 +2486,7 @@ namespace Next_Game
             int elapsedTime = Game.gameExile;
             string descriptor;
             int startAge, comeOfAge;
-            Game.logTurn.Write("--- AgePassiveCharacters (History.cs) ---");
+            Game.logTurn.Write("--- AgePassiveCharacters (History.cs)");
             foreach(var actor in dictPassiveActors)
             {
                 //actor currently alive at time of revolt?
@@ -2525,7 +2524,7 @@ namespace Next_Game
         /// </summary>
         public void InitialisePastHistoryHouses()
         {
-            Game.logStart.Write("--- InitialisePastHistoryHouses (History.cs) ---");
+            Game.logStart.Write("--- InitialisePastHistoryHouses (History.cs)");
             //convert array data to lists
             listOfHouseRelsGood = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastGood].ToList());
             listOfHouseRelsBad = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastBad].ToList());
@@ -2759,7 +2758,7 @@ namespace Next_Game
         /// </summary>
         public void InitialiseLordRelations()
         {
-            Game.logStart.Write("--- InitialiseLordRelations (History.cs) ---");
+            Game.logStart.Write("--- InitialiseLordRelations (History.cs)");
             int houseID, lordTreachery, relLord, lordStars, relChange;
             string relText, relTag;
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetAllMajorHouses();
