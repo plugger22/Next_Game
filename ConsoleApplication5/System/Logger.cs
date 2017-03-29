@@ -60,8 +60,13 @@ namespace Next_Game
                 //write to file
                 if (File.Exists(path) == true)
                 {
-                    writer.Write(text);
-                    writer.Write(Environment.NewLine);
+                    try
+                    {
+                        writer.Write(text);
+                        writer.Write(Environment.NewLine);
+                    }
+                    catch(ObjectDisposedException)
+                    { Game.SetError(new Error(192, string.Format("File has been Disposed -> Write (\"{0}\") -> Text not written", path))); }
                 }
                 else { Game.SetError(new Error(192, string.Format("File does not exist -> Write (\"{0}\") -> Text not written", path))); }
                 //write to Console

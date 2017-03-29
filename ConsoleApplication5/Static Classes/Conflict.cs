@@ -46,6 +46,8 @@ namespace Next_Game
         private int[] arrayPool;
         private int[] arrayModifiers; 
         private string[,] arraySituation;
+        private string[,] arraySupportGood;
+        private string[,] arraySupportBad;
         //three lists to consolidate into pool breakdown description
         private List<Snippet> listPlayerCards;
         private List<Snippet> listOpponentCards;
@@ -66,6 +68,8 @@ namespace Next_Game
             arrayPool = new int[4]; //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards, 3 - # defender specific cards)
             arrayModifiers = new int[3]; //modifier (DM) for GetSituationCardNumber, 0/1/2 refer to the three situation cards (def adv/neutral/game specific) -> DM for 0 & 1, # of cards for Game ('2')
             arraySituation = new string[3, 3];
+            arraySupportGood = new string[5, 3]; //max 5 supporters for Player ('0' -> name supporter, '1' -> played outcome text, '2' -> ignored outcome text)
+            arraySupportBad = new string[5, 3]; //max 5 supporters for Opponent
             //three lists to consolidate into pool breakdown description
             listPlayerCards = new List<Snippet>();
             listOpponentCards = new List<Snippet>();
@@ -93,6 +97,7 @@ namespace Next_Game
                 SetSkills();
                 SetSituation(Game.director.GetSituationsNormal(), Game.director.GetSituationsGame());
                 CheckSpecialSituations();
+                SetSupporters();
                 SetCardPool();
                 SetOpponentStrategy();
                 SetRecommendedStrategy();
@@ -135,6 +140,14 @@ namespace Next_Game
             }
             else
             { Game.SetError(new Error(86, "Invalid Strategy (incorrect array size), Layout not updated")); }
+        }
+
+        /// <summary>
+        /// Gets any supporters for both participants of the conflict
+        /// </summary>
+        private void SetSupporters()
+        {
+
         }
 
         /// <summary>
