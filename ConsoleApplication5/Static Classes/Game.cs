@@ -955,7 +955,7 @@ namespace Next_Game
             }
             catch (Exception exception)
             {
-                logStart.Write(exception.Message); logError.Write(exception.Message);
+                logTurn.Write(exception.Message); logError.Write(exception.Message);
                 //tidy up before crash
                 logError.Dispose();
                 logTurn.Dispose();
@@ -1573,7 +1573,7 @@ namespace Next_Game
                     { logTurn.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow); }
                 }
                 //print message regarding ongoing repeats and then ignore the rest
-                else if (_errorCounter == 10)
+                else if (_errorCounter == 5)
                 {
                     //Console.WriteLine("Multiple repeats of same error...");
                     logError.Write("Multiple repeats of same error...", true, ConsoleColor.Red);

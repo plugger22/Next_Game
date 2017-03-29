@@ -1,4 +1,0 @@
-//Exile Game file ops commenced at: 29/03/2017 14:34:33
---- End Turn Day 1
-//Exile Game Initialisation completed at: 29/03/2017 14:34:40
-//Exile Elapsed Time 828 ms
