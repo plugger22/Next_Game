@@ -2013,8 +2013,6 @@ namespace Next_Game.Cartographic
         internal void UpdateHouses(List<MajorHouse> listOfHouses)
         {
             Game.logStart.Write("---  UpdateHouses (Network.cs) ---");
-            //List<House> returnListOfHouses = listOfHouses;
-            Console.WriteLine();
             //set up a quick list for randomly assigning houses to houseID's
             List<int> randomList = new List<int>();
             for(int i = 0; i < listOfHouses.Count; i++)
@@ -2030,7 +2028,7 @@ namespace Next_Game.Cartographic
                 randomIndex = rnd.Next(0, randomList.Count);
                 house.HouseID = randomList[randomIndex];
                 randomList.RemoveAt(randomIndex);
-                Console.WriteLine("House {0} has LocID {1} and HouseID {2}", house.Name, house.LocID, house.HouseID);
+                Game.logStart.Write(string.Format("House {0} assigned LocID {1} and HouseID {2}", house.Name, house.LocID, house.HouseID));
             }
             //loop houses and update data
             int houseID;

@@ -481,9 +481,10 @@ namespace Next_Game
         {
             if (locID > 0)
             {
+                Game.logStart.Write("---  CreateNemesis (History.cs) ---");
                 int refID = Game.world.GetRefID(locID);
                 //create new inquisitor -> random name
-                string name = "The Relentless";
+                string name = "The Unrelenting";
                 if (String.IsNullOrEmpty(name) == false)
                 {
                     int ageYears = rnd.Next(65, 105);
@@ -959,8 +960,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-
-                            Console.WriteLine("Inherited Combat trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
+                            Game.logStart.Write(string.Format("Inherited Combat trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1008,8 +1008,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-
-                            Console.WriteLine("Inherited Wits trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
+                            Game.logStart.Write(string.Format("Inherited Wits trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1056,8 +1055,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-
-                            Console.WriteLine("Inherited Charm trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
+                            Game.logStart.Write(string.Format("Inherited Charm trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1104,8 +1102,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-
-                            Console.WriteLine("Inherited Treachery trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
+                            Game.logStart.Write(string.Format("Inherited Treachery trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1152,8 +1149,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-
-                            Console.WriteLine("Inherited Leadership trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
+                            Game.logStart.Write(string.Format("Inherited Leadership trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1202,8 +1198,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-
-                            Console.WriteLine("Inherited Touched trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID);
+                            Game.logStart.Write(string.Format("Inherited Touched trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1217,7 +1212,7 @@ namespace Next_Game
                 {
                     //give base strength of 3 (prior to any traits)
                     person.Touched = 3;
-                    Console.WriteLine("- {0}, Aid {1} is Touched", person.Name, person.ActID);
+                    Game.logStart.Write(string.Format("{0}, Aid {1} is Touched", person.Name, person.ActID));
                     rndRange = arrayOfTraits[(int)SkillType.Touched, (int)person.Sex].Length;
                     //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
                     if (traitPositive == SkillType.Touched) { startRange = 0; endRange = rndRange / 2; }

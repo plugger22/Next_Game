@@ -1993,7 +1993,9 @@ namespace Next_Game
         /// <param name="listOfHouses"></param>
         internal void InitialiseHouses()
         {
+            
             Game.network.UpdateHouses(Game.history.GetGreatHouses());
+            Game.logStart.Write("---  InitialiseHouses (World.cs) ---");
             //great houses
             List<MajorHouse> listOfGreatHouses = Game.history.GetGreatHouses();
             foreach(MajorHouse house in listOfGreatHouses)
@@ -2037,7 +2039,7 @@ namespace Next_Game
                 }
             }
             //fill Great Houses with Lords and Ladies
-            Console.WriteLine("--- Genetics");
+            Game.logStart.Write("- House Genetics (add Lords and Ladies)");
             foreach (KeyValuePair<int, MajorHouse> kvp in dictMajorHouses)
             {
                 //create Lord and Lady for house

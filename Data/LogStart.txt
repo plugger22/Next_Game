@@ -1,56 +1,118 @@
-//Exile Game file ops commenced at: 28/03/2017 20:57:46
-ERROR_29 "Location Deleted 5:1" Method: LocationSweeper Line: 1675
-ERROR_29 "Location Deleted 10:1" Method: LocationSweeper Line: 1675
-ERROR_29 "Location Deleted 7:2" Method: LocationSweeper Line: 1675
-ERROR_29 "Location Deleted 14:4" Method: LocationSweeper Line: 1675
-ERROR_29 "Location Deleted 10:5" Method: LocationSweeper Line: 1675
+//Exile Game file ops commenced at: 29/03/2017 11:14:43
 ---  InitialiseMajorHouses (History.cs) ---
-Great House Arryn removed
-Great House Stark removed
-Great House Martell removed
-Great House Greyjoy removed
-Great House Baratheon removed
+Great House Tully removed
+Great House Lannister removed
 -0-
-Major House Lannister added at Casterly Rock, RefID 2, ArcID 14
+Major House Martell added at Dorne, RefID 3, ArcID 18
 Major House Florent added at Brightwater Keep, RefID 4, ArcID 12
-Major House Tully added at Riverrun, RefID 9, ArcID 13
+Major House Greyjoy added at Pyke, RefID 5, ArcID 17
+Major House Arryn added at Eyrie, RefID 6, ArcID 16
+Major House Baratheon added at Bloodkeep, RefID 7, ArcID 19
+Major House Stark added at Winterfell, RefID 8, ArcID 11
 Major House Tyrell added at Highgarden, RefID 10, ArcID 20
 Major House Targaryen added at Valyria, RefID 11, ArcID 21
 ---  InitialiseGeoClusters (History.cs) ---
-21 Geoclusters initialised
+34 Geoclusters initialised
 ---  InitialisePlayer (History.cs) ---
 Usurper William Tell, ActID William Tell, Resources 1
 ---  InitialiseCapital (History.cs) ---
-CapitalWalls 5, CapitalTreasury 5
+CapitalWalls 5, CapitalTreasury 3
 ---  InitialiseFollowers (History.cs) ---
 The Spider, Aid 2, FID 1, ArcID 23, "Spy" Loyalty 60
-The Crone, Aid 3, FID 8, ArcID 23, "Old Woman" Loyalty 58
-The Jester, Aid 4, FID 2, ArcID 23, "Entertainer" Loyalty 50
+The Leper, Aid 3, FID 4, ArcID 23, "Beggar" Loyalty 55
+The Beast, Aid 4, FID 7, ArcID 23, "Enforcer" Loyalty 95
 The Duchess, Aid 5, FID 6, ArcID 23, "Seductress" Loyalty 75
-The Leper, Aid 6, FID 4, ArcID 23, "Beggar" Loyalty 55
-The Waif, Aid 7, FID 10, ArcID 23, "Lost Child" Loyalty 57
+The Jester, Aid 6, FID 2, ArcID 23, "Entertainer" Loyalty 50
+The Dark Eminence, Aid 7, FID 5, ArcID 23, "Manipulator" Loyalty 35
 The Viper, Aid 8, FID 3, ArcID 23, "Assassin" Loyalty 55
-The Dark Eminence, Aid 9, FID 5, ArcID 23, "Manipulator" Loyalty 35
+The Waif, Aid 9, FID 10, ArcID 23, "Lost Child" Loyalty 57
 ---  UpdateHouses (Network.cs) ---
-- Initialise BannerLords for House Lannister
-Minor House Tarth added at Evenfall, RefID 130, LocID 5, ArcID 0
-Minor House Peake added at Starpike, RefID 134, LocID 7, ArcID 0
+House Martell assigned LocID 3 and HouseID 5
+House Florent assigned LocID 8 and HouseID 6
+House Greyjoy assigned LocID 12 and HouseID 4
+House Arryn assigned LocID 17 and HouseID 2
+House Baratheon assigned LocID 20 and HouseID 1
+House Stark assigned LocID 27 and HouseID 7
+House Tyrell assigned LocID 32 and HouseID 8
+House Targaryen assigned LocID 34 and HouseID 3
+- Initialise BannerLords for House Martell
+Minor House Umber added at Last Hearth, RefID 131, LocID 21, ArcID 0
+Minor House Frey added at The Twins, RefID 113, LocID 24, ArcID 0
+Minor House Dondarrion added at Blackhaven, RefID 110, LocID 22, ArcID 0
+Minor House Fowler added at Skyreach, RefID 112, LocID 25, ArcID 0
+Minor House Hunt added at Longbow Hall, RefID 118, LocID 23, ArcID 0
 - Initialise BannerLords for House Florent
-Minor House Flint added at Widow's Watch, RefID 136, LocID 12, ArcID 0
-Minor House Slynt added at Harrenhal, RefID 127, LocID 11, ArcID 0
-Minor House Penrose added at Parchments, RefID 125, LocID 10, ArcID 0
-- Initialise BannerLords for House Tully
+Minor House Penrose added at Parchments, RefID 125, LocID 26, ArcID 0
+Minor House Estermont added at Greenstone, RefID 111, LocID 29, ArcID 0
+Minor House Slynt added at Harrenhal, RefID 127, LocID 28, ArcID 0
+- Initialise BannerLords for House Greyjoy
+Minor House Caron added at Nightsong, RefID 105, LocID 14, ArcID 0
+Minor House Tallhart added at Torrhen's Square, RefID 128, LocID 15, ArcID 0
+Minor House Bolton added at Dreadfort, RefID 101, LocID 16, ArcID 0
+Minor House Peake added at Starpike, RefID 134, LocID 18, ArcID 0
+- Initialise BannerLords for House Arryn
+Minor House Oakheart added at Old Oak, RefID 124, LocID 7, ArcID 0
+Minor House Botley added at Lordsport, RefID 102, LocID 9, ArcID 0
+- Initialise BannerLords for House Baratheon
+Minor House Wull added at Sodhall, RefID 133, LocID 6, ArcID 0
+Minor House Karstark added at Karhold, RefID 119, LocID 4, ArcID 0
+Minor House Yronwood added at Yronwood Castle, RefID 135, LocID 5, ArcID 0
+- Initialise BannerLords for House Stark
+Minor House Hightower added at Oldtown, RefID 116, LocID 31, ArcID 0
+Minor House Mormont added at Bearpit, RefID 122, LocID 33, ArcID 0
 - Initialise BannerLords for House Tyrell
-Minor House Bracken added at Stone Hedge, RefID 103, LocID 3, ArcID 0
+Minor House Codd added at Fishfork, RefID 108, LocID 37, ArcID 0
+Minor House Mooton added at Maidenpool, RefID 121, LocID 35, ArcID 0
+Minor House Tarly added at Horn Hill, RefID 129, LocID 36, ArcID 0
 - Initialise BannerLords for House Targaryen
-Minor House Karstark added at Karhold, RefID 119, LocID 14, ArcID 0
-Minor House Estermont added at Greenstone, RefID 111, LocID 18, ArcID 0
-Minor House Crane added at Red Lake, RefID 109, LocID 17, ArcID 0
-Minor House Mullendore added at Uplands, RefID 123, LocID 19, ArcID 0
-Minor House Westerling added at The Crag, RefID 132, LocID 16, ArcID 0
+Minor House Tarth added at Evenfall, RefID 130, LocID 10, ArcID 0
+Minor House Flint added at Widow's Watch, RefID 136, LocID 11, ArcID 0
+Minor House Harlaw added at Ten Towers, RefID 115, LocID 13, ArcID 0
+---  InitialiseHouses (World.cs) ---
 --- InitialiseSpecialHouse (History.cs) ---
-"The Pickled Prune" Inn initialised, RefID 1005, LocID 4, HouseID 99
-"The Singing Ghost" Inn initialised, RefID 1002, LocID 8, HouseID 99
+"The Singing Ghost" Inn initialised, RefID 1002, LocID 2, HouseID 99
+"One Eyed Pete's" Inn initialised, RefID 1006, LocID 19, HouseID 99
+"The Yellow Huntress" Inn initialised, RefID 1003, LocID 30, HouseID 99
+- House Genetics (add Lords and Ladies)
+Inherited Charm trait, Actor ID 16, Parent ID 10
+Inherited Leadership trait, Actor ID 16, Parent ID 10
+Inherited Combat trait, Actor ID 18, Parent ID 10
+Inherited Treachery trait, Actor ID 18, Parent ID 10
+Inherited Leadership trait, Actor ID 18, Parent ID 10
+Inherited Combat trait, Actor ID 19, Parent ID 10
+Inherited Charm trait, Actor ID 19, Parent ID 10
+Inherited Treachery trait, Actor ID 19, Parent ID 10
+Inherited Charm trait, Actor ID 21, Parent ID 10
+Inherited Combat trait, Actor ID 28, Parent ID 23
+Inherited Treachery trait, Actor ID 28, Parent ID 23
+Inherited Combat trait, Actor ID 42, Parent ID 35
+Inherited Combat trait, Actor ID 49, Parent ID 44
+Inherited Leadership trait, Actor ID 49, Parent ID 44
+Inherited Treachery trait, Actor ID 50, Parent ID 43
+Inherited Charm trait, Actor ID 57, Parent ID 52
+Inherited Leadership trait, Actor ID 57, Parent ID 52
+Inherited Leadership trait, Actor ID 58, Parent ID 52
+Inherited Combat trait, Actor ID 59, Parent ID 51
+Inherited Charm trait, Actor ID 59, Parent ID 51
+Inherited Combat trait, Actor ID 60, Parent ID 51
+Inherited Charm trait, Actor ID 60, Parent ID 51
+Inherited Wits trait, Actor ID 67, Parent ID 61
+Inherited Wits trait, Actor ID 75, Parent ID 70
+Inherited Treachery trait, Actor ID 75, Parent ID 70
+Inherited Combat trait, Actor ID 76, Parent ID 70
+Inherited Combat trait, Actor ID 77, Parent ID 69
+Inherited Treachery trait, Actor ID 78, Parent ID 70
+Inherited Combat trait, Actor ID 79, Parent ID 70
+Inherited Wits trait, Actor ID 79, Parent ID 70
+Sephare Targaryen, Aid 79 is Touched
+Inherited Combat trait, Actor ID 80, Parent ID 70
+Inherited Charm trait, Actor ID 80, Parent ID 70
+Inherited Treachery trait, Actor ID 80, Parent ID 70
+Inherited Combat trait, Actor ID 81, Parent ID 69
+Inherited Leadership trait, Actor ID 83, Parent ID 29
+Harys Estermont, Aid 90 is Touched
+Helman Gerrart, Aid 122 is Touched
 --- InitialiseEnemyActors (World.cs) ---
-//Exile Game file ops completed at: 28/03/2017 20:58:47
-//Elapsed Time 343 ms
+---  CreateNemesis (History.cs) ---
+//Exile Game file ops completed at: 29/03/2017 11:14:44
+//Elapsed Time 564 ms
