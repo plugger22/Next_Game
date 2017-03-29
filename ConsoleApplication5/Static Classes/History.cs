@@ -1873,7 +1873,7 @@ namespace Next_Game
                         {
                             //same name repeated - add the 'II', etc., the returned actor name
                             surname += " " + new String('I', numOfLikeNames);
-                            Console.WriteLine("- Repeating Name in house {0}: {1} {2}", house.HouseID, firstName, surname);
+                            Game.logStart.Write(string.Format("[Notification] Repeating Name in house {0}: {1} {2}", house.HouseID, firstName, surname));
                         }
                     }
                 }
@@ -2487,7 +2487,7 @@ namespace Next_Game
             int elapsedTime = Game.gameExile;
             string descriptor;
             int startAge, comeOfAge;
-            //Console.WriteLine(Environment.NewLine + "--- Age all Current Passive Actors");
+            Game.logTurn.Write("--- AgePassiveCharacters (History.cs) ---");
             foreach(var actor in dictPassiveActors)
             {
                 //actor currently alive at time of revolt?
@@ -2525,6 +2525,7 @@ namespace Next_Game
         /// </summary>
         public void InitialisePastHistoryHouses()
         {
+            Game.logStart.Write("--- InitialisePastHistoryHouses (History.cs) ---");
             //convert array data to lists
             listOfHouseRelsGood = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastGood].ToList());
             listOfHouseRelsBad = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastBad].ToList());
@@ -2544,7 +2545,6 @@ namespace Next_Game
             chanceGood = Math.Max(1, chanceGood);
             int interval = yearEnd - yearStart - 50;
             interval = Math.Max(50, interval);
-            Console.WriteLine(Environment.NewLine + "--- Past History Houses");
             List<Relation> tempListRelations = new List<Relation>();
             List<MajorHouse> listTempHouses = new List<MajorHouse>();
             List<int> tempBannerLords = new List<int>();
@@ -2611,17 +2611,17 @@ namespace Next_Game
                             //choose a random house from list
                             int tempIndex = rnd.Next(0, listTempHouses.Count);
                             MajorHouse rndHouse = listTempHouses[tempIndex];
-                            Console.WriteLine("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year);
+                            Game.logStart.Write(string.Format("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year));
                             //add to House list
                             Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
                             tempListRelations.Add(relation);
                             //add to Master list
                             masterText = string.Format("{0} {1} -> {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);
                             listOfHouseRelsMaster.Add(masterText);
-                            //Console.WriteLine("MASTER: {0}", masterText);
+                            Game.logStart.Write(string.Format("MASTER: {0}", masterText));
                         }
                     }
-                    Console.WriteLine("House {0}, refID {1}, Relations", house.Name, house.RefID);
+                    Game.logStart.Write(string.Format("House {0}, refID {1}, Relations", house.Name, house.RefID));
 
                     //Bannerlord Relations with House
                     tempBannerLords.Clear();
@@ -2681,14 +2681,16 @@ namespace Next_Game
                                     MinorHouse rndHouse = (MinorHouse)Game.world.GetHouse(refID);
                                     if (rndHouse != null)
                                     {
-                                        Console.WriteLine("- Minor House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year);
+                                        Game.logStart.Write(string.Format("- Minor House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, 
+                                            relEffect > 0 ? "+" : "", relEffect, year));
                                         //add to House list
                                         Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
                                         tempListRelations.Add(relation);
                                         //add to Master list
-                                        masterText = string.Format("{0} {1} -> (Minor) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);
+                                        masterText = string.Format("{0} {1} -> (Minor) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, 
+                                            relEffect > 0 ? "+" : "", relEffect);
                                         listOfHouseRelsMaster.Add(masterText);
-                                        //Console.WriteLine("MASTER: {0}", masterText);
+                                        Game.logStart.Write(string.Format("MASTER: {0}", masterText));
                                     }
                                     else { Game.SetError(new Error(131, "MinorHouse Invalid (null)")); }
                                 }
@@ -2709,7 +2711,7 @@ namespace Next_Game
             int turnCoatRefID = Game.lore.TurnCoatRefIDNew;
             int newKingRefID = Game.lore.RoyalRefIDNew;
             string turnCoatName = Game.world.GetHouseName(turnCoatRefID);
-            Console.WriteLine(Environment.NewLine + "--- Turncoat Relations");
+            Game.logStart.Write("-Turncoat Relations");
             foreach (MajorHouse house in listOfMajorHouses)
             {
                 if (house.RefID != newKingRefID)
@@ -2743,7 +2745,7 @@ namespace Next_Game
                     //add to Master list
                     masterText = string.Format("{0} {1} -> (Major) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, turnCoatName, relation.Text, relEffect > 0 ? "+" : "", relEffect);
                     listOfHouseRelsMaster.Add(masterText);
-                    Console.WriteLine("{0}", masterText);
+                    Game.logStart.Write(string.Format("{0}", masterText));
                 }
             }
         }
@@ -2757,6 +2759,7 @@ namespace Next_Game
         /// </summary>
         public void InitialiseLordRelations()
         {
+            Game.logStart.Write("--- InitialiseLordRelations (History.cs) ---");
             int houseID, lordTreachery, relLord, lordStars, relChange;
             string relText, relTag;
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetAllMajorHouses();
@@ -2810,15 +2813,15 @@ namespace Next_Game
                             }
                             //treachery of Lord
                             lordTreachery = lord.GetSkill(SkillType.Treachery);
-                            Console.WriteLine(Environment.NewLine + "{0} {1}, {2}, actID {3}, Treachery {4}, \"{5}\", houseID {6}", lord.Title, lord.Name, lord.Handle, lord.ActID, lordTreachery,
-                                Game.world.GetMajorHouseName(houseID), lord.HouseID);
+                            Game.logStart.Write(string.Format("{0} {1}, {2}, actID {3}, Treachery {4}, \"{5}\", houseID {6}", lord.Title, lord.Name, lord.Handle, lord.ActID, lordTreachery,
+                                Game.world.GetMajorHouseName(houseID), lord.HouseID));
                             //loop list and establish relations
                             for (int i = 0; i < tempActors.Count; i++)
                             {
                                 Passive actor = tempActors[i];
                                 if (actor.Type != ActorType.Lord && actor.Status != ActorStatus.Gone)
                                 {
-                                    Console.WriteLine("  {0} {1}, actID {2}, houseID {3}", actor.Title, actor.Name, actor.ActID, actor.HouseID);
+                                    Game.logStart.Write(string.Format("  {0} {1}, actID {2}, houseID {3}", actor.Title, actor.Name, actor.ActID, actor.HouseID));
                                     relLord = 0;
                                     switch (actor.Type)
                                     {
@@ -2853,7 +2856,7 @@ namespace Next_Game
                                             Game.SetError(new Error(134, string.Format("Invalid ActorType (\"{0}\") for {1} {2}, ActID {3}", actor.Type, actor.Title, actor.Name, actor.ActID)));
                                             break;
                                     }
-                                    Console.WriteLine("   Relationship with Lord {0} {1}", relLord, relLord > 80 || relLord < 20 ? "***" : "");
+                                    Game.logStart.Write(string.Format("   Relationship with Lord {0} {1}", relLord, relLord > 80 || relLord < 20 ? "***" : ""));
                                     //instigate Relationship
                                     if (relLord >= 0)
                                     {

@@ -132,13 +132,16 @@ namespace Next_Game
         /// </summary>
         public void Dispose()
         {
-            if (File.Exists(path) == true)
+            if (File.Exists(path) == true && fileStream != null)
             {
                 Write(string.Format("//Exile Game file ops \"{0}\" Completed at: {1}", fileName, DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
                 timer.Stop();
                 TimeSpan ts = timer.Elapsed;
                 Write(string.Format("//Elapsed Time {0} ms", ts.Milliseconds), true, ConsoleColor.Red);
-                writer.Close();
+                writer.Dispose();
+                fileStream.Dispose();
+                fileStream = null;
+               
             }
             else { Game.SetError(new Error(192, string.Format("File does not exist -> Dispose (\"{0}\")", path))); }
         }

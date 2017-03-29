@@ -99,6 +99,7 @@ namespace Next_Game
         //errors
         private static string _errorLast = ""; //text of the last generated error (game.SetError)
         private static int _errorCounter = 0; //counts instances of identical errors (game.SetError)
+        private static int _errorLimit = 5; //max. # of identical errors that will be shown before 'repeat...' msg
         //other
         private static RLKeyPress _keyLast = null; //last known keypress
         private static Position _posSelect1; //used for input of map positions
@@ -849,8 +850,8 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
-                                        logError.Dispose();
                                         logTurn.Dispose();
+                                        logError.Dispose();
                                         _rootConsole.Close();
                                         //Environment.Exit(1); - not needed and causes OpenTK error
                                         break;
@@ -957,8 +958,8 @@ namespace Next_Game
             {
                 logTurn.Write(exception.Message); logError.Write(exception.Message);
                 //tidy up before crash
-                logError.Dispose();
-                logTurn.Dispose();
+                logError.Dispose(); logError = null;
+                logTurn.Dispose(); logTurn = null;
             }
         }
 
@@ -1562,21 +1563,23 @@ namespace Next_Game
                 else
                 { _errorCounter = 0; _errorLast = error.Text; }
                 //print first 5 occurences of error
-                if (_errorCounter < 6)
+                if (_errorCounter < _errorLimit + 1)
                 {
                     //write to log files
-                    logError.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow);
-                    logError.Write(error.Object, false);
+                    if (logError != null)
+                    { logError.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow); }
+                    //logError.Write(error.Object, false);
                     if (logStart != null)
                     { logStart.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow); }
                     else if (logTurn != null)
                     { logTurn.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow); }
                 }
                 //print message regarding ongoing repeats and then ignore the rest
-                else if (_errorCounter == 5)
+                else if (_errorCounter == _errorLimit)
                 {
                     //Console.WriteLine("Multiple repeats of same error...");
-                    logError.Write("Multiple repeats of same error...", true, ConsoleColor.Red);
+                    if (logError != null)
+                    { logError.Write("Multiple repeats of same error...", true, ConsoleColor.Red); }
                     if (logStart != null)
                     { logStart.Write("Multiple repeats of same error...", true, ConsoleColor.Red); }
                     else if (logTurn != null)

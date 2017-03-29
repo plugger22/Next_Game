@@ -3062,7 +3062,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartGame()
         {
-            Console.WriteLine(Environment.NewLine + "--- Start Game");
+            Game.logTurn.Write("--- Start Game");
             Game.history.AgePassiveCharacters(dictPassiveActors);
             CalculateCrows();
             
