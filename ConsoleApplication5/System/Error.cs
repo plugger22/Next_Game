@@ -38,7 +38,8 @@ namespace Next_Game
             this.Text = text;
             Method = memberName;
             Line = sourceLineNumber;
-            Object = sourceFilePath;
+            string[] tokens = sourceFilePath.Split('/');
+            Object = tokens[tokens.Length - 1];
         }
 
 

@@ -921,6 +921,7 @@ namespace Next_Game
                                 break;
                             case RLKey.Enter:
                                 world.ProcessEndTurn();
+                                logTurn.Close(); logTurn.Open(); //retain previous turn's output only
                                 world.ProcessStartTurn();
                                 infoChannel.ClearConsole(ConsoleDisplay.Input);
                                 infoChannel.ClearConsole(ConsoleDisplay.Multi);
@@ -1560,26 +1561,26 @@ namespace Next_Game
                 { _errorCounter++; }
                 else
                 { _errorCounter = 0; _errorLast = error.Text; }
-                //print first 9 occurences of error
-                if (_errorCounter < 10)
+                //print first 5 occurences of error
+                if (_errorCounter < 6)
                 {
                     //write to log files
-                    logError.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line), true, ConsoleColor.Yellow);
+                    logError.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow);
                     logError.Write(error.Object, false);
                     if (logStart != null)
-                    { logStart.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line), true, ConsoleColor.Yellow); }
+                    { logStart.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow); }
                     else if (logTurn != null)
-                    { logTurn.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line), true, ConsoleColor.Yellow); }
+                    { logTurn.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow); }
                 }
                 //print message regarding ongoing repeats and then ignore the rest
                 else if (_errorCounter == 10)
                 {
                     //Console.WriteLine("Multiple repeats of same error...");
-                    logError.Write("Multiple repeats of same error...");
+                    logError.Write("Multiple repeats of same error...", true, ConsoleColor.Red);
                     if (logStart != null)
-                    { logStart.Write("Multiple repeats of same error..."); }
+                    { logStart.Write("Multiple repeats of same error...", true, ConsoleColor.Red); }
                     else if (logTurn != null)
-                    { logTurn.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3}", error.Code, error.Text, error.Method, error.Line), true, ConsoleColor.Yellow); }
+                    { logTurn.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow); }
                 }
                 
             }

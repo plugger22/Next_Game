@@ -16,6 +16,7 @@ namespace Next_Game
     {
 
         string path;
+        string className;
         FileStream fileStream;
         StreamWriter writer;
         CultureInfo culture;
@@ -27,6 +28,8 @@ namespace Next_Game
         /// <param name="path"></param>
         public Logger(string path)
         {
+            string[] tokens = path.Split('/'); 
+            className = tokens[tokens.Length -1];
             this.path = path;
             //create file, if exists overwrite
             try
@@ -66,9 +69,9 @@ namespace Next_Game
                         writer.Write(Environment.NewLine);
                     }
                     catch(ObjectDisposedException)
-                    { Game.SetError(new Error(192, string.Format("File has been Disposed -> Write (\"{0}\") -> Text not written", path))); }
+                    { Game.SetError(new Error(192, string.Format("File has been Disposed -> Write (\"{0}\") -> Text not written", text))); }
                 }
-                else { Game.SetError(new Error(192, string.Format("File does not exist -> Write (\"{0}\") -> Text not written", path))); }
+                else { Game.SetError(new Error(192, string.Format("File does not exist -> Write (\"{0}\") -> Text not written", text))); }
                 //write to Console
                 if (writeToConsole == true)
                 {
@@ -83,7 +86,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Open and existing, but closed, file for write operations
+        /// Open an existing, but closed, file for write operations (any existing text is overwritten)
         /// </summary>
         public void Open()
         {
@@ -114,13 +117,13 @@ namespace Next_Game
         {
             if (File.Exists(path) == true)
             {
-                Write(string.Format("//Exile Game Initialisation completed at: {0}", DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
+                Write(string.Format("//Exile Game File Close completed at: {0}", DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
                 timer.Stop();
                 TimeSpan ts = timer.Elapsed;
                 Write(string.Format("//Exile Elapsed Time {0} ms", ts.Milliseconds), true, ConsoleColor.Red);
                 writer.Close();
             }
-            else { Game.SetError(new Error(192, string.Format("File does not exist -> Close (\"{0}\") -> Text not written", path))); }
+            else { Game.SetError(new Error(192, string.Format("File does not exist -> Close (\"{0}\")", path))); }
         }
 
         /// <summary>
@@ -136,7 +139,7 @@ namespace Next_Game
                 Write(string.Format("//Elapsed Time {0} ms", ts.Milliseconds), true, ConsoleColor.Red);
                 writer.Close();
             }
-            else { Game.SetError(new Error(192, string.Format("File does not exist -> Dispose (\"{0}\") -> Text not written", path))); }
+            else { Game.SetError(new Error(192, string.Format("File does not exist -> Dispose (\"{0}\")", path))); }
         }
     }
 }

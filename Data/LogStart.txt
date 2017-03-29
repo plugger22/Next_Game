@@ -1,118 +1,106 @@
-//Exile Game file ops commenced at: 29/03/2017 14:20:20
+//Exile Game file ops commenced at: 29/03/2017 14:34:32
 ---  InitialiseMajorHouses (History.cs) ---
-Great House Baratheon removed
-Great House Arryn removed
+Great House Lannister removed
+Great House Targaryen removed
 -0-
-Major House Lannister added at Casterly Rock, RefID 2, ArcID 14
 Major House Martell added at Dorne, RefID 3, ArcID 18
 Major House Florent added at Brightwater Keep, RefID 4, ArcID 12
 Major House Greyjoy added at Pyke, RefID 5, ArcID 17
+Major House Arryn added at Eyrie, RefID 6, ArcID 16
+Major House Baratheon added at Bloodkeep, RefID 7, ArcID 19
 Major House Stark added at Winterfell, RefID 8, ArcID 11
 Major House Tully added at Riverrun, RefID 9, ArcID 13
 Major House Tyrell added at Highgarden, RefID 10, ArcID 20
-Major House Targaryen added at Valyria, RefID 11, ArcID 21
 ---  InitialiseGeoClusters (History.cs) ---
-28 Geoclusters initialised
+23 Geoclusters initialised
 ---  InitialisePlayer (History.cs) ---
 Usurper William Tell, ActID William Tell, Resources 1
 ---  InitialiseCapital (History.cs) ---
-CapitalWalls 5, CapitalTreasury 3
+CapitalWalls 5, CapitalTreasury 4
 ---  InitialiseFollowers (History.cs) ---
-The Jester, Aid 2, FID 2, ArcID 23, "Entertainer" Loyalty 50
-The Viper, Aid 3, FID 3, ArcID 23, "Assassin" Loyalty 55
-The Waif, Aid 4, FID 10, ArcID 23, "Lost Child" Loyalty 57
-The Leper, Aid 5, FID 4, ArcID 23, "Beggar" Loyalty 55
-The Dark Eminence, Aid 6, FID 5, ArcID 23, "Manipulator" Loyalty 35
-The Spider, Aid 7, FID 1, ArcID 23, "Spy" Loyalty 60
+The Dark Eminence, Aid 2, FID 5, ArcID 23, "Manipulator" Loyalty 35
+The Spider, Aid 3, FID 1, ArcID 23, "Spy" Loyalty 60
+The Viper, Aid 4, FID 3, ArcID 23, "Assassin" Loyalty 55
+The Duchess, Aid 5, FID 6, ArcID 23, "Seductress" Loyalty 75
+The Waif, Aid 6, FID 10, ArcID 23, "Lost Child" Loyalty 57
+The Beast, Aid 7, FID 7, ArcID 23, "Enforcer" Loyalty 95
 The Crone, Aid 8, FID 8, ArcID 23, "Old Woman" Loyalty 58
-The Duchess, Aid 9, FID 6, ArcID 23, "Seductress" Loyalty 75
+The Haggler, Aid 9, FID 9, ArcID 23, "Merchant" Loyalty 56
 ---  UpdateHouses (Network.cs) ---
-House Lannister assigned LocID 13 and HouseID 1
-House Martell assigned LocID 5 and HouseID 4
-House Florent assigned LocID 9 and HouseID 3
-House Greyjoy assigned LocID 15 and HouseID 7
-House Stark assigned LocID 23 and HouseID 8
-House Tully assigned LocID 20 and HouseID 6
-House Tyrell assigned LocID 26 and HouseID 2
-House Targaryen assigned LocID 34 and HouseID 5
-- Initialise BannerLords for House Lannister
-Minor House Tallhart added at Torrhen's Square, RefID 128, LocID 14, ArcID 0
+House Martell assigned LocID 3 and HouseID 5
+House Florent assigned LocID 22 and HouseID 7
+House Greyjoy assigned LocID 6 and HouseID 2
+House Arryn assigned LocID 10 and HouseID 4
+House Baratheon assigned LocID 16 and HouseID 6
+House Stark assigned LocID 31 and HouseID 8
+House Tully assigned LocID 26 and HouseID 3
+House Tyrell assigned LocID 32 and HouseID 1
 - Initialise BannerLords for House Martell
-Minor House Frey added at The Twins, RefID 113, LocID 16, ArcID 0
+Minor House Bolton added at Dreadfort, RefID 101, LocID 17, ArcID 0
+Minor House Caron added at Nightsong, RefID 105, LocID 18, ArcID 0
 - Initialise BannerLords for House Florent
-Minor House Tarth added at Evenfall, RefID 130, LocID 3, ArcID 0
-Minor House Glover added at Deepwood Motte, RefID 114, LocID 4, ArcID 0
-Minor House Hornwood added at Hornwood, RefID 117, LocID 10, ArcID 0
-Minor House Westerling added at The Crag, RefID 132, LocID 12, ArcID 0
-Minor House Ambrose added at Blackwater, RefID 100, LocID 8, ArcID 0
-Minor House Leygood added at Barrow Hill, RefID 120, LocID 11, ArcID 0
+Minor House Umber added at Last Hearth, RefID 131, LocID 30, ArcID 0
+Minor House Flint added at Widow's Watch, RefID 136, LocID 27, ArcID 0
+Minor House Codd added at Fishfork, RefID 108, LocID 28, ArcID 0
+Minor House Leygood added at Barrow Hill, RefID 120, LocID 29, ArcID 0
 - Initialise BannerLords for House Greyjoy
-Minor House Flint added at Widow's Watch, RefID 136, LocID 25, ArcID 0
-Minor House Yronwood added at Yronwood Castle, RefID 135, LocID 31, ArcID 0
-Minor House Harlaw added at Ten Towers, RefID 115, LocID 29, ArcID 0
-Minor House Dondarrion added at Blackhaven, RefID 110, LocID 27, ArcID 0
-Minor House Mooton added at Maidenpool, RefID 121, LocID 28, ArcID 0
-Minor House Hunt added at Longbow Hall, RefID 118, LocID 30, ArcID 0
+Minor House Mormont added at Bearpit, RefID 122, LocID 23, ArcID 0
+Minor House Tarth added at Evenfall, RefID 130, LocID 24, ArcID 0
+- Initialise BannerLords for House Arryn
+Minor House Westerling added at The Crag, RefID 132, LocID 9, ArcID 0
+Minor House Oakheart added at Old Oak, RefID 124, LocID 11, ArcID 0
+Minor House Peake added at Starpike, RefID 134, LocID 21, ArcID 0
+Minor House Bracken added at Stone Hedge, RefID 103, LocID 15, ArcID 0
+Minor House Mullendore added at Uplands, RefID 123, LocID 12, ArcID 0
+Minor House Clegane added at Clegane's Keep, RefID 107, LocID 13, ArcID 0
+Minor House Glover added at Deepwood Motte, RefID 114, LocID 19, ArcID 0
+Minor House Yronwood added at Yronwood Castle, RefID 135, LocID 14, ArcID 0
+Minor House Karstark added at Karhold, RefID 119, LocID 20, ArcID 0
+- Initialise BannerLords for House Baratheon
 - Initialise BannerLords for House Stark
-Minor House Tarly added at Horn Hill, RefID 129, LocID 32, ArcID 0
-Minor House Oakheart added at Old Oak, RefID 124, LocID 40, ArcID 0
-Minor House Caron added at Nightsong, RefID 105, LocID 33, ArcID 0
-Minor House Codd added at Fishfork, RefID 108, LocID 35, ArcID 0
-Minor House Mullendore added at Uplands, RefID 123, LocID 37, ArcID 0
-Minor House Crane added at Red Lake, RefID 109, LocID 36, ArcID 0
-Minor House Peake added at Starpike, RefID 134, LocID 38, ArcID 0
-Minor House Penrose added at Parchments, RefID 125, LocID 39, ArcID 0
+Minor House Tallhart added at Torrhen's Square, RefID 128, LocID 33, ArcID 0
 - Initialise BannerLords for House Tully
-Minor House Slynt added at Harrenhal, RefID 127, LocID 18, ArcID 0
-Minor House Brax added at Hornvale, RefID 104, LocID 19, ArcID 0
-Minor House Karstark added at Karhold, RefID 119, LocID 22, ArcID 0
-Minor House Cerwyn added at Cerwyn, RefID 106, LocID 21, ArcID 0
+Minor House Hunt added at Longbow Hall, RefID 118, LocID 7, ArcID 0
+Minor House Botley added at Lordsport, RefID 102, LocID 8, ArcID 0
 - Initialise BannerLords for House Tyrell
-Minor House Botley added at Lordsport, RefID 102, LocID 7, ArcID 0
-Minor House Hightower added at Oldtown, RefID 116, LocID 6, ArcID 0
-- Initialise BannerLords for House Targaryen
+Minor House Ambrose added at Blackwater, RefID 100, LocID 4, ArcID 0
+Minor House Crane added at Red Lake, RefID 109, LocID 5, ArcID 0
 ---  InitialiseHouses (World.cs) ---
 --- InitialiseSpecialHouse (History.cs) ---
-"The Shaggy Parrot" Inn initialised, RefID 1004, LocID 2, HouseID 99
-"One Eyed Pete's" Inn initialised, RefID 1006, LocID 17, HouseID 99
-"The Clumsy Hog" Inn initialised, RefID 1000, LocID 24, HouseID 99
+"The Clumsy Hog" Inn initialised, RefID 1000, LocID 2, HouseID 99
+"The Shaggy Parrot" Inn initialised, RefID 1004, LocID 25, HouseID 99
 - House Genetics (add Lords and Ladies)
-Inherited Combat trait, Actor ID 23, Parent ID 18
-Inherited Combat trait, Actor ID 24, Parent ID 18
-Inherited Treachery trait, Actor ID 24, Parent ID 18
-Inherited Charm trait, Actor ID 32, Parent ID 25
-Inherited Combat trait, Actor ID 33, Parent ID 26
-Inherited Charm trait, Actor ID 34, Parent ID 25
-Jaques Florent, Aid 34 is Touched
-Inherited Charm trait, Actor ID 35, Parent ID 25
-Inherited Leadership trait, Actor ID 35, Parent ID 25
-Inherited Combat trait, Actor ID 43, Parent ID 38
-Inherited Treachery trait, Actor ID 43, Parent ID 38
-Inherited Wits trait, Actor ID 50, Parent ID 44
-Inherited Charm trait, Actor ID 50, Parent ID 44
-Inherited Wits trait, Actor ID 51, Parent ID 44
-Inherited Charm trait, Actor ID 51, Parent ID 44
-Inherited Treachery trait, Actor ID 51, Parent ID 44
-Inherited Treachery trait, Actor ID 58, Parent ID 52
-Inherited Charm trait, Actor ID 59, Parent ID 52
-Inherited Combat trait, Actor ID 60, Parent ID 53
-Inherited Leadership trait, Actor ID 60, Parent ID 53
-Inherited Charm trait, Actor ID 68, Parent ID 63
-Inherited Leadership trait, Actor ID 68, Parent ID 63
-Inherited Combat trait, Actor ID 76, Parent ID 70
-Inherited Combat trait, Actor ID 77, Parent ID 70
-Inherited Treachery trait, Actor ID 77, Parent ID 70
-Inherited Charm trait, Actor ID 78, Parent ID 17
-Inherited Combat trait, Actor ID 79, Parent ID 37
-Inherited Charm trait, Actor ID 79, Parent ID 37
-Inherited Treachery trait, Actor ID 80, Parent ID 62
-Segarus Slynt, Aid 103 is Touched
-Vardis Francis, Aid 114 is Touched
-Inherited Charm trait, Actor ID 128, Parent ID 127
-Inherited Leadership trait, Actor ID 128, Parent ID 127
-Inherited Charm trait, Actor ID 129, Parent ID 103
-Inherited Leadership trait, Actor ID 129, Parent ID 103
+Inherited Treachery trait, Actor ID 16, Parent ID 10
+Inherited Leadership trait, Actor ID 16, Parent ID 10
+Inherited Leadership trait, Actor ID 24, Parent ID 18
+Ser Andry Anselet, Aid 34 is Touched
+Inherited Combat trait, Actor ID 38, Parent ID 32
+Inherited Combat trait, Actor ID 39, Parent ID 33
+Inherited Wits trait, Actor ID 39, Parent ID 33
+Inherited Combat trait, Actor ID 47, Parent ID 42
+Ser Hodgkin Hary, Aid 51 is Touched
+Inherited Wits trait, Actor ID 55, Parent ID 50
+Inherited Charm trait, Actor ID 55, Parent ID 50
+Inherited Treachery trait, Actor ID 55, Parent ID 50
+Inherited Leadership trait, Actor ID 55, Parent ID 50
+Inherited Combat trait, Actor ID 62, Parent ID 56
+Inherited Treachery trait, Actor ID 62, Parent ID 56
+Inherited Charm trait, Actor ID 69, Parent ID 63
+Inherited Leadership trait, Actor ID 69, Parent ID 63
+Inherited Combat trait, Actor ID 70, Parent ID 64
+Inherited Wits trait, Actor ID 70, Parent ID 64
+Inherited Charm trait, Actor ID 70, Parent ID 64
+Inherited Treachery trait, Actor ID 70, Parent ID 64
+Inherited Combat trait, Actor ID 71, Parent ID 63
+Inherited Charm trait, Actor ID 71, Parent ID 63
+Inherited Leadership trait, Actor ID 71, Parent ID 63
+Inherited Leadership trait, Actor ID 72, Parent ID 25
+Inherited Wits trait, Actor ID 113, Parent ID 80
+Inherited Leadership trait, Actor ID 113, Parent ID 80
+Inherited Combat trait, Actor ID 114, Parent ID 112
+Inherited Wits trait, Actor ID 114, Parent ID 112
+Inherited Combat trait, Actor ID 115, Parent ID 112
 --- InitialiseEnemyActors (World.cs) ---
 ---  CreateNemesis (History.cs) ---
-//Exile Game file ops completed at: 29/03/2017 14:20:20
-//Elapsed Time 573 ms
+//Exile Game file ops completed at: 29/03/2017 14:34:33
+//Elapsed Time 602 ms

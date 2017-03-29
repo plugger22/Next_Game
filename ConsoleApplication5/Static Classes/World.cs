@@ -3073,7 +3073,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartTurn()
         {
-            Console.WriteLine(Environment.NewLine + "--- Start Turn Day {0}", Game.gameTurn + 1);
+            Game.logTurn.Write(string.Format("--- Start Turn Day {0}", Game.gameTurn + 1));
             UpdateActorMoveStatus(MoveActors());
             CheckStationaryActiveActors();
             CalculateCrows();
@@ -3104,7 +3104,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessEndTurn()
         {
-            Console.WriteLine(Environment.NewLine + "--- End Turn Day {0}", Game.gameTurn + 1);
+            Game.logTurn.Write(string.Format("--- End Turn Day {0}", Game.gameTurn + 1));
             Game.map.UpdateMap();
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();

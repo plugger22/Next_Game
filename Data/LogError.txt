@@ -1,5 +1,24 @@
-//Exile Game file ops commenced at: 29/03/2017 14:20:20
-ERROR_95 "No Cards Remaining in listCardHand" Method: UpdateCards Line: 749
-C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Layout.cs
-//Exile Game file ops completed at: 29/03/2017 14:22:49
-//Elapsed Time 678 ms
+//Exile Game file ops commenced at: 29/03/2017 14:34:32
+ERROR_192 "File has been Disposed -> Write ("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogTurn.txt") -> Text not written" Method: Write Line: 69
+C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\System\Logger.cs
+ERROR_192 "File has been Disposed -> Write ("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogTurn.txt") -> Text not written" Method: Write Line: 69
+C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\System\Logger.cs
+ERROR_192 "File has been Disposed -> Write ("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogTurn.txt") -> Text not written" Method: Write Line: 69
+C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\System\Logger.cs
+ERROR_192 "File has been Disposed -> Write ("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogTurn.txt") -> Text not written" Method: Write Line: 69
+C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\System\Logger.cs
+ERROR_192 "File has been Disposed -> Write ("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogTurn.txt") -> Text not written" Method: Write Line: 69
+C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\System\Logger.cs
+ERROR_192 "File has been Disposed -> Write ("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogTurn.txt") -> Text not written" Method: Write Line: 69
+C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\System\Logger.cs
+ERROR_192 "File has been Disposed -> Write ("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogTurn.txt") -> Text not written" Method: Write Line: 69
+C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\System\Logger.cs
+ERROR_192 "File has been Disposed -> Write ("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogTurn.txt") -> Text not written" Method: Write Line: 69
+C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\System\Logger.cs
+ERROR_192 "File has been Disposed -> Write ("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogTurn.txt") -> Text not written" Method: Write Line: 69
+C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\System\Logger.cs
+ERROR_192 "File has been Disposed -> Write ("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogTurn.txt") -> Text not written" Method: Write Line: 69
+C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\System\Logger.cs
+Multiple repeats of same error...
+//Exile Game file ops completed at: 29/03/2017 14:38:49
+//Elapsed Time 586 ms
