@@ -1565,14 +1565,15 @@ namespace Next_Game
                 //print first 5 occurences of error
                 if (_errorCounter < _errorLimit + 1)
                 {
+                    string descriptor = string.Format("Method: {0} Line: {1} Object: {2} Turn: {3} Local Time: {4}", error.Method, error.Line, error.Object, error.Turn, error.Time);
                     //write to log files
                     if (logError != null)
-                    { logError.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow); }
+                    { logError.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logError.Write(descriptor, true, ConsoleColor.Yellow); }
                     //logError.Write(error.Object, false);
                     if (logStart != null)
-                    { logStart.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow); }
+                    { logStart.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logStart.Write(descriptor, true, ConsoleColor.Yellow); }
                     else if (logTurn != null)
-                    { logTurn.Write(string.Format("ERROR_{0} \"{1}\" Method: {2} Line: {3} Object: {4}", error.Code, error.Text, error.Method, error.Line, error.Object), true, ConsoleColor.Yellow); }
+                    { logTurn.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logTurn.Write(descriptor, true, ConsoleColor.Yellow); }
                 }
                 //print message regarding ongoing repeats and then ignore the rest
                 else if (_errorCounter == _errorLimit)
@@ -1583,7 +1584,7 @@ namespace Next_Game
                     if (logStart != null)
                     { logStart.Write("Multiple repeats of same error...", true, ConsoleColor.Red); }
                     else if (logTurn != null)
-                    { logTurn.Write(string.Format("Multiple repeats of same error..."), true, ConsoleColor.Yellow); }
+                    { logTurn.Write(string.Format("Multiple repeats of same error..."), true, ConsoleColor.Red); }
                 }
                 
             }

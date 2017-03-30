@@ -14,6 +14,8 @@ namespace Next_Game
         private static int errorIndex = 1;
         public int errorID { get; }
         public int Code { get; } //3 digit error code
+        public int Turn { get; } //game turn
+        public string Time { get; } //time of occurrence
         public string Text { get; } //description
         public string Method { get; } //calling method
         public string Object { get; } //calling object
@@ -40,6 +42,8 @@ namespace Next_Game
             Line = sourceLineNumber;
             string[] tokens = sourceFilePath.Split('\\');
             Object = tokens[tokens.Length - 1];
+            Turn = Game.gameTurn;
+            Time = DateTime.Now.ToString("T");
         }
 
 
