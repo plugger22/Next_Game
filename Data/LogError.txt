@@ -1,2 +1,10 @@
-//Exile Game file ops "LogError.txt" commenced at: 30/03/2017 13:39:13
-//Exile Game file ops "LogError.txt" Completed at: 30/03/2017 13:39:45
+//Exile Game file ops "LogError.txt" commenced at: 30/03/2017 14:05:41
+ERROR_29 "Location Deleted 29:4"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:05:41 UTC +11:00
+ERROR_29 "Location Deleted 7:28"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:05:41 UTC +11:00
+ERROR_29 "Location Deleted 10:29"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:05:41 UTC +11:00
+ERROR_73 "No valid option present for "What to do?", option # 5"
+Method: ResolveOutcome,  Line: 2152,  Object: Director.cs,  Turn: 1,  Local Time: 14:06:08 UTC +11:00
+//Exile Game file ops "LogError.txt" Completed at: 30/03/2017 14:07:20

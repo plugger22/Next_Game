@@ -1565,7 +1565,8 @@ namespace Next_Game
                 //print first 5 occurences of error
                 if (_errorCounter < _errorLimit + 1)
                 {
-                    string descriptor = string.Format("Method: {0} Line: {1} Object: {2} Turn: {3} Local Time: {4}", error.Method, error.Line, error.Object, error.Turn, error.Time);
+                    string descriptor = string.Format("Method: {0},  Line: {1},  Object: {2},  Turn: {3},  Local Time: {4} UTC {5}", error.Method, error.Line, error.Object, error.Turn, 
+                        error.Time, error.TimeZone);
                     //write to log files
                     if (logError != null)
                     { logError.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logError.Write(descriptor, true, ConsoleColor.Yellow); }
