@@ -52,6 +52,7 @@ namespace Next_Game
         private List<Snippet> listPlayerCards;
         private List<Snippet> listOpponentCards;
         private List<Snippet> listSituationCards;
+        private List<Snippet> listSupporterCards;
 
         /// <summary>
         /// default Constructor
@@ -68,12 +69,13 @@ namespace Next_Game
             arrayPool = new int[4]; //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards, 3 - # defender specific cards)
             arrayModifiers = new int[3]; //modifier (DM) for GetSituationCardNumber, 0/1/2 refer to the three situation cards (def adv/neutral/game specific) -> DM for 0 & 1, # of cards for Game ('2')
             arraySituation = new string[3, 3];
-            arraySupportGood = new string[5, 3]; //max 5 supporters for Player ('0' -> name supporter, '1' -> played outcome text, '2' -> ignored outcome text)
-            arraySupportBad = new string[5, 3]; //max 5 supporters for Opponent
+            arraySupportGood = new string[3, 3]; //max 3 supporters for Player ('0' -> name supporter, '1' -> played outcome text, '2' -> ignored outcome text)
+            arraySupportBad = new string[3, 3]; //max 3 supporters for Opponent
             //three lists to consolidate into pool breakdown description
             listPlayerCards = new List<Snippet>();
             listOpponentCards = new List<Snippet>();
             listSituationCards = new List<Snippet>();
+            listSupporterCards = new List<Snippet>();
             //get player (always the player vs. somebody else)
             player = (Player)Game.world.GetActiveActor(1);
             if (player != null) {}
@@ -147,7 +149,13 @@ namespace Next_Game
         /// </summary>
         private void SetSupporters()
         {
-
+            //test data
+            arraySupportGood[0, 0] = "Prince Alfred Bignose";
+            arraySupportGood[1, 0] = "Bastard John Snow";
+            arraySupportGood[2, 0] = "Officer Clint Eastwood";
+            arraySupportBad[0, 0] = "Lord Darth Vader";
+            arraySupportBad[1, 0] = "Doctor Evil";
+            arraySupportBad[2, 0] = "Lord Voldermont";
         }
 
         /// <summary>
@@ -895,10 +903,12 @@ namespace Next_Game
             listPlayerCards.Clear();
             listOpponentCards.Clear();
             listSituationCards.Clear();
+            listSupporterCards.Clear();
             //headers
             listPlayerCards.Add(new Snippet("Your Cards", RLColor.Blue, backColor));
             listOpponentCards.Add(new Snippet("Opponent's Cards", RLColor.Blue, backColor));
             listSituationCards.Add(new Snippet("Situation Cards", RLColor.Blue, backColor));
+            listSupporterCards.Add(new Snippet("Supporter Cards", RLColor.Blue, backColor));
             //primary skills (2 cards per skill level)
             int skill_player = player.GetSkill(PrimarySkill);
             int skill_opponent = opponent.GetSkill(PrimarySkill);
@@ -1008,6 +1018,38 @@ namespace Next_Game
             }
             text = string.Format("\"{0}\", {1} card{2}, A Neutral Card (Good if played, Bad if ignored)", arraySituation[1, 0], numCards, numCards > 1 ? "s" : "");
             listSituationCards.Add(new Snippet(text, foreColor, backColor));
+
+            //Supporters -> Good
+            for (int i = 0; i < arraySupportGood.GetUpperBound(0); i++)
+            {
+                string supporterText = arraySupportGood[i, 0];
+                string supportDescription = "Lends a helping hand";  //TO DO
+                type = CardType.Good;
+                foreColor = RLColor.Black;
+                //no more valid data
+                if (String.IsNullOrEmpty(supporterText) == true)
+                { break; }
+                Card_Conflict card = new Card_Conflict(CardConflict.Supporter, type, supporterText, supportDescription);
+                card.PlayedText = arraySupportGood[i, 1]; card.IgnoredText = arraySupportBad[i, 2];
+                listCardPool.Add(card);
+                listSupporterCards.Add(new Snippet(supporterText, foreColor, backColor)); //TO DO
+            }
+            //Supporters -> Bad
+            for (int i = 0; i < arraySupportBad.GetUpperBound(0); i++)
+            {
+                string supporter = arraySupportBad[i, 0];
+                string support_description = "Lends a helping hand";  //TO DO
+                type = CardType.Bad;
+                foreColor = RLColor.Red;
+                //no more valid data
+                if (String.IsNullOrEmpty(supporter) == true)
+                { break; }
+                Card_Conflict card = new Card_Conflict(CardConflict.Supporter, type, supporter, support_description);
+                card.PlayedText = arraySupportBad[i, 1]; card.IgnoredText = arraySupportBad[i, 2];
+                listCardPool.Add(card);
+                listSupporterCards.Add(new Snippet(supporter, foreColor, backColor)); //TO DO
+            }
+
             //...Game Specific Situation
             if (Game_Type != CardType.None)
             {
@@ -1065,6 +1107,8 @@ namespace Next_Game
             listBreakdown.AddRange(listOpponentCards);
             listBreakdown.Add(new Snippet(""));
             listBreakdown.AddRange(listSituationCards);
+            listBreakdown.Add(new Snippet(""));
+            listBreakdown.AddRange(listSupporterCards);
             //send to layout
             Game.layout.SetCardBreakdown(listBreakdown);
             Game.layout.SetCardPool(arrayPool);

@@ -1,7 +1,5 @@
-//Exile Game File "LogTurn.txt" opened at: 30/03/2017 14:38:43
---- ProcessStartTurn, Day 2 (World.cs) 
-ERROR_73 "No valid option present for "What to do?", option # 9"
-Method: ResolveOutcome,  Line: 2152,  Object: Director.cs,  Turn: 1,  Local Time: 14:38:44 UTC +11:00
-ERROR_73 "No valid option present for "What to do?", option # 10"
-Method: ResolveOutcome,  Line: 2152,  Object: Director.cs,  Turn: 1,  Local Time: 14:38:49 UTC +11:00
-//Exile Game file ops "LogTurn.txt" Completed at: 30/03/2017 14:39:08
+//Exile Game File "LogTurn.txt" opened at: 30/03/2017 15:20:42
+--- ProcessStartTurn, Day 6 (World.cs) 
+ERROR_95 "No Cards Remaining in listCardHand"
+Method: UpdateCards,  Line: 749,  Object: Layout.cs,  Turn: 5,  Local Time: 15:26:01 UTC +11:00
+//Exile Game file ops "LogTurn.txt" Completed at: 30/03/2017 15:26:08
