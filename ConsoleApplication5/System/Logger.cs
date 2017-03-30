@@ -14,7 +14,6 @@ namespace Next_Game
     /// </summary>
     public class Logger
     {
-
         string path;
         string fileName;
         FileStream fileStream;
@@ -99,6 +98,7 @@ namespace Next_Game
                 try
                 {
                     fileStream = File.OpenWrite(path);
+                    writer = new StreamWriter(fileStream);
                     //write header (time & data stamp
                     culture = new CultureInfo("en-GB");
                     Write(string.Format("//Exile Game File \"{0}\" opened at: {1}", fileName, DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
@@ -118,7 +118,7 @@ namespace Next_Game
         /// </summary>
         public void Close()
         {
-            if (File.Exists(path) == true)
+            if (File.Exists(path) == true && fileStream != null)
             {
                 Write(string.Format("//Exile Game File \"{0}\" Close completed at: {1}", fileName, DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
                 if (useTimer == true)
@@ -129,7 +129,7 @@ namespace Next_Game
                 }
                 //Closing the adapter also closes the underlying filestream
                 writer.Close();
-                //fileStream.Close();
+                //fileStream.Close(); -> doing this causes an exception as the closing the adapter stream (writer) auto closes the underlying fileStream
                 fileStream = null;
             }
             else { Game.SetError(new Error(192, string.Format("File does not exist -> Close (\"{0}\")", path))); }
