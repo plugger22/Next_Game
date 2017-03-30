@@ -3062,7 +3062,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartGame()
         {
-            Game.logTurn.Write("--- Start Game");
+            Game.logTurn.Write("--- ProcessStartGame (World.cs)");
             Game.history.AgePassiveCharacters(dictPassiveActors);
             CalculateCrows();
             
@@ -3073,7 +3073,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartTurn()
         {
-            Game.logTurn.Write(string.Format("--- Start Turn Day {0}", Game.gameTurn + 1));
+            Game.logTurn.Write(string.Format("--- ProcessStartTurn, Day {0} (World.cs) ", Game.gameTurn + 1));
             UpdateActorMoveStatus(MoveActors());
             CheckStationaryActiveActors();
             CalculateCrows();
@@ -3104,7 +3104,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessEndTurn()
         {
-            Game.logTurn.Write(string.Format("--- End Turn Day {0}", Game.gameTurn + 1));
+            Game.logTurn.Write(string.Format("--- ProcessEndTurn, Day {0} (World.cs)", Game.gameTurn + 1));
             Game.map.UpdateMap();
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();

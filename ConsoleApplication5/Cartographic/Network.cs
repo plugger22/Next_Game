@@ -1336,7 +1336,7 @@ namespace Next_Game.Cartographic
 
         public void PrintNetworkStatus()
         {
-            Console.WriteLine("Debug: Network Summary ---");
+            Console.WriteLine("Debug: Network Summary");
             Console.WriteLine("Debug: dictLocations has {0} records", dictLocations.Count);
             Console.WriteLine("Debug: listOfLocationNames has {0} records", listOfLocationNames.Count);
         }
@@ -2012,7 +2012,7 @@ namespace Next_Game.Cartographic
         /// <param name="listOfHouses"></param>
         internal void UpdateHouses(List<MajorHouse> listOfHouses)
         {
-            Game.logStart.Write("---  UpdateHouses (Network.cs) ---");
+            Game.logStart.Write("---  UpdateHouses (Network.cs)");
             //set up a quick list for randomly assigning houses to houseID's
             List<int> randomList = new List<int>();
             for(int i = 0; i < listOfHouses.Count; i++)

@@ -122,7 +122,7 @@ namespace Next_Game
             Stopwatch timer_1 = new Stopwatch();
             constant = new Constant();
             utility = new Utility();
-            logStart = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogStart.txt");
+            logStart = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogStart.txt", true);
             logError = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogError.txt");
             try
             {

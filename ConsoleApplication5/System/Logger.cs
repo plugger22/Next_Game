@@ -21,23 +21,26 @@ namespace Next_Game
         StreamWriter writer;
         CultureInfo culture;
         Stopwatch timer;
+        bool useTimer;
 
         /// <summary>
         /// constructor -> create file
         /// </summary>
         /// <param name="path"></param>
-        public Logger(string path)
+        /// <param name="timer">true if you want the file ops to be timed, false otherise</param>
+        public Logger(string path, bool timedOp = false)
         {
             string[] tokens = path.Split('/'); 
             fileName = tokens[tokens.Length -1];
             this.path = path;
+            useTimer = timedOp;
             //create file, if exists overwrite
             try
             {
                 fileStream = File.Create(path);
                 writer = new StreamWriter(fileStream);
-                timer = new Stopwatch();
-                timer.Start();
+                if (useTimer == true)
+                { timer = new Stopwatch(); timer.Start(); }
                 //write header (time & data stamp
                 culture = new CultureInfo("en-GB");
                 Write(string.Format("//Exile Game file ops \"{0}\" commenced at: {1}", fileName, DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
@@ -61,7 +64,7 @@ namespace Next_Game
             if (String.IsNullOrEmpty(text) == false)
             {
                 //write to file
-                if (File.Exists(path) == true)
+                if (File.Exists(path) == true && fileStream != null)
                 {
                     try
                     {
@@ -118,11 +121,16 @@ namespace Next_Game
             if (File.Exists(path) == true)
             {
                 Write(string.Format("//Exile Game File \"{0}\" Close completed at: {1}", fileName, DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
-                timer.Stop();
-                TimeSpan ts = timer.Elapsed;
-                Write(string.Format("//Exile Elapsed Time {0} ms", ts.Milliseconds), true, ConsoleColor.Red);
-                //writer.Close();
-                fileStream.Close();
+                if (useTimer == true)
+                {
+                    timer.Stop();
+                    TimeSpan ts = timer.Elapsed;
+                    Write(string.Format("//Exile Elapsed Time {0} ms", ts.Milliseconds), true, ConsoleColor.Red);
+                }
+                //Closing the adapter also closes the underlying filestream
+                writer.Close();
+                //fileStream.Close();
+                fileStream = null;
             }
             else { Game.SetError(new Error(192, string.Format("File does not exist -> Close (\"{0}\")", path))); }
         }
@@ -135,11 +143,15 @@ namespace Next_Game
             if (File.Exists(path) == true && fileStream != null)
             {
                 Write(string.Format("//Exile Game file ops \"{0}\" Completed at: {1}", fileName, DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
-                timer.Stop();
-                TimeSpan ts = timer.Elapsed;
-                Write(string.Format("//Elapsed Time {0} ms", ts.Milliseconds), true, ConsoleColor.Red);
-                writer.Dispose();
-                fileStream.Dispose();
+                if (useTimer == true)
+                {
+                    timer.Stop();
+                    TimeSpan ts = timer.Elapsed;
+                    Write(string.Format("//Elapsed Time {0} ms", ts.Milliseconds), true, ConsoleColor.Red);
+                }
+                //closing the adapter also closes the underlying filestream
+                writer.Dispose(); 
+                //fileStream.Dispose();
                 fileStream = null;
                
             }
