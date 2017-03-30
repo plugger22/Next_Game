@@ -1047,7 +1047,7 @@ namespace Next_Game
                 { break; }
                 Card_Conflict card = new Card_Conflict(CardConflict.Supporter, type, supporter, support_description);
                 card.PlayedText = arraySupportBad[i, 1]; card.IgnoredText = arraySupportBad[i, 2];
-                arrayPool[2]--;
+                arrayPool[2]++;
                 listCardPool.Add(card);
                 listSupporterCards.Add(new Snippet(supporter, foreColor, backColor)); //TO DO
             }

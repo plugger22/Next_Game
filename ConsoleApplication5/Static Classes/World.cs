@@ -282,9 +282,12 @@ namespace Next_Game
                                 { Game.world.SetPlayerRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
                                 else if (charID > 1)
                                 { Game.world.SetCurrentRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
-                                //show route
-                                Game.map.UpdateMap();
-                                Game.map.DrawRoutePath(path);
+                                //show route (Player only)
+                                if (playerInParty == true)
+                                {
+                                    Game.map.UpdateMap();
+                                    Game.map.DrawRoutePath(path);
+                                }
                             }
                             else
                             { returnText = "ERROR: The Journey has been cancelled (Destination not Found)"; }

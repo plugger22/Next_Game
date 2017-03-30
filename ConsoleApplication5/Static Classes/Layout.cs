@@ -933,10 +933,11 @@ namespace Next_Game
                 for (int height_index = st_top_align + 1; height_index < st_top_align + st_upper_box_height - 1; height_index++)
                 { arrayOfCells_Strategy[width_index, height_index] = 255; }
             }
+            int totalNumCards = arrayCardPool[0] + arrayCardPool[1] + arrayCardPool[2];
             DrawText(Convert.ToString(arrayCardPool[0]), st_left_outer + 24, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(Convert.ToString(arrayCardPool[1]), st_left_outer + 24, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(Convert.ToString(arrayCardPool[2]), st_left_outer + 24, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText(Convert.ToString(arrayCardPool.Sum()), st_left_outer + 24, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(totalNumCards), st_left_outer + 24, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Situation
             for (int width_index = right_inner + 1; width_index < right_inner + st_upper_box_width - 1; width_index++)
             {
