@@ -2149,7 +2149,7 @@ namespace Next_Game
                             Console.WriteLine(" Inactive (greyed out) Option chosen for \"{0}\", option # {1}", eventObject.Name, optionNum);
                         }
                     }
-                    else { Game.SetError(new Error(73, string.Format("No valid option present for \"{0}\", option # {1}", eventObject.Name, optionNum))); }
+                    else { validOption = 0;  Game.SetError(new Error(73, string.Format("No valid option present for \"{0}\", option # {1}", eventObject.Name, optionNum))); }
                 }
                 else { Game.SetError(new Error(73, string.Format("No options present for \"{0}\"", eventObject.Name))); }
             }

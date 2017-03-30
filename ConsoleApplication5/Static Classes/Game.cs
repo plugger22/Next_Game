@@ -1562,6 +1562,8 @@ namespace Next_Game
                 { _errorCounter++; }
                 else
                 { _errorCounter = 0; _errorLast = error.Text; }
+                //flag to avoid multiple writes to console for the same error
+                bool console = true;
                 //print first 5 occurences of error
                 if (_errorCounter < _errorLimit + 1)
                 {
@@ -1569,23 +1571,23 @@ namespace Next_Game
                         error.Time, error.TimeZone);
                     //write to log files
                     if (logError != null)
-                    { logError.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logError.Write(descriptor, true, ConsoleColor.Yellow); }
-                    //logError.Write(error.Object, false);
+                    { logError.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logError.Write(descriptor, true, ConsoleColor.Yellow); console = false; }
                     if (logStart != null)
-                    { logStart.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logStart.Write(descriptor, true, ConsoleColor.Yellow); }
+                    { logStart.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow);
+                        logStart.Write(descriptor, console, ConsoleColor.Yellow); console = false; }
                     else if (logTurn != null)
-                    { logTurn.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logTurn.Write(descriptor, true, ConsoleColor.Yellow); }
+                    { logTurn.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow); logTurn.Write(descriptor, console, ConsoleColor.Yellow); }
                 }
                 //print message regarding ongoing repeats and then ignore the rest
                 else if (_errorCounter == _errorLimit)
                 {
                     //Console.WriteLine("Multiple repeats of same error...");
                     if (logError != null)
-                    { logError.Write("Multiple repeats of same error...", true, ConsoleColor.Red); }
+                    { logError.Write("Multiple repeats of same error...", true, ConsoleColor.Red); console = false; }
                     if (logStart != null)
-                    { logStart.Write("Multiple repeats of same error...", true, ConsoleColor.Red); }
+                    { logStart.Write("Multiple repeats of same error...", console, ConsoleColor.Red); console = false; }
                     else if (logTurn != null)
-                    { logTurn.Write(string.Format("Multiple repeats of same error..."), true, ConsoleColor.Red); }
+                    { logTurn.Write(string.Format("Multiple repeats of same error..."), console, ConsoleColor.Red); }
                 }
                 
             }
