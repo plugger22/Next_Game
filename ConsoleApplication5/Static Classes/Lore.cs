@@ -134,7 +134,7 @@ namespace Next_Game
             //choose a random reason from the pool
             WhyRevolt = listWhyPool[rnd.Next(0, listWhyPool.Count)];
 
-            Game.logStart.Write("--- Create BackStory (Lore.cs)");
+            Game.logStart.Write("--- CreateOldKingBackStory (Lore.cs)");
             Game.logStart.Write(string.Format("Old King Wits {0} Aid {1}, {2}", oldKing_Wits, OldKing.ActID, OldKing.Name));
             Game.logStart.Write(string.Format("New King Treachery {0} Aid {1}, {2}", newKing_Treachery, NewKing.ActID, NewKing.Name));
             Game.logStart.Write(string.Format("WhyRevolt: {0}", WhyRevolt));
@@ -159,7 +159,7 @@ namespace Next_Game
 
             //How many men could the Old king field?
             int royalArmy = 0;
-            Game.logStart.Write("--- Royalist Army (Lore.cs)");
+            Game.logStart.Write("--- Royalist Army -> CreateOldKingBackStory (Lore.cs)");
             foreach (MajorHouse house in listOfRoyalists)
             {
                 //Great houses
@@ -180,7 +180,7 @@ namespace Next_Game
             Game.logStart.Write(string.Format("The Royalists fielded {0:N0} Men At Arms", royalArmy));
             //How many men could the New king field?
             int rebelArmy = 0;
-            Game.logStart.Write("--- Rebel Army (Lore.cs)");
+            Game.logStart.Write("--- Rebel Army -> CreateOldKingBackStory (Lore.cs)");
             foreach (MajorHouse house in listOfRebels)
             {
                 //Great houses
@@ -231,14 +231,14 @@ namespace Next_Game
                 select loc;
             orderedLocs = tempLocs.ToList();
             //debug
-            Game.logStart.Write("--- Royalist Locations (Battle site pool) (Lore.cs)");
+            Game.logStart.Write("--- Royalist Locations -> CreateOldKingBackStory (Lore.cs)");
             foreach(Location loc in orderedLocs)
             {
                 string houseName = Game.world.GetMajorHouseName(loc.HouseID);
                 string locName = loc.LocName;
                 Game.logStart.Write(string.Format("{0} -> {1}, distance {2}", houseName, locName, loc.DistanceToCapital));
             }
-            Game.logStart.Write("--- Battles (Lore.cs)");
+            Game.logStart.Write("--- Battles -> CreateOldKingBackStory (Lore.cs)");
             //fixed # of battles -> first, last and one inbetween
             int numBattles = 3;
             HistKingdomIncident kingdomEvent;
@@ -404,7 +404,7 @@ namespace Next_Game
                 listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
 
                 //events ---
-                Game.logStart.Write("--- Events (Lore.cs)");
+                Game.logStart.Write("--- Events -> CreateOldKingBackStory (Lore.cs)");
                 for (int k = 0; k < Game.constant.GetValue(Global.BATTLE_EVENTS); k++)
                 {
 
@@ -430,7 +430,7 @@ namespace Next_Game
                                 listOfCapturedActors.Add(knightID);
                                 listOfTempKnights.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor);
-                                Console.WriteLine(string.Format("Knight {0}, Aid {1}, was captured by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
+                                Game.logStart.Write(string.Format("Knight {0}, Aid {1}, was captured by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
                                 record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorIncident.Captured);
                                 break;
                             case 3:
@@ -438,7 +438,7 @@ namespace Next_Game
                                 //knight killed
                                 listOfTempKnights.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", knight.Name, knight.ActID, descriptor, Friends, knight.Age);
-                                Console.WriteLine(string.Format("Knight {0}, Aid {1}, was killed by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
+                                Game.logStart.Write(string.Format("Knight {0}, Aid {1}, was killed by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
                                 record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorIncident.Died);
                                 Game.history.RemoveActor(knight, year, ActorGone.Battle);
                                 break;
@@ -447,7 +447,7 @@ namespace Next_Game
                             case 7:
                                 //knight wounded
                                 eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", knight.Name, knight.ActID, descriptor, Friends);
-                                Console.WriteLine(string.Format("Knight {0}, Aid {1}, was wounded by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
+                                Game.logStart.Write(string.Format("Knight {0}, Aid {1}, was wounded by the {2} during {3}", knight.Name, knight.ActID, Enemies, descriptor));
                                 record_knight = new Record(eventText, knight.ActID, loc.LocationID, knight.RefID, year, HistActorIncident.Wounded);
                                 //60% chance of wound causing an ongoing issue -> Secret (random strength 1 to 4)
                                 if (rnd.Next(100) < 60)
@@ -470,7 +470,7 @@ namespace Next_Game
                                     //heroic deed
                                     index = rnd.Next(0, array_HeroicDeeds.Length);
                                     eventText = string.Format("{0}, Aid {1}, {2} during {3}", knight.Name, knight.ActID, array_HeroicDeeds[index], descriptor);
-                                    Console.WriteLine("{0}, Aid {1}, {2} during {3}", knight.Name, knight.ActID, array_HeroicDeeds[index], descriptor);
+                                    Game.logStart.Write(string.Format("{0}, Aid {1}, {2} during {3}", knight.Name, knight.ActID, array_HeroicDeeds[index], descriptor));
                                     //did he take somebody else's glory? -> secret
                                     if (rnd.Next(1, 6) < knightTreachery)
                                     {
@@ -486,7 +486,7 @@ namespace Next_Game
                                     //bad deed
                                     index = rnd.Next(0, array_BadDeeds.Length);
                                     eventText = string.Format("{0}, Aid {1}, {2} during {3}", knight.Name, knight.ActID, array_BadDeeds[index], descriptor);
-                                    Console.WriteLine("{0}, Aid {1}, {2} during {3}", knight.Name, knight.ActID, array_BadDeeds[index], descriptor);
+                                    Game.logStart.Write(string.Format("{0}, Aid {1}, {2} during {3}", knight.Name, knight.ActID, array_BadDeeds[index], descriptor));
                                     //was falsely accused by another? -> secret
                                     if (rnd.Next(1, 6) > knightTreachery)
                                     {
@@ -528,14 +528,14 @@ namespace Next_Game
                                 listOfCapturedActors.Add(royalID);
                                 listOfTempRoyals.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", royal.Name, royal.ActID, Enemies, descriptor);
-                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was captured by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
+                                Game.logStart.Write(string.Format("{0} {1}, Aid {2}, was captured by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorIncident.Captured);
                                 break;
                             case 2:
                                 //killed
                                 listOfTempRoyals.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", royal.Name, royal.ActID, descriptor, Friends, royal.Age);
-                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
+                                Game.logStart.Write(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorIncident.Died);
                                 //replace Bannerlord
                                 if (royal is BannerLord) { ReplaceBannerLord((BannerLord)royal); }
@@ -547,7 +547,7 @@ namespace Next_Game
                             case 5:
                                 //wounded
                                 eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", royal.Name, royal.ActID, descriptor, Friends);
-                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was wounded by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
+                                Game.logStart.Write(string.Format("{0} {1}, Aid {2}, was wounded by the {3} during {4}", royal.Type, royal.Name, royal.ActID, Enemies, descriptor));
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorIncident.Wounded);
                                 //60% chance of wound causing an ongoing issue -> Secret (random strength 1 to 4)
                                 if (rnd.Next(100) < 60)
@@ -568,14 +568,14 @@ namespace Next_Game
                                 {
                                     index = rnd.Next(0, array_AbsentLeadership.Length);
                                     eventText = string.Format("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_AbsentLeadership[index], descriptor);
-                                    Console.WriteLine(string.Format("{0} {1}, Aid {2}, {3} during {4}", royal.Type, royal.Name, royal.ActID, array_AbsentLeadership[index], descriptor));
+                                    Game.logStart.Write(string.Format("{0} {1}, Aid {2}, {3} during {4}", royal.Type, royal.Name, royal.ActID, array_AbsentLeadership[index], descriptor));
                                 }
                                 else
                                 {
                                     //changed sides against their will
                                     index = rnd.Next(0, array_EnemyLeadership.Length);
                                     eventText = string.Format("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_EnemyLeadership[index], descriptor);
-                                    Console.WriteLine(string.Format("{0} {1}, Aid {2}, {3} during {4}", royal.Type, royal.Name, royal.ActID, array_EnemyLeadership[index], descriptor));
+                                    Game.logStart.Write(string.Format("{0} {1}, Aid {2}, {3} during {4}", royal.Type, royal.Name, royal.ActID, array_EnemyLeadership[index], descriptor));
                                     //change loyalty and swap lord from royalist to rebel list for any future battles
                                     royal.Loyalty_Current = KingLoyalty.New_King;
                                     listOfTempRoyals.RemoveAt(listIndex);
@@ -597,7 +597,7 @@ namespace Next_Game
                                         royal.Loyalty_Current = KingLoyalty.New_King;
                                         listOfTempRoyals.RemoveAt(listIndex);
                                         listOfTempRebels.Add(royalID);
-                                        Console.WriteLine("Moved to Rebel List");
+                                        Game.logStart.Write("Moved to Rebel List");
                                     }
                                 }
                                 record_royal = new Record(eventText, royal.ActID, loc.LocationID, royal.RefID, year, HistActorIncident.Leadership, truth);
@@ -607,13 +607,13 @@ namespace Next_Game
                                 //Good leadership
                                 index = rnd.Next(0, array_GoodLeadership.Length);
                                 eventText = string.Format("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_GoodLeadership[index], descriptor);
-                                Console.WriteLine("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_GoodLeadership[index], descriptor);
+                                Game.logStart.Write(string.Format("{0}, Aid {1}, {2} during {3}", royal.Name, royal.ActID, array_GoodLeadership[index], descriptor));
                                 int lordLeadership = royal.GetSkill(SkillType.Leadership);
                                 if (rnd.Next(1, 6) > lordLeadership)
                                 {
                                     //poor leadership, took somebody else's glory -> secret
                                     secretText = string.Format("{0}, Aid {1}, {2} {3}", royal.Name, royal.ActID, "cowardly stole somebody else's glory during", descriptor);
-                                    Console.WriteLine("{0}, Aid {1}, {2} {3}", royal.Name, royal.ActID, "cowardly stole somebody else's glory during", descriptor);
+                                    Game.logStart.Write(string.Format("{0}, Aid {1}, {2} {3}", royal.Name, royal.ActID, "cowardly stole somebody else's glory during", descriptor));
                                     Secret_Actor secret = new Secret_Actor(PossSecretType.Loyalty, year, secretText, lordLeadership, royal.ActID);
                                     Game.history.SetSecret(secret);
                                     royal.AddSecret(secret.PossID);
@@ -650,14 +650,14 @@ namespace Next_Game
                                 listOfCapturedActors.Add(rebelID);
                                 listOfTempRebels.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was captured by the {2} during {3}", rebel.Name, rebel.ActID, Enemies, descriptor);
-                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was captured by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
+                                Game.logStart.Write(string.Format("{0} {1}, Aid {2}, was captured by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
                                 record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorIncident.Captured);
                                 break;
                             case 2:
                                 //killed
                                 listOfTempRebels.RemoveAt(listIndex);
                                 eventText = string.Format("{0}, Aid {1}, was killed during {2} while fighting for the {3}, age {4}", rebel.Name, rebel.ActID, descriptor, Friends, rebel.Age);
-                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
+                                Game.logStart.Write(string.Format("{0} {1}, Aid {2}, was killed by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
                                 record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorIncident.Died);
                                 //replace Bannerlord
                                 if (rebel is BannerLord ) { ReplaceBannerLord((BannerLord)rebel); }
@@ -669,7 +669,7 @@ namespace Next_Game
                             case 5:
                                 //wounded
                                 eventText = string.Format("{0}, Aid {1}, was wounded during {2} while fighting for the {3}", rebel.Name, rebel.ActID, descriptor, Friends);
-                                Console.WriteLine(string.Format("{0} {1}, Aid {2}, was wounded by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
+                                Game.logStart.Write(string.Format("{0} {1}, Aid {2}, was wounded by the {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, Enemies, descriptor));
                                 record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorIncident.Wounded);
                                 //60% chance of wound causing an ongoing issue -> Secret (random strength 1 to 4)
                                 if (rnd.Next(100) < 60)
@@ -689,14 +689,14 @@ namespace Next_Game
                                 {
                                     index = rnd.Next(0, array_AbsentLeadership.Length);
                                     eventText = string.Format("{0}, Aid {1}, {2} during {3}", rebel.Name, rebel.ActID, array_AbsentLeadership[index], descriptor);
-                                    Console.WriteLine(string.Format("{0} {1}, Aid {2}, {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, array_AbsentLeadership[index], descriptor));
+                                    Game.logStart.Write(string.Format("{0} {1}, Aid {2}, {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, array_AbsentLeadership[index], descriptor));
                                 }
                                 else
                                 {
                                     //changed sides against their will
                                     index = rnd.Next(0, array_EnemyLeadership.Length);
                                     eventText = string.Format("{0}, Aid {1}, {2} during {3}", rebel.Name, rebel.ActID, array_EnemyLeadership[index], descriptor);
-                                    Console.WriteLine(string.Format("{0} {1}, Aid {2}, {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, array_EnemyLeadership[index], descriptor));
+                                    Game.logStart.Write(string.Format("{0} {1}, Aid {2}, {3} during {4}", rebel.Type, rebel.Name, rebel.ActID, array_EnemyLeadership[index], descriptor));
                                     //change loyalty and swap lord from Rebelist to royalist list for any future battles
                                     rebel.Loyalty_Current = KingLoyalty.Old_King;
                                     listOfTempRebels.RemoveAt(listIndex);
@@ -719,7 +719,7 @@ namespace Next_Game
                                         rebel.Loyalty_Current = KingLoyalty.Old_King;
                                         listOfTempRebels.RemoveAt(listIndex);
                                         listOfTempRoyals.Add(rebelID);
-                                        Console.WriteLine("Moved to Rebel List");
+                                        Game.logStart.Write("Moved to Rebel List");
                                     }
                                 }
                                 record_rebel = new Record(eventText, rebel.ActID, loc.LocationID, rebel.RefID, year, HistActorIncident.Leadership, truth);
@@ -730,13 +730,13 @@ namespace Next_Game
                                 //Good leadership
                                 index = rnd.Next(0, array_GoodLeadership.Length);
                                 eventText = string.Format("{0}, Aid {1}, {2} during {3}", rebel.Name, rebel.ActID, array_GoodLeadership[index], descriptor);
-                                Console.WriteLine("{0}, Aid {1}, {2} during {3}", rebel.Name, rebel.ActID, array_GoodLeadership[index], descriptor);
+                                Game.logStart.Write(string.Format("{0}, Aid {1}, {2} during {3}", rebel.Name, rebel.ActID, array_GoodLeadership[index], descriptor));
                                 int lordLeadership = rebel.GetSkill(SkillType.Leadership);
                                 if (rnd.Next(1, 6) > lordLeadership)
                                 {
                                     //poor leadership, took somebody else's glory -> secret
                                     secretText = string.Format("{0}, Aid {1}, {2} {3}", rebel.Name, rebel.ActID, "cowardly stole somebody else's glory during", descriptor);
-                                    Console.WriteLine("{0}, Aid {1}, {2} {3}", rebel.Name, rebel.ActID, "cowardly stole somebody else's glory during", descriptor);
+                                    Game.logStart.Write(string.Format("{0}, Aid {1}, {2} {3}", rebel.Name, rebel.ActID, "cowardly stole somebody else's glory during", descriptor));
                                     Secret_Actor secret = new Secret_Actor(PossSecretType.Loyalty, year, secretText, lordLeadership, rebel.ActID);
                                     Game.history.SetSecret(secret);
                                     rebel.AddSecret(secret.PossID);

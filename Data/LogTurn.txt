@@ -1,5 +1,5 @@
-//Exile Game File "LogTurn.txt" opened at: 30/03/2017 20:42:45
---- ProcessStartTurn, Day 15 (World.cs) 
-//Exile Game file ops "LogTurn.txt" Completed at: 30/03/2017 20:44:06
-Close completed at: 30/03/2017 20:42:45
- completed at: 30/03/2017 20:42:23
+//Exile Game File "LogTurn.txt" opened at: 30/03/2017 21:24:21
+--- ProcessStartTurn, Day 2 (World.cs) 
+//Exile Game file ops "LogTurn.txt" Completed at: 30/03/2017 21:24:26
+cs)
+//Exile Game File "LogTurn.txt" Close completed at: 30/03/2017 21:24:21
