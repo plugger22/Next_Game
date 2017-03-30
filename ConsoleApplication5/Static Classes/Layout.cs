@@ -320,7 +320,7 @@ namespace Next_Game
             //Card Pool (top left)
             DrawBox(st_left_outer, st_top_align, st_upper_box_width, st_upper_box_height, RLColor.Yellow, Back_FillColor, arrayOfCells_Strategy, arrayOfForeColors_Strategy, arrayOfBackColors_Strategy);
             DrawText("Good cards", st_left_outer + 7, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText("Neutral cards", st_left_outer + 7, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText("Neutral cards", st_left_outer + 7, st_top_align + 4, RLColor.Magenta, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText("Bad cards", st_left_outer + 7, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText("Total cards", st_left_outer + 7, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Situation (top right)
@@ -935,7 +935,7 @@ namespace Next_Game
             }
             int totalNumCards = arrayCardPool[0] + arrayCardPool[1] + arrayCardPool[2];
             DrawText(Convert.ToString(arrayCardPool[0]), st_left_outer + 24, st_top_align + 2, RLColor.Blue, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
-            DrawText(Convert.ToString(arrayCardPool[1]), st_left_outer + 24, st_top_align + 4, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
+            DrawText(Convert.ToString(arrayCardPool[1]), st_left_outer + 24, st_top_align + 4, RLColor.Magenta, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(Convert.ToString(arrayCardPool[2]), st_left_outer + 24, st_top_align + 6, RLColor.Red, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             DrawText(Convert.ToString(totalNumCards), st_left_outer + 24, st_top_align + 8, RLColor.Black, arrayOfCells_Strategy, arrayOfForeColors_Strategy);
             //Situation
