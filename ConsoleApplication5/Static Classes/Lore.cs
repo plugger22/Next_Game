@@ -134,10 +134,10 @@ namespace Next_Game
             //choose a random reason from the pool
             WhyRevolt = listWhyPool[rnd.Next(0, listWhyPool.Count)];
 
-            Console.WriteLine(Environment.NewLine + "--- Create BackStory");
-            Console.WriteLine("Old King Wits {0} Aid {1}, {2}", oldKing_Wits, OldKing.ActID, OldKing.Name);
-            Console.WriteLine("New King Treachery {0} Aid {1}, {2}", newKing_Treachery, NewKing.ActID, NewKing.Name);
-            Console.WriteLine("WhyRevolt: {0}", WhyRevolt);
+            Game.logStart.Write("--- Create BackStory (Lore.cs)");
+            Game.logStart.Write(string.Format("Old King Wits {0} Aid {1}, {2}", oldKing_Wits, OldKing.ActID, OldKing.Name));
+            Game.logStart.Write(string.Format("New King Treachery {0} Aid {1}, {2}", newKing_Treachery, NewKing.ActID, NewKing.Name));
+            Game.logStart.Write(string.Format("WhyRevolt: {0}", WhyRevolt));
 
             //get old & new king and Queen's charm (can't be influenced)
             int oldKing_Charm = OldKing.GetSkill(SkillType.Charm);
@@ -149,9 +149,9 @@ namespace Next_Game
             OldQueen_Popularity = (Popularity)oldQueen_Charm;
             NewQueen_Popularity = (Popularity)newQueen_Charm;
 
-            Console.WriteLine("King {0} was {1} by his people", OldKing.Name, OldKing_Popularity);
-            Console.WriteLine("His Queen, {0}, was {1} with the common folk", OldQueen.Name, OldQueen_Popularity);
-            Console.WriteLine(Environment.NewLine + "In {0} there was a great Revolt", Game.gameRevolt);
+            Game.logStart.Write(string.Format("King {0} was {1} by his people", OldKing.Name, OldKing_Popularity));
+            Game.logStart.Write(string.Format("His Queen, {0}, was {1} with the common folk", OldQueen.Name, OldQueen_Popularity));
+            Game.logStart.Write(string.Format(Environment.NewLine + "In {0} there was a great Revolt", Game.gameRevolt));
 
             //loyalties of Kings
             OldKing.Loyalty_Current = KingLoyalty.Old_King;
@@ -159,7 +159,7 @@ namespace Next_Game
 
             //How many men could the Old king field?
             int royalArmy = 0;
-            Console.WriteLine(Environment.NewLine + "--- Royalist Army");
+            Game.logStart.Write("--- Royalist Army (Lore.cs)");
             foreach (MajorHouse house in listOfRoyalists)
             {
                 //Great houses
@@ -177,10 +177,10 @@ namespace Next_Game
                     }
                 }
             }
-            Console.WriteLine(Environment.NewLine + "The Royalists fielded {0:N0} Men At Arms", royalArmy);
+            Game.logStart.Write(string.Format("The Royalists fielded {0:N0} Men At Arms", royalArmy));
             //How many men could the New king field?
             int rebelArmy = 0;
-            Console.WriteLine(Environment.NewLine + "--- Rebel Army");
+            Game.logStart.Write("--- Rebel Army (Lore.cs)");
             foreach (MajorHouse house in listOfRebels)
             {
                 //Great houses
@@ -198,9 +198,9 @@ namespace Next_Game
                     }
                 }
             }
-            Console.WriteLine(Environment.NewLine + "The Rebels fielded {0:N0} Men At Arms", rebelArmy);
-            Console.WriteLine(Environment.NewLine + "King {0} was {1} his people", NewKing.Name, NewKing_Popularity);
-            Console.WriteLine("His Queen, {0}, was {1} the common folk", NewQueen.Name, NewQueen_Popularity);
+            Game.logStart.Write(string.Format("The Rebels fielded {0:N0} Men At Arms", rebelArmy));
+            Game.logStart.Write(string.Format("King {0} was {1} his people", NewKing.Name, NewKing_Popularity));
+            Game.logStart.Write(string.Format("His Queen, {0}, was {1} the common folk", NewQueen.Name, NewQueen_Popularity));
 
             //Battle Resolution module - multiple battles, sieges, to and fro
 
@@ -231,14 +231,14 @@ namespace Next_Game
                 select loc;
             orderedLocs = tempLocs.ToList();
             //debug
-            Console.WriteLine(Environment.NewLine + "--- Royalist Locations (Battle site pool");
+            Game.logStart.Write("--- Royalist Locations (Battle site pool) (Lore.cs)");
             foreach(Location loc in orderedLocs)
             {
                 string houseName = Game.world.GetMajorHouseName(loc.HouseID);
                 string locName = loc.LocName;
-                Console.WriteLine("{0} -> {1}, distance {2}", houseName, locName, loc.DistanceToCapital);
+                Game.logStart.Write(string.Format("{0} -> {1}, distance {2}", houseName, locName, loc.DistanceToCapital));
             }
-            Console.WriteLine(Environment.NewLine + "--- Battles");
+            Game.logStart.Write("--- Battles (Lore.cs)");
             //fixed # of battles -> first, last and one inbetween
             int numBattles = 3;
             HistKingdomIncident kingdomEvent;
@@ -335,7 +335,7 @@ namespace Next_Game
                 //add to list of battles to enable actor events to be fleshed out
                 listOfUprisingBattles.Add(descriptor);
                 //debug
-                Console.WriteLine("{0} {1} {2}", year, descriptor, Game.world.ShowLocationCoords(loc.LocationID));
+                Game.logStart.Write(string.Format("{0} {1} {2}", year, descriptor, Game.world.ShowLocationCoords(loc.LocationID)));
 
                 //Battle descriptions - first (rebels always prevail, battle is smallest, rebel forces larger than royalists)
                 string text_1 = null;
@@ -395,8 +395,8 @@ namespace Next_Game
                     text_2 = string.Format("King {0} {1} from this day forward.", OldKing.Name, array_TurnOfTide[rnd.Next(0, array_TurnOfTide.Length)]);
                 }
                 //debug
-                Console.WriteLine(Environment.NewLine + text_1);
-                Console.WriteLine(Environment.NewLine + text_2 + Environment.NewLine);
+                Game.logStart.Write(text_1);
+                Game.logStart.Write(text_2);
 
                 //add to text list (run through word wrap first)
                 listUprising.Add("");
@@ -404,7 +404,7 @@ namespace Next_Game
                 listUprising.AddRange(Game.utility.WordWrap(textToWrap, 120));
 
                 //events ---
-
+                Game.logStart.Write("--- Events (Lore.cs)");
                 for (int k = 0; k < Game.constant.GetValue(Global.BATTLE_EVENTS); k++)
                 {
 
