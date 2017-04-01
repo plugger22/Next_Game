@@ -750,12 +750,6 @@ namespace Next_Game
                 
                 //stats - natural ---
                 string effectText = null;
-
-                /*int influencer = person.Influencer;
-                string influenceActor = null;
-                string influenceText = null;
-                bool influenceDisplay = false;*/
-
                 int abilityStars;
                 RLColor traitColor;
                 SkillType trait;
