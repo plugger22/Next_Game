@@ -1232,6 +1232,7 @@ namespace Next_Game
             //choose NickName (handle)
             if (tempHandles.Count > 0)
             { person.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
+            else { person.Handle = "The Average"; }
         }
 
         /// <summary>

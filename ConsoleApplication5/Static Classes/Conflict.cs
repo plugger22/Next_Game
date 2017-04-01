@@ -214,7 +214,7 @@ namespace Next_Game
                             Actor actor = Game.world.GetAnyActor(relationship.Key);
                             if (actor != null)
                             {
-                                descriptor = string.Format("{0} {1} \"{2}\", Friend", actor.Title, actor.Name, actor.Handle.Length > 0 ? actor.Handle : "The Average");
+                                descriptor = string.Format("{0} {1} \"{2}\", Friend", actor.Title, actor.Name, actor.Handle);
                                 arraySupportGood[index, 0] = descriptor;
                                 index++;
                                 Game.logTurn.Write(string.Format(string.Format(" [Supporter -> Good] {0}, ActID {1}, relPlyr {2}", descriptor, actor.ActID, actor.GetRelPlyr())));
@@ -947,14 +947,14 @@ namespace Next_Game
             string title;
             if (opponent.Office == ActorOffice.None) { title = Convert.ToString(opponent.Type); }
             else { title = Convert.ToString(opponent.Office); }
-            string handle_player, handle_opponent;
+            /*string handle_player, handle_opponent;
             if (player.Handle != null) { handle_player = string.Format(" \"{0}\" ", player.Handle); } else { handle_player = null; }
-            if (opponent.Handle != null) { handle_opponent = string.Format(" \"{0}\" ", opponent.Handle); } else { handle_opponent = null; }
+            if (opponent.Handle != null) { handle_opponent = string.Format(" \"{0}\" ", opponent.Handle); } else { handle_opponent = null; }*/
             //order protagnoists so that challenger is first and defender is second
             if (Challenger == true)
-            { tempArray[9] = string.Format("{0} {1}{2} vs. {3} {4}{5}", player.Type, player.Name, handle_player, title, opponent.Name, handle_opponent); }
+            { tempArray[9] = string.Format("{0} {1}{2} vs. {3} {4}{5}", player.Type, player.Name, player.Handle, title, opponent.Name, opponent.Handle); }
             else
-            { tempArray[9] = string.Format("{0} {1}{2} vs. {3} {4}{5}", title, opponent.Name, handle_opponent, player.Type, player.Name, handle_player); }
+            { tempArray[9] = string.Format("{0} {1}{2} vs. {3} {4}{5}", title, opponent.Name, opponent.Handle, player.Type, player.Name, player.Handle); }
             //send to layout
             Game.layout.SetOutcome(tempArray);
         }

@@ -1,9 +1,12 @@
-//Exile Game File "LogTurn.txt" opened at: 01/04/2017 20:42:56
+//Exile Game File "LogTurn.txt" opened at: 01/04/2017 21:01:03
 --- ProcessStartTurn, Day 7, Turn 6 (World.cs) 
 --- SetSupporters (Conflict.cs)
- [Notification] dictPlyrSupporters has 3 records
- [Supporter -> Good] Castellan Albar Warnerus "The Black Rat", Friend, ActID 13, relPlyr 86
- [Supporter -> Good] Knight Ser Mikken Sansum "The Watchful", Friend, ActID 12, relPlyr 77
- [Supporter -> Good] Lord Oggery Lannister "", Friend, ActID 10, relPlyr 75
- [Notification] dictOppSupporters has 0 records
-//Exile Game file ops "LogTurn.txt" Completed at: 01/04/2017 20:45:29
+ [Notification] dictPlyrSupporters has 2 records
+ [Supporter -> Good] Master_of_Coin Druettus Huchon "The Sh*tter", Friend, ActID 103, relPlyr 84
+ [Supporter -> Good] High_Septon Doran Hughoc "The Mesmerising", Friend, ActID 102, relPlyr 72
+ [Notification] dictOppSupporters has 10 records
+ [Supporter -> Bad] Inquisitor Brother Mastema "The Observant", Enemy, ActID 125, relPlyr 0
+ [Supporter -> Bad] Inquisitor Brother Mormo "The Harsh", Enemy, ActID 126, relPlyr 0
+ [Supporter -> Bad] Inquisitor Brother Demogorgon "The Commanding", Enemy, ActID 127, relPlyr 0
+//Exile Game file ops "LogTurn.txt" Completed at: 01/04/2017 21:04:29
+txt" Close completed at: 01/04/2017 21:01:03

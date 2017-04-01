@@ -691,7 +691,7 @@ namespace Next_Game
                 string handle = null;
                 bool newLine = true;
                 //nickname
-                if (person.Handle != null && person.Age >= 15)
+                if (person.Age >= 15)
                 {
                     newLine = false;
                     handle = string.Format(" \"{0}\"", person.Handle);
