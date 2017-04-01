@@ -93,7 +93,6 @@
 # TRAIT_MULTIPLIER -> amount trait level (1 to 5) is multiplied by for automatic option follower tests
 29: 20 @ 15 @ 25
 
-
 # Challenges ---
 
 # HAND_CARDS_NUM -> number of cards in a challenge hand
@@ -112,12 +111,20 @@
 38: 2 @ 1 @ 3
 # TALK_THRESHOLD -> A characters relationship level (0 - 100) with the player required (>=) in order for them to agree to meet
 39: 50 @ 30 @ 70
-# SUPPORTER_THRESHOLD -> Relationship level with Player that actor needs (>=) in order to be considered a supporter in a challenge
+# SEDUCE_THRESHOLD -> characters rel level with Plyr needed (>=) to initiate a Seduce Challenge
+61: 60 @ 55 @ 65
+# ALLEGIANCE_THRESHOLD -> characters rel level with Plyr needed (>=) to Swear Allegiance to their cause
+62: 70 @ 65 @ 75
+# BLACKMAIL_THRESHOLD -> characters rel level with Plyr needed (>=) to initiate a Blackmail Challenge
+63: 40 @ 35 @ 45
+# IMPROVE_THRESHOLD -> characters rel level with Plyr needed (>=) to initiate a Befriend Challenge
+64: 50 @ 45 @ 55
+# FRIEND_THRESHOLD -> Relationship level with Player that actor needs (>=) in order to be considered a supporter in a challenge
 58: 70 @ 60 @ 90
-# NUM_SUPPORTERS -> max. number of supporters a character can have in a conflict
-59: 3 @ 1 @ 3
 # ENEMY_THRESHOLD -> Relationship level with Player that actor needs (<=), in order to become a supporter of Player's Opponent 
 60: 30 @ 10 @ 40
+# NUM_SUPPORTERS -> max. number of supporters a character can have in a conflict
+59: 3 @ 1 @ 3
 
 # Relationships ---
 
@@ -159,4 +166,4 @@
 57: 1 @ 0 @ 4
 
 
-# Next valid number -> 61
+# Next valid number -> 65

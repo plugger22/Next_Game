@@ -152,7 +152,7 @@ namespace Next_Game
         private void SetSupporters()
         {
             Game.logTurn.Write("--- SetSupporters (Conflict.cs)");
-            int relThresholdPlyr = Game.constant.GetValue(Global.SUPPORTER_THRESHOLD); //relationship level (>=) with Player needed to be a supporter of Player
+            int relThresholdPlyr = Game.constant.GetValue(Global.FRIEND_THRESHOLD); //relationship level (>=) with Player needed to be a supporter of Player
             int relThresholdOpp = Game.constant.GetValue(Global.ENEMY_THRESHOLD); //relationship level (<=) with Player needed to be a supporter of Opponent
             Dictionary<int, int> dictPlyrSupporters = new Dictionary<int, int>();
             Dictionary<int, int> dictOppSupporters = new Dictionary<int, int>();
@@ -214,7 +214,7 @@ namespace Next_Game
                             Actor actor = Game.world.GetAnyActor(relationship.Key);
                             if (actor != null)
                             {
-                                descriptor = string.Format("{0} {1} \"{2}\", Friend", actor.Title, actor.Name, actor.Handle);
+                                descriptor = string.Format("{0} {1} \"{2}\", Friend", actor.Title, actor.Name, actor.Handle.Length > 0 ? actor.Handle : "The Average");
                                 arraySupportGood[index, 0] = descriptor;
                                 index++;
                                 Game.logTurn.Write(string.Format(string.Format(" [Supporter -> Good] {0}, ActID {1}, relPlyr {2}", descriptor, actor.ActID, actor.GetRelPlyr())));

@@ -1219,11 +1219,11 @@ namespace Next_Game
                                     OutNone outcome_0 = new OutNone(eventObject.EventPID);
                                     option_0.SetGoodOutcome(outcome_0);
                                     eventObject.SetOption(option_0);
-                                    //befriend
+                                    //improve relationship (befriend)
                                     OptionInteractive option_1 = new OptionInteractive("Befriend") { ActorID = actorID };
                                     option_1.ReplyGood = string.Format("{0} looks at you expectantly", actorText);
                                     List<Trigger> listTriggers_1 = new List<Trigger>();
-                                    listTriggers_1.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), 50, EventCalc.GreaterThanOrEqual));
+                                    listTriggers_1.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), Game.constant.GetValue(Global.IMPROVE_THRESHOLD), EventCalc.GreaterThanOrEqual));
                                     option_1.SetTriggers(listTriggers_1);
                                     OutConflict outcome_1 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Befriend, SubType = ConflictSubType.Befriend};
                                     option_1.SetGoodOutcome(outcome_1);
@@ -1232,7 +1232,7 @@ namespace Next_Game
                                     OptionInteractive option_2 = new OptionInteractive("Blackmail") { ActorID = actorID };
                                     option_2.ReplyGood = string.Format("{0} frowns, their expression darkens", actorText);
                                     List<Trigger> listTriggers_2 = new List<Trigger>();
-                                    listTriggers_2.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), 40, EventCalc.GreaterThanOrEqual));
+                                    listTriggers_2.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), Game.constant.GetValue(Global.BLACKMAIL_THRESHOLD), EventCalc.GreaterThanOrEqual));
                                     option_2.SetTriggers(listTriggers_2);
                                     OutConflict outcome_2 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Blackmail, SubType = ConflictSubType.Blackmail};
                                     option_2.SetGoodOutcome(outcome_2);
@@ -1241,17 +1241,17 @@ namespace Next_Game
                                     OptionInteractive option_3 = new OptionInteractive("Seduce") { ActorID = actorID };
                                     option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
                                     List<Trigger> listTriggers_3 = new List<Trigger>();
-                                    listTriggers_3.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), 60, EventCalc.GreaterThanOrEqual));
+                                    listTriggers_3.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), Game.constant.GetValue(Global.SEDUCE_THRESHOLD), EventCalc.GreaterThanOrEqual));
                                     listTriggers_3.Add(new Trigger(TriggerCheck.Sex, 0, (int)person.Sex, EventCalc.NotEqual)); //must be opposite sex
                                     option_3.SetTriggers(listTriggers_3);
                                     OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce, SubType = ConflictSubType.Seduce};
                                     option_3.SetGoodOutcome(outcome_3);
                                     eventObject.SetOption(option_3);
-                                    //support
+                                    //swear allegiance
                                     OptionInteractive option_4 = new OptionInteractive("Ask for their Allegiance") { ActorID = actorID };
                                     option_4.ReplyGood = string.Format("{0} kneels at your feet", actorText);
                                     List<Trigger> listTriggers_4 = new List<Trigger>();
-                                    listTriggers_4.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), 70, EventCalc.GreaterThanOrEqual));
+                                    listTriggers_4.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), Game.constant.GetValue(Global.ALLEGIANCE_THRESHOLD), EventCalc.GreaterThanOrEqual));
                                     listTriggers_4.Add(new Trigger(TriggerCheck.ActorType, (int)person.Type, (int)ActorType.Lord, EventCalc.Equals)); //must be a Lord
                                     option_4.SetTriggers(listTriggers_4);
                                     OutNone outcome_4 = new OutNone(eventObject.EventPID);

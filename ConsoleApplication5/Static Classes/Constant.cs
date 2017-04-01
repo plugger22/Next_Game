@@ -56,7 +56,11 @@ namespace Next_Game
         RESULT_FACTOR,
         OPPONENT_MARGIN,
         TALK_THRESHOLD,
-        SUPPORTER_THRESHOLD,
+        SEDUCE_THRESHOLD,
+        ALLEGIANCE_THRESHOLD,
+        BLACKMAIL_THRESHOLD,
+        IMPROVE_THRESHOLD,
+        FRIEND_THRESHOLD,
         ENEMY_THRESHOLD,
         NUM_SUPPORTERS,
         //Relationships
@@ -150,9 +154,13 @@ namespace Next_Game
             arrayOfGlobals[55] = Global.AI_CONNECTOR;
             arrayOfGlobals[56] = Global.AI_HUNT_THRESHOLD;
             arrayOfGlobals[57] = Global.LOSS_OF_LEGEND;
-            arrayOfGlobals[58] = Global.SUPPORTER_THRESHOLD;
+            arrayOfGlobals[58] = Global.FRIEND_THRESHOLD;
             arrayOfGlobals[59] = Global.NUM_SUPPORTERS;
             arrayOfGlobals[60] = Global.ENEMY_THRESHOLD;
+            arrayOfGlobals[61] = Global.SEDUCE_THRESHOLD;
+            arrayOfGlobals[62] = Global.ALLEGIANCE_THRESHOLD;
+            arrayOfGlobals[63] = Global.BLACKMAIL_THRESHOLD;
+            arrayOfGlobals[64] = Global.IMPROVE_THRESHOLD;
         }
 
         /// <summary>

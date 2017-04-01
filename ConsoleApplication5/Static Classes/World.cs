@@ -1260,6 +1260,9 @@ namespace Next_Game
         /// <param name="pos"></param>
         internal List<Snippet> ShowLocationRL(int locID, int mouseX, int mouseY)
         {
+            int relFriends = Game.constant.GetValue(Global.FRIEND_THRESHOLD);
+            int relEnemies = Game.constant.GetValue(Global.ENEMY_THRESHOLD);
+            int numFriends = 0; int numEnemies = 0; int relPlyr = 0;
             List<Snippet> locList = new List<Snippet>();
             //Location display
             if (locID > 0)
@@ -1373,10 +1376,24 @@ namespace Next_Game
                                     else
                                     { textColor = Color._active; }
                                 }
+                                //tally friends and enemies
+                                if (person.ActID > 1)
+                                {
+                                    relPlyr = person.GetRelPlyr();
+                                    if (relPlyr >= relFriends) { numFriends++; }
+                                    else if (relPlyr <= relEnemies) { numEnemies++; }
+                                }
                             }
                             else
                             { actorDetails = string.Format("unknown ID " + Convert.ToString(charID)); }
                             locList.Add(new Snippet(actorDetails, textColor, RLColor.Black));
+                        }
+                        //display friends and enemies
+                        if (numFriends > 0 || numEnemies > 0)
+                        {
+                            locList.Add(new Snippet(string.Format("Current Standing at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
+                            locList.Add(new Snippet(string.Format("You have {0} Friend{1} and {2} Enem{3} here", numFriends, numFriends != 1 ? "s" : "", numEnemies, 
+                                numEnemies != 1 ? "ies" : "y")));
                         }
                     }
                 }
@@ -3076,7 +3093,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartTurn()
         {
-            Game.logTurn.Write(string.Format("--- ProcessStartTurn, Day {0} (World.cs) ", Game.gameTurn + 1));
+            Game.logTurn.Write(string.Format("--- ProcessStartTurn, Day {0}, Turn {1} (World.cs) ", Game.gameTurn + 1, Game.gameTurn));
             UpdateActorMoveStatus(MoveActors());
             CheckStationaryActiveActors();
             CalculateCrows();
@@ -3107,7 +3124,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessEndTurn()
         {
-            Game.logTurn.Write(string.Format("--- ProcessEndTurn, Day {0} (World.cs)", Game.gameTurn + 1));
+            Game.logTurn.Write(string.Format("--- ProcessEndTurn, Day {0} Turn {1} (World.cs)", Game.gameTurn + 1, Game.gameTurn));
             Game.map.UpdateMap();
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();

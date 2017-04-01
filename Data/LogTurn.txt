@@ -1,9 +1,9 @@
-//Exile Game File "LogTurn.txt" opened at: 01/04/2017 16:59:01
---- ProcessStartTurn, Day 6 (World.cs) 
+//Exile Game File "LogTurn.txt" opened at: 01/04/2017 20:42:56
+--- ProcessStartTurn, Day 7, Turn 6 (World.cs) 
 --- SetSupporters (Conflict.cs)
- [Notification] dictPlyrSupporters has 0 records
- [Notification] dictOppSupporters has 13 records
- [Supporter -> Bad] Queen Beth Tully "The Canny", Enemy, ActID 58, relPlyr 0
- [Supporter -> Bad] Heir Randyll Tully "The Stygian Rat", Enemy, ActID 64, relPlyr 0
- [Supporter -> Bad] lady Auphrey Tully "The Nightingale", Enemy, ActID 66, relPlyr 0
-//Exile Game file ops "LogTurn.txt" Completed at: 01/04/2017 17:00:47
+ [Notification] dictPlyrSupporters has 3 records
+ [Supporter -> Good] Castellan Albar Warnerus "The Black Rat", Friend, ActID 13, relPlyr 86
+ [Supporter -> Good] Knight Ser Mikken Sansum "The Watchful", Friend, ActID 12, relPlyr 77
+ [Supporter -> Good] Lord Oggery Lannister "", Friend, ActID 10, relPlyr 75
+ [Notification] dictOppSupporters has 0 records
+//Exile Game file ops "LogTurn.txt" Completed at: 01/04/2017 20:45:29
