@@ -5,29 +5,32 @@ namespace Next_Game
 {
     public enum Global
     {
-        None, //keep as first
+        None,
+        //Actors
         INHERIT_TRAIT,
         CHILDBIRTH_DEATH,
         CHILDBIRTH_INFERTILE,
+        CHILDBIRTH_COMPLICATIONS,
         PREGNANT,
         TOUCHED,
+        MOVE_SPEED,
+        NUM_FOLLOWERS,
+        //Houses
         MEN_AT_ARMS,
+        CASTLE_CAPITAL,
+        //History
         BATTLE_EVENTS,
         ADVISOR_REFUSAL,
         SIBLING_ESCAPE,
-        MOVE_SPEED,
-        CHILDBIRTH_COMPLICATIONS,
+        //Crows
         CROW_NUMBER,
         CROW_BONUS,
+        //Map Generation
         MAP_LOCATIONS_MIN,
         MAP_LOCATIONS_MAX,
         MAP_FREQUENCY,
         MAP_SPACING,
         MAP_SIZE,
-        GAME_EXILE,
-        GAME_REVOLT,
-        GAME_STATE,
-        GAME_PAST,
         MAP_DIVISOR,
         CONNECTOR_MIN,
         CONNECTOR_MAX,
@@ -35,22 +38,30 @@ namespace Next_Game
         SEA_LARGE,
         MOUNTAIN_LARGE,
         FOREST_LARGE,
-        NUM_FOLLOWERS,
+        //Game
+        GAME_EXILE,
+        GAME_REVOLT,
+        GAME_STATE,
+        GAME_PAST,
+        KNOWN_REVERT,
+        INQUISITORS,
+        //Events
         TRAIT_MULTIPLIER,
+        //Challenges
         HAND_CARDS_NUM,
         PLAYER_INFLUENCE,
         NEUTRAL_EFFECT,
         ARMY_SIZE,
         SIT_CARD_SPREAD,
-        CASTLE_CAPITAL,
         RESULT_FACTOR,
         OPPONENT_MARGIN,
         TALK_THRESHOLD,
+        SUPPORTER_THRESHOLD,
+        //Relationships
         HOUSE_REL_GOOD,
         HOUSE_REL_EFFECT,
         HOUSE_REL_NUM,
-        KNOWN_REVERT,
-        INQUISITORS,
+        //AI
         AI_CONTINUE_SEARCH,
         AI_CONTINUE_HIDE,
         AI_CONTINUE_WAIT,
@@ -62,8 +73,10 @@ namespace Next_Game
         AI_CAPITAL,
         AI_CONNECTOR,
         AI_HUNT_THRESHOLD,
+        //Incarceration
         LOSS_OF_LEGEND,
-        Count //keep as last
+        //keep as last
+        Count 
     }
 
     public class Constant
@@ -135,7 +148,7 @@ namespace Next_Game
             arrayOfGlobals[55] = Global.AI_CONNECTOR;
             arrayOfGlobals[56] = Global.AI_HUNT_THRESHOLD;
             arrayOfGlobals[57] = Global.LOSS_OF_LEGEND;
-            //arrayOfGlobals[57] = Global.AI_HUNT_WAIT;
+            arrayOfGlobals[58] = Global.SUPPORTER_THRESHOLD;
         }
 
         /// <summary>

@@ -1,15 +1,2 @@
 Seed 25028 -> Thursday, 30 March 2017 1:15 PM
-Seed 58500 -> Thursday, 30 March 2017 1:39 PM
-Seed 35743 -> Thursday, 30 March 2017 1:56 PM
-Seed 16742 -> Thursday, 30 March 2017 2:05 PM
-Seed 4783 -> Thursday, 30 March 2017 2:29 PM
-Seed 49936 -> Thursday, 30 March 2017 2:37 PM
-Seed 44241 -> Thursday, 30 March 2017 2:38 PM
-Seed 26904 -> Thursday, 30 March 2017 3:02 PM
-Seed 24120 -> Thursday, 30 March 2017 3:20 PM
-Seed 28135 -> Thursday, 30 March 2017 8:04 PM
-Seed 41466 -> Thursday, 30 March 2017 8:18 PM
-Seed 54024 -> Thursday, 30 March 2017 8:38 PM
-Seed 61287 -> Thursday, 30 March 2017 8:40 PM
-Seed 27467 -> Thursday, 30 March 2017 8:42 PM
-Seed 4900 -> Thursday, 30 March 2017 9:24 PM
+Seed 11700 -> Saturday, 1 April 2017 11:09 AM

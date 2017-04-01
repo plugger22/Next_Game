@@ -156,6 +156,55 @@ namespace Next_Game
             arraySupportBad[0, 0] = "Lord Darth Vader";
             arraySupportBad[1, 0] = "Doctor Evil";
             arraySupportBad[2, 0] = "Lord Voldermont";
+
+
+            int relThreshold = Game.constant.GetValue(Global.SUPPORTER_THRESHOLD); //level of relationship needed to be a supporter
+            Dictionary<int, int> dictPlyrSupporters = new Dictionary<int, int>();
+            Dictionary<int, int> dictOppSupporters = new Dictionary<int, int>();
+
+            //get list of all actors at location
+            if (player.Status == ActorStatus.AtLocation || player.Status == ActorStatus.Captured)
+            {
+                Location loc = Game.network.GetLocation(player.LocID);
+                if (loc != null)
+                {
+                    List<int> listActors = loc.GetActorList();
+                    int actorID;
+                    for(int i = 0; i < listActors.Count; i++)
+                    {
+                        actorID = listActors[i];
+                        if (actorID > 0)
+                        {
+                            Actor actor = Game.world.GetAnyActor(actorID);
+                            int relPlyr;
+                            if (actor != null)
+                            {
+                                //relationship with Player
+                                relPlyr = actor.GetRelPlyr();
+                                if (relPlyr >= relThreshold)
+                                {
+                                    //relationship high enough to be a supporter, add to dictionary
+                                    try
+                                    { dictPlyrSupporters.Add(actorID, relPlyr); }
+                                    catch (ArgumentException)
+                                    { Game.SetError(new Error(193, string.Format("Invalid actorID (\"{0}\") -> Duplicate Key, with relPlyr {1}", actorID, relPlyr))); }
+                                }
+                                //relationship with Opponent
+
+
+                            }
+                            else { Game.SetError(new Error(193, string.Format("Invalid actor (null) from actorID \"{0}\"", actorID))); }
+                        }
+                        else { Game.SetError(new Error(193, "Invalid actorID (zero or less)")); }
+                    }
+                }
+                else { Game.SetError(new Error(193, "Invalid Player.LocID (null Location)")); }
+            }
+            else if (player.Status == ActorStatus.Travelling)
+            {
+
+            }
+
         }
 
         /// <summary>

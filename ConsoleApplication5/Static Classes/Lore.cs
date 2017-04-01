@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum RevoltReason {None, Stupid_OldKing, Treacherous_NewKing, Incapacited_OldKing, Dead_OldKing, Internal_Dispute, External_Event}
-    public enum Popularity {Hated_by, Disliked_by, Tolerated_by, Liked_by, Loved_by}
+    public enum Popularity {None, hated, disliked, tolerated, liked, loved}
 
     /// <summary>
     /// Keeps track of all key game lore (backstory) DO NOT USE METHODS FOR ANY OTHER USE
@@ -135,8 +135,8 @@ namespace Next_Game
             WhyRevolt = listWhyPool[rnd.Next(0, listWhyPool.Count)];
 
             Game.logStart.Write("--- CreateOldKingBackStory (Lore.cs)");
-            Game.logStart.Write(string.Format("Old King Wits {0} Aid {1}, {2}", oldKing_Wits, OldKing.ActID, OldKing.Name));
-            Game.logStart.Write(string.Format("New King Treachery {0} Aid {1}, {2}", newKing_Treachery, NewKing.ActID, NewKing.Name));
+            Game.logStart.Write(string.Format("Old King Wits {0}, Aid {1}, {2}", oldKing_Wits, OldKing.ActID, OldKing.Name));
+            Game.logStart.Write(string.Format("New King Treachery {0}, Aid {1}, {2}", newKing_Treachery, NewKing.ActID, NewKing.Name));
             Game.logStart.Write(string.Format("WhyRevolt: {0}", WhyRevolt));
 
             //get old & new king and Queen's charm (can't be influenced)
@@ -150,8 +150,8 @@ namespace Next_Game
             NewQueen_Popularity = (Popularity)newQueen_Charm;
 
             Game.logStart.Write(string.Format("King {0} was {1} by his people", OldKing.Name, OldKing_Popularity));
-            Game.logStart.Write(string.Format("His Queen, {0}, was {1} with the common folk", OldQueen.Name, OldQueen_Popularity));
-            Game.logStart.Write(string.Format(Environment.NewLine + "In {0} there was a great Revolt", Game.gameRevolt));
+            Game.logStart.Write(string.Format("His Queen, {0}, was {1} by the common folk", OldQueen.Name, OldQueen_Popularity));
+            Game.logStart.Write(string.Format("In {0} there was a great Revolt", Game.gameRevolt));
 
             //loyalties of Kings
             OldKing.Loyalty_Current = KingLoyalty.Old_King;
@@ -199,8 +199,8 @@ namespace Next_Game
                 }
             }
             Game.logStart.Write(string.Format("The Rebels fielded {0:N0} Men At Arms", rebelArmy));
-            Game.logStart.Write(string.Format("King {0} was {1} his people", NewKing.Name, NewKing_Popularity));
-            Game.logStart.Write(string.Format("His Queen, {0}, was {1} the common folk", NewQueen.Name, NewQueen_Popularity));
+            Game.logStart.Write(string.Format("King {0} was {1} by his people", NewKing.Name, NewKing_Popularity));
+            Game.logStart.Write(string.Format("His Queen, {0}, was {1} by the common folk", NewQueen.Name, NewQueen_Popularity));
 
             //Battle Resolution module - multiple battles, sieges, to and fro
 
@@ -236,7 +236,7 @@ namespace Next_Game
             {
                 string houseName = Game.world.GetMajorHouseName(loc.HouseID);
                 string locName = loc.LocName;
-                Game.logStart.Write(string.Format("{0} -> {1}, distance {2}", houseName, locName, loc.DistanceToCapital));
+                Game.logStart.Write(string.Format("{0} -> {1}, distance {2}", houseName.Length > 0 ? houseName : "Capital", locName, loc.DistanceToCapital));
             }
             Game.logStart.Write("--- Battles -> CreateOldKingBackStory (Lore.cs)");
             //fixed # of battles -> first, last and one inbetween
