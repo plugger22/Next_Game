@@ -33,6 +33,7 @@ namespace Next_Game
         public CardType Game_Type { get; set; }
         public string Game_Title { get; set; } //used for card title
         public string Game_Description { get; set; } //used for card breakdown
+        public int NumSupporters { get; } //max # of supporters for each participant
         //Card Pool
         private List<Card_Conflict> listCardPool;
         private List<Card_Conflict> listCardHand; //hand that will be played
@@ -69,8 +70,9 @@ namespace Next_Game
             arrayPool = new int[4]; //card pool analysis (0 - # good cards, 1 - # neutral cards, 2 - # bad cards, 3 - # defender specific cards)
             arrayModifiers = new int[3]; //modifier (DM) for GetSituationCardNumber, 0/1/2 refer to the three situation cards (def adv/neutral/game specific) -> DM for 0 & 1, # of cards for Game ('2')
             arraySituation = new string[3, 3];
-            arraySupportGood = new string[3, 3]; //max 3 supporters for Player ('0' -> name supporter, '1' -> played outcome text, '2' -> ignored outcome text)
-            arraySupportBad = new string[3, 3]; //max 3 supporters for Opponent
+            NumSupporters = Game.constant.GetValue(Global.NUM_SUPPORTERS);
+            arraySupportGood = new string[NumSupporters, 3]; //max 'NumSupporters' supporters for Player ('0' -> name supporter, '1' -> played outcome text, '2' -> ignored outcome text)
+            arraySupportBad = new string[NumSupporters, 3]; //max 'NumSupporters' supporters for Opponent
             //three lists to consolidate into pool breakdown description
             listPlayerCards = new List<Snippet>();
             listOpponentCards = new List<Snippet>();
@@ -150,13 +152,9 @@ namespace Next_Game
         private void SetSupporters()
         {
             //test data
-            arraySupportGood[0, 0] = "Prince Alfred Bignose";
-            arraySupportGood[1, 0] = "Bastard John Snow";
-            arraySupportGood[2, 0] = "Officer Clint Eastwood";
             arraySupportBad[0, 0] = "Lord Darth Vader";
             arraySupportBad[1, 0] = "Doctor Evil";
             arraySupportBad[2, 0] = "Lord Voldermont";
-
 
             int relThreshold = Game.constant.GetValue(Global.SUPPORTER_THRESHOLD); //level of relationship needed to be a supporter
             Dictionary<int, int> dictPlyrSupporters = new Dictionary<int, int>();
@@ -179,23 +177,45 @@ namespace Next_Game
                             int relPlyr;
                             if (actor != null)
                             {
-                                //relationship with Player
-                                relPlyr = actor.GetRelPlyr();
-                                if (relPlyr >= relThreshold)
+                                //exclude player and opponent from relationship checks
+                                if (actor.ActID != player.ActID && actor.ActID != opponent.ActID)
                                 {
-                                    //relationship high enough to be a supporter, add to dictionary
-                                    try
-                                    { dictPlyrSupporters.Add(actorID, relPlyr); }
-                                    catch (ArgumentException)
-                                    { Game.SetError(new Error(193, string.Format("Invalid actorID (\"{0}\") -> Duplicate Key, with relPlyr {1}", actorID, relPlyr))); }
+                                    //relationship with Player
+                                    relPlyr = actor.GetRelPlyr();
+                                    if (relPlyr >= relThreshold)
+                                    {
+                                        //relationship high enough to be a supporter, add to dictionary
+                                        try
+                                        { dictPlyrSupporters.Add(actorID, relPlyr); }
+                                        catch (ArgumentException)
+                                        { Game.SetError(new Error(193, string.Format("Invalid actorID (\"{0}\") -> Duplicate Key, with relPlyr {1}", actorID, relPlyr))); }
+                                    }
+                                    //relationship with Opponent
+
                                 }
-                                //relationship with Opponent
-
-
                             }
                             else { Game.SetError(new Error(193, string.Format("Invalid actor (null) from actorID \"{0}\"", actorID))); }
                         }
                         else { Game.SetError(new Error(193, "Invalid actorID (zero or less)")); }
+                    }
+                    //Sort dictionaries -> Player
+                    if (dictPlyrSupporters.Count > 0)
+                    {
+                        var sortedDict = from entry in dictPlyrSupporters orderby entry.Value descending select entry;
+                        //use top 'NumSupporters' entries only (highest relationships)
+                        int index = 0;
+                        foreach(var relationship in sortedDict)
+                        {
+                            Actor actor = Game.world.GetAnyActor(relationship.Key);
+                            if (actor != null)
+                            {
+                                arraySupportGood[index, 0] = string.Format("{0} {1} \"{2}\", ActID {3}", actor.Title, actor.Name, actor.Handle, actor.ActID);
+                                index++;
+                                if (index >= NumSupporters) { break; }
+                            }
+                            else { Game.SetError(new Error(193, "Invalid actor (null) in sortedDict")); }
+                        }
+
                     }
                 }
                 else { Game.SetError(new Error(193, "Invalid Player.LocID (null Location)")); }
@@ -1069,7 +1089,7 @@ namespace Next_Game
             listSituationCards.Add(new Snippet(text, foreColor, backColor));
 
             //Supporters -> Good
-            for (int i = 0; i < arraySupportGood.GetUpperBound(0); i++)
+            for (int i = 0; i <= arraySupportGood.GetUpperBound(0); i++)
             {
                 string supporterText = arraySupportGood[i, 0];
                 string supportDescription = "Lends a helping hand";  //TO DO
@@ -1085,7 +1105,7 @@ namespace Next_Game
                 listSupporterCards.Add(new Snippet(supporterText, foreColor, backColor)); //TO DO
             }
             //Supporters -> Bad
-            for (int i = 0; i < arraySupportBad.GetUpperBound(0); i++)
+            for (int i = 0; i <= arraySupportBad.GetUpperBound(0); i++)
             {
                 string supporter = arraySupportBad[i, 0];
                 string support_description = "Lends a helping hand";  //TO DO

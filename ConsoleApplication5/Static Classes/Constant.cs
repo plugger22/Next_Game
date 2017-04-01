@@ -57,6 +57,7 @@ namespace Next_Game
         OPPONENT_MARGIN,
         TALK_THRESHOLD,
         SUPPORTER_THRESHOLD,
+        NUM_SUPPORTERS,
         //Relationships
         HOUSE_REL_GOOD,
         HOUSE_REL_EFFECT,
@@ -149,6 +150,7 @@ namespace Next_Game
             arrayOfGlobals[56] = Global.AI_HUNT_THRESHOLD;
             arrayOfGlobals[57] = Global.LOSS_OF_LEGEND;
             arrayOfGlobals[58] = Global.SUPPORTER_THRESHOLD;
+            arrayOfGlobals[59] = Global.NUM_SUPPORTERS;
         }
 
         /// <summary>
