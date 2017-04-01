@@ -1,6 +1,6 @@
 # Constants
 # FORMAT - first line -> '# Explanation'
-# FORMAT - second line -> 'x : y @ L @ H' where x is the index code (DON'T CHANGE) and y is value, L & H are MIN and MAX possible values
+# FORMAT - second line -> 'x : y @ L @ H' where x is the index code and y is value (CAN CHANGE), L & H are MIN and MAX possible values
 # blank lines and spaces are ignored
 # all values are 1+ (a zero value is invalid)
 
@@ -112,16 +112,18 @@
 38: 2 @ 1 @ 3
 # TALK_THRESHOLD -> A characters relationship level (0 - 100) with the player required (>=) in order for them to agree to meet
 39: 50 @ 30 @ 70
-# SUPPORTER_THRESHOLD -> Relationship level with character needs to be this, or higher, in order to be considered a supporter in a challenge
-58: 60 @ 60 @ 90
+# SUPPORTER_THRESHOLD -> Relationship level with Player that actor needs (>=) in order to be considered a supporter in a challenge
+58: 70 @ 60 @ 90
 # NUM_SUPPORTERS -> max. number of supporters a character can have in a conflict
 59: 3 @ 1 @ 3
+# ENEMY_THRESHOLD -> Relationship level with Player that actor needs (<=), in order to become a supporter of Player's Opponent 
+60: 30 @ 10 @ 40
 
 # Relationships ---
 
 # HOUSE_REL_GOOD -> % chance of good house, past history, relationship (Bad is same % as good, None is 100 - Good x 2), eg. good 30, bad 30, none 40
 40: 35 @ 20 @ 40
-# HOUSE_REL_EFFECT -> 1dx relationship effect for any, past history, relationship incident, eg. 30 gives a range of 1 to 30 (1d30)
+# HOUSE_REL_EFFECT -> 1d'x' relationship effect for any, past history, relationship incident, eg. 30 gives a range of 1 to 30 (1d30)
 41: 30 @ 20 @ 40
 # HOUSE_REL_NUM -> number of rolls for each house for possible relations with others
 43: 2 @ 1 @ 3
@@ -157,4 +159,4 @@
 57: 1 @ 0 @ 4
 
 
-# Next valid number -> 60
+# Next valid number -> 61

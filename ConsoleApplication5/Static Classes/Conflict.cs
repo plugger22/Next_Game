@@ -151,16 +151,12 @@ namespace Next_Game
         /// </summary>
         private void SetSupporters()
         {
-            //test data
-            arraySupportBad[0, 0] = "Lord Darth Vader";
-            arraySupportBad[1, 0] = "Doctor Evil";
-            arraySupportBad[2, 0] = "Lord Voldermont";
-
-            int relThreshold = Game.constant.GetValue(Global.SUPPORTER_THRESHOLD); //level of relationship needed to be a supporter
+            int relThresholdPlyr = Game.constant.GetValue(Global.SUPPORTER_THRESHOLD); //relationship level (>=) with Player needed to be a supporter of Player
+            int relThresholdOpp = Game.constant.GetValue(Global.ENEMY_THRESHOLD); //relationship level (<=) with Player needed to be a supporter of Opponent
             Dictionary<int, int> dictPlyrSupporters = new Dictionary<int, int>();
             Dictionary<int, int> dictOppSupporters = new Dictionary<int, int>();
 
-            //get list of all actors at location
+            //get list of all actors at location -> No supporters if travelling (on the road)
             if (player.Status == ActorStatus.AtLocation || player.Status == ActorStatus.Captured)
             {
                 Location loc = Game.network.GetLocation(player.LocID);
@@ -182,15 +178,23 @@ namespace Next_Game
                                 {
                                     //relationship with Player
                                     relPlyr = actor.GetRelPlyr();
-                                    if (relPlyr >= relThreshold)
+                                    if (relPlyr >= relThresholdPlyr)
                                     {
                                         //relationship high enough to be a supporter, add to dictionary
                                         try
                                         { dictPlyrSupporters.Add(actorID, relPlyr); }
                                         catch (ArgumentException)
-                                        { Game.SetError(new Error(193, string.Format("Invalid actorID (\"{0}\") -> Duplicate Key, with relPlyr {1}", actorID, relPlyr))); }
+                                        { Game.SetError(new Error(193, string.Format("Invalid actorID (\"{0}\") -> Duplicate Key (dictPlyrSupporters), with relPlyr {1}", actorID, relPlyr))); }
                                     }
                                     //relationship with Opponent
+                                    if (relPlyr <= relThresholdOpp)
+                                    {
+                                        //relationship low enough to be an enemy (supporter of Opponent) -> add to dict
+                                        try
+                                        { dictOppSupporters.Add(actorID, relPlyr); }
+                                        catch (ArgumentException)
+                                        { Game.SetError(new Error(193, string.Format("Invalid actorID (\"{0}\") -> Duplicate Key (dictOppSupporters), with relPlyr {1}", actorID, relPlyr))); }
+                                    }
 
                                 }
                             }
@@ -198,7 +202,7 @@ namespace Next_Game
                         }
                         else { Game.SetError(new Error(193, "Invalid actorID (zero or less)")); }
                     }
-                    //Sort dictionaries -> Player
+                    //Sort (highest to lowest) dictionaries -> Player
                     if (dictPlyrSupporters.Count > 0)
                     {
                         var sortedDict = from entry in dictPlyrSupporters orderby entry.Value descending select entry;
@@ -213,18 +217,30 @@ namespace Next_Game
                                 index++;
                                 if (index >= NumSupporters) { break; }
                             }
-                            else { Game.SetError(new Error(193, "Invalid actor (null) in sortedDict")); }
+                            else { Game.SetError(new Error(193, "Invalid actor (null) in sortedDict -> dictPlyrSupporters")); }
                         }
-
+                    }
+                    //Sort (lowest to highest) dictionaries -> Opponent
+                    if (dictOppSupporters.Count > 0)
+                    {
+                        var sortedDict = from entry in dictOppSupporters orderby entry.Value ascending select entry;
+                        //use top 'NumSupporters' entries only (highest relationships)
+                        int index = 0;
+                        foreach (var relationship in sortedDict)
+                        {
+                            Actor actor = Game.world.GetAnyActor(relationship.Key);
+                            if (actor != null)
+                            {
+                                arraySupportBad[index, 0] = string.Format("{0} {1} \"{2}\", ActID {3}", actor.Title, actor.Name, actor.Handle, actor.ActID);
+                                index++;
+                                if (index >= NumSupporters) { break; }
+                            }
+                            else { Game.SetError(new Error(193, "Invalid actor (null) in sortedDict -> dictOppSupporters")); }
+                        }
                     }
                 }
                 else { Game.SetError(new Error(193, "Invalid Player.LocID (null Location)")); }
             }
-            else if (player.Status == ActorStatus.Travelling)
-            {
-
-            }
-
         }
 
         /// <summary>
