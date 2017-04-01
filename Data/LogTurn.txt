@@ -1,5 +1,9 @@
-//Exile Game File "LogTurn.txt" opened at: 01/04/2017 16:26:13
---- ProcessStartTurn, Day 11 (World.cs) 
-//Exile Game file ops "LogTurn.txt" Completed at: 01/04/2017 16:35:23
-Close completed at: 01/04/2017 16:26:13
- completed at: 01/04/2017 16:23:55
+//Exile Game File "LogTurn.txt" opened at: 01/04/2017 16:59:01
+--- ProcessStartTurn, Day 6 (World.cs) 
+--- SetSupporters (Conflict.cs)
+ [Notification] dictPlyrSupporters has 0 records
+ [Notification] dictOppSupporters has 13 records
+ [Supporter -> Bad] Queen Beth Tully "The Canny", Enemy, ActID 58, relPlyr 0
+ [Supporter -> Bad] Heir Randyll Tully "The Stygian Rat", Enemy, ActID 64, relPlyr 0
+ [Supporter -> Bad] lady Auphrey Tully "The Nightingale", Enemy, ActID 66, relPlyr 0
+//Exile Game file ops "LogTurn.txt" Completed at: 01/04/2017 17:00:47
