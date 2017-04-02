@@ -852,7 +852,7 @@ namespace Next_Game
             int lordID = house.LordID;
             Passive lord = Game.world.GetPassiveActor(lordID);
             menAtArms = (float)(6 - lord.GetSkill(SkillType.Treachery)) / 5 * (float)house.MenAtArms;
-            Console.WriteLine("Aid {0}, {1} has provided {2} men", lord.ActID, lord.Name, menAtArms);
+            Game.logStart.Write(string.Format("Aid {0}, {1} has provided {2} men", lord.ActID, lord.Name, menAtArms));
             return Convert.ToInt32(menAtArms);
         }
 
@@ -925,10 +925,10 @@ namespace Next_Game
         /// </summary>
         internal void CreateNewMajorHouse(List<HouseStruct> listUnusedMinorHouses, List<Advisor> listOfRoyalAdvisors)
         {
-            Console.WriteLine(Environment.NewLine + "--- CreateNewMajorHouse");
+            Game.logStart.Write("--- CreateNewMajorHouse (Lore.cs)");
             Passive oldBannerLord = Game.world.GetPassiveActor(TurnCoat);
-            Console.WriteLine("turncoatActor {0}, {1}, ActID: {2} RefID: {3} Loc: {4}", oldBannerLord.Name, oldBannerLord.Handle, oldBannerLord.ActID, oldBannerLord.RefID, 
-                Game.world.GetLocationName(oldBannerLord.LocID));
+            Game.logStart.Write(string.Format("turncoatActor {0}, {1}, ActID: {2} RefID: {3} Loc: {4}", oldBannerLord.Name, oldBannerLord.Handle, oldBannerLord.ActID, oldBannerLord.RefID, 
+                Game.world.GetLocationName(oldBannerLord.LocID)));
 
             if (oldBannerLord != null && oldBannerLord.Status == ActorStatus.AtLocation)
             {
@@ -944,7 +944,7 @@ namespace Next_Game
                 int houseID = Game.network.GetNumUniqueHouses() + 1;
                 int amt;
                 newMajorhouse.HouseID = houseID;
-                Console.WriteLine("Old King House {0}, {1}", oldkingHouse.Name, oldkingHouse.Motto);
+                Game.logStart.Write(string.Format("Old King House {0}, {1}", oldkingHouse.Name, oldkingHouse.Motto));
                 //Ref ID is 99 (all relevant datapoints are changed to this, not previous bannerlord refID as this is > 100 and causes issues with code as it thinks it's still a minor house)
                 int refID = 99;
                 TurnCoatRefIDNew = refID;
@@ -978,7 +978,7 @@ namespace Next_Game
                 {
                     Game.map.SetMapInfo(MapLayer.HouseID, locLord.GetPosX(), locLord.GetPosY(), houseID);
                     Game.map.SetMapInfo(MapLayer.RefID, locLord.GetPosX(), locLord.GetPosY(), refID);
-                    Console.WriteLine("loc {0}:{1}, houseID: {2}, refID: {3}", locLord.GetPosX(), locLord.GetPosY(), houseID, refID);
+                    Game.logStart.Write(string.Format("loc {0}:{1}, houseID: {2}, refID: {3}", locLord.GetPosX(), locLord.GetPosY(), houseID, refID));
                     //update Loc details
                     locLord.HouseID = houseID;
                     locLord.RefID = refID;
@@ -1005,18 +1005,19 @@ namespace Next_Game
                 newMinorHouse.Resources = turncoatHouse.Resources;
                 //remove from list to prevent future use
                 listUnusedMinorHouses.RemoveAt(index);
-                Console.WriteLine("{0}, {1}, RefID: {2}", minorStruct.Name, minorStruct.Motto, minorStruct.RefID);
+                Game.logStart.Write(string.Format("{0}, {1}, RefID: {2}", minorStruct.Name, minorStruct.Motto, minorStruct.RefID));
 
                 //need a new Bannerlord Actor
                 int bannerLocID = newMinorHouse.LocID;
                 Location locBannerLord = Game.network.GetLocation(bannerLocID);
                 if (locBannerLord == null) { Game.SetError(new Error(33, "Invalid locBannerLord Loc (null) Major issues ahead")); }
 
-                Console.WriteLine("bannerlord comes from {0}, LocID: {1} ({2}:{3})", Game.world.GetLocationName(bannerLocID), bannerLocID, locBannerLord.GetPosX(), locBannerLord.GetPosY());
+                Game.logStart.Write(string.Format("bannerlord comes from {0}, LocID: {1} ({2}:{3})", Game.world.GetLocationName(bannerLocID), bannerLocID, 
+                    locBannerLord.GetPosX(), locBannerLord.GetPosY()));
                 Position pos = locBannerLord.GetPosition();
                 BannerLord newBannerLord = Game.history.CreateBannerLord(minorStruct.Name, pos, bannerLocID, minorStruct.RefID, houseID);
                 Game.world.SetPassiveActor(newBannerLord);
-                Console.WriteLine("new Bannerlord {0}, ActID: {1}", newBannerLord.Name, newBannerLord.ActID);
+                Game.logStart.Write(string.Format("new Bannerlord {0}, ActID: {1}", newBannerLord.Name, newBannerLord.ActID));
                 newBannerLord.Loyalty_AtStart = KingLoyalty.New_King;
                 newBannerLord.Loyalty_Current = KingLoyalty.New_King;
                 newBannerLord.Lordship = Game.gameRevolt;
@@ -1032,7 +1033,7 @@ namespace Next_Game
                 { liegeLordHouse = newMajorhouse; }
                 else
                 { liegeLordHouse = Game.world.GetMajorHouse(oldBannerLord.HouseID); }
-                Console.WriteLine("Liege Lord House {0}", liegeLordHouse.Name);
+                Game.logStart.Write(string.Format("Liege Lord House {0}", liegeLordHouse.Name));
                 tempLords.AddRange(liegeLordHouse.GetBannerLords());
                 index = tempLords.FindIndex(a => a == oldBannerLordRefID);
                 if (index > -1)
@@ -1043,9 +1044,9 @@ namespace Next_Game
                     { Game.SetError(new Error(33, "Invalid index for tempLords.RemoveAt, Lord not removed")); }
                     tempLords.Add(minorStruct.RefID);
                     liegeLordHouse.SetBannerLords(tempLords);
-                    Console.WriteLine("Remove index: {0}, Add RefID: {1}", index, minorStruct.RefID);
+                   Game.logStart.Write(string.Format("Remove index: {0}, Add RefID: {1}", index, minorStruct.RefID));
                 }
-                else { Console.WriteLine("Not found in listOfBannerLords"); }
+                else { Game.logStart.Write("[Alert] Not found in listOfBannerLords"); }
 
                 //loop through turncoat bannerlords and update loc details
                 List<int> tempList = newMajorhouse.GetBannerLordLocations();
@@ -1055,7 +1056,7 @@ namespace Next_Game
                     if (locTemp != null)
                     {
                         Game.map.SetMapInfo(MapLayer.HouseID, locTemp.GetPosX(), locTemp.GetPosY(), houseID);
-                        Console.WriteLine("BannerLord loc {0}:{1}, houseID: {2}", locTemp.GetPosX(), locTemp.GetPosY(), houseID);
+                        Game.logStart.Write(string.Format("BannerLord loc {0}:{1}, houseID: {2}", locTemp.GetPosX(), locTemp.GetPosY(), houseID));
                         //update Loc details
                         locTemp.HouseID = houseID;
                     }
@@ -1131,7 +1132,7 @@ namespace Next_Game
 
                 //update Map with refID and houseID for loc
                 Game.map.SetMapInfo(MapLayer.RefID, locBannerLord.GetPosX(), locBannerLord.GetPosY(), newMinorHouse.RefID);
-                Console.WriteLine("Updating MapLayer -> loc {0}:{1}, refID: {2}", locBannerLord.GetPosX(), locBannerLord.GetPosY(), newMinorHouse.RefID);
+                Game.logStart.Write(string.Format("Updating MapLayer -> loc {0}:{1}, refID: {2}", locBannerLord.GetPosX(), locBannerLord.GetPosY(), newMinorHouse.RefID));
                 //update Loc details
                 locBannerLord.RefID = newMinorHouse.RefID;
 
@@ -1255,9 +1256,7 @@ namespace Next_Game
                 string descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Lordship of House {3}, age {4}", newLord.Name, newLord.ActID, deadLord.Name, house.Name, newLord.Age);
                 Record record_0 = new Record(descriptor, newLord.ActID, newLord.LocID, newLord.RefID, newLord.Lordship, HistActorIncident.Lordship);
                 Game.world.SetHistoricalRecord(record_0);
-
-                //debug
-                Console.WriteLine("New Bannerlord for House {0} -> {1}, Aid {2}", house.Name, newLord.Name, newLord.ActID);
+                Game.logStart.Write(string.Format("New Bannerlord for House {0} -> {1}, Aid {2}", house.Name, newLord.Name, newLord.ActID));
             }
             catch (Exception e)
             { Game.SetError(new Error(39, e.Message)); }
