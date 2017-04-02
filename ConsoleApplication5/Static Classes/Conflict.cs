@@ -1201,19 +1201,17 @@ namespace Next_Game
             listSituationCards.Add(new Snippet(text, foreColor, backColor));
 
             //Supporters -> Good
-            for (int i = 0; i <= arraySupportGood.Length; i++)
+            for (int i = 0; i < arraySupportGood.Length; i++)
             {
                 string supporterText = arraySupportGood[i];
                 string supportDescription = "Lends a helping hand"; 
                 type = CardType.Good;
                 foreColor = RLColor.Black;
-
                 //Situation immersion texts
                 Situation situationHelp = GetSupporterText(Conflict_Type, subType, Challenger);
                 if (situationHelp != null)
                 { tempListGood = situationHelp.GetGood(); tempListBad = situationHelp.GetBad(); }
                 else { Game.SetError(new Error(105, string.Format("situation (Supporters -> Good (Help)) came back Null", Conflict_Type))); }
-
                 //no more valid data
                 if (String.IsNullOrEmpty(supporterText) == true)
                 { break; }
@@ -1226,7 +1224,7 @@ namespace Next_Game
                 listSupporterCards.Add(new Snippet(supporterText, foreColor, backColor)); //TO DO
             }
             //Supporters -> Bad
-            for (int i = 0; i <= arraySupportBad.Length; i++)
+            for (int i = 0; i < arraySupportBad.Length; i++)
             {
                 string supporter = arraySupportBad[i];
                 string support_description = "Attempts to hinder you";

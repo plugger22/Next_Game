@@ -40,31 +40,36 @@ namespace Next_Game
         public List<string> WordWrap(string input, int maxCharacters)
         {
             List<string> lines = new List<string>();
-            if (!input.Contains(" "))
+            if (String.IsNullOrEmpty(input) == false)
             {
-                int start = 0;
-                while (start < input.Length)
+                
+                if (!input.Contains(" "))
                 {
-                    lines.Add(input.Substring(start, Math.Min(maxCharacters, input.Length - start)));
-                    start += maxCharacters;
-                }
-            }
-            else
-            {
-                string[] words = input.Split(' ');
-                string line = "";
-                foreach (string word in words)
-                {
-                    if ((line + word).Length > maxCharacters)
+                    int start = 0;
+                    while (start < input.Length)
                     {
-                        lines.Add(line.Trim());
-                        line = "";
+                        lines.Add(input.Substring(start, Math.Min(maxCharacters, input.Length - start)));
+                        start += maxCharacters;
                     }
-                    line += string.Format("{0} ", word);
                 }
-                if (line.Length > 0)
-                { lines.Add(line.Trim()); }
+                else
+                {
+                    string[] words = input.Split(' ');
+                    string line = "";
+                    foreach (string word in words)
+                    {
+                        if ((line + word).Length > maxCharacters)
+                        {
+                            lines.Add(line.Trim());
+                            line = "";
+                        }
+                        line += string.Format("{0} ", word);
+                    }
+                    if (line.Length > 0)
+                    { lines.Add(line.Trim()); }
+                }
             }
+            else { Game.SetError(new Error(195, "Invalid string input (null or empty) -> WordWrap Cancelled")); }
             return lines;
         }
 

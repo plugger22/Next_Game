@@ -15,238 +15,238 @@ Name: Battle -> Plyr Def
 Type: Combat
 SubType: Battle
 PlyrDef: 1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abc_cb
+Good2: abc_cb
+Good3: abc_cb
+Bad1: abc_cb
+Bad2: abc_cb
+Bad3; abc_cb
 [end]
 
 Name: Battle -> Opp Def
 Type: Combat
 SubType: Battle
 PlyrDef: -1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abcdef_cb
+Good2: abcdef_cb
+Good3: abcdef_cb
+Bad1: abcdef_cb
+Bad2: abcdef_cb
+Bad3; abcdef_cb
 [end]
 
 Name: Tournament -> Plyr Def
 Type: Combat
 SubType: Tournament
 PlyrDef: 1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abc_ct
+Good2: abc_ct
+Good3: abc_ct
+Bad1: abc_ct
+Bad2: abc_ct
+Bad3; abc_ct
 [end]
 
 Name: Tournament -> Opp Def
 Type: Combat
 SubType: Tournament
 PlyrDef: -1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abcdef_ct
+Good2: abcdef_ct
+Good3: abcdef_ct
+Bad1: abcdef_ct
+Bad2: abcdef_ct
+Bad3; abcdef_ct
 [end]
 
 Name: Personal -> Plyr Def
 Type: Combat
 SubType: Personal
 PlyrDef: 1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abc_cp
+Good2: abc_cp
+Good3: abc_cp
+Bad1: abc_cp
+Bad2: abc_cp
+Bad3; abc_cp
 [end]
 
 Name: Personal -> Opp Def
 Type: Combat
 SubType: Personal
 PlyrDef: -1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abcdef_cp
+Good2: abcdef_cp
+Good3: abcdef_cp
+Bad1: abcdef_cp
+Bad2: abcdef_cp
+Bad3; abcdef_cp
 [end]
 
 Name: Hunting -> Plry Def
 Type: Combat
 SubType: Hunting
 PlyrDef: 1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abc_ch
+Good2: abc_ch
+Good3: abc_ch
+Bad1: abc_ch
+Bad2: abc_ch
+Bad3; abc_ch
 [end]
 
 Name: Hunting -> Opp Def
 Type: Combat
 SubType: Hunting
 PlyrDef: -1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abcdef_ch
+Good2: abcdef_ch
+Good3: abcdef_ch
+Bad1: abcdef_ch
+Bad2: abcdef_ch
+Bad3; abcdef_ch
 [end]
 
 Name: BlackMail -> Plyr Def
 Type: Social
 SubType: Blackmail
 PlyrDef: 1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abc_sb
+Good2: abc_sb
+Good3: abc_sb
+Bad1: abc_sb
+Bad2: abc_sb
+Bad3; abc_sb
 [end]
 
 Name: Blackmail -> Opp Def
 Type: Social
 SubType: Blackmail
 PlyrDef: -1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abcdef_sb
+Good2: abcdef_sb
+Good3: abcdef_sb
+Bad1: abcdef_sb
+Bad2: abcdef_sb
+Bad3; abcdef_sb
 [end]
 
 Name: Seduce -> Plyr Def
 Type: Social
 SubType: Seduce
 PlyrDef: 1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abc_ss
+Good2: abc_ss
+Good3: abc_ss
+Bad1: abc_ss
+Bad2: abc_ss
+Bad3; abc_ss
 [end]
 
 Name: Seduce -> Opp Def
 Type: Social
 SubType: Seduce
 PlyrDef: -1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abcdef_ss
+Good2: abcdef_ss
+Good3: abcdef_ss
+Bad1: abcdef_ss
+Bad2: abcdef_ss
+Bad3; abcdef_ss
 [end]
 
 Name: Befriend -> Plyr Def
 Type: Social
 SubType: Befriend
 PlyrDef: 1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abc_sf
+Good2: abc_sf
+Good3: abc_sf
+Bad1: abc_sf
+Bad2: abc_sf
+Bad3; abc_sf
 [end]
 
 Name: Befriend -> Opp Def
 Type: Social
 SubType: Befriend
 PlyrDef: -1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abcdef_sf
+Good2: abcdef_sf
+Good3: abcdef_sf
+Bad1: abcdef_sf
+Bad2: abcdef_sf
+Bad3; abcdef_sf
 [end]
 
 Name: Infiltrate -> Plyr Def
 Type: Stealth
 SubType: Infiltrate
 PlyrDef: 1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abc_si
+Good2: abc_si
+Good3: abc_si
+Bad1: abc_si
+Bad2: abc_si
+Bad3; abc_si
 [end]
 
 Name: Infiltrate -> Opp Def
 Type: Stealth
 SubType: Infiltrate
 PlyrDef: -1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abcdef_si
+Good2: abcdef_si
+Good3: abcdef_si
+Bad1: abcdef_si
+Bad2: abcdef_si
+Bad3; abcdef_si
 [end]
 
 Name: Evade -> Plyr Def
 Type: Stealth
 SubType: Evade
 PlyrDef: 1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abc_sv
+Good2: abc_sv
+Good3: abc_sv
+Bad1: abc_sv
+Bad2: abc_sv
+Bad3; abc_sv
 [end]
 
 Name: Evade -> Opp Def
 Type: Stealth
 SubType: Evade
 PlyrDef: -1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abcdef_sv
+Good2: abcdef_sv
+Good3: abcdef_sv
+Bad1: abcdef_sv
+Bad2: abcdef_sv
+Bad3; abcdef_sv
 [end]
 
 Name: Escape -> Plyr Def
 Type: Stealth
 SubType: Escape
 PlyrDef: 1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abc_se
+Good2: abc_se
+Good3: abc_se
+Bad1: abc_se
+Bad2: abc_se
+Bad3; abc_se
 [end]
 
 Name: Escape -> Opp Def
 Type: Stealth
 SubType: Escape
 PlyrDef: -1
-Good1: abc
-Good2: abc
-Good3: abc
-Bad1: abc
-Bad2: abc
-Bad3; abc
+Good1: abcdef_se
+Good2: abcdef_se
+Good3: abcdef_se
+Bad1: abcdef_se
+Bad2: abcdef_se
+Bad3; abcdef_se
 [end]
