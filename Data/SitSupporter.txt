@@ -20,7 +20,7 @@ Good2: abc_cb
 Good3: abc_cb
 Bad1: abc_cb
 Bad2: abc_cb
-Bad3; abc_cb
+Bad3: abc_cb
 [end]
 
 Name: Battle -> Opp Def
@@ -32,7 +32,7 @@ Good2: abcdef_cb
 Good3: abcdef_cb
 Bad1: abcdef_cb
 Bad2: abcdef_cb
-Bad3; abcdef_cb
+Bad3: abcdef_cb
 [end]
 
 Name: Tournament -> Plyr Def
@@ -44,7 +44,7 @@ Good2: abc_ct
 Good3: abc_ct
 Bad1: abc_ct
 Bad2: abc_ct
-Bad3; abc_ct
+Bad3: abc_ct
 [end]
 
 Name: Tournament -> Opp Def
@@ -56,31 +56,31 @@ Good2: abcdef_ct
 Good3: abcdef_ct
 Bad1: abcdef_ct
 Bad2: abcdef_ct
-Bad3; abcdef_ct
+Bad3: abcdef_ct
 [end]
 
 Name: Personal -> Plyr Def
 Type: Combat
 SubType: Personal
 PlyrDef: 1
-Good1: abc_cp
-Good2: abc_cp
-Good3: abc_cp
-Bad1: abc_cp
-Bad2: abc_cp
-Bad3; abc_cp
+Good1: Discreetly flashes reflections off a piece of shiny metal into the eyes of <name>.
+Good2: Kicks a small wooden object under the feet of <name>.
+Good3: Shouts a warning to you as <name> lunges forward unexpectedly.
+Bad1: Throws something small and hard at your head, forcing you duck.
+Bad2: Yells abuse in your ear as you backpedal in the face of <name>'s onslaught.
+Bad3: Unexpectedly heaves the contents of a jug of water under your feet.
 [end]
 
 Name: Personal -> Opp Def
 Type: Combat
 SubType: Personal
 PlyrDef: -1
-Good1: abcdef_cp
-Good2: abcdef_cp
-Good3: abcdef_cp
-Bad1: abcdef_cp
-Bad2: abcdef_cp
-Bad3; abcdef_cp
+Good1: Pushes an onlooker who lurches forward and knocks <name> off balance.
+Good2: Ducks behind and flicks a rope end around <name>'s ankles.
+Good3: Hurls rotten eggs, forcing <name> to duck and weave.
+Bad1: Leaps forward and helps <name> back to their feet as <he> stumbles backwards.
+Bad2: Shouts words of encouragement to <name> who suddenly gets a second wind.
+Bad3: Stand directly behind <name> and guides them as they edge backwards while defending.
 [end]
 
 Name: Hunting -> Plry Def
@@ -92,7 +92,7 @@ Good2: abc_ch
 Good3: abc_ch
 Bad1: abc_ch
 Bad2: abc_ch
-Bad3; abc_ch
+Bad3: abc_ch
 [end]
 
 Name: Hunting -> Opp Def
@@ -104,7 +104,7 @@ Good2: abcdef_ch
 Good3: abcdef_ch
 Bad1: abcdef_ch
 Bad2: abcdef_ch
-Bad3; abcdef_ch
+Bad3: abcdef_ch
 [end]
 
 Name: BlackMail -> Plyr Def
@@ -116,7 +116,7 @@ Good2: abc_sb
 Good3: abc_sb
 Bad1: abc_sb
 Bad2: abc_sb
-Bad3; abc_sb
+Bad3: abc_sb
 [end]
 
 Name: Blackmail -> Opp Def
@@ -128,7 +128,7 @@ Good2: abcdef_sb
 Good3: abcdef_sb
 Bad1: abcdef_sb
 Bad2: abcdef_sb
-Bad3; abcdef_sb
+Bad3: abcdef_sb
 [end]
 
 Name: Seduce -> Plyr Def
@@ -140,7 +140,7 @@ Good2: abc_ss
 Good3: abc_ss
 Bad1: abc_ss
 Bad2: abc_ss
-Bad3; abc_ss
+Bad3: abc_ss
 [end]
 
 Name: Seduce -> Opp Def
@@ -152,31 +152,31 @@ Good2: abcdef_ss
 Good3: abcdef_ss
 Bad1: abcdef_ss
 Bad2: abcdef_ss
-Bad3; abcdef_ss
+Bad3: abcdef_ss
 [end]
 
 Name: Befriend -> Plyr Def
 Type: Social
 SubType: Befriend
 PlyrDef: 1
-Good1: abc_sf
-Good2: abc_sf
-Good3: abc_sf
-Bad1: abc_sf
-Bad2: abc_sf
-Bad3; abc_sf
+Good1: Intervenes and gives <name> a number of backhanded compliments.
+Good2: Whispers a warning in your ear aoout <name>'s dubious intentions.
+Good3: Finds an excuse to call you away momentarily to allow you to collect your thoughts.
+Bad1: Wanders over and mentions highlights the many positive virtues of <name>.
+Bad2: Offers you a mug of highly fermented ale in order to loosen your inhibitions.
+Bad3: Feeds you delicious nibbly snacks of rare food as you and <name> engage in conversation.
 [end]
 
 Name: Befriend -> Opp Def
 Type: Social
 SubType: Befriend
 PlyrDef: -1
-Good1: abcdef_sf
-Good2: abcdef_sf
-Good3: abcdef_sf
-Bad1: abcdef_sf
-Bad2: abcdef_sf
-Bad3; abcdef_sf
+Good1: Sidles up and says a good word on your behalf.
+Good2: Whispers in <name>'s ear that you are a person of high repute and standing.
+Good3: Smiles and flatters <name> whenever they raise doubts about your intentions.
+Bad1: Rudely interrupts your conversation with <name> and insists that you have to leave.
+Bad2: Openingly questions your mother's wisdom of bringing you into the world.
+Bad3: Cracks jokes with <name> at your expense and attempts to turn you into a figure of fun.
 [end]
 
 Name: Infiltrate -> Plyr Def
@@ -188,7 +188,7 @@ Good2: abc_si
 Good3: abc_si
 Bad1: abc_si
 Bad2: abc_si
-Bad3; abc_si
+Bad3: abc_si
 [end]
 
 Name: Infiltrate -> Opp Def
@@ -200,53 +200,53 @@ Good2: abcdef_si
 Good3: abcdef_si
 Bad1: abcdef_si
 Bad2: abcdef_si
-Bad3; abcdef_si
+Bad3: abcdef_si
 [end]
 
 Name: Evade -> Plyr Def
 Type: Stealth
 SubType: Evade
 PlyrDef: 1
-Good1: abc_sv
-Good2: abc_sv
-Good3: abc_sv
-Bad1: abc_sv
-Bad2: abc_sv
-Bad3; abc_sv
+Good1: Rolls a barrel into the path of your pursuer.
+Good2: Knocks over a shelf and impedes the passage of <name>.
+Good3: Waves you towards the entrace of a hidden route.
+Bad1: Yells at the top of <his> lungs that you are right HERE!
+Bad2: Points at you as you race past, highlighting the path you took.
+Bad3: Thrusts their leg forward and trips you.
 [end]
 
 Name: Evade -> Opp Def
 Type: Stealth
 SubType: Evade
 PlyrDef: -1
-Good1: abcdef_sv
-Good2: abcdef_sv
-Good3: abcdef_sv
-Bad1: abcdef_sv
-Bad2: abcdef_sv
-Bad3; abcdef_sv
+Good1: Waves their arms in the direction taken by <name>.
+Good2: Viciously knocks <name> to the ground as they run past.
+Good3: Steps in front of <name> and blocks their path.
+Bad1: Shouts false directions at you about the direction <name> took.
+Bad2: Splashes hot oil onto the ground immediately in front of you.
+Bad3: Slams an opening shut as you race towards it.
 [end]
 
 Name: Escape -> Plyr Def
 Type: Stealth
 SubType: Escape
 PlyrDef: 1
-Good1: abc_se
-Good2: abc_se
-Good3: abc_se
-Bad1: abc_se
-Bad2: abc_se
-Bad3; abc_se
+Good1: Knocks out a guard clearing the way forward.
+Good2: Hands out free liquor to the guards, intoxicating them.
+Good3: Waits just clear of the dungeons in order to lead you to safety.
+Bad1: Personally inspects the guards and increases their alterness.
+Bad2: Ensures that a few extra guards are on duty tonight.
+Bad3: Asks that the door to your cell be double padlocked.
 [end]
 
 Name: Escape -> Opp Def
 Type: Stealth
 SubType: Escape
 PlyrDef: -1
-Good1: abcdef_se
-Good2: abcdef_se
-Good3: abcdef_se
-Bad1: abcdef_se
-Bad2: abcdef_se
-Bad3; abcdef_se
+Good1: Notices that something is amiss and raises the alarm.
+Good2: Makes sure that the main dungeon entrance has double guards tonight.
+Good3: Personally offers coin to each guard to ensure their alertness.
+Bad1: Concots an excuse to have several guards called away to attend other duties.
+Bad2: Bribes some of the guards to look the other way tonight.
+Bad3: Manages to smuggle a lock pick into <name>s cell in the bottom of the dinner pail.
 [end]
