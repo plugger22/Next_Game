@@ -1022,6 +1022,7 @@ namespace Next_Game
                 newBannerLord.Lordship = Game.gameRevolt;
                 newBannerLord.AddRelEventPlyr(new Relation("Grateful to the New King for their Title", "Supports New King", -45));
                 newMinorHouse.LordID = newBannerLord.ActID;
+                
 
 
                 //need to update house.ListOfBannerLords (remove old refID, add new)
@@ -1122,6 +1123,10 @@ namespace Next_Game
                     House bannerHouse = (MinorHouse)Game.world.GetHouse(lordRefID);
                     //MinorHouse bannerHouse = tempbannerHouse as MinorHouse;
                     bannerHouse.HouseID = newMajorhouse.HouseID;
+                    //update House ID for Bannerlord actors
+                    Passive tempActor = Game.world.GetPassiveActor(bannerHouse.LordID);
+                    if (tempActor != null) { tempActor.HouseID = newMajorhouse.HouseID; }
+                    else { Game.SetError(new Error(33, "Invalid newMajorHouse bannerLord (null)")); }
                 }
 
                 //update Map with refID and houseID for loc

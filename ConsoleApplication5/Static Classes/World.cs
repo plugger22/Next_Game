@@ -88,8 +88,8 @@ namespace Next_Game
             timer_2.Start();
             //need to be here for sequencing issues
             Game.history.InitialiseOverthrow(dictPassiveActors);
-            Game.history.InitialiseLordRelations();
             Game.history.InitialisePastHistoryHouses();
+            Game.history.InitialiseLordRelations();
             Game.StopTimer(timer_2, "W: InitialiseHistory");
             timer_2.Start();
             InitialiseSecrets();
@@ -707,8 +707,8 @@ namespace Next_Game
                         break;
                     case ActorStatus.Travelling:
                         Position pos = person.GetActorPosition();
-                        locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}, Rid {5}", pos.PosX, pos.PosY, GetLocationName(locID), ShowLocationCoords(locID), 
-                            locID, refID);
+                        locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}, Rid {5}", pos.PosX, pos.PosY, GetLocationName(locID), 
+                            ShowLocationCoords(locID), locID, refID);
                         break;
                     case ActorStatus.Captured:
                         locString = string.Format("Incarcerated in the bowels of the {0} dungeons", GetLocationName(locID));
@@ -966,8 +966,8 @@ namespace Next_Game
                         { listToDisplay.Add(new Snippet("Not activated", RLColor.Red, RLColor.Black)); }
                     }
                 }
-                //relationships
-                if (!(person is Player))
+                //relationships (ignore for dead actors)
+                if (!(person is Player) && person.Status != ActorStatus.Gone)
                 {
                     listToDisplay.Add(new Snippet("Relationships", RLColor.Brown, RLColor.Black));
                     //with Player
@@ -1138,7 +1138,7 @@ namespace Next_Game
                 }
 
                 //Relationship records
-                if ((person is Player) == false)
+                if (!(person is Player) && person.Status != ActorStatus.Gone)
                 {
                     //with Player
                     List<Relation> playerRelations = person.GetRelEventPlyr();
@@ -2969,15 +2969,6 @@ namespace Next_Game
             return type;
         }
 
-        /*
-        internal void InitialiseWorldHistory()
-        {
-            //Generate History
-            Game.history.InitialiseOverthrow(dictPassiveActors);
-            //need to be here for sequencing issues
-            Game.history.InitialiseLordRelations();
-            Game.history.InitialisePastHistoryHouses();
-        }*/
 
         /// <summary>
         /// debug: highlights duplicate names in imported files

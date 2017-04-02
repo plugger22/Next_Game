@@ -11,3 +11,9 @@ Seed 8551 -> Saturday, 1 April 2017 8:09 PM
 Seed 61403 -> Saturday, 1 April 2017 8:22 PM
 Seed 49527 -> Saturday, 1 April 2017 8:42 PM
 Seed 34390 -> Saturday, 1 April 2017 8:59 PM
+Seed 7573 -> Sunday, 2 April 2017 9:04 AM
+Seed 19013 -> Sunday, 2 April 2017 9:17 AM
+Seed 1900 -> Sunday, 2 April 2017 9:25 AM
+Seed 17551 -> Sunday, 2 April 2017 9:40 AM
+Seed 59550 -> Sunday, 2 April 2017 9:54 AM
+Seed 18750 -> Sunday, 2 April 2017 10:08 AM

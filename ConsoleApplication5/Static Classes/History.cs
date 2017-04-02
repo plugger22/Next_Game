@@ -2941,7 +2941,7 @@ namespace Next_Game
                 else
                 { relValue = rnd.Next(neutralLow, neutralHigh); }
             }
-            //neutral treachery, no particular preference, range 25 - 76
+            //neutral treachery, no particular preference, range 25 - 75
             else
             { relValue = rnd.Next(neutralLow, neutralHigh); }
             //allow for any difference (the idea is to get a wider spread of results)

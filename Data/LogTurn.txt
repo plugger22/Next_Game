@@ -1,12 +1,4 @@
-//Exile Game File "LogTurn.txt" opened at: 01/04/2017 21:01:03
---- ProcessStartTurn, Day 7, Turn 6 (World.cs) 
---- SetSupporters (Conflict.cs)
- [Notification] dictPlyrSupporters has 2 records
- [Supporter -> Good] Master_of_Coin Druettus Huchon "The Sh*tter", Friend, ActID 103, relPlyr 84
- [Supporter -> Good] High_Septon Doran Hughoc "The Mesmerising", Friend, ActID 102, relPlyr 72
- [Notification] dictOppSupporters has 10 records
- [Supporter -> Bad] Inquisitor Brother Mastema "The Observant", Enemy, ActID 125, relPlyr 0
- [Supporter -> Bad] Inquisitor Brother Mormo "The Harsh", Enemy, ActID 126, relPlyr 0
- [Supporter -> Bad] Inquisitor Brother Demogorgon "The Commanding", Enemy, ActID 127, relPlyr 0
-//Exile Game file ops "LogTurn.txt" Completed at: 01/04/2017 21:04:29
-txt" Close completed at: 01/04/2017 21:01:03
+//Exile Game file ops "LogTurn.txt" commenced at: 02/04/2017 10:08:39
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+//Exile Game file ops "LogTurn.txt" Completed at: 02/04/2017 10:13:06
