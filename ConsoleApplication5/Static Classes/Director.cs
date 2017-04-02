@@ -98,6 +98,7 @@ namespace Next_Game
         private Dictionary<int, Situation> dictSituationsGame;
         private Dictionary<int, Situation> dictSituationsSpecial;
         private Dictionary<int, Situation> dictSituationsSkill;
+        private Dictionary<int, Situation> dictSituationsSupporter;
         private Dictionary<int, Result> dictResults;
         private Dictionary<ConflictSubType, Challenge> dictChallenges;
 
@@ -153,6 +154,7 @@ namespace Next_Game
             dictSituationsGame = new Dictionary<int, Situation>(); //third, game specific, situation
             dictSituationsSpecial = new Dictionary<int, Situation>(); //decisions-derived special situations
             dictSituationsSkill = new Dictionary<int, Situation>(); //primary skill involved in a challenge
+            dictSituationsSupporter = new Dictionary<int, Situation>(); //supporters involved in a challenge
             dictResults = new Dictionary<int, Result>(); //predefined results of a challenge outcome
             dictChallenges = new Dictionary<ConflictSubType, Challenge>(); //challenge data unique to individual challenge types
         }
@@ -185,6 +187,8 @@ namespace Next_Game
             dictSituationsSpecial = Game.file.GetSituations("SitSpecial.txt");
             Console.WriteLine(Environment.NewLine + "--- Initialise Skill (Situations)");
             dictSituationsSkill = Game.file.GetSituations("SitSkill.txt");
+            Console.WriteLine(Environment.NewLine + "--- Initialise Supporter (Situations)");
+            dictSituationsSupporter = Game.file.GetSituations("SitSupporter.txt");
             Console.WriteLine(Environment.NewLine + "--- Initialise Results");
             dictResults = Game.file.GetResults("Results.txt");
             Console.WriteLine(Environment.NewLine + "--- Initialise Challenges"); //run AFTER GetResults

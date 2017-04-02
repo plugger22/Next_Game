@@ -3572,6 +3572,7 @@ namespace Next_Game
                                         Situation situation = null;
                                         if (structSituation.State == ConflictState.None && structSituation.Type > ConflictType.None)
                                         {
+                                            //sitNormal
                                             situation = new Situation(structSituation.Name, structSituation.Type, structSituation.SitNum, structSituation.Type_Combat,
                                                 structSituation.Type_Social, structSituation.Type_Stealth);
                                         }

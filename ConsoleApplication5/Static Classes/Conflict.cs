@@ -1114,7 +1114,7 @@ namespace Next_Game
             for (int i = 0; i <= arraySupportGood.GetUpperBound(0); i++)
             {
                 string supporterText = arraySupportGood[i, 0];
-                string supportDescription = "Lends a helping hand";  //TO DO
+                string supportDescription = "Lends a helping hand"; 
                 type = CardType.Good;
                 foreColor = RLColor.Black;
                 //no more valid data
@@ -1130,7 +1130,7 @@ namespace Next_Game
             for (int i = 0; i <= arraySupportBad.GetUpperBound(0); i++)
             {
                 string supporter = arraySupportBad[i, 0];
-                string support_description = "Lends a helping hand";  //TO DO
+                string support_description = "Attempts to hinder you";
                 type = CardType.Bad;
                 foreColor = RLColor.Red;
                 //no more valid data

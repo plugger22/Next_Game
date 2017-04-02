@@ -1,0 +1,252 @@
+# SitSupporter -> immersion strings for supporters (good and bad) -> Done in sets of two, one for Plyr attacking and other for Plyr defending
+# NOTE: All fields must have a value
+# Name: descriptor (max. 4 words)
+# Type: (ConflictType) Combat / Social / Other / State (game specific)
+# SubType: if Combat -> Personal/Tournament/Battle/Hunting, if Social -> Blackmail/Seduce/Befriend, if Stealth -> Infiltrate/Evade/Escape
+# PlyrDef: '1' if player is the defender, '-1' if opponent
+# Good: immersion strings, 3 variations for good outcomes, short/med sentence, use tags, max 6, eg. Good6:, min1
+# Bad: immersion strings, 3 variations for bad outcomes, short/med sentence, use tags, max 6, eg. Bad6:, min 1
+
+# terminology: Use 'you' and 'your', not 'our'
+
+# Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She, <his> his/her
+
+Name: Battle -> Plyr Def
+Type: Combat
+SubType: Battle
+PlyrDef: 1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Battle -> Opp Def
+Type: Combat
+SubType: Battle
+PlyrDef: -1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Tournament -> Plyr Def
+Type: Combat
+SubType: Tournament
+PlyrDef: 1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Tournament -> Opp Def
+Type: Combat
+SubType: Tournament
+PlyrDef: -1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Personal -> Plyr Def
+Type: Combat
+SubType: Personal
+PlyrDef: 1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Personal -> Opp Def
+Type: Combat
+SubType: Personal
+PlyrDef: -1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Hunting -> Plry Def
+Type: Combat
+SubType: Hunting
+PlyrDef: 1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Hunting -> Opp Def
+Type: Combat
+SubType: Hunting
+PlyrDef: -1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: BlackMail -> Plyr Def
+Type: Social
+SubType: Blackmail
+PlyrDef: 1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Blackmail -> Opp Def
+Type: Social
+SubType: Blackmail
+PlyrDef: -1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Seduce -> Plyr Def
+Type: Social
+SubType: Seduce
+PlyrDef: 1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Seduce -> Opp Def
+Type: Social
+SubType: Seduce
+PlyrDef: -1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Befriend -> Plyr Def
+Type: Social
+SubType: Befriend
+PlyrDef: 1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Befriend -> Opp Def
+Type: Social
+SubType: Befriend
+PlyrDef: -1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Infiltrate -> Plyr Def
+Type: Stealth
+SubType: Infiltrate
+PlyrDef: 1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Infiltrate -> Opp Def
+Type: Stealth
+SubType: Infiltrate
+PlyrDef: -1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Evade -> Plyr Def
+Type: Stealth
+SubType: Evade
+PlyrDef: 1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Evade -> Opp Def
+Type: Stealth
+SubType: Evade
+PlyrDef: -1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Escape -> Plyr Def
+Type: Stealth
+SubType: Escape
+PlyrDef: 1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
+
+Name: Escape -> Opp Def
+Type: Stealth
+SubType: Escape
+PlyrDef: -1
+Good1: abc
+Good2: abc
+Good3: abc
+Bad1: abc
+Bad2: abc
+Bad3; abc
+[end]
