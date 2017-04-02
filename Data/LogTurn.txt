@@ -1,12 +1,5 @@
-//Exile Game File "LogTurn.txt" opened at: 02/04/2017 16:36:54
---- ProcessStartTurn, Day 16, Turn 15 (World.cs) 
---- SetSupporters (Conflict.cs)
- [Notification] dictPlyrSupporters has 1 records
- [Supporter -> Good] Master_of_Coin Renoldus Timm "The Balanced", Friend, ActID 104, relPlyr 74
- [Notification] dictOppSupporters has 10 records
- [Supporter -> Bad] King Paxter Tyrell "The Windy", Enemy, ActID 64, relPlyr 0
- [Supporter -> Bad] Queen Desmera Tyrell "The Single Minded", Enemy, ActID 65, relPlyr 0
- [Supporter -> Bad] lady Esclamonde Tyrell "The Addictive", Enemy, ActID 70, relPlyr 0
-ERROR_95 "No Cards Remaining in listCardHand"
-Method: UpdateCards,  Line: 749,  Object: Layout.cs,  Turn: 15,  Local Time: 16:42:21 UTC +10:00
-//Exile Game file ops "LogTurn.txt" Completed at: 02/04/2017 16:46:12
+//Exile Game File "LogTurn.txt" opened at: 02/04/2017 17:12:46
+--- ProcessStartTurn, Day 6, Turn 5 (World.cs) 
+--- ProcessEndTurn, Day 6 Turn 5 (World.cs)
+//Exile Game File "LogTurn.txt" Close completed at: 02/04/2017 17:14:21
+eted at: 02/04/2017 17:12:29

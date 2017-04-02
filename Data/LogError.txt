@@ -1,4 +1,0 @@
-//Exile Game file ops "LogError.txt" commenced at: 02/04/2017 16:33:59
-ERROR_95 "No Cards Remaining in listCardHand"
-Method: UpdateCards,  Line: 749,  Object: Layout.cs,  Turn: 15,  Local Time: 16:42:21 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 02/04/2017 16:46:12

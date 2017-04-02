@@ -588,7 +588,10 @@ namespace Next_Game
         /// </summary>
         /// <param name="multiConsole"></param>
         public void DrawCards(RLConsole multiConsole)
-        { Draw(multiConsole, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards); NextCard = false; }
+        {
+            Draw(multiConsole, arrayOfCells_Cards, arrayOfForeColors_Cards, arrayOfBackColors_Cards);
+            NextCard = false;
+        }
 
         /// <summary>
         /// Update Card Layout contents (assumes that all card data sets are up to data)
@@ -1372,8 +1375,9 @@ namespace Next_Game
             }
             else
             { score += points_ignore; }
-            //flip next card
-            NextCard = true;
+            //flip next card, provided hand isn't empty
+            if (listCardHand.Count > 0)
+            { NextCard = true; }
             //add to history
             if (currentCard != null && currentCard.Type != CardType.None)
             {

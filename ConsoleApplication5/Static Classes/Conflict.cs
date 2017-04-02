@@ -1826,6 +1826,8 @@ namespace Next_Game
                             case ResultType.Known:
                                 //change Player's Known status
                                 tempText = Game.world.SetActiveActorKnownStatus(1, result.Data);
+                                if (result.Data > 0) { tempList.Add(new Snippet(tempText, RLColor.Green, backColor)); }
+                                else { tempList.Add(new Snippet(tempText, RLColor.Red, backColor)); }
                                 message = new Message(tempText, MessageType.Conflict);
                                 Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
                                 break;
