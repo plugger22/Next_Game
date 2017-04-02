@@ -2712,6 +2712,9 @@ namespace Next_Game
         internal Dictionary<int, Situation> GetSituationsSkill()
         { return dictSituationsSkill; }
 
+        internal Dictionary<int, Situation> GetSituationsSupporter()
+        { return dictSituationsSupporter; }
+
         /// <summary>
         /// return a challenge from the dictionary, null if not found
         /// </summary>

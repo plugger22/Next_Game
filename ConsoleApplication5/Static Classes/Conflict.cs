@@ -47,8 +47,8 @@ namespace Next_Game
         private int[] arrayPool;
         private int[] arrayModifiers; 
         private string[,] arraySituation;
-        private string[,] arraySupportGood;
-        private string[,] arraySupportBad;
+        private string[] arraySupportGood;
+        private string[] arraySupportBad;
         //three lists to consolidate into pool breakdown description
         private List<Snippet> listPlayerCards;
         private List<Snippet> listOpponentCards;
@@ -71,8 +71,8 @@ namespace Next_Game
             arrayModifiers = new int[3]; //modifier (DM) for GetSituationCardNumber, 0/1/2 refer to the three situation cards (def adv/neutral/game specific) -> DM for 0 & 1, # of cards for Game ('2')
             arraySituation = new string[3, 3];
             NumSupporters = Game.constant.GetValue(Global.NUM_SUPPORTERS);
-            arraySupportGood = new string[NumSupporters, 3]; //max 'NumSupporters' supporters for Player ('0' -> name supporter, '1' -> played outcome text, '2' -> ignored outcome text)
-            arraySupportBad = new string[NumSupporters, 3]; //max 'NumSupporters' supporters for Opponent
+            arraySupportGood = new string[NumSupporters]; //max 'NumSupporters' supporters for Player ('0' -> name supporter)
+            arraySupportBad = new string[NumSupporters]; //max 'NumSupporters' supporters for Opponent ('0' -> name supporter)
             //three lists to consolidate into pool breakdown description
             listPlayerCards = new List<Snippet>();
             listOpponentCards = new List<Snippet>();
@@ -215,7 +215,7 @@ namespace Next_Game
                             if (actor != null)
                             {
                                 descriptor = string.Format("{0} {1} \"{2}\", Friend", actor.Title, actor.Name, actor.Handle);
-                                arraySupportGood[index, 0] = descriptor;
+                                arraySupportGood[index] = descriptor;
                                 index++;
                                 Game.logTurn.Write(string.Format(string.Format(" [Supporter -> Good] {0}, ActID {1}, relPlyr {2}", descriptor, actor.ActID, actor.GetRelPlyr())));
                                 if (index >= NumSupporters) { break; }
@@ -236,7 +236,7 @@ namespace Next_Game
                             if (actor != null)
                             {
                                 descriptor = string.Format("{0} {1} \"{2}\", Enemy", actor.Title, actor.Name, actor.Handle);
-                                arraySupportBad[index, 0] = descriptor;
+                                arraySupportBad[index] = descriptor;
                                 index++;
                                 Game.logTurn.Write(string.Format(string.Format(" [Supporter -> Bad] {0}, ActID {1}, relPlyr {2}", descriptor, actor.ActID, actor.GetRelPlyr())));
                                 if (index >= NumSupporters) { break; }
@@ -867,6 +867,96 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// returns a situation containing lists of good/bad immersion texts for the Supporters involved in the challenge.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="subType"></param>
+        /// <param name="challenger">true if the Player is the challenger</param>
+        /// <returns>null if no valid data</returns>
+        private Situation GetSupporterText(ConflictType type, int subType, bool challenger)
+        {
+            if (type > ConflictType.None)
+            {
+                if (subType > 0)
+                {
+                    Situation situation = null;
+                    Dictionary<int, Situation> tempDictionary = Game.director.GetSituationsSupporter();
+                    //get dictionary of skill situations
+                    if (tempDictionary != null && tempDictionary.Count > 0)
+                    {
+                        //work out correct Player defending status
+                        int plyrDef = 1;
+                        if (challenger == true) { plyrDef = -1; }
+                        //get correct subtype
+                        switch (type)
+                        {
+                            case ConflictType.Combat:
+                                //Get suitable situations from dictionary
+                                List<Situation> listCombatSituations = new List<Situation>();
+                                IEnumerable<Situation> situationCombatSet =
+                                    from sitTemp in tempDictionary
+                                    where sitTemp.Value.Type == ConflictType.Combat
+                                    where (int)sitTemp.Value.Type_Combat == subType
+                                    where sitTemp.Value.Defender == plyrDef
+                                    select sitTemp.Value;
+                                listCombatSituations = situationCombatSet.ToList();
+                                //should be a single situation
+                                if (listCombatSituations.Count == 1)
+                                { situation = listCombatSituations[0]; }
+                                else
+                                { Game.SetError(new Error(194, "Incorrect count for Combat Situations")); }
+                                break;
+                            case ConflictType.Social:
+                                //Get suitable situations from dictionary
+                                List<Situation> listSocialSituations = new List<Situation>();
+                                IEnumerable<Situation> situationSocialSet =
+                                    from sitTemp in tempDictionary
+                                    where sitTemp.Value.Type == ConflictType.Social
+                                    where (int)sitTemp.Value.Type_Social == subType
+                                    where sitTemp.Value.Defender == plyrDef
+                                    select sitTemp.Value;
+                                listSocialSituations = situationSocialSet.ToList();
+                                //should be a single situation
+                                if (listSocialSituations.Count == 1)
+                                { situation = listSocialSituations[0]; }
+                                else
+                                { Game.SetError(new Error(194, "Incorrect count for Social Situations")); }
+                                break;
+                            case ConflictType.Stealth:
+                                //Get suitable situations from dictionary
+                                List<Situation> listOtherSituations = new List<Situation>();
+                                IEnumerable<Situation> situationOtherSet =
+                                    from sitTemp in tempDictionary
+                                    where sitTemp.Value.Type == ConflictType.Stealth
+                                    where (int)sitTemp.Value.Type_Stealth == subType
+                                    where sitTemp.Value.Defender == plyrDef
+                                    select sitTemp.Value;
+                                listOtherSituations = situationOtherSet.ToList();
+                                //should be a single situation
+                                if (listOtherSituations.Count == 1)
+                                { situation = listOtherSituations[0]; }
+                                else
+                                { Game.SetError(new Error(194, "Incorrect count for Stealth Situations")); }
+                                break;
+                            default:
+                                Game.SetError(new Error(194, string.Format("Invalid type (\"{0}\")", type)));
+                                break;
+                        }
+                    }
+                    else
+                    { Game.SetError(new Error(104, "Invalid Dictionary input (null or empty)")); }
+                    return situation;
+                }
+                else
+                { Game.SetError(new Error(104, "Invalid subType input (Zero or less)")); }
+            }
+            else
+            { Game.SetError(new Error(104, "Invalid ConflictType input (\"None\")")); }
+            return null;
+        }
+
+
+        /// <summary>
         /// determine # of cards (worked on remainder / 8x / 4x / 2x / 1x for 1/2/3/4/5 cards). Only for the first two situations (def adv & neutral)
         /// </summary>
         /// <param name="modifier">Optional DM to die roll</param>
@@ -1111,33 +1201,49 @@ namespace Next_Game
             listSituationCards.Add(new Snippet(text, foreColor, backColor));
 
             //Supporters -> Good
-            for (int i = 0; i <= arraySupportGood.GetUpperBound(0); i++)
+            for (int i = 0; i <= arraySupportGood.Length; i++)
             {
-                string supporterText = arraySupportGood[i, 0];
+                string supporterText = arraySupportGood[i];
                 string supportDescription = "Lends a helping hand"; 
                 type = CardType.Good;
                 foreColor = RLColor.Black;
+
+                //Situation immersion texts
+                Situation situationHelp = GetSupporterText(Conflict_Type, subType, Challenger);
+                if (situationHelp != null)
+                { tempListGood = situationHelp.GetGood(); tempListBad = situationHelp.GetBad(); }
+                else { Game.SetError(new Error(105, string.Format("situation (Supporters -> Good (Help)) came back Null", Conflict_Type))); }
+
                 //no more valid data
                 if (String.IsNullOrEmpty(supporterText) == true)
                 { break; }
                 Card_Conflict card = new Card_Conflict(CardConflict.Supporter, type, supporterText, supportDescription);
-                card.PlayedText = arraySupportGood[i, 1]; card.IgnoredText = arraySupportBad[i, 2];
+                //get immersion texts, if present
+                if (tempListGood.Count > 0) { card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)]; }
+                if (tempListBad.Count > 0) { card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)]; }
                 arrayPool[0]++;
                 listCardPool.Add(card);
                 listSupporterCards.Add(new Snippet(supporterText, foreColor, backColor)); //TO DO
             }
             //Supporters -> Bad
-            for (int i = 0; i <= arraySupportBad.GetUpperBound(0); i++)
+            for (int i = 0; i <= arraySupportBad.Length; i++)
             {
-                string supporter = arraySupportBad[i, 0];
+                string supporter = arraySupportBad[i];
                 string support_description = "Attempts to hinder you";
                 type = CardType.Bad;
                 foreColor = RLColor.Red;
+                //Situation immersion texts
+                Situation situationHinder = GetSupporterText(Conflict_Type, subType, Challenger);
+                if (situationHinder != null)
+                { tempListGood = situationHinder.GetGood(); tempListBad = situationHinder.GetBad(); }
+                else { Game.SetError(new Error(105, string.Format("situation (Supporters -> Bad (Hinder)) came back Null", Conflict_Type))); }
                 //no more valid data
                 if (String.IsNullOrEmpty(supporter) == true)
                 { break; }
                 Card_Conflict card = new Card_Conflict(CardConflict.Supporter, type, supporter, support_description);
-                card.PlayedText = arraySupportBad[i, 1]; card.IgnoredText = arraySupportBad[i, 2];
+                //get immersion texts, if present
+                if (tempListGood.Count > 0) { card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)]; }
+                if (tempListBad.Count > 0) { card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)]; }
                 arrayPool[2]++;
                 listCardPool.Add(card);
                 listSupporterCards.Add(new Snippet(supporter, foreColor, backColor)); //TO DO
