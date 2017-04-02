@@ -1042,9 +1042,9 @@ namespace Next_Game
             if (opponent.Handle != null) { handle_opponent = string.Format(" \"{0}\" ", opponent.Handle); } else { handle_opponent = null; }*/
             //order protagnoists so that challenger is first and defender is second
             if (Challenger == true)
-            { tempArray[9] = string.Format("{0} {1}{2} vs. {3} {4}{5}", player.Type, player.Name, player.Handle, title, opponent.Name, opponent.Handle); }
+            { tempArray[9] = string.Format("{0} {1} \"{2}\" vs. {3} {4} \"{5}\"", player.Type, player.Name, player.Handle, title, opponent.Name, opponent.Handle); }
             else
-            { tempArray[9] = string.Format("{0} {1}{2} vs. {3} {4}{5}", title, opponent.Name, opponent.Handle, player.Type, player.Name, player.Handle); }
+            { tempArray[9] = string.Format("{0} {1} \"{2}\" vs. {3} {4} \"{5}\"", title, opponent.Name, opponent.Handle, player.Type, player.Name, player.Handle); }
             //send to layout
             Game.layout.SetOutcome(tempArray);
         }
