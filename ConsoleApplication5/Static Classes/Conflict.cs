@@ -1173,6 +1173,64 @@ namespace Next_Game
             CheckActorTrait(opponent, OtherSkill_1, listOpponentCards);
             CheckActorTrait(opponent, OtherSkill_2, listOpponentCards);
 
+            //Touched Skill -> 1 card per level (ignore traits) -> applies to all conflict types
+            int touchedPlyrCards = player.GetSkill(SkillType.Touched);
+            int touchedOppCards = opponent.GetSkill(SkillType.Touched);
+            //Player is touched?
+            if (touchedPlyrCards > 0)
+            {
+                type = CardType.Good; foreColor = RLColor.Black; arrayPool[0] += touchedPlyrCards;
+                //get relevant touched situation (for lists of immersion texts)
+                Situation situationTouchedPlyr = GetTouchedText(Conflict_Type, subType, Challenger, true);
+                if (situationTouchedPlyr != null)
+                { tempListGood = situationTouchedPlyr.GetGood(); tempListBad = situationTouchedPlyr.GetBad(); }
+                else { Game.SetError(new Error(105, string.Format("situation (Player Touched Skill) came back Null", Conflict_Type))); }
+                goodIndex = rnd.Next(tempListGood.Count);
+                badIndex = rnd.Next(tempListBad.Count);
+                for (int i = 0; i < touchedPlyrCards; i++)
+                {
+                    Card_Conflict cardPlayer = new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", opponent.Name, SkillType.Touched), description);
+                    //get immersion texts, if present
+                    if (tempListGood.Count > 0) { cardPlayer.PlayedText = tempListGood[goodIndex]; }
+                    if (tempListBad.Count > 0) { cardPlayer.IgnoredText = tempListBad[badIndex]; }
+                    //increment and rollover indexes (so there's an equal distribution of immersion texts)
+                    goodIndex++; badIndex++;
+                    if (goodIndex == tempListGood.Count) { goodIndex = 0; }
+                    if (badIndex == tempListBad.Count) { badIndex = 0; }
+                    //add card to pool
+                    listCardPool.Add(cardPlayer);
+                }
+                text = string.Format("{0}'s Touched Skill, {3} cards, applies to all challenges ({4} stars) ", player.Name, touchedPlyrCards, touchedPlyrCards);
+                listPlayerCards.Add(new Snippet(text, foreColor, backColor));
+            }
+            //Opponent is touched?
+            if (touchedOppCards > 0)
+            {
+                type = CardType.Bad; foreColor = RLColor.Red; arrayPool[2] += touchedOppCards;
+                //get relevant touched situation (for lists of immersion texts)
+                Situation situationTouchedOpp = GetTouchedText(Conflict_Type, subType, Challenger, true);
+                if (situationTouchedOpp != null)
+                { tempListGood = situationTouchedOpp.GetGood(); tempListBad = situationTouchedOpp.GetBad(); }
+                else { Game.SetError(new Error(105, string.Format("situation (Opponent Touched Skill) came back Null", Conflict_Type))); }
+                goodIndex = rnd.Next(tempListGood.Count);
+                badIndex = rnd.Next(tempListBad.Count);
+                for (int i = 0; i < touchedOppCards; i++)
+                {
+                    Card_Conflict cardPlayer = new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", opponent.Name, SkillType.Touched), description);
+                    //get immersion texts, if present
+                    if (tempListGood.Count > 0) { cardPlayer.PlayedText = tempListGood[goodIndex]; }
+                    if (tempListBad.Count > 0) { cardPlayer.IgnoredText = tempListBad[badIndex]; }
+                    //increment and rollover indexes (so there's an equal distribution of immersion texts)
+                    goodIndex++; badIndex++;
+                    if (goodIndex == tempListGood.Count) { goodIndex = 0; }
+                    if (badIndex == tempListBad.Count) { badIndex = 0; }
+                    //add card to pool
+                    listCardPool.Add(cardPlayer);
+                }
+                text = string.Format("{0}'s Touched Skill, {3} cards, applies to all challenges ({4} stars) ", player.Name, touchedOppCards, touchedOppCards);
+                listPlayerCards.Add(new Snippet(text, foreColor, backColor));
+            }
+
             //Situation Cards
             numCards = GetSituationCardNumber(arrayModifiers[0]);
             //...advantage defender card -> First situation
