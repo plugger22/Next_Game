@@ -954,12 +954,22 @@ namespace Next_Game
                     }
                 }
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                logTurn.Write(exception.Message); logError.Write(exception.Message);
-                //tidy up before crash
-                logError.Dispose(); logError = null;
-                logTurn.Dispose(); logTurn = null;
+                string descriptionError = string.Format(ex.Message + Environment.NewLine + ex.Source + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.TargetSite);
+                if (logTurn != null)
+                {
+                    logTurn.Write(descriptionError); logError.Write(descriptionError);
+                    //tidy up before crash
+                    logError.Dispose(); logError = null;
+                    logTurn.Dispose(); logTurn = null;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(descriptionError);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                }
             }
         }
 

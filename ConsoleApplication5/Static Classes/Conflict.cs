@@ -1297,7 +1297,7 @@ namespace Next_Game
                     //add card to pool
                     listCardPool.Add(cardPlayer);
                 }
-                text = string.Format("{0}'s Touched Skill, {3} cards, applies to all challenges ({4} stars) ", player.Name, touchedPlyrCards, touchedPlyrCards);
+                text = string.Format("{0}'s Touched Skill, {1} cards, applies to all challenges ({2} stars) ", player.Name, touchedPlyrCards, touchedPlyrCards);
                 listPlayerCards.Add(new Snippet(text, foreColor, backColor));
             }
             //Opponent is touched?
@@ -1324,7 +1324,7 @@ namespace Next_Game
                     //add card to pool
                     listCardPool.Add(cardPlayer);
                 }
-                text = string.Format("{0}'s Touched Skill, {3} cards, applies to all challenges ({4} stars) ", player.Name, touchedOppCards, touchedOppCards);
+                text = string.Format("{0}'s Touched Skill, {2} cards, applies to all challenges ({4} stars) ", player.Name, touchedOppCards, touchedOppCards);
                 listPlayerCards.Add(new Snippet(text, foreColor, backColor));
             }
 

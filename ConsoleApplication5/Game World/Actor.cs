@@ -56,11 +56,9 @@ namespace Next_Game
         public int Treachery { get; set; } = 3;
         public int Leadership { get; set; } = 3;
         public int Touched { get; set; } = 0;
-        //public int Influencer { get; set; } = 0; //ActorID of person who is influencing traits (can only be one)
         public int[] arrayOfSkillID { get; set; } //array index corresponds to skill type in Skill.cs SkillType enum, eg. Combat = 1
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
-        //public int[] arrayOfSkillInfluences { get; set; } //effects due to person influencing (default 0)
         public int[] arrayOfConditions { get; set; } //net effect of any conditions
         //lists
         private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
@@ -86,7 +84,6 @@ namespace Next_Game
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
-            //arrayOfSkillInfluences = new int[(int)SkillType.Count];
             arrayOfConditions = new int[(int)SkillType.Count];
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
@@ -117,7 +114,6 @@ namespace Next_Game
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
-            //arrayOfSkillInfluences = new int[(int)SkillType.Count];
             arrayOfConditions = new int[(int)SkillType.Count];
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
@@ -158,9 +154,6 @@ namespace Next_Game
         //needed for sub classes (world.cs -> ShowActorRL) Duplicate methods in subclasses, return null is correct
         internal SortedDictionary<int, ActorRelation> GetFamily()
         { return null; }
-
-        /*public void AddRelEventOther(Relation relMsg)
-        { listOfRelLord.Add(relMsg); }*/
 
         /// <summary>
         /// adds event & updates relPlyr & figures out new value (Level) after changes
@@ -268,32 +261,22 @@ namespace Next_Game
             relLord = Math.Max(0, relLord);
         }
 
-        /// <summary>
-        /// checks whether particular skill has any influence effect, True if so.
-        /// </summary>
-        /// <param name="skill"></param>
-        /// <returns></returns>
-        /*public bool CheckSkillInfluenced(SkillType skill)
-        {
-            if (arrayOfSkillInfluences[(int)skill] != 0)
-            { return true; }
-            return false;
-        }*/
 
         /// <summary>
-        /// returns net value of a specified skill (with/without influence) Need to check if influence applies first
+        /// returns level of a specified skill Need to check if influence applies first
         /// </summary>
         /// <param name="skill"></param>
         /// <param name="influenceEffect">True if you want the influenced skill</param>
         /// <returns></returns>
         public int GetSkill(SkillType skill, SkillAge age = SkillAge.Fifteen /*, bool influenceEffect = false*/)
         {
-            int skillValue = 3 + arrayOfTraitEffects[(int)age, (int)skill] + arrayOfConditions[(int)skill];
-            /*if (influenceEffect == true)
-            { skillValue += arrayOfSkillInfluences[(int)skill]; }*/
-            //parameter check (1 to 5)
+            int baseValue = 3;
+            if (skill == SkillType.Touched) { baseValue = 0; }
+            int skillValue = baseValue + arrayOfTraitEffects[(int)age, (int)skill] + arrayOfConditions[(int)skill];
+            //parameter check (1 to 5) -> 0 to 5 for Touched
             skillValue = Math.Min(5, skillValue);
-            skillValue = Math.Max(1, skillValue);
+            if (skill != SkillType.Touched)
+            { skillValue = Math.Max(1, skillValue); }
             return skillValue;
         }
 
