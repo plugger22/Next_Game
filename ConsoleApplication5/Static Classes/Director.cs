@@ -839,7 +839,7 @@ namespace Next_Game
                         "Dazed, you manage to escape, barely",
                         "You opponent is left flat footed and winded as you make your escape",
                         "You stand over your defiant enemy before departing. Your legend grows.",
-                        "You have been caught, but luckily your are uninjured",
+                        "You have been caught, but luckily you are uninjured",
                         "You have been caught and sustain minor injuries",
                         "You have been caught and have been badly injured",
                         "Breathing hard, your opponent scowls at you."};

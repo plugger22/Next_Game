@@ -1,9 +1,4 @@
-//Exile Game File "LogTurn.txt" opened at: 03/04/2017 20:50:09
---- ProcessStartTurn, Day 7, Turn 6 (World.cs) 
---- SetSupporters (Conflict.cs)
- [Notification] dictPlyrSupporters has 0 records
- [Notification] dictOppSupporters has 9 records
- [Supporter -> Bad] Heir Hullen Florent "The Unflinching", Enemy, ActID 32, relPlyr 0
- [Supporter -> Bad] Inquisitor Brother Nergal "The Gifted", Enemy, ActID 124, relPlyr 0
- [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 128, relPlyr 0
-//Exile Game file ops "LogTurn.txt" Completed at: 03/04/2017 20:53:33
+//Exile Game file ops "LogTurn.txt" commenced at: 03/04/2017 21:09:46
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+//Exile Game file ops "LogTurn.txt" Completed at: 03/04/2017 21:11:06
