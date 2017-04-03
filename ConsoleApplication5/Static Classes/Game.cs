@@ -156,7 +156,28 @@ namespace Next_Game
                 world.SetMessage(message);
             }
             catch(Exception e)
-            { logStart.Write(e.Message); logError.Write(e.Message); }
+            {
+                StringBuilder builder = new StringBuilder();
+                builder.Append("ERROR_0   (Initialise Game)");
+                builder.AppendLine();
+                builder.Append("--- Error Message");
+                builder.AppendLine();
+                builder.Append(e.Message);
+                builder.AppendLine();
+                builder.Append("--- Source");
+                builder.AppendLine();
+                builder.Append(e.Source);
+                builder.AppendLine();
+                builder.Append("--- Stack Trace");
+                builder.AppendLine();
+                builder.Append(e.StackTrace);
+                builder.AppendLine();
+                builder.Append("---TargetSite");
+                builder.AppendLine();
+                builder.Append(e.TargetSite);
+                string descriptionError = builder.ToString();
+                logStart.Write(descriptionError); logError.Write(descriptionError);
+            }
             finally
             {
                 //tidy up before crash
@@ -218,7 +239,7 @@ namespace Next_Game
             {
                 //game loop
                 RLKeyPress keyPress = _rootConsole.Keyboard.GetKeyPress();
-                //last used keypress
+                //last used keypressx
                 if (keyPress != null)
                 { _keyLast = keyPress; }
                 RLMouse mouse = _rootConsole.Mouse;
@@ -956,7 +977,25 @@ namespace Next_Game
             }
             catch (Exception ex)
             {
-                string descriptionError = string.Format(ex.Message + Environment.NewLine + ex.Source + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.TargetSite);
+                StringBuilder builder = new StringBuilder();
+                builder.Append("ERROR_00   (Main Game Loop)");
+                builder.AppendLine();
+                builder.Append("--- Error Message");
+                builder.AppendLine();
+                builder.Append(ex.Message);
+                builder.AppendLine();
+                builder.Append("--- Source");
+                builder.AppendLine();
+                builder.Append(ex.Source);
+                builder.AppendLine();
+                builder.Append("--- Stack Trace");
+                builder.AppendLine();
+                builder.Append(ex.StackTrace);
+                builder.AppendLine();
+                builder.Append("---TargetSite");
+                builder.AppendLine();
+                builder.Append(ex.TargetSite);
+                string descriptionError = builder.ToString();
                 if (logTurn != null)
                 {
                     logTurn.Write(descriptionError); logError.Write(descriptionError);

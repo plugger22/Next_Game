@@ -80,7 +80,7 @@ Good2: Ducks behind and flicks a rope end around <name>'s ankles.
 Good3: Hurls rotten eggs, forcing <name> to duck and weave.
 Bad1: Leaps forward and helps <name> back to their feet as <he> stumbles backwards.
 Bad2: Shouts words of encouragement to <name> who suddenly gets a second wind.
-Bad3: Stand directly behind <name> and guides them as they edge backwards while defending.
+Bad3: Stand directly behind <name> and guides <him> as <he> edges backwards while defending.
 [end]
 
 Name: Hunting -> Plry Def

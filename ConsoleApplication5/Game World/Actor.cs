@@ -263,18 +263,25 @@ namespace Next_Game
 
 
         /// <summary>
-        /// returns level of a specified skill Need to check if influence applies first
+        /// returns level of a specified skill Need to check if influence applies first. 
+        /// as otherwise it'll return a default '3' value for everybody.
         /// </summary>
         /// <param name="skill"></param>
         /// <param name="influenceEffect">True if you want the influenced skill</param>
         /// <returns></returns>
         public int GetSkill(SkillType skill, SkillAge age = SkillAge.Fifteen /*, bool influenceEffect = false*/)
         {
-            int skillValue = 3 + arrayOfTraitEffects[(int)age, (int)skill] + arrayOfConditions[(int)skill];
-            //parameter check (1 to 5) -> 0 to 5 for Touched
-            skillValue = Math.Min(5, skillValue);
-            skillValue = Math.Max(1, skillValue);
-            if (skill == SkillType.Touched && skillValue == 3) { skillValue = 0; }
+            int skillValue;
+            //if touched & base value is zero then go no further
+            if (skill == SkillType.Touched && Touched == 0)
+            { return 0; }
+            else
+            {
+                skillValue = 3 + arrayOfTraitEffects[(int)age, (int)skill] + arrayOfConditions[(int)skill];
+                //parameter check (1 to 5)
+                skillValue = Math.Min(5, skillValue);
+                skillValue = Math.Max(1, skillValue);
+            }
             return skillValue;
         }
 

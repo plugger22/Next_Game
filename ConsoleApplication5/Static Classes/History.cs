@@ -1312,8 +1312,8 @@ namespace Next_Game
                     rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)inquisitor.Sex].Length;
                     tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, rndRange));
                     //Touched -> triple chance compared to normal person, if so then lower value
-                    if (rnd.Next(100) <= (Game.constant.GetValue(Global.TOUCHED) * 3))
-                    {
+                    //if (rnd.Next(100) <= (Game.constant.GetValue(Global.TOUCHED) * 3))
+                    //{
                         inquisitor.Touched = 3;
                         Game.logStart.Write(string.Format("{0}, Aid {1} is Touched", inquisitor.Name, inquisitor.ActID));
                         rndRange = arrayOfTraits[(int)SkillType.Touched, (int)inquisitor.Sex].Length;
@@ -1322,7 +1322,7 @@ namespace Next_Game
                         if (tempHandles.Count > 0)
                         { inquisitor.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
                         else { inquisitor.Handle = "The Loyal"; }
-                    }
+                    //}
                 }
                 else { Game.SetError(new Error(154, "Invalid Inquisitor (null)")); }
             }
