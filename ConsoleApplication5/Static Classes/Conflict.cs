@@ -866,6 +866,103 @@ namespace Next_Game
             return null;
         }
 
+
+        /// <summary>
+        /// returns a situation containing lists of good/bad immersion texts for the Touched skill involved in the challenge.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="subType"></param>
+        /// <param name="challenger">true if the Player is the challenger</param>
+        /// <param name="playerSkill">true if referring to the Player's skill, false if it's your Opponents skill</param>
+        /// <returns>null if no valid data</returns>
+        private Situation GetTouchedText(ConflictType type, int subType, bool challenger, bool playerSkill)
+        {
+            if (type > ConflictType.None)
+            {
+                if (subType > 0)
+                {
+                    Situation situation = null;
+                    Dictionary<int, Situation> tempDictionary = Game.director.GetSituationsTouched();
+                    //get dictionary of skill situations
+                    if (tempDictionary != null && tempDictionary.Count > 0)
+                    {
+                        //work out correct Player defending status
+                        int plyrDef = 1;
+                        if (challenger == true) { plyrDef = -1; }
+                        //work out who's point of view
+                        int pointOfView = 1;
+                        if (playerSkill == true) { pointOfView = 0; }
+                        //get correct subtype
+                        switch (type)
+                        {
+                            case ConflictType.Combat:
+                                //Get suitable situations from dictionary
+                                List<Situation> listCombatSituations = new List<Situation>();
+                                IEnumerable<Situation> situationCombatSet =
+                                    from sitTemp in tempDictionary
+                                    where sitTemp.Value.Type == ConflictType.Combat
+                                    where (int)sitTemp.Value.Type_Combat == subType
+                                    where sitTemp.Value.Defender == plyrDef
+                                    where sitTemp.Value.Data == pointOfView
+                                    select sitTemp.Value;
+                                listCombatSituations = situationCombatSet.ToList();
+                                //should be a single situation
+                                if (listCombatSituations.Count == 1)
+                                { situation = listCombatSituations[0]; }
+                                else
+                                { Game.SetError(new Error(196, "Incorrect count for Combat Situations (listCombatSituations)")); }
+                                break;
+                            case ConflictType.Social:
+                                //Get suitable situations from dictionary
+                                List<Situation> listSocialSituations = new List<Situation>();
+                                IEnumerable<Situation> situationSocialSet =
+                                    from sitTemp in tempDictionary
+                                    where sitTemp.Value.Type == ConflictType.Social
+                                    where (int)sitTemp.Value.Type_Social == subType
+                                    where sitTemp.Value.Defender == plyrDef
+                                    where sitTemp.Value.Data == pointOfView
+                                    select sitTemp.Value;
+                                listSocialSituations = situationSocialSet.ToList();
+                                //should be a single situation
+                                if (listSocialSituations.Count == 1)
+                                { situation = listSocialSituations[0]; }
+                                else
+                                { Game.SetError(new Error(196, "Incorrect count for Social Situations (listSocialSituations)")); }
+                                break;
+                            case ConflictType.Stealth:
+                                //Get suitable situations from dictionary
+                                List<Situation> listOtherSituations = new List<Situation>();
+                                IEnumerable<Situation> situationOtherSet =
+                                    from sitTemp in tempDictionary
+                                    where sitTemp.Value.Type == ConflictType.Stealth
+                                    where (int)sitTemp.Value.Type_Stealth == subType
+                                    where sitTemp.Value.Defender == plyrDef
+                                    where sitTemp.Value.Data == pointOfView
+                                    select sitTemp.Value;
+                                listOtherSituations = situationOtherSet.ToList();
+                                //should be a single situation
+                                if (listOtherSituations.Count == 1)
+                                { situation = listOtherSituations[0]; }
+                                else
+                                { Game.SetError(new Error(196, "Incorrect count for Other Situations (listOtherSituations)")); }
+                                break;
+                            default:
+                                Game.SetError(new Error(196, string.Format("Invalid type (\"{0}\")", type)));
+                                break;
+                        }
+                    }
+                    else
+                    { Game.SetError(new Error(196, "Invalid Dictionary input (null or empty)")); }
+                    return situation;
+                }
+                else
+                { Game.SetError(new Error(196, "Invalid subType input (Zero or less)")); }
+            }
+            else
+            { Game.SetError(new Error(196, "Invalid ConflictType input (\"None\")")); }
+            return null;
+        }
+
         /// <summary>
         /// returns a situation containing lists of good/bad immersion texts for the Supporters involved in the challenge.
         /// </summary>

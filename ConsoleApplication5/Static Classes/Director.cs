@@ -98,6 +98,7 @@ namespace Next_Game
         private Dictionary<int, Situation> dictSituationsGame;
         private Dictionary<int, Situation> dictSituationsSpecial;
         private Dictionary<int, Situation> dictSituationsSkill;
+        private Dictionary<int, Situation> dictSituationsTouched;
         private Dictionary<int, Situation> dictSituationsSupporter;
         private Dictionary<int, Result> dictResults;
         private Dictionary<ConflictSubType, Challenge> dictChallenges;
@@ -154,6 +155,7 @@ namespace Next_Game
             dictSituationsGame = new Dictionary<int, Situation>(); //third, game specific, situation
             dictSituationsSpecial = new Dictionary<int, Situation>(); //decisions-derived special situations
             dictSituationsSkill = new Dictionary<int, Situation>(); //primary skill involved in a challenge
+            dictSituationsTouched = new Dictionary<int, Situation>(); //Touched skill involved in a challenge
             dictSituationsSupporter = new Dictionary<int, Situation>(); //supporters involved in a challenge
             dictResults = new Dictionary<int, Result>(); //predefined results of a challenge outcome
             dictChallenges = new Dictionary<ConflictSubType, Challenge>(); //challenge data unique to individual challenge types
@@ -165,35 +167,38 @@ namespace Next_Game
         public void InitialiseDirector()
         {
             listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters()); //Run FIRST
-            Console.WriteLine(Environment.NewLine + "--- Import Follower Events");
+            Game.logStart.Write("--- Import Follower Events (Director.cs)");
             dictFollowerEvents = Game.file.GetFollowerEvents("Events_Follower.txt");
-            Console.WriteLine(Environment.NewLine + "--- Import Player Events");
+            Game.logStart.Write("--- Import Player Events (Director.cs)");
             dictPlayerEvents = Game.file.GetPlayerEvents("Events_Player.txt");
-            Console.WriteLine(Environment.NewLine + "--- Import AutoReact Events");
+            Game.logStart.Write("--- Import AutoReact Events (Director.cs)");
             AddAutoEvents(Game.file.GetPlayerEvents("Events_AutoReact.txt"));
             InitialiseGenericEvents();
-            Console.WriteLine(Environment.NewLine + "--- Import Archetypes"); //Run AFTER importing Events
+            Game.logStart.Write("--- Import Archetypes (Director.cs)"); //Run AFTER importing Events
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
-            Console.WriteLine(Environment.NewLine + "--- Import Stories"); //Run AFTER importing Archetypes
+            Game.logStart.Write("--- Import Stories (Director.cs)"); //Run AFTER importing Archetypes
             dictStories = Game.file.GetStories("Stories.txt");
             story = SetStory(1); //choose which story to use
-            Console.WriteLine(Environment.NewLine + "--- Initialise Archetypes");
+            Game.logStart.Write("--- Initialise Archetypes (Director.cs)");
             InitialiseArchetypes();
-            Console.WriteLine(Environment.NewLine + "--- Initialise Normal Situations");
+            Game.logStart.Write("--- Initialise Normal Situations (Director.cs)");
             dictSituationsNormal = Game.file.GetSituations("SitNormal.txt");
-            Console.WriteLine(Environment.NewLine + "--- Initialise Game Specific Situations");
+            Game.logStart.Write("--- Initialise Game Specific Situations (Director.cs)");
             dictSituationsGame = Game.file.GetSituations("SitGame.txt");
-            Console.WriteLine(Environment.NewLine + "--- Initialise Special Situations");
+            Game.logStart.Write("--- Initialise Special Situations (Director.cs)");
             dictSituationsSpecial = Game.file.GetSituations("SitSpecial.txt");
-            Console.WriteLine(Environment.NewLine + "--- Initialise Skill (Situations)");
+            Game.logStart.Write("--- Initialise Skill Situations (Director.cs)");
             dictSituationsSkill = Game.file.GetSituations("SitSkill.txt");
-            Console.WriteLine(Environment.NewLine + "--- Initialise Supporter (Situations)");
+            Game.logStart.Write("--- Initialise Touched Situations (Director.cs)");
+            dictSituationsTouched = Game.file.GetSituations("SitTouched.txt");
+            Game.logStart.Write("--- Initialise Supporter Situations (Director.cs)");
             dictSituationsSupporter = Game.file.GetSituations("SitSupporter.txt");
-            Console.WriteLine(Environment.NewLine + "--- Initialise Results");
+            Game.logStart.Write("--- Initialise Results (Director.cs)");
             dictResults = Game.file.GetResults("Results.txt");
-            Console.WriteLine(Environment.NewLine + "--- Initialise Challenges"); //run AFTER GetResults
+            Game.logStart.Write("--- Initialise Challenges (Director.cs)"); //run AFTER GetResults
             dictChallenges = Game.file.GetChallenges("Challenge.txt");
             Console.WriteLine(Environment.NewLine);
+            Game.logStart.Write("--- InitialiseGameStates (Director.cs)");
             InitialiseGameStates();
         }
 
@@ -2711,6 +2716,9 @@ namespace Next_Game
 
         internal Dictionary<int, Situation> GetSituationsSkill()
         { return dictSituationsSkill; }
+
+        internal Dictionary<int, Situation> GetSituationsTouched()
+        { return dictSituationsTouched; }
 
         internal Dictionary<int, Situation> GetSituationsSupporter()
         { return dictSituationsSupporter; }

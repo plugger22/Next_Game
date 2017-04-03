@@ -1,0 +1,580 @@
+# SitTouched -> Immersion texts for Touched skill which applies to all conflicst
+# should be FOUR entries for each type, one if  Player is challenger (PlyrDef -1), one if not (PlyrDef 1), another set from POV of Opponent (Data: 1)
+# NOTE: All fields must have a value
+# Skill: Name of Skill, eg. Leadership. Description purposes only
+# Type: (ConflictType) Combat / Social / Stealth 
+# SubType: if Combat -> Personal/Tournament/Battle/Hunting, if Social -> Blackmail/Seduce/Befriend, if Stealth -> Infiltrate/Evade/Escape
+# SitNum: NO sitNum as all cards are assumed to be defender advantage, sitnum 0, cards.
+# PlyrDef: '1' if player is the defender, '-1' if opponent 
+# Data: Point of View (who's skill are we talking about) -> '0' Player's skill, '1' Opponent's skill
+# Good: immersion strings, 5 variations for good outcomes, short/med sentence, use tags, max 6, eg. Good6:, min1 -> You Play the card
+# Bad: immersion strings, 5 variations for bad outcomes, short/med sentence, use tags, max 6, eg. Bad6:, min 1 -> You Ignore the card
+
+# PlyrDef 1, Data 0 -> Player defending, Player Primary skill (refer to the Player's leadership)
+# PlyrDef -1, Data 0 -> Player attacking, Player Primary skill (refer to the Player's leadership)
+# PlyrDef 1, Data 1 -> Player defending, Opponent Primary skill (refer to the Opponent's leadership)
+# PlyrDef -1, Data 1 -> Player attacking, Opponent Primary skill (refer to the Opponent's leadership)
+
+# terminology: Use 'you' and 'your', not 'our'
+
+# Tags: all refer to your Opponent -> <name> King Fred, <men> King Fred's Men-At-Arms, <him> him/her, <he> he/she, <He> He/She, <his> his/her
+
+# Combat -> Battle ---
+
+Skill: Leadership
+Type: Combat
+SubType: Battle
+PlyrDef: 1
+Data: 0
+Good1: You stand tall in the stirrups and rally your men. The give a rousing cheer in response.
+Good2: Racing to the threatened sector your presence serves to raise the moral of your men and firm up the defences.
+Good3: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: Your men are looking at your expectantly, awaiting a speech or a sign of confidence. You ignore them.
+Bad2: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad3: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Leadership
+Type: Combat
+SubType: Battle
+PlyrDef: -1
+Data: 0
+Good1: You ride along the line of men and rouse them to greater feats of martial derring-do with your fierce oratory.
+Good2: You pause to take in the ebb and flow of the battle and weigh up the odds. There's an opportunity there...
+Good3: A fired up attacker is a fearsome site, running howling into battle. You do your utmost to energise them all the more.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: It's difficult to judge the success of the attack when you are so far back from the action. Caution is costing you dearly.
+Bad2: Your men are looking to you for firm leadership but you seem fixated on posing in the saddle for an imaginary artist.
+Bad3: Decisions are tough. Get it wrong and everybody blames you. Best to not make it in the first place.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Leadership
+Type: Combat
+SubType: Battle
+PlyrDef: 1
+Data: 1
+Good1: You can see <name> shouting orders and waving his arms . Careful observation gives you a few clues as to his intentions.
+Good2: You point out <name>, attired in <his> fancy suit of armour, to your men. They laugh as you refer to the 'golden peacock'.
+Good3: You refuse to be intimidated by <name>. <He> couldn't lead a herd of goats to water, let alone an attacking army.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: The trouble with defending is that you find yourself constantly reacting to <name> as he manoeuvres his army to best advantage.
+Bad2: It would be a lot easier to hold firm if <name> stop issuing orders. Doesn't <he> have something better to do today?
+Bad3: You're frustrated. You issue an order and even before it's implemented <name> has countered it with a sudden assault. 
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Leadership
+Type: Combat
+SubType: Battle
+PlyrDef: -1
+Data: 1
+Good1: You immediately shift the focus of your attack as <name> appears to reshuffle his defences. 
+Good2: <men> look weary and flat footed. You shout encouragement as your troops surge forward.
+Good3: Does <name> know what he his doing? Given his lacklustre leadership, apparently not. His men appear confused.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: Is it possible that you're being out-generaled today? <name> looks to have a better grasp of the battle than you do.
+Bad2: How can you push forward a successful assault when <name> keeps repositioning his forces to block you? Can he read your mind?
+Bad3: It's tough to admit but <name> looks to be doing a better job of defending than you are of attacking. Curse <him>.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+# Combat -> Personal ---
+
+Skill: Combat
+Type: Combat
+SubType: Personal
+PlyrDef: 1
+Data: 0
+Good1: You block and parry <name>'s attacks as if they were bloatflies just waiting to be swatted.
+Good2: In a blur of moving arms and steel you fend of <name> and launch a stinging counter attack.
+Good3: <name> has no answer to your raging martial prowess. You are a tiger in full flight.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: There is a lethargy about you today that is holding back your undoubted fighting abilities. Was it last night's dinner?
+Bad2: Is there an imposter in your skin today? Why are you restraining yourself? What's wrong?
+Bad3: You realise that you strongly dislike defending. You are a natural born attacker. You feel restricted. Constrained. Chained up.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Personal
+PlyrDef: -1
+Data: 0
+Good1: You don't think, you simply move and your steel is THERE, on target. <name> is bruised, battered and worried.
+Good2: Lunging forward you knock <name>'s weapon to one side. <He> is yours for the taking, defenceless and vulnerable.
+Good3: With a wild flurry of blows you force <name> further back. <He> manages to block your thrusts and slashes, but only some.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You are supposed to be attacking yet here you are on the back foot fending off <name>'s blows.
+Bad2: Your attack has all the enthusiasm of a thief for the hangman's noose. It's hard to get as excited as <name> clearly is.
+Bad3: It's a full moon. You shouldn't have picked a fight on a full moon. You put the minimum effort into your attack. Best not to offend anyone.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now. 
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Personal
+PlyrDef: 1
+Data: 1
+Good1: <name> wields his weapon as if <he> is plowing a field. Does <he> think that you're a potato who just happens to be holding a steel weapon?
+Good2: Your sustained defence has caused <name> to break out into a heavy sweat. Any more and they are liable to collapse at your feet from exhaustion.
+Good3: <name> is struggling to get past your blocks and parries. Perhaps you are too good for <him>?
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: <name> lands blow after blow. You struggle to fend off the incessant assault. As good as you are <he> appears to be better.
+Bad2: Your weapon arm goes heavy and your movements lethargic. <name>'s flurry of blows have exhausted your reservoir of stamina.
+Bad3: How much longer can you keep defending in the face of <name>'s fierce assault? You feel your strength ebbing away.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Personal
+PlyrDef: -1
+Data: 1
+Good1: <name>'s efforts at blocking your lunges and thrusts appear futile. It'll be a short fight.
+Good2: For somebody on the defence, <name> seems to be overly confident. You hammer into them and wait for the right moment.
+Good3: <name> fights on but you can tell that <he> is weakening. You block all but <his> most unexpected counter-attacks.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: How can <name> keep holding you off with such vigour? You feel as if you are dressed in a lead suit that's anchored to the ground.
+Bad2: Your aggressive thrusts have faltered in the face of <name>'s fierce defence and even fiercer counter-attacks. You're in trouble.
+Bad3: It's supposed to be you who is landing the slashing blows, not <name>. <He> should defending, not leaping at you like a wild animal.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+# Combat -> Tournament (player as anonymous entry -> challenger, player as Usurper -> defender) ---
+
+Skill: Combat
+Type: Combat
+SubType: Tournament
+PlyrDef: 1
+Data: 0
+Good1: You ride down the jousting lane and wield your lance like a giant spear of doom. <name> topples from <his> horse.
+Good2: It's all about instinct and timing. You've got it and that's why it's <name> flying backwards out of <his> saddle and not you.
+Good3: <name> should yield now. How many times can they take being knocked off the horse and being flung face down into the dirt?
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: Your timing is off. Not by much but enough that your lance misses <name>'s torso and glances harmlessly off to one side.
+Bad2: Crack! Your lance shatters as you failed to properly couch it before galloping down the jousting lane towards <name>.
+Bad3: You blink your eyes and try and stop seeing two of <name>. Dealing with one of them is bad enough. You feel hot and sweaty inside your armour.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Tournament
+PlyrDef: -1
+Data: 0
+Good1: Spurring your horse into a fast gallop you wallop your lance squarely into <name>'s chest. <He> is jerked off his horse as if suddenly pulled.
+Good2: Jousting is all about momentum. Right now it's on your side. You leave <name> eating dirt behind you as you slow your horse to a canter.
+Good3: The crowd gasps as the point of your lance finds the front of <name>'s protective face plate. It's not easy to hit such a small, moving target.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: Your horse twitches underneath you, letting you know that he'd like to step it up. Why haven't you? What's wrong?
+Bad2: Ahhh-Choooo! It's either the dust or the pollen count but either way your eyes are watering and you can't stop sneezing inside your helmet.
+Bad3: The suit of armour they've given you doesn't quite fit. It chafes and bites, unsettling you and disturbing your concentration.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now. 
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Tournament
+PlyrDef: 1
+Data: 1
+Good1: <name> couldn't hit the side of a castle wall if it was right in front of him. You receive glancing blows but that's all.
+Good2: You swerve your horse at the last moment and <name>'s lance strikes a glancing blow. You manage to stay in the saddle.
+Good3: <name>'s lance keeps searching for your chest plate but you fend it off with your shield.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: <name>'s lance finds you unprepared and you find yourself being roughly jerked out of the saddle.
+Bad2: With casual ease, <name> lowers his lance and takes you firmly in the chest. That's dirt that you're eating.
+Bad3: You wonder how you found yourself sprawled in the dirt as you can't remember <name> hitting you with <his> lance. It must have been the wind.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Combat
+Type: Combat
+SubType: Tournament
+PlyrDef: -1
+Data: 1
+Good1: <name> has had more than <his> fair share of luck today but, even though you've been hit, you remain mounted, ready for the next round.
+Good2: You breathe a sigh of relief as <name> cracks <his> lance on your side armour. Your armour has survived intact but <his> lance hasn't.
+Good3: By leaning outwards you manage to miss <name>'s lunging lance tip although it was a close call.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: Whump! Your head snaps backwards as <name>'s lance takes you in the neck. Your protective armour does it's job but you topple from your horse.
+Bad2: Your body is still store from your previous unhorsing. It likes being knocked out of the saddle by <name>'s lance even less this time around.
+Bad3: You're trying your best but every gallop down the jousting lane leaves you face down in the dirt and <name> mounted and waving to the crowd.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+# Combat -> Hunting ---
+
+Skill: Wits
+Type: Combat
+SubType: Hunting
+PlyrDef: 1
+Data: 0
+Good1: <name> comes charging out of the undergrowth but you're ready for it. Let it come.
+Good2: You can feel the presence of <name>. It's close. You drop into a defensive crouch.
+Good3: <name> attacks but you knew that it would. The broken branches, the muddy tracks, the odour... Let it taste your steel.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: As <name> bursts out of the nearby bushes you have only moments to react. You knew it was close but perhaps not THAT close.
+Bad2: You've anticipated the movements of <name> but it's sudden charge catches you unaware. Almost.
+Bad3: The snorting and snuffling from the bushes are you're only warning signs. Moments later <name> lunges straight at you.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Wits
+Type: Combat
+SubType: Hunting
+PlyrDef: -1
+Data: 0
+Good1: It's been tough tracking <name> through the difficult terrain but you've finally got it cornered.
+Good2: It's a battle of wits and one that you're confident of winning. <name> can't out think a human.
+Good3: <name> has twisted, turned and backtracked through the awkward terrain but to no avail. You've remained on their trail and now you're close. Very close.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You've been hunting <name> for long enough to realise that it's down something unusual. Backtracked maybe or has it left the area?
+Bad2: <name> is a wily opponent. One moment you're right on it's trail and the next you're casting around in the hope of finding a new one.
+Bad3: You hate to admit it but <name> may just have managed to double back and get past you. It certainly looks like that judging by the tracks.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Wits
+Type: Combat
+SubType: Hunting
+PlyrDef: 1
+Data: 1
+Good1: You're not entirely sure who is hunting whom here. <name> displays human-like levels of intelligence and awareness. Luckily not that of a smart human.
+Good2: It's an unpleasant sensation to be uncertain of your situation when you're in difficult terrain and <name> is prowling around. You can handle it.
+Good3: Funnily enough it's you who's having to back track. <name> must have the nose of a swine and the eyes of eagle.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You wonder what it is like to be hunted? What it is like to be the prey? Now you know.
+Bad2: Your experience is in hunting creatures. When it comes to avoiding a dangerous predator, on your trail in difficult terrain, you're helpless.
+Bad3: You can hear <name> stealthily moving closer. It's stalking you. Carefully. Deliberately. Your queasy stomach and frightened bowels are telling you to run! RUN!!!
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Wits
+Type: Combat
+SubType: Hunting
+PlyrDef: -1
+Data: 1
+Good1: Just how smart is <name>? It seems to always be one step ahead of you, slinking through the dark bushes with ease. At least you're close.
+Good2: There's movement up ahead. <name> has deliberately shaken small trees before in order to lure you in. Not this time.
+Good3: You're beginning to see ghosts. Every time you think you've found <name> it turns out to be a false alarm. But it's close, very close.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You haven't seen a track for some time and there's been no sign of <name>'s passing this way. Have you lost the spoor?
+Bad2: You've got a sneaky suspicion that the tracks you're following are the same one you followed earlier. <name> is a wily b*stard.
+Bad3: Where is <name>? You've seen no sign of it for ages, haven't heard it or smelt it. Nothing. It doesn't bode well.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+# Social -> Blackmail ---
+
+Skill: Treachery
+Type: Social
+SubType: Blackmail
+PlyrDef: 1
+Data: 0
+Good1: You refuse to heel to <name>'s threats and bluster. You are the rightful ruler of the land, not some easily manipulated lackey.
+Good2: <name> might think that they can push you in any direction but <he> doesn't realise that you are an immovable force of nature.
+Good3: Threats! Who is <name> to threaten you? What do they know of hardship and travail? You laugh at <his> feeble effort.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You have dealt with blackmailers before but you're not paying close enough attention and feel the ground sliding beneath you.
+Bad2: It's difficult to deal with odious blackmailing b*stards when you aren't feeling your best.
+Bad3: You refuse to concede to <name>'s threats but you find yourself giving ground on the smaller points.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Treachery
+Type: Social
+SubType: Blackmail
+PlyrDef: -1
+Data: 0
+Good1: Like a worm on a hook, <name> wriggles this way and that but to no avail. The hook is firmly set.
+Good2: <name> may lay claim to a higher moral code but you know that they are slowly being squeezed under your snake-like embrace.
+Good3: Manipulation is the key. <name> is nothing but a lump of clay in your hands, waiting patiently to be shaped and moulded.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You're not on top of your game today. Your subtle threats have been taken as crude cudgels. You can do better.
+Bad2: There is something about <name> that is making it difficult for you to press home your case. Surely you don't care about them?
+Bad3: In the blustering storm of threat and counter-threat you've lost track of who said what. Focus!
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Treachery
+Type: Social
+SubType: Blackmail
+PlyrDef: 1
+Data: 1
+Good1: <name> is gradually weakening your resolve but you stand firm for now.
+Good2: You can tell that <name> is becoming frustrated at your reticence but that's how it should be.
+Good3: You prevaricate and avoid, enough to fend off <name>'s threats for now.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: Your resistance crumbles in the face of <name> relentless threats. 
+Bad2: <name> is master of the indirect threat. Before you realise it you are nodding your head.
+Bad3: What can you do when faced with such an experienced manipulator? <name> has you over a barrel.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Treachery
+Type: Social
+SubType: Blackmail
+PlyrDef: -1
+Data: 1
+Good1: <name> is a slippery customer but you manage to get your point across.
+Good2: While <name> isn't yet agreeing to your demands they are at least giving them serious consideration.
+Good3: <name> doesn't give ground easily but you feel that you've made an impact.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You cajole and threaten but <name> appears to be paying you little heed. It's incredibly annoying.
+Bad2: Threatening <name> is like p*ssing into the wind. Everything you aim at them gets thrown straight back at you.
+Bad3: You are beginning to realise the futility of attempting to threaten <name>. Are they incorruptible?
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+# Social -> Seduce ---
+
+Skill: Charm
+Type: Social
+SubType: Seduce
+PlyrDef: 1
+Data: 0
+Good1: <name>'s come hither looks and sultry charm fail to arose your interest.
+Good2: It's hard to get excited by <name> when <he> won't acknowledge your birthright.
+Good3: You try to imagine what it would be like to wake up next to <name> and cringe at the mental image the thought conjures up.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You know that you should resist but, by the heavenly light of the Golden Gods, isn't <he> lovely?
+Bad2: The allure of <name>'s physical presence is strong and growing. You're weakening. 
+Bad3: As the rightful ruler of the land you should be able to exercise great self control but <name> has you doubting your self-control.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Charm
+Type: Social
+SubType: Seduce
+PlyrDef: -1
+Data: 0
+Good1: You touch <name> on the hand, the arm, the neck. You feel the glow from <his> skin, the heat of <his> body.
+Good2: <name> wilts at your touch, laughs at your jokes and sighs when you blow sweet nothings into <his> ear.
+Good3: Seizing the moment you lean forward and kiss <name> passionately on <his> lips.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: Your approaches are being repelled but with less force each time.
+Bad2: You chance a sneak kiss only to have <name> pull back, although with a smile on <his> face.
+Bad3: <name> suddenly slaps you hard but tellingly remains within kissing distance.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Charm
+Type: Social
+SubType: Seduce
+PlyrDef: 1
+Data: 1
+Good1: As lovely as <name> appears to be, whenever <he> passes wind you can only laugh.
+Good2: <name> is all a fluster as you rebuff <he> advances but you both know that there is an inevitability about the outcome.
+Good3: It is all you can do to fend of <name> and <he> sultry charms but you manage it one more time.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: Your inhale the scent of <name>, admire the silky smoothness of <he> skin and gape at <his> beauty. You want <he>.
+Bad2: You feel an overwhelming desire to hold and caress <name>. You reach for <him>.
+Bad3: If you don't kiss <name> soon you'll explode from an unrequited desire so strong that you can barely restrain yourself.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Charm
+Type: Social
+SubType: Seduce
+PlyrDef: -1
+Data: 1
+Good1: You manage to elicit a sad, soft smile from <name>. It's something.
+Good2: Who said you're not romantic? <name> appears to think so although you've got a lot of ground to make up.
+Good3: You reach out and touch <name>'s hand. The contact of flesh on flesh gives you some hope that <he>'ll respond.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: All your romantic overtures have been rebuffed. <name> appears to have as much interest in you as the rear end of a horse.
+Bad2: You've been spurned! <name> sits there and laughs at your feeble attempts at seduction. How did it go so wrong?
+Bad3: If only you'd managed a smile from <name>. A small sign that you are making progress. But no, a cold shoulder is all your receive for your troubles.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+# Social -> Befriend ---
+
+Skill: Charm
+Type: Social
+SubType: Befriend
+PlyrDef: 1
+Data: 0
+Good1: <name> wants to help you and befriend you. Can't they see that it's pointless?
+Good2: Sadly you just plain don't like <name>. There's nothing more to say.
+Good3: <name> promises this and that but how can you be friends with somebody you don't like?
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You're not handling this situation well. You have no interest in <name> yet you smile and encourage them.
+Bad2: <name> has a way about them. Despite your best efforts they are wriggling their way under your skin.
+Bad3: Would it be the end of the world if you befriended <name>? You're not sure but you're giving it serious thought.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Charm
+Type: Social
+SubType: Befriend
+PlyrDef: -1
+Data: 0
+Good1: You are the life of the party when you want to be. <name> certainly thinks so.
+Good2: Who wouldn't want to be your friend? You are such a likeable person. <name> appears to think so.
+Good3: It's all about knowing which buttons to press. You're the master button masher. <name> can only sit there and smile.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You try and try. <name> peers back at you with a blank expression. It's frustrating.
+Bad2: If <name> could only see the benefits of being your friend. Why are they being so pigheaded and stubborn?
+Bad3: The ability of <name> to resist your charm is beginning to niggle. You are a wonderful person. Why don't they realise this?
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Charm
+Type: Social
+SubType: Befriend
+PlyrDef: 1
+Data: 1
+Good1: <name> is going all out to befriend you. A frown here, a stern look there and you delay for a bit longer.
+Good2: While it's good to be friends sometimes a measure of reserve is the wiser approach.
+Good3: <name> looks at you askance. Why won't you be swayed to their point of view? Perhaps, but not quite yet.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: <name> is such a lovely person. You can't think of any reason why you shouldn't be friends.
+Bad2: Yes, of course you'd like nothing better than to establish a closer relationship with <name>.
+Bad3: You laugh at <name>'s hilarious jokes. You nod at their sage remarks. You should spend more time together.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Charm
+Type: Social
+SubType: Befriend
+PlyrDef: -1
+Data: 1
+Good1: <name> gifts you a small smile, but it's a sad one.
+Good2: The resilience of <name> is to be admired. They have resisted your undoubted charms with tenacity and vigour but you feel you've gained a little ground.
+Good3: Arrrh! It's a prolonged, painful process. <name> is not easily won over. Is there a smile there, just a little one? Yes!
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: In a charm offensive you find that you've been out-charm! <name> is one step ahead of you.
+Bad2: Attempting to stem the tide might have been an easier task than trying to befriend <name>. <He> pays little attention to your overtures.
+Bad3: Have you taken on more than you can handle? <name> has ample enough charm to counter all your attempts at sidling up to them.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+# Stealth -> Evade ---
+
+Skill: Wits
+Type: Stealth
+SubType: Evade
+PlyrDef: 1
+Data: 0
+Good1: You are on the run but it's nothing that you haven't done before. You take a deep breath and calm your racing pulse.
+Good2: Even though <name> is on your heels, you are confident that there's a way out. There's always a way.
+Good3: Stay calm. Yes, <name> is close but you need to think your way through the situation, not just blindly run.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You feel like a mouse being played with by a cat. Everything idea that you've tried has been countered by <name>.
+Bad2: Puffing, breathing hard, you bend over double and try and think which is the best way to go. It's hard to think of anything right now.
+Bad3: The nearness of <name> makes it hard to stay calm. No matter how fast your run, there <he> is.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Wits
+Type: Stealth
+SubType: Evade
+PlyrDef: -1
+Data: 0
+Good1: The advantage goes to the pursuer. Prey can only run and panic while the hunter can calmly think and act.
+Good2: <name> jinks and janks but it's to no avail. You can anticipate their moves in advance by the movement of their head.
+Good3: Chasing down <name> isn't just about out running them. Out thinking them plays a large role. You're good at that.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: You'd expect to have a mental edge when you're chasing someone but that doesn't take into account being winded from all the running.
+Bad2: It's easy to over think the situation. <name> is moving fast and erratically but is <he> doing it consciously? What if it's random?
+Bad3: Your mind has turned to fuzz in the face of the sheer physical challenge of running down <name>. You need to get it working.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Wits
+Type: Stealth
+SubType: Evade
+PlyrDef: 1
+Data: 1
+Good1: As you run you plan where to go next. You're confident that <name> isn't doing that. All <he> can manage right now is to run.
+Good2: You might not being able to out run them but you sure can out think them. Glancing over your shoulder you notice <name>'s confusion.
+Good3: <name>'s brain must have turned to mush judging by how badly <he> is anticipating your darting progress through the obstacles.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: How did <name> figure that out? <He> is moving to cut you off before you have even decided to go in a particular direction.
+Bad2: Panting hard, you realise that you might have underestimated <name>'s determination and ability to out wit you. It's a worry.
+Bad3: Clearly <name> is thinking one move ahead of you. No matter where you go, there <he> is in hot pursuit. Closing fast.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
+
+Skill: Wits
+Type: Stealth
+SubType: Evade
+PlyrDef: -1
+Data: 1
+Good1: Not only can you out run <name> but you can out think him. <He> is a spud. Slow afoot and slow witted. It's only a matter of time.
+Good2: You've got <name> beat. <He> can run all <he> likes but you're inside <his> head. <He> isn't as smart as <he> looks.
+Good3: Why does <name> keep running? Doesn't <he> realise that you have the superior mind? There is nothing <he> can do that will surprise you.
+Good4: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Good5: You've kept men back in reserve. Judging when to use them is the key. You get it right.
+Bad1: Perhaps <name> is a little smarter than you give him credit for. <He> seems to be able to out run and out wit you with ease.
+Bad2: Is <name> that clever? Surely not. But why are you continually surprised when he runs in an unexpected direction?
+Bad3: You grudgingly admit that <name> might be a bit more switched on than yourself. Either that or <he> must be able to think more clearly.
+Bad4: Every battle has a pivot point where clear, firm leadership can swing the day. You must have missed it.
+Bad5: Deploy your reserves? What reserves? Winners don't need reserves although they could come in handy now.
+[End]
