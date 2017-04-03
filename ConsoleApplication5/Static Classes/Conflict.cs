@@ -1297,7 +1297,8 @@ namespace Next_Game
                     //add card to pool
                     listCardPool.Add(cardPlayer);
                 }
-                text = string.Format("{0}'s Touched Skill, {1} cards, applies to all challenges ({2} stars) ", player.Name, touchedPlyrCards, touchedPlyrCards);
+                text = string.Format("{0}'s Touched Skill, {1} card{2}, applies to all challenges ({3} stars) ", player.Name, touchedPlyrCards, touchedPlyrCards != 1 ? "s" : "",
+                    touchedPlyrCards);
                 listPlayerCards.Add(new Snippet(text, foreColor, backColor));
             }
             //Opponent is touched?
@@ -1313,19 +1314,20 @@ namespace Next_Game
                 badIndex = rnd.Next(tempListBad.Count);
                 for (int i = 0; i < touchedOppCards; i++)
                 {
-                    Card_Conflict cardPlayer = new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", opponent.Name, SkillType.Touched), description);
+                    Card_Conflict cardOpponent = new Card_Conflict(CardConflict.Skill, type, string.Format("{0}'s {1} Skill", opponent.Name, SkillType.Touched), description);
                     //get immersion texts, if present
-                    if (tempListGood.Count > 0) { cardPlayer.PlayedText = tempListGood[goodIndex]; }
-                    if (tempListBad.Count > 0) { cardPlayer.IgnoredText = tempListBad[badIndex]; }
+                    if (tempListGood.Count > 0) { cardOpponent.PlayedText = tempListGood[goodIndex]; }
+                    if (tempListBad.Count > 0) { cardOpponent.IgnoredText = tempListBad[badIndex]; }
                     //increment and rollover indexes (so there's an equal distribution of immersion texts)
                     goodIndex++; badIndex++;
                     if (goodIndex == tempListGood.Count) { goodIndex = 0; }
                     if (badIndex == tempListBad.Count) { badIndex = 0; }
                     //add card to pool
-                    listCardPool.Add(cardPlayer);
+                    listCardPool.Add(cardOpponent);
                 }
-                text = string.Format("{0}'s Touched Skill, {1} cards, applies to all challenges ({2} stars) ", player.Name, touchedOppCards, touchedOppCards);
-                listPlayerCards.Add(new Snippet(text, foreColor, backColor));
+                text = string.Format("{0}'s Touched Skill, {1} card{2}, applies to all challenges ({3} stars) ", opponent.Name, touchedOppCards, touchedOppCards != 1 ? "s" : "",
+                    touchedOppCards);
+                listOpponentCards.Add(new Snippet(text, foreColor, backColor));
             }
 
             //Situation Cards

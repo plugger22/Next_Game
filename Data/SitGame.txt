@@ -81,7 +81,7 @@ SubType: Fame
 SitNum: 0
 Data: 0
 Good1: You are known but then so is the King. You do your best to make yourself more noticeable.
-Good2: If you hadn't made it clear to all that your are a rising star you would be no more known than the King.
+Good2: If you hadn't made it clear to all that you are a rising star you would be no more known than the King.
 Good3: It's a struggle but you manage to make the most of your fame. Around you, support for the King falls away.
 Bad1: As much as you protest otherwise, the peasants appear to view the King more favourably.
 Bad2: It's hard to stand tall, proud and famous when the current King keeps crowding you out.

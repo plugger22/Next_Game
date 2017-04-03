@@ -4242,7 +4242,7 @@ namespace Next_Game
                                                 //if unknown then becomes known
                                                 if (active.Known == false)
                                                 {
-                                                    if (active.AddEnemy(enemy.Value.ActID) == true)
+                                                    if (active.AddEnemy(enemy.Value.ActID, enemy.Value.Activated) == true)
                                                     {
                                                         active.Known = true; active.Revert = known_revert;
                                                         description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
@@ -4257,7 +4257,7 @@ namespace Next_Game
                                                     if (active.CheckEnemyOnList(enemy.Value.ActID) == false)
                                                     {
                                                         //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
-                                                        if (active.AddEnemy(enemy.Value.ActID) == true)
+                                                        if (active.AddEnemy(enemy.Value.ActID, enemy.Value.Activated) == true)
                                                         {
                                                             active.Revert = known_revert;
                                                             description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
@@ -4284,7 +4284,7 @@ namespace Next_Game
                                             else if (active is Follower)
                                             {
                                                 //can only be captured (assumed to be Known)
-                                                if (active.AddEnemy(enemy.Value.ActID) == true)
+                                                if (active.AddEnemy(enemy.Value.ActID, enemy.Value.Activated) == true)
                                                 {
                                                     
                                                     if (enemy.Value is Inquisitor)
@@ -4404,7 +4404,7 @@ namespace Next_Game
                                                 //if unknown then becomes known
                                                 if (active.Value.Known == false)
                                                 {
-                                                    if (active.Value.AddEnemy(enemy.ActID) == true)
+                                                    if (active.Value.AddEnemy(enemy.ActID, enemy.Activated) == true)
                                                     {
                                                         active.Value.Known = true; active.Value.Revert = known_revert; 
                                                         description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name,
@@ -4419,7 +4419,7 @@ namespace Next_Game
                                                     if (active.Value.CheckEnemyOnList(enemy.ActID) == false)
                                                     {
                                                         //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
-                                                        if (active.Value.AddEnemy(enemy.ActID) == true)
+                                                        if (active.Value.AddEnemy(enemy.ActID, enemy.Activated) == true)
                                                         {
                                                             active.Value.Revert = known_revert;
                                                             description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, 
@@ -4446,7 +4446,7 @@ namespace Next_Game
                                             else if (active.Value is Follower)
                                             {
                                                 //can only be captured (assumed to be Known)
-                                                if (active.Value.AddEnemy(enemy.ActID) == true)
+                                                if (active.Value.AddEnemy(enemy.ActID, enemy.Activated) == true)
                                                 {
                                                     if (enemy is Inquisitor)
                                                     {

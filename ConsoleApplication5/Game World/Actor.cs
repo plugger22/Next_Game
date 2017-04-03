@@ -574,14 +574,18 @@ namespace Next_Game
         /// Add enemy to list, returns true if successfull, false if already on list
         /// </summary>
         /// <param name="enemyID"></param>
-        public bool AddEnemy(int enemyID)
+        public bool AddEnemy(int enemyID, bool enemyActivated)
         {
             if (enemyID > 0)
             {
-                //don't add if already present
-                if (listOfEnemies.Contains(enemyID) == false)
-                { listOfEnemies.Add(enemyID); return true; }
-                else { Console.WriteLine("[DEBUG] listOfEnemies for {0} {1}, ActID {2}, already contains Enemy ActID {3}", Title, Name, ActID, enemyID); }
+                if (enemyActivated == true)
+                {
+                    //don't add if already present
+                    if (listOfEnemies.Contains(enemyID) == false)
+                    { listOfEnemies.Add(enemyID); return true; }
+                    else { Console.WriteLine(" [AddEnemy -> DEBUG] listOfEnemies for {0} {1}, ActID {2}, already contains Enemy ActID {3}", Title, Name, ActID, enemyID); }
+                }
+                else { Game.logTurn.Write(string.Format(" [AddEnemy -> Notification] enemyID {0} activated {1} and isn't added to the list", enemyID, enemyActivated)); }
             }
             else { Game.SetError(new Error(158, "Invalid actID input (zero or less)")); }
             return false;
