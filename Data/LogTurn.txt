@@ -1,5 +1,25 @@
-//Exile Game File "LogTurn.txt" opened at: 03/04/2017 17:09:43
---- ProcessStartTurn, Day 16, Turn 15 (World.cs) 
---- ProcessEndTurn, Day 16 Turn 15 (World.cs)
-//Exile Game File "LogTurn.txt" Close completed at: 03/04/2017 17:09:53
- at: 03/04/2017 17:09:28
+//Exile Game File "LogTurn.txt" opened at: 03/04/2017 17:18:20
+--- ProcessStartTurn, Day 18, Turn 17 (World.cs) 
+--- SetSupporters (Conflict.cs)
+ [Notification] dictPlyrSupporters has 1 records
+ [Supporter -> Good] Master_of_Coin Theon Eden "The Stunted", Friend, ActID 101, relPlyr 81
+ [Notification] dictOppSupporters has 4 records
+ [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 127, relPlyr 0
+ [Supporter -> Bad] Heir Petyr Stark "The Stargazer", Enemy, ActID 72, relPlyr 1
+ [Supporter -> Bad] King Druet Stark "The Dreamer", Enemy, ActID 66, relPlyr 19
+ERROR_00   (Main Game Loop)
+--- Error Message
+Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+--- Source
+mscorlib
+--- Stack Trace
+   at System.Text.StringBuilder.AppendFormatHelper(IFormatProvider provider, String format, ParamsArray args)
+   at System.String.FormatHelper(IFormatProvider provider, String format, ParamsArray args)
+   at System.String.Format(String format, Object arg0, Object arg1, Object arg2)
+   at Next_Game.Conflict.SetCardPool() in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Conflict.cs:line 1327
+   at Next_Game.Conflict.InitialiseConflict() in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Conflict.cs:line 105
+   at Next_Game.Game.SpecialModeInput(RLKeyPress keyPress, SpecialMode mode) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 1341
+   at Next_Game.Game.OnRootConsoleUpdate(Object sender, UpdateEventArgs e) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 255
+---TargetSite
+System.Text.StringBuilder AppendFormatHelper(System.IFormatProvider, System.String, System.ParamsArray)
+//Exile Game file ops "LogTurn.txt" Completed at: 03/04/2017 17:18:52
