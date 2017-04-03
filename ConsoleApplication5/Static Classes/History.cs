@@ -1236,25 +1236,32 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Sub method to handle random traits
+        /// Sub method to handle random traits. If chanceFlag = false then a skill is automatically given in the input range of possibilities
         /// </summary>
         /// <param name="person"></param>
         /// <param name="skill"></param>
         /// <param name="skillAge"></param>
         /// <param name="startRange"></param>
         /// <param name="endRange"></param>
-        private List<string> GetRandomTrait(Actor person, SkillType skill, SkillAge skillAge, int rndRange, int startRange, int endRange)
+        /// <param name="chanceFlag">if true use Chance roll for skill (default) otherwise ignore</param>
+        private List<string> GetRandomTrait(Actor person, SkillType skill, SkillAge skillAge, int rndRange, int startRange, int endRange, bool chanceFlag = true)
         {
             int traitID;
             int effect;
             List<string> tempHandles = new List<string>();
-            
+
             if (rndRange > 0)
             {
                 Skill rndTrait = arrayOfTraits[(int)skill, (int)person.Sex][rnd.Next(startRange, endRange)];
                 //trait roll (trait only assigned if passes roll, otherwise no trait)
-                int chanceOfTrait = rndTrait.Chance;
-                if (rnd.Next(100) < chanceOfTrait)
+                bool proceedFlag = true;
+                if (chanceFlag == true)
+                {
+                    int chanceOfTrait = rndTrait.Chance;
+                    if (rnd.Next(100) >= chanceOfTrait)
+                    { proceedFlag = false; }
+                }
+                if (proceedFlag == true)
                 {
                     string name = rndTrait.Name;
                     effect = rndTrait.Effect;
@@ -1275,10 +1282,12 @@ namespace Next_Game
             return tempHandles;
         }
 
+
+
         /// <summary>
         /// sets up custom Inquistor traits (all positive except leadership which is neutral and charm which is negative)
         /// </summary>
-        /// <param name="inquisitor"></param>
+        /// <param name="enemy">Could be either an Inquisitor or the Nemesis</param>
         public void InitialiseEnemyTraits(Enemy enemy)
         {
             if (enemy is Inquisitor)
@@ -1302,12 +1311,18 @@ namespace Next_Game
                     //Leadership
                     rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)inquisitor.Sex].Length;
                     tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, rndRange));
-                    //Touched
-                    rndRange = arrayOfTraits[(int)SkillType.Touched, (int)inquisitor.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Touched, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                    //choose NickName (handle)
-                    if (tempHandles.Count > 0)
-                    { inquisitor.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
+                    //Touched -> triple chance compared to normal person, if so then lower value
+                    if (rnd.Next(100) <= (Game.constant.GetValue(Global.TOUCHED) * 3))
+                    {
+                        inquisitor.Touched = 3;
+                        Game.logStart.Write(string.Format("{0}, Aid {1} is Touched", inquisitor.Name, inquisitor.ActID));
+                        rndRange = arrayOfTraits[(int)SkillType.Touched, (int)inquisitor.Sex].Length;
+                        GetRandomTrait(inquisitor, SkillType.Touched, SkillAge.Fifteen, rndRange, rndRange / 2, rndRange);
+                        //choose NickName (handle)
+                        if (tempHandles.Count > 0)
+                        { inquisitor.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
+                        else { inquisitor.Handle = "The Loyal"; }
+                    }
                 }
                 else { Game.SetError(new Error(154, "Invalid Inquisitor (null)")); }
             }
@@ -1332,12 +1347,13 @@ namespace Next_Game
                     //Leadership
                     rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)nemesis.Sex].Length;
                     tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, rndRange));
-                    //Touched
+                    //Touched -> automatically given a touched skill
                     rndRange = arrayOfTraits[(int)SkillType.Touched, (int)nemesis.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Touched, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                    //choose NickName (handle)
-                    if (tempHandles.Count > 0)
-                    { nemesis.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
+                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Touched, SkillAge.Fifteen, rndRange, 0, rndRange / 2, false));
+                    nemesis.Touched = 3;
+                    Game.logStart.Write(string.Format("{0}, Aid {1} is Touched", nemesis.Name, nemesis.ActID));
+                    rndRange = arrayOfTraits[(int)SkillType.Touched, (int)nemesis.Sex].Length;
+                    GetRandomTrait(nemesis, SkillType.Touched, SkillAge.Fifteen, rndRange, 0, rndRange / 2);
                 }
                 else { Game.SetError(new Error(154, "Invalid nemesis (null)")); }
             }

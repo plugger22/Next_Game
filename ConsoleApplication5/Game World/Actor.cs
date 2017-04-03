@@ -270,13 +270,11 @@ namespace Next_Game
         /// <returns></returns>
         public int GetSkill(SkillType skill, SkillAge age = SkillAge.Fifteen /*, bool influenceEffect = false*/)
         {
-            int baseValue = 3;
-            if (skill == SkillType.Touched) { baseValue = 0; }
-            int skillValue = baseValue + arrayOfTraitEffects[(int)age, (int)skill] + arrayOfConditions[(int)skill];
+            int skillValue = 3 + arrayOfTraitEffects[(int)age, (int)skill] + arrayOfConditions[(int)skill];
             //parameter check (1 to 5) -> 0 to 5 for Touched
             skillValue = Math.Min(5, skillValue);
-            if (skill != SkillType.Touched)
-            { skillValue = Math.Max(1, skillValue); }
+            skillValue = Math.Max(1, skillValue);
+            if (skill == SkillType.Touched && skillValue == 3) { skillValue = 0; }
             return skillValue;
         }
 

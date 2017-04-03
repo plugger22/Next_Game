@@ -165,7 +165,7 @@ namespace Next_Game
         /// </summary>
         private void InitialiseEnemyActors()
         {
-            Game.logStart.Write("--- InitialiseEnemyActors (World.cs) ---");
+            Game.logStart.Write("--- InitialiseEnemyActors (World.cs)");
             int numInquisitors = Game.constant.GetValue(Global.INQUISITORS);
             //loop for # of inquisitors
             for (int i = 0; i < numInquisitors; i++)
@@ -190,14 +190,14 @@ namespace Next_Game
                         {
                             enemy.Value.AssignedBranch = i;
                             arrayAI[2, i]--;
-                            Console.WriteLine(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i);
+                            Game.logStart.Write(string.Format(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i));
                             break;
                         }
                     }
                     else if (enemy.Value is Nemesis)
                     {
                         enemy.Value.AssignedBranch = 0;
-                        Console.WriteLine(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i);
+                        Game.logStart.Write(string.Format(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i));
                     }
                 }
             }
