@@ -182,22 +182,25 @@ namespace Next_Game
             {
                 enemy.Value.MoveOut = true;
                 enemy.Value.HuntMode = false;
-                for (int i = 0; i <= arrayAI.GetUpperBound(1); i++)
+                if (enemy.Value is Nemesis)
                 {
-                    if (enemy.Value is Inquisitor)
+                    enemy.Value.AssignedBranch = 0;
+                    Game.logStart.Write(string.Format(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, enemy.Value.AssignedBranch));
+                }
+                else
+                {
+                    for (int i = 0; i <= arrayAI.GetUpperBound(1); i++)
                     {
-                        if (arrayAI[2, i] > 0)
+                        if (enemy.Value is Inquisitor)
                         {
-                            enemy.Value.AssignedBranch = i;
-                            arrayAI[2, i]--;
-                            Game.logStart.Write(string.Format(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i));
-                            break;
+                            if (arrayAI[2, i] > 0)
+                            {
+                                enemy.Value.AssignedBranch = i;
+                                arrayAI[2, i]--;
+                                Game.logStart.Write(string.Format(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i));
+                                break;
+                            }
                         }
-                    }
-                    else if (enemy.Value is Nemesis)
-                    {
-                        enemy.Value.AssignedBranch = 0;
-                        Game.logStart.Write(string.Format(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i));
                     }
                 }
             }
@@ -3619,7 +3622,6 @@ namespace Next_Game
                         }
                     }
                 }
-
                 //ignore all this if player Incarcerated in a dungeon?
                 if (player.Status == ActorStatus.AtLocation || player.Status == ActorStatus.Travelling)
                 {
@@ -4226,8 +4228,8 @@ namespace Next_Game
                                         {
                                             string locName = GetLocationName(pos);
                                             if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); }
-                                            Console.WriteLine(" [SEARCH -> Active] {0} {1} has been Spotted by {2}, ActID {3} at loc {4}:{5}", active.Title, active.Name, enemy.Value.Name, enemy.Value.ActID,
-                                            pos.PosX, pos.PosY);
+                                            Console.WriteLine(" [SEARCH -> Active] {0} {1} has been Spotted by {2}, ActID {3} at loc {4}:{5} -> Activated {6}", active.Title, active.Name, enemy.Value.Name, 
+                                                enemy.Value.ActID, pos.PosX, pos.PosY, enemy.Value.Activated);
                                             active.Found = true;
                                             Console.WriteLine(" [Search -> ListEnemy] {0} {1}, ActID {2} as Spotted -> True and Enemy ActID {3} added", active.Title, active.Name, active.ActID, enemy.Value.ActID);
                                             //Stuff that happens when found
@@ -4389,8 +4391,8 @@ namespace Next_Game
                                             string locName = GetLocationName(pos);
                                             if (locName.Equals("Unknown") == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); } //travelling
                                             if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); }
-                                            Console.WriteLine(" [SEARCH -> Enemy] {0} {1} has been Spotted by {2}, ActID {3} at {4}", active.Value.Title, active.Value.Name, enemy.Name, enemy.ActID,
-                                            locName);
+                                            Console.WriteLine(" [SEARCH -> Enemy] {0} {1} has been Spotted by {2}, ActID {3} at {4} -> Activated {5}", active.Value.Title, active.Value.Name, 
+                                                enemy.Name, enemy.ActID, locName, enemy.Activated);
                                             active.Value.Found = true;
                                             Console.WriteLine(" [Search -> ListEnemies] {0} {1}, ActID {2} is Found -> True and Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID);
                                             //Stuff that happens when found

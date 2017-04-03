@@ -1,25 +1,10 @@
-//Exile Game File "LogTurn.txt" opened at: 03/04/2017 17:18:20
---- ProcessStartTurn, Day 18, Turn 17 (World.cs) 
+//Exile Game File "LogTurn.txt" opened at: 03/04/2017 20:02:18
+--- ProcessStartTurn, Day 15, Turn 14 (World.cs) 
 --- SetSupporters (Conflict.cs)
  [Notification] dictPlyrSupporters has 1 records
- [Supporter -> Good] Master_of_Coin Theon Eden "The Stunted", Friend, ActID 101, relPlyr 81
- [Notification] dictOppSupporters has 4 records
- [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 127, relPlyr 0
- [Supporter -> Bad] Heir Petyr Stark "The Stargazer", Enemy, ActID 72, relPlyr 1
- [Supporter -> Bad] King Druet Stark "The Dreamer", Enemy, ActID 66, relPlyr 19
-ERROR_00   (Main Game Loop)
---- Error Message
-Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
---- Source
-mscorlib
---- Stack Trace
-   at System.Text.StringBuilder.AppendFormatHelper(IFormatProvider provider, String format, ParamsArray args)
-   at System.String.FormatHelper(IFormatProvider provider, String format, ParamsArray args)
-   at System.String.Format(String format, Object arg0, Object arg1, Object arg2)
-   at Next_Game.Conflict.SetCardPool() in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Conflict.cs:line 1327
-   at Next_Game.Conflict.InitialiseConflict() in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Conflict.cs:line 105
-   at Next_Game.Game.SpecialModeInput(RLKeyPress keyPress, SpecialMode mode) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 1341
-   at Next_Game.Game.OnRootConsoleUpdate(Object sender, UpdateEventArgs e) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 255
----TargetSite
-System.Text.StringBuilder AppendFormatHelper(System.IFormatProvider, System.String, System.ParamsArray)
-//Exile Game file ops "LogTurn.txt" Completed at: 03/04/2017 17:18:52
+ [Supporter -> Good] Master_of_Ships Giradin Bardolf "The Black Rat", Friend, ActID 100, relPlyr 80
+ [Notification] dictOppSupporters has 7 records
+ [Supporter -> Bad] King Joseth Greyjoy "The Trusting", Enemy, ActID 25, relPlyr 0
+ [Supporter -> Bad] Queen Nina Greyjoy "The Ingenue", Enemy, ActID 26, relPlyr 0
+ [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 123, relPlyr 0
+//Exile Game file ops "LogTurn.txt" Completed at: 03/04/2017 20:05:14
