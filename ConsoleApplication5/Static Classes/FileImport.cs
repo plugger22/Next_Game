@@ -268,7 +268,7 @@ namespace Next_Game
         public List<ConflictSubType> ListSubTypes { get; set; }
         public int CardNum { get; set; }
         public string CardText { get; set; }
-        public string[] OutcomeTexts { get; set; }
+        public string[] OutcomeTexts { get; set; } //[0] -> Plyr Chall Good, [1] -> Plyr Chall Bad, [2] -> Plyr Def Good, [3] -> Plyr Def Bad
     }
 
     //results
@@ -4004,6 +4004,7 @@ namespace Next_Game
         internal List<Item> GetItems(string fileName)
         {
             List<Item> listItems = new List<Item>();
+            List<int> listItemID = new List<int>();
             string[] arrayOfItems = ImportDataFile(fileName);
             if (arrayOfItems != null)
             {
@@ -4011,6 +4012,7 @@ namespace Next_Game
                 bool newItem = false;
                 bool validData = true;
                 int dataCounter = 0; //number of challenges
+                string[] tempArray = new string[4];
                 ItemStruct structItem = new ItemStruct();
                 string cleanToken;
                 string cleanTag;
@@ -4025,6 +4027,7 @@ namespace Next_Game
                             newItem = true;
                             validData = true;
                             dataCounter++;
+                            Array.Clear(tempArray, 0, tempArray.Length);
                             //new structure
                             structItem = new ItemStruct();
                         }
@@ -4051,12 +4054,38 @@ namespace Next_Game
                             switch (cleanTag)
                             {
                                 case "Name":
+                                    if (cleanToken.Length == 0)
+                                    { Game.SetError(new Error(200, string.Format("Empty Name field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                                    else { structItem.Name = cleanToken; }
                                     break;
                                 case "ItemID":
+                                    try
+                                    { structItem.ItemID = Convert.ToInt32(cleanToken); }
+                                    catch
+                                    { Game.SetError(new Error(200, string.Format("Invalid input for ItemID {0}, (\"{1}\")", cleanToken, structItem.Name))); validData = false; }
+                                    //check for duplicate arcID's
+                                    if (listItemID.Contains(structItem.ItemID))
+                                    { Game.SetError(new Error(200, string.Format("Duplicate ItemID {0}, (\"{1}\")", cleanToken, structItem.Name))); validData = false; }
+                                    else { listItemID.Add(structItem.ItemID); }
                                     break;
                                 case "Type":
+                                    switch (cleanToken)
+                                    {
+                                        case "Passive":
+                                            structItem.Type = PossItemType.Passive;
+                                            break;
+                                        case "Active":
+                                            structItem.Type = PossItemType.Active;
+                                            break;
+                                        default:
+                                            structItem.Type = PossItemType.None;
+                                            Game.SetError(new Error(200, string.Format("Items -> Invalid Input, Type (\"{0}\")", arrayOfItems[i])));
+                                            validData = false;
+                                            break;
+                                    }
                                     break;
                                 case "Lore":
+                                   structItem.Lore = cleanToken;
                                     break;
                                 case "Year":
                                     break;
@@ -4075,14 +4104,19 @@ namespace Next_Game
                                 case "Cards":
                                     break;
                                 case "Text":
+                                    structItem.CardText = cleanToken;
                                     break;
                                 case "GoodChall":
+                                    tempArray[0] = cleanToken;
                                     break;
                                 case "BadChall":
+                                    tempArray[1] = cleanToken;
                                     break;
                                 case "GoodDef":
+                                    tempArray[2] = cleanToken;
                                     break;
                                 case "BadDef":
+                                    tempArray[3] = cleanToken;
                                     break;
                                 case "[End]":
                                     break;
