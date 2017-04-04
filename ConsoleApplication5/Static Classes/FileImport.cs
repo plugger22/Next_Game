@@ -263,6 +263,7 @@ namespace Next_Game
         public PossItemType Type { get; set; }
         public PossItemEffect Effect { get; set; }
         public int Amount { get; set; }
+        public int ArcID { get; set; }
         public bool Known { get; set; }
         public bool Challenge { get; set; }
         public List<ConflictSubType> ListSubTypes { get; set; }
@@ -4088,12 +4089,24 @@ namespace Next_Game
                                    structItem.Lore = cleanToken;
                                     break;
                                 case "Year":
+                                    try
+                                    { structItem.Year = Convert.ToInt32(cleanToken); }
+                                    catch
+                                    { Game.SetError(new Error(200, string.Format("Invalid input for Year {0}, (\"{1}\")", cleanToken, structItem.Name))); validData = false; }
                                     break;
                                 case "Effect":
                                     break;
                                 case "Amount":
+                                    try
+                                    { structItem.Amount = Convert.ToInt32(cleanToken); }
+                                    catch
+                                    { Game.SetError(new Error(200, string.Format("Invalid input for Amount {0}, (\"{1}\")", cleanToken, structItem.Name))); validData = false; }
                                     break;
                                 case "ArcID":
+                                    try
+                                    { structItem.ArcID = Convert.ToInt32(cleanToken); }
+                                    catch
+                                    { Game.SetError(new Error(200, string.Format("Invalid input for ArcID {0}, (\"{1}\")", cleanToken, structItem.Name))); validData = false; }
                                     break;
                                 case "Known":
                                     break;
@@ -4102,6 +4115,10 @@ namespace Next_Game
                                 case "SubTypes":
                                     break;
                                 case "Cards":
+                                    try
+                                    { structItem.CardNum = Convert.ToInt32(cleanToken); }
+                                    catch
+                                    { Game.SetError(new Error(200, string.Format("Invalid input for Cards {0}, (\"{1}\")", cleanToken, structItem.Name))); validData = false; }
                                     break;
                                 case "Text":
                                     structItem.CardText = cleanToken;
