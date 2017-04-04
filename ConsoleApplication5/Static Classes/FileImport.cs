@@ -3952,9 +3952,9 @@ namespace Next_Game
                                                 tempDictionary.Add(subDict, challenge);
                                                 Game.logStart.Write(string.Format("{0} Challenge ({1}), successfully imported", subDict, challenge.Type));
                                             }
-                                            catch (ArgumentNullException e)
+                                            catch (ArgumentNullException)
                                             { Game.SetError(new Error(110, string.Format("{0} Challenge not imported due to errors", challenge.Type))); }
-                                            catch (ArgumentException e)
+                                            catch (ArgumentException)
                                             { Game.SetError(new Error(110, string.Format("{0} Challenge not imported due to errors", challenge.Type))); }
 
                                         }

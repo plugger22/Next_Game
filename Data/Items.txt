@@ -1,40 +1,70 @@
 # Items.txt -> list of all special items that may be found in game
 
 # Name: (string) descriptive name (max 4 words)
+# ItemID: <int> unique number, 1+
+# Type (PossItemType enum) -> Passive / Active (have an effect)
 # Lore: (string) background information. (single sentence)
 # Year: (int) year item created ( < gameStart ), if value -ve then indicates a 'BC' year.
 # Effect: (PossItemEffect enum) -> None / 
 # Amount: (int) multipurpose use related to effect. Default '0'
-# Arc: (int) Archetype ID for related events, if any (default '0')
+# Arc: OPTIONAL -> (int) Archetype ID for related events, if any (default '0')
+# Known: (bool) Yes / No -> whether item starts known, or not
+# Chall: (bool) Yes / No -> if Yes, Item can be used in Challenges
 
-Name: 
-Lore:
-Year:
-Effect:
-Amount:
-ArcID: 
+# Chall: Yes -> then you need to add the following fields...
+# SubTypes: Personal/Tournament/Battle/Hunting/Blackmail/Seduce/Befriend/Infiltrate/Evade/Escape -> list all applicable, separate with commas.
+# Cards: (int) Number of cards that item generates in a challenge
+# Text: text for card (keep short)
+# GoodDef: (string) outcome text for when you Play the card and are the Defender (one sentence)
+# GoodChall: (string) outcome text for when you Play the card and are the Challenger (one sentence)
+# BadDef: & BadChall: (string) as above but when you Ignore the card (one sentence)
+
+
+Name: Dragon Eggs
+ItemID: 1
+Type: Passive
+Lore: The last vestiges of the Great Age of Dragons. When will they hatch? Can they ever hatch?
+Year: -1000
+Effect: None
+Amount: 0
+Known: Yes
+Chall: False
 [End]
 
-Name: 
-Lore:
-Year:
-Effect:
-Amount:
-ArcID: 
+Name: Head Lopper
+ItemID: 2
+Type: Active
+Lore: A great sword forged hundreds of years ago from Valyrian steel by skilled craftsmen.
+Year: 100
+Effect: None
+Amount: 0
+ArcID: 0
+Known: Yes
+Chall: Yes
+SubTypes: Personal, Tournament, Battle, Hunting
+Cards:
+Text:
+GoodChall:
+BadChall:
+GoodDef:
+BadDef:
 [End]
 
-Name: 
-Lore:
-Year:
-Effect:
-Amount:
-ArcID: 
-[End]
-
-Name: 
-Lore:
-Year:
-Effect:
-Amount:
-ArcID: 
+Name: The Mage Ring
+ItemID: 3
+Type: Active
+Lore: An enchanted ring made by the mute, Hermoine the Horrible, which glows brightly when enemies are near
+Year: 250
+Effect: None
+Amount: 0
+ArcID: 0
+Known: Yes
+Chall: Yes
+SubTypes: Infiltrate, Evade, Escape
+Cards:
+Text:
+GoodChall:
+BadChall:
+GoodDef:
+BadDef:
 [End]

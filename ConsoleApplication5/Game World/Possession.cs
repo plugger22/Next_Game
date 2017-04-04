@@ -9,6 +9,7 @@ namespace Next_Game
     public enum PossessionType { None, Secret, Promise, Favour, Introduction, Disguise, Item }
     public enum PossSecretType {Parents, Trait, Wound, Torture, Murder, Loyalty, Glory,Fertility };
     public enum PossItemEffect { None }
+    public enum PossItemType { None, Passive, Active} //active items provide benefits, passive items are used as bargaining chips
     //public enum PossSecretRef { Actor, House, GeoCluster, Location, Item }
 
     public class Possession
@@ -182,9 +183,19 @@ namespace Next_Game
         /// </summary>
     public class Item : Possession
     {
+        public int ItemID { get; set; } //unique item ID (in addition to autoassigned PossID)
         public string Lore { get; set; } //background description
-        public PossItemEffect Effect { get; set; }
-        public int Amount { get; set; }
+        public PossItemType ItemType { get; set; } //if true item is Active (provides beneficial effects to the Player), if false item is Passive (something that can be used for 
+        //unique effect
+        public PossItemEffect Effect { get; set; } //unique effect (unrelated to the Items challenge effect)
+        public int Amount { get; set; } //multipurpose value related to unique effect, default 0
+        //challenge effect
+        public bool ChallengeFlag { get; set; } //if true can be used in challenges
+        private List<ConflictSubType> listOfChallenges; //list of all challenge subtypes that the item can be used for. Leave empty for none.
+        public int NumCards { get; set; } //number of cards item gives in a challenge
+        public string CardText { get; set; } //card text
+        private string[] outcomeText; //outcome texts for when card played or ignored
+
 
         /// <summary>
         /// default constructor -> year refers to when item was made (could be hundreds of years old)
@@ -197,6 +208,8 @@ namespace Next_Game
             this.Effect = effect;
             this.Amount = amount;
             Type = PossessionType.Item;
+            listOfChallenges = new List<ConflictSubType>();
+            outcomeText = new string[4]; //[0] -> Plyr Challenger Good (plays card), [1] -> Plyr Challenger Bad (ignores card), [2] -> Plyr Def Good (plays), [3] -> Plyr Def Bad (ignores)
         }
     }
 }
