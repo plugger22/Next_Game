@@ -4095,6 +4095,17 @@ namespace Next_Game
                                     { Game.SetError(new Error(200, string.Format("Invalid input for Year {0}, (\"{1}\")", cleanToken, structItem.Name))); validData = false; }
                                     break;
                                 case "Effect":
+                                    switch (cleanToken)
+                                    {
+                                        case "None":
+                                            structItem.Effect = PossItemEffect.None;
+                                            break;
+                                        default:
+                                            structItem.Effect = PossItemEffect.None;
+                                            Game.SetError(new Error(200, string.Format("Items -> Invalid Input, Effect (\"{0}\")", arrayOfItems[i])));
+                                            validData = false;
+                                            break;
+                                    }
                                     break;
                                 case "Amount":
                                     try
@@ -4109,10 +4120,87 @@ namespace Next_Game
                                     { Game.SetError(new Error(200, string.Format("Invalid input for ArcID {0}, (\"{1}\")", cleanToken, structItem.Name))); validData = false; }
                                     break;
                                 case "Known":
+                                    switch (cleanToken)
+                                    {
+                                        case "Yes":
+                                        case "yes":
+                                            structItem.Known = true;
+                                            break;
+                                        case "No":
+                                        case "no":
+                                            structItem.Known = false;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(200, string.Format("Invalid Input, Known, (\"{0}\")", arrayOfItems[i])));
+                                            validData = false;
+                                            break;
+                                    }
                                     break;
                                 case "Chall":
+                                    switch (cleanToken)
+                                    {
+                                        case "Yes":
+                                        case "yes":
+                                            structItem.Challenge = true;
+                                            break;
+                                        case "No":
+                                        case "no":
+                                            structItem.Challenge = false;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(200, string.Format("Invalid Input, Challenge, (\"{0}\")", arrayOfItems[i])));
+                                            validData = false;
+                                            break;
+                                    }
                                     break;
                                 case "SubTypes":
+                                    string[] arrayOfSubTypes = cleanToken.Split(',');
+                                    List<ConflictSubType> listSubTypes = new List<ConflictSubType>();
+                                    string tempHandle = null;
+                                    for (int k = 0; k < arrayOfSubTypes.Length; k++)
+                                    {
+                                        tempHandle = arrayOfSubTypes[k].Trim();
+                                        if (String.IsNullOrEmpty(tempHandle) == false)
+                                        {
+                                            switch (tempHandle)
+                                            {
+                                                case "Personal":
+                                                    listSubTypes.Add(ConflictSubType.Personal);
+                                                    break;
+                                                case "Tournament":
+                                                    listSubTypes.Add(ConflictSubType.Tournament);
+                                                    break;
+                                                case "Battle":
+                                                    listSubTypes.Add(ConflictSubType.Battle);
+                                                    break;
+                                                case "Hunting":
+                                                    listSubTypes.Add(ConflictSubType.Hunting);
+                                                    break;
+                                                case "Blackmail":
+                                                    listSubTypes.Add(ConflictSubType.Blackmail);
+                                                    break;
+                                                case "Befriend":
+                                                    listSubTypes.Add(ConflictSubType.Befriend);
+                                                    break;
+                                                case "Seduce":
+                                                    listSubTypes.Add(ConflictSubType.Seduce);
+                                                    break;
+                                                case "Infiltrate":
+                                                    listSubTypes.Add(ConflictSubType.Infiltrate);
+                                                    break;
+                                                case "Evade":
+                                                    listSubTypes.Add(ConflictSubType.Evade);
+                                                    break;
+                                                case "Escape":
+                                                    listSubTypes.Add(ConflictSubType.Escape);
+                                                    break;
+                                                default:
+                                                    Game.SetError(new Error(200, string.Format("Invalid Input, SubType, (\"{0}\")", tempHandle)));
+                                                    validData = false;
+                                                    break;
+                                            }
+                                        }
+                                    }
                                     break;
                                 case "Cards":
                                     try
@@ -4135,14 +4223,43 @@ namespace Next_Game
                                 case "BadDef":
                                     tempArray[3] = cleanToken;
                                     break;
+                                case "[end]":
                                 case "[End]":
+                                    //last datapoint - save structure to list
+                                    if (dataCounter > 0 && validData == true)
+                                    {
+                                        //validate data
+                                        
+                                        //add data
+                                        if (validData == true)
+                                        {
+                                            Item itemObject = new Item(structItem.Name, structItem.Lore, structItem.Year, structItem.Effect, structItem.Amount)
+                                            { ItemType = structItem.Type, ItemID = structItem.ItemID, ArcID = structItem.ArcID, Active = structItem.Known, ChallengeFlag = structItem.Challenge  };
+                                            //challenge effect present?
+                                            if (itemObject.ChallengeFlag == true)
+                                            {
+                                                itemObject.CardText = structItem.CardText;
+                                                itemObject.CardNum = structItem.CardNum;
+                                                itemObject.SetConflictChallenges(structItem.ListSubTypes);
+                                                itemObject.SetOutcomeTexts(structItem.OutcomeTexts);
+                                            }
+
+                                        }
+                                        else
+                                        { Game.SetError(new Error(200, string.Format("{0} Item not imported due to errors", structItem.Name))); }
+                                    }
+                                    break;
+                                default:
+                                    Game.SetError(new Error(200, string.Format("Invalid Data \"{0}\" in Item Input, Record not Imported", cleanTag)));
                                     break;
                             }
                         }
                     }
+                    else
+                    { newItem = false; }
                 }
             }
-
+            else { Game.SetError(new Error(200, "Invalid arrayOfItems (null)")); }
             return listItems;
         }
 

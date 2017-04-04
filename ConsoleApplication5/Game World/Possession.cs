@@ -184,6 +184,7 @@ namespace Next_Game
     public class Item : Possession
     {
         public int ItemID { get; set; } //unique item ID (in addition to autoassigned PossID)
+        public int ArcID { get; set; } //archetype ID for related events (optional, default '0')
         public string Lore { get; set; } //background description
         public PossItemType ItemType { get; set; } //if true item is Active (provides beneficial effects to the Player), if false item is Passive (something that can be used for 
         //unique effect
@@ -192,7 +193,7 @@ namespace Next_Game
         //challenge effect
         public bool ChallengeFlag { get; set; } //if true can be used in challenges
         private List<ConflictSubType> listOfChallenges; //list of all challenge subtypes that the item can be used for. Leave empty for none.
-        public int NumCards { get; set; } //number of cards item gives in a challenge
+        public int CardNum { get; set; } //number of cards item gives in a challenge
         public string CardText { get; set; } //card text
         private string[] outcomeText; //outcome texts for when card played or ignored
 
@@ -211,5 +212,25 @@ namespace Next_Game
             listOfChallenges = new List<ConflictSubType>();
             outcomeText = new string[4]; //[0] -> Plyr Challenger Good (plays card), [1] -> Plyr Challenger Bad (ignores card), [2] -> Plyr Def Good (plays), [3] -> Plyr Def Bad (ignores)
         }
+
+        internal void SetConflictChallenges(List<ConflictSubType> tempList)
+        {
+            if (tempList != null)
+            { listOfChallenges.AddRange(tempList); }
+            else { Game.SetError(new Error(201, "Invalid list of ConflictSubTypes Input (null)")); }
+        }
+
+        internal void SetOutcomeTexts(string[] tempArray)
+        {
+            if (tempArray.Length == 4)
+            {
+                for (int i = 0; i < tempArray.Length; i++)
+                { outcomeText[i] = tempArray[i]; }
+            }
+            else { Game.SetError(new Error(201, string.Format("Invalid Outcome Texts Array Length (should be 4, not {0})", tempArray.Length))); }
+        }
     }
+
+
+    //new classes above here
 }
