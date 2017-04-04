@@ -93,7 +93,8 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitialiseHistory");
             timer_2.Start();
             InitialiseSecrets();
-            Game.StopTimer(timer_2, "W: InitialiseSecrets");
+            InitialiseItems();
+            Game.StopTimer(timer_2, "W: InitialisePossessions");
             timer_2.Start();
             InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors
             InitialiseAI();
@@ -2303,8 +2304,40 @@ namespace Next_Game
         private void InitialiseSecrets()
         {
             List<Secret> tempList = Game.history.GetSecrets();
-            foreach (Secret secret in tempList)
-            { dictPossessions.Add(secret.PossID, secret); }
+            if (tempList != null)
+            {
+                foreach (Secret secret in tempList)
+                {
+                    try
+                    { dictPossessions.Add(secret.PossID, secret); }
+                    catch(ArgumentNullException)
+                    { Game.SetError(new Error(198, "Invalid Secret (null) -> Not added to Dictionary")); }
+                    catch(ArgumentException)
+                    { Game.SetError(new Error(198, string.Format("Invalid secret.PossID \"{0}\" (duplicate) -> Not added to Dictionary", secret.PossID))); }
+                }
+            }
+            else { Game.SetError(new Error(198, "Invalid dictionary input -> history.GetSecrets (null)")); }
+        }
+
+        /// <summary>
+        /// populates Possession dictionary with Items
+        /// </summary>
+        private void InitialiseItems()
+        {
+            List<Item> tempList = Game.file.GetItems("Items.txt");
+            if (tempList != null)
+            {
+                foreach (Item item in tempList)
+                {
+                    try
+                    { dictPossessions.Add(item.PossID, item); }
+                    catch (ArgumentNullException)
+                    { Game.SetError(new Error(199, "Invalid Item (null) -> Not added to Dictionary")); }
+                    catch (ArgumentException)
+                    { Game.SetError(new Error(199, string.Format("Invalid item.PossID \"{0}\" (duplicate) -> Not added to Dictionary", item.PossID))); }
+                }
+            }
+            else { Game.SetError(new Error(199, "Invalid dictionary input -> history.GetSecrets (null)")); }
         }
 
         /// <summary>

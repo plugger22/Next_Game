@@ -42,12 +42,12 @@ ArcID: 0
 Known: Yes
 Chall: Yes
 SubTypes: Personal, Tournament, Battle, Hunting
-Cards:
-Text:
-GoodChall:
-BadChall:
-GoodDef:
-BadDef:
+Cards: 2
+Text: There is no count of the number of heads this sword has taken
+GoodChall: Head Lopper good chall
+BadChall: Head Lopper bad chall
+GoodDef: Head Lopper good def
+BadDef: Head lopper bad def
 [End]
 
 Name: The Mage Ring
@@ -61,10 +61,10 @@ ArcID: 0
 Known: Yes
 Chall: Yes
 SubTypes: Infiltrate, Evade, Escape
-Cards:
-Text:
-GoodChall:
-BadChall:
-GoodDef:
-BadDef:
+Cards: 2
+Text: The third eye that sees all
+GoodChall: Mage Ring good chall
+BadChall: Mage Ring bad chall
+GoodDef: Mage Ring good def
+BadDef: Mage ring bad def
 [End]

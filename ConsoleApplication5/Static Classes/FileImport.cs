@@ -253,6 +253,24 @@ namespace Next_Game
         public ConflictStealth StealthType { get; set; }
     }
 
+    //items
+    struct ItemStruct
+    {
+        public int ItemID { get; set; }
+        public string Name { get; set; }
+        public string Lore { get; set; }
+        public int Year { get; set; }
+        public PossItemType Type { get; set; }
+        public PossItemEffect Effect { get; set; }
+        public int Amount { get; set; }
+        public bool Known { get; set; }
+        public bool Challenge { get; set; }
+        public List<ConflictSubType> ListSubTypes { get; set; }
+        public int CardNum { get; set; }
+        public string CardText { get; set; }
+        public string[] OutcomeTexts { get; set; }
+    }
+
     //results
     struct ResultStruct
     {
@@ -3978,6 +3996,104 @@ namespace Next_Game
             return tempDictionary;
         }
 
+        /// <summary>
+        /// Import Items data
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        internal List<Item> GetItems(string fileName)
+        {
+            List<Item> listItems = new List<Item>();
+            string[] arrayOfItems = ImportDataFile(fileName);
+            if (arrayOfItems != null)
+            {
+                List<ItemStruct> listOfStructs = new List<ItemStruct>();
+                bool newItem = false;
+                bool validData = true;
+                int dataCounter = 0; //number of challenges
+                ItemStruct structItem = new ItemStruct();
+                string cleanToken;
+                string cleanTag;
+                string subType = "unknown";
+                for (int i = 0; i < arrayOfItems.Length; i++)
+                {
+                    if (arrayOfItems[i] != "" && !arrayOfItems[i].StartsWith("#"))
+                    {
+                        //set up for a new Item
+                        if (newItem == false)
+                        {
+                            newItem = true;
+                            validData = true;
+                            dataCounter++;
+                            //new structure
+                            structItem = new ItemStruct();
+                        }
+                        string[] tokens = arrayOfItems[i].Split(new Char[] { ':', ';' });
+                        //strip out leading spaces
+                        cleanTag = tokens[0].Trim();
+                        if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                                                                      //check for random text elements in the file
+                        else
+                        {
+                            try { cleanToken = tokens[1].Trim(); }
+                            catch (System.IndexOutOfRangeException)
+                            {
+                                Game.SetError(new Error(200, string.Format("Items -> Invalid token[1] (empty or null) for label \"{0}\"", cleanTag))); cleanToken = "";
+                            }
+                        }
+                        if (cleanToken.Length == 0)
+                        {
+                            validData = false;
+                            Game.SetError(new Error(200, string.Format("Items {0} (Missing data for \"{1}\") \"{2}\"", subType, cleanTag, fileName)));
+                        }
+                        else
+                        {
+                            switch (cleanTag)
+                            {
+                                case "Name":
+                                    break;
+                                case "ItemID":
+                                    break;
+                                case "Type":
+                                    break;
+                                case "Lore":
+                                    break;
+                                case "Year":
+                                    break;
+                                case "Effect":
+                                    break;
+                                case "Amount":
+                                    break;
+                                case "ArcID":
+                                    break;
+                                case "Known":
+                                    break;
+                                case "Chall":
+                                    break;
+                                case "SubTypes":
+                                    break;
+                                case "Cards":
+                                    break;
+                                case "Text":
+                                    break;
+                                case "GoodChall":
+                                    break;
+                                case "BadChall":
+                                    break;
+                                case "GoodDef":
+                                    break;
+                                case "BadDef":
+                                    break;
+                                case "[End]":
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return listItems;
+        }
 
         /// <summary>
         /// Import Results data
