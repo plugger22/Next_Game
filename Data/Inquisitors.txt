@@ -1,3 +1,5 @@
+#Inquisitors.txt -> names for inquisitors (all are representations of evil in various cultures)
+
 Astaroth
 Shaitan
 Gorgo

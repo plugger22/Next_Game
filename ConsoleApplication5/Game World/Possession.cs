@@ -8,6 +8,7 @@ namespace Next_Game
 {
     public enum PossessionType { None, Secret, Promise, Favour, Introduction, Disguise, Item }
     public enum PossSecretType {Parents, Trait, Wound, Torture, Murder, Loyalty, Glory,Fertility };
+    public enum PossItemEffect { None }
     //public enum PossSecretRef { Actor, House, GeoCluster, Location, Item }
 
     public class Possession
@@ -171,6 +172,31 @@ namespace Next_Game
             Strength = Math.Max(1, Strength);
             if (actorID > 0) { this.ActorID = actorID; } else { Game.SetError(new Error(122, "Invalid ActorID input (zero or less) Introduction.cs")); }
             Type = PossessionType.Favour;
+        }
+    }
+
+    // Items ---
+
+        /// <summary>
+        /// Items -> player or NPC
+        /// </summary>
+    public class Item : Possession
+    {
+        public string Lore { get; set; } //background description
+        public PossItemEffect Effect { get; set; }
+        public int Amount { get; set; }
+
+        /// <summary>
+        /// default constructor -> year refers to when item was made (could be hundreds of years old)
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="year"></param>
+        public Item(string description, string lore, int year, PossItemEffect effect, int amount) : base(description, year)
+        {
+            this.Lore = lore;
+            this.Effect = effect;
+            this.Amount = amount;
+            Type = PossessionType.Item;
         }
     }
 }

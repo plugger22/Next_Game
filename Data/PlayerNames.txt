@@ -1,3 +1,5 @@
+#PlayerNames.txt -> Not used
+
 The Viper
 The Mute
 The Fiend

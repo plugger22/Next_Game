@@ -1,0 +1,40 @@
+# Items.txt -> list of all special items that may be found in game
+
+# Name: (string) descriptive name (max 4 words)
+# Lore: (string) background information. (single sentence)
+# Year: (int) year item created ( < gameStart ), if value -ve then indicates a 'BC' year.
+# Effect: (PossItemEffect enum) -> None / 
+# Amount: (int) multipurpose use related to effect. Default '0'
+# Arc: (int) Archetype ID for related events, if any (default '0')
+
+Name: 
+Lore:
+Year:
+Effect:
+Amount:
+ArcID: 
+[End]
+
+Name: 
+Lore:
+Year:
+Effect:
+Amount:
+ArcID: 
+[End]
+
+Name: 
+Lore:
+Year:
+Effect:
+Amount:
+ArcID: 
+[End]
+
+Name: 
+Lore:
+Year:
+Effect:
+Amount:
+ArcID: 
+[End]
