@@ -303,15 +303,58 @@ namespace Next_Game
                         }
                         else { Game.SetError(new Error(203, "Invalid Player Item Possession (null)")); }
                     }
-                    else { Game.SetError(new Error(203, string.Format("Invalid Item PossID (\"{0}\")", tempList[i]))); }
+                    else { Game.SetError(new Error(203, string.Format("Invalid Player Item PossID (\"{0}\")", tempList[i]))); }
                 }
             }
             else { Game.logTurn.Write(" [Notification] Player has no Items"); }
-
             //opponent
             tempList.Clear();
             tempList = opponent.GetItems();
-
+            if (tempList.Count > 0)
+            {
+                //loop list looking for active items that can be used in a challenge. Take the first found (should only be one anyway)
+                for (int i = 0; i < tempList.Count; i++)
+                {
+                    if (tempList[i] > 0)
+                    {
+                        Possession possession = Game.world.GetPossession(tempList[i]);
+                        if (possession != null)
+                        {
+                            if (possession.Active == true && possession is Item)
+                            {
+                                Item item = possession as Item;
+                                if (item.ChallengeFlag == true)
+                                {
+                                    //item is valid for this type of Conflict?
+                                    if (item.CheckChallengeType(Sub_Type) == true)
+                                    {
+                                        arrayItems[0, 0] = item.Description;
+                                        arrayItems[0, 1] = item.CardText;
+                                        arrayItems[0, 2] = item.CardNum.ToString();
+                                        if (Challenger == true)
+                                        {
+                                            string[] tempTexts = item.GetOutcomeTexts();
+                                            if (tempTexts.Length == 4)
+                                            {
+                                                //Good Text
+                                                arrayItems[0, 3] = tempTexts[0];
+                                                //Bad Text
+                                                arrayItems[0, 4] = tempTexts[1];
+                                            }
+                                            else { arrayItems[0, 3] = "Unknown"; arrayItems[0, 4] = "Unknown"; }
+                                        }
+                                    }
+                                    else { Game.logTurn.Write(string.Format(" [Notification] Opponent Item \"{0}\" isn't valid for this Challenge", item.Description)); }
+                                }
+                                else { Game.logTurn.Write(string.Format(" [Notification] Opponent Item \"{0}\" has no challenge effect", item.Description)); }
+                            }
+                        }
+                        else { Game.SetError(new Error(203, "Invalid Opponent Item Possession (null)")); }
+                    }
+                    else { Game.SetError(new Error(203, string.Format("Invalid Opponent Item PossID (\"{0}\")", tempList[i]))); }
+                }
+            }
+            else { Game.logTurn.Write(" [Notification] Opponent has no Items"); }
         }
 
 
