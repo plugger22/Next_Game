@@ -151,7 +151,7 @@ namespace Next_Game
         /// </summary>
         private void SetSupporters()
         {
-            Game.logTurn.Write("--- SetSupporters (Conflict.cs)");
+            Game.logTurn?.Write("--- SetSupporters (Conflict.cs)");
             int relThresholdPlyr = Game.constant.GetValue(Global.FRIEND_THRESHOLD); //relationship level (>=) with Player needed to be a supporter of Player
             int relThresholdOpp = Game.constant.GetValue(Global.ENEMY_THRESHOLD); //relationship level (<=) with Player needed to be a supporter of Opponent
             Dictionary<int, int> dictPlyrSupporters = new Dictionary<int, int>();
@@ -203,7 +203,7 @@ namespace Next_Game
                         else { Game.SetError(new Error(193, "Invalid actorID (zero or less)")); }
                     }
                     //Sort (highest to lowest) dictionaries -> Player
-                    Game.logTurn.Write(string.Format(" [Notification] dictPlyrSupporters has {0} records", dictPlyrSupporters.Count));
+                    Game.logTurn?.Write(string.Format(" [Notification] dictPlyrSupporters has {0} records", dictPlyrSupporters.Count));
                     if (dictPlyrSupporters.Count > 0)
                     {
                         var sortedDict = from entry in dictPlyrSupporters orderby entry.Value descending select entry;
@@ -217,14 +217,14 @@ namespace Next_Game
                                 descriptor = string.Format("{0} {1} \"{2}\", Friend", actor.Title, actor.Name, actor.Handle);
                                 arraySupportGood[index] = descriptor;
                                 index++;
-                                Game.logTurn.Write(string.Format(string.Format(" [Supporter -> Good] {0}, ActID {1}, relPlyr {2}", descriptor, actor.ActID, actor.GetRelPlyr())));
+                                Game.logTurn?.Write(string.Format(string.Format(" [Supporter -> Good] {0}, ActID {1}, relPlyr {2}", descriptor, actor.ActID, actor.GetRelPlyr())));
                                 if (index >= NumSupporters) { break; }
                             }
                             else { Game.SetError(new Error(193, "Invalid actor (null) in sortedDict -> dictPlyrSupporters")); }
                         }
                     }
                     //Sort (lowest to highest) dictionaries -> Opponent
-                    Game.logTurn.Write(string.Format(" [Notification] dictOppSupporters has {0} records", dictOppSupporters.Count));
+                    Game.logTurn?.Write(string.Format(" [Notification] dictOppSupporters has {0} records", dictOppSupporters.Count));
                     if (dictOppSupporters.Count > 0)
                     {
                         var sortedDict = from entry in dictOppSupporters orderby entry.Value ascending select entry;
@@ -238,7 +238,7 @@ namespace Next_Game
                                 descriptor = string.Format("{0} {1} \"{2}\", Enemy", actor.Title, actor.Name, actor.Handle);
                                 arraySupportBad[index] = descriptor;
                                 index++;
-                                Game.logTurn.Write(string.Format(string.Format(" [Supporter -> Bad] {0}, ActID {1}, relPlyr {2}", descriptor, actor.ActID, actor.GetRelPlyr())));
+                                Game.logTurn?.Write(string.Format(string.Format(" [Supporter -> Bad] {0}, ActID {1}, relPlyr {2}", descriptor, actor.ActID, actor.GetRelPlyr())));
                                 if (index >= NumSupporters) { break; }
                             }
                             else { Game.SetError(new Error(193, "Invalid actor (null) in sortedDict -> dictOppSupporters")); }

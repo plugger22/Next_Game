@@ -871,7 +871,7 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
-                                        logTurn.Dispose();
+                                        logTurn?.Dispose();
                                         logError.Dispose();
                                         _rootConsole.Close();
                                         //Environment.Exit(1); - not needed and causes OpenTK error
@@ -943,7 +943,7 @@ namespace Next_Game
                                 break;
                             case RLKey.Enter:
                                 world.ProcessEndTurn();
-                                logTurn.Close(); logTurn.Open(); //retain previous turn's output only
+                                logTurn?.Close(); logTurn?.Open(); //retain previous turn's output only
                                 world.ProcessStartTurn();
                                 infoChannel.ClearConsole(ConsoleDisplay.Input);
                                 infoChannel.ClearConsole(ConsoleDisplay.Multi);
@@ -998,7 +998,7 @@ namespace Next_Game
                 string descriptionError = builder.ToString();
                 if (logTurn != null)
                 {
-                    logTurn.Write(descriptionError); logError.Write(descriptionError);
+                    logTurn?.Write(descriptionError); logError.Write(descriptionError);
                     //tidy up before crash
                     logError.Dispose(); logError = null;
                     logTurn.Dispose(); logTurn = null;

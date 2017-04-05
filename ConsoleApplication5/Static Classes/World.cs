@@ -77,6 +77,7 @@ namespace Next_Game
             InitialiseGeoClusters();
             Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
             timer_2.Start();
+            InitialiseItems();
             InitialiseActiveActors(Game.history.GetActiveActors());
             Game.StopTimer(timer_2, "W: InitiatePlayerActors");
             timer_2.Start();
@@ -93,8 +94,7 @@ namespace Next_Game
             Game.StopTimer(timer_2, "W: InitialiseHistory");
             timer_2.Start();
             InitialiseSecrets();
-            InitialiseItems();
-            Game.StopTimer(timer_2, "W: InitialisePossessions");
+            Game.StopTimer(timer_2, "W: InitialiseSecrets");
             timer_2.Start();
             InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors
             InitialiseAI();
@@ -154,6 +154,38 @@ namespace Next_Game
                         SetActiveActor(player);
                         listOfActiveActors.RemoveAt(0);
                         //assign to random location on map -> EDIT: Already done in history.cs InitialisePlayer
+
+                        //DEBUG ----
+                        //Add an random, active, Item to the Player at game start that has a challenge effect
+                        List<Possession> listPossessions = new List<Possession>(dictPossessions.Values);
+                        List<Item> listItems = new List<Item>();
+                        {
+                            for (int k = 0; k < listPossessions.Count; k++)
+                            {
+                                Possession possObject = listPossessions[k];
+                                if (possObject.Active == true && possObject is Item)
+                                {
+                                    Item itemObject = possObject as Item;
+                                    if (itemObject.ChallengeFlag == true)
+                                    { listItems.Add(itemObject); }
+                                }
+                            }
+                        }
+                        //randomly choose one item from list
+                        if (listItems.Count > 0)
+                        {
+                            int rndIndex = rnd.Next(listItems.Count);
+                            int itemID = listItems[rndIndex].PossID;
+                            if (itemID > 0)
+                            {
+                                player.AddItem(itemID);
+                                Game.logStart.Write(string.Format("[Item] {0}, PossID {1}, ItemID {2} added to Player's Inventory", listItems[rndIndex].Description, listItems[rndIndex].PossID,
+                                    listItems[rndIndex].ItemID));
+                            }
+                        }
+                        //DEBUG---
+
+
                     }
                     else
                     { Game.SetError(new Error(63, "Invalid Player in listOfActiveActors")); }
@@ -3115,7 +3147,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartTurn()
         {
-            Game.logTurn.Write(string.Format("--- ProcessStartTurn, Day {0}, Turn {1} (World.cs) ", Game.gameTurn + 1, Game.gameTurn));
+            Game.logTurn?.Write(string.Format("--- ProcessStartTurn, Day {0}, Turn {1} (World.cs) ", Game.gameTurn + 1, Game.gameTurn));
             UpdateActorMoveStatus(MoveActors());
             CheckStationaryActiveActors();
             CalculateCrows();
@@ -3146,7 +3178,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessEndTurn()
         {
-            Game.logTurn.Write(string.Format("--- ProcessEndTurn, Day {0} Turn {1} (World.cs)", Game.gameTurn + 1, Game.gameTurn));
+            Game.logTurn?.Write(string.Format("--- ProcessEndTurn, Day {0} Turn {1} (World.cs)", Game.gameTurn + 1, Game.gameTurn));
             Game.map.UpdateMap();
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();
@@ -3451,16 +3483,6 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// returns a list of all Possessions from dictPossessions
-        /// </summary>
-        /// <returns></returns>
-        internal List<Possession> GetPossessionsList()
-        {
-            List<Possession> tempList = new List<Possession>(dictPossessions.Values);
-            return tempList;
-        }
-
-        /// <summary>
         /// returns a list of year + description of the specific object type in dictionary
         /// </summary>
         /// <param name="possType"></param>
@@ -3479,13 +3501,18 @@ namespace Next_Game
                     tempList = secretList.ToList();
                     break;
                 case PossessionType.Item:
-                    IEnumerable<string> itemList =
-                    from item in dictPossessions
-                    let temp = item.Value as Item
-                    where temp.Active == true && temp.ChallengeFlag == true
-                    orderby temp.ItemID
-                    select Convert.ToString("ItemID " + temp.ItemID + " " + item.Value.Description);
-                    tempList = itemList.ToList();
+                    /*var query =
+                    from possession in dictPossessions
+                    
+                    let item = query where possession.Value is Item
+                    //from item in items
+                    from item in items
+                    where item.Active == true && item.ChallengeFlag == true
+                    orderby item.ItemID
+                    select Convert.ToString("ItemID " + item.ItemID + " " + item.Description);
+                    tempList = var.ToList();
+                    select Convert.ToString("ItemID " + item.ItemID + " " + item.Description);
+                    tempList = query.ToList();*/
                     break;
                 case PossessionType.None:
                     Game.SetError(new Error(121, "Invalid possType Input (None)"));
