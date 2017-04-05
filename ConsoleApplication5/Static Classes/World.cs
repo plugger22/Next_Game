@@ -2355,7 +2355,7 @@ namespace Next_Game
             int numActors = dictAllActors.Count;
             int numChildren = numActors - (numGreatHouses * 2) - numBannerLords;
             //int numSecrets = dictSecrets.Count;
-            int numSecrets = CountPossessions(PossessionType.Secret);
+            int numSecrets = GetPossessionsCount(PossessionType.Secret);
             //checksum
             if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
             { Game.SetError(new Error(25, "Locations don't tally")); }
@@ -2848,7 +2848,7 @@ namespace Next_Game
                 orderby secret.Value.Year
                 select Convert.ToString(secret.Value.Year + " " + secret.Value.Description);
             tempList = secretList.ToList();*/
-            List <string> tempList = GetPossessionsList(PossessionType.Secret);
+            List <string> tempList = GetPossessionsSummary(PossessionType.Secret);
             //snippet list
             List<Snippet> listData = new List<Snippet>();
             foreach(string data in tempList)
@@ -3423,16 +3423,22 @@ namespace Next_Game
         /// </summary>
         /// <param name="possType"></param>
         /// <returns></returns>
-        internal int CountPossessions(PossessionType possType)
+        internal int GetPossessionsCount(PossessionType possType)
         {
             int num = 0;
             switch (possType)
             {
+                case PossessionType.Item:
+                    var itemResult = from possObject in dictPossessions
+                                 where possObject.Value is Item
+                                 select possObject;
+                    num = itemResult.Count();
+                    break;
                 case PossessionType.Secret:
-                    var result = from possObject in dictPossessions
+                    var secretResult = from possObject in dictPossessions
                                  where possObject.Value is Secret
                                  select possObject;
-                    num = result.Count();
+                    num = secretResult.Count();
                     break;
                 case PossessionType.None:
                     Game.SetError(new Error(120, "Invalid possType Input (None)"));
@@ -3445,11 +3451,21 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// returns a list of all Possessions from dictPossessions
+        /// </summary>
+        /// <returns></returns>
+        internal List<Possession> GetPossessionsList()
+        {
+            List<Possession> tempList = new List<Possession>(dictPossessions.Values);
+            return tempList;
+        }
+
+        /// <summary>
         /// returns a list of year + description of the specific object type in dictionary
         /// </summary>
         /// <param name="possType"></param>
         /// <returns></returns>
-        internal List<string> GetPossessionsList(PossessionType possType)
+        internal List<string> GetPossessionsSummary(PossessionType possType)
         {
             List<string> tempList = new List<string>();
             switch (possType)
@@ -3461,6 +3477,15 @@ namespace Next_Game
                     orderby secret.Value.Year
                     select Convert.ToString(secret.Value.Year + " " + secret.Value.Description);
                     tempList = secretList.ToList();
+                    break;
+                case PossessionType.Item:
+                    IEnumerable<string> itemList =
+                    from item in dictPossessions
+                    let temp = item.Value as Item
+                    where temp.Active == true && temp.ChallengeFlag == true
+                    orderby temp.ItemID
+                    select Convert.ToString("ItemID " + temp.ItemID + " " + item.Value.Description);
+                    tempList = itemList.ToList();
                     break;
                 case PossessionType.None:
                     Game.SetError(new Error(121, "Invalid possType Input (None)"));

@@ -62,6 +62,7 @@ namespace Next_Game
         public int[] arrayOfConditions { get; set; } //net effect of any conditions
         //lists
         private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
+        private List<int> listOfItems; //items have a PossID which can be referenced in the dictPossessionss (world.cs)
         private List<int> listOfFollowerEvents; //archetype events
         private List<int> listOfPlayerEvents; //archetype events
         private List<Relation> listOfRelLord; //list of relation messages relating to all actors other than the Player
@@ -86,6 +87,7 @@ namespace Next_Game
             arrayOfTraitNames = new string[(int)SkillType.Count];
             arrayOfConditions = new int[(int)SkillType.Count];
             listOfSecrets = new List<int>();
+            listOfItems = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
             listOfRelLord = new List<Relation>();
@@ -116,6 +118,7 @@ namespace Next_Game
             arrayOfTraitNames = new string[(int)SkillType.Count];
             arrayOfConditions = new int[(int)SkillType.Count];
             listOfSecrets = new List<int>();
+            listOfItems = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
             listOfRelLord = new List<Relation>();
@@ -344,7 +347,7 @@ namespace Next_Game
             if (possID > 0)
             { listOfSecrets.Add(possID); }
             else
-            { Game.SetError(new Error(7, "invalid Possession (Secret) ID")); }
+            { Game.SetError(new Error(7, "invalid Secret PossessionID (zero or less)")); }
         }
 
         public List<int> GetSecrets()
@@ -352,6 +355,21 @@ namespace Next_Game
 
         public void SetSecrets(List<int> secrets)
         { if (secrets != null) { listOfSecrets.Clear(); listOfSecrets.AddRange(secrets); } }
+
+        /// <summary>
+        /// Items
+        /// </summary>
+        /// <param name="possID"></param>
+        public void AddItem(int possID)
+        {
+            if (possID > 0)
+            { listOfItems.Add(possID); }
+            else
+            { Game.SetError(new Error(202, "invalid Item PossessionID (zero, or less)")); }
+        }
+
+        public List<int> GetItems()
+        { return listOfItems; }
 
         /// <summary>
         /// Conditions
