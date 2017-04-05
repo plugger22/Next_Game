@@ -220,6 +220,24 @@ namespace Next_Game
             else { Game.SetError(new Error(201, "Invalid list of ConflictSubTypes Input (null)")); }
         }
 
+        /// <summary>
+        /// returns true if item is valid for the input ConflictSubType challenge
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        internal bool CheckChallengeType(ConflictSubType type)
+        {
+            if (ChallengeFlag == true)
+            {
+                for (int i = 0; i < listOfChallenges.Count; i++)
+                {
+                    if (listOfChallenges[i] == type)
+                    { return true; }
+                }
+            }
+            return false;
+        }
+
         internal void SetOutcomeTexts(string[] tempArray)
         {
             if (tempArray.Length == 4)
@@ -229,6 +247,9 @@ namespace Next_Game
             }
             else { Game.SetError(new Error(201, string.Format("Invalid Outcome Texts Array Length (should be 4, not {0})", tempArray.Length))); }
         }
+
+        internal string[] GetOutcomeTexts()
+        { return outcomeText; }
     }
 
 

@@ -28,6 +28,7 @@ namespace Next_Game
         public ConflictCombat Combat_Type { get; set; }
         public ConflictSocial Social_Type { get; set; }
         public ConflictStealth Stealth_Type { get; set; }
+        public ConflictSubType Sub_Type { get; set; }
         //Game specific Situation
         public ConflictState Game_State { get; set; }
         public CardType Game_Type { get; set; }
@@ -49,6 +50,7 @@ namespace Next_Game
         private string[,] arraySituation;
         private string[] arraySupportGood;
         private string[] arraySupportBad;
+        private string[,] arrayItems;
         //three lists to consolidate into pool breakdown description
         private List<Snippet> listPlayerCards;
         private List<Snippet> listOpponentCards;
@@ -74,6 +76,7 @@ namespace Next_Game
             NumSupporters = Game.constant.GetValue(Global.NUM_SUPPORTERS);
             arraySupportGood = new string[NumSupporters]; //max 'NumSupporters' supporters for Player ('0' -> name supporter)
             arraySupportBad = new string[NumSupporters]; //max 'NumSupporters' supporters for Opponent ('0' -> name supporter)
+            arrayItems = new string[2, 5]; // Items ([0,] -> Player, [1,] -> Opponent) [,0] -> Description [,1] -> CardText [,2] -> CardNum [,3] -> Good outcome txt [,4] -> Bad outcome txt
             //lists to consolidate into pool breakdown description
             listPlayerCards = new List<Snippet>();
             listOpponentCards = new List<Snippet>();
@@ -94,8 +97,7 @@ namespace Next_Game
         /// </summary>
         public bool InitialiseConflict()
         {
-            //debug
-            Console.WriteLine("- Initialise {0} Challenge", Conflict_Type);
+            Game.logTurn?.Write(string.Format("- Initialise {0} Challenge", Conflict_Type));
             if (GetChallenge() == true) //get relevant challenge data
             {
                 Game.layout.InitialiseData();
@@ -104,6 +106,7 @@ namespace Next_Game
                 SetSituation(Game.director.GetSituationsNormal(), Game.director.GetSituationsGame());
                 CheckSpecialSituations();
                 SetSupporters();
+                SetItems();
                 SetCardPool();
                 SetOpponentStrategy();
                 SetRecommendedStrategy();
@@ -252,28 +255,89 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Checks both participants for items useable in a challenge
+        /// </summary>
+        private void SetItems()
+        {
+            Game.logTurn?.Write("--- SetItems (Conflict.cs)");
+            //player
+            List<int> tempList = player.GetItems();
+            if (tempList.Count > 0)
+            {
+                //loop list looking for active items that can be used in a challenge. Take the first found (should only be one anyway)
+                for (int i = 0; i < tempList.Count; i++)
+                {
+                    if (tempList[i] > 0)
+                    {
+                        Possession possession = Game.world.GetPossession(tempList[i]);
+                        if (possession != null)
+                        {
+                            if (possession.Active == true && possession is Item)
+                            {
+                                Item item = possession as Item;
+                                if (item.ChallengeFlag == true)
+                                {
+                                    //item is valid for this type of Conflict?
+                                    if (item.CheckChallengeType(Sub_Type) == true)
+                                    {
+                                        arrayItems[0, 0] = item.Description;
+                                        arrayItems[0, 1] = item.CardText;
+                                        arrayItems[0, 2] = item.CardNum.ToString();
+                                        if (Challenger == true)
+                                        {
+                                            string[] tempTexts = item.GetOutcomeTexts();
+                                            if (tempTexts.Length == 4)
+                                            {
+                                                //Good Text
+                                                arrayItems[0, 3] = tempTexts[0];
+                                                //Bad Text
+                                                arrayItems[0, 4] = tempTexts[1];
+                                            }
+                                            else { arrayItems[0, 3] = "Unknown"; arrayItems[0, 4] = "Unknown"; }
+                                        }
+                                    }
+                                    else { Game.logTurn.Write(string.Format(" [Notification] Player Item \"{0}\" isn't valid for this Challenge", item.Description)); }
+                                }
+                                else { Game.logTurn.Write(string.Format(" [Notification] Player Item \"{0}\" has no challenge effect", item.Description)); }
+                            }
+                        }
+                        else { Game.SetError(new Error(203, "Invalid Player Item Possession (null)")); }
+                    }
+                    else { Game.SetError(new Error(203, string.Format("Invalid Item PossID (\"{0}\")", tempList[i]))); }
+                }
+            }
+            else { Game.logTurn.Write(" [Notification] Player has no Items"); }
+
+            //opponent
+            tempList.Clear();
+            tempList = opponent.GetItems();
+
+        }
+
+
+        /// <summary>
         /// Gets relevant challenge from dictionary. Returns true if valid challenge found.
         /// </summary>
         private bool GetChallenge()
         {
             bool proceed = true;
-            ConflictSubType subType = ConflictSubType.None;
+            ConflictSubType Sub_Type = ConflictSubType.None;
             switch (Conflict_Type)
             {
                 case ConflictType.Combat:
                     switch(Combat_Type)
                     {
                         case ConflictCombat.Personal:
-                            subType = ConflictSubType.Personal;
+                            Sub_Type = ConflictSubType.Personal;
                             break;
                         case ConflictCombat.Tournament:
-                            subType = ConflictSubType.Tournament;
+                            Sub_Type= ConflictSubType.Tournament;
                             break;
                         case ConflictCombat.Battle:
-                            subType = ConflictSubType.Battle;
+                            Sub_Type= ConflictSubType.Battle;
                             break;
                         case ConflictCombat.Hunting:
-                            subType = ConflictSubType.Hunting;
+                            Sub_Type= ConflictSubType.Hunting;
                             break;
                         default:
                             Game.SetError(new Error(111, "Invalid Combat_Type"));
@@ -285,13 +349,13 @@ namespace Next_Game
                     switch(Social_Type)
                     {
                         case ConflictSocial.Befriend:
-                            subType = ConflictSubType.Befriend;
+                            Sub_Type= ConflictSubType.Befriend;
                             break;
                         case ConflictSocial.Blackmail:
-                            subType = ConflictSubType.Blackmail;
+                            Sub_Type= ConflictSubType.Blackmail;
                             break;
                         case ConflictSocial.Seduce:
-                            subType = ConflictSubType.Seduce;
+                            Sub_Type= ConflictSubType.Seduce;
                             break;
                         default:
                             Game.SetError(new Error(111, "Invalid Social_Type"));
@@ -303,13 +367,13 @@ namespace Next_Game
                     switch(Stealth_Type)
                     {
                         case ConflictStealth.Infiltrate:
-                            subType = ConflictSubType.Infiltrate;
+                            Sub_Type= ConflictSubType.Infiltrate;
                             break;
                         case ConflictStealth.Evade:
-                            subType = ConflictSubType.Evade;
+                            Sub_Type= ConflictSubType.Evade;
                             break;
                         case ConflictStealth.Escape:
-                            subType = ConflictSubType.Escape;
+                            Sub_Type = ConflictSubType.Escape;
                             break;
                         default:
                             Game.SetError(new Error(111, "Invalid Stealth_Type"));
@@ -324,7 +388,7 @@ namespace Next_Game
             }
             if (proceed == true)
             {
-                challenge = Game.director.GetChallenge(subType);
+                challenge = Game.director.GetChallenge(Sub_Type);
                 if (challenge == null)
                 { Game.SetError(new Error(111, "Challenge not found (returns null)")); return false; }
                 else
