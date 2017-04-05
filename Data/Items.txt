@@ -2,7 +2,7 @@
 
 # Name: (string) descriptive name (max 4 words)
 # ItemID: <int> unique number, 1+
-# Type (PossItemType enum) -> Passive / Active (have an effect)
+# Type (PossItemType enum) -> Passive (no effect) / Active (have an effect)
 # Lore: (string) background information. (single sentence)
 # Year: (int) year item created ( < gameStart ), if value -ve then indicates a 'BC' year.
 # Effect: (PossItemEffect enum) -> None / 
@@ -28,7 +28,7 @@ Year: -1000
 Effect: None
 Amount: 0
 Known: Yes
-Chall: False
+Chall: No
 [End]
 
 Name: Head Lopper

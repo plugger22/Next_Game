@@ -54,6 +54,7 @@ namespace Next_Game
         private List<Snippet> listOpponentCards;
         private List<Snippet> listSituationCards;
         private List<Snippet> listSupporterCards;
+        private List<Snippet> listItemCards;
 
         /// <summary>
         /// default Constructor
@@ -73,11 +74,12 @@ namespace Next_Game
             NumSupporters = Game.constant.GetValue(Global.NUM_SUPPORTERS);
             arraySupportGood = new string[NumSupporters]; //max 'NumSupporters' supporters for Player ('0' -> name supporter)
             arraySupportBad = new string[NumSupporters]; //max 'NumSupporters' supporters for Opponent ('0' -> name supporter)
-            //three lists to consolidate into pool breakdown description
+            //lists to consolidate into pool breakdown description
             listPlayerCards = new List<Snippet>();
             listOpponentCards = new List<Snippet>();
             listSituationCards = new List<Snippet>();
             listSupporterCards = new List<Snippet>();
+            listItemCards = new List<Snippet>();
             //get player (always the player vs. somebody else)
             player = (Player)Game.world.GetActiveActor(1);
             if (player != null) {}
