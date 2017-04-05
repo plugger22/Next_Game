@@ -2324,6 +2324,7 @@ namespace Next_Game
         /// </summary>
         private void InitialiseItems()
         {
+            Game.logStart.Write("--- InitialiseItems (World.cs)");
             List<Item> tempList = Game.file.GetItems("Items.txt");
             if (tempList != null)
             {

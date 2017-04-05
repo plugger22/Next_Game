@@ -266,10 +266,8 @@ namespace Next_Game
         public int ArcID { get; set; }
         public bool Known { get; set; }
         public bool Challenge { get; set; }
-        public List<ConflictSubType> ListSubTypes { get; set; }
         public int CardNum { get; set; }
         public string CardText { get; set; }
-        public string[] OutcomeTexts { get; set; } //[0] -> Plyr Chall Good, [1] -> Plyr Chall Bad, [2] -> Plyr Def Good, [3] -> Plyr Def Bad
     }
 
     //results
@@ -1798,10 +1796,14 @@ namespace Next_Game
                                     {
                                         case "Yes":
                                         case "yes":
+                                        case "True":
+                                        case "true":
                                             structOutcome.PlayerRes = true;
                                             break;
                                         case "No":
                                         case "no":
+                                        case "False":
+                                        case "false":
                                             structOutcome.PlayerRes = false;
                                             break;
                                         default:
@@ -1816,10 +1818,14 @@ namespace Next_Game
                                     {
                                         case "Yes":
                                         case "yes":
+                                        case "True":
+                                        case "true":
                                             structOutcome.PlayerCondition = true;
                                             break;
                                         case "No":
                                         case "no":
+                                        case "False":
+                                        case "false":
                                             structOutcome.PlayerCondition = false;
                                             break;
                                         default:
@@ -4010,6 +4016,7 @@ namespace Next_Game
             if (arrayOfItems != null)
             {
                 List<ItemStruct> listOfStructs = new List<ItemStruct>();
+                List<ConflictSubType> listSubTypes = new List<ConflictSubType>();
                 bool newItem = false;
                 bool validData = true;
                 int dataCounter = 0; //number of challenges
@@ -4031,6 +4038,7 @@ namespace Next_Game
                             Array.Clear(tempArray, 0, tempArray.Length);
                             //new structure
                             structItem = new ItemStruct();
+                            listSubTypes = new List<ConflictSubType>();
                         }
                         string[] tokens = arrayOfItems[i].Split(new Char[] { ':', ';' });
                         //strip out leading spaces
@@ -4124,10 +4132,14 @@ namespace Next_Game
                                     {
                                         case "Yes":
                                         case "yes":
+                                        case "True":
+                                        case "true":
                                             structItem.Known = true;
                                             break;
                                         case "No":
                                         case "no":
+                                        case "False":
+                                        case "false":
                                             structItem.Known = false;
                                             break;
                                         default:
@@ -4141,10 +4153,14 @@ namespace Next_Game
                                     {
                                         case "Yes":
                                         case "yes":
+                                        case "True":
+                                        case "true":
                                             structItem.Challenge = true;
                                             break;
                                         case "No":
                                         case "no":
+                                        case "False":
+                                        case "false":
                                             structItem.Challenge = false;
                                             break;
                                         default:
@@ -4155,7 +4171,7 @@ namespace Next_Game
                                     break;
                                 case "SubTypes":
                                     string[] arrayOfSubTypes = cleanToken.Split(',');
-                                    List<ConflictSubType> listSubTypes = new List<ConflictSubType>();
+                                    
                                     string tempHandle = null;
                                     for (int k = 0; k < arrayOfSubTypes.Length; k++)
                                     {
@@ -4240,10 +4256,13 @@ namespace Next_Game
                                             {
                                                 itemObject.CardText = structItem.CardText;
                                                 itemObject.CardNum = structItem.CardNum;
-                                                itemObject.SetConflictChallenges(structItem.ListSubTypes);
-                                                itemObject.SetOutcomeTexts(structItem.OutcomeTexts);
+                                                itemObject.SetConflictChallenges(listSubTypes);
+                                                itemObject.SetOutcomeTexts(tempArray);
                                             }
-
+                                            //add to list
+                                            listItems.Add(itemObject);
+                                            Game.logStart.Write(string.Format("{0}, ItemID {1}, {2}, Year {3}", itemObject.Description, itemObject.ItemID,
+                                                itemObject.Lore, itemObject.Year));
                                         }
                                         else
                                         { Game.SetError(new Error(200, string.Format("{0} Item not imported due to errors", structItem.Name))); }
@@ -4494,10 +4513,14 @@ namespace Next_Game
                                 {
                                     case "Yes":
                                     case "yes":
+                                    case "True":
+                                    case "true":
                                         structResult.ConPlayer = true;
                                         break;
                                     case "No":
                                     case "no":
+                                    case "False":
+                                    case "false":
                                         structResult.ConPlayer = false;
                                         break;
                                     default:
