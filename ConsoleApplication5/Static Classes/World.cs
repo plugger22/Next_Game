@@ -2707,8 +2707,8 @@ namespace Next_Game
                 { messageQueue.Dequeue(); }
                 //add to dictionary
                 dictMessages.Add(message.trackerID, message);
-                //debug
-                Game.logTurn.Write(string.Format("Message -> [{0}] Day {1}, {2}, {3}", message.Type, message.Day, message.Year, message.Text));
+                //debug -> doesn't work 'cause called by both logStart and logTurn
+                //Game.logTurn.Write(string.Format("Message -> [{0}] Day {1}, {2}, {3}", message.Type, message.Day, message.Year, message.Text));
             }
         }
 
@@ -4563,7 +4563,7 @@ namespace Next_Game
         /// </summary>
         private void InitialiseAI()
         {
-            Game.logTurn.Write("--- InitialiseAI (World.cs)");
+            Game.logStart.Write("--- InitialiseAI (World.cs)");
             int connectorBonus = Game.constant.GetValue(Global.AI_CONNECTOR);
             //work out branch priorities
             int numBranches = Game.network.GetNumBranches();
@@ -4629,7 +4629,7 @@ namespace Next_Game
             //display arrayAI
             
             for(int i = 0; i <= arrayAI.GetUpperBound(1); i++)
-            { Game.logTurn.Write(string.Format(" {0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i], 
+            { Game.logStart.Write(string.Format(" {0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i], 
                 arrayTemp[i])); }
         }
 

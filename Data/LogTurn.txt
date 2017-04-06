@@ -1,50 +1,70 @@
-//Exile Game File "LogTurn.txt" opened at: 06/04/2017 13:41:44
---- ProcessStartTurn, Day 13, Turn 12 (World.cs) 
---- MoveActors -> 3 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 129 travelling to Kingskeep (current Loc 21:12)
- [Move -> MoveObject] Inquisitor Brother Adramalech, ActID 130 travelling to Kingskeep (current Loc 18:19)
- [Move -> MoveObject] Inquisitor Brother Nergal, ActID 131 travelling to Kingskeep (current Loc 14:7)
+//Exile Game File "LogTurn.txt" opened at: 06/04/2017 14:11:40
+--- ProcessStartTurn, Day 2, Turn 1 (World.cs) 
+--- MoveActors -> 0 Records (World.cs)
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Roose Stark, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Shaitan, ID 124 at 16:14, Active Roose Stark, ID 1, at 14:9
+ [Search -> Debug] Enemy, Brother Damballa, ID 125 at 16:14, Active Roose Stark, ID 1, at 14:9
+ [Search -> Debug] Enemy, Brother Mormo, ID 126 at 16:14, Active Roose Stark, ID 1, at 14:9
+ [Search -> Debug] Enemy, Brother Behemoth, ID 127 at 16:14, Active Roose Stark, ID 1, at 14:9
+ [Search -> Debug] Enemy, The Unrelenting, ID 128 at 16:14, Active Roose Stark, ID 1, at 14:9
+ [Search -> Stationary] Follower The Leper, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 7 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 124 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 125 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mormo, Act ID 126 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 127 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 128 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Known] Brother Shaitan ActID 124 has become KNOWN
+ [Enemy -> Goal] Brother Shaitan, ActID 124 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Damballa, ActID 125 Assigned Branch -> 2 Current Branch -> 0
+ [Goal -> New] Brother Damballa, ActID 125, (loc 16:14), assigned new Goal -> Move
+ [Goal -> Move] Brother Damballa, ActID 125 -> Capital to Correct Branch -> One Eyed Pete's, LocID 7
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mormo, ActID 126 Assigned Branch -> 3 Current Branch -> 0
+ [Goal -> New] Brother Mormo, ActID 126, (loc 16:14), assigned new Goal -> Move
+ [Goal -> Move] Brother Mormo, ActID 126 -> Capital to Correct Branch -> The Raucous Rat, LocID 18
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Behemoth, ActID 127 retains Goal -> Wait
+ [Enemy -> Known] The Unrelenting ActID 128 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 128 Assigned Branch -> 0 Current Branch -> 0
 --- CheckPlayerEvents (Director.cs)
---- ResolvePlayerEvents (Director.cs)
- Event "Enemy Afoot" Timer Repeat now 999
- Event "Enemy Afoot" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-SetGameSituation] -> "how well you are Known in the Land -100 %", difference -100 Modifier 80 numCards 5
-- Initialise Stealth Challenge
---- SetSupporters (Conflict.cs)
- [Notification] dictPlyrSupporters has 1 records
- [Supporter -> Good] Master_of_Ships Jaime Umbert "The UnRead", Friend, ActID 105, relPlyr 73
- [Notification] dictOppSupporters has 6 records
- [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 132, relPlyr 0
- [Supporter -> Bad] Heir Helman Florent "The Canny", Enemy, ActID 34, relPlyr 2
- [Supporter -> Bad] King Heward Florent "The Observant", Enemy, ActID 28, relPlyr 6
---- SetItems (Conflict.cs)
- [Notification] Opponent has no Items
---- GetSituationCardNumber (Conflict.cs)
- modifier 0, rndNum 68, net 68, numCards 2
---- GetSituationCardNumber (Conflict.cs)
- modifier 0, rndNum 70, net 70, numCards 2
---- SetOpponentStrategy (Conflict.cs)
-[Conflict -> Debug] Good -> 11 Bad -> 22 Margin -> 2 rndFactor -> 0 Opp Wits -> 4 Opp PSkill -> 4 Def Spec -> 0 Challenger -> False
-[Conflict -> Plyr Def's] Bad 22 + rndFactor 0 - good 11 > margin 2
---- ResolveResults (Conflict.cs)
-//Exile Game file ops "LogTurn.txt" Completed at: 06/04/2017 13:42:47
-105 added to list of Advisors
- [AutoEvent -> AdvisorList] "Guarnier Goisfrid", ID 106 added to list of Advisors
- [AutoEvent -> LocalList] "Heward Florent", ID 28 added to list of Locals
- [AutoEvent -> LocalList] "Helman Florent", ID 34 added to list of Locals
- [AutoEvent -> AdvisorList] "Mace Tolly", ID 124 added to list of Advisors
- [AutoEvent -> AdvisorList] "Donnel Manfred", ID 125 added to list of Advisors
- [AutoEvent -> AdvisorList] "Merrett Jankin", ID 126 added to list of Advisors
- [AutoEvent -> AdvisorList] "Pereret Francis", ID 127 added to list of Advisors
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Nycolas Martell", ID 10 added to list of Actors
+ [AutoEvent -> ActorList] "Auphrey Martell", ID 11 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Hunfridus Alainon", ID 12 added to list of Actors
+ [AutoEvent -> ActorList] "Stafford Gernier", ID 13 added to list of Actors
+ [AutoEvent -> ActorList] "Cristal Nicholaus", ID 14 added to list of Actors
+ [AutoEvent -> ActorList] "Peter Ivo", ID 15 added to list of Actors
+ [AutoEvent -> ActorList] "Joanna Martell", ID 16 added to list of Actors
+ [AutoEvent -> ActorList] "Willem Martell", ID 17 added to list of Actors
+ [AutoEvent -> ActorList] "Gennevote Martell", ID 18 added to list of Actors
+ [AutoEvent -> LocalList] "Nycolas Martell", ID 10 added to list of Locals
+ [AutoEvent -> LocalList] "Auphrey Martell", ID 11 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Hunfridus Alainon", ID 12 added to list of Locals
+ [AutoEvent -> AdvisorList] "Stafford Gernier", ID 13 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Cristal Nicholaus", ID 14 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Peter Ivo", ID 15 added to list of Advisors
+ [AutoEvent -> LocalList] "Joanna Martell", ID 16 added to list of Locals
+ [AutoEvent -> LocalList] "Willem Martell", ID 17 added to list of Locals
+ [AutoEvent -> LocalList] "Gennevote Martell", ID 18 added to list of Locals
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Roose Stark has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Leper has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
 --- ResolveOutcome (Director.cs)
---- ResolveFollowerEvents (Director.cs)
---- ResolveFollowerEvents (Director.cs)
---- ProcessEndTurn, Day 12 Turn 11 (World.cs)
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 9
-//Exile Game File "LogTurn.txt" Close completed at: 06/04/2017 13:41:44
+//Exile Game file ops "LogTurn.txt" Completed at: 06/04/2017 14:11:47
