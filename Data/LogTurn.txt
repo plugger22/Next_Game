@@ -1,13 +1,13 @@
-//Exile Game File "LogTurn.txt" opened at: 06/04/2017 11:28:43
---- ProcessStartTurn, Day 13, Turn 12 (World.cs) 
+//Exile Game File "LogTurn.txt" opened at: 06/04/2017 11:37:19
+--- ProcessStartTurn, Day 18, Turn 17 (World.cs) 
+ [AddEnemy -> Notification] enemyID 127 activated False and isn't added to the list
 - Initialise Combat Challenge
 --- SetSupporters (Conflict.cs)
- [Notification] dictPlyrSupporters has 1 records
- [Supporter -> Good] Master_of_Coin Gerbod Timm "The Dark Rodent", Friend, ActID 102, relPlyr 74
- [Notification] dictOppSupporters has 10 records
- [Supporter -> Bad] Queen Dorna Tully "The Unembellished", Enemy, ActID 52, relPlyr 0
- [Supporter -> Bad] Heir Chett Tully "The Hurt", Enemy, ActID 57, relPlyr 0
- [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 132, relPlyr 0
+ [Notification] dictPlyrSupporters has 0 records
+ [Notification] dictOppSupporters has 9 records
+ [Supporter -> Bad] King Gregor Arryn "The Active", Enemy, ActID 39, relPlyr 0
+ [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 127, relPlyr 0
+ [Supporter -> Bad] Inquisitor Brother Demogorgon "The Loyal", Enemy, ActID 126, relPlyr 0
 --- SetItems (Conflict.cs)
  [Notification] Opponent has no Items
-//Exile Game file ops "LogTurn.txt" Completed at: 06/04/2017 11:33:07
+//Exile Game file ops "LogTurn.txt" Completed at: 06/04/2017 11:39:05

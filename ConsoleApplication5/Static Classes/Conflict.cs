@@ -515,7 +515,7 @@ namespace Next_Game
         private void SetOpponentStrategy()
         {
             //NOTE: Doesn't take into account secrets
-
+            Game.logTurn.Write("--- SetOpponentStrategy (Conflict.cs)");
             int good = arrayPool[0];
             int bad = arrayPool[2];
             int defenderSpecific = arrayPool[3]; //defender advantage cards (only apply if defender chooses a defensive strategy)
@@ -527,8 +527,8 @@ namespace Next_Game
             //Factor is applied depending on Primary skill -> if < 3 then factor works against an aggressive strategy, if > 3 then towards & if factor = 0 then no random factor 
             if (opponentPrimarySkill < 3) { rndFactor *= -1; } 
             else if (opponentPrimarySkill == 3) { rndFactor = 0; }
-            Console.WriteLine("[Conflict -> Debug] Good -> {0} Bad -> {1} Margin -> {2} rndFactor -> {3} Opp Wits -> {4} Opp PSkill -> {5} Def Spec -> {6} Challenger -> {7}", good, bad, margin,
-                        rndFactor, opponentWits, opponentPrimarySkill, defenderSpecific, Challenger);
+            Game.logTurn.Write(string.Format("[Conflict -> Debug] Good -> {0} Bad -> {1} Margin -> {2} rndFactor -> {3} Opp Wits -> {4} Opp PSkill -> {5} Def Spec -> {6} Challenger -> {7}", good, bad, margin,
+                        rndFactor, opponentWits, opponentPrimarySkill, defenderSpecific, Challenger));
             if (Challenger == true)
             {
                 //opponent is the defender 
@@ -536,13 +536,13 @@ namespace Next_Game
                 {
                     //aggressive
                     Game.layout.Strategy_Opponent = 0;
-                    Console.WriteLine("[Conflict -> Opp Def's] Good {0} + rndFactor {1} - bad {2} - defSpec {3} > margin {4}", good, rndFactor, bad, defenderSpecific, margin);
+                    Game.logTurn.Write(string.Format("[Conflict -> Opp Def's] Good {0} + rndFactor {1} - bad {2} - defSpec {3} > margin {4}", good, rndFactor, bad, defenderSpecific, margin));
                 }
                 else if (bad - good > margin)
                 {
                     //defensive
                     Game.layout.Strategy_Opponent = 2;
-                    Console.WriteLine("[Conflict -> Opp Def's] Bad {0} - Good {1} > margin {2}", bad, good, margin);
+                    Game.logTurn.Write(string.Format("[Conflict -> Opp Def's] Bad {0} - Good {1} > margin {2}", bad, good, margin));
                 }
                 else
                 {
@@ -558,14 +558,14 @@ namespace Next_Game
                 {
                     //aggressive
                     Game.layout.Strategy_Opponent = 0;
-                    Console.WriteLine("[Conflict -> Plyr Def's] Bad {0} + rndFactor {1} - good {2} > margin {3}", bad, rndFactor, good, margin);
+                    Game.logTurn.Write(string.Format("[Conflict -> Plyr Def's] Bad {0} + rndFactor {1} - good {2} > margin {3}", bad, rndFactor, good, margin));
                 }
                 //else if (bad - good > margin)
                 else if (bad - good <= 0)
                 {
                     //defensive
                     Game.layout.Strategy_Opponent = 2;
-                    Console.WriteLine("[Conflict -> Plyr Def's] Bad {0} - Good {1} <= 0", bad, good, margin);
+                    Game.logTurn.Write(string.Format("[Conflict -> Plyr Def's] Bad {0} - Good {1} <= 0", bad, good, margin));
                 }
                 else
                 {
@@ -1216,7 +1216,7 @@ namespace Next_Game
                 else { numCards = 2; }
             }
             //debug
-            Console.WriteLine("SitCard: modifier {0}, rndNum {1}, net {2}, numCards {3}", modifier, rndDebug, rndNum, numCards);
+            Game.logTurn.Write(string.Format("[GetSituationCardNumber] -> modifier {0}, rndNum {1}, net {2}, numCards {3}", modifier, rndDebug, rndNum, numCards));
             //return 
             return numCards;
         }
@@ -1614,6 +1614,7 @@ namespace Next_Game
                     Card_Conflict card = new Card_Conflict(CardConflict.Item, CardType.Good, arrayItems[0, 0], arrayItems[0, 1])
                     { PlayedText = arrayItems[0, 3], IgnoredText = arrayItems[0, 4] };
                     listCardPool.Add(card);
+                    arrayPool[0]++;
                 }
             }
             if (arrayItems[1, 0]?.Length > 0)
@@ -1633,6 +1634,7 @@ namespace Next_Game
                     Card_Conflict card = new Card_Conflict(CardConflict.Item, CardType.Good, arrayItems[1, 0], arrayItems[1, 1])
                     { PlayedText = arrayItems[1, 3], IgnoredText = arrayItems[1, 4] };
                     listCardPool.Add(card);
+                    arrayPool[2]++;
                 }
             }
 
@@ -1885,7 +1887,7 @@ namespace Next_Game
             numCards = Math.Min(5, numCards);
             arrayModifiers[2] = numCards;
             //debug
-            Console.WriteLine("Situation: \"{0}\", difference {1} Modifier {2} numCards {3}", description, difference, modifier, numCards);
+            Game.logTurn.Write(string.Format("SetGameSituation] -> \"{0}\", difference {1} Modifier {2} numCards {3}", description, difference, modifier, numCards));
             //Type (if difference between -10 & +10 then card is neutral
             if (difference > 10) { Game_Type = CardType.Good; }
             else if (difference < -10) { Game_Type = CardType.Bad; }
@@ -1971,12 +1973,11 @@ namespace Next_Game
                             if (numCards == 0) { numCards = GetSituationCardNumber(); }
                             int number = numCards;
                             //debug
-                            Console.WriteLine("SetSpecialSituation: \"{0}\", numCards {1}, Added to listCardsSpecial", situation.Name, numCards);
+                            Game.logTurn.Write(string.Format("[SetSpecialSituation] -> \"{0}\", numCards {1}, Added to listCardsSpecial", situation.Name, numCards));
                             //add cards to special card list
                             for (int i = 0; i < number; i++)
                             {
                                 Card_Conflict card = new Card_Conflict(CardConflict.Situation, type, situation.Name, "A Special Situation");
-                                //Console.WriteLine("SPECIAL Situation \"{0}\" -> {1}, Challenger {2}", card.Title, card.Type, Challenger);
                                 card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)];
                                 card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)];
                                 card.TypeDefend = CardType.Good; //as long as it's not CardType.None
@@ -2085,6 +2086,7 @@ namespace Next_Game
         /// <returns>A snippet list describing each individual result, suitable for display, green for good, red for bad</returns>
         internal List<Snippet> ResolveResults(ConflictResult outcome)
         {
+            Game.logTurn.Write("--- ResolveResults (Conflict.cs)");
             List<Snippet> tempList = new List<Snippet>();
             List<int> resultList = challenge.GetResults(outcome);
             int resultID;
@@ -2109,8 +2111,8 @@ namespace Next_Game
                             int rndNum = rnd.Next(0, 100);
                             testText = string.Format("(needed {0} %, or less, rolled {1})", result.Test, rndNum);
                             if (rndNum > result.Test)
-                            { type = ResultType.None; Console.WriteLine("{0} failed Test {1}", result.Description, testText); }
-                            else { Console.WriteLine("{0} PASSED Test {1}", result.Description, testText); }
+                            { type = ResultType.None; Game.logTurn.Write(string.Format("{0} failed Test {1}", result.Description, testText)); }
+                            else { Game.logTurn.Write(string.Format("{0} PASSED Test {1}", result.Description, testText)); }
                         }
                         //check for a random outcome -> then it's random 'amount', eg. amount is 100 then it's d100, -100 then it's -1d100
                         if (calc == EventCalc.Random)
@@ -2118,11 +2120,11 @@ namespace Next_Game
                             if (amount > 1) { amount = rnd.Next(1, amount); calc = EventCalc.Add; }
                             else if (amount < -1) { amount = rnd.Next(1, Math.Abs(amount)) * -1; calc = EventCalc.Add; }
                             int halfAmount;
-                            Console.WriteLine("RelPlyr amount beforehand {0}", amount);
+                            Game.logTurn.Write(string.Format("RelPlyr amount beforehand {0}", amount));
                             //if random amount comes in at less than half the range then bump it up to half (effective range = Amount/2 -> Amount)
                             if (result.Amount > 0) { halfAmount = result.Amount / 2; if (amount < halfAmount) { amount = halfAmount; } }
                             if (result.Amount < 0) { halfAmount = result.Amount / 2; if (amount > halfAmount) { amount = halfAmount; } }
-                            Console.WriteLine("RelPlyr amount afterwards {0}", amount);
+                            Game.logTurn.Write(string.Format("RelPlyr amount afterwards {0}", amount));
                         }
                         //resolve the actual result
                         Message message = null;
@@ -2130,7 +2132,7 @@ namespace Next_Game
                         switch (type)
                         {
                             case ResultType.DataPoint:
-                                Console.WriteLine("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount);
+                                Game.logTurn.Write(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
                                 if (result.DataPoint > DataPoint.None)
                                 {
                                     if (amount != 0)
@@ -2294,7 +2296,7 @@ namespace Next_Game
                                                     eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, multiText, opponent);
                                                     Passive tempOpponent = opponent as Passive;
                                                     eventObject.SubRef = tempOpponent.HouseID;
-                                                    Console.WriteLine("Event \"{0}\" assigned subRef {1} (HouseID)", eventObject.Name, eventObject.SubRef);
+                                                    Game.logTurn.Write(string.Format("Event \"{0}\" assigned subRef {1} (HouseID)", eventObject.Name, eventObject.SubRef));
                                                 }
                                                 //Terrain cluster, needs to match GeoID of cluster
                                                 else if (eventObject.Type == ArcType.GeoCluster)
@@ -2305,7 +2307,7 @@ namespace Next_Game
                                                         eventObject.SubRef = Game.map.GetMapInfo(MapLayer.GeoID, loc.GetPosX(), loc.GetPosY());
                                                         GeoCluster cluster = Game.world.GetGeoCluster(eventObject.SubRef);
                                                         eventObject.Text = Game.utility.CheckTagsAuto(eventObject.Text, null, null, cluster);
-                                                        Console.WriteLine("Event \"{0}\" assigned subRef {1} (GeoID)", eventObject.Name, eventObject.SubRef);
+                                                        Game.logTurn.Write(string.Format("Event \"{0}\" assigned subRef {1} (GeoID)", eventObject.Name, eventObject.SubRef));
                                                     }
                                                     else { Game.SetError(new Error(113, "Invalid Terrain Cluster Loc (null)")); }
                                                 }
@@ -2358,7 +2360,7 @@ namespace Next_Game
                         { Game.world.SetMessage(message); }
                     }
                     else
-                    { Console.WriteLine("[Result -> Notification] Invalid, or Missing, result (null returned, resultID \"{0}\")", resultID); }
+                    { Game.logTurn.Write(string.Format("[Result -> Notification] Invalid, or Missing, result (null returned, resultID \"{0}\")", resultID)); }
                 }
             }
             else { Game.SetError(new Error(113, string.Format("Invalid Input (no results from \"{0}\")", outcome))); }

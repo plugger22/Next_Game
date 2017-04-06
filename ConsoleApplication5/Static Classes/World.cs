@@ -1013,7 +1013,7 @@ namespace Next_Game
                             if (possession is Item)
                             {
                                 Item item = possession as Item;
-                                listToDisplay.Add(new Snippet(string.Format("{0}, \"{1}\"", item.Description, item.Lore)));
+                                listToDisplay.Add(new Snippet(string.Format("itemID {0} {1}, \"{2}\"", item.ItemID, item.Description, item.Lore)));
                             }
                         }
                     }
