@@ -62,7 +62,7 @@ Known: Yes
 Chall: Yes
 SubTypes: Infiltrate, Evade, Escape
 Cards: 2
-Text: The third eye that sees al
+Text: The third eye that sees all
 GoodChall: Mage Ring good chall
 BadChall: Mage Ring bad chall
 GoodDef: Mage Ring good def

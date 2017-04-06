@@ -1,13 +1,50 @@
-//Exile Game File "LogTurn.txt" opened at: 06/04/2017 11:37:19
---- ProcessStartTurn, Day 18, Turn 17 (World.cs) 
- [AddEnemy -> Notification] enemyID 127 activated False and isn't added to the list
-- Initialise Combat Challenge
+//Exile Game File "LogTurn.txt" opened at: 06/04/2017 13:41:44
+--- ProcessStartTurn, Day 13, Turn 12 (World.cs) 
+--- MoveActors -> 3 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 129 travelling to Kingskeep (current Loc 21:12)
+ [Move -> MoveObject] Inquisitor Brother Adramalech, ActID 130 travelling to Kingskeep (current Loc 18:19)
+ [Move -> MoveObject] Inquisitor Brother Nergal, ActID 131 travelling to Kingskeep (current Loc 14:7)
+--- CheckPlayerEvents (Director.cs)
+--- ResolvePlayerEvents (Director.cs)
+ Event "Enemy Afoot" Timer Repeat now 999
+ Event "Enemy Afoot" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+SetGameSituation] -> "how well you are Known in the Land -100 %", difference -100 Modifier 80 numCards 5
+- Initialise Stealth Challenge
 --- SetSupporters (Conflict.cs)
- [Notification] dictPlyrSupporters has 0 records
- [Notification] dictOppSupporters has 9 records
- [Supporter -> Bad] King Gregor Arryn "The Active", Enemy, ActID 39, relPlyr 0
- [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 127, relPlyr 0
- [Supporter -> Bad] Inquisitor Brother Demogorgon "The Loyal", Enemy, ActID 126, relPlyr 0
+ [Notification] dictPlyrSupporters has 1 records
+ [Supporter -> Good] Master_of_Ships Jaime Umbert "The UnRead", Friend, ActID 105, relPlyr 73
+ [Notification] dictOppSupporters has 6 records
+ [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 132, relPlyr 0
+ [Supporter -> Bad] Heir Helman Florent "The Canny", Enemy, ActID 34, relPlyr 2
+ [Supporter -> Bad] King Heward Florent "The Observant", Enemy, ActID 28, relPlyr 6
 --- SetItems (Conflict.cs)
  [Notification] Opponent has no Items
-//Exile Game file ops "LogTurn.txt" Completed at: 06/04/2017 11:39:05
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 68, net 68, numCards 2
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 70, net 70, numCards 2
+--- SetOpponentStrategy (Conflict.cs)
+[Conflict -> Debug] Good -> 11 Bad -> 22 Margin -> 2 rndFactor -> 0 Opp Wits -> 4 Opp PSkill -> 4 Def Spec -> 0 Challenger -> False
+[Conflict -> Plyr Def's] Bad 22 + rndFactor 0 - good 11 > margin 2
+--- ResolveResults (Conflict.cs)
+//Exile Game file ops "LogTurn.txt" Completed at: 06/04/2017 13:42:47
+105 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Goisfrid", ID 106 added to list of Advisors
+ [AutoEvent -> LocalList] "Heward Florent", ID 28 added to list of Locals
+ [AutoEvent -> LocalList] "Helman Florent", ID 34 added to list of Locals
+ [AutoEvent -> AdvisorList] "Mace Tolly", ID 124 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Donnel Manfred", ID 125 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Merrett Jankin", ID 126 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Pereret Francis", ID 127 added to list of Advisors
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- ProcessEndTurn, Day 12 Turn 11 (World.cs)
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 9
+//Exile Game File "LogTurn.txt" Close completed at: 06/04/2017 13:41:44

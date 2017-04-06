@@ -1198,6 +1198,7 @@ namespace Next_Game
         /// <returns></returns>
         private int GetSituationCardNumber(int modifier = 0)
         {
+            Game.logTurn.Write("--- GetSituationCardNumber (Conflict.cs)");
             int numCards = 1;
             int rndNum = rnd.Next(100);
             int rndDebug = rndNum;
@@ -1216,7 +1217,7 @@ namespace Next_Game
                 else { numCards = 2; }
             }
             //debug
-            Game.logTurn.Write(string.Format("[GetSituationCardNumber] -> modifier {0}, rndNum {1}, net {2}, numCards {3}", modifier, rndDebug, rndNum, numCards));
+            Game.logTurn.Write(string.Format(" modifier {0}, rndNum {1}, net {2}, numCards {3}", modifier, rndDebug, rndNum, numCards));
             //return 
             return numCards;
         }
@@ -1932,6 +1933,7 @@ namespace Next_Game
         /// <param name="unique">Add the enum for a unique card property</param>
         public void SetSpecialSituation(ConflictSpecial specialType, int numCards = 0, CardUnique unique = CardUnique.None)
         {
+            Game.logTurn.Write("--- SetSpecialSituation (Conflict.cs)");
             //get dictionary of specials
             Dictionary<int, Situation> specialDictionary = Game.director.GetSituationsSpecial();
             if (specialDictionary.Count > 0)
@@ -1973,7 +1975,7 @@ namespace Next_Game
                             if (numCards == 0) { numCards = GetSituationCardNumber(); }
                             int number = numCards;
                             //debug
-                            Game.logTurn.Write(string.Format("[SetSpecialSituation] -> \"{0}\", numCards {1}, Added to listCardsSpecial", situation.Name, numCards));
+                            Game.logTurn.Write(string.Format("\"{0}\", numCards {1}, Added to listCardsSpecial", situation.Name, numCards));
                             //add cards to special card list
                             for (int i = 0; i < number; i++)
                             {
