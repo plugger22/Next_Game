@@ -261,7 +261,8 @@ namespace Next_Game
         {
             Game.logTurn?.Write("--- SetItems (Conflict.cs)");
             //player
-            List<int> tempList = player.GetItems();
+            List<int> tempList = new List<int>();
+            tempList.AddRange(player.GetItems());
             if (tempList.Count > 0)
             {
                 //loop list looking for active items that can be used in a challenge. Take the first found (should only be one anyway)
@@ -285,6 +286,7 @@ namespace Next_Game
                                         arrayItems[0, 2] = item.CardNum.ToString();
                                         if (Challenger == true)
                                         {
+                                            //Player is the Challenger
                                             string[] tempTexts = item.GetOutcomeTexts();
                                             if (tempTexts.Length == 4)
                                             {
@@ -292,6 +294,19 @@ namespace Next_Game
                                                 arrayItems[0, 3] = tempTexts[0];
                                                 //Bad Text
                                                 arrayItems[0, 4] = tempTexts[1];
+                                            }
+                                            else { arrayItems[0, 3] = "Unknown"; arrayItems[0, 4] = "Unknown"; }
+                                        }
+                                        else
+                                        {
+                                            //Player is the Defender
+                                            string[] tempTexts = item.GetOutcomeTexts();
+                                            if (tempTexts.Length == 4)
+                                            {
+                                                //Good Text
+                                                arrayItems[0, 3] = tempTexts[2];
+                                                //Bad Text
+                                                arrayItems[0, 4] = tempTexts[3];
                                             }
                                             else { arrayItems[0, 3] = "Unknown"; arrayItems[0, 4] = "Unknown"; }
                                         }
@@ -309,7 +324,7 @@ namespace Next_Game
             else { Game.logTurn.Write(" [Notification] Player has no Items"); }
             //opponent
             tempList.Clear();
-            tempList = opponent.GetItems();
+            tempList.AddRange(opponent.GetItems());
             if (tempList.Count > 0)
             {
                 //loop list looking for active items that can be used in a challenge. Take the first found (should only be one anyway)
@@ -328,20 +343,34 @@ namespace Next_Game
                                     //item is valid for this type of Conflict?
                                     if (item.CheckChallengeType(Sub_Type) == true)
                                     {
-                                        arrayItems[0, 0] = item.Description;
-                                        arrayItems[0, 1] = item.CardText;
-                                        arrayItems[0, 2] = item.CardNum.ToString();
+                                        //Opponent is the Challenger
+                                        arrayItems[1, 0] = item.Description;
+                                        arrayItems[1, 1] = item.CardText;
+                                        arrayItems[1, 2] = item.CardNum.ToString();
                                         if (Challenger == true)
                                         {
                                             string[] tempTexts = item.GetOutcomeTexts();
                                             if (tempTexts.Length == 4)
                                             {
                                                 //Good Text
-                                                arrayItems[0, 3] = tempTexts[0];
+                                                arrayItems[1, 3] = tempTexts[0];
                                                 //Bad Text
-                                                arrayItems[0, 4] = tempTexts[1];
+                                                arrayItems[1, 4] = tempTexts[1];
                                             }
-                                            else { arrayItems[0, 3] = "Unknown"; arrayItems[0, 4] = "Unknown"; }
+                                            else { arrayItems[1, 3] = "Unknown"; arrayItems[1, 4] = "Unknown"; }
+                                        }
+                                        else
+                                        {
+                                            //Opponent is the Defender
+                                            string[] tempTexts = item.GetOutcomeTexts();
+                                            if (tempTexts.Length == 4)
+                                            {
+                                                //Good Text
+                                                arrayItems[1, 3] = tempTexts[2];
+                                                //Bad Text
+                                                arrayItems[1, 4] = tempTexts[3];
+                                            }
+                                            else { arrayItems[1, 3] = "Unknown"; arrayItems[1, 4] = "Unknown"; }
                                         }
                                     }
                                     else { Game.logTurn.Write(string.Format(" [Notification] Opponent Item \"{0}\" isn't valid for this Challenge", item.Description)); }
@@ -364,7 +393,7 @@ namespace Next_Game
         private bool GetChallenge()
         {
             bool proceed = true;
-            ConflictSubType Sub_Type = ConflictSubType.None;
+            Sub_Type = ConflictSubType.None;
             switch (Conflict_Type)
             {
                 case ConflictType.Combat:
@@ -1291,11 +1320,15 @@ namespace Next_Game
             listOpponentCards.Clear();
             listSituationCards.Clear();
             listSupporterCards.Clear();
+            listItemCards.Clear();
             //headers
             listPlayerCards.Add(new Snippet("Your Cards", RLColor.Blue, backColor));
             listOpponentCards.Add(new Snippet("Opponent's Cards", RLColor.Blue, backColor));
             listSituationCards.Add(new Snippet("Situation Cards", RLColor.Blue, backColor));
-            listSupporterCards.Add(new Snippet("Supporter Cards", RLColor.Blue, backColor));
+            if (arraySupportGood[0]?.Length > 0 || arraySupportBad[0]?.Length > 0)
+            { listSupporterCards.Add(new Snippet("Supporter Cards", RLColor.Blue, backColor)); }
+            if (arrayItems[0, 0]?.Length > 0 || arrayItems[1, 0]?.Length > 0)
+            { listItemCards.Add(new Snippet("Item Cards", RLColor.Blue, backColor)); }
             //primary skills (2 cards per skill level)
             int skill_player = player.GetSkill(PrimarySkill);
             int skill_opponent = opponent.GetSkill(PrimarySkill);
@@ -1466,53 +1499,6 @@ namespace Next_Game
             text = string.Format("\"{0}\", {1} card{2}, A Neutral Card (Good if played, Bad if ignored)", arraySituation[1, 0], numCards, numCards > 1 ? "s" : "");
             listSituationCards.Add(new Snippet(text, foreColor, backColor));
 
-            //Supporters -> Good
-            for (int i = 0; i < arraySupportGood.Length; i++)
-            {
-                string supporterText = arraySupportGood[i];
-                string supportDescription = "Lends a helping hand"; 
-                type = CardType.Good;
-                foreColor = RLColor.Black;
-                //Situation immersion texts
-                Situation situationHelp = GetSupporterText(Conflict_Type, subType, Challenger);
-                if (situationHelp != null)
-                { tempListGood = situationHelp.GetGood(); tempListBad = situationHelp.GetBad(); }
-                else { Game.SetError(new Error(105, string.Format("situation (Supporters -> Good (Help)) came back Null", Conflict_Type))); }
-                //no more valid data
-                if (String.IsNullOrEmpty(supporterText) == true)
-                { break; }
-                Card_Conflict card = new Card_Conflict(CardConflict.Supporter, type, supporterText, supportDescription);
-                //get immersion texts, if present
-                if (tempListGood.Count > 0) { card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)]; }
-                if (tempListBad.Count > 0) { card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)]; }
-                arrayPool[0]++;
-                listCardPool.Add(card);
-                listSupporterCards.Add(new Snippet(supporterText, foreColor, backColor)); //TO DO
-            }
-            //Supporters -> Bad
-            for (int i = 0; i < arraySupportBad.Length; i++)
-            {
-                string supporter = arraySupportBad[i];
-                string support_description = "Attempts to hinder you";
-                type = CardType.Bad;
-                foreColor = RLColor.Red;
-                //Situation immersion texts
-                Situation situationHinder = GetSupporterText(Conflict_Type, subType, Challenger);
-                if (situationHinder != null)
-                { tempListGood = situationHinder.GetGood(); tempListBad = situationHinder.GetBad(); }
-                else { Game.SetError(new Error(105, string.Format("situation (Supporters -> Bad (Hinder)) came back Null", Conflict_Type))); }
-                //no more valid data
-                if (String.IsNullOrEmpty(supporter) == true)
-                { break; }
-                Card_Conflict card = new Card_Conflict(CardConflict.Supporter, type, supporter, support_description);
-                //get immersion texts, if present
-                if (tempListGood.Count > 0) { card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)]; }
-                if (tempListBad.Count > 0) { card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)]; }
-                arrayPool[2]++;
-                listCardPool.Add(card);
-                listSupporterCards.Add(new Snippet(supporter, foreColor, backColor)); //TO DO
-            }
-
             //...Game Specific Situation
             if (Game_Type != CardType.None)
             {
@@ -1562,6 +1548,94 @@ namespace Next_Game
                     listCardPool.Add(cardSpecial);
                 }
             }
+
+            //Supporters -> Good
+            for (int i = 0; i < arraySupportGood.Length; i++)
+            {
+                string supporterText = arraySupportGood[i];
+                string supportDescription = "Lends a helping hand";
+                type = CardType.Good;
+                foreColor = RLColor.Black;
+                //Situation immersion texts
+                Situation situationHelp = GetSupporterText(Conflict_Type, subType, Challenger);
+                if (situationHelp != null)
+                { tempListGood = situationHelp.GetGood(); tempListBad = situationHelp.GetBad(); }
+                else { Game.SetError(new Error(105, string.Format("situation (Supporters -> Good (Help)) came back Null", Conflict_Type))); }
+                //no more valid data
+                if (String.IsNullOrEmpty(supporterText) == true)
+                { break; }
+                Card_Conflict card = new Card_Conflict(CardConflict.Supporter, type, supporterText, supportDescription);
+                //get immersion texts, if present
+                if (tempListGood.Count > 0) { card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)]; }
+                if (tempListBad.Count > 0) { card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)]; }
+                arrayPool[0]++;
+                listCardPool.Add(card);
+                listSupporterCards.Add(new Snippet(supporterText, foreColor, backColor)); //TO DO
+            }
+            //Supporters -> Bad
+            for (int i = 0; i < arraySupportBad.Length; i++)
+            {
+                string supporter = arraySupportBad[i];
+                string support_description = "Attempts to hinder you";
+                type = CardType.Bad;
+                foreColor = RLColor.Red;
+                //Situation immersion texts
+                Situation situationHinder = GetSupporterText(Conflict_Type, subType, Challenger);
+                if (situationHinder != null)
+                { tempListGood = situationHinder.GetGood(); tempListBad = situationHinder.GetBad(); }
+                else { Game.SetError(new Error(105, string.Format("situation (Supporters -> Bad (Hinder)) came back Null", Conflict_Type))); }
+                //no more valid data
+                if (String.IsNullOrEmpty(supporter) == true)
+                { break; }
+                Card_Conflict card = new Card_Conflict(CardConflict.Supporter, type, supporter, support_description);
+                //get immersion texts, if present
+                if (tempListGood.Count > 0) { card.PlayedText = tempListGood[rnd.Next(0, tempListGood.Count)]; }
+                if (tempListBad.Count > 0) { card.IgnoredText = tempListBad[rnd.Next(0, tempListBad.Count)]; }
+                arrayPool[2]++;
+                listCardPool.Add(card);
+                listSupporterCards.Add(new Snippet(supporter, foreColor, backColor)); //TO DO
+            }
+
+            //Items -> Max one per protagonist
+            if (arrayItems[0, 0]?.Length > 0)
+            {
+                //Challenger item
+                int numItemCards = 0;
+                try
+                { numItemCards = Convert.ToInt32(arrayItems[0, 2]); }
+                catch (FormatException)
+                { Game.SetError(new Error(105, string.Format("Invalid input for Opponent Item CardNum (arrayItems[0, 2] \"{0}\" (format excepction)", arrayItems[0, 2]))); }
+                catch (OverflowException)
+                { Game.SetError(new Error(105, string.Format("Invalid input for Opponent Item CardNum (arrayItems[0, 2] \"{0}\" (overflow excepction)", arrayItems[0, 2]))); }
+                string itemText = string.Format("{0}, \"{1}\", {2} Card{3} (Good)", arrayItems[0, 0], arrayItems[0, 1], numItemCards, numItemCards != 1 ? "s" : "");
+                listItemCards.Add(new Snippet(itemText, RLColor.Black, backColor));
+                for (int i = 0; i < numItemCards; i++)
+                {
+                    Card_Conflict card = new Card_Conflict(CardConflict.Item, CardType.Good, arrayItems[0, 0], arrayItems[0, 1])
+                    { PlayedText = arrayItems[0, 3], IgnoredText = arrayItems[0, 4] };
+                    listCardPool.Add(card);
+                }
+            }
+            if (arrayItems[1, 0]?.Length > 0)
+            {
+                //Opponent item
+                int numItemCards = 0;
+                try
+                { numItemCards = Convert.ToInt32(arrayItems[1, 2]); }
+                catch (FormatException)
+                { Game.SetError(new Error(105, string.Format("Invalid input for Opponent Item CardNum (arrayItems[1, 2] \"{0}\" (format excepction)", arrayItems[1, 2]))); }
+                catch (OverflowException)
+                { Game.SetError(new Error(105, string.Format("Invalid input for Opponent Item CardNum (arrayItems[1, 2] \"{0}\" (overflow excepction)", arrayItems[1, 2]))); }
+                string itemText = string.Format("{0}, \"{1}\", {2} Card{3} (Bad)", arrayItems[1, 0], arrayItems[1, 1], numItemCards, numItemCards != 1 ? "s" : "");
+                listItemCards.Add(new Snippet(itemText, RLColor.Red, backColor));
+                for (int i = 0; i < numItemCards; i++)
+                {
+                    Card_Conflict card = new Card_Conflict(CardConflict.Item, CardType.Good, arrayItems[1, 0], arrayItems[1, 1])
+                    { PlayedText = arrayItems[1, 3], IgnoredText = arrayItems[1, 4] };
+                    listCardPool.Add(card);
+                }
+            }
+
             //clear master list and add headers
             listBreakdown.Clear();
             //consolidate lists
@@ -1572,6 +1646,8 @@ namespace Next_Game
             listBreakdown.AddRange(listSituationCards);
             listBreakdown.Add(new Snippet(""));
             listBreakdown.AddRange(listSupporterCards);
+            listBreakdown.Add(new Snippet(""));
+            listBreakdown.AddRange(listItemCards);
             //send to layout
             Game.layout.SetCardBreakdown(listBreakdown);
             Game.layout.SetCardPool(arrayPool);

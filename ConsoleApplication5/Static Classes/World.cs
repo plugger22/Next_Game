@@ -1013,7 +1013,7 @@ namespace Next_Game
                             if (possession is Item)
                             {
                                 Item item = possession as Item;
-                                listToDisplay.Add(new Snippet(string.Format("{0}, ItemID {1}, \"{2}\"", item.Description, item.ItemID, item.Lore)));
+                                listToDisplay.Add(new Snippet(string.Format("{0}, \"{1}\"", item.Description, item.Lore)));
                             }
                         }
                     }
@@ -1124,7 +1124,7 @@ namespace Next_Game
                 { actorCurrent.AddRange(GetActorCurrentRecords(person.ActID)); }
                 if (actorCurrent.Count > 0)
                 {
-                    listToDisplay.Add(new Snippet("Current Events", RLColor.Brown, RLColor.Black));
+                    listToDisplay.Add(new Snippet("Recent Events", RLColor.Brown, RLColor.Black));
                     foreach (string text in actorCurrent)
                     { listToDisplay.Add(new Snippet(text)); }
                 }

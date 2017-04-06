@@ -1,15 +1,13 @@
-//Exile Game File "LogTurn.txt" opened at: 05/04/2017 16:51:57
---- ProcessStartTurn, Day 6, Turn 5 (World.cs) 
- [AddEnemy -> Notification] enemyID 132 activated False and isn't added to the list
-- Initialise Stealth Challenge
+//Exile Game File "LogTurn.txt" opened at: 06/04/2017 11:28:43
+--- ProcessStartTurn, Day 13, Turn 12 (World.cs) 
+- Initialise Combat Challenge
 --- SetSupporters (Conflict.cs)
  [Notification] dictPlyrSupporters has 1 records
- [Supporter -> Good] Master_of_Ships Jaques Colinus "The Courageous", Friend, ActID 104, relPlyr 76
- [Notification] dictOppSupporters has 7 records
- [Supporter -> Bad] King Vortimer Arryn "The Slobberer", Enemy, ActID 34, relPlyr 0
- [Supporter -> Bad] Queen Esclamonde Arryn "Goddess of War", Enemy, ActID 35, relPlyr 0
- [Supporter -> Bad] Inquisitor Brother Haborym "The Able", Enemy, ActID 131, relPlyr 0
+ [Supporter -> Good] Master_of_Coin Gerbod Timm "The Dark Rodent", Friend, ActID 102, relPlyr 74
+ [Notification] dictOppSupporters has 10 records
+ [Supporter -> Bad] Queen Dorna Tully "The Unembellished", Enemy, ActID 52, relPlyr 0
+ [Supporter -> Bad] Heir Chett Tully "The Hurt", Enemy, ActID 57, relPlyr 0
+ [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 132, relPlyr 0
 --- SetItems (Conflict.cs)
- [Notification] Player Item "Head Lopper" isn't valid for this Challenge
  [Notification] Opponent has no Items
-//Exile Game file ops "LogTurn.txt" Completed at: 05/04/2017 16:53:03
+//Exile Game file ops "LogTurn.txt" Completed at: 06/04/2017 11:33:07
