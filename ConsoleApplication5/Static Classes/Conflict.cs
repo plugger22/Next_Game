@@ -2348,14 +2348,15 @@ namespace Next_Game
                                 {
                                     tempColor = RLColor.Red;
                                     tempText = string.Format("You have been Captured by {0} {1}, ActID {2}", opponent.Title, opponent.Name, opponent.ActID);
-                                    Game.world.SetPlayerCaptured(opponent.ActID);
                                     //items lost
                                     if (player.CheckItems() == true)
                                     {
                                         List<int> tempItems = player.GetItems();
                                         int numItems = tempItems.Count();
-                                        tempText += string.Format(" and your {0} item{1} will be confiscated", numItems, numItems != 1 ? "s" : "");
+                                        tempText += " and any items that you possess will be confiscated";
                                     }
+                                    //Incarcerated
+                                    Game.world.SetPlayerCaptured(opponent.ActID);
                                 }
                                 else { Game.SetError(new Error(113, "Invalid Data value (zero) for Freedom Result")); }
                                 if (String.IsNullOrEmpty(tempText) == false)

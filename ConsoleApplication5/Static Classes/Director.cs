@@ -454,7 +454,7 @@ namespace Next_Game
             {
                 Game.logTurn.Write("--- CheckPlayerEvents (Director.cs)");
                 //check first if any enemy is about to capture the Player
-                if (player.Capture == true)
+                if (player.Capture == true && player.Status != ActorStatus.Captured)
                 {  CreateAutoEnemyEvent(); }
                 else
                 {
@@ -825,7 +825,7 @@ namespace Next_Game
 
                         //default option -> Surrender
                         OptionInteractive option_1 = new OptionInteractive("Lay down your Weapons") { ActorID = enemy.ActID };
-                        option_1.ReplyGood = string.Format("{0} forcibly restrains you and leads you to the nearest dungeon", enemy.Name);
+                        option_1.ReplyGood = string.Format("{0} forcibly restrains you and leads you to the nearest dungeon. Any items you possess will be confiscated.", enemy.Name);
                         OutFreedom outcome_1 = new OutFreedom(eventObject.EventPID, -1);
                         option_1.SetGoodOutcome(outcome_1);
                         eventObject.SetOption(option_1);

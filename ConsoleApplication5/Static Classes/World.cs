@@ -4420,7 +4420,7 @@ namespace Next_Game
                         if (posActive != null && pos != null)
                         {
                             //find player in any situation, find follower only if Known
-                            if (active.Value is Player || (active.Value is Follower && active.Value.Known == true))
+                            if (active.Value is Player && active.Value.Status != ActorStatus.Captured || (active.Value is Follower && active.Value.Known == true))
                             {
                                 //debug
                                 Game.logTurn.Write(string.Format(" [Search -> Debug] Active {0}, ID {1} at {2}:{3}, Enemy at {4}:{5} ({6}, ID {7}", active.Value.Name, active.Value.ActID,
@@ -4692,7 +4692,7 @@ namespace Next_Game
         public void SetPlayerCaptured(int enemyID)
         {
             Game.logTurn.Write("--- SetPlayerCaptured (World.cs)");
-            string description;
+            string description, dungeonLoc;
             Player player = (Player)GetActiveActor(1);
             if (player != null)
             {
@@ -4818,6 +4818,7 @@ namespace Next_Game
                         //update Player LocID (dungeon), set Known to true (should be already)
                         player.LocID = heldLocID;
                         player.Known = true;
+                        dungeonLoc = GetLocationName(heldLocID);
                         //Player loses any items they possess (needs to be a reverse loop as you're deleting as you go
                         if (player.CheckItems() == true)
                         {
@@ -4830,15 +4831,14 @@ namespace Next_Game
                                 {
                                     Item item = GetItem(possID);
                                     //admin
-                                    description = string.Format("ItemID {0}, {1}, has been confiscated by the Dungeon Master", item.ItemID, item.Description);
+                                    description = string.Format("ItemID {0}, {1}, has been confiscated by the {2} Dungeon Master", item.ItemID, item.Description, dungeonLoc);
                                     SetMessage(new Message(description, MessageType.Incarceration));
                                     SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Challenge));
                                 }
                             }
                         }
                         //administration
-                        description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID,
-                            GetLocationName(heldLocID));
+                        description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID, dungeonLoc);
                         SetMessage(new Message(description, MessageType.Search));
                         SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
                         SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));

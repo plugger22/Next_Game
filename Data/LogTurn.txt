@@ -1,125 +1,134 @@
-//Exile Game File "LogTurn.txt" opened at: 07/04/2017 10:09:23
---- ProcessStartTurn, Day 5, Turn 4 (World.cs) 
---- MoveActors -> 0 Records (World.cs)
+//Exile Game File "LogTurn.txt" opened at: 07/04/2017 10:47:14
+--- ProcessStartTurn, Day 13, Turn 12 (World.cs) 
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Beelzebub, ActID 90 travelling to Kingskeep (current Loc 14:18)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Randyll Florent, ID 1 at 15:18, Enemy at 14:18 (Brother Beelzebub, ID 90
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Randyll Florent, ID 1 at 15:18, Enemy at 15:18 (Brother Beelzebub, ID 90
+ [Search -> Alert] Usurper Randyll Florent, ActID 1, is in the same place as the Enemy, loc 15:18 (Brother Beelzebub, ID 90)
+ [SEARCH -> Active] Random 8 < 50 (ai 20 + known 30) -> Success 
+ [Search -> ListSearched] Usurper Randyll Florent, ActID 1 Searched -> Enemy ActID 90 added
+ [SEARCH -> Enemy] Usurper Randyll Florent has been Spotted by Brother Beelzebub, ActID 90 at Kingskeep -> Activated True
+ [Search -> ListEnemies] Usurper Randyll Florent, ActID 1 is Found -> True and Enemy ActID 90 added
+ [Goal -> Arrival] Inquisitor Brother Beelzebub, ActID 90, currently at Kingskeep, new Goal -> Search
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Pate Martell, ActID 1 is Captured
- [Search -> Stationary] Follower The Crone, ActID 2 is AtLocation
- [Search -> Stationary] Follower The Waif, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Haggler, ActID 4 is AtLocation
+ [Search -> Stationary] Usurper Randyll Florent, ActID 1 is Captured
+ [Search -> Stationary] Follower The Jester, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 6 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Captured] Inquisitor Brother Damballa, Act ID 129 Mode -> Normal
- [AI -> Player Captured] Inquisitor Brother Kali, Act ID 130 Mode -> Normal
- [AI -> Player Captured] Inquisitor Brother Mormo, Act ID 131 Mode -> Normal
- [AI -> Player Captured] Inquisitor Brother Beelzebub, Act ID 132 Mode -> Normal
- [AI -> Player Captured] Nemesis The Unrelenting, Act ID 133 Mode -> Normal
---- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Damballa, ActID 129 retains Goal -> Search
- [Enemy -> Goal] Brother Kali, ActID 130 retains Goal -> Hide
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Mormo, ActID 131 Assigned Branch -> 2 Current Branch -> 0
- [Goal -> New] Brother Mormo, ActID 131, (loc 16:14), assigned new Goal -> Wait
- [Enemy -> Known] Brother Beelzebub ActID 132 has become KNOWN
- [Enemy -> Goal] Brother Beelzebub, ActID 132 retains Goal -> Search
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 133 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] The Unrelenting, ActID 133, (loc 16:14), assigned new Goal -> Wait
---- CheckPlayerEvents (Director.cs)
---- ResolveFollowerEvents (Director.cs)
---- UpdateActiveActors (World.cs)
- Usurper Pate Martell has had their Revert Timer reduced from 2 to 1
- Follower The Crone has had their TurnsUnknown Timer increased from 3 to 4
- Follower The Waif has had their TurnsUnknown Timer increased from 3 to 4
- Follower The Haggler has had their TurnsUnknown Timer increased from 3 to 4
-//Exile Game file ops "LogTurn.txt" Completed at: 07/04/2017 10:09:34
- Active Pate Martell, ID 1, at 16:14
- [Search -> Alert] Nemesis The Unrelenting, ActID 133, is in the same place as Active Pate Martell, ID 1, (loc 16:14)
- [SEARCH -> Active] Random 13 < 50 (ai 20 + known 30) -> Success 
- [Search -> ListSearched] Usurper Pate Martell, ActID 1 Searched -> Enemy ActID 133 added
- [SEARCH -> Active] Usurper Pate Martell has been Spotted by The Unrelenting, ActID 133 at loc 16:14 -> Activated False
- [Search -> ListEnemy] Usurper Pate Martell, ActID 1 as Spotted -> True and Enemy ActID 133 added
- [AddEnemy -> Notification] enemyID 133 activated False and isn't added to the list
- [Search -> Previous] Nemesis The Unrelenting, ActID 133 has already Found Player this turn -> Result Cancelled
- [Search -> Stationary] Follower The Crone, ActID 2 is AtLocation
- [Search -> Stationary] Follower The Waif, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Haggler, ActID 4 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Mode] enemyID 129,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 130,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 131,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 132,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 133,  distance -> 0  Threshold (turns) -> 8  Mode -> Hunt
+ [AI -> Player Captured] Inquisitor Brother Astaroth, Act ID 87 Mode -> Normal
+ [AI -> Player Captured] Inquisitor Brother Gorgo, Act ID 88 Mode -> Normal
+ [AI -> Player Captured] Inquisitor Brother Haborym, Act ID 89 Mode -> Normal
+ [AI -> Player Captured] Inquisitor Brother Beelzebub, Act ID 90 Mode -> Normal
+ [AI -> Player Captured] Nemesis The Unrelenting, Act ID 91 Mode -> Normal
 --- SetEnemyActivity (World.cs)
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Damballa, ActID 129 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] Brother Damballa, ActID 129, (loc 16:14), assigned new Goal -> Search
+ [Goal -> Branch] Brother Astaroth, ActID 87 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] Brother Astaroth, ActID 87, (loc 15:18), assigned new Goal -> Wait
+ [Enemy -> Known] Brother Gorgo ActID 88 has become KNOWN
+ [Enemy -> Goal] Brother Gorgo, ActID 88 retains Goal -> Hide
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Mormo, ActID 131 Assigned Branch -> 2 Current Branch -> 0
- [Goal -> New] Brother Mormo, ActID 131, (loc 16:14), assigned new Goal -> Search
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Beelzebub, ActID 132 Assigned Branch -> 3 Current Branch -> 0
- [Goal -> New] Brother Beelzebub, ActID 132, (loc 16:14), assigned new Goal -> Search
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 133 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] The Unrelenting, ActID 133, (loc 16:14), assigned new Goal -> Search
+ [Goal -> Branch] Brother Haborym, ActID 89 Assigned Branch -> 1 Current Branch -> 1
+ [Enemy -> Goal] Brother Beelzebub, ActID 90 retains Goal -> Search
+ [Enemy -> Goal] The Unrelenting, ActID 91 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
 --- ResolvePlayerEvents (Director.cs)
  Event "Enemy Afoot" Timer Repeat now 999
  Event "Enemy Afoot" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Pate Martell has had their Revert Timer reduced from 5 to 4
- Follower The Crone has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Waif has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Haggler has had their TurnsUnknown Timer increased from 2 to 3
+ Usurper Randyll Florent has had their Revert Timer reduced from 5 to 4
+ Follower The Jester has had their TurnsUnknown Timer increased from 11 to 12
+ Follower The Duchess has had their TurnsUnknown Timer increased from 11 to 12
+ Follower The Spider has had their TurnsUnknown Timer increased from 11 to 12
 --- ResolveOutcome (Director.cs)
 --- SetPlayerCaptured (World.cs)
  [Captured] dungeon -> Capital
-Item with PossID 2 has been removed from Pate Martell's inventory
---- ProcessEndTurn, Day 4 Turn 3 (World.cs)
+//Exile Game file ops "LogTurn.txt" Completed at: 07/04/2017 10:48:11
+ther Haborym ActID 89 has become KNOWN
+ [Enemy -> Goal] Brother Haborym, ActID 89 retains Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Beelzebub, ActID 90 Assigned Branch -> 4 Current Branch -> 4
+ [Goal -> New] Brother Beelzebub, ActID 90, (loc 11:19), assigned new Goal -> Move
+ [Goal -> Move] Brother Beelzebub, ActID 90 -> Player's last known location -> Kingskeep, LocID 1
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- CheckPlayerEvents (Director.cs)
+--- ResolvePlayerEvents (Director.cs)
+ Event "Enemy Afoot" Timer Repeat now 999
+ Event "Enemy Afoot" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Randyll Florent has had their Revert Timer reduced from 5 to 4
+ Follower The Jester has had their TurnsUnknown Timer increased from 8 to 9
+ Follower The Duchess has had their TurnsUnknown Timer increased from 8 to 9
+ Follower The Spider has had their TurnsUnknown Timer increased from 8 to 9
+--- ResolveOutcome (Director.cs)
+SetGameSituation] -> "how well you are Known in the Land -100 %", difference -100 Modifier 80 numCards 5
+- Initialise Stealth Challenge
+--- SetSupporters (Conflict.cs)
+ [Notification] dictPlyrSupporters has 1 records
+ [Supporter -> Good] High_Septon Thomme Samm "The Monumental", Friend, ActID 65, relPlyr 73
+ [Notification] dictOppSupporters has 7 records
+ [Supporter -> Bad] Heir Vayon Martell "The Perceptive", Enemy, ActID 25, relPlyr 0
+ [Supporter -> Bad] Inquisitor Brother Gorgo "The Unyielding", Enemy, ActID 88, relPlyr 0
+ [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 91, relPlyr 0
+--- SetItems (Conflict.cs)
+ [Notification] Player Item "Head Lopper" isn't valid for this Challenge
+ [Notification] Opponent has no Items
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 59, net 59, numCards 2
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 81, net 81, numCards 3
+--- SetOpponentStrategy (Conflict.cs)
+[Conflict -> Debug] Good -> 7 Bad -> 24 Margin -> 2 rndFactor -> 1 Opp Wits -> 4 Opp PSkill -> 4 Def Spec -> 0 Challenger -> False
+[Conflict -> Plyr Def's] Bad 24 + rndFactor 1 - good 7 > margin 2
+--- ResolveResults (Conflict.cs)
+--- SetPlayerCaptured (World.cs)
+ [Captured] dungeon -> Capital
+Item with PossID 2 has been removed from Randyll Florent's inventory
+--- ProcessEndTurn, Day 10 Turn 9 (World.cs)
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 17
- "Naked Woman" event, Cooldown Timer decremented from 1 to 0
-//Exile Game File "LogTurn.txt" Close completed at: 07/04/2017 10:09:23
-torList] "Marioun Tyrell", ID 67 added to list of Actors
- [AutoEvent -> ActorList] "Rechemay Tyrell", ID 68 added to list of Actors
- [AutoEvent -> ActorList] "Maege Tyrell", ID 69 added to list of Actors
- [AutoEvent -> ActorList] "Chett Tyrell", ID 81 added to list of Actors
- [AutoEvent -> ActorList] "Hamlin Hodgkin", ID 125 added to list of Actors
- [AutoEvent -> ActorList] "Vayon Wymon", ID 126 added to list of Actors
- [AutoEvent -> ActorList] "Doran Artor", ID 127 added to list of Actors
- [AutoEvent -> ActorList] "Martyn Jeacock", ID 128 added to list of Actors
- [AutoEvent -> ActorList] "Brother Damballa", ID 129 added to list of Actors
- [AutoEvent -> ActorList] "Brother Kali", ID 130 added to list of Actors
- [AutoEvent -> ActorList] "Brother Mormo", ID 131 added to list of Actors
- [AutoEvent -> ActorList] "Brother Beelzebub", ID 132 added to list of Actors
- [AutoEvent -> ActorList] "The Unrelenting", ID 133 added to list of Actors
- [AutoEvent -> AdvisorList] "Wyschardus Amauri", ID 104 added to list of Advisors
- [AutoEvent -> AdvisorList] "Helies Rouland", ID 106 added to list of Advisors
- [AutoEvent -> AdvisorList] "Rickard Nicolin", ID 107 added to list of Advisors
- [AutoEvent -> AdvisorList] "Giradin Josse", ID 108 added to list of Advisors
- [AutoEvent -> LocalList] "Hervey Tyrell", ID 60 added to list of Locals
- [AutoEvent -> LocalList] "Mylecent Tyrell", ID 61 added to list of Locals
- [AutoEvent -> LocalList] "Genna Tyrell", ID 66 added to list of Locals
- [AutoEvent -> LocalList] "Marioun Tyrell", ID 67 added to list of Locals
- [AutoEvent -> LocalList] "Rechemay Tyrell", ID 68 added to list of Locals
- [AutoEvent -> LocalList] "Maege Tyrell", ID 69 added to list of Locals
- [AutoEvent -> LocalList] "Chett Tyrell", ID 81 added to list of Locals
- [AutoEvent -> AdvisorList] "Hamlin Hodgkin", ID 125 added to list of Advisors
- [AutoEvent -> AdvisorList] "Vayon Wymon", ID 126 added to list of Advisors
- [AutoEvent -> AdvisorList] "Doran Artor", ID 127 added to list of Advisors
- [AutoEvent -> AdvisorList] "Martyn Jeacock", ID 128 added to list of Advisors
+ Event "Search and Detain" Dormant Timer decremented to 11
+//Exile Game File "LogTurn.txt" Close completed at: 07/04/2017 10:46:50
+g, ActID 91 Assigned Branch -> 0 Current Branch -> 0
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Thomme Samm", ID 65 added to list of Actors
+ [AutoEvent -> ActorList] "Jiame Hugelin", ID 66 added to list of Actors
+ [AutoEvent -> ActorList] "Jiame Powle", ID 68 added to list of Actors
+ [AutoEvent -> ActorList] "Salemon Sansum", ID 69 added to list of Actors
+ [AutoEvent -> ActorList] "Samwell Digory", ID 72 added to list of Actors
+ [AutoEvent -> ActorList] "Willas Martell", ID 19 added to list of Actors
+ [AutoEvent -> ActorList] "Vayon Martell", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Gualtier Simonnet", ID 84 added to list of Actors
+ [AutoEvent -> ActorList] "Rodrik Nicholaus", ID 85 added to list of Actors
+ [AutoEvent -> ActorList] "Lancel Dumphry", ID 86 added to list of Actors
+ [AutoEvent -> ActorList] "Brother Astaroth", ID 87 added to list of Actors
+ [AutoEvent -> ActorList] "Brother Gorgo", ID 88 added to list of Actors
+ [AutoEvent -> ActorList] "The Unrelenting", ID 91 added to list of Actors
+ [AutoEvent -> AdvisorList] "Thomme Samm", ID 65 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Jiame Hugelin", ID 66 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Jiame Powle", ID 68 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Salemon Sansum", ID 69 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Samwell Digory", ID 72 added to list of Advisors
+ [AutoEvent -> LocalList] "Willas Martell", ID 19 added to list of Locals
+ [AutoEvent -> LocalList] "Vayon Martell", ID 25 added to list of Locals
+ [AutoEvent -> AdvisorList] "Gualtier Simonnet", ID 84 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Rodrik Nicholaus", ID 85 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Lancel Dumphry", ID 86 added to list of Advisors
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Pate Martell has had their TurnsUnknown Timer increased from 101 to 102
- Follower The Crone has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Waif has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Haggler has had their TurnsUnknown Timer increased from 1 to 2
+ Usurper Randyll Florent has had their Revert Timer reduced from 5 to 4
+ Follower The Jester has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Duchess has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Spider has had their TurnsUnknown Timer increased from 7 to 8
 --- ResolveOutcome (Director.cs)
---- ResolveFollowerEvents (Director.cs)
---- ProcessEndTurn, Day 3 Turn 2 (World.cs)
+--- ProcessEndTurn, Day 9 Turn 8 (World.cs)
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 18
- "Naked Woman" event, Cooldown Timer decremented from 2 to 1
-//Exile Game File "LogTurn.txt" Close completed at: 07/04/2017 10:07:40
+ Event "Search and Detain" Dormant Timer decremented to 12
+ "Naked Woman" event, Cooldown Timer decremented from 1 to 0
+//Exile Game File "LogTurn.txt" Close completed at: 07/04/2017 10:44:39
