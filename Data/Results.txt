@@ -443,36 +443,42 @@ RID: 47
 Type: Item
 Calc: Add
 Data: 0
+[End]
 
 Name: Lose any Item
 RID: 48
 Type: Item
 Calc: Subtract
 Data: 0
+[End]
 
 Name: Gain any Active Item
 RID: 49
 Type: Item
 Calc: Add
 Data: 1
+[End]
 
 Name: Lose any Active Item
 RID: 50
 Type: Item
 Calc: Subtract
 Data: 2
+[End]
 
 Name: Gain any Passive Item
 RID: 51
 Type: Item
 Calc: Add
 Data: 0
+[End]
 
 Name: Lose any Passive Item
 RID: 52
 Type: Item
 Calc: Subtract
 Data: 0
+[End]
 
 
 

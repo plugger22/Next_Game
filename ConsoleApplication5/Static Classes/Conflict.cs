@@ -2230,7 +2230,7 @@ namespace Next_Game
                                 if (result.Data > 0) { filter = PossItemType.Active; }
                                 else if (result.Data < 0) { filter = PossItemType.Passive; }
                                 //Gain an item -> if your Opponent has one
-                                if (opponent.CheckItems(filter) == true)
+                                if (result.Calc == EventCalc.Add && opponent.CheckItems(filter) == true)
                                 {
                                     List<int> tempItems = opponent.GetItems(filter);
                                     rndIndex = rnd.Next(tempItems.Count);
@@ -2245,7 +2245,7 @@ namespace Next_Game
                                     }
                                 }
                                 //Lose an item -> if you have one
-                                if (player.CheckItems(filter) == true)
+                                if (result.Calc == EventCalc.Subtract && player.CheckItems(filter) == true)
                                 {
                                     tempColor = RLColor.Red;
                                     List<int> tempItems = player.GetItems(filter);

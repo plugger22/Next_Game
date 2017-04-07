@@ -1,4 +1,177 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 07/04/2017 14:23:34
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
-//Exile Game file ops "LogTurn.txt" Completed at: 07/04/2017 14:24:58
+//Exile Game File "LogTurn.txt" opened at: 07/04/2017 17:43:14
+--- ProcessStartTurn, Day 5, Turn 4 (World.cs) 
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Usurper Hervey Stark, ActID 1 travelling to Brightwater Keep (current Loc 12:21)
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Mantus, ID 131 at 15:14, Active Hervey Stark, ID 1, at 12:21
+ [Search -> Debug] Enemy, Brother Azazel, ID 132 at 15:14, Active Hervey Stark, ID 1, at 12:21
+ [Search -> Debug] Enemy, Brother Gorgo, ID 133 at 15:10, Active Hervey Stark, ID 1, at 12:21
+ [Search -> Debug] Enemy, Brother Mastema, ID 134 at 15:14, Active Hervey Stark, ID 1, at 12:21
+ [Search -> Debug] Enemy, The Unrelenting, ID 135 at 15:14, Active Hervey Stark, ID 1, at 12:21
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Mantus, ID 131 at 15:14, Active Hervey Stark, ID 1, at 12:22
+ [Search -> Debug] Enemy, Brother Azazel, ID 132 at 15:14, Active Hervey Stark, ID 1, at 12:22
+ [Search -> Debug] Enemy, Brother Gorgo, ID 133 at 15:10, Active Hervey Stark, ID 1, at 12:22
+ [Search -> Debug] Enemy, Brother Mastema, ID 134 at 15:14, Active Hervey Stark, ID 1, at 12:22
+ [Search -> Debug] Enemy, The Unrelenting, ID 135 at 15:14, Active Hervey Stark, ID 1, at 12:22
+ [Move -> MoveObject] Inquisitor Brother Gorgo, ActID 133 travelling to The Clumsy Hog (current Loc 15:10)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Hervey Stark, ID 1 at 12:22, Enemy at 15:10 (Brother Gorgo, ID 133
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Hervey Stark, ID 1 at 12:22, Enemy at 16:10 (Brother Gorgo, ID 133
+ [Goal -> Arrival] Inquisitor Brother Gorgo, ActID 133, currently at The Clumsy Hog, new Goal -> Wait
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Hervey Stark, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Mantus, ID 131 at 15:14, Active Hervey Stark, ID 1, at 12:22
+ [Search -> Debug] Enemy, Brother Azazel, ID 132 at 15:14, Active Hervey Stark, ID 1, at 12:22
+ [Search -> Debug] Enemy, Brother Gorgo, ID 133 at 17:10, Active Hervey Stark, ID 1, at 12:22
+ [Search -> Debug] Enemy, Brother Mastema, ID 134 at 15:14, Active Hervey Stark, ID 1, at 12:22
+ [Search -> Debug] Enemy, The Unrelenting, ID 135 at 15:14, Active Hervey Stark, ID 1, at 12:22
+ [Search -> Stationary] Follower The Dark Eminence, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 7 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 2 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 132 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Gorgo, Act ID 133 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 134 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 135 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Mantus, ActID 131 retains Goal -> Hide
+ [Enemy -> Goal] Brother Azazel, ActID 132 retains Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Gorgo, ActID 133 Assigned Branch -> 1 Current Branch -> 1
+ [Goal -> New] Brother Gorgo, ActID 133, (loc 17:10), assigned new Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mastema, ActID 134 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Mastema, ActID 134, (loc 15:14), assigned new Goal -> Move
+ [Goal -> Move] Brother Mastema, ActID 134 -> Capital to Correct Branch -> The Raucous Rat, LocID 30
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] The Unrelenting, ActID 135 retains Goal -> Hide
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Huchon Florent", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Beth Florent", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Renly Drake", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Gregor Edon", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Eddard Humpty", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "Amory Amauri", ID 33 added to list of Actors
+ [AutoEvent -> ActorList] "Edelina Florent", ID 34 added to list of Actors
+ [AutoEvent -> ActorList] "Addam Florent", ID 35 added to list of Actors
+ [AutoEvent -> ActorList] "Beth Florent", ID 36 added to list of Actors
+ [AutoEvent -> ActorList] "Isopel Florent", ID 37 added to list of Actors
+ [AutoEvent -> LocalList] "Huchon Florent", ID 28 added to list of Locals
+ [AutoEvent -> LocalList] "Beth Florent", ID 29 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Renly Drake", ID 30 added to list of Locals
+ [AutoEvent -> AdvisorList] "Gregor Edon", ID 31 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Eddard Humpty", ID 32 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Amory Amauri", ID 33 added to list of Advisors
+ [AutoEvent -> LocalList] "Edelina Florent", ID 34 added to list of Locals
+ [AutoEvent -> LocalList] "Addam Florent", ID 35 added to list of Locals
+ [AutoEvent -> LocalList] "Beth Florent", ID 36 added to list of Locals
+ [AutoEvent -> LocalList] "Isopel Florent", ID 37 added to list of Locals
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Hervey Stark has had their TurnsUnknown Timer increased from 103 to 104
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Leper has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Viper has had their TurnsUnknown Timer increased from 3 to 4
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Huchon Florent", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Beth Florent", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Renly Drake", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Gregor Edon", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Eddard Humpty", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "Amory Amauri", ID 33 added to list of Actors
+ [AutoEvent -> ActorList] "Edelina Florent", ID 34 added to list of Actors
+ [AutoEvent -> ActorList] "Addam Florent", ID 35 added to list of Actors
+ [AutoEvent -> ActorList] "Beth Florent", ID 36 added to list of Actors
+ [AutoEvent -> ActorList] "Isopel Florent", ID 37 added to list of Actors
+ [AutoEvent -> LocalList] "Huchon Florent", ID 28 added to list of Locals
+ [AutoEvent -> LocalList] "Beth Florent", ID 29 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Renly Drake", ID 30 added to list of Locals
+ [AutoEvent -> AdvisorList] "Gregor Edon", ID 31 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Eddard Humpty", ID 32 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Amory Amauri", ID 33 added to list of Advisors
+ [AutoEvent -> LocalList] "Edelina Florent", ID 34 added to list of Locals
+ [AutoEvent -> LocalList] "Addam Florent", ID 35 added to list of Locals
+ [AutoEvent -> LocalList] "Beth Florent", ID 36 added to list of Locals
+ [AutoEvent -> LocalList] "Isopel Florent", ID 37 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "67" GreaterThanOrEqual 50
+ Trigger passed on "64" GreaterThanOrEqual 50
+ Trigger passed on "73" GreaterThanOrEqual 50
+ Trigger passed on "67" GreaterThanOrEqual 50
+ Trigger passed on "56" GreaterThanOrEqual 50
+ Trigger passed on "77" GreaterThanOrEqual 50
+ Trigger passed on "86" GreaterThanOrEqual 50
+ Event "Talk to Locals" Timer Repeat now 999
+ Event "Talk to Locals" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Huchon Florent", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Beth Florent", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Renly Drake", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Gregor Edon", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Eddard Humpty", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "Amory Amauri", ID 33 added to list of Actors
+ [AutoEvent -> ActorList] "Edelina Florent", ID 34 added to list of Actors
+ [AutoEvent -> ActorList] "Addam Florent", ID 35 added to list of Actors
+ [AutoEvent -> ActorList] "Beth Florent", ID 36 added to list of Actors
+ [AutoEvent -> ActorList] "Isopel Florent", ID 37 added to list of Actors
+ [AutoEvent -> LocalList] "Huchon Florent", ID 28 added to list of Locals
+ [AutoEvent -> LocalList] "Beth Florent", ID 29 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Renly Drake", ID 30 added to list of Locals
+ [AutoEvent -> AdvisorList] "Gregor Edon", ID 31 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Eddard Humpty", ID 32 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Amory Amauri", ID 33 added to list of Advisors
+ [AutoEvent -> LocalList] "Edelina Florent", ID 34 added to list of Locals
+ [AutoEvent -> LocalList] "Addam Florent", ID 35 added to list of Locals
+ [AutoEvent -> LocalList] "Beth Florent", ID 36 added to list of Locals
+ [AutoEvent -> LocalList] "Isopel Florent", ID 37 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "86" GreaterThanOrEqual 50
+ Trigger passed on "86" GreaterThanOrEqual 40
+ Trigger passed on "86" GreaterThanOrEqual 60
+ Trigger passed on "1" NotEqual 2
+ Trigger passed on "86" GreaterThanOrEqual 70
+ Trigger FAILED on "9" Equals 3
+ Trigger: Incorrect ActorType
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+SetGameSituation] -> "difference between Your's and the King's Honour is +50 %", difference 50 Modifier 50 numCards 3
+- Initialise Social Challenge
+--- SetSupporters (Conflict.cs)
+ [Notification] dictPlyrSupporters has 3 records
+ [Supporter -> Good] Maester Eddard Humpty "The Iron Willed", Friend, ActID 32, relPlyr 85
+ [Supporter -> Good] lady Beth Florent "The Underhanded", Friend, ActID 36, relPlyr 77
+ [Supporter -> Good] Knight Ser Renly Drake "The Dutiful", Friend, ActID 30, relPlyr 73
+ [Notification] dictOppSupporters has 0 records
+--- SetItems (Conflict.cs)
+ [Notification] Player Item "The Mage Ring" isn't valid for this Challenge
+ [Notification] Opponent Item "Goblin Mug" has no challenge effect
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 12, net 12, numCards 1
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 90, net 90, numCards 3
+--- SetOpponentStrategy (Conflict.cs)
+[Conflict -> Debug] Good -> 14 Bad -> 7 Margin -> 2 rndFactor -> -2 Opp Wits -> 4 Opp PSkill -> 2 Def Spec -> 1 Challenger -> True
+[Conflict -> Opp Def's] Good 14 + rndFactor -2 - bad 7 - defSpec 1 > margin 2
+--- ResolveResults (Conflict.cs)
+RelPlyr amount beforehand 10
+RelPlyr amount afterwards 35
+RelPlyr amount beforehand 8
+RelPlyr amount afterwards 8
+A DataPoint Result, ID 5, Data 1, Calc Random, Amount 10
+Item with PossID 4 has been removed from Isopel Florent's inventory
+Item with PossID 2 has been removed from Hervey Stark's inventory
+--- ResolveFollowerEvents (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+//Exile Game file ops "LogTurn.txt" Completed at: 07/04/2017 17:46:04
