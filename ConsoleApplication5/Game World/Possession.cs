@@ -9,7 +9,7 @@ namespace Next_Game
     public enum PossessionType { None, Secret, Promise, Favour, Introduction, Disguise, Item }
     public enum PossSecretType {Parents, Trait, Wound, Torture, Murder, Loyalty, Glory,Fertility };
     public enum PossItemEffect { None }
-    public enum PossItemType { None, Passive, Active} //active items provide benefits, passive items are used as bargaining chips
+    public enum PossItemType { None, Passive, Active, Both} //active items provide benefits, passive items are used as bargaining chips, both is used for method filtering in Actor.cs -> CAREFUL!!!
     //public enum PossSecretRef { Actor, House, GeoCluster, Location, Item }
 
     public class Possession

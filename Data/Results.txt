@@ -19,7 +19,8 @@
 # Data: is the strength of the item, eg. 1 (weak) to 5 (strong)
 
 # Type -> Item
-# Calc -> Add / Subtract -> Gain or lose an item
+# Calc: Add / Subtract -> Gain or lose an item
+# Data: +ve -> Active Items only, -ve -> Passive Items only, '0' -> all items (Active & Passive)
 
 # Type -> Event
 # Data: is the EventID from an event in Events_Player.txt
@@ -437,17 +438,43 @@ conTimer: 10
 
 # Items (generic)
 
-Name: Gain an Item
+Name: Gain any Item
 RID: 47
 Type: Item
 Calc: Add
+Data: 0
 
-Name: Lose an Item
+Name: Lose any Item
 RID: 48
 Type: Item
 Calc: Subtract
+Data: 0
+
+Name: Gain any Active Item
+RID: 49
+Type: Item
+Calc: Add
+Data: 1
+
+Name: Lose any Active Item
+RID: 50
+Type: Item
+Calc: Subtract
+Data: 2
+
+Name: Gain any Passive Item
+RID: 51
+Type: Item
+Calc: Add
+Data: 0
+
+Name: Lose any Passive Item
+RID: 52
+Type: Item
+Calc: Subtract
+Data: 0
 
 
 
 
-# next is 49
+# next is 53

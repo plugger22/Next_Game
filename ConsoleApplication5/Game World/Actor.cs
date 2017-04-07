@@ -368,15 +368,53 @@ namespace Next_Game
             { Game.SetError(new Error(202, "invalid Item PossessionID (zero, or less)")); }
         }
 
-        public List<int> GetItems()
-        { return listOfItems; }
+        /// <summary>
+        /// returns a list of items -> Active/Passive or Both (default)
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public List<int> GetItems(PossItemType type = PossItemType.Both)
+        {
+            //if default 'both' or erroneous entry 'none' -> return all
+            if (type == PossItemType.Both || type == PossItemType.None) { return listOfItems; }
+            else
+            {
+                //return filtered list -> either Active or Passive
+                List<int> tempItems = new List<int>(listOfItems);
+                for (int i = tempItems.Count - 1; i >= 0;  i--)
+                {
+                    Item item = Game.world.GetItem(tempItems[i]);
+                    if (item != null)
+                    {
+                        //wrong type, remove from list
+                        if (item.ItemType != type)
+                        { tempItems.RemoveAt(i); }
+                    }
+                }
+                return tempItems;
+            }
+        }
 
         /// <summary>
-        /// Returns true if Player possesses any items, false otherwise
+        /// Returns true if Player possesses any items (of a type), false otherwise (default filter is all items)
         /// </summary>
         /// <returns></returns>
-        public bool CheckItems()
-        { if (listOfItems.Count > 0) { return true; } return false; }
+        public bool CheckItems(PossItemType type = PossItemType.Both)
+        {
+            if (listOfItems.Count > 0) { return true; }
+            else
+            {
+                int counter = 0;
+                for(int i = 0; i < listOfItems.Count; i++)
+                {
+                    Item item = Game.world.GetItem(listOfItems[i]);
+                    if (item != null)
+                    { if (item.ItemType == type) { counter++; } }
+                }
+                if (counter > 0) { return true; }
+            }
+            return false;
+        }
 
         /// <summary>
         /// deletes an item, returns true if operation successful

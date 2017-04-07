@@ -2094,6 +2094,7 @@ namespace Next_Game
             int resultID;
             string tempText;
             string testText = "";
+            RLColor tempColor;
             if (resultList.Count > 0)
             {
                 for(int i = 0; i < resultList.Count; i++)
@@ -2222,12 +2223,16 @@ namespace Next_Game
                             case ResultType.Resource:
                                 break;
                             case ResultType.Item:
-                                //Gain an item -> if your Opponent has one
                                 int rndIndex;
-                                RLColor tempColor = RLColor.Green;
-                                if (opponent.CheckItems() == true)
+                                tempColor = RLColor.Green;
+                                //what type of item filter -> +ve then Active Items, -ve Passive Items, '0' for all
+                                PossItemType filter = PossItemType.Both;
+                                if (result.Data > 0) { filter = PossItemType.Active; }
+                                else if (result.Data < 0) { filter = PossItemType.Passive; }
+                                //Gain an item -> if your Opponent has one
+                                if (opponent.CheckItems(filter) == true)
                                 {
-                                    List<int> tempItems = opponent.GetItems();
+                                    List<int> tempItems = opponent.GetItems(filter);
                                     rndIndex = rnd.Next(tempItems.Count);
                                     int possID = tempItems[rndIndex];
                                     if (possID > 0)
@@ -2239,11 +2244,21 @@ namespace Next_Game
                                             opponent.Name, opponent.Handle);
                                     }
                                 }
-
                                 //Lose an item -> if you have one
-                                if (player.CheckItems() == true)
+                                if (player.CheckItems(filter) == true)
                                 {
                                     tempColor = RLColor.Red;
+                                    List<int> tempItems = player.GetItems(filter);
+                                    rndIndex = rnd.Next(tempItems.Count);
+                                    int possID = tempItems[rndIndex];
+                                    if (possID > 0)
+                                    {
+                                        opponent.AddItem(possID);
+                                        player.RemoveItem(possID);
+                                        Item item = Game.world.GetItem(possID);
+                                        tempText = string.Format("You have lost possession of \"{0}\", itemID {1}, to {2} {3} {4}", item.Description, item.ItemID, opponent.Title,
+                                            opponent.Name, opponent.Handle);
+                                    }
                                 }
                                 //admin
                                 if (tempText.Length > 0)
@@ -2363,7 +2378,7 @@ namespace Next_Game
                             case ResultType.Freedom:
                                 //data > 0, player status -> AtLocation, data < 0, player status -> Captured, data 0 -> ignored
                                 tempText = "";
-                                RLColor tempColor = RLColor.Green;
+                                tempColor = RLColor.Green;
                                 if (data > 0)
                                 {
                                     //only valid if Player is already captured -> at a location

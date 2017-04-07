@@ -32,12 +32,12 @@ OutLossMinor: You suffer a minor wound and retire defeated
 OutLoss: You are Forced to Yield to a superior Opponent who can demand an Advantage
 OutLossMajor: You have been Badly Injured and Lose any Special Items
 OutNone: You have fought your Opponent to a draw. You are both exhausted.
-ResWinMinor: 2, 3, 4, 43
-ResWin: 5, 43
+ResWinMinor: 2, 3, 4, 43, 51
+ResWin: 5, 43, 51
 ResWinMajor: 5, 8 , 43, 47
-ResLossMinor: 7, 42
-ResLoss: 9, 10, 42
-ResLossMajor: 11, 12, 13, 42, 48
+ResLossMinor: 7, 42, 48
+ResLoss: 9, 10, 42, 48
+ResLossMajor: 11, 12, 13, 42, 48, 50
 ResNone: 1
 [End]
 
@@ -142,12 +142,12 @@ OutLossMinor: Your relationship deteriorates (Rel-)
 OutLoss: You have become disliked (Rel--)
 OutLossMajor: Your opponent is actively campaigning against you (Rel---)
 OutNone: Indifference is the only outcome today. Nobody cares one way or another.
-ResWinMinor: 14
-ResWin: 15
+ResWinMinor: 14, 47
+ResWin: 15, 51
 ResWinMajor: 16, 5, 47
-ResLossMinor: 17
-ResLoss: 18
-ResLossMajor: 19
+ResLossMinor: 17, 48
+ResLoss: 18, 50
+ResLossMajor: 19, 48
 ResNone: 1
 [End]
 
@@ -169,12 +169,12 @@ OutLossMinor: You relationship has deteriorated (Rel-)
 OutLoss: You have been firmly rebuffed (Rel--)
 OutLossMajor: Your opponent is now your enemy (Rel---)
 OutNone: The Blackmail attempt has fizzled out. The mud and threats didn't stick.
-ResWinMinor: 29, 27
-ResWin: 30, 27
+ResWinMinor: 29, 27, 47
+ResWin: 30, 27, 51
 ResWinMajor:  31, 27, 47
-ResLossMinor: 32, 26
-ResLoss: 33, 26
-ResLossMajor: 34, 10, 26
+ResLossMinor: 32, 26, 48
+ResLoss: 33, 26, 50
+ResLossMajor: 34, 10, 26, 50
 ResNone: 35
 [End]
 
@@ -196,12 +196,12 @@ OutLossMinor: Your relationship has deteriorated (Rel-)
 OutLoss: You have been firmly rebuffed (Rel--)
 OutLossMajor: Your opponent has taken offence and is now your enemy (Rel---)
 OutNone: Love and lust are not on the menu today. It didn't happen.
-ResWinMinor: 20, 36, 41
-ResWin: 21, 37, 41
+ResWinMinor: 20, 36, 41, 51
+ResWin: 21, 37, 41, 51
 ResWinMajor: 22, 38, 41, 47
-ResLossMinor: 23, 41
-ResLoss: 24, 41
-ResLossMajor: 25, 41
+ResLossMinor: 23, 41, 48
+ResLoss: 24, 41, 48
+ResLossMajor: 25, 41, 50
 ResNone: 1, 41
 [End]
 

@@ -2649,7 +2649,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// returns an Item from the Possessions Dict
+        /// returns an Item from the Possessions Dict, null if not found
         /// </summary>
         /// <param name="possID"></param>
         /// <returns></returns>
