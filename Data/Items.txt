@@ -19,17 +19,7 @@
 # GoodChall: (string) outcome text for when you Play the card and are the Challenger (one sentence)
 # BadDef: & BadChall: (string) as above but when you Ignore the card (one sentence)
 
-
-Name: Dragon Eggs
-ItemID: 1
-Type: Passive
-Lore: The last vestiges of the Great Age of Dragons. When will they hatch? Can they ever hatch?
-Year: -1000
-Effect: None
-Amount: 0
-Known: Yes
-Chall: No
-[End]
+# Active Items -> Player only
 
 Name: Head Lopper
 ItemID: 2
@@ -68,3 +58,95 @@ BadChall: Mage Ring bad chall
 GoodDef: Mage Ring good def
 BadDef: Mage ring bad def
 [End]
+
+# Passive Items -> NPC's and Followers
+
+Name: Dragon Eggs
+ItemID: 1
+Type: Passive
+Lore: The last vestiges of the Great Age of Dragons. When will they hatch? Can they ever hatch?
+Year: -1000
+Effect: None
+Amount: 0
+Known: Yes
+Chall: No
+[End]
+
+Name: Goblin Mug
+ItemID: 4
+Type: Passive
+Lore: An age old Mug rumoured to belong to Grimoire the Great, the King of the 5th Goblin Dynasty
+Year: -500
+Effect: None
+Amount: 0
+Known: Yes
+Chall: No
+[End]
+
+Name: Mammoth Boots
+ItemID: 5
+Type: Passive
+Lore: Supremely warm boots made from the cured skin of long extinct Mammoths
+Year: -2000
+Effect: None
+Amount: 0
+Known: Yes
+Chall: No
+[End]
+
+Name: Lion Dagger
+ItemID: 6
+Type: Passive
+Lore: An ornamental dagger encrusted with rubies which is a treasured heirlorm of the House of Lannister
+Year: 500
+Effect: None
+Amount: 0
+Known: Yes
+Chall: No
+[End]
+
+Name: Chalice of Pain
+ItemID: 7
+Type: Passive
+Lore: Rumoured to have been brought into existence by Witches, it inflicts agonising pain to all who sip from it
+Year: 0
+Effect: None
+Amount: 0
+Known: Yes
+Chall: No
+[End]
+
+Name: Amulet of Passion
+ItemID: 8
+Type: Passive
+Lore: Whoever wears the Amulet has the sexual stamina of a bull Ox
+Year: 200
+Effect: None
+Amount: 0
+Known: Yes
+Chall: No
+[End]
+
+Name: Book of the Dead
+ItemID: 9
+Type: Passive
+Lore: An ancient tome that possesses the secret to Eternal Life. Scholars have been searching for this book for hundreds of years.
+Year: -1500
+Effect: None
+Amount: 0
+Known: Yes
+Chall: No
+[End]
+
+Name: Elixir of Wellness
+ItemID: 10
+Type: Passive
+Lore: Those who drink from the Exilir have their digestive systems purged, cleaned and cured. Greatly valued by Gastronomes.
+Year: 300
+Effect: None
+Amount: 0
+Known: Yes
+Chall: No
+[End]
+
+# next ItemID -> 11
