@@ -1,94 +1,68 @@
-//Exile Game File "LogTurn.txt" opened at: 07/04/2017 11:50:51
---- ProcessStartTurn, Day 23, Turn 22 (World.cs) 
---- MoveActors -> 0 Records (World.cs)
+//Exile Game File "LogTurn.txt" opened at: 07/04/2017 12:52:47
+--- ProcessStartTurn, Day 5, Turn 4 (World.cs) 
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Gorgo, ActID 132 travelling to The Pickled Prune (current Loc 14:16)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Harding Martell, ID 1 at 16:20, Enemy at 14:16 (Brother Gorgo, ID 132
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Harding Martell, ID 1 at 16:20, Enemy at 15:16 (Brother Gorgo, ID 132
+ [Move -> MoveObject] Inquisitor Brother Nergal, ActID 130 travelling to The Yellow Huntress (current Loc 14:12)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Harding Martell, ID 1 at 16:20, Enemy at 14:12 (Brother Nergal, ID 130
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Harding Martell, ID 1 at 16:20, Enemy at 14:11 (Brother Nergal, ID 130
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Paulinus Arryn, ActID 1 is Captured
- [Search -> Stationary] Follower The Leper, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Duchess, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 9 is AtLocation
+ [Search -> Stationary] Usurper Harding Martell, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Azazel, ID 129 at 13:13, Active Harding Martell, ID 1, at 16:20
+ [Search -> Debug] Enemy, Brother Nergal, ID 130 at 14:10, Active Harding Martell, ID 1, at 16:20
+ [Search -> Debug] Enemy, Brother Kali, ID 131 at 13:13, Active Harding Martell, ID 1, at 16:20
+ [Search -> Debug] Enemy, Brother Gorgo, ID 132 at 16:16, Active Harding Martell, ID 1, at 16:20
+ [Search -> Debug] Enemy, The Unrelenting, ID 133 at 13:13, Active Harding Martell, ID 1, at 16:20
+ [Search -> Stationary] Follower The Viper, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Jester, ActID 3 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Captured] Inquisitor Brother Astaroth, Act ID 127 Mode -> Normal
- [AI -> Player Captured] Inquisitor Brother Azazel, Act ID 128 Mode -> Normal
- [AI -> Player Captured] Inquisitor Brother Dagon, Act ID 129 Mode -> Normal
- [AI -> Player Captured] Inquisitor Brother Behemoth, Act ID 130 Mode -> Normal
- [AI -> Player Captured] Nemesis The Unrelenting, Act ID 131 Mode -> Normal
+ [AI -> Notification] Inquisitor Brother Nergal, ActID 130 is Travelling to The Yellow Huntress
+ [AI -> Notification] Inquisitor Brother Gorgo, ActID 132 is Travelling to The Pickled Prune
+ [AI -> Mode] enemyID 129,  distance -> 18  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 131,  distance -> 18  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 133,  distance -> 18  Threshold (turns) -> 8  Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Astaroth ActID 127 has become KNOWN
- [Enemy -> Goal] Brother Astaroth, ActID 127 retains Goal -> Wait
+ [Enemy -> Goal] Brother Azazel, ActID 129 retains Goal -> Hide
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Azazel, ActID 128 Assigned Branch -> 1 Current Branch -> 1
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Dagon, ActID 129 Assigned Branch -> 3 Current Branch -> 3
- [Enemy -> Unknown] Brother Behemoth ActID 130 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] Brother Behemoth, ActID 130 retains Goal -> Wait
- [Enemy -> Goal] The Unrelenting, ActID 131 retains Goal -> Wait
+ [Goal -> Branch] Brother Kali, ActID 131 Assigned Branch -> 3 Current Branch -> 0
+ [Goal -> New] Brother Kali, ActID 131, (loc 13:13), assigned new Goal -> Move
+ [Goal -> Move] Brother Kali, ActID 131 -> Capital to Correct Branch -> The Pickled Prune, LocID 11
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] The Unrelenting, ActID 133 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
---- UpdateActiveActors (World.cs)
- Usurper Paulinus Arryn has had their Revert Timer reduced from 2 to 1
- Follower The Leper has had their TurnsUnknown Timer increased from 21 to 22
- Follower The Duchess has had their TurnsUnknown Timer increased from 21 to 22
- Follower The Spider has had their TurnsUnknown Timer increased from 21 to 22
-//Exile Game file ops "LogTurn.txt" Completed at: 07/04/2017 11:51:14
-ame File "LogTurn.txt" Close completed at: 07/04/2017 11:50:50
-or.cs)
---- ProcessEndTurn, Day 20 Turn 19 (World.cs)
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 1
-//Exile Game File "LogTurn.txt" Close completed at: 07/04/2017 11:50:50
- Dormant Timer decremented to 2
-//Exile Game File "LogTurn.txt" Close completed at: 07/04/2017 11:50:49
-13
- Follower The Duchess has had their TurnsUnknown Timer increased from 12 to 13
- Follower The Spider has had their TurnsUnknown Timer increased from 12 to 13
---- ProcessEndTurn, Day 14 Turn 13 (World.cs)
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 7
-//Exile Game File "LogTurn.txt" Close completed at: 07/04/2017 11:50:45
-
- [SEARCH -> Active] Random 65 < 90 (ai 60 + known 30) -> Success 
- [Search -> ListSearched] Usurper Paulinus Arryn, ActID 1 Searched -> Enemy ActID 129 added
- [SEARCH -> Active] Usurper Paulinus Arryn has been Spotted by Brother Dagon, ActID 129 at loc 17:14 -> Activated True
- [Search -> ListEnemy] Usurper Paulinus Arryn, ActID 1 as Spotted -> True and Enemy ActID 129 added
- [Search -> Debug] Enemy, Brother Behemoth, ID 130 at 17:14, Active Paulinus Arryn, ID 1, at 17:14
- [Search -> Alert] Inquisitor Brother Behemoth, ActID 130, is in the same place as Active Paulinus Arryn, ID 1, (loc 17:14)
- [SEARCH -> Active] Random 69 < 90 (ai 60 + known 30) -> Success 
- [Search -> ListSearched] Usurper Paulinus Arryn, ActID 1 Searched -> Enemy ActID 130 added
- [SEARCH -> Active] Usurper Paulinus Arryn has been Spotted by Brother Behemoth, ActID 130 at loc 17:14 -> Activated True
- [Search -> ListEnemy] Usurper Paulinus Arryn, ActID 1 as Spotted -> True and Enemy ActID 130 added
- [Search -> Debug] Enemy, The Unrelenting, ID 131 at 17:14, Active Paulinus Arryn, ID 1, at 17:14
- [Search -> Alert] Nemesis The Unrelenting, ActID 131, is in the same place as Active Paulinus Arryn, ID 1, (loc 17:14)
- [SEARCH -> Active] Random 69 < 90 (ai 60 + known 30) -> Success 
- [Search -> ListSearched] Usurper Paulinus Arryn, ActID 1 Searched -> Enemy ActID 131 added
- [SEARCH -> Active] Usurper Paulinus Arryn has been Spotted by The Unrelenting, ActID 131 at loc 17:14 -> Activated False
- [Search -> ListEnemy] Usurper Paulinus Arryn, ActID 1 as Spotted -> True and Enemy ActID 131 added
- [AddEnemy -> Notification] enemyID 131 activated False and isn't added to the list
- [Search -> Previous] Nemesis The Unrelenting, ActID 131 has already Found Player this turn -> Result Cancelled
- [Search -> Stationary] Follower The Leper, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Duchess, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 9 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Notification] Inquisitor Brother Azazel, ActID 128 is Travelling to Kingskeep
- [AI -> Mode] enemyID 127,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 129,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 130,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 131,  distance -> 0  Threshold (turns) -> 8  Mode -> Hunt
---- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Astaroth ActID 127 has become KNOWN
- [Enemy -> Unknown] Brother Azazel ActID 128 has reverted to Unknown status (timer elapsed)
---- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Gervesin Targaryen", ID 72 added to list of Actors
+ [AutoEvent -> ActorList] "Rose Targaryen", ID 73 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Segarus Aymeri", ID 74 added to list of Actors
+ [AutoEvent -> ActorList] "Druet Goisfrid", ID 75 added to list of Actors
+ [AutoEvent -> ActorList] "Druet Segar", ID 76 added to list of Actors
+ [AutoEvent -> ActorList] "Raymun Alainon", ID 77 added to list of Actors
+ [AutoEvent -> ActorList] "Cleremunda Targaryen", ID 78 added to list of Actors
+ [AutoEvent -> ActorList] "Gilibertus Targaryen", ID 81 added to list of Actors
+ [AutoEvent -> LocalList] "Gervesin Targaryen", ID 72 added to list of Locals
+ [AutoEvent -> LocalList] "Rose Targaryen", ID 73 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Segarus Aymeri", ID 74 added to list of Locals
+ [AutoEvent -> AdvisorList] "Druet Goisfrid", ID 75 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Druet Segar", ID 76 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Raymun Alainon", ID 77 added to list of Advisors
+ [AutoEvent -> LocalList] "Cleremunda Targaryen", ID 78 added to list of Locals
+ [AutoEvent -> LocalList] "Gilibertus Targaryen", ID 81 added to list of Locals
+ Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
- Event "Enemy Afoot" Timer Repeat now 999
- Event "Enemy Afoot" Cooldown Timer has been reset to 0
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Paulinus Arryn has had their Revert Timer reduced from 5 to 4
- Follower The Leper has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Duchess has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Spider has had their TurnsUnknown Timer increased from 7 to 8
+ Usurper Harding Martell has had their Revert Timer reduced from 3 to 2
+ Follower The Viper has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Jester has had their TurnsUnknown Timer increased from 3 to 4
 --- ResolveOutcome (Director.cs)
---- SetPlayerCaptured (World.cs)
- [Captured] dungeon -> Capital
-Item with PossID 1 has been removed from Paulinus Arryn's inventory
---- ProcessEndTurn, Day 9 Turn 8 (World.cs)
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 12
-//Exile Game File "LogTurn.txt" Close completed at: 07/04/2017 11:50:31
+//Exile Game file ops "LogTurn.txt" Completed at: 07/04/2017 12:53:00

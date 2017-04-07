@@ -100,6 +100,7 @@ namespace Next_Game
             InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors
             InitialiseAI();
             InitialiseEnemyActors();
+            InitialiseWorldDevelopment();
             Game.StopTimer(timer_2, "W: InitialiseAI");
         }
 
@@ -4853,6 +4854,34 @@ namespace Next_Game
             else { Game.SetError(new Error(174, "Invalid Player (null)")); }
         }
 
+        /// <summary>
+        /// seeds procgen world with all the interesting stuff
+        /// </summary>
+        private void InitialiseWorldDevelopment()
+        {
+            Game.logStart.Write("--- InitialiseWorldDevelopment (World.cs)");
+            //Placeholder -> List of all Passive Items
+            IEnumerable<Item> listItems =
+                from items in dictPossessions.Values.OfType<Item>()
+                where items.ItemType == PossItemType.Passive
+                select items;
+            List<Item> listPassiveItems = listItems.ToList();
+            //get list of Passive actors
+            List<Passive> listPassiveActors = new List<Passive>(dictPassiveActors.Values);
+            int rndIndex;
+            //assign each passive item to a random actor
+            for(int i = 0; i < listPassiveItems.Count; i++)
+            {
+                Item item = listPassiveItems[i];
+                rndIndex = rnd.Next(listPassiveActors.Count);
+                Passive passive = listPassiveActors[rndIndex];
+                passive.AddItem(item.PossID);
+                Game.logStart.Write(string.Format("ItemID {0}, \"{1}\", given to {2} {3} at {4} {5}", item.ItemID, item.Description, passive.Title, passive.Name, GetLocationName(passive.LocID),
+                    ShowLocationCoords(passive.LocID)));
+                listPassiveActors.RemoveAt(rndIndex);
+            }
+
+        }
 
         //new Methods above here
     }
