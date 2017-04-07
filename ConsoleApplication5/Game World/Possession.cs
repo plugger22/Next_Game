@@ -17,6 +17,8 @@ namespace Next_Game
         private static int possessionIndex = 1; //provides a unique ID to every possession
         public int PossID { get; set; }
         public int Year { get; set; }
+        public int WhoHas { get; set; } //actId of actor who currently has the possession
+        
         public PossessionType Type { get; set; }
         public string Description { get; set; }
         public bool Active { get; set; } //some possessions can be owned but inactive, default true
@@ -196,6 +198,7 @@ namespace Next_Game
         public int CardNum { get; set; } //number of cards item gives in a challenge
         public string CardText { get; set; } //card text
         private string[] outcomeText; //outcome texts for when card played or ignored
+        private List<int> listWhoWants; //actID's of all actors who don't currently have the possession but who want it
 
 
         /// <summary>
@@ -211,6 +214,7 @@ namespace Next_Game
             Type = PossessionType.Item;
             listOfChallenges = new List<ConflictSubType>();
             outcomeText = new string[4]; //[0] -> Plyr Challenger Good (plays card), [1] -> Plyr Challenger Bad (ignores card), [2] -> Plyr Def Good (plays), [3] -> Plyr Def Bad (ignores)
+            listWhoWants = new List<int>();
         }
 
         internal void SetConflictChallenges(List<ConflictSubType> tempList)
@@ -238,6 +242,10 @@ namespace Next_Game
             return false;
         }
 
+        /// <summary>
+        /// initialise item outcome texts
+        /// </summary>
+        /// <param name="tempArray"></param>
         internal void SetOutcomeTexts(string[] tempArray)
         {
             if (tempArray.Length == 4)
