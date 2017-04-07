@@ -372,6 +372,34 @@ namespace Next_Game
         { return listOfItems; }
 
         /// <summary>
+        /// Returns true if Player possesses any items, false otherwise
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckItems()
+        { if (listOfItems.Count > 0) { return true; } return false; }
+
+        /// <summary>
+        /// deletes an item, returns true if operation successful
+        /// </summary>
+        public bool RemoveItem(int possID)
+        {
+            if (possID > 0)
+            {
+                for (int i = 0; i < listOfItems.Count; i++)
+                {
+                    if (listOfItems[i] == possID)
+                    {
+                        listOfItems.RemoveAt(i);
+                        Game.logTurn.Write(string.Format("Item with PossID {0} has been removed from {1}'s inventory", possID, Name));
+                        return true;
+                    }
+                }
+            }
+            else { Game.SetError(new Error(206, "Invalid possID (zero, or less)")); }
+            return false;
+        }
+
+        /// <summary>
         /// Conditions
         /// </summary>
         /// <param name="condition"></param>

@@ -1009,15 +1009,8 @@ namespace Next_Game
                 {
                     foreach (int possID in listItems)
                     {
-                        if (possID > 0)
-                        {
-                            Possession possession = GetPossession(possID);
-                            if (possession is Item)
-                            {
-                                Item item = possession as Item;
-                                listToDisplay.Add(new Snippet(string.Format("itemID {0} {1}, \"{2}\"", item.ItemID, item.Description, item.Lore)));
-                            }
-                        }
+                        Item item = GetItem(possID);
+                        listToDisplay.Add(new Snippet(string.Format("ItemID {0}, {1}, \"{2}\"", item.ItemID, item.Description, item.Lore)));
                     }
                 }
                 //family
@@ -2639,11 +2632,39 @@ namespace Next_Game
             return null;
         }
 
-        internal Possession GetPossession(int possessionID)
+        internal Possession GetPossession(int possID)
         {
-            Possession possession = new Possession();
-            if (dictPossessions.TryGetValue(possessionID, out possession))
-            { return possession; }
+            if (possID > 0)
+            {
+                Possession possession = new Possession();
+                if (dictPossessions.TryGetValue(possID, out possession))
+                { return possession; }
+            }
+            else { Game.SetError(new Error(205, "Invalid PossID (zero, or less)")); }
+            return null;
+        }
+
+        /// <summary>
+        /// returns an Item from the Possessions Dict
+        /// </summary>
+        /// <param name="possID"></param>
+        /// <returns></returns>
+        internal Item GetItem(int possID)
+        {
+            if (possID > 0)
+            {
+                Possession possession = new Possession();
+                if (dictPossessions.TryGetValue(possID, out possession))
+                {
+                    if (possession is Item)
+                    {
+                        Item item = possession as Item;
+                        return item;
+                    }
+                    else { Game.SetError(new Error(204, string.Format("Invalid possession -> should be an Item but isn't (possID {0})", possID))); }
+                }
+            }
+            else { Game.SetError(new Error(204, "Invalid PossID (zero, or less)")); }
             return null;
         }
 
@@ -4671,6 +4692,7 @@ namespace Next_Game
         public void SetPlayerCaptured(int enemyID)
         {
             Game.logTurn.Write("--- SetPlayerCaptured (World.cs)");
+            string description;
             Player player = (Player)GetActiveActor(1);
             if (player != null)
             {
@@ -4796,8 +4818,26 @@ namespace Next_Game
                         //update Player LocID (dungeon), set Known to true (should be already)
                         player.LocID = heldLocID;
                         player.Known = true;
+                        //Player loses any items they possess (needs to be a reverse loop as you're deleting as you go
+                        if (player.CheckItems() == true)
+                        {
+                            int possID;
+                            List<int> tempItems = player.GetItems();
+                            for (int k = tempItems.Count - 1; k >= 0; k--)
+                            {
+                                possID = tempItems[k];
+                                if (player.RemoveItem(possID) == true)
+                                {
+                                    Item item = GetItem(possID);
+                                    //admin
+                                    description = string.Format("ItemID {0}, {1}, has been confiscated by the Dungeon Master", item.ItemID, item.Description);
+                                    SetMessage(new Message(description, MessageType.Incarceration));
+                                    SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Challenge));
+                                }
+                            }
+                        }
                         //administration
-                        string description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID,
+                        description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID,
                             GetLocationName(heldLocID));
                         SetMessage(new Message(description, MessageType.Search));
                         SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
