@@ -4866,8 +4866,13 @@ namespace Next_Game
                 where items.ItemType == PossItemType.Passive
                 select items;
             List<Item> listPassiveItems = listItems.ToList();
-            //get list of Passive actors
-            List<Passive> listPassiveActors = new List<Passive>(dictPassiveActors.Values);
+            //get list of live Passive actors
+            IEnumerable<Passive> listActors =
+                from actors in dictPassiveActors
+                where actors.Value.Status == ActorStatus.AtLocation
+                select actors.Value;
+            List<Passive> listPassiveActors = listActors.ToList();
+
             int rndIndex;
             //assign each passive item to a random actor
             for(int i = 0; i < listPassiveItems.Count; i++)
@@ -4876,8 +4881,8 @@ namespace Next_Game
                 rndIndex = rnd.Next(listPassiveActors.Count);
                 Passive passive = listPassiveActors[rndIndex];
                 passive.AddItem(item.PossID);
-                Game.logStart.Write(string.Format("ItemID {0}, \"{1}\", given to {2} {3} at {4} {5}", item.ItemID, item.Description, passive.Title, passive.Name, GetLocationName(passive.LocID),
-                    ShowLocationCoords(passive.LocID)));
+                Game.logStart.Write(string.Format("ItemID {0}, \"{1}\", given to {2} {3}, ActID {4}, at {5} {6}", item.ItemID, item.Description, passive.Title, passive.Name, passive.ActID,
+                    GetLocationName(passive.LocID), ShowLocationCoords(passive.LocID)));
                 listPassiveActors.RemoveAt(rndIndex);
             }
 
