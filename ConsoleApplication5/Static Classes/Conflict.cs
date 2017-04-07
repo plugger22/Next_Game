@@ -2106,6 +2106,7 @@ namespace Next_Game
                         int data = result.Data;
                         int amount = result.Amount;
                         EventCalc calc = result.Calc;
+                        tempText = "";
                         RLColor backColor = Game.layout.Outcome_FillColor;
                         //Test result? Only applies is test passed
                         if (result.Test > 0)
@@ -2221,6 +2222,35 @@ namespace Next_Game
                             case ResultType.Resource:
                                 break;
                             case ResultType.Item:
+                                //Gain an item -> if your Opponent has one
+                                int rndIndex;
+                                RLColor tempColor = RLColor.Green;
+                                if (opponent.CheckItems() == true)
+                                {
+                                    List<int> tempItems = opponent.GetItems();
+                                    rndIndex = rnd.Next(tempItems.Count);
+                                    int possID = tempItems[rndIndex];
+                                    if (possID > 0)
+                                    {
+                                        player.AddItem(possID);
+                                        opponent.RemoveItem(possID);
+                                        Item item = Game.world.GetItem(possID);
+                                        tempText = string.Format("You have gained possession of \"{0}\", itemID {1}, from {2} {3} {4}", item.Description, item.ItemID, opponent.Title,
+                                            opponent.Name, opponent.Handle);
+                                    }
+                                }
+
+                                //Lose an item -> if you have one
+                                if (player.CheckItems() == true)
+                                {
+                                    tempColor = RLColor.Red;
+                                }
+                                //admin
+                                if (tempText.Length > 0)
+                                {
+                                    tempList.Add(new Snippet(tempText, tempColor, backColor));
+                                    message = new Message(tempText, MessageType.Conflict);
+                                }
                                 break;
                             case ResultType.Secret:
                                 break;

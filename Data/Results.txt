@@ -15,8 +15,11 @@
 # Tag: OPTIONAL -> short descriptor, applies if Type is  RelPlyr or RelOther 
 # Key Stats Generic Results, eg. Invisibility, Justice, etc. -> Data +ve ADD to Good, otherwise ADD to Bad
 
-# Type -> Introduction, Favour
+# Type -> Introduction or Favour
 # Data: is the strength of the item, eg. 1 (weak) to 5 (strong)
+
+# Type -> Item
+# Calc -> Add / Subtract -> Gain or lose an item
 
 # Type -> Event
 # Data: is the EventID from an event in Events_Player.txt
@@ -432,5 +435,19 @@ conEffect: -1
 conTimer: 10
 [End]
 
+# Items (generic)
 
-# next is 47
+Name: Gain an Item
+RID: 47
+Type: Item
+Calc: Add
+
+Name: Lose an Item
+RID: 48
+Type: Item
+Calc: Subtract
+
+
+
+
+# next is 49
