@@ -1011,7 +1011,10 @@ namespace Next_Game
                     foreach (int possID in listItems)
                     {
                         Item item = GetItem(possID);
-                        listToDisplay.Add(new Snippet(string.Format("ItemID {0}, {1}, \"{2}\"", item.ItemID, item.Description, item.Lore)));
+                        //add possession label for all non-Lords who wouldn't normally have one
+                        if (person is Passive && (person.Type != ActorType.Lord && person.Type != ActorType.BannerLord))
+                        { listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black)); }
+                        listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\" ({2})", item.ItemID, item.Description, item.ItemType)));
                     }
                 }
                 //family
