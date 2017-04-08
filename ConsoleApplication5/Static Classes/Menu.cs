@@ -154,12 +154,13 @@ namespace Next_Game
                     menuArrayText[0, 4] = "[I] Toggle Info";
                     //Debug Info commands
                     menuArrayText[1, 0] = "[S] Show Secrets";
-                    menuArrayText[1, 1] = "[E] Show Errors";
-                    menuArrayText[1, 2] = "[T] Show Timers";
-                    menuArrayText[1, 3] = "[P] Show Dup's";
-                    menuArrayText[1, 4] = "[K] Show Old K's Hse";
-                    menuArrayText[1, 5] = "[H] Show Hse Rels";
-                    menuArrayText[1, 6] = "[Q] Show Enemies";
+                    menuArrayText[1, 1] = "[L] Show Items";
+                    menuArrayText[1, 2] = "[E] Show Errors";
+                    menuArrayText[1, 3] = "[T] Show Timers";
+                    menuArrayText[1, 4] = "[P] Show Dup's";
+                    menuArrayText[1, 5] = "[K] Show Old K's Hse";
+                    menuArrayText[1, 6] = "[H] Show Hse Rels";
+                    menuArrayText[1, 7] = "[Q] Show Enemies";
                     //Debug Spy commands
                     menuArrayText[2, 0] = "[U] Show All";
                     menuArrayText[2, 1] = "[V] Show Actor";

@@ -357,15 +357,19 @@ namespace Next_Game
         { if (secrets != null) { listOfSecrets.Clear(); listOfSecrets.AddRange(secrets); } }
 
         /// <summary>
-        /// Items
+        /// Items -> auto updates Item.WhoHas property
         /// </summary>
         /// <param name="possID"></param>
         public void AddItem(int possID)
         {
-            if (possID > 0)
-            { listOfItems.Add(possID); }
+            Item item = Game.world.GetItem(possID);
+            if (item != null)
+            {
+                item.WhoHas = ActID;
+                listOfItems.Add(possID);
+            }
             else
-            { Game.SetError(new Error(202, "invalid Item PossessionID (zero, or less)")); }
+            { Game.SetError(new Error(202, string.Format("Invalid Item (null) possID {0}", possID))); }
         }
 
         /// <summary>

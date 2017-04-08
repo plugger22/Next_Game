@@ -1014,7 +1014,7 @@ namespace Next_Game
                         //add possession label for all non-Lords who wouldn't normally have one
                         if (person is Passive && (person.Type != ActorType.Lord && person.Type != ActorType.BannerLord))
                         { listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black)); }
-                        listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\" ({2})", item.ItemID, item.Description, item.ItemType)));
+                        listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType)));
                     }
                 }
                 //family
@@ -1878,6 +1878,24 @@ namespace Next_Game
             }
             else { Game.SetError(new Error(172, "Actor not found in dictAllActors")); }
             return name;
+        }
+
+        /// <summary>
+        /// Gets an actors Title + Name + ActID + 'at' + Location ('Coords)
+        /// </summary>
+        /// <param name="actID"></param>
+        /// <returns></returns>
+        public string GetActorDetails(int actID)
+        {
+            string details = "";
+            //check active actor in dictionary
+            if (dictAllActors.ContainsKey(actID))
+            {
+                Actor actor = dictAllActors[actID];
+                return string.Format("{0} {1}, ActID {2} at {3} {4}", actor.Title, actor.Name, actor.ActID, GetLocationName(actor.LocID), ShowLocationCoords(actor.LocID));
+            }
+            else { Game.SetError(new Error(172, "Actor not found in dictAllActors")); }
+            return details;
         }
 
         /// <summary>
@@ -2858,23 +2876,35 @@ namespace Next_Game
             return snippetList;
         }
 
+        /*
         /// <summary>
         /// Generate a list of All Secrets
         /// </summary>
         /// <returns></returns>
         public List<Snippet> ShowSecretsRL()
         {
-            /*List<string> tempList = new List<string>();
-            IEnumerable<string> secretList =
-                from secret in dictSecrets
-                orderby secret.Value.Year
-                select Convert.ToString(secret.Value.Year + " " + secret.Value.Description);
-            tempList = secretList.ToList();*/
             List <string> tempList = GetPossessionsSummary(PossessionType.Secret);
             //snippet list
             List<Snippet> listData = new List<Snippet>();
             foreach(string data in tempList)
             { listData.Add(new Snippet(data)); }
+            return listData;
+        }*/
+
+        /// <summary>
+        /// Generate a list of a subtype of Possessions for display
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowPossessionsRL(PossessionType type)
+        {
+            //snippet list
+            List<Snippet> listData = new List<Snippet>();
+            List<string> tempList = GetPossessionsSummary(type);
+            if (tempList.Count > 0)
+            {
+                foreach (string data in tempList)
+                { listData.Add(new Snippet(data)); }
+            }
             return listData;
         }
 
@@ -3491,18 +3521,16 @@ namespace Next_Game
                     tempList = secretList.ToList();
                     break;
                 case PossessionType.Item:
-                    /*var query =
-                    from possession in dictPossessions
-                    
-                    let item = query where possession.Value is Item
-                    //from item in items
-                    from item in items
-                    where item.Active == true && item.ChallengeFlag == true
-                    orderby item.ItemID
-                    select Convert.ToString("ItemID " + item.ItemID + " " + item.Description);
-                    tempList = var.ToList();
-                    select Convert.ToString("ItemID " + item.ItemID + " " + item.Description);
-                    tempList = query.ToList();*/
+                    IEnumerable<string> itemListActive =
+                        from items in dictPossessions.Values.OfType<Item>()
+                        where items.ItemType == PossItemType.Active && items.WhoHas > 0
+                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType +  ", " + GetActorDetails(items.WhoHas));
+                    tempList = itemListActive.ToList();
+                    IEnumerable<string> itemListPassive =
+                        from items in dictPossessions.Values.OfType<Item>()
+                        where items.ItemType == PossItemType.Passive && items.WhoHas > 0
+                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType + ", " + GetActorDetails(items.WhoHas));
+                    tempList.AddRange(itemListPassive.ToList());
                     break;
                 case PossessionType.None:
                     Game.SetError(new Error(121, "Invalid possType Input (None)"));

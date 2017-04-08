@@ -712,6 +712,11 @@ namespace Next_Game
                                         //witch to Lore Menu
                                         _menuMode = menu.SwitchMenuMode(MenuMode.Lore);
                                         break;
+                                    case MenuMode.Debug:
+                                        //Show All Items log
+                                        infoChannel.SetInfoList(world.ShowPossessionsRL(PossessionType.Item), ConsoleDisplay.Multi);
+                                        infoChannel.InsertHeader(new Snippet("--- Items ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                        break;
                                 }
                                 break;
                             case RLKey.M:
@@ -824,7 +829,7 @@ namespace Next_Game
                                         break;
                                     case MenuMode.Debug:
                                         //Show All Secrets log
-                                        infoChannel.SetInfoList(world.ShowSecretsRL(), ConsoleDisplay.Multi);
+                                        infoChannel.SetInfoList(world.ShowPossessionsRL(PossessionType.Secret), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- Secrets ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                 }
