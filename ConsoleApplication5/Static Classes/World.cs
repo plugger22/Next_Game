@@ -1862,7 +1862,7 @@ namespace Next_Game
             return false;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Get any actor's name. Returns empty string if not found
         /// </summary>
         /// <param name="actID"></param>
@@ -1878,23 +1878,26 @@ namespace Next_Game
             }
             else { Game.SetError(new Error(172, "Actor not found in dictAllActors")); }
             return name;
-        }
+        }*/
 
         /// <summary>
-        /// Gets an actors Title + Name + ActID + 'at' + Location ('Coords)
+        /// nameOnly true -> actor.Name, nameOnly false -> actors Title + Name + ActID + 'at' + Location ('Coords)
         /// </summary>
         /// <param name="actID"></param>
         /// <returns></returns>
-        public string GetActorDetails(int actID)
+        public string GetActorDetails(int actID, bool nameOnly = true)
         {
             string details = "";
             //check active actor in dictionary
             if (dictAllActors.ContainsKey(actID))
             {
                 Actor actor = dictAllActors[actID];
-                return string.Format("{0} {1}, ActID {2} at {3} {4}", actor.Title, actor.Name, actor.ActID, GetLocationName(actor.LocID), ShowLocationCoords(actor.LocID));
+                if (nameOnly == true)
+                { return actor.Name; }
+                else
+                { return string.Format("{0} {1}, ActID {2} at {3} {4}", actor.Title, actor.Name, actor.ActID, GetLocationName(actor.LocID), ShowLocationCoords(actor.LocID)); }
             }
-            else { Game.SetError(new Error(172, "Actor not found in dictAllActors")); }
+            else { Game.SetError(new Error(172, string.Format("Actor not found in dictAllActors (ActID {0})", actID))); }
             return details;
         }
 
@@ -2941,7 +2944,7 @@ namespace Next_Game
                 {
                     foreach (ActorSpy spy in listTempActive)
                     {
-                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, GetActorName(spy.ActID), 
+                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, GetActorDetails(spy.ActID), 
                             spy.Pos.PosX, spy.Pos.PosY, spy.Status, spy.Known, "n.a", "n.a");
                         listData.Add(new Snippet(description));
                     }
@@ -2951,7 +2954,7 @@ namespace Next_Game
                 {
                     foreach (ActorSpy spy in listTempEnemy)
                     {
-                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, GetActorName(spy.ActID), spy.Pos.PosX,
+                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, GetActorDetails(spy.ActID), spy.Pos.PosX,
                             spy.Pos.PosY, spy.Status, spy.Known, spy.Goal, spy.HuntMode == true ? "Hunt" : "normal");
                         listData.Add(new Snippet(description));
                     }
@@ -3001,7 +3004,7 @@ namespace Next_Game
                     {
                         if (spy.Known == true) { foreColor = Color._badTrait; }
                         else { foreColor = RLColor.White; }
-                        description = string.Format("Day {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.Turn, GetActorName(spy.ActID), 
+                        description = string.Format("Day {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.Turn, GetActorDetails(spy.ActID), 
                             spy.Pos.PosX, spy.Pos.PosY, spy.Status, spy.Known, spy.Goal, spy.HuntMode == true ? "Hunt" : "normal");
                         listData.Add(new Snippet(description, foreColor, RLColor.Black));
                     }
@@ -3524,12 +3527,12 @@ namespace Next_Game
                     IEnumerable<string> itemListActive =
                         from items in dictPossessions.Values.OfType<Item>()
                         where items.ItemType == PossItemType.Active && items.WhoHas > 0
-                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType +  ", " + GetActorDetails(items.WhoHas));
+                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType +  ", " + GetActorDetails(items.WhoHas, false));
                     tempList = itemListActive.ToList();
                     IEnumerable<string> itemListPassive =
                         from items in dictPossessions.Values.OfType<Item>()
                         where items.ItemType == PossItemType.Passive && items.WhoHas > 0
-                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType + ", " + GetActorDetails(items.WhoHas));
+                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType + ", " + GetActorDetails(items.WhoHas, false));
                     tempList.AddRange(itemListPassive.ToList());
                     break;
                 case PossessionType.None:
