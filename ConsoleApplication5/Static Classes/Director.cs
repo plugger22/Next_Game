@@ -1000,7 +1000,7 @@ namespace Next_Game
                     }
                     //new event (auto location events always have eventPID of '1000' -> old version in Player dict is deleted before new one added)
                     EventPlayer eventObject = new EventPlayer(1000, "What to do?", EventFrequency.Low) { Category = EventCategory.AutoCreate, Status = EventStatus.Active, Type = ArcType.Location };
-
+                    tempText = "";
                     switch (filter)
                     {
                         case EventFilter.None:
@@ -1231,6 +1231,7 @@ namespace Next_Game
                                     else { actorText = string.Format("{0} {1}", person.Type, person.Name); }
                                     eventObject.Name = "Interact";
                                     eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
+                                    tempText = string.Format("You are granted an audience with {0} {1} \"{2}\", ActID {3}, at {4}", person.Title, person.Name, person.Handle, person.ActID, loc.LocName);
                                     //default
                                     OptionInteractive option_0 = new OptionInteractive("Make yourself known") { ActorID = actorID };
                                     option_0.ReplyGood = string.Format("{0} acknowledges your presence", actorText);
@@ -1299,10 +1300,13 @@ namespace Next_Game
                     if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }
                     dictPlayerEvents.Add(1000, eventObject);
                     //message
-                    tempText = string.Format("{0}, Aid {1} at {2} {3}, [{4} Event] \"{5}\"", player.Name, player.ActID, locName, Game.world.ShowLocationCoords(player.LocID),
-                          eventObject.Type, eventObject.Name);
-                    Game.world.SetMessage(new Message(tempText, MessageType.Event));
-                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                    //tempText = string.Format("{0}, Aid {1} at {2} {3}, [{4} Event] \"{5}\"", player.Name, player.ActID, locName, Game.world.ShowLocationCoords(player.LocID),
+                          //eventObject.Type, eventObject.Name);
+                    if (tempText.Length > 0)
+                    {
+                        Game.world.SetMessage(new Message(tempText, MessageType.Event));
+                        Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                    }
                 }
                 else { Game.SetError(new Error(118, "Invalid List of Actors (Zero present at Location")); }
             }
@@ -2663,8 +2667,9 @@ namespace Next_Game
                         Item item = Game.world.GetItem(possID);
                         resultText = string.Format("You have gained possession of \"{0}\", itemID {1}, from {2} {3} \"{4}\", ActID {5}", item.Description, item.ItemID, opponent.Title,
                             opponent.Name, opponent.Handle, opponent.ActID);
-                        tempText = string.Format("You have lost possession of \"{0}\", itemID {1}, to the Ursurper", item.Description, item.ItemID);
+                        tempText = string.Format("{0} {1} has lost possession of \"{2}\", itemID {1}, to the Ursurper", opponent.Title, opponent.Name, item.Description, item.ItemID);
                         Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.GetRefID(opponent.LocID), CurrentActorIncident.Event));
+                        Game.logTurn.Write(tempText);
 
                     }
                 }
@@ -2681,8 +2686,9 @@ namespace Next_Game
                         Item item = Game.world.GetItem(possID);
                         resultText = string.Format("You have lost possession of \"{0}\", itemID {1}, to {2} {3} \"{4}\", ActID {5}", item.Description, item.ItemID, opponent.Title,
                             opponent.Name, opponent.Handle, opponent.ActID);
-                        tempText = string.Format("You have gained possession of \"{0}\", itemID {1}, from the Ursurper", item.Description, item.ItemID);
+                        tempText = string.Format("{0} {1} has gained possession of \"{2}\", itemID {3}, from the Ursurper", opponent.Title, opponent.Name, item.Description, item.ItemID);
                         Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.GetRefID(opponent.LocID), CurrentActorIncident.Event));
+                        Game.logTurn.Write(tempText);
                     }
                 }
             }

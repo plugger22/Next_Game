@@ -249,8 +249,8 @@ Type: Road
 subType: Normal
 Cat: Generic
 Freq: Low
-Repeat: 10
-Cool: 2
+Repeat: 3
+Cool: 5
 Event: A crazy, old woman approaches you, yelling obscenities.
 [option]
 text: Ride past, ignoring her
