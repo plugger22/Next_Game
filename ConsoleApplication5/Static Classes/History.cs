@@ -437,7 +437,9 @@ namespace Next_Game
                 {
                     int ageYears = rnd.Next(25, 65);
                     Inquisitor inquisitor = new Inquisitor(name) { Age = ageYears, Born = Game.gameYear - ageYears };
-                    InitialiseEnemyTraits(inquisitor);
+                    //InitialiseEnemyTraits(inquisitor);
+                    //Combat / Wits / Charm / Treachery / Leadership / Touched
+                    InitialiseManualTraits(inquisitor, new int[6, 2] { { 1, 0 }, { 1, 0 }, { -1, 0 }, { 1, 1 }, { 0, 0 }, { -1, 0 } });
                     inquisitor.Handle = "The Loyal";
                     //assign to the capital
                     Location loc = Game.network.GetLocation(locID);
@@ -489,7 +491,9 @@ namespace Next_Game
                 {
                     int ageYears = rnd.Next(65, 105);
                     Nemesis nemesis = new Nemesis(name) { Age = ageYears, Born = Game.gameYear - ageYears };
-                    InitialiseEnemyTraits(nemesis);
+                    //InitialiseEnemyTraits(nemesis);
+                    //Combat / Wits / Charm / Treachery / Leadership / Touched
+                    InitialiseManualTraits(nemesis, new int[6, 2] { { 1, 0 }, { 1, 0 }, { -1, 0 }, { 1, 1 }, { 0, 0 }, { 1, 1 } });
                     //assign to the capital
                     Location loc = Game.network.GetLocation(locID);
                     if (loc != null)
@@ -1374,7 +1378,7 @@ namespace Next_Game
 
             if (actor != null)
             {
-                if (arrayDM.GetUpperBound(0) == 6 && arrayDM.GetUpperBound(1) == 2)
+                if (arrayDM.GetUpperBound(0) + 1 == 6 && arrayDM.GetUpperBound(1) + 1 == 2)
                 {
                     List<string> tempHandles = new List<string>();
 
@@ -1416,6 +1420,7 @@ namespace Next_Game
                         {
                             //always gets a trait
                             chanceFlag = false;
+                            Game.logStart.Write(string.Format("{0} {1} has a confirmed {2} trait", actor.Title, actor.Name, skill));
                             //special case of auto Touched, need to set base (normally it's 0)
                             if (skill == SkillType.Touched)
                             { actor.Touched = 3; }
