@@ -1989,7 +1989,10 @@ namespace Next_Game
                                             break;
                                         case OutcomeType.Item:
                                             //Player gains or loses an item
-
+                                            OutItem itemOutcome = outcome as OutItem;
+                                            outcomeText = ChangePlayerItemStatus(itemOutcome.Calc, itemOutcome.Data, option.ActorID);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             break;
                                         case OutcomeType.Resource:
                                             //adjust the resource level of Player or an NPC actor
@@ -2615,6 +2618,60 @@ namespace Next_Game
             }
             else
             { Game.SetError(new Error(78, string.Format("Target Event ID {0} not found, event status unchanged", targetEventID))); }
+            return resultText;
+        }
+
+        /// <summary>
+        /// Player Gains, or Loses, an Item (from Opponent)
+        /// </summary>
+        /// <param name="calc"></param>
+        /// <param name="data"></param>
+        /// <param name="oppID"></param>
+        /// <returns></returns>
+        private string ChangePlayerItemStatus(EventCalc calc, int data, int oppID)
+        {
+            string resultText = "";
+            Active player = Game.world.GetActiveActor(1);
+            Actor opponent = Game.world.GetAnyActor(oppID);
+            if (player != null && opponent != null)
+            {
+                int rndIndex;
+                //what type of item filter -> +ve then Active Items, -ve Passive Items, '0' for all
+                PossItemType filter = PossItemType.Both;
+                if (data > 0) { filter = PossItemType.Active; }
+                else if (data < 0) { filter = PossItemType.Passive; }
+                //Gain an item -> if your Opponent has one
+                if (calc == EventCalc.Add && opponent.CheckItems(filter) == true)
+                {
+                    List<int> tempItems = opponent.GetItems(filter);
+                    rndIndex = rnd.Next(tempItems.Count);
+                    int possID = tempItems[rndIndex];
+                    if (possID > 0)
+                    {
+                        player.AddItem(possID);
+                        opponent.RemoveItem(possID);
+                        Item item = Game.world.GetItem(possID);
+                        resultText = string.Format("You have gained possession of \"{0}\", itemID {1}, from {2} {3} {4}", item.Description, item.ItemID, opponent.Title,
+                            opponent.Name, opponent.Handle);
+                    }
+                }
+                //Lose an item -> if you have one
+                if (calc == EventCalc.Subtract && player.CheckItems(filter) == true)
+                {
+                    List<int> tempItems = player.GetItems(filter);
+                    rndIndex = rnd.Next(tempItems.Count);
+                    int possID = tempItems[rndIndex];
+                    if (possID > 0)
+                    {
+                        opponent.AddItem(possID);
+                        player.RemoveItem(possID);
+                        Item item = Game.world.GetItem(possID);
+                        resultText = string.Format("You have lost possession of \"{0}\", itemID {1}, to {2} {3} {4}", item.Description, item.ItemID, opponent.Title,
+                            opponent.Name, opponent.Handle);
+                    }
+                }
+            }
+            else { Game.SetError(new Error(207, "Invalid Player or Opponent (null)")); }
             return resultText;
         }
 
