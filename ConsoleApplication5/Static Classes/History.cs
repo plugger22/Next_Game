@@ -438,6 +438,7 @@ namespace Next_Game
                     int ageYears = rnd.Next(25, 65);
                     Inquisitor inquisitor = new Inquisitor(name) { Age = ageYears, Born = Game.gameYear - ageYears };
                     InitialiseEnemyTraits(inquisitor);
+                    inquisitor.Handle = "The Loyal";
                     //assign to the capital
                     Location loc = Game.network.GetLocation(locID);
                     if (loc != null)
@@ -495,7 +496,6 @@ namespace Next_Game
                     {
                         //handle (overides the trait derived one)
                         nemesis.Handle = "Who Cannot be Named";
-
                         //set up status
                         nemesis.Known = false;
                         nemesis.TurnsUnknown = 1;
@@ -1312,8 +1312,8 @@ namespace Next_Game
                     rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)inquisitor.Sex].Length;
                     tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, rndRange));
                     //Touched -> triple chance compared to normal person, if so then lower value
-                    //if (rnd.Next(100) <= (Game.constant.GetValue(Global.TOUCHED) * 3))
-                    //{
+                    if (rnd.Next(100) <= (Game.constant.GetValue(Global.TOUCHED) * 3))
+                    {
                         inquisitor.Touched = 3;
                         Game.logStart.Write(string.Format("{0}, Aid {1} is Touched", inquisitor.Name, inquisitor.ActID));
                         rndRange = arrayOfTraits[(int)SkillType.Touched, (int)inquisitor.Sex].Length;
@@ -1322,7 +1322,7 @@ namespace Next_Game
                         if (tempHandles.Count > 0)
                         { inquisitor.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
                         else { inquisitor.Handle = "The Loyal"; }
-                    //}
+                    }
                 }
                 else { Game.SetError(new Error(154, "Invalid Inquisitor (null)")); }
             }
@@ -1368,20 +1368,17 @@ namespace Next_Game
         /// [, 0] +ve good trait, -ve bad trait, '0' neutral (may not have any trait) -> [0,] Combat, [1,] Wits, [2,] Charm, [3,] Treachery, [4,] Leadership, [5,] Touched 
         /// [, 1] is a trait automatically given, or left to normal probabilities? '0' -> normal chances, +ve -> automatically given
         /// </param>
-       
+
         public void InitialiseManualTraits(Actor actor, int[,] arrayDM)
         {
-            int startRange = 0;
-            int endRange = 0;
-            int rndRange;
-            bool chanceFlag;
+
             if (actor != null)
             {
                 if (arrayDM.GetUpperBound(0) == 6 && arrayDM.GetUpperBound(1) == 2)
                 {
                     List<string> tempHandles = new List<string>();
 
-                    //Combat
+                    /*//Combat
                     rndRange = arrayOfTraits[(int)SkillType.Combat, (int)actor.Sex].Length;
                     if (arrayDM[0, 0] == 0) { startRange = 0; endRange = rndRange; }
                     else if (arrayDM[0, 0] < 0)
@@ -1389,7 +1386,45 @@ namespace Next_Game
                     else { startRange = 0; endRange = rndRange / 2; }
                     chanceFlag = false;
                     if (arrayDM[0, 1] > 0) { chanceFlag = true; }
-                    tempHandles.AddRange(GetRandomTrait(actor, SkillType.Combat, SkillAge.Fifteen, rndRange, startRange, endRange, chanceFlag));
+                    tempHandles.AddRange(GetRandomTrait(actor, SkillType.Combat, SkillAge.Fifteen, rndRange, startRange, endRange, chanceFlag));*/
+
+                    int startRange = 0;
+                    int endRange = 0;
+                    int rndRange;
+                    bool chanceFlag;
+                    SkillType skill = SkillType.None;
+                    int limit = arrayDM.GetUpperBound(0) + 1;
+                    for (int i = 0; i < limit; i++)
+                    {
+                        switch (i)
+                        {
+                            case 0: skill = SkillType.Combat; break;
+                            case 1: skill = SkillType.Wits; break;
+                            case 2: skill = SkillType.Charm; break;
+                            case 3: skill = SkillType.Treachery; break;
+                            case 4: skill = SkillType.Leadership; break;
+                            case 5: skill = SkillType.Touched; break;
+                            default: Game.SetError(new Error(154, "Invalid i in SkillType switch statement")); break;
+                        }
+                        rndRange = arrayOfTraits[(int)skill, (int)actor.Sex].Length;
+                        if (arrayDM[i, 0] == 0) { startRange = 0; endRange = rndRange; } //normal range of probabilites, might get a trait, might not
+                        else if (arrayDM[i, 0] < 0) 
+                        { startRange = rndRange / 2; endRange = rndRange; } //if a trait, it'll be a negative one
+                        else { startRange = 0; endRange = rndRange / 2; } //if a trait, it'll be a positive one
+                        chanceFlag = true; //chance of trait is as per normal
+                        if (arrayDM[i, 1] > 0)
+                        {
+                            //always gets a trait
+                            chanceFlag = false;
+                            //special case of auto Touched, need to set base (normally it's 0)
+                            if (skill == SkillType.Touched)
+                            { actor.Touched = 3; }
+                        } 
+                        tempHandles.AddRange(GetRandomTrait(actor, skill, SkillAge.Fifteen, rndRange, startRange, endRange, chanceFlag));
+                    }
+                    //choose NickName (handle)
+                    if (tempHandles.Count > 0)
+                    { actor.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
                 }
                 else { Game.SetError(new Error(154, "Invalid arrayDM input (length must be [6,2])")); }
             }
