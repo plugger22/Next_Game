@@ -946,7 +946,7 @@ namespace Next_Game
                 else { Game.SetError(new Error(118, "Invalid locType (doesn't fit any criteria)")); }
                 //Get actors present at location
                 List<int> actorIDList = loc.GetActorList();
-                
+
                 if (actorIDList.Count > 0)
                 {
                     //get actual actors
@@ -956,7 +956,7 @@ namespace Next_Game
                         if (tempActor != null)
                         {   //exclude player from list (they are always present) & you
                             if (tempActor.ActID != 1)
-                            { listActors.Add(tempActor); Game.logTurn.Write(string.Format( " [AutoEvent -> ActorList] \"{0}\", ID {1} added to list of Actors", tempActor.Name, tempActor.ActID)); } 
+                            { listActors.Add(tempActor); Game.logTurn.Write(string.Format(" [AutoEvent -> ActorList] \"{0}\", ID {1} added to list of Actors", tempActor.Name, tempActor.ActID)); }
                         }
                         else { Game.SetError(new Error(118, string.Format("Invalid tempActor ID {0} (Null)", actorIDList[i]))); }
                     }
@@ -972,17 +972,23 @@ namespace Next_Game
                             if (tempPassive.RefID == testRefID && !(actor is Advisor))
                             {
                                 if (tempPassive.Type == ActorType.Lord || tempPassive.Age >= 15)
-                                { listLocals.Add(tempPassive); Game.logTurn.Write(string.Format(" [AutoEvent -> LocalList] \"{0}\", ID {1} added to list of Locals", 
-                                    tempPassive.Name, tempPassive.ActID)); }
+                                {
+                                    listLocals.Add(tempPassive); Game.logTurn.Write(string.Format(" [AutoEvent -> LocalList] \"{0}\", ID {1} added to list of Locals",
+                                      tempPassive.Name, tempPassive.ActID));
+                                }
                             }
                             else if (actor is Advisor)
-                            { listAdvisors.Add(tempPassive); Game.logTurn.Write(string.Format(" [AutoEvent -> AdvisorList] \"{0}\", ID {1} added to list of Advisors", 
-                                tempPassive.Name, tempPassive.ActID)); }
+                            {
+                                listAdvisors.Add(tempPassive); Game.logTurn.Write(string.Format(" [AutoEvent -> AdvisorList] \"{0}\", ID {1} added to list of Advisors",
+                                  tempPassive.Name, tempPassive.ActID));
+                            }
                             else
                             {
                                 if (tempPassive.Age >= 15)
-                                { listVisitors.Add(tempPassive); Game.logTurn.Write(string.Format(" [AutoEvent -> VisitorList] \"{0}\", ID {1} added to list of Visitors", 
-                                    tempPassive.Name, tempPassive.ActID)); }
+                                {
+                                    listVisitors.Add(tempPassive); Game.logTurn.Write(string.Format(" [AutoEvent -> VisitorList] \"{0}\", ID {1} added to list of Visitors",
+                                      tempPassive.Name, tempPassive.ActID));
+                                }
                             }
                         }
                         else if (actor is Follower)
@@ -993,18 +999,18 @@ namespace Next_Game
                         }
                     }
                     //new event (auto location events always have eventPID of '1000' -> old version in Player dict is deleted before new one added)
-                    EventPlayer eventObject = new EventPlayer(1000, "What to do?", EventFrequency.Low) {Category = EventCategory.AutoCreate, Status = EventStatus.Active, Type = ArcType.Location };
-                    
+                    EventPlayer eventObject = new EventPlayer(1000, "What to do?", EventFrequency.Low) { Category = EventCategory.AutoCreate, Status = EventStatus.Active, Type = ArcType.Location };
+
                     switch (filter)
                     {
                         case EventFilter.None:
                             eventObject.Text = string.Format("You are at {0}. How will you fill your day?", locName);
-                            
+
                             //option -> audience with local House member
                             if (listLocals.Count() > 0)
                             {
                                 OptionInteractive option = null;
-                                
+
                                 if (locType != 1)
                                 {
                                     option = new OptionInteractive(string.Format("Seek an Audience with a member of House {0} ({1} present)", houseName, listLocals.Count));
@@ -1058,7 +1064,7 @@ namespace Next_Game
                                 eventObject.SetOption(option);
                             }
                             //option -> seek information
-                            if (player.Known == false )
+                            if (player.Known == false)
                             {
                                 OptionInteractive option = new OptionInteractive("Ask around for Information");
                                 option.ReplyGood = "You make some discreet enquiries";
@@ -1098,7 +1104,7 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
-                            for(int i = 0; i < limit; i++)
+                            for (int i = 0; i < limit; i++)
                             {
                                 Passive local = listLocals[i];
                                 if (local.Office > ActorOffice.None)
@@ -1209,7 +1215,7 @@ namespace Next_Game
                             break;
                         case EventFilter.Interact:
                             //inteact with the selected individual
-                            if (actorID > 1 && Game.world.CheckActorPresent(actorID, locID ) == true)
+                            if (actorID > 1 && Game.world.CheckActorPresent(actorID, locID) == true)
                             {
                                 Actor person = Game.world.GetAnyActor(actorID);
                                 if (person != null)
@@ -1237,7 +1243,7 @@ namespace Next_Game
                                     List<Trigger> listTriggers_1 = new List<Trigger>();
                                     listTriggers_1.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), Game.constant.GetValue(Global.IMPROVE_THRESHOLD), EventCalc.GreaterThanOrEqual));
                                     option_1.SetTriggers(listTriggers_1);
-                                    OutConflict outcome_1 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Befriend, SubType = ConflictSubType.Befriend};
+                                    OutConflict outcome_1 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Befriend, SubType = ConflictSubType.Befriend };
                                     option_1.SetGoodOutcome(outcome_1);
                                     eventObject.SetOption(option_1);
                                     //blackmail
@@ -1246,7 +1252,7 @@ namespace Next_Game
                                     List<Trigger> listTriggers_2 = new List<Trigger>();
                                     listTriggers_2.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), Game.constant.GetValue(Global.BLACKMAIL_THRESHOLD), EventCalc.GreaterThanOrEqual));
                                     option_2.SetTriggers(listTriggers_2);
-                                    OutConflict outcome_2 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Blackmail, SubType = ConflictSubType.Blackmail};
+                                    OutConflict outcome_2 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Blackmail, SubType = ConflictSubType.Blackmail };
                                     option_2.SetGoodOutcome(outcome_2);
                                     eventObject.SetOption(option_2);
                                     //seduce
@@ -1256,7 +1262,7 @@ namespace Next_Game
                                     listTriggers_3.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), Game.constant.GetValue(Global.SEDUCE_THRESHOLD), EventCalc.GreaterThanOrEqual));
                                     listTriggers_3.Add(new Trigger(TriggerCheck.Sex, 0, (int)person.Sex, EventCalc.NotEqual)); //must be opposite sex
                                     option_3.SetTriggers(listTriggers_3);
-                                    OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce, SubType = ConflictSubType.Seduce};
+                                    OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce, SubType = ConflictSubType.Seduce };
                                     option_3.SetGoodOutcome(outcome_3);
                                     eventObject.SetOption(option_3);
                                     //swear allegiance
@@ -1269,10 +1275,10 @@ namespace Next_Game
                                     OutNone outcome_4 = new OutNone(eventObject.EventPID);
                                     option_4.SetGoodOutcome(outcome_4);
                                     eventObject.SetOption(option_4);
-                                    //gift
+                                    //gift -> debug: used to test OutItem outcomes
                                     OptionInteractive option_5 = new OptionInteractive("Give Information or a Gift") { ActorID = actorID };
                                     option_5.ReplyGood = string.Format("{0} thanks you for your gift", actorText);
-                                    OutNone outcome_5 = new OutNone(eventObject.EventPID);
+                                    OutItem outcome_5 = new OutItem(eventObject.EventPID, 0, EventCalc.Subtract);
                                     option_5.SetGoodOutcome(outcome_5);
                                     eventObject.SetOption(option_5);
                                 }
@@ -1288,15 +1294,14 @@ namespace Next_Game
                     listPlyrCurrentEvents.Add(package);
                     //if more than the current event present the original one (autocreated) needs to be deleted
                     if (listPlyrCurrentEvents.Count > 1) { listPlyrCurrentEvents.RemoveAt(0); }
-                    
+
                     //add to Player dictionary (ResolveOutcome looks for it there) -> check not an instance present already
                     if (dictPlayerEvents.ContainsKey(1000)) { dictPlayerEvents.Remove(1000); }
                     dictPlayerEvents.Add(1000, eventObject);
                     //message
                     tempText = string.Format("{0}, Aid {1} at {2} {3}, [{4} Event] \"{5}\"", player.Name, player.ActID, locName, Game.world.ShowLocationCoords(player.LocID),
                           eventObject.Type, eventObject.Name);
-                    Message  message = new Message(tempText, MessageType.Event);
-                    Game.world.SetMessage(message);
+                    Game.world.SetMessage(new Message(tempText, MessageType.Event));
                     Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                 }
                 else { Game.SetError(new Error(118, "Invalid List of Actors (Zero present at Location")); }
@@ -1992,7 +1997,11 @@ namespace Next_Game
                                             OutItem itemOutcome = outcome as OutItem;
                                             outcomeText = ChangePlayerItemStatus(itemOutcome.Calc, itemOutcome.Data, option.ActorID);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
-                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
                                             break;
                                         case OutcomeType.Resource:
                                             //adjust the resource level of Player or an NPC actor
@@ -2630,6 +2639,7 @@ namespace Next_Game
         /// <returns></returns>
         private string ChangePlayerItemStatus(EventCalc calc, int data, int oppID)
         {
+            string tempText;
             string resultText = "";
             Active player = Game.world.GetActiveActor(1);
             Actor opponent = Game.world.GetAnyActor(oppID);
@@ -2651,8 +2661,11 @@ namespace Next_Game
                         player.AddItem(possID);
                         opponent.RemoveItem(possID);
                         Item item = Game.world.GetItem(possID);
-                        resultText = string.Format("You have gained possession of \"{0}\", itemID {1}, from {2} {3} {4}", item.Description, item.ItemID, opponent.Title,
-                            opponent.Name, opponent.Handle);
+                        resultText = string.Format("You have gained possession of \"{0}\", itemID {1}, from {2} {3} \"{4}\", ActID {5}", item.Description, item.ItemID, opponent.Title,
+                            opponent.Name, opponent.Handle, opponent.ActID);
+                        tempText = string.Format("You have lost possession of \"{0}\", itemID {1}, to the Ursurper", item.Description, item.ItemID);
+                        Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.GetRefID(opponent.LocID), CurrentActorIncident.Event));
+
                     }
                 }
                 //Lose an item -> if you have one
@@ -2666,8 +2679,10 @@ namespace Next_Game
                         opponent.AddItem(possID);
                         player.RemoveItem(possID);
                         Item item = Game.world.GetItem(possID);
-                        resultText = string.Format("You have lost possession of \"{0}\", itemID {1}, to {2} {3} {4}", item.Description, item.ItemID, opponent.Title,
-                            opponent.Name, opponent.Handle);
+                        resultText = string.Format("You have lost possession of \"{0}\", itemID {1}, to {2} {3} \"{4}\", ActID {5}", item.Description, item.ItemID, opponent.Title,
+                            opponent.Name, opponent.Handle, opponent.ActID);
+                        tempText = string.Format("You have gained possession of \"{0}\", itemID {1}, from the Ursurper", item.Description, item.ItemID);
+                        Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.GetRefID(opponent.LocID), CurrentActorIncident.Event));
                     }
                 }
             }

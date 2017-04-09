@@ -243,7 +243,7 @@ conEffect: 2
 conTimer: 4
 [End]
 
-Name: Naked Woman
+Name: Crazy Old Woman
 ID: 6
 Type: Road
 subType: Normal
@@ -251,10 +251,10 @@ Cat: Generic
 Freq: Low
 Repeat: 10
 Cool: 2
-Event: A dazed, naked woman is limping along the road ahead, in a distressed state.
+Event: A crazy, old woman approaches you, yelling obscenities.
 [option]
 text: Ride past, ignoring her
-reply: You can't save the world, it's too big and mean. The woman pleads for some water as you canter past.
+reply: Crazy old hags are best left to themselves.
 [outcome]
 effect: EventTimer
 data: 6
@@ -263,7 +263,7 @@ amount: 1
 apply: Add
 [option]
 text: Offer assistance
-reply: You immediately dismount and approach her on foot only to find that she has strange, lifeless eyes. Bright blue eyes.
+reply: You immediately dismount and approach her on foot only to be assaulted by the incensed hag.
 [outcome]
 effect: Game
 data: 5
@@ -276,7 +276,7 @@ amount: 1
 apply: Subtract
 [option]
 text: Ride her down!
-reply: As you spur your horse into a gallop and aim directly at the helpless woman you feel no pity or remorse. Anyone woman foolish enough to wander naked down a road deserves to the form of natural justice that you are so adept at providing.
+reply: As you spur your horse into a gallop and aim directly at the helpless woman you feel no pity or remorse. The world has no use for demented old hags.
 [trigger]
 check: Trait
 item: 4

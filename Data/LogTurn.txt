@@ -1,4 +1,103 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 09/04/2017 10:57:12
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
-//Exile Game file ops "LogTurn.txt" Completed at: 09/04/2017 10:57:23
+//Exile Game File "LogTurn.txt" opened at: 09/04/2017 12:02:43
+--- ProcessStartTurn, Day 2, Turn 1 (World.cs) 
+--- MoveActors -> 0 Records (World.cs)
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Wyl Tully, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Diabolous, ID 96 at 13:14, Active Wyl Tully, ID 1, at 14:4
+ [Search -> Debug] Enemy, Brother Behemoth, ID 97 at 13:14, Active Wyl Tully, ID 1, at 14:4
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 98 at 13:14, Active Wyl Tully, ID 1, at 14:4
+ [Search -> Debug] Enemy, Brother Astaroth, ID 99 at 13:14, Active Wyl Tully, ID 1, at 14:4
+ [Search -> Debug] Enemy, The Unrelenting, ID 100 at 13:14, Active Wyl Tully, ID 1, at 14:4
+ [Search -> Stationary] Follower The Viper, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 5 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 96 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 97 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 98 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Astaroth, Act ID 99 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 100 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Diabolous, ActID 96 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Goal] Brother Behemoth, ActID 97 retains Goal -> Wait
+ [Enemy -> Goal] Brother Demogorgon, ActID 98 retains Goal -> Wait
+ [Enemy -> Known] Brother Astaroth ActID 99 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Astaroth, ActID 99 Assigned Branch -> 3 Current Branch -> 0
+ [Enemy -> Goal] The Unrelenting, ActID 100 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Desmond Arryn", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Arryn", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Chett Rodbertus", ID 33 added to list of Actors
+ [AutoEvent -> ActorList] "Druettus Henry", ID 34 added to list of Actors
+ [AutoEvent -> ActorList] "Eon Guarin", ID 35 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Arryn", ID 36 added to list of Actors
+ [AutoEvent -> ActorList] "Davos Arryn", ID 59 added to list of Actors
+ [AutoEvent -> LocalList] "Desmond Arryn", ID 30 added to list of Locals
+ [AutoEvent -> LocalList] "Lyanna Arryn", ID 31 added to list of Locals
+ [AutoEvent -> AdvisorList] "Chett Rodbertus", ID 33 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Druettus Henry", ID 34 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Eon Guarin", ID 35 added to list of Advisors
+ [AutoEvent -> LocalList] "Lyanna Arryn", ID 36 added to list of Locals
+ [AutoEvent -> LocalList] "Davos Arryn", ID 59 added to list of Locals
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Wyl Tully has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Viper has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Desmond Arryn", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Arryn", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Chett Rodbertus", ID 33 added to list of Actors
+ [AutoEvent -> ActorList] "Druettus Henry", ID 34 added to list of Actors
+ [AutoEvent -> ActorList] "Eon Guarin", ID 35 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Arryn", ID 36 added to list of Actors
+ [AutoEvent -> ActorList] "Davos Arryn", ID 59 added to list of Actors
+ [AutoEvent -> LocalList] "Desmond Arryn", ID 30 added to list of Locals
+ [AutoEvent -> LocalList] "Lyanna Arryn", ID 31 added to list of Locals
+ [AutoEvent -> AdvisorList] "Chett Rodbertus", ID 33 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Druettus Henry", ID 34 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Eon Guarin", ID 35 added to list of Advisors
+ [AutoEvent -> LocalList] "Lyanna Arryn", ID 36 added to list of Locals
+ [AutoEvent -> LocalList] "Davos Arryn", ID 59 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "57" GreaterThanOrEqual 50
+ Trigger passed on "69" GreaterThanOrEqual 50
+ Trigger passed on "72" GreaterThanOrEqual 50
+ Trigger passed on "63" GreaterThanOrEqual 50
+ Event "Talk to Locals" Timer Repeat now 999
+ Event "Talk to Locals" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Desmond Arryn", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Arryn", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Chett Rodbertus", ID 33 added to list of Actors
+ [AutoEvent -> ActorList] "Druettus Henry", ID 34 added to list of Actors
+ [AutoEvent -> ActorList] "Eon Guarin", ID 35 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Arryn", ID 36 added to list of Actors
+ [AutoEvent -> ActorList] "Davos Arryn", ID 59 added to list of Actors
+ [AutoEvent -> LocalList] "Desmond Arryn", ID 30 added to list of Locals
+ [AutoEvent -> LocalList] "Lyanna Arryn", ID 31 added to list of Locals
+ [AutoEvent -> AdvisorList] "Chett Rodbertus", ID 33 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Druettus Henry", ID 34 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Eon Guarin", ID 35 added to list of Advisors
+ [AutoEvent -> LocalList] "Lyanna Arryn", ID 36 added to list of Locals
+ [AutoEvent -> LocalList] "Davos Arryn", ID 59 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "57" GreaterThanOrEqual 50
+ Trigger passed on "57" GreaterThanOrEqual 40
+ Trigger FAILED on "57" GreaterThanOrEqual 60
+ Trigger FAILED on "57" GreaterThanOrEqual 70
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+Item with PossID 2 has been removed from Wyl Tully's inventory
+//Exile Game file ops "LogTurn.txt" Completed at: 09/04/2017 12:11:09
