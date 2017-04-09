@@ -216,6 +216,25 @@ namespace Next_Game
             return checkedText;
         }
 
+        /// <summary>
+        /// Capitalises the first letter of a word, eg. cat -> Cat
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public string Capitalise(string s)
+        {
+            if (String.IsNullOrEmpty(s))
+            { return s; }
+            if (Char.IsUpper(s[1]) == true)
+            { return s; }
+            else
+            {
+                if (s.Length == 1)
+                { return s.ToUpper(); }
+                return s.Remove(1).ToUpper() + s.Substring(1);
+            }
+        }
+
         //methods above here
     }
 }

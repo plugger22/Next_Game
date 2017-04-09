@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom };
+    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item };
 
     /// <summary>
     /// Option outcome, event system
@@ -163,6 +163,22 @@ namespace Next_Game.Event_System
         {
             Data = free;
             Type = OutcomeType.Freedom;
+        }
+    }
+
+    /// <summary>
+    /// Gain or lose an item
+    /// </summary>
+    class OutItem : Outcome
+    {
+        //Calc -> Add to gain, Subtract to lose
+        //Data -> select from: +ve Active items only, -ve Passive items only, '0' all items
+
+        public OutItem(int eventID, int itemType, EventCalc calc) : base(eventID)
+        {
+            Data = itemType;
+            this.Calc = calc;
+            Type = OutcomeType.Item;
         }
     }
 

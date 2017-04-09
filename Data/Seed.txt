@@ -33,3 +33,10 @@ Seed 6469 -> Saturday, 8 April 2017 1:25 PM
 Seed 11906 -> Saturday, 8 April 2017 1:33 PM
 Seed 27590 -> Saturday, 8 April 2017 1:35 PM
 Seed 63568 -> Saturday, 8 April 2017 4:07 PM
+Seed 30360 -> Saturday, 8 April 2017 4:20 PM
+Seed 55483 -> Saturday, 8 April 2017 4:25 PM
+Seed 16701 -> Saturday, 8 April 2017 4:31 PM
+Seed 27919 -> Sunday, 9 April 2017 10:19 AM
+Seed 31081 -> Sunday, 9 April 2017 10:22 AM
+Seed 31782 -> Sunday, 9 April 2017 10:41 AM
+Seed 33369 -> Sunday, 9 April 2017 10:57 AM

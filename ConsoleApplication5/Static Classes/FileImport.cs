@@ -1645,6 +1645,8 @@ namespace Next_Game
                                         case "Game":
                                         case "known":
                                         case "Known":
+                                        case "item":
+                                        case "Item":
                                         case "eventtimer":
                                         case "eventTimer":
                                         case "EventTimer":
@@ -1662,7 +1664,7 @@ namespace Next_Game
                                         case "freedom":
                                         case "none":
                                         case "None":
-                                            structOutcome.Effect = cleanToken;
+                                            structOutcome.Effect = Game.utility.Capitalise(cleanToken);
                                             break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Effect, (\"{0}\")", arrayOfEvents[i])));
@@ -2129,6 +2131,15 @@ namespace Next_Game
                                                                     else
                                                                     {
                                                                         Game.SetError(new Error(49, "Invalid Input, Outcome Data, (Known), can't create object)"));
+                                                                        validData = false;
+                                                                    }
+                                                                    break;
+                                                                case "Item":
+                                                                    if (outTemp.Calc == EventCalc.Add || outTemp.Calc == EventCalc.Subtract)
+                                                                    { outObject = new OutItem(structEvent.EventID, outTemp.Data, outTemp.Calc); }
+                                                                    else
+                                                                    {
+                                                                        Game.SetError(new Error(49, string.Format("Invalid outcome.Calc (\"{0}\") -> must be Add or Subtract, can't create object", outTemp)));
                                                                         validData = false;
                                                                     }
                                                                     break;

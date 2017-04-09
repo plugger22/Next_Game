@@ -1987,6 +1987,10 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             break;
+                                        case OutcomeType.Item:
+                                            //Player gains or loses an item
+
+                                            break;
                                         case OutcomeType.Resource:
                                             //adjust the resource level of Player or an NPC actor
                                             OutResource resourceOutcome = outcome as OutResource;

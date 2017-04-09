@@ -28,7 +28,7 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource, Condition, Known, Freedom)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource, Condition, Known, Freedom, Item)
 
 # [outcome] effect -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -42,6 +42,10 @@
 
 # [outcome] effect -> Freedom
 # data: if > 0 ('1') then Player is free'd (status.AtLocation), if < 0 ('-1') then Player captured (status.Captured)
+
+# [outcome] effect -> Item
+# calc: Add -> player gains an item, Subtract -> player loses an item
+# apply: Select from... +ve -> Active items, -ve -> Passive Items, '0' All items
 
 # [outcome] effect -> EventStatus
 # data: target EventID

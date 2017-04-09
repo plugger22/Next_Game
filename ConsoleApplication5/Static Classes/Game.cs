@@ -117,6 +117,10 @@ namespace Next_Game
         public static void Main(string[] args)
         {
             rnd = new Random(seed);
+            //debug -> write seed to file
+            DateTime date1 = DateTime.Now;
+            string seedInfo = string.Format("Seed {0} -> {1}", seed, date1.ToString("f", CultureInfo.CreateSpecificCulture("en-AU"))) + Environment.NewLine;
+            File.AppendAllText("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Seed.txt", seedInfo);
             Console.SetWindowSize(180, 90); //debug console
             //initialise game objects
             Stopwatch timer_1 = new Stopwatch();
@@ -190,10 +194,7 @@ namespace Next_Game
             layout = new Layout(seed, 130, 100, 2, 3, RLColor.Black, RLColor.Yellow);
             layout.Initialise();
             conflict = new Conflict(seed);
-            //debug -> write seed to file
-            DateTime date1 = DateTime.Now;
-            string seedInfo = string.Format("Seed {0} -> {1}", seed, date1.ToString("f", CultureInfo.CreateSpecificCulture("en-AU"))) + Environment.NewLine;
-            File.AppendAllText("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/Seed.txt", seedInfo);
+
             //set up menu
             menu = new Menu(4, 8);
             _menuMode = menu.SwitchMenuMode(MenuMode.Main);
