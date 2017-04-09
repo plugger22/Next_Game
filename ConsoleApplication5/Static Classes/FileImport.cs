@@ -227,6 +227,31 @@ namespace Next_Game
         public string Touched_Trait { get; set; }
     }
 
+    //Character
+    struct CharacterStruct
+    {
+        public string Name { get; set; }
+        public int ActID { get; set; } //follower ID
+        public ActorSex Sex { get; set; }
+        public string Description { get; set; }
+        public int Age { get; set; }
+        public int Resources { get; set; } //any starting resources
+        public int[,] arrayOfSkillMods { get; set; }
+        /*public int Combat_Mod { get; set; }
+        public int Wits_Mod { get; set; }
+        public int Charm_Mod { get; set; }
+        public int Treachery_Mod { get; set; }
+        public int Leadership_Mod { get; set; }
+        public int Touched_Mod { get; set; }
+        public string Combat_Trait { get; set; }
+        public string Wits_Trait { get; set; }
+        public string Charm_Trait { get; set; }
+        public string Treachery_Trait { get; set; }
+        public string Leadership_Trait { get; set; }
+        public string Touched_Trait { get; set; }*/
+    }
+
+
     //situations
     struct SituationStruct
     {
@@ -3351,6 +3376,176 @@ namespace Next_Game
             }
             else
             { Game.SetError(new Error(59, string.Format("File not found (\"{0}\")", fileName))); }
+            return listOfStructs;
+        }
+
+        /// <summary>
+        /// Import fixed Characters (used in Events)
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        internal List<CharacterStruct> GetCharacters(string fileName)
+        {
+            List<CharacterStruct> listOfStructs = new List<CharacterStruct>();
+            string[] arrayOfCharacters = ImportDataFile(fileName);
+            int[,] tempArray = new int[6, 2];
+            if (arrayOfCharacters != null)
+            {
+                bool newFollower = false;
+                bool validData = true;
+                int tempNum;
+                int dataCounter = 0; //number of followers
+                CharacterStruct structCharacter = new CharacterStruct();
+                string cleanToken;
+                string cleanTag;
+                for (int i = 0; i < arrayOfCharacters.Length; i++)
+                {
+                    if (arrayOfCharacters[i] != "" && !arrayOfCharacters[i].StartsWith("#"))
+                    {
+                        //set up for a new follower
+                        if (newFollower == false)
+                        {
+                            newFollower = true;
+                            validData = true;
+                            dataCounter++;
+                            //new structure
+                            structCharacter = new CharacterStruct();
+                            Array.Clear(tempArray, 0, tempArray.Length);
+                        }
+                        string[] tokens = arrayOfCharacters[i].Split(new Char[] { ':', ';' });
+                        //strip out leading spaces
+                        cleanTag = tokens[0].Trim();
+                        if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                                                                      //check for random text elements in the file
+                        else
+                        {
+                            try { cleanToken = tokens[1].Trim(); }
+                            catch (System.IndexOutOfRangeException)
+                            { Game.SetError(new Error(208, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag))); cleanToken = ""; }
+                        }
+                        if (cleanToken.Length == 0)
+                        {
+                            validData = false;
+                            Game.SetError(new Error(208, string.Format("Character {0} (Missing data for \"{1}\") \"{2}\"",
+                            String.IsNullOrEmpty(structCharacter.Name) ? "?" : structCharacter.Name, cleanTag, fileName)));
+                        }
+                        else
+                        {
+                            switch (cleanTag)
+                            {
+                                case "Name":
+                                    structCharacter.Name = cleanToken;
+                                    break;
+                                case "ActID":
+                                    try { structCharacter.ActID = Convert.ToInt32(cleanToken); }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, e.Message)); validData = false; }
+                                    break;
+                                case "Sex":
+                                    switch (cleanToken)
+                                    {
+                                        case "Male":
+                                        case "male":
+                                            structCharacter.Sex = ActorSex.Male;
+                                            break;
+                                        case "Female":
+                                        case "female":
+                                            structCharacter.Sex = ActorSex.Female;
+                                            break;
+                                        default:
+                                            structCharacter.Sex = ActorSex.None;
+                                            Game.SetError(new Error(208, string.Format("Invalid Input, Sex (\"{0}\")", arrayOfCharacters[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                    break;
+                                case "Description":
+                                    structCharacter.Description = cleanToken;
+                                    break;
+                                case "Age":
+                                    try { structCharacter.Age = Convert.ToInt32(cleanToken); }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, e.Message)); validData = false; }
+                                    break;
+                                case "Resources":
+                                    //should be level 0 to 5
+                                    try
+                                    {
+                                        tempNum = Convert.ToInt32(cleanToken);
+                                        if (tempNum > 5) { tempNum = 5; Game.SetError(new Error(208, string.Format("Invalid Input, Resources > 5 (\"{0}\")", arrayOfCharacters[i]))); }
+                                        else if (tempNum < 0) { tempNum = 0; Game.SetError(new Error(208, string.Format("Invalid Input, Resources < 1 (\"{0}\")", arrayOfCharacters[i]))); }
+                                        structCharacter.Resources = tempNum;
+                                    }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, e.Message)); validData = false; }
+                                    break;
+                                case "Combat_Mod":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 0] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Combat_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    break;
+                                case "Wits_Mod":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 1] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Wits_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    break;
+                                case "Charm_Mod":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 2] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Charm_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    break;
+                                case "Treachery_Mod":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 3] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Treachery_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    break;
+                                case "Leadership_Mod":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 4] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Leadership_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    break;
+                                case "Touched_Mod":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 5] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid touched_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    break;
+
+                                case "Combat_Trait":
+                                    structCharacter.Combat_Trait = cleanToken;
+                                    break;
+                                case "Wits_Trait":
+                                    structCharacter.Wits_Trait = cleanToken;
+                                    break;
+                                case "Charm_Trait":
+                                    structCharacter.Charm_Trait = cleanToken;
+                                    break;
+                                case "Treachery_Trait":
+                                    structCharacter.Treachery_Trait = cleanToken;
+                                    break;
+                                case "Leadership_Trait":
+                                    structCharacter.Leadership_Trait = cleanToken;
+                                    break;
+                                case "Touched_Trait":
+                                    structCharacter.Touched_Trait = cleanToken;
+                                    break;
+                                case "[end]":
+                                case "[End]":
+                                    //last datapoint - save structure to list
+                                    if (dataCounter > 0 && validData == true)
+                                    { listOfStructs.Add(structCharacter); }
+                                    break;
+                                default:
+                                    Game.SetError(new Error(208, string.Format("Invalid Data \"{0}\" in Follower Input", cleanTag)));
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    { newFollower = false; }
+                }
+            }
+            else
+            { Game.SetError(new Error(208, string.Format("File not found (\"{0}\")", fileName))); }
             return listOfStructs;
         }
 

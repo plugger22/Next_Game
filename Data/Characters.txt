@@ -6,28 +6,28 @@
 # Description: paint a picture of the character. No default, compulsory.
 # Resources: Starting amount of resources, default value of '1', range 1 to 5
 # ..._Mod -> +ve gives a higher trait value, -ve gives a lower, '0' is neutral (could go either way)
-# ..._Trait -> Yes / No, default ('No'), if 'Yes' then a trait is automatically assigned, if 'No' then there is the normal chance of trait
+# ..._Auto -> Yes / No, default ('No'), if 'Yes' then a trait is automatically assigned, if 'No' then there is the normal chance of trait
 
 
 
 Name: The Spider
 ActID: 1000
 Sex: Male
-
 Description: A nondescript, short, middle aged man who listens in, observes, and takes note of everything around him while tending to his sticky web of contacts.
 Age: 40
 Resources: 1
+# 1 -> good trait, -1 -> bad trait, 0 -> neutral
 Combat_Mod:
-Combat_Trait:
 Wits_Mod:
-Wits_Trait: 
 Charm_Mod:
-Charm_Trait: 
 Treachery_Mod:
-Treachery_Trait:
 Leadership_Mod:
-Leadership_Trait:
 Touched_Mod:
-Touched_Trait:
-
+# Yes -> auto assign trait, No -> normal odds (default)
+Combat_Auto:
+Wits_Auto:
+Charm_Auto: 
+Treachery_Auto:
+Leadership_Auto:
+Touched_Auto:
 [End]

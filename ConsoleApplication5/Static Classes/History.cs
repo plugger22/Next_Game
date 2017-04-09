@@ -1292,7 +1292,7 @@ namespace Next_Game
         /// sets up custom Inquistor traits (all positive except leadership which is neutral and charm which is negative)
         /// </summary>
         /// <param name="enemy">Could be either an Inquisitor or the Nemesis</param>
-        public void InitialiseEnemyTraits(Enemy enemy)
+        /*public void InitialiseEnemyTraits(Enemy enemy)
         {
             if (enemy is Inquisitor)
             {
@@ -1361,7 +1361,7 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(154, "Invalid nemesis (null)")); }
             }
-        }
+        }*/
 
 
         /// <summary>
@@ -1375,22 +1375,11 @@ namespace Next_Game
 
         public void InitialiseManualTraits(Actor actor, int[,] arrayDM)
         {
-
             if (actor != null)
             {
                 if (arrayDM.GetUpperBound(0) + 1 == 6 && arrayDM.GetUpperBound(1) + 1 == 2)
                 {
                     List<string> tempHandles = new List<string>();
-
-                    /*//Combat
-                    rndRange = arrayOfTraits[(int)SkillType.Combat, (int)actor.Sex].Length;
-                    if (arrayDM[0, 0] == 0) { startRange = 0; endRange = rndRange; }
-                    else if (arrayDM[0, 0] < 0)
-                    { startRange = rndRange / 2; endRange = rndRange; }
-                    else { startRange = 0; endRange = rndRange / 2; }
-                    chanceFlag = false;
-                    if (arrayDM[0, 1] > 0) { chanceFlag = true; }
-                    tempHandles.AddRange(GetRandomTrait(actor, SkillType.Combat, SkillAge.Fifteen, rndRange, startRange, endRange, chanceFlag));*/
 
                     int startRange = 0;
                     int endRange = 0;
