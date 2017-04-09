@@ -1,3 +1,5 @@
+# GeoNames.txt -> names of geocluster features
+
 [Large Seas]
 The Dancing Ocean
 The Yearning Expanse

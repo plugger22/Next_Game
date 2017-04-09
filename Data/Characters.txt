@@ -1,0 +1,33 @@
+# Characters.txt -> special characters used in Events
+
+# NOTE: All fields must have a value
+# ActID: 1000+, must be unique
+# Sex: Male / Female
+# Description: paint a picture of the character. No default, compulsory.
+# Resources: Starting amount of resources, default value of '1', range 1 to 5
+# ..._Mod -> +ve gives a higher trait value, -ve gives a lower, '0' is neutral (could go either way)
+# ..._Trait -> Yes / No, default ('No'), if 'Yes' then a trait is automatically assigned, if 'No' then there is the normal chance of trait
+
+
+
+Name: The Spider
+ActID: 1000
+Sex: Male
+
+Description: A nondescript, short, middle aged man who listens in, observes, and takes note of everything around him while tending to his sticky web of contacts.
+Age: 40
+Resources: 1
+Combat_Mod:
+Combat_Trait:
+Wits_Mod:
+Wits_Trait: 
+Charm_Mod:
+Charm_Trait: 
+Treachery_Mod:
+Treachery_Trait:
+Leadership_Mod:
+Leadership_Trait:
+Touched_Mod:
+Touched_Trait:
+
+[End]

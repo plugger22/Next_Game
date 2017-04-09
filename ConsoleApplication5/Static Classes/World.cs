@@ -1862,23 +1862,6 @@ namespace Next_Game
             return false;
         }
 
-        /*/// <summary>
-        /// Get any actor's name. Returns empty string if not found
-        /// </summary>
-        /// <param name="actID"></param>
-        /// <returns></returns>
-        public string GetActorName(int actID)
-        {
-            string name = "";
-            //check active actor in dictionary
-            if (dictAllActors.ContainsKey(actID))
-            {
-                Actor actor = dictAllActors[actID];
-                return string.Format("{0}", actor.Name);
-            }
-            else { Game.SetError(new Error(172, "Actor not found in dictAllActors")); }
-            return name;
-        }*/
 
         /// <summary>
         /// nameOnly true -> actor.Name, nameOnly false -> actors Title + Name + ActID + 'at' + Location ('Coords)

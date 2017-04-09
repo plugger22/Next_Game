@@ -1359,6 +1359,45 @@ namespace Next_Game
             }
         }
 
+
+        /// <summary>
+        /// allows you to specify a preference for each trait (or leave them to the normal probability mix)
+        /// </summary>
+        /// <param name="actor"></param>
+        /// <param name="arrayDM">
+        /// [, 0] +ve good trait, -ve bad trait, '0' neutral (may not have any trait) -> [0,] Combat, [1,] Wits, [2,] Charm, [3,] Treachery, [4,] Leadership, [5,] Touched 
+        /// [, 1] is a trait automatically given, or left to normal probabilities? '0' -> normal chances, +ve -> automatically given
+        /// </param>
+       
+        public void InitialiseManualTraits(Actor actor, int[,] arrayDM)
+        {
+            int startRange = 0;
+            int endRange = 0;
+            int rndRange;
+            bool chanceFlag;
+            if (actor != null)
+            {
+                if (arrayDM.GetUpperBound(0) == 6 && arrayDM.GetUpperBound(1) == 2)
+                {
+                    List<string> tempHandles = new List<string>();
+
+                    //Combat
+                    rndRange = arrayOfTraits[(int)SkillType.Combat, (int)actor.Sex].Length;
+                    if (arrayDM[0, 0] == 0) { startRange = 0; endRange = rndRange; }
+                    else if (arrayDM[0, 0] < 0)
+                    { startRange = rndRange / 2; endRange = rndRange; }
+                    else { startRange = 0; endRange = rndRange / 2; }
+                    chanceFlag = false;
+                    if (arrayDM[0, 1] > 0) { chanceFlag = true; }
+                    tempHandles.AddRange(GetRandomTrait(actor, SkillType.Combat, SkillAge.Fifteen, rndRange, startRange, endRange, chanceFlag));
+                }
+                else { Game.SetError(new Error(154, "Invalid arrayDM input (length must be [6,2])")); }
+            }
+            else { Game.SetError(new Error(154, "Invalid Actor (null)")); }
+        }
+
+
+
         /// <summary>
         /// sets up a bunch of list with filtered Male + All or Female + All traits to enable quick random access (rather than having to run a query each time)
         /// </summary>

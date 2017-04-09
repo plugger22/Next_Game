@@ -1,3 +1,5 @@
+# FirstMale.txt -> male actor first names
+
 Bran
 Eddard
 Jon

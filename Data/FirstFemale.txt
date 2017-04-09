@@ -1,3 +1,5 @@
+# FirstFemale.txt -> Female actor first names
+
 Catelyn
 Daenerys
 Arya
