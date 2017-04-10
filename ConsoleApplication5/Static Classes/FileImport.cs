@@ -231,7 +231,7 @@ namespace Next_Game
     struct CharacterStruct
     {
         public string Name { get; set; }
-        public int ActID { get; set; } //follower ID
+        public int ID { get; set; } //special ID -> unique & allows events access to character
         public ActorSex Sex { get; set; }
         public string Description { get; set; }
         public int Age { get; set; }
@@ -3436,7 +3436,7 @@ namespace Next_Game
                                 case "Name":
                                     structCharacter.Name = cleanToken;
                                     break;
-                                case "ActID":
+                                case "ID":
                                     try { structCharacter.ActID = Convert.ToInt32(cleanToken); }
                                     catch (Exception e)
                                     { Game.SetError(new Error(208, e.Message)); validData = false; }
@@ -3507,32 +3507,55 @@ namespace Next_Game
                                 case "Touched_Mod":
                                     try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 5] = tempNum; }
                                     catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid touched_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    { Game.SetError(new Error(208, string.Format("Invalid Touched_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
                                     break;
 
-                                case "Combat_Trait":
-                                    structCharacter.Combat_Trait = cleanToken;
+                                case "Combat_Auto":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 0] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Combat_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
                                     break;
-                                case "Wits_Trait":
-                                    structCharacter.Wits_Trait = cleanToken;
+                                case "Wits_Auto":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 1] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Wits_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
                                     break;
-                                case "Charm_Trait":
-                                    structCharacter.Charm_Trait = cleanToken;
+                                case "Charm_Auto":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 2] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Charm_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
                                     break;
-                                case "Treachery_Trait":
-                                    structCharacter.Treachery_Trait = cleanToken;
+                                case "Treachery_Auto":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 3] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Treachery_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
                                     break;
-                                case "Leadership_Trait":
-                                    structCharacter.Leadership_Trait = cleanToken;
+                                case "Leadership_Auto":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 4] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Leadership_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
                                     break;
-                                case "Touched_Trait":
-                                    structCharacter.Touched_Trait = cleanToken;
+                                case "Touched_Auto":
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 5] = tempNum; }
+                                    catch (Exception)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Touched_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
                                     break;
                                 case "[end]":
                                 case "[End]":
                                     //last datapoint - save structure to list
                                     if (dataCounter > 0 && validData == true)
-                                    { listOfStructs.Add(structCharacter); }
+                                    {
+                                        //initialise array & import character struct
+                                        structCharacter.arrayOfSkillMods = new int[6, 2];
+                                        try
+                                        {
+                                            Array.Copy(tempArray, structCharacter.arrayOfSkillMods, tempArray.Length);
+                                            listOfStructs.Add(structCharacter);
+                                        }
+                                        catch(ArgumentException)
+                                        { Game.SetError(new Error(208, string.Format("Invalid CopyTo operation, tempArray -> arrayOfSkillMods (Argument Exception), \"{0}\", ActID {1}, not imported", 
+                                            structCharacter.Name, structCharacter.ActID))); }
+                                    }
                                     break;
                                 default:
                                     Game.SetError(new Error(208, string.Format("Invalid Data \"{0}\" in Follower Input", cleanTag)));

@@ -120,6 +120,7 @@ namespace Next_Game
             InitialisePlayer();
             InitialiseCapital();
             InitialiseFollowers(Game.file.GetFollowers("Followers.txt"));
+            InitialiseCharacters(Game.file.GetChacters("Characters.txt"));
             //Past Relationship Histories
             arrayOfRelTexts = Game.file.GetRelations("RelLists.txt");
         }
@@ -422,6 +423,60 @@ namespace Next_Game
             }
             else { Game.SetError(new Error(59, "Insufficient Follower Structures available (less than the Eight rqr'd)")); }
         }
+
+        /// <summary>
+        /// take list of structs from fileimport.GetCharacters and generate actors that are stored in dictPassiveActors
+        /// </summary>
+        /// <param name="listOfStructs"></param>
+        internal void InitialiseCharacters(List<CharacterStruct> listOfStructs)
+        {
+            int numImportedCharacters = 8;
+            int index;
+            Game.logStart.Write("---  InitialiseCharacters (History.cs)");
+            int age = (int)SkillAge.Fifteen;
+            for (int i = 0; i < numImportedCharacters; i++)
+            {
+                index = rnd.Next(0, listOfStructs.Count);
+                CharacterStruct data = listOfStructs[index];
+                //Convert CharacterStructs into Special (Passive) objects
+                Special special = new Special(data.Name, data.ID, data.Sex);
+
+                if (special != null)
+                {
+                    //copy data across from struct to object
+                    special.Description = data.Description;
+                    special.Resources = data.Resources;
+                    special.Age = data.Age;
+                    special.Born = Game.gameStart - data.Age;
+                    //trait effects
+                    special.arrayOfTraitEffects[age, (int)SkillType.Combat] = data.Combat_Effect;
+                    special.arrayOfTraitEffects[age, (int)SkillType.Wits] = data.Wits_Effect;
+                    special.arrayOfTraitEffects[age, (int)SkillType.Charm] = data.Charm_Effect;
+                    special.arrayOfTraitEffects[age, (int)SkillType.Treachery] = data.Treachery_Effect;
+                    special.arrayOfTraitEffects[age, (int)SkillType.Leadership] = data.Leadership_Effect;
+                    special.arrayOfTraitEffects[age, (int)SkillType.Touched] = data.Touched_Effect;
+                    if (data.Touched_Effect != 0) { special.Touched = 3; }
+                    //trait names
+                    special.arrayOfTraitNames[(int)SkillType.Combat] = data.Combat_Trait;
+                    special.arrayOfTraitNames[(int)SkillType.Wits] = data.Wits_Trait;
+                    special.arrayOfTraitNames[(int)SkillType.Charm] = data.Charm_Trait;
+                    special.arrayOfTraitNames[(int)SkillType.Treachery] = data.Treachery_Trait;
+                    special.arrayOfTraitNames[(int)SkillType.Leadership] = data.Leadership_Trait;
+                    special.arrayOfTraitNames[(int)SkillType.Touched] = data.Touched_Trait;
+                    //trait ID's not needed
+                    //add to list
+                    listOfActiveActors.Add(special);
+                    Game.logStart.Write(string.Format("{0}, Aid {1}, FID {2}, ArcID {3}, \"{4}\" Loyalty {5}", special.Name, special.ActID, special.specialID,
+                        special.ArcID, special.Role, special.GetRelPlyr()));
+                    //Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.GetRelPlyr());
+                }
+                else { Game.SetError(new Error(210, "invalid Character Initialisation (null)")); }
+                //remove struct from list
+                listOfStructs.RemoveAt(index);
+
+            }
+        }
+      
 
         /// <summary>
         /// create an Inquisitor

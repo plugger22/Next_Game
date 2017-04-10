@@ -1,7 +1,7 @@
 # Characters.txt -> special characters used in Events
 
 # NOTE: All fields must have a value
-# ActID: 1000+, must be unique
+# ID: 1+, must be unique (SpecialID)
 # Sex: Male / Female
 # Description: paint a picture of the character. No default, compulsory.
 # Resources: Starting amount of resources, default value of '1', range 1 to 5
@@ -10,24 +10,24 @@
 
 
 
-Name: The Spider
-ActID: 1000
+Name: Bandit Boss
+ID: 1
 Sex: Male
-Description: A nondescript, short, middle aged man who listens in, observes, and takes note of everything around him while tending to his sticky web of contacts.
+Description: A large, scarred man dressed in ragged clothing but well armed and muscled.
 Age: 40
 Resources: 1
-# 1 -> good trait, -1 -> bad trait, 0 -> neutral
-Combat_Mod:
-Wits_Mod:
-Charm_Mod:
-Treachery_Mod:
-Leadership_Mod:
-Touched_Mod:
-# Yes -> auto assign trait, No -> normal odds (default)
-Combat_Auto:
-Wits_Auto:
-Charm_Auto: 
-Treachery_Auto:
-Leadership_Auto:
+# Mods
+Combat_Mod: 1
+Wits_Mod: -1
+Charm_Mod: -1
+Treachery_Mod: 0
+Leadership_Mod: 1
+Touched_Mod: -1
+# Auto
+Combat_Auto: yes
+Wits_Auto: no
+Charm_Auto: no
+Treachery_Auto: no
+Leadership_Auto: no
 Touched_Auto:
 [End]

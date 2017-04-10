@@ -882,8 +882,14 @@ namespace Next_Game
     //Special NPC's
     public class Special : Passive
     {
-        public Special(string name, ActorType type = ActorType.Special, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { }
+        public int SpecialID { get; set; } //user specified unique ID to enable use in events
+
+        public Special(string name, int specID, ActorSex sex = ActorSex.Male) : base(name,ActorType.Special, sex)
+        {
+            if (specID > 0)
+            { SpecialID = specID; }
+            else { Game.SetError(new Error(209, "Invalid SpecialID (zero, or less) -> WARNING: INVALID OBJECT (check imported data)")); }
+        }
     }
 
     //Beasts
