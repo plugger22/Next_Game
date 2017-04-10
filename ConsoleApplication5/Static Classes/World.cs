@@ -19,6 +19,7 @@ namespace Next_Game
         private Dictionary<int, Active> dictActiveActors; //list of all Player controlled actors keyed off actorID (non-activated followers aren't in dictionary)
         private Dictionary<int, Passive> dictPassiveActors; //list of all NPC actors keyed of actorID
         private Dictionary<int, Enemy> dictEnemyActors; //list of all Enemy actors keyed of actorID
+        private Dictionary<int, Special> dictSpecialActors; //list of all Special NPC actors -> key is SpecialID
         private Dictionary<int, Actor> dictAllActors; //list of all Actors keyed of actorID
         private Dictionary<int, MajorHouse> dictMajorHouses; //list of all Greathouses keyed off houseID
         private Dictionary<int, House> dictAllHouses; //list of all houses & special locations keyed off RefID
@@ -48,6 +49,7 @@ namespace Next_Game
             dictActiveActors = new Dictionary<int, Active>();
             dictPassiveActors = new Dictionary<int, Passive>();
             dictEnemyActors = new Dictionary<int, Enemy>();
+            dictSpecialActors = new Dictionary<int, Special>();
             dictAllActors = new Dictionary<int, Actor>();
             dictMajorHouses = new Dictionary<int, MajorHouse>();
             dictAllHouses = new Dictionary<int, House>();
@@ -2748,8 +2750,15 @@ namespace Next_Game
         /// <param name="actor"></param>
         internal void SetPassiveActor(Passive actor)
         {
-            dictPassiveActors.Add(actor.ActID, actor);
-            dictAllActors.Add(actor.ActID, actor);
+            try
+            {
+                dictPassiveActors.Add(actor.ActID, actor);
+                dictAllActors.Add(actor.ActID, actor);
+            }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(211, "Invalid actor (null) -> Record not saved")); }
+            catch (ArgumentException)
+            { Game.SetError(new Error(211, "Invalid actor.ActID (duplicate key exists) -> Record not saved")); }
         }
 
         /// <summary>
@@ -2764,13 +2773,42 @@ namespace Next_Game
                 dictAllActors.Add(actor.ActID, actor);
             }
             catch (ArgumentNullException)
-            { Game.SetError(new Error(150, "Invalid actor (null)")); }
+            { Game.SetError(new Error(150, "Invalid actor (null) -> Record not saved")); }
             catch (ArgumentException)
-            { Game.SetError(new Error(150, "Invalid actor.ActID (duplicate key exists)")); }
+            { Game.SetError(new Error(150, "Invalid actor.ActID (duplicate key exists) -> Record not saved")); }
         }
 
+        /// <summary>
+        /// store a new special (NPC) actor
+        /// </summary>
+        /// <param name="actor"></param>
+        internal void SetSpecialActor(Special actor)
+        {
+            try
+            {
+                dictPassiveActors.Add(actor.ActID, actor);
+                dictAllActors.Add(actor.ActID, actor);
+                dictSpecialActors.Add(actor.SpecialID, actor);
+            }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(150, "Invalid actor (null) -> Record not saved")); }
+            catch (ArgumentException)
+            { Game.SetError(new Error(150, "Invalid ActID or SpecialID (duplicate key exists) -> Record not saved")); }
+        }
+
+        /// <summary>
+        /// store a Royal court member in relevant dict
+        /// </summary>
+        /// <param name="actor"></param>
         internal void SetRoyalCourt(Passive actor)
-        { dictRoyalCourt.Add(actor.ActID, actor); }
+        {
+            try
+            { dictRoyalCourt.Add(actor.ActID, actor); }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(212, "Invalid actor (null) -> Record not saved")); }
+            catch (ArgumentException)
+            { Game.SetError(new Error(212, "Invalid actor.ActID (duplicate key exists) -> Record not saved")); }
+        }
 
         /// <summary>
         /// Returns a filtered set of Historical Records

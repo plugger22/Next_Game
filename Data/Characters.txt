@@ -6,7 +6,7 @@
 # Description: paint a picture of the character. No default, compulsory.
 # Resources: Starting amount of resources, default value of '1', range 1 to 5
 # ..._Mod -> +ve gives a higher trait value, -ve gives a lower, '0' is neutral (could go either way)
-# ..._Auto -> Yes / No, default ('No'), if 'Yes' then a trait is automatically assigned, if 'No' then there is the normal chance of trait
+# ..._Auto -> 1  / 0 (default), if '1' then a trait is automatically assigned, if '0' then there is the normal chance of trait
 
 
 
@@ -24,10 +24,10 @@ Treachery_Mod: 0
 Leadership_Mod: 1
 Touched_Mod: -1
 # Auto
-Combat_Auto: yes
-Wits_Auto: no
-Charm_Auto: no
-Treachery_Auto: no
-Leadership_Auto: no
-Touched_Auto:
+Combat_Auto: 1
+Wits_Auto: 0
+Charm_Auto: 0
+Treachery_Auto: 0
+Leadership_Auto: 0
+Touched_Auto: 0
 [End]

@@ -884,7 +884,7 @@ namespace Next_Game
     {
         public int SpecialID { get; set; } //user specified unique ID to enable use in events
 
-        public Special(string name, int specID, ActorSex sex = ActorSex.Male) : base(name,ActorType.Special, sex)
+        public Special(string name, int specID, ActorSex sex = ActorSex.Male) : base(name, ActorType.Special, sex)
         {
             if (specID > 0)
             { SpecialID = specID; }

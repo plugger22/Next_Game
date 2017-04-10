@@ -120,7 +120,7 @@ namespace Next_Game
             InitialisePlayer();
             InitialiseCapital();
             InitialiseFollowers(Game.file.GetFollowers("Followers.txt"));
-            InitialiseCharacters(Game.file.GetChacters("Characters.txt"));
+            InitialiseCharacters(Game.file.GetCharacters("Characters.txt"));
             //Past Relationship Histories
             arrayOfRelTexts = Game.file.GetRelations("RelLists.txt");
         }
@@ -430,17 +430,15 @@ namespace Next_Game
         /// <param name="listOfStructs"></param>
         internal void InitialiseCharacters(List<CharacterStruct> listOfStructs)
         {
-            int numImportedCharacters = 8;
+            int numImportedCharacters = listOfStructs.Count;
             int index;
             Game.logStart.Write("---  InitialiseCharacters (History.cs)");
-            int age = (int)SkillAge.Fifteen;
             for (int i = 0; i < numImportedCharacters; i++)
             {
                 index = rnd.Next(0, listOfStructs.Count);
                 CharacterStruct data = listOfStructs[index];
                 //Convert CharacterStructs into Special (Passive) objects
                 Special special = new Special(data.Name, data.ID, data.Sex);
-
                 if (special != null)
                 {
                     //copy data across from struct to object
@@ -448,32 +446,13 @@ namespace Next_Game
                     special.Resources = data.Resources;
                     special.Age = data.Age;
                     special.Born = Game.gameStart - data.Age;
-                    //trait effects
-                    special.arrayOfTraitEffects[age, (int)SkillType.Combat] = data.Combat_Effect;
-                    special.arrayOfTraitEffects[age, (int)SkillType.Wits] = data.Wits_Effect;
-                    special.arrayOfTraitEffects[age, (int)SkillType.Charm] = data.Charm_Effect;
-                    special.arrayOfTraitEffects[age, (int)SkillType.Treachery] = data.Treachery_Effect;
-                    special.arrayOfTraitEffects[age, (int)SkillType.Leadership] = data.Leadership_Effect;
-                    special.arrayOfTraitEffects[age, (int)SkillType.Touched] = data.Touched_Effect;
-                    if (data.Touched_Effect != 0) { special.Touched = 3; }
-                    //trait names
-                    special.arrayOfTraitNames[(int)SkillType.Combat] = data.Combat_Trait;
-                    special.arrayOfTraitNames[(int)SkillType.Wits] = data.Wits_Trait;
-                    special.arrayOfTraitNames[(int)SkillType.Charm] = data.Charm_Trait;
-                    special.arrayOfTraitNames[(int)SkillType.Treachery] = data.Treachery_Trait;
-                    special.arrayOfTraitNames[(int)SkillType.Leadership] = data.Leadership_Trait;
-                    special.arrayOfTraitNames[(int)SkillType.Touched] = data.Touched_Trait;
-                    //trait ID's not needed
+                    //skills
+                    InitialiseManualSkills(special, data.arrayOfSkillMods);
                     //add to list
-                    listOfActiveActors.Add(special);
-                    Game.logStart.Write(string.Format("{0}, Aid {1}, FID {2}, ArcID {3}, \"{4}\" Loyalty {5}", special.Name, special.ActID, special.specialID,
-                        special.ArcID, special.Role, special.GetRelPlyr()));
-                    //Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.GetRelPlyr());
+                    Game.world.SetSpecialActor(special);
+                    Game.logStart.Write(string.Format("{0}, Aid {1}, specID {2} -> initialised O.K", special.Name, special.ActID, special.SpecialID));
                 }
                 else { Game.SetError(new Error(210, "invalid Character Initialisation (null)")); }
-                //remove struct from list
-                listOfStructs.RemoveAt(index);
-
             }
         }
       
@@ -494,7 +473,7 @@ namespace Next_Game
                     Inquisitor inquisitor = new Inquisitor(name) { Age = ageYears, Born = Game.gameYear - ageYears };
                     //InitialiseEnemyTraits(inquisitor);
                     //Combat / Wits / Charm / Treachery / Leadership / Touched
-                    InitialiseManualTraits(inquisitor, new int[6, 2] { { 1, 0 }, { 1, 0 }, { -1, 0 }, { 1, 1 }, { 0, 0 }, { -1, 0 } });
+                    InitialiseManualSkills(inquisitor, new int[6, 2] { { 1, 0 }, { 1, 0 }, { -1, 0 }, { 1, 1 }, { 0, 0 }, { -1, 0 } });
                     inquisitor.Handle = "The Loyal";
                     //assign to the capital
                     Location loc = Game.network.GetLocation(locID);
@@ -548,7 +527,7 @@ namespace Next_Game
                     Nemesis nemesis = new Nemesis(name) { Age = ageYears, Born = Game.gameYear - ageYears };
                     //InitialiseEnemyTraits(nemesis);
                     //Combat / Wits / Charm / Treachery / Leadership / Touched
-                    InitialiseManualTraits(nemesis, new int[6, 2] { { 1, 0 }, { 1, 0 }, { -1, 0 }, { 1, 1 }, { 0, 0 }, { 1, 1 } });
+                    InitialiseManualSkills(nemesis, new int[6, 2] { { 1, 0 }, { 1, 0 }, { -1, 0 }, { 1, 1 }, { 0, 0 }, { 1, 1 } });
                     //assign to the capital
                     Location loc = Game.network.GetLocation(locID);
                     if (loc != null)
@@ -1420,7 +1399,7 @@ namespace Next_Game
 
 
         /// <summary>
-        /// allows you to specify a preference for each trait (or leave them to the normal probability mix)
+        /// allows you to specify a preference for each skill (or leave them to the normal probability mix)
         /// </summary>
         /// <param name="actor"></param>
         /// <param name="arrayDM">
@@ -1428,7 +1407,7 @@ namespace Next_Game
         /// [, 1] is a trait automatically given, or left to normal probabilities? '0' -> normal chances, +ve -> automatically given
         /// </param>
 
-        public void InitialiseManualTraits(Actor actor, int[,] arrayDM)
+        public void InitialiseManualSkills(Actor actor, int[,] arrayDM)
         {
             if (actor != null)
             {

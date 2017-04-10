@@ -3391,7 +3391,7 @@ namespace Next_Game
             int[,] tempArray = new int[6, 2];
             if (arrayOfCharacters != null)
             {
-                bool newFollower = false;
+                bool newCharacter = false;
                 bool validData = true;
                 int tempNum;
                 int dataCounter = 0; //number of followers
@@ -3402,10 +3402,10 @@ namespace Next_Game
                 {
                     if (arrayOfCharacters[i] != "" && !arrayOfCharacters[i].StartsWith("#"))
                     {
-                        //set up for a new follower
-                        if (newFollower == false)
+                        //set up for a new character
+                        if (newCharacter == false)
                         {
-                            newFollower = true;
+                            newCharacter = true;
                             validData = true;
                             dataCounter++;
                             //new structure
@@ -3437,7 +3437,7 @@ namespace Next_Game
                                     structCharacter.Name = cleanToken;
                                     break;
                                 case "ID":
-                                    try { structCharacter.ActID = Convert.ToInt32(cleanToken); }
+                                    try { structCharacter.ID = Convert.ToInt32(cleanToken); }
                                     catch (Exception e)
                                     { Game.SetError(new Error(208, e.Message)); validData = false; }
                                     break;
@@ -3479,66 +3479,67 @@ namespace Next_Game
                                     catch (Exception e)
                                     { Game.SetError(new Error(208, e.Message)); validData = false; }
                                     break;
+                                //should a trait (if there is one) be good ('1'), bad ('-1') or neutral (could go either way) '0'
                                 case "Combat_Mod":
                                     try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 0] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Combat_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Combat_Mod conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
                                 case "Wits_Mod":
-                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 1] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Wits_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 0] = tempNum; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Wits_Mod conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
                                 case "Charm_Mod":
-                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 2] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Charm_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[2, 0] = tempNum; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Charm_Mod conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
                                 case "Treachery_Mod":
-                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 3] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Treachery_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[3, 0] = tempNum; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Treachery_Mod conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
                                 case "Leadership_Mod":
-                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 4] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Leadership_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[4, 0] = tempNum; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Leadership_Mod conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
                                 case "Touched_Mod":
-                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 5] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Touched_Mod conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[5, 0] = tempNum; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Touched_Mod conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
-
+                                //leave it to chance ('0') or auto assign a trait ('1')
                                 case "Combat_Auto":
-                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 0] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Combat_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[0, 1] = tempNum; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Combat_Auto conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
                                 case "Wits_Auto":
                                     try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 1] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Wits_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Wits_Auto conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
                                 case "Charm_Auto":
-                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 2] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Charm_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[2, 1] = tempNum; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Charm_Auto conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
                                 case "Treachery_Auto":
-                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 3] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Treachery_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[3, 1] = tempNum; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Treachery_Auto conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
                                 case "Leadership_Auto":
-                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 4] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Leadership_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[4, 1] = tempNum; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Leadership_Auto conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
                                 case "Touched_Auto":
-                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[1, 5] = tempNum; }
-                                    catch (Exception)
-                                    { Game.SetError(new Error(208, string.Format("Invalid Touched_Auto conversion (\"{0}\")", cleanToken))); validData = false; }
+                                    try { tempNum = Convert.ToInt32(cleanToken); tempArray[5, 1] = tempNum; }
+                                    catch (Exception e)
+                                    { Game.SetError(new Error(208, string.Format("Invalid Touched_Auto conversion (\"{0}\") -> {1}", cleanToken, e.Message))); validData = false; }
                                     break;
                                 case "[end]":
                                 case "[End]":
@@ -3553,18 +3554,18 @@ namespace Next_Game
                                             listOfStructs.Add(structCharacter);
                                         }
                                         catch(ArgumentException)
-                                        { Game.SetError(new Error(208, string.Format("Invalid CopyTo operation, tempArray -> arrayOfSkillMods (Argument Exception), \"{0}\", ActID {1}, not imported", 
-                                            structCharacter.Name, structCharacter.ActID))); }
+                                        { Game.SetError(new Error(208, string.Format("Invalid CopyTo operation, tempArray -> arrayOfSkillMods (Argument Exception), \"{0}\", SpecID {1}, not imported", 
+                                            structCharacter.Name, structCharacter.ID))); }
                                     }
                                     break;
                                 default:
-                                    Game.SetError(new Error(208, string.Format("Invalid Data \"{0}\" in Follower Input", cleanTag)));
+                                    Game.SetError(new Error(208, string.Format("Invalid Data \"{0}\" in Character Input", cleanTag)));
                                     break;
                             }
                         }
                     }
                     else
-                    { newFollower = false; }
+                    { newCharacter = false; }
                 }
             }
             else
