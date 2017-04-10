@@ -120,7 +120,7 @@ namespace Next_Game
             InitialisePlayer();
             InitialiseCapital();
             InitialiseFollowers(Game.file.GetFollowers("Followers.txt"));
-            InitialiseCharacters(Game.file.GetCharacters("Characters.txt"));
+            
             //Past Relationship Histories
             arrayOfRelTexts = Game.file.GetRelations("RelLists.txt");
         }
@@ -428,32 +428,34 @@ namespace Next_Game
         /// take list of structs from fileimport.GetCharacters and generate actors that are stored in dictPassiveActors
         /// </summary>
         /// <param name="listOfStructs"></param>
-        internal void InitialiseCharacters(List<CharacterStruct> listOfStructs)
+        internal void InitialiseSpecialCharacters(List<CharacterStruct> listOfStructs)
         {
-            int numImportedCharacters = listOfStructs.Count;
-            int index;
-            Game.logStart.Write("---  InitialiseCharacters (History.cs)");
-            for (int i = 0; i < numImportedCharacters; i++)
+            if (listOfStructs.Count > 0)
             {
-                index = rnd.Next(0, listOfStructs.Count);
-                CharacterStruct data = listOfStructs[index];
-                //Convert CharacterStructs into Special (Passive) objects
-                Special special = new Special(data.Name, data.ID, data.Sex);
-                if (special != null)
+                int numImportedCharacters = listOfStructs.Count;
+                Game.logStart.Write("---  InitialiseCharacters (History.cs)");
+                for (int i = 0; i < numImportedCharacters; i++)
                 {
-                    //copy data across from struct to object
-                    special.Description = data.Description;
-                    special.Resources = data.Resources;
-                    special.Age = data.Age;
-                    special.Born = Game.gameStart - data.Age;
-                    //skills
-                    InitialiseManualSkills(special, data.arrayOfSkillMods);
-                    //add to list
-                    Game.world.SetSpecialActor(special);
-                    Game.logStart.Write(string.Format("{0}, Aid {1}, specID {2} -> initialised O.K", special.Name, special.ActID, special.SpecialID));
+                    CharacterStruct data = listOfStructs[i];
+                    //Convert CharacterStructs into Special (Passive) objects
+                    Special special = new Special(data.Name, data.ID, data.Sex);
+                    if (special != null)
+                    {
+                        //copy data across from struct to object
+                        special.Description = data.Description;
+                        special.Resources = data.Resources;
+                        special.Age = data.Age;
+                        special.Born = Game.gameStart - data.Age;
+                        //skills
+                        InitialiseManualSkills(special, data.arrayOfSkillMods);
+                        //add to list
+                        Game.world.SetSpecialActor(special);
+                        Game.logStart.Write(string.Format("{0}, Aid {1}, specID {2} -> initialised O.K", special.Name, special.ActID, special.SpecialID));
+                    }
+                    else { Game.SetError(new Error(210, "Invalid Character Initialisation (null)")); }
                 }
-                else { Game.SetError(new Error(210, "invalid Character Initialisation (null)")); }
             }
+            else { Game.SetError(new Error(210, "No records present in listOfStructs")); }
         }
       
 

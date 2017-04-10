@@ -16,14 +16,12 @@ Sex: Male
 Description: A large, scarred man dressed in ragged clothing but well armed and muscled.
 Age: 40
 Resources: 1
-# Mods
 Combat_Mod: 1
 Wits_Mod: -1
 Charm_Mod: -1
 Treachery_Mod: 0
 Leadership_Mod: 1
 Touched_Mod: -1
-# Auto
 Combat_Auto: 1
 Wits_Auto: 0
 Charm_Auto: 0

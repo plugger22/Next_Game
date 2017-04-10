@@ -94,6 +94,7 @@ namespace Next_Game
             Game.history.InitialiseOverthrow(dictPassiveActors);
             Game.history.InitialisePastHistoryHouses();
             Game.history.InitialiseLordRelations();
+            Game.history.InitialiseSpecialCharacters(Game.file.GetCharacters("Characters.txt"));
             Game.StopTimer(timer_2, "W: InitialiseHistory");
             timer_2.Start();
             InitialiseSecrets();
