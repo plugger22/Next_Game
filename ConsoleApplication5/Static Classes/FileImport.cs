@@ -230,6 +230,7 @@ namespace Next_Game
     //Character
     struct CharacterStruct
     {
+        public string Title { get; set; }
         public string Name { get; set; }
         public int ID { get; set; } //special ID -> unique & allows events access to character
         public ActorSex Sex { get; set; }
@@ -2139,6 +2140,9 @@ namespace Next_Game
                                                                     {Conflict_Type = outTemp.Conflict_Type, Social_Type = outTemp.Social_Type, Stealth_Type = outTemp.Stealth_Type,
                                                                         Combat_Type = outTemp.Combat_Type, SubType = outTemp.SubType };
                                                                     optionObject.ActorID = outTemp.Data;
+                                                                    //Convert SpecialID into ActorID
+                                                                    optionObject.ActorID = Game.world.GetSpecialActorID(outTemp.Data);
+                                                                    if (optionObject.ActorID == 0) { validData = false; }
                                                                     break;
                                                                 case "Game":
                                                                     //check that GameVars (DataPoints) are only 'add' or 'random'
@@ -3435,6 +3439,9 @@ namespace Next_Game
                             {
                                 case "Name":
                                     structCharacter.Name = cleanToken;
+                                    break;
+                                case "Title":
+                                    structCharacter.Title = cleanToken;
                                     break;
                                 case "ID":
                                     try { structCharacter.ID = Convert.ToInt32(cleanToken); }

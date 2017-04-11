@@ -726,7 +726,8 @@ namespace Next_Game
                 int refID = GetRefID(locID);
                 //advisors can be one of three different categories
                 if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
-                else { actorType = Convert.ToString(person.Type); }
+                //else { actorType = Convert.ToString(person.Type); }
+                else { actorType = person.Title; }
                 if ((int)person.Office > 0)
                 { actorType = Convert.ToString(person.Office); }
                 string name = string.Format("{0} {1}", actorType, person is Follower ? "\"" + person.Name + "\"" : person.Name);
@@ -772,7 +773,10 @@ namespace Next_Game
                 //office
                 if ((int)person.Office > 0)
                 { listToDisplay.Add(new Snippet(string.Format("Office: {0}", person.Office), RLColor.Yellow, RLColor.Black)); }
-                listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
+                //location (if special replace with description)
+                if (!(person is Special))
+                { listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black)); }
+                else { listToDisplay.Add(new Snippet(person.Description)); }
                 //Delayed
                 if (person.Delay > 0)
                 { listToDisplay.Add(new Snippet(string.Format("Delayed (\"{0}\") for {1} {2}", person.DelayReason, person.Delay, person.Delay == 1 ? "turn" : "turns"), RLColor.LightRed, RLColor.Black)); }
@@ -786,7 +790,7 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet(string.Format("Has sworn allegiance to House {0}", houseName )));
                 }
                 //Loyalty
-                if (person is Passive)
+                if (person is Passive && !(person is Special))
                 { listToDisplay.Add(new Snippet(string.Format("Loyal to the {0} (originally {1})", person.Loyalty_Current, person.Loyalty_AtStart))); }
                 listToDisplay.Add(new Snippet(string.Format("{0} y.o {1}, born {2}", person.Age, person.Sex, person.Born)));
                 //stats - natural ---
@@ -953,7 +957,7 @@ namespace Next_Game
                     }
                 }
                 //relationships (ignore for dead actors)
-                if (!(person is Player) && person.Status != ActorStatus.Gone)
+                if (!(person is Player || person is Special) && person.Status != ActorStatus.Gone)
                 {
                     listToDisplay.Add(new Snippet("Relationships", RLColor.Brown, RLColor.Black));
                     //with Player

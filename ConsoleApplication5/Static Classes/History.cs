@@ -438,7 +438,7 @@ namespace Next_Game
                 {
                     CharacterStruct data = listOfStructs[i];
                     //Convert CharacterStructs into Special (Passive) objects
-                    Special special = new Special(data.Name, data.ID, data.Sex);
+                    Special special = new Special(data.Title, data.Name, data.ID, data.Sex);
                     if (special != null)
                     {
                         //copy data across from struct to object

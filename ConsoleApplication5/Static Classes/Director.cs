@@ -2055,7 +2055,7 @@ namespace Next_Game
                                             break;
                                         case OutcomeType.Conflict:
                                             //seque straight into a Conflict
-                                            actorID = Game.world.GetSpecialActorID(option.ActorID);
+                                            actorID = option.ActorID;
                                             if (actorID > 0)
                                             {
                                                 validOption = 2; //activates conflict in Game.cs SetSpecialModeInput()

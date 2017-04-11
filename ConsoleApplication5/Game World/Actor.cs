@@ -884,10 +884,10 @@ namespace Next_Game
     {
         public int SpecialID { get; set; } //user specified unique ID to enable use in events
 
-        public Special(string name, int specID, ActorSex sex = ActorSex.Male) : base(name, ActorType.Special, sex)
+        public Special(string title, string name, int specID, ActorSex sex = ActorSex.Male) : base(name, ActorType.Special, sex)
         {
             if (specID > 0)
-            { SpecialID = specID; }
+            { SpecialID = specID; this.Title = title; }
             else { Game.SetError(new Error(209, "Invalid SpecialID (zero, or less) -> WARNING: INVALID OBJECT (check imported data)")); }
         }
     }

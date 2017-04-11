@@ -10,9 +10,10 @@
 
 
 
-Name: Bandit Boss
+Name: Luigi RobYourBlind
 ID: 1
 Sex: Male
+Title: Bandit Boss
 Description: A large, scarred man dressed in ragged clothing but well armed and muscled.
 Age: 40
 Resources: 1

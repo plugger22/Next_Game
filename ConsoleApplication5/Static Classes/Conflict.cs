@@ -1271,7 +1271,7 @@ namespace Next_Game
             tempArray[8] = string.Format("{0} Strategy is Recommended", strategyText);
             //protagonists
             string title;
-            if (opponent.Office == ActorOffice.None) { title = Convert.ToString(opponent.Type); }
+            if (opponent.Office == ActorOffice.None) { /*title = Convert.ToString(opponent.Type);*/ title = opponent.Title; }
             else { title = Convert.ToString(opponent.Office); }
             /*string handle_player, handle_opponent;
             if (player.Handle != null) { handle_player = string.Format(" \"{0}\" ", player.Handle); } else { handle_player = null; }
@@ -1303,7 +1303,8 @@ namespace Next_Game
         /// <summary>
         /// Set up Card Pool
         /// </summary>
-        private void SetCardPool()
+        private void 
+            SetCardPool()
         {
             RLColor backColor = Game.layout.Back_FillColor;
             RLColor foreColor = RLColor.Black;
