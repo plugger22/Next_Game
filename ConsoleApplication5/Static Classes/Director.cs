@@ -2055,7 +2055,7 @@ namespace Next_Game
                                             break;
                                         case OutcomeType.Conflict:
                                             //seque straight into a Conflict
-                                            actorID = option.ActorID;
+                                            actorID = Game.world.GetSpecialActorID(option.ActorID);
                                             if (actorID > 0)
                                             {
                                                 validOption = 2; //activates conflict in Game.cs SetSpecialModeInput()
@@ -2126,7 +2126,8 @@ namespace Next_Game
                                                 Game.conflict.SetGameSituation(state);
                                             }
                                             else
-                                            { Game.SetError(new Error(73, string.Format("Invalid actorID for OutConflict (zero or less) \"{0}\", option # {1}", eventObject.Name, optionNum))); }
+                                            { Game.SetError(new Error(73, string.Format("Invalid actorID (derived from SpecialID) for OutConflict (zero or less) \"{0}\", option # {1}", 
+                                                eventObject.Name, optionNum))); }
                                             break;
                                     }
                                 }

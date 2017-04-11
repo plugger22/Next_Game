@@ -1,4 +1,68 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 10/04/2017 16:38:12
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
-//Exile Game file ops "LogTurn.txt" Completed at: 10/04/2017 16:38:45
+//Exile Game File "LogTurn.txt" opened at: 11/04/2017 11:41:19
+--- ProcessStartTurn, Day 6, Turn 5 (World.cs) 
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Usurper Garth Targaryen, ActID 1 travelling to Casterly Rock (current Loc 25:7)
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Kali, ID 116 at 16:12, Active Garth Targaryen, ID 1, at 25:7
+ [Search -> Debug] Enemy, Brother Shiva, ID 117 at 16:12, Active Garth Targaryen, ID 1, at 25:7
+ [Search -> Debug] Enemy, Brother Mastema, ID 118 at 17:17, Active Garth Targaryen, ID 1, at 25:7
+ [Search -> Debug] Enemy, Brother Nergal, ID 119 at 17:17, Active Garth Targaryen, ID 1, at 25:7
+ [Search -> Debug] Enemy, The Unrelenting, ID 120 at 17:17, Active Garth Targaryen, ID 1, at 25:7
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Kali, ID 116 at 16:12, Active Garth Targaryen, ID 1, at 25:8
+ [Search -> Debug] Enemy, Brother Shiva, ID 117 at 16:12, Active Garth Targaryen, ID 1, at 25:8
+ [Search -> Debug] Enemy, Brother Mastema, ID 118 at 17:17, Active Garth Targaryen, ID 1, at 25:8
+ [Search -> Debug] Enemy, Brother Nergal, ID 119 at 17:17, Active Garth Targaryen, ID 1, at 25:8
+ [Search -> Debug] Enemy, The Unrelenting, ID 120 at 17:17, Active Garth Targaryen, ID 1, at 25:8
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Garth Targaryen, ActID 1 is Travelling
+ [Search -> Stationary] Follower The Viper, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 3 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Notification] Player is Travelling -> 5 turns from their destination
+ [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 116 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 117 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 118 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 119 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 120 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Kali, ActID 116 retains Goal -> Wait
+ [Enemy -> Goal] Brother Shiva, ActID 117 retains Goal -> Wait
+ [Enemy -> Goal] Brother Mastema, ActID 118 retains Goal -> Hide
+ [Enemy -> Unknown] Brother Nergal ActID 119 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Nergal, ActID 119 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 120 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Event "Crazy Old Woman" has no attached Conditions
+--- GetValidPlayerEvents (Director.cs)
+--- ResolvePlayerEvents (Director.cs)
+ "Ride her down!" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
+ Trigger passed on "3" GreaterThanOrEqual 3
+ Event "Crazy Old Woman" Timer Repeat now 2
+ Event "Crazy Old Woman" Cooldown Timer has been reset to 6
+--- UpdateActiveActors (World.cs)
+ Usurper Garth Targaryen has had their TurnsUnknown Timer increased from 104 to 105
+ Follower The Viper has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Leper has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Duchess has had their TurnsUnknown Timer increased from 4 to 5
+--- ResolveOutcome (Director.cs)
+SetGameSituation] -> "difference between Your's and the King's Legend is 0 %", difference 0 Modifier 0 numCards 1
+- Initialise Combat Challenge
+--- SetSupporters (Conflict.cs)
+--- SetItems (Conflict.cs)
+ [Notification] Opponent has no Items
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 16, net 16, numCards 1
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 59, net 59, numCards 2
+--- SetOpponentStrategy (Conflict.cs)
+[Conflict -> Debug] Good -> 10 Bad -> 10 Margin -> 2 rndFactor -> 2 Opp Wits -> 1 Opp PSkill -> 4 Def Spec -> 1 Challenger -> True
+--- ResolveResults (Conflict.cs)
+--- ResolveFollowerEvents (Director.cs)
+ERROR_185 "Invalid Loc (null) -> By LocID"
+Method: GetLocationName,  Line: 1204,  Object: World.cs,  Turn: 5,  Local Time: 11:45:16 UTC +10:00
+ERROR_186 "Invalid Loc (null) Unknown Coordinates"
+Method: ShowLocationCoords,  Line: 1236,  Object: World.cs,  Turn: 5,  Local Time: 11:45:16 UTC +10:00
+//Exile Game file ops "LogTurn.txt" Completed at: 11/04/2017 11:46:42

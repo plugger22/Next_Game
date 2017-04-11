@@ -2007,6 +2007,26 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Checks dictSpecialActors and, if found, returns ActorID, otherwise '0'
+        /// </summary>
+        /// <param name="specialID"></param>
+        /// <returns></returns>
+        internal int GetSpecialActorID(int specialID)
+        {
+            int actorID = 0;
+            if (specialID > 0)
+            {
+                if (dictSpecialActors.ContainsKey(specialID))
+                {
+                    Special person = dictSpecialActors[specialID];
+                    return person.ActID;
+                }
+            }
+            else { Game.SetError(new Error(213, "Invalid specialID (zero, or less)")); }
+            return actorID;
+        }
+
+        /// <summary>
         /// receives list of Houses from Network and places in releveant House Dictionaries for permanent use
         /// </summary>
         /// <param name="listOfHouses"></param>
@@ -2796,6 +2816,7 @@ namespace Next_Game
             catch (ArgumentException)
             { Game.SetError(new Error(150, "Invalid ActID or SpecialID (duplicate key exists) -> Record not saved")); }
         }
+
 
         /// <summary>
         /// store a Royal court member in relevant dict

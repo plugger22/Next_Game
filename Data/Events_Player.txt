@@ -69,7 +69,7 @@
 # conTimer: How long condition applies for in days. If '999' then condition is permanent
 
 # [outcome] effect -> Conflict
-# data: OpponentID
+# data: OpponentID (Note: this must be the SpecialID of an actor from 'Characters.txt' (called 'ID:' in that file), NOT an ActorID
 # chall: Yes / No (is the Player the challenger in this conflict?)
 # CsubType: Conflict subType (Personal / Tournament / Battle / Hunting / Blackmail / Seduce / Befriend / Infiltrate / Evade / Escape)
 
@@ -289,7 +289,7 @@ amount: 3
 apply: Add
 [outcome]
 effect: Conflict
-data: 20
+data: 1
 chall: Yes
 CsubType: Personal
 [End]

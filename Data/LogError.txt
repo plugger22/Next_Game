@@ -1,2 +1,6 @@
-//Exile Game file ops "LogError.txt" commenced at: 10/04/2017 16:38:02
-//Exile Game file ops "LogError.txt" Completed at: 10/04/2017 16:38:45
+//Exile Game file ops "LogError.txt" commenced at: 11/04/2017 11:41:05
+ERROR_185 "Invalid Loc (null) -> By LocID"
+Method: GetLocationName,  Line: 1204,  Object: World.cs,  Turn: 5,  Local Time: 11:45:16 UTC +10:00
+ERROR_186 "Invalid Loc (null) Unknown Coordinates"
+Method: ShowLocationCoords,  Line: 1236,  Object: World.cs,  Turn: 5,  Local Time: 11:45:16 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 11/04/2017 11:46:42
