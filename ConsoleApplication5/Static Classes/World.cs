@@ -4952,7 +4952,7 @@ namespace Next_Game
             //get list of live Passive actors
             IEnumerable<Passive> listActors =
                 from actors in dictPassiveActors
-                where actors.Value.Status == ActorStatus.AtLocation
+                where actors.Value.Status == ActorStatus.AtLocation && !(actors.Value is Special)
                 select actors.Value;
             List<Passive> listPassiveActors = listActors.ToList();
 

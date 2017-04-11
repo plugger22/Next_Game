@@ -2142,7 +2142,11 @@ namespace Next_Game
                                                                     optionObject.ActorID = outTemp.Data;
                                                                     //Convert SpecialID into ActorID
                                                                     optionObject.ActorID = Game.world.GetSpecialActorID(outTemp.Data);
-                                                                    if (optionObject.ActorID == 0) { validData = false; }
+                                                                    if (optionObject.ActorID == 0)
+                                                                    {
+                                                                        Game.SetError(new Error(49, string.Format("Invalid data -> SpecialID for Actor in Conflict Outcome for Event (\"{0}\")", structEvent.Name)));
+                                                                        validData = false;
+                                                                    }
                                                                     break;
                                                                 case "Game":
                                                                     //check that GameVars (DataPoints) are only 'add' or 'random'
@@ -3391,6 +3395,7 @@ namespace Next_Game
         internal List<CharacterStruct> GetCharacters(string fileName)
         {
             List<CharacterStruct> listOfStructs = new List<CharacterStruct>();
+            List<int> listSpecialID = new List<int>();
             string[] arrayOfCharacters = ImportDataFile(fileName);
             int[,] tempArray = new int[6, 2];
             if (arrayOfCharacters != null)
@@ -3444,7 +3449,13 @@ namespace Next_Game
                                     structCharacter.Title = cleanToken;
                                     break;
                                 case "ID":
-                                    try { structCharacter.ID = Convert.ToInt32(cleanToken); }
+                                    try {
+                                        structCharacter.ID = Convert.ToInt32(cleanToken);
+                                        //check for duplicate specialID's
+                                        if (listSpecialID.Contains(structCharacter.ID))
+                                        { Game.SetError(new Error(208, string.Format("Duplicate SpecialID {0}, (\"{1}\")", cleanToken, structCharacter.Name))); validData = false; }
+                                        else { listSpecialID.Add(structCharacter.ID); }
+                                    }
                                     catch (Exception e)
                                     { Game.SetError(new Error(208, e.Message)); validData = false; }
                                     break;

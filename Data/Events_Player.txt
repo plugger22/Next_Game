@@ -289,7 +289,7 @@ amount: 3
 apply: Add
 [outcome]
 effect: Conflict
-data: 1
+data: 2
 chall: Yes
 CsubType: Personal
 [End]

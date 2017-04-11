@@ -10,7 +10,7 @@
 
 
 
-Name: Luigi RobYourBlind
+Name: Luigi HandsUp
 ID: 1
 Sex: Male
 Title: Bandit Boss
@@ -23,6 +23,28 @@ Charm_Mod: -1
 Treachery_Mod: 0
 Leadership_Mod: 1
 Touched_Mod: -1
+Combat_Auto: 1
+Wits_Auto: 0
+Charm_Auto: 0
+Treachery_Auto: 0
+Leadership_Auto: 0
+Touched_Auto: 0
+[End]
+
+
+Name: Holy Haggard
+ID: 2
+Sex: Female
+Title: Old Lady
+Description: A wizened, bent over, old crone with missing teeth and few remaining wisps of hair.
+Age: 80
+Resources: 1
+Combat_Mod: -1
+Wits_Mod: 0
+Charm_Mod: 0
+Treachery_Mod: 0
+Leadership_Mod: 0
+Touched_Mod: 0
 Combat_Auto: 1
 Wits_Auto: 0
 Charm_Auto: 0
