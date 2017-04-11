@@ -1322,11 +1322,6 @@ namespace Next_Game
                         Game.world.SetHistoricalRecord(record_1);
                         //wife as regent
                         wife.Realm = ActorRealm.Regent;
-                        /*Game.history.SetInfluence(heir, wife, SkillType.Combat);
-                        Game.history.SetInfluence(heir, wife, SkillType.Wits);
-                        Game.history.SetInfluence(heir, wife, SkillType.Charm);
-                        Game.history.SetInfluence(heir, wife, SkillType.Leadership);
-                        Game.history.SetInfluence(heir, wife, SkillType.Treachery);*/
                         wife.RegencyPeriod = 15 - heir.Age;
                         //record
                         descriptor = string.Format("{0}, Aid {1}, wife of {2}, assumes Regency of House {3}, age {4}", wife.Name, wife.ActID, deadLord.Name, house.Name, wife.Age);
@@ -1349,14 +1344,15 @@ namespace Next_Game
                                 if (deadLord.Loyalty_Current == KingLoyalty.New_King) { amt *= -1; brother.AddRelEventPlyr(new Relation("Loyal to New King", "Supports New King", amt)); }
                                 else { brother.AddRelEventPlyr(new Relation("Loyal to the Old King", "Supports Old King", amt)); }
                             }
-                            /*Game.history.SetInfluence(heir, brother, SkillType.Combat);
-                            Game.history.SetInfluence(heir, brother, SkillType.Wits);
-                            Game.history.SetInfluence(heir, brother, SkillType.Charm);
-                            Game.history.SetInfluence(heir, brother, SkillType.Leadership);
-                            Game.history.SetInfluence(heir, brother, SkillType.Treachery);*/
                             brother.RegencyPeriod = 15 - heir.Age;
+                            //loyalties same as house
+                            brother.Loyalty_Current = house.Loyalty_Current;
+                            brother.Loyalty_AtStart = house.Loyalty_AtStart;
+                            //add to dictionaries
+                            Game.world.SetPassiveActor(brother);
                             //record
-                            descriptor = string.Format("{0}, Aid {1}, brother of {2}, assumes Regency of House {3}, age {4}", brother.Name, brother.ActID, deadLord.Name, house.Name, brother.Age);
+                            descriptor = string.Format("{0}, Aid {1}, brother of {2} {3}, assumes Regency of House {4}, age {5}", brother.Name, brother.ActID, 
+                                deadLord.Title, deadLord.Name, house.Name, brother.Age);
                             Record record_3 = new Record(descriptor, heir.ActID, heir.LocID, heir.RefID, heir.Lordship, HistActorIncident.Lordship);
                             record_3.AddActor(brother.ActID);
                             Game.world.SetHistoricalRecord(record_3);

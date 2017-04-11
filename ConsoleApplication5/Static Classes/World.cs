@@ -2772,7 +2772,7 @@ namespace Next_Game
 
 
         /// <summary>
-        /// Store a new actor (child) in relevant dictionaries
+        /// Store a new actor (child,regent brother, etc.) in relevant dictionaries
         /// </summary>
         /// <param name="actor"></param>
         internal void SetPassiveActor(Passive actor)

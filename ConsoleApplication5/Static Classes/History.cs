@@ -2611,7 +2611,7 @@ namespace Next_Game
             foreach(var actor in dictPassiveActors)
             {
                 //actor currently alive at time of revolt?
-                if (actor.Value.Status != ActorStatus.Gone /*&& !(actor.Value is Special)*/)
+                if (actor.Value.Status != ActorStatus.Gone && !(actor.Value is Special))
                 {
                     startAge = actor.Value.Age;
                     actor.Value.Age += elapsedTime;
@@ -3028,7 +3028,7 @@ namespace Next_Game
 
   
         /// <summary>
-        /// sub method to handle calc's for an NPC's relationship with their Lord (used by IniitialiseLordRelations)
+        /// sub method to handle calc's for an NPC's relationship with their Lord (used by InitialiseLordRelations)
         /// </summary>
         /// <param name="actorSkill"></param>
         /// <param name="lordSkill"></param>

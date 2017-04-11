@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 11/04/2017 14:24:28
+//Exile Game file ops "LogStart.txt" commenced at: 11/04/2017 15:22:13
 --- Initialise Constants (FileImport.cs)
 ---  InitialiseMajorHouses (History.cs)
 Great House Martell removed
@@ -327,124 +327,130 @@ Lord Urien Florent, The Unstable, actID 23, Treachery 5, "Florent", houseID 7
    Relationship with Lord 33 
   BannerLord Hunfridus Brax, actID 76, houseID 7
    Relationship with Lord 69 
+  lord Henry Florent, actID 101, houseID 7
+   Relationship with Lord 69 
 Lord Donnel Greyjoy, The Axe Man, actID 24, Treachery 3, "Greyjoy", houseID 8
   Lady Maege Greyjoy, actID 25, houseID 8
-   Relationship with Lord 74 
+   Relationship with Lord 21 
   Castellan Willas Lambard, actID 27, houseID 8
-   Relationship with Lord 26 
+   Relationship with Lord 40 
   Maester Martyn Richardin, actID 28, houseID 8
-   Relationship with Lord 35 
+   Relationship with Lord 22 
   Septon Benjen Bertol, actID 29, houseID 8
-   Relationship with Lord 27 
+   Relationship with Lord 35 
   lady Linyeve Greyjoy, actID 30, houseID 8
-   Relationship with Lord 30 
+   Relationship with Lord 62 
   Heir Randyll Greyjoy, actID 69, houseID 8
-   Relationship with Lord 57 
+   Relationship with Lord 41 
   BannerLord Mord Umber, actID 77, houseID 8
-   Relationship with Lord 36 
+   Relationship with Lord 26 
   BannerLord Jory Botley, actID 78, houseID 8
-   Relationship with Lord 31 
-  BannerLord Ivo Dondarrion, actID 80, houseID 8
    Relationship with Lord 64 
-  BannerLord Jonos Caron, actID 104, houseID 8
+  BannerLord Ivo Dondarrion, actID 80, houseID 8
    Relationship with Lord 42 
+  BannerLord Jonos Caron, actID 104, houseID 8
+   Relationship with Lord 43 
 Lord Donnel Arryn, The Unrealistic, actID 38, Treachery 3, "Arryn", houseID 5
   Knight Ser Samwell Hodgkin, actID 33, houseID 5
-   Relationship with Lord 43 
+   Relationship with Lord 51 
   Castellan Davos Colinus, actID 34, houseID 5
-   Relationship with Lord 56 
+   Relationship with Lord 36 
   Maester Frank Colinus, actID 35, houseID 5
    Relationship with Lord 26 
   Septon Petyr Isemberd, actID 36, houseID 5
-   Relationship with Lord 31 
-  Heir Raymun Arryn, actID 37, houseID 5
    Relationship with Lord 23 
+  Heir Raymun Arryn, actID 37, houseID 5
+   Relationship with Lord 15 ***
+  lord Vortimer Arryn, actID 105, houseID 5
+   Relationship with Lord 70 
 Lord Willis Stark, The Agile, actID 39, Treachery 2, "Stark", houseID 3
   Lady Sephare Stark, actID 40, houseID 3
-   Relationship with Lord 20 
-  Castellan Henry Gilebin, actID 42, houseID 3
-   Relationship with Lord 70 
-  Maester Jason Bartolomeus, actID 43, houseID 3
    Relationship with Lord 80 
-  Septon Theon Gilebin, actID 44, houseID 3
+  Castellan Henry Gilebin, actID 42, houseID 3
    Relationship with Lord 30 
-  Heir Eddard Stark, actID 70, houseID 3
+  Maester Jason Bartolomeus, actID 43, houseID 3
    Relationship with Lord 37 
+  Septon Theon Gilebin, actID 44, houseID 3
+   Relationship with Lord 21 
+  Heir Eddard Stark, actID 70, houseID 3
+   Relationship with Lord 66 
   BannerLord Vargo Clegane, actID 81, houseID 3
-   Relationship with Lord 26 
+   Relationship with Lord 70 
 King Jaques Tully, The Reliable, actID 45, Treachery 2, "Tully", houseID 4
   Queen Genna Tully, actID 46, houseID 4
-   Relationship with Lord 61 
+   Relationship with Lord 74 
   Knight Ser Iamys Guy, actID 47, houseID 4
-   Relationship with Lord 75 
-  Castellan Chayle Gervasius, actID 48, houseID 4
-   Relationship with Lord 74 
-  Maester Wyschardus Harry, actID 49, houseID 4
    Relationship with Lord 22 
-  Septon Aerys Hamelin, actID 50, houseID 4
-   Relationship with Lord 31 
-  Heir Eon Tully, actID 51, houseID 4
-   Relationship with Lord 28 
-  lady Ala Tully, actID 52, houseID 4
-   Relationship with Lord 61 
-  lord Aeron Tully, actID 53, houseID 4
-   Relationship with Lord 29 
-  BannerLord Varys Penrose, actID 82, houseID 4
-   Relationship with Lord 11 ***
-  BannerLord Geoff Yronwood, actID 83, houseID 4
+  Castellan Chayle Gervasius, actID 48, houseID 4
+   Relationship with Lord 36 
+  Maester Wyschardus Harry, actID 49, houseID 4
    Relationship with Lord 63 
-  BannerLord Druet Flint, actID 84, houseID 4
-   Relationship with Lord 23 
-  BannerLord Robert Mullendore, actID 85, houseID 4
-   Relationship with Lord 1 ***
-  BannerLord Charles Karstark, actID 86, houseID 4
-   Relationship with Lord 57 
-  BannerLord Haimmon Mooton, actID 87, houseID 4
-   Relationship with Lord 27 
-  High_Septon Daue Humpty, actID 92, houseID 9999
-   Relationship with Lord 64 
-  Master_of_Coin Jack Hughoc, actID 113, houseID 9999
+  Septon Aerys Hamelin, actID 50, houseID 4
+   Relationship with Lord 66 
+  Heir Eon Tully, actID 51, houseID 4
+   Relationship with Lord 29 
+  lady Ala Tully, actID 52, houseID 4
    Relationship with Lord 41 
-  Master_of_Laws Trystane Oudin, actID 94, houseID 9999
-   Relationship with Lord 74 
-  Master_of_Ships Victarion Drake, actID 95, houseID 9999
-   Relationship with Lord 72 
-  Master_of_Whisperers Petyr Gill, actID 96, houseID 9999
+  lord Aeron Tully, actID 53, houseID 4
+   Relationship with Lord 33 
+  BannerLord Varys Penrose, actID 82, houseID 4
+   Relationship with Lord 23 
+  BannerLord Geoff Yronwood, actID 83, houseID 4
+   Relationship with Lord 31 
+  BannerLord Druet Flint, actID 84, houseID 4
+   Relationship with Lord 27 
+  BannerLord Robert Mullendore, actID 85, houseID 4
    Relationship with Lord 0 ***
+  BannerLord Charles Karstark, actID 86, houseID 4
+   Relationship with Lord 59 
+  BannerLord Haimmon Mooton, actID 87, houseID 4
+   Relationship with Lord 46 
+  High_Septon Daue Humpty, actID 92, houseID 9999
+   Relationship with Lord 74 
+  Master_of_Coin Jack Hughoc, actID 113, houseID 9999
+   Relationship with Lord 77 
+  Master_of_Laws Trystane Oudin, actID 94, houseID 9999
+   Relationship with Lord 29 
+  Master_of_Ships Victarion Drake, actID 95, houseID 9999
+   Relationship with Lord 74 
+  Master_of_Whisperers Petyr Gill, actID 96, houseID 9999
+   Relationship with Lord 19 ***
   Hand_of_the_King Tyrek Goscelinus, actID 114, houseID 9999
-   Relationship with Lord 79 
+   Relationship with Lord 64 
   Commander_of_Kings_Guard Tybaut Segar, actID 115, houseID 9999
-   Relationship with Lord 59 
+   Relationship with Lord 71 
   Commander_of_City_Watch Oggery Warnerus, actID 116, houseID 9999
-   Relationship with Lord 59 
+   Relationship with Lord 70 
 Lord Rowan Tyrell, The Persistent, actID 54, Treachery 3, "Tyrell", houseID 2
   Castellan Desmond Thomlin, actID 57, houseID 2
-   Relationship with Lord 71 
-  Maester Nycolas Gerrart, actID 58, houseID 2
-   Relationship with Lord 75 
-  Septon Eddard Eden, actID 59, houseID 2
    Relationship with Lord 79 
+  Maester Nycolas Gerrart, actID 58, houseID 2
+   Relationship with Lord 31 
+  Septon Eddard Eden, actID 59, houseID 2
+   Relationship with Lord 34 
   Heir Karyl Tyrell, actID 60, houseID 2
-   Relationship with Lord 36 
+   Relationship with Lord 68 
   BannerLord Nycolas Hornwood, actID 88, houseID 2
    Relationship with Lord 34 
   BannerLord Gualtier Bracken, actID 89, houseID 2
-   Relationship with Lord 68 
+   Relationship with Lord 46 
 Lord Oggery Targaryen, The Severe, actID 68, Treachery 4, "Targaryen", houseID 1
   Knight Ser Dickon Houdoin, actID 63, houseID 1
-   Relationship with Lord 34 
-  Castellan Tolly Wyon, actID 64, houseID 1
-   Relationship with Lord 36 
-  Maester Aegon Richardin, actID 65, houseID 1
    Relationship with Lord 67 
+  Castellan Tolly Wyon, actID 64, houseID 1
+   Relationship with Lord 82 ***
+  Maester Aegon Richardin, actID 65, houseID 1
+   Relationship with Lord 24 
   Septon Varly Charles, actID 66, houseID 1
-   Relationship with Lord 77 
+   Relationship with Lord 40 
   Heir Varys Targaryen, actID 67, houseID 1
-   Relationship with Lord 29 
-  BannerLord Hallis Fowler, actID 90, houseID 1
-   Relationship with Lord 45 
-  BannerLord Morton Harlaw, actID 91, houseID 1
    Relationship with Lord 41 
+  BannerLord Hallis Fowler, actID 90, houseID 1
+   Relationship with Lord 62 
+  BannerLord Morton Harlaw, actID 91, houseID 1
+   Relationship with Lord 44 
+  lord Robett Targaryen, actID 103, houseID 1
+   Relationship with Lord 73 
 ---  InitialiseCharacters (History.cs)
 Bandit Boss Luigi RobYourBlind has a confirmed Combat trait
 Luigi RobYourBlind, Aid 117, specID 1 -> initialised O.K
@@ -455,28 +461,28 @@ Luigi RobYourBlind, Aid 117, specID 1 -> initialised O.K
  Branch  3 -> Current 0 -> Desired 1 -> adjusted Loc's 7
  Branch  4 -> Current 0 -> Desired 1 -> adjusted Loc's 13
 --- InitialiseEnemyActors (World.cs)
+Inquisitor Brother Shaitan has a confirmed Treachery trait
 Inquisitor Brother Nergal has a confirmed Treachery trait
-Inquisitor Brother Mormo has a confirmed Treachery trait
-Inquisitor Brother Damballa has a confirmed Treachery trait
-Inquisitor Brother Adramalech has a confirmed Treachery trait
+Inquisitor Brother Gorgo has a confirmed Treachery trait
+Inquisitor Brother Mantus has a confirmed Treachery trait
 ---  CreateNemesis (History.cs)
 Nemesis The Unrelenting has a confirmed Treachery trait
 Nemesis The Unrelenting has a confirmed Touched trait
 - Assign Enemies
- [Goal -> Inquisitor] Brother Nergal, ActID 118 Branch -> 1
- [Goal -> Inquisitor] Brother Mormo, ActID 119 Branch -> 2
- [Goal -> Inquisitor] Brother Damballa, ActID 120 Branch -> 3
- [Goal -> Inquisitor] Brother Adramalech, ActID 121 Branch -> 4
+ [Goal -> Inquisitor] Brother Shaitan, ActID 118 Branch -> 1
+ [Goal -> Inquisitor] Brother Nergal, ActID 119 Branch -> 2
+ [Goal -> Inquisitor] Brother Gorgo, ActID 120 Branch -> 3
+ [Goal -> Inquisitor] Brother Mantus, ActID 121 Branch -> 4
  [Goal -> Nemesis] The Unrelenting, ActID 122 Branch -> 0
 --- InitialiseWorldDevelopment (World.cs)
-ItemID 1, "Dragon Eggs", given to BannerLord Jory Botley, ActID 78, at Lordsport (loc 2:18)
-ItemID 4, "Goblin Mug", given to BannerLord Tybaut Tallhart, ActID 100, at Torrhen's Square (loc 14:26)
-ItemID 5, "Mammoth Boots", given to Lord Oggery Targaryen, ActID 68, at Valyria (loc 11:5)
-ItemID 6, "Lion Dagger", given to Lord Rowan Tyrell, ActID 54, at Highgarden (loc 17:5)
+ItemID 1, "Dragon Eggs", given to BannerLord Vargo Clegane, ActID 81, at Clegane's Keep (loc 21:15)
+ItemID 4, "Goblin Mug", given to lord Robett Targaryen, ActID 103, at Valyria (loc 11:5)
+ItemID 5, "Mammoth Boots", given to Heir Randyll Greyjoy, ActID 69, at Pyke (loc 10:22)
+ItemID 6, "Lion Dagger", given to Castellan Desmond Thomlin, ActID 57, at Highgarden (loc 17:5)
 ItemID 7, "Chalice of Pain", given to Maester Jason Bartolomeus, ActID 43, at Winterfell (loc 20:17)
 ItemID 8, "Amulet of Passion", given to Lord Urien Florent, ActID 23, at Brightwater Keep (loc 7:9)
-ItemID 9, "Book of the Dead", given to Maester Nycolas Gerrart, ActID 58, at Highgarden (loc 17:5)
-ItemID 10, "Elixir of Wellness", given to BannerLord Hallis Fowler, ActID 90, at Skyreach (loc 10:3)
+ItemID 9, "Book of the Dead", given to Septon Eddard Eden, ActID 59, at Highgarden (loc 17:5)
+ItemID 10, "Elixir of Wellness", given to BannerLord Tybaut Tallhart, ActID 100, at Torrhen's Square (loc 14:26)
 --- Import Follower Events (Director.cs)
 --- Import Player Events (Director.cs)
 --- Player Events (FileImport.cs)
@@ -794,5 +800,5 @@ Infiltrate Challenge (Stealth), successfully imported
 Evade Challenge (Stealth), successfully imported
 Escape Challenge (Stealth), successfully imported
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 11/04/2017 14:24:29
-//Elapsed Time 878 ms
+//Exile Game file ops "LogStart.txt" Completed at: 11/04/2017 15:22:13
+//Elapsed Time 691 ms
