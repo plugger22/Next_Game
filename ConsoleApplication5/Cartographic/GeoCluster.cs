@@ -21,13 +21,15 @@ namespace Next_Game.Cartographic
         public GeoType Type { get; }
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents; //Archetype events
-        private List<int> listOfPlayerEvents; 
+        private List<int> listOfPlayerEvents;
+        private List<int> listOfPorts; //Sea clusters only (locID of orthoganl adjoining cities)
 
         public GeoCluster()
         {
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
+            listOfPorts = new List<int>();
         }
 
         //default constructor
@@ -36,6 +38,7 @@ namespace Next_Game.Cartographic
             listOfSecrets = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
+            listOfPorts = new List<int>();
             this.GeoID = geoID;
             Terrain = (Cluster)type;
             this.Size = size;
@@ -101,5 +104,27 @@ namespace Next_Game.Cartographic
 
         public int GetNumPlayerEvents()
         { return listOfPlayerEvents.Count; }
+
+
+        /// <summary>
+        /// Add a port to a SeaCluster (only if Port Not already on list)
+        /// </summary>
+        /// <param name="locID"></param>
+        public void AddPort(int locID)
+        {
+            if (locID > 0)
+            {
+                if (listOfPorts.Contains(locID) == false)
+                {
+                    listOfPorts.Add(locID);
+                    Game.logStart.Write(string.Format("LocID {0} has been added to the ListPorts for {1}, GeoID {2}", locID, Name, GeoID));
+                }
+                else { Game.logStart.Write(string.Format("LocID {0} is already in the ListPorts for {1}, GeoID {2}", locID, Name, GeoID)); }
+            }
+            else
+            { Game.SetError(new Error(214, "Invalid LocID (zero or less)")); }
+        }
     }
+
+
 }

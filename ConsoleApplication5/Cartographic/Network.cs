@@ -100,6 +100,43 @@ namespace Next_Game.Cartographic
                 InitialiseRoutesToConnectors();
                 ShowNetworkAnalysis();
                 InitialiseHouseLocations(8, 3);
+                InitialisePorts();
+            }
+        }
+
+        /// <summary>
+        /// Identifies and sets up Ports
+        /// </summary>
+        private void InitialisePorts()
+        {
+            Game.logStart.Write("--- InitialisePorts (Network.cs)");
+            List<GeoCluster> listGeoClusters = Game.map.GetGeoCluster();
+            
+            //need to filter down to a straight list of SeaClusters
+            List<GeoCluster> listSeaClusters = new List<GeoCluster>();
+
+            int coord_X, coord_Y, tempX, tempY, geoID;
+            int limit = Game.map.GetMapSize();
+            //loop Locations searching for Ports (orthoganally adjacent to sea cluster - NOT diagonally)
+            for(int i = 0; i < ListOfLocations.Count; i++)
+            {
+                Location loc = ListOfLocations[i];
+                if (loc != null)
+                {
+                    coord_X = loc.GetPosX();
+                    coord_Y = loc.GetPosY();
+                    //check North
+                    tempX = coord_X + 1;
+                    if (tempX < limit)
+                    {
+                       if (Game.map.GetMapInfo(MapLayer.Geography, tempX, coord_Y) == 1)
+                        {
+                            geoID = Game.map.GetMapInfo(MapLayer.GeoID, tempX, coord_Y);
+                            //need to AddPort to relevant geoCluster
+                        }
+                    }
+                }
+                else { Game.SetError(new Error(215, "Invalid Location (null)")); }
             }
         }
 

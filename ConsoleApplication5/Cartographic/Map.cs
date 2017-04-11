@@ -2893,6 +2893,10 @@ namespace Next_Game.Cartographic
             return tempList;
         }
 
+
+        public int GetMapSize()
+        { return mapSize; }
+
         //--- place new method above---
     }
 }
