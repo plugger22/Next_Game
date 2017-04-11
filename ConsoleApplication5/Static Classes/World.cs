@@ -742,25 +742,6 @@ namespace Next_Game
                 RLColor color = RLColor.White;
                 RLColor locColor = RLColor.White;
                 string locString = "?";
-                //location descriptor
-                switch(person.Status)
-                {
-                    case ActorStatus.AtLocation:
-                        locString = string.Format("Located at {0} {1}, Lid {2}, Rid {3}", GetLocationName(locID), ShowLocationCoords(locID), locID, refID);
-                        break;
-                    case ActorStatus.Travelling:
-                        Position pos = person.GetActorPosition();
-                        locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}, Rid {5}", pos.PosX, pos.PosY, GetLocationName(locID), 
-                            ShowLocationCoords(locID), locID, refID);
-                        break;
-                    case ActorStatus.Captured:
-                        locString = string.Format("Incarcerated in the bowels of the {0} dungeons", GetLocationName(locID));
-                        break;
-                    case ActorStatus.Gone:
-                        locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
-                        locColor = RLColor.Red;
-                        break;
-                }
                 listToDisplay.Add(new Snippet(name, RLColor.Yellow, RLColor.Black, false));
                 //nickname (show as White)?
                 if (handle != null)
@@ -775,7 +756,28 @@ namespace Next_Game
                 { listToDisplay.Add(new Snippet(string.Format("Office: {0}", person.Office), RLColor.Yellow, RLColor.Black)); }
                 //location (if special replace with description)
                 if (!(person is Special))
-                { listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black)); }
+                {
+                    //location descriptor
+                    switch (person.Status)
+                    {
+                        case ActorStatus.AtLocation:
+                            locString = string.Format("Located at {0} {1}, Lid {2}, Rid {3}", GetLocationName(locID), ShowLocationCoords(locID), locID, refID);
+                            break;
+                        case ActorStatus.Travelling:
+                            Position pos = person.GetActorPosition();
+                            locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}, Rid {5}", pos.PosX, pos.PosY, GetLocationName(locID),
+                                ShowLocationCoords(locID), locID, refID);
+                            break;
+                        case ActorStatus.Captured:
+                            locString = string.Format("Incarcerated in the bowels of the {0} dungeons", GetLocationName(locID));
+                            break;
+                        case ActorStatus.Gone:
+                            locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
+                            locColor = RLColor.Red;
+                            break;
+                    }
+                    listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
+                }
                 else { listToDisplay.Add(new Snippet(person.Description)); }
                 //Delayed
                 if (person.Delay > 0)

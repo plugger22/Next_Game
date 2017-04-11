@@ -1,20 +1,4 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 11/04/2017 13:34:16
+//Exile Game file ops "LogTurn.txt" commenced at: 11/04/2017 14:24:29
 --- ProcessStartGame (World.cs)
 --- AgePassiveCharacters (History.cs)
-ERROR_185 "Invalid Loc (null) -> By LocID"
-Method: GetLocationName,  Line: 1208,  Object: World.cs,  Turn: 0,  Local Time: 13:34:42 UTC +10:00
-ERROR_186 "Invalid Loc (null) Unknown Coordinates"
-Method: ShowLocationCoords,  Line: 1240,  Object: World.cs,  Turn: 0,  Local Time: 13:34:42 UTC +10:00
-ERROR_185 "Invalid Loc (null) -> By LocID"
-Method: GetLocationName,  Line: 1208,  Object: World.cs,  Turn: 0,  Local Time: 13:34:47 UTC +10:00
-ERROR_186 "Invalid Loc (null) Unknown Coordinates"
-Method: ShowLocationCoords,  Line: 1240,  Object: World.cs,  Turn: 0,  Local Time: 13:34:47 UTC +10:00
-ERROR_185 "Invalid Loc (null) -> By LocID"
-Method: GetLocationName,  Line: 1208,  Object: World.cs,  Turn: 0,  Local Time: 13:35:30 UTC +10:00
-ERROR_186 "Invalid Loc (null) Unknown Coordinates"
-Method: ShowLocationCoords,  Line: 1240,  Object: World.cs,  Turn: 0,  Local Time: 13:35:30 UTC +10:00
-ERROR_185 "Invalid Loc (null) -> By LocID"
-Method: GetLocationName,  Line: 1208,  Object: World.cs,  Turn: 0,  Local Time: 13:35:40 UTC +10:00
-ERROR_186 "Invalid Loc (null) Unknown Coordinates"
-Method: ShowLocationCoords,  Line: 1240,  Object: World.cs,  Turn: 0,  Local Time: 13:35:40 UTC +10:00
-//Exile Game file ops "LogTurn.txt" Completed at: 11/04/2017 13:36:04
+//Exile Game file ops "LogTurn.txt" Completed at: 11/04/2017 14:26:28

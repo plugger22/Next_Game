@@ -2611,7 +2611,7 @@ namespace Next_Game
             foreach(var actor in dictPassiveActors)
             {
                 //actor currently alive at time of revolt?
-                if (actor.Value.Status != ActorStatus.Gone)
+                if (actor.Value.Status != ActorStatus.Gone /*&& !(actor.Value is Special)*/)
                 {
                     startAge = actor.Value.Age;
                     actor.Value.Age += elapsedTime;
