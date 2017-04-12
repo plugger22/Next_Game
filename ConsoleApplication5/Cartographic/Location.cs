@@ -60,7 +60,8 @@ namespace Next_Game.Cartographic
         public string LocName { get; set; }
         private Position locPos;
         public int LocationID { get; }
-        public bool Capital { get; set; } //is capital?
+        public bool Capital { get; set; } //true if Capital
+        public bool Port { get; set; } //true if a port (orthoganlly adjacent to a sea cluster with at least one other port present
         public bool Connector { get; set; } //has a connector to a different branch?
         public int Connections { get; set; } //number of connections to neighbouring nodes
         public int ConnectorID { get; set; } = 0; //ID of location at the other end of the connection (if one exists)
@@ -79,6 +80,7 @@ namespace Next_Game.Cartographic
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
+        private Dictionary<int, int> dictSeaDistances;
 
         public Location()
         { LocName = "testville"; Capital = false; locPos = new Position(); LocationID = locationIndex++; }
@@ -92,15 +94,16 @@ namespace Next_Game.Cartographic
             listOfPlayerEvents = new List<int>();
             listOfNeighboursPos = new List<Position>();
             listOfNeighboursLocID = new List<int>();
+            dictSeaDistances = new Dictionary<int, int>();
             routeToCapital = new List<Route>();
             routeToConnector = new List<Route>();
             routeFromCapital = new List<Route>();
             routeFromConnector = new List<Route>();
-
             LocName = "testville";
             locPos = new Position();
             locPos.PosX = pos.PosX; locPos.PosY = pos.PosY;
             Capital = false;
+            Port = false;
             Connector = false;
             LocationID = locationIndex++;
         }
@@ -114,15 +117,16 @@ namespace Next_Game.Cartographic
             listOfPlayerEvents = new List<int>();
             listOfNeighboursPos = new List<Position>();
             listOfNeighboursLocID = new List<int>();
+            dictSeaDistances = new Dictionary<int, int>();
             routeToCapital = new List<Route>();
             routeToConnector = new List<Route>();
             routeFromCapital = new List<Route>();
             routeFromConnector = new List<Route>();
-
             LocName = "testville";
             locPos = new Position();
             locPos.PosX = pos.PosX; locPos.PosY = pos.PosY;
             Capital = capital;
+            Port = false;
             Connector = false;
             LocationID = locationIndex++;
         }
@@ -136,15 +140,16 @@ namespace Next_Game.Cartographic
             listOfPlayerEvents = new List<int>();
             listOfNeighboursPos = new List<Position>();
             listOfNeighboursLocID = new List<int>();
+            dictSeaDistances = new Dictionary<int, int>();
             routeToCapital = new List<Route>();
             routeToConnector = new List<Route>();
             routeFromCapital = new List<Route>();
             routeFromConnector = new List<Route>();
-
             LocName = "testville";
             locPos = new Position();
             locPos.PosX = pos.PosX; locPos.PosY = pos.PosY; locPos.Branch = dir;
             Capital = capital;
+            Port = false;
             Connector = false;
             LocationID = locationIndex++;
         }

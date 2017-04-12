@@ -163,6 +163,9 @@ namespace Next_Game.Cartographic
         public int GetNumPorts()
         { return listOfPorts.Count; }
 
+        public List<int> GetPorts()
+        { return listOfPorts; }
+
         //methods above here
     }
 }

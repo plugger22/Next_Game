@@ -192,7 +192,25 @@ namespace Next_Game.Cartographic
             {
                 num = cluster.GetNumPorts();
                 if (num > 1)
-                {  Game.logStart.Write($"GeoCluster GeoID {cluster.GeoID} -> {num} Ports"); }
+                {
+                    Game.logStart.Write($"GeoCluster GeoID {cluster.GeoID} -> {num} Ports");
+                    //Set all locations adjoing cluster to Ports
+                    List<int> listOfPorts = cluster.GetPorts();
+                    if (listOfPorts != null)
+                    {
+                        for(int i = 0; i < listOfPorts.Count; i++)
+                        {
+                            Location locTemp = GetLocation(listOfPorts[i]);
+                            if (locTemp != null)
+                            {
+                                locTemp.Port = true;
+                                Game.logStart.Write($"Port -> LocID {locTemp.LocationID} at {locTemp.GetPosX()}:{locTemp.GetPosY()}");
+                            }
+                            else { Game.SetError(new Error(215, $"Invalid locTemp (null) from LocID {listOfPorts[i]}")); }
+                        }
+                    }
+                    else { Game.SetError(new Error(215, "Invalid listOfPorts (null) from cluster.GetPorts")); }
+                }
             }
         }
 
