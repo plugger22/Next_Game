@@ -1226,6 +1226,7 @@ namespace Next_Game
                         case EventFilter.Passage:
                             //seek passage on a vessel to another port 
                             int speed = Game.constant.GetValue(Global.SEA_SPEED);
+                            int chance; //chance of a suitable ship being available
                             eventObject.Name = "Seek Passage to another Port";
                             eventObject.Text = $"You are at {locName}. Which Port do you wish to travel to?";
                             Dictionary<int, int> dictSeaDistances = loc.GetSeaDistances();
@@ -1235,8 +1236,8 @@ namespace Next_Game
                             if (limit > 0)
                             {
                                 //default option
-                                OptionInteractive option = new OptionInteractive("You begin to feel queasy and decide to Leave.");
-                                option.ReplyGood = string.Format("You depart {0} without further ado", Game.world.GetHouseName(refID));
+                                OptionInteractive option = new OptionInteractive("The sea makes you queasy. You decide to Leave.");
+                                option.ReplyGood = string.Format("You leave the smelly docks of {0} behind", Game.world.GetHouseName(refID));
                                 OutNone outcome = new OutNone(eventObject.EventPID);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
@@ -1251,21 +1252,32 @@ namespace Next_Game
                                     //estimate voyage time, min 1 day
                                     voyageTime = passage.Value / speed;
                                     voyageTime = Math.Max(1, voyageTime);
-                                    optionText = string.Format("Obtain passage to {0} {1}, a voyage of {2} days", locDestination.LocName, 
-                                        Game.world.ShowLocationCoords(locDestination.LocationID), voyageTime);
-                                    OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID };
-                                    option.ReplyGood = string.Format("{0} is happy to sit down for a chat", actorText);
+                                    chance = rnd.Next(1, 10) * 10;
+                                    optionText = string.Format("Obtain passage to {0} {1}, a voyage of {2} day{3}. {4}% chance of success.", locDestination.LocName, 
+                                        Game.world.ShowLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "", chance);
+                                    OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID, Test = chance };
+                                    option.ReplyGood = "A suitable ship is available. You board immediately";
+                                    option.ReplyBad = $"No ship is available to take you to {locDestination.LocName} today";
                                     OutNone outcome = new OutNone(eventObject.EventPID);
                                     //OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                     option.SetGoodOutcome(outcome);
+                                    option.SetBadOutcome(outcome);
                                     eventObject.SetOption(option);
                                 }
                                 else { Game.SetError(new Error(73, "invalid locDestination (null) -> Passage option not created")); }
                             }
-                            //desperado option
-                            optionText = "Find the first available ship, who cares where it's going?";
-                            //get a random destination
-                            OptionInteractive optionDesperate = new OptionInteractive(optionText) { LocID = locDestination.LocationID };
+                            //desperado option -> random destination (only if > 1 port option available)
+                            if (limit > 1)
+                            {
+                                optionText = "Find the first available ship, who cares where it's going?";
+                                List<int> tempList = new List<int>(dictSeaDistances.Keys);
+                                OptionInteractive optionRandom = new OptionInteractive(optionText) { LocID = tempList[rnd.Next(tempList.Count)] };
+                                optionRandom.ReplyGood = "A nearby ship is casting of it's mooring lines, about to leave. You jump onboard";
+                                OutNone outcomeRandom = new OutNone(eventObject.EventPID);
+                                //OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
+                                optionRandom.SetGoodOutcome(outcomeRandom);
+                                eventObject.SetOption(optionRandom);
+                            }
                             break;
                         case EventFilter.Interact:
                             //inteact with the selected individual
@@ -1948,6 +1960,7 @@ namespace Next_Game
             Game.logTurn.Write("--- ResolveOutcome (Director.cs)");
             int validOption = 1;
             int actorID;
+            int rndNum = 0;
             string status;
             string outcomeText = "";
             string tempText = "";
@@ -1980,7 +1993,7 @@ namespace Next_Game
                                 { Game.SetError(new Error(73, string.Format("Invalid Test option (no ReplyBad) for \"{0}\"", option.Text))); }
                                 else
                                 {
-                                    int rndNum = rnd.Next(0, 100);
+                                    rndNum = rnd.Next(0, 100);
                                     if (rndNum <= option.Test)
                                     {
                                         listOutcomes = option.GetGoodOutcomes(); optionReply = option.ReplyGood;
@@ -2215,6 +2228,13 @@ namespace Next_Game
                             eventList.Add(new Snippet(string.Format("\"{0}\"", option.Text), foreColor, backColor));
                             eventList.Add(new Snippet(""));
                             eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                            if (option.Test > 0)
+                            {
+                                eventList.Add(new Snippet(""));
+                                eventList.Add(new Snippet($"Roll {rndNum}", RLColor.Gray, backColor));
+                                eventList.Add(new Snippet(""));
+                                eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                            }
                             eventList.Add(new Snippet(""));
                             eventList.Add(new Snippet(string.Format("{0}", optionReply), RLColor.LightBlue, backColor));
                             eventList.Add(new Snippet(""));
