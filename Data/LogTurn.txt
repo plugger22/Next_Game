@@ -1,84 +1,75 @@
-//Exile Game File "LogTurn.txt" opened at: 12/04/2017 17:16:16
---- ProcessStartTurn, Day 8, Turn 7 (World.cs) 
+//Exile Game File "LogTurn.txt" opened at: 12/04/2017 20:44:51
+--- ProcessStartTurn, Day 5, Turn 4 (World.cs) 
 --- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Mastema, ActID 134 travelling to The Pickled Prune (current Loc 16:21)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Iamys Targaryen, ID 1 at 27:24, Enemy at 16:21 (Brother Mastema, ID 134
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Iamys Targaryen, ID 1 at 27:24, Enemy at 15:21 (Brother Mastema, ID 134
- [Move -> MoveObject] Inquisitor Brother Damballa, ActID 135 travelling to The Pickled Prune (current Loc 18:16)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Iamys Targaryen, ID 1 at 27:24, Enemy at 18:16 (Brother Damballa, ID 135
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Iamys Targaryen, ActID 1 is AtLocation
+ [Move -> MoveObject] Usurper Aerys Greyjoy, ActID 1 travelling to The Arbor (current Loc 0:24)
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Shiva, ID 133 at 18:15, Active Iamys Targaryen, ID 1, at 27:24
- [Search -> Debug] Enemy, Brother Mastema, ID 134 at 14:21, Active Iamys Targaryen, ID 1, at 27:24
- [Search -> Debug] Enemy, Brother Damballa, ID 135 at 18:17, Active Iamys Targaryen, ID 1, at 27:24
- [Search -> Debug] Enemy, Brother Mormo, ID 136 at 18:15, Active Iamys Targaryen, ID 1, at 27:24
- [Search -> Debug] Enemy, The Unrelenting, ID 137 at 18:15, Active Iamys Targaryen, ID 1, at 27:24
- [Search -> Stationary] Follower The Spider, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Leper, ActID 3 is AtLocation
- [Search -> Stationary] Follower The Waif, ActID 9 is AtLocation
+ [Search -> Debug] Enemy, Brother Set, ID 123 at 16:14, Active Aerys Greyjoy, ID 1, at 0:24
+ [Search -> Debug] Enemy, Brother Behemoth, ID 124 at 16:14, Active Aerys Greyjoy, ID 1, at 0:24
+ [Search -> Debug] Enemy, Brother Shaitan, ID 125 at 16:14, Active Aerys Greyjoy, ID 1, at 0:24
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 126 at 16:14, Active Aerys Greyjoy, ID 1, at 0:24
+ [Search -> Debug] Enemy, The Unrelenting, ID 127 at 16:14, Active Aerys Greyjoy, ID 1, at 0:24
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Set, ID 123 at 16:14, Active Aerys Greyjoy, ID 1, at 0:25
+ [Search -> Debug] Enemy, Brother Behemoth, ID 124 at 16:14, Active Aerys Greyjoy, ID 1, at 0:25
+ [Search -> Debug] Enemy, Brother Shaitan, ID 125 at 16:14, Active Aerys Greyjoy, ID 1, at 0:25
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 126 at 16:14, Active Aerys Greyjoy, ID 1, at 0:25
+ [Search -> Debug] Enemy, The Unrelenting, ID 127 at 16:14, Active Aerys Greyjoy, ID 1, at 0:25
+ [Move -> MoveObject] Inquisitor Brother Shaitan, ActID 125 travelling to The Shaggy Parrot (current Loc 17:14)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Aerys Greyjoy, ID 1 at 0:26, Enemy at 17:14 (Brother Shaitan, ID 125
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Aerys Greyjoy, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Set, ID 123 at 16:14, Active Aerys Greyjoy, ID 1, at 0:26
+ [Search -> Debug] Enemy, Brother Behemoth, ID 124 at 16:14, Active Aerys Greyjoy, ID 1, at 0:26
+ [Search -> Debug] Enemy, Brother Shaitan, ID 125 at 17:13, Active Aerys Greyjoy, ID 1, at 0:26
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 126 at 16:14, Active Aerys Greyjoy, ID 1, at 0:26
+ [Search -> Debug] Enemy, The Unrelenting, ID 127 at 16:14, Active Aerys Greyjoy, ID 1, at 0:26
+ [Search -> Stationary] Follower The Spider, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Haggler, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 133 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Mormo, Act ID 136 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 137 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Set, Act ID 123 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 124 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 126 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 127 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Shiva, ActID 133 retains Goal -> Wait
- [Enemy -> Unknown] Brother Mastema ActID 134 has reverted to Unknown status (timer elapsed)
- [Enemy -> Unknown] Brother Damballa ActID 135 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Known] Brother Set ActID 123 has become KNOWN
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Mormo, ActID 136 Assigned Branch -> 4 Current Branch -> 0
- [Enemy -> Goal] The Unrelenting, ActID 137 retains Goal -> Wait
+ [Goal -> Branch] Brother Set, ActID 123 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Goal] Brother Behemoth, ActID 124 retains Goal -> Wait
+ [Enemy -> Known] Brother Shaitan ActID 125 has become KNOWN
+ [Enemy -> Goal] Brother Demogorgon, ActID 126 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 127 Assigned Branch -> 0 Current Branch -> 0
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Houdouyn Mullendore", ID 114 added to list of Actors
- [AutoEvent -> LocalList] "Houdouyn Mullendore", ID 114 added to list of Locals
+ [AutoEvent -> ActorList] "Harding Redwyne", ID 79 added to list of Actors
+ [AutoEvent -> LocalList] "Harding Redwyne", ID 79 added to list of Locals
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Iamys Targaryen has had their TurnsUnknown Timer increased from 106 to 107
- Follower The Spider has had their TurnsUnknown Timer increased from 6 to 7
- Follower The Leper has had their TurnsUnknown Timer increased from 6 to 7
- Follower The Waif has had their TurnsUnknown Timer increased from 6 to 7
+ Usurper Aerys Greyjoy has had their TurnsUnknown Timer increased from 103 to 104
+ Follower The Spider has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Haggler has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Crone has had their TurnsUnknown Timer increased from 3 to 4
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Houdouyn Mullendore", ID 114 added to list of Actors
- [AutoEvent -> LocalList] "Houdouyn Mullendore", ID 114 added to list of Locals
+ [AutoEvent -> ActorList] "Harding Redwyne", ID 79 added to list of Actors
+ [AutoEvent -> LocalList] "Harding Redwyne", ID 79 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "4" GreaterThanOrEqual 2
  Event "Seek Passage to another Port" Timer Repeat now 999
  Event "Seek Passage to another Port" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
- Option "Obtain passage to Winterfell (loc 17:23), a voyage of 2 days. 30% chance of success." Failed test (30 % needed, rolled 72)
-//Exile Game file ops "LogTurn.txt" Completed at: 12/04/2017 17:16:58
-t
---- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Houdouyn Mullendore", ID 114 added to list of Actors
- [AutoEvent -> LocalList] "Houdouyn Mullendore", ID 114 added to list of Locals
- Chance of Player Location event 75 %
+ [AutoEvent -> ActorList] "Harding Redwyne", ID 79 added to list of Actors
+ [AutoEvent -> LocalList] "Harding Redwyne", ID 79 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Iamys Targaryen has had their TurnsUnknown Timer increased from 105 to 106
- Follower The Spider has had their TurnsUnknown Timer increased from 5 to 6
- Follower The Leper has had their TurnsUnknown Timer increased from 5 to 6
- Follower The Waif has had their TurnsUnknown Timer increased from 5 to 6
+ Event "Look for a suitable ship" Timer Repeat now 999
+ Event "Look for a suitable ship" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Houdouyn Mullendore", ID 114 added to list of Actors
- [AutoEvent -> LocalList] "Houdouyn Mullendore", ID 114 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Event "Seek Passage to another Port" Timer Repeat now 999
- Event "Seek Passage to another Port" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
- Option "Obtain passage to Winterfell (loc 17:23), a voyage of 2 days. 20% chance of success." Passed test (20 % needed, rolled 9)
---- ProcessEndTurn, Day 7 Turn 6 (World.cs)
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 14
- "Crazy Old Woman" event, Cooldown Timer decremented from 4 to 3
-//Exile Game File "LogTurn.txt" Close completed at: 12/04/2017 17:16:16
+--- ResolveFollowerEvents (Director.cs)
+//Exile Game file ops "LogTurn.txt" Completed at: 12/04/2017 20:45:34
