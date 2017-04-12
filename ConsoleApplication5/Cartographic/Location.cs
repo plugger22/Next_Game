@@ -7,7 +7,7 @@ namespace Next_Game.Cartographic
 
     public class Position
     {
-        public int PosX { get; set;}
+        public int PosX { get; set; }
         public int PosY { get; set; }
         public float Distance { get; set; } //multi-purpose
         public int Branch { get; set; } //on which route from the capital is the position? (0 - Capital, 1 - North, 2 - East, 3 - South, 4 - West)
@@ -16,7 +16,7 @@ namespace Next_Game.Cartographic
         { }
 
         public Position(int x, int y)
-        { PosX = x;  PosY = y; }
+        { PosX = x; PosY = y; }
 
         public Position(Position pos)
         { PosX = pos.PosX; PosY = pos.PosY; }
@@ -29,10 +29,10 @@ namespace Next_Game.Cartographic
         public bool Equals(Position pos1, Position pos2)
         {
             //identical x & Y coords is a match
-            if(pos1.PosX == pos2.PosX && pos1.PosY == pos2.PosY)
+            if (pos1.PosX == pos2.PosX && pos1.PosY == pos2.PosY)
             { return true; }
             //both null is a match
-            else if(pos1 == null && pos2 == null)
+            else if (pos1 == null && pos2 == null)
             { return true; }
             else
             { return false; }
@@ -40,7 +40,7 @@ namespace Next_Game.Cartographic
 
         public int GetHashCode(Position pos)
         {
-            int hCode = pos.PosX ^ pos.PosY;                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+            int hCode = pos.PosX ^ pos.PosY;
             return hCode.GetHashCode();
         }
     }
@@ -65,7 +65,7 @@ namespace Next_Game.Cartographic
         public bool Connector { get; set; } //has a connector to a different branch?
         public int Connections { get; set; } //number of connections to neighbouring nodes
         public int ConnectorID { get; set; } = 0; //ID of location at the other end of the connection (if one exists)
-        public int DistanceToCapital { get; set; } 
+        public int DistanceToCapital { get; set; }
         public int DistanceToConnector { get; set; }
         public int HouseID { get; set; } //location house ID if applicable
         public int RefID { get; set; } //location ref ID if applicable
@@ -132,7 +132,7 @@ namespace Next_Game.Cartographic
         }
 
         //quad constructor to include CapitalRoute
-        public Location(Position pos, int dir,  bool capital)
+        public Location(Position pos, int dir, bool capital)
         {
             listOfActors = new List<int>();
             listOfSecrets = new List<int>();
@@ -205,7 +205,7 @@ namespace Next_Game.Cartographic
             //new list of Routes
             List<Route> reversedRoutes = new List<Route>();
             //loop through each existing route
-            foreach(Route route in routeFromCapital)
+            foreach (Route route in routeFromCapital)
             {
                 //copy Path to a new instance (independent of original)
                 List<Position> tempPath = new List<Position>(route.GetPath());
@@ -310,7 +310,7 @@ namespace Next_Game.Cartographic
             { return true; }
             return false;
         }
-       
+
         //returns true if capital
         public bool IsCapital()
         {
@@ -322,7 +322,7 @@ namespace Next_Game.Cartographic
         //prints details of a route, cell by cell
         private void ShowRoute(List<Route> listOfRoutes, string routeName)
         {
-            foreach(Route route in listOfRoutes)
+            foreach (Route route in listOfRoutes)
             { route.ShowPath(routeName); }
         }
 
@@ -334,7 +334,7 @@ namespace Next_Game.Cartographic
             catch (Exception e)
             { Game.SetError(new Error(60, e.Message)); }
         }
-           
+
 
         ///remove character from location (goes with AddActor)
         public void RemoveActor(int actorID)
@@ -351,7 +351,7 @@ namespace Next_Game.Cartographic
         {
             Console.WriteLine();
             Console.WriteLine("--- Location (ID {0})", LocationID);
-            if(Capital == true)
+            if (Capital == true)
             { Console.WriteLine("CAPITAL"); }
             if (Connector == true)
             { Console.WriteLine("CONNECTOR NODE"); }
@@ -372,5 +372,25 @@ namespace Next_Game.Cartographic
         internal List<int> GetPlayerEvents()
         { return listOfPlayerEvents; }
 
+        /// <summary>
+        /// add the distance (at sea) to the specified location
+        /// </summary>
+        /// <param name="locID"></param>
+        /// <param name="distance"></param>
+        public void AddSeaDistance(int locID, int distance)
+        {
+            try
+            {
+                dictSeaDistances.Add(locID, distance);
+                Game.logStart.Write($"[Notification] LocID {locID} distance {distance} added to dictSeaDistance for Port LocID {LocationID}");
+            }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(216, "Invalid input (null)")); }
+            catch (ArgumentException)
+            {
+                Game.SetError(new Error(216, $"Invalid locID {locID} (duplicate exists)"));
+            }
+
+        }
     }
 }

@@ -200,11 +200,30 @@ namespace Next_Game.Cartographic
                     {
                         for(int i = 0; i < listOfPorts.Count; i++)
                         {
-                            Location locTemp = GetLocation(listOfPorts[i]);
-                            if (locTemp != null)
+                            Location locOrigin = GetLocation(listOfPorts[i]);
+                            if (locOrigin != null)
                             {
-                                locTemp.Port = true;
-                                Game.logStart.Write($"Port -> LocID {locTemp.LocationID} at {locTemp.GetPosX()}:{locTemp.GetPosY()}");
+                                locOrigin.Port = true;
+                                Game.logStart.Write($"Port -> LocID {locOrigin.LocationID} at {locOrigin.GetPosX()}:{locOrigin.GetPosY()}");
+                                //loop all ports within sea cluster ignoring origina port (locOrigin)
+                                int distance = 0;
+                                for (int k = 0; k < listOfPorts.Count; k++)
+                                {
+                                    if (listOfPorts[k] != listOfPorts[i])
+                                    {
+                                        //work out and add distance to loc dictSeaDistances
+                                        Location locDestination = GetLocation(listOfPorts[k]);
+                                        if (locDestination != null)
+                                        {
+                                            //distance calc is straight knight move distance (ignores obstacles)
+                                            distance = Math.Abs(locDestination.GetPosX() - locOrigin.GetPosX()) + Math.Abs(locDestination.GetPosY() - locOrigin.GetPosY());
+                                            if (distance > 0)
+                                            { locOrigin.AddSeaDistance(locDestination.LocationID, distance); }
+                                            else { Game.SetError(new Error(215, "Invalid distance (zero, or less)")); }
+                                        }
+                                        else { Game.SetError(new Error(215, "Invalid locDestination (null)")); }
+                                    }
+                                }
                             }
                             else { Game.SetError(new Error(215, $"Invalid locTemp (null) from LocID {listOfPorts[i]}")); }
                         }
