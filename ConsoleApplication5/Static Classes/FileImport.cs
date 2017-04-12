@@ -1750,7 +1750,7 @@ namespace Next_Game
                                             break;
                                         case "locals":
                                         case "Locals":
-                                            structOutcome.Filter = EventFilter.Locals;
+                                            structOutcome.Filter = EventFilter.Court;
                                             break;
                                         case "visitors":
                                         case "Visitors":

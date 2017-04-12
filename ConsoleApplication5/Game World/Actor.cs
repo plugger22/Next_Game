@@ -26,7 +26,7 @@ namespace Next_Game
         private Position actorPos;
         public string Name { get; set; }
         public int LocID { get; set; } //current location (if travelling then destination) -> if dead then '0'
-        public int Speed { get; set; } = Game.constant.GetValue(Global.MOVE_SPEED); //speed of travel throughout the world
+        public int Speed { get; set; } = Game.constant.GetValue(Global.LAND_SPEED); //speed of travel throughout the world
         public int ActID { get; set; } //set in constructor except in special circumstances (eg, copying actors over in Lore.cs)
         public int Age { get; set; }
         public int Born { get; set; } //year born

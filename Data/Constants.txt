@@ -18,8 +18,10 @@
 4: 75 @ 0 @ 100
 # TOUCHED -> % chance of an actor having the touched trait
 5: 2 @ 0 @ 100
-# MOVE_SPEED -> movement speed of actors on map, per turn
+# LAND_SPEED -> movement speed of actors on map (by horse), per turn
 10: 2 @ 1 @ 3
+# SEA_SPEED -> movement speed of actors on a Sea Passage, per turn
+65: 4 @ 2 @ 6
 # NUM_FOLLOWERS -> number of followers at game start (max 6)
 28: 3 @ 0 @ 4
 
@@ -166,4 +168,4 @@
 57: 1 @ 0 @ 4
 
 
-# Next valid number -> 65
+# Next valid number -> 66

@@ -1,4 +1,52 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 12/04/2017 13:44:04
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
-//Exile Game file ops "LogTurn.txt" Completed at: 12/04/2017 13:45:57
+//Exile Game File "LogTurn.txt" opened at: 12/04/2017 14:35:20
+--- ProcessStartTurn, Day 2, Turn 1 (World.cs) 
+--- MoveActors -> 0 Records (World.cs)
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Herriot Martell, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Mastema, ID 100 at 18:16, Active Herriot Martell, ID 1, at 28:21
+ [Search -> Debug] Enemy, Brother Shaitan, ID 101 at 18:16, Active Herriot Martell, ID 1, at 28:21
+ [Search -> Debug] Enemy, Brother Mormo, ID 102 at 18:16, Active Herriot Martell, ID 1, at 28:21
+ [Search -> Debug] Enemy, Brother Haborym, ID 103 at 18:16, Active Herriot Martell, ID 1, at 28:21
+ [Search -> Debug] Enemy, The Unrelenting, ID 104 at 18:16, Active Herriot Martell, ID 1, at 28:21
+ [Search -> Stationary] Follower The Spider, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Jester, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 7 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 100 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 101 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mormo, Act ID 102 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 103 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 104 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mastema, ActID 100 Assigned Branch -> 0 Current Branch -> 0
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Shaitan, ActID 101 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Goal] Brother Mormo, ActID 102 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Haborym, ActID 103 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Haborym, ActID 103, (loc 18:16), assigned new Goal -> Hide
+ [Enemy -> Goal] The Unrelenting, ActID 104 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Raymun Crane", ID 86 added to list of Actors
+ [AutoEvent -> LocalList] "Raymun Crane", ID 86 added to list of Locals
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Herriot Martell has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Jester has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Raymun Crane", ID 86 added to list of Actors
+ [AutoEvent -> LocalList] "Raymun Crane", ID 86 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Seek Passage to another Port" Timer Repeat now 999
+ Event "Seek Passage to another Port" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+//Exile Game file ops "LogTurn.txt" Completed at: 12/04/2017 14:38:45

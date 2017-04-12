@@ -390,7 +390,9 @@ namespace Next_Game.Cartographic
             {
                 Game.SetError(new Error(216, $"Invalid locID {locID} (duplicate exists)"));
             }
-
         }
+
+        public Dictionary<int, int> GetSeaDistances()
+        { return dictSeaDistances; }
     }
 }

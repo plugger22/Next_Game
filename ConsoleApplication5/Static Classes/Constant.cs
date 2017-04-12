@@ -13,7 +13,8 @@ namespace Next_Game
         CHILDBIRTH_COMPLICATIONS,
         PREGNANT,
         TOUCHED,
-        MOVE_SPEED,
+        LAND_SPEED,
+        SEA_SPEED,
         NUM_FOLLOWERS,
         //Houses
         MEN_AT_ARMS,
@@ -106,7 +107,7 @@ namespace Next_Game
             arrayOfGlobals[7] = Global.BATTLE_EVENTS;
             arrayOfGlobals[8] = Global.ADVISOR_REFUSAL;
             arrayOfGlobals[9] = Global.SIBLING_ESCAPE;
-            arrayOfGlobals[10] = Global.MOVE_SPEED;
+            arrayOfGlobals[10] = Global.LAND_SPEED;
             arrayOfGlobals[11] = Global.CHILDBIRTH_COMPLICATIONS;
             arrayOfGlobals[12] = Global.CROW_NUMBER;
             arrayOfGlobals[13] = Global.CROW_BONUS;
@@ -161,6 +162,7 @@ namespace Next_Game
             arrayOfGlobals[62] = Global.ALLEGIANCE_THRESHOLD;
             arrayOfGlobals[63] = Global.BLACKMAIL_THRESHOLD;
             arrayOfGlobals[64] = Global.IMPROVE_THRESHOLD;
+            arrayOfGlobals[65] = Global.SEA_SPEED;
         }
 
         /// <summary>

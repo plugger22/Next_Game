@@ -913,7 +913,7 @@ namespace Next_Game
             {
                 Game.logTurn.Write("- CreateAutoLocEvent (Director.cs)");
                 List<Actor> listActors = new List<Actor>();
-                List<Passive> listLocals = new List<Passive>();
+                List<Passive> listCourt = new List<Passive>();
                 List<Passive> listAdvisors = new List<Passive>();
                 List<Passive> listVisitors = new List<Passive>();
                 List<Follower> listFollowers = new List<Follower>();
@@ -941,7 +941,7 @@ namespace Next_Game
                 {
                     locType = 4;
                     //can't be locals present at an Inn, only Visitors and Followers
-                    if (filter == EventFilter.Locals) { filter = EventFilter.Visitors; Game.SetError(new Error(118, "Invalid filter (Locals when at an Inn)")); }
+                    if (filter == EventFilter.Court) { filter = EventFilter.Visitors; Game.SetError(new Error(118, "Invalid filter (Locals when at an Inn)")); }
                 }
                 else { Game.SetError(new Error(118, "Invalid locType (doesn't fit any criteria)")); }
                 //Get actors present at location
@@ -973,7 +973,7 @@ namespace Next_Game
                             {
                                 if (tempPassive.Type == ActorType.Lord || tempPassive.Age >= 15)
                                 {
-                                    listLocals.Add(tempPassive); Game.logTurn.Write(string.Format(" [AutoEvent -> LocalList] \"{0}\", ID {1} added to list of Locals",
+                                    listCourt.Add(tempPassive); Game.logTurn.Write(string.Format(" [AutoEvent -> LocalList] \"{0}\", ID {1} added to list of Locals",
                                       tempPassive.Name, tempPassive.ActID));
                                 }
                             }
@@ -1007,22 +1007,22 @@ namespace Next_Game
                             eventObject.Text = string.Format("You are at {0}. How will you fill your day?", locName);
 
                             //option -> audience with local House member
-                            if (listLocals.Count() > 0)
+                            if (listCourt.Count() > 0)
                             {
                                 OptionInteractive option = null;
 
                                 if (locType != 1)
                                 {
-                                    option = new OptionInteractive(string.Format("Seek an Audience with a member of House {0} ({1} present)", houseName, listLocals.Count));
+                                    option = new OptionInteractive(string.Format("Seek an Audience with a member of House {0} ({1} present)", houseName, listCourt.Count));
                                     option.ReplyGood = string.Format("House {0} is willing to consider the matter", houseName);
                                 }
                                 else
                                 {
                                     //capital
-                                    option = new OptionInteractive(string.Format("Seek an Audience with a member of the Royal Household ({0} present)", listLocals.Count));
+                                    option = new OptionInteractive(string.Format("Seek an Audience with a member of the Royal Household ({0} present)", listCourt.Count));
                                     option.ReplyGood = string.Format("The Royal Clerk has advised that the household is willing to consider the matter");
                                 }
-                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Locals);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Court);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -1063,7 +1063,7 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
-                            //option -> seek information
+                            //option -> seek information (if not known)
                             if (player.Known == false)
                             {
                                 OptionInteractive option = new OptionInteractive("Ask around for Information");
@@ -1073,7 +1073,17 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
-                            //option -> lay low
+                            //option -> seek passage to another port (if applicable)
+                            if (loc.Port == true)
+                            {
+                                OptionInteractive option = new OptionInteractive("Seek Sea Passage to another Port");
+                                option.ReplyGood = "You head to the harbour and search for a suitable ship";
+                                //OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutEventChain outcome = new OutEventChain(1000, EventFilter.Passage);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            //option -> lay low (only if not known)
                             if (player.Known == false)
                             {
                                 OptionInteractive option = new OptionInteractive("Lay Low");
@@ -1089,13 +1099,13 @@ namespace Next_Game
                             option_L.SetGoodOutcome(outcome_L);
                             eventObject.SetOption(option_L);
                             break;
-                        case EventFilter.Locals:
+                        case EventFilter.Court:
                             eventObject.Name = "Talk to Locals";
                             eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
                             //options -> one for each member present
-                            limit = listLocals.Count();
+                            limit = listCourt.Count();
                             limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
-                            if (listLocals.Count > 0)
+                            if (limit > 0)
                             {
                                 //default option
                                 OptionInteractive option = new OptionInteractive("You've changed your mind and decide to Leave");
@@ -1106,7 +1116,7 @@ namespace Next_Game
                             }
                             for (int i = 0; i < limit; i++)
                             {
-                                Passive local = listLocals[i];
+                                Passive local = listCourt[i];
                                 if (local.Office > ActorOffice.None)
                                 { actorText = string.Format("{0} {1}", local.Office, local.Name); }
                                 else { actorText = string.Format("{0} {1}", local.Type, local.Name); }
@@ -1128,7 +1138,7 @@ namespace Next_Game
                             //options -> one for each member present
                             limit = listAdvisors.Count();
                             limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
-                            if (listAdvisors.Count > 0)
+                            if (limit > 0)
                             {
                                 //default option
                                 OptionInteractive option = new OptionInteractive("You've changed your mind and decide to Leave");
@@ -1159,7 +1169,7 @@ namespace Next_Game
                             //options -> one for each member present
                             limit = listVisitors.Count();
                             limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
-                            if (listVisitors.Count > 0)
+                            if (limit > 0)
                             {
                                 //default option
                                 OptionInteractive option = new OptionInteractive("You've changed your mind and decide to Leave");
@@ -1191,7 +1201,7 @@ namespace Next_Game
                             //options -> one for each member present
                             limit = listFollowers.Count();
                             limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
-                            if (listFollowers.Count > 0)
+                            if (limit > 0)
                             {
                                 //default option
                                 OptionInteractive option = new OptionInteractive("You've changed your mind and decide to Leave");
@@ -1212,6 +1222,50 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
+                            break;
+                        case EventFilter.Passage:
+                            //seek passage on a vessel to another port 
+                            int speed = Game.constant.GetValue(Global.SEA_SPEED);
+                            eventObject.Name = "Seek Passage to another Port";
+                            eventObject.Text = $"You are at {locName}. Which Port do you wish to travel to?";
+                            Dictionary<int, int> dictSeaDistances = loc.GetSeaDistances();
+                            //options -> one for each possible port
+                            limit = dictSeaDistances.Count();
+                            limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
+                            if (limit > 0)
+                            {
+                                //default option
+                                OptionInteractive option = new OptionInteractive("You begin to feel queasy and decide to Leave.");
+                                option.ReplyGood = string.Format("You depart {0} without further ado", Game.world.GetHouseName(refID));
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                option.SetGoodOutcome(outcome);
+                                eventObject.SetOption(option);
+                            }
+                            int voyageTime;
+                            foreach (var passage in dictSeaDistances)
+                            {
+                                Location locDestination = Game.network.GetLocation(passage.Key);
+
+                                if (locDestination != null)
+                                {
+                                    //estimate voyage time, min 1 day
+                                    voyageTime = passage.Value / speed;
+                                    voyageTime = Math.Max(1, voyageTime);
+                                    optionText = string.Format("Obtain passage to {0} {1}, a voyage of {2} days", locDestination.LocName, 
+                                        Game.world.ShowLocationCoords(locDestination.LocationID), voyageTime);
+                                    OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID };
+                                    option.ReplyGood = string.Format("{0} is happy to sit down for a chat", actorText);
+                                    OutNone outcome = new OutNone(eventObject.EventPID);
+                                    //OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
+                                    option.SetGoodOutcome(outcome);
+                                    eventObject.SetOption(option);
+                                }
+                                else { Game.SetError(new Error(73, "invalid locDestination (null) -> Passage option not created")); }
+                            }
+                            //desperado option
+                            optionText = "Find the first available ship, who cares where it's going?";
+                            //get a random destination
+                            OptionInteractive optionDesperate = new OptionInteractive(optionText) { LocID = locDestination.LocationID };
                             break;
                         case EventFilter.Interact:
                             //inteact with the selected individual
