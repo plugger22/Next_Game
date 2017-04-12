@@ -111,9 +111,14 @@ namespace Next_Game.Cartographic
         {
             Game.logStart.Write("--- InitialisePorts (Network.cs)");
             List<GeoCluster> listGeoClusters = Game.map.GetGeoCluster();
-            
+
             //need to filter down to a straight list of SeaClusters
             List<GeoCluster> listSeaClusters = new List<GeoCluster>();
+            IEnumerable<GeoCluster> seaClusters =
+                from cluster in listGeoClusters
+                where cluster.Terrain == Cluster.Sea
+                select cluster;
+            listSeaClusters = seaClusters.ToList();
 
             int coord_X, coord_Y, tempX, tempY, geoID;
             int limit = Game.map.GetMapSize();
@@ -125,7 +130,7 @@ namespace Next_Game.Cartographic
                 {
                     coord_X = loc.GetPosX();
                     coord_Y = loc.GetPosY();
-                    //check North
+                    //check East
                     tempX = coord_X + 1;
                     if (tempX < limit)
                     {
@@ -133,10 +138,61 @@ namespace Next_Game.Cartographic
                         {
                             geoID = Game.map.GetMapInfo(MapLayer.GeoID, tempX, coord_Y);
                             //need to AddPort to relevant geoCluster
+                            GeoCluster cluster = listSeaClusters.Find(x => x.GeoID == geoID);
+                            if (cluster != null)
+                            { cluster.AddPort(loc.LocationID); }
+                        }
+                    }
+                    //check West
+                    tempX = coord_X - 1;
+                    if (tempX >= 0)
+                    {
+                        if (Game.map.GetMapInfo(MapLayer.Geography, tempX, coord_Y) == 1)
+                        {
+                            geoID = Game.map.GetMapInfo(MapLayer.GeoID, tempX, coord_Y);
+                            //need to AddPort to relevant geoCluster
+                            GeoCluster cluster = listSeaClusters.Find(x => x.GeoID == geoID);
+                            if (cluster != null)
+                            { cluster.AddPort(loc.LocationID); }
+                        }
+                    }
+                    //check North
+                    tempY = coord_Y + 1;
+                    if (tempY < limit)
+                    {
+                        if (Game.map.GetMapInfo(MapLayer.Geography, coord_X, tempY) == 1)
+                        {
+                            geoID = Game.map.GetMapInfo(MapLayer.GeoID, coord_X, tempY);
+                            //need to AddPort to relevant geoCluster
+                            GeoCluster cluster = listSeaClusters.Find(x => x.GeoID == geoID);
+                            if (cluster != null)
+                            { cluster.AddPort(loc.LocationID); }
+                        }
+                    }
+                    //check South
+                    tempY = coord_Y - 1;
+                    if (tempY >= 0)
+                    {
+                        if (Game.map.GetMapInfo(MapLayer.Geography, coord_X, tempY) == 1)
+                        {
+                            geoID = Game.map.GetMapInfo(MapLayer.GeoID, coord_X, tempY);
+                            //need to AddPort to relevant geoCluster
+                            GeoCluster cluster = listSeaClusters.Find(x => x.GeoID == geoID);
+                            if (cluster != null)
+                            { cluster.AddPort(loc.LocationID); }
                         }
                     }
                 }
                 else { Game.SetError(new Error(215, "Invalid Location (null)")); }
+            }
+            Game.logStart.Write("--- Port Summary (Network.cs)");
+            int num = 0;
+            //only sea clusters with 1+ ports can have sea travel 
+            foreach(GeoCluster cluster in listSeaClusters)
+            {
+                num = cluster.GetNumPorts();
+                if (num > 1)
+                {  Game.logStart.Write($"GeoCluster GeoID {cluster.GeoID} -> {num} Ports"); }
             }
         }
 
@@ -1436,13 +1492,12 @@ namespace Next_Game.Cartographic
         /// </summary>
         public void ShowNetworkAnalysis()
         {
-            Console.WriteLine();
-            Console.WriteLine("--- Network Analysis");
+            Game.logStart.Write("--- Network Analysis (Network.cs)");
             for (int i = 0; i <= arrayOfNetworkAnalysis.GetUpperBound(0); i++)
             {
                 int locConsole = arrayOfNetworkAnalysis[i, (int)NetGrid.Locations];
                 int connConsole = arrayOfNetworkAnalysis[i, (int)NetGrid.Connections];
-                Console.WriteLine($"Dir {i, -5} {locConsole, 5} Locations {connConsole, 5} Connections");
+                Game.logStart.Write(string.Format($"Dir {i, -5} {locConsole, 5} Locations {connConsole, 5} Connections"));
             }
         }
 
@@ -1522,15 +1577,13 @@ namespace Next_Game.Cartographic
             while (housesTally > 0);
            
             //debug output
-            Console.WriteLine();
-            Console.WriteLine("--- InitialiseHouseLocations");
-            Console.WriteLine("Total Locations (excluding Capital) {0}", totalLocs);
-            Console.WriteLine("Number of Houses {0}, Max Cap on House Numbers {1}", numHouses, maxHouses);
-            Console.WriteLine();
+            Game.logStart.Write("--- InitialiseHouseLocations (Network.cs)");
+            Game.logStart.Write($"Total Locations (excluding Capital) {totalLocs}");
+            Game.logStart.Write($"Number of Houses {numHouses}, Max Cap on House Numbers {maxHouses}");
             for(int i = 1; i < numBranches; i++)
-            { Console.WriteLine("Branch {0} has {1} Houses allocated, Special Locations {2}", i, arrayOfNetworkAnalysis[i, (int)NetGrid.Houses], arrayOfNetworkAnalysis[i, (int)NetGrid.Specials]); }
-            Console.WriteLine();
-            Console.WriteLine("Total Houses Allocated {0} out of {1}", numHouses - housesTally, numHouses);
+            { Game.logStart.Write(string.Format("Branch {0} has {1} Houses allocated, Special Locations {2}",
+                i, arrayOfNetworkAnalysis[i, (int)NetGrid.Houses], arrayOfNetworkAnalysis[i, (int)NetGrid.Specials])); }
+            Game.logStart.Write(string.Format("Total Houses Allocated {0} out of {1}", numHouses - housesTally, numHouses));
 
             List<Location> branchList = new List<Location>();
             List<int> locConnections = new List<int>();
@@ -1900,8 +1953,7 @@ namespace Next_Game.Cartographic
             //
             //create analysis data structures ---
             //
-            Console.WriteLine();
-            Console.WriteLine("--- House Analysis");
+            Game.logStart.Write("--- House Analysis (Network.cs)");
             //loop through MasterList and populate Lists
             uniqueHouses = 0;
             for(int outer = 1; outer < numBranches; outer++)
@@ -1928,8 +1980,7 @@ namespace Next_Game.Cartographic
             //group LocID's by houses
             if (uniqueHouses > 0)
             {
-                //Console.WriteLine();
-                //Console.WriteLine("Unique Houses: {0}", uniqueHouses);
+                Game.logStart.Write($"Unique Houses: {uniqueHouses}");
                 //Set up subLists, one for each unique house, access by house #
                 for (int i = 0; i < uniqueHouses + 1; i++)
                 {
@@ -1964,7 +2015,7 @@ namespace Next_Game.Cartographic
                     //create 2 arrays: first for # connections that Loc has, 2nd # routes to Capital
                     int[] tempArrayConnections = new int[numLocs];
                     int[] tempArrayRoutes = new int[numLocs];
-                    //Console.WriteLine("- House {0}", outer);
+                    Game.logStart.Write($"- House {outer}");
                     for(int inner = 0; inner < numLocs; inner++)
                     {
                         locID = listIndividualHouseLocID[outer][inner];
@@ -1973,7 +2024,8 @@ namespace Next_Game.Cartographic
                         {
                             tempArrayConnections[inner] = tempLoc.Connections;
                             tempArrayRoutes[inner] = tempLoc.GetNumRoutesToCapital();
-                            //Console.WriteLine("LocID {0} has {1} connections and is {2} routes from the Capital", locID, tempLoc.Connections, tempLoc.GetNumRoutesToCapital());
+                            Game.logStart.Write(string.Format("LocID {0} has {1} connections and is {2} routes from the Capital", 
+                                locID, tempLoc.Connections, tempLoc.GetNumRoutesToCapital()));
                         }
                         else { Game.SetError(new Error(176, "Invalid tempLoc_1 (null)")); }
                     }
@@ -2018,20 +2070,16 @@ namespace Next_Game.Cartographic
                     }
                 }
             }
-            
             //debug list contents
-            Console.WriteLine();
-            Console.WriteLine("--- listOfAllHouses");
+            Game.logStart.Write("--- listOfAllHouses (Network.cs)");
             for (int i = 0; i < listUniqueHousesByBranch.Count; i++)
-            { Console.WriteLine("Branch {0} has {1} records", i + 1, listUniqueHousesByBranch[i].Count); }
-            Console.WriteLine();
-            Console.WriteLine("--- listIndividualHouseLocID");
+            { Game.logStart.Write(string.Format("Branch {0} has {1} records", i + 1, listUniqueHousesByBranch[i].Count)); }
+            Game.logStart.Write("--- listIndividualHouseLocID (Network.cs)");
             for (int i = 0; i < listIndividualHouseLocID.Count; i++)
-            { Console.WriteLine("House {0} has {1} records", i, listIndividualHouseLocID[i].Count); }
-            Console.WriteLine();
-            Console.WriteLine("--- House Capitals");
+            { Game.logStart.Write(string.Format("House {0} has {1} records", i, listIndividualHouseLocID[i].Count)); }
+            Game.logStart.Write("--- House Capitals (Network.cs)");
             for(int i = 0; i < arrayOfCapitals.Length; i++)
-            { Console.WriteLine("House {0} has ID {1} as it's capital", i, arrayOfCapitals[i]); }
+            { Game.logStart.Write($"House {i} has ID {arrayOfCapitals[i]} as it's capital"); }
             
         }
 

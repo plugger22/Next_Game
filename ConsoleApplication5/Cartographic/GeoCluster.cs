@@ -10,7 +10,7 @@ namespace Next_Game.Cartographic
     /// <summary>
     /// Clusters of geo objects such as sea, mountain or forest zones (orthagonol clusters)
     /// </summary>
-    class GeoCluster
+    class GeoCluster : IEquatable<GeoCluster>
     {
         public string Name { get; set; } = "Unknown";
         public string Description { get; set; } = "No description provided";
@@ -68,6 +68,37 @@ namespace Next_Game.Cartographic
         }
 
         /// <summary>
+        /// IEquatable
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            GeoCluster cluster = obj as GeoCluster;
+            if (cluster == null) return false;
+            else return Equals(cluster);
+        }
+
+        /// <summary>
+        /// IEquatable
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        { return GeoID; }
+
+        /// <summary>
+        /// IEquatable (match on GeoID)
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(GeoCluster other)
+        {
+            if (other == null) return false;
+            return (this.GeoID.Equals(other.GeoID));
+        }
+
+        /// <summary>
         /// add Follower events to the Geocluster
         /// </summary>
         /// <param name="listArchEvents"></param>
@@ -117,14 +148,21 @@ namespace Next_Game.Cartographic
                 if (listOfPorts.Contains(locID) == false)
                 {
                     listOfPorts.Add(locID);
-                    Game.logStart.Write(string.Format("LocID {0} has been added to the ListPorts for {1}, GeoID {2}", locID, Name, GeoID));
+                    Game.logStart.Write(string.Format("LocID {0} has been added to the ListPorts for GeoID {1}", locID, GeoID));
                 }
-                else { Game.logStart.Write(string.Format("LocID {0} is already in the ListPorts for {1}, GeoID {2}", locID, Name, GeoID)); }
+                else { Game.logStart.Write(string.Format("[Notification] LocID {0} is already present in ListPorts for GeoID {1}", locID, GeoID)); }
             }
             else
             { Game.SetError(new Error(214, "Invalid LocID (zero or less)")); }
         }
+
+        /// <summary>
+        /// returns number of ports in cluster (sea only but will return zero if called for a non-sea cluster)
+        /// </summary>
+        /// <returns></returns>
+        public int GetNumPorts()
+        { return listOfPorts.Count; }
+
+        //methods above here
     }
-
-
 }
