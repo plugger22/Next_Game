@@ -1276,16 +1276,15 @@ namespace Next_Game
                                     voyageTime = passage.Value / speed;
                                     voyageTime = Math.Max(1, voyageTime);
                                     chance = (rnd.Next(1, 10) - 1) * 10;
-                                    chance = Math.Max(1, chance);
+                                    chance = Math.Max(10, chance);
                                     optionText = string.Format("Obtain passage to {0} {1}, a voyage of {2} day{3}. {4}% chance of success.", locDestination.LocName, 
                                         Game.world.ShowLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "", chance);
                                     OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID, Test = chance };
                                     option.ReplyGood = "A suitable ship is available. You board immediately";
                                     option.ReplyBad = $"No ship is available to take you to {locDestination.LocName} today";
                                     OutPassage outSuccess = new OutPassage(eventObject.EventPID, locDestination.LocationID, voyageTime);
-                                    //string failText = $"You depart the [locName] docks after failing to find a ship bound for [locDestination.LocName]";
-                                    OutNone outFail = new OutNone(eventObject.EventPID, $"You depart the [locName] docks after failing to find a ship bound for [locDestination.LocName]", loc.LocationID);
-                                    //OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
+                                    string failText = string.Format("You depart the {0} docks after failing to find a suitable ship bound for {1}", locName, locDestination.LocName);
+                                    OutNone outFail = new OutNone(eventObject.EventPID, failText, loc.LocationID);
                                     option.SetGoodOutcome(outSuccess);
                                     option.SetBadOutcome(outFail);
                                     eventObject.SetOption(option);

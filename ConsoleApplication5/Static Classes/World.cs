@@ -3284,12 +3284,12 @@ namespace Next_Game
                     if (player.VoyageTime == 0)
                     {
                         //arrived at Location
-                        player.Status = ActorStatus.AtLocation;
-                        player.ShipName = "Unknown";
-                        player.VoyageSafe = true;
                         description = string.Format("{0} {1} has arrived at {2} onboard the S.S \"{3}\"", player.Title, player.Name, GetLocationName(player.LocID), player.ShipName);
                         SetPlayerRecord(new Record(description, 1, player.LocID, GetRefID(player.LocID), CurrentActorIncident.Travel));
                         SetMessage(new Message(description, MessageType.Move));
+                        player.Status = ActorStatus.AtLocation;
+                        player.ShipName = "Unknown";
+                        player.VoyageSafe = true;
                     }
                     else
                     {
