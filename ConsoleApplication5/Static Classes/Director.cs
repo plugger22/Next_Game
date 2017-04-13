@@ -1283,7 +1283,8 @@ namespace Next_Game
                                     option.ReplyGood = "A suitable ship is available. You board immediately";
                                     option.ReplyBad = $"No ship is available to take you to {locDestination.LocName} today";
                                     OutPassage outSuccess = new OutPassage(eventObject.EventPID, locDestination.LocationID, voyageTime);
-                                    OutNone outFail = new OutNone(eventObject.EventPID);
+                                    //string failText = $"You depart the [locName] docks after failing to find a ship bound for [locDestination.LocName]";
+                                    OutNone outFail = new OutNone(eventObject.EventPID, $"You depart the [locName] docks after failing to find a ship bound for [locDestination.LocName]", loc.LocationID);
                                     //OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
                                     option.SetGoodOutcome(outSuccess);
                                     option.SetBadOutcome(outFail);
@@ -2116,7 +2117,7 @@ namespace Next_Game
                                             if (noneOutcome.Description.Length > 0)
                                             {
                                                 Game.world.SetMessage(new Message(noneOutcome.Description, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(noneOutcome.Description, 1, 0, 0, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(noneOutcome.Description, 1, noneOutcome.Data, Game.world.GetRefID(noneOutcome.Data), CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Game:

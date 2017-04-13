@@ -1,6 +1,6 @@
 # ShipsSafe.txt -> Ship Name list of Safe passage vessels
 
-GrayFly
+GrayFlyer
 The Sabrina
 Phosphorus
 Dominator
@@ -13,5 +13,3 @@ Sprightly
 Pearl
 Penelope
 Gladiator
-
-
