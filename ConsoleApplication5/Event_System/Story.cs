@@ -19,6 +19,8 @@ namespace Next_Game.Event_System
         public int Ev_Player_Loc_Base { get; set; } // chance of the Player experiencing a random event
         public int Ev_Player_Loc_Current { get; set; } //actual turn by turn chance of Player experiencing a random event (can differ from base Ev_Player_Loc figure)
         public int Ev_Player_Trav_Base { get; set; }
+        public int Ev_Player_Sea_Base { get; set; }
+        public int Ev_Player_Dungeon_Base { get; set; }
         //categoryies of archetypes
         public int Arc_Geo_Sea { get; set; }
         public int Arc_Geo_Mountain { get; set; }

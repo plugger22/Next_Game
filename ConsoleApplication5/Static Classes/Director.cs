@@ -459,29 +459,43 @@ namespace Next_Game
                 else
                 {
                     //Situation Normal...
-                    if (player.Status == ActorStatus.AtLocation)
+                    switch (player.Status)
                     {
-                        //Location event
-                        if (rnd.Next(100) <= story.Ev_Player_Loc_Current)
-                        {
-                            DeterminePlayerEvent(player, EventType.Location);
-                            //chance of event halved after each occurence (prevents a long string of random events and gives space for necessary system events)
-                            story.Ev_Player_Loc_Current /= 2;
-                            Game.logTurn.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
-                        }
-                        else
-                        {
-                            CreateAutoLocEvent(EventFilter.None);
-                            //reset back to base figure
-                            story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
-                            Game.logTurn.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
-                        }
-                    }
-                    else if (player.Status == ActorStatus.Travelling)
-                    {
-                        //travelling event
-                        if (rnd.Next(100) <= story.Ev_Player_Trav_Base)
-                        { DeterminePlayerEvent(player, EventType.Travelling); }
+                        case ActorStatus.AtLocation:
+                            //Location event
+                            if (rnd.Next(100) <= story.Ev_Player_Loc_Current)
+                            {
+                                DeterminePlayerEvent(player, EventType.Location);
+                                //chance of event halved after each occurence (prevents a long string of random events and gives space for necessary system events)
+                                story.Ev_Player_Loc_Current /= 2;
+                                Game.logTurn.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
+                            }
+                            else
+                            {
+                                CreateAutoLocEvent(EventFilter.None);
+                                //reset back to base figure
+                                story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
+                                Game.logTurn.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
+                            }
+                            break;
+                        case ActorStatus.Travelling:
+                            //travelling event
+                            if (rnd.Next(100) <= story.Ev_Player_Trav_Base)
+                            { DeterminePlayerEvent(player, EventType.Travelling); }
+                            break;
+                        case ActorStatus.AtSea:
+                            //sea voyage event
+                            if (rnd.Next(100) <= story.Ev_Player_Sea_Base)
+                            { DeterminePlayerEvent(player, EventType.Sea); }
+                            break;
+                        case ActorStatus.Captured:
+                            //dungeon event
+                            if (rnd.Next(100) <= story.Ev_Player_Dungeon_Base)
+                            { DeterminePlayerEvent(player, EventType.Dungeon); }
+                            break;
+                        default:
+                            Game.SetError(new Error(71, $"Invalid ActorStatus \"{player.Status}\" -> not recognised"));
+                            break;
                     }
                 }
             }
@@ -642,105 +656,114 @@ namespace Next_Game
             List<Event> listEventPool = new List<Event>();
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
 
-            //Location event
-            if (type == EventType.Location)
+            switch (type)
             {
-                refID = Game.map.GetMapInfo(Cartographic.MapLayer.RefID, pos.PosX, pos.PosY);
-                houseID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
-                Location loc = Game.network.GetLocation(locID);
-                if (loc != null)
-                {
-                    if (locID == 1)
+                case EventType.Location:
+                    refID = Game.map.GetMapInfo(Cartographic.MapLayer.RefID, pos.PosX, pos.PosY);
+                    houseID = Game.map.GetMapInfo(Cartographic.MapLayer.HouseID, pos.PosX, pos.PosY);
+                    Location loc = Game.network.GetLocation(locID);
+                    if (loc != null)
                     {
-                        //capital
-                        if (type == EventType.Location)
+                        if (locID == 1)
                         {
-                            listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsCapital));
-                            listEventPool.AddRange(GetValidPlayerEvents(listPlyrCapitalEvents));
+                            //capital
+                            if (type == EventType.Location)
+                            {
+                                listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsCapital));
+                                listEventPool.AddRange(GetValidPlayerEvents(listPlyrCapitalEvents));
+                            }
                         }
-                    }
-                    else if (refID > 0 && refID < 100)
-                    {
-                        //Major House
-                        if (type == EventType.Location)
+                        else if (refID > 0 && refID < 100)
                         {
-                            listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMajor, houseID));
+                            //Major House
+                            if (type == EventType.Location)
+                            {
+                                listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMajor, houseID));
+                                listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
+                                House house = Game.world.GetHouse(refID);
+                                if (house != null)
+                                { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
+                                else { Game.SetError(new Error(72, "Invalid Major House (refID)")); }
+                            }
+                        }
+                        else if (refID >= 100 && refID < 1000)
+                        {
+                            //Minor House
+                            listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMinor, houseID));
                             listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
                             House house = Game.world.GetHouse(refID);
                             if (house != null)
                             { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
-                            else { Game.SetError(new Error(72, "Invalid Major House (refID)")); }
+                            else { Game.SetError(new Error(72, "Invalid Minor House (refID)")); }
+                        }
+                        else if (houseID == 99)
+                        {
+                            //Special Location - Inn
+                            listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsInn, houseID));
+                            listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
+                            House house = Game.world.GetHouse(refID);
+                            if (house != null)
+                            { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
+                            else { Game.SetError(new Error(72, "Invalid Inn (refID)")); }
+                        }
+                        else
+                        { Game.SetError(new Error(72, "Invalid Location Event Type")); }
+                    }
+                    else { Game.SetError(new Error(72, "Invalid Loc (null)")); }
+                    break;
+                case EventType.Travelling:
+                    //Get map data for actor's current location
+                    geoID = Game.map.GetMapInfo(Cartographic.MapLayer.GeoID, pos.PosX, pos.PosY);
+                    terrain = Game.map.GetMapInfo(Cartographic.MapLayer.Terrain, pos.PosX, pos.PosY);
+                    road = Game.map.GetMapInfo(Cartographic.MapLayer.Road, pos.PosX, pos.PosY);
+                    GeoCluster cluster = Game.world.GetGeoCluster(geoID);
+                    //get terrain & road events
+                    if (locID == 0 && terrain == 1)
+                    {
+                        //mountains
+                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMountain, geoID));
+                        listEventPool.AddRange(GetValidPlayerEvents(cluster.GetPlayerEvents()));
+                    }
+                    else if (locID == 0 && terrain == 2)
+                    {
+                        //forests
+                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsForest, geoID));
+                        listEventPool.AddRange(GetValidPlayerEvents(cluster.GetPlayerEvents()));
+                    }
+                    else if (locID == 0 && terrain == 0)
+                    {
+                        //road event
+                        if (road == 1)
+                        {
+                            //normal road
+                            listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsNormal));
+                            listEventPool.AddRange(GetValidPlayerEvents(listPlyrRoadEventsNormal));
+                        }
+                        else if (road == 2)
+                        {
+                            //king's road
+                            listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsKing));
+                            listEventPool.AddRange(GetValidPlayerEvents(listPlyrRoadEventsKings));
+                        }
+                        else if (road == 3)
+                        {
+                            //connector road
+                            listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsConnector));
+                            listEventPool.AddRange(GetValidPlayerEvents(listPlyrRoadEventsConnector));
                         }
                     }
-                    else if (refID >= 100 && refID < 1000)
-                    {
-                        //Minor House
-                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMinor, houseID));
-                        listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
-                        House house = Game.world.GetHouse(refID);
-                        if (house != null)
-                        { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
-                        else { Game.SetError(new Error(72, "Invalid Minor House (refID)")); }
-                    }
-                    else if (houseID == 99)
-                    {
-                        //Special Location - Inn
-                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsInn, houseID));
-                        listEventPool.AddRange(GetValidPlayerEvents(loc.GetPlayerEvents()));
-                        House house = Game.world.GetHouse(refID);
-                        if (house != null)
-                        { listEventPool.AddRange(GetValidPlayerEvents(house.GetPlayerEvents())); }
-                        else { Game.SetError(new Error(72, "Invalid Inn (refID)")); }
-                    }
-                    else
-                    { Game.SetError(new Error(72, "Invalid Location Event Type")); }
-                }
-                else { Game.SetError(new Error(72, "Invalid Loc (null)")); }
+                    break;
+                case EventType.Sea:
+
+                    break;
+                case EventType.Dungeon:
+
+                    break;
+                default:
+                    Game.SetError(new Error(72, $"Invalid type \"{type}\" -> not recognised"));
+                    break;
             }
-            //Travelling event
-            else if (type == EventType.Travelling)
-            {
-                //Get map data for actor's current location
-                geoID = Game.map.GetMapInfo(Cartographic.MapLayer.GeoID, pos.PosX, pos.PosY);
-                terrain = Game.map.GetMapInfo(Cartographic.MapLayer.Terrain, pos.PosX, pos.PosY);
-                road = Game.map.GetMapInfo(Cartographic.MapLayer.Road, pos.PosX, pos.PosY);
-                GeoCluster cluster = Game.world.GetGeoCluster(geoID);
-                //get terrain & road events
-                if (locID == 0 && terrain == 1)
-                {
-                    //mountains
-                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMountain, geoID));
-                    listEventPool.AddRange(GetValidPlayerEvents(cluster.GetPlayerEvents()));
-                }
-                else if (locID == 0 && terrain == 2)
-                {
-                    //forests
-                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsForest, geoID));
-                    listEventPool.AddRange(GetValidPlayerEvents(cluster.GetPlayerEvents()));
-                }
-                else if (locID == 0 && terrain == 0)
-                {
-                    //road event
-                    if (road == 1)
-                    {
-                        //normal road
-                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsNormal));
-                        listEventPool.AddRange(GetValidPlayerEvents(listPlyrRoadEventsNormal));
-                    }
-                    else if (road == 2)
-                    {
-                        //king's road
-                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsKing));
-                        listEventPool.AddRange(GetValidPlayerEvents(listPlyrRoadEventsKings));
-                    }
-                    else if (road == 3)
-                    {
-                        //connector road
-                        listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsConnector));
-                        listEventPool.AddRange(GetValidPlayerEvents(listPlyrRoadEventsConnector));
-                    }
-                }
-            }
+
             //character specific events
             if (actor.GetNumPlayerEvents() > 0)
             { listEventPool.AddRange(GetValidPlayerEvents(actor.GetPlayerEvents())); }

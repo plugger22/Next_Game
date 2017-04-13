@@ -7,6 +7,8 @@
 # Ev_Follower_Trav: number (1 to 100) -> chance of a follower experiencing a random event while travelling 
 # Ev_Player_Loc: number (1 to 100) -> chance of the Player experiencing a random event while at a location
 # Ev_Player_Trav: number (1 to 100) -> chance of the Player experiencing a random event while travelling 
+# Ev_Player_Sea: number (1 to 100) -> chance of the Player experiencing a random event while at sea 
+# Ev_Player_Dungeon: number (1 to 100) -> chance of the Player experiencing a random event while in a dungeon (captured)
 # Arc_... : Archetype ID for Generic archetype that applies (leave blank if none) 
 # Inquisitors: number of inquisitors at game start
 
@@ -17,7 +19,9 @@ Type: Balanced
 Ev_Follower_Loc: 10
 Ev_Follower_Trav: 30
 Ev_Player_Loc: 75
-Ev_Player_Trav: 50
+Ev_Player_Trav: 30
+Ev_Player_Sea: 50
+Ev_Player_Dungeon: 50
 Arc_Geo_Sea: 3
 Arc_Geo_Mountain: 2
 Arc_Geo_Forest: 1

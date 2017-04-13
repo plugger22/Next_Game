@@ -187,6 +187,8 @@ namespace Next_Game
         public int Ev_Follower_Trav { get; set; } // chance of a follower experiencing a random event when travelling
         public int Ev_Player_Loc { get; set; } // chance of the Player experiencing a random event
         public int Ev_Player_Trav { get; set; }
+        public int Ev_Player_Sea { get; set; }
+        public int Ev_Player_Dungeon { get; set; }
         //categoryies of archetypes
         public int Sea { get; set; }
         public int Mountain { get; set; }
@@ -2787,6 +2789,40 @@ namespace Next_Game
                                 else
                                 { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Player_Trav), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                                 break;
+                            case "Ev_Player_Sea":
+                                if (cleanToken.Length > 0)
+                                {
+                                    try
+                                    {
+                                        dataInt = Convert.ToInt32(cleanToken);
+                                        if (dataInt > 0)
+                                        { structStory.Ev_Player_Sea = dataInt; }
+                                        else
+                                        { Game.SetError(new Error(54, string.Format("Invalid Ev_Player_Sea \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                    }
+                                    catch
+                                    { Game.SetError(new Error(54, string.Format("Invalid Ev_Player_Sea (Conversion) for  {0}", structStory.Name))); validData = false; }
+                                }
+                                else
+                                { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Player_Sea), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                                break;
+                            case "Ev_Player_Dungeon":
+                                if (cleanToken.Length > 0)
+                                {
+                                    try
+                                    {
+                                        dataInt = Convert.ToInt32(cleanToken);
+                                        if (dataInt > 0)
+                                        { structStory.Ev_Player_Dungeon = dataInt; }
+                                        else
+                                        { Game.SetError(new Error(54, string.Format("Invalid Ev_Player_Dungeon \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                    }
+                                    catch
+                                    { Game.SetError(new Error(54, string.Format("Invalid Ev_Player_Dungeon (Conversion) for  {0}", structStory.Name))); validData = false; }
+                                }
+                                else
+                                { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Player_Dungeon), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                                break;
                             case "Arc_Geo_Sea":
                                 if (cleanToken.Length > 0)
                                 {
@@ -2948,6 +2984,7 @@ namespace Next_Game
                                     storyObject.Ev_Follower_Trav = structStory.Ev_Follower_Trav;
                                     storyObject.Ev_Player_Loc_Base = structStory.Ev_Player_Loc;
                                     storyObject.Ev_Player_Trav_Base = structStory.Ev_Player_Trav;
+                                    storyObject.Ev_Player_Sea_Base = structStory.Ev_Player_Sea;
                                     storyObject.Arc_Geo_Sea = structStory.Sea;
                                     storyObject.Arc_Geo_Mountain = structStory.Mountain;
                                     storyObject.Arc_Geo_Forest = structStory.Forest;
