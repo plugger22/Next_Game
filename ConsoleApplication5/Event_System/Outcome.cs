@@ -87,8 +87,11 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutNone : Outcome
     {
-        public OutNone(int eventID) : base (eventID)
+        public string Description { get; set; } //optional text description that, if present is given as a record
+
+        public OutNone(int eventID, string description = "") : base (eventID)
         {
+            this.Description = description;
             //set all to default (they aren't used but do show up on debug messages)
             Data = 0;
             Amount = 0;

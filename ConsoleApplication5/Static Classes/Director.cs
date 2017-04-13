@@ -2110,6 +2110,15 @@ namespace Next_Game
                                 {
                                     switch (outcome.Type)
                                     {
+                                        case OutcomeType.None:
+                                            //display descriptive text, if present
+                                            OutNone noneOutcome = outcome as OutNone;
+                                            if (noneOutcome.Description.Length > 0)
+                                            {
+                                                Game.world.SetMessage(new Message(noneOutcome.Description, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(noneOutcome.Description, 1, 0, 0, CurrentActorIncident.Event));
+                                            }
+                                            break;
                                         case OutcomeType.Game:
                                             //Change a Game state variable, eg. Honour, Justice, etc.
                                             outcomeText = state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc);
