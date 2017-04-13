@@ -32,6 +32,9 @@ namespace Next_Game
         private List<GeoCluster> listOfGeoClusters;
         private List<Active> listOfActiveActors;
         private string[][] arrayOfGeoNames;
+        //ships
+        private List<string> listOfShipNamesSafe;
+        private List<string> listOfShipNamesRisky;
         //traits
         private List<Skill> listOfTraits; //main
         private Skill[,][] arrayOfTraits; //filtered sets for fast random access
@@ -76,6 +79,8 @@ namespace Next_Game
             listOfWounds = new List<string>();
             listOfInjuries = new List<string>();
             listOfDiseases = new List<string>();
+            listOfShipNamesSafe = new List<string>();
+            listOfShipNamesRisky = new List<string>();
             listOfHouseRelsGood = new List<string>();
             listOfHouseRelsBad = new List<string>();
             listOfHouseRelsMaster = new List<string>();
@@ -97,6 +102,8 @@ namespace Next_Game
             //listOfPlayerNames.AddRange(Game.file.GetStrings("PlayerNames.txt"));
             listOfSurnames.AddRange(Game.file.GetStrings("Surnames.txt"));
             listOfInquisitors.AddRange(Game.file.GetStrings("Inquisitors.txt"));
+            listOfShipNamesSafe.AddRange(Game.file.GetStrings("ShipsSafe.txt"));
+            listOfShipNamesRisky.AddRange(Game.file.GetStrings("ShipsRisky.txt"));
             //Major houses
             listHousePool.AddRange(Game.file.GetHouses("MajorHouses.txt"));
             InitialiseMajorHouses(numHousesRequired);
@@ -3088,6 +3095,19 @@ namespace Next_Game
             return name;
         }
 
+        /// <summary>
+        /// returns a Random Ship Name from either list of Safe or Risky ships
+        /// </summary>
+        /// <param name="isSafe"></param>
+        /// <returns></returns>
+        internal string GetShipName(bool isSafe)
+        {
+            string shipName = "Unknown";
+            if (isSafe == true)
+            { shipName = listOfShipNamesSafe[rnd.Next(listOfShipNamesSafe.Count)]; }
+            else { shipName = listOfShipNamesRisky[rnd.Next(listOfShipNamesRisky.Count)]; }
+            return shipName;
+        }
         //add methods above
     }
 }

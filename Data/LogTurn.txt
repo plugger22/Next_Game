@@ -1,4 +1,93 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 13/04/2017 14:15:33
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
-//Exile Game file ops "LogTurn.txt" Completed at: 13/04/2017 14:17:03
+//Exile Game File "LogTurn.txt" opened at: 13/04/2017 15:17:59
+--- ProcessStartTurn, Day 34, Turn 33 (World.cs) 
+--- MoveActors -> 0 Records (World.cs)
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Nycolas Greyjoy, ActID 1 is AtSea
+ [Search -> Stationary] Follower The Leper, ActID 7 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 6 is AtLocation
+--- UpdateAIController (World.cs)
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Diabolous, ActID 135 retains Goal -> Wait
+ [Enemy -> Goal] Brother Astaroth, ActID 136 retains Goal -> Wait
+ [Enemy -> Goal] Brother Dagon, ActID 137 retains Goal -> Hide
+ [Enemy -> Goal] Brother Haborym, ActID 138 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 139 retains Goal -> Hide
+--- CheckPlayerEvents (Director.cs)
+--- UpdateActiveActors (World.cs)
+ Usurper Nycolas Greyjoy has had their TurnsUnknown Timer increased from 132 to 133
+ Follower The Leper has had their TurnsUnknown Timer increased from 32 to 33
+ Follower The Spider has had their TurnsUnknown Timer increased from 32 to 33
+ Follower The Beast has had their TurnsUnknown Timer increased from 32 to 33
+//Exile Game file ops "LogTurn.txt" Completed at: 13/04/2017 15:18:04
+138 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 139 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Known] Brother Diabolous ActID 135 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Diabolous, ActID 135 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Known] Brother Astaroth ActID 136 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Astaroth, ActID 136 Assigned Branch -> 1 Current Branch -> 1
+ [Enemy -> Unknown] Brother Dagon ActID 137 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Dagon, ActID 137 retains Goal -> Hide
+ [Enemy -> Goal] Brother Haborym, ActID 138 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 139 retains Goal -> Hide
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "The Spider", ID 8 added to list of Actors
+ [AutoEvent -> ActorList] "Barristan Codd", ID 109 added to list of Actors
+ [AutoEvent -> FollowerList] "The Spider", ID 8 added to list of Followers
+ [AutoEvent -> LocalList] "Barristan Codd", ID 109 added to list of Locals
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Nycolas Greyjoy has had their TurnsUnknown Timer increased from 131 to 132
+ Follower The Leper has had their TurnsUnknown Timer increased from 31 to 32
+ Follower The Spider has had their TurnsUnknown Timer increased from 31 to 32
+ Follower The Beast has had their TurnsUnknown Timer increased from 31 to 32
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "The Spider", ID 8 added to list of Actors
+ [AutoEvent -> ActorList] "Barristan Codd", ID 109 added to list of Actors
+ [AutoEvent -> FollowerList] "The Spider", ID 8 added to list of Followers
+ [AutoEvent -> LocalList] "Barristan Codd", ID 109 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "3" GreaterThanOrEqual 2
+ Event "Seek Passage to another Port" Timer Repeat now 999
+ Event "Seek Passage to another Port" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "The Spider", ID 8 added to list of Actors
+ [AutoEvent -> ActorList] "Barristan Codd", ID 109 added to list of Actors
+ [AutoEvent -> FollowerList] "The Spider", ID 8 added to list of Followers
+ [AutoEvent -> LocalList] "Barristan Codd", ID 109 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Look for a suitable ship" Timer Repeat now 999
+ Event "Look for a suitable ship" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+--- ProcessEndTurn, Day 33 Turn 32 (World.cs)
+--- CheckEventTimers (Director.cs)
+//Exile Game File "LogTurn.txt" Close completed at: 13/04/2017 15:17:59
+n reset to 0
+--- ResolveOutcome (Director.cs)
+ Option "Obtain passage to Hornwood (loc 15:1), a voyage of 4 days. 80% chance of success." Passed test (80 % needed, rolled 34)
+--- ProcessEndTurn, Day 19 Turn 18 (World.cs)
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 2
+//Exile Game File "LogTurn.txt" Close completed at: 13/04/2017 15:15:57
+he Spider", ID 8 added to list of Actors
+ [AutoEvent -> ActorList] "Barristan Codd", ID 109 added to list of Actors
+ [AutoEvent -> FollowerList] "The Spider", ID 8 added to list of Followers
+ [AutoEvent -> LocalList] "Barristan Codd", ID 109 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Look for a suitable ship" Timer Repeat now 999
+ Event "Look for a suitable ship" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+ Option "Obtain passage to Hornwood (loc 15:1), a voyage of 4 days. 70% chance of success." Failed test (70 % needed, rolled 71)
+--- ProcessEndTurn, Day 17 Turn 16 (World.cs)
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 4
+//Exile Game File "LogTurn.txt" Close completed at: 13/04/2017 15:14:22

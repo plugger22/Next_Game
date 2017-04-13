@@ -118,13 +118,6 @@ namespace Next_Game.Event_System
             Type = OutcomeType.Conflict;
             challenge = new Challenge(ConflictType.Special, ConflictCombat.None, ConflictSocial.None, ConflictStealth.None); //special mode Challenge (purely for data overides)
         }
-
-        //SetResults
-
-        //SetOutcomes
-
-        //SetSituation
-
     }
 
 

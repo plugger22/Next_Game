@@ -238,18 +238,6 @@ namespace Next_Game
         public int Age { get; set; }
         public int Resources { get; set; } //any starting resources
         public int[,] arrayOfSkillMods { get; set; }
-        /*public int Combat_Mod { get; set; }
-        public int Wits_Mod { get; set; }
-        public int Charm_Mod { get; set; }
-        public int Treachery_Mod { get; set; }
-        public int Leadership_Mod { get; set; }
-        public int Touched_Mod { get; set; }
-        public string Combat_Trait { get; set; }
-        public string Wits_Trait { get; set; }
-        public string Charm_Trait { get; set; }
-        public string Treachery_Trait { get; set; }
-        public string Leadership_Trait { get; set; }
-        public string Touched_Trait { get; set; }*/
     }
 
 
