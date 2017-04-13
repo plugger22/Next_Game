@@ -612,6 +612,9 @@ namespace Next_Game
     public class Active : Actor
     {
         public int ArcID { get; set; } //archetype ID
+        public int VoyageTime { get; set; } //number of turns remaining for a sea voyage (arrives when zero)
+        public string ShipName { get; set; } //name of ship while undergoing a sea voyage
+        public bool VoyageSafe { get; set; } //true if a safe ship, false if a risky ship
         public int CrowChance { get; set; } //chance of crow getting through
         public int CrowDistance { get; set; } //distance between player and follower
         public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn

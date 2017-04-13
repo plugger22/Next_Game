@@ -919,6 +919,7 @@ namespace Next_Game
                 List<Follower> listFollowers = new List<Follower>();
                 int limit; //loop counter, prevents overshooting the # of available function keys
                 int locID = player.LocID;
+                int rndLocID, voyageDistance;
                 int locType = 0; //1 - capital, 2 - MajorHouse, 3 - MinorHouse, 4 - Inn
                 int talkRel = Game.constant.GetValue(Global.TALK_THRESHOLD);
                 int speed = Game.constant.GetValue(Global.SEA_SPEED);
@@ -1274,29 +1275,41 @@ namespace Next_Game
                                     //estimate voyage time, min 1 day
                                     voyageTime = passage.Value / speed;
                                     voyageTime = Math.Max(1, voyageTime);
-                                    chance = rnd.Next(1, 10) * 10;
+                                    chance = (rnd.Next(1, 10) - 1) * 10;
                                     optionText = string.Format("Obtain passage to {0} {1}, a voyage of {2} day{3}. {4}% chance of success.", locDestination.LocName, 
                                         Game.world.ShowLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "", chance);
                                     OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID, Test = chance };
                                     option.ReplyGood = "A suitable ship is available. You board immediately";
                                     option.ReplyBad = $"No ship is available to take you to {locDestination.LocName} today";
-                                    OutNone outcome = new OutNone(eventObject.EventPID);
+                                    OutPassage outSuccess = new OutPassage(eventObject.EventPID, locDestination.LocationID, voyageTime);
+                                    OutNone outFail = new OutNone(eventObject.EventPID);
                                     //OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
-                                    option.SetGoodOutcome(outcome);
-                                    option.SetBadOutcome(outcome);
+                                    option.SetGoodOutcome(outSuccess);
+                                    option.SetBadOutcome(outFail);
                                     eventObject.SetOption(option);
                                 }
                                 else { Game.SetError(new Error(73, "invalid locDestination (null) -> Passage option not created")); }
                             }
-                            //desperado option
-                            optionText = "Find the first available ship, who cares where it's going? (Guaranteed but Risky)";
-                            List<int> tempList = new List<int>(dictSeaDistances_0.Keys);
-                            OptionInteractive optionRandom = new OptionInteractive(optionText) { LocID = tempList[rnd.Next(tempList.Count)] };
-                            optionRandom.ReplyGood = "A nearby ship is casting of it's mooring lines, about to leave. You jump onboard";
-                            OutNone outcomeRandom = new OutNone(eventObject.EventPID);
-                            //OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
-                            optionRandom.SetGoodOutcome(outcomeRandom);
-                            eventObject.SetOption(optionRandom);
+                            //desperado option (must be at least 2 port options available)
+                            if (limit > 1)
+                            {
+                                optionText = "Find the first available ship, who cares where it's going? (Guaranteed but Risky)";
+                                List<int> tempList = new List<int>(dictSeaDistances_0.Keys);
+                                rndLocID = tempList[rnd.Next(tempList.Count)];
+                                voyageDistance = dictSeaDistances_0[rndLocID];
+                                voyageTime = voyageDistance / speed;
+                                voyageTime = Math.Max(1, voyageTime);
+                                Location locRandom = Game.network.GetLocation(rndLocID);
+                                if (locRandom != null)
+                                {
+                                    OptionInteractive optionRandom = new OptionInteractive(optionText) { LocID = rndLocID };
+                                    optionRandom.ReplyGood = "A nearby ship is casting off it's mooring lines, about to leave. You jump onboard";
+                                    OutPassage outRandom = new OutPassage(eventObject.EventPID, rndLocID, voyageTime, false);
+                                    optionRandom.SetGoodOutcome(outRandom);
+                                    eventObject.SetOption(optionRandom);
+                                }
+                                else { Game.SetError(new Error(73, "Invalid locRandom (null)")); }
+                            }
                             break;
                         case EventFilter.BribeCaptain:
                             //Bribe a Captain -> Guaranteed
@@ -1328,22 +1341,35 @@ namespace Next_Game
                                         Game.world.ShowLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "");
                                     OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID };
                                     option.ReplyGood = "Money talks. The Captain pockets the gold and bids you come aboard";
-                                    OutResource outcome = new OutResource(eventObject.EventPID, true, 1, EventCalc.Subtract);
+                                    OutResource outResource = new OutResource(eventObject.EventPID, true, 1, EventCalc.Subtract);
+                                    OutPassage outPassage = new OutPassage(eventObject.EventPID, locDestination.LocationID, voyageTime);
                                     //OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
-                                    option.SetGoodOutcome(outcome);
+                                    option.SetGoodOutcome(outResource);
+                                    option.SetGoodOutcome(outPassage);
                                     eventObject.SetOption(option);
                                 }
                                 else { Game.SetError(new Error(73, "invalid locDestination (null) -> Passage option not created")); }
                             }
-                            //desperado option
-                            optionText = "Find the first available ship, who cares where it's going? (Guaranteed but Risky)";
-                            List<int> bribeList = new List<int>(dictSeaDistances_1.Keys);
-                            OptionInteractive optionBribe = new OptionInteractive(optionText) { LocID = bribeList[rnd.Next(bribeList.Count)] };
-                            optionBribe.ReplyGood = "A nearby ship is casting of it's mooring lines, about to leave. You jump onboard";
-                            OutNone outcomeBribe = new OutNone(eventObject.EventPID);
-                            //OutEventChain outcome = new OutEventChain(1000, EventFilter.Interact);
-                            optionBribe.SetGoodOutcome(outcomeBribe);
-                            eventObject.SetOption(optionBribe);
+                            //desperado option (must be at least 2 port options available)
+                            if (limit > 1)
+                            {
+                                optionText = "Find the first available ship, who cares where it's going? (Guaranteed but Risky)";
+                                List<int> bribeList = new List<int>(dictSeaDistances_1.Keys);
+                                rndLocID = bribeList[rnd.Next(bribeList.Count)];
+                                voyageDistance = dictSeaDistances_1[rndLocID];
+                                voyageTime = voyageDistance / speed;
+                                voyageTime = Math.Max(1, voyageTime);
+                                Location locRandom = Game.network.GetLocation(rndLocID);
+                                if (locRandom != null)
+                                {
+                                    OptionInteractive optionRandom = new OptionInteractive(optionText) { LocID = rndLocID };
+                                    optionRandom.ReplyGood = "A nearby ship is casting off it's mooring lines, about to leave. You jump onboard";
+                                    OutPassage outRandom = new OutPassage(eventObject.EventPID, rndLocID, voyageTime, false);
+                                    optionRandom.SetGoodOutcome(outRandom);
+                                    eventObject.SetOption(optionRandom);
+                                }
+                                else { Game.SetError(new Error(73, "Invalid locRandom (null)")); }
+                            }
                             break;
                         case EventFilter.Interact:
                             //inteact with the selected individual
@@ -2143,6 +2169,17 @@ namespace Next_Game
                                                 Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
+                                        case OutcomeType.Passage:
+                                            //Player goes on a sea voyage
+                                            OutPassage passageOutcome = outcome as OutPassage;
+                                            outcomeText = ChangePlayerVoyageStatus(passageOutcome.DestinationID, passageOutcome.Data, passageOutcome.VoyageSafe);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
+                                            break;
                                         case OutcomeType.Resource:
                                             //adjust the resource level of Player or an NPC actor
                                             OutResource resourceOutcome = outcome as OutResource;
@@ -2837,6 +2874,41 @@ namespace Next_Game
                 }
             }
             else { Game.SetError(new Error(207, "Invalid Player or Opponent (null)")); }
+            return resultText;
+        }
+
+        /// <summary>
+        /// Initiate a Player's sea voyage
+        /// </summary>
+        /// <param name="destID"></param>
+        /// <param name="voyageTime"></param>
+        /// <returns></returns>
+        private string ChangePlayerVoyageStatus(int destID, int voyageTime, bool safePassage)
+        {
+            string resultText = "";
+            Active player = Game.world.GetActiveActor(1);
+            if (player != null)
+            {
+                if (destID > 0)
+                {
+                    if (voyageTime > 0)
+                    {
+                        int currentLocID = player.LocID;
+                        player.LocID = destID;
+                        player.VoyageTime = voyageTime;
+                        player.Status = ActorStatus.AtSea;
+                        player.ShipName = "Yellow Peril";
+                        player.VoyageSafe = safePassage;
+                        string locNameOrigin = Game.world.GetLocationName(currentLocID);
+                        string locNameDestination = Game.world.GetLocationName(destID);
+                        resultText = string.Format("{0} {1} boards the S.S \"{2}\" at {3} bound for {4}. Estimated voyage time {5} days", player.Title, player.Name, player.ShipName,
+                            locNameOrigin, locNameDestination);
+                    }
+                    else { Game.SetError(new Error(217, "Invalid voyageTime (zero, or less)")); }
+                }
+                else { Game.SetError(new Error(217, "Invalid DestinationID (zero, or less)")); }
+            }
+            else { Game.SetError(new Error(217, "Invalid Player (null)")); }
             return resultText;
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item };
+    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage };
 
     /// <summary>
     /// Option outcome, event system
@@ -253,6 +253,25 @@ namespace Next_Game.Event_System
             this.PlayerRes = playerRes;
             Type = OutcomeType.Resource;
         }
+    }
+
+    /// <summary>
+    /// Player commences a sea voyage
+    /// </summary>
+    class OutPassage : Outcome
+    {
+        //Data is Estimated voyage time (turns)
+        public int DestinationID { get; set; }
+        public bool VoyageSafe { get; set; } //flag if true, a safe ship, if false, a risky one
+
+        public OutPassage(int eventID, int locID, int voyageTime, bool safePassage = true) : base(eventID)
+        {
+            DestinationID = locID;
+            Data = voyageTime;
+            VoyageSafe = safePassage;
+            Type = OutcomeType.Passage;
+        }
+
     }
 
     /// <summary>

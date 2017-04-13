@@ -726,7 +726,6 @@ namespace Next_Game
                 int refID = GetRefID(locID);
                 //advisors can be one of three different categories
                 if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
-                //else { actorType = Convert.ToString(person.Type); }
                 else { actorType = person.Title; }
                 if ((int)person.Office > 0)
                 { actorType = Convert.ToString(person.Office); }
@@ -767,6 +766,14 @@ namespace Next_Game
                             Position pos = person.GetActorPosition();
                             locString = string.Format("Currently at {0}:{1}, travelling towards {2} {3}, Lid {4}, Rid {5}", pos.PosX, pos.PosY, GetLocationName(locID),
                                 ShowLocationCoords(locID), locID, refID);
+                            break;
+                        case ActorStatus.AtSea:
+                            if (person.ActID == 1)
+                            {
+                                Active tempPlayer = person as Active;
+                                locString = string.Format("At Sea onboard the S.S \"{0}\" bound for {1}, arriving in {2} more day{3}", tempPlayer.ShipName, GetLocationName(locID),
+                                    tempPlayer.VoyageTime, tempPlayer.VoyageTime != 1 ? "s" : "");
+                            }
                             break;
                         case ActorStatus.Captured:
                             locString = string.Format("Incarcerated in the bowels of the {0} dungeons", GetLocationName(locID));
