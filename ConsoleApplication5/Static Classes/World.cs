@@ -1290,6 +1290,7 @@ namespace Next_Game
                             RLColor loyaltyColor = Color._goodTrait;
                             if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
                             locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
+                            
                             locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), false));
                             locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), RLColor.LightRed, RLColor.Black));
                             locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));
@@ -1341,6 +1342,11 @@ namespace Next_Game
                     }
                     if (loc.Connector == true)
                     { locList.Add(new Snippet("CONNECTOR", RLColor.Red, RLColor.Black)); }
+                    if (loc.Port == true)
+                    {
+                        int numPorts = loc.GetNumConnectedPorts();
+                        locList.Add(new Snippet(string.Format("PORT, connected to {0} other port{1}. Sea Passages available.", numPorts, numPorts != 1 ? "s" : ""), RLColor.LightRed, RLColor.Black));
+                    }
 
                     //characters at location
                     List<int> charList = loc.GetActorList();
@@ -3282,6 +3288,8 @@ namespace Next_Game
                     {
                         //arrived at Location
                         player.Status = ActorStatus.AtLocation;
+                        player.ShipName = "Unknown";
+                        player.VoyageSafe = true;
                         description = string.Format("{0} {1} has arrived at {2} onboard the S.S \"{3}\"", player.Title, player.Name, GetLocationName(player.LocID), player.ShipName);
                         SetPlayerRecord(new Record(description, 1, player.LocID, GetRefID(player.LocID), CurrentActorIncident.Travel));
                         SetMessage(new Message(description, MessageType.Move));

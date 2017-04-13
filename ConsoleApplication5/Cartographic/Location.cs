@@ -394,5 +394,8 @@ namespace Next_Game.Cartographic
 
         public Dictionary<int, int> GetSeaDistances()
         { return dictSeaDistances; }
+
+        public int GetNumConnectedPorts()
+        { return dictSeaDistances.Count; }
     }
 }
