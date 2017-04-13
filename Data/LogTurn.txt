@@ -1,68 +1,110 @@
-//Exile Game File "LogTurn.txt" opened at: 13/04/2017 11:09:47
---- ProcessStartTurn, Day 3, Turn 2 (World.cs) 
---- MoveActors -> 0 Records (World.cs)
+//Exile Game File "LogTurn.txt" opened at: 13/04/2017 13:57:35
+--- ProcessStartTurn, Day 10, Turn 9 (World.cs) 
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Adramalech, ActID 112 travelling to The Shaggy Parrot (current Loc 15:10)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Azer Tully, ID 1 at 26:10, Enemy at 15:10 (Brother Adramalech, ID 112
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Azer Tully, ID 1 at 26:10, Enemy at 14:10 (Brother Adramalech, ID 112
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Raff Tully, ActID 1 is AtSea
- [Search -> Stationary] Follower The Beast, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Haggler, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 8 is AtLocation
+ [Search -> Stationary] Usurper Azer Tully, ActID 1 is AtSea
+ [Search -> Stationary] Follower The Waif, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 7 is AtLocation
 --- UpdateAIController (World.cs)
 --- SetEnemyActivity (World.cs)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Mormo, ActID 126 Assigned Branch -> 0 Current Branch -> 0
- [Enemy -> Known] Brother Amon ActID 127 has become KNOWN
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Amon, ActID 127 Assigned Branch -> 1 Current Branch -> 0
- [Goal -> New] Brother Amon, ActID 127, (loc 13:16), assigned new Goal -> Move
- [Goal -> Move] Brother Amon, ActID 127 -> Capital to Correct Branch -> The Pickled Prune, LocID 2
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Goal] Brother Kali, ActID 128 retains Goal -> Wait
- [Enemy -> Goal] Brother Damballa, ActID 129 retains Goal -> Hide
- [Enemy -> Goal] The Unrelenting, ActID 130 retains Goal -> Wait
+ [Enemy -> Known] Brother Beelzebub ActID 111 has become KNOWN
+ [Enemy -> Goal] Brother Beelzebub, ActID 111 retains Goal -> Wait
+ [Enemy -> Goal] Brother Shiva, ActID 113 retains Goal -> Wait
+ [Enemy -> Goal] Brother Demogorgon, ActID 114 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 115 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
---- ResolveFollowerEvents (Director.cs)
 --- UpdateActiveActors (World.cs)
- Usurper Raff Tully has had their TurnsUnknown Timer increased from 101 to 102
- Follower The Beast has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Haggler has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Crone has had their TurnsUnknown Timer increased from 1 to 2
-//Exile Game file ops "LogTurn.txt" Completed at: 13/04/2017 11:10:29
- Branch] Brother Damballa, ActID 129 Assigned Branch -> 3 Current Branch -> 0
- [Goal -> New] Brother Damballa, ActID 129, (loc 13:16), assigned new Goal -> Hide
+ Usurper Azer Tully has had their TurnsUnknown Timer increased from 108 to 109
+ Follower The Waif has had their TurnsUnknown Timer increased from 8 to 9
+ Follower The Crone has had their TurnsUnknown Timer increased from 8 to 9
+ Follower The Leper has had their TurnsUnknown Timer increased from 8 to 9
+//Exile Game file ops "LogTurn.txt" Completed at: 13/04/2017 13:57:58
+f, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 7 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 111 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 113 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 114 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 115 Mode -> Normal
+--- SetEnemyActivity (World.cs)
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 130 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> Branch] Brother Beelzebub, ActID 111 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] Brother Beelzebub, ActID 111, (loc 16:15), assigned new Goal -> Wait
+ [Enemy -> Known] Brother Adramalech ActID 112 has become KNOWN
+ [Enemy -> Known] Brother Shiva ActID 113 has become KNOWN
+ [Enemy -> Goal] Brother Shiva, ActID 113 retains Goal -> Wait
+ [Enemy -> Goal] Brother Demogorgon, ActID 114 retains Goal -> Wait
+ [Enemy -> Unknown] The Unrelenting ActID 115 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] The Unrelenting, ActID 115 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Robert Westerling", ID 101 added to list of Actors
- [AutoEvent -> LocalList] "Robert Westerling", ID 101 added to list of Locals
+ [AutoEvent -> ActorList] "Marq Tyrell", ID 59 added to list of Actors
+ [AutoEvent -> ActorList] "Giselle Tyrell", ID 60 added to list of Actors
+ [AutoEvent -> ActorList] "Godet Guarin", ID 62 added to list of Actors
+ [AutoEvent -> ActorList] "Aunger Alainon", ID 63 added to list of Actors
+ [AutoEvent -> ActorList] "Ilyn Jankin", ID 64 added to list of Actors
+ [AutoEvent -> ActorList] "Lancel Tyrell", ID 65 added to list of Actors
+ [AutoEvent -> LocalList] "Marq Tyrell", ID 59 added to list of Locals
+ [AutoEvent -> LocalList] "Giselle Tyrell", ID 60 added to list of Locals
+ [AutoEvent -> AdvisorList] "Godet Guarin", ID 62 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aunger Alainon", ID 63 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Ilyn Jankin", ID 64 added to list of Advisors
+ [AutoEvent -> LocalList] "Lancel Tyrell", ID 65 added to list of Locals
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Raff Tully has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Haggler has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+ Usurper Azer Tully has had their TurnsUnknown Timer increased from 107 to 108
+ Follower The Waif has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Crone has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Leper has had their TurnsUnknown Timer increased from 7 to 8
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Robert Westerling", ID 101 added to list of Actors
- [AutoEvent -> LocalList] "Robert Westerling", ID 101 added to list of Locals
+ [AutoEvent -> ActorList] "Marq Tyrell", ID 59 added to list of Actors
+ [AutoEvent -> ActorList] "Giselle Tyrell", ID 60 added to list of Actors
+ [AutoEvent -> ActorList] "Godet Guarin", ID 62 added to list of Actors
+ [AutoEvent -> ActorList] "Aunger Alainon", ID 63 added to list of Actors
+ [AutoEvent -> ActorList] "Ilyn Jankin", ID 64 added to list of Actors
+ [AutoEvent -> ActorList] "Lancel Tyrell", ID 65 added to list of Actors
+ [AutoEvent -> LocalList] "Marq Tyrell", ID 59 added to list of Locals
+ [AutoEvent -> LocalList] "Giselle Tyrell", ID 60 added to list of Locals
+ [AutoEvent -> AdvisorList] "Godet Guarin", ID 62 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aunger Alainon", ID 63 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Ilyn Jankin", ID 64 added to list of Advisors
+ [AutoEvent -> LocalList] "Lancel Tyrell", ID 65 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
  Trigger passed on "3" GreaterThanOrEqual 2
  Event "Seek Passage to another Port" Timer Repeat now 999
  Event "Seek Passage to another Port" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Robert Westerling", ID 101 added to list of Actors
- [AutoEvent -> LocalList] "Robert Westerling", ID 101 added to list of Locals
+ [AutoEvent -> ActorList] "Marq Tyrell", ID 59 added to list of Actors
+ [AutoEvent -> ActorList] "Giselle Tyrell", ID 60 added to list of Actors
+ [AutoEvent -> ActorList] "Godet Guarin", ID 62 added to list of Actors
+ [AutoEvent -> ActorList] "Aunger Alainon", ID 63 added to list of Actors
+ [AutoEvent -> ActorList] "Ilyn Jankin", ID 64 added to list of Actors
+ [AutoEvent -> ActorList] "Lancel Tyrell", ID 65 added to list of Actors
+ [AutoEvent -> LocalList] "Marq Tyrell", ID 59 added to list of Locals
+ [AutoEvent -> LocalList] "Giselle Tyrell", ID 60 added to list of Locals
+ [AutoEvent -> AdvisorList] "Godet Guarin", ID 62 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aunger Alainon", ID 63 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Ilyn Jankin", ID 64 added to list of Advisors
+ [AutoEvent -> LocalList] "Lancel Tyrell", ID 65 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
  Event "Look for a suitable ship" Timer Repeat now 999
  Event "Look for a suitable ship" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 --- ResolveFollowerEvents (Director.cs)
---- ProcessEndTurn, Day 2 Turn 1 (World.cs)
+--- ProcessEndTurn, Day 9 Turn 8 (World.cs)
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 19
-//Exile Game File "LogTurn.txt" Close completed at: 13/04/2017 11:09:47
+ Event "Search and Detain" Dormant Timer decremented to 12
+ "Search and Detain" event, Cooldown Timer decremented from 3 to 2
+//Exile Game File "LogTurn.txt" Close completed at: 13/04/2017 13:57:35

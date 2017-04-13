@@ -3228,6 +3228,7 @@ namespace Next_Game
         {
             Game.logTurn?.Write(string.Format("--- ProcessStartTurn, Day {0}, Turn {1} (World.cs) ", Game.gameTurn + 1, Game.gameTurn));
             UpdateActorMoveStatus(MoveActors());
+            UpdateSeaVoyageStatus();
             CheckStationaryActiveActors();
             CalculateCrows();
             //Enemies
@@ -3266,15 +3267,43 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// updates Movement map layer for the different actors (key is mapMarker which is also the ActID of the character moving) Enemies are only shown if known
+        /// handles Sea Voyages for the Player
+        /// </summary>
+        private void UpdateSeaVoyageStatus()
+        {
+            Active player = GetActiveActor(1);
+            if (player != null)
+            {
+                if (player.Status == ActorStatus.AtSea)
+                {
+                    string description;
+                    player.VoyageTime--;
+                    if (player.VoyageTime == 0)
+                    {
+                        //arrived at Location
+                        player.Status = ActorStatus.AtLocation;
+                        description = string.Format("{0} {1} has arrived at {2} onboard the S.S \"{3}\"", player.Title, player.Name, GetLocationName(player.LocID), player.ShipName);
+                        SetPlayerRecord(new Record(description, 1, player.LocID, GetRefID(player.LocID), CurrentActorIncident.Travel));
+                        SetMessage(new Message(description, MessageType.Move));
+                    }
+                    else
+                    {
+                        description = string.Format("{0} {1} is at Sea onboard the S.S \"{2}\", bound for {3}, arriving in {4} days", player.Title, player.Name, player.ShipName,
+                            GetLocationName(player.LocID), player.VoyageTime);
+                        SetMessage(new Message(description, MessageType.Move));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// updates Movement map layer for the different actors (key is mapMarker which is also the ActID of the character moving) Enemies are only shown if known.
         /// </summary>
         private void UpdateActorMoveStatus(Dictionary<int, Position> dictMoveActors)
         {
             int marker;
             //clear out the Movement layer of the grid first
             Game.map.ClearMapLayer(MapLayer.Movement);
-            //Game.map.ClearMapLayer(MapLayer.Followers);
-            //Game.map.ClearMapLayer(MapLayer.Enemies);
             //loop dictionary of move actors
             foreach (var pos in dictMoveActors)
             {
@@ -3295,7 +3324,7 @@ namespace Next_Game
                     //show on map only if known
                     if (marker > 0)
                     { Game.map.SetMapInfo(MapLayer.Movement, pos.Value.PosX, pos.Value.PosY, marker); }
-            } 
+                }
                 else { Game.SetError(new Error(157, "Invalid key (ActID) in dictMoveActors (not found in dict)")); } 
             }
         }

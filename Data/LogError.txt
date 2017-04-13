@@ -1,2 +1,4 @@
-//Exile Game file ops "LogError.txt" commenced at: 13/04/2017 11:06:06
-//Exile Game file ops "LogError.txt" Completed at: 13/04/2017 11:10:29
+//Exile Game file ops "LogError.txt" commenced at: 13/04/2017 13:51:25
+ERROR_78 ""Active" identical to existing, eventID 4 status unchanged"
+Method: ChangePlayerEventStatus,  Line: 2809,  Object: Director.cs,  Turn: 7,  Local Time: 13:55:47 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 13/04/2017 13:57:58

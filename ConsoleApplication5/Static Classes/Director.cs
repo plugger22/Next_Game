@@ -1276,6 +1276,7 @@ namespace Next_Game
                                     voyageTime = passage.Value / speed;
                                     voyageTime = Math.Max(1, voyageTime);
                                     chance = (rnd.Next(1, 10) - 1) * 10;
+                                    chance = Math.Max(1, chance);
                                     optionText = string.Format("Obtain passage to {0} {1}, a voyage of {2} day{3}. {4}% chance of success.", locDestination.LocName, 
                                         Game.world.ShowLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "", chance);
                                     OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID, Test = chance };
