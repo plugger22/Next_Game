@@ -2901,8 +2901,8 @@ namespace Next_Game
                         player.VoyageSafe = safePassage;
                         string locNameOrigin = Game.world.GetLocationName(currentLocID);
                         string locNameDestination = Game.world.GetLocationName(destID);
-                        resultText = string.Format("{0} {1} boards the S.S \"{2}\" at {3} bound for {4}. Estimated voyage time {5} days", player.Title, player.Name, player.ShipName,
-                            locNameOrigin, locNameDestination);
+                        resultText = string.Format("{0} {1} boards the S.S \"{2}\" at {3}, bound for {4}. Estimated voyage time {5} day{6}", player.Title, player.Name, player.ShipName,
+                            locNameOrigin, locNameDestination, player.VoyageTime, player.VoyageTime != 1 ? "s" : "" );
                     }
                     else { Game.SetError(new Error(217, "Invalid voyageTime (zero, or less)")); }
                 }

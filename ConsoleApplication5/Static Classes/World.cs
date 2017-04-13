@@ -3466,6 +3466,7 @@ namespace Next_Game
             {
                 //Main error states
                 if (player.Status == ActorStatus.Travelling) { listSnippet.Add(new Snippet("You are unable to dispatch crows while you are Travelling", RLColor.LightRed, RLColor.Black)); }
+                else if (player.Status == ActorStatus.AtSea) { listSnippet.Add(new Snippet("You are unable to dispatch crows while at Sea", RLColor.LightRed, RLColor.Black)); }
                 else if (player.Status == ActorStatus.Captured) { listSnippet.Add(new Snippet("You are unable to dispatch crows while you are Incarcerated", RLColor.LightRed, RLColor.Black)); }
                 else if (player.Status == ActorStatus.Gone) { listSnippet.Add(new Snippet("You are unable to dispatch crows from the AfterLife", RLColor.LightRed, RLColor.Black)); }
                 else { listSnippet.Add(new Snippet(string.Format("Your Status isn't recognised (\"{0}\") and crows are consequently unavailable", player.Status), RLColor.LightRed, RLColor.Black)); }

@@ -1,75 +1,68 @@
-//Exile Game File "LogTurn.txt" opened at: 12/04/2017 20:44:51
---- ProcessStartTurn, Day 5, Turn 4 (World.cs) 
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Usurper Aerys Greyjoy, ActID 1 travelling to The Arbor (current Loc 0:24)
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Set, ID 123 at 16:14, Active Aerys Greyjoy, ID 1, at 0:24
- [Search -> Debug] Enemy, Brother Behemoth, ID 124 at 16:14, Active Aerys Greyjoy, ID 1, at 0:24
- [Search -> Debug] Enemy, Brother Shaitan, ID 125 at 16:14, Active Aerys Greyjoy, ID 1, at 0:24
- [Search -> Debug] Enemy, Brother Demogorgon, ID 126 at 16:14, Active Aerys Greyjoy, ID 1, at 0:24
- [Search -> Debug] Enemy, The Unrelenting, ID 127 at 16:14, Active Aerys Greyjoy, ID 1, at 0:24
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Set, ID 123 at 16:14, Active Aerys Greyjoy, ID 1, at 0:25
- [Search -> Debug] Enemy, Brother Behemoth, ID 124 at 16:14, Active Aerys Greyjoy, ID 1, at 0:25
- [Search -> Debug] Enemy, Brother Shaitan, ID 125 at 16:14, Active Aerys Greyjoy, ID 1, at 0:25
- [Search -> Debug] Enemy, Brother Demogorgon, ID 126 at 16:14, Active Aerys Greyjoy, ID 1, at 0:25
- [Search -> Debug] Enemy, The Unrelenting, ID 127 at 16:14, Active Aerys Greyjoy, ID 1, at 0:25
- [Move -> MoveObject] Inquisitor Brother Shaitan, ActID 125 travelling to The Shaggy Parrot (current Loc 17:14)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Aerys Greyjoy, ID 1 at 0:26, Enemy at 17:14 (Brother Shaitan, ID 125
+//Exile Game File "LogTurn.txt" opened at: 13/04/2017 11:09:47
+--- ProcessStartTurn, Day 3, Turn 2 (World.cs) 
+--- MoveActors -> 0 Records (World.cs)
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Aerys Greyjoy, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Set, ID 123 at 16:14, Active Aerys Greyjoy, ID 1, at 0:26
- [Search -> Debug] Enemy, Brother Behemoth, ID 124 at 16:14, Active Aerys Greyjoy, ID 1, at 0:26
- [Search -> Debug] Enemy, Brother Shaitan, ID 125 at 17:13, Active Aerys Greyjoy, ID 1, at 0:26
- [Search -> Debug] Enemy, Brother Demogorgon, ID 126 at 16:14, Active Aerys Greyjoy, ID 1, at 0:26
- [Search -> Debug] Enemy, The Unrelenting, ID 127 at 16:14, Active Aerys Greyjoy, ID 1, at 0:26
- [Search -> Stationary] Follower The Spider, ActID 2 is AtLocation
+ [Search -> Stationary] Usurper Raff Tully, ActID 1 is AtSea
+ [Search -> Stationary] Follower The Beast, ActID 4 is AtLocation
  [Search -> Stationary] Follower The Haggler, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 8 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Set, Act ID 123 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 124 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 126 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 127 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Set ActID 123 has become KNOWN
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Set, ActID 123 Assigned Branch -> 0 Current Branch -> 0
- [Enemy -> Goal] Brother Behemoth, ActID 124 retains Goal -> Wait
- [Enemy -> Known] Brother Shaitan ActID 125 has become KNOWN
- [Enemy -> Goal] Brother Demogorgon, ActID 126 retains Goal -> Wait
+ [Goal -> Branch] Brother Mormo, ActID 126 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Known] Brother Amon ActID 127 has become KNOWN
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 127 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> Branch] Brother Amon, ActID 127 Assigned Branch -> 1 Current Branch -> 0
+ [Goal -> New] Brother Amon, ActID 127, (loc 13:16), assigned new Goal -> Move
+ [Goal -> Move] Brother Amon, ActID 127 -> Capital to Correct Branch -> The Pickled Prune, LocID 2
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Kali, ActID 128 retains Goal -> Wait
+ [Enemy -> Goal] Brother Damballa, ActID 129 retains Goal -> Hide
+ [Enemy -> Goal] The Unrelenting, ActID 130 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- UpdateActiveActors (World.cs)
+ Usurper Raff Tully has had their TurnsUnknown Timer increased from 101 to 102
+ Follower The Beast has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Haggler has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Crone has had their TurnsUnknown Timer increased from 1 to 2
+//Exile Game file ops "LogTurn.txt" Completed at: 13/04/2017 11:10:29
+ Branch] Brother Damballa, ActID 129 Assigned Branch -> 3 Current Branch -> 0
+ [Goal -> New] Brother Damballa, ActID 129, (loc 13:16), assigned new Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 130 Assigned Branch -> 0 Current Branch -> 0
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Harding Redwyne", ID 79 added to list of Actors
- [AutoEvent -> LocalList] "Harding Redwyne", ID 79 added to list of Locals
+ [AutoEvent -> ActorList] "Robert Westerling", ID 101 added to list of Actors
+ [AutoEvent -> LocalList] "Robert Westerling", ID 101 added to list of Locals
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Aerys Greyjoy has had their TurnsUnknown Timer increased from 103 to 104
- Follower The Spider has had their TurnsUnknown Timer increased from 3 to 4
- Follower The Haggler has had their TurnsUnknown Timer increased from 3 to 4
- Follower The Crone has had their TurnsUnknown Timer increased from 3 to 4
+ Usurper Raff Tully has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Haggler has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Harding Redwyne", ID 79 added to list of Actors
- [AutoEvent -> LocalList] "Harding Redwyne", ID 79 added to list of Locals
+ [AutoEvent -> ActorList] "Robert Westerling", ID 101 added to list of Actors
+ [AutoEvent -> LocalList] "Robert Westerling", ID 101 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "4" GreaterThanOrEqual 2
+ Trigger passed on "3" GreaterThanOrEqual 2
  Event "Seek Passage to another Port" Timer Repeat now 999
  Event "Seek Passage to another Port" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Harding Redwyne", ID 79 added to list of Actors
- [AutoEvent -> LocalList] "Harding Redwyne", ID 79 added to list of Locals
+ [AutoEvent -> ActorList] "Robert Westerling", ID 101 added to list of Actors
+ [AutoEvent -> LocalList] "Robert Westerling", ID 101 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
  Event "Look for a suitable ship" Timer Repeat now 999
  Event "Look for a suitable ship" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 --- ResolveFollowerEvents (Director.cs)
-//Exile Game file ops "LogTurn.txt" Completed at: 12/04/2017 20:45:34
+--- ProcessEndTurn, Day 2 Turn 1 (World.cs)
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 19
+//Exile Game File "LogTurn.txt" Close completed at: 13/04/2017 11:09:47
