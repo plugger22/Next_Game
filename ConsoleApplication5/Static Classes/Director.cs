@@ -387,9 +387,6 @@ namespace Next_Game
                         case ArcLoc.Inn:
                             listGenPlyrEventsInn.Add(eventID);
                             break;
-                        case ArcLoc.Dungeon:
-                            listGenPlyrEventsDungeon.Add(eventID);
-                            break;
                         default:
                             Game.SetError(new Error(50, string.Format("Invalid Type, ArcLoc, Player Event, ID {0}", eventID)));
                             break;
@@ -411,6 +408,9 @@ namespace Next_Game
                             Game.SetError(new Error(50, string.Format("Invalid Type, ArcRoad, Player Event, ID {0}", eventID)));
                             break;
                     }
+                    break;
+                case ArcType.Dungeon:
+                    listGenPlyrEventsDungeon.Add(eventID);
                     break;
                 default:
                     Game.SetError(new Error(50, string.Format("Invalid Type, Unknown, Player Event, ID {0}", eventID)));

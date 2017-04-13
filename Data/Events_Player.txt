@@ -3,7 +3,7 @@
 
 # Name: descriptive
 # ID: (Event ID) unique number for PLAYER Events only (do not exceed ID1000)
-# Type: GeoCluster/Location/Road
+# Type: GeoCluster/Location/Road/Dungeon
 # subType:(GeoCluster -> Sea/Mountain/Forest, Location -> Capital/Major/Minor/Inn, Road -> Normal/Kings/Connector)
 # Cat: (Category) Generic/Special
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/Common/High/Very_High
