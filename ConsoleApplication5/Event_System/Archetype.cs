@@ -8,7 +8,7 @@ namespace Next_Game
 {
     public enum ArcType {None, GeoCluster, Location, Road, House, Actor}
     public enum ArcGeo {None, Sea, Mountain, Forest } //geocluster sub category
-    public enum ArcLoc {None, Capital, Major, Minor, Inn} //location sub category
+    public enum ArcLoc {None, Capital, Major, Minor, Inn, Dungeon} //location sub category
     public enum ArcRoad {None, Normal, Kings, Connector} //road sub category
     public enum ArcHouse {None, Major, Minor, Inn} //House sub category (specific archetype to a house, eg. Stark.
     public enum ArcActor {None, Player, Follower} //actor specific subcategory

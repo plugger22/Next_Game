@@ -52,7 +52,7 @@ namespace Next_Game
         List<int> listOfActiveGeoClusters; //clusters that have a road through them (GeoID's)
         List<int> listGenFollEventsForest; //generic events for followers
         List<int> listGenFollEventsMountain;
-        List<int> listGenFollEventsSea;
+        //List<int> listGenFollEventsSea;
         List<int> listGenFollEventsNormal;
         List<int> listGenFollEventsKing;
         List<int> listGenFollEventsConnector;
@@ -76,10 +76,7 @@ namespace Next_Game
         List<int> listGenPlyrEventsMajor;
         List<int> listGenPlyrEventsMinor;
         List<int> listGenPlyrEventsInn;
-        /*List<int> listAutoPlyrEventsCapital;
-        List<int> listAutoPlyrEventsMajor;
-        List<int> listAutoPlyrEventsMinor;
-        List<int> listAutoPlyrEventsInn;*/
+        List<int> listGenPlyrEventsDungeon;
         //archetype player events
         List<int> listPlyrRoadEventsNormal;
         List<int> listPlyrRoadEventsKings;
@@ -113,7 +110,7 @@ namespace Next_Game
             listOfActiveGeoClusters = new List<int>();
             listGenFollEventsForest = new List<int>();
             listGenFollEventsMountain = new List<int>();
-            listGenFollEventsSea = new List<int>();
+            //listGenFollEventsSea = new List<int>();
             listGenFollEventsNormal = new List<int>(); //note that Normal road generic events also apply to all types of Roads (Royal generics -> Royal + Normal, for example)
             listGenFollEventsKing = new List<int>();
             listGenFollEventsConnector = new List<int>();
@@ -137,6 +134,7 @@ namespace Next_Game
             listGenPlyrEventsMajor = new List<int>();
             listGenPlyrEventsMinor = new List<int>();
             listGenPlyrEventsInn = new List<int>();
+            listGenPlyrEventsDungeon = new List<int>();
             //archetype player events
             listPlyrRoadEventsNormal = new List<int>();
             listPlyrRoadEventsKings = new List<int>();
@@ -283,9 +281,9 @@ namespace Next_Game
                                 case ArcGeo.Mountain:
                                     listGenFollEventsMountain.Add(eventID);
                                     break;
-                                case ArcGeo.Sea:
+                                /*case ArcGeo.Sea:
                                     listGenFollEventsSea.Add(eventID);
-                                    break;
+                                    break;*/
                                 default:
                                     Game.SetError(new Error(50, string.Format("Invalid Type, ArcGeo, Follower Event, ID {0}", eventID)));
                                     break;
@@ -388,6 +386,9 @@ namespace Next_Game
                             break;
                         case ArcLoc.Inn:
                             listGenPlyrEventsInn.Add(eventID);
+                            break;
+                        case ArcLoc.Dungeon:
+                            listGenPlyrEventsDungeon.Add(eventID);
                             break;
                         default:
                             Game.SetError(new Error(50, string.Format("Invalid Type, ArcLoc, Player Event, ID {0}", eventID)));
