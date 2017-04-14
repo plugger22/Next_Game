@@ -2214,6 +2214,16 @@ namespace Next_Game
                                                 Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
+                                        case OutcomeType.VoyageTime:
+                                            //Player's sea voyage time is increased or decreased
+                                            outcomeText = ChangePlayerVoyageTime(outcome.Amount, outcome.Calc);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
+                                            break;
                                         case OutcomeType.Resource:
                                             //adjust the resource level of Player or an NPC actor
                                             OutResource resourceOutcome = outcome as OutResource;
@@ -2943,6 +2953,39 @@ namespace Next_Game
                 else { Game.SetError(new Error(217, "Invalid DestinationID (zero, or less)")); }
             }
             else { Game.SetError(new Error(217, "Invalid Player (null)")); }
+            return resultText;
+        }
+
+        /// <summary>
+        /// Change the voyage time for a Player's sea passage (increase or decrease)
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="calc"></param>
+        /// <returns></returns>
+        private string ChangePlayerVoyageTime(int amount, EventCalc calc)
+        {
+            string resultText = "";
+            Active player = Game.world.GetActiveActor(1);
+            if (player != null)
+            {
+                int voyageTime = player.VoyageTime;
+                switch(calc)
+                {
+                    case EventCalc.Add:
+                        voyageTime += amount;
+                        resultText = string.Format("The voyage of the S.S \"{0}\" has been increased by {1} day{2} to {3} days}", player.ShipName, amount, amount != 1 ? "s" : "", voyageTime);
+                        break;
+                    case EventCalc.Subtract:
+                        voyageTime -= amount;
+                        voyageTime = Math.Max(1, voyageTime);
+                        resultText = string.Format("The voyage of the S.S \"{0}\" has been reduced by {1} day{2} to {3} days}", player.ShipName, amount, amount != 1 ? "s" : "", voyageTime);
+                        break;
+                    default:
+                        Game.SetError(new Error(218, string.Format("Invalid EventCalc \"{0}\" -> voyage time change invalid")));
+                        break;
+                }
+                player.VoyageTime = voyageTime;
+            }
             return resultText;
         }
 

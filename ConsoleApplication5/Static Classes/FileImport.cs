@@ -1667,13 +1667,10 @@ namespace Next_Game
                                         case "Known":
                                         case "item":
                                         case "Item":
-                                        case "eventtimer":
                                         case "eventTimer":
                                         case "EventTimer":
-                                        case "eventstatus":
                                         case "eventStatus":
                                         case "EventStatus":
-                                        case "eventchain":
                                         case "eventChain":
                                         case "EventChain":
                                         case "resource":
@@ -1682,6 +1679,8 @@ namespace Next_Game
                                         case "condition":
                                         case "Freedom":
                                         case "freedom":
+                                        case "VoyageTime":
+                                        case "voyageTime":
                                         case "none":
                                         case "None":
                                             structOutcome.Effect = Game.utility.Capitalise(cleanToken);
@@ -2203,6 +2202,15 @@ namespace Next_Game
                                                                     else
                                                                     {
                                                                         Game.SetError(new Error(49, "Invalid Input, Outcome Calc (Resource), (only Add/Subtract/Equals allowed)"));
+                                                                        validData = false;
+                                                                    }
+                                                                    break;
+                                                                case "VoyageTime":
+                                                                    if (outTemp.Calc == EventCalc.Add || outTemp.Calc == EventCalc.Subtract)
+                                                                    { outObject = new OutVoyageTime(structEvent.EventID, outTemp.Amount, outTemp.Calc); }
+                                                                    else
+                                                                    {
+                                                                        Game.SetError(new Error(49, "Invalid Input, Outcome Calc (VoyageTime), (only Add & Subtract allowed)"));
                                                                         validData = false;
                                                                     }
                                                                     break;
