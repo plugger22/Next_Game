@@ -290,6 +290,19 @@ namespace Next_Game.Event_System
         }
     }
 
+    /// <summary>
+    /// Dungeon event for when Player is Captured
+    /// </summary>
+    public class EventPlyDungeon : EventPlayer
+    {
+
+        public EventPlyDungeon(int eventID, string name, EventFrequency frequency) : base(eventID, name, frequency)
+        {
+            Type = ArcType.Dungeon;
+        }
+    }
+
+
 
 
 }

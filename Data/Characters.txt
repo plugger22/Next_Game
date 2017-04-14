@@ -52,3 +52,24 @@ Treachery_Auto: 0
 Leadership_Auto: 0
 Touched_Auto: 0
 [End]
+
+Name: Hardened Seaman
+ID: 3
+Sex: Male
+Title: Seaman
+Description: A gnarly, muscled, hardened sailor who stares at you will squinting eyes and an angry scowl.
+Age: 40
+Resources: 1
+Combat_Mod: 1
+Wits_Mod: 0
+Charm_Mod: 0
+Treachery_Mod: 1
+Leadership_Mod: 0
+Touched_Mod: 0
+Combat_Auto: 0
+Wits_Auto: 0
+Charm_Auto: 0
+Treachery_Auto: 0
+Leadership_Auto: 0
+Touched_Auto: 0
+[End]

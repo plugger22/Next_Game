@@ -1,40 +1,37 @@
-//Exile Game File "LogTurn.txt" opened at: 13/04/2017 17:06:42
---- ProcessStartTurn, Day 11, Turn 10 (World.cs) 
+//Exile Game File "LogTurn.txt" opened at: 14/04/2017 16:04:47
+--- ProcessStartTurn, Day 10, Turn 9 (World.cs) 
 --- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Shaitan, ActID 92 travelling to The Shaggy Parrot (current Loc 14:20)
+ [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 114 travelling to Bloodkeep (current Loc 17:20)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Raff Lannister, ID 1 at 19:0, Enemy at 14:20 (Brother Shaitan, ID 92
+ [Search -> Debug] Active Albar Targaryen, ID 1 at 24:0, Enemy at 17:20 (Brother Diabolous, ID 114
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Raff Lannister, ID 1 at 19:0, Enemy at 15:20 (Brother Shaitan, ID 92
- [Move -> MoveObject] Inquisitor Brother Mastema, ActID 91 travelling to The Singing Ghost (current Loc 13:15)
+ [Search -> Debug] Active Albar Targaryen, ID 1 at 24:0, Enemy at 18:20 (Brother Diabolous, ID 114
+ [Move -> MoveObject] Inquisitor Brother Damballa, ActID 113 travelling to Casterly Rock (current Loc 18:8)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Raff Lannister, ID 1 at 19:0, Enemy at 13:15 (Brother Mastema, ID 91
+ [Search -> Debug] Active Albar Targaryen, ID 1 at 24:0, Enemy at 18:8 (Brother Damballa, ID 113
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Raff Lannister, ID 1 at 19:0, Enemy at 14:15 (Brother Mastema, ID 91
+ [Search -> Debug] Active Albar Targaryen, ID 1 at 24:0, Enemy at 18:7 (Brother Damballa, ID 113
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Raff Lannister, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Albar Targaryen, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Shiva, ID 89 at 11:15, Active Raff Lannister, ID 1, at 19:0
- [Search -> Debug] Enemy, Brother Kali, ID 90 at 11:15, Active Raff Lannister, ID 1, at 19:0
- [Search -> Debug] Enemy, Brother Mastema, ID 91 at 15:15, Active Raff Lannister, ID 1, at 19:0
- [Search -> Debug] Enemy, Brother Shaitan, ID 92 at 16:20, Active Raff Lannister, ID 1, at 19:0
- [Search -> Debug] Enemy, The Unrelenting, ID 93 at 11:15, Active Raff Lannister, ID 1, at 19:0
- [Search -> Stationary] Follower The Duchess, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 7 is AtLocation
- [Search -> Stationary] Follower The Leper, ActID 2 is AtLocation
+ [Search -> Debug] Enemy, Brother Azazel, ID 112 at 13:14, Active Albar Targaryen, ID 1, at 24:0
+ [Search -> Debug] Enemy, Brother Damballa, ID 113 at 18:6, Active Albar Targaryen, ID 1, at 24:0
+ [Search -> Debug] Enemy, Brother Diabolous, ID 114 at 19:20, Active Albar Targaryen, ID 1, at 24:0
+ [Search -> Debug] Enemy, Brother Amon, ID 115 at 13:14, Active Albar Targaryen, ID 1, at 24:0
+ [Search -> Debug] Enemy, The Unrelenting, ID 116 at 13:14, Active Albar Targaryen, ID 1, at 24:0
+ [Search -> Stationary] Follower The Beast, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 5 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 89 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 90 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 93 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 112 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 115 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 116 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Shiva ActID 89 has become KNOWN
+ [Enemy -> Goal] Brother Azazel, ActID 112 retains Goal -> Wait
+ [Enemy -> Known] Brother Diabolous ActID 114 has become KNOWN
+ [Enemy -> Goal] Brother Amon, ActID 115 retains Goal -> Wait
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Shiva, ActID 89 Assigned Branch -> 0 Current Branch -> 0
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Kali, ActID 90 Assigned Branch -> 0 Current Branch -> 0
- [Enemy -> Known] The Unrelenting ActID 93 has become KNOWN
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 93 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> Branch] The Unrelenting, ActID 116 Assigned Branch -> 0 Current Branch -> 0
 --- CheckPlayerEvents (Director.cs)
 --- GetValidPlayerEvents (Director.cs)
  Event "Mysterious Stranger" has no attached Conditions
@@ -43,51 +40,43 @@
  Chance of Player Location event 37 %
 --- ResolvePlayerEvents (Director.cs)
  "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
- Trigger passed on "3" GreaterThanOrEqual 3
+ Trigger FAILED on "2" GreaterThanOrEqual 3
  "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
  Trigger passed on "3" GreaterThanOrEqual 3
- Event "Mysterious Stranger" Timer Repeat now 8
+ Event "Mysterious Stranger" Timer Repeat now 7
  Event "Mysterious Stranger" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Raff Lannister has had their TurnsUnknown Timer increased from 109 to 110
- Follower The Duchess has had their TurnsUnknown Timer increased from 9 to 10
- Follower The Spider has had their TurnsUnknown Timer increased from 9 to 10
- Follower The Leper has had their TurnsUnknown Timer increased from 9 to 10
+ Usurper Albar Targaryen has had their TurnsUnknown Timer increased from 108 to 109
+ Follower The Beast has had their TurnsUnknown Timer increased from 8 to 9
+ Follower The Waif has had their TurnsUnknown Timer increased from 8 to 9
+ Follower The Crone has had their TurnsUnknown Timer increased from 8 to 9
 --- ResolveOutcome (Director.cs)
---- ResolveFollowerEvents (Director.cs)
-//Exile Game file ops "LogTurn.txt" Completed at: 13/04/2017 17:07:11
-smond Mormont", ID 75 added to list of Actors
- [AutoEvent -> LocalList] "Desmond Mormont", ID 75 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Event "Look for a suitable ship" Timer Repeat now 999
- Event "Look for a suitable ship" Cooldown Timer has been reset to 0
+//Exile Game file ops "LogTurn.txt" Completed at: 14/04/2017 16:05:56
+er The Waif has had their TurnsUnknown Timer increased from 6 to 7
+ Follower The Crone has had their TurnsUnknown Timer increased from 6 to 7
 --- ResolveOutcome (Director.cs)
- Option "Obtain passage to Stone Hedge (loc 19:0), a voyage of 1 day. 30% chance of success." Failed test (30 % needed, rolled 83)
---- ResolveFollowerEvents (Director.cs)
---- ProcessEndTurn, Day 10 Turn 9 (World.cs)
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 11
-//Exile Game File "LogTurn.txt" Close completed at: 13/04/2017 17:06:42
-
- [AutoEvent -> ActorList] "Mord Bracken", ID 50 added to list of Actors
- [AutoEvent -> FollowerList] "The Leper", ID 2 added to list of Followers
- [AutoEvent -> LocalList] "Mord Bracken", ID 50 added to list of Locals
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "The Waif", ID 3 added to list of Actors
+ [AutoEvent -> ActorList] "Varys Glover", ID 76 added to list of Actors
+ [AutoEvent -> FollowerList] "The Waif", ID 3 added to list of Followers
+ [AutoEvent -> LocalList] "Varys Glover", ID 76 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "2" GreaterThanOrEqual 2
+ Trigger FAILED on "1" GreaterThanOrEqual 2
+ Trigger: Player has wrong amount of Resources
  Event "Seek Passage to another Port" Timer Repeat now 999
  Event "Seek Passage to another Port" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "The Leper", ID 2 added to list of Actors
- [AutoEvent -> ActorList] "Mord Bracken", ID 50 added to list of Actors
- [AutoEvent -> FollowerList] "The Leper", ID 2 added to list of Followers
- [AutoEvent -> LocalList] "Mord Bracken", ID 50 added to list of Locals
+ [AutoEvent -> ActorList] "The Waif", ID 3 added to list of Actors
+ [AutoEvent -> ActorList] "Varys Glover", ID 76 added to list of Actors
+ [AutoEvent -> FollowerList] "The Waif", ID 3 added to list of Followers
+ [AutoEvent -> LocalList] "Varys Glover", ID 76 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
  Event "Look for a suitable ship" Timer Repeat now 999
  Event "Look for a suitable ship" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
- Option "Obtain passage to Deepwood Motte (loc 15:1), a voyage of 1 day. 60% chance of success." Passed test (60 % needed, rolled 8)
+ Option "Obtain passage to Sodhall (loc 24:0), a voyage of 2 days. 40% chance of success." Passed test (40 % needed, rolled 18)
 --- ProcessEndTurn, Day 8 Turn 7 (World.cs)
 --- CheckEventTimers (Director.cs)
  Event "Search and Detain" Dormant Timer decremented to 13
-//Exile Game File "LogTurn.txt" Close completed at: 13/04/2017 17:05:53
+//Exile Game File "LogTurn.txt" Close completed at: 14/04/2017 16:04:45

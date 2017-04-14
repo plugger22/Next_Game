@@ -47,7 +47,6 @@
 # calc: Add -> player gains an item, Subtract -> player loses an item
 # apply: Select from... +ve -> Active items, -ve -> Passive Items, '0' All items
 
-
 # [outcome] effect -> VoyageTime
 # amount: number of turns to vary voyagetime by
 # calc: Add (slow down) / Subtract (speed up, mincapped at 1)
@@ -399,26 +398,28 @@ Event: A wild storm lashes the vessel. Amid slashing spray, large waves crash on
 text: Seek shelter below decks in the relative safety of your cabin
 reply: Why risk being washed overboard? Let the crew deal with the storm. It's their job to keep you afloat.
 [outcome]
-effect: None
-data: 
-amount:
-apply:
+effect: VoyageTime
+amount: 3
+apply: Add
 [option]
 text: Stand next to the Captain on the quarter deck and set an example for the crew.
 reply: Damn the storm. It's dangerous to remain on deck but the crew will be inspired by your calm demeanour.
 [outcome]
-effect: 
-data: 
-amount:
-apply:
+effect: VoyageTime
+amount: 1
+apply: Add
 [option]
 text: Climb the mast and howl at the wind. Uncage your inner beast.
 reply: The crew look at you askance. Clearly you must be mad. Nobody goes aloft in a storm.
 [outcome]
-effect: 
-data: 
-amount:
-apply:
+effect: VoyageTime
+amount: 2
+apply: Add
+[outcome]
+effect: Game
+data: 2
+amount: 1
+apply: Add
 [End]
 
 Name: Becalmed
@@ -435,26 +436,28 @@ Event: The wind, the wind? Where to has it gone? Will it ever return? The ship s
 text: What can you do but go below and drink some wine?
 reply: The coolness of your cabin beckons along with the allure of a fine wine. Leave the Captain and crew to bake in the hot sun.
 [outcome]
-effect: 
-data: 
-amount:
-apply:
+effect: VoyageTime
+amount: 4
+apply: Add
 [option]
 text: Join the crew in their prays to the Harpies.
 reply: With luck the Harpies will send forth gusts of wind to get you out of this baking hot hell hole in the midst of the ocean.
 [outcome]
-effect: 
-data: 
-amount:
-apply:
+effect: VoyageTime
+amount: 1
+apply: Add
 [option]
 text: Pick a fight with the biggest, narliest, looking crew member.
 reply: Discipline is breaking down. The Captain seems as listless and apathetic as his crew. Restore order through physical violence.
 [outcome]
-effect: 
-data: 
-amount:
-apply:
+effect: VoyageTime
+amount: 2
+apply: Add
+[outcome]
+effect: Conflict
+data: 3
+chall: Yes
+CsubType: Personal
 [End]
 
 Name: Jonah
@@ -469,26 +472,26 @@ Event: The crew demand that a passenger be thrown overboard. They insist that sh
 text: Stand aside and let it happen.
 reply: Nobody wants to be sailing on a cursed ship. If the woman is a Jonah then she needs to be heaved overboard immediately.
 [outcome]
-effect: 
-data: 
-amount:
-apply:
+effect: Game
+data: -4
+amount: 2
+apply: Add
 [option]
 text: Over my dead body! Protect the woman.
 reply: Superstituous nonsense! You draw your sword and make it clear that they will have to kill you first.
 [outcome]
-effect: 
-data: 
-amount:
-apply:
+effect: Game
+data: 4
+amount: 2
+apply: Add
 [option]
 text:  Negotiate with the crew. Giving the woman ten lashes of the whip will be sufficent
 reply: There is no need for the woman to die. While ten lashes might cripple her, it's better than drowning.
 [outcome]
-effect: 
-data: 
-amount:
-apply:
+effect: Game
+data: -4
+amount: 1
+apply: Add
 [End]
 
 Name: Cabin Boy
@@ -503,29 +506,41 @@ Event: You surprise one of the crew taking advantage of the cabin boy.
 text: Keep walking. It's none of your business.
 reply: It's a tough world. The boy needs to learn that the only person who will help you is yourself.
 [outcome]
-effect: 
-data: 
-amount:
-apply:
+effect: Game
+data: -4
+amount: 2
+apply: Add
 [option]
 text: Speak to the Captain and ask him to make an example of the man.
 reply: Moral standards must be upheld. Explain to the Captain that he is only as good as the standards he upholds.
 [outcome]
-effect: 
-data: 
-amount:
-apply:
+effect: Game
+data: 4
+amount: 1
+apply: Add
 [option]
 text: He's only a young boy. Draw your sword.
 reply: It's your duty to protect the weak and vulnerable. Cold steel will teach this filthy rapist a lesson.
 [outcome]
-effect: 
-data: 
-amount:
-apply:
+effect: Game
+data: 4
+amount: 1
+apply: Add
+[outcome]
+effect: Conflict
+data: 3
+chall: Yes
+CsubType: Personal
 [End]
 
 # Dungeon Events ---
+
+# [outcome] effect -> Condition
+# conPlyr: Yes / No ( Yes -> condition applies to Player, No -> condition applies to NPC actor)
+# conText: Name of condition, eg. "Old Age"
+# conSkill: Which skill it applies to ( Combat / Wits / Charm / Treachery / Leadership / Touched )
+# conEffect: effect of condition on skill, only values allowed are -2 / -1 / 1 / 2
+# conTimer: How long condition applies for in days. If '999' then condition is permanent
 
 Name: Torture
 ID: 11
@@ -540,12 +555,33 @@ Event: The door of your cell crashes open. The dungeon master gives you an evil 
 [option]
 text: Stretch me on the wrack please. My back is giving me trouble.
 reply: Grimacing you allow yourself to be dragged off to the torture chamber. The dungeon master drools with anticipation.
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Pulled Tendons
+conSkill:  Combat
+conEffect: -1
+conTimer: 20
 [option]
 text: Chop off a finger or two, I've got plenty to spare.
 reply: Grimacing you allow yourself to be dragged off to the torture chamber. The dungeon master drools with anticipation.
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Missing Fingers
+conSkill: Combat
+conEffect: -1
+conTimer: 30
 [option]
 text: Teeth. Feel free to knock a few out. They'll grow back one day.
 reply: Grimacing you allow yourself to be dragged off to the torture chamber. The dungeon master drools with anticipation.
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Missing Teeth
+conSkill: Charm
+conEffect: -1
+conTimer: 40
 [End]
 
 Name: Rats
@@ -561,12 +597,33 @@ Event: Rats infest your cell at night. Big, vicious, rats that have no fear of h
 [option]
 text: Ignore them. So what if they chew your toes?
 reply: Rat bites and a ragged toe or two you can handle. It's important to conserve your energy for when it counts.
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Rat Bites
+conSkill: Combat
+conEffect: -1
+conTimer: 10
 [option]
 text: Mmmmm. Raw Rat. What a treat.
 reply: Beggars can't be chosers. Besides, it's so dark that raw, dripping, rat looks the same as raw dog. Both taste rancid.
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Rat Food Energy Boost
+conSkill: Combat
+conEffect: 1
+conTimer: 5
 [option]
 text: Kill them with your bare hands if you can. 
 reply: It's an effort but why should you have to share your cell with a resident population of disgusting vermin?
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Exhausted
+conSkill: Combat
+conEffect: -1
+conTimer: 5
 [End]
 
 Name: Terrible Food
@@ -582,12 +639,38 @@ Event: The swill that your Goaler brings every morning and evening is fit only f
 [option]
 text: Hold your tongue and wolf down the inedible mixture as fast as you can.
 reply: There are things floating in the swill that aren't known to man. They claw at the sides of your throat as you gulp them down.
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Indigestion
+conSkill: Wits
+conEffect: -1
+conTimer: 4
 [option]
 text: Refuse to eat anything until better food arrives.
 reply: Why eat food that will chew it's way through your stomach lining? Better to go without and hope for something edible tomorrow.
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Hungry
+conSkill: Combat
+conEffect: -1
+conTimer: 4
 [option]
 text: Hurl the pail of swill into the face of your Goaler.
 reply: Sure, he'll beat you but it's important to draw the line and stand your ground.
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Beaten up by Goaler
+conSkill: Charm
+conEffect: -1
+conTimer: 5
+[outcome]
+effect: Game
+data: 2
+amount: 1
+apply: Add
 [End]
 
 Name: The Bucket
@@ -603,16 +686,32 @@ Event: There's a bucket in the corner of your tiny cell. You can use it for a la
 [option]
 text: Who wants to lie in their own waste? 
 reply: You refuse the water and use the bucket for your toiletry. It stinks but at least you're not sleeping in it.
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Dehydrated
+conSkill: Wits
+conEffect: -1
+conTimer: 4
 [option]
 text: Water, give me water.
 reply: How long will you last if you can't drink? People don't die from sleeping in their own crap, do they?
+[outcome]
+effect: None
 [option]
 text: Do both. It's a multipurpose bucket.
 reply: The goaler promises to empty your waste every morning and refill the bucket with water. He didn't say anything about rinsing it first.
+[outcome]
+effect: Condition
+conPlyr: yes
+conText: Diarrhoea
+conSkill: Charm
+conEffect: -1
+conTimer: 6
 [End]
 
 Name: Bribe Goaler
-ID: 11
+ID: 15
 Type: Dungeon
 subType: None
 Cat: Generic
@@ -625,12 +724,28 @@ Event: You've got to know your Goaler. In a fashion. You sense that he might be 
 [option]
 text: It's to risky. Say nothing.
 reply: He'll only beat you to pulp and report you to the Dungeon Master if you offer him a bribe.
+[outcome]
+effect: None
 [option]
 text: Offer your fat, piggy, Goaler a better life
 reply: He works all day in the dark, damp, dungeons under the castle. Why wouldn't he want a better life? Keep it vague and let him fill in the details himself.
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Broken nose
+conSkill: Charm
+conEffect: -1
+conTimer: 30
 [option]
 text: Offer your peasant brained Goaler untold wealth and women
 reply: Of course you'll give him neither. What woman would sleep with such an ugly dumb brute? You make an effort to smile in order to sweeten the offer.
+[outcome]
+effect: Condition
+conPlyr: Yes
+conText: Black Eyes
+conSkill: Charm
+conEffect: -1
+conTimer: 5
 [End]
 
-# next ID is 15
+# next ID is 16

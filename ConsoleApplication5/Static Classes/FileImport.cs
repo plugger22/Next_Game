@@ -1394,6 +1394,9 @@ namespace Next_Game
                                                     break;
                                             }
                                             break;
+                                        case ArcType.Dungeon:
+                                            //no subType required for Dungeons
+                                            break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
@@ -2067,6 +2070,9 @@ namespace Next_Game
                                                 break;
                                             case ArcType.Actor:
                                                 eventObject = new EventFolActor(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Actor);
+                                                break;
+                                            case ArcType.Dungeon:
+                                                eventObject = new EventPlyDungeon(structEvent.EventID, structEvent.Name, structEvent.Frequency);
                                                 break;
                                             default:
                                                 Game.SetError(new Error(49, string.Format("Invalid ArcType for Object (\"{0}\")", arrayOfEvents[i])));

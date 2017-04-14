@@ -3297,6 +3297,7 @@ namespace Next_Game
                             GetLocationName(player.LocID), player.VoyageTime);
                         SetMessage(new Message(description, MessageType.Move));
                     }
+                    Game.logTurn.Write(description);
                 }
             }
         }
