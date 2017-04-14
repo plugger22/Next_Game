@@ -1273,6 +1273,10 @@ namespace Next_Game
                                         case "Actor":
                                             structEvent.Type = ArcType.Actor;
                                             break;
+                                        case "dungeon":
+                                        case "Dungeon":
+                                            structEvent.Type = ArcType.Dungeon;
+                                            break;
                                         default:
                                             structEvent.Type = ArcType.None;
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfEvents[i])));

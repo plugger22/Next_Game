@@ -378,4 +378,107 @@ amount: 1
 apply: Add
 [End]
 
-# next ID is 7
+# Sea events
+
+Name: Storm
+ID: 7
+Type: GeoCluster
+subType: Sea
+Cat: Generic
+Freq: Low
+Status: Active
+Repeat: 10
+Cool:
+Event: 
+
+Name: Becalmed
+ID: 8
+Type: GeoCluster
+subType: Sea
+Cat: Generic
+Freq: Low
+Status: Active
+Repeat: 10
+Cool:
+Event:
+
+Name: Jonah
+ID: 9
+Type: GeoCluster
+subType: Sea
+Cat: Generic
+Freq: Low
+Status: Active
+Repeat: 10
+Cool:
+Event:
+
+Name: Ships Boy
+ID: 10
+Type: GeoCluster
+subType: Sea
+Cat: Generic
+Freq: Low
+Status: Active
+Repeat: 10
+Cool:
+Event:
+
+# Dungeon Events
+
+Name: Torture
+ID: 11
+Type: Dungeon
+subType: None
+Cat: Generic
+Freq: Low
+Status: Active
+Repeat: 2
+Cool: 4
+Event:
+
+Name: Rats
+ID: 12
+Type: Dungeon
+subType: None
+Cat: Generic
+Freq: Low
+Status: Active
+Repeat: 2
+Cool:
+Event:
+
+Name: Terrible Food
+ID: 13
+Type: Dungeon
+subType: None
+Cat: Generic
+Freq: Low
+Status: Active
+Repeat: 2
+Cool:
+Event:
+
+Name: The Bucket
+ID: 14
+Type: Dungeon
+subType: None
+Cat: Generic
+Freq: Low
+Status: Active
+Repeat: 2
+Cool:
+Event:
+
+Name: Bribe Goaler
+ID: 11
+Type: Dungeon
+subType: None
+Cat: Generic
+Freq: Low
+Status: Active
+Repeat: 2
+Cool:
+Event:
+
+# next ID is 15
