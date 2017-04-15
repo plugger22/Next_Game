@@ -457,7 +457,7 @@ namespace Next_Game
             Active player = Game.world.GetActiveActor(1);
             if (player != null && player.Status != ActorStatus.Gone && player.Delay == 0)
             {
-                Game.logTurn.Write("--- CheckPlayerEvents (Director.cs)");
+                Game.logTurn?.Write("--- CheckPlayerEvents (Director.cs)");
                 //check first if any enemy is about to capture the Player
                 if (player.Capture == true && player.Status != ActorStatus.Captured)
                 {  CreateAutoEnemyEvent(); }
@@ -473,14 +473,14 @@ namespace Next_Game
                                 DeterminePlayerEvent(player, EventType.Location);
                                 //chance of event halved after each occurence (prevents a long string of random events and gives space for necessary system events)
                                 story.Ev_Player_Loc_Current /= 2;
-                                Game.logTurn.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
+                                Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
                             }
                             else
                             {
                                 CreateAutoLocEvent(EventFilter.None);
                                 //reset back to base figure
                                 story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
-                                Game.logTurn.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
+                                Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
                             }
                             break;
                         case ActorStatus.Travelling:
@@ -968,7 +968,7 @@ namespace Next_Game
             Active player = Game.world.GetActiveActor(1);
             if (player != null)
             {
-                Game.logTurn.Write("- CreateAutoLocEvent (Director.cs)");
+                Game.logTurn?.Write("- CreateAutoLocEvent (Director.cs)");
                 List<Actor> listActors = new List<Actor>();
                 List<Passive> listCourt = new List<Passive>();
                 List<Passive> listAdvisors = new List<Passive>();
@@ -1015,7 +1015,7 @@ namespace Next_Game
                         if (tempActor != null)
                         {   //exclude player from list (they are always present) & you
                             if (tempActor.ActID != 1)
-                            { listActors.Add(tempActor); Game.logTurn.Write(string.Format(" [AutoEvent -> ActorList] \"{0}\", ID {1} added to list of Actors", tempActor.Name, tempActor.ActID)); }
+                            { listActors.Add(tempActor); Game.logTurn?.Write(string.Format(" [AutoEvent -> ActorList] \"{0}\", ID {1} added to list of Actors", tempActor.Name, tempActor.ActID)); }
                         }
                         else { Game.SetError(new Error(118, string.Format("Invalid tempActor ID {0} (Null)", actorIDList[i]))); }
                     }
@@ -1032,20 +1032,20 @@ namespace Next_Game
                             {
                                 if (tempPassive.Type == ActorType.Lord || tempPassive.Age >= 15)
                                 {
-                                    listCourt.Add(tempPassive); Game.logTurn.Write(string.Format(" [AutoEvent -> LocalList] \"{0}\", ID {1} added to list of Locals",
+                                    listCourt.Add(tempPassive); Game.logTurn?.Write(string.Format(" [AutoEvent -> LocalList] \"{0}\", ID {1} added to list of Locals",
                                       tempPassive.Name, tempPassive.ActID));
                                 }
                             }
                             else if (actor is Advisor)
                             {
-                                listAdvisors.Add(tempPassive); Game.logTurn.Write(string.Format(" [AutoEvent -> AdvisorList] \"{0}\", ID {1} added to list of Advisors",
+                                listAdvisors.Add(tempPassive); Game.logTurn?.Write(string.Format(" [AutoEvent -> AdvisorList] \"{0}\", ID {1} added to list of Advisors",
                                   tempPassive.Name, tempPassive.ActID));
                             }
                             else
                             {
                                 if (tempPassive.Age >= 15)
                                 {
-                                    listVisitors.Add(tempPassive); Game.logTurn.Write(string.Format(" [AutoEvent -> VisitorList] \"{0}\", ID {1} added to list of Visitors",
+                                    listVisitors.Add(tempPassive); Game.logTurn?.Write(string.Format(" [AutoEvent -> VisitorList] \"{0}\", ID {1} added to list of Visitors",
                                       tempPassive.Name, tempPassive.ActID));
                                 }
                             }
@@ -1054,7 +1054,7 @@ namespace Next_Game
                         {
                             Follower tempFollower = actor as Follower;
                             listFollowers.Add(tempFollower);
-                            Game.logTurn.Write(string.Format(" [AutoEvent -> FollowerList] \"{0}\", ID {1} added to list of Followers", tempFollower.Name, tempFollower.ActID));
+                            Game.logTurn?.Write(string.Format(" [AutoEvent -> FollowerList] \"{0}\", ID {1} added to list of Followers", tempFollower.Name, tempFollower.ActID));
                         }
                     }
                     //new event (auto location events always have eventPID of '1000' -> old version in Player dict is deleted before new one added)
@@ -1539,7 +1539,7 @@ namespace Next_Game
             {
                 List<int> tempList = new List<int>(); //temp list to hold eventPID of deleted events
                 //check dictionary first
-                Game.logTurn.Write("--- HouseKeepEvents (Director.cs)");
+                Game.logTurn?.Write("--- HouseKeepEvents (Director.cs)");
                 int counter = 0;
                 foreach (var eventObject in dictPlayerEvents)
                 {
@@ -1548,7 +1548,7 @@ namespace Next_Game
                     {
                         tempList.Add(eventObject.Value.EventPID);
                         counter++;
-                        Game.logTurn.Write(string.Format(" \"{0}\" autoReact Event found, Status {1}", eventObject.Value.Name, eventObject.Value.Status));
+                        Game.logTurn?.Write(string.Format(" \"{0}\" autoReact Event found, Status {1}", eventObject.Value.Name, eventObject.Value.Status));
                     }
                     
                 }
@@ -1560,23 +1560,23 @@ namespace Next_Game
                         //remove from dictionary
                         if (dictPlayerEvents.Remove(eventID) == true)
                         {
-                            Game.logTurn.Write(string.Format(" \"eventID {0}\" Player Event has been removed from the dictPlayerEvents", eventID));
+                            Game.logTurn?.Write(string.Format(" \"eventID {0}\" Player Event has been removed from the dictPlayerEvents", eventID));
                             NumAutoReactEvents--;
                         }
                     }
                     //remove from lists (asumes that each individual eventID will be present in only one list)
                     for (int i = 0; i < tempList.Count; i++)
                     {
-                        if (listGenPlyrEventsCapital.Remove(tempList[i]) == true) { Game.logTurn.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsCapital", i)); continue; }
-                        if (listGenPlyrEventsMajor.Remove(tempList[i]) == true) { Game.logTurn.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsMajor", i)); continue; }
-                        if (listGenPlyrEventsMinor.Remove(tempList[i]) == true) { Game.logTurn.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsMinor", i)); continue; }
-                        if (listGenPlyrEventsInn.Remove(tempList[i]) == true) { Game.logTurn.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsInn", i)); continue; }
-                        if (listGenPlyrEventsForest.Remove(tempList[i]) == true) { Game.logTurn.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsForest", i)); continue; }
-                        if (listGenPlyrEventsMountain.Remove(tempList[i]) == true) { Game.logTurn.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsMountain", i)); continue; }
-                        if (listGenPlyrEventsSea.Remove(tempList[i]) == true) { Game.logTurn.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsSea", i)); continue; }
-                        if (listGenPlyrEventsNormal.Remove(tempList[i]) == true) { Game.logTurn.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsNormal", i)); continue; }
-                        if (listGenPlyrEventsKing.Remove(tempList[i]) == true) { Game.logTurn.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsKing", i)); continue; }
-                        if (listGenPlyrEventsConnector.Remove(tempList[i]) == true) { Game.logTurn.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsConnector", i)); continue; }
+                        if (listGenPlyrEventsCapital.Remove(tempList[i]) == true) { Game.logTurn?.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsCapital", i)); continue; }
+                        if (listGenPlyrEventsMajor.Remove(tempList[i]) == true) { Game.logTurn?.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsMajor", i)); continue; }
+                        if (listGenPlyrEventsMinor.Remove(tempList[i]) == true) { Game.logTurn?.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsMinor", i)); continue; }
+                        if (listGenPlyrEventsInn.Remove(tempList[i]) == true) { Game.logTurn?.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsInn", i)); continue; }
+                        if (listGenPlyrEventsForest.Remove(tempList[i]) == true) { Game.logTurn?.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsForest", i)); continue; }
+                        if (listGenPlyrEventsMountain.Remove(tempList[i]) == true) { Game.logTurn?.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsMountain", i)); continue; }
+                        if (listGenPlyrEventsSea.Remove(tempList[i]) == true) { Game.logTurn?.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsSea", i)); continue; }
+                        if (listGenPlyrEventsNormal.Remove(tempList[i]) == true) { Game.logTurn?.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsNormal", i)); continue; }
+                        if (listGenPlyrEventsKing.Remove(tempList[i]) == true) { Game.logTurn?.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsKing", i)); continue; }
+                        if (listGenPlyrEventsConnector.Remove(tempList[i]) == true) { Game.logTurn?.Write(string.Format(" EventPID {0} removed from listGenPlyrEventsConnector", i)); continue; }
                         //any hit above would have skipped this code
                         Game.SetError(new Error(126, string.Format("Warning! EventPID {0} wasn't found in any list (HousekeepEvents, tidy up AutoReact events", i)));
                     }
@@ -1628,7 +1628,7 @@ namespace Next_Game
             List<Event> listEvents = new List<Event>();
             if (listEventID != null)
             {
-                Game.logTurn.Write("--- GetValidPlayerEvents (Director.cs)");
+                Game.logTurn?.Write("--- GetValidPlayerEvents (Director.cs)");
                 foreach (int eventID in listEventID)
                 {
                     Event eventObject = dictPlayerEvents[eventID];
@@ -1643,17 +1643,17 @@ namespace Next_Game
                             {
                                 if (eventObject.LocType > ArcLoc.None)
                                 {
-                                    if (data != eventObject.SubRef) { proceed = false; Game.logTurn.Write(string.Format("Event \"{0}\" failed HouseID check", eventObject.Name)); }
-                                    else { Game.logTurn.Write(string.Format(" Event \"{0}\" PASSED HouseID check", eventObject.Name)); }
+                                    if (data != eventObject.SubRef) { proceed = false; Game.logTurn?.Write(string.Format("Event \"{0}\" failed HouseID check", eventObject.Name)); }
+                                    else { Game.logTurn?.Write(string.Format(" Event \"{0}\" PASSED HouseID check", eventObject.Name)); }
                                 }
                                 else if (eventObject.GeoType > ArcGeo.None)
                                 {
-                                    if (data != eventObject.SubRef) { proceed = false; Game.logTurn.Write(string.Format("Event \"{0}\" failed GeoID check", eventObject.Name)); }
-                                    else { Game.logTurn.Write(string.Format(" Event \"{0}\" PASSED HouseID check", eventObject.Name)); }
+                                    if (data != eventObject.SubRef) { proceed = false; Game.logTurn?.Write(string.Format("Event \"{0}\" failed GeoID check", eventObject.Name)); }
+                                    else { Game.logTurn?.Write(string.Format(" Event \"{0}\" PASSED HouseID check", eventObject.Name)); }
                                 }
                             }
                         }
-                        else { Game.logTurn.Write(string.Format(" Event \"{0}\" has no attached Conditions", eventObject.Name)); }
+                        else { Game.logTurn?.Write(string.Format(" Event \"{0}\" has no attached Conditions", eventObject.Name)); }
                         if (proceed == true)
                         {
                             frequency = (int)eventObject.Frequency;
@@ -1726,7 +1726,7 @@ namespace Next_Game
                 EventPackage package = listFollCurrentEvents[i];
                 if (package.Done == false)
                 {
-                    Game.logTurn.Write("--- ResolveFollowerEvents (Director.cs)");
+                    Game.logTurn?.Write("--- ResolveFollowerEvents (Director.cs)");
                     EventFollower eventObject = (EventFollower)package.EventObject;
                     List<OptionAuto> listOptions = eventObject.GetOptions();
                     //assume only a single option
@@ -1918,7 +1918,7 @@ namespace Next_Game
                 EventPackage package = listPlyrCurrentEvents[i];
                 if (package.Done == false)
                 {
-                    Game.logTurn.Write("--- ResolvePlayerEvents (Director.cs)");
+                    Game.logTurn?.Write("--- ResolvePlayerEvents (Director.cs)");
                     EventPlayer eventObject = (EventPlayer)package.EventObject;
                     Active actor = package.Person;
                     Game._eventID = eventObject.EventPID;
@@ -1993,17 +1993,17 @@ namespace Next_Game
                     if (eventObject.TimerRepeat > 0)
                     {
                         eventObject.TimerRepeat--;
-                        Game.logTurn.Write(string.Format(" Event \"{0}\" Timer Repeat now {1}", eventObject.Name, eventObject.TimerRepeat));
+                        Game.logTurn?.Write(string.Format(" Event \"{0}\" Timer Repeat now {1}", eventObject.Name, eventObject.TimerRepeat));
                         //if repeat timer has run down to 0, the event is no longer active
                         if (eventObject.TimerRepeat == 0)
                         {
                             eventObject.Status = EventStatus.Dormant;
-                            Game.logTurn.Write(string.Format(" Event \"{0}\" Timer Repeat has run down to Zero. Event is now {1}", eventObject.Name, eventObject.Status));
+                            Game.logTurn?.Write(string.Format(" Event \"{0}\" Timer Repeat has run down to Zero. Event is now {1}", eventObject.Name, eventObject.Status));
                         }
                     }
                     //reset cool down timer
                     eventObject.TimerCoolDown = eventObject.TimerCoolBase;
-                    Game.logTurn.Write(string.Format(" Event \"{0}\" Cooldown Timer has been reset to {1}", eventObject.Name, eventObject.TimerCoolBase));
+                    Game.logTurn?.Write(string.Format(" Event \"{0}\" Cooldown Timer has been reset to {1}", eventObject.Name, eventObject.TimerCoolBase));
                     //info at bottom
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("Press ENTER or ESC to ignore this event", RLColor.LightGray, backColor));
@@ -2047,7 +2047,7 @@ namespace Next_Game
                                 type = SkillType.Combat;
                                 Game.SetError(new Error(76, string.Format("Invalid Trigger Data (\"{0}\"), default Combat trait used instead, for Option \"{1}\"", trigger.Data, option.Text)));
                             }
-                            Game.logTurn.Write(string.Format(" \"{0}\" {1} Trigger, if type {2} is {3} to {4}", option.Text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold));
+                            Game.logTurn?.Write(string.Format(" \"{0}\" {1} Trigger, if type {2} is {3} to {4}", option.Text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold));
                             if (CheckTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == false) { return false; }
                             break;
                         case TriggerCheck.GameVar:
@@ -2058,14 +2058,14 @@ namespace Next_Game
                             break;
                         case TriggerCheck.Sex:
                             //Threshold = (int)ActorSex -> Male 1, Female 2 (sex of actor). Must be opposite sex (seduction
-                            if (CheckTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == false) { Game.logTurn.Write(" Trigger: Same sex, Seduction not possible"); return false; }
+                            if (CheckTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Same sex, Seduction not possible"); return false; }
                             break;
                         case TriggerCheck.ActorType:
                             //Data = ActorType, Threshold is required type. Must be equal
-                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { Game.logTurn.Write(" Trigger: Incorrect ActorType"); return false; }
+                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Incorrect ActorType"); return false; }
                             break;
                         case TriggerCheck.ResourcePlyr:
-                            if (CheckTrigger(player.Resources, trigger.Calc, trigger.Threshold) == false) { Game.logTurn.Write(" Trigger: Player has wrong amount of Resources"); return false; }
+                            if (CheckTrigger(player.Resources, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player has wrong amount of Resources"); return false; }
                             break;
                         default:
                             Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\"", trigger.Check, option.Text)));
@@ -2109,7 +2109,7 @@ namespace Next_Game
                     validCheck = false;
                     break;
             }
-            Game.logTurn.Write(string.Format(" Trigger {0} on \"{1}\" {2} {3}", validCheck == true ? "passed" : "FAILED", data, comparator, threshold));
+            Game.logTurn?.Write(string.Format(" Trigger {0} on \"{1}\" {2} {3}", validCheck == true ? "passed" : "FAILED", data, comparator, threshold));
             return validCheck;
         }
 
@@ -2120,7 +2120,7 @@ namespace Next_Game
         /// <param name="optionNum"></param>
         public int ResolveOutcome(int eventID, int optionNum)
         {
-            Game.logTurn.Write("--- ResolveOutcome (Director.cs)");
+            Game.logTurn?.Write("--- ResolveOutcome (Director.cs)");
             int validOption = 1;
             int actorID;
             int rndNum = 0;
@@ -2161,13 +2161,13 @@ namespace Next_Game
                                     if (rndNum <= option.Test)
                                     {
                                         listOutcomes = option.GetGoodOutcomes(); optionReply = option.ReplyGood;
-                                        Game.logTurn.Write(string.Format(" Option \"{0}\" Passed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum));
+                                        Game.logTurn?.Write(string.Format(" Option \"{0}\" Passed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum));
                                         rndResult = "Success!";
                                     }
                                     else
                                     {
                                         listOutcomes = option.GetBadOutcomes(); optionReply = option.ReplyBad;
-                                        Game.logTurn.Write(string.Format(" Option \"{0}\" Failed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum));
+                                        Game.logTurn?.Write(string.Format(" Option \"{0}\" Failed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum));
                                         rndResult = "Fail";
                                     }
                                 }
@@ -2450,7 +2450,7 @@ namespace Next_Game
                         {
                             //invalid option (trigger/s didn't pass)
                             validOption = 0;
-                            Game.logTurn.Write(string.Format(" Inactive (greyed out) Option chosen for \"{0}\", option # {1}", eventObject.Name, optionNum));
+                            Game.logTurn?.Write(string.Format(" Inactive (greyed out) Option chosen for \"{0}\", option # {1}", eventObject.Name, optionNum));
                         }
                     }
                     else { validOption = 0;  Game.SetError(new Error(73, string.Format("No valid option present for \"{0}\", option # {1}", eventObject.Name, optionNum))); }
@@ -2831,7 +2831,7 @@ namespace Next_Game
         /// </summary>
         internal void CheckEventTimers()
         {
-            Game.logTurn.Write("--- CheckEventTimers (Director.cs)");
+            Game.logTurn?.Write("--- CheckEventTimers (Director.cs)");
             //PLAYER events
             foreach (var eventObject in dictPlayerEvents)
             {
@@ -2842,19 +2842,19 @@ namespace Next_Game
                         if (eventObject.Value.TimerDormant > 0)
                         {
                             eventObject.Value.TimerDormant--;
-                            Game.logTurn.Write(string.Format(" Event \"{0}\" Dormant Timer decremented to {1}", eventObject.Value.Name, eventObject.Value.TimerDormant));
+                            Game.logTurn?.Write(string.Format(" Event \"{0}\" Dormant Timer decremented to {1}", eventObject.Value.Name, eventObject.Value.TimerDormant));
                             //if dormant timer has run down to 0, the event is no longer active
                             if (eventObject.Value.TimerDormant == 0)
                             {
                                 eventObject.Value.Status = EventStatus.Dormant;
-                                Game.logTurn.Write(string.Format(" Event \"{0}\" Dormant Timer has run down to Zero. Event is now {1}", eventObject.Value.Name, eventObject.Value.Status));
+                                Game.logTurn?.Write(string.Format(" Event \"{0}\" Dormant Timer has run down to Zero. Event is now {1}", eventObject.Value.Name, eventObject.Value.Status));
                             }
                         }
                         //decrement Cool down timers
                         if (eventObject.Value.TimerCoolDown > 0)
                         {
                             eventObject.Value.TimerCoolDown--;
-                            Game.logTurn.Write(string.Format(" \"{0}\" event, Cooldown Timer decremented from {1} to {2}", eventObject.Value.Name, eventObject.Value.TimerCoolDown + 1, 
+                            Game.logTurn?.Write(string.Format(" \"{0}\" event, Cooldown Timer decremented from {1} to {2}", eventObject.Value.Name, eventObject.Value.TimerCoolDown + 1, 
                                 eventObject.Value.TimerCoolDown));
                         }
                         break;
@@ -2863,12 +2863,12 @@ namespace Next_Game
                         if (eventObject.Value.TimerLive > 0)
                         {
                             eventObject.Value.TimerLive--;
-                            Game.logTurn.Write(string.Format(" Event \"{0}\" Live Timer decremented to {1}", eventObject.Value.Name, eventObject.Value.TimerLive));
+                            Game.logTurn?.Write(string.Format(" Event \"{0}\" Live Timer decremented to {1}", eventObject.Value.Name, eventObject.Value.TimerLive));
                             //if Lie timer has run down to 0, the event goes active
                             if (eventObject.Value.TimerLive == 0)
                             {
                                 eventObject.Value.Status = EventStatus.Active;
-                                Game.logTurn.Write(string.Format(" Event \"{0}\" Live Timer has run down to Zero. Event is now {1}", eventObject.Value.Name, eventObject.Value.Status));
+                                Game.logTurn?.Write(string.Format(" Event \"{0}\" Live Timer has run down to Zero. Event is now {1}", eventObject.Value.Name, eventObject.Value.Status));
                             }
                         }
                         break;
@@ -2892,10 +2892,10 @@ namespace Next_Game
                 {
                     if (eventObject.Status != newStatus)
                     {
-                        Game.logTurn.Write("--- ChangePlayerEventStatus (Director.cs)");
+                        Game.logTurn?.Write("--- ChangePlayerEventStatus (Director.cs)");
                         eventObject.Status = newStatus;
                         resultText = string.Format(" \"{0}\", eventPID {1}, has changed status to \"{2}\"", eventObject.Name, eventObject.EventPID, newStatus);
-                        Game.logTurn.Write(resultText);
+                        Game.logTurn?.Write(resultText);
                     }
                     else
                     { Game.SetError(new Error(78, string.Format("\"{0}\" identical to existing, eventID {1} status unchanged", newStatus, targetEventID))); }
@@ -2943,7 +2943,7 @@ namespace Next_Game
                             opponent.Name, opponent.Handle, opponent.ActID);
                         tempText = string.Format("{0} {1} has lost possession of \"{2}\", itemID {1}, to the Ursurper", opponent.Title, opponent.Name, item.Description, item.ItemID);
                         Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.GetRefID(opponent.LocID), CurrentActorIncident.Event));
-                        Game.logTurn.Write(tempText);
+                        Game.logTurn?.Write(tempText);
 
                     }
                 }
@@ -2962,7 +2962,7 @@ namespace Next_Game
                             opponent.Name, opponent.Handle, opponent.ActID);
                         tempText = string.Format("{0} {1} has gained possession of \"{2}\", itemID {3}, from the Ursurper", opponent.Title, opponent.Name, item.Description, item.ItemID);
                         Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.GetRefID(opponent.LocID), CurrentActorIncident.Event));
-                        Game.logTurn.Write(tempText);
+                        Game.logTurn?.Write(tempText);
                     }
                 }
             }
@@ -2988,14 +2988,14 @@ namespace Next_Game
                     {
                         int currentLocID = player.LocID;
                         player.LocID = destID;
-                        player.VoyageTime = voyageTime;
+                        player.VoyageTimer = voyageTime;
                         player.Status = ActorStatus.AtSea;
                         player.VoyageSafe = safePassage;
                         player.ShipName = Game.history.GetShipName(player.VoyageSafe);
                         string locNameOrigin = Game.world.GetLocationName(currentLocID);
                         string locNameDestination = Game.world.GetLocationName(destID);
                         resultText = string.Format("{0} {1} boards the S.S \"{2}\" at {3}, bound for {4}. Estimated voyage time {5} day{6}", player.Title, player.Name, player.ShipName,
-                            locNameOrigin, locNameDestination, player.VoyageTime, player.VoyageTime != 1 ? "s" : "" );
+                            locNameOrigin, locNameDestination, player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "" );
                     }
                     else { Game.SetError(new Error(217, "Invalid voyageTime (zero, or less)")); }
                 }
@@ -3017,7 +3017,7 @@ namespace Next_Game
             Active player = Game.world.GetActiveActor(1);
             if (player != null)
             {
-                int voyageTime = player.VoyageTime;
+                int voyageTime = player.VoyageTimer;
                 switch(calc)
                 {
                     case EventCalc.Add:
@@ -3033,7 +3033,7 @@ namespace Next_Game
                         Game.SetError(new Error(218, string.Format("Invalid EventCalc \"{0}\" -> voyage time change invalid")));
                         break;
                 }
-                player.VoyageTime = voyageTime;
+                player.VoyageTimer = voyageTime;
             }
             return resultText;
         }
@@ -3049,7 +3049,7 @@ namespace Next_Game
             {
                 try
                 {
-                    Game.logTurn.Write("--- ChangePlayerEventTimer (Director.cs)");
+                    Game.logTurn?.Write("--- ChangePlayerEventTimer (Director.cs)");
                     EventPlayer eventObject = GetPlayerEvent(outcome.EventID);
                     int oldValue, newValue;
                     switch (outcome.Timer)
@@ -3059,28 +3059,28 @@ namespace Next_Game
                             newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
                             eventObject.TimerRepeat = newValue;
                             resultText = string.Format(" \"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
-                            Game.logTurn.Write(resultText);
+                            Game.logTurn?.Write(resultText);
                             break;
                         case EventTimer.Dormant:
                             oldValue = eventObject.TimerDormant;
                             newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
                             eventObject.TimerDormant = newValue;
                             resultText = string.Format(" \"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
-                            Game.logTurn.Write(resultText);
+                            Game.logTurn?.Write(resultText);
                             break;
                         case EventTimer.Live:
                             oldValue = eventObject.TimerLive;
                             newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
                             eventObject.TimerLive = newValue;
                             resultText = string.Format(" \"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
-                            Game.logTurn.Write(resultText);
+                            Game.logTurn?.Write(resultText);
                             break;
                         case EventTimer.Cool:
                             oldValue = eventObject.TimerCoolBase;
                             newValue = ChangeData(oldValue, outcome.Amount, outcome.Calc);
                             eventObject.TimerCoolBase = newValue;
                             resultText = string.Format(" \"{0}\", EventPID {1}, {2} timer changed from {3} to {4}", eventObject.Name, eventObject.EventPID, outcome.Timer, oldValue, newValue);
-                            Game.logTurn.Write(resultText);
+                            Game.logTurn?.Write(resultText);
                             break;
                         default:
                             Game.SetError(new Error(79, string.Format("Invalid Timer \"{0}\", EventID \"{1}\"", outcome.Timer, outcome.EventID)));

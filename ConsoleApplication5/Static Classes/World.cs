@@ -253,7 +253,7 @@ namespace Next_Game
         /// <param name="path">sequenced List of Positions to destination</param>
         internal string InitiateMoveActor(int charID, Position posOrigin, Position posDestination/*, List<Position> path*/)
         {
-            Game.logTurn.Write("--- InitiateMoveActor (World.cs)");
+            Game.logTurn?.Write("--- InitiateMoveActor (World.cs)");
             string returnText = "Error in World.InitiateMoveCharacters";
             //viable Character & Position?
             if (charID > 0 && posOrigin != null && posDestination != null/* && path != null*/)
@@ -261,7 +261,7 @@ namespace Next_Game
                 //find in dictionary
                 if (dictAllActors.ContainsKey(charID))
                 {
-                    Game.logTurn.Write("--- Move Actor (Director.cs)");
+                    Game.logTurn?.Write("--- Move Actor (Director.cs)");
                     Actor person = dictAllActors[charID];
                     if (person != null)
                     {
@@ -294,7 +294,7 @@ namespace Next_Game
                                     if (tempMove.GetPrimaryCharacter() == charID)
                                     {
                                         Position pos = tempMove.GetCurrentPosition();
-                                        Game.logTurn.Write(string.Format("[Move -> Alert] Move Object DELETED PlayerInParty -> {0}, charID {1} at Loc {2}:{3}", tempMove.PlayerInParty, tempMove.GetPrimaryCharacter(),
+                                        Game.logTurn?.Write(string.Format("[Move -> Alert] Move Object DELETED PlayerInParty -> {0}, charID {1} at Loc {2}:{3}", tempMove.PlayerInParty, tempMove.GetPrimaryCharacter(),
                                             pos.PosX, pos.PosY));
                                         Active tempActive = Game.world.GetActiveActor(charID);
                                         if (tempActive != null)
@@ -338,13 +338,13 @@ namespace Next_Game
                         {
                             //main error conditions
                             if (person.Status == ActorStatus.Travelling)
-                            { Game.logTurn.Write(string.Format("[Move -> Error] {0} {1}, ActID {2}, currently Travelling. Move Cancelled", person.Title, person.Name, person.ActID));
+                            { Game.logTurn?.Write(string.Format("[Move -> Error] {0} {1}, ActID {2}, currently Travelling. Move Cancelled", person.Title, person.Name, person.ActID));
                                 returnText = "ERROR: The Journey has been cancelled (Actor Travelling))"; }
                             else if (person.Status == ActorStatus.Captured)
-                            { Game.logTurn.Write(string.Format("[Move -> Error] {0} {1}, ActID {2}, currently Captured. Move Cancelled", person.Title, person.Name, person.ActID));
+                            { Game.logTurn?.Write(string.Format("[Move -> Error] {0} {1}, ActID {2}, currently Captured. Move Cancelled", person.Title, person.Name, person.ActID));
                                 returnText = "ERROR: The Journey has been cancelled (Actor Captured))"; }
                             else if (person.Status == ActorStatus.Gone)
-                            { Game.logTurn.Write(string.Format("[Move -> Error] {0} {1}, ActID {2}, is Deceased. Move Cancelled", person.Title, person.Name, person.ActID));
+                            { Game.logTurn?.Write(string.Format("[Move -> Error] {0} {1}, ActID {2}, is Deceased. Move Cancelled", person.Title, person.Name, person.ActID));
                                 returnText = "ERROR: The Journey has been cancelled (Actor Deceased))"; }
                             else
                             { Game.SetError(new Error(175, string.Format("{0} {1}, ActID {2} Status \"{3}\" Unknown. Move Cancelled", person.Title, person.Name, person.ActID, person.Status)));
@@ -365,7 +365,7 @@ namespace Next_Game
         {
             //create a dictionary of position and map markers to return (passed up to game thence to map to update mapgrid
             Dictionary<int, Position> dictMapMarkers = new Dictionary<int, Position>();
-            Game.logTurn.Write(string.Format("--- MoveActors -> {0} Records (World.cs)", listMoveObjects.Count));
+            Game.logTurn?.Write(string.Format("--- MoveActors -> {0} Records (World.cs)", listMoveObjects.Count));
             //loop moveList. Update each move object - update Character Location ID
             for (int i = 0; i < listMoveObjects.Count; i++)
             {
@@ -380,7 +380,7 @@ namespace Next_Game
                     Position pos = moveObject.GetCurrentPosition();
                     if (pos != null)
                     {
-                        Game.logTurn.Write(string.Format(" [Move -> MoveObject] {0} {1}, ActID {2} travelling to {3} (current Loc {4}:{5})", actor.Title, actor.Name, actor.ActID,
+                        Game.logTurn?.Write(string.Format(" [Move -> MoveObject] {0} {1}, ActID {2} travelling to {3} (current Loc {4}:{5})", actor.Title, actor.Name, actor.ActID,
                             moveObject.GetDestination(), pos.PosX, pos.PosY));
                     }
                     else { Game.SetError(new Error(42, "Invalid pos (null) in actor console printout")); }
@@ -425,7 +425,7 @@ namespace Next_Game
                                         Enemy enemy = person as Enemy;
                                         if (enemy.HuntMode == true) { enemy.Goal = ActorGoal.Search; }
                                         else { enemy.Goal = ActorGoal.Wait; }
-                                        Game.logTurn.Write(string.Format(" [Goal -> Arrival] {0} {1}, ActID {2}, currently at {3}, new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, loc.LocName, enemy.Goal));
+                                        Game.logTurn?.Write(string.Format(" [Goal -> Arrival] {0} {1}, ActID {2}, currently at {3}, new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, loc.LocName, enemy.Goal));
                                     }
                                 }
                                 else
@@ -772,7 +772,7 @@ namespace Next_Game
                             {
                                 Active tempPlayer = person as Active;
                                 locString = string.Format("At Sea onboard the S.S \"{0}\" bound for {1}, arriving in {2} more day{3}", tempPlayer.ShipName, GetLocationName(locID),
-                                    tempPlayer.VoyageTime, tempPlayer.VoyageTime != 1 ? "s" : "");
+                                    tempPlayer.VoyageTimer, tempPlayer.VoyageTimer != 1 ? "s" : "");
                             }
                             break;
                         case ActorStatus.Captured:
@@ -1710,8 +1710,8 @@ namespace Next_Game
         /// <returns>Character ID</returns>
         public int ChooseActor()
         {
-            Game.logTurn.Write("--- ChooseActor (World.cs)");
-            Game.logTurn.Write("Which Character do you want to move (Enter ID #)? ");
+            Game.logTurn?.Write("--- ChooseActor (World.cs)");
+            Game.logTurn?.Write("Which Character do you want to move (Enter ID #)? ");
             //Console.WriteLine("Which Character do you want to move (Enter ID #)? ");
             int charID = Convert.ToInt32(Console.ReadLine());
             Active person = new Active();
@@ -1721,14 +1721,14 @@ namespace Next_Game
                 person = dictActiveActors[charID];
                 if (person.Status != ActorStatus.AtLocation)
                 {
-                    Game.logTurn.Write("That Character isn't at a Location and can't be selected");
+                    Game.logTurn?.Write("That Character isn't at a Location and can't be selected");
                     //Console.WriteLine("That Character isn't at a Location and can't be selected");
                     charID = 0;
                 }
             }
             else
             {
-                Game.logTurn.Write("Character doesn't exist!");
+                Game.logTurn?.Write("Character doesn't exist!");
                 //Console.WriteLine("Character doesn't exist!");
                 charID = 0;
             }
@@ -3219,7 +3219,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartGame()
         {
-            Game.logTurn.Write("--- ProcessStartGame (World.cs)");
+            Game.logTurn?.Write("--- ProcessStartGame (World.cs)");
             Game.history.AgePassiveCharacters(dictPassiveActors);
             CalculateCrows();
             
@@ -3232,7 +3232,7 @@ namespace Next_Game
         {
             Game.logTurn?.Write(string.Format("--- ProcessStartTurn, Day {0}, Turn {1} (World.cs) ", Game.gameTurn + 1, Game.gameTurn));
             UpdateActorMoveStatus(MoveActors());
-            UpdateSeaVoyageStatus();
+            UpdatePlayerStatus();
             CheckStationaryActiveActors();
             CalculateCrows();
             //Enemies
@@ -3271,18 +3271,20 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// handles Sea Voyages for the Player
+        /// handles all relevant status changes for the Player
         /// </summary>
-        private void UpdateSeaVoyageStatus()
+        private void UpdatePlayerStatus()
         {
+            Game.logTurn?.Write("--- UpdatePlayerStatus (World.cs)");
             Active player = GetActiveActor(1);
             if (player != null)
             {
+                //Sea Voyage Status
                 if (player.Status == ActorStatus.AtSea)
                 {
                     string description;
-                    player.VoyageTime--;
-                    if (player.VoyageTime == 0)
+                    player.VoyageTimer--;
+                    if (player.VoyageTimer == 0)
                     {
                         //arrived at Location
                         description = string.Format("{0} {1} has arrived at {2} onboard the S.S \"{3}\"", player.Title, player.Name, GetLocationName(player.LocID), player.ShipName);
@@ -3295,13 +3297,27 @@ namespace Next_Game
                     else
                     {
                         description = string.Format("{0} {1} is at Sea onboard the S.S \"{2}\", bound for {3}, arriving in {4} days", player.Title, player.Name, player.ShipName,
-                            GetLocationName(player.LocID), player.VoyageTime);
+                            GetLocationName(player.LocID), player.VoyageTimer);
                         SetMessage(new Message(description, MessageType.Move));
                     }
-                    Game.logTurn.Write(description);
+                    Game.logTurn?.Write(description);
+                }
+                //Death Timer active
+                if (player.DeathTimer < 999)
+                {
+                    player.DeathTimer--;
+                    Game.logTurn?.Write($"{player.Title} {player.Name} Death Timer reduced by 1 to {player.DeathTimer}");
+                    if (player.DeathTimer <= 0)
+                    {
+                        //end of game
+                        Game.SetEndGame("Death Timer expired");
+                    }
                 }
             }
+            else { Game.SetError(new Error(219, "Invalid Player (null)")); }
+
         }
+
 
         /// <summary>
         /// updates Movement map layer for the different actors (key is mapMarker which is also the ActID of the character moving) Enemies are only shown if known.
@@ -3695,7 +3711,7 @@ namespace Next_Game
         /// </summary>
         private void UpdateActiveActors()
         {
-            Game.logTurn.Write("--- UpdateActiveActors (World.cs)");
+            Game.logTurn?.Write("--- UpdateActiveActors (World.cs)");
             foreach (var actor in dictActiveActors)
             {
                 //if Known, decrement their revert status
@@ -3704,7 +3720,7 @@ namespace Next_Game
                     actor.Value.LastKnownLocID = actor.Value.LocID;
                     actor.Value.TurnsUnknown = 0;
                     actor.Value.Revert--;
-                    Game.logTurn.Write(string.Format(" {0} {1} has had their Revert Timer reduced from {2} to {3}", actor.Value.Title, actor.Value.Name, actor.Value.Revert + 1, actor.Value.Revert));
+                    Game.logTurn?.Write(string.Format(" {0} {1} has had their Revert Timer reduced from {2} to {3}", actor.Value.Title, actor.Value.Name, actor.Value.Revert + 1, actor.Value.Revert));
                     if (actor.Value.Revert <= 0)
                     {
                         //Reverts from Known to Unknown state
@@ -3717,13 +3733,13 @@ namespace Next_Game
                         { SetPlayerRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, CurrentActorIncident.Known)); }
                         else if (actor.Value.ActID > 1)
                         { SetCurrentRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, CurrentActorIncident.Known)); }
-                        Game.logTurn.Write( eventText);
+                        Game.logTurn?.Write( eventText);
                     }
                 }
                 else if (actor.Value.Known == false)
                 {
                     actor.Value.TurnsUnknown++;
-                    Game.logTurn.Write(string.Format(" {0} {1} has had their TurnsUnknown Timer increased from {2} to {3}", 
+                    Game.logTurn?.Write(string.Format(" {0} {1} has had their TurnsUnknown Timer increased from {2} to {3}", 
                         actor.Value.Title, actor.Value.Name, actor.Value.TurnsUnknown - 1, actor.Value.TurnsUnknown));
                 }
             }
@@ -3801,7 +3817,7 @@ namespace Next_Game
             int knownStatus = GetActiveActorTrackingStatus(1); //if '0' then Known, if > 0 then # of days since last known
             int playerLocID, distance, enemyDM;
             int turnsToDestination = 0; //# of turns for Player to reach their destination if travelling (used to adjust threshold)
-            Game.logTurn.Write("--- UpdateAIController (World.cs)");
+            Game.logTurn?.Write("--- UpdateAIController (World.cs)");
             //get player
             Player player = (Player)GetActiveActor(1);
             if (player != null)
@@ -3817,7 +3833,7 @@ namespace Next_Game
                         {
                             //player found, determine how many route segments left
                             turnsToDestination = moveObject.CheckTurnsToDestination();
-                            Game.logTurn.Write(string.Format(" [AI -> Notification] Player is Travelling -> {0} turns from their destination", turnsToDestination));
+                            Game.logTurn?.Write(string.Format(" [AI -> Notification] Player is Travelling -> {0} turns from their destination", turnsToDestination));
                             break;
                         }
                     }
@@ -3859,7 +3875,7 @@ namespace Next_Game
                                             { Game.SetError(new Error(167, string.Format("Invalid enemy ID {0} (duplicate)", enemy.Value.ActID))); }
                                         }
                                         else {
-                                            Game.logTurn.Write(string.Format(" [AI -> Notification] {0} {1}, ActID {2} is Travelling to {3}", enemy.Value.Title, enemy.Value.Name, 
+                                            Game.logTurn?.Write(string.Format(" [AI -> Notification] {0} {1}, ActID {2} is Travelling to {3}", enemy.Value.Title, enemy.Value.Name, 
                                             enemy.Value.ActID, GetLocationName(enemy.Value.LocID))); }
                                     }
                                     else
@@ -3884,13 +3900,13 @@ namespace Next_Game
                                             if ((pair.Value / enemy.Speed) <= (threshold * enemyDM))
                                             { enemy.HuntMode = true; }
                                             else { enemy.HuntMode = false; }
-                                            Game.logTurn.Write(string.Format(" [AI -> Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value, 
+                                            Game.logTurn?.Write(string.Format(" [AI -> Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value, 
                                                 threshold * enemyDM, enemy.HuntMode == true ? "Hunt" : "Normal"));
                                         }
                                         else { Game.SetError(new Error(167, string.Format("Invalid enemy, ID {0} (null)", pair.Key))); }
                                     }
                                 }
-                                else { Game.logTurn.Write(" [AI -> Notification] tempDictionary has too few records to sort (zero)"); }
+                                else { Game.logTurn?.Write(" [AI -> Notification] tempDictionary has too few records to sort (zero)"); }
                             }
                             else { Game.SetError(new Error(167, "Invalid Loc (null) Dictionary not updated")); }
                         }
@@ -3902,7 +3918,7 @@ namespace Next_Game
                                 if (enemy.Value.Status == ActorStatus.AtLocation)
                                 {
                                     enemy.Value.HuntMode = false;
-                                    Game.logTurn.Write(string.Format(" [AI -> Player Unknown] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID));
+                                    Game.logTurn?.Write(string.Format(" [AI -> Player Unknown] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID));
                                 }
                             }
                         }
@@ -3917,7 +3933,7 @@ namespace Next_Game
                         if (enemy.Value.Status == ActorStatus.AtLocation)
                         {
                             enemy.Value.HuntMode = false;
-                            Game.logTurn.Write(string.Format(" [AI -> Player Captured] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID));
+                            Game.logTurn?.Write(string.Format(" [AI -> Player Captured] {0} {1}, Act ID {2} Mode -> Normal", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID));
                         }
                     }
                 }
@@ -3941,7 +3957,7 @@ namespace Next_Game
                 int ai_hide = Game.constant.GetValue(Global.AI_CONTINUE_HIDE);
                 int ai_wait = Game.constant.GetValue(Global.AI_CONTINUE_WAIT);
                 int revert = Game.constant.GetValue(Global.KNOWN_REVERT);
-                Game.logTurn.Write("--- SetEnemyActivity (World.cs)");
+                Game.logTurn?.Write("--- SetEnemyActivity (World.cs)");
                 //loop enemy dictionary
                 foreach (var enemy in dictEnemyActors)
                 {
@@ -3949,7 +3965,7 @@ namespace Next_Game
                     if (enemy.Value.Known == false && rnd.Next(100) < 20)
                     {
                         enemy.Value.Known = true; enemy.Value.Revert = revert;
-                        Game.logTurn.Write(string.Format(" [Enemy -> Known] {0} ActID {1} has become KNOWN", enemy.Value.Name, enemy.Value.ActID));
+                        Game.logTurn?.Write(string.Format(" [Enemy -> Known] {0} ActID {1} has become KNOWN", enemy.Value.Name, enemy.Value.ActID));
                     }
 
                     //update status -> unknown
@@ -3965,7 +3981,7 @@ namespace Next_Game
                         if (enemy.Value.Revert <= 0)
                         {
                             enemy.Value.Revert = 0; enemy.Value.Known = false; enemy.Value.TurnsUnknown++;
-                            Game.logTurn.Write(string.Format(" [Enemy -> Unknown] {0} ActID {1} has reverted to Unknown status (timer elapsed)", enemy.Value.Name, enemy.Value.ActID));
+                            Game.logTurn?.Write(string.Format(" [Enemy -> Unknown] {0} ActID {1} has reverted to Unknown status (timer elapsed)", enemy.Value.Name, enemy.Value.ActID));
                         }
                     }
                     //continue on with existing goal or get a new one?
@@ -3994,7 +4010,7 @@ namespace Next_Game
                                         //Player Unknown
                                         if (rnd.Next(100) > (ai_wait + turnsDM))
                                         { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
-                                        else { Game.logTurn.Write(string.Format(" [Enemy -> Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal)); }
+                                        else { Game.logTurn?.Write(string.Format(" [Enemy -> Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal)); }
                                     }
                                     break;
                                 case ActorGoal.Search:
@@ -4009,7 +4025,7 @@ namespace Next_Game
                                         //Player Unknown
                                         if (rnd.Next(100) > (ai_search + turnsDM))
                                         { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
-                                        else { Game.logTurn.Write(string.Format(" [Enemy -> Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal)); }
+                                        else { Game.logTurn?.Write(string.Format(" [Enemy -> Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal)); }
                                     }
                                     break;
                                 case ActorGoal.Hide:
@@ -4024,7 +4040,7 @@ namespace Next_Game
                                         //Player Unknown
                                         if (rnd.Next(100) > (ai_hide + turnsDM))
                                         { SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown); }
-                                        else { Game.logTurn.Write(string.Format(" [Enemy -> Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal)); }
+                                        else { Game.logTurn?.Write(string.Format(" [Enemy -> Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal)); }
                                     }
                                     break;
                                 default:
@@ -4051,7 +4067,7 @@ namespace Next_Game
         /// <param name="enemy"></param>
         private void SetEnemyGoal(Enemy enemy, bool huntStatus, int playerLocID, int turnsUnknown)
         {
-            Game.logTurn.Write("--- SetEnemyGoal (World.cs)");
+            Game.logTurn?.Write("--- SetEnemyGoal (World.cs)");
             bool huntMoveFlag = false; 
             int rndNum, refID, tempDistance, enemyDistance, tempLocID;
             int currentBranch = -1;
@@ -4077,7 +4093,7 @@ namespace Next_Game
                                 currentBranch = house.Branch;
                             }
                             //debug
-                            Game.logTurn.Write(string.Format(" [Goal -> Branch] {0}, ActID {1} Assigned Branch -> {2} Current Branch -> {3}", enemy.Name, enemy.ActID, enemy.AssignedBranch, currentBranch));
+                            Game.logTurn?.Write(string.Format(" [Goal -> Branch] {0}, ActID {1} Assigned Branch -> {2} Current Branch -> {3}", enemy.Name, enemy.ActID, enemy.AssignedBranch, currentBranch));
                             //Mode -> Hunt or Normal (set by UpdateAIController)
                             if (huntStatus == true)
                             {
@@ -4151,7 +4167,7 @@ namespace Next_Game
                             enemy.GoalTurns = 0;
                             //assign new goal
                             enemy.Goal = newGoal;
-                            Game.logTurn.Write(string.Format(" [Goal -> New] {0}, ActID {1}, {2}, assigned new Goal -> {3}", enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
+                            Game.logTurn?.Write(string.Format(" [Goal -> New] {0}, ActID {1}, {2}, assigned new Goal -> {3}", enemy.Name, enemy.ActID, ShowLocationCoords(enemy.LocID),
                                 enemy.Goal));
                         }
                         //
@@ -4184,7 +4200,7 @@ namespace Next_Game
                                             tempLocID = Game.map.GetMapInfo(MapLayer.LocID, posTemp.PosX, posTemp.PosY);
                                             if (tempLocID > 0)
                                             {
-                                                    Game.logTurn.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> One Node closer to Player -> {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                                    Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> One Node closer to Player -> {2}, LocID {3}", enemy.Name, enemy.ActID,
                                                     GetLocationName(tempLocID), tempLocID));
                                                 destinationLocID = tempLocID; break;
                                             }
@@ -4195,7 +4211,7 @@ namespace Next_Game
                                     if (destinationLocID == 0)
                                     {
                                         destinationLocID = playerLocID;
-                                            Game.logTurn.Write(string.Format(" [Goal -> Alert] {0}, ActID [1} has been assigned a default PlayerLocID [move One Node closer] as no viable node was found", 
+                                            Game.logTurn?.Write(string.Format(" [Goal -> Alert] {0}, ActID [1} has been assigned a default PlayerLocID [move One Node closer] as no viable node was found", 
                                                 enemy.Name, enemy.ActID));
                                     }
                                 }
@@ -4204,7 +4220,7 @@ namespace Next_Game
                                 // - Move Directly to Player's last known location
                                 else
                                 {
-                                    Game.logTurn.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Player's last known location -> {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                    Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Player's last known location -> {2}, LocID {3}", enemy.Name, enemy.ActID,
                                                    GetLocationName(playerLocID), playerLocID));
                                     destinationLocID = playerLocID;
                                 }
@@ -4237,7 +4253,7 @@ namespace Next_Game
                                         }
                                         if (reverseStatus == true)
                                         {
-                                            Game.logTurn.Write(string.Format(" [Goal -> Alert] {0}, ActID {1} has reversed their MoveOut status from {2} to {3}", enemy.Name, enemy.ActID, enemy.MoveOut,
+                                            Game.logTurn?.Write(string.Format(" [Goal -> Alert] {0}, ActID {1} has reversed their MoveOut status from {2} to {3}", enemy.Name, enemy.ActID, enemy.MoveOut,
                                                 enemy.MoveOut == true ? "False" : "True"));
                                             if (enemy.MoveOut == true) { enemy.MoveOut = false; }
                                             else { enemy.MoveOut = true; }
@@ -4271,13 +4287,13 @@ namespace Next_Game
                                         {
                                             //randomly select a destination
                                             destinationLocID = tempLocList[rnd.Next(0, tempLocList.Count)];
-                                            Game.logTurn.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Move {2} -> {3}, LocID {4}", enemy.Name, enemy.ActID, enemy.MoveOut == true ? "Outwards" : "Inwards",
+                                            Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Move {2} -> {3}, LocID {4}", enemy.Name, enemy.ActID, enemy.MoveOut == true ? "Outwards" : "Inwards",
                                                    GetLocationName(destinationLocID), destinationLocID));
                                         }
                                         else
                                         {
                                             //else must have reached the end of a branch -> reverse move direction to prevent an endless loop
-                                            Game.logTurn.Write(string.Format(" [Goal -> Alert] {0}, ActID {1} has reversed their MoveOut status [end of the Road] from {2} to {3}", enemy.Name, enemy.ActID, 
+                                            Game.logTurn?.Write(string.Format(" [Goal -> Alert] {0}, ActID {1} has reversed their MoveOut status [end of the Road] from {2} to {3}", enemy.Name, enemy.ActID, 
                                                 enemy.MoveOut, enemy.MoveOut == true ? "False" : "True"));
                                             if (enemy.MoveOut == true) { enemy.MoveOut = false; }
                                             else { enemy.MoveOut = true; }
@@ -4288,7 +4304,7 @@ namespace Next_Game
                                     else if (enemy.LocID == 1)
                                     {
                                         //Currently at the Capital -> Shouldn't get to this situation (see above)
-                                        Game.logTurn.Write(string.Format(" [Goal -> Alert] Normal Mode, {0}, ActID {1} At Capital with correct branch -> Unassigned", enemy.Name, enemy.ActID));
+                                        Game.logTurn?.Write(string.Format(" [Goal -> Alert] Normal Mode, {0}, ActID {1} At Capital with correct branch -> Unassigned", enemy.Name, enemy.ActID));
                                     }
                                 }
                                 // - Incorrect Branch
@@ -4299,7 +4315,7 @@ namespace Next_Game
                                     {
                                         //return to Capital
                                         destinationLocID = 1;
-                                        Game.logTurn.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Return to Capital -> {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                        Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Return to Capital -> {2}, LocID {3}", enemy.Name, enemy.ActID,
                                                    GetLocationName(destinationLocID), destinationLocID));
                                     }
                                     //At Capital
@@ -4315,7 +4331,7 @@ namespace Next_Game
                                                     if (locTemp.GetBranch() == enemy.AssignedBranch)
                                                     {
                                                         destinationLocID = listNeighbours[i];
-                                                        Game.logTurn.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Capital to Correct Branch -> {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                                        Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> Capital to Correct Branch -> {2}, LocID {3}", enemy.Name, enemy.ActID,
                                                         GetLocationName(destinationLocID), destinationLocID));
                                                         break;
                                                     }
@@ -4334,7 +4350,7 @@ namespace Next_Game
                             if (destinationLocID == 0)
                             {
                                 destinationLocID = listNeighbours[rnd.Next(0, listNeighbours.Count)];
-                                Game.logTurn.Write(string.Format(" [Goal -> Alert] No valid destination found for {0}, ActID {1}. Assigned Random neighbour, {2}, LocID {3}", enemy.Name, enemy.ActID,
+                                Game.logTurn?.Write(string.Format(" [Goal -> Alert] No valid destination found for {0}, ActID {1}. Assigned Random neighbour, {2}, LocID {3}", enemy.Name, enemy.ActID,
                                     GetLocationName(destinationLocID), destinationLocID));
                             }
                             //Move enemy
@@ -4382,7 +4398,7 @@ namespace Next_Game
                     //find player in any situation, find follower only if Known
                     if (active is Player || (active is Follower && active.Known == true))
                     {
-                        Game.logTurn.Write("--- CheckIfFoundActive (World.cs)");
+                        Game.logTurn?.Write("--- CheckIfFoundActive (World.cs)");
                         foreach (var enemy in dictEnemyActors)
                         {
                             found = false;
@@ -4390,12 +4406,12 @@ namespace Next_Game
                             if (posEnemy != null && pos != null)
                             {
                                 //debug
-                                Game.logTurn.Write(string.Format(" [Search -> Debug] Enemy, {0}, ID {1} at {2}:{3}, Active {4}, ID {5}, at {6}:{7}", enemy.Value.Name, enemy.Value.ActID, posEnemy.PosX, posEnemy.PosY,
+                                Game.logTurn?.Write(string.Format(" [Search -> Debug] Enemy, {0}, ID {1} at {2}:{3}, Active {4}, ID {5}, at {6}:{7}", enemy.Value.Name, enemy.Value.ActID, posEnemy.PosX, posEnemy.PosY,
                                     active.Name, active.ActID, pos.PosX, pos.PosY));
                                 if (posEnemy.PosX == pos.PosX && posEnemy.PosY == pos.PosY)
                                 {
                                     //in same spot
-                                    Game.logTurn.Write(string.Format(" [Search -> Alert] {0} {1}, ActID {2}, is in the same place as Active {3}, ID {4}, (loc {5}:{6})", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID,
+                                    Game.logTurn?.Write(string.Format(" [Search -> Alert] {0} {1}, ActID {2}, is in the same place as Active {3}, ID {4}, (loc {5}:{6})", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID,
                                         active.Name, active.ActID, pos.PosX, pos.PosY));
                                     //only search if enemy hasn't already searched for this actor this turn
                                     if (active.CheckSearchedOnList(enemy.Value.ActID) == false)
@@ -4421,20 +4437,20 @@ namespace Next_Game
                                                 break;
                                         }
                                         if (rndNum < threshold) { found = true; }
-                                        Game.logTurn.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3}) -> {4} ", rndNum, threshold, threshold - knownDM, knownDM,
+                                        Game.logTurn?.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3}) -> {4} ", rndNum, threshold, threshold - knownDM, knownDM,
                                             rndNum < threshold ? "Success" : "Fail"));
                                         //add to list of searched to prevent same enemy making multiple searches per turn
                                         if (active.AddSearched(enemy.Value.ActID) == true)
-                                        { Game.logTurn.Write(string.Format(" [Search -> ListSearched] {0} {1}, ActID {2} Searched -> Enemy ActID {3} added", active.Title, active.Name, active.ActID, enemy.Value.ActID)); }
+                                        { Game.logTurn?.Write(string.Format(" [Search -> ListSearched] {0} {1}, ActID {2} Searched -> Enemy ActID {3} added", active.Title, active.Name, active.ActID, enemy.Value.ActID)); }
 
                                         if (found == true)
                                         {
                                             string locName = GetLocationName(pos);
                                             if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); }
-                                            Game.logTurn.Write(string.Format(" [SEARCH -> Active] {0} {1} has been Spotted by {2}, ActID {3} at loc {4}:{5} -> Activated {6}", active.Title, active.Name, enemy.Value.Name, 
+                                            Game.logTurn?.Write(string.Format(" [SEARCH -> Active] {0} {1} has been Spotted by {2}, ActID {3} at loc {4}:{5} -> Activated {6}", active.Title, active.Name, enemy.Value.Name, 
                                                 enemy.Value.ActID, pos.PosX, pos.PosY, enemy.Value.Activated));
                                             active.Found = true;
-                                            Game.logTurn.Write(string.Format(" [Search -> ListEnemy] {0} {1}, ActID {2} as Spotted -> True and Enemy ActID {3} added", active.Title, active.Name, active.ActID, enemy.Value.ActID));
+                                            Game.logTurn?.Write(string.Format(" [Search -> ListEnemy] {0} {1}, ActID {2} as Spotted -> True and Enemy ActID {3} added", active.Title, active.Name, active.ActID, enemy.Value.ActID));
                                             //Stuff that happens when found
                                             string description = "Unknown";
                                             int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
@@ -4477,7 +4493,7 @@ namespace Next_Game
                                                         else
                                                         {
                                                             //enemy has already found Player this turn
-                                                            Game.logTurn.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has already Found Player this turn -> Result Cancelled", enemy.Value.Title,
+                                                            Game.logTurn?.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has already Found Player this turn -> Result Cancelled", enemy.Value.Title,
                                                                 enemy.Value.Name, enemy.Value.ActID));
                                                         }
                                                     }
@@ -4503,13 +4519,13 @@ namespace Next_Game
                                             }
                                         }
                                     }
-                                    else { Game.logTurn.Write(string.Format(" [Search -> Notification] {0} {1}, ActID {2} Already on List, no Search -> Enemy ActID {3}", active.Title, active.Name, active.ActID, enemy.Value.ActID)); }
+                                    else { Game.logTurn?.Write(string.Format(" [Search -> Notification] {0} {1}, ActID {2} Already on List, no Search -> Enemy ActID {3}", active.Title, active.Name, active.ActID, enemy.Value.ActID)); }
                                 }
                             }
                             else { Game.SetError(new Error(161, string.Format("Invalid Enemy (actID {0}) Pos (null) or Active (actID {1}) Pos (null)", enemy.Value.ActID, active.ActID))); }
                         }
                     }
-                    else { Game.logTurn.Write(string.Format(" [Search -> Notification] Invalid actor (NOT Player || NOT Follower && Known) {0}, ActID {1}", active.Name, active.ActID)); }
+                    else { Game.logTurn?.Write(string.Format(" [Search -> Notification] Invalid actor (NOT Player || NOT Follower && Known) {0}, ActID {1}", active.Name, active.ActID)); }
                 }
             }
             else { Game.SetError(new Error(161, string.Format("Invalid actor (null or ActorStatus.Gone) charID \"{0}\", Status {1}", charID, actor.Status))); }
@@ -4539,7 +4555,7 @@ namespace Next_Game
                 if (actor is Enemy)
                 {
                     Enemy enemy = actor as Enemy;
-                    Game.logTurn.Write("--- CheckIfFoundEnemy (World.cs)");
+                    Game.logTurn?.Write("--- CheckIfFoundEnemy (World.cs)");
                     //loop Active Actors and check if in same position as enemy
                     foreach (var active in dictActiveActors)
                     {
@@ -4551,12 +4567,12 @@ namespace Next_Game
                             if (active.Value is Player && active.Value.Status != ActorStatus.Captured || (active.Value is Follower && active.Value.Known == true))
                             {
                                 //debug
-                                Game.logTurn.Write(string.Format(" [Search -> Debug] Active {0}, ID {1} at {2}:{3}, Enemy at {4}:{5} ({6}, ID {7}", active.Value.Name, active.Value.ActID,
+                                Game.logTurn?.Write(string.Format(" [Search -> Debug] Active {0}, ID {1} at {2}:{3}, Enemy at {4}:{5} ({6}, ID {7}", active.Value.Name, active.Value.ActID,
                                     posActive.PosX, posActive.PosY, pos.PosX, pos.PosY, enemy.Name, enemy.ActID));
                                 if (posActive.PosX == pos.PosX && posActive.PosY == pos.PosY)
                                 {
                                     //in same spot
-                                    Game.logTurn.Write(string.Format(" [Search -> Alert] {0} {1}, ActID {2}, is in the same place as the Enemy, loc {3}:{4} ({5}, ID {6})", active.Value.Title, active.Value.Name,
+                                    Game.logTurn?.Write(string.Format(" [Search -> Alert] {0} {1}, ActID {2}, is in the same place as the Enemy, loc {3}:{4} ({5}, ID {6})", active.Value.Title, active.Value.Name,
                                         active.Value.ActID, pos.PosX, pos.PosY, enemy.Name, enemy.ActID));
                                     //only search if enemy hasn't already searched for this actor this turn
                                     if (active.Value.CheckSearchedOnList(enemy.ActID) == false)
@@ -4583,21 +4599,21 @@ namespace Next_Game
                                         }
                                         if (rndNum < threshold)
                                         { found = true; }
-                                        Game.logTurn.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3}) -> {4} ", rndNum, threshold, threshold - knownDM, knownDM,
+                                        Game.logTurn?.Write(string.Format(" [SEARCH -> Active] Random {0} < {1} (ai {2} + known {3}) -> {4} ", rndNum, threshold, threshold - knownDM, knownDM,
                                             rndNum < threshold ? "Success" : "Fail"));
                                         //add to list of Searched to prevent same enemy making multiple search attempts on this actor per turn
                                         if (active.Value.AddSearched(enemy.ActID) == true)
-                                        { Game.logTurn.Write(string.Format(" [Search -> ListSearched] {0} {1}, ActID {2} Searched -> Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID)); }
+                                        { Game.logTurn?.Write(string.Format(" [Search -> ListSearched] {0} {1}, ActID {2} Searched -> Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID)); }
 
                                         if (found == true)
                                         {
                                             string locName = GetLocationName(pos);
                                             if (locName.Equals("Unknown") == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); } //travelling
                                             if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); }
-                                            Game.logTurn.Write(string.Format(" [SEARCH -> Enemy] {0} {1} has been Spotted by {2}, ActID {3} at {4} -> Activated {5}", active.Value.Title, active.Value.Name, 
+                                            Game.logTurn?.Write(string.Format(" [SEARCH -> Enemy] {0} {1} has been Spotted by {2}, ActID {3} at {4} -> Activated {5}", active.Value.Title, active.Value.Name, 
                                                 enemy.Name, enemy.ActID, locName, enemy.Activated));
                                             active.Value.Found = true;
-                                            Game.logTurn.Write(string.Format(" [Search -> ListEnemies] {0} {1}, ActID {2} is Found -> True and Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID));
+                                            Game.logTurn?.Write(string.Format(" [Search -> ListEnemies] {0} {1}, ActID {2} is Found -> True and Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID));
                                             //Stuff that happens when found
                                             string description = "Unknown";
                                             int locID = Game.map.GetMapInfo(MapLayer.LocID, pos.PosX, pos.PosY);
@@ -4640,7 +4656,7 @@ namespace Next_Game
                                                     else 
                                                     {
                                                         //enemy has already found player this turn
-                                                        Game.logTurn.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has previously Found the Player -> Result Cancelled", enemy.Title, enemy.Name, 
+                                                        Game.logTurn?.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has previously Found the Player -> Result Cancelled", enemy.Title, enemy.Name, 
                                                             enemy.ActID));
                                                     }
                                                 }
@@ -4664,7 +4680,7 @@ namespace Next_Game
                                             }
                                         }
                                     }
-                                    else { Game.logTurn.Write(string.Format(" [Search -> Notification] {0} {1}, ActID {2} already on List, not Searched -> Enemy ActID {3}", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID)); }
+                                    else { Game.logTurn?.Write(string.Format(" [Search -> Notification] {0} {1}, ActID {2} already on List, not Searched -> Enemy ActID {3}", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID)); }
                                 }
                             }
                         }
@@ -4682,13 +4698,13 @@ namespace Next_Game
         /// </summary>
         private void CheckStationaryActiveActors()
         {
-            Game.logTurn.Write("--- CheckStationaryActiveActors (World.cs)");
+            Game.logTurn?.Write("--- CheckStationaryActiveActors (World.cs)");
             //loop active actors 
             foreach (var actor in dictActiveActors)
             {
                 if (actor.Value.Status == ActorStatus.AtLocation)
                 {
-                    Game.logTurn.Write(string.Format(" [Search -> Stationary] {0} {1}, ActID {2} is AtLocation", actor.Value.Title, actor.Value.Name, actor.Value.ActID));
+                    Game.logTurn?.Write(string.Format(" [Search -> Stationary] {0} {1}, ActID {2} is AtLocation", actor.Value.Title, actor.Value.Name, actor.Value.ActID));
                     Position pos = actor.Value.GetActorPosition();
                     if (pos != null)
                     {
@@ -4703,7 +4719,7 @@ namespace Next_Game
                         else { Game.SetError(new Error(162, string.Format("Unknown Actor type for \"{0} {1}\" ID {2}", actor.Value.Title, actor.Value.Name, actor.Value.ActID))); }
                     }
                 }
-                else { Game.logTurn.Write(string.Format(" [Search -> Stationary] {0} {1}, ActID {2} is {3}", actor.Value.Title, actor.Value.Name, actor.Value.ActID, actor.Value.Status)); }
+                else { Game.logTurn?.Write(string.Format(" [Search -> Stationary] {0} {1}, ActID {2} is {3}", actor.Value.Title, actor.Value.Name, actor.Value.ActID, actor.Value.Status)); }
             }
         }
 
@@ -4819,7 +4835,7 @@ namespace Next_Game
         /// <param name="enemyID">actID of enemy who captured the player</param>
         public void SetPlayerCaptured(int enemyID)
         {
-            Game.logTurn.Write("--- SetPlayerCaptured (World.cs)");
+            Game.logTurn?.Write("--- SetPlayerCaptured (World.cs)");
             string description, dungeonLoc;
             Player player = (Player)GetActiveActor(1);
             if (player != null)
@@ -4833,7 +4849,7 @@ namespace Next_Game
                         Move moveObject = listMoveObjects[i];
                         if (moveObject.PlayerInParty == true)
                         {
-                            Game.logTurn.Write(string.Format(" [Capture -> Move Object] {0} {1}'s journey to {2} has been deleted", player.Title, player.Name, moveObject.GetDestination()));
+                            Game.logTurn?.Write(string.Format(" [Capture -> Move Object] {0} {1}'s journey to {2} has been deleted", player.Title, player.Name, moveObject.GetDestination()));
                             listMoveObjects.RemoveAt(i);
                             break;
                         }
@@ -4851,7 +4867,7 @@ namespace Next_Game
                         int heldLocID = 0;
                         int tempRefID = 0;
                         int refID = 0;
-                        if (player.LocID == 1) { tempRefID = 9999; Game.logTurn.Write(" [Captured] dungeon -> Capital"); }
+                        if (player.LocID == 1) { tempRefID = 9999; Game.logTurn?.Write(" [Captured] dungeon -> Capital"); }
                         else
                         {
                             Location loc = Game.network.GetLocation(player.LocID);
@@ -4910,7 +4926,7 @@ namespace Next_Game
                                                         int checkDistance = Game.network.GetDistance(route);
                                                         if (checkDistance > distOut)
                                                         {
-                                                            Game.logTurn.Write(string.Format(" [Captured -> CheckDistance] distOut increased from {0} to {1}", distOut, checkDistance));
+                                                            Game.logTurn?.Write(string.Format(" [Captured -> CheckDistance] distOut increased from {0} to {1}", distOut, checkDistance));
                                                             distOut = checkDistance;
                                                         }
                                                         break;
@@ -4921,19 +4937,19 @@ namespace Next_Game
                                         }
                                         else { Game.SetError(new Error(174, "Invalid listBranchLocs (Null or Zero Count) Search outwards cancelled")); }
                                         //Compare in and out and find closest, favouring inwards (if equal distance)
-                                        if (refIn > 0 && refOut == 0) { tempRefID = refIn; Game.logTurn.Write(" [Captured] dungeon -> In (no out)"); }
-                                        else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Game.logTurn.Write(" [Captured] dungeon -> Out (no in)"); }
-                                        else if (distIn <= distOut) { tempRefID = refIn; Game.logTurn.Write(" [Captured] dungeon -> In (distance <= out)"); }
-                                        else if (distIn > distOut) { tempRefID = refOut; Game.logTurn.Write(" [Captured] dungeon -> Out (distance < in)"); }
+                                        if (refIn > 0 && refOut == 0) { tempRefID = refIn; Game.logTurn?.Write(" [Captured] dungeon -> In (no out)"); }
+                                        else if (refOut > 0 && refIn == 0) { tempRefID = refOut; Game.logTurn?.Write(" [Captured] dungeon -> Out (no in)"); }
+                                        else if (distIn <= distOut) { tempRefID = refIn; Game.logTurn?.Write(" [Captured] dungeon -> In (distance <= out)"); }
+                                        else if (distIn > distOut) { tempRefID = refOut; Game.logTurn?.Write(" [Captured] dungeon -> Out (distance < in)"); }
                                         else
                                         {
                                             Game.SetError(new Error(174, string.Format("Unable to get a valid dungeon loc, refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3}, default to Capital",
                                             refIn, distIn, refOut, distOut)));
                                         }
-                                        Game.logTurn.Write(string.Format(" [Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempRefID -> {4}",
+                                        Game.logTurn?.Write(string.Format(" [Captured -> Debug] refIn -> {0} distIn -> {1} refOut -> {2} distOut -> {3} tempRefID -> {4}",
                                             refIn, distIn, refOut, distOut, tempRefID));
                                     }
-                                    else { Game.logTurn.Write(" [Captured] Major House dungeon"); }
+                                    else { Game.logTurn?.Write(" [Captured] Major House dungeon"); }
                                 }
                                 else { Game.SetError(new Error(174, string.Format("Invalid House returned (null) from player.LocID \"{0}\"", player.LocID))); }
                             }

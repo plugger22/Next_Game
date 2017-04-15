@@ -432,7 +432,7 @@ namespace Next_Game
                     if (listOfItems[i] == possID)
                     {
                         listOfItems.RemoveAt(i);
-                        Game.logTurn.Write(string.Format("Item with PossID {0} has been removed from {1}'s inventory", possID, Name));
+                        Game.logTurn?.Write(string.Format("Item with PossID {0} has been removed from {1}'s inventory", possID, Name));
                         return true;
                     }
                 }
@@ -612,9 +612,10 @@ namespace Next_Game
     public class Active : Actor
     {
         public int ArcID { get; set; } //archetype ID
-        public int VoyageTime { get; set; } //number of turns remaining for a sea voyage (arrives when zero)
+        public int VoyageTimer { get; set; } //number of turns remaining for a sea voyage (arrives when zero)
         public string ShipName { get; set; } //name of ship while undergoing a sea voyage
         public bool VoyageSafe { get; set; } //true if a safe ship, false if a risky ship
+        public int DeathTimer { get; set; } //default '999', if it gets to zero (dungeons, adrift) game over
         public int CrowChance { get; set; } //chance of crow getting through
         public int CrowDistance { get; set; } //distance between player and follower
         public int CrowBonus { get; set; } //carry over bonus to CrowChance from previous turn
@@ -636,6 +637,7 @@ namespace Next_Game
             listOfSearched = new List<int>();
             crowTooltip = new List<string>();
             Title = string.Format("{0}", Type);
+            DeathTimer = 999;
             Known = false;
             Found = false;
         }
@@ -645,6 +647,7 @@ namespace Next_Game
             listOfEnemies = new List<int>();
             listOfSearched = new List<int>();
             crowTooltip = new List<string>();
+            DeathTimer = 999;
             Title = string.Format("{0}", Type);
             Known = false;
         }
@@ -676,7 +679,7 @@ namespace Next_Game
                     { listOfEnemies.Add(enemyID); return true; }
                     else { Console.WriteLine(" [AddEnemy -> DEBUG] listOfEnemies for {0} {1}, ActID {2}, already contains Enemy ActID {3}", Title, Name, ActID, enemyID); }
                 }
-                else { Game.logTurn.Write(string.Format(" [AddEnemy -> Notification] enemyID {0} activated {1} and isn't added to the list", enemyID, enemyActivated)); }
+                else { Game.logTurn?.Write(string.Format(" [AddEnemy -> Notification] enemyID {0} activated {1} and isn't added to the list", enemyID, enemyActivated)); }
             }
             else { Game.SetError(new Error(158, "Invalid actID input (zero or less)")); }
             return false;

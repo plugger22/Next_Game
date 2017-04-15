@@ -2614,7 +2614,7 @@ namespace Next_Game
             int elapsedTime = Game.gameExile;
             string descriptor;
             int startAge, comeOfAge;
-            Game.logTurn.Write("--- AgePassiveCharacters (History.cs)");
+            Game.logTurn?.Write("--- AgePassiveCharacters (History.cs)");
             foreach(var actor in dictPassiveActors)
             {
                 //actor currently alive at time of revolt?

@@ -106,6 +106,7 @@ namespace Next_Game
         private static Position _posSelect2;
         private static int _charIDSelected; //selected player character
         private static long _totalTime; //Stopwatch total time elasped for all timed sections
+        private static bool _endGame = false; //game over if true
         //logs
         private static Dictionary<int, Error> dictErrors = new Dictionary<int, Error>(); //all errors (key is errorID)
         private static List<string> listOfTimers = new List<string>(); //all timer tests
@@ -247,6 +248,15 @@ namespace Next_Game
                 bool mouseLeft = _rootConsole.Mouse.GetLeftClick();
                 bool mouseRight = _rootConsole.Mouse.GetRightClick();
                 bool complete = false;
+
+                //end Game?
+                if (_endGame == true)
+                {
+                    logTurn?.Dispose();
+                    logError.Dispose();
+                    _rootConsole.Close();
+                    //Environment.Exit(1); - not needed and causes OpenTK error
+                }
 
                 //special display mode (Events and Conflicts)
                 if (_specialMode > 0)
@@ -877,10 +887,7 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
-                                        logTurn?.Dispose();
-                                        logError.Dispose();
-                                        _rootConsole.Close();
-                                        //Environment.Exit(1); - not needed and causes OpenTK error
+                                        SetEndGame("Player chose to exit (pressed 'X')");
                                         break;
                                 }
                                 break;
@@ -1007,7 +1014,7 @@ namespace Next_Game
                     logTurn?.Write(descriptionError); logError.Write(descriptionError);
                     //tidy up before crash
                     logError.Dispose(); logError = null;
-                    logTurn.Dispose(); logTurn = null;
+                    logTurn?.Dispose(); logTurn = null;
                 }
                 else
                 {
@@ -1218,8 +1225,8 @@ namespace Next_Game
                     {   //exit multi key input
                         _inputMode = InputMode.Normal;
                         _multiData = _multiData.Replace("?", "");
-                        logTurn.Write("--- MultiKeyInput (Game.cs)");
-                        logTurn.Write($"{_multiData} input");
+                        logTurn?.Write("--- MultiKeyInput (Game.cs)");
+                        logTurn?.Write($"{_multiData} input");
                         inputComplete = true;
                     }
                     break;
@@ -1632,7 +1639,7 @@ namespace Next_Game
                     { logStart.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow);
                         logStart.Write(descriptor, console, ConsoleColor.Yellow); console = false; }
                     else if (logTurn != null)
-                    { logTurn.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow); logTurn.Write(descriptor, console, ConsoleColor.Yellow); }
+                    { logTurn?.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow); logTurn?.Write(descriptor, console, ConsoleColor.Yellow); }
                 }
                 //print message regarding ongoing repeats and then ignore the rest
                 else if (_errorCounter == _errorLimit)
@@ -1643,7 +1650,7 @@ namespace Next_Game
                     if (logStart != null)
                     { logStart.Write("Multiple repeats of same error...", console, ConsoleColor.Red); console = false; }
                     else if (logTurn != null)
-                    { logTurn.Write(string.Format("Multiple repeats of same error..."), console, ConsoleColor.Red); }
+                    { logTurn?.Write(string.Format("Multiple repeats of same error..."), console, ConsoleColor.Red); }
                 }
                 
             }
@@ -1725,6 +1732,17 @@ namespace Next_Game
             gameYear = gameStart;
             gameGeneration = 1; //current generation (25 years each)
             mapSize = constant.GetValue(Global.MAP_SIZE);
+        }
+
+        /// <summary>
+        /// Triggers end of game state
+        /// </summary>
+        /// <param name="text"></param>
+        public static void SetEndGame(string text)
+        {
+            logTurn?.Write("--- SetEndGame (Game.cs)");
+            _endGame = true;
+            logTurn?.Write("[Alert] " + text);
         }
 
     }
