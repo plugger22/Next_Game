@@ -382,7 +382,7 @@ namespace Next_Game.Cartographic
             try
             {
                 dictSeaDistances.Add(locID, distance);
-                Game.logStart.Write($"[Notification] LocID {locID} distance {distance} added to dictSeaDistance for Port LocID {LocationID}");
+                Game.logStart?.Write($"[Notification] LocID {locID} distance {distance} added to dictSeaDistance for Port LocID {LocationID}");
             }
             catch (ArgumentNullException)
             { Game.SetError(new Error(216, "Invalid input (null)")); }

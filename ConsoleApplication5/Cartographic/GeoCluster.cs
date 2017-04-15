@@ -148,9 +148,9 @@ namespace Next_Game.Cartographic
                 if (listOfPorts.Contains(locID) == false)
                 {
                     listOfPorts.Add(locID);
-                    Game.logStart.Write(string.Format("LocID {0} has been added to the ListPorts for GeoID {1}", locID, GeoID));
+                    Game.logStart?.Write(string.Format("LocID {0} has been added to the ListPorts for GeoID {1}", locID, GeoID));
                 }
-                else { Game.logStart.Write(string.Format("[Notification] LocID {0} is already present in ListPorts for GeoID {1}", locID, GeoID)); }
+                else { Game.logStart?.Write(string.Format("[Notification] LocID {0} is already present in ListPorts for GeoID {1}", locID, GeoID)); }
             }
             else
             { Game.SetError(new Error(214, "Invalid LocID (zero or less)")); }

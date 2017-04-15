@@ -181,12 +181,12 @@ namespace Next_Game
                 builder.AppendLine();
                 builder.Append(e.TargetSite);
                 string descriptionError = builder.ToString();
-                logStart.Write(descriptionError); logError.Write(descriptionError);
+                logStart?.Write(descriptionError); logError?.Write(descriptionError);
             }
             finally
             {
                 //tidy up before crash
-                logStart.Dispose();
+                logStart?.Dispose();
                 logStart = null;
                 logTurn = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogTurn.txt");
             }
@@ -253,7 +253,7 @@ namespace Next_Game
                 if (_endGame == true)
                 {
                     logTurn?.Dispose();
-                    logError.Dispose();
+                    logError?.Dispose();
                     _rootConsole.Close();
                     //Environment.Exit(1); - not needed and causes OpenTK error
                 }
@@ -1011,9 +1011,9 @@ namespace Next_Game
                 string descriptionError = builder.ToString();
                 if (logTurn != null)
                 {
-                    logTurn?.Write(descriptionError); logError.Write(descriptionError);
+                    logTurn?.Write(descriptionError); logError?.Write(descriptionError);
                     //tidy up before crash
-                    logError.Dispose(); logError = null;
+                    logError?.Dispose(); logError = null;
                     logTurn?.Dispose(); logTurn = null;
                 }
                 else
@@ -1634,10 +1634,10 @@ namespace Next_Game
                         error.Time, error.TimeZone);
                     //write to log files
                     if (logError != null)
-                    { logError.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logError.Write(descriptor, true, ConsoleColor.Yellow); console = false; }
+                    { logError?.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logError?.Write(descriptor, true, ConsoleColor.Yellow); console = false; }
                     if (logStart != null)
-                    { logStart.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow);
-                        logStart.Write(descriptor, console, ConsoleColor.Yellow); console = false; }
+                    { logStart?.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow);
+                        logStart?.Write(descriptor, console, ConsoleColor.Yellow); console = false; }
                     else if (logTurn != null)
                     { logTurn?.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow); logTurn?.Write(descriptor, console, ConsoleColor.Yellow); }
                 }
@@ -1645,12 +1645,9 @@ namespace Next_Game
                 else if (_errorCounter == _errorLimit)
                 {
                     //Console.WriteLine("Multiple repeats of same error...");
-                    if (logError != null)
-                    { logError.Write("Multiple repeats of same error...", true, ConsoleColor.Red); console = false; }
-                    if (logStart != null)
-                    { logStart.Write("Multiple repeats of same error...", console, ConsoleColor.Red); console = false; }
-                    else if (logTurn != null)
-                    { logTurn?.Write(string.Format("Multiple repeats of same error..."), console, ConsoleColor.Red); }
+                    logError?.Write("Multiple repeats of same error...", true, ConsoleColor.Red); console = false;
+                    logStart?.Write("Multiple repeats of same error...", console, ConsoleColor.Red); console = false;
+                    logTurn?.Write(string.Format("Multiple repeats of same error..."), console, ConsoleColor.Red);
                 }
                 
             }
@@ -1658,18 +1655,16 @@ namespace Next_Game
             {
                 //Console.ForegroundColor = ConsoleColor.Yellow;
                 //Console.WriteLine(string.Format(" [SetError] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID));
-                logError.Write(string.Format(" [SetError] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID), true, ConsoleColor.Yellow);
-                if (logStart != null)
-                { logStart.Write(string.Format(" [SetError] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID), true, ConsoleColor.Yellow); }
+                logError?.Write(string.Format(" [SetError] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID), true, ConsoleColor.Yellow);
+                logStart?.Write(string.Format(" [SetError] Error (\"{0}\") not written as Null, ErrorID \"{1}\")", error.Text, error.errorID), true, ConsoleColor.Yellow);
                 //Console.ForegroundColor = ConsoleColor.Gray;
             }
             catch(ArgumentException)
             {
                 //Console.ForegroundColor = ConsoleColor.Yellow;
                 //Console.WriteLine(string.Format(" [SetError] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID));
-                logError.Write(string.Format(" [SetError] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID), true, ConsoleColor.Yellow);
-                if (logStart != null)
-                { logStart.Write(string.Format(" [SetError] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID), true, ConsoleColor.Yellow); }
+                logError?.Write(string.Format(" [SetError] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID), true, ConsoleColor.Yellow);
+                logStart?.Write(string.Format(" [SetError] Error (\"{0}\") not written as duplicate ErrorID \"{1}\")", error.Text, error.errorID), true, ConsoleColor.Yellow);
                 //Console.ForegroundColor = ConsoleColor.Gray;
             }
         }

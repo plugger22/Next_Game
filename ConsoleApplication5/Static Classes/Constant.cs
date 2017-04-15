@@ -204,7 +204,7 @@ namespace Next_Game
                 arrayOfConstants[(int)index] = data;
                 arrayOfLimits[(int)index, 0] = low;
                 arrayOfLimits[(int)index, 1] = high;
-                Game.logStart.Write($"{index} -> {data} Min {low} Max {high}");
+                Game.logStart?.Write($"{index} -> {data} Min {low} Max {high}");
             }
             else
             { Game.SetError(new Error(9, string.Format("{0} out of range, data {1}", index, data))); }

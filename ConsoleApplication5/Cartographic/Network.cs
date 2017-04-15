@@ -109,7 +109,7 @@ namespace Next_Game.Cartographic
         /// </summary>
         private void InitialisePorts()
         {
-            Game.logStart.Write("--- InitialisePorts (Network.cs)");
+            Game.logStart?.Write("--- InitialisePorts (Network.cs)");
             List<GeoCluster> listGeoClusters = Game.map.GetGeoCluster();
 
             //need to filter down to a straight list of SeaClusters
@@ -185,7 +185,7 @@ namespace Next_Game.Cartographic
                 }
                 else { Game.SetError(new Error(215, "Invalid Location (null)")); }
             }
-            Game.logStart.Write("--- Port Summary (Network.cs)");
+            Game.logStart?.Write("--- Port Summary (Network.cs)");
             int num = 0;
             //only sea clusters with 1+ ports can have sea travel 
             foreach(GeoCluster cluster in listSeaClusters)
@@ -193,7 +193,7 @@ namespace Next_Game.Cartographic
                 num = cluster.GetNumPorts();
                 if (num > 1)
                 {
-                    Game.logStart.Write($"GeoCluster GeoID {cluster.GeoID} -> {num} Ports");
+                    Game.logStart?.Write($"GeoCluster GeoID {cluster.GeoID} -> {num} Ports");
                     //Set all locations adjoing cluster to Ports
                     List<int> listOfPorts = cluster.GetPorts();
                     if (listOfPorts != null)
@@ -204,7 +204,7 @@ namespace Next_Game.Cartographic
                             if (locOrigin != null)
                             {
                                 locOrigin.Port = true;
-                                Game.logStart.Write($"Port -> LocID {locOrigin.LocationID} at {locOrigin.GetPosX()}:{locOrigin.GetPosY()}");
+                                Game.logStart?.Write($"Port -> LocID {locOrigin.LocationID} at {locOrigin.GetPosX()}:{locOrigin.GetPosY()}");
                                 //loop all ports within sea cluster ignoring origina port (locOrigin)
                                 int distance = 0;
                                 for (int k = 0; k < listOfPorts.Count; k++)
@@ -1529,12 +1529,12 @@ namespace Next_Game.Cartographic
         /// </summary>
         public void ShowNetworkAnalysis()
         {
-            Game.logStart.Write("--- Network Analysis (Network.cs)");
+            Game.logStart?.Write("--- Network Analysis (Network.cs)");
             for (int i = 0; i <= arrayOfNetworkAnalysis.GetUpperBound(0); i++)
             {
                 int locConsole = arrayOfNetworkAnalysis[i, (int)NetGrid.Locations];
                 int connConsole = arrayOfNetworkAnalysis[i, (int)NetGrid.Connections];
-                Game.logStart.Write(string.Format($"Dir {i, -5} {locConsole, 5} Locations {connConsole, 5} Connections"));
+                Game.logStart?.Write(string.Format($"Dir {i, -5} {locConsole, 5} Locations {connConsole, 5} Connections"));
             }
         }
 
@@ -1614,13 +1614,13 @@ namespace Next_Game.Cartographic
             while (housesTally > 0);
            
             //debug output
-            Game.logStart.Write("--- InitialiseHouseLocations (Network.cs)");
-            Game.logStart.Write($"Total Locations (excluding Capital) {totalLocs}");
-            Game.logStart.Write($"Number of Houses {numHouses}, Max Cap on House Numbers {maxHouses}");
+            Game.logStart?.Write("--- InitialiseHouseLocations (Network.cs)");
+            Game.logStart?.Write($"Total Locations (excluding Capital) {totalLocs}");
+            Game.logStart?.Write($"Number of Houses {numHouses}, Max Cap on House Numbers {maxHouses}");
             for(int i = 1; i < numBranches; i++)
-            { Game.logStart.Write(string.Format("Branch {0} has {1} Houses allocated, Special Locations {2}",
+            { Game.logStart?.Write(string.Format("Branch {0} has {1} Houses allocated, Special Locations {2}",
                 i, arrayOfNetworkAnalysis[i, (int)NetGrid.Houses], arrayOfNetworkAnalysis[i, (int)NetGrid.Specials])); }
-            Game.logStart.Write(string.Format("Total Houses Allocated {0} out of {1}", numHouses - housesTally, numHouses));
+            Game.logStart?.Write(string.Format("Total Houses Allocated {0} out of {1}", numHouses - housesTally, numHouses));
 
             List<Location> branchList = new List<Location>();
             List<int> locConnections = new List<int>();
@@ -1990,7 +1990,7 @@ namespace Next_Game.Cartographic
             //
             //create analysis data structures ---
             //
-            Game.logStart.Write("--- House Analysis (Network.cs)");
+            Game.logStart?.Write("--- House Analysis (Network.cs)");
             //loop through MasterList and populate Lists
             uniqueHouses = 0;
             for(int outer = 1; outer < numBranches; outer++)
@@ -2017,7 +2017,7 @@ namespace Next_Game.Cartographic
             //group LocID's by houses
             if (uniqueHouses > 0)
             {
-                Game.logStart.Write($"Unique Houses: {uniqueHouses}");
+                Game.logStart?.Write($"Unique Houses: {uniqueHouses}");
                 //Set up subLists, one for each unique house, access by house #
                 for (int i = 0; i < uniqueHouses + 1; i++)
                 {
@@ -2052,7 +2052,7 @@ namespace Next_Game.Cartographic
                     //create 2 arrays: first for # connections that Loc has, 2nd # routes to Capital
                     int[] tempArrayConnections = new int[numLocs];
                     int[] tempArrayRoutes = new int[numLocs];
-                    Game.logStart.Write($"- House {outer}");
+                    Game.logStart?.Write($"- House {outer}");
                     for(int inner = 0; inner < numLocs; inner++)
                     {
                         locID = listIndividualHouseLocID[outer][inner];
@@ -2061,7 +2061,7 @@ namespace Next_Game.Cartographic
                         {
                             tempArrayConnections[inner] = tempLoc.Connections;
                             tempArrayRoutes[inner] = tempLoc.GetNumRoutesToCapital();
-                            Game.logStart.Write(string.Format("LocID {0} has {1} connections and is {2} routes from the Capital", 
+                            Game.logStart?.Write(string.Format("LocID {0} has {1} connections and is {2} routes from the Capital", 
                                 locID, tempLoc.Connections, tempLoc.GetNumRoutesToCapital()));
                         }
                         else { Game.SetError(new Error(176, "Invalid tempLoc_1 (null)")); }
@@ -2108,15 +2108,15 @@ namespace Next_Game.Cartographic
                 }
             }
             //debug list contents
-            Game.logStart.Write("--- listOfAllHouses (Network.cs)");
+            Game.logStart?.Write("--- listOfAllHouses (Network.cs)");
             for (int i = 0; i < listUniqueHousesByBranch.Count; i++)
-            { Game.logStart.Write(string.Format("Branch {0} has {1} records", i + 1, listUniqueHousesByBranch[i].Count)); }
-            Game.logStart.Write("--- listIndividualHouseLocID (Network.cs)");
+            { Game.logStart?.Write(string.Format("Branch {0} has {1} records", i + 1, listUniqueHousesByBranch[i].Count)); }
+            Game.logStart?.Write("--- listIndividualHouseLocID (Network.cs)");
             for (int i = 0; i < listIndividualHouseLocID.Count; i++)
-            { Game.logStart.Write(string.Format("House {0} has {1} records", i, listIndividualHouseLocID[i].Count)); }
-            Game.logStart.Write("--- House Capitals (Network.cs)");
+            { Game.logStart?.Write(string.Format("House {0} has {1} records", i, listIndividualHouseLocID[i].Count)); }
+            Game.logStart?.Write("--- House Capitals (Network.cs)");
             for(int i = 0; i < arrayOfCapitals.Length; i++)
-            { Game.logStart.Write($"House {i} has ID {arrayOfCapitals[i]} as it's capital"); }
+            { Game.logStart?.Write($"House {i} has ID {arrayOfCapitals[i]} as it's capital"); }
             
         }
 
@@ -2134,7 +2134,7 @@ namespace Next_Game.Cartographic
         /// <param name="listOfHouses"></param>
         internal void UpdateHouses(List<MajorHouse> listOfHouses)
         {
-            Game.logStart.Write("---  UpdateHouses (Network.cs)");
+            Game.logStart?.Write("---  UpdateHouses (Network.cs)");
             //set up a quick list for randomly assigning houses to houseID's
             List<int> randomList = new List<int>();
             for(int i = 0; i < listOfHouses.Count; i++)
@@ -2150,7 +2150,7 @@ namespace Next_Game.Cartographic
                 randomIndex = rnd.Next(0, randomList.Count);
                 house.HouseID = randomList[randomIndex];
                 randomList.RemoveAt(randomIndex);
-                Game.logStart.Write(string.Format("House {0} assigned LocID {1} and HouseID {2}", house.Name, house.LocID, house.HouseID));
+                Game.logStart?.Write(string.Format("House {0} assigned LocID {1} and HouseID {2}", house.Name, house.LocID, house.HouseID));
             }
             //loop houses and update data
             int houseID;
@@ -2175,7 +2175,7 @@ namespace Next_Game.Cartographic
                     house.LocID = capitalLocID;
                     house.Branch = loc.GetBranch();
                     //update all house locations for house
-                    Game.logStart.Write(string.Format("- Initialise BannerLords for House {0}", house.Name));
+                    Game.logStart?.Write(string.Format("- Initialise BannerLords for House {0}", house.Name));
                     for (int k = 0; k < listIndividualHouseLocID[houseID].Count; k++)
                     {
                         locID = listIndividualHouseLocID[houseID][k];

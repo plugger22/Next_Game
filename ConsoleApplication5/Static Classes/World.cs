@@ -74,7 +74,7 @@ namespace Next_Game
         /// </summary>
         public void InitialiseWorld()
         {
-            Game.logStart.Write("--- InitialiseWorld (World.cs)");
+            Game.logStart?.Write("--- InitialiseWorld (World.cs)");
             Stopwatch timer_2 = new Stopwatch();
             timer_2.Start();
             InitialiseGeoClusters();
@@ -184,7 +184,7 @@ namespace Next_Game
                             if (itemID > 0)
                             {
                                 player.AddItem(itemID);
-                                Game.logStart.Write(string.Format("[Item] {0}, PossID {1}, ItemID {2} added to Player's Inventory", listItems[rndIndex].Description, listItems[rndIndex].PossID,
+                                Game.logStart?.Write(string.Format("[Item] {0}, PossID {1}, ItemID {2} added to Player's Inventory", listItems[rndIndex].Description, listItems[rndIndex].PossID,
                                     listItems[rndIndex].ItemID));
                             }
                         }
@@ -203,7 +203,7 @@ namespace Next_Game
         /// </summary>
         private void InitialiseEnemyActors()
         {
-            Game.logStart.Write("--- InitialiseEnemyActors (World.cs)");
+            Game.logStart?.Write("--- InitialiseEnemyActors (World.cs)");
             int numInquisitors = Game.constant.GetValue(Global.INQUISITORS);
             //loop for # of inquisitors
             for (int i = 0; i < numInquisitors; i++)
@@ -214,7 +214,7 @@ namespace Next_Game
             //create The Nemesis
             Game.history.CreateNemesis(1);
             //assign specific enemies to tasks (based on InitialiseAI)
-            Game.logStart.Write("- Assign Enemies");
+            Game.logStart?.Write("- Assign Enemies");
             
             foreach (var enemy in dictEnemyActors)
             {
@@ -223,7 +223,7 @@ namespace Next_Game
                 if (enemy.Value is Nemesis)
                 {
                     enemy.Value.AssignedBranch = 0;
-                    Game.logStart.Write(string.Format(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, enemy.Value.AssignedBranch));
+                    Game.logStart?.Write(string.Format(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, enemy.Value.AssignedBranch));
                 }
                 else
                 {
@@ -235,7 +235,7 @@ namespace Next_Game
                             {
                                 enemy.Value.AssignedBranch = i;
                                 arrayAI[2, i]--;
-                                Game.logStart.Write(string.Format(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i));
+                                Game.logStart?.Write(string.Format(" [Goal -> {0}] {1}, ActID {2} Branch -> {3}", enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, i));
                                 break;
                             }
                         }
@@ -2051,7 +2051,7 @@ namespace Next_Game
         {
             
             Game.network.UpdateHouses(Game.history.GetGreatHouses());
-            Game.logStart.Write("---  InitialiseHouses (World.cs) ---");
+            Game.logStart?.Write("---  InitialiseHouses (World.cs) ---");
             //great houses
             List<MajorHouse> listOfGreatHouses = Game.history.GetGreatHouses();
             foreach(MajorHouse house in listOfGreatHouses)
@@ -2095,7 +2095,7 @@ namespace Next_Game
                 }
             }
             //fill Great Houses with Lords and Ladies
-            Game.logStart.Write("- House Genetics (add Lords and Ladies)");
+            Game.logStart?.Write("- House Genetics (add Lords and Ladies)");
             foreach (KeyValuePair<int, MajorHouse> kvp in dictMajorHouses)
             {
                 //create Lord and Lady for house
@@ -2362,7 +2362,7 @@ namespace Next_Game
         /// </summary>
         private void InitialiseItems()
         {
-            Game.logStart.Write("--- InitialiseItems (World.cs)");
+            Game.logStart?.Write("--- InitialiseItems (World.cs)");
             List<Item> tempList = Game.file.GetItems("Items.txt");
             if (tempList != null)
             {
@@ -4728,7 +4728,7 @@ namespace Next_Game
         /// </summary>
         private void InitialiseAI()
         {
-            Game.logStart.Write("--- InitialiseAI (World.cs)");
+            Game.logStart?.Write("--- InitialiseAI (World.cs)");
             int connectorBonus = Game.constant.GetValue(Global.AI_CONNECTOR);
             //work out branch priorities
             int numBranches = Game.network.GetNumBranches();
@@ -4794,7 +4794,7 @@ namespace Next_Game
             //display arrayAI
             
             for(int i = 0; i <= arrayAI.GetUpperBound(1); i++)
-            { Game.logStart.Write(string.Format(" {0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i], 
+            { Game.logStart?.Write(string.Format(" {0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i], 
                 arrayTemp[i])); }
         }
 
@@ -5002,7 +5002,7 @@ namespace Next_Game
         /// </summary>
         private void InitialiseWorldDevelopment()
         {
-            Game.logStart.Write("--- InitialiseWorldDevelopment (World.cs)");
+            Game.logStart?.Write("--- InitialiseWorldDevelopment (World.cs)");
             //Placeholder -> List of all Passive Items
             IEnumerable<Item> listItems =
                 from items in dictPossessions.Values.OfType<Item>()
@@ -5024,7 +5024,7 @@ namespace Next_Game
                 rndIndex = rnd.Next(listPassiveActors.Count);
                 Passive passive = listPassiveActors[rndIndex];
                 passive.AddItem(item.PossID);
-                Game.logStart.Write(string.Format("ItemID {0}, \"{1}\", given to {2} {3}, ActID {4}, at {5} {6}", item.ItemID, item.Description, passive.Title, passive.Name, passive.ActID,
+                Game.logStart?.Write(string.Format("ItemID {0}, \"{1}\", given to {2} {3}, ActID {4}, at {5} {6}", item.ItemID, item.Description, passive.Title, passive.Name, passive.ActID,
                     GetLocationName(passive.LocID), ShowLocationCoords(passive.LocID)));
                 listPassiveActors.RemoveAt(rndIndex);
             }

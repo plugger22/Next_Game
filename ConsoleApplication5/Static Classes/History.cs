@@ -138,7 +138,7 @@ namespace Next_Game
         /// <param name="numHousesRequired">Will thin out surplus houses if required</param>
         private void InitialiseMajorHouses(int numHousesRequired)
         {
-            Game.logStart.Write("---  InitialiseMajorHouses (History.cs)");
+            Game.logStart?.Write("---  InitialiseMajorHouses (History.cs)");
             //remove surplus houses from pool
             int count = listHousePool.Count;
             int index = 0;
@@ -146,12 +146,12 @@ namespace Next_Game
             {
                 index = rnd.Next(0, count);
                 
-                Game.logStart.Write(string.Format("Great House {0} removed", listHousePool[index].Name));
+                Game.logStart?.Write(string.Format("Great House {0} removed", listHousePool[index].Name));
                 //Console.WriteLine("Great House {0} removed", listHousePool[index].Name);
                 listHousePool.RemoveAt(index);
                 count = listHousePool.Count;
             }
-            Game.logStart.Write("-0-");
+            Game.logStart?.Write("-0-");
             //loop through structures and initialise House classes
             for (int i = 0; i < listHousePool.Count; i++)
             {
@@ -169,7 +169,7 @@ namespace Next_Game
                 house.Resources = rnd.Next(1, 5);
                 //add house to listOfHouses
                 listOfMajorHouses.Add(house);
-                Game.logStart.Write(string.Format("Major House {0} added at {1}, RefID {2}, ArcID {3}", house.Name, house.LocName, house.RefID, house.ArcID));
+                Game.logStart?.Write(string.Format("Major House {0} added at {1}, RefID {2}, ArcID {3}", house.Name, house.LocName, house.RefID, house.ArcID));
             }
         }
 
@@ -211,7 +211,7 @@ namespace Next_Game
                 house.Branch = loc.GetBranch();
             }
             else { Game.SetError(new Error(61, "Invalid Loc (null)")); }
-            Game.logStart.Write(string.Format("Minor House {0} added at {1}, RefID {2}, LocID {3}, ArcID {4}", house.Name, house.LocName, house.RefID, house.LocID, house.ArcID));
+            Game.logStart?.Write(string.Format("Minor House {0} added at {1}, RefID {2}, LocID {3}, ArcID {4}", house.Name, house.LocName, house.RefID, house.LocID, house.ArcID));
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Next_Game
         {
             List<Location> listLocations = Game.network.GetLocationsList();
             int index;
-            Game.logStart.Write("--- InitialiseSpecialHouse (History.cs)");
+            Game.logStart?.Write("--- InitialiseSpecialHouse (History.cs)");
             //NOTE: Assumes at present the only special house type is an Inn 
 
             //loop locations looking for specials (houseID = 99)
@@ -247,7 +247,7 @@ namespace Next_Game
                     //add house to listOfHouses
                     listOfSpecialHouses.Add(specialInn);
                     Game.world.AddOtherHouse(specialInn);
-                    Game.logStart.Write(string.Format("\"{0}\" Inn initialised, RefID {1}, LocID {2}, HouseID {3}", specialInn.Name, specialInn.RefID, specialInn.LocID, specialInn.HouseID));
+                    Game.logStart?.Write(string.Format("\"{0}\" Inn initialised, RefID {1}, LocID {2}, HouseID {3}", specialInn.Name, specialInn.RefID, specialInn.LocID, specialInn.HouseID));
                     //remove minorhouse from pool list to avoid being chosen again
                     listSpecialHousePool.RemoveAt(index);
                     //update location details
@@ -262,7 +262,7 @@ namespace Next_Game
         /// </summary>
         public void InitialiseGeoClusters()
         {
-            Game.logStart.Write("---  InitialiseGeoClusters (History.cs)");
+            Game.logStart?.Write("---  InitialiseGeoClusters (History.cs)");
             listOfGeoClusters = Game.map.GetGeoCluster();
             List<string> tempList = new List<string>();
             int randomNum;
@@ -325,7 +325,7 @@ namespace Next_Game
                     }
                 }
             }
-            Game.logStart.Write(string.Format("{0} Geoclusters initialised", listOfGeoClusters.Count));
+            Game.logStart?.Write(string.Format("{0} Geoclusters initialised", listOfGeoClusters.Count));
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Next_Game
         /// </summary>
         private void InitialisePlayer()
         {
-            Game.logStart.Write("---  InitialisePlayer (History.cs)");
+            Game.logStart?.Write("---  InitialisePlayer (History.cs)");
             int locID;
             //create player (place holder)
             Player player = new Player("William Tell", ActorType.Usurper);
@@ -354,7 +354,7 @@ namespace Next_Game
                 player.Type = ActorType.Usurper;
                 //add to Location list of Characters
                 loc.AddActor(player.ActID);
-                Game.logStart.Write(string.Format("{0} {1}, ActID {1}, Resources {2}", player.Title, player.Name, player.ActID, player.Resources));
+                Game.logStart?.Write(string.Format("{0} {1}, ActID {1}, Resources {2}", player.Title, player.Name, player.ActID, player.Resources));
             }
             else { Game.SetError(new Error(178, "Invalid Loc (null)")); }
         }
@@ -364,10 +364,10 @@ namespace Next_Game
         /// </summary>
         private void InitialiseCapital()
         {
-            Game.logStart.Write("---  InitialiseCapital (History.cs)");
+            Game.logStart?.Write("---  InitialiseCapital (History.cs)");
             CapitalWalls = Game.constant.GetValue(Global.CASTLE_CAPITAL);
             CapitalTreasury = rnd.Next(2, 6); //placeholder
-            Game.logStart.Write(string.Format("CapitalWalls {0}, CapitalTreasury {1}", CapitalWalls, CapitalTreasury));
+            Game.logStart?.Write(string.Format("CapitalWalls {0}, CapitalTreasury {1}", CapitalWalls, CapitalTreasury));
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Next_Game
         {
             int numImportedFollowers = 8; 
             int index;
-            Game.logStart.Write("---  InitialiseFollowers (History.cs)");
+            Game.logStart?.Write("---  InitialiseFollowers (History.cs)");
             int age = (int)SkillAge.Fifteen;
             //randomly choose a follower from list (we need a max of 8)
             if (listOfStructs.Count >= 8)
@@ -420,7 +420,7 @@ namespace Next_Game
                         //trait ID's not needed
                         //add to list
                         listOfActiveActors.Add(follower);
-                        Game.logStart.Write(string.Format("{0}, Aid {1}, FID {2}, ArcID {3}, \"{4}\" Loyalty {5}", follower.Name, follower.ActID, follower.FollowerID, 
+                        Game.logStart?.Write(string.Format("{0}, Aid {1}, FID {2}, ArcID {3}, \"{4}\" Loyalty {5}", follower.Name, follower.ActID, follower.FollowerID, 
                             follower.ArcID, follower.Role, follower.GetRelPlyr()));
                         //Console.WriteLine("{0}, Aid {1}, FID {2}, \"{3}\" Loyalty {4}", follower.Name, follower.ActID, follower.FollowerID, follower.Role, follower.GetRelPlyr());
                     }
@@ -440,7 +440,7 @@ namespace Next_Game
             if (listOfStructs.Count > 0)
             {
                 int numImportedCharacters = listOfStructs.Count;
-                Game.logStart.Write("---  InitialiseCharacters (History.cs)");
+                Game.logStart?.Write("---  InitialiseCharacters (History.cs)");
                 for (int i = 0; i < numImportedCharacters; i++)
                 {
                     CharacterStruct data = listOfStructs[i];
@@ -457,7 +457,7 @@ namespace Next_Game
                         InitialiseManualSkills(special, data.arrayOfSkillMods);
                         //add to list
                         Game.world.SetSpecialActor(special);
-                        Game.logStart.Write(string.Format("{0}, Aid {1}, specID {2} -> initialised O.K", special.Name, special.ActID, special.SpecialID));
+                        Game.logStart?.Write(string.Format("{0}, Aid {1}, specID {2} -> initialised O.K", special.Name, special.ActID, special.SpecialID));
                     }
                     else { Game.SetError(new Error(210, "Invalid Character Initialisation (null)")); }
                 }
@@ -526,7 +526,7 @@ namespace Next_Game
         {
             if (locID > 0)
             {
-                Game.logStart.Write("---  CreateNemesis (History.cs)");
+                Game.logStart?.Write("---  CreateNemesis (History.cs)");
                 int refID = Game.world.GetRefID(locID);
                 //create new inquisitor -> random name
                 string name = "The Unrelenting";
@@ -1006,7 +1006,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-                            Game.logStart.Write(string.Format("Inherited Combat trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
+                            Game.logStart?.Write(string.Format("Inherited Combat trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1054,7 +1054,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-                            Game.logStart.Write(string.Format("Inherited Wits trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
+                            Game.logStart?.Write(string.Format("Inherited Wits trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1101,7 +1101,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-                            Game.logStart.Write(string.Format("Inherited Charm trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
+                            Game.logStart?.Write(string.Format("Inherited Charm trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1148,7 +1148,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-                            Game.logStart.Write(string.Format("Inherited Treachery trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
+                            Game.logStart?.Write(string.Format("Inherited Treachery trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1195,7 +1195,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-                            Game.logStart.Write(string.Format("Inherited Leadership trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
+                            Game.logStart?.Write(string.Format("Inherited Leadership trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1244,7 +1244,7 @@ namespace Next_Game
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
-                            Game.logStart.Write(string.Format("Inherited Touched trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
+                            Game.logStart?.Write(string.Format("Inherited Touched trait, Actor ID {0}, Parent ID {1}", person.ActID, parent.ActID));
                         }
                     }
                     else { needRandomTrait = true; }
@@ -1258,7 +1258,7 @@ namespace Next_Game
                 {
                     //give base strength of 3 (prior to any traits)
                     person.Touched = 3;
-                    Game.logStart.Write(string.Format("{0}, Aid {1} is Touched", person.Name, person.ActID));
+                    Game.logStart?.Write(string.Format("{0}, Aid {1} is Touched", person.Name, person.ActID));
                     rndRange = arrayOfTraits[(int)SkillType.Touched, (int)person.Sex].Length;
                     //random trait (if a preferred trait choice from top half of traits which are mostly the positive ones)
                     if (traitPositive == SkillType.Touched) { startRange = 0; endRange = rndRange / 2; }
@@ -1330,83 +1330,6 @@ namespace Next_Game
         }
 
 
-
-        /// <summary>
-        /// sets up custom Inquistor traits (all positive except leadership which is neutral and charm which is negative)
-        /// </summary>
-        /// <param name="enemy">Could be either an Inquisitor or the Nemesis</param>
-        /*public void InitialiseEnemyTraits(Enemy enemy)
-        {
-            if (enemy is Inquisitor)
-            {
-                Inquisitor inquisitor = enemy as Inquisitor;
-                if (inquisitor != null)
-                {
-                    List<string> tempHandles = new List<string>();
-                    //Combat
-                    int rndRange = arrayOfTraits[(int)SkillType.Combat, (int)inquisitor.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Combat, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                    //Wits
-                    rndRange = arrayOfTraits[(int)SkillType.Wits, (int)inquisitor.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Wits, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                    //Charm
-                    rndRange = arrayOfTraits[(int)SkillType.Charm, (int)inquisitor.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Charm, SkillAge.Fifteen, rndRange, rndRange / 2, rndRange));
-                    //Treachery
-                    rndRange = arrayOfTraits[(int)SkillType.Treachery, (int)inquisitor.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Treachery, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                    //Leadership
-                    rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)inquisitor.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(inquisitor, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, rndRange));
-                    //Touched -> triple chance compared to normal person, if so then lower value
-                    if (rnd.Next(100) <= (Game.constant.GetValue(Global.TOUCHED) * 3))
-                    {
-                        inquisitor.Touched = 3;
-                        Game.logStart.Write(string.Format("{0}, Aid {1} is Touched", inquisitor.Name, inquisitor.ActID));
-                        rndRange = arrayOfTraits[(int)SkillType.Touched, (int)inquisitor.Sex].Length;
-                        GetRandomTrait(inquisitor, SkillType.Touched, SkillAge.Fifteen, rndRange, rndRange / 2, rndRange);
-                        //choose NickName (handle)
-                        if (tempHandles.Count > 0)
-                        { inquisitor.Handle = tempHandles[rnd.Next(tempHandles.Count)]; }
-                        else { inquisitor.Handle = "The Loyal"; }
-                    }
-                }
-                else { Game.SetError(new Error(154, "Invalid Inquisitor (null)")); }
-            }
-            else if (enemy is Nemesis)
-            {
-                Nemesis nemesis = enemy as Nemesis;
-                if (nemesis != null)
-                {
-                    List<string> tempHandles = new List<string>();
-                    //Combat
-                    int rndRange = arrayOfTraits[(int)SkillType.Combat, (int)nemesis.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Combat, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                    //Wits
-                    rndRange = arrayOfTraits[(int)SkillType.Wits, (int)nemesis.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Wits, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                    //Charm
-                    rndRange = arrayOfTraits[(int)SkillType.Charm, (int)nemesis.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Charm, SkillAge.Fifteen, rndRange, rndRange / 2, rndRange));
-                    //Treachery
-                    rndRange = arrayOfTraits[(int)SkillType.Treachery, (int)nemesis.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Treachery, SkillAge.Fifteen, rndRange, 0, rndRange / 2));
-                    //Leadership
-                    rndRange = arrayOfTraits[(int)SkillType.Leadership, (int)nemesis.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Leadership, SkillAge.Fifteen, rndRange, 0, rndRange));
-                    //Touched -> automatically given a touched skill
-                    rndRange = arrayOfTraits[(int)SkillType.Touched, (int)nemesis.Sex].Length;
-                    tempHandles.AddRange(GetRandomTrait(nemesis, SkillType.Touched, SkillAge.Fifteen, rndRange, 0, rndRange / 2, false));
-                    nemesis.Touched = 3;
-                    Game.logStart.Write(string.Format("{0}, Aid {1} is Touched", nemesis.Name, nemesis.ActID));
-                    rndRange = arrayOfTraits[(int)SkillType.Touched, (int)nemesis.Sex].Length;
-                    GetRandomTrait(nemesis, SkillType.Touched, SkillAge.Fifteen, rndRange, 0, rndRange / 2);
-                }
-                else { Game.SetError(new Error(154, "Invalid nemesis (null)")); }
-            }
-        }*/
-
-
         /// <summary>
         /// allows you to specify a preference for each skill (or leave them to the normal probability mix)
         /// </summary>
@@ -1452,7 +1375,7 @@ namespace Next_Game
                         {
                             //always gets a trait
                             chanceFlag = false;
-                            Game.logStart.Write(string.Format("{0} {1} has a confirmed {2} trait", actor.Title, actor.Name, skill));
+                            Game.logStart?.Write(string.Format("{0} {1} has a confirmed {2} trait", actor.Title, actor.Name, skill));
                             //special case of auto Touched, need to set base (normally it's 0)
                             if (skill == SkillType.Touched)
                             { actor.Touched = 3; }
@@ -2000,7 +1923,7 @@ namespace Next_Game
                         {
                             //same name repeated - add the 'II', etc., the returned actor name
                             surname += " " + new String('I', numOfLikeNames);
-                            Game.logStart.Write(string.Format("[Notification] Repeating Name in house {0}: {1} {2}", house.HouseID, firstName, surname));
+                            Game.logStart?.Write(string.Format("[Notification] Repeating Name in house {0}: {1} {2}", house.HouseID, firstName, surname));
                         }
                     }
                 }
@@ -2652,7 +2575,7 @@ namespace Next_Game
         /// </summary>
         public void InitialisePastHistoryHouses()
         {
-            Game.logStart.Write("--- InitialisePastHistoryHouses (History.cs)");
+            Game.logStart?.Write("--- InitialisePastHistoryHouses (History.cs)");
             //convert array data to lists
             listOfHouseRelsGood = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastGood].ToList());
             listOfHouseRelsBad = new List<string>(arrayOfRelTexts[(int)RelListType.HousePastBad].ToList());
@@ -2738,17 +2661,17 @@ namespace Next_Game
                             //choose a random house from list
                             int tempIndex = rnd.Next(0, listTempHouses.Count);
                             MajorHouse rndHouse = listTempHouses[tempIndex];
-                            Game.logStart.Write(string.Format("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year));
+                            Game.logStart?.Write(string.Format("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year));
                             //add to House list
                             Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
                             tempListRelations.Add(relation);
                             //add to Master list
                             masterText = string.Format("{0} {1} -> {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);
                             listOfHouseRelsMaster.Add(masterText);
-                            Game.logStart.Write(string.Format("MASTER: {0}", masterText));
+                            Game.logStart?.Write(string.Format("MASTER: {0}", masterText));
                         }
                     }
-                    Game.logStart.Write(string.Format("House {0}, refID {1}, Relations", house.Name, house.RefID));
+                    Game.logStart?.Write(string.Format("House {0}, refID {1}, Relations", house.Name, house.RefID));
 
                     //Bannerlord Relations with House
                     tempBannerLords.Clear();
@@ -2808,7 +2731,7 @@ namespace Next_Game
                                     MinorHouse rndHouse = (MinorHouse)Game.world.GetHouse(refID);
                                     if (rndHouse != null)
                                     {
-                                        Game.logStart.Write(string.Format("- Minor House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, 
+                                        Game.logStart?.Write(string.Format("- Minor House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, 
                                             relEffect > 0 ? "+" : "", relEffect, year));
                                         //add to House list
                                         Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
@@ -2817,7 +2740,7 @@ namespace Next_Game
                                         masterText = string.Format("{0} {1} -> (Minor) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, 
                                             relEffect > 0 ? "+" : "", relEffect);
                                         listOfHouseRelsMaster.Add(masterText);
-                                        Game.logStart.Write(string.Format("MASTER: {0}", masterText));
+                                        Game.logStart?.Write(string.Format("MASTER: {0}", masterText));
                                     }
                                     else { Game.SetError(new Error(131, "MinorHouse Invalid (null)")); }
                                 }
@@ -2838,7 +2761,7 @@ namespace Next_Game
             int turnCoatRefID = Game.lore.TurnCoatRefIDNew;
             int newKingRefID = Game.lore.RoyalRefIDNew;
             string turnCoatName = Game.world.GetHouseName(turnCoatRefID);
-            Game.logStart.Write("-Turncoat Relations");
+            Game.logStart?.Write("-Turncoat Relations");
             foreach (MajorHouse house in listOfMajorHouses)
             {
                 if (house.RefID != newKingRefID)
@@ -2872,7 +2795,7 @@ namespace Next_Game
                     //add to Master list
                     masterText = string.Format("{0} {1} -> (Major) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, turnCoatName, relation.Text, relEffect > 0 ? "+" : "", relEffect);
                     listOfHouseRelsMaster.Add(masterText);
-                    Game.logStart.Write(string.Format("{0}", masterText));
+                    Game.logStart?.Write(string.Format("{0}", masterText));
                 }
             }
         }
@@ -2886,7 +2809,7 @@ namespace Next_Game
         /// </summary>
         public void InitialiseLordRelations()
         {
-            Game.logStart.Write("--- InitialiseLordRelations (History.cs)");
+            Game.logStart?.Write("--- InitialiseLordRelations (History.cs)");
             int houseID, lordTreachery, relLord, lordStars, relChange;
             string relText, relTag;
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetAllMajorHouses();
@@ -2940,7 +2863,7 @@ namespace Next_Game
                             }
                             //treachery of Lord
                             lordTreachery = lord.GetSkill(SkillType.Treachery);
-                            Game.logStart.Write(string.Format("{0} {1}, {2}, actID {3}, Treachery {4}, \"{5}\", houseID {6}", lord.Title, lord.Name, lord.Handle, lord.ActID, lordTreachery,
+                            Game.logStart?.Write(string.Format("{0} {1}, {2}, actID {3}, Treachery {4}, \"{5}\", houseID {6}", lord.Title, lord.Name, lord.Handle, lord.ActID, lordTreachery,
                                 Game.world.GetMajorHouseName(houseID), lord.HouseID));
                             //loop list and establish relations
                             for (int i = 0; i < tempActors.Count; i++)
@@ -2948,7 +2871,7 @@ namespace Next_Game
                                 Passive actor = tempActors[i];
                                 if (actor.Type != ActorType.Lord && actor.Status != ActorStatus.Gone)
                                 {
-                                    Game.logStart.Write(string.Format("  {0} {1}, actID {2}, houseID {3}", actor.Title, actor.Name, actor.ActID, actor.HouseID));
+                                    Game.logStart?.Write(string.Format("  {0} {1}, actID {2}, houseID {3}", actor.Title, actor.Name, actor.ActID, actor.HouseID));
                                     relLord = 0;
                                     switch (actor.Type)
                                     {
@@ -2983,7 +2906,7 @@ namespace Next_Game
                                             Game.SetError(new Error(134, string.Format("Invalid ActorType (\"{0}\") for {1} {2}, ActID {3}", actor.Type, actor.Title, actor.Name, actor.ActID)));
                                             break;
                                     }
-                                    Game.logStart.Write(string.Format("   Relationship with Lord {0} {1}", relLord, relLord > 80 || relLord < 20 ? "***" : ""));
+                                    Game.logStart?.Write(string.Format("   Relationship with Lord {0} {1}", relLord, relLord > 80 || relLord < 20 ? "***" : ""));
                                     //instigate Relationship
                                     if (relLord >= 0)
                                     {

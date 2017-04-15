@@ -496,7 +496,7 @@ namespace Next_Game
             string[] arrayOfFileInput = ImportDataFile(fileName);
             if (arrayOfFileInput != null)
             {
-                Game.logStart.Write("--- Initialise Constants (FileImport.cs)");
+                Game.logStart?.Write("--- Initialise Constants (FileImport.cs)");
                 string cleanToken = null;
                 string cleanTag = null;
                 string cleanLow = null;
@@ -2285,26 +2285,26 @@ namespace Next_Game
                     else { newEvent = false; }
                 }
                 //debug - data dump of Player Events
-                Game.logStart.Write("--- Player Events (FileImport.cs)");
+                Game.logStart?.Write("--- Player Events (FileImport.cs)");
                 Type type;
                 String name;
                 //events
                 foreach (var eventObject in dictOfPlayerEvents)
                 {
-                    Game.logStart.Write(string.Format("\"{0}\" Event, ID {1}, Type {2}, Repeat {3}, Dormant {4}, Live {5}, Status {6}", eventObject.Value.Name, eventObject.Value.EventPID, eventObject.Value.Type,
+                    Game.logStart?.Write(string.Format("\"{0}\" Event, ID {1}, Type {2}, Repeat {3}, Dormant {4}, Live {5}, Status {6}", eventObject.Value.Name, eventObject.Value.EventPID, eventObject.Value.Type,
                         eventObject.Value.TimerRepeat, eventObject.Value.TimerDormant, eventObject.Value.TimerLive, eventObject.Value.Status));
                     List<OptionInteractive> listTempOptions = eventObject.Value.GetOptions();
                     //options
                     foreach (OptionInteractive optionObject in listTempOptions)
                     {
-                        Game.logStart.Write(string.Format("  Option \"{0}\"", optionObject.Text));
+                        Game.logStart?.Write(string.Format("  Option \"{0}\"", optionObject.Text));
                         List<Outcome> listTempOutcomes = new List<Outcome>(); //need to create a new list otherwise copying by reference and affects records in dictOfPlayerEvents
                         listTempOutcomes.AddRange(optionObject.GetGoodOutcomes());
                         listTempOutcomes.AddRange(optionObject.GetBadOutcomes());
                         List<Trigger> listTempTriggers = optionObject.GetTriggers();
                         //triggers
                         foreach (Trigger triggerObject in listTempTriggers)
-                        { Game.logStart.Write(string.Format("   {0} -> if {1} {2} is {3} to {4}", "Trigger", triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold)); }
+                        { Game.logStart?.Write(string.Format("   {0} -> if {1} {2} is {3} to {4}", "Trigger", triggerObject.Check, triggerObject.Data, triggerObject.Calc, triggerObject.Threshold)); }
                         //outcomes
                         foreach (Outcome outcomeObject in listTempOutcomes)
                         {
@@ -2317,37 +2317,37 @@ namespace Next_Game
                             if (outcomeObject is OutEventStatus)
                             {
                                 OutEventStatus tempOutcome = outcomeObject as OutEventStatus;
-                                Game.logStart.Write(string.Format("    {0} -> Target EventID {1}, New Status {2}", cleanTag, tempOutcome.Data, tempOutcome.NewStatus));
+                                Game.logStart?.Write(string.Format("    {0} -> Target EventID {1}, New Status {2}", cleanTag, tempOutcome.Data, tempOutcome.NewStatus));
                             }
                             else if (outcomeObject is OutEventChain)
                             {
                                 OutEventChain tempOutcome = outcomeObject as OutEventChain;
-                                Game.logStart.Write(string.Format("    {0} -> Target EventID {1}", cleanTag, tempOutcome.Data));
+                                Game.logStart?.Write(string.Format("    {0} -> Target EventID {1}", cleanTag, tempOutcome.Data));
                             }
                             else if (outcomeObject is OutEventTimer)
                             {
                                 OutEventTimer tempOutcome = outcomeObject as OutEventTimer;
-                                Game.logStart.Write(string.Format("    {0} -> Target EventID {1}, {2} timer, amount {3} apply {4}", cleanTag, tempOutcome.Data, tempOutcome.Timer, 
+                                Game.logStart?.Write(string.Format("    {0} -> Target EventID {1}, {2} timer, amount {3} apply {4}", cleanTag, tempOutcome.Data, tempOutcome.Timer, 
                                     tempOutcome.Amount, tempOutcome.Calc));
                             }
                             else if (outcomeObject is OutConflict)
                             {
                                 OutConflict tempOutcome = outcomeObject as OutConflict;
-                                Game.logStart.Write(string.Format("    {0} -> subType {1}, oppID {2}, Challenger {3}", cleanTag, tempOutcome.SubType, tempOutcome.Data, tempOutcome.Challenger));
+                                Game.logStart?.Write(string.Format("    {0} -> subType {1}, oppID {2}, Challenger {3}", cleanTag, tempOutcome.SubType, tempOutcome.Data, tempOutcome.Challenger));
                             }
                             else if (outcomeObject is OutResource)
                             {
                                 OutResource tempOutcome = outcomeObject as OutResource;
-                                Game.logStart.Write(string.Format("    {0} -> Player? {1}, amount {2}, apply {3}", cleanTag, tempOutcome.PlayerRes, tempOutcome.Amount, tempOutcome.Calc));
+                                Game.logStart?.Write(string.Format("    {0} -> Player? {1}, amount {2}, apply {3}", cleanTag, tempOutcome.PlayerRes, tempOutcome.Amount, tempOutcome.Calc));
                             }
                             else if (outcomeObject is OutCondition)
                             {
                                 OutCondition tempOutcome = outcomeObject as OutCondition;
-                                Game.logStart.Write(string.Format("    {0} -> Player? {1}, Condition \"{2}\", {3} {4}, Timer {5}", cleanTag, tempOutcome.PlayerCondition, tempOutcome.NewCondition.Text, 
+                                Game.logStart?.Write(string.Format("    {0} -> Player? {1}, Condition \"{2}\", {3} {4}, Timer {5}", cleanTag, tempOutcome.PlayerCondition, tempOutcome.NewCondition.Text, 
                                     tempOutcome.NewCondition.Skill, tempOutcome.NewCondition.Effect, tempOutcome.NewCondition.Timer));
                             }
                             else
-                            { Game.logStart.Write(string.Format("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc)); }
+                            { Game.logStart?.Write(string.Format("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc)); }
                         }
                     }
                 }
@@ -3899,17 +3899,17 @@ namespace Next_Game
                                         tempDictionary.Add(situation.SitID, situation);
                                         if (structSituation.Type > ConflictType.None)
                                         {
-                                            Game.logStart.Write(string.Format("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad, SitNum {4}, Def {5}, Data {6}", structSituation.Name, subType,
+                                            Game.logStart?.Write(string.Format("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad, SitNum {4}, Def {5}, Data {6}", structSituation.Name, subType,
                                               tempListGood.Count, tempListBad.Count, structSituation.SitNum, structSituation.Defender, structSituation.Data));
                                         }
                                         else if (structSituation.State > ConflictState.None)
                                         {
-                                            Game.logStart.Write(string.Format("\"{0}\" imported, {1} good records & {2} bad, SitNum {3}", structSituation.Name, tempListGood.Count, tempListBad.Count,
+                                            Game.logStart?.Write(string.Format("\"{0}\" imported, {1} good records & {2} bad, SitNum {3}", structSituation.Name, tempListGood.Count, tempListBad.Count,
                                               structSituation.SitNum));
                                         }
                                         else if (structSituation.Special > ConflictSpecial.None)
                                         {
-                                            Game.logStart.Write(string.Format("\"{0}\" imported, {1} good records & {2} bad, Def {3}", structSituation.Name, tempListGood.Count, tempListBad.Count,
+                                            Game.logStart?.Write(string.Format("\"{0}\" imported, {1} good records & {2} bad, Def {3}", structSituation.Name, tempListGood.Count, tempListBad.Count,
                                                structSituation.Defender));
                                         }
                                     }
@@ -4266,7 +4266,7 @@ namespace Next_Game
                                             try
                                             {
                                                 tempDictionary.Add(subDict, challenge);
-                                                Game.logStart.Write(string.Format("{0} Challenge ({1}), successfully imported", subDict, challenge.Type));
+                                                Game.logStart?.Write(string.Format("{0} Challenge ({1}), successfully imported", subDict, challenge.Type));
                                             }
                                             catch (ArgumentNullException)
                                             { Game.SetError(new Error(110, string.Format("{0} Challenge not imported due to errors", challenge.Type))); }
@@ -4552,7 +4552,7 @@ namespace Next_Game
                                             }
                                             //add to list
                                             listItems.Add(itemObject);
-                                            Game.logStart.Write(string.Format("{0}, ItemID {1}, {2}, Year {3}", itemObject.Description, itemObject.ItemID,
+                                            Game.logStart?.Write(string.Format("{0}, ItemID {1}, {2}, Year {3}", itemObject.Description, itemObject.ItemID,
                                                 itemObject.Lore, itemObject.Year));
                                         }
                                         else
@@ -4915,7 +4915,7 @@ namespace Next_Game
                                         try
                                         {
                                             dictOfResults.Add(resultObject.ResultID, resultObject);
-                                            Game.logStart.Write(string.Format("RecordID {0} (\"{1}\"), successfully imported", resultObject.ResultID, resultObject.Description));
+                                            Game.logStart?.Write(string.Format("RecordID {0} (\"{1}\"), successfully imported", resultObject.ResultID, resultObject.Description));
                                         }
                                         catch (ArgumentNullException)
                                         {

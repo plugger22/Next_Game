@@ -167,37 +167,37 @@ namespace Next_Game
         public void InitialiseDirector()
         {
             listOfActiveGeoClusters.AddRange(Game.map.GetActiveGeoClusters()); //Run FIRST
-            Game.logStart.Write("--- Import Follower Events (Director.cs)");
+            Game.logStart?.Write("--- Import Follower Events (Director.cs)");
             dictFollowerEvents = Game.file.GetFollowerEvents("Events_Follower.txt");
-            Game.logStart.Write("--- Import Player Events (Director.cs)");
+            Game.logStart?.Write("--- Import Player Events (Director.cs)");
             dictPlayerEvents = Game.file.GetPlayerEvents("Events_Player.txt");
-            Game.logStart.Write("--- Import AutoReact Events (Director.cs)");
+            Game.logStart?.Write("--- Import AutoReact Events (Director.cs)");
             AddAutoEvents(Game.file.GetPlayerEvents("Events_AutoReact.txt"));
             InitialiseGenericEvents();
-            Game.logStart.Write("--- Import Archetypes (Director.cs)"); //Run AFTER importing Events
+            Game.logStart?.Write("--- Import Archetypes (Director.cs)"); //Run AFTER importing Events
             dictArchetypes = Game.file.GetArchetypes("Archetypes.txt");
-            Game.logStart.Write("--- Import Stories (Director.cs)"); //Run AFTER importing Archetypes
+            Game.logStart?.Write("--- Import Stories (Director.cs)"); //Run AFTER importing Archetypes
             dictStories = Game.file.GetStories("Stories.txt");
             story = SetStory(1); //choose which story to use
-            Game.logStart.Write("--- Initialise Archetypes (Director.cs)");
+            Game.logStart?.Write("--- Initialise Archetypes (Director.cs)");
             InitialiseArchetypes();
-            Game.logStart.Write("--- Initialise Normal Situations (Director.cs)");
+            Game.logStart?.Write("--- Initialise Normal Situations (Director.cs)");
             dictSituationsNormal = Game.file.GetSituations("SitNormal.txt");
-            Game.logStart.Write("--- Initialise Game Specific Situations (Director.cs)");
+            Game.logStart?.Write("--- Initialise Game Specific Situations (Director.cs)");
             dictSituationsGame = Game.file.GetSituations("SitGame.txt");
-            Game.logStart.Write("--- Initialise Special Situations (Director.cs)");
+            Game.logStart?.Write("--- Initialise Special Situations (Director.cs)");
             dictSituationsSpecial = Game.file.GetSituations("SitSpecial.txt");
-            Game.logStart.Write("--- Initialise Skill Situations (Director.cs)");
+            Game.logStart?.Write("--- Initialise Skill Situations (Director.cs)");
             dictSituationsSkill = Game.file.GetSituations("SitSkill.txt");
-            Game.logStart.Write("--- Initialise Touched Situations (Director.cs)");
+            Game.logStart?.Write("--- Initialise Touched Situations (Director.cs)");
             dictSituationsTouched = Game.file.GetSituations("SitTouched.txt");
-            Game.logStart.Write("--- Initialise Supporter Situations (Director.cs)");
+            Game.logStart?.Write("--- Initialise Supporter Situations (Director.cs)");
             dictSituationsSupporter = Game.file.GetSituations("SitSupporter.txt");
-            Game.logStart.Write("--- Initialise Results (Director.cs)");
+            Game.logStart?.Write("--- Initialise Results (Director.cs)");
             dictResults = Game.file.GetResults("Results.txt");
-            Game.logStart.Write("--- Initialise Challenges (Director.cs)"); //run AFTER GetResults
+            Game.logStart?.Write("--- Initialise Challenges (Director.cs)"); //run AFTER GetResults
             dictChallenges = Game.file.GetChallenges("Challenge.txt");
-            Game.logStart.Write("--- InitialiseGameStates (Director.cs)");
+            Game.logStart?.Write("--- InitialiseGameStates (Director.cs)");
             InitialiseGameStates();
         }
 
@@ -249,7 +249,7 @@ namespace Next_Game
                 foreach(var eventObject in autoDictionary)
                 {
                     try
-                    { dictAutoEvents.Add(eventObject.Value.EventPID, eventObject.Value); Game.logStart.Write(string.Format("\"{0}\" successfully added to DictAutoEvents", eventObject.Value.Name)); }
+                    { dictAutoEvents.Add(eventObject.Value.EventPID, eventObject.Value); Game.logStart?.Write(string.Format("\"{0}\" successfully added to DictAutoEvents", eventObject.Value.Name)); }
                     catch (ArgumentNullException)
                     { Game.SetError(new Error(117, string.Format("Invalid eventObject (null), eventID {0} in AddAutoEvents", eventObject.Value.EventPID))); }
                     catch (ArgumentException)
@@ -2552,7 +2552,7 @@ namespace Next_Game
                                         cluster.SetPlayerEvents(arcSea.GetEvents());
                                         cluster.Archetype = arcSea.ArcID;
                                         //debug
-                                        Game.logStart.Write(string.Format(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcSea.Name, arcSea.ArcID));
+                                        Game.logStart?.Write(string.Format(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcSea.Name, arcSea.ArcID));
                                     }
                                 }
                             }
@@ -2567,7 +2567,7 @@ namespace Next_Game
                                     cluster.SetFollowerEvents(arcMountain.GetEvents());
                                     cluster.Archetype = arcMountain.ArcID;
                                     //debug
-                                    Game.logStart.Write(string.Format(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcMountain.Name, arcMountain.ArcID));
+                                    Game.logStart?.Write(string.Format(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcMountain.Name, arcMountain.ArcID));
                                 }
                             }
                             break;
@@ -2581,7 +2581,7 @@ namespace Next_Game
                                     cluster.SetFollowerEvents(arcForest.GetEvents());
                                     cluster.Archetype = arcForest.ArcID;
                                     //debug
-                                    Game.logStart.Write(string.Format(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcForest.Name, arcForest.ArcID));
+                                    Game.logStart?.Write(string.Format(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcForest.Name, arcForest.ArcID));
                                 }
                             }
                             break;
@@ -2597,17 +2597,17 @@ namespace Next_Game
             if (arcNormal != null)
             {
                 listArcFollRoadEventsNormal.AddRange(arcNormal.GetEvents());
-                Game.logStart.Write(string.Format("Normal roads have been initialised with \"{0}\", arcID {1}", arcNormal.Name, arcNormal.ArcID));
+                Game.logStart?.Write(string.Format("Normal roads have been initialised with \"{0}\", arcID {1}", arcNormal.Name, arcNormal.ArcID));
             }
             if (arcKings != null)
             {
                 listArcFollRoadEventsKings.AddRange(arcKings.GetEvents());
-                Game.logStart.Write(string.Format("Kings roads have been initialised with \"{0}\", arcID {1}", arcKings.Name, arcKings.ArcID));
+                Game.logStart?.Write(string.Format("Kings roads have been initialised with \"{0}\", arcID {1}", arcKings.Name, arcKings.ArcID));
             }
             if (arcConnector != null)
             {
                 listArcFollRoadEventsConnector.AddRange(arcConnector.GetEvents());
-                Game.logStart.Write(string.Format("Connector roads have been initialised with \"{0}\", arcID {1}", arcConnector.Name, arcConnector.ArcID));
+                Game.logStart?.Write(string.Format("Connector roads have been initialised with \"{0}\", arcID {1}", arcConnector.Name, arcConnector.ArcID));
             }
 
             //Capital archetype
@@ -2616,7 +2616,7 @@ namespace Next_Game
             if (arcCapital != null)
             {
                 listArcFollCapitalEvents.AddRange(arcCapital.GetEvents());
-                Game.logStart.Write(string.Format("The Capital at KingsKeep has been initialised with \"{0}\", arcID {1}", arcCapital.Name, arcCapital.ArcID));
+                Game.logStart?.Write(string.Format("The Capital at KingsKeep has been initialised with \"{0}\", arcID {1}", arcCapital.Name, arcCapital.ArcID));
             }
 
             //Location archetypes
@@ -2644,7 +2644,7 @@ namespace Next_Game
                                 loc.Value.SetEvents(arcMajor.GetEvents());
                                 loc.Value.ArcID = arcMajor.ArcID;
                                 //debug
-                                Game.logStart.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID));
+                                Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMajor.Name, arcMajor.ArcID));
                             }
                         }
 
@@ -2661,7 +2661,7 @@ namespace Next_Game
                                 loc.Value.SetEvents(arcMinor.GetEvents());
                                 loc.Value.ArcID = arcMinor.ArcID;
                                 //debug
-                                Game.logStart.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMinor.Name, arcMinor.ArcID));
+                                Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcMinor.Name, arcMinor.ArcID));
                             }
                         }
                     }
@@ -2677,7 +2677,7 @@ namespace Next_Game
                                 loc.Value.SetEvents(arcInn.GetEvents());
                                 loc.Value.ArcID = arcInn.ArcID;
                                 //debug
-                                Game.logStart.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcInn.Name, arcInn.ArcID));
+                                Game.logStart?.Write(string.Format("{0}, locID {1}, has been initialised with \"{2}\", arcID {3}", Game.world.GetLocationName(loc.Key), loc.Key, arcInn.Name, arcInn.ArcID));
                             }
                         }
                     }
@@ -2689,7 +2689,7 @@ namespace Next_Game
                         Archetype archetype = GetArchetype(arcID);
                         house.SetFollowerEvents(archetype.GetEvents());
                         //debug
-                        Game.logStart.Write(string.Format("House {0}, refID {1}, has been initialised with \"{2}\", arcID {3}", house.Name, house.RefID, archetype.Name, archetype.ArcID));
+                        Game.logStart?.Write(string.Format("House {0}, refID {1}, has been initialised with \"{2}\", arcID {3}", house.Name, house.RefID, archetype.Name, archetype.ArcID));
                     }
                 }
             }
@@ -2705,7 +2705,7 @@ namespace Next_Game
                         Archetype archetype = GetArchetype(arcID);
                         actor.Value.SetEvents(archetype.GetEvents());
                         //debug
-                        Game.logStart.Write(string.Format("\"{0}\", AiD {1}, has been initialised with \"{2}\", arcID {3}", actor.Value.Name, actor.Value.ActID, archetype.Name, archetype.ArcID));
+                        Game.logStart?.Write(string.Format("\"{0}\", AiD {1}, has been initialised with \"{2}\", arcID {3}", actor.Value.Name, actor.Value.ActID, archetype.Name, archetype.ArcID));
                     }
                 }
             }
