@@ -4,7 +4,7 @@
 # Name: descriptive title for archetype
 # Type: (ArcType -> GeoCluster / Location / Road / House / Actor)
 # subType:(GeoClstr ->Sea/Mountain/Forest, Loc's ->Capital/Major/Minor/Inn, Rds ->Normal/Royal/Connector,Hse -> Major/Minor/Inn, Act->Follower/Player) 
-# Chance: % chance of archetype applying to whatever (eg. all forests have a chance% of having this archetype). Minimum 1 instance. Roads auto 100%
+# Chance: % chance of archetype applying to whatever (eg. all forests have a % chance of having this archetype). Minimum 1 instance. Roads auto 100%
 # Events: tempID's comma separated, eg. 2, 33, 47, 48 
 # [End] -> place at end of archetype description
 

@@ -1218,7 +1218,8 @@ namespace Next_Game
                     {   //exit multi key input
                         _inputMode = InputMode.Normal;
                         _multiData = _multiData.Replace("?", "");
-                        Console.WriteLine("{0} input", _multiData);
+                        logTurn.Write("--- MultiKeyInput (Game.cs)");
+                        logTurn.Write($"{_multiData} input");
                         inputComplete = true;
                     }
                     break;

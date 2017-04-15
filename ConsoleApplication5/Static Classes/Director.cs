@@ -61,10 +61,10 @@ namespace Next_Game
         List<int> listGenFollEventsMinor;
         List<int> listGenFollEventsInn;
         //archetype follower events
-        List<int> listFollRoadEventsNormal;
-        List<int> listFollRoadEventsKings;
-        List<int> listFollRoadEventsConnector;
-        List<int> listFollCapitalEvents;
+        List<int> listArcFollRoadEventsNormal;
+        List<int> listArcFollRoadEventsKings;
+        List<int> listArcFollRoadEventsConnector;
+        List<int> listArcFollCapitalEvents;
         //Player generic events
         List<int> listGenPlyrEventsForest;
         List<int> listGenPlyrEventsMountain;
@@ -78,10 +78,10 @@ namespace Next_Game
         List<int> listGenPlyrEventsInn;
         List<int> listGenPlyrEventsDungeon;
         //archetype player events
-        List<int> listPlyrRoadEventsNormal;
-        List<int> listPlyrRoadEventsKings;
-        List<int> listPlyrRoadEventsConnector;
-        List<int> listPlyrCapitalEvents;
+        List<int> listArcPlyrRoadEventsNormal;
+        List<int> listArcPlyrRoadEventsKings;
+        List<int> listArcPlyrRoadEventsConnector;
+        List<int> listArcPlyrCapitalEvents;
         //other
         List<Follower> listOfFollowers;
         List<EventPackage> listFollCurrentEvents; //follower
@@ -119,10 +119,10 @@ namespace Next_Game
             listGenFollEventsMinor = new List<int>();
             listGenFollEventsInn = new List<int>();
             //archetype follower events
-            listFollRoadEventsNormal = new List<int>();
-            listFollRoadEventsKings = new List<int>();
-            listFollRoadEventsConnector = new List<int>();
-            listFollCapitalEvents = new List<int>();
+            listArcFollRoadEventsNormal = new List<int>();
+            listArcFollRoadEventsKings = new List<int>();
+            listArcFollRoadEventsConnector = new List<int>();
+            listArcFollCapitalEvents = new List<int>();
             //Player events
             listGenPlyrEventsForest = new List<int>();
             listGenPlyrEventsMountain = new List<int>();
@@ -136,10 +136,10 @@ namespace Next_Game
             listGenPlyrEventsInn = new List<int>();
             listGenPlyrEventsDungeon = new List<int>();
             //archetype player events
-            listPlyrRoadEventsNormal = new List<int>();
-            listPlyrRoadEventsKings = new List<int>();
-            listPlyrRoadEventsConnector = new List<int>();
-            listPlyrCapitalEvents = new List<int>();
+            listArcPlyrRoadEventsNormal = new List<int>();
+            listArcPlyrRoadEventsKings = new List<int>();
+            listArcPlyrRoadEventsConnector = new List<int>();
+            listArcPlyrCapitalEvents = new List<int>();
             //other
             listFollCurrentEvents = new List<EventPackage>(); //follower events
             listPlyrCurrentEvents = new List<EventPackage>(); //player events
@@ -528,7 +528,7 @@ namespace Next_Game
                     {
                         //capital
                         listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsCapital));
-                        listEventPool.AddRange(GetValidFollowerEvents(listFollCapitalEvents));
+                        listEventPool.AddRange(GetValidFollowerEvents(listArcFollCapitalEvents));
                     }
                     else if (refID > 0 && refID < 100)
                     {
@@ -593,19 +593,19 @@ namespace Next_Game
                     {
                         //normal road
                         listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsNormal));
-                        listEventPool.AddRange(GetValidFollowerEvents(listFollRoadEventsNormal));
+                        listEventPool.AddRange(GetValidFollowerEvents(listArcFollRoadEventsNormal));
                     }
                     else if (road == 2)
                     {
                         //king's road
                         listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsKing));
-                        listEventPool.AddRange(GetValidFollowerEvents(listFollRoadEventsKings));
+                        listEventPool.AddRange(GetValidFollowerEvents(listArcFollRoadEventsKings));
                     }
                     else if (road == 3)
                     {
                         //connector road
                         listEventPool.AddRange(GetValidFollowerEvents(listGenFollEventsConnector));
-                        listEventPool.AddRange(GetValidFollowerEvents(listFollRoadEventsConnector));
+                        listEventPool.AddRange(GetValidFollowerEvents(listArcFollRoadEventsConnector));
                     }
                 }
             }
@@ -671,7 +671,7 @@ namespace Next_Game
                             if (type == EventType.Location)
                             {
                                 listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsCapital));
-                                listEventPool.AddRange(GetValidPlayerEvents(listPlyrCapitalEvents));
+                                listEventPool.AddRange(GetValidPlayerEvents(listArcPlyrCapitalEvents));
                             }
                         }
                         else if (refID > 0 && refID < 100)
@@ -738,19 +738,19 @@ namespace Next_Game
                         {
                             //normal road
                             listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsNormal));
-                            listEventPool.AddRange(GetValidPlayerEvents(listPlyrRoadEventsNormal));
+                            listEventPool.AddRange(GetValidPlayerEvents(listArcPlyrRoadEventsNormal));
                         }
                         else if (road == 2)
                         {
                             //king's road
                             listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsKing));
-                            listEventPool.AddRange(GetValidPlayerEvents(listPlyrRoadEventsKings));
+                            listEventPool.AddRange(GetValidPlayerEvents(listArcPlyrRoadEventsKings));
                         }
                         else if (road == 3)
                         {
                             //connector road
                             listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsConnector));
-                            listEventPool.AddRange(GetValidPlayerEvents(listPlyrRoadEventsConnector));
+                            listEventPool.AddRange(GetValidPlayerEvents(listArcPlyrRoadEventsConnector));
                         }
                     }
                     break;
@@ -1909,24 +1909,41 @@ namespace Next_Game
                     EventPlayer eventObject = (EventPlayer)package.EventObject;
                     Active actor = package.Person;
                     Game._eventID = eventObject.EventPID;
+                    string locName = Game.world.GetLocationName(actor.LocID);
                     //create event description
                     Position pos = actor.GetActorPosition();
                     switch (eventObject.Type)
                     {
                         case ArcType.GeoCluster:
+                            if (eventObject.GeoType == ArcGeo.Sea)
+                            {
+                                eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Sea, bound for {2} (Loc {3}:{4})", actor.Name, actor.ActID, locName, pos.PosX, pos.PosY), 
+                                    RLColor.LightGray, backColor));
+                            }
+                            else
+                            {
+                                eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
+                                locName), RLColor.LightGray, backColor));
+                            }
+                            break;
                         case ArcType.Road:
                             eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
-                                Game.world.GetLocationName(actor.LocID)), RLColor.LightGray, backColor));
+                                locName), RLColor.LightGray, backColor));
                             break;
                         case ArcType.Location:
-                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
-                                pos.PosX, pos.PosY), RLColor.LightGray, backColor));
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2} (Loc {3}:{4})", actor.Name, actor.ActID, locName, pos.PosX, pos.PosY), RLColor.LightGray, backColor));
                             break;
                         case ArcType.Actor:
-                            if (actor.Status == ActorStatus.AtLocation) { status = Game.world.GetLocationName(actor.LocID) + " "; }
+                            if (actor.Status == ActorStatus.AtLocation) { status = locName + " "; }
                             else { status = null; }
                             eventList.Add(new Snippet(string.Format("{0}, Aid {1}. at {2}(Loc {3}:{4})", actor.Name, actor.ActID, status,
                                 pos.PosX, pos.PosY), RLColor.LightGray, backColor));
+                            break;
+                        case ArcType.Dungeon:
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}, incarcerated in {2}'s dungeons (Loc {3}:{4})", actor.Name, actor.ActID, locName, pos.PosX, pos.PosY)));
+                            break;
+                        default:
+                            Game.SetError(new Error(70, $"Inknown ArcType \"{eventObject.Type}\""));
                             break;
                     }
                     eventList.Add(new Snippet(""));
@@ -2567,17 +2584,17 @@ namespace Next_Game
             //Initialise Roads
             if (arcNormal != null)
             {
-                listFollRoadEventsNormal.AddRange(arcNormal.GetEvents());
+                listArcFollRoadEventsNormal.AddRange(arcNormal.GetEvents());
                 Game.logStart.Write(string.Format("Normal roads have been initialised with \"{0}\", arcID {1}", arcNormal.Name, arcNormal.ArcID));
             }
             if (arcKings != null)
             {
-                listFollRoadEventsKings.AddRange(arcKings.GetEvents());
+                listArcFollRoadEventsKings.AddRange(arcKings.GetEvents());
                 Game.logStart.Write(string.Format("Kings roads have been initialised with \"{0}\", arcID {1}", arcKings.Name, arcKings.ArcID));
             }
             if (arcConnector != null)
             {
-                listFollRoadEventsConnector.AddRange(arcConnector.GetEvents());
+                listArcFollRoadEventsConnector.AddRange(arcConnector.GetEvents());
                 Game.logStart.Write(string.Format("Connector roads have been initialised with \"{0}\", arcID {1}", arcConnector.Name, arcConnector.ArcID));
             }
 
@@ -2586,7 +2603,7 @@ namespace Next_Game
             //Initialise Capital
             if (arcCapital != null)
             {
-                listFollCapitalEvents.AddRange(arcCapital.GetEvents());
+                listArcFollCapitalEvents.AddRange(arcCapital.GetEvents());
                 Game.logStart.Write(string.Format("The Capital at KingsKeep has been initialised with \"{0}\", arcID {1}", arcCapital.Name, arcCapital.ArcID));
             }
 

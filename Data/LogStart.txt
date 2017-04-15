@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 15/04/2017 09:58:38
+//Exile Game file ops "LogStart.txt" commenced at: 15/04/2017 13:30:32
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -1023,5 +1023,5 @@ Infiltrate Challenge (Stealth), successfully imported
 Evade Challenge (Stealth), successfully imported
 Escape Challenge (Stealth), successfully imported
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 15/04/2017 09:58:39
-//Elapsed Time 839 ms
+//Exile Game file ops "LogStart.txt" Completed at: 15/04/2017 13:30:32
+//Elapsed Time 625 ms

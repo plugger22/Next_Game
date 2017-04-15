@@ -53,7 +53,7 @@ Leadership_Auto: 0
 Touched_Auto: 0
 [End]
 
-Name: Hardened Seaman
+Name: Saladin Kinghit
 ID: 3
 Sex: Male
 Title: Seaman
