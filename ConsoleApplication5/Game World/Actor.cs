@@ -6,7 +6,7 @@ using Next_Game.Event_System;
 
 namespace Next_Game
 {
-    public enum ActorStatus { AtLocation, Travelling, Captured, AtSea, Gone }; //'Gone' encompasses dead and missing
+    public enum ActorStatus { AtLocation, Travelling, Captured, AtSea, Adrift, Gone }; //'Gone' encompasses dead and missing
     //lord and lady are children of Lords, Heir is first in line to inherit. NOTE: keep Knight immediately after Bannerlord with Advisor and Special behind Knight.
     public enum ActorType { None, Usurper, Follower, Lord, Lady, Prince, Princess, Heir, lord, lady, BannerLord, Knight, Advisor, Special, Beast, Inquisitor, Nemesis };
     public enum ActorOffice { None, Usurper, King, Queen, Lord_of_the_North, Lord_of_the_East, Lord_of_the_South, Lord_of_the_West }

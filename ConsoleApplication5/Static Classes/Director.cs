@@ -77,6 +77,7 @@ namespace Next_Game
         List<int> listGenPlyrEventsMinor;
         List<int> listGenPlyrEventsInn;
         List<int> listGenPlyrEventsDungeon;
+        List<int> listGenPlyrEventsAdrift;
         //archetype player events
         List<int> listArcPlyrRoadEventsNormal;
         List<int> listArcPlyrRoadEventsKings;
@@ -135,6 +136,7 @@ namespace Next_Game
             listGenPlyrEventsMinor = new List<int>();
             listGenPlyrEventsInn = new List<int>();
             listGenPlyrEventsDungeon = new List<int>();
+            listGenPlyrEventsAdrift = new List<int>();
             //archetype player events
             listArcPlyrRoadEventsNormal = new List<int>();
             listArcPlyrRoadEventsKings = new List<int>();
@@ -195,7 +197,6 @@ namespace Next_Game
             dictResults = Game.file.GetResults("Results.txt");
             Game.logStart.Write("--- Initialise Challenges (Director.cs)"); //run AFTER GetResults
             dictChallenges = Game.file.GetChallenges("Challenge.txt");
-            
             Game.logStart.Write("--- InitialiseGameStates (Director.cs)");
             InitialiseGameStates();
         }
@@ -411,6 +412,9 @@ namespace Next_Game
                     break;
                 case ArcType.Dungeon:
                     listGenPlyrEventsDungeon.Add(eventID);
+                    break;
+                case ArcType.Adrift:
+                    listGenPlyrEventsAdrift.Add(eventID);
                     break;
                 default:
                     Game.SetError(new Error(50, string.Format("Invalid Type, Unknown, Player Event, ID {0}", eventID)));

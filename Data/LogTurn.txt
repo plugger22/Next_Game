@@ -1,4 +1,4 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 15/04/2017 16:09:17
+//Exile Game file ops "LogTurn.txt" commenced at: 15/04/2017 16:53:04
 --- ProcessStartGame (World.cs)
 --- AgePassiveCharacters (History.cs)
-//Exile Game file ops "LogTurn.txt" Completed at: 15/04/2017 16:10:42
+//Exile Game file ops "LogTurn.txt" Completed at: 15/04/2017 16:53:55

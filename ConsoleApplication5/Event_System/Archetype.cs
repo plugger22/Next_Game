@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game
 {
-    public enum ArcType {None, GeoCluster, Location, Road, House, Actor, Dungeon}
+    public enum ArcType {None, GeoCluster, Location, Road, House, Actor, Dungeon, Adrift}
     public enum ArcGeo {None, Sea, Mountain, Forest } //geocluster sub category
     public enum ArcLoc {None, Capital, Major, Minor, Inn} //location sub category
     public enum ArcRoad {None, Normal, Kings, Connector} //road sub category
