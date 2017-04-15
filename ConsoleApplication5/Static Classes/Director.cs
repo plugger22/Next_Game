@@ -755,10 +755,10 @@ namespace Next_Game
                     }
                     break;
                 case EventType.Sea:
-
+                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsSea));
                     break;
                 case EventType.Dungeon:
-
+                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsDungeon));
                     break;
                 default:
                     Game.SetError(new Error(72, $"Invalid type \"{type}\" -> not recognised"));
@@ -775,18 +775,38 @@ namespace Next_Game
                 Event eventTemp = listEventPool[rndNum];
                 EventPlayer eventChosen = eventTemp as EventPlayer;
                 Message message = null; tempText = "";
-                if (type == EventType.Travelling)
+                switch (type)
                 {
-                    tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
+                    case EventType.Location:
+                        tempText = string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
                       type, eventChosen.Name);
-                    message = new Message(tempText, MessageType.Event);
+                        message = new Message(tempText, MessageType.Event);
+                        break;
+                    case EventType.Travelling:
+                        tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.ShowLocationCoords(actor.LocID),
+                          type, eventChosen.Name);
+                        message = new Message(tempText, MessageType.Event);
+                        break;
+                    case EventType.Sea:
+                        if (actor.ActID == 1)
+                        {
+                            Active player = actor as Active;
+                            tempText = string.Format("{0}, Aid {1} at Sea onboard the S.S \"{2}\", [{3} Event] \"{4}\"", player.Name, player.ActID, player.ShipName,
+                          type, eventChosen.Name);
+                        }
+                        else {  tempText = "unknown actor at sea"; }
+                        message = new Message(tempText, MessageType.Event);
+                        break;
+                    case EventType.Dungeon:
+                        tempText = string.Format("{0}, Aid {1} incarcerated in the dungeons of {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, 
+                            Game.world.GetLocationName(actor.LocID), type, eventChosen.Name);
+                        message = new Message(tempText, MessageType.Event);
+                        break;
+                    default:
+                        Game.SetError(new Error(72, $"Invalid EventType \"{type}\""));
+                        break;
                 }
-                else if (type == EventType.Location)
-                {
-                    tempText = string.Format("{0}, Aid {1} at {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, Game.world.GetLocationName(actor.LocID),
-                      type, eventChosen.Name);
-                    message = new Message(tempText, MessageType.Event);
-                }
+                
                 if (message != null)
                 {
                     Game.world.SetMessage(message);
@@ -2973,12 +2993,12 @@ namespace Next_Game
                 {
                     case EventCalc.Add:
                         voyageTime += amount;
-                        resultText = string.Format("The voyage of the S.S \"{0}\" has been increased by {1} day{2} to {3} days}", player.ShipName, amount, amount != 1 ? "s" : "", voyageTime);
+                        resultText = string.Format("The voyage of the S.S \"{0}\" has been increased by {1} day{2} to {3} days", player.ShipName, amount, amount != 1 ? "s" : "", voyageTime);
                         break;
                     case EventCalc.Subtract:
                         voyageTime -= amount;
                         voyageTime = Math.Max(1, voyageTime);
-                        resultText = string.Format("The voyage of the S.S \"{0}\" has been reduced by {1} day{2} to {3} days}", player.ShipName, amount, amount != 1 ? "s" : "", voyageTime);
+                        resultText = string.Format("The voyage of the S.S \"{0}\" has been reduced by {1} day{2} to {3} days", player.ShipName, amount, amount != 1 ? "s" : "", voyageTime);
                         break;
                     default:
                         Game.SetError(new Error(218, string.Format("Invalid EventCalc \"{0}\" -> voyage time change invalid")));

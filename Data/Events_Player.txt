@@ -433,7 +433,7 @@ Repeat: 10
 Cool: 3
 Event: The wind, the wind? Where to has it gone? Will it ever return? The ship sags lifeless in the calm like an exhausted animal.
 [option]   
-text: What can you do but go below and drink some wine?
+text: What can you do but go below and drink more wine?
 reply: The coolness of your cabin beckons along with the allure of a fine wine. Leave the Captain and crew to bake in the hot sun.
 [outcome]
 effect: VoyageTime

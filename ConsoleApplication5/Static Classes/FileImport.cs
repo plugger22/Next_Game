@@ -2057,22 +2057,22 @@ namespace Next_Game
                                         switch (structEvent.Type)
                                         {
                                             case ArcType.GeoCluster:
-                                                eventObject = new EventPlyGeo(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Geo);
+                                                eventObject = new EventPlyrGeo(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Geo);
                                                 break;
                                             case ArcType.Location:
-                                                eventObject = new EventPlyLoc(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Loc);
+                                                eventObject = new EventPlyrLoc(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Loc);
                                                 break;
                                             case ArcType.Road:
-                                                eventObject = new EventPlyRoad(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Road);
+                                                eventObject = new EventPlyrRoad(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Road);
                                                 break;
                                             case ArcType.House:
-                                                eventObject = new EventPlyHouse(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.House);
+                                                eventObject = new EventPlyrHouse(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.House);
                                                 break;
                                             case ArcType.Actor:
                                                 eventObject = new EventFolActor(structEvent.EventID, structEvent.Name, structEvent.Frequency, structEvent.Actor);
                                                 break;
                                             case ArcType.Dungeon:
-                                                eventObject = new EventPlyDungeon(structEvent.EventID, structEvent.Name, structEvent.Frequency);
+                                                eventObject = new EventPlyrDungeon(structEvent.EventID, structEvent.Name, structEvent.Frequency);
                                                 break;
                                             default:
                                                 Game.SetError(new Error(49, string.Format("Invalid ArcType for Object (\"{0}\")", arrayOfEvents[i])));
