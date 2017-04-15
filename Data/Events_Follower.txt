@@ -5,7 +5,7 @@
 # ID: (Event ID) unique number for FOLLOWER Events only
 # Type: GeoCluster/Location/Road
 # subType:(GeoCluster -> Sea/Mountain/Forest, Locations -> Capital/Major/Minor/Inn, Roads -> Normal/Kings/Connector)
-# Cat: (Category) Generic/Special -> Generic events apply to all, Special events are for archetypes
+# Cat: (Category) Generic/Archetype (Archetype soley for archetype events, Generic can be used for all)
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/High/Common/Very_Common
 # Event: (Event Text)
 # Succeed: (Succeed text) [follower's name] ....text
@@ -73,7 +73,7 @@ Name: Dire Wolf Tracks
 ID: 5
 Type: GeoCluster
 subType: Forest
-Cat: Special
+Cat: Archetype
 Freq: Normal
 Event: Fresh Dire Wolf tracks are seen nearby. These big, powerful animals are dangerous and best avoided.
 Succeed: checks the tracks and notices that they are moving away from the trail. The danger is in the past.
@@ -86,7 +86,7 @@ Name: Dire Wolves Attack
 ID: 6
 Type: GeoCluster
 subType: Forest
-Cat: Special
+Cat: Archetype
 Freq: Normal
 Event: A Dire Wolf lunges out of the dense undergrowth without warning.
 Succeed: manages to duck under the Dire Wolf, draw their sword and fend off the beast.
@@ -324,7 +324,7 @@ Name: Guard Inspection
 ID: 24
 Type: Location
 subType: Minor
-Cat: Special
+Cat: Archetype
 Freq: Low
 Event: A handful of Royal Guards gather round and begin asking questions.
 Succeed: manages to convince them that they are innocent of any wrongdoing.
@@ -337,7 +337,7 @@ Name: City Watch
 ID: 25
 Type: Location
 subType: Capital
-Cat: Special
+Cat: Archetype
 Freq: Low
 Event: A member of the City Watch demands a donation in return for free passage.
 Succeed: offers a lucrative prize in return for their unhindered progress. The Watch Guard salivates with greed.
@@ -350,7 +350,7 @@ Name: The Shadow
 ID: 26
 Type: Actor
 subType: Follower
-Cat: Special
+Cat: Archetype
 Freq: Low
 Event: There's a dark shadow. It's always there. It's following, relentless in it's pursuit. Why won't it go away?
 Succeed: realises that's it's only a shadow. The voices in their head are nothing but harmless uttering.
@@ -363,7 +363,7 @@ Name: The Voices
 ID: 27
 Type: Actor
 subType: Follower
-Cat: Special
+Cat: Archetype
 Freq: Low
 Event: They mutter obscenities. They suggest, cajole and prod. Do this, they say. Do that, NOW.
 Succeed: has learnt to come to terms with the voices. They have them under control.

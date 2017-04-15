@@ -656,7 +656,6 @@ namespace Next_Game
             Cartographic.Position pos = actor.GetActorPosition();
             List<Event> listEventPool = new List<Event>();
             locID = Game.map.GetMapInfo(Cartographic.MapLayer.LocID, pos.PosX, pos.PosY);
-
             switch (type)
             {
                 case EventType.Location:
@@ -723,13 +722,17 @@ namespace Next_Game
                     {
                         //mountains
                         listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsMountain, geoID));
-                        listEventPool.AddRange(GetValidPlayerEvents(cluster.GetPlayerEvents()));
+                        if (cluster != null)
+                        { listEventPool.AddRange(GetValidPlayerEvents(cluster.GetPlayerEvents())); }
+                        else { Game.SetError(new Error(72, "Invalid cluster Mountains (null)")); }
                     }
                     else if (locID == 0 && terrain == 2)
                     {
                         //forests
                         listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsForest, geoID));
-                        listEventPool.AddRange(GetValidPlayerEvents(cluster.GetPlayerEvents()));
+                        if (cluster != null)
+                        { listEventPool.AddRange(GetValidPlayerEvents(cluster.GetPlayerEvents())); }
+                        else { Game.SetError(new Error(72, "Invalid cluster Forests (null)")); }
                     }
                     else if (locID == 0 && terrain == 0)
                     {
@@ -755,7 +758,13 @@ namespace Next_Game
                     }
                     break;
                 case EventType.Sea:
+                    //Get map data for actor's current location
+                    geoID = Game.map.GetMapInfo(Cartographic.MapLayer.GeoID, pos.PosX, pos.PosY);
+                    GeoCluster seaCluster = Game.world.GetGeoCluster(geoID);
                     listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsSea));
+                    if (seaCluster != null)
+                    { listEventPool.AddRange(GetValidPlayerEvents(seaCluster.GetPlayerEvents())); }
+                    else { Game.SetError(new Error(72, "Invalid cluster Sea (null)")); }
                     break;
                 case EventType.Dungeon:
                     listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsDungeon));
@@ -1916,15 +1925,11 @@ namespace Next_Game
                     {
                         case ArcType.GeoCluster:
                             if (eventObject.GeoType == ArcGeo.Sea)
-                            {
-                                eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Sea, bound for {2} (Loc {3}:{4})", actor.Name, actor.ActID, locName, pos.PosX, pos.PosY), 
-                                    RLColor.LightGray, backColor));
-                            }
+                            { eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Sea, bound for {2} (Loc {3}:{4})", actor.Name, actor.ActID, locName, pos.PosX, pos.PosY), 
+                                    RLColor.LightGray, backColor)); }
                             else
-                            {
-                                eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
-                                locName), RLColor.LightGray, backColor));
-                            }
+                            { eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
+                                locName), RLColor.LightGray, backColor)); }
                             break;
                         case ArcType.Road:
                             eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
@@ -2516,13 +2521,12 @@ namespace Next_Game
         /// </summary>
         public void InitialiseArchetypes()
         {
-            Game.logStart.Write("--- InitialiseArchetypes (Director.cs)");
             int refID, arcID;
             //GeoCluster archetypes
             Archetype arcSea = GetArchetype(story.Arc_Geo_Sea);
             Archetype arcMountain = GetArchetype(story.Arc_Geo_Mountain);
             Archetype arcForest = GetArchetype(story.Arc_Geo_Forest);
-            //Initialise active GeoClusters (ones with roads through them)
+            //Initialise active GeoClusters (ones with roads through them & all sea clusters)
             foreach (int geoID in listOfActiveGeoClusters)
             {
                 //get cluster
@@ -2534,14 +2538,18 @@ namespace Next_Game
                         case Cluster.Sea:
                             if (arcSea != null)
                             {
-                                //% chance of applying to each instance
-                                if (rnd.Next(100) < arcSea.Chance)
+                                //only applies to Large sea zones with 2 or more ports (no events needed for the others)
+                                if (cluster.GetNumPorts() > 1 && cluster.Type == GeoType.Large_Sea)
                                 {
-                                    //copy Archetype event ID's across to GeoCluster
-                                    cluster.SetFollowerEvents(arcSea.GetEvents());
-                                    cluster.Archetype = arcSea.ArcID;
-                                    //debug
-                                    Game.logStart.Write(string.Format(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcSea.Name, arcSea.ArcID));
+                                    //% chance of applying to each instance
+                                    if (rnd.Next(100) < arcSea.Chance)
+                                    {
+                                        //copy Archetype event ID's across to GeoCluster -> Player events only (followers don't travel by sea)
+                                        cluster.SetPlayerEvents(arcSea.GetEvents());
+                                        cluster.Archetype = arcSea.ArcID;
+                                        //debug
+                                        Game.logStart.Write(string.Format(" {0}, geoID {1}, has been initialised with \"{2}\", arcID {3}", cluster.Name, cluster.GeoID, arcSea.Name, arcSea.ArcID));
+                                    }
                                 }
                             }
                             break;

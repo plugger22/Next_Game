@@ -5,7 +5,7 @@
 # ID: (Event ID) unique number for PLAYER Events only (do not exceed ID1000)
 # Type: GeoCluster/Location/Road/Dungeon
 # subType:(GeoCluster -> Sea/Mountain/Forest, Location -> Capital/Major/Minor/Inn, Road -> Normal/Kings/Connector)
-# Cat: (Category) Generic/Special
+# Cat: (Category) Generic/Archetype (Archetype soley for archetype events, Generic can be used for all)
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/Common/High/Very_High
 # Status: (Active or Dormant) -> Optional tag (if not shown then default of 'Active')
 # Event: (Event Text)
@@ -533,14 +533,38 @@ chall: Yes
 CsubType: Personal
 [End]
 
-# Dungeon Events ---
+# Sea Archetype Events ---
 
-# [outcome] effect -> Condition
-# conPlyr: Yes / No ( Yes -> condition applies to Player, No -> condition applies to NPC actor)
-# conText: Name of condition, eg. "Old Age"
-# conSkill: Which skill it applies to ( Combat / Wits / Charm / Treachery / Leadership / Touched )
-# conEffect: effect of condition on skill, only values allowed are -2 / -1 / 1 / 2
-# conTimer: How long condition applies for in days. If '999' then condition is permanent
+Name: Kraken Sighted
+ID: 16
+Type: GeoCluster
+subType: Sea
+Cat: Archetype
+Freq: Low
+Status: Active
+Event: The lookout's shout alerts all on deck to a mighty swirl in the ocean ahead. One of the crew nervously whispers 'Kraken'.
+[option]
+text: Superstitious nonsense. It must have been a whale.
+reply: The nearby crew begin shouting at you. Nobody is buying your whale story. You stand your ground. Sailors are such nervous nellies.
+[outcome]
+effect: None
+[option]
+text: Insist that the Captain takes a wide detour around the area.
+reply: The Captain doesn't need any convincing. He's already ordered the helmsman to alter course.
+[outcome]
+effect: VoyageTime
+amount: 1
+apply: Add
+[option]
+text: Demand that the Captain have the ship come about and reverse course immediately.
+reply: He takes some convincing but the crew are on your side. It'll slow the voyage considerably but who wants to be eaten by a Kraken?
+[outcome]
+effect: VoyageTime
+amount: 4
+apply: Add
+[End]
+
+# Dungeon Events ---
 
 Name: Torture
 ID: 11
@@ -748,4 +772,4 @@ conEffect: -1
 conTimer: 5
 [End]
 
-# next ID is 16
+# next ID is 17

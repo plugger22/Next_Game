@@ -21,7 +21,7 @@ namespace Next_Game.Cartographic
         public GeoType Type { get; }
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents; //Archetype events
-        private List<int> listOfPlayerEvents;
+        private List<int> listOfPlayerEvents; //Archetype events
         private List<int> listOfPorts; //Sea clusters only (locID of orthoganl adjoining cities)
 
         public GeoCluster()

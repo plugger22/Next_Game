@@ -2868,22 +2868,33 @@ namespace Next_Game.Cartographic
         }
 
         /// <summary>
-        /// returns a list of all geocluster ID's (unique ones only) that are in the same cell as a road (any type)
+        /// returns a list of all geocluster ID's (unique ones only) that are in the same cell as a road (any type) as well as all sea clusters
         /// </summary>
         /// <returns></returns>
         public List<int> GetActiveGeoClusters()
         {
             List<int> tempList = new List<int>();
-            int geoCell, roadCell;
+            int geoCell, roadCell, seaCell;
             for (int row = 0; row < mapSize; row++)
             {
                 for (int column = 0; column < mapSize; column++)
                 {
                     geoCell = mapGrid[(int)MapLayer.GeoID, column, row];
                     roadCell = mapGrid[(int)MapLayer.Road, column, row];
+                    seaCell = mapGrid[(int)MapLayer.Geography, column, row];
                     //normal road present
-                    if (roadCell > 0 && geoCell > 0)
-                    { 
+                    if (seaCell == 2)
+                    {
+                        if (roadCell > 0 && geoCell > 0)
+                        {
+                            //already in list? add if not
+                            if (!tempList.Contains(geoCell))
+                            { tempList.Add(geoCell); }
+                        }
+                    }
+                    //Sea cluster
+                    else if (seaCell == 1)
+                    {
                         //already in list? add if not
                         if (!tempList.Contains(geoCell))
                         { tempList.Add(geoCell); }

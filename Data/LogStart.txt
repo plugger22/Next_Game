@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 15/04/2017 13:30:32
+//Exile Game file ops "LogStart.txt" commenced at: 15/04/2017 16:09:16
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -617,7 +617,7 @@ Bandit Boss Luigi HandsUp has a confirmed Combat trait
 Luigi HandsUp, Aid 104, specID 1 -> initialised O.K
 Old Lady Holy Haggard has a confirmed Combat trait
 Holy Haggard, Aid 105, specID 2 -> initialised O.K
-Hardened Seaman, Aid 106, specID 3 -> initialised O.K
+Saladin Kinghit, Aid 106, specID 3 -> initialised O.K
 --- InitialiseAI (World.cs)
  Capital 0 -> Current 0 -> Desired 2 -> adjusted Loc's 0
  Branch  1 -> Current 0 -> Desired 1 -> adjusted Loc's 11
@@ -742,6 +742,13 @@ ItemID 10, "Elixir of Wellness", given to Maester Sagard Rotgerius, ActID 14, at
   Option "He's only a young boy. Draw your sword."
     OutGame -> data 4, amount 1, apply Add
     OutConflict -> subType Personal, oppID 3, Challenger True
+"Kraken Sighted" Event, ID 16, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "Superstitious nonsense. It must have been a whale."
+    OutNone -> data 0, amount 0, apply None
+  Option "Insist that the Captain takes a wide detour around the area."
+    OutVoyageTime -> data 0, amount 1, apply Add
+  Option "Demand that the Captain have the ship come about and reverse course immediately."
+    OutVoyageTime -> data 0, amount 4, apply Add
 "Torture" Event, ID 11, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
   Option "Stretch me on the wrack please. My back is giving me trouble."
     OutCondition -> Player? True, Condition "Pulled Tendons", Combat -1, Timer 20
@@ -796,21 +803,21 @@ ItemID 10, "Elixir of Wellness", given to Maester Sagard Rotgerius, ActID 14, at
 --- Import Archetypes (Director.cs)
 --- Import Stories (Director.cs)
 --- Initialise Archetypes (Director.cs)
---- InitialiseArchetypes (Director.cs)
- The Fractured Pinnacle, geoID 4, has been initialised with "Bandit Mountains", arcID 2
- Frost Fang Mountains, geoID 6, has been initialised with "Bandit Mountains", arcID 2
- Locust Woods, geoID 8, has been initialised with "Dire Wolf Forest", arcID 1
- Forest of Marvels, geoID 12, has been initialised with "Dire Wolf Forest", arcID 1
+ The Depths of Despair, geoID 3, has been initialised with "Kraken Sea", arcID 3
+ The Ice-Crowned Highlands, geoID 5, has been initialised with "Bandit Mountains", arcID 2
+ Rat Forest, geoID 7, has been initialised with "Dire Wolf Forest", arcID 1
+ The Coloured Peaks, geoID 10, has been initialised with "Bandit Mountains", arcID 2
+ The Jade Abyss, geoID 17, has been initialised with "Kraken Sea", arcID 3
 Normal roads have been initialised with "Goblin Road", arcID 4
 Kings roads have been initialised with "Dwarf Road", arcID 5
 Connector roads have been initialised with "Orc Hunting Party", arcID 6
 The Capital at KingsKeep has been initialised with "Entertainers", arcID 9
+Casterly Rock, locID 3, has been initialised with "Attentive Guards", arcID 7
 House Lannister, refID 2, has been initialised with "Lazy Lions", arcID 14
-Eyrie, locID 5, has been initialised with "Attentive Guards", arcID 7
+Horn Hill, locID 4, has been initialised with "Attentive Guards", arcID 8
 House Arryn, refID 6, has been initialised with "Cloud Climbers", arcID 16
 Uplands, locID 6, has been initialised with "Attentive Guards", arcID 8
 Ten Towers, locID 8, has been initialised with "Attentive Guards", arcID 8
-Deepwood Motte, locID 10, has been initialised with "Attentive Guards", arcID 8
 House Tyrell, refID 10, has been initialised with "Strong Men", arcID 20
 House The Yellow Huntress, refID 1003, has been initialised with "Evil Tavern", arcID 22
 House Targaryen, refID 11, has been initialised with "Dragon Lovers", arcID 21
@@ -1023,5 +1030,5 @@ Infiltrate Challenge (Stealth), successfully imported
 Evade Challenge (Stealth), successfully imported
 Escape Challenge (Stealth), successfully imported
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 15/04/2017 13:30:32
-//Elapsed Time 625 ms
+//Exile Game file ops "LogStart.txt" Completed at: 15/04/2017 16:09:17
+//Elapsed Time 817 ms

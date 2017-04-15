@@ -883,8 +883,8 @@ namespace Next_Game
                                         case "Generic":
                                             structEvent.Cat = EventCategory.Generic;
                                             break;
-                                        case "Special":
-                                            structEvent.Cat = EventCategory.Special;
+                                        case "Archetype":
+                                            structEvent.Cat = EventCategory.Archetype;
                                             break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Category, (\"{0}\")", arrayOfEvents[i])));
@@ -1416,9 +1416,9 @@ namespace Next_Game
                                         case "Generic":
                                             structEvent.Cat = EventCategory.Generic;
                                             break;
-                                        case "special":
-                                        case "Special":
-                                            structEvent.Cat = EventCategory.Special;
+                                        case "archetype":
+                                        case "Archetype":
+                                            structEvent.Cat = EventCategory.Archetype;
                                             break;
                                         case "autoreact":
                                         case "autoReact":
