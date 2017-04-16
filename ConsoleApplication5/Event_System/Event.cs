@@ -302,6 +302,17 @@ namespace Next_Game.Event_System
         }
     }
 
+    /// <summary>
+    /// Adrift event for when Player is cast adrift in the ocean
+    /// </summary>
+    public class EventPlyrAdrift : EventPlayer
+    {
+        public EventPlyrAdrift(int eventID, string name, EventFrequency frequency) : base(eventID, name, frequency)
+        {
+            Type = ArcType.Adrift;
+        }
+    }
+
 
 
 

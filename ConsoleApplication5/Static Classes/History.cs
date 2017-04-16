@@ -3031,6 +3031,13 @@ namespace Next_Game
             else { shipName = listOfShipNamesRisky[rnd.Next(listOfShipNamesRisky.Count)]; }
             return shipName;
         }
+
+        internal List<string> GetShipNamesSafe()
+        { return listOfShipNamesSafe; }
+
+        internal List<string> GetShipNamesRisky()
+        { return listOfShipNamesRisky; }
+
         //add methods above
     }
 }

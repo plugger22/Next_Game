@@ -1685,6 +1685,8 @@ namespace Next_Game
                                         case "freedom":
                                         case "VoyageTime":
                                         case "voyageTime":
+                                        case "Adrift":
+                                        case "adrift":
                                         case "none":
                                         case "None":
                                             structOutcome.Effect = Game.utility.Capitalise(cleanToken);
@@ -2075,6 +2077,9 @@ namespace Next_Game
                                             case ArcType.Dungeon:
                                                 eventObject = new EventPlyrDungeon(structEvent.EventID, structEvent.Name, structEvent.Frequency);
                                                 break;
+                                            case ArcType.Adrift:
+                                                eventObject = new EventPlyrAdrift(structEvent.EventID, structEvent.Name, structEvent.Frequency);
+                                                break;
                                             default:
                                                 Game.SetError(new Error(49, string.Format("Invalid ArcType for Object (\"{0}\")", arrayOfEvents[i])));
                                                 validData = false;
@@ -2220,6 +2225,9 @@ namespace Next_Game
                                                                         Game.SetError(new Error(49, "Invalid Input, Outcome Calc (VoyageTime), (only Add & Subtract allowed)"));
                                                                         validData = false;
                                                                     }
+                                                                    break;
+                                                                case "Adrift":
+                                                                    outObject = new OutAdrift(structEventID, )
                                                                     break;
                                                                 case "Condition":
                                                                     if (outTemp.ConditionSkill > SkillType.None && outTemp.ConditionEffect != 0 && String.IsNullOrEmpty(outTemp.ConditionText) == false

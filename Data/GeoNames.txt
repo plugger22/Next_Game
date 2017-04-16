@@ -1,4 +1,5 @@
 # GeoNames.txt -> names of geocluster features
+# Seas ->  'in ...' [sea]
 
 [Large Seas]
 The Dancing Ocean

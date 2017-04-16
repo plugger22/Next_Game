@@ -2275,6 +2275,17 @@ namespace Next_Game
                                                 Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
+                                        case OutcomeType.Adrift:
+                                            //Player cast adrift
+                                            OutAdrift adriftOutcome = outcome as OutAdrift;
+                                            outcomeText = ChangePlayerAdriftStatus(adriftOutcome.DeathTimer, adriftOutcome.ShipSunk);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
+                                            break;
                                         case OutcomeType.Resource:
                                             //adjust the resource level of Player or an NPC actor
                                             OutResource resourceOutcome = outcome as OutResource;
@@ -3010,6 +3021,57 @@ namespace Next_Game
             }
             else { Game.SetError(new Error(217, "Invalid Player (null)")); }
             return resultText;
+        }
+
+        /// <summary>
+        /// Initiates a Player's adrift situation
+        /// </summary>
+        /// <param name="setAdrift"></param>
+        /// <param name="deathTimer"></param>
+        /// <param name="shipSunk"></param>
+        /// <returns></returns>
+        private string ChangePlayerAdriftStatus(int deathTimer, bool shipSunk)
+        {
+            string resultText = "";
+            Active player = Game.world.GetActiveActor(1);
+            if (player != null)
+            {
+                if (deathTimer > 1)
+                {
+                    player.DeathTimer = deathTimer;
+                    player.Status = ActorStatus.Adrift;
+                    resultText = $"{player.Title} {player.Name} has been cast Adrift in {player.SeaName}. Death looms in {player.DeathTimer} days";
+                    if (shipSunk == true)
+                    {
+                        //find and remove ship from list
+                        string shipName = player.ShipName;
+                        if (String.IsNullOrEmpty(shipName) == false)
+                        {
+                            List<string> tempList = null;
+                            if (player.VoyageSafe == true)
+                            { tempList = Game.history.GetShipNamesSafe(); }
+                            else { tempList = Game.history.GetShipNamesRisky(); }
+                            if (tempList != null)
+                            {
+                                //loop list, find ship name and remove
+                                for(int i = 0; i < tempList.Count; i++)
+                                {
+                                    if (shipName.Equals(tempList[i]) == true )
+                                    {
+                                        tempList.RemoveAt(i);
+                                        Game.logTurn.Write($"[Notification] S.S \"{shipName}\" has been removed from the list of Ship Names");
+                                        break;
+                                    }
+                                }
+                            }
+                            else { Game.SetError(new Error(221, "Invalid tempList (null)")); }
+                        }
+                        else { Game.SetError(new Error(221, "Invalid Ship Name (null or Empty)")); }
+                    }
+                }
+                else { player.DeathTimer = 10; Game.SetError(new Error(221, "Invalid Death Timer ( must be > 1) -> given default value of 10")); }
+            }
+                return resultText;
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime };
+    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift };
 
     /// <summary>
     /// Option outcome, event system
@@ -280,6 +280,21 @@ namespace Next_Game.Event_System
             this.Amount = amount;
             this.Calc = apply;
             Type = OutcomeType.VoyageTime;
+        }
+    }
+
+    /// <summary>
+    /// Player Cast Adrift at sea. Death timer kicks in.
+    /// </summary>
+    class OutAdrift : Outcome
+    {
+        public int DeathTimer { get; set; } //what value to assign the death timer
+        public bool ShipSunk { get; set; } //true if ship that Player was on sinks
+
+        public OutAdrift(int eventID, bool shipSunk, int timer = 10) : base(eventID)
+        {
+            DeathTimer = timer;
+            Type = OutcomeType.Adrift;
         }
     }
 
