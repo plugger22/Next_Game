@@ -493,6 +493,11 @@ namespace Next_Game
                             if (rnd.Next(100) <= story.Ev_Player_Sea_Base)
                             { DeterminePlayerEvent(player, EventType.Sea); }
                             break;
+                        case ActorStatus.Adrift:
+                            //adrift at sea
+                            if (rnd.Next(100) <= story.Ev_Player_Adrift_Base)
+                            { DeterminePlayerEvent(player, EventType.Adrift); }
+                            break;
                         case ActorStatus.Captured:
                             //dungeon event
                             if (rnd.Next(100) <= story.Ev_Player_Dungeon_Base)

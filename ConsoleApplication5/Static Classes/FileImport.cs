@@ -189,6 +189,7 @@ namespace Next_Game
         public int Ev_Player_Trav { get; set; }
         public int Ev_Player_Sea { get; set; }
         public int Ev_Player_Dungeon { get; set; }
+        public int Ev_Player_Adrift { get; set; }
         //categoryies of archetypes
         public int Sea { get; set; }
         public int Mountain { get; set; }
@@ -2841,6 +2842,23 @@ namespace Next_Game
                                 else
                                 { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Player_Dungeon), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                                 break;
+                            case "Ev_Player_Adrift":
+                                if (cleanToken.Length > 0)
+                                {
+                                    try
+                                    {
+                                        dataInt = Convert.ToInt32(cleanToken);
+                                        if (dataInt > 0)
+                                        { structStory.Ev_Player_Adrift = dataInt; }
+                                        else
+                                        { Game.SetError(new Error(54, string.Format("Invalid Ev_Player_Adrift \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                    }
+                                    catch
+                                    { Game.SetError(new Error(54, string.Format("Invalid Ev_Player_Adrift (Conversion) for  {0}", structStory.Name))); validData = false; }
+                                }
+                                else
+                                { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Player_Adrift), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                                break;
                             case "Arc_Geo_Sea":
                                 if (cleanToken.Length > 0)
                                 {
@@ -3003,6 +3021,8 @@ namespace Next_Game
                                     storyObject.Ev_Player_Loc_Base = structStory.Ev_Player_Loc;
                                     storyObject.Ev_Player_Trav_Base = structStory.Ev_Player_Trav;
                                     storyObject.Ev_Player_Sea_Base = structStory.Ev_Player_Sea;
+                                    storyObject.Ev_Player_Dungeon_Base = structStory.Ev_Player_Dungeon;
+                                    storyObject.Ev_Player_Adrift_Base = structStory.Ev_Player_Adrift;
                                     storyObject.Arc_Geo_Sea = structStory.Sea;
                                     storyObject.Arc_Geo_Mountain = structStory.Mountain;
                                     storyObject.Arc_Geo_Forest = structStory.Forest;
@@ -3015,7 +3035,17 @@ namespace Next_Game
                                     storyObject.Arc_Road_Connector = structStory.Connector;
                                     //last datapoint - save object to list
                                     if (dataCounter > 0)
-                                    { dictOfStories.Add(storyObject.StoryID, storyObject); }
+                                    {
+                                        try
+                                        {
+                                            dictOfStories.Add(storyObject.StoryID, storyObject);
+                                            Game.logStart.Write($"{storyObject.Name}, StoryID {storyObject.StoryID} -> successfully imported");
+                                        }
+                                        catch (ArgumentNullException)
+                                        { Game.SetError(new Error(54, "Invalid storyObject (null) -> not added to dictOfStories")); }
+                                        catch (ArgumentException)
+                                        { Game.SetError(new Error(54, $"Invalid StoryID \"{storyObject.StoryID}\" (duplicate)")); }
+                                    }
                                     else { Game.SetError(new Error(54, "Invalid Input, storyObject")); }
                                 }
                                 else
