@@ -6,13 +6,13 @@ The Yearning Expanse
 The Ocean of Fire
 The Abyss of Infinity
 The Windy Ocean
-Blythe Sea
+The Blythe Sea
 The Quiet Expanse
 The Troubled Expanse
 The Frothy Deep
 The Jade Abyss
 Thunder Deep
-Milt Ocean
+The Gray Sea
 The Boundless Deep
 The Charmed Sea
 The Depths of Despair
@@ -30,7 +30,7 @@ The Wasting Waters
 The Fisal Tides
 Swordfish Gulf
 Whale Bay
-Gulf of Wonder
+The Gulf of Wonder
 Laughing Bay
 Serene Bay
 Worm Deep
@@ -40,9 +40,9 @@ Kraken Bay
 [Small Seas]
 Turtle Haven
 ScuttleButt Cove
-Refuge of the Barnacles
-Crimson Anchorage
-High Tide Haven
+The Refuge of the Barnacles
+The Crimson Anchorage
+The High Tide Haven
 Corsair Cove
 Storm Inlet
 Moon Cove

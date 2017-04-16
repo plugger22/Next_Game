@@ -512,13 +512,19 @@ namespace Next_Game
                     switch (status)
                     {
                         case ActorStatus.AtLocation:
-                            locStatus = "At " + locName;
+                            locStatus = $"At {locName}";
                             break;
                         case ActorStatus.Travelling:
-                            locStatus = "Moving to " + locName;
+                            locStatus = $"Moving to {locName}";
+                            break;
+                        case ActorStatus.AtSea:
+                            locStatus = $"On a ship to {locName}";
+                            break;
+                        case ActorStatus.Adrift:
+                            locStatus = $"Adrift in {actor.Value.SeaName}";
                             break;
                         case ActorStatus.Captured:
-                            locStatus = "Held at " + locName;
+                            locStatus = $"Held at {locName}";
                             break;
                     }
                     /*//get location coords
@@ -788,7 +794,7 @@ namespace Next_Game
                             break;
                         case ActorStatus.Adrift:
                             if (person is Player)
-                            { locString = string.Format("Adrift in the {0}. Death awaits in {player.DeathTimer} day{1}", player.SeaName,
+                            { locString = string.Format("Adrift in {0}. Death awaits in {player.DeathTimer} day{1}", player.SeaName,
                                 player.DeathTimer != 1 ? "s" : ""); }
                             break;
                         case ActorStatus.Gone:
