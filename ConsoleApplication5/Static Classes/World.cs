@@ -724,6 +724,14 @@ namespace Next_Game
             {
                 int locID = person.LocID;
                 int refID = GetRefID(locID);
+                //Set up people types
+                Player player = null;
+                Active active = null;
+                //player
+                if (person is Player)
+                { player = person as Player; }
+                if (person is Active)
+                { active = person as Active; }
                 //advisors can be one of three different categories
                 if (person is Advisor) { actorType = GetAdvisorType((Advisor)person); }
                 else { actorType = person.Title; }
@@ -768,15 +776,20 @@ namespace Next_Game
                                 ShowLocationCoords(locID), locID, refID);
                             break;
                         case ActorStatus.AtSea:
-                            if (person.ActID == 1)
+                            if (person is Player)
                             {
-                                Active tempPlayer = person as Active;
-                                locString = string.Format("At Sea onboard the S.S \"{0}\" bound for {1}, arriving in {2} more day{3}", tempPlayer.ShipName, GetLocationName(locID),
-                                    tempPlayer.VoyageTimer, tempPlayer.VoyageTimer != 1 ? "s" : "");
+                                locString = string.Format("At Sea onboard the S.S \"{0}\" bound for {1}, arriving in {2} more day{3}", player.ShipName, GetLocationName(locID),
+                                    player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
                             }
                             break;
                         case ActorStatus.Captured:
-                            locString = string.Format("Incarcerated in the bowels of the {0} dungeons", GetLocationName(locID));
+                            locString = string.Format("Incarcerated in the bowels of the {0} dungeons. Death awaits in {1} more day{2}", GetLocationName(locID), player.DeathTimer,
+                                player.DeathTimer != 1 ? "s" : "");
+                            break;
+                        case ActorStatus.Adrift:
+                            if (person is Player)
+                            { locString = string.Format("Adrift in the {0}. Death awaits in {player.DeathTimer} day{1}", player.SeaName,
+                                player.DeathTimer != 1 ? "s" : ""); }
                             break;
                         case ActorStatus.Gone:
                             locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
@@ -807,8 +820,6 @@ namespace Next_Game
                 int abilityStars;
                 RLColor traitColor;
                 SkillType trait;
-                /*if (influencer > 0)
-                { Passive infl_actor = GetPassiveActor(influencer); influenceActor = Convert.ToString(infl_actor.Type) + " " + infl_actor.Name; }*/
                 //age of actor
                 SkillAge age = SkillAge.Fifteen;
                 if (person.Age >= 5 && person.Age < 15)
@@ -1000,8 +1011,7 @@ namespace Next_Game
                 //Possessions -> active followers
                 if (person is Active)
                 {
-                    Active tempPerson = person as Active;
-                    int resources = tempPerson.Resources;
+                    int resources = active.Resources;
                     resources = Math.Min(5, resources);
                     //resources = Math.Max(1, resources);
                     listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black));
@@ -1084,7 +1094,6 @@ namespace Next_Game
                 //player specific Soft possessions - Favours & Introductions
                 if (person is Player)
                 {
-                    Player player = person as Player;
                     //favours (Player only)
                     List<int> listOfFavours = player.GetFavours();
                     if (listOfFavours.Count > 0)
@@ -1121,7 +1130,6 @@ namespace Next_Game
                 if (person is Player)
                 {
                     //Player -> get original (pre-game start history)
-                    Player player = person as Player;
                     actorHistory = GetActorHistoricalRecords(player.HistoryID);
                 }
                 actorHistory.AddRange(GetActorHistoricalRecords(person.ActID));
@@ -3230,7 +3238,8 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartTurn()
         {
-            Game.logTurn?.Write(string.Format("--- ProcessStartTurn, Day {0}, Turn {1} (World.cs) ", Game.gameTurn + 1, Game.gameTurn));
+            Game.logTurn?.Write("--- ProcessStartTurn (World.cs)");
+            Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}");
             UpdateActorMoveStatus(MoveActors());
             UpdatePlayerStatus();
             CheckStationaryActiveActors();
@@ -3262,7 +3271,8 @@ namespace Next_Game
         /// </summary>
         public void ProcessEndTurn()
         {
-            Game.logTurn?.Write(string.Format("--- ProcessEndTurn, Day {0} Turn {1} (World.cs)", Game.gameTurn + 1, Game.gameTurn));
+            Game.logTurn?.Write("--- ProcessEndTurn (World.cs)");
+            Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}");
             Game.map.UpdateMap();
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();
@@ -3292,6 +3302,7 @@ namespace Next_Game
                         SetMessage(new Message(description, MessageType.Move));
                         player.Status = ActorStatus.AtLocation;
                         player.ShipName = "Unknown";
+                        player.SeaName = "Unknown";
                         player.VoyageSafe = true;
                     }
                     else
