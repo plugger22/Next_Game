@@ -22,6 +22,7 @@ namespace Next_Game.Cartographic
         //Interface class to enable dictionary keys (Position) to be compared
         List<string> listOfLocationNames = new List<string>(); //list of all location names
         Dictionary<int, Location> dictLocations;
+        Dictionary<int, List<int>> dictActiveSeas; //all sea zones with GeoID as key and a List of (LocID) all ports within
         //see NetGrid enum above
         private int[,] arrayOfNetworkAnalysis;
         //four lists (sorted by distance to capital) of locations, one for each branch.
@@ -42,10 +43,9 @@ namespace Next_Game.Cartographic
         /// <param name="seed">Random seed passed from Game</param>
         public Network(int seed)
         {
-            //posEqC = new PositionEqualityComparer();
-            dictLocations = new Dictionary<int, Location>();
             rnd = new Random(seed);
-            //set up data structures
+            dictLocations = new Dictionary<int, Location>();
+            dictActiveSeas = new Dictionary<int, List<int>>();
             ListOfRoutes = Game.map.GetRoutes();
             ListOfLocations = Game.map.GetLocations();
             ListOfConnectorRoutes = Game.map.GetConnectors();
@@ -111,7 +111,6 @@ namespace Next_Game.Cartographic
         {
             Game.logStart?.Write("--- InitialisePorts (Network.cs)");
             List<GeoCluster> listGeoClusters = Game.map.GetGeoCluster();
-
             //need to filter down to a straight list of SeaClusters
             List<GeoCluster> listSeaClusters = new List<GeoCluster>();
             IEnumerable<GeoCluster> seaClusters =
@@ -198,6 +197,15 @@ namespace Next_Game.Cartographic
                     List<int> listOfPorts = cluster.GetPorts();
                     if (listOfPorts != null)
                     {
+                        //add to dictActiveSeas
+                        try
+                        {
+                            dictActiveSeas.Add(cluster.GeoID, listOfPorts);
+                            Game.logStart?.Write($"[Notification] {cluster.Name} GeoID {cluster.GeoID} with {listOfPorts.Count} Ports -> added to dictActiveSeas");
+                        }
+                        catch (ArgumentException)
+                        { Game.SetError(new Error(215, $"Invalid GeoID \"{cluster.GeoID}\" (duplicate record in dictActiveSeas)")); }
+                        //work out distances from port to port within sea zone
                         for(int i = 0; i < listOfPorts.Count; i++)
                         {
                             Location locOrigin = GetLocation(listOfPorts[i]);
@@ -2281,6 +2289,47 @@ namespace Next_Game.Cartographic
                     break;
             }
             return branchList;
+        }
+
+        /// <summary>
+        /// Given two ports, the name of the sea between them is returned, otherwise "Unknown".
+        /// </summary>
+        /// <param name="orginLocID"></param>
+        /// <param name="destLocID"></param>
+        /// <returns></returns>
+        internal string GetSeaName(int originLocID, int destinationLocID)
+        {
+            string seaName = "Unknown";
+            List<int> tempList = null;
+            int locID;
+            int tally = 0;
+            if (originLocID > 0 && destinationLocID > 0)
+            {
+                if (dictActiveSeas.Count > 0)
+                {
+                    for (int i = 0; i < dictActiveSeas.Count; i++)
+                    {
+                        tempList = dictActiveSeas.ElementAt(i).Value;
+                        //loop list of ports aiming to find both origin and destination in the same list
+                        tally = 0;
+                        for(int k = 0; k < tempList.Count; k++)
+                        {
+                            locID = tempList[k];
+                            if (locID == originLocID || locID == destinationLocID ) { tally++; }
+                            //found both?
+                            if (tally == 2 )
+                            {
+                                GeoCluster cluster = Game.world.GetGeoCluster(dictActiveSeas.ElementAt(i).Key);
+                                return cluster.Name;
+                            }
+                        }
+                    }
+                    
+                }
+                Game.SetError(new Error(220, "dictActiveSeas has no records (it method called, it should)"));
+            }
+            else { Game.SetError(new Error(220, $"Invalid port LocID (zero, or less), originLocID { originLocID} destinationLocID { destinationLocID}")); }
+            return seaName;
         }
 
         //methods above here

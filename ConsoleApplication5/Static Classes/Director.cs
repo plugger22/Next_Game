@@ -2993,7 +2993,7 @@ namespace Next_Game
                         player.Status = ActorStatus.AtSea;
                         player.VoyageSafe = safePassage;
                         player.ShipName = Game.history.GetShipName(player.VoyageSafe);
-                        player.SeaName = 
+                        player.SeaName = Game.network.GetSeaName(currentLocID, destID);
                         string locNameOrigin = Game.world.GetLocationName(currentLocID);
                         string locNameDestination = Game.world.GetLocationName(destID);
                         resultText = string.Format("{0} {1} boards the S.S \"{2}\" at {3}, bound for {4}. Estimated voyage time {5} day{6}", player.Title, player.Name, player.ShipName,

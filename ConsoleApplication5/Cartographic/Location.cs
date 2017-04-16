@@ -80,7 +80,7 @@ namespace Next_Game.Cartographic
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
-        private Dictionary<int, int> dictSeaDistances;
+        private Dictionary<int, int> dictSeaDistances; //locID of destination port (key) and distance (value)
 
         public Location()
         { LocName = "testville"; Capital = false; locPos = new Position(); LocationID = locationIndex++; }
