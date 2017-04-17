@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 17/04/2017 21:05:38
+//Exile Game file ops "LogStart.txt" commenced at: 17/04/2017 21:19:18
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -66,39 +66,39 @@ AI_CONNECTOR -> 4 Min 0 Max 10
 AI_HUNT_THRESHOLD -> 4 Min 4 Max 12
 LOSS_OF_LEGEND -> 1 Min 0 Max 4
 ERROR_29 "Location Deleted 3:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 28:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 10:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 14:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 19:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 1:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 17:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 23:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 15:4"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 23:5"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 17:6"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 15:7"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 23:9"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 25:9"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 26:11"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 24:12"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 ERROR_29 "Location Deleted 28:12"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:18 UTC +10:00
 --- Network Analysis (Network.cs)
 Dir 0         1 Locations     0 Connections
 Dir 1         3 Locations     3 Connections
@@ -598,294 +598,4 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
   Option "Stretch me on the wrack please. My back is giving me trouble."
     OutCondition -> Player? True, Condition "Pulled Tendons", Combat -1, Timer 20
     OutDeathTimer -> data 0, amount 2, apply Subtract
-  Option "Chop off a finger or two, I've got plenty to spare."
-    OutCondition -> Player? True, Condition "Missing Fingers", Combat -1, Timer 30
-    OutDeathTimer -> data 0, amount 2, apply Subtract
-  Option "Teeth. Feel free to knock a few out. They'll grow back one day."
-    OutCondition -> Player? True, Condition "Missing Teeth", Charm -1, Timer 40
-    OutDeathTimer -> data 0, amount 2, apply Subtract
-"Rats" Event, ID 12, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
-  Option "Ignore them. So what if they chew your toes?"
-    OutCondition -> Player? True, Condition "Rat Bites", Combat -1, Timer 10
-    OutDeathTimer -> data 0, amount 2, apply Add
-  Option "Mmmmm. Raw Rat. What a treat."
-    OutCondition -> Player? True, Condition "Rat Food Energy Boost", Combat 1, Timer 5
-    OutDeathTimer -> data 0, amount 2, apply Add
-  Option "Kill them with your bare hands if you can."
-    OutCondition -> Player? True, Condition "Exhausted", Combat -1, Timer 5
-    OutDeathTimer -> data 0, amount 2, apply Add
-"Terrible Food" Event, ID 13, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
-  Option "Hold your tongue and wolf down the inedible mixture as fast as you can."
-    OutCondition -> Player? True, Condition "Indigestion", Wits -1, Timer 4
-    OutDeathTimer -> data 0, amount 2, apply Add
-  Option "Refuse to eat anything until better food arrives."
-    OutCondition -> Player? True, Condition "Hungry", Combat -1, Timer 4
-    OutDeathTimer -> data 0, amount 2, apply Subtract
-  Option "Hurl the pail of swill into the face of your Goaler."
-    OutCondition -> Player? True, Condition "Beaten up by Goaler", Charm -1, Timer 5
-    OutGame -> data 2, amount 1, apply Add
-    OutDeathTimer -> data 0, amount 2, apply Subtract
-"The Bucket" Event, ID 14, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
-  Option "Who wants to lie in their own waste?"
-    OutCondition -> Player? True, Condition "Dehydrated", Wits -1, Timer 4
-    OutDeathTimer -> data 0, amount 2, apply Subtract
-  Option "Water, give me water."
-    OutNone -> data 0, amount 0, apply None
-    OutDeathTimer -> data 0, amount 2, apply Add
-  Option "Do both. It's a multipurpose bucket."
-    OutCondition -> Player? True, Condition "Diarrhoea", Charm -1, Timer 6
-    OutDeathTimer -> data 0, amount 4, apply Subtract
-"Bribe Goaler" Event, ID 15, Type Dungeon, Repeat 2, Dormant 0, Live 4, Status Active
-  Option "It's to risky. Say nothing."
-    OutNone -> data 0, amount 0, apply None
-  Option "Offer your fat, piggy, Goaler a better life"
-    OutCondition -> Player? True, Condition "Broken nose", Charm -1, Timer 30
-    OutDeathTimer -> data 0, amount 2, apply Subtract
-  Option "Offer your peasant brained Goaler untold wealth and women"
-    OutCondition -> Player? True, Condition "Black Eyes", Charm -1, Timer 5
-    OutDeathTimer -> data 0, amount 2, apply Subtract
---- Import AutoReact Events (Director.cs)
---- Player Events (FileImport.cs)
-"Vengeful <text_1> (Seduction attempt)" Event, ID 1003, Type Location, Repeat 1, Dormant 0, Live 3, Status Live
-  Option "Run like the wind"
-    OutNone -> data 0, amount 0, apply None
-  Option "Attempt to Bribe the Thugs"
-   Trigger -> if ResourcePlyr 0 is GreaterThanOrEqual to 1
-    OutGame -> data 4, amount 12, apply Add
-    OutKnown -> data -1, amount 0, apply None
-    OutGame -> data -4, amount 10, apply Add
-    OutKnown -> data -1, amount 0, apply None
-  Option "Curse all strangers"
-   Trigger -> if Trait 4 is GreaterThanOrEqual to 3
-    OutGame -> data -2, amount 2, apply Add
-"Vengeful <text_1> (Seduction attempt)" successfully added to DictAutoEvents
---- Import Archetypes (Director.cs)
---- Import Stories (Director.cs)
-Steady Eddy, StoryID 1 -> successfully imported
---- Initialise Archetypes (Director.cs)
- The Troubled Expanse, geoID 1, has been initialised with "Kraken Sea", arcID 3
- Grey Thrall Forest, geoID 2, has been initialised with "Dire Wolf Forest", arcID 1
- Anteater Grove, geoID 5, has been initialised with "Dire Wolf Forest", arcID 1
- The Sharp Peaked Mountain, geoID 6, has been initialised with "Bandit Mountains", arcID 2
- Wolverine Forest, geoID 9, has been initialised with "Dire Wolf Forest", arcID 1
- Rotting Forest, geoID 10, has been initialised with "Dire Wolf Forest", arcID 1
-Normal roads have been initialised with "Goblin Road", arcID 4
-Kings roads have been initialised with "Dwarf Road", arcID 5
-Connector roads have been initialised with "Orc Hunting Party", arcID 6
-The Capital at KingsKeep has been initialised with "Entertainers", arcID 9
-House Greyjoy, refID 5, has been initialised with "Golden Kraken", arcID 17
-Evenfall, locID 3, has been initialised with "Attentive Guards", arcID 8
-Greenstone, locID 5, has been initialised with "Attentive Guards", arcID 8
-House Tully, refID 9, has been initialised with "Leaping Trout", arcID 13
-Red Lake, locID 11, has been initialised with "Attentive Guards", arcID 8
-The Raucous Rat, locID 14, has been initialised with "Willowy Wenches", arcID 10
-House The Raucous Rat, refID 1001, has been initialised with "Evil Tavern", arcID 22
-"The Haggler", AiD 2, has been initialised with "The Ghosts Within", arcID 23
-"The Viper", AiD 5, has been initialised with "The Ghosts Within", arcID 23
-"The Spider", AiD 9, has been initialised with "The Ghosts Within", arcID 23
---- Initialise Normal Situations (Director.cs)
-"A Defendable Hill" imported, a Battle conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"A Defendable Hill" imported, a Battle conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Muddy Ground" imported, a Battle conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
-"Hold Back until Needed" imported, a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Hold Back until Needed" imported, a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Cheers of the Crowd" imported, a Tournament conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
-"Favoured Side of the Fence" imported, a Tournament conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
-"Freedom of Movement" imported, a Personal conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Freedom of Movement" imported, a Personal conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Glare of the Sun" imported, a Personal conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
-"Uneven Ground" imported, a Personal conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
-"Take the Moral High Ground" imported, a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Take the Moral High Ground" imported, a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"An Unspoken Threat" imported, a Blackmail conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
-"An Austere Venue" imported, a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"An Austere Venue" imported, a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Minstrel Musicians" imported, a Seduce conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
-"Hostile Whispers" imported, a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Hostile Whispers" imported, a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"A Fine Arbor Wine" imported, a Befriend conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
-"A Pleasant Lunch" imported, a Befriend conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
-"A Crowded Market" imported, a Evade conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 2
-"A Crowded Market" imported, a Evade conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 2
-"Morning Mist" imported, a Evade conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
-"Morning Mist" imported, a Evade conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
-"Shadows" imported, a Evade conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
---- Initialise Game Specific Situations (Director.cs)
-"Relative Army Size" imported, 3 good records & 3 bad, SitNum 1
-"Relative Army Size" imported, 3 good records & 3 bad, SitNum 0
-"Relative Army Size" imported, 3 good records & 3 bad, SitNum -1
-"Relative Fame" imported, 3 good records & 3 bad, SitNum 1
-"Relative Fame" imported, 3 good records & 3 bad, SitNum 0
-"Relative Fame" imported, 3 good records & 3 bad, SitNum -1
-"Relative Honour" imported, 3 good records & 3 bad, SitNum 1
-"Relative Honour" imported, 3 good records & 3 bad, SitNum 0
-"Relative Honour" imported, 3 good records & 3 bad, SitNum -1
-"Relative Justice" imported, 3 good records & 3 bad, SitNum 1
-"Relative Justice" imported, 3 good records & 3 bad, SitNum 0
-"Relative Justice" imported, 3 good records & 3 bad, SitNum -1
-"Known Status" imported, 3 good records & 3 bad, SitNum 1
-"Known Status" imported, 3 good records & 3 bad, SitNum 0
-"Known Status" imported, 3 good records & 3 bad, SitNum -1
---- Initialise Special Situations (Director.cs)
-"Fortified Position" imported, 3 good records & 3 bad, Def 1
-"Fortified Position" imported, 3 good records & 3 bad, Def -1
-"Mountain Terrain" imported, 3 good records & 3 bad, Def 1
-"Mountain Terrain" imported, 3 good records & 3 bad, Def -1
-"Forest Terrain" imported, 3 good records & 3 bad, Def 1
-"Forest Terrain" imported, 3 good records & 3 bad, Def -1
-"Castle Walls" imported, 3 good records & 3 bad, Def 1
-"Castle Walls" imported, 3 good records & 3 bad, Def -1
---- Initialise Skill Situations (Director.cs)
-"Leadership" imported, a Battle conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Leadership" imported, a Battle conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Leadership" imported, a Battle conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
-"Leadership" imported, a Battle conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
-"Combat" imported, a Personal conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Combat" imported, a Personal conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Combat" imported, a Personal conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
-"Combat" imported, a Personal conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
-"Combat" imported, a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Combat" imported, a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Combat" imported, a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
-"Combat" imported, a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
-"Wits" imported, a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Wits" imported, a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Wits" imported, a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
-"Wits" imported, a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
-"Treachery" imported, a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Treachery" imported, a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Treachery" imported, a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
-"Treachery" imported, a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
-"Charm" imported, a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Charm" imported, a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Charm" imported, a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
-"Charm" imported, a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
-"Charm" imported, a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Charm" imported, a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Charm" imported, a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
-"Charm" imported, a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
-"Wits" imported, a Evade conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Wits" imported, a Evade conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Wits" imported, a Evade conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
-"Wits" imported, a Evade conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
---- Initialise Touched Situations (Director.cs)
-"Leadership" imported, a Battle conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
-"Leadership" imported, a Battle conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
-"Leadership" imported, a Battle conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
-"Leadership" imported, a Battle conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
-"Combat" imported, a Personal conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
-"Combat" imported, a Personal conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
-"Combat" imported, a Personal conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
-"Combat" imported, a Personal conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
-"Combat" imported, a Tournament conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
-"Combat" imported, a Tournament conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
-"Combat" imported, a Tournament conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
-"Combat" imported, a Tournament conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
-"Wits" imported, a Hunting conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
-"Wits" imported, a Hunting conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
-"Wits" imported, a Hunting conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
-"Wits" imported, a Hunting conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
-"Treachery" imported, a Blackmail conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
-"Treachery" imported, a Blackmail conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
-"Treachery" imported, a Blackmail conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
-"Treachery" imported, a Blackmail conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
-"Charm" imported, a Seduce conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
-"Charm" imported, a Seduce conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
-"Charm" imported, a Seduce conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
-"Charm" imported, a Seduce conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
-"Charm" imported, a Befriend conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
-"Charm" imported, a Befriend conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
-"Charm" imported, a Befriend conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
-"Charm" imported, a Befriend conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
-"Wits" imported, a Evade conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
-"Wits" imported, a Evade conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
-"Wits" imported, a Evade conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
-"Wits" imported, a Evade conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
---- Initialise Supporter Situations (Director.cs)
-"Battle -> Plyr Def" imported, a Battle conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Battle -> Opp Def" imported, a Battle conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Tournament -> Plyr Def" imported, a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Tournament -> Opp Def" imported, a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Personal -> Plyr Def" imported, a Personal conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Personal -> Opp Def" imported, a Personal conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Hunting -> Plry Def" imported, a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Hunting -> Opp Def" imported, a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"BlackMail -> Plyr Def" imported, a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Blackmail -> Opp Def" imported, a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Seduce -> Plyr Def" imported, a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Seduce -> Opp Def" imported, a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Befriend -> Plyr Def" imported, a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Befriend -> Opp Def" imported, a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Infiltrate -> Plyr Def" imported, a Infiltrate conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Infiltrate -> Opp Def" imported, a Infiltrate conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Evade -> Plyr Def" imported, a Evade conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Evade -> Opp Def" imported, a Evade conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
-"Escape -> Plyr Def" imported, a Escape conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
-"Escape -> Opp Def" imported, a Escape conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
---- Initialise Results (Director.cs)
-RecordID 1 ("Blend in More"), successfully imported
-RecordID 2 ("Been Spotted!"), successfully imported
-RecordID 35 ("You're Presence is known"), successfully imported
-RecordID 3 ("The Cause is Just"), successfully imported
-RecordID 4 ("Unjustly Accused!"), successfully imported
-RecordID 5 ("We're Famous"), successfully imported
-RecordID 6 ("Nobody heard the news"), successfully imported
-RecordID 7 ("Long Live the King"), successfully imported
-RecordID 8 ("Down with the King"), successfully imported
-RecordID 9 ("Honour and Liberty!"), successfully imported
-RecordID 10 ("Oops, shouldn't have done that"), successfully imported
-RecordID 11 ("The King Does the Right Thing"), successfully imported
-RecordID 12 ("The King is a Bastard"), successfully imported
-RecordID 13 ("The King is a Great Man"), successfully imported
-RecordID 14 ("Rel improved due to Befriend Minor Win"), successfully imported
-RecordID 15 ("Rel improved due to Befriend Win"), successfully imported
-RecordID 16 ("Rel improved due to Befriend Major Win"), successfully imported
-RecordID 40 ("Intro given due to Befriend Win"), successfully imported
-RecordID 39 ("Intro given due to a Befriend Major Win"), successfully imported
-RecordID 17 ("Rel worsened due to Befriend Minor Loss"), successfully imported
-RecordID 18 ("Rel worsened due to Befriend Loss"), successfully imported
-RecordID 19 ("Rel worsened due to Befriend Major Loss"), successfully imported
-RecordID 20 ("Rel improved due to Seduce Minor Win"), successfully imported
-RecordID 21 ("Rel improved due to Seduce Win"), successfully imported
-RecordID 22 ("Rel improved due to Seduce Major Win"), successfully imported
-RecordID 36 ("Intro given due to Seduce Minor Win"), successfully imported
-RecordID 37 ("Intro given due to Seduce Win"), successfully imported
-RecordID 38 ("Favour given due to Seduce Major Win"), successfully imported
-RecordID 23 ("Rel worsened due to Seduce Minor Loss"), successfully imported
-RecordID 24 ("Rel worsened due to Seduce Loss"), successfully imported
-RecordID 25 ("Rel worsened due to Seduce Major Loss"), successfully imported
-RecordID 41 ("Chance of a Jealous Lord finding out"), successfully imported
-RecordID 29 ("Favour given due to Blackmail Minor Win"), successfully imported
-RecordID 30 ("Favour given due to Blackmail Win"), successfully imported
-RecordID 31 ("Favour given due to Blackmail Major Win"), successfully imported
-RecordID 32 ("Rel worsened due to Blackmail Minor Loss"), successfully imported
-RecordID 33 ("Rel worsened due to Blackmail Loss"), successfully imported
-RecordID 34 ("Rel worsened due to Blackmail Major Loss"), successfully imported
-RecordID 26 ("Shocked by Blackmail attempt"), successfully imported
-RecordID 27 ("Power mad after Blackmail"), successfully imported
-RecordID 42 ("Wounded in Combat"), successfully imported
-RecordID 43 ("Pumped up after a win in Combat"), successfully imported
-RecordID 44 ("Free at Last"), successfully imported
-RecordID 45 ("Captured"), successfully imported
-RecordID 28 ("Dazed in Combat"), successfully imported
-RecordID 46 ("Exhausted"), successfully imported
-RecordID 47 ("Gain any Item"), successfully imported
-RecordID 48 ("Lose any Item"), successfully imported
-RecordID 49 ("Gain any Active Item"), successfully imported
-RecordID 50 ("Lose any Active Item"), successfully imported
-RecordID 51 ("Gain any Passive Item"), successfully imported
-RecordID 52 ("Lose any Passive Item"), successfully imported
---- Initialise Challenges (Director.cs)
-Personal Challenge (Combat), successfully imported
-Tournament Challenge (Combat), successfully imported
-Battle Challenge (Combat), successfully imported
-Hunting Challenge (Combat), successfully imported
-Befriend Challenge (Social), successfully imported
-Blackmail Challenge (Social), successfully imported
-Seduce Challenge (Social), successfully imported
-Infiltrate Challenge (Stealth), successfully imported
-Evade Challenge (Stealth), successfully imported
-Escape Challenge (Stealth), successfully imported
---- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 17/04/2017 21:05:39
-//Elapsed Time 747 ms
+  Optio

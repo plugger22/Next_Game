@@ -5,7 +5,7 @@
 # ID: (Event ID) unique number for PLAYER Events only (do not exceed ID1000)
 # Type: GeoCluster/Location/Road/Dungeon
 # subType:(GeoCluster -> Sea/Unsafe/Mountain/Forest, Location -> Capital/Major/Minor/Inn, Road -> Normal/Kings/Connector)
-# Cat: (Category) Generic/Archetype (Archetype soley for archetype events, Generic can be used for all)
+# Cat: (Category) Generic/Archetype (Archetype soley for archetype events assigned to an object, Generic can be used for all)
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/Common/High/Very_High
 # Status: (Active or Dormant) -> Optional tag (if not shown then default of 'Active')
 # Event: (Event Text)
@@ -545,13 +545,13 @@ chall: Yes
 CsubType: Personal
 [End]
 
-# Unsafe Sea Archetype Events --- (Cat -> Archetype, subType -> Unsafe)
+# Unsafe Sea  Events --- (subType -> Unsafe)
 
 Name: Sprung a Leak
 ID: 18
 Type: GeoCluster
 subType: Unsafe
-Cat: Archetype
+Cat: Generic
 Freq: Low
 Status: Active
 Event: The Bosun runs onto deck yelling that the ship has sprung a leak. It's sounds bad.
@@ -584,7 +584,7 @@ amount: 1
 apply: Subtract
 [End]
 
-# Sea Archetype Events --- (Cat -> Archetype)
+# Sea Archetype Events --- 
 
 Name: Kraken Sighted
 ID: 16
