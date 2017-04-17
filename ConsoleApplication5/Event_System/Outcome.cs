@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift };
+    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer };
 
     /// <summary>
     /// Option outcome, event system
@@ -295,6 +295,20 @@ namespace Next_Game.Event_System
         {
             DeathTimer = timer;
             Type = OutcomeType.Adrift;
+        }
+    }
+
+
+    /// <summary>
+    /// Player's death timer (applies in Adrift and Dungeon situations) goes up or down (Add/Subtract)
+    /// </summary>
+    class OutDeathTimer : Outcome
+    {
+        public OutDeathTimer(int eventID, int amount, EventCalc apply) : base(eventID)
+        {
+            this.Amount = amount;
+            this.Calc = apply;
+            Type = OutcomeType.DeathTimer;
         }
     }
 

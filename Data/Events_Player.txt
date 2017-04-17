@@ -28,7 +28,7 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource, Condition, Known, Freedom, Item, VoyageTime)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource, Condition, Known, Freedom, Item, VoyageTime, Adrift, DeathTimer)
 
 # [outcome] effect -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -47,9 +47,17 @@
 # calc: Add -> player gains an item, Subtract -> player loses an item
 # apply: Select from... +ve -> Active items, -ve -> Passive Items, '0' All items
 
+# [outcome] effect -> DeathTimer
+# amount: +ve number (how many turns timer changes by)
+# apply: Add / Subtract
+
 # [outcome] effect -> VoyageTime
 # amount: number of turns to vary voyagetime by
 # calc: Add (slow down) / Subtract (speed up, mincapped at 1)
+
+# [outcome] effect -> Adrift
+# data: number of turns for death timer setting ( > 1)
+# shipSunk: Yes / No -> did the ship that the player was on sink as a result of the outcome?
 
 # [outcome] effect -> EventStatus
 # data: target EventID

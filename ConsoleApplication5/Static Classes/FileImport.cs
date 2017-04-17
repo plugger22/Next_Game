@@ -109,6 +109,8 @@ namespace Next_Game
         public EventStatus NewStatus { get; set; } //specific to EventStatus outcomes
         public EventTimer Timer { get; set; } //specific to EventTimer outcomes
         public EventFilter Filter { get; set; } //which group of people to focus on?
+        //Adrift Outcomes
+        public bool ShipSunk { get; set; }
         //Conflict Outcomes
         public bool Challenger { get; set; } //is the player the challenger?
         public ConflictType Conflict_Type { get; set; }
@@ -138,7 +140,7 @@ namespace Next_Game
             Timer = outcome.Timer;
             Filter = outcome.Filter;
             PlayerRes = outcome.PlayerRes;
-            //conflict Outcomes
+            ShipSunk = outcome.ShipSunk;
             Challenger = outcome.Challenger;
             Conflict_Type = outcome.Conflict_Type;
             Combat_Type = outcome.Combat_Type;
@@ -1140,6 +1142,7 @@ namespace Next_Game
                                             structOutcome.Calc = EventCalc.None;
                                             structOutcome.NewStatus = EventStatus.None;
                                             structOutcome.Timer = EventTimer.None;
+                                            structOutcome.ShipSunk = false;
                                             structOutcome.PlayerRes = false;
                                             structOutcome.PlayerCondition = true;
                                             structOutcome.ConditionText = "";
@@ -1209,6 +1212,7 @@ namespace Next_Game
                                         structOutcome.Calc = EventCalc.None;
                                         structOutcome.NewStatus = EventStatus.None;
                                         structOutcome.Timer = EventTimer.None;
+                                        structOutcome.ShipSunk = false;
                                         structOutcome.PlayerRes = false;
                                         structOutcome.PlayerCondition = true;
                                         structOutcome.ConditionText = "";
@@ -1687,6 +1691,8 @@ namespace Next_Game
                                         case "voyageTime":
                                         case "Adrift":
                                         case "adrift":
+                                        case "DeathTimer":
+                                        case "deathTimer":
                                         case "none":
                                         case "None":
                                             structOutcome.Effect = Game.utility.Capitalise(cleanToken);
@@ -1930,10 +1936,14 @@ namespace Next_Game
                                     {
                                         case "Yes":
                                         case "yes":
+                                        case "True":
+                                        case "true":
                                             structOutcome.Challenger = true;
                                             break;
                                         case "No":
                                         case "no":
+                                        case "False":
+                                        case "false":
                                             structOutcome.Challenger = false;
                                             break;
                                         default:
@@ -2008,6 +2018,28 @@ namespace Next_Game
                                             break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, CsubType, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                    break;
+                                case "shipSunk":
+                                    //adrift outcomes - did the ship sink?
+                                    switch (cleanToken)
+                                    {
+                                        case "Yes":
+                                        case "yes":
+                                        case "True":
+                                        case "true":
+                                            structOutcome.ShipSunk = true;
+                                            break;
+                                        case "No":
+                                        case "no":
+                                        case "False":
+                                        case "false":
+                                            structOutcome.ShipSunk = false;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, ShipSunk, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
                                             break;
                                     }
@@ -2217,6 +2249,15 @@ namespace Next_Game
                                                                         validData = false;
                                                                     }
                                                                     break;
+                                                                case "DeathTimer":
+                                                                    if (outTemp.Calc == EventCalc.Add || outTemp.Calc == EventCalc.Subtract)
+                                                                    { outObject = new OutDeathTimer(structEvent.EventID, Math.Abs(outTemp.Amount), outTemp.Calc); }
+                                                                    else
+                                                                    {
+                                                                        Game.SetError(new Error(49, "Invalid Input, Outcome Calc (DeathTimer), (only Add/Subtract allowed)"));
+                                                                        validData = false;
+                                                                    }
+                                                                    break;
                                                                 case "VoyageTime":
                                                                     if (outTemp.Calc == EventCalc.Add || outTemp.Calc == EventCalc.Subtract)
                                                                     { outObject = new OutVoyageTime(structEvent.EventID, outTemp.Amount, outTemp.Calc); }
@@ -2227,7 +2268,7 @@ namespace Next_Game
                                                                     }
                                                                     break;
                                                                 case "Adrift":
-                                                                    outObject = new OutAdrift(structEventID, )
+                                                                    outObject = new OutAdrift(structEvent.EventID, outTemp.ShipSunk, outTemp.Data);
                                                                     break;
                                                                 case "Condition":
                                                                     if (outTemp.ConditionSkill > SkillType.None && outTemp.ConditionEffect != 0 && String.IsNullOrEmpty(outTemp.ConditionText) == false

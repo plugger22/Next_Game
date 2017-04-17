@@ -4874,7 +4874,7 @@ namespace Next_Game
                 }
                 //change status
                 player.Status = ActorStatus.Captured;
-                
+                player.DeathTimer = 20;
                 Enemy enemy = GetEnemyActor(enemyID);
                 if (enemy != null)
                 {

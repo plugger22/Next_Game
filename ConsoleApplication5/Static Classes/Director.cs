@@ -2286,6 +2286,17 @@ namespace Next_Game
                                                 Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
+                                        case OutcomeType.DeathTimer:
+                                            //adjust the number of turns remaining on the Death Timer (Adrift and Dungeon situations only)
+                                            OutDeathTimer deathOutcome = outcome as OutDeathTimer;
+                                            outcomeText = ChangePlayerDeathTimer(deathOutcome.Amount, deathOutcome.Calc);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
+                                            break;
                                         case OutcomeType.Resource:
                                             //adjust the resource level of Player or an NPC actor
                                             OutResource resourceOutcome = outcome as OutResource;
@@ -3103,6 +3114,39 @@ namespace Next_Game
                         break;
                 }
                 player.VoyageTimer = voyageTime;
+            }
+            return resultText;
+        }
+
+        /// <summary>
+        /// Change the death timer for the Player when in an Adrift or Dungeon situation (increase/decrease)
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="calc"></param>
+        /// <returns></returns>
+        private string ChangePlayerDeathTimer(int amount, EventCalc calc)
+        {
+            string resultText = "";
+            Active player = Game.world.GetActiveActor(1);
+            if (player != null)
+            {
+                int deathTime = player.DeathTimer;
+                switch (calc)
+                {
+                    case EventCalc.Add:
+                        deathTime += amount;
+                        resultText = $"The Death Timer has been increased by {amount} to {deathTime}";
+                        break;
+                    case EventCalc.Subtract:
+                        deathTime -= amount;
+                        deathTime = Math.Max(1, deathTime);
+                        resultText = $"The Death Timer has been decreased by {amount} to {deathTime}";
+                        break;
+                    default:
+                        Game.SetError(new Error(218, string.Format("Invalid EventCalc \"{0}\" -> Death time change invalid")));
+                        break;
+                }
+                player.DeathTimer = deathTime;
             }
             return resultText;
         }
