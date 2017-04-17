@@ -778,6 +778,9 @@ namespace Next_Game
                 case EventType.Dungeon:
                     listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsDungeon));
                     break;
+                case EventType.Adrift:
+                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsAdrift));
+                    break;
                 default:
                     Game.SetError(new Error(72, $"Invalid type \"{type}\" -> not recognised"));
                     break;
@@ -818,6 +821,11 @@ namespace Next_Game
                     case EventType.Dungeon:
                         tempText = string.Format("{0}, Aid {1} incarcerated in the dungeons of {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, 
                             Game.world.GetLocationName(actor.LocID), type, eventChosen.Name);
+                        message = new Message(tempText, MessageType.Event);
+                        break;
+                    case EventType.Adrift:
+                        tempText = string.Format("{0}, Aid {1} is adrift in {2}. Certain death looms in {3} day{4}", actor.Name, actor.ActID, actor.SeaName, actor.DeathTimer,
+                            actor.DeathTimer != 1 ? "s" : "");
                         message = new Message(tempText, MessageType.Event);
                         break;
                     default:
@@ -1954,7 +1962,11 @@ namespace Next_Game
                                 pos.PosX, pos.PosY), RLColor.LightGray, backColor));
                             break;
                         case ArcType.Dungeon:
-                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}, incarcerated in {2}'s dungeons (Loc {3}:{4})", actor.Name, actor.ActID, locName, pos.PosX, pos.PosY)));
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}, incarcerated in {2}'s dungeons (Loc {3}:{4}). Survival time {5} days.", actor.Name, actor.ActID,
+                                locName, pos.PosX, pos.PosY, actor.DeathTimer)));
+                            break;
+                        case ArcType.Adrift:
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}, adrift in {2}. Survival time {3} days", actor.Name, actor.ActID, actor.SeaName, actor.DeathTimer)));
                             break;
                         default:
                             Game.SetError(new Error(70, $"Inknown ArcType \"{eventObject.Type}\""));

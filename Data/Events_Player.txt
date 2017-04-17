@@ -398,7 +398,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Active
+Status: Dormant
 Repeat: 3
 Cool: 3
 Event: A wild storm lashes the vessel. Amid slashing spray, large waves crash onto the deck.
@@ -436,7 +436,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Active
+Status: Dormant
 Repeat: 10
 Cool: 3
 Event: The wind, the wind? Where to has it gone? Will it ever return? The ship sags lifeless in the calm like an exhausted animal.
@@ -474,7 +474,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Active
+Status: Dormant
 Event: The crew demand that a passenger be thrown overboard. They insist that she's a Jonah who will curse the ship and all onboard.
 [option]
 text: Stand aside and let it happen.
@@ -519,15 +519,19 @@ data: -4
 amount: 2
 apply: Add
 [option]
-text: Speak to the Captain and ask him to make an example of the man.
-reply: Moral standards must be upheld. Explain to the Captain that he is only as good as the standards he upholds.
+text: Speak to the Captain and demand he make an example of the man.
+reply: Moral standards must be upheld. Explain to the Captain that he is only as good as the standards he upholds. Sadly the Captain fails to see it your way and orders you off his ship, immediately.
 [outcome]
 effect: Game
 data: 4
 amount: 1
 apply: Add
+[outcome]
+effect: Adrift
+data: 10
+shipSunk: Yes
 [option]
-text: He's only a young boy. Draw your sword.
+text: He's just a young boy. Draw your sword and protect him.
 reply: It's your duty to protect the weak and vulnerable. Cold steel will teach this filthy rapist a lesson.
 [outcome]
 effect: Game
@@ -572,6 +576,50 @@ amount: 4
 apply: Add
 [End]
 
+# Adrift Events ---
+
+Name: Drowning seaman
+ID: 17
+Type: Adrift
+subType: None
+Cat: Generic
+Freq: Low
+Status: Active
+Event: You haul a drowning seaman onboard your raft . Who is he and where has he come from? How are you going to feed him?
+[option]
+text: Despite the lack of food and water you decide to share what you have.
+reply: The seaman is eternally grateful for your magnaminous gesture and promises to repay your kindness when he is in a position to do so.
+[outcome]
+effect: DeathTimer
+amount: 4
+apply: Subtract
+[outcome]
+effect: Game
+data: 4
+amount: 2
+apply: Add
+[option]
+text: It's not going to work. Heave him back into the water.
+reply: You're on a raft. You can't be expected to feed and water every passing seaman. Somebody else can deal with him.
+[outcome]
+effect: Game
+data: -4
+amount: 1
+apply: Add
+[option]
+text: Hit him on the head with the paddle. Hard.
+reply: There's your food problem solved, right there and then.
+[outcome]
+effect: Game
+data: -4
+amount: 2
+apply: Add
+[outcome]
+effect: DeathTimer
+amount: 4
+apply: Add
+[End]
+
 # Dungeon Events ---
 
 Name: Torture
@@ -594,6 +642,10 @@ conText: Pulled Tendons
 conSkill:  Combat
 conEffect: -1
 conTimer: 20
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Subtract
 [option]
 text: Chop off a finger or two, I've got plenty to spare.
 reply: Grimacing you allow yourself to be dragged off to the torture chamber. The dungeon master drools with anticipation.
@@ -604,6 +656,10 @@ conText: Missing Fingers
 conSkill: Combat
 conEffect: -1
 conTimer: 30
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Subtract
 [option]
 text: Teeth. Feel free to knock a few out. They'll grow back one day.
 reply: Grimacing you allow yourself to be dragged off to the torture chamber. The dungeon master drools with anticipation.
@@ -614,6 +670,10 @@ conText: Missing Teeth
 conSkill: Charm
 conEffect: -1
 conTimer: 40
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Subtract
 [End]
 
 Name: Rats
@@ -636,6 +696,10 @@ conText: Rat Bites
 conSkill: Combat
 conEffect: -1
 conTimer: 10
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Add
 [option]
 text: Mmmmm. Raw Rat. What a treat.
 reply: Beggars can't be chosers. Besides, it's so dark that raw, dripping, rat looks the same as raw dog. Both taste rancid.
@@ -646,6 +710,10 @@ conText: Rat Food Energy Boost
 conSkill: Combat
 conEffect: 1
 conTimer: 5
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Add
 [option]
 text: Kill them with your bare hands if you can. 
 reply: It's an effort but why should you have to share your cell with a resident population of disgusting vermin?
@@ -656,6 +724,10 @@ conText: Exhausted
 conSkill: Combat
 conEffect: -1
 conTimer: 5
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Add
 [End]
 
 Name: Terrible Food
@@ -678,6 +750,10 @@ conText: Indigestion
 conSkill: Wits
 conEffect: -1
 conTimer: 4
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Add
 [option]
 text: Refuse to eat anything until better food arrives.
 reply: Why eat food that will chew it's way through your stomach lining? Better to go without and hope for something edible tomorrow.
@@ -688,6 +764,10 @@ conText: Hungry
 conSkill: Combat
 conEffect: -1
 conTimer: 4
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Subtract
 [option]
 text: Hurl the pail of swill into the face of your Goaler.
 reply: Sure, he'll beat you but it's important to draw the line and stand your ground.
@@ -703,6 +783,10 @@ effect: Game
 data: 2
 amount: 1
 apply: Add
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Subtract
 [End]
 
 Name: The Bucket
@@ -725,11 +809,19 @@ conText: Dehydrated
 conSkill: Wits
 conEffect: -1
 conTimer: 4
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Subtract
 [option]
 text: Water, give me water.
 reply: How long will you last if you can't drink? People don't die from sleeping in their own crap, do they?
 [outcome]
 effect: None
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Add
 [option]
 text: Do both. It's a multipurpose bucket.
 reply: The goaler promises to empty your waste every morning and refill the bucket with water. He didn't say anything about rinsing it first.
@@ -740,6 +832,10 @@ conText: Diarrhoea
 conSkill: Charm
 conEffect: -1
 conTimer: 6
+[outcome]
+effect: DeathTimer
+amount: 4
+apply: Subtract
 [End]
 
 Name: Bribe Goaler
@@ -768,6 +864,10 @@ conText: Broken nose
 conSkill: Charm
 conEffect: -1
 conTimer: 30
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Subtract
 [option]
 text: Offer your peasant brained Goaler untold wealth and women
 reply: Of course you'll give him neither. What woman would sleep with such an ugly dumb brute? You make an effort to smile in order to sweeten the offer.
@@ -778,6 +878,10 @@ conText: Black Eyes
 conSkill: Charm
 conEffect: -1
 conTimer: 5
+[outcome]
+effect: DeathTimer
+amount: 2
+apply: Subtract
 [End]
 
-# next ID is 17
+# next ID is 18

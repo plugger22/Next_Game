@@ -1633,13 +1633,12 @@ namespace Next_Game
                     string descriptor = string.Format("Method: {0},  Line: {1},  Object: {2},  Turn: {3},  Local Time: {4} UTC {5}", error.Method, error.Line, error.Object, error.Turn, 
                         error.Time, error.TimeZone);
                     //write to log files
-                    if (logError != null)
-                    { logError?.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logError?.Write(descriptor, true, ConsoleColor.Yellow); console = false; }
+                    logError?.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), true, ConsoleColor.Yellow); logError?.Write(descriptor, true, ConsoleColor.Yellow); console = false;
                     if (logStart != null)
-                    { logStart?.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow);
+                    { logStart.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow);
                         logStart?.Write(descriptor, console, ConsoleColor.Yellow); console = false; }
                     else if (logTurn != null)
-                    { logTurn?.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow); logTurn?.Write(descriptor, console, ConsoleColor.Yellow); }
+                    { logTurn.Write(string.Format("ERROR_{0} \"{1}\"", error.Code, error.Text), console, ConsoleColor.Yellow); logTurn?.Write(descriptor, console, ConsoleColor.Yellow); }
                 }
                 //print message regarding ongoing repeats and then ignore the rest
                 else if (_errorCounter == _errorLimit)

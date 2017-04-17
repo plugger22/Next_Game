@@ -73,7 +73,7 @@ namespace Next_Game
                     catch(ObjectDisposedException)
                     { Game.SetError(new Error(192, string.Format("File \"{0}\" has been Disposed -> Write (\"{1}\") -> Text not written",fileName, text))); }
                 }
-                else { Game.SetError(new Error(192, string.Format("File \"{0}\" does not exist -> Write (\"{1}\") -> Text not written", fileName, text))); }
+                //else { Game.SetError(new Error(192, string.Format("File \"{0}\" does not exist -> Write (\"{1}\") -> Text not written", fileName, text))); } -> causes stack overflow !!!
                 //write to Console
                 if (writeToConsole == true)
                 {

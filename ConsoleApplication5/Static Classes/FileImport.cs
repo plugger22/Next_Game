@@ -1282,6 +1282,10 @@ namespace Next_Game
                                         case "Dungeon":
                                             structEvent.Type = ArcType.Dungeon;
                                             break;
+                                        case "adrift":
+                                        case "Adrift":
+                                            structEvent.Type = ArcType.Adrift;
+                                            break;
                                         default:
                                             structEvent.Type = ArcType.None;
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfEvents[i])));
@@ -1400,6 +1404,7 @@ namespace Next_Game
                                             }
                                             break;
                                         case ArcType.Dungeon:
+                                        case ArcType.Adrift:
                                             //no subType required for Dungeons
                                             break;
                                         default:
