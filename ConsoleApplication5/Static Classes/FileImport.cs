@@ -189,11 +189,12 @@ namespace Next_Game
         public int Ev_Follower_Trav { get; set; } // chance of a follower experiencing a random event when travelling
         public int Ev_Player_Loc { get; set; } // chance of the Player experiencing a random event
         public int Ev_Player_Trav { get; set; }
-        public int Ev_Player_Sea { get; set; }
+        public int Ev_Player_Sea { get; set; } //chance for both safe and unsafe voyages
         public int Ev_Player_Dungeon { get; set; }
         public int Ev_Player_Adrift { get; set; }
         //categoryies of archetypes
-        public int Sea { get; set; }
+        public int Sea { get; set; } //all sea voyages
+        public int Unsafe { get; set; } //unsafe sea voyages
         public int Mountain { get; set; }
         public int Forest { get; set; }
         public int Capital { get; set; }
@@ -786,9 +787,9 @@ namespace Next_Game
                                         case ArcType.GeoCluster:
                                             switch (cleanToken)
                                             {
-                                                case "Sea":
-                                                    structEvent.Geo = ArcGeo.Sea;
-                                                    break;
+                                                /*case "Sea":
+                                                    structEvent.Geo = ArcGeo.Sea; -> followers don't go to sea
+                                                    break;*/
                                                 case "Mountain":
                                                     structEvent.Geo = ArcGeo.Mountain;
                                                     break;
@@ -1303,6 +1304,10 @@ namespace Next_Game
                                                 case "sea":
                                                 case "Sea":
                                                     structEvent.Geo = ArcGeo.Sea;
+                                                    break;
+                                                case "unsafe":
+                                                case "Unsafe":
+                                                    structEvent.Geo = ArcGeo.Unsafe;
                                                     break;
                                                 case "mountain":
                                                 case "Mountain":
@@ -2512,6 +2517,9 @@ namespace Next_Game
                                                 case "Sea":
                                                     structArc.Geo = ArcGeo.Sea;
                                                     break;
+                                                case "Unsafe":
+                                                    structArc.Geo = ArcGeo.Unsafe;
+                                                    break;
                                                 case "Mountain":
                                                     structArc.Geo = ArcGeo.Mountain;
                                                     break;
@@ -2914,6 +2922,7 @@ namespace Next_Game
                                 { Game.SetError(new Error(54, string.Format("Empty data field (Ev_Player_Adrift), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                                 break;
                             case "Arc_Geo_Sea":
+                                //general sea events
                                 if (cleanToken.Length > 0)
                                 {
                                     try
@@ -2926,6 +2935,22 @@ namespace Next_Game
                                     }
                                     catch
                                     { Game.SetError(new Error(54, string.Format("Invalid Sea (Conversion) for  {0}", structStory.Name))); validData = false; }
+                                }
+                                break;
+                            case "Arc_Geo_Unsafe":
+                                //sea events when onboard an unsafe vessel (VoyageSafe = true)
+                                if (cleanToken.Length > 0)
+                                {
+                                    try
+                                    {
+                                        dataInt = Convert.ToInt32(cleanToken);
+                                        if (dataInt > 0)
+                                        { structStory.Unsafe = dataInt; }
+                                        else
+                                        { Game.SetError(new Error(54, string.Format("Invalid Unsafe \"{0}\" (Zero) for {1}", dataInt, structStory.Name))); validData = false; }
+                                    }
+                                    catch
+                                    { Game.SetError(new Error(54, string.Format("Invalid Unsafe (Conversion) for  {0}", structStory.Name))); validData = false; }
                                 }
                                 break;
                             case "Arc_Geo_Mountain":
@@ -3078,6 +3103,7 @@ namespace Next_Game
                                     storyObject.Ev_Player_Dungeon_Base = structStory.Ev_Player_Dungeon;
                                     storyObject.Ev_Player_Adrift_Base = structStory.Ev_Player_Adrift;
                                     storyObject.Arc_Geo_Sea = structStory.Sea;
+                                    storyObject.Arc_Geo_Unsafe = structStory.Unsafe;
                                     storyObject.Arc_Geo_Mountain = structStory.Mountain;
                                     storyObject.Arc_Geo_Forest = structStory.Forest;
                                     storyObject.Arc_Loc_Capital = structStory.Capital;

@@ -4,7 +4,7 @@
 # Name: descriptive
 # ID: (Event ID) unique number for PLAYER Events only (do not exceed ID1000)
 # Type: GeoCluster/Location/Road/Dungeon
-# subType:(GeoCluster -> Sea/Mountain/Forest, Location -> Capital/Major/Minor/Inn, Road -> Normal/Kings/Connector)
+# subType:(GeoCluster -> Sea/Unsafe/Mountain/Forest, Location -> Capital/Major/Minor/Inn, Road -> Normal/Kings/Connector)
 # Cat: (Category) Generic/Archetype (Archetype soley for archetype events, Generic can be used for all)
 # Freq: (Frequency) Very_Rare/Rare/Low/Normal/Common/High/Very_High
 # Status: (Active or Dormant) -> Optional tag (if not shown then default of 'Active')
@@ -398,7 +398,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Dormant
+Status: Active
 Repeat: 3
 Cool: 3
 Event: A wild storm lashes the vessel. Amid slashing spray, large waves crash onto the deck.
@@ -436,7 +436,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Dormant
+Status: Active
 Repeat: 10
 Cool: 3
 Event: The wind, the wind? Where to has it gone? Will it ever return? The ship sags lifeless in the calm like an exhausted animal.
@@ -474,7 +474,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Dormant
+Status: Active
 Event: The crew demand that a passenger be thrown overboard. They insist that she's a Jonah who will curse the ship and all onboard.
 [option]
 text: Stand aside and let it happen.
@@ -529,7 +529,7 @@ apply: Add
 [outcome]
 effect: Adrift
 data: 10
-shipSunk: Yes
+shipSunk: No
 [option]
 text: He's just a young boy. Draw your sword and protect him.
 reply: It's your duty to protect the weak and vulnerable. Cold steel will teach this filthy rapist a lesson.
@@ -545,7 +545,46 @@ chall: Yes
 CsubType: Personal
 [End]
 
-# Sea Archetype Events ---
+# Unsafe Sea Archetype Events --- (Cat -> Archetype, subType -> Unsafe)
+
+Name: Sprung a Leak
+ID: 18
+Type: GeoCluster
+subType: Unsafe
+Cat: Archetype
+Freq: Low
+Status: Active
+Event: The Bosun runs onto deck yelling that the ship has sprung a leak. It's sounds bad.
+[option]
+text: Stand back and let the professionals deal with it.
+reply: The crew run around frantically gathering spare timber and nails. The ship starts listing and you feel water lapping your feet.
+[outcome]
+effect: Adrift
+data: 10
+shipSunk: Yes
+[option]
+text: Volunteer to help man the pumps. 
+reply: At times like these it pays to put status and position to one side.
+[outcome]
+effect: Game
+data: 2
+amount: 1
+apply: Add
+[option]
+text:  Offer a gold coin to every crew member if they can keep the ship afloat
+reply: That really sparked them up! The vim and vigour they are displaying is impressive. Water flies out the ports and the ship rises up.
+[trigger]
+check: ResourcePlyr
+thresh: 2
+calc: >=
+[outcome]
+effect: Resource
+plyrRes: Yes
+amount: 1
+apply: Subtract
+[End]
+
+# Sea Archetype Events --- (Cat -> Archetype)
 
 Name: Kraken Sighted
 ID: 16
@@ -884,4 +923,4 @@ amount: 2
 apply: Subtract
 [End]
 
-# next ID is 18
+# next ID is 19

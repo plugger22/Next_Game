@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 17/04/2017 17:53:33
+//Exile Game file ops "LogStart.txt" commenced at: 17/04/2017 21:05:38
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -66,39 +66,39 @@ AI_CONNECTOR -> 4 Min 0 Max 10
 AI_HUNT_THRESHOLD -> 4 Min 4 Max 12
 LOSS_OF_LEGEND -> 1 Min 0 Max 4
 ERROR_29 "Location Deleted 3:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 28:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 10:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 14:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 19:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 1:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 17:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 23:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 15:4"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 23:5"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 17:6"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 15:7"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 23:9"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 25:9"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 26:11"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 24:12"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 ERROR_29 "Location Deleted 28:12"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:53:33 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:05:38 UTC +10:00
 --- Network Analysis (Network.cs)
 Dir 0         1 Locations     0 Connections
 Dir 1         3 Locations     3 Connections
@@ -538,7 +538,7 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
   Option "Pay the Citizen"
    Trigger -> if Trait 2 is GreaterThanOrEqual to 3
     OutGame -> data 3, amount 1, apply Add
-"Storm" Event, ID 7, Type GeoCluster, Repeat 3, Dormant 0, Live 0, Status Dormant
+"Storm" Event, ID 7, Type GeoCluster, Repeat 3, Dormant 0, Live 0, Status Active
   Option "Seek shelter below decks in the relative safety of your cabin"
     OutVoyageTime -> data 0, amount 3, apply Add
   Option "Stand next to the Captain on the quarter deck and set an example for the crew."
@@ -546,7 +546,7 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
   Option "Climb the mast and howl at the wind. Uncage your inner beast."
     OutVoyageTime -> data 0, amount 2, apply Add
     OutGame -> data 2, amount 1, apply Add
-"Becalmed" Event, ID 8, Type GeoCluster, Repeat 10, Dormant 0, Live 0, Status Dormant
+"Becalmed" Event, ID 8, Type GeoCluster, Repeat 10, Dormant 0, Live 0, Status Active
   Option "What can you do but go below and drink more wine?"
     OutVoyageTime -> data 0, amount 4, apply Add
   Option "Join the crew in their prays to the Harpies."
@@ -554,7 +554,7 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
   Option "Pick a fight with the biggest, narliest, looking crew member."
     OutVoyageTime -> data 0, amount 2, apply Add
     OutConflict -> subType Personal, oppID 3, Challenger True
-"Jonah" Event, ID 9, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Dormant
+"Jonah" Event, ID 9, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Stand aside and let it happen."
     OutGame -> data -4, amount 2, apply Add
   Option "Over my dead body! Protect the woman."
@@ -564,12 +564,20 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
 "Cabin Boy" Event, ID 10, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Keep walking. It's none of your business."
     OutGame -> data -4, amount 2, apply Add
-  Option "Speak to the Captain and ask him to make an example of the man."
+  Option "Speak to the Captain and demand he make an example of the man."
     OutGame -> data 4, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
   Option "He's just a young boy. Draw your sword and protect him."
     OutGame -> data 4, amount 1, apply Add
     OutConflict -> subType Personal, oppID 3, Challenger True
+"Sprung a Leak" Event, ID 18, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "Stand back and let the professionals deal with it."
+    OutAdrift -> data 0, amount 0, apply None
+  Option "Volunteer to help man the pumps."
+    OutGame -> data 2, amount 1, apply Add
+  Option "Offer a gold coin to every crew member if they can keep the ship afloat"
+   Trigger -> if ResourcePlyr 2 is GreaterThanOrEqual to 2
+    OutResource -> Player? True, amount 1, apply Subtract
 "Kraken Sighted" Event, ID 16, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Superstitious nonsense. It must have been a whale."
     OutNone -> data 0, amount 0, apply None
@@ -879,5 +887,5 @@ Infiltrate Challenge (Stealth), successfully imported
 Evade Challenge (Stealth), successfully imported
 Escape Challenge (Stealth), successfully imported
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 17/04/2017 17:53:55
-//Elapsed Time 262 ms
+//Exile Game file ops "LogStart.txt" Completed at: 17/04/2017 21:05:39
+//Elapsed Time 747 ms

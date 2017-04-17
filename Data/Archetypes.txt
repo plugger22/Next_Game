@@ -34,6 +34,14 @@ Chance: 50
 Events: 16
 [End]
 
+ArcID: 24
+Name: Creaky Ship
+Type: GeoCluster
+subType: Unsafe
+Chance: 100
+Events: 18
+[End]
+
 # Roads ---
 
 ArcID: 4
@@ -199,3 +207,5 @@ subType: Follower
 Chance: 100
 Events: 26, 27
 [End]
+
+# next ArcID is 25

@@ -7,7 +7,8 @@
 # Ev_Follower_Trav: number (1 to 100) -> chance of a follower experiencing a random event while travelling 
 # Ev_Player_Loc: number (1 to 100) -> chance of the Player experiencing a random event while at a location
 # Ev_Player_Trav: number (1 to 100) -> chance of the Player experiencing a random event while travelling 
-# Ev_Player_Sea: number (1 to 100) -> chance of the Player experiencing a random event while at sea 
+# Ev_Player_Sea: number (1 to 100) -> chance of the Player experiencing a random event while at sea (applies to all voyages)
+# Ev_Player_Unsafe: number (1 to 100) -> chance of Player experiencing a random event while at sea on an unsafe vessel (VoyageSafe = false)
 # Ev_Player_Dungeon: number (1 to 100) -> chance of the Player experiencing a random event while in a dungeon (captured)
 # Ev_Player_Drift: number (1 to 100) -> chance of the Player experiencing a random event while adrift at sea
 # Arc_... : Archetype ID for Generic archetype that applies (leave blank if none) 
@@ -25,6 +26,7 @@ Ev_Player_Sea: 50
 Ev_Player_Dungeon: 50
 Ev_Player_Adrift: 50
 Arc_Geo_Sea: 3
+Arc_Geo_Unsafe: 3
 Arc_Geo_Mountain: 2
 Arc_Geo_Forest: 1
 Arc_Loc_Capital: 9

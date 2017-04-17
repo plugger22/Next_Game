@@ -69,6 +69,7 @@ namespace Next_Game
         List<int> listGenPlyrEventsForest;
         List<int> listGenPlyrEventsMountain;
         List<int> listGenPlyrEventsSea;
+        List<int> listGenPlyrEventsUnsafe;
         List<int> listGenPlyrEventsNormal;
         List<int> listGenPlyrEventsKing;
         List<int> listGenPlyrEventsConnector;
@@ -128,6 +129,7 @@ namespace Next_Game
             listGenPlyrEventsForest = new List<int>();
             listGenPlyrEventsMountain = new List<int>();
             listGenPlyrEventsSea = new List<int>();
+            listGenPlyrEventsUnsafe = new List<int>();
             listGenPlyrEventsNormal = new List<int>();
             listGenPlyrEventsKing = new List<int>();
             listGenPlyrEventsConnector = new List<int>();
@@ -283,7 +285,7 @@ namespace Next_Game
                                     listGenFollEventsMountain.Add(eventID);
                                     break;
                                 /*case ArcGeo.Sea:
-                                    listGenFollEventsSea.Add(eventID);
+                                    listGenFollEventsSea.Add(eventID); -> followers don't go to sea
                                     break;*/
                                 default:
                                     Game.SetError(new Error(50, string.Format("Invalid Type, ArcGeo, Follower Event, ID {0}", eventID)));
@@ -367,6 +369,9 @@ namespace Next_Game
                             break;
                         case ArcGeo.Sea:
                             listGenPlyrEventsSea.Add(eventID);
+                            break;
+                        case ArcGeo.Unsafe:
+                            listGenPlyrEventsUnsafe.Add(eventID);
                             break;
                         default:
                             Game.SetError(new Error(50, string.Format("Invalid Type, ArcGeo, Player Event, ID {0}", eventID)));
@@ -463,7 +468,6 @@ namespace Next_Game
                 {  CreateAutoEnemyEvent(); }
                 else
                 {
-                    //Situation Normal...
                     switch (player.Status)
                     {
                         case ActorStatus.AtLocation:
@@ -767,13 +771,19 @@ namespace Next_Game
                     }
                     break;
                 case EventType.Sea:
-                    //Get map data for actor's current location
+                    //general sea events
+                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsSea));
+                    //Get map data for actor's current location -> Sea Archetype events
                     geoID = Game.map.GetMapInfo(Cartographic.MapLayer.GeoID, pos.PosX, pos.PosY);
                     GeoCluster seaCluster = Game.world.GetGeoCluster(geoID);
-                    listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsSea));
                     if (seaCluster != null)
                     { listEventPool.AddRange(GetValidPlayerEvents(seaCluster.GetPlayerEvents())); }
                     else { Game.SetError(new Error(72, "Invalid cluster Sea (null)")); }
+                    //Player at sea on a risky vessel
+                    Active player = Game.world.GetActiveActor(1);
+                    if (player != null)
+                    { if (player.VoyageSafe == false) { listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsUnsafe)); } }
+                    else { Game.SetError(new Error(72, "Invalid Player (null)")); }
                     break;
                 case EventType.Dungeon:
                     listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsDungeon));
@@ -1941,7 +1951,7 @@ namespace Next_Game
                     switch (eventObject.Type)
                     {
                         case ArcType.GeoCluster:
-                            if (eventObject.GeoType == ArcGeo.Sea)
+                            if (eventObject.GeoType == ArcGeo.Sea || eventObject.GeoType == ArcGeo.Unsafe)
                             { eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Sea, bound for {2} (Loc {3}:{4})", actor.Name, actor.ActID, locName, pos.PosX, pos.PosY), 
                                     RLColor.LightGray, backColor)); }
                             else
