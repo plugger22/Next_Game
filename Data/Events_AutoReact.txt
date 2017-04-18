@@ -23,7 +23,7 @@
 # replyBad: OPTIONAL -> needed if test present and value > 0
 
 # TO MAKE AN OPTION variable, eg. good or bad outcome depending on die roll
-# [option] -> use 'test:' and 'replybad:'
+# [option] -> use 'test:' and 'replyBad:'
 # [outcome] -> use 'bad: 1' for bad outcome (make sure there is a good one as well, so minimum 2 outcomes, one good, one bad)
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.

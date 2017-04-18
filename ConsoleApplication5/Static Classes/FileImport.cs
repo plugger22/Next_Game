@@ -2688,7 +2688,17 @@ namespace Next_Game
                                             arcTemp.Type = arcObject.Type;
                                             //last datapoint - save object to list
                                             if (dataCounter > 0)
-                                            { dictOfArchetypes.Add(arcTemp.ArcID, arcTemp); }
+                                            {
+                                                try
+                                                {
+                                                    dictOfArchetypes.Add(arcTemp.ArcID, arcTemp);
+                                                    Game.logStart.Write(string.Format("{0}, ArcID {1}, [{2}], has {3} events -> successfully imported", arcTemp.Name, arcTemp.ArcID, 
+                                                        arcTemp.Type, arcTemp.GetNumEvents()));
+                                                }
+                                                catch (ArgumentException)
+                                                { Game.SetError(new Error(53, $"Invalid ArcID \"{arcTemp.ArcID}\" (Duplicate record) -> {arcTemp.Name} not added to dict")); }
+                                            }
+
                                         }
                                         else { Game.SetError(new Error(53, "Invalid Input, arcObject")); }
                                     }

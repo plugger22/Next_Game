@@ -18,6 +18,12 @@
 # [option]: Option Block (one block for each option, only use enough blocks for your need. Max 4 option blocks. Place block header at top
 # text: option text. Keep it short and clear.
 # reply: text shown when option selected
+# test: OPTIONAL if value > 0 (up to 98) then option gives Good outcomes if 1d100 <= Test and Bad if > test (must have replyBad and bad outcomes)
+# replyBad: OPTIONAL -> needed if test present and value > 0
+
+# TO MAKE AN OPTION variable, eg. good or bad outcome depending on a random die roll
+# [option] -> use 'test:' and 'replyBad:'
+# [outcome] -> use 'bad: 1' for bad outcome (make sure there is a good one as well, so minimum 2 outcomes, one good, one bad)
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
 # check: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr)
@@ -398,7 +404,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Dormant
+Status: Active
 Repeat: 3
 Cool: 3
 Event: A wild storm lashes the vessel. Amid slashing spray, large waves crash onto the deck.
@@ -436,7 +442,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Dormant
+Status: Active
 Repeat: 10
 Cool: 3
 Event: The wind, the wind? Where to has it gone? Will it ever return? The ship sags lifeless in the calm like an exhausted animal.
@@ -474,7 +480,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Dormant
+Status: Active
 Event: The crew demand that a passenger be thrown overboard. They insist that she's a Jonah who will curse the ship and all onboard.
 [option]
 text: Stand aside and let it happen.
@@ -552,13 +558,18 @@ ID: 18
 Type: GeoCluster
 subType: Unsafe
 Cat: Generic
-Freq: High
+Freq: Very_High
 Status: Active
 Event: The Bosun runs onto deck yelling that the ship has sprung a leak. It's sounds bad.
 [option]
 text: Stand back and let the professionals deal with it.
-reply: The crew run around frantically gathering spare timber and nails. The ship takes on an alarming list. Water caresses your feet.
+reply: The crew appear to have the situation in hand. You congratulate yourself on having the foresight to not intervene.
+test: 45
+replyBad: The crew run around frantically gathering spare timber and nails. The ship takes on an alarming list. Water tickles your toes.
 [outcome]
+effect: None
+[outcome]
+bad: 1
 effect: Adrift
 data: 10
 shipSunk: Yes
