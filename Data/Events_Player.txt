@@ -34,7 +34,7 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource, Condition, Known, Freedom, Item, VoyageTime, Adrift, DeathTimer)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, Game, Resource, Condition, Known, Freedom, Item, VoyageTime, Adrift, Rescued, DeathTimer)
 
 # [outcome] effect -> Game
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
@@ -63,7 +63,10 @@
 
 # [outcome] effect -> Adrift
 # data: number of turns for death timer setting ( > 1)
-# shipSunk: Yes / No -> did the ship that the player was on sink as a result of the outcome?
+# bool: Yes / No -> did the ship that the player was on sink as a result of the outcome?
+
+# [outcome] effect -> Rescued
+# bool: Yes/No -> is the rescuing vessel a safe (Yes), or unsafe (No), vessel?
 
 # [outcome] effect -> EventStatus
 # data: target EventID
@@ -75,7 +78,7 @@
 # amount & calc as per normal
 
 # [outcome] effect -> Resource 
-# plyrRes: Yes / No (if yes it's Player's resource level that is affected, otherwise opponents)
+# bool: Yes / No (if yes it's Player's resource level that is affected, otherwise opponents)
 # amount: how much change (keep in mind Resources are restrained within a range of 1 to 5 but this is automatically enforced by Actor.cs)
 # apply: only Add/Subtract/Equal are valid options here
 
@@ -88,7 +91,7 @@
 
 # [outcome] effect -> Conflict
 # data: OpponentID (Note: this must be the SpecialID of an actor from 'Characters.txt' (called 'ID:' in that file), NOT an ActorID
-# chall: Yes / No (is the Player the challenger in this conflict?)
+# bool: Yes / No (is the Player the challenger in this conflict?)
 # CsubType: Conflict subType (Personal / Tournament / Battle / Hunting / Blackmail / Seduce / Befriend / Infiltrate / Evade / Escape)
 
 
@@ -289,7 +292,7 @@ amount: 1
 apply: Add
 [outcome]
 effect: Resource
-plyrRes: Yes
+bool: Yes
 amount: 1
 apply: Subtract
 [option]
@@ -308,7 +311,7 @@ apply: Add
 [outcome]
 effect: Conflict
 data: 2
-chall: Yes
+bool: Yes
 CsubType: Personal
 [End]
 
@@ -470,7 +473,7 @@ apply: Add
 [outcome]
 effect: Conflict
 data: 3
-chall: Yes
+bool: Yes
 CsubType: Personal
 [End]
 
@@ -535,7 +538,7 @@ apply: Add
 [outcome]
 effect: Adrift
 data: 10
-shipSunk: No
+bool: No
 [option]
 text: He's just a young boy. Draw your sword and protect him.
 reply: It's your duty to protect the weak and vulnerable. Cold steel will teach this filthy rapist a lesson.
@@ -547,7 +550,7 @@ apply: Add
 [outcome]
 effect: Conflict
 data: 3
-chall: Yes
+bool: Yes
 CsubType: Personal
 [End]
 
@@ -572,7 +575,7 @@ effect: None
 bad: 1
 effect: Adrift
 data: 10
-shipSunk: Yes
+bool: Yes
 [option]
 text: Volunteer to help man the pumps. 
 reply: At times like these it pays to put status and position to one side.
@@ -587,7 +590,7 @@ apply: Add
 bad: 1
 effect: Adrift
 data: 10
-shipSunk: Yes
+bool: Yes
 [option]
 text:  Offer a gold coin to every crew member if they can keep the ship afloat
 reply: That really sparked them up! The vim and vigour they are displaying is impressive. Water flies out the ports and the ship rises up.
@@ -597,7 +600,7 @@ thresh: 2
 calc: >=
 [outcome]
 effect: Resource
-plyrRes: Yes
+bool: Yes
 amount: 1
 apply: Subtract
 [End]

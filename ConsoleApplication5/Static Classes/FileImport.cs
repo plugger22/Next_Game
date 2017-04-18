@@ -2039,6 +2039,8 @@ namespace Next_Game
                                 case "chall":           //conflict outcomes -> is the Player the challenger?
                                 case "shipSafe":        //rescued outcomes -> is the vessel safe, or unsafe?
                                 case "shipSunk":        //adrift outcomes -> did the ship sink?
+                                case "bool":
+                                case "Bool":
                                     //all of the above make us of a single, generic bool
                                     switch (cleanToken)
                                     {

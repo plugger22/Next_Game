@@ -2311,7 +2311,7 @@ namespace Next_Game
                                         case OutcomeType.Rescued:
                                             //Player rescued from drifting around the ocean on a raft
                                             OutRescued rescuedOutcome = outcome as OutRescued;
-                                            outcomeText = changePlayerRescuedStatus(rescuedOutcome.Safe);
+                                            outcomeText = ChangePlayerRescuedStatus(rescuedOutcome.Safe);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
