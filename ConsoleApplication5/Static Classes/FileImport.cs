@@ -104,22 +104,22 @@ namespace Next_Game
         public int Data { get; set; }
         public int Amount { get; set; }
         public int Bad { get; set; } //if > 0, flags outcome as Bad
-        public bool PlayerRes { get; set; } //if true then Player has Resources changed, otherwise opponent (OutResources only)
+        //public bool PlayerRes { get; set; } //if true then Player has Resources changed, otherwise opponent (OutResources only)
         public EventCalc Calc { get; set; }
         public EventStatus NewStatus { get; set; } //specific to EventStatus outcomes
         public EventTimer Timer { get; set; } //specific to EventTimer outcomes
         public EventFilter Filter { get; set; } //which group of people to focus on?
-        //Adrift Outcomes
-        public bool ShipSunk { get; set; }
+        //Generic bool Outcomes (multipurpose)
+        public bool boolGeneric { get; set; }
         //Conflict Outcomes
-        public bool Challenger { get; set; } //is the player the challenger?
+        //public bool Challenger { get; set; } //is the player the challenger?
         public ConflictType Conflict_Type { get; set; }
         public ConflictCombat Combat_Type { get; set; }
         public ConflictSocial Social_Type { get; set; }
         public ConflictStealth Stealth_Type { get; set; }
         public ConflictSubType SubType { get; set; } //descriptive purposes only
         //Condition Outcomes
-        public bool PlayerCondition { get; set; } //true if condition applies to Player, otherwise other actor
+        //public bool PlayerCondition { get; set; } //true if condition applies to Player, otherwise other actor
         public string ConditionText { get; set; } // "Old Age", for example
         public SkillType ConditionSkill { get; set; } //Combat, Charm, Wits etc.
         public int ConditionEffect { get; set; } //+/- 1 or 2
@@ -139,15 +139,15 @@ namespace Next_Game
             NewStatus = outcome.NewStatus;
             Timer = outcome.Timer;
             Filter = outcome.Filter;
-            PlayerRes = outcome.PlayerRes;
-            ShipSunk = outcome.ShipSunk;
-            Challenger = outcome.Challenger;
+            //PlayerRes = outcome.PlayerRes;
+            boolGeneric = outcome.boolGeneric;
+            //Challenger = outcome.Challenger;
             Conflict_Type = outcome.Conflict_Type;
             Combat_Type = outcome.Combat_Type;
             Social_Type = outcome.Social_Type;
             Stealth_Type = outcome.Stealth_Type;
             SubType = outcome.SubType;
-            PlayerCondition = outcome.PlayerCondition;
+            //PlayerCondition = outcome.PlayerCondition;
             ConditionText = outcome.ConditionText;
             ConditionSkill = outcome.ConditionSkill;
             ConditionEffect = outcome.ConditionEffect;
@@ -1143,9 +1143,9 @@ namespace Next_Game
                                             structOutcome.Calc = EventCalc.None;
                                             structOutcome.NewStatus = EventStatus.None;
                                             structOutcome.Timer = EventTimer.None;
-                                            structOutcome.ShipSunk = false;
-                                            structOutcome.PlayerRes = false;
-                                            structOutcome.PlayerCondition = true;
+                                            structOutcome.boolGeneric = false;
+                                            //structOutcome.PlayerRes = false;
+                                            //structOutcome.PlayerCondition = true;
                                             structOutcome.ConditionText = "";
                                             structOutcome.ConditionSkill = SkillType.None;
                                             structOutcome.ConditionEffect = 0;
@@ -1213,9 +1213,9 @@ namespace Next_Game
                                         structOutcome.Calc = EventCalc.None;
                                         structOutcome.NewStatus = EventStatus.None;
                                         structOutcome.Timer = EventTimer.None;
-                                        structOutcome.ShipSunk = false;
-                                        structOutcome.PlayerRes = false;
-                                        structOutcome.PlayerCondition = true;
+                                        structOutcome.boolGeneric = false;
+                                        //structOutcome.PlayerRes = false;
+                                        //structOutcome.PlayerCondition = true;
                                         structOutcome.ConditionText = "";
                                         structOutcome.ConditionSkill = SkillType.None;
                                         structOutcome.ConditionEffect = 0;
@@ -1701,6 +1701,8 @@ namespace Next_Game
                                         case "voyageTime":
                                         case "Adrift":
                                         case "adrift":
+                                        case "Rescued":
+                                        case "rescued":
                                         case "DeathTimer":
                                         case "deathTimer":
                                         case "none":
@@ -1833,7 +1835,7 @@ namespace Next_Game
                                             break;
                                     }
                                     break;
-                                case "plyrRes":
+                                /*case "plyrRes":
                                     //Change Resource outcomes only -> if true then Player's resources are changed, otherwise opponents
                                     switch (cleanToken)
                                     {
@@ -1854,8 +1856,8 @@ namespace Next_Game
                                             validData = false;
                                             break;
                                     }
-                                    break;
-                                case "conPlyr":
+                                    break;*/
+                                /*case "conPlyr":
                                     //Condition outcomes - if true applies to Player, otherwise NPC actor
                                     switch (cleanToken)
                                     {
@@ -1876,7 +1878,7 @@ namespace Next_Game
                                             validData = false;
                                             break;
                                     }
-                                    break;
+                                    break;*/
                                 case "conText":
                                     //Condition outcomes - name of condition, eg. "Old Age"
                                     structOutcome.ConditionText = cleanToken;
@@ -1940,7 +1942,7 @@ namespace Next_Game
                                     }
                                     catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome conTimer, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                     break;
-                                case "chall":
+                                /*case "chall":
                                     //conflict outcomes - is the Player the challenger?
                                     switch (cleanToken)
                                     {
@@ -1961,7 +1963,7 @@ namespace Next_Game
                                             validData = false;
                                             break;
                                     }
-                                    break;
+                                    break;*/
                                 case "CsubType":
                                     //Conflict outcome subtype
                                     switch (cleanToken)
@@ -2032,21 +2034,25 @@ namespace Next_Game
                                             break;
                                     }
                                     break;
-                                case "shipSunk":
-                                    //adrift outcomes - did the ship sink?
+                                case "plyrRes":         //Change Resource outcomes only -> if true then Player's resources are changed, otherwise opponents
+                                case "conPlyr":         //Condition outcomes - if true applies to Player, otherwise NPC actor
+                                case "chall":           //conflict outcomes -> is the Player the challenger?
+                                case "shipSafe":        //rescued outcomes -> is the vessel safe, or unsafe?
+                                case "shipSunk":        //adrift outcomes -> did the ship sink?
+                                    //all of the above make us of a single, generic bool
                                     switch (cleanToken)
                                     {
                                         case "Yes":
                                         case "yes":
                                         case "True":
                                         case "true":
-                                            structOutcome.ShipSunk = true;
+                                            structOutcome.boolGeneric = true;
                                             break;
                                         case "No":
                                         case "no":
                                         case "False":
                                         case "false":
-                                            structOutcome.ShipSunk = false;
+                                            structOutcome.boolGeneric = false;
                                             break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, ShipSunk, (\"{0}\")", arrayOfEvents[i])));
@@ -2183,7 +2189,7 @@ namespace Next_Game
                                                             switch (outTemp.Effect)
                                                             {
                                                                 case "Conflict":
-                                                                    outObject = new OutConflict(structEvent.EventID, outTemp.Data, outTemp.Conflict_Type, outTemp.Challenger)
+                                                                    outObject = new OutConflict(structEvent.EventID, outTemp.Data, outTemp.Conflict_Type, outTemp.boolGeneric)
                                                                     {Conflict_Type = outTemp.Conflict_Type, Social_Type = outTemp.Social_Type, Stealth_Type = outTemp.Stealth_Type,
                                                                         Combat_Type = outTemp.Combat_Type, SubType = outTemp.SubType };
                                                                     optionObject.ActorID = outTemp.Data;
@@ -2252,7 +2258,7 @@ namespace Next_Game
                                                                     break;
                                                                 case "Resource":
                                                                     if (outTemp.Calc == EventCalc.Add || outTemp.Calc == EventCalc.Subtract || outTemp.Calc == EventCalc.Equals)
-                                                                    { outObject = new OutResource(structEvent.EventID, outTemp.PlayerRes, outTemp.Amount, outTemp.Calc); }
+                                                                    { outObject = new OutResource(structEvent.EventID, outTemp.boolGeneric, outTemp.Amount, outTemp.Calc); }
                                                                     else
                                                                     {
                                                                         Game.SetError(new Error(49, "Invalid Input, Outcome Calc (Resource), (only Add/Subtract/Equals allowed)"));
@@ -2278,14 +2284,17 @@ namespace Next_Game
                                                                     }
                                                                     break;
                                                                 case "Adrift":
-                                                                    outObject = new OutAdrift(structEvent.EventID, outTemp.ShipSunk, outTemp.Data);
+                                                                    outObject = new OutAdrift(structEvent.EventID, outTemp.boolGeneric, outTemp.Data);
+                                                                    break;
+                                                                case "Rescued":
+                                                                    outObject = new OutRescued(structEvent.EventID, outTemp.boolGeneric);
                                                                     break;
                                                                 case "Condition":
                                                                     if (outTemp.ConditionSkill > SkillType.None && outTemp.ConditionEffect != 0 && String.IsNullOrEmpty(outTemp.ConditionText) == false
                                                                         && outTemp.ConditionTimer > 0)
                                                                     {
                                                                         Condition condition = new Condition(outTemp.ConditionSkill, outTemp.ConditionEffect, outTemp.ConditionText, outTemp.ConditionTimer);
-                                                                        outObject = new OutCondition(structEvent.EventID, outTemp.PlayerCondition, condition); }
+                                                                        outObject = new OutCondition(structEvent.EventID, outTemp.boolGeneric, condition); }
                                                                     else
                                                                     {
                                                                         Game.SetError(new Error(49, "Invalid Input, Outcome Condition variables (default data exists)"));

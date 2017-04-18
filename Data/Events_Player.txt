@@ -558,7 +558,7 @@ ID: 18
 Type: GeoCluster
 subType: Unsafe
 Cat: Generic
-Freq: Very_High
+Freq: Normal
 Status: Active
 Event: The Bosun runs onto deck yelling that the ship has sprung a leak. It's sounds bad.
 [option]
@@ -576,11 +576,18 @@ shipSunk: Yes
 [option]
 text: Volunteer to help man the pumps. 
 reply: At times like these it pays to put status and position to one side.
+test: 85
+replyBad: You pump and pump but it is, in the end, pointless. The battered old lady of the sea succumbs to the ingress of water and you are forced to abandon ship.
 [outcome]
 effect: Game
 data: 2
 amount: 1
 apply: Add
+[outcome]
+bad: 1
+effect: Adrift
+data: 10
+shipSunk: Yes
 [option]
 text:  Offer a gold coin to every crew member if they can keep the ship afloat
 reply: That really sparked them up! The vim and vigour they are displaying is impressive. Water flies out the ports and the ship rises up.

@@ -2188,13 +2188,13 @@ namespace Next_Game
                                     if (rndNum <= option.Test)
                                     {
                                         listOutcomes = option.GetGoodOutcomes(); optionReply = option.ReplyGood;
-                                        Game.logTurn?.Write(string.Format(" Option \"{0}\" Passed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum));
+                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Passed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum));
                                         rndResult = "Success!";
                                     }
                                     else
                                     {
                                         listOutcomes = option.GetBadOutcomes(); optionReply = option.ReplyBad;
-                                        Game.logTurn?.Write(string.Format(" Option \"{0}\" Failed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum));
+                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Failed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum));
                                         rndResult = "Fail";
                                     }
                                 }
@@ -2301,6 +2301,17 @@ namespace Next_Game
                                             //Player cast adrift
                                             OutAdrift adriftOutcome = outcome as OutAdrift;
                                             outcomeText = ChangePlayerAdriftStatus(adriftOutcome.DeathTimer, adriftOutcome.ShipSunk);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
+                                            break;
+                                        case OutcomeType.Rescued:
+                                            //Player rescued from drifting around the ocean on a raft
+                                            OutRescued rescuedOutcome = outcome as OutRescued;
+                                            outcomeText = changePlayerRescuedStatus(rescuedOutcome.Safe);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
@@ -3087,9 +3098,9 @@ namespace Next_Game
                             if (tempList != null)
                             {
                                 //loop list, find ship name and remove
-                                for(int i = 0; i < tempList.Count; i++)
+                                for (int i = 0; i < tempList.Count; i++)
                                 {
-                                    if (shipName.Equals(tempList[i]) == true )
+                                    if (shipName.Equals(tempList[i]) == true)
                                     {
                                         tempList.RemoveAt(i);
                                         Game.logTurn.Write($"[Notification] S.S \"{shipName}\" has been removed from the list of Ship Names");
@@ -3104,7 +3115,32 @@ namespace Next_Game
                 }
                 else { player.DeathTimer = 10; Game.SetError(new Error(221, "Invalid Death Timer ( must be > 1) -> given default value of 10")); }
             }
-                return resultText;
+            else { Game.SetError(new Error(221, "Invalid Player (null)")); }
+            return resultText;
+        }
+
+        /// <summary>
+        /// Player rescued from drifting around the ocean by a passing merchant vessel. Could be a safe, or unsafe, ship.
+        /// </summary>
+        /// <param name="safeShip"></param>
+        /// <returns></returns>
+        private string ChangePlayerRescuedStatus(bool safeShip)
+        {
+            string resultText = "";
+            Active player = Game.world.GetActiveActor(1);
+            if (player != null)
+            {
+                player.DeathTimer = 999;
+                player.VoyageTimer--;
+                player.VoyageTimer = Math.Max(1, player.VoyageTimer);
+                player.VoyageSafe = safeShip;
+                player.ShipName = Game.history.GetShipName(player.VoyageSafe);
+                player.Status = ActorStatus.AtSea;
+                resultText = string.Format("{0} {1} has been rescued by the S.S {2} which is bound for {3} and is expected to dock in {4} day{5}", player.Title, player.Name, player.ShipName,
+                    Game.world.GetLocationName(player.LocID), player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
+            }
+            else { Game.SetError(new Error(222, "Invalid Player (null)")); }
+            return resultText;
         }
 
         /// <summary>

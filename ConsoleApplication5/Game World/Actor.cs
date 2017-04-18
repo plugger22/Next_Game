@@ -638,7 +638,7 @@ namespace Next_Game
             listOfSearched = new List<int>();
             crowTooltip = new List<string>();
             Title = string.Format("{0}", Type);
-            DeathTimer = 999;
+            DeathTimer = 999; //default value, ignored unless < 999
             Known = false;
             Found = false;
         }

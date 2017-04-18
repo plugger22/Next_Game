@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer };
+    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued };
 
     /// <summary>
     /// Option outcome, event system
@@ -151,7 +151,7 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// if Data > 0, player if free'd (ActorStatus.AtLocation), if Data < 0, player is Captured (ActorStatus.Captured) NOTE: Only applies to Player
+    /// if Data > 0, player is free'd (ActorStatus.AtLocation), if Data < 0, player is Captured (ActorStatus.Captured) NOTE: Only applies to Player
     /// </summary>
     class OutFreedom : Outcome
     {
@@ -295,6 +295,20 @@ namespace Next_Game.Event_System
         {
             DeathTimer = timer;
             Type = OutcomeType.Adrift;
+        }
+    }
+
+    /// <summary>
+    /// Player rescued from drifting around the ocean by a passing Merchant vessel
+    /// </summary>
+    class OutRescued : Outcome
+    {
+        public bool Safe { get; set; } //is the rescuing merchant a safe, or unsafe, vessel
+
+        public OutRescued(int eventID, bool shipSafe) : base(eventID)
+        {
+            Safe = shipSafe;
+            Type = OutcomeType.Rescued;
         }
     }
 
