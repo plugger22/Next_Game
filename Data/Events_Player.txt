@@ -398,7 +398,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Active
+Status: Dormant
 Repeat: 3
 Cool: 3
 Event: A wild storm lashes the vessel. Amid slashing spray, large waves crash onto the deck.
@@ -436,7 +436,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Active
+Status: Dormant
 Repeat: 10
 Cool: 3
 Event: The wind, the wind? Where to has it gone? Will it ever return? The ship sags lifeless in the calm like an exhausted animal.
@@ -474,7 +474,7 @@ Type: GeoCluster
 subType: Sea
 Cat: Generic
 Freq: Low
-Status: Active
+Status: Dormant
 Event: The crew demand that a passenger be thrown overboard. They insist that she's a Jonah who will curse the ship and all onboard.
 [option]
 text: Stand aside and let it happen.
@@ -552,12 +552,12 @@ ID: 18
 Type: GeoCluster
 subType: Unsafe
 Cat: Generic
-Freq: Low
+Freq: High
 Status: Active
 Event: The Bosun runs onto deck yelling that the ship has sprung a leak. It's sounds bad.
 [option]
 text: Stand back and let the professionals deal with it.
-reply: The crew run around frantically gathering spare timber and nails. The ship starts listing and you feel water lapping your feet.
+reply: The crew run around frantically gathering spare timber and nails. The ship takes on an alarming list. Water caresses your feet.
 [outcome]
 effect: Adrift
 data: 10

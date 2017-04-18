@@ -521,10 +521,10 @@ namespace Next_Game
                             locStatus = $"On a ship to {locName}";
                             break;
                         case ActorStatus.Adrift:
-                            locStatus = string.Format("Adrift in {0}. Death in {1} day{2}", actor.Value.SeaName, actor.Value.DeathTimer, actor.Value.DeathTimer != 1 ? "s" : "");
+                            locStatus = string.Format("Adrift in {0}. Survival time {1} day{2}", actor.Value.SeaName, actor.Value.DeathTimer, actor.Value.DeathTimer != 1 ? "s" : "");
                             break;
                         case ActorStatus.Captured:
-                            locStatus = string.Format("Held at {0}. Death in {1} day{2}", locName, actor.Value.DeathTimer, actor.Value.DeathTimer != 1 ? "s" : "");
+                            locStatus = string.Format("Held at {0}. Survival time {1} day{2}", locName, actor.Value.DeathTimer, actor.Value.DeathTimer != 1 ? "s" : "");
                             break;
                     }
                     /*//get location coords
@@ -792,12 +792,12 @@ namespace Next_Game
                             }
                             break;
                         case ActorStatus.Captured:
-                            locString = string.Format("Incarcerated in the bowels of the {0} dungeons. Death awaits in {1} more day{2}", GetLocationName(locID), player.DeathTimer,
+                            locString = string.Format("Incarcerated in the bowels of the {0} dungeons. Survival time {1} more day{2}", GetLocationName(locID), player.DeathTimer,
                                 player.DeathTimer != 1 ? "s" : "");
                             break;
                         case ActorStatus.Adrift:
                             if (person is Player)
-                            { locString = string.Format("Adrift in {0}. Death awaits in {1} day{2}", player.SeaName, player.DeathTimer, player.DeathTimer != 1 ? "s" : ""); }
+                            { locString = string.Format("Adrift in {0}. Survival time {1} day{2}", player.SeaName, player.DeathTimer, player.DeathTimer != 1 ? "s" : ""); }
                             break;
                         case ActorStatus.Gone:
                             locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);

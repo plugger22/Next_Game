@@ -834,7 +834,7 @@ namespace Next_Game
                         message = new Message(tempText, MessageType.Event);
                         break;
                     case EventType.Adrift:
-                        tempText = string.Format("{0}, Aid {1} is adrift in {2}. Certain death looms in {3} day{4}", actor.Name, actor.ActID, actor.SeaName, actor.DeathTimer,
+                        tempText = string.Format("{0}, Aid {1} is adrift in {2}. Survival time {3} day{4}", actor.Name, actor.ActID, actor.SeaName, actor.DeathTimer,
                             actor.DeathTimer != 1 ? "s" : "");
                         message = new Message(tempText, MessageType.Event);
                         break;
@@ -3073,7 +3073,7 @@ namespace Next_Game
                 {
                     player.DeathTimer = deathTimer;
                     player.Status = ActorStatus.Adrift;
-                    resultText = $"{player.Title} {player.Name} has been cast Adrift in {player.SeaName}. Death looms in {player.DeathTimer} days";
+                    resultText = $"{player.Title} {player.Name} has been cast Adrift in {player.SeaName}. Survival time {player.DeathTimer} days";
                     if (shipSunk == true)
                     {
                         //find and remove ship from list
@@ -3157,12 +3157,12 @@ namespace Next_Game
                 {
                     case EventCalc.Add:
                         deathTime += amount;
-                        resultText = $"The Death Timer has been increased by {amount} to {deathTime}";
+                        resultText = $"Survival time has been increased by {amount} to {deathTime}";
                         break;
                     case EventCalc.Subtract:
                         deathTime -= amount;
                         deathTime = Math.Max(1, deathTime);
-                        resultText = $"The Death Timer has been decreased by {amount} to {deathTime}";
+                        resultText = $"Survival time has been decreased by {amount} to {deathTime}";
                         break;
                     default:
                         Game.SetError(new Error(218, string.Format("Invalid EventCalc \"{0}\" -> Death time change invalid")));

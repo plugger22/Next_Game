@@ -1,0 +1,82 @@
+//Exile Game File "LogTurn.txt" opened at: 18/04/2017 14:17:01
+--- ProcessStartTurn (World.cs)
+Day 7, Turn 6
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 72 travelling to Pyke (current Loc 12:19)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Andry Tyrell, ID 1 at 4:14, Enemy at 12:19 (Brother Diabolous, ID 72
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Andry Tyrell, ID 1 at 4:14, Enemy at 11:19 (Brother Diabolous, ID 72
+ [Move -> MoveObject] Inquisitor Brother Azazel, ActID 74 travelling to Clegane's Keep (current Loc 15:22)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Andry Tyrell, ID 1 at 4:14, Enemy at 15:22 (Brother Azazel, ID 74
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Andry Tyrell, ID 1 at 4:14, Enemy at 15:23 (Brother Azazel, ID 74
+--- UpdatePlayerStatus (World.cs)
+Usurper Andry Tyrell Death Timer reduced by 1 to 8
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Andry Tyrell, ActID 1 is Adrift
+ [Search -> Stationary] Follower The Haggler, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 9 is AtLocation
+--- UpdateAIController (World.cs)
+--- SetEnemyActivity (World.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mormo, ActID 73 Assigned Branch -> 2 Current Branch -> 2
+ [Goal -> New] Brother Mormo, ActID 73, (loc 17:22), assigned new Goal -> Move
+ [Goal -> Move] Brother Mormo, ActID 73 -> Move Outwards -> Riverrun, LocID 6
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Known] Brother Azazel ActID 74 has become KNOWN
+ [Enemy -> Unknown] Brother Astaroth ActID 75 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Astaroth, ActID 75 retains Goal -> Wait
+ [Enemy -> Known] The Unrelenting ActID 76 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 76 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] The Unrelenting, ActID 76, (loc 15:20), assigned new Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Event "Drowning seaman" has no attached Conditions
+--- ResolvePlayerEvents (Director.cs)
+ Event "Drowning seaman" Timer Repeat now 999
+ Event "Drowning seaman" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Andry Tyrell has had their TurnsUnknown Timer increased from 105 to 106
+ Follower The Haggler has had their TurnsUnknown Timer increased from 5 to 6
+ Follower The Viper has had their TurnsUnknown Timer increased from 5 to 6
+ Follower The Spider has had their TurnsUnknown Timer increased from 5 to 6
+--- ResolveOutcome (Director.cs)
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 18/04/2017 14:17:34
+ld.cs)
+Day 5, Turn 4
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 16
+//Exile Game File "LogTurn.txt" Close completed at: 18/04/2017 14:16:37
+lower The Spider has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "The Haggler", ID 2 added to list of Actors
+ [AutoEvent -> ActorList] "Andry Tarth", ID 36 added to list of Actors
+ [AutoEvent -> FollowerList] "The Haggler", ID 2 added to list of Followers
+ [AutoEvent -> LocalList] "Andry Tarth", ID 36 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "3" GreaterThanOrEqual 2
+ Event "Seek Passage to another Port" Timer Repeat now 999
+ Event "Seek Passage to another Port" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "The Haggler", ID 2 added to list of Actors
+ [AutoEvent -> ActorList] "Andry Tarth", ID 36 added to list of Actors
+ [AutoEvent -> FollowerList] "The Haggler", ID 2 added to list of Followers
+ [AutoEvent -> LocalList] "Andry Tarth", ID 36 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Look for a suitable ship" Timer Repeat now 999
+ Event "Look for a suitable ship" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 2, Turn 1
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 19
+//Exile Game File "LogTurn.txt" Close completed at: 18/04/2017 14:09:14
