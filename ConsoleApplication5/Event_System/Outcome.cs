@@ -294,6 +294,7 @@ namespace Next_Game.Event_System
         public OutAdrift(int eventID, bool shipSunk, int timer = 10) : base(eventID)
         {
             DeathTimer = timer;
+            ShipSunk = shipSunk;
             Type = OutcomeType.Adrift;
         }
     }

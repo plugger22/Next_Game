@@ -24,7 +24,8 @@
 
 # TO MAKE AN OPTION variable, eg. good or bad outcome depending on die roll
 # [option] -> use 'test:' and 'replyBad:'
-# [outcome] -> use 'bad: 1' for bad outcome (make sure there is a good one as well, so minimum 2 outcomes, one good, one bad)
+# [outcome] -> use 'bad: Yes' for bad outcome (make sure there is a good one as well, so minimum 2 outcomes, one good, one bad)
+# there is NO need to put 'bad: No' for the good outcome
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
 # check: Trigger Check ( None, Trait, GameVar)
@@ -101,7 +102,7 @@ data: 4
 amount: 12
 apply: Add
 [outcome]
-bad: 1
+bad: Yes
 effect: Game
 data: -4
 amount: 10
@@ -110,7 +111,7 @@ apply: Add
 effect: Known
 data: -1
 [outcome]
-bad: 1
+bad: Yes
 effect: Known
 data: -1
 [option]

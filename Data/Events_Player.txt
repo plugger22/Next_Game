@@ -432,6 +432,8 @@ apply: Add
 [option]
 text: Climb the mast and howl at the wind. Uncage your inner beast.
 reply: The crew look at you askance. Clearly you must be mad. Nobody goes aloft in a storm.
+test: 20
+replyBad: The mast is bucking like a wild horse. The wind rips your hands from their desperate holds and you find yourself clinging to raft in the swirling malestrom of a storm tossed sea.
 [outcome]
 effect: VoyageTime
 amount: 2
@@ -441,6 +443,11 @@ effect: Game
 data: 2
 amount: 1
 apply: Add
+[outcome]
+bad: Yes
+effect: Adrift
+data: 12
+bool: No
 [End]
 
 Name: Becalmed
