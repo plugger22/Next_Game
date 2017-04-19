@@ -111,6 +111,8 @@ namespace Next_Game
         public EventFilter Filter { get; set; } //which group of people to focus on?
         //Generic bool Outcomes (multipurpose)
         public bool boolGeneric { get; set; }
+        //OutNone descriptive text
+        public string Text { get; set; }
         //Conflict Outcomes
         //public bool Challenger { get; set; } //is the player the challenger?
         public ConflictType Conflict_Type { get; set; }
@@ -139,6 +141,7 @@ namespace Next_Game
             NewStatus = outcome.NewStatus;
             Timer = outcome.Timer;
             Filter = outcome.Filter;
+            Text = outcome.Text;
             //PlayerRes = outcome.PlayerRes;
             boolGeneric = outcome.boolGeneric;
             //Challenger = outcome.Challenger;
@@ -1144,6 +1147,7 @@ namespace Next_Game
                                             structOutcome.NewStatus = EventStatus.None;
                                             structOutcome.Timer = EventTimer.None;
                                             structOutcome.boolGeneric = false;
+                                            structOutcome.Text = "";
                                             //structOutcome.PlayerRes = false;
                                             //structOutcome.PlayerCondition = true;
                                             structOutcome.ConditionText = "";
@@ -1214,6 +1218,7 @@ namespace Next_Game
                                         structOutcome.NewStatus = EventStatus.None;
                                         structOutcome.Timer = EventTimer.None;
                                         structOutcome.boolGeneric = false;
+                                        structOutcome.Text = "";
                                         //structOutcome.PlayerRes = false;
                                         //structOutcome.PlayerCondition = true;
                                         structOutcome.ConditionText = "";
@@ -1665,13 +1670,26 @@ namespace Next_Game
                                     }
                                     break;
                                 case "bad":
-                                    //if > 0 then flagged as a Bad outcome
-                                    try
+                                    //if 'Yes' then flagged as a Bad outcome ( > 0 )
+                                    switch (cleanToken)
                                     {
-                                        dataInt = Convert.ToInt32(cleanToken);
-                                        structOutcome.Bad = dataInt;
+                                        case "Yes":
+                                        case "yes":
+                                        case "True":
+                                        case "true":
+                                            structOutcome.Bad = 1;
+                                            break;
+                                        case "No":
+                                        case "no":
+                                        case "False":
+                                        case "false":
+                                            structOutcome.Bad = 0;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Bad, (\"{0}\")", arrayOfEvents[i])));
+                                            validData = false;
+                                            break;
                                     }
-                                    catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Bad, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                     break;
                                 case "effect":
                                     //Outcome effect
@@ -1782,6 +1800,9 @@ namespace Next_Game
                                             validData = false;
                                             break;
                                     }
+                                    break;
+                                case "outText":
+                                    structOutcome.Text = cleanToken;
                                     break;
                                 case "newStatus":
                                     //specific to EventStatus outcomes
@@ -2304,7 +2325,7 @@ namespace Next_Game
                                                                     }
                                                                     break;
                                                                 case "None":
-                                                                    outObject = new OutNone(structEvent.EventID);
+                                                                    outObject = new OutNone(structEvent.EventID, outTemp.Text);
                                                                     break;
                                                                 default:
                                                                     Game.SetError(new Error(49, string.Format("Invalid Outcome Effect for Event (\"{0}\")", structEvent.Name)));
@@ -2368,7 +2389,9 @@ namespace Next_Game
                     //options
                     foreach (OptionInteractive optionObject in listTempOptions)
                     {
-                        Game.logStart?.Write(string.Format("  Option \"{0}\"", optionObject.Text));
+                        string varText = "";
+                        if (optionObject.Test > 0) { varText = $" [Variable -> {optionObject.Test} % chance of Success]"; }
+                        Game.logStart?.Write(string.Format("  Option \"{0}\" {1}", optionObject.Text, varText));
                         List<Outcome> listTempOutcomes = new List<Outcome>(); //need to create a new list otherwise copying by reference and affects records in dictOfPlayerEvents
                         listTempOutcomes.AddRange(optionObject.GetGoodOutcomes());
                         listTempOutcomes.AddRange(optionObject.GetBadOutcomes());

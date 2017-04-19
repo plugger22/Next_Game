@@ -1973,10 +1973,11 @@ namespace Next_Game
                             break;
                         case ArcType.Dungeon:
                             eventList.Add(new Snippet(string.Format("{0}, Aid {1}, incarcerated in {2}'s dungeons (Loc {3}:{4}). Survival time {5} days.", actor.Name, actor.ActID,
-                                locName, pos.PosX, pos.PosY, actor.DeathTimer)));
+                                locName, pos.PosX, pos.PosY, actor.DeathTimer), RLColor.LightGray, backColor));
                             break;
                         case ArcType.Adrift:
-                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}, adrift in {2}. Survival time {3} days", actor.Name, actor.ActID, actor.SeaName, actor.DeathTimer)));
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}, adrift in {2}. Survival time {3} days", actor.Name, actor.ActID, actor.SeaName, 
+                                actor.DeathTimer), RLColor.LightGray, backColor));
                             break;
                         default:
                             Game.SetError(new Error(70, $"Inknown ArcType \"{eventObject.Type}\""));
@@ -3136,7 +3137,7 @@ namespace Next_Game
                 player.VoyageSafe = safeShip;
                 player.ShipName = Game.history.GetShipName(player.VoyageSafe);
                 player.Status = ActorStatus.AtSea;
-                resultText = string.Format("{0} {1} has been rescued by the S.S {2} which is bound for {3} and is expected to dock in {4} day{5}", player.Title, player.Name, player.ShipName,
+                resultText = string.Format("{0} has been rescued by the S.S \"{1}\" which is bound for {2}, arriving in {3} day{4}", player.Name, player.ShipName,
                     Game.world.GetLocationName(player.LocID), player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
             }
             else { Game.SetError(new Error(222, "Invalid Player (null)")); }

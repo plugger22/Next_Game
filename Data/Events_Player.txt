@@ -23,7 +23,8 @@
 
 # TO MAKE AN OPTION variable, eg. good or bad outcome depending on a random die roll
 # [option] -> use 'test:' and 'replyBad:'
-# [outcome] -> use 'bad: 1' for bad outcome (make sure there is a good one as well, so minimum 2 outcomes, one good, one bad)
+# [outcome] -> use 'bad: Yes' for bad outcome (make sure there is a good outcome as well, so minimum 2 outcomes, one good, one bad)
+# there is NO need to put 'bad: No' for the good outcome
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
 # check: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr)
@@ -42,6 +43,9 @@
 # if data <= 5 then data -> 1 Justice, 2 Legend_Urs, 3 Legend_King, 4 Honour_Urs, 5 Honour_King (apply: Add or Random only)
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
 # apply: how the amount is applied -> None / Add / Subtract / Equals / Random   where 'Random' is Add random range (amount). Default 'None'
+
+# [outcome] effect -> None
+# outText: OPTIONAL short descriptive text 
 
 # [outcome] effect -> Known
 # data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to UNKNOWN
@@ -572,7 +576,7 @@ replyBad: The crew run around frantically gathering spare timber and nails. The 
 [outcome]
 effect: None
 [outcome]
-bad: 1
+bad: Yes
 effect: Adrift
 data: 10
 bool: Yes
@@ -587,7 +591,7 @@ data: 2
 amount: 1
 apply: Add
 [outcome]
-bad: 1
+bad: Yes
 effect: Adrift
 data: 10
 bool: Yes
@@ -604,6 +608,7 @@ bool: Yes
 amount: 1
 apply: Subtract
 [End]
+
 
 # Sea Archetype Events --- 
 
@@ -678,6 +683,46 @@ apply: Add
 effect: DeathTimer
 amount: 4
 apply: Add
+[End]
+
+
+Name: Passing Gypsy Vessel
+ID: 19
+Type: Adrift
+subType: None
+Cat: Generic
+Freq: High
+Status: Active
+Event: You spy a passing ship. It seems to be riding low in the water and it's sails are ragged.
+[option]
+text: Ignore the ship.
+reply: Why climb aboard an unsafe, risky, vessel that looks one good storm away from Davey Jones Locker?
+[outcome]
+effect: None
+outText: You'll wait for a proper ship.
+[option]
+text: Wave your arms frantically.
+reply: A lookout onboard the ship notices you and it heaves to and drops a longboat. You've been rescued!
+test: 70
+replyBad: The ship sails on and disappears over the horizon, oblivious to your presence.
+[outcome]
+effect: Rescued
+bool: No
+[outcome]
+bad: Yes
+effect: None
+outText: You feel demoralised.
+[option]
+text: Use the sun to flash your shiny knife at the ship
+reply: A lookout onboard the ship notices you and it heaves to and drops a longboat. You've been rescued!
+[trigger]
+check: Trait
+item: 2
+thresh: 3
+calc: >=
+[outcome]
+effect: Rescued
+bool: No
 [End]
 
 # Dungeon Events ---
@@ -944,4 +989,4 @@ amount: 2
 apply: Subtract
 [End]
 
-# next ID is 19
+# next ID is 20
