@@ -1743,6 +1743,7 @@ namespace Next_Game
             RLColor foreColor = RLColor.Black;
             RLColor backColor = Color._background1;
             RLColor traitColor;
+            Active player = Game.world.GetActiveActor(1);
             //loop all triggered events for this turn
             for (int i = 0; i < listFollCurrentEvents.Count; i++)
             {
@@ -1797,9 +1798,11 @@ namespace Next_Game
                     else { traitColor = RLColor.Green; }
                     //enables stars to be centred
                     if (ability != 3)
-                    { eventList.Add(new Snippet(string.Format("({0} {1})  {2} {3} {4}", ability, ability == 1 ? "Star" : "Stars",
-                        Game.world.GetStars(ability), actor.arrayOfTraitNames[(int)option.Trait],
-                        effectText), traitColor, backColor)); }
+                    {
+                        eventList.Add(new Snippet(string.Format("({0} {1})  {2} {3} {4}", ability, ability == 1 ? "Star" : "Stars",
+                          Game.world.GetStars(ability), actor.arrayOfTraitNames[(int)option.Trait],
+                          effectText), traitColor, backColor));
+                    }
                     else
                     { eventList.Add(new Snippet(string.Format("({0} {1})  {2}", ability, ability == 1 ? "Star" : "Stars", Game.world.GetStars(ability)), traitColor, backColor)); }
                     eventList.Add(new Snippet(""));
@@ -1885,7 +1888,19 @@ namespace Next_Game
                     }
                     eventList.Add(new Snippet(""));
                     eventList.Add(new Snippet("Press ENTER or ESC to continue", RLColor.LightGray, backColor));
-                    //housekeeping
+
+                    //only show follower events if Player is at a location and able to receive crows
+                    if (player.Status != ActorStatus.AtLocation)
+                    {
+                        eventList.Clear();
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("An incoming Crow failed to arrive", RLColor.LightRed, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("You can only receive crows while at a Location", RLColor.Black, backColor));
+                        eventList.Add(new Snippet(""));
+                    }
                     Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
                     returnValue = true;
                     package.Done = true;
@@ -2167,6 +2182,7 @@ namespace Next_Game
                 //find option
                 List<OptionInteractive> listOptions = eventObject.GetOptions();
                 string optionReply = "unknown option Reply";
+                string eventText = $"Event \"{eventObject.Name}\", ";
                 if (listOptions != null)
                 {
                     if (listOptions.Count >= optionNum)
@@ -2213,15 +2229,15 @@ namespace Next_Game
                                             OutNone noneOutcome = outcome as OutNone;
                                             if (noneOutcome.Description.Length > 0)
                                             {
-                                                Game.world.SetMessage(new Message(noneOutcome.Description, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(noneOutcome.Description, 1, noneOutcome.Data, Game.world.GetRefID(noneOutcome.Data), CurrentActorIncident.Event));
+                                                Game.world.SetMessage(new Message(eventText + noneOutcome.Description, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + noneOutcome.Description, 1, noneOutcome.Data, Game.world.GetRefID(noneOutcome.Data), CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Game:
                                             //Change a Game state variable, eg. Honour, Justice, etc.
                                             outcomeText = state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
-                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            { resultList.Add(new Snippet(eventText + outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             break;
                                         case OutcomeType.Known:
                                             //change an Active Actor's Known/Unknown status
@@ -2273,8 +2289,8 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
-                                                Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Passage:
@@ -2290,45 +2306,45 @@ namespace Next_Game
                                             break;
                                         case OutcomeType.VoyageTime:
                                             //Player's sea voyage time is increased or decreased
-                                            outcomeText = ChangePlayerVoyageTime(eventObject.Name, outcome.Amount, outcome.Calc);
+                                            outcomeText = ChangePlayerVoyageTime(outcome.Amount, outcome.Calc);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
-                                                Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Adrift:
                                             //Player cast adrift
                                             OutAdrift adriftOutcome = outcome as OutAdrift;
-                                            outcomeText = ChangePlayerAdriftStatus(eventObject.Name, adriftOutcome.DeathTimer, adriftOutcome.ShipSunk);
+                                            outcomeText = ChangePlayerAdriftStatus(adriftOutcome.DeathTimer, adriftOutcome.ShipSunk);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
-                                                Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Rescued:
                                             //Player rescued from drifting around the ocean on a raft
                                             OutRescued rescuedOutcome = outcome as OutRescued;
-                                            outcomeText = ChangePlayerRescuedStatus(eventObject.Name, rescuedOutcome.Safe);
+                                            outcomeText = ChangePlayerRescuedStatus(rescuedOutcome.Safe);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
-                                                Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.DeathTimer:
                                             //adjust the number of turns remaining on the Death Timer (Adrift and Dungeon situations only)
                                             OutDeathTimer deathOutcome = outcome as OutDeathTimer;
-                                            outcomeText = ChangePlayerDeathTimer(eventObject.Name, deathOutcome.Amount, deathOutcome.Calc);
+                                            outcomeText = ChangePlayerDeathTimer(deathOutcome.Amount, deathOutcome.Calc);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
-                                                Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Resource:
@@ -2341,7 +2357,7 @@ namespace Next_Game
                                             {
                                                 outcomeText = personRes.ChangeResources(resourceOutcome.Amount, resourceOutcome.Calc);
                                                 if (String.IsNullOrEmpty(outcomeText) == false)
-                                                { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                                { resultList.Add(new Snippet(eventText + outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             }
                                             break;
                                         case OutcomeType.Condition:
@@ -2358,7 +2374,7 @@ namespace Next_Game
                                                     //not present -> add new condition
                                                     outcomeText = personCon.AddCondition(conditionOutcome.NewCondition);
                                                     if (String.IsNullOrEmpty(outcomeText) == false)
-                                                    { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                                    { resultList.Add(new Snippet(eventText + outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                                 }
                                                 else
                                                 {
@@ -3077,7 +3093,7 @@ namespace Next_Game
         /// <param name="deathTimer"></param>
         /// <param name="shipSunk"></param>
         /// <returns></returns>
-        private string ChangePlayerAdriftStatus(string eventName, int deathTimer, bool shipSunk)
+        private string ChangePlayerAdriftStatus(int deathTimer, bool shipSunk)
         {
             string resultText = "";
             Active player = Game.world.GetActiveActor(1);
@@ -3087,7 +3103,7 @@ namespace Next_Game
                 {
                     player.DeathTimer = deathTimer;
                     player.Status = ActorStatus.Adrift;
-                    resultText = $"Event \"{eventName}\", {player.Name} has been cast Adrift in {player.SeaName}. Survival time {player.DeathTimer} days";
+                    resultText = $"{player.Name} has been cast Adrift in {player.SeaName}. Survival time {player.DeathTimer} days";
                     if (shipSunk == true)
                     {
                         //find and remove ship from list
@@ -3127,7 +3143,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="safeShip"></param>
         /// <returns></returns>
-        private string ChangePlayerRescuedStatus(string eventName, bool safeShip)
+        private string ChangePlayerRescuedStatus(bool safeShip)
         {
             string resultText = "";
             Active player = Game.world.GetActiveActor(1);
@@ -3139,7 +3155,7 @@ namespace Next_Game
                 player.VoyageSafe = safeShip;
                 player.ShipName = Game.history.GetShipName(player.VoyageSafe);
                 player.Status = ActorStatus.AtSea;
-                resultText = string.Format("Event \"{0}\", {1} has been rescued by the S.S \"{2}\", bound for {3}, arriving in {4} day{5}", eventName, player.Name, player.ShipName,
+                resultText = string.Format("{0} has been rescued by the S.S \"{1}\", bound for {2}, arriving in {3} day{4}", player.Name, player.ShipName,
                     Game.world.GetLocationName(player.LocID), player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
             }
             else { Game.SetError(new Error(222, "Invalid Player (null)")); }
@@ -3152,7 +3168,7 @@ namespace Next_Game
         /// <param name="amount"></param>
         /// <param name="calc"></param>
         /// <returns></returns>
-        private string ChangePlayerVoyageTime(string eventName, int amount, EventCalc calc)
+        private string ChangePlayerVoyageTime(int amount, EventCalc calc)
         {
             string resultText = "";
             Active player = Game.world.GetActiveActor(1);
@@ -3163,13 +3179,13 @@ namespace Next_Game
                 {
                     case EventCalc.Add:
                         voyageTime += amount;
-                        resultText = string.Format("Event \"{0}\", the voyage of the S.S \"{1}\" has been increased by {2} day{3} to {4} days", eventName, player.ShipName, amount, 
+                        resultText = string.Format("The voyage of the S.S \"{0}\" has been increased by {1} day{2} to {3} days", player.ShipName, amount, 
                             amount != 1 ? "s" : "", voyageTime);
                         break;
                     case EventCalc.Subtract:
                         voyageTime -= amount;
                         voyageTime = Math.Max(1, voyageTime);
-                        resultText = string.Format("Event \"{0}\", the voyage of the S.S \"{1}\" has been reduced by {2} day{3} to {4} days", eventName, player.ShipName, amount, 
+                        resultText = string.Format("The voyage of the S.S \"{0}\" has been reduced by {1} day{2} to {3} days", player.ShipName, amount, 
                             amount != 1 ? "s" : "", voyageTime);
                         break;
                     default:
@@ -3187,7 +3203,7 @@ namespace Next_Game
         /// <param name="amount"></param>
         /// <param name="calc"></param>
         /// <returns></returns>
-        private string ChangePlayerDeathTimer(string eventName, int amount, EventCalc calc)
+        private string ChangePlayerDeathTimer(int amount, EventCalc calc)
         {
             string resultText = "";
             Active player = Game.world.GetActiveActor(1);
@@ -3198,12 +3214,12 @@ namespace Next_Game
                 {
                     case EventCalc.Add:
                         deathTime += amount;
-                        resultText = $"Event \"{eventName}\", Survival time has been increased by {amount} to {deathTime}";
+                        resultText = $"Survival time has been increased by {amount} to {deathTime}";
                         break;
                     case EventCalc.Subtract:
                         deathTime -= amount;
                         deathTime = Math.Max(1, deathTime);
-                        resultText = $"Event \"{eventName}\", Survival time has been decreased by {amount} to {deathTime}";
+                        resultText = $"Survival time has been decreased by {amount} to {deathTime}";
                         break;
                     default:
                         Game.SetError(new Error(218, string.Format("Invalid EventCalc \"{0}\" -> Death time change invalid")));
