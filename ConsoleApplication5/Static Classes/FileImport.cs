@@ -1038,7 +1038,17 @@ namespace Next_Game
                                             eventTemp.SetOption(option);
                                             //last datapoint - save object to list
                                             if (dataCounter > 0)
-                                            { dictOfFollowerEvents.Add(eventTemp.EventFID, eventTemp); }
+                                            {
+                                                try
+                                                {
+                                                    dictOfFollowerEvents.Add(eventTemp.EventFID, eventTemp);
+                                                    Game.logStart?.Write(string.Format("\"{0}\", FID {1}, [{2}, {3}], Freq {4}, Status {5}, Trait {6}, Delay {7}", 
+                                                        eventTemp.Name, eventTemp.EventFID, eventTemp.Type, eventTemp.Category, eventTemp.Frequency, eventTemp.Status, structEvent.Trait, 
+                                                        structEvent.Delay));
+                                                }
+                                                catch (ArgumentException)
+                                                { Game.SetError(new Error(49, $"Invalid FID {eventTemp.EventFID} (duplicate) \"{eventTemp.Name}\" not added to dict")); }
+                                            }
                                         }
                                         else { Game.SetError(new Error(49, "Invalid Input, eventObject")); }
                                     }
@@ -2726,7 +2736,7 @@ namespace Next_Game
                                                 try
                                                 {
                                                     dictOfArchetypes.Add(arcTemp.ArcID, arcTemp);
-                                                    Game.logStart.Write(string.Format("{0}, ArcID {1}, [{2}], has {3} events -> successfully imported", arcTemp.Name, arcTemp.ArcID, 
+                                                    Game.logStart.Write(string.Format("{0}, ArcID {1}, [{2}], has {3} events", arcTemp.Name, arcTemp.ArcID, 
                                                         arcTemp.Type, arcTemp.GetNumEvents()));
                                                 }
                                                 catch (ArgumentException)
@@ -3163,7 +3173,7 @@ namespace Next_Game
                                         try
                                         {
                                             dictOfStories.Add(storyObject.StoryID, storyObject);
-                                            Game.logStart.Write($"{storyObject.Name}, StoryID {storyObject.StoryID} -> successfully imported");
+                                            Game.logStart.Write($"{storyObject.Name}, StoryID {storyObject.StoryID}");
                                         }
                                         catch (ArgumentNullException)
                                         { Game.SetError(new Error(54, "Invalid storyObject (null) -> not added to dictOfStories")); }
@@ -4053,17 +4063,17 @@ namespace Next_Game
                                         tempDictionary.Add(situation.SitID, situation);
                                         if (structSituation.Type > ConflictType.None)
                                         {
-                                            Game.logStart?.Write(string.Format("\"{0}\" imported, a {1} conflict, {2} good records & {3} bad, SitNum {4}, Def {5}, Data {6}", structSituation.Name, subType,
+                                            Game.logStart?.Write(string.Format("\"{0}\", a {1} conflict, {2} good records & {3} bad, SitNum {4}, Def {5}, Data {6}", structSituation.Name, subType,
                                               tempListGood.Count, tempListBad.Count, structSituation.SitNum, structSituation.Defender, structSituation.Data));
                                         }
                                         else if (structSituation.State > ConflictState.None)
                                         {
-                                            Game.logStart?.Write(string.Format("\"{0}\" imported, {1} good records & {2} bad, SitNum {3}", structSituation.Name, tempListGood.Count, tempListBad.Count,
+                                            Game.logStart?.Write(string.Format("\"{0}\", {1} good records & {2} bad, SitNum {3}", structSituation.Name, tempListGood.Count, tempListBad.Count,
                                               structSituation.SitNum));
                                         }
                                         else if (structSituation.Special > ConflictSpecial.None)
                                         {
-                                            Game.logStart?.Write(string.Format("\"{0}\" imported, {1} good records & {2} bad, Def {3}", structSituation.Name, tempListGood.Count, tempListBad.Count,
+                                            Game.logStart?.Write(string.Format("\"{0}\", {1} good records & {2} bad, Def {3}", structSituation.Name, tempListGood.Count, tempListBad.Count,
                                                structSituation.Defender));
                                         }
                                     }
@@ -4420,7 +4430,7 @@ namespace Next_Game
                                             try
                                             {
                                                 tempDictionary.Add(subDict, challenge);
-                                                Game.logStart?.Write(string.Format("{0} Challenge ({1}), successfully imported", subDict, challenge.Type));
+                                                Game.logStart?.Write(string.Format("{0} Challenge ({1})", subDict, challenge.Type));
                                             }
                                             catch (ArgumentNullException)
                                             { Game.SetError(new Error(110, string.Format("{0} Challenge not imported due to errors", challenge.Type))); }
@@ -5069,7 +5079,7 @@ namespace Next_Game
                                         try
                                         {
                                             dictOfResults.Add(resultObject.ResultID, resultObject);
-                                            Game.logStart?.Write(string.Format("RecordID {0} (\"{1}\"), successfully imported", resultObject.ResultID, resultObject.Description));
+                                            Game.logStart?.Write(string.Format("RecordID {0} (\"{1}\")", resultObject.ResultID, resultObject.Description));
                                         }
                                         catch (ArgumentNullException)
                                         {

@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 20/04/2017 11:44:15
+//Exile Game file ops "LogStart.txt" commenced at: 20/04/2017 14:21:25
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -66,39 +66,39 @@ AI_CONNECTOR -> 4 Min 0 Max 10
 AI_HUNT_THRESHOLD -> 4 Min 4 Max 12
 LOSS_OF_LEGEND -> 1 Min 0 Max 4
 ERROR_29 "Location Deleted 3:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 28:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 10:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 14:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 19:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 1:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 17:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 23:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 15:4"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 23:5"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 17:6"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 15:7"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 23:9"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 25:9"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 26:11"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 24:12"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 ERROR_29 "Location Deleted 28:12"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 11:44:15 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:21:25 UTC +10:00
 --- Network Analysis (Network.cs)
 Dir 0         1 Locations     0 Connections
 Dir 1         3 Locations     3 Connections
@@ -475,6 +475,33 @@ ItemID 8, "Amulet of Passion", given to Lord Randyll Greyjoy, ActID 32, at Pyke 
 ItemID 9, "Book of the Dead", given to Heir Bertelot Tully, ActID 33, at Kingskeep (loc 15:20)
 ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at Riverrun (loc 20:22)
 --- Import Follower Events (Director.cs)
+"Spiders", FID 1, [GeoCluster, Generic], Freq Low, Status Active, Trait Wits, Delay 2 -> Successfully imported
+"Wolves", FID 2, [GeoCluster, Generic], Freq Normal, Status Active, Trait Combat, Delay 2 -> Successfully imported
+"Rockfall", FID 3, [GeoCluster, Generic], Freq Low, Status Active, Trait Wits, Delay 2 -> Successfully imported
+"Shadow Cat", FID 4, [GeoCluster, Generic], Freq Normal, Status Active, Trait Combat, Delay 2 -> Successfully imported
+"Dire Wolf Tracks", FID 5, [GeoCluster, Archetype], Freq Normal, Status Active, Trait Wits, Delay 1 -> Successfully imported
+"Dire Wolves Attack", FID 6, [GeoCluster, Archetype], Freq Normal, Status Active, Trait Combat, Delay 2 -> Successfully imported
+"Bad Going", FID 7, [Road, Generic], Freq Normal, Status Active, Trait Combat, Delay 1 -> Successfully imported
+"Peasants", FID 8, [Road, Generic], Freq Normal, Status Active, Trait Leadership, Delay 1 -> Successfully imported
+"Heavy Rain", FID 9, [Road, Generic], Freq Low, Status Active, Trait Wits, Delay 2 -> Successfully imported
+"Priest", FID 10, [Road, Generic], Freq Rare, Status Active, Trait Charm, Delay 1 -> Successfully imported
+"Rowdy Peasants", FID 11, [Road, Generic], Freq Low, Status Active, Trait Charm, Delay 1 -> Successfully imported
+"Merchant", FID 12, [Road, Generic], Freq Normal, Status Active, Trait Charm, Delay 1 -> Successfully imported
+"Horse Throws a Shoe", FID 13, [Road, Generic], Freq Normal, Status Active, Trait Combat, Delay 2 -> Successfully imported
+"Thick Mud", FID 14, [Road, Generic], Freq Normal, Status Active, Trait Wits, Delay 2 -> Successfully imported
+"Collapsed Bridge", FID 15, [Road, Generic], Freq Low, Status Active, Trait Leadership, Delay 3 -> Successfully imported
+"Noble", FID 16, [Location, Generic], Freq Low, Status Active, Trait Charm, Delay 1 -> Successfully imported
+"Pickpocket", FID 17, [Location, Generic], Freq Low, Status Active, Trait Combat, Delay 1 -> Successfully imported
+"Knight", FID 18, [Location, Generic], Freq Low, Status Active, Trait Charm, Delay 1 -> Successfully imported
+"Squire", FID 19, [Location, Generic], Freq Normal, Status Active, Trait Wits, Delay 1 -> Successfully imported
+"Beggar", FID 20, [Location, Generic], Freq Normal, Status Active, Trait Combat, Delay 1 -> Successfully imported
+"Vendor", FID 21, [Location, Generic], Freq Low, Status Active, Trait Wits, Delay 1 -> Successfully imported
+"Drunken Thugs", FID 22, [Location, Generic], Freq Low, Status Active, Trait Leadership, Delay 1 -> Successfully imported
+"Pleasures of the Flesh", FID 23, [Location, Generic], Freq Low, Status Active, Trait Wits, Delay 1 -> Successfully imported
+"Guard Inspection", FID 24, [Location, Archetype], Freq Low, Status Active, Trait Wits, Delay 2 -> Successfully imported
+"City Watch", FID 25, [Location, Archetype], Freq Low, Status Active, Trait Treachery, Delay 2 -> Successfully imported
+"The Shadow", FID 26, [Actor, Archetype], Freq Low, Status Active, Trait Wits, Delay 2 -> Successfully imported
+"The Voices", FID 27, [Actor, Archetype], Freq Low, Status Active, Trait Wits, Delay 2 -> Successfully imported
 --- Import Player Events (Director.cs)
 --- Player Events (FileImport.cs)
 "The King's Men" Event, ID 1, Type Road, Repeat 1000, Dormant 0, Live 0, Status Active
@@ -542,13 +569,15 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
   Option "Seek shelter below decks in the relative safety of your cabin" 
     OutVoyageTime -> data 0, amount 3, apply Add
   Option "Stand next to the Captain on the quarter deck and set an example for the crew." 
+   Trigger -> if Trait 4 is GreaterThanOrEqual to 3
     OutVoyageTime -> data 0, amount 1, apply Add
-  Option "Climb the mast and howl at the wind. Uncage your inner beast."  [Variable -> 20 % chance of Success]
+  Option "Climb the mast and howl at the wind. Uncage your inner beast."  [Variable -> 75 % chance of Success]
+   Trigger -> if Trait 1 is GreaterThanOrEqual to 3
     OutVoyageTime -> data 0, amount 2, apply Add
     OutGame -> data 2, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
 "Becalmed" Event, ID 8, Type GeoCluster, Repeat 10, Dormant 0, Live 0, Status Active
-  Option "What can you do but go below and drink more wine?"  [Variable -> 20 % chance of Success]
+  Option "What can you do but go below and drink more wine?"  [Variable -> 75 % chance of Success]
     OutVoyageTime -> data 0, amount 4, apply Add
   Option "Join the crew in their prays to the Harpies." 
     OutVoyageTime -> data 0, amount 1, apply Add
@@ -579,7 +608,7 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
     OutGame -> data 2, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
   Option "Offer a gold coin to every crew member if they can keep the ship afloat" 
-   Trigger -> if ResourcePlyr 2 is GreaterThanOrEqual to 2
+   Trigger -> if ResourcePlyr 1 is GreaterThanOrEqual to 2
     OutResource -> Player? True, amount 1, apply Subtract
 "Kraken Sighted" Event, ID 16, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Superstitious nonsense. It must have been a whale." 
@@ -923,5 +952,5 @@ Infiltrate Challenge (Stealth), successfully imported
 Evade Challenge (Stealth), successfully imported
 Escape Challenge (Stealth), successfully imported
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 20/04/2017 11:44:16
-//Elapsed Time 795 ms
+//Exile Game file ops "LogStart.txt" Completed at: 20/04/2017 14:21:26
+//Elapsed Time 810 ms
