@@ -45,7 +45,7 @@
 # apply: how the amount is applied -> None / Add / Subtract / Equals / Random   where 'Random' is Add random range (amount). Default 'None'
 
 # [outcome] effect -> None
-# outText: OPTIONAL short descriptive text 
+# outText: OPTIONAL short descriptive text (shows up as a message & player record)
 
 # [outcome] effect -> Known
 # data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to UNKNOWN
@@ -425,6 +425,11 @@ apply: Add
 [option]
 text: Stand next to the Captain on the quarter deck and set an example for the crew.
 reply: Damn the storm. It's dangerous to remain on deck but the crew will be inspired by your calm demeanour.
+[trigger]
+check: Trait
+item: 4
+thresh: 3
+calc: >=
 [outcome]
 effect: VoyageTime
 amount: 1
@@ -432,8 +437,13 @@ apply: Add
 [option]
 text: Climb the mast and howl at the wind. Uncage your inner beast.
 reply: The crew look at you askance. Clearly you must be mad. Nobody goes aloft in a storm.
-test: 20
-replyBad: The mast is bucking like a wild horse. The wind rips your hands from their desperate holds and you find yourself clinging to raft in the swirling malestrom of a storm tossed sea.
+test: 75
+replyBad: The mast is bucking like a wild horse. The wind rips your hands from their desperate grasp of the ship's rigging. You find yourself clinging to a raft in the swirling malestrom of the storm tossed sea.
+[trigger]
+check: Trait
+item: 1
+thresh: 3
+calc: >=
 [outcome]
 effect: VoyageTime
 amount: 2
@@ -706,10 +716,9 @@ text: Ignore the ship.
 reply: Why climb aboard an unsafe, risky, vessel that looks one good storm away from Davey Jones Locker?
 [outcome]
 effect: None
-outText: You'll wait for a proper ship.
 [option]
 text: Wave your arms frantically.
-reply: A lookout onboard the ship notices you and it heaves to and drops a longboat. You've been rescued!
+reply: A lookout onboard the ship notices you. The ship heaves too and drops a longboat. You've been rescued!
 test: 70
 replyBad: The ship sails on and disappears over the horizon, oblivious to your presence.
 [outcome]
@@ -718,7 +727,6 @@ bool: No
 [outcome]
 bad: Yes
 effect: None
-outText: You feel demoralised.
 [option]
 text: Use the sun to flash your shiny knife at the ship
 reply: A lookout onboard the ship notices you and it heaves to and drops a longboat. You've been rescued!

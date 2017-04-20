@@ -1,13 +1,16 @@
-//Exile Game File "LogTurn.txt" opened at: 19/04/2017 15:16:54
+//Exile Game File "LogTurn.txt" opened at: 20/04/2017 12:17:35
 --- ProcessStartTurn (World.cs)
-Day 13, Turn 12
---- MoveActors -> 1 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 72 travelling to Kingskeep (current Loc 15:19)
+Day 19, Turn 18
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 72 travelling to Pyke (current Loc 10:19)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Andry Tyrell, ID 1 at 4:14, Enemy at 15:19 (Brother Diabolous, ID 72
+ [Search -> Debug] Active Andry Tyrell, ID 1 at 4:14, Enemy at 10:19 (Brother Diabolous, ID 72
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Andry Tyrell, ID 1 at 4:14, Enemy at 15:20 (Brother Diabolous, ID 72
- [Goal -> Arrival] Inquisitor Brother Diabolous, ActID 72, currently at Kingskeep, new Goal -> Wait
+ [Search -> Debug] Active Andry Tyrell, ID 1 at 4:14, Enemy at 9:19 (Brother Diabolous, ID 72
+ [Goal -> Arrival] Inquisitor Brother Diabolous, ActID 72, currently at Pyke, new Goal -> Wait
+ [Move -> MoveObject] Inquisitor Brother Azazel, ActID 74 travelling to Kingskeep (current Loc 13:24)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Andry Tyrell, ID 1 at 4:14, Enemy at 13:24 (Brother Azazel, ID 74
 --- UpdatePlayerStatus (World.cs)
 Usurper Andry Tyrell Death Timer reduced by 1 to 0
 --- SetEndGame (Game.cs)
@@ -20,50 +23,46 @@ Usurper Andry Tyrell Death Timer reduced by 1 to 0
 --- UpdateAIController (World.cs)
 --- SetEnemyActivity (World.cs)
  [Enemy -> Goal] Brother Diabolous, ActID 72 retains Goal -> Wait
- [Enemy -> Known] Brother Mormo ActID 73 has become KNOWN
  [Enemy -> Goal] Brother Mormo, ActID 73 retains Goal -> Wait
- [Enemy -> Known] Brother Azazel ActID 74 has become KNOWN
- [Enemy -> Goal] Brother Azazel, ActID 74 retains Goal -> Wait
+ [Enemy -> Known] Brother Astaroth ActID 75 has become KNOWN
  [Enemy -> Goal] Brother Astaroth, ActID 75 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 76 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] The Unrelenting, ActID 76, (loc 15:20), assigned new Goal -> Hide
+ [Enemy -> Goal] The Unrelenting, ActID 76 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
- Event "Drowning seaman" has no attached Conditions
- Event "Passing Gypsy Vessel" has no attached Conditions
---- ResolvePlayerEvents (Director.cs)
- Event "Drowning seaman" Timer Repeat now 997
- Event "Drowning seaman" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Andry Tyrell has had their TurnsUnknown Timer increased from 111 to 112
- Follower The Haggler has had their TurnsUnknown Timer increased from 11 to 12
- Follower The Viper has had their TurnsUnknown Timer increased from 11 to 12
- Follower The Spider has had their TurnsUnknown Timer increased from 11 to 12
-//Exile Game file ops "LogTurn.txt" Completed at: 19/04/2017 15:16:54
-rper Andry Tyrell has had their TurnsUnknown Timer increased from 109 to 110
- Follower The Haggler has had their TurnsUnknown Timer increased from 9 to 10
- Follower The Viper has had their TurnsUnknown Timer increased from 9 to 10
- Follower The Spider has had their TurnsUnknown Timer increased from 9 to 10
+ Usurper Andry Tyrell has had their TurnsUnknown Timer increased from 117 to 118
+ Follower The Haggler has had their TurnsUnknown Timer increased from 17 to 18
+ Follower The Viper has had their TurnsUnknown Timer increased from 17 to 18
+ Follower The Spider has had their TurnsUnknown Timer increased from 17 to 18
+//Exile Game file ops "LogTurn.txt" Completed at: 20/04/2017 12:17:35
+as had their TurnsUnknown Timer increased from 16 to 17
 --- ResolveOutcome (Director.cs)
---- MultiKeyInput (Game.cs)
-1 input
+--- ResolveFollowerEvents (Director.cs)
 --- ProcessEndTurn (World.cs)
-Day 11, Turn 10
+Day 18, Turn 17
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 10
-//Exile Game File "LogTurn.txt" Close completed at: 19/04/2017 15:16:44
-mpleted at: 19/04/2017 15:13:58
-d from 5 to 6
---- ResolveOutcome (Director.cs)
- [Variable Option] "Stand back and let the professionals deal with it." Failed test (45 % needed, rolled 56)
-[Notification] S.S "Disgraceful" has been removed from the list of Ship Names
+ Event "Search and Detain" Dormant Timer decremented to 3
+//Exile Game File "LogTurn.txt" Close completed at: 20/04/2017 12:17:35
+in" Dormant Timer decremented to 8
+ "Storm" event, Cooldown Timer decremented from 3 to 2
+//Exile Game File "LogTurn.txt" Close completed at: 20/04/2017 12:15:21
+vent, Cooldown Timer decremented from 4 to 3
+//Exile Game File "LogTurn.txt" Close completed at: 20/04/2017 12:15:11
+TurnsUnknown Timer increased from 7 to 8
+ Follower The Spider has had their TurnsUnknown Timer increased from 7 to 8
 --- ProcessEndTurn (World.cs)
-Day 7, Turn 6
+Day 9, Turn 8
 --- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 12
+//Exile Game File "LogTurn.txt" Close completed at: 20/04/2017 12:10:12
+)
  Event "Search and Detain" Dormant Timer decremented to 14
-//Exile Game File "LogTurn.txt" Close completed at: 19/04/2017 15:11:48
- list of Locals
+//Exile Game File "LogTurn.txt" Close completed at: 20/04/2017 12:10:10
+.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "The Haggler", ID 2 added to list of Actors
+ [AutoEvent -> ActorList] "Andry Tarth", ID 36 added to list of Actors
+ [AutoEvent -> FollowerList] "The Haggler", ID 2 added to list of Followers
+ [AutoEvent -> LocalList] "Andry Tarth", ID 36 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
  Trigger passed on "3" GreaterThanOrEqual 2
  Event "Seek Passage to another Port" Timer Repeat now 999
@@ -82,4 +81,4 @@ Day 7, Turn 6
 Day 2, Turn 1
 --- CheckEventTimers (Director.cs)
  Event "Search and Detain" Dormant Timer decremented to 19
-//Exile Game File "LogTurn.txt" Close completed at: 19/04/2017 15:08:47
+//Exile Game File "LogTurn.txt" Close completed at: 20/04/2017 11:52:17

@@ -20,7 +20,7 @@ namespace Next_Game.Event_System
     /// </summary>
     public class Event
     {
-        public string Name { get; set; }
+        public string Name { get; set; } //short descriptor (used in messages and records)
         public int TimerLive { get; set; } = 0; //turns to change from Live -> Active
         public int TimerDormant { get; set; } = 0; //turns to change from Active -> Dormant (lasts a fixed number of turns, not activations as with TimerRepeat)
         public int TimerRepeat { get; set; } = 1000; //# times remaining for the event to repeat (if 0 then reverts to dormant)

@@ -46,6 +46,9 @@
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
 # apply: how the amount is applied -> None / Add / Subtract / Equals / Random   where 'Random' is Add random range (amount). Default 'None'
 
+# [outcome] effect -> None
+# outText: OPTIONAL short descriptive text (shows up as a message & player record)
+
 # [outcome] effect -> Known
 # data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to UNKNOWN
 
