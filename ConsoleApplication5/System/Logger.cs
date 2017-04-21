@@ -50,6 +50,8 @@ namespace Next_Game
             { Game.SetError(new Error(192, string.Format("Directory Not Found (\"{0}\") -> file \"{1}\" not created", path, fileName))); }
             catch(FileLoadException)
             { Game.SetError(new Error(192, "File Failed to Load (Logger) -> file not created")); }
+            catch(IOException e)
+            { Game.SetError(new Error(192, $"File issue, \"{e}\"")); }
         }
 
         /// <summary>

@@ -1641,14 +1641,66 @@ namespace Next_Game
                                     break;
                                 case "item":
                                     //Trigger item
-                                    try
+                                    switch (cleanToken)
                                     {
-                                        dataInt = Convert.ToInt32(cleanToken);
-                                        if (dataInt > 0) { structTrigger.Item = dataInt; }
-                                        else
-                                        { Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Item, (value less than 0) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                        //picks up optional trait specific text
+                                        case "Combat":
+                                        case "combat":
+                                            structTrigger.Item = 1;
+                                            break;
+                                        case "Wits":
+                                        case "wits":
+                                            structTrigger.Item = 2;
+                                            break;
+                                        case "Charm":
+                                        case "charm":
+                                            structTrigger.Item = 3;
+                                            break;
+                                        case "Treachery":
+                                        case "treachery":
+                                            structTrigger.Item = 4;
+                                            break;
+                                        case "Leadership":
+                                        case "leadership":
+                                            structTrigger.Item = 5;
+                                            break;
+                                        case "Touched":
+                                        case "touched":
+                                            structTrigger.Item = 6;
+                                            break;
+                                        //picks up optional GameVar specific Text
+                                        case "Justice":
+                                        case "justice":
+                                            structTrigger.Item = 1;
+                                            break;
+                                        case "Legend_Urs":
+                                        case "legend_Urs":
+                                            structTrigger.Item = 2;
+                                            break;
+                                        case "Legend_King":
+                                        case "legend_King":
+                                            structTrigger.Item = 3;
+                                            break;
+                                        case "Honour_Urs":
+                                        case "honour_Urs":
+                                            structTrigger.Item = 4;
+                                            break;
+                                        case "Honour_King":
+                                        case "honour_King":
+                                            structTrigger.Item = 5;
+                                            break;
+                                        default:
+                                            //number entry (multipurpose)
+                                            try
+                                            {
+                                                dataInt = Convert.ToInt32(cleanToken);
+                                                if (dataInt > 0) { structTrigger.Item = dataInt; }
+                                                else
+                                                { Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Item, (value less than 0) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                            }
+                                            catch { Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Item, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
+                                            break;
                                     }
-                                    catch { Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Item, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                     break;
                                 case "thresh":
                                     //Trigger Threshold
