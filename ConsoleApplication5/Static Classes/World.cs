@@ -113,10 +113,10 @@ namespace Next_Game
         /// <param name="listOfActiveActors"></param>
         internal void InitialiseActiveActors(List<Active> listOfActiveActors)
         {
-            
+
             int numFollowers = Game.constant.GetValue(Global.NUM_FOLLOWERS);
             int locID, index;
-            
+
             for (int i = 0; i <= numFollowers; i++)
             {
                 if (i > 0)
@@ -215,7 +215,7 @@ namespace Next_Game
             Game.history.CreateNemesis(1);
             //assign specific enemies to tasks (based on InitialiseAI)
             Game.logStart?.Write("- Assign Enemies");
-            
+
             foreach (var enemy in dictEnemyActors)
             {
                 enemy.Value.MoveOut = true;
@@ -470,7 +470,7 @@ namespace Next_Game
                 }
             }
             //reverse loop through list of Moveobjects and delete any that are marked as 'Done'
-            for(int i = listMoveObjects.Count; i > 0; i--)
+            for (int i = listMoveObjects.Count; i > 0; i--)
             {
                 if (listMoveObjects[i - 1].Status == PartyStatus.Done)
                 {
@@ -484,7 +484,7 @@ namespace Next_Game
             return dictMapMarkers;
         }
 
-      
+
         /// <summary>
         /// Returns a list of characters in string format to pass to InfoChannel to display in multi-Console
         /// </summary>
@@ -649,7 +649,7 @@ namespace Next_Game
                     {
                         //known status
                         if (debugMode == true)
-                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12}  Goal -> {5,-8} Branch -> {6}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
+                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12}  Goal -> {5,-8} Branch -> {6}", enemy.Key, enemy.Value.Name, locStatus, coordinates,
                             enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal, enemy.Value.AssignedBranch); }
                         else { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
                         listInquistors.Add(new Snippet(charString, RLColor.White, RLColor.Black));
@@ -678,7 +678,7 @@ namespace Next_Game
                     {
                         //known status
                         if (debugMode == true)
-                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12}  Goal -> {5,-8} Branch -> {6}", enemy.Key, enemy.Value.Name, locStatus, coordinates, 
+                        { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15} {4,-12}  Goal -> {5,-8} Branch -> {6}", enemy.Key, enemy.Value.Name, locStatus, coordinates,
                             enemy.Value.Known == true ? "Known" : "Unknown", enemy.Value.Goal, enemy.Value.AssignedBranch); }
                         else
                         { charString = string.Format("Aid {0,-3} {1,-23} {2,-35}{3,-15}", enemy.Key, enemy.Value.Name, locStatus, coordinates); }
@@ -817,7 +817,7 @@ namespace Next_Game
                     if (knight.HouseID == Game.lore.OldHouseID) { houseName = Game.lore.OldHouseName; }
                     //deals with case of knight belonging to old King (he's been deleted from dictMajorHouses)
                     else { houseName = GetMajorHouseName(knight.HouseID); }
-                    listToDisplay.Add(new Snippet(string.Format("Has sworn allegiance to House {0}", houseName )));
+                    listToDisplay.Add(new Snippet(string.Format("Has sworn allegiance to House {0}", houseName)));
                 }
                 //Loyalty
                 if (person is Passive && !(person is Special))
@@ -871,7 +871,7 @@ namespace Next_Game
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
                         if (abilityStars != 3 /*|| influenceDisplay == true*/)
-                        {  listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
+                        { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
                     //charm
                     trait = SkillType.Charm;
@@ -956,7 +956,7 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet("Conditions (additional Skill modifiers)", RLColor.Brown, RLColor.Black));
                     string tempCondition_0, tempCondition_1;
                     RLColor tempColor = RLColor.White;
-                    foreach(Condition condition in tempConditions)
+                    foreach (Condition condition in tempConditions)
                     {
                         if (condition.Timer != 999)
                         { tempCondition_0 = string.Format("\"{0}\", {1} day{2}", condition.Text, condition.Timer, condition.Timer == 1 ? "" : "s"); }
@@ -964,7 +964,7 @@ namespace Next_Game
                         tempCondition_1 = string.Format("{0} ({1}{2})", condition.Skill, condition.Effect > 0 ? "+" : "", condition.Effect);
                         if (condition.Effect > 0) { tempColor = Color._goodTrait; }
                         else { tempColor = Color._badTrait; }
-                        listToDisplay.Add(new Snippet(string.Format("{0, -28}",tempCondition_0), false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -28}", tempCondition_0), false));
                         listToDisplay.Add(new Snippet(string.Format("{0}", tempCondition_1), tempColor, RLColor.Black));
                     }
                 }
@@ -997,9 +997,9 @@ namespace Next_Game
                     string tagText = string.Format("(Change {0}{1})", change > 0 ? "+" : "", change);
                     if (change == 0) { tagText = ""; }
                     RLColor tagColor = Color._badTrait;
-                    if ( relPlyr >= 50) { tagColor = Color._goodTrait; }
-                    listToDisplay.Add(new Snippet(string.Format("{0}, Rel {1}, {2}", person.GetPlayerTag(), relPlyr, tagText), 
-                        tagColor ,RLColor.Black, true));
+                    if (relPlyr >= 50) { tagColor = Color._goodTrait; }
+                    listToDisplay.Add(new Snippet(string.Format("{0}, Rel {1}, {2}", person.GetPlayerTag(), relPlyr, tagText),
+                        tagColor, RLColor.Black, true));
                     //with Lord
                     if (person.Type != ActorType.Lord && person is Passive || person is Inquisitor && person.Status != ActorStatus.Gone)
                     {
@@ -1182,7 +1182,7 @@ namespace Next_Game
                 }
             }
             else
-            { listToDisplay.Add(new Snippet(string.Format("No Character with ID {0} exists", actorID ), RLColor.LightRed, RLColor.Black)); }
+            { listToDisplay.Add(new Snippet(string.Format("No Character with ID {0} exists", actorID), RLColor.LightRed, RLColor.Black)); }
             return listToDisplay;
         }
 
@@ -1306,7 +1306,7 @@ namespace Next_Game
                             RLColor loyaltyColor = Color._goodTrait;
                             if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
                             locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
-                            
+
                             locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), false));
                             locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), RLColor.LightRed, RLColor.Black));
                             locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));
@@ -1409,7 +1409,7 @@ namespace Next_Game
                         if (numFriends > 0 || numEnemies > 0)
                         {
                             locList.Add(new Snippet(string.Format("Current Standing at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
-                            locList.Add(new Snippet(string.Format("You have {0} Friend{1} and {2} Enem{3} here", numFriends, numFriends != 1 ? "s" : "", numEnemies, 
+                            locList.Add(new Snippet(string.Format("You have {0} Friend{1} and {2} Enem{3} here", numFriends, numFriends != 1 ? "s" : "", numEnemies,
                                 numEnemies != 1 ? "ies" : "y")));
                         }
                     }
@@ -1440,7 +1440,7 @@ namespace Next_Game
                 //nothing there apart from plains
                 else
                 { locList.Add(new Snippet("ERROR: There is no Location present here", RLColor.Red, RLColor.Black)); }
-                
+
             }
             else
             { locList.Add(new Snippet("ERROR: Please click on the map", RLColor.Red, RLColor.Black)); }
@@ -1516,7 +1516,7 @@ namespace Next_Game
                 //loop list and display each actor appropriately (dead, or missing, in Lt.Gray)
                 string personText;
                 string actorType;
-                foreach(int actorID in listOfFamily)
+                foreach (int actorID in listOfFamily)
                 {
                     Passive person = GetPassiveActor(actorID);
                     if ((int)person.Office > 0) { actorType = Convert.ToString(person.Office); }
@@ -1535,7 +1535,7 @@ namespace Next_Game
                                 break;
                             case ActorStatus.Travelling:
                                 Position pos = person.GetActorPosition();
-                                locString = string.Format("travelling to {0} {1}",  GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
+                                locString = string.Format("travelling to {0} {1}", GetLocationName(person.LocID), ShowLocationCoords(person.LocID));
                                 break;
                             case ActorStatus.Gone:
                                 locString = string.Format("Passed away ({0}) in {1}", person.ReasonGone, person.Gone);
@@ -1604,11 +1604,11 @@ namespace Next_Game
                     { houseList.Add(new Snippet(relText)); }
                 }
                 //house history
-                List < string > houseHistory = GetHistoricalHouseRecords(majorHouse.RefID);
+                List<string> houseHistory = GetHistoricalHouseRecords(majorHouse.RefID);
                 if (houseHistory.Count > 0)
                 {
                     houseList.Add(new Snippet("House History", RLColor.Brown, RLColor.Black));
-                    foreach(string text in houseHistory)
+                    foreach (string text in houseHistory)
                     { houseList.Add(new Snippet(text)); }
                 }
             }
@@ -1644,7 +1644,7 @@ namespace Next_Game
             royalFamily = listOfNobles.ToList();
             //add to list
             string actorOffice;
-            foreach(Passive actor in royalFamily)
+            foreach (Passive actor in royalFamily)
             {
                 Noble noble = actor as Noble;
                 if (noble.Office > ActorOffice.None)
@@ -1732,7 +1732,7 @@ namespace Next_Game
             int charID = Convert.ToInt32(Console.ReadLine());
             Active person = new Active();
             //check character exists
-            if(dictActiveActors.ContainsKey(charID))
+            if (dictActiveActors.ContainsKey(charID))
             {
                 person = dictActiveActors[charID];
                 if (person.Status != ActorStatus.AtLocation)
@@ -1815,7 +1815,7 @@ namespace Next_Game
         /// <returns></returns>
         internal Dictionary<int, Active> GetAllActiveActors()
         { return dictActiveActors; }
-      
+
         /// <summary>
         /// returns string showing character name (at 'x' loc)
         /// </summary>
@@ -2004,7 +2004,7 @@ namespace Next_Game
             return pos;
         }
 
-        
+
         /// <summary>
         /// returns current Loc (their destination if travelling)
         /// </summary>
@@ -2065,12 +2065,12 @@ namespace Next_Game
         /// <param name="listOfHouses"></param>
         internal void InitialiseHouses()
         {
-            
+
             Game.network.UpdateHouses(Game.history.GetGreatHouses());
             Game.logStart?.Write("---  InitialiseHouses (World.cs) ---");
             //great houses
             List<MajorHouse> listOfGreatHouses = Game.history.GetGreatHouses();
-            foreach(MajorHouse house in listOfGreatHouses)
+            foreach (MajorHouse house in listOfGreatHouses)
             { AddMajorHouse(house); }
             //populate sorted dictionary (descending) of house ID's by Power (# of BannerLords)
             SortMajorHouses();
@@ -2089,7 +2089,7 @@ namespace Next_Game
                 refID = record.Value.RefID;
                 Location loc = Game.network.GetLocation(locID);
                 if (loc != null) { Game.map.SetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY(), refID); }
-                else { Game.SetError(new Error(188, "Invalid Loc (null) Map Layer not updated"));}
+                else { Game.SetError(new Error(188, "Invalid Loc (null) Map Layer not updated")); }
             }
             //populate list of Bannerlord RefID's in Great Houses
             foreach (MajorHouse house in listOfGreatHouses)
@@ -2141,36 +2141,36 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(188, "Invalid Loc (null) Lord and Lady not created")); }
                 //check if lady died in childbirth
-               /* if (actorLady.Status == ActorStatus.Gone)
-                {
-                    int yearWifeDied = actorLady.Died;
-                    //40% chance of remarrying
-                    if (rnd.Next(100) < 40)
-                    {
-                        //new wife
-                        Passive actor2ndWife = Game.history.CreatePassiveActor(kvp.Value.Name, ActorTitle.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
-                            ActorSex.Female, WifeStatus.Second_Wife);
-                        //add to dictionaries of actors
-                        dictPassiveActors.Add(actor2ndWife.ActID, actor2ndWife);
-                        dictAllActors.Add(actor2ndWife.ActID, actor2ndWife);
-                        //location born (different for lady)
-                        House wife2ndHouse = GetHouse(actor2ndWife.BornRefID);
-                        Location loc2ndWife = Game.network.GetLocation(wife2ndHouse.LocID);
-                        descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", actor2ndWife.Name, actor2ndWife.MaidenName, actor2ndWife.ActID, loc2ndWife.LocName);
-                        Record record2ndWife = new Record(descriptor, actor2ndWife.ActID, loc2ndWife.LocationID, actor2ndWife.BornRefID, actor2ndWife.Born, HistEvent.Born);
-                        //create records of being born
-                        SetRecord(record2ndWife);
-                        //store actor in location
-                        loc.AddActor(actor2ndWife.ActID);
-                        //create family
-                        Game.history.CreatePassiveFamily(actorLord, actor2ndWife);
-                    }
-                }*/
+                /* if (actorLady.Status == ActorStatus.Gone)
+                 {
+                     int yearWifeDied = actorLady.Died;
+                     //40% chance of remarrying
+                     if (rnd.Next(100) < 40)
+                     {
+                         //new wife
+                         Passive actor2ndWife = Game.history.CreatePassiveActor(kvp.Value.Name, ActorTitle.Lady, pos, kvp.Value.LocID, kvp.Value.RefID, kvp.Value.HouseID, 
+                             ActorSex.Female, WifeStatus.Second_Wife);
+                         //add to dictionaries of actors
+                         dictPassiveActors.Add(actor2ndWife.ActID, actor2ndWife);
+                         dictAllActors.Add(actor2ndWife.ActID, actor2ndWife);
+                         //location born (different for lady)
+                         House wife2ndHouse = GetHouse(actor2ndWife.BornRefID);
+                         Location loc2ndWife = Game.network.GetLocation(wife2ndHouse.LocID);
+                         descriptor = string.Format("{0} (nee {1}, Aid {2}) born at {3}", actor2ndWife.Name, actor2ndWife.MaidenName, actor2ndWife.ActID, loc2ndWife.LocName);
+                         Record record2ndWife = new Record(descriptor, actor2ndWife.ActID, loc2ndWife.LocationID, actor2ndWife.BornRefID, actor2ndWife.Born, HistEvent.Born);
+                         //create records of being born
+                         SetRecord(record2ndWife);
+                         //store actor in location
+                         loc.AddActor(actor2ndWife.ActID);
+                         //create family
+                         Game.history.CreatePassiveFamily(actorLord, actor2ndWife);
+                     }
+                 }*/
             }
             //hand out bastards and adopted sons to lords with no heirs
             CheckGreatLords();
             //fill minor houses with BannerLords
-            foreach(KeyValuePair<int, House> kvp in dictAllHouses)
+            foreach (KeyValuePair<int, House> kvp in dictAllHouses)
             {
                 //minor houses only
                 if (kvp.Value is MinorHouse)
@@ -2296,8 +2296,8 @@ namespace Next_Game
                     foreach (KeyValuePair<int, ActorRelation> family_kvp in tempDictFamily)
                     {
                         if (family_kvp.Value == ActorRelation.Son)
-                        { foundSon = true;}
-                        else if(family_kvp.Value == ActorRelation.Wife)
+                        { foundSon = true; }
+                        else if (family_kvp.Value == ActorRelation.Wife)
                         { wifeID = family_kvp.Key; }
                     }
                     //if no son provide one
@@ -2364,9 +2364,9 @@ namespace Next_Game
                 {
                     try
                     { dictPossessions.Add(secret.PossID, secret); }
-                    catch(ArgumentNullException)
+                    catch (ArgumentNullException)
                     { Game.SetError(new Error(198, "Invalid Secret (null) -> Not added to Dictionary")); }
-                    catch(ArgumentException)
+                    catch (ArgumentException)
                     { Game.SetError(new Error(198, string.Format("Invalid secret.PossID \"{0}\" (duplicate) -> Not added to Dictionary", secret.PossID))); }
                 }
             }
@@ -2430,7 +2430,7 @@ namespace Next_Game
             foreach (KeyValuePair<int, int> kvp in dictHousePower)
             {
                 MajorHouse house = GetMajorHouse(kvp.Key);
-                housePower = string.Format("Hid {0} House {1} has {2} BannerLords  {3}, Loyal to the {4} (orig {5})", house.HouseID, house.Name, house.GetNumBannerLords(), 
+                housePower = string.Format("Hid {0} House {1} has {2} BannerLords  {3}, Loyal to the {4} (orig {5})", house.HouseID, house.Name, house.GetNumBannerLords(),
                     ShowLocationCoords(house.LocID), house.Loyalty_Current, house.Loyalty_AtStart);
                 listStats.Add(new Snippet(housePower));
             }
@@ -2513,7 +2513,7 @@ namespace Next_Game
             //show Visibility status
             int knownStatus = GetActiveActorKnownStatus(1);
             if (knownStatus > 0)
-            { listStats.Add(new Snippet(string.Format("Known, reverts in {0} day{1}", knownStatus, knownStatus == 1 ? "" : "s") , Color._badTrait, RLColor.Black)); }
+            { listStats.Add(new Snippet(string.Format("Known, reverts in {0} day{1}", knownStatus, knownStatus == 1 ? "" : "s"), Color._badTrait, RLColor.Black)); }
             else { listStats.Add(new Snippet("Unknown (the Inquisitors don't know your location)", Color._goodTrait, RLColor.Black)); }
 
             //display data
@@ -2529,7 +2529,7 @@ namespace Next_Game
         {
             string houseName = "";
             MajorHouse house = new MajorHouse();
-            if(dictMajorHouses.TryGetValue(houseID, out house))
+            if (dictMajorHouses.TryGetValue(houseID, out house))
             { houseName = house.Name; }
             return houseName;
         }
@@ -3005,7 +3005,7 @@ namespace Next_Game
             else { listData.Add(new Snippet("--- Spy ENEMY Actors", RLColor.Yellow, RLColor.Black)); }
             List<ActorSpy> listTempActive = new List<ActorSpy>();
             List<ActorSpy> listTempEnemy = new List<ActorSpy>();
-            foreach(var bloodhound in dictBloodHound)
+            foreach (var bloodhound in dictBloodHound)
             {
                 turn = bloodhound.Key;
                 //clear lists
@@ -3020,7 +3020,7 @@ namespace Next_Game
                 {
                     foreach (ActorSpy spy in listTempActive)
                     {
-                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, GetActorDetails(spy.ActID), 
+                        description = string.Format("ID {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.ActID, GetActorDetails(spy.ActID),
                             spy.Pos.PosX, spy.Pos.PosY, spy.Status, spy.Known, "n.a", "n.a");
                         listData.Add(new Snippet(description));
                     }
@@ -3080,7 +3080,7 @@ namespace Next_Game
                     {
                         if (spy.Known == true) { foreColor = Color._badTrait; }
                         else { foreColor = RLColor.White; }
-                        description = string.Format("Day {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.Turn, GetActorDetails(spy.ActID), 
+                        description = string.Format("Day {0,-5} {1,-26} Pos {2,2}:{3,-5} Status -> {4,-12} Known -> {5,-8} Goal -> {6, -8} Mode -> {7}", spy.Turn, GetActorDetails(spy.ActID),
                             spy.Pos.PosX, spy.Pos.PosY, spy.Status, spy.Known, spy.Goal, spy.HuntMode == true ? "Hunt" : "normal");
                         listData.Add(new Snippet(description, foreColor, RLColor.Black));
                     }
@@ -3100,7 +3100,7 @@ namespace Next_Game
         {
             List<Snippet> tempList = new List<Snippet>();
             RLColor color = RLColor.White;
-            foreach(var message in dictMessages)
+            foreach (var message in dictMessages)
             {
                 if (message.Value.Type == MessageType.Activation) { color = Color._active; }
                 else { color = RLColor.White; }
@@ -3120,7 +3120,7 @@ namespace Next_Game
             tempList.AddRange(messageQueue.ToList());
             return tempList;
         }
-        
+
 
         /// <summary>
         /// gets the correct advisor type and returns as a string for display purposes
@@ -3148,7 +3148,7 @@ namespace Next_Game
             List<string> listOfStrings = new List<string>(Game.history.GetDuplicatesNames());
             List<Snippet> listOfDuplicates = new List<Snippet>();
             //convert to snippets
-            foreach(string name in listOfStrings)
+            foreach (string name in listOfStrings)
             { listOfDuplicates.Add(new Snippet(name)); }
             return listOfDuplicates;
         }
@@ -3238,7 +3238,7 @@ namespace Next_Game
             Game.logTurn?.Write("--- ProcessStartGame (World.cs)");
             Game.history.AgePassiveCharacters(dictPassiveActors);
             CalculateCrows();
-            
+
         }
 
         /// <summary>
@@ -3367,7 +3367,7 @@ namespace Next_Game
                     if (marker > 0)
                     { Game.map.SetMapInfo(MapLayer.Movement, pos.Value.PosX, pos.Value.PosY, marker); }
                 }
-                else { Game.SetError(new Error(157, "Invalid key (ActID) in dictMoveActors (not found in dict)")); } 
+                else { Game.SetError(new Error(157, "Invalid key (ActID) in dictMoveActors (not found in dict)")); }
             }
         }
 
@@ -3562,7 +3562,7 @@ namespace Next_Game
         private void HousekeepActors()
         {
             //All actors -> decrement any Condition timers
-            foreach(var actor in dictAllActors)
+            foreach (var actor in dictAllActors)
             {
                 if (actor.Value.CheckConditions() == true)
                 { actor.Value.UpdateConditionTimers(); }
@@ -3613,14 +3613,14 @@ namespace Next_Game
             {
                 case PossessionType.Item:
                     var itemResult = from possObject in dictPossessions
-                                 where possObject.Value is Item
-                                 select possObject;
+                                     where possObject.Value is Item
+                                     select possObject;
                     num = itemResult.Count();
                     break;
                 case PossessionType.Secret:
                     var secretResult = from possObject in dictPossessions
-                                 where possObject.Value is Secret
-                                 select possObject;
+                                       where possObject.Value is Secret
+                                       select possObject;
                     num = secretResult.Count();
                     break;
                 case PossessionType.None:
@@ -3655,7 +3655,7 @@ namespace Next_Game
                     IEnumerable<string> itemListActive =
                         from items in dictPossessions.Values.OfType<Item>()
                         where items.ItemType == PossItemType.Active && items.WhoHas > 0
-                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType +  ", " + GetActorDetails(items.WhoHas, false));
+                        select Convert.ToString("ItemID " + items.ItemID + ", \"" + items.Description + "\", Type: " + items.ItemType + ", " + GetActorDetails(items.WhoHas, false));
                     tempList = itemListActive.ToList();
                     IEnumerable<string> itemListPassive =
                         from items in dictPossessions.Values.OfType<Item>()
@@ -3680,7 +3680,7 @@ namespace Next_Game
         private void UpdateFollowerPositions()
         {
             Game.map.ClearMapLayer(MapLayer.Followers);
-            foreach(var follower in dictActiveActors)
+            foreach (var follower in dictActiveActors)
             {
                 if (follower.Key > 0 && follower.Value.Status != ActorStatus.Gone)
                 {
@@ -3752,13 +3752,13 @@ namespace Next_Game
                         { SetPlayerRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, CurrentActorIncident.Known)); }
                         else if (actor.Value.ActID > 1)
                         { SetCurrentRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, CurrentActorIncident.Known)); }
-                        Game.logTurn?.Write( eventText);
+                        Game.logTurn?.Write(eventText);
                     }
                 }
                 else if (actor.Value.Known == false)
                 {
                     actor.Value.TurnsUnknown++;
-                    Game.logTurn?.Write(string.Format(" {0} {1} has had their TurnsUnknown Timer increased from {2} to {3}", 
+                    Game.logTurn?.Write(string.Format(" {0} {1} has had their TurnsUnknown Timer increased from {2} to {3}",
                         actor.Value.Title, actor.Value.Name, actor.Value.TurnsUnknown - 1, actor.Value.TurnsUnknown));
                 }
             }
@@ -3820,9 +3820,9 @@ namespace Next_Game
         {
             if (refID > 0)
             {
-                    if (dictConvertRefToLoc.ContainsKey(refID) == true)
-                    { return dictConvertRefToLoc[refID]; }
-                    else { Game.SetError(new Error(147, "Invalid refID (record not found")); }
+                if (dictConvertRefToLoc.ContainsKey(refID) == true)
+                { return dictConvertRefToLoc[refID]; }
+                else { Game.SetError(new Error(147, "Invalid refID (record not found")); }
             }
             return 0;
         }
@@ -3894,7 +3894,7 @@ namespace Next_Game
                                             { Game.SetError(new Error(167, string.Format("Invalid enemy ID {0} (duplicate)", enemy.Value.ActID))); }
                                         }
                                         else {
-                                            Game.logTurn?.Write(string.Format(" [AI -> Notification] {0} {1}, ActID {2} is Travelling to {3}", enemy.Value.Title, enemy.Value.Name, 
+                                            Game.logTurn?.Write(string.Format(" [AI -> Notification] {0} {1}, ActID {2} is Travelling to {3}", enemy.Value.Title, enemy.Value.Name,
                                             enemy.Value.ActID, GetLocationName(enemy.Value.LocID))); }
                                     }
                                     else
@@ -3919,7 +3919,7 @@ namespace Next_Game
                                             if ((pair.Value / enemy.Speed) <= (threshold * enemyDM))
                                             { enemy.HuntMode = true; }
                                             else { enemy.HuntMode = false; }
-                                            Game.logTurn?.Write(string.Format(" [AI -> Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value, 
+                                            Game.logTurn?.Write(string.Format(" [AI -> Mode] enemyID {0},  distance -> {1}  Threshold (turns) -> {2}  Mode -> {3}", pair.Key, pair.Value,
                                                 threshold * enemyDM, enemy.HuntMode == true ? "Hunt" : "Normal"));
                                         }
                                         else { Game.SetError(new Error(167, string.Format("Invalid enemy, ID {0} (null)", pair.Key))); }
@@ -4087,7 +4087,7 @@ namespace Next_Game
         private void SetEnemyGoal(Enemy enemy, bool huntStatus, int playerLocID, int turnsUnknown)
         {
             Game.logTurn?.Write("--- SetEnemyGoal (World.cs)");
-            bool huntMoveFlag = false; 
+            bool huntMoveFlag = false;
             int rndNum, refID, tempDistance, enemyDistance, tempLocID;
             int currentBranch = -1;
             ActorGoal newGoal = ActorGoal.None;
@@ -4156,20 +4156,20 @@ namespace Next_Game
                                 }
                                 else if (refID == 9999)
                                 {
-                                        //Capital
-                                        if (enemy.AssignedBranch == 0)
-                                        {
-                                            //Capital (where enemy should be) -> Wait 70, Hide 30
-                                            if (rndNum <= 70) { newGoal = ActorGoal.Wait; }
-                                            else { newGoal = ActorGoal.Hide; }
-                                        }
-                                        else
-                                        {
-                                            //Capital -> Wait 30, Hide 20, Move 50
-                                            if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
-                                            else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
-                                            else { newGoal = ActorGoal.Hide; }
-                                        }
+                                    //Capital
+                                    if (enemy.AssignedBranch == 0)
+                                    {
+                                        //Capital (where enemy should be) -> Wait 70, Hide 30
+                                        if (rndNum <= 70) { newGoal = ActorGoal.Wait; }
+                                        else { newGoal = ActorGoal.Hide; }
+                                    }
+                                    else
+                                    {
+                                        //Capital -> Wait 30, Hide 20, Move 50
+                                        if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
+                                        else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
+                                        else { newGoal = ActorGoal.Hide; }
+                                    }
                                 }
                             }
                         }
@@ -4207,34 +4207,34 @@ namespace Next_Game
                                 {
                                     Location locTarget = Game.network.GetLocation(playerLocID);
                                     if (locTarget != null)
-                                    { 
-                                    Position posTarget = locTarget.GetPosition();
-                                    List<Position> pathTemp = Game.network.GetPathAnywhere(posOrigin, posTarget);
-                                    //loop path looking for the first viable location along path
-                                    for (int i = 0; i < pathTemp.Count; i++)
                                     {
-                                        Position posTemp = pathTemp[i];
-                                        if (posTemp != null)
+                                        Position posTarget = locTarget.GetPosition();
+                                        List<Position> pathTemp = Game.network.GetPathAnywhere(posOrigin, posTarget);
+                                        //loop path looking for the first viable location along path
+                                        for (int i = 0; i < pathTemp.Count; i++)
                                         {
-                                            tempLocID = Game.map.GetMapInfo(MapLayer.LocID, posTemp.PosX, posTemp.PosY);
-                                            if (tempLocID > 0)
+                                            Position posTemp = pathTemp[i];
+                                            if (posTemp != null)
                                             {
+                                                tempLocID = Game.map.GetMapInfo(MapLayer.LocID, posTemp.PosX, posTemp.PosY);
+                                                if (tempLocID > 0)
+                                                {
                                                     Game.logTurn?.Write(string.Format(" [Goal -> Move] {0}, ActID {1} -> One Node closer to Player -> {2}, LocID {3}", enemy.Name, enemy.ActID,
                                                     GetLocationName(tempLocID), tempLocID));
-                                                destinationLocID = tempLocID; break;
+                                                    destinationLocID = tempLocID; break;
+                                                }
                                             }
+                                            else { Game.SetError(new Error(156, "Invalid Position (null) in pathTemp")); }
                                         }
-                                        else { Game.SetError(new Error(156, "Invalid Position (null) in pathTemp")); }
-                                    }
-                                    //error check
-                                    if (destinationLocID == 0)
-                                    {
-                                        destinationLocID = playerLocID;
-                                            Game.logTurn?.Write(string.Format(" [Goal -> Alert] {0}, ActID [1} has been assigned a default PlayerLocID [move One Node closer] as no viable node was found", 
+                                        //error check
+                                        if (destinationLocID == 0)
+                                        {
+                                            destinationLocID = playerLocID;
+                                            Game.logTurn?.Write(string.Format(" [Goal -> Alert] {0}, ActID [1} has been assigned a default PlayerLocID [move One Node closer] as no viable node was found",
                                                 enemy.Name, enemy.ActID));
+                                        }
                                     }
-                                }
-                                else { Game.SetError(new Error(156, "Invalid locTarget (null) Viable Node not searched for")); }
+                                    else { Game.SetError(new Error(156, "Invalid locTarget (null) Viable Node not searched for")); }
                                 }
                                 // - Move Directly to Player's last known location
                                 else
@@ -4258,7 +4258,7 @@ namespace Next_Game
                                         List<int> tempLocList = new List<int>();
                                         //change direction of travel?
                                         bool reverseStatus = false;
-                                        switch(enemy.MoveOut)
+                                        switch (enemy.MoveOut)
                                         {
                                             case true:
                                                 //slightly higher chance of reversing outward movement in order to keep inquisitors closer to the capital
@@ -4294,7 +4294,7 @@ namespace Next_Game
                                                 else
                                                 {
                                                     //move inwards towards capital -> select any that are further in
-                                                    if(tempDistance < enemyDistance)
+                                                    if (tempDistance < enemyDistance)
                                                     { tempLocList.Add(listNeighbours[i]); }
                                                 }
                                             }
@@ -4312,7 +4312,7 @@ namespace Next_Game
                                         else
                                         {
                                             //else must have reached the end of a branch -> reverse move direction to prevent an endless loop
-                                            Game.logTurn?.Write(string.Format(" [Goal -> Alert] {0}, ActID {1} has reversed their MoveOut status [end of the Road] from {2} to {3}", enemy.Name, enemy.ActID, 
+                                            Game.logTurn?.Write(string.Format(" [Goal -> Alert] {0}, ActID {1} has reversed their MoveOut status [end of the Road] from {2} to {3}", enemy.Name, enemy.ActID,
                                                 enemy.MoveOut, enemy.MoveOut == true ? "False" : "True"));
                                             if (enemy.MoveOut == true) { enemy.MoveOut = false; }
                                             else { enemy.MoveOut = true; }
@@ -4466,7 +4466,7 @@ namespace Next_Game
                                         {
                                             string locName = GetLocationName(pos);
                                             if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); }
-                                            Game.logTurn?.Write(string.Format(" [SEARCH -> Active] {0} {1} has been Spotted by {2}, ActID {3} at loc {4}:{5} -> Activated {6}", active.Title, active.Name, enemy.Value.Name, 
+                                            Game.logTurn?.Write(string.Format(" [SEARCH -> Active] {0} {1} has been Spotted by {2}, ActID {3} at loc {4}:{5} -> Activated {6}", active.Title, active.Name, enemy.Value.Name,
                                                 enemy.Value.ActID, pos.PosX, pos.PosY, enemy.Value.Activated));
                                             active.Found = true;
                                             Game.logTurn?.Write(string.Format(" [Search -> ListEnemy] {0} {1}, ActID {2} as Spotted -> True and Enemy ActID {3} added", active.Title, active.Name, active.ActID, enemy.Value.ActID));
@@ -4524,7 +4524,7 @@ namespace Next_Game
                                                 //can only be captured (assumed to be Known)
                                                 if (active.AddEnemy(enemy.Value.ActID, enemy.Value.Activated) == true)
                                                 {
-                                                    
+
                                                     if (enemy.Value is Inquisitor)
                                                     {
                                                         active.Known = true; active.Revert = known_revert;
@@ -4629,7 +4629,7 @@ namespace Next_Game
                                             string locName = GetLocationName(pos);
                                             if (locName.Equals("Unknown") == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); } //travelling
                                             if (String.IsNullOrEmpty(locName) == true) { locName = string.Format("Loc {0}:{1}", pos.PosX, pos.PosY); }
-                                            Game.logTurn?.Write(string.Format(" [SEARCH -> Enemy] {0} {1} has been Spotted by {2}, ActID {3} at {4} -> Activated {5}", active.Value.Title, active.Value.Name, 
+                                            Game.logTurn?.Write(string.Format(" [SEARCH -> Enemy] {0} {1} has been Spotted by {2}, ActID {3} at {4} -> Activated {5}", active.Value.Title, active.Value.Name,
                                                 enemy.Name, enemy.ActID, locName, enemy.Activated));
                                             active.Value.Found = true;
                                             Game.logTurn?.Write(string.Format(" [Search -> ListEnemies] {0} {1}, ActID {2} is Found -> True and Enemy ActID {3} added", active.Value.Title, active.Value.Name, active.Value.ActID, enemy.ActID));
@@ -4644,7 +4644,7 @@ namespace Next_Game
                                                 {
                                                     if (active.Value.AddEnemy(enemy.ActID, enemy.Activated) == true)
                                                     {
-                                                        active.Value.Known = true; active.Value.Revert = known_revert; 
+                                                        active.Value.Known = true; active.Value.Revert = known_revert;
                                                         description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name,
                                                             active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
                                                         Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Known);
@@ -4660,26 +4660,26 @@ namespace Next_Game
                                                         if (active.Value.AddEnemy(enemy.ActID, enemy.Activated) == true)
                                                         {
                                                             active.Value.Revert = known_revert;
-                                                            description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, 
+                                                            description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name,
                                                                 active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
                                                             if (enemy.Activated == true)
                                                             {
                                                                 //only activated enemies can capture (Inquisitors are always activated, Nemesis only when gods are angry)
-                                                                 active.Value.Capture = true;
+                                                                active.Value.Capture = true;
                                                             }
                                                             Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
                                                             SetPlayerRecord(record);
                                                             SetMessage(new Message(description, MessageType.Search));
                                                         }
                                                     }
-                                                    else 
+                                                    else
                                                     {
                                                         //enemy has already found player this turn
-                                                        Game.logTurn?.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has previously Found the Player -> Result Cancelled", enemy.Title, enemy.Name, 
+                                                        Game.logTurn?.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has previously Found the Player -> Result Cancelled", enemy.Title, enemy.Name,
                                                             enemy.ActID));
                                                     }
                                                 }
-                                                
+
                                             }
                                             else if (active.Value is Follower)
                                             {
@@ -4708,7 +4708,7 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(161, string.Format("Invalid actor (NOT Enemy) charID \"{0}\"", charID))); }
             }
-            else { Game.SetError(new Error(161,  string.Format("Invalid Enemy actor (null or ActorStatus.Gone) charID \"{0}\", Status {1}", charID, actor.Status))); }
+            else { Game.SetError(new Error(161, string.Format("Invalid Enemy actor (null or ActorStatus.Gone) charID \"{0}\", Status {1}", charID, actor.Status))); }
             return found;
         }
 
@@ -4755,17 +4755,17 @@ namespace Next_Game
             int[] arrayTemp = new int[5]; // (1 to 4 branches with 0 being Capital)
             //allocate # loc's to each branch
             int tempNumLocs = 0;
-            for(int i = 1; i < arrayTemp.Length; i++)
+            for (int i = 1; i < arrayTemp.Length; i++)
             { arrayTemp[i] = Game.network.GetNumLocsByBranch(i); tempNumLocs += arrayTemp[i]; }
             //tallies match?
             if (tempNumLocs != numLocs)
             { Game.SetError(new Error(165, string.Format("Loc's don't tally (tempNumLocs (GetNumLocsByBranch) {0} numLocs (GetNumLocations) {1})", tempNumLocs, numLocs))); }
             //allow for connectors (provide more flexibility and make a branch more valuable to the enemy if present)
             int adjustedNumLocs = 0;
-            for(int i = 1; i < arrayTemp.Length; i++)
+            for (int i = 1; i < arrayTemp.Length; i++)
             {
                 if (Game.network.GetBranchConnectorStatus(i) == true)
-                { arrayTemp[i] += connectorBonus;}
+                { arrayTemp[i] += connectorBonus; }
                 adjustedNumLocs += arrayTemp[i];
             }
             //work out how many enemies should stay in the captial (normal operations)
@@ -4811,9 +4811,9 @@ namespace Next_Game
             for (int i = 0; i <= arrayAI.GetUpperBound(1); i++)
             { arrayAI[2, i] = arrayAI[1, i]; }
             //display arrayAI
-            
-            for(int i = 0; i <= arrayAI.GetUpperBound(1); i++)
-            { Game.logStart?.Write(string.Format(" {0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i], 
+
+            for (int i = 0; i <= arrayAI.GetUpperBound(1); i++)
+            { Game.logStart?.Write(string.Format(" {0} {1} -> Current {2} -> Desired {3} -> adjusted Loc's {4}", i > 0 ? "Branch " : "Capital", i, arrayAI[0, i], arrayAI[1, i],
                 arrayTemp[i])); }
         }
 
@@ -4827,14 +4827,14 @@ namespace Next_Game
             listTempActiveActors.Clear();
             listTempEnemyActors.Clear();
             //active actors
-            foreach(var active in dictActiveActors)
+            foreach (var active in dictActiveActors)
             {
                 ActorSpy activeSpy = new ActorSpy(active.Value.ActID, active.Value.GetActorPosition(), active.Value.Status, active.Value.Known);
                 listTempActiveActors.Add(activeSpy);
             }
             bloodhound.SetActiveActors(listTempActiveActors);
             //enemy actors
-            foreach(var enemy in dictEnemyActors)
+            foreach (var enemy in dictEnemyActors)
             {
                 ActorSpy enemySpy = new ActorSpy(enemy.Value.ActID, enemy.Value.GetActorPosition(), enemy.Value.Status, enemy.Value.Known, enemy.Value.Goal, enemy.Value.HuntMode);
                 listTempEnemyActors.Add(enemySpy);
@@ -4843,7 +4843,7 @@ namespace Next_Game
             //add to dictionary
             try
             { dictBloodHound.Add(Game.gameTurn, bloodhound); }
-            catch(ArgumentException)
+            catch (ArgumentException)
             { Game.SetError(new Error(171, string.Format("Invalid gameTurn \"{0}\", (duplicate Entry) -> Bloodhound entry Not added", Game.gameTurn))); }
         }
 
@@ -4863,7 +4863,7 @@ namespace Next_Game
                 if (player.Status == ActorStatus.Travelling)
                 {
                     //loop list Move Objects and delete the Players
-                    for(int i = 0; i < listMoveObjects.Count; i++)
+                    for (int i = 0; i < listMoveObjects.Count; i++)
                     {
                         Move moveObject = listMoveObjects[i];
                         if (moveObject.PlayerInParty == true)
@@ -5037,7 +5037,7 @@ namespace Next_Game
 
             int rndIndex;
             //assign each passive item to a random actor
-            for(int i = 0; i < listPassiveItems.Count; i++)
+            for (int i = 0; i < listPassiveItems.Count; i++)
             {
                 Item item = listPassiveItems[i];
                 rndIndex = rnd.Next(listPassiveActors.Count);
@@ -5049,6 +5049,25 @@ namespace Next_Game
             }
 
         }
+
+        /// <summary>
+        /// Set up a notification message (straight message, no user input)
+        /// </summary>
+        /// <param name="notificationList"></param>
+        public void SetNotification(List<Snippet> notificationList)
+        {
+            if (notificationList != null)
+            {
+                if (notificationList.Count > 0)
+                {
+                    //take a list of snippets and set up ready to go. Might need to switch to special mode.
+                    Game.infoChannel.SetInfoList(notificationList, ConsoleDisplay.Event);
+                }
+                else { Game.SetError(new Error(223, "Invalid notificationList input (no records)")); }
+            }
+            else { Game.SetError(new Error(223, "Invalid notificationList input (null)")); }
+        }
+
 
         //new Methods above here
     }

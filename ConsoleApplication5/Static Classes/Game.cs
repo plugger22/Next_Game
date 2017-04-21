@@ -15,7 +15,7 @@ namespace Next_Game
     public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record, Special, Lore} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
-    public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome} //if MenuMode.Special then this is the type of special
+    public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome, Notification, Confirm} //if MenuMode.Special then -> type of special (Notification -> msg, Confirm -> Y/N)
     public enum ConflictMode { None, Intro, Strategy, Cards, Outcome, Confirm, AutoResolve, ErrorStrategy, Popup, RestoreCards} //submodes within SpecialMode.Conflict, determines GUI
     public enum InfoMode { None, Followers, Enemies}; //which characters to highlight on the map
 
@@ -805,6 +805,7 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
+                                        /*
                                         _menuMode = MenuMode.Special;
                                         _specialMode = SpecialMode.Conflict;
                                         _conflictMode = ConflictMode.Intro;
@@ -836,7 +837,12 @@ namespace Next_Game
                                             _menuMode = MenuMode.Main;
                                             _specialMode = SpecialMode.None;
                                             _conflictMode = ConflictMode.None;
-                                        }
+                                        }*/
+                                        //debug
+                                        List<Snippet> tempList = new List<Snippet>();
+                                        tempList.Add(new Snippet("Test Notification"));
+                                        _specialMode = SpecialMode.Notification;
+                                        world.SetNotification(tempList);
                                         break;
                                     case MenuMode.Debug:
                                         //Show All Secrets log
@@ -1457,6 +1463,8 @@ namespace Next_Game
                         else
                         { exitFlag = true; }
                     }
+                    else if (mode == SpecialMode.Notification)
+                    { exitFlag = true; }
                     //Player Events
                     else if (mode == SpecialMode.PlayerEvent)
                     {
@@ -1734,9 +1742,19 @@ namespace Next_Game
         /// <param name="text"></param>
         public static void SetEndGame(string text)
         {
+            RLColor foreColor = RLColor.Black;
+            RLColor backColor = Color._background1;
             logTurn?.Write("--- SetEndGame (Game.cs)");
-            _endGame = true;
             logTurn?.Write("[Alert] " + text);
+            List<Snippet> msgList = new List<Snippet>();
+            msgList.Add(new Snippet(""));
+            msgList.Add(new Snippet("You are exiting the Game", foreColor, backColor));
+            msgList.Add(new Snippet(""));
+            msgList.Add(new Snippet(text, foreColor, backColor));
+            msgList.Add(new Snippet(""));
+            world.SetNotification(msgList);
+            _specialMode = SpecialMode.Notification;
+            _endGame = true;
         }
 
     }

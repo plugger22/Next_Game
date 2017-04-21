@@ -324,6 +324,8 @@ namespace Next_Game
                 case SpecialMode.PlayerEvent:
                 case SpecialMode.FollowerEvent:
                 case SpecialMode.Outcome:
+                case SpecialMode.Notification:
+                case SpecialMode.Confirm:
                     //ignore if nothing to display
                     if (eventList.Count > 0)
                     {

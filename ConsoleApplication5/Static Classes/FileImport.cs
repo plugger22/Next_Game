@@ -1668,27 +1668,6 @@ namespace Next_Game
                                         case "touched":
                                             structTrigger.Item = 6;
                                             break;
-                                        //picks up optional GameVar specific Text
-                                        case "Justice":
-                                        case "justice":
-                                            structTrigger.Item = 1;
-                                            break;
-                                        case "Legend_Urs":
-                                        case "legend_Urs":
-                                            structTrigger.Item = 2;
-                                            break;
-                                        case "Legend_King":
-                                        case "legend_King":
-                                            structTrigger.Item = 3;
-                                            break;
-                                        case "Honour_Urs":
-                                        case "honour_Urs":
-                                            structTrigger.Item = 4;
-                                            break;
-                                        case "Honour_King":
-                                        case "honour_King":
-                                            structTrigger.Item = 5;
-                                            break;
                                         default:
                                             //number entry (multipurpose)
                                             try

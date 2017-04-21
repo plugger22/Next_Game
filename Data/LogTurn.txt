@@ -1,6 +1,58 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 21/04/2017 14:02:18
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
+//Exile Game File "LogTurn.txt" opened at: 21/04/2017 17:17:37
+--- ProcessStartTurn (World.cs)
+Day 3, Turn 2
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Mormo, ActID 73 travelling to Greenstone (current Loc 16:20)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Andry Tyrell, ID 1 at 4:14, Enemy at 16:20 (Brother Mormo, ID 73
+--- UpdatePlayerStatus (World.cs)
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Andry Tyrell, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Diabolous, ID 72 at 15:20, Active Andry Tyrell, ID 1, at 4:14
+ [Search -> Debug] Enemy, Brother Mormo, ID 73 at 17:20, Active Andry Tyrell, ID 1, at 4:14
+ [Search -> Debug] Enemy, Brother Azazel, ID 74 at 15:20, Active Andry Tyrell, ID 1, at 4:14
+ [Search -> Debug] Enemy, Brother Astaroth, ID 75 at 15:20, Active Andry Tyrell, ID 1, at 4:14
+ [Search -> Debug] Enemy, The Unrelenting, ID 76 at 15:20, Active Andry Tyrell, ID 1, at 4:14
+ [Search -> Stationary] Follower The Haggler, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 9 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 72 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 74 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Astaroth, Act ID 75 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 76 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Diabolous, ActID 72 retains Goal -> Wait
+ [Enemy -> Goal] Brother Azazel, ActID 74 retains Goal -> Hide
+ [Enemy -> Known] Brother Astaroth ActID 75 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Astaroth, ActID 75 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Astaroth, ActID 75, (loc 15:20), assigned new Goal -> Move
+ [Goal -> Move] Brother Astaroth, ActID 75 -> Capital to Correct Branch -> The Raucous Rat, LocID 14
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] The Unrelenting, ActID 76 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Event "Mysterious Stranger" has no attached Conditions
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 37 %
+--- ResolvePlayerEvents (Director.cs)
+ "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger passed on "3" GreaterThanOrEqual 3
+ "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
+ Trigger passed on "3" GreaterThanOrEqual 3
+ Event "Mysterious Stranger" Timer Repeat now 9
+ Event "Mysterious Stranger" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Andry Tyrell has had their TurnsUnknown Timer increased from 101 to 102
+ Follower The Haggler has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Viper has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Spider has had their TurnsUnknown Timer increased from 1 to 2
+--- ResolveOutcome (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 21/04/2017 14:04:21
+//Exile Game file ops "LogTurn.txt" Completed at: 21/04/2017 17:17:44
+e File "LogTurn.txt" Close completed at: 21/04/2017 17:17:37

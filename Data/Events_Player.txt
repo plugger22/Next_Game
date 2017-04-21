@@ -412,7 +412,6 @@ subType: Sea
 Cat: Generic
 Freq: Low
 Status: Active
-Repeat: 3
 Cool: 3
 Event: A wild storm lashes the vessel. Amid slashing spray, large waves crash onto the deck.
 [option]
@@ -467,7 +466,6 @@ subType: Sea
 Cat: Generic
 Freq: Low
 Status: Active
-Repeat: 10
 Cool: 3
 Event: The wind, the wind? Where to has it gone? Will it ever return? The ship sags lifeless in the calm like an exhausted animal.
 [option]   
@@ -506,6 +504,7 @@ Cat: Generic
 Freq: Low
 Status: Active
 Event: The crew demand that a passenger be thrown overboard. They insist that she's a Jonah who will curse the ship and all onboard.
+Cool: 10
 [option]
 text: Stand aside and let it happen.
 reply: Nobody wants to be sailing on a cursed ship. If the woman is a Jonah then she needs to be heaved overboard immediately.
@@ -540,6 +539,7 @@ Cat: Generic
 Freq: Low
 Status: Active
 Event: You surprise one of the crew taking advantage of the cabin boy.
+Cool: 10
 [option]
 text: Keep walking. It's none of your business.
 reply: It's a tough world. The boy needs to learn that the only person who will help you is yourself.
@@ -585,6 +585,7 @@ Cat: Generic
 Freq: Normal
 Status: Active
 Event: The Bosun runs onto deck yelling that the ship has sprung a leak. It's sounds bad.
+Cool: 5
 [option]
 text: Stand back and let the professionals deal with it.
 reply: The crew appear to have the situation in hand. You congratulate yourself on having the foresight to not intervene.
