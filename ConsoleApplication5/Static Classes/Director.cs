@@ -1737,6 +1737,7 @@ namespace Next_Game
         {
             bool returnValue = false;
             int ability, rndNum, success;
+            int crowCounter = 0;
             int traitMultiplier = Game.constant.GetValue(Global.TRAIT_MULTIPLIER);
             string effectText, status;
             List<Snippet> eventList = new List<Snippet>();
@@ -1892,9 +1893,12 @@ namespace Next_Game
                     //only show follower events if Player is at a location and able to receive crows
                     if (player.Status != ActorStatus.AtLocation)
                     {
+                        crowCounter++;
                         eventList.Clear();
                         eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet("An incoming Crow failed to arrive", RLColor.LightRed, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet(string.Format("You have missed a total of {0} crow{1} today", crowCounter, crowCounter != 1 ? "s" : ""), RLColor.Black, backColor));
                         eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                         eventList.Add(new Snippet(""));
@@ -2237,7 +2241,7 @@ namespace Next_Game
                                             //Change a Game state variable, eg. Honour, Justice, etc.
                                             outcomeText = state.SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
-                                            { resultList.Add(new Snippet(eventText + outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             break;
                                         case OutcomeType.Known:
                                             //change an Active Actor's Known/Unknown status
@@ -2357,7 +2361,7 @@ namespace Next_Game
                                             {
                                                 outcomeText = personRes.ChangeResources(resourceOutcome.Amount, resourceOutcome.Calc);
                                                 if (String.IsNullOrEmpty(outcomeText) == false)
-                                                { resultList.Add(new Snippet(eventText + outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                                { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             }
                                             break;
                                         case OutcomeType.Condition:
@@ -2374,7 +2378,7 @@ namespace Next_Game
                                                     //not present -> add new condition
                                                     outcomeText = personCon.AddCondition(conditionOutcome.NewCondition);
                                                     if (String.IsNullOrEmpty(outcomeText) == false)
-                                                    { resultList.Add(new Snippet(eventText + outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                                    { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                                 }
                                                 else
                                                 {

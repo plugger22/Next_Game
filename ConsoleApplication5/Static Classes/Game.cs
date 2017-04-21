@@ -107,6 +107,8 @@ namespace Next_Game
         private static int _charIDSelected; //selected player character
         private static long _totalTime; //Stopwatch total time elasped for all timed sections
         private static bool _endGame = false; //game over if true
+        private static bool _endFlag = false; //preliminary end game flag that, if confirmed, triggers _endGame
+        private static int _startMode = 0; //controls start turn processes: Early -> Mid -> Late
         //logs
         private static Dictionary<int, Error> dictErrors = new Dictionary<int, Error>(); //all errors (key is errorID)
         private static List<string> listOfTimers = new List<string>(); //all timer tests
@@ -256,6 +258,18 @@ namespace Next_Game
                     logError?.Dispose();
                     _rootConsole.Close();
                     //Environment.Exit(1); - not needed and causes OpenTK error
+                }
+
+                //start turn Mode?
+                if (_startMode > 0)
+                {
+                    switch (_startMode)
+                    {
+                        case 1:
+                            world.ProcessStartTurnLate();
+                            _startMode = 0;
+                            break;
+                    }
                 }
 
                 //special display mode (Events and Conflicts)
@@ -963,7 +977,9 @@ namespace Next_Game
                             case RLKey.Enter:
                                 world.ProcessEndTurn();
                                 logTurn?.Close(); logTurn?.Open(); //retain previous turn's output only
-                                world.ProcessStartTurn();
+                                world.ProcessStartTurnEarly();
+                                _startMode = 1;
+                                //world.ProcessStartTurnLate();
                                 infoChannel.ClearConsole(ConsoleDisplay.Input);
                                 infoChannel.ClearConsole(ConsoleDisplay.Multi);
                                 //infoChannel.AppendInfoList(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);
@@ -1595,6 +1611,8 @@ namespace Next_Game
                     if (_menuMode != MenuMode.Main)
                     { _menuMode = menu.SwitchMenuMode(MenuMode.Main); }
                 }
+                //end of game
+                if (_endFlag == true) { _endGame = true; }
             }
             
         }
@@ -1753,8 +1771,7 @@ namespace Next_Game
             msgList.Add(new Snippet(text, foreColor, backColor));
             msgList.Add(new Snippet(""));
             world.SetNotification(msgList);
-            _specialMode = SpecialMode.Notification;
-            _endGame = true;
+            _endFlag = true; //preliminary end game, set to true (_endGame = true) once confirmed.
         }
 
     }

@@ -518,7 +518,7 @@ namespace Next_Game
                             locStatus = $"Moving to {locName}";
                             break;
                         case ActorStatus.AtSea:
-                            locStatus = $"On a ship to {locName}";
+                            locStatus = string.Format("On a ship to {0}, arriving in {1} day{2}", locName, actor.Value.VoyageTimer, actor.Value.VoyageTimer != 1 ? "s" : "");
                             break;
                         case ActorStatus.Adrift:
                             locStatus = string.Format("Adrift in {0}. Survival time {1} day{2}", actor.Value.SeaName, actor.Value.DeathTimer, actor.Value.DeathTimer != 1 ? "s" : "");
@@ -538,10 +538,21 @@ namespace Next_Game
                         {
                             //player (no distance display)
                             textColor = Color._player;
-                            if (actor.Value.Status != ActorStatus.Adrift && actor.Value.Status != ActorStatus.Captured)
-                            { charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates); }
-                            else
-                            { charString = string.Format("Aid {0,-2} {1,-18} {2,-30}", actor.Key, actor.Value.Name, locStatus); }
+                            switch(actor.Value.Status)
+                            {
+                                case ActorStatus.AtLocation:
+                                case ActorStatus.Travelling:
+                                    charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
+                                    break;
+                                case ActorStatus.AtSea:
+                                case ActorStatus.Adrift:
+                                case ActorStatus.Captured:
+                                    charString = string.Format("Aid {0,-2} {1,-18} {2,-30}", actor.Key, actor.Value.Name, locStatus);
+                                    break;
+                                default:
+                                    charString = "Unknown Actor.Value.Status";
+                                    break;
+                            }
                         }
                         else
                         {
@@ -3242,9 +3253,9 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// handles all pre-turn stuff
+        /// handles all pre-turn stuff, part 1
         /// </summary>
-        public void ProcessStartTurn()
+        public void ProcessStartTurnEarly()
         {
             Game.logTurn?.Write("--- ProcessStartTurn (World.cs)");
             Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}");
@@ -3255,6 +3266,14 @@ namespace Next_Game
             //Enemies
             UpdateAIController();
             SetEnemyActivity();
+
+        }
+
+        /// <summary>
+        /// handles pre-turn stuff, part 2
+        /// </summary>
+        public void ProcessStartTurnLate()
+        {
             //Create events
             Game.director.CheckPlayerEvents();
             Game.director.CheckFollowerEvents(dictActiveActors);
@@ -3305,13 +3324,32 @@ namespace Next_Game
                     if (player.VoyageTimer == 0)
                     {
                         //arrived at Location
-                        description = string.Format("{0} {1} has arrived at {2} onboard the S.S \"{3}\"", player.Title, player.Name, GetLocationName(player.LocID), player.ShipName);
+                        string locName = GetLocationName(player.LocID);
+                        description = string.Format("{0} {1} has arrived at {2} onboard the S.S \"{3}\"", player.Title, player.Name, locName, player.ShipName);
                         SetPlayerRecord(new Record(description, 1, player.LocID, GetRefID(player.LocID), CurrentActorIncident.Travel));
                         SetMessage(new Message(description, MessageType.Move));
+                        //notification message
+                        RLColor foreColor = RLColor.Black;
+                        RLColor backColor = Color._background1;
+                        List<Snippet> msgList = new List<Snippet>();
+                        msgList.Add(new Snippet(""));
+                        msgList.Add(new Snippet($"The {locName} Gazette", foreColor, backColor));
+                        msgList.Add(new Snippet(""));
+                        msgList.Add(new Snippet("Hear Yea, hear yea, hear yea!", foreColor, backColor));
+                        msgList.Add(new Snippet(""));
+                        if (player.Known == true)
+                        { msgList.Add(new Snippet($"The S.S \"{player.ShipName}\" has docked today with {player.Title} {player.Name} onboard", foreColor, backColor)); }
+                        else
+                        { msgList.Add(new Snippet($"The S.S \"{player.ShipName}\" has docked today and disembarked a number of passengers", foreColor, backColor)); }
+                        msgList.Add(new Snippet(""));
+                        SetNotification(msgList);
+                        
+                        //reset actor instances
                         player.Status = ActorStatus.AtLocation;
                         player.ShipName = "Unknown";
                         player.SeaName = "Unknown";
                         player.VoyageSafe = true;
+                        
                     }
                     else
                     {
@@ -5062,6 +5100,7 @@ namespace Next_Game
                 {
                     //take a list of snippets and set up ready to go. Might need to switch to special mode.
                     Game.infoChannel.SetInfoList(notificationList, ConsoleDisplay.Event);
+                    Game._specialMode = SpecialMode.Notification;
                 }
                 else { Game.SetError(new Error(223, "Invalid notificationList input (no records)")); }
             }
