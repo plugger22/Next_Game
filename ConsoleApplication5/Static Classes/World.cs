@@ -5101,8 +5101,9 @@ namespace Next_Game
                     List<Snippet> eventList = new List<Snippet>();
                     RLColor backColor = Color._background1;
                     if (Game.infoChannel.GetListCount(ConsoleDisplay.Event) == 0)
-                    {  
+                    {
                         //no existing records, create header
+                        eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet("Hear Yea, Hear Yea, Hear Yea!", RLColor.Blue, backColor));
                         eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
@@ -5116,6 +5117,30 @@ namespace Next_Game
                 else { Game.SetError(new Error(223, "Invalid notificationList input (no records)")); }
             }
             else { Game.SetError(new Error(223, "Invalid notificationList input (null)")); }
+        }
+
+        /// <summary>
+        /// Set up a confirmation message (message with Yes or No user input). Snippets should be pre-formatted. No appending takes place, one-shot only
+        /// </summary>
+        /// <param name="confirmationList"></param>
+        public void SetConfirmation(List<Snippet> confirmationList)
+        {
+            if (confirmationList != null)
+            {
+                //take a list of snippets and set up ready to go. Might need to switch to special mode.
+                if (confirmationList.Count > 0)
+                {
+                    List<Snippet> eventList = new List<Snippet>();
+                    RLColor backColor = Color._background1;
+                    //add new records
+                    eventList.AddRange(confirmationList);
+                    Game.infoChannel.ClearConsole(ConsoleDisplay.Event);
+                    Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
+                    Game._specialMode = SpecialMode.Confirm;
+                }
+                else { Game.SetError(new Error(225, "Invalid confirmationList input (no records)")); }
+            }
+            else { Game.SetError(new Error(225, "Invalid confirmationList input (null)")); }
         }
 
         /// <summary>

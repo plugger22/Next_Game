@@ -1461,6 +1461,11 @@ namespace Next_Game
                         }
                     }
                     break;
+                case RLKey.Y:
+                    if (mode == SpecialMode.Confirm)
+                    { _endFlag = true; exitFlag = true; }
+                    break;
+                case RLKey.N:
                 case RLKey.Space:
                 case RLKey.Enter:
                 case RLKey.Escape:
@@ -1475,6 +1480,8 @@ namespace Next_Game
                     }
                     else if (mode == SpecialMode.Notification)
                     { exitFlag = true; _startMode = 1; }
+                    else if (mode == SpecialMode.Confirm)
+                    { exitFlag = true; _endFlag = false; }
                     //Player Events
                     else if (mode == SpecialMode.PlayerEvent)
                     {
@@ -1764,8 +1771,10 @@ namespace Next_Game
             msgList.Add(new Snippet(""));
             msgList.Add(new Snippet(text, foreColor, backColor));
             msgList.Add(new Snippet(""));
-            world.SetNotification(msgList);
-            _endFlag = true; //preliminary end game, set to true (_endGame = true) once confirmed.
+            msgList.Add(new Snippet("Press [Y] to confirm, [N], or [ESC], to cancel", foreColor, backColor));
+            msgList.Add(new Snippet(""));
+            world.SetConfirmation(msgList);
+            //_endFlag = true; //preliminary end game, set to true (_endGame = true) once confirmed.
         }
 
     }
