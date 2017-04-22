@@ -28,7 +28,6 @@
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
 # check: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr, Known)
-# check -> if 'Trait' then -> 1 Combat, 2 Wits, 3 Charm, 4 Treachery, 5 Leadership, 6 Touched (you can use text instead, eg. 'Wits')
 # item: OPTIONAL multi purpose number depending on Trigger Check type, default '0' 
 # thresh: Trigger threshold amount to be tested against, eg. < 3
 # calc: Type of comparison for testing trigger (>=, <=, =)
@@ -36,6 +35,16 @@
 # [trigger] check -> Known
 # thresh: '0' if Player should be Unknown, '1' if should be Known
 # calc: =
+
+# [trigger] check -> Trait
+# item -> 1 Combat, 2 Wits, 3 Charm, 4 Treachery, 5 Leadership, 6 Touched (you can use text instead, eg. 'Wits')
+# thresh: 1 to 5
+# calc: Type of comparison for testing trigger (>=, <=, =)
+
+# [trigger] check -> GameVar
+# item -> 1 Justice, 2 Legend_Urs, 3 Legend_King, 4 Honour_Urs, 5 Honour_King (can use text instead)
+# thresh: 0 to 100
+# calc: Type of comparison for testing trigger (>=, <=, =)
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)

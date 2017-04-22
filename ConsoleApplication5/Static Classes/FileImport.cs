@@ -1672,6 +1672,21 @@ namespace Next_Game
                                         case "touched":
                                             structTrigger.Item = 6;
                                             break;
+                                        case "Justice":
+                                            structTrigger.Item = 1;
+                                            break;
+                                        case "Legend_Urs":
+                                            structTrigger.Item = 2;
+                                            break;
+                                        case "Legend_King":
+                                            structTrigger.Item = 3;
+                                            break;
+                                        case "Honour_Urs":
+                                            structTrigger.Item = 4;
+                                            break;
+                                        case "Honour_King":
+                                            structTrigger.Item = 5;
+                                            break;
                                         default:
                                             //number entry (multipurpose)
                                             try

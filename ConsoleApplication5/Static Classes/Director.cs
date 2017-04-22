@@ -2074,6 +2074,7 @@ namespace Next_Game
         private bool CheckOption(OptionInteractive option)
         {
             bool validCheck = true;
+            int checkValue;
             List<Trigger> listTriggers = option.GetTriggers();
             if (listTriggers.Count > 0)
             {
@@ -2081,6 +2082,7 @@ namespace Next_Game
                 //check each trigger
                 foreach (Trigger trigger in listTriggers)
                 {
+                    checkValue = 0;
                     switch (trigger.Check)
                     {
                         case TriggerCheck.None:
@@ -2099,7 +2101,13 @@ namespace Next_Game
                             if (CheckTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == false) { return false; }
                             break;
                         case TriggerCheck.GameVar:
-                            //NOT YET IMPLEMENTED
+                            //get % value for required gamevar
+                            if (trigger.Data > 0 && trigger.Data < (int)DataPoint.Count)
+                            {
+                                checkValue = CheckGameState((DataPoint)trigger.Data);
+                                if (CheckTrigger(checkValue, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: GameVar value incorrect"); return false; }
+                            }
+                            else { Game.SetError(new Error(76, $"Invalid trigger.Data \"{trigger.Data}\" for option {option.Text} -> trigger ignored")); }
                             break;
                         case TriggerCheck.RelPlyr:
                             if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { return false; }
@@ -2116,7 +2124,7 @@ namespace Next_Game
                             if (CheckTrigger(player.Resources, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player has wrong amount of Resources"); return false; }
                             break;
                         case TriggerCheck.Known:
-                            int checkValue = 0;
+                            checkValue = 0;
                             if (player.Known == true) { checkValue = 1; }
                             if(CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player is wrong type of Known status"); return false; }
                             break;
