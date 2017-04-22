@@ -263,13 +263,8 @@ namespace Next_Game
                 //start turn Mode?
                 if (_startMode > 0)
                 {
-                    switch (_startMode)
-                    {
-                        case 1:
-                            world.ProcessStartTurnLate();
-                            _startMode = 0;
-                            break;
-                    }
+                    world.ProcessStartTurnLate();
+                    _startMode = 0;
                 }
 
                 //special display mode (Events and Conflicts)
@@ -977,8 +972,8 @@ namespace Next_Game
                             case RLKey.Enter:
                                 world.ProcessEndTurn();
                                 logTurn?.Close(); logTurn?.Open(); //retain previous turn's output only
-                                world.ProcessStartTurnEarly();
-                                _startMode = 1;
+                                if (world.ProcessStartTurnEarly() == false)
+                                { _startMode = 1; }
                                 //world.ProcessStartTurnLate();
                                 infoChannel.ClearConsole(ConsoleDisplay.Input);
                                 infoChannel.ClearConsole(ConsoleDisplay.Multi);
@@ -1480,7 +1475,7 @@ namespace Next_Game
                         { exitFlag = true; }
                     }
                     else if (mode == SpecialMode.Notification)
-                    { exitFlag = true; }
+                    { exitFlag = true; _startMode = 1; }
                     //Player Events
                     else if (mode == SpecialMode.PlayerEvent)
                     {

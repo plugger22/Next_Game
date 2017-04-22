@@ -3255,18 +3255,19 @@ namespace Next_Game
         /// <summary>
         /// handles all pre-turn stuff, part 1
         /// </summary>
-        public void ProcessStartTurnEarly()
+        public bool ProcessStartTurnEarly()
         {
+            bool updateStatus = false; //is a message update needed?
             Game.logTurn?.Write("--- ProcessStartTurn (World.cs)");
             Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}");
             UpdateActorMoveStatus(MoveActors());
-            UpdatePlayerStatus();
+            if (UpdatePlayerStatus() == true) { updateStatus = true; }
             CheckStationaryActiveActors();
             CalculateCrows();
             //Enemies
             UpdateAIController();
             SetEnemyActivity();
-
+            return updateStatus;
         }
 
         /// <summary>
@@ -3310,8 +3311,9 @@ namespace Next_Game
         /// <summary>
         /// handles all relevant status changes for the Player
         /// </summary>
-        private void UpdatePlayerStatus()
+        private bool UpdatePlayerStatus()
         {
+            bool updateStatus = false; //does a message need to be shown?
             Game.logTurn?.Write("--- UpdatePlayerStatus (World.cs)");
             Active player = GetActiveActor(1);
             if (player != null)
@@ -3343,7 +3345,7 @@ namespace Next_Game
                         { msgList.Add(new Snippet($"The S.S \"{player.ShipName}\" has docked today and disembarked a number of passengers", foreColor, backColor)); }
                         msgList.Add(new Snippet(""));
                         SetNotification(msgList);
-                        
+                        updateStatus = true;
                         //reset actor instances
                         player.Status = ActorStatus.AtLocation;
                         player.ShipName = "Unknown";
@@ -3372,7 +3374,7 @@ namespace Next_Game
                 }
             }
             else { Game.SetError(new Error(219, "Invalid Player (null)")); }
-
+            return updateStatus;
         }
 
 
