@@ -575,6 +575,61 @@ bool: Yes
 CsubType: Personal
 [End]
 
+Name: Drinks with Captain
+ID: 21
+Type: GeoCluster
+subType: Sea
+Cat: Generic
+Freq: Low
+Status: Active
+Event: The Captain asks if you'd like to share a bottle of Rum with him in the privacy of his cabin?
+Cool: 10
+[option]
+text: Decline the invitation.
+reply: You make an effort to be polite about it. The Captain nods sagely and tells you that you aren't the first worm infested wimp that he has known.
+test: 70
+replyBad: Having spurned his hospitality, the Captain makes an announcement on deck that you have all the moral fibre of a sea slug on heat.
+[outcome]
+effect: None
+[outcome]
+bad: Yes
+effect: Condition
+conPlyr: Yes
+conText: Loss of Face
+conSkill:  Leadership
+conEffect: -1
+conTimer: 5
+[option]
+text: Join the Captain for a quiet drink, or two.
+reply: You enjoy a pleasant evening descreetly swapping tales with the Captain.
+test: 50
+replyBad: The Captain isn't one for moderation and you wake up the next morning with a very sore head indeed.
+[outcome]
+effect: None
+[outcome]
+bad: Yes
+effect: Condition
+conPlyr: Yes
+conText: Hungover
+conSkill:  Wits
+conEffect: -1
+conTimer: 5
+[option]
+text: Drink the Captain under the table.
+reply: Heedless of what he is saying, the drunken, slobbering Captain, shows you his private stash of gold before passing out. You help yourself.
+test: 50
+replyBad: The next morning when you awake with a sore head, the Captain greets you by your real name and title. What did you tell him last night?
+[outcome]
+bad: Yes
+effect: Known
+data: -1
+[outcome]
+effect: Resource
+bool: Yes
+amount: 1
+apply: Add
+[End]
+
 # Unsafe Sea  Events --- (subType -> Unsafe)
 
 Name: Sprung a Leak
@@ -1082,4 +1137,4 @@ amount: 2
 apply: Subtract
 [End]
 
-# next ID is 21
+# next ID is 22
