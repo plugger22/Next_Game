@@ -1892,24 +1892,25 @@ namespace Next_Game
 
                     //only show follower events if Player is at a location and able to receive crows
                     if (player.Status != ActorStatus.AtLocation)
-                    {
-                        crowCounter++;
-                        eventList.Clear();
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("An incoming Crow failed to arrive", RLColor.LightRed, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet(string.Format("You have missed a total of {0} crow{1} today", crowCounter, crowCounter != 1 ? "s" : ""), RLColor.Black, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("You can only receive crows while at a Location", RLColor.Black, backColor));
-                        eventList.Add(new Snippet(""));
-                    }
+                    { crowCounter++; }
                     Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
                     returnValue = true;
                     package.Done = true;
                     break;
                 }
+            }
+            if (crowCounter > 0)
+            {
+                eventList.Clear();
+                eventList.Add(new Snippet(""));
+                eventList.Add(new Snippet("An incoming Crow failed to arrive", RLColor.LightRed, backColor));
+                eventList.Add(new Snippet(""));
+                eventList.Add(new Snippet(string.Format("You have missed a total of {0} crow{1} today", crowCounter, crowCounter != 1 ? "s" : ""), RLColor.Black, backColor));
+                eventList.Add(new Snippet(""));
+                eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                eventList.Add(new Snippet(""));
+                eventList.Add(new Snippet("You can only receive crows while at a Location", RLColor.Black, backColor));
+                eventList.Add(new Snippet(""));
             }
             return returnValue;
         }

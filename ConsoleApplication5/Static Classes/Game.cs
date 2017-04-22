@@ -974,7 +974,6 @@ namespace Next_Game
                                 logTurn?.Close(); logTurn?.Open(); //retain previous turn's output only
                                 if (world.ProcessStartTurnEarly() == false)
                                 { _startMode = 1; }
-                                //world.ProcessStartTurnLate();
                                 infoChannel.ClearConsole(ConsoleDisplay.Input);
                                 infoChannel.ClearConsole(ConsoleDisplay.Multi);
                                 //infoChannel.AppendInfoList(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black), ConsoleDisplay.Input);

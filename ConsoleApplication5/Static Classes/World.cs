@@ -3253,25 +3253,26 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// handles all pre-turn stuff, part 1
+        /// handles all pre-turn stuff, part 1 (Notification messages)
         /// </summary>
         public bool ProcessStartTurnEarly()
         {
-            bool updateStatus = false; //is a message update needed?
+            bool notificationStatus = false; //is a notification msg needed?
             Game.logTurn?.Write("--- ProcessStartTurn (World.cs)");
             Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}");
             UpdateActorMoveStatus(MoveActors());
-            if (UpdatePlayerStatus() == true) { updateStatus = true; }
+            if (UpdatePlayerStatus() == true) { notificationStatus = true; }
+            if (UpdateWorldStatus() == true) { notificationStatus = true; }
             CheckStationaryActiveActors();
             CalculateCrows();
             //Enemies
             UpdateAIController();
             SetEnemyActivity();
-            return updateStatus;
+            return notificationStatus;
         }
 
         /// <summary>
-        /// handles pre-turn stuff, part 2
+        /// handles pre-turn stuff, part 2 (events)
         /// </summary>
         public void ProcessStartTurnLate()
         {
@@ -3335,14 +3336,7 @@ namespace Next_Game
                         RLColor backColor = Color._background1;
                         List<Snippet> msgList = new List<Snippet>();
                         msgList.Add(new Snippet(""));
-                        msgList.Add(new Snippet($"The {locName} Gazette", foreColor, backColor));
-                        msgList.Add(new Snippet(""));
-                        msgList.Add(new Snippet("Hear Yea, hear yea, hear yea!", foreColor, backColor));
-                        msgList.Add(new Snippet(""));
-                        if (player.Known == true)
-                        { msgList.Add(new Snippet($"The S.S \"{player.ShipName}\" has docked today with {player.Title} {player.Name} onboard", foreColor, backColor)); }
-                        else
-                        { msgList.Add(new Snippet($"The S.S \"{player.ShipName}\" has docked today and disembarked a number of passengers", foreColor, backColor)); }
+                        msgList.Add(new Snippet($"The S.S \"{player.ShipName}\" has docked today with {player.Title} {player.Name} onboard", foreColor, backColor));
                         msgList.Add(new Snippet(""));
                         SetNotification(msgList);
                         updateStatus = true;
@@ -5109,6 +5103,30 @@ namespace Next_Game
             else { Game.SetError(new Error(223, "Invalid notificationList input (null)")); }
         }
 
+        /// <summary>
+        /// Updates world events and triggers a Notification message
+        /// </summary>
+        /// <returns></returns>
+        private bool UpdateWorldStatus()
+        {
+            bool notificationStatus = false;
+            List<Snippet> eventList = new List<Snippet>();
+            RLColor foreColor = RLColor.Black;
+            RLColor backColor = Color._background1;
+            //any world message to display?
+            if (eventList.Count > 0)
+            {
+                notificationStatus = true;
+                //add header
+                foreach (Snippet snippet in eventList)
+                {
+                    Game.infoChannel.AppendInfoList(new Snippet("- 0 -", RLColor.Gray, backColor), ConsoleDisplay.Event);
+                    Game.infoChannel.AppendInfoList(snippet, ConsoleDisplay.Event);
+                }
+            }
+
+            return notificationStatus;
+        }
 
         //new Methods above here
     }
