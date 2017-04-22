@@ -43,7 +43,7 @@
 
 # [trigger] check -> GameVar
 # item -> 1 Justice, 2 Legend_Urs, 3 Legend_King, 4 Honour_Urs, 5 Honour_King (can use text instead)
-# thresh: 0 to 100
+# thresh: 0 to 100 (%)
 # calc: Type of comparison for testing trigger (>=, <=, =)
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
@@ -181,7 +181,7 @@ Freq: Low
 Status: Active
 Cool: 3
 Dormant: 20
-Event: You there, Halt! A group of black coated Inquisitors move purposely towards you.
+Event: You there, Halt! A group of red coated guards move purposely towards you.
 [option]
 text: Leg it!
 reply: Do they know who you are? Why take the chance?
@@ -352,6 +352,11 @@ effect: None
 [option]
 text: Offer assistance
 reply: You immediately dismount and approach her on foot only to find that she has strange, lifeless eyes. Bright blue eyes.
+[trigger]
+check: GameVar
+item: Legend_Urs
+thresh: 50
+calc: >=
 [outcome]
 effect: Game
 data: 4

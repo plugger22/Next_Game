@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 22/04/2017 16:52:27
+//Exile Game file ops "LogStart.txt" commenced at: 22/04/2017 21:19:54
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -66,39 +66,39 @@ AI_CONNECTOR -> 4 Min 0 Max 10
 AI_HUNT_THRESHOLD -> 4 Min 4 Max 12
 LOSS_OF_LEGEND -> 1 Min 0 Max 4
 ERROR_29 "Location Deleted 3:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 28:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 10:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 14:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 19:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 1:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 17:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 23:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 15:4"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 23:5"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 17:6"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 15:7"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 23:9"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 25:9"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 26:11"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 24:12"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 ERROR_29 "Location Deleted 28:12"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 16:52:27 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
 --- Network Analysis (Network.cs)
 Dir 0         1 Locations     0 Connections
 Dir 1         3 Locations     3 Connections
@@ -552,6 +552,7 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
   Option "Ride past, ignoring her" 
     OutNone -> data 0, amount 0, apply None
   Option "Offer assistance" 
+   Trigger -> if GameVar 2 is GreaterThanOrEqual to 50
     OutGame -> data 4, amount 1, apply Add
   Option "Ride her down!" 
    Trigger -> if Trait 4 is GreaterThanOrEqual to 3
@@ -977,5 +978,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 22/04/2017 16:52:28
-//Elapsed Time 686 ms
+//Exile Game file ops "LogStart.txt" Completed at: 22/04/2017 21:19:54
+//Elapsed Time 621 ms
