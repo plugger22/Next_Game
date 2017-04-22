@@ -1633,6 +1633,10 @@ namespace Next_Game
                                         case "ActorType":
                                             structTrigger.Check = TriggerCheck.ActorType;
                                             break;
+                                        case "known":
+                                        case "Known":
+                                            structTrigger.Check = TriggerCheck.Known;
+                                            break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Trigger Check, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;
