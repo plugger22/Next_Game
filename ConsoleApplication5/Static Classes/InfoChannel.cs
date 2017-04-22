@@ -188,6 +188,30 @@ namespace Next_Game
             }
         }
 
+        public int GetListCount(ConsoleDisplay consoleDisplay)
+        {
+            int numRecords = 0;
+            switch (consoleDisplay)
+            {
+                case ConsoleDisplay.Input:
+                    numRecords = inputList.Count;
+                    break;
+                case ConsoleDisplay.Multi:
+                    numRecords = multiList.Count;
+                    break;
+                case ConsoleDisplay.Status:
+                    numRecords = statusList.Count;
+                    break;
+                case ConsoleDisplay.Message:
+                    numRecords = messageList.Count;
+                    break;
+                case ConsoleDisplay.Event:
+                    numRecords = eventList.Count;
+                    break;
+            }
+            return numRecords;
+        }
+
         /// <summary>
         /// Main Draw console function
         /// </summary>
@@ -308,17 +332,6 @@ namespace Next_Game
         /// <param name="mode"></param>
         private void DrawSpecial(RLConsole multiConsole, SpecialMode mode )
         {
-            /*//test data
-                    List<Snippet> listOfSnippets = new List<Snippet>();
-                    listOfSnippets.Add(new Snippet("This is the most amazing house I've lived in", RLColor.Black, RLColor.Black));
-                    listOfSnippets.Add(new Snippet());
-                    listOfSnippets.Add(new Snippet("Hey, I'm not so sure about that?", RLColor.Black, RLColor.Black));
-                    listOfSnippets.Add(new Snippet());
-                    listOfSnippets.Add(new Snippet("Yes I am!", RLColor.Black, RLColor.Black));
-                    listOfSnippets.Add(new Snippet());
-                    listOfSnippets.Add(new Snippet());
-                    listOfSnippets.Add(new Snippet("Choose [F1] Event or [F2] Color", RLColor.Red, RLColor.Black));
-                    */
             switch (mode)
             {
                 case SpecialMode.PlayerEvent:

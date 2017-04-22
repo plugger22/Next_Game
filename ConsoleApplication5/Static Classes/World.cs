@@ -3258,6 +3258,7 @@ namespace Next_Game
         public bool ProcessStartTurnEarly()
         {
             bool notificationStatus = false; //is a notification msg needed?
+            Game.infoChannel.ClearConsole(ConsoleDisplay.Event);
             Game.logTurn?.Write("--- ProcessStartTurn (World.cs)");
             Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}");
             UpdateActorMoveStatus(MoveActors());
@@ -3276,6 +3277,7 @@ namespace Next_Game
         /// </summary>
         public void ProcessStartTurnLate()
         {
+            //Game.infoChannel.ClearConsole(ConsoleDisplay.Event);
             //Create events
             Game.director.CheckPlayerEvents();
             Game.director.CheckFollowerEvents(dictActiveActors);
@@ -3335,8 +3337,9 @@ namespace Next_Game
                         RLColor foreColor = RLColor.Black;
                         RLColor backColor = Color._background1;
                         List<Snippet> msgList = new List<Snippet>();
-                        msgList.Add(new Snippet(""));
                         msgList.Add(new Snippet($"The S.S \"{player.ShipName}\" has docked today with {player.Title} {player.Name} onboard", foreColor, backColor));
+                        msgList.Add(new Snippet(""));
+                        msgList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                         msgList.Add(new Snippet(""));
                         SetNotification(msgList);
                         updateStatus = true;
@@ -5085,17 +5088,29 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Set up a notification message (straight message, no user input)
+        /// Set up a notification message (straight message, no user input). Will automatically add or append where necessary. Snippets should be pre-formatted
         /// </summary>
         /// <param name="notificationList"></param>
         public void SetNotification(List<Snippet> notificationList)
         {
             if (notificationList != null)
             {
+                //take a list of snippets and set up ready to go. Might need to switch to special mode.
                 if (notificationList.Count > 0)
                 {
-                    //take a list of snippets and set up ready to go. Might need to switch to special mode.
-                    Game.infoChannel.SetInfoList(notificationList, ConsoleDisplay.Event);
+                    List<Snippet> eventList = new List<Snippet>();
+                    RLColor backColor = Color._background1;
+                    if (Game.infoChannel.GetListCount(ConsoleDisplay.Event) == 0)
+                    {  
+                        //no existing records, create header
+                        eventList.Add(new Snippet("Hear Yea, Hear Yea, Hear Yea!", RLColor.Blue, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet(""));
+                    }
+                    //add new records
+                    eventList.AddRange(notificationList);
+                    Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
                     Game._specialMode = SpecialMode.Notification;
                 }
                 else { Game.SetError(new Error(223, "Invalid notificationList input (no records)")); }
@@ -5113,18 +5128,49 @@ namespace Next_Game
             List<Snippet> eventList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
             RLColor backColor = Color._background1;
-            //any world message to display?
-            if (eventList.Count > 0)
+            Active player = GetActiveActor(1);
+            if (player != null)
             {
-                notificationStatus = true;
-                //add header
-                foreach (Snippet snippet in eventList)
+                switch (player.Status)
                 {
-                    Game.infoChannel.AppendInfoList(new Snippet("- 0 -", RLColor.Gray, backColor), ConsoleDisplay.Event);
-                    Game.infoChannel.AppendInfoList(snippet, ConsoleDisplay.Event);
+                    case ActorStatus.AtLocation:
+                        //debug
+                        eventList.Add(new Snippet("Blight has hit wheat crops at The Twins. Food shortages loom.", foreColor, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("Rumour that the King has the pox and that he is going mad", foreColor, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet(""));
+                        break;
+                    case ActorStatus.Travelling:
+                        eventList.Add(new Snippet("A passing Merchant tells of trouble in the Court of Casterly Rock", foreColor, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet(""));
+                        break;
+                    case ActorStatus.AtSea:
+                        eventList.Add(new Snippet("The Captain tells tales of war in the far-off-lands", foreColor, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet(""));
+                        break;
+                    case ActorStatus.Captured:
+                        eventList.Add(new Snippet("You overhear a guard arguing with another prison about food shortages in the Castle", foreColor, backColor));
+                        eventList.Add(new Snippet(""));
+                        eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                        eventList.Add(new Snippet(""));
+                        break;
+                }
+                //any world message to display?
+                if (eventList.Count > 0)
+                {
+                    notificationStatus = true;
+                    SetNotification(eventList);
                 }
             }
-
+            else { Game.SetError(new Error(224, "Invalid player (null)")); }
             return notificationStatus;
         }
 

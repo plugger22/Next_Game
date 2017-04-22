@@ -49,8 +49,8 @@ namespace Next_Game
         private static readonly int _inputHeight = 20;
         private static RLConsole _inputConsole; //top right
 
-        private static readonly int _multiWidth = 130;
-        private static readonly int _multiHeight = 100;
+        public static readonly int _multiWidth = 130;
+        public static readonly int _multiHeight = 100;
         private static RLConsole _multiConsole; //middle right
 
         private static readonly int _messageWidth = 130;
@@ -1760,7 +1760,7 @@ namespace Next_Game
             logTurn?.Write("[Alert] " + text);
             List<Snippet> msgList = new List<Snippet>();
             msgList.Add(new Snippet(""));
-            msgList.Add(new Snippet("You are exiting the Game", foreColor, backColor));
+            msgList.Add(new Snippet("You are exiting the Game", RLColor.LightRed, backColor));
             msgList.Add(new Snippet(""));
             msgList.Add(new Snippet(text, foreColor, backColor));
             msgList.Add(new Snippet(""));

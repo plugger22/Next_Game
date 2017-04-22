@@ -32,12 +32,13 @@ namespace Next_Game
             this.Height = height;
             this.Offset_y = offset_y;
             this.backColor = backColor;
-           
+            int multiWidth = Game._multiWidth;
+            int multiHeight = Game._multiHeight;
             //work out X offset to have box centred
-            Offset_x = (130 - Width) / 2;
+            Offset_x = (multiWidth - Width) / 2;
             //error check dimensions to see that they'll fit into the multi-console (130 x 100) -> Boxes are assumed to be centred horizontally in the multiconsole
-            if (Width > 130) { Width = 130; Offset_x = 0; }
-            if (Height > 100) { Height = 100; Offset_y = 0; }
+            if (Width > multiWidth) { Width = multiWidth; Offset_x = 0; }
+            if (Height > multiHeight) { Height = multiHeight; Offset_y = 0; }
             
             //initialise border and colors
             arrayOfCells = new int[Width, Height];
