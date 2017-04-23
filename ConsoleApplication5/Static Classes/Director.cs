@@ -2129,6 +2129,9 @@ namespace Next_Game
                             if (player.Known == true) { checkValue = 1; }
                             if(CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player is wrong type of Known status"); return false; }
                             break;
+                        case TriggerCheck.Followers:
+
+                            break;
                         default:
                             Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\"", trigger.Check, option.Text)));
                             break;
