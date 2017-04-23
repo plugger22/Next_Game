@@ -6,7 +6,7 @@
 # Description: paint a picture of the character. No default, compulsory.
 # Special: short text description of a weakness or strength (tied into Archetype and related events). Default of 'None'
 # ArcID: Archetype ID, default value of '0' for none (events that are specific to the follower, eg. a recurring weakness)
-# Resources: Starting amount of resources, default value of '1', range 1 to 5
+# Resources: Starting amount of resources, default value of '0', range 0 to 5
 # Loyalty: Base Loyalty level (range 0 to 100) default '50'
 # ...._Effect: Description of Effect, eg. "Puzzled" (keep short). Use default of 'Normal' if nothing unusual. Tie in with Effect system if possible.
 # ...._Effect: A number (range +/- 1 or 2), eg. '+1' which gives a value of '4'. Default of '0' gives an average Effect of 3 (or none for 'Touched')
@@ -46,7 +46,7 @@ Description: A lithe, jolly young man with great agility who can sing, dance and
 Age: 19
 Special: None
 ArcID: 23
-Resources: 1
+Resources: 0
 Loyalty: 45
 Combat_Effect: +1
 Combat_Trait: Acrobatic
@@ -166,7 +166,7 @@ Description: Massive muscles, brawn and a plethora of scars create a slow moving
 Age: 29
 Special: None
 ArcID: 23
-Resources: 1
+Resources: 0
 Loyalty: 90
 Combat_Effect: +2
 Combat_Trait: Humungus

@@ -599,7 +599,7 @@ namespace Next_Game
             }
             //keep within paramters
             Resources = Math.Min(5, Resources);
-            Resources = Math.Max(1, Resources);
+            Resources = Math.Max(0, Resources);
             return messageText;
         }
     }

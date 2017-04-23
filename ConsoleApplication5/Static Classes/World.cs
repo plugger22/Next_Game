@@ -1032,7 +1032,6 @@ namespace Next_Game
                 {
                     int resources = active.Resources;
                     resources = Math.Min(5, resources);
-                    //resources = Math.Max(1, resources);
                     listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black));
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Resources"), false));
                     listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
@@ -1043,7 +1042,6 @@ namespace Next_Game
                 {
                     int resources = person.Resources;
                     resources = Math.Min(5, resources);
-                    //resources = Math.Max(1, resources);
                     listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black));
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Resources"), false));
                     listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
