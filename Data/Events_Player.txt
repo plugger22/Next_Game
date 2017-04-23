@@ -19,11 +19,12 @@
 # text: option text. Keep it short and clear.
 # reply: text shown when option selected
 # test: OPTIONAL if value > 0 (up to 98) then option gives Good outcomes if 1d100 <= Test and Bad if > test (must have replyBad and bad outcomes)
+# skill: OPTIONAL -> (gives DM to roll) Combat / Wits / Charm / Treachery / Leadership / Touched 
 # replyBad: OPTIONAL -> needed if test present and value > 0
 
 # TO MAKE AN OPTION variable, eg. good or bad outcome depending on a random die roll
-# [option] -> use 'test:' and 'replyBad:'
-# [outcome] -> use 'bad: Yes' for bad outcome (make sure there is a good outcome as well, so minimum 2 outcomes, one good, one bad)
+# [option] -> use 'test:', 'replyBad:' & 'skill:'
+# [outcome] -> use 'bad: Yes' for bad outcomes (make sure there is a good outcome as well, so minimum 2 outcomes, one good, one bad)
 # there is NO need to put 'bad: No' for the good outcome
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
@@ -455,6 +456,7 @@ apply: Add
 text: Climb the mast and howl at the wind. Uncage your inner beast.
 reply: The crew look at you askance. Clearly you must be mad. Nobody goes aloft in a storm.
 test: 75
+skill: Combat
 replyBad: The mast is bucking like a wild horse. The wind rips your hands from their desperate grasp of the ship's rigging. You find yourself clinging to a raft in the swirling malestrom of the storm tossed sea.
 [trigger]
 check: Trait
@@ -606,6 +608,7 @@ Cool: 10
 text: Decline the invitation.
 reply: You make an effort to be polite about it. The Captain nods sagely and tells you that you aren't the first worm infested wimp that he has known.
 test: 70
+skill: Charm
 replyBad: Having spurned his hospitality, the Captain makes an announcement on deck that you have all the moral fibre of a sea slug on heat.
 [outcome]
 effect: None
@@ -621,6 +624,7 @@ conTimer: 5
 text: Join the Captain for a quiet drink, or two.
 reply: You enjoy a pleasant evening descreetly swapping tales with the Captain.
 test: 50
+skill: Treachery
 replyBad: The Captain isn't one for moderation and you wake up the next morning with a very sore head indeed.
 [outcome]
 effect: None
@@ -636,6 +640,7 @@ conTimer: 5
 text: Drink the Captain under the table.
 reply: Heedless of what he is saying, the drunken, slobbering Captain, shows you his private stash of gold before passing out. You help yourself.
 test: 50
+skill: Treachery
 replyBad: The next morning when you awake with a sore head, the Captain greets you by your real name and title. What did you tell him last night?
 [trigger]
 check: Known
@@ -679,6 +684,7 @@ bool: Yes
 text: Volunteer to help man the pumps. 
 reply: At times like these it pays to put status and position to one side.
 test: 85
+skill: Leadership
 replyBad: You pump and pump but it is, in the end, pointless. The battered old lady of the sea succumbs to the ingress of water and you are forced to abandon ship.
 [outcome]
 effect: Game
@@ -779,7 +785,8 @@ bool: Yes
 [option]
 text: Insist that the Captain call all crew to Arms
 reply: He's hesitating, frozen into inaction by the sight of the rampaging beast descending upon his ship. A sharp couple of words snap him back to reality. The crew scurry to arm themselves with cutlasses and other cutting implements. Tentacles beware!
-test: 66
+test: 60
+skill: Leadership
 replyBad: The crew frantically hack and slash but it isn't enough. The beast squeezes the ship like a soggy lemon trapped beneath a steel boot.
 [trigger]
 check: Trait
@@ -800,6 +807,7 @@ bool: Yes
 text: Grab a nearby raft and abandon ship
 reply: If you leave now at least you've got a chance of survival. Clearly the ship, and all those onboard, are doomed.
 test: 50
+skill: Treachery
 replyBad: You watch, wet and cold, from your bobbing raft as the beast descends into the depths and the ship sails off over the horizon. Damn!
 [outcome]
 effect: Game
@@ -875,6 +883,7 @@ effect: None
 text: Wave your arms frantically.
 reply: A lookout onboard the ship notices you. The ship heaves too and drops a longboat. You've been rescued!
 test: 70
+skill: Combat
 replyBad: The ship sails on and disappears over the horizon, oblivious to your presence.
 [outcome]
 effect: Rescued

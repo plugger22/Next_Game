@@ -1322,7 +1322,7 @@ namespace Next_Game
                 case RLKey.F1:
                     if (mode == SpecialMode.PlayerEvent)
                     {
-                       returnCode = director.ResolveOutcome(_eventID, 1);
+                       returnCode = director.ResolveOptionOutcome(_eventID, 1);
                        if (returnCode == 1) { _specialMode = SpecialMode.Outcome; }
                        else if (returnCode == 2)
                         {
@@ -1361,7 +1361,7 @@ namespace Next_Game
                 case RLKey.F2:
                     if (mode == SpecialMode.PlayerEvent)
                     {
-                        returnCode = director.ResolveOutcome(_eventID, 2);
+                        returnCode = director.ResolveOptionOutcome(_eventID, 2);
                         if (returnCode == 1) { _specialMode = SpecialMode.Outcome; }
                         else if (returnCode == 2)
                         {
@@ -1396,7 +1396,7 @@ namespace Next_Game
                 case RLKey.F3:
                     if (mode == SpecialMode.PlayerEvent)
                     {
-                        returnCode = director.ResolveOutcome(_eventID, 3);
+                        returnCode = director.ResolveOptionOutcome(_eventID, 3);
                         if (returnCode == 1) { _specialMode = SpecialMode.Outcome; }
                         else if (returnCode == 2)
                         {
@@ -1445,7 +1445,7 @@ namespace Next_Game
                             case RLKey.F11: codeNum = 11; break;
                             case RLKey.F12: codeNum = 12; break;
                         }
-                        returnCode = director.ResolveOutcome(_eventID, codeNum);
+                        returnCode = director.ResolveOptionOutcome(_eventID, codeNum);
                         if (returnCode == 1) { _specialMode = SpecialMode.Outcome; }
                         else if (returnCode == 2)
                         {
@@ -1486,7 +1486,7 @@ namespace Next_Game
                     else if (mode == SpecialMode.PlayerEvent)
                     {
                         //default option (first option) if player ignores the event
-                        returnCode = director.ResolveOutcome(_eventID, 1);
+                        returnCode = director.ResolveOptionOutcome(_eventID, 1);
                         if (returnCode == 1) { _specialMode = SpecialMode.Outcome; }
                         else if (returnCode == 2)
                         {

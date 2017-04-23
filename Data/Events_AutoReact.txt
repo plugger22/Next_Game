@@ -20,11 +20,12 @@
 # text: option text (number is block, or option num, eg. sequential from 1 to 4). Keep it short and clear.
 # reply: text shown when option selected
 # test: OPTIONAL if value > 0 (up to 98) then option gives Good outcomes if 1d100 <= Test and Bad if > test (must have replyBad and bad outcomes)
+# skill: OPTIONAL -> (gives DM to roll) Combat / Wits / Charm / Treachery / Leadership / Touched
 # replyBad: OPTIONAL -> needed if test present and value > 0
 
-# TO MAKE AN OPTION variable, eg. good or bad outcome depending on die roll
-# [option] -> use 'test:' and 'replyBad:'
-# [outcome] -> use 'bad: Yes' for bad outcome (make sure there is a good one as well, so minimum 2 outcomes, one good, one bad)
+# TO MAKE AN OPTION variable, eg. good or bad outcome depending on a random die roll
+# [option] -> use 'test:', 'replyBad:' & 'skill:'
+# [outcome] -> use 'bad: Yes' for bad outcomes (make sure there is a good outcome as well, so minimum 2 outcomes, one good, one bad)
 # there is NO need to put 'bad: No' for the good outcome
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.

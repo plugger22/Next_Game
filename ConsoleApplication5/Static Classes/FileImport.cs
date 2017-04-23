@@ -80,6 +80,7 @@ namespace Next_Game
     {
         public string Text { get; set; }
         public int Test { get; set; }
+        public SkillType Skill { get; set; }
         public string Reply { get; set; }
         public string ReplyBad { get; set; }
 
@@ -91,6 +92,7 @@ namespace Next_Game
         {
             Text = option.Text;
             Test = option.Test;
+            Skill = option.Skill;
             Reply = option.Reply;
             ReplyBad = option.ReplyBad;
         }
@@ -1171,6 +1173,7 @@ namespace Next_Game
                                         //zero out optional data as structOption reused
                                         structOption.Test = 0;
                                         structOption.ReplyBad = "";
+                                        structOption.Skill = SkillType.None;
                                         outcomeFlag = false;
                                         //add Triggers to a list in same sequential order as options (place a blank trigger in the list if none exists)
                                         if (listSubTriggers.Count > 0)
@@ -1606,6 +1609,36 @@ namespace Next_Game
                                     catch
                                     { Game.SetError(new Error(49, string.Format("Invalid input for option Test {0}, (\"{1}\")", cleanToken, structEvent.Name))); validData = false; }
                                     break;
+                                case "skill":
+                                    switch (cleanToken)
+                                    {
+                                        //picks up optional trait specific text
+                                        case "Combat":
+                                        case "combat":
+                                            structOption.Skill = SkillType.Combat;
+                                            break;
+                                        case "Wits":
+                                        case "wits":
+                                            structOption.Skill = SkillType.Wits;
+                                            break;
+                                        case "Charm":
+                                        case "charm":
+                                            structOption.Skill = SkillType.Charm;
+                                            break;
+                                        case "Treachery":
+                                        case "treachery":
+                                            structOption.Skill = SkillType.Treachery;
+                                            break;
+                                        case "Leadership":
+                                        case "leadership":
+                                            structOption.Skill = SkillType.Leadership;
+                                            break;
+                                        case "Touched":
+                                        case "touched":
+                                            structOption.Skill = SkillType.Touched;
+                                            break;
+                                    }
+                                     break;
                                 case "check":
                                     //Trigger Check
                                     switch (cleanToken)
@@ -2246,7 +2279,7 @@ namespace Next_Game
                                                     if (listAllOutcomes.Count > 0)
                                                     {
                                                         OptionInteractive optionObject = new OptionInteractive(optionTemp.Text)
-                                                        { ReplyGood = optionTemp.Reply, ReplyBad = optionTemp.ReplyBad, Test = optionTemp.Test };
+                                                        { ReplyGood = optionTemp.Reply, ReplyBad = optionTemp.ReplyBad, Test = optionTemp.Test, Skill = optionTemp.Skill };
 
                                                         //Triggers (optional)
                                                         List<Trigger> tempTriggers = listAllTriggers[index];
@@ -2450,7 +2483,7 @@ namespace Next_Game
                     foreach (OptionInteractive optionObject in listTempOptions)
                     {
                         string varText = "";
-                        if (optionObject.Test > 0) { varText = $" [Variable -> {optionObject.Test} % chance of Success]"; }
+                        if (optionObject.Test > 0) { varText = $" [Variable -> {optionObject.Test} % Success, {optionObject.Skill} DM]"; }
                         Game.logStart?.Write(string.Format("  Option \"{0}\" {1}", optionObject.Text, varText));
                         List<Outcome> listTempOutcomes = new List<Outcome>(); //need to create a new list otherwise copying by reference and affects records in dictOfPlayerEvents
                         listTempOutcomes.AddRange(optionObject.GetGoodOutcomes());

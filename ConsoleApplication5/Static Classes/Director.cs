@@ -2021,7 +2021,7 @@ namespace Next_Game
                         foreach(OptionInteractive option in listOptions)
                         {
                             //check any option triggers 
-                            if (CheckOption(option) == true)
+                            if (CheckOptionTrigger(option) == true)
                             { optionColor = RLColor.Blue; option.Active = true; }
                             else
                             {
@@ -2071,7 +2071,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
-        private bool CheckOption(OptionInteractive option)
+        private bool CheckOptionTrigger(OptionInteractive option)
         {
             bool validCheck = true;
             int checkValue;
@@ -2179,16 +2179,18 @@ namespace Next_Game
         /// </summary>
         /// <param name="eventID"></param>
         /// <param name="optionNum"></param>
-        public int ResolveOutcome(int eventID, int optionNum)
+        public int ResolveOptionOutcome(int eventID, int optionNum)
         {
             Game.logTurn?.Write("--- ResolveOutcome (Director.cs)");
             int validOption = 1;
             int actorID;
-            int rndNum = 0;
+            int rndNum, DMskill, DMtouched, numModified;
             string rndResult = "";
             string status;
             string outcomeText = "";
             string tempText = "";
+            string skillTrait = "";
+            string touchedTrait = "";
             List<Snippet> eventList = new List<Snippet>();
             List<Snippet> resultList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
@@ -2203,6 +2205,7 @@ namespace Next_Game
                 string eventText = $"Event \"{eventObject.Name}\", ";
                 if (listOptions != null)
                 {
+                    DMskill = 0; DMtouched = 0; rndNum = 0; numModified = 0;
                     if (listOptions.Count >= optionNum)
                     {
                         OptionInteractive option = listOptions[optionNum - 1];
@@ -2220,16 +2223,39 @@ namespace Next_Game
                                 else
                                 {
                                     rndNum = rnd.Next(0, 100);
-                                    if (rndNum <= option.Test)
+                                    //Skill DM?
+                                    if (option.Skill > SkillType.None)
+                                    {
+                                        int skill = player.GetSkill(option.Skill);
+                                        //DM modifier to rndNum roll if any skill level other than 3 (average)
+                                        switch(skill)
+                                        {
+                                            case 1: DMskill = 20; skillTrait = player.GetTraitName(option.Skill); break;
+                                            case 2: DMskill = 10; skillTrait = player.GetTraitName(option.Skill); break;
+                                            case 4: DMskill = -10; skillTrait = player.GetTraitName(option.Skill); break;
+                                            case 5: DMskill = -20; skillTrait = player.GetTraitName(option.Skill); break;
+                                        }
+                                        //touched effect (universal)
+                                        if (option.Skill != SkillType.Touched)
+                                        {
+                                            int touched = player.GetSkill(SkillType.Touched);
+                                            if (touched > 0)
+                                            { DMtouched = touched * -5; touchedTrait = player.GetTraitName(SkillType.Touched); }
+                                        }
+                                    }
+                                    //adjust roll for DM's
+                                    numModified = rndNum + DMskill + DMtouched;
+                                    //Pass the test?
+                                    if (numModified <= option.Test)
                                     {
                                         listOutcomes = option.GetGoodOutcomes(); optionReply = option.ReplyGood;
-                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Passed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum));
+                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Passed test ({1} % needed, rolled {2})", option.Text, option.Test, numModified));
                                         rndResult = "Success!";
                                     }
                                     else
                                     {
                                         listOutcomes = option.GetBadOutcomes(); optionReply = option.ReplyBad;
-                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Failed test ({1} % needed, rolled {2})", option.Text, option.Test, rndNum));
+                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Failed test ({1} % needed, rolled {2})", option.Text, option.Test, numModified));
                                         rndResult = "Fail";
                                     }
                                 }
@@ -2524,7 +2550,15 @@ namespace Next_Game
                                 eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet($"Success on {option.Test} %, or less", RLColor.Gray, backColor));
                                 eventList.Add(new Snippet(""));
-                                eventList.Add(new Snippet($"Roll {rndNum}. {rndResult}", RLColor.Gray, backColor));
+                                string skillMod = ""; string touchedMod = "";
+                                if (DMskill != 0)
+                                { skillMod = string.Format("{0} {1}{2} ", skillTrait, DMskill > 0 ? "+" : "", DMskill); }
+                                if (DMtouched > 0)
+                                { touchedMod = string.Format("{0} +{1}", touchedTrait, DMtouched); }
+                                string modifiers = "";
+                                if (DMskill != 0 || DMtouched > 0)
+                                { modifiers = $"({skillMod}{touchedMod})"; }
+                                eventList.Add(new Snippet($"Roll {numModified} {modifiers} {rndResult}", RLColor.Gray, backColor));
                                 eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                             }

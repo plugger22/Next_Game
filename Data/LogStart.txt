@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 22/04/2017 21:19:54
+//Exile Game file ops "LogStart.txt" commenced at: 23/04/2017 09:31:56
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -66,39 +66,39 @@ AI_CONNECTOR -> 4 Min 0 Max 10
 AI_HUNT_THRESHOLD -> 4 Min 4 Max 12
 LOSS_OF_LEGEND -> 1 Min 0 Max 4
 ERROR_29 "Location Deleted 3:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 28:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 10:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 14:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 19:2"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 1:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 17:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 23:3"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 15:4"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 23:5"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 17:6"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 15:7"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 23:9"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 25:9"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 26:11"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 24:12"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 ERROR_29 "Location Deleted 28:12"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 21:19:54 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:31:56 UTC +10:00
 --- Network Analysis (Network.cs)
 Dir 0         1 Locations     0 Connections
 Dir 1         3 Locations     3 Connections
@@ -572,13 +572,13 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
   Option "Stand next to the Captain on the quarter deck and set an example for the crew." 
    Trigger -> if Trait 5 is GreaterThanOrEqual to 3
     OutVoyageTime -> data 0, amount 1, apply Add
-  Option "Climb the mast and howl at the wind. Uncage your inner beast."  [Variable -> 75 % chance of Success]
+  Option "Climb the mast and howl at the wind. Uncage your inner beast."  [Variable -> 75 % Success, Combat]
    Trigger -> if Trait 1 is GreaterThanOrEqual to 3
     OutVoyageTime -> data 0, amount 2, apply Add
     OutGame -> data 2, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
 "Becalmed" Event, ID 8, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
-  Option "What can you do but go below and drink more wine?"  [Variable -> 75 % chance of Success]
+  Option "What can you do but go below and drink more wine?"  [Variable -> 75 % Success, Combat]
     OutVoyageTime -> data 0, amount 4, apply Add
   Option "Join the crew in their prays to the Harpies." 
     OutVoyageTime -> data 0, amount 1, apply Add
@@ -602,21 +602,21 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
     OutGame -> data 4, amount 1, apply Add
     OutConflict -> subType Personal, oppID 3, Challenger True
 "Drinks with Captain" Event, ID 21, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
-  Option "Decline the invitation."  [Variable -> 70 % chance of Success]
+  Option "Decline the invitation."  [Variable -> 70 % Success, Charm]
     OutNone -> data 0, amount 0, apply None
     OutCondition -> Player? True, Condition "Loss of Face", Leadership -1, Timer 5
-  Option "Join the Captain for a quiet drink, or two."  [Variable -> 50 % chance of Success]
+  Option "Join the Captain for a quiet drink, or two."  [Variable -> 50 % Success, Treachery]
     OutNone -> data 0, amount 0, apply None
     OutCondition -> Player? True, Condition "Hungover", Wits -1, Timer 5
-  Option "Drink the Captain under the table."  [Variable -> 50 % chance of Success]
+  Option "Drink the Captain under the table."  [Variable -> 50 % Success, Treachery]
    Trigger -> if Known 1 is Equals to 0
     OutResource -> Player? True, amount 1, apply Add
     OutKnown -> data -1, amount 0, apply None
 "Sprung a Leak" Event, ID 18, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
-  Option "Stand back and let the professionals deal with it."  [Variable -> 45 % chance of Success]
+  Option "Stand back and let the professionals deal with it."  [Variable -> 45 % Success, Treachery]
     OutNone -> data 0, amount 0, apply None
     OutAdrift -> data 0, amount 0, apply None
-  Option "Volunteer to help man the pumps."  [Variable -> 85 % chance of Success]
+  Option "Volunteer to help man the pumps."  [Variable -> 85 % Success, Leadership]
     OutGame -> data 2, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
   Option "Offer a gold coin to every crew member if they can keep the ship afloat" 
@@ -633,18 +633,18 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
     OutVoyageTime -> data 0, amount 4, apply Add
     OutEventStatus -> Target EventID 20, New Status Active
 "Kraken Attacks" Event, ID 20, Type GeoCluster, Repeat 1, Dormant 31, Live 0, Status Dormant
-  Option "Go below and hope for the best."  [Variable -> 33 % chance of Success]
+  Option "Go below and hope for the best."  [Variable -> 33 % Success, None]
     OutGame -> data -4, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
-  Option "Insist that the Captain call all crew to Arms"  [Variable -> 66 % chance of Success]
+  Option "Insist that the Captain call all crew to Arms"  [Variable -> 60 % Success, Leadership]
    Trigger -> if Trait 5 is GreaterThanOrEqual to 3
     OutGame -> data 3, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
-  Option "Grab a nearby raft and abandon ship"  [Variable -> 50 % chance of Success]
+  Option "Grab a nearby raft and abandon ship"  [Variable -> 50 % Success, Treachery]
     OutGame -> data -4, amount 2, apply Add
     OutAdrift -> data 0, amount 0, apply None
 "Drowning seaman" Event, ID 17, Type Adrift, Repeat 1000, Dormant 0, Live 0, Status Active
-  Option "Despite the lack of food and water you decide to share what you have."  [Variable -> 50 % chance of Success]
+  Option "Despite the lack of food and water you decide to share what you have."  [Variable -> 50 % Success, Treachery]
     OutGame -> data 4, amount 2, apply Add
     OutDeathTimer -> data 0, amount 4, apply Subtract
   Option "It's not going to work. Heave him back into the water." 
@@ -655,7 +655,7 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
 "Passing Gypsy Vessel" Event, ID 19, Type Adrift, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Ignore the ship." 
     OutNone -> data 0, amount 0, apply None
-  Option "Wave your arms frantically."  [Variable -> 70 % chance of Success]
+  Option "Wave your arms frantically."  [Variable -> 70 % Success, Combat]
     OutRescued -> data 0, amount 0, apply None
     OutNone -> data 0, amount 0, apply None
   Option "Use the sun to flash your shiny knife at the ship" 
@@ -716,7 +716,7 @@ ItemID 10, "Elixir of Wellness", given to Septon Salemon Warnerus, ActID 23, at 
 "Vengeful <text_1> (Seduction attempt)" Event, ID 1003, Type Location, Repeat 1, Dormant 0, Live 3, Status Live
   Option "Run like the wind" 
     OutNone -> data 0, amount 0, apply None
-  Option "Attempt to Bribe the Thugs"  [Variable -> 50 % chance of Success]
+  Option "Attempt to Bribe the Thugs"  [Variable -> 50 % Success, None]
    Trigger -> if ResourcePlyr 0 is GreaterThanOrEqual to 1
     OutGame -> data 4, amount 12, apply Add
     OutKnown -> data -1, amount 0, apply None
@@ -978,5 +978,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 22/04/2017 21:19:54
-//Elapsed Time 621 ms
+//Exile Game file ops "LogStart.txt" Completed at: 23/04/2017 09:31:56
+//Elapsed Time 601 ms

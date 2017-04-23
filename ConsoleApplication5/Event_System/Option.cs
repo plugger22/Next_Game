@@ -15,6 +15,7 @@ namespace Next_Game.Event_System
         private static int optionIndex = 1; //autoassigned ID's.
         public int OptionID { get;}
         public int Test { get; set; } //OPTIONAL, if Test > 0 then variable outcome (rdm 1d100 <= Test -> PASS -> Good Outcome & Reply, otherwise Bad Outcome & Reply)
+        public SkillType Skill { get; set; } //OPTIONAL, if Test > 0 then skill can act as a +/- DM to the random roll
         public string ReplyGood { get; set; } //text for good outcome or if only a single outcome result possible (eg. interactive)
         public string ReplyBad { get; set; } //text for bad outcome
         public string Tooltip { get; set; }
