@@ -3337,7 +3337,7 @@ namespace Next_Game
                         RLColor foreColor = RLColor.Black;
                         RLColor backColor = Color._background1;
                         List<Snippet> msgList = new List<Snippet>();
-                        msgList.Add(new Snippet($"The S.S \"{player.ShipName}\" has docked today with {player.Title} {player.Name} onboard", foreColor, backColor));
+                        msgList.Add(new Snippet($"The S.S \"{player.ShipName}\" has docked today with {player.Title} {player.Name} onboard", Color._goodTrait, backColor));
                         msgList.Add(new Snippet(""));
                         msgList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                         msgList.Add(new Snippet(""));

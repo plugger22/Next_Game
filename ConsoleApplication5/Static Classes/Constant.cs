@@ -48,6 +48,7 @@ namespace Next_Game
         INQUISITORS,
         //Events
         TRAIT_MULTIPLIER,
+        TEST_MULTIPLIER,
         //Challenges
         HAND_CARDS_NUM,
         PLAYER_INFLUENCE,
@@ -163,6 +164,7 @@ namespace Next_Game
             arrayOfGlobals[63] = Global.BLACKMAIL_THRESHOLD;
             arrayOfGlobals[64] = Global.IMPROVE_THRESHOLD;
             arrayOfGlobals[65] = Global.SEA_SPEED;
+            arrayOfGlobals[66] = Global.TEST_MULTIPLIER;
         }
 
         /// <summary>

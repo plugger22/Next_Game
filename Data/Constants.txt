@@ -94,6 +94,8 @@
 
 # TRAIT_MULTIPLIER -> amount trait level (1 to 5) is multiplied by for automatic option follower tests
 29: 20 @ 15 @ 25
+# TEST_MULTIPLIER -> amount skill level (adj.) (halved for touched) multiplied for to create DM for roll for Variable Options
+66: 10 @ 5 @ 15
 
 # Challenges ---
 
@@ -168,4 +170,4 @@
 57: 1 @ 0 @ 4
 
 
-# Next valid number -> 66
+# Next valid number -> 67

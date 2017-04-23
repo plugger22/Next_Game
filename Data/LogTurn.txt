@@ -1,6 +1,113 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 23/04/2017 09:31:56
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
+//Exile Game File "LogTurn.txt" opened at: 23/04/2017 11:00:42
+--- ProcessStartTurn (World.cs)
+Day 10, Turn 9
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+Usurper Varys Tully has arrived at Longbow Hall onboard the S.S "Hannibal"
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Varys Tully, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Damballa, ID 126 at 15:11, Active Varys Tully, ID 1, at 14:9
+ [Search -> Debug] Enemy, Brother Shiva, ID 127 at 15:11, Active Varys Tully, ID 1, at 14:9
+ [Search -> Debug] Enemy, Brother Beelzebub, ID 128 at 19:9, Active Varys Tully, ID 1, at 14:9
+ [Search -> Debug] Enemy, Brother Mastema, ID 129 at 8:12, Active Varys Tully, ID 1, at 14:9
+ [Search -> Debug] Enemy, The Unrelenting, ID 130 at 15:11, Active Varys Tully, ID 1, at 14:9
+ [Search -> Stationary] Follower The Dark Eminence, ActID 7 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 8 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 126 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 127 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 128 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 129 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 130 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Damballa, ActID 126 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Known] Brother Shiva ActID 127 has become KNOWN
+ [Enemy -> Goal] Brother Shiva, ActID 127 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Beelzebub, ActID 128 Assigned Branch -> 2 Current Branch -> 2
+ [Goal -> New] Brother Beelzebub, ActID 128, (loc 19:9), assigned new Goal -> Move
+ [Goal -> Move] Brother Beelzebub, ActID 128 -> Move Outwards -> Pyke, LocID 3
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Mastema, ActID 129 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 130 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Event "Search and Detain" has no attached Conditions
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 37 %
+--- ResolvePlayerEvents (Director.cs)
+ "Stay Calm" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger passed on "3" GreaterThanOrEqual 3
+ "Run straight at them" Trait Trigger, if type 1 is GreaterThanOrEqual to 3
+ Trigger passed on "5" GreaterThanOrEqual 3
+ Event "Search and Detain" Timer Repeat now 998
+ Event "Search and Detain" Cooldown Timer has been reset to 4
+--- UpdateActiveActors (World.cs)
+ Usurper Varys Tully has had their TurnsUnknown Timer increased from 108 to 109
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 8 to 9
+ Follower The Crone has had their TurnsUnknown Timer increased from 8 to 9
+ Follower The Spider has had their TurnsUnknown Timer increased from 8 to 9
+--- ResolveOutcome (Director.cs)
+--- ChangePlayerEventStatus (Director.cs)
+ "Naked Woman", eventPID 4, has changed status to "Active"
+--- ResolveFollowerEvents (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 23/04/2017 09:33:41
+//Exile Game file ops "LogTurn.txt" Completed at: 23/04/2017 11:01:48
+to list of Locals
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Varys Tully has had their TurnsUnknown Timer increased from 104 to 105
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Crone has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Spider has had their TurnsUnknown Timer increased from 4 to 5
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Aerys Lannister", ID 10 added to list of Actors
+ [AutoEvent -> ActorList] "Mahault Lannister", ID 11 added to list of Actors
+ [AutoEvent -> ActorList] "Morton Ademar", ID 13 added to list of Actors
+ [AutoEvent -> ActorList] "Will Anselet", ID 14 added to list of Actors
+ [AutoEvent -> ActorList] "Wyl Vauquelin", ID 15 added to list of Actors
+ [AutoEvent -> ActorList] "Galot Lannister", ID 16 added to list of Actors
+ [AutoEvent -> LocalList] "Aerys Lannister", ID 10 added to list of Locals
+ [AutoEvent -> LocalList] "Mahault Lannister", ID 11 added to list of Locals
+ [AutoEvent -> AdvisorList] "Morton Ademar", ID 13 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Will Anselet", ID 14 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Wyl Vauquelin", ID 15 added to list of Advisors
+ [AutoEvent -> LocalList] "Galot Lannister", ID 16 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "2" GreaterThanOrEqual 2
+ Event "Seek Passage to another Port" Timer Repeat now 999
+ Event "Seek Passage to another Port" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Aerys Lannister", ID 10 added to list of Actors
+ [AutoEvent -> ActorList] "Mahault Lannister", ID 11 added to list of Actors
+ [AutoEvent -> ActorList] "Morton Ademar", ID 13 added to list of Actors
+ [AutoEvent -> ActorList] "Will Anselet", ID 14 added to list of Actors
+ [AutoEvent -> ActorList] "Wyl Vauquelin", ID 15 added to list of Actors
+ [AutoEvent -> ActorList] "Galot Lannister", ID 16 added to list of Actors
+ [AutoEvent -> LocalList] "Aerys Lannister", ID 10 added to list of Locals
+ [AutoEvent -> LocalList] "Mahault Lannister", ID 11 added to list of Locals
+ [AutoEvent -> AdvisorList] "Morton Ademar", ID 13 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Will Anselet", ID 14 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Wyl Vauquelin", ID 15 added to list of Advisors
+ [AutoEvent -> LocalList] "Galot Lannister", ID 16 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Look for a suitable ship" Timer Repeat now 999
+ Event "Look for a suitable ship" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 6, Turn 5
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 15
+ "Search and Detain" event, Cooldown Timer decremented from 1 to 0
+//Exile Game File "LogTurn.txt" Close completed at: 23/04/2017 11:00:19

@@ -1893,7 +1893,7 @@ namespace Next_Game
                     //only show follower events if Player is at a location and able to receive crows
                     if (player.Status != ActorStatus.AtLocation)
                     { crowCounter++; }
-                    Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
+                    else { Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event); }
                     returnValue = true;
                     package.Done = true;
                     break;
@@ -1911,6 +1911,7 @@ namespace Next_Game
                 eventList.Add(new Snippet(""));
                 eventList.Add(new Snippet("You can only receive crows while at a Location", RLColor.Black, backColor));
                 eventList.Add(new Snippet(""));
+                Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
             }
             return returnValue;
         }
@@ -2185,6 +2186,7 @@ namespace Next_Game
             int validOption = 1;
             int actorID;
             int rndNum, DMskill, DMtouched, numModified;
+            int modBase = Game.constant.GetValue(Global.TEST_MULTIPLIER);
             string rndResult = "";
             string status;
             string outcomeText = "";
@@ -2230,17 +2232,17 @@ namespace Next_Game
                                         //DM modifier to rndNum roll if any skill level other than 3 (average)
                                         switch(skill)
                                         {
-                                            case 1: DMskill = 20; skillTrait = player.GetTraitName(option.Skill); break;
-                                            case 2: DMskill = 10; skillTrait = player.GetTraitName(option.Skill); break;
-                                            case 4: DMskill = -10; skillTrait = player.GetTraitName(option.Skill); break;
-                                            case 5: DMskill = -20; skillTrait = player.GetTraitName(option.Skill); break;
+                                            case 1: DMskill = modBase * 2; skillTrait = player.GetTraitName(option.Skill); break;
+                                            case 2: DMskill = modBase * 1; skillTrait = player.GetTraitName(option.Skill); break;
+                                            case 4: DMskill = modBase * -1; skillTrait = player.GetTraitName(option.Skill); break;
+                                            case 5: DMskill = modBase * -2; skillTrait = player.GetTraitName(option.Skill); break;
                                         }
                                         //touched effect (universal)
                                         if (option.Skill != SkillType.Touched)
                                         {
                                             int touched = player.GetSkill(SkillType.Touched);
                                             if (touched > 0)
-                                            { DMtouched = touched * -5; touchedTrait = player.GetTraitName(SkillType.Touched); }
+                                            { DMtouched = touched * modBase / 2 * -1; touchedTrait = player.GetTraitName(SkillType.Touched); }
                                         }
                                     }
                                     //adjust roll for DM's
@@ -2249,7 +2251,8 @@ namespace Next_Game
                                     if (numModified <= option.Test)
                                     {
                                         listOutcomes = option.GetGoodOutcomes(); optionReply = option.ReplyGood;
-                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Passed test ({1} % needed, rolled {2})", option.Text, option.Test, numModified));
+                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Passed test ({1} % needed, rolled {2})  Roll {3} + DMskill {4} + DMtouched {5} -> modifiedRoll {6}",
+                                            option.Text, option.Test, numModified, rndNum, DMskill, DMtouched, numModified));
                                         rndResult = "Success!";
                                     }
                                     else
@@ -2548,7 +2551,7 @@ namespace Next_Game
                             if (option.Test > 0)
                             {
                                 eventList.Add(new Snippet(""));
-                                eventList.Add(new Snippet($"Success on {option.Test} %, or less", RLColor.Gray, backColor));
+                                eventList.Add(new Snippet($"Success on {option.Test} % or less", RLColor.Gray, backColor));
                                 eventList.Add(new Snippet(""));
                                 string skillMod = ""; string touchedMod = "";
                                 if (DMskill != 0)

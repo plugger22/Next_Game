@@ -258,11 +258,14 @@ calc: >=
 [outcome]
 effect: Game
 data: 5
-amount: 12
+amount: 1
 apply: Add
 [option]
 text: Curse all strangers
 reply: You are heard. The Stranger has taken note of your insolence.
+test: 50
+skill: Treachery
+replyBad: The stranger stares at you angrily. Recognition slowly dawns. He knows you.
 [trigger]
 check: Trait
 item: Treachery
@@ -271,15 +274,12 @@ calc: >=
 [outcome]
 effect: Game
 data: -3
-amount: 2
+amount: 1
 apply: Add
 [outcome]
-effect: Condition
-conPlyr: Yes
-conText: Blessed
-conSkill: Charm
-conEffect: 2
-conTimer: 4
+bad: Yes
+effect: Known
+data: -1
 [End]
 
 Name: Crazy Old Woman
