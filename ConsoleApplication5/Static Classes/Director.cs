@@ -2258,7 +2258,8 @@ namespace Next_Game
                                     else
                                     {
                                         listOutcomes = option.GetBadOutcomes(); optionReply = option.ReplyBad;
-                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Failed test ({1} % needed, rolled {2})", option.Text, option.Test, numModified));
+                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Failed test ({1} % needed, rolled {2})  Roll {3} + DMskill {4} + DMtouched {5} -> modifiedRoll {6}", 
+                                            option.Text, option.Test, numModified, rndNum, DMskill, DMtouched, numModified));
                                         rndResult = "Fail";
                                     }
                                 }
@@ -2560,8 +2561,8 @@ namespace Next_Game
                                 { touchedMod = string.Format("{0} +{1}", touchedTrait, DMtouched); }
                                 string modifiers = "";
                                 if (DMskill != 0 || DMtouched > 0)
-                                { modifiers = $"({skillMod}{touchedMod})"; }
-                                eventList.Add(new Snippet($"Roll {numModified} {modifiers} {rndResult}", RLColor.Gray, backColor));
+                                { modifiers = $"(Roll {rndNum}, {skillMod}{touchedMod})"; }
+                                eventList.Add(new Snippet($"Modified Roll {numModified} {modifiers} -> {rndResult}", RLColor.Gray, backColor));
                                 eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                             }

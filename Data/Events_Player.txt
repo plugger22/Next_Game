@@ -186,6 +186,9 @@ Event: You there, Halt! A group of red coated guards move purposely towards you.
 [option]
 text: Leg it!
 reply: Do they know who you are? Why take the chance?
+test: 60
+skill: Combat
+replyBad: You foot snags the corner of a building as you round the corner. You evade the guards but they have recognised you.
 [outcome]
 effect: EventStatus
 data: 4
@@ -193,8 +196,12 @@ newStatus: Active
 [outcome]
 effect: Game
 data: 5
-amount: 12
+amount: 1
 apply: Add
+[outcome]
+bad: Yes
+effect: Known
+data: -1
 [option]
 text: Stay Calm
 reply: They regularly stop people at random, you should be able to talk your way out of this.

@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 23/04/2017 10:56:42
+//Exile Game file ops "LogStart.txt" commenced at: 23/04/2017 11:43:17
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -752,9 +752,10 @@ ItemID 10, "Elixir of Wellness", given to lady Cersei Stark, ActID 57, at Winter
     OutGame -> data 4, amount 20, apply Add
     OutGame -> data 1, amount 3, apply Add
 "Search and Detain" Event, ID 2, Type Location, Repeat 1000, Dormant 21, Live 0, Status Active
-  Option "Leg it!" 
+  Option "Leg it!"  [Variable -> 60 % Success, Combat DM]
     OutEventStatus -> Target EventID 4, New Status Active
-    OutGame -> data 5, amount 12, apply Add
+    OutGame -> data 5, amount 1, apply Add
+    OutKnown -> data -1, amount 0, apply None
   Option "Stay Calm" 
    Trigger -> if Trait 3 is GreaterThanOrEqual to 3
     OutGame -> data 5, amount 10, apply Random
@@ -1218,5 +1219,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 23/04/2017 10:56:43
-//Elapsed Time 806 ms
+//Exile Game file ops "LogStart.txt" Completed at: 23/04/2017 11:43:18
+//Elapsed Time 684 ms

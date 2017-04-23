@@ -3334,12 +3334,10 @@ namespace Next_Game
                         SetPlayerRecord(new Record(description, 1, player.LocID, GetRefID(player.LocID), CurrentActorIncident.Travel));
                         SetMessage(new Message(description, MessageType.Move));
                         //notification message
-                        RLColor foreColor = RLColor.Black;
-                        RLColor backColor = Color._background1;
                         List<Snippet> msgList = new List<Snippet>();
-                        msgList.Add(new Snippet($"The S.S \"{player.ShipName}\" has docked today with {player.Title} {player.Name} onboard", Color._goodTrait, backColor));
+                        msgList.Add(new Snippet($"The S.S \"{player.ShipName}\" has docked today with {player.Title} {player.Name} onboard", RLColor.Red, Color._background1));
                         msgList.Add(new Snippet(""));
-                        msgList.Add(new Snippet("- o -", RLColor.Gray, backColor));
+                        msgList.Add(new Snippet("- o -", RLColor.Gray, Color._background1));
                         msgList.Add(new Snippet(""));
                         SetNotification(msgList);
                         updateStatus = true;
@@ -5108,10 +5106,15 @@ namespace Next_Game
                         eventList.Add(new Snippet(""));
                         eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
                         eventList.Add(new Snippet(""));
+                        eventList.AddRange(notificationList);
+                        Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
                     }
-                    //add new records
-                    eventList.AddRange(notificationList);
-                    Game.infoChannel.SetInfoList(eventList, ConsoleDisplay.Event);
+                    else
+                    {
+                        //existing records, append
+                        foreach(Snippet snippet in notificationList)
+                        { Game.infoChannel.AppendInfoList(snippet, ConsoleDisplay.Event);}
+                    }
                     Game._specialMode = SpecialMode.Notification;
                 }
                 else { Game.SetError(new Error(223, "Invalid notificationList input (no records)")); }
