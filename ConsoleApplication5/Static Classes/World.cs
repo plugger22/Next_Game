@@ -79,16 +79,20 @@ namespace Next_Game
             timer_2.Start();
             InitialiseGeoClusters();
             Game.StopTimer(timer_2, "W: InitialiseGeoClusters");
+
+            timer_2.Start();
+            InitialiseHouses();
+            Game.StopTimer(timer_2, "W: InitialiseHouses");
+
             timer_2.Start();
             InitialiseItems();
             InitialiseActiveActors(Game.history.GetActiveActors());
             Game.StopTimer(timer_2, "W: InitiatePlayerActors");
-            timer_2.Start();
-            InitialiseHouses();
-            Game.StopTimer(timer_2, "W: InitialiseHouses");
+
             timer_2.Start();
             InitialiseTraits();
             Game.StopTimer(timer_2, "W: InitialiseTraits");
+
             timer_2.Start();
             //need to be here for sequencing issues
             Game.history.InitialiseOverthrow(dictPassiveActors);
@@ -160,7 +164,8 @@ namespace Next_Game
                         listOfActiveActors.RemoveAt(0);
                         //assign to random location on map -> EDIT: Already done in history.cs InitialisePlayer
 
-                        //DEBUG ----
+                        //DEBUG ---- (start) ---
+                        //
                         //Add an random, active, Item to the Player at game start that has a challenge effect
                         List<Possession> listPossessions = new List<Possession>(dictPossessions.Values);
                         List<Item> listItems = new List<Item>();
@@ -188,7 +193,8 @@ namespace Next_Game
                                     listItems[rndIndex].ItemID));
                             }
                         }
-                        //DEBUG---
+                        //
+                        //DEBUG --- (end) ---
 
 
                     }
@@ -196,8 +202,26 @@ namespace Next_Game
                     { Game.SetError(new Error(63, "Invalid Player in listOfActiveActors")); }
                 }
             }
+            //get list of Inns
+            IEnumerable<InnHouse> inns =
+                from houses in dictAllHouses.Values.OfType<InnHouse>()
+                select houses;
+            List<InnHouse> listOfInns = inns.ToList();
             //loop list again and assign all remaining followers to inns
-
+            if (listOfInns.Count > 0)
+            {
+                Game.logStart?.Write("--- Assign LeftOver Followers to Inns");
+                int indexInns = 0;
+                for (int i = 0; i < listOfActiveActors.Count; i++)
+                {
+                    Active actor = listOfActiveActors[i];
+                    listOfInns[indexInns].AddFollower(actor.ActID);
+                    indexInns++;
+                    //rollover index if end of Inns reached
+                    if (indexInns == listOfInns.Count) { indexInns = 0; }
+                }
+            }
+            else { Game.SetError(new Error(63, "No Inns present on Map -> No followers available to recruit")); }
         }
 
         /// <summary>
