@@ -3364,6 +3364,8 @@ namespace Next_Game
                         Location loc = Game.network.GetLocation(locID);
                         loc.AddActor(follower.ActID);
                         follower.LocID = locID;
+                        follower.LastKnownLocID = locID;
+                        follower.SetActorPosition(loc.GetPosition());
                     }
                     else { Game.SetError(new Error(227, $"Invalid locID \"{locID}\" -> Follower not added to Location"));}
                     //Add to dictionaries
