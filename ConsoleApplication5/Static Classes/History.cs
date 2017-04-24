@@ -1946,6 +1946,9 @@ namespace Next_Game
         internal List<Active> GetActiveActors()
         { return listOfActiveActors; }
 
+        internal int GetNumRemainingFollowers()
+        { return listOfActiveActors.Count(); }
+
         /// <summary>
         ///return list of Great Houses (one house for each houseID)
         /// </summary>

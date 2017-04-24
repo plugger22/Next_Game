@@ -1,82 +1,83 @@
-//Exile Game File "LogTurn.txt" opened at: 24/04/2017 13:41:04
+//Exile Game File "LogTurn.txt" opened at: 24/04/2017 16:30:58
 --- ProcessStartTurn (World.cs)
-Day 5, Turn 4
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Usurper Galot Greyjoy, ActID 1 travelling to The Raucous Rat (current Loc 22:10)
+Day 8, Turn 7
+--- MoveActors -> 4 Records (World.cs)
+ [Move -> MoveObject] Usurper Andry Florent, ActID 1 travelling to The Raucous Rat (current Loc 11:21)
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Dagon, ID 131 at 17:13, Active Galot Greyjoy, ID 1, at 22:10
- [Search -> Debug] Enemy, Brother Astaroth, ID 132 at 17:13, Active Galot Greyjoy, ID 1, at 22:10
- [Search -> Debug] Enemy, Brother Gorgo, ID 133 at 15:15, Active Galot Greyjoy, ID 1, at 22:10
- [Search -> Debug] Enemy, Brother Demogorgon, ID 134 at 17:13, Active Galot Greyjoy, ID 1, at 22:10
- [Search -> Debug] Enemy, The Unrelenting, ID 135 at 17:13, Active Galot Greyjoy, ID 1, at 22:10
+ [Search -> Debug] Enemy, Brother Mantus, ID 121 at 16:18, Active Andry Florent, ID 1, at 11:21
+ [Search -> Debug] Enemy, Brother Haborym, ID 122 at 16:18, Active Andry Florent, ID 1, at 11:21
+ [Search -> Debug] Enemy, Brother Astaroth, ID 123 at 16:22, Active Andry Florent, ID 1, at 11:21
+ [Search -> Debug] Enemy, Brother Diabolous, ID 124 at 12:18, Active Andry Florent, ID 1, at 11:21
+ [Search -> Debug] Enemy, The Unrelenting, ID 125 at 16:18, Active Andry Florent, ID 1, at 11:21
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Dagon, ID 131 at 17:13, Active Galot Greyjoy, ID 1, at 21:10
- [Search -> Debug] Enemy, Brother Astaroth, ID 132 at 17:13, Active Galot Greyjoy, ID 1, at 21:10
- [Search -> Debug] Enemy, Brother Gorgo, ID 133 at 15:15, Active Galot Greyjoy, ID 1, at 21:10
- [Search -> Debug] Enemy, Brother Demogorgon, ID 134 at 17:13, Active Galot Greyjoy, ID 1, at 21:10
- [Search -> Debug] Enemy, The Unrelenting, ID 135 at 17:13, Active Galot Greyjoy, ID 1, at 21:10
- [Move -> MoveObject] Inquisitor Brother Gorgo, ActID 133 travelling to The Singing Ghost (current Loc 15:15)
+ [Search -> Debug] Enemy, Brother Mantus, ID 121 at 16:18, Active Andry Florent, ID 1, at 11:20
+ [Search -> Debug] Enemy, Brother Haborym, ID 122 at 16:18, Active Andry Florent, ID 1, at 11:20
+ [Search -> Debug] Enemy, Brother Astaroth, ID 123 at 16:22, Active Andry Florent, ID 1, at 11:20
+ [Search -> Debug] Enemy, Brother Diabolous, ID 124 at 12:18, Active Andry Florent, ID 1, at 11:20
+ [Search -> Debug] Enemy, The Unrelenting, ID 125 at 16:18, Active Andry Florent, ID 1, at 11:20
+ [Move -> MoveObject] Inquisitor Brother Astaroth, ActID 123 travelling to Bloodkeep (current Loc 16:22)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Galot Greyjoy, ID 1 at 20:10, Enemy at 15:15 (Brother Gorgo, ID 133
+ [Search -> Debug] Active Andry Florent, ID 1 at 11:19, Enemy at 16:22 (Brother Astaroth, ID 123
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Galot Greyjoy, ID 1 at 20:10, Enemy at 14:15 (Brother Gorgo, ID 133
+ [Search -> Debug] Active Andry Florent, ID 1 at 11:19, Enemy at 16:23 (Brother Astaroth, ID 123
+ [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 124 travelling to The Raucous Rat (current Loc 12:18)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Andry Florent, ID 1 at 11:19, Enemy at 12:18 (Brother Diabolous, ID 124
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Andry Florent, ID 1 at 11:19, Enemy at 11:18 (Brother Diabolous, ID 124
+ [Goal -> Arrival] Inquisitor Brother Diabolous, ActID 124, currently at The Raucous Rat, new Goal -> Wait
+ [Move -> MoveObject] Inquisitor Brother Haborym, ActID 122 travelling to The Shaggy Parrot (current Loc 17:18)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Andry Florent, ID 1 at 11:19, Enemy at 17:18 (Brother Haborym, ID 122
 --- UpdatePlayerStatus (World.cs)
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Galot Greyjoy, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Andry Florent, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Dagon, ID 131 at 17:13, Active Galot Greyjoy, ID 1, at 20:10
- [Search -> Debug] Enemy, Brother Astaroth, ID 132 at 17:13, Active Galot Greyjoy, ID 1, at 20:10
- [Search -> Debug] Enemy, Brother Gorgo, ID 133 at 13:15, Active Galot Greyjoy, ID 1, at 20:10
- [Search -> Debug] Enemy, Brother Demogorgon, ID 134 at 17:13, Active Galot Greyjoy, ID 1, at 20:10
- [Search -> Debug] Enemy, The Unrelenting, ID 135 at 17:13, Active Galot Greyjoy, ID 1, at 20:10
- [Search -> Stationary] Follower The Leper, ActID 2 is AtLocation
- [Search -> Stationary] Follower The Duchess, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Waif, ActID 3 is AtLocation
+ [Search -> Debug] Enemy, Brother Mantus, ID 121 at 16:18, Active Andry Florent, ID 1, at 11:19
+ [Search -> Debug] Enemy, Brother Haborym, ID 122 at 18:18, Active Andry Florent, ID 1, at 11:19
+ [Search -> Debug] Enemy, Brother Astaroth, ID 123 at 16:24, Active Andry Florent, ID 1, at 11:19
+ [Search -> Debug] Enemy, Brother Diabolous, ID 124 at 11:19, Active Andry Florent, ID 1, at 11:19
+ [Search -> Alert] Inquisitor Brother Diabolous, ActID 124, is in the same place as Active Andry Florent, ID 1, (loc 11:19)
+ [SEARCH -> Active] Random 47 < 20 (ai 20 + known 0) -> Fail 
+ [Search -> ListSearched] Usurper Andry Florent, ActID 1 Searched -> Enemy ActID 124 added
+ [Search -> Debug] Enemy, The Unrelenting, ID 125 at 16:18, Active Andry Florent, ID 1, at 11:19
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Jester, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 7 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 131 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Astaroth, Act ID 132 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 134 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 135 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 121 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 124 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 125 Mode -> Normal
 --- SetEnemyActivity (World.cs)
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Dagon, ActID 131 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] Brother Dagon, ActID 131, (loc 17:13), assigned new Goal -> Hide
- [Enemy -> Goal] Brother Astaroth, ActID 132 retains Goal -> Hide
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Demogorgon, ActID 134 Assigned Branch -> 4 Current Branch -> 0
- [Goal -> New] Brother Demogorgon, ActID 134, (loc 17:13), assigned new Goal -> Move
- [Goal -> Move] Brother Demogorgon, ActID 134 -> Capital to Correct Branch -> The Clumsy Hog, LocID 25
+ [Goal -> Branch] Brother Mantus, ActID 121 Assigned Branch -> 1 Current Branch -> 0
+ [Goal -> New] Brother Mantus, ActID 121, (loc 16:18), assigned new Goal -> Move
+ [Goal -> Move] Brother Mantus, ActID 121 -> Capital to Correct Branch -> One Eyed Pete's, LocID 2
 --- InitiateMoveActor (World.cs)
 --- Move Actor (Director.cs)
- [Enemy -> Goal] The Unrelenting, ActID 135 retains Goal -> Hide
+ [Enemy -> Known] Brother Haborym ActID 122 has become KNOWN
+ [Enemy -> Goal] Brother Diabolous, ActID 124 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 125 retains Goal -> Hide
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Brother Diabolous", ID 124 added to list of Actors
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Galot Greyjoy has had their TurnsUnknown Timer increased from 103 to 104
- Follower The Leper has had their TurnsUnknown Timer increased from 3 to 4
- Follower The Duchess has had their TurnsUnknown Timer increased from 3 to 4
- Follower The Waif has had their TurnsUnknown Timer increased from 3 to 4
+ Usurper Andry Florent has had their TurnsUnknown Timer increased from 106 to 107
+ Follower The Crone has had their TurnsUnknown Timer increased from 6 to 7
+ Follower The Jester has had their TurnsUnknown Timer increased from 6 to 7
+ Follower The Beast has had their TurnsUnknown Timer increased from 6 to 7
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
-ERROR_118 "Invalid EventFilter ("Recruit")"
-Method: CreateAutoLocEvent,  Line: 1566,  Object: Director.cs,  Turn: 4,  Local Time: 13:41:38 UTC +10:00
+ [AutoEvent -> ActorList] "Brother Diabolous", ID 124 added to list of Actors
 --- ResolvePlayerEvents (Director.cs)
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
-ERROR_00   (Main Game Loop)
---- Error Message
-Object reference not set to an instance of an object.
---- Source
-ConsoleApplication5
---- Stack Trace
-   at Next_Game.InfoChannel.SetInfoList(List`1 listToDisplay, ConsoleDisplay consoleDisplay) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\InfoChannel.cs:line 84
-   at Next_Game.Director.ResolvePlayerEvents() in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Director.cs:line 2097
-   at Next_Game.Game.SpecialModeInput(RLKeyPress keyPress, SpecialMode mode) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 1528
-   at Next_Game.Game.OnRootConsoleUpdate(Object sender, UpdateEventArgs e) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 275
---- TargetSite
-Void SetInfoList(System.Collections.Generic.List`1[Next_Game.Snippet], Next_Game.ConsoleDisplay)
-//Exile Game file ops "LogTurn.txt" Completed at: 24/04/2017 13:41:56
+ Event "Recruit a Follower" Timer Repeat now 999
+ Event "Recruit a Follower" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 24/04/2017 16:33:23

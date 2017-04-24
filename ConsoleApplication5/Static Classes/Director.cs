@@ -1152,32 +1152,37 @@ namespace Next_Game
                                 { Game.logTurn?.Write(" Trigger: Player has max. allowed number of Followers already -> Recruit option cancelled"); }
                                 else
                                 {
-                                    //option has a random chance of appearing
-                                    if (rnd.Next(100) <= Game.constant.GetValue(Global.RECRUIT_FOLLOWERS))
+                                    //there is at least one remaining follower available to recruit
+                                    if (Game.history.GetNumRemainingFollowers() > 0)
                                     {
-                                        //are there any followers available to recruit in the inn?
-                                        House house = Game.world.GetHouse(refID);
-                                        if (house != null)
+                                        //option has a random chance of appearing
+                                        if (rnd.Next(100) <= Game.constant.GetValue(Global.RECRUIT_FOLLOWERS))
                                         {
-                                            if (house is InnHouse)
+                                            //are there any followers available to recruit in the inn?
+                                            House tempHouse = Game.world.GetHouse(refID);
+                                            if (tempHouse != null)
                                             {
-                                                InnHouse inn = house as InnHouse;
-                                                int numAvailable = inn.GetNumFollowers();
-                                                if (numAvailable > 0)
+                                                if (tempHouse is InnHouse)
                                                 {
-                                                    OptionInteractive option = new OptionInteractive(string.Format("Recruit a Follower ({0} present)", numAvailable));
-                                                    option.ReplyGood = "You are always on the lookout for loyal followers";
-                                                    OutEventChain outcome = new OutEventChain(1000, EventFilter.Recruit);
-                                                    option.SetGoodOutcome(outcome);
-                                                    eventObject.SetOption(option);
+                                                    InnHouse inn = tempHouse as InnHouse;
+                                                    int numAvailable = inn.GetNumFollowers();
+                                                    if (numAvailable > 0)
+                                                    {
+                                                        OptionInteractive option = new OptionInteractive(string.Format("Recruit a Follower ({0} present)", numAvailable));
+                                                        option.ReplyGood = "You are always on the lookout for loyal followers";
+                                                        OutEventChain outcome = new OutEventChain(1000, EventFilter.Recruit);
+                                                        option.SetGoodOutcome(outcome);
+                                                        eventObject.SetOption(option);
+                                                    }
+                                                    else { Game.logStart?.Write($"[Notification] No followers available for recruiting at \"{inn.Name}\""); }
                                                 }
-                                                else { Game.logStart?.Write($"[Notification] No followers available for recruiting at \"{inn.Name}\""); }
+                                                else { Game.SetError(new Error(118, "House isn't a valid Inn")); }
                                             }
-                                            else { Game.SetError(new Error(118, "House isn't a valid Inn")); }
+                                            else { Game.SetError(new Error(118, "Invalid House (null)")); }
                                         }
-                                        else { Game.SetError(new Error(118, "Invalid House (null)")); }
+                                        else { Game.logStart?.Write($"[Notification] Random roll didn't succeed for recruiting followers option at LocID {locID}"); }
                                     }
-                                    else { Game.logStart?.Write($"[Notification] Random roll didn't succeed for recruiting followers option at LocID {locID}"); }
+                                    else { Game.logStart?.Write($"[Notification] No followers remaining in listActiveActors -> recruitment option cancelled"); }
                                 }
                             }
 
@@ -1341,6 +1346,58 @@ namespace Next_Game
                                 eventObject.SetOption(option);
                             }
                             break;
+
+                        case EventFilter.Recruit:
+                            eventObject.Name = "Recruit a Follower";
+                            eventObject.Text = string.Format("You are at {0}. Which follower do you wish to Recruit?", locName);
+                            //options -> one for each recruit present
+                            House house = Game.world.GetHouse(refID);
+                            if (house != null)
+                            {
+                                InnHouse inn = house as InnHouse;
+                                List<int> listRecruits = inn.GetFollowers();
+                                limit = listRecruits.Count();
+                                limit = Math.Min(12, limit); //max 12 options possible (F1 - F12)
+                                List<Active> listRemainingFollowers = Game.history.GetActiveActors();
+                                if (listRemainingFollowers.Count > 0)
+                                {
+                                    if (limit > 0)
+                                    {
+                                        //default option
+                                        OptionInteractive option = new OptionInteractive("You've changed your mind and decide to Leave");
+                                        option.ReplyGood = string.Format("You depart {0} without further ado", Game.world.GetHouseName(refID));
+                                        OutNone outcome = new OutNone(eventObject.EventPID);
+                                        option.SetGoodOutcome(outcome);
+                                        eventObject.SetOption(option);
+                                    }
+                                    for (int i = 0; i < limit; i++)
+                                    {
+                                        //get follower
+                                        Follower follower = null;
+                                        foreach(Active actor in listRemainingFollowers)
+                                        {
+                                            if (actor.ActID == listRecruits[i])
+                                            {
+                                                follower = (Follower)actor;
+                                                break;
+                                            }
+                                        }
+                                        //follower found
+                                        if (follower != null)
+                                        {
+                                            optionText = $"\"{follower.Name}\" offers to help";
+                                            OptionInteractive option = new OptionInteractive(optionText) { ActorID = follower.ActID };
+                                            option.ReplyGood = $"{follower.Name} agrees to help you win back your throne";
+                                            OutNone outcome = new OutNone(eventObject.EventPID);
+                                            option.SetGoodOutcome(outcome);
+                                            eventObject.SetOption(option);
+                                        }
+                                    }
+                                }
+                                else { Game.SetError(new Error(73, "Invalid listRemainingFollowers (no records)")); }
+                            }
+                            break;
+
                         case EventFilter.Docks:
                             //visit the docks and assess your options
                             eventObject.Name = "Seek Passage to another Port";
