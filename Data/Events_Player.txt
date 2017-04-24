@@ -28,7 +28,7 @@
 # there is NO need to put 'bad: No' for the good outcome
 
 # [trigger]: Trigger block (optional, can have multiple triggers for each option or event). There must be at least one option with no triggers.
-# check: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr, Known)
+# check: Trigger Check ( None, Trait, GameVar, ActorType, Sex, ResourcePlyr, Known, Follower)
 # item: OPTIONAL multi purpose number depending on Trigger Check type, default '0' 
 # thresh: Trigger threshold amount to be tested against, eg. < 3
 # calc: Type of comparison for testing trigger (>=, <=, =)
@@ -46,6 +46,9 @@
 # item -> 1 Justice, 2 Legend_Urs, 3 Legend_King, 4 Honour_Urs, 5 Honour_King (can use text instead)
 # thresh: 0 to 100 (%)
 # calc: Type of comparison for testing trigger (>=, <=, =)
+
+# [trigger] check -> Follower
+# item: 2 to 9 (FID of follower -> NOT ActID)
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)

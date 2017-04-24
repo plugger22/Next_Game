@@ -2129,8 +2129,11 @@ namespace Next_Game
                             if (player.Known == true) { checkValue = 1; }
                             if(CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player is wrong type of Known status"); return false; }
                             break;
-                        case TriggerCheck.Followers:
-
+                        case TriggerCheck.NumFollowers:
+                            int numFollowers = Game.world.GetNumFollowers();
+                            int maxFollowers = Game.constant.GetValue(Global.MAX_FOLLOWERS);
+                            if (numFollowers >= maxFollowers) { Game.logTurn?.Write(" Trigger: Player has max. allowed number of Followers already"); return false; }
+                            else { Game.logTurn?.Write($"Trigger NumFollowers PASSED -> currentNum {numFollowers}, maxNum {maxFollowers}");}
                             break;
                         default:
                             Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\"", trigger.Check, option.Text)));

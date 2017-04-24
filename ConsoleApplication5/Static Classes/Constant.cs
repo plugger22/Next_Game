@@ -15,7 +15,8 @@ namespace Next_Game
         TOUCHED,
         LAND_SPEED,
         SEA_SPEED,
-        NUM_FOLLOWERS,
+        START_FOLLOWERS,
+        MAX_FOLLOWERS,
         //Houses
         MEN_AT_ARMS,
         CASTLE_CAPITAL,
@@ -126,7 +127,7 @@ namespace Next_Game
             arrayOfGlobals[25] = Global.SEA_LARGE;
             arrayOfGlobals[26] = Global.MOUNTAIN_LARGE;
             arrayOfGlobals[27] = Global.FOREST_LARGE;
-            arrayOfGlobals[28] = Global.NUM_FOLLOWERS;
+            arrayOfGlobals[28] = Global.START_FOLLOWERS;
             arrayOfGlobals[29] = Global.TRAIT_MULTIPLIER;
             arrayOfGlobals[30] = Global.GAME_STATE;
             arrayOfGlobals[31] = Global.HAND_CARDS_NUM;
@@ -165,6 +166,7 @@ namespace Next_Game
             arrayOfGlobals[64] = Global.IMPROVE_THRESHOLD;
             arrayOfGlobals[65] = Global.SEA_SPEED;
             arrayOfGlobals[66] = Global.TEST_MULTIPLIER;
+            arrayOfGlobals[67] = Global.MAX_FOLLOWERS;
         }
 
         /// <summary>

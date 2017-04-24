@@ -114,7 +114,7 @@ namespace Next_Game
         internal void InitialiseActiveActors(List<Active> listOfActiveActors)
         {
 
-            int numFollowers = Game.constant.GetValue(Global.NUM_FOLLOWERS);
+            int numFollowers = Game.constant.GetValue(Global.START_FOLLOWERS);
             int locID, index;
 
             for (int i = 0; i <= numFollowers; i++)
@@ -196,6 +196,8 @@ namespace Next_Game
                     { Game.SetError(new Error(63, "Invalid Player in listOfActiveActors")); }
                 }
             }
+            //loop list again and assign all remaining followers to inns
+
         }
 
         /// <summary>
@@ -2839,6 +2841,21 @@ namespace Next_Game
             { Game.SetError(new Error(150, "Invalid actor (null) -> Record not saved")); }
             catch (ArgumentException)
             { Game.SetError(new Error(150, "Invalid actor.ActID (duplicate key exists) -> Record not saved")); }
+        }
+
+        /// <summary>
+        /// returns number of followers 
+        /// </summary>
+        /// <returns></returns>
+        internal int GetNumFollowers()
+        {
+            int numFollowers = 0;
+            foreach (var actor in dictActiveActors)
+            {
+                if (actor.Value is Follower && actor.Value.Status != ActorStatus.Gone)
+                { numFollowers++; }
+            }
+            return numFollowers;
         }
 
         /// <summary>

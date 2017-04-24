@@ -250,8 +250,47 @@ namespace Next_Game
     /// </summary>
     class InnHouse : SpecialHouse
     {
+        private List<int> listOfFollowers; //ActID of followers in the Inn, available for recruitment.
 
         public InnHouse()
-        { Special = HouseSpecial.Inn; CastleWalls = 0; }
+        {
+            listOfFollowers = new List<int>();
+            Special = HouseSpecial.Inn;
+            CastleWalls = 0;
+        }
+
+        /// <summary>
+        /// adds a follower to the listOfFollowers available for recruitment
+        /// </summary>
+        /// <param name="actID"></param>
+        public void AddFollower(int actID)
+        {
+            if (actID > 0 && actID < 10)
+            {
+                listOfFollowers.Add(actID);
+                Game.logStart?.Write($" Inn \"{Name}\" -> Follower ActID {actID} added");
+            }
+        }
+
+        public List<int> GetFollowers()
+        { return listOfFollowers; }
+
+        /// <summary>
+        /// used to update list (passed to world.InitialiseActiveActors, entries possibly deleted, passed back by reference as newly updated version)
+        /// </summary>
+        /// <param name="listOfUpdatedFollowers"></param>
+        public void UpdateFollowers(List<int> listOfUpdatedFollowers)
+        {
+            if (listOfUpdatedFollowers != null)
+            {
+                if (listOfUpdatedFollowers.Count > 0)
+                {
+                    listOfFollowers.Clear();
+                    listOfFollowers.AddRange(listOfUpdatedFollowers);
+                }
+                else { Game.SetError(new Error(226, "Invalid listOfUpdatedFollowers input (no records)")); }
+            }
+            else { Game.SetError(new Error(226, "Invalid listOfUpdatedFollowers input (null)")); }
+        }
     }
 }

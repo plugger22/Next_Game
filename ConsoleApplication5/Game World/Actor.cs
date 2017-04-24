@@ -103,6 +103,7 @@ namespace Next_Game
         /// <param name="name"></param>
         public Actor(string name, ActorType type, ActorSex sex = ActorSex.Male)
         {
+            ActID = characterIndex++;
             Status = ActorStatus.AtLocation;
             this.Name = name;
             actorPos = new Position();
@@ -112,7 +113,7 @@ namespace Next_Game
             this.Sex = sex;
             relPlyr = 50; //neutral
             relLord = 50; //neutral
-            ActID = characterIndex++;
+            
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];

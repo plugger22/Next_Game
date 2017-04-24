@@ -22,8 +22,10 @@
 10: 2 @ 1 @ 3
 # SEA_SPEED -> movement speed of actors on a Sea Passage, per turn
 65: 4 @ 2 @ 6
-# NUM_FOLLOWERS -> number of followers at game start (max 6)
+# START_FOLLOWERS -> number of followers at game start (max 6)
 28: 3 @ 0 @ 4
+# MAX_FOLLOWERS -> can't have any more than this
+67: 6 @ 0 @ 8
 
 # Houses ---
 
@@ -170,4 +172,4 @@
 57: 1 @ 0 @ 4
 
 
-# Next valid number -> 67
+# Next valid number -> 68
