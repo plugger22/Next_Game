@@ -282,7 +282,7 @@ namespace Next_Game
             Game.logTurn?.Write("--- InitiateMoveActor (World.cs)");
             string returnText = "Error in World.InitiateMoveCharacters";
             //viable Character & Position?
-            if (charID > 0 && posOrigin != null && posDestination != null/* && path != null*/)
+            if (charID > 0 && posOrigin != null && posDestination != null /* && path != null*/)
             {
                 //find in dictionary
                 if (dictAllActors.ContainsKey(charID))
@@ -351,7 +351,8 @@ namespace Next_Game
                                 else if (charID > 1)
                                 { Game.world.SetCurrentRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
                                 //show route (Player only)
-                                if (playerInParty == true)
+                                //if (playerInParty == true)
+                                if (person is Active)
                                 {
                                     Game.map.UpdateMap();
                                     Game.map.DrawRoutePath(path);
@@ -5212,22 +5213,31 @@ namespace Next_Game
                         eventList.Add(new Snippet(""));
                         break;
                     case ActorStatus.Travelling:
-                        eventList.Add(new Snippet("A passing Merchant tells of trouble in the Court of Casterly Rock", foreColor, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
-                        eventList.Add(new Snippet(""));
+                        if (rnd.Next(100) < 20)
+                        {
+                            eventList.Add(new Snippet("A passing Merchant tells of trouble in the Court of Casterly Rock", foreColor, backColor));
+                            eventList.Add(new Snippet(""));
+                            eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                            eventList.Add(new Snippet(""));
+                        }
                         break;
                     case ActorStatus.AtSea:
-                        eventList.Add(new Snippet("The Captain tells tales of war in the far-off-lands", foreColor, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
-                        eventList.Add(new Snippet(""));
+                        if (rnd.Next(100) < 20)
+                        {
+                            eventList.Add(new Snippet("The Captain tells tales of war in the far-off-lands", foreColor, backColor));
+                            eventList.Add(new Snippet(""));
+                            eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                            eventList.Add(new Snippet(""));
+                        }
                         break;
                     case ActorStatus.Captured:
-                        eventList.Add(new Snippet("You overhear a guard arguing with another prison about food shortages in the Castle", foreColor, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
-                        eventList.Add(new Snippet(""));
+                        if (rnd.Next(100) < 20)
+                        {
+                            eventList.Add(new Snippet("You overhear a guard arguing with another prison about food shortages in the Castle", foreColor, backColor));
+                            eventList.Add(new Snippet(""));
+                            eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                            eventList.Add(new Snippet(""));
+                        }
                         break;
                 }
                 //any world message to display?

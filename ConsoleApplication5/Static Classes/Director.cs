@@ -2672,7 +2672,9 @@ namespace Next_Game
                                 string modifiers = "";
                                 if (DMskill != 0 || DMtouched > 0)
                                 { modifiers = $"(Roll {rndNum}, {skillMod}{touchedMod})"; }
-                                eventList.Add(new Snippet($"Modified Roll {numModified} {modifiers} -> {rndResult}", RLColor.Gray, backColor));
+                                if (modifiers.Length > 0)
+                                { eventList.Add(new Snippet($"Modified Roll {numModified} {modifiers} -> {rndResult}", RLColor.Gray, backColor)); }
+                                else { eventList.Add(new Snippet($"Roll {numModified} -> {rndResult}", RLColor.Gray, backColor)); }
                                 eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet("- o -", RLColor.Gray, backColor));
                             }
@@ -3349,6 +3351,7 @@ namespace Next_Game
                         follower.CrowDistance = 0;
                         follower.CrowChance = 100;
                         follower.CrowBonus = 0;
+                        follower.Activated = true; //can be given orders this turn
                         break;
                     }
                 }

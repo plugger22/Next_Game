@@ -1,16 +1,59 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 24/04/2017 19:42:24
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
---- MultiKeyInput (Game.cs)
-7 input
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
---- MultiKeyInput (Game.cs)
-7 input
---- MultiKeyInput (Game.cs)
-5 input
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
+//Exile Game File "LogTurn.txt" opened at: 24/04/2017 20:26:04
+--- ProcessStartTurn (World.cs)
+Day 2, Turn 1
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Follower The Duchess, ActID 4 travelling to Kingskeep (current Loc 7:14)
+ [Search -> Notification] Invalid actor (NOT Player || NOT Follower && Known) The Duchess, ActID 4
+--- UpdatePlayerStatus (World.cs)
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Druet Tully, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Damballa, ID 110 at 17:12, Active Druet Tully, ID 1, at 0:27
+ [Search -> Debug] Enemy, Brother Mormo, ID 111 at 17:12, Active Druet Tully, ID 1, at 0:27
+ [Search -> Debug] Enemy, Brother Mantus, ID 112 at 17:12, Active Druet Tully, ID 1, at 0:27
+ [Search -> Debug] Enemy, Brother Shiva, ID 113 at 17:12, Active Druet Tully, ID 1, at 0:27
+ [Search -> Debug] Enemy, The Unrelenting, ID 114 at 17:12, Active Druet Tully, ID 1, at 0:27
+ [Search -> Stationary] Follower The Haggler, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 4 is Travelling
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 110 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mormo, Act ID 111 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 112 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 113 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 114 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Known] Brother Damballa ActID 110 has become KNOWN
+ [Enemy -> Goal] Brother Damballa, ActID 110 retains Goal -> Wait
+ [Enemy -> Goal] Brother Mormo, ActID 111 retains Goal -> Wait
+ [Enemy -> Goal] Brother Mantus, ActID 112 retains Goal -> Wait
+ [Enemy -> Known] Brother Shiva ActID 113 has become KNOWN
+ [Enemy -> Goal] Brother Shiva, ActID 113 retains Goal -> Wait
+ [Enemy -> Known] The Unrelenting ActID 114 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 114 Assigned Branch -> 0 Current Branch -> 0
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Ilyn Flint", ID 71 added to list of Actors
+ [AutoEvent -> LocalList] "Ilyn Flint", ID 71 added to list of Locals
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Druet Tully has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Haggler has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Ilyn Flint", ID 71 added to list of Actors
+ [AutoEvent -> LocalList] "Ilyn Flint", ID 71 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "17" GreaterThanOrEqual 50
+ Event "Talk to Locals" Timer Repeat now 999
+ Event "Talk to Locals" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 24/04/2017 19:46:28
+//Exile Game file ops "LogTurn.txt" Completed at: 24/04/2017 20:26:12
