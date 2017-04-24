@@ -275,6 +275,9 @@ namespace Next_Game
         public List<int> GetFollowers()
         { return listOfFollowers; }
 
+        public int GetNumFollowers()
+        { return listOfFollowers.Count(); }
+
         /// <summary>
         /// used to update list (passed to world.InitialiseActiveActors, entries possibly deleted, passed back by reference as newly updated version)
         /// </summary>

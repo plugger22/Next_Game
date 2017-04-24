@@ -15,8 +15,10 @@ namespace Next_Game
         TOUCHED,
         LAND_SPEED,
         SEA_SPEED,
+        //Followers
         START_FOLLOWERS,
         MAX_FOLLOWERS,
+        RECRUIT_FOLLOWERS,
         //Houses
         MEN_AT_ARMS,
         CASTLE_CAPITAL,
@@ -167,6 +169,7 @@ namespace Next_Game
             arrayOfGlobals[65] = Global.SEA_SPEED;
             arrayOfGlobals[66] = Global.TEST_MULTIPLIER;
             arrayOfGlobals[67] = Global.MAX_FOLLOWERS;
+            arrayOfGlobals[68] = Global.RECRUIT_FOLLOWERS;
         }
 
         /// <summary>

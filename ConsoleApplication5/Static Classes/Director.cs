@@ -1013,14 +1013,13 @@ namespace Next_Game
                 int refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
                 string houseName = "Unknown";
                 string tempText;
-                //if (houseID > 0) { houseName = Game.world.GetGreatHouseName(houseID); }
                 if (refID > 0) { houseName = Game.world.GetHouseName(refID); }
                 int testRefID; //which refID (loc) to use when checking who's present
                 //what type of location?
-                if (locID == 1) { locType = 1; }
-                else if (refID > 0 && refID < 100) { locType = 2; }
-                else if (refID >= 100 && refID < 1000) { locType = 3; }
-                else if (refID >= 1000 && houseID == 99)
+                if (locID == 1) { locType = 1; } //capital
+                else if (refID > 0 && refID < 100) { locType = 2; } //major houses
+                else if (refID >= 100 && refID < 1000) { locType = 3; } //minor houses
+                else if (refID >= 1000 && houseID == 99) //inns
                 {
                     locType = 4;
                     //can't be locals present at an Inn, only Visitors and Followers
@@ -1091,7 +1090,6 @@ namespace Next_Game
                             if (listCourt.Count() > 0)
                             {
                                 OptionInteractive option = null;
-
                                 if (locType != 1)
                                 {
                                     option = new OptionInteractive(string.Format("Seek an Audience with a member of House {0} ({1} present)", houseName, listCourt.Count));
@@ -1144,6 +1142,45 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
+                            //option -> recruit follower (only at Inns)
+                            if (locType == 4)
+                            {
+                                //you haven't yet reached the max. number of Followers allowed?
+                                int numFollowers = Game.world.GetNumFollowers();
+                                int maxFollowers = Game.constant.GetValue(Global.MAX_FOLLOWERS);
+                                if (numFollowers >= maxFollowers)
+                                { Game.logTurn?.Write(" Trigger: Player has max. allowed number of Followers already -> Recruit option cancelled"); }
+                                else
+                                {
+                                    //option has a random chance of appearing
+                                    if (rnd.Next(100) <= Game.constant.GetValue(Global.RECRUIT_FOLLOWERS))
+                                    {
+                                        //are there any followers available to recruit in the inn?
+                                        House house = Game.world.GetHouse(refID);
+                                        if (house != null)
+                                        {
+                                            if (house is InnHouse)
+                                            {
+                                                InnHouse inn = house as InnHouse;
+                                                int numAvailable = inn.GetNumFollowers();
+                                                if (numAvailable > 0)
+                                                {
+                                                    OptionInteractive option = new OptionInteractive(string.Format("Recruit a Follower ({0} present)", numAvailable));
+                                                    option.ReplyGood = "You are always on the lookout for loyal followers";
+                                                    OutEventChain outcome = new OutEventChain(1000, EventFilter.Recruit);
+                                                    option.SetGoodOutcome(outcome);
+                                                    eventObject.SetOption(option);
+                                                }
+                                                else { Game.logStart?.Write($"[Notification] No followers available for recruiting at \"{inn.Name}\""); }
+                                            }
+                                            else { Game.SetError(new Error(118, "House isn't a valid Inn")); }
+                                        }
+                                        else { Game.SetError(new Error(118, "Invalid House (null)")); }
+                                    }
+                                    else { Game.logStart?.Write($"[Notification] Random roll didn't succeed for recruiting followers option at LocID {locID}"); }
+                                }
+                            }
+
                             //option -> seek information (if not known)
                             if (player.Known == false)
                             {

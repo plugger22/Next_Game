@@ -22,10 +22,15 @@
 10: 2 @ 1 @ 3
 # SEA_SPEED -> movement speed of actors on a Sea Passage, per turn
 65: 4 @ 2 @ 6
+
+# Followers ---
+
 # START_FOLLOWERS -> number of followers at game start (max 6)
 28: 3 @ 0 @ 4
 # MAX_FOLLOWERS -> can't have any more than this
 67: 6 @ 0 @ 8
+# RECRUIT_FOLLOWERS -> % chance of a 'Recruit Followers..' option appearing at an Inn each time
+68: 80 @ 10 @ 100
 
 # Houses ---
 
@@ -172,4 +177,4 @@
 57: 1 @ 0 @ 4
 
 
-# Next valid number -> 68
+# Next valid number -> 69

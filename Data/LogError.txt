@@ -1,2 +1,16 @@
-//Exile Game file ops "LogError.txt" commenced at: 24/04/2017 12:15:47
-//Exile Game file ops "LogError.txt" Completed at: 24/04/2017 12:16:52
+//Exile Game file ops "LogError.txt" commenced at: 24/04/2017 13:40:23
+ERROR_118 "Invalid EventFilter ("Recruit")"
+Method: CreateAutoLocEvent,  Line: 1566,  Object: Director.cs,  Turn: 4,  Local Time: 13:41:38 UTC +10:00
+ERROR_00   (Main Game Loop)
+--- Error Message
+Object reference not set to an instance of an object.
+--- Source
+ConsoleApplication5
+--- Stack Trace
+   at Next_Game.InfoChannel.SetInfoList(List`1 listToDisplay, ConsoleDisplay consoleDisplay) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\InfoChannel.cs:line 84
+   at Next_Game.Director.ResolvePlayerEvents() in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Director.cs:line 2097
+   at Next_Game.Game.SpecialModeInput(RLKeyPress keyPress, SpecialMode mode) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 1528
+   at Next_Game.Game.OnRootConsoleUpdate(Object sender, UpdateEventArgs e) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 275
+--- TargetSite
+Void SetInfoList(System.Collections.Generic.List`1[Next_Game.Snippet], Next_Game.ConsoleDisplay)
+//Exile Game file ops "LogError.txt" Completed at: 24/04/2017 13:41:56
