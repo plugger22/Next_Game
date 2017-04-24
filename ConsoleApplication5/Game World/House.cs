@@ -278,7 +278,8 @@ namespace Next_Game
         public int GetNumFollowers()
         { return listOfFollowers.Count(); }
 
-        /// <summary>
+
+        /*/// <summary>
         /// used to update list (passed to world.InitialiseActiveActors, entries possibly deleted, passed back by reference as newly updated version)
         /// </summary>
         /// <param name="listOfUpdatedFollowers"></param>
@@ -294,6 +295,31 @@ namespace Next_Game
                 else { Game.SetError(new Error(226, "Invalid listOfUpdatedFollowers input (no records)")); }
             }
             else { Game.SetError(new Error(226, "Invalid listOfUpdatedFollowers input (null)")); }
+        }*/
+
+        /// <summary>
+        /// Removes a follower from the list I'cause they've been recruited)
+        /// </summary>
+        /// <param name="actID"></param>
+        public void RemoveFollower(int actID)
+        {
+            if (actID > 1 && actID < 10)
+            {
+                bool removed = false;
+                for(int i = 0; i < listOfFollowers.Count; i++)
+                {
+                    if (listOfFollowers[i] == actID)
+                    {
+                        listOfFollowers.RemoveAt(i);
+                        Game.logTurn?.Write($"Follower ActID {actID} has been removed from listOfFollowers at \"{Name}\"");
+                        removed = true;
+                        break;
+                    }
+                }
+                if (removed == false)
+                { Game.SetError(new Error(226, $"Follower, ActID {actID} wasn't found in {Name}'s listOfFollowers -> Not removed")); }
+            }
+            else { Game.SetError(new Error(226, $"Invalid actID \"{actID}\"")); }
         }
     }
 }

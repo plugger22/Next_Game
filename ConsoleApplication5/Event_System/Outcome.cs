@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued };
+    public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
+    Follower};
 
     /// <summary>
     /// Option outcome, event system
@@ -310,6 +311,18 @@ namespace Next_Game.Event_System
         {
             Safe = shipSafe;
             Type = OutcomeType.Rescued;
+        }
+    }
+
+    /// <summary>
+    /// A new Follower is recruited from an Inn
+    /// </summary>
+    class OutFollower : Outcome
+    {
+
+        public OutFollower(int eventID) : base(eventID)
+        {
+            Type = OutcomeType.Follower;
         }
     }
 

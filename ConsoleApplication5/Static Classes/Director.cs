@@ -1388,7 +1388,7 @@ namespace Next_Game
                                             optionText = $"\"{follower.Name}\" offers to help";
                                             OptionInteractive option = new OptionInteractive(optionText) { ActorID = follower.ActID };
                                             option.ReplyGood = $"{follower.Name} agrees to help you win back your throne";
-                                            OutNone outcome = new OutNone(eventObject.EventPID);
+                                            OutFollower outcome = new OutFollower(eventObject.EventPID);
                                             option.SetGoodOutcome(outcome);
                                             eventObject.SetOption(option);
                                         }
@@ -2484,6 +2484,16 @@ namespace Next_Game
                                                 Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
+                                        case OutcomeType.Follower:
+                                            //New Follower recruited from an Inn
+                                            outcomeText = ChangeFollowerStatus(option.ActorID, player.LocID);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
+                                            break;
                                         case OutcomeType.DeathTimer:
                                             //adjust the number of turns remaining on the Death Timer (Adrift and Dungeon situations only)
                                             OutDeathTimer deathOutcome = outcome as OutDeathTimer;
@@ -3315,6 +3325,74 @@ namespace Next_Game
                     Game.world.GetLocationName(player.LocID), player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
             }
             else { Game.SetError(new Error(222, "Invalid Player (null)")); }
+            return resultText;
+        }
+
+        /// <summary>
+        /// Follower recruited from an Inn.
+        /// </summary>
+        /// <returns></returns>
+        private string ChangeFollowerStatus(int actID, int locID)
+        {
+            string resultText = "";
+            //get follower
+            Follower follower = null;
+            if (actID > 1 && actID < 10)
+            {
+                List<Active> listRemainingFollowers = Game.history.GetActiveActors();
+                foreach (Active actor in listRemainingFollowers)
+                {
+                    if (actor.ActID == actID)
+                    {
+                        follower = (Follower)actor;
+                        break;
+                    }
+                }
+                //Follower found
+                if (follower != null)
+                {
+                    //Add to Location
+                    if (locID > 0)
+                    {
+                        Location loc = Game.network.GetLocation(locID);
+                        loc.AddActor(follower.ActID);
+                        follower.LocID = locID;
+                    }
+                    else { Game.SetError(new Error(227, $"Invalid locID \"{locID}\" -> Follower not added to Location"));}
+                    //Add to dictionaries
+                    Game.world.SetActiveActor(follower);
+                    //Remove from InnHouse listOfFollowers
+                    int refID = Game.world.GetRefID(locID);
+                    if (refID > 0)
+                    {
+                        InnHouse inn = (InnHouse)Game.world.GetHouse(refID);
+                        if (inn != null)
+                        { inn.RemoveFollower(actID); }
+                        { Game.SetError(new Error(227, "Invalid inn (null)")); }
+                    }
+                    else { Game.SetError(new Error(227, $"Invalid refID \"{refID}\" -> Follower not removed from InnHouse listOfFollowers")); }
+                    //remove from listActiveActors
+                    List<Active> listActiveActors = Game.history.GetActiveActors();
+                    bool removed = false;
+                    for(int i = 0; i < listActiveActors.Count; i++)
+                    {
+                        Active actor = listActiveActors[i];
+                        if (actor.ActID == actID)
+                        {
+                            Game.logTurn?.Write($"{actor.Name}, ActID {actor.ActID} has been removed from History.cs listOfActiveActors");
+                            listActiveActors.RemoveAt(i);
+                            removed = true;
+                            break;
+                        }
+                    }
+                    if (removed == false)
+                    { Game.SetError(new Error(227, $"ActID {actID} wasn't found in listActiveActors -> Not removed")); }
+                    //return string
+                    resultText = string.Format("\"{0}\", ActID {1}, has joined your cause at \"{2}\"", follower.Name, follower.ActID, Game.world.GetLocationName(locID));
+                }
+                else { Game.SetError(new Error(227, "Invalid Player (null)")); }
+            }
+            else { Game.SetError(new Error(227, $"Invalid actID \"{actID}\" -> Follower not created")); }
             return resultText;
         }
 
