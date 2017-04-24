@@ -1231,7 +1231,7 @@ namespace Next_Game
                             if (limit > 0)
                             {
                                 //default option
-                                OptionInteractive option = new OptionInteractive("You've changed your mind and decide to Leave");
+                                OptionInteractive option = new OptionInteractive("You've changed your mind");
                                 option.ReplyGood = string.Format("You depart {0} without further ado", Game.world.GetHouseName(refID));
                                 OutNone outcome = new OutNone(eventObject.EventPID);
                                 option.SetGoodOutcome(outcome);
@@ -1264,7 +1264,7 @@ namespace Next_Game
                             if (limit > 0)
                             {
                                 //default option
-                                OptionInteractive option = new OptionInteractive("You've changed your mind and decide to Leave");
+                                OptionInteractive option = new OptionInteractive("You've changed your mind");
                                 option.ReplyGood = string.Format("You depart {0} without further ado", Game.world.GetHouseName(refID));
                                 OutNone outcome = new OutNone(eventObject.EventPID);
                                 option.SetGoodOutcome(outcome);
@@ -1295,7 +1295,7 @@ namespace Next_Game
                             if (limit > 0)
                             {
                                 //default option
-                                OptionInteractive option = new OptionInteractive("You've changed your mind and decide to Leave");
+                                OptionInteractive option = new OptionInteractive("You've changed your mind");
                                 option.ReplyGood = string.Format("You depart {0} without further ado", Game.world.GetHouseName(refID));
                                 OutNone outcome = new OutNone(eventObject.EventPID);
                                 option.SetGoodOutcome(outcome);
@@ -1327,7 +1327,7 @@ namespace Next_Game
                             if (limit > 0)
                             {
                                 //default option
-                                OptionInteractive option = new OptionInteractive("You've changed your mind and decide to Leave");
+                                OptionInteractive option = new OptionInteractive("You've changed your mind");
                                 option.ReplyGood = string.Format("You depart {0} without further ado", Game.world.GetHouseName(refID));
                                 OutNone outcome = new OutNone(eventObject.EventPID);
                                 option.SetGoodOutcome(outcome);
@@ -1364,7 +1364,7 @@ namespace Next_Game
                                     if (limit > 0)
                                     {
                                         //default option
-                                        OptionInteractive option = new OptionInteractive("You've changed your mind and decide to Leave");
+                                        OptionInteractive option = new OptionInteractive("You've changed your mind");
                                         option.ReplyGood = string.Format("You depart {0} without further ado", Game.world.GetHouseName(refID));
                                         OutNone outcome = new OutNone(eventObject.EventPID);
                                         option.SetGoodOutcome(outcome);
@@ -1403,7 +1403,7 @@ namespace Next_Game
                             eventObject.Name = "Seek Passage to another Port";
                             eventObject.Text = $"You are at {locName}'s Docks. Squawk! How do you wish to proceed?";
                             //Option -> Leave
-                            OptionInteractive option_d0 = new OptionInteractive("The sea makes you queasy. You decide to Leave.");
+                            OptionInteractive option_d0 = new OptionInteractive("You've changed your mind.");
                             option_d0.ReplyGood = string.Format("You leave the smelly docks of {0} behind", Game.world.GetHouseName(refID));
                             OutNone outcome_d0 = new OutNone(eventObject.EventPID);
                             option_d0.SetGoodOutcome(outcome_d0);
@@ -1435,7 +1435,7 @@ namespace Next_Game
                             if (limit > 0)
                             {
                                 //default option
-                                OptionInteractive option = new OptionInteractive("The smell, the noise! You decide to Leave.");
+                                OptionInteractive option = new OptionInteractive("You've changed your mind.");
                                 option.ReplyGood = string.Format("You leave the raucous docks of {0} behind", Game.world.GetHouseName(refID));
                                 OutNone outcome = new OutNone(eventObject.EventPID);
                                 option.SetGoodOutcome(outcome);
@@ -1497,7 +1497,7 @@ namespace Next_Game
                             if (limit > 0)
                             {
                                 //default option
-                                OptionInteractive option = new OptionInteractive("The smell, the noise! You decide to Leave.");
+                                OptionInteractive option = new OptionInteractive("You've changed your mind.");
                                 option.ReplyGood = string.Format("You leave the raucous docks of {0} behind", Game.world.GetHouseName(refID));
                                 OutNone outcome = new OutNone(eventObject.EventPID);
                                 option.SetGoodOutcome(outcome);
@@ -3345,6 +3345,10 @@ namespace Next_Game
                     if (actor.ActID == actID)
                     {
                         follower = (Follower)actor;
+                        //crow set to 100% as at same location as Player
+                        follower.CrowDistance = 0;
+                        follower.CrowChance = 100;
+                        follower.CrowBonus = 0;
                         break;
                     }
                 }
@@ -3367,8 +3371,8 @@ namespace Next_Game
                     {
                         InnHouse inn = (InnHouse)Game.world.GetHouse(refID);
                         if (inn != null)
-                        { inn.RemoveFollower(actID); }
-                        { Game.SetError(new Error(227, "Invalid inn (null)")); }
+                        { inn.RemoveFollower(actID); Game.logTurn?.Write($"{follower.Name} removed from \"{inn.Name}\" listOfFollowers"); }
+                        else { Game.SetError(new Error(227, "Invalid inn (null)")); }
                     }
                     else { Game.SetError(new Error(227, $"Invalid refID \"{refID}\" -> Follower not removed from InnHouse listOfFollowers")); }
                     //remove from listActiveActors

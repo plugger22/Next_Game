@@ -1,83 +1,16 @@
-//Exile Game File "LogTurn.txt" opened at: 24/04/2017 16:30:58
---- ProcessStartTurn (World.cs)
-Day 8, Turn 7
---- MoveActors -> 4 Records (World.cs)
- [Move -> MoveObject] Usurper Andry Florent, ActID 1 travelling to The Raucous Rat (current Loc 11:21)
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Mantus, ID 121 at 16:18, Active Andry Florent, ID 1, at 11:21
- [Search -> Debug] Enemy, Brother Haborym, ID 122 at 16:18, Active Andry Florent, ID 1, at 11:21
- [Search -> Debug] Enemy, Brother Astaroth, ID 123 at 16:22, Active Andry Florent, ID 1, at 11:21
- [Search -> Debug] Enemy, Brother Diabolous, ID 124 at 12:18, Active Andry Florent, ID 1, at 11:21
- [Search -> Debug] Enemy, The Unrelenting, ID 125 at 16:18, Active Andry Florent, ID 1, at 11:21
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Mantus, ID 121 at 16:18, Active Andry Florent, ID 1, at 11:20
- [Search -> Debug] Enemy, Brother Haborym, ID 122 at 16:18, Active Andry Florent, ID 1, at 11:20
- [Search -> Debug] Enemy, Brother Astaroth, ID 123 at 16:22, Active Andry Florent, ID 1, at 11:20
- [Search -> Debug] Enemy, Brother Diabolous, ID 124 at 12:18, Active Andry Florent, ID 1, at 11:20
- [Search -> Debug] Enemy, The Unrelenting, ID 125 at 16:18, Active Andry Florent, ID 1, at 11:20
- [Move -> MoveObject] Inquisitor Brother Astaroth, ActID 123 travelling to Bloodkeep (current Loc 16:22)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Andry Florent, ID 1 at 11:19, Enemy at 16:22 (Brother Astaroth, ID 123
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Andry Florent, ID 1 at 11:19, Enemy at 16:23 (Brother Astaroth, ID 123
- [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 124 travelling to The Raucous Rat (current Loc 12:18)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Andry Florent, ID 1 at 11:19, Enemy at 12:18 (Brother Diabolous, ID 124
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Andry Florent, ID 1 at 11:19, Enemy at 11:18 (Brother Diabolous, ID 124
- [Goal -> Arrival] Inquisitor Brother Diabolous, ActID 124, currently at The Raucous Rat, new Goal -> Wait
- [Move -> MoveObject] Inquisitor Brother Haborym, ActID 122 travelling to The Shaggy Parrot (current Loc 17:18)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Andry Florent, ID 1 at 11:19, Enemy at 17:18 (Brother Haborym, ID 122
---- UpdatePlayerStatus (World.cs)
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Andry Florent, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Mantus, ID 121 at 16:18, Active Andry Florent, ID 1, at 11:19
- [Search -> Debug] Enemy, Brother Haborym, ID 122 at 18:18, Active Andry Florent, ID 1, at 11:19
- [Search -> Debug] Enemy, Brother Astaroth, ID 123 at 16:24, Active Andry Florent, ID 1, at 11:19
- [Search -> Debug] Enemy, Brother Diabolous, ID 124 at 11:19, Active Andry Florent, ID 1, at 11:19
- [Search -> Alert] Inquisitor Brother Diabolous, ActID 124, is in the same place as Active Andry Florent, ID 1, (loc 11:19)
- [SEARCH -> Active] Random 47 < 20 (ai 20 + known 0) -> Fail 
- [Search -> ListSearched] Usurper Andry Florent, ActID 1 Searched -> Enemy ActID 124 added
- [Search -> Debug] Enemy, The Unrelenting, ID 125 at 16:18, Active Andry Florent, ID 1, at 11:19
- [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
- [Search -> Stationary] Follower The Jester, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Beast, ActID 7 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 121 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 124 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 125 Mode -> Normal
---- SetEnemyActivity (World.cs)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Mantus, ActID 121 Assigned Branch -> 1 Current Branch -> 0
- [Goal -> New] Brother Mantus, ActID 121, (loc 16:18), assigned new Goal -> Move
- [Goal -> Move] Brother Mantus, ActID 121 -> Capital to Correct Branch -> One Eyed Pete's, LocID 2
+//Exile Game file ops "LogTurn.txt" commenced at: 24/04/2017 19:42:24
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+--- MultiKeyInput (Game.cs)
+7 input
 --- InitiateMoveActor (World.cs)
 --- Move Actor (Director.cs)
- [Enemy -> Known] Brother Haborym ActID 122 has become KNOWN
- [Enemy -> Goal] Brother Diabolous, ActID 124 retains Goal -> Wait
- [Enemy -> Goal] The Unrelenting, ActID 125 retains Goal -> Hide
---- CheckPlayerEvents (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Brother Diabolous", ID 124 added to list of Actors
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Andry Florent has had their TurnsUnknown Timer increased from 106 to 107
- Follower The Crone has had their TurnsUnknown Timer increased from 6 to 7
- Follower The Jester has had their TurnsUnknown Timer increased from 6 to 7
- Follower The Beast has had their TurnsUnknown Timer increased from 6 to 7
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Brother Diabolous", ID 124 added to list of Actors
---- ResolvePlayerEvents (Director.cs)
- Event "Recruit a Follower" Timer Repeat now 999
- Event "Recruit a Follower" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
---- ResolveFollowerEvents (Director.cs)
+--- MultiKeyInput (Game.cs)
+7 input
+--- MultiKeyInput (Game.cs)
+5 input
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 24/04/2017 16:33:23
+//Exile Game file ops "LogTurn.txt" Completed at: 24/04/2017 19:46:28
