@@ -1640,12 +1640,15 @@ namespace Next_Game
                                     if (advisor.advisorRoyal > AdvisorRoyal.None) { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
                                     else { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
                                 }
+                                else if (personWant.Office > ActorOffice.None)
+                                { actorText = string.Format("{0} {1}", personWant.Office, personWant.Name); }
+                                else { actorText = string.Format("{0} {1}", personWant.Type, personWant.Name); }
                                 if (personWant is Passive)
                                 {
                                     int strength; // strength of promise, 1 to 5
                                     Passive passive = personWant as Passive;
-                                    eventObject.Name = "WantSomething";
-                                    eventObject.Text = $"{passive.Title} {passive.Name}, ActID {passive.ActID} has a desire for {passive.Desire}.";
+                                    eventObject.Name = "Need Something";
+                                    eventObject.Text = $"{passive.Title} {passive.Name}, ActID {passive.ActID} has a desire for {passive.DesireText}.";
                                     tempText = string.Format("You sit down and discuss what you can do for {0} {1} \"{2}\", ActID {3}, at {4}", passive.Title, passive.Name, 
                                         passive.Handle, passive.ActID, loc.LocName);
                                     //default
@@ -1659,7 +1662,7 @@ namespace Next_Game
                                     option_w1.ReplyGood = $"{actorText} nods in agreement";
                                     strength = 1;
                                     OutPromise outcome_w1_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
-                                    OutRelPlyr outcome_w1_1 = new OutRelPlyr(eventObject.EventPID, 10 * strength, EventCalc.Add, $"Ursurper Promises to think about {passive.Desire}", "Promise");
+                                    OutRelPlyr outcome_w1_1 = new OutRelPlyr(eventObject.EventPID, 10 * strength, EventCalc.Add, $"Ursurper Promises to think about {passive.DesireText}", "Promise");
                                     option_w1.SetGoodOutcome(outcome_w1_0);
                                     option_w1.SetGoodOutcome(outcome_w1_1);
                                     eventObject.SetOption(option_w1);
@@ -1668,7 +1671,7 @@ namespace Next_Game
                                     option_w2.ReplyGood = $"{actorText} nods in agreement";
                                     strength = 3;
                                     OutPromise outcome_w2_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
-                                    OutRelPlyr outcome_w2_1 = new OutRelPlyr(eventObject.EventPID, 10 * strength, EventCalc.Add, $"Ursurper Promises to take care off {passive.Desire}", "Promise");
+                                    OutRelPlyr outcome_w2_1 = new OutRelPlyr(eventObject.EventPID, 10 * strength, EventCalc.Add, $"Ursurper Promises to take care off {passive.DesireText}", "Promise");
                                     option_w2.SetGoodOutcome(outcome_w2_0);
                                     option_w2.SetGoodOutcome(outcome_w2_1);
                                     eventObject.SetOption(option_w2);
@@ -1678,7 +1681,7 @@ namespace Next_Game
                                     strength = 5;
                                     OutPromise outcome_w3_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
                                     OutRelPlyr outcome_w3_1 = new OutRelPlyr(eventObject.EventPID, 10 * strength, EventCalc.Add,
-                                        $"Ursurper Swears on their Father's grave to deal with {passive.Desire}", "Promise");
+                                        $"Ursurper Swears on their Father's grave to deal with {passive.DesireText}", "Promise");
                                     option_w3.SetGoodOutcome(outcome_w3_0);
                                     option_w3.SetGoodOutcome(outcome_w3_1);
                                     eventObject.SetOption(option_w3);
@@ -2284,7 +2287,7 @@ namespace Next_Game
                             {
                                 Passive person = actor as Passive;
                                 if (person.Desire > PossPromiseType.None && person.Satisfied == false)
-                                { Game.logTurn?.Write($"Trigger: {person.Name} has desire {person.Desire} and Satisified {person.Satisfied} -> passed"); }
+                                { Game.logTurn?.Write($"Trigger: {person.Name} has desire {person.DesireText} and Satisified {person.Satisfied} -> passed"); }
                                 else { Game.logTurn?.Write("Trigger: Desire is None or Satisified is True"); return false; }
                             }
                             else { Game.logTurn?.Write("Trigger: Desire, actor is Null or Not Passive"); return false; }
@@ -3338,8 +3341,9 @@ namespace Next_Game
                             //add PossID to Player & NPC
                             player.AddPromise(promise.PossID);
                             actor.AddPromise(promise.PossID);
-                            resultText = $"You promise {actor.Title} {actor.Name} that you will attend to their desire for {actor.Desire} once you are Ruler";
                             actor.Satisfied = true;
+                            actor.DesireText = promise.GetPromiseText();
+                            resultText = $"{player.Title} {player.Name} promises {actor.Title} {actor.Name}, ActID {actor.ActID}, that they will attend to their desire for {actor.DesireText}";
                         }
                         else { Game.SetError(new Error(230, "Error in AddPossession -> Promise not created")); }
                     }

@@ -8,7 +8,7 @@ namespace Next_Game
 {
     public enum PossessionType { None, Secret, Promise, Favour, Introduction, Disguise, Item }
     public enum PossSecretType { None, Parents, Trait, Wound, Torture, Murder, Loyalty, Glory,Fertility }
-    public enum PossPromiseType { None, Land, Court, Resource, Marriage, Item, Count } //court is a court title, Land is a Location
+    public enum PossPromiseType { None, Land, Court, Resource, Marriage, Item, Count } //NOTE: Order corresponds identically to arrayOfPromiseTexts -> Change one, change the other
     public enum PossItemType { None, Passive, Active, Both} //active items provide benefits, passive items are used as bargaining chips, both is used for method filtering in Actor.cs -> CAREFUL!!!
     public enum PossItemEffect { None }
     //public enum PossSecretRef { Actor, House, GeoCluster, Location, Item }
@@ -19,23 +19,24 @@ namespace Next_Game
         public int PossID { get; set; }
         public int Year { get; set; }
         public int WhoHas { get; set; } //actId of actor who currently has the possession
-        
         public PossessionType Type { get; set; }
         public string Description { get; set; }
         public bool Active { get; set; } //some possessions can be owned but inactive, default true
+        
 
         public Possession()
-        { }
-            
+        {  }
+
         public Possession(string description, int year)
         {
             PossID = possessionIndex++;
             if (year == 0) { Year = Game.gameYear; } else { this.Year = year; }
             this.Description = description;
             this.Active = true;
-        }
-    }
 
+        }
+
+    }
 
     // Secrets ---
 
@@ -203,7 +204,8 @@ namespace Next_Game
         //description is used to hold combined title + name of person (WhoHas) holding promise for quickreference
         public int Strength { get; set; } //1 to 5
         public PossPromiseType PromiseType { get; set; }
-        
+        private string[] arrayOfPromiseTexts;
+
         /// <summary>
         /// default constructor
         /// </summary>
@@ -217,8 +219,22 @@ namespace Next_Game
             PromiseType = promiseType;
             if (actorID > 0) { WhoHas = actorID; } else { Game.SetError(new Error(228, $"Invalid ActorID input \"{actorID}\" -> given Bad value 1")); WhoHas = 1; }
             if (strength > 0 && strength < 6) { this.Strength = strength; } else { Game.SetError(new Error(228, $"Invalid strength input \"{strength}\" -> given default value 3")); Strength = 3; }
+            InitialisePromiseArray();
             Type = PossessionType.Promise;
         }
+
+        /// <summary>
+        /// Texts that correspond to PossPromiseType and used as descriptors -> Keep order identical to enum
+        /// </summary>
+        private void InitialisePromiseArray()
+        { arrayOfPromiseTexts = new string[] { "None", "more Land", "a Court Title", "more Resources", "a Favourable Marriage", "a Specific Item" }; }
+
+        /// <summary>
+        /// Gives a text descriptor for desires, as in, 'has a desire for...' 
+        /// </summary>
+        /// <returns></returns>
+        public string GetPromiseText()
+        { return arrayOfPromiseTexts[(int)Type]; }
 
     }
 

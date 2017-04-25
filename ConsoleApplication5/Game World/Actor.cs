@@ -812,6 +812,7 @@ namespace Next_Game
         public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
         public bool Satisfied { get; set; } = false; //has their desire been satisfied? (Act I only, typically means issuing a promise)
         public PossPromiseType Desire { get; set; } //what does the actor want?
+        public string DesireText { get; set; } //descriptor for desire
 
 
         public Passive()

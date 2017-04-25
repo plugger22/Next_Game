@@ -1137,7 +1137,7 @@ namespace Next_Game
                         }
                     }
                 }
-                //player specific Soft possessions - Favours & Introductions
+                //player specific Soft possessions - Favours & Introductions & Promises
                 if (person is Player)
                 {
                     //favours (Player only)
@@ -1168,6 +1168,21 @@ namespace Next_Game
                                 listToDisplay.Add(new Snippet(string.Format("{0} {1} ", introduction.Year, introduction.Description), false));
                                 listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(introduction.Strength)), RLColor.LightRed, RLColor.Black));
                             }
+                        }
+                    }
+                }
+                //Promises
+                List<int> listOfPromises = person.GetPromises();
+                if (listOfPromises.Count > 0)
+                {
+                    listToDisplay.Add(new Snippet("Promises", RLColor.Brown, RLColor.Black));
+                    foreach (int possessionID in listOfPromises)
+                    {
+                        Promise promise = (Promise)GetPossession(possessionID);
+                        if (promise != null)
+                        {
+                            listToDisplay.Add(new Snippet(string.Format("{0} {1} ", promise.Year, promise.Description), false));
+                            listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(promise.Strength)), RLColor.LightRed, RLColor.Black));
                         }
                     }
                 }
