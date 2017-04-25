@@ -1,6 +1,112 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 25/04/2017 14:28:58
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
+//Exile Game File "LogTurn.txt" opened at: 25/04/2017 16:05:36
+--- ProcessStartTurn (World.cs)
+Day 13, Turn 12
+--- MoveActors -> 4 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Set, ActID 109 travelling to Casterly Rock (current Loc 10:13)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Elyes Martell, ID 1 at 17:27, Enemy at 10:13 (Brother Set, ID 109
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Elyes Martell, ID 1 at 17:27, Enemy at 9:13 (Brother Set, ID 109
+ [Move -> MoveObject] Inquisitor Brother Shaitan, ActID 106 travelling to Eyrie (current Loc 13:9)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Elyes Martell, ID 1 at 17:27, Enemy at 13:9 (Brother Shaitan, ID 106
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Elyes Martell, ID 1 at 17:27, Enemy at 13:8 (Brother Shaitan, ID 106
+ [Move -> MoveObject] Inquisitor Brother Mormo, ActID 107 travelling to One Eyed Pete's (current Loc 17:17)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Elyes Martell, ID 1 at 17:27, Enemy at 17:17 (Brother Mormo, ID 107
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Elyes Martell, ID 1 at 17:27, Enemy at 18:17 (Brother Mormo, ID 107
+ [Move -> MoveObject] Inquisitor Brother Kali, ActID 108 travelling to The Pickled Prune (current Loc 15:18)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Elyes Martell, ID 1 at 17:27, Enemy at 15:18 (Brother Kali, ID 108
+--- UpdatePlayerStatus (World.cs)
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Elyes Martell, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Shaitan, ID 106 at 13:7, Active Elyes Martell, ID 1, at 17:27
+ [Search -> Debug] Enemy, Brother Mormo, ID 107 at 19:17, Active Elyes Martell, ID 1, at 17:27
+ [Search -> Debug] Enemy, Brother Kali, ID 108 at 15:19, Active Elyes Martell, ID 1, at 17:27
+ [Search -> Debug] Enemy, Brother Set, ID 109 at 8:13, Active Elyes Martell, ID 1, at 17:27
+ [Search -> Debug] Enemy, The Unrelenting, ID 110 at 15:17, Active Elyes Martell, ID 1, at 17:27
+ [Search -> Stationary] Follower The Beast, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 3 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Notification] Inquisitor Brother Shaitan, ActID 106 is Travelling to Eyrie
+ [AI -> Notification] Inquisitor Brother Mormo, ActID 107 is Travelling to One Eyed Pete's
+ [AI -> Notification] Inquisitor Brother Kali, ActID 108 is Travelling to The Pickled Prune
+ [AI -> Notification] Inquisitor Brother Set, ActID 109 is Travelling to Casterly Rock
+ [AI -> Mode] enemyID 110,  distance -> 18  Threshold (turns) -> 8  Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] The Unrelenting, ActID 110 retains Goal -> Hide
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Lyanna Florent", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Varamyr Hary", ID 27 added to list of Actors
+ [AutoEvent -> ActorList] "Victarion Cristofre", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Donnel Ebrardus", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Cerenna Florent", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Vargo Florent", ID 31 added to list of Actors
+ [AutoEvent -> LocalList] "Lyanna Florent", ID 25 added to list of Locals
+ [AutoEvent -> AdvisorList] "Varamyr Hary", ID 27 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Victarion Cristofre", ID 28 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Donnel Ebrardus", ID 29 added to list of Advisors
+ [AutoEvent -> LocalList] "Cerenna Florent", ID 30 added to list of Locals
+ [AutoEvent -> LocalList] "Vargo Florent", ID 31 added to list of Locals
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Elyes Martell has had their Revert Timer reduced from 4 to 3
+ Follower The Beast has had their TurnsUnknown Timer increased from 11 to 12
+ Follower The Viper has had their TurnsUnknown Timer increased from 11 to 12
+ Follower The Duchess has had their TurnsUnknown Timer increased from 11 to 12
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Lyanna Florent", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Varamyr Hary", ID 27 added to list of Actors
+ [AutoEvent -> ActorList] "Victarion Cristofre", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Donnel Ebrardus", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Cerenna Florent", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Vargo Florent", ID 31 added to list of Actors
+ [AutoEvent -> LocalList] "Lyanna Florent", ID 25 added to list of Locals
+ [AutoEvent -> AdvisorList] "Varamyr Hary", ID 27 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Victarion Cristofre", ID 28 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Donnel Ebrardus", ID 29 added to list of Advisors
+ [AutoEvent -> LocalList] "Cerenna Florent", ID 30 added to list of Locals
+ [AutoEvent -> LocalList] "Vargo Florent", ID 31 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "59" GreaterThanOrEqual 50
+ Trigger passed on "62" GreaterThanOrEqual 50
+ Trigger passed on "60" GreaterThanOrEqual 50
+ Event "Talk to Locals" Timer Repeat now 999
+ Event "Talk to Locals" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Lyanna Florent", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Varamyr Hary", ID 27 added to list of Actors
+ [AutoEvent -> ActorList] "Victarion Cristofre", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Donnel Ebrardus", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Cerenna Florent", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Vargo Florent", ID 31 added to list of Actors
+ [AutoEvent -> LocalList] "Lyanna Florent", ID 25 added to list of Locals
+ [AutoEvent -> AdvisorList] "Varamyr Hary", ID 27 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Victarion Cristofre", ID 28 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Donnel Ebrardus", ID 29 added to list of Advisors
+ [AutoEvent -> LocalList] "Cerenna Florent", ID 30 added to list of Locals
+ [AutoEvent -> LocalList] "Vargo Florent", ID 31 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "60" GreaterThanOrEqual 50
+ Trigger passed on "60" GreaterThanOrEqual 40
+ Trigger passed on "60" GreaterThanOrEqual 60
+ Trigger FAILED on "1" NotEqual 1
+ Trigger: Same sex, Seduction not possible
+ Trigger FAILED on "60" GreaterThanOrEqual 70
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 25/04/2017 14:30:00
+//Exile Game file ops "LogTurn.txt" Completed at: 25/04/2017 16:07:45

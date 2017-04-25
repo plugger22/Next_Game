@@ -19,7 +19,7 @@ namespace Next_Game
     public enum WifeStatus { None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife }
     public enum ActorRelation { None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister }
     public enum ActorAIGoal { None, Wait, Hide, Search, Move} //specific for AI controlled actors
-    public enum ActorDesire { None, Land, CourtTitle, Resources, Marriage, Item, Problem, Count }
+    public enum ActorDesire { None, Land, CourtTitle, Resources, Marriage, Item, Help, Count }
 
     public class Actor
     {

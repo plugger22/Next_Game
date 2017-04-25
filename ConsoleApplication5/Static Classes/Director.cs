@@ -1624,7 +1624,7 @@ namespace Next_Game
                                         ActorDesire theyWant = passive.Desire;
                                         if (theyWant > ActorDesire.None && passive.Satisfied == false)
                                         {
-                                            OptionInteractive option_6 = new OptionInteractive($"{actorText} desires {theyWant}. Offer to help.") { ActorID = actorID };
+                                            OptionInteractive option_6 = new OptionInteractive($"{actorText} desires {theyWant}") { ActorID = actorID };
                                             option_6.ReplyGood = $"{actorText} leans forward enthusiastically to discuss the matter with you";
                                             OutNone outcome_6 = new OutNone(eventObject.EventPID);
                                             option_6.SetGoodOutcome(outcome_6);

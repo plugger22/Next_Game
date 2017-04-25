@@ -191,7 +191,7 @@ text: Leg it!
 reply: Do they know who you are? Why take the chance?
 test: 60
 skill: Combat
-replyBad: You foot snags the corner of a building as you round the corner. You evade the guards but they have recognised you.
+replyBad: Your foot snags the corner of a building as you run past. Regaining your feet you manage to evade the guards but they have recognised you.
 [outcome]
 effect: EventStatus
 data: 4
