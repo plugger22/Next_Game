@@ -1621,12 +1621,41 @@ namespace Next_Game
                                     List<Trigger> listTriggers_6 = new List<Trigger>();
                                     listTriggers_6.Add(new Trigger(TriggerCheck.Desire, 0, 0, EventCalc.None));
                                     option_6.SetTriggers(listTriggers_6);
-                                    OutNone outcome_6 = new OutNone(eventObject.EventPID);
+                                    OutEventChain outcome_6 = new OutEventChain(eventObject.EventPID, EventFilter.WantSomething);
+                                    //OutNone outcome_6 = new OutNone(eventObject.EventPID);
                                     option_6.SetGoodOutcome(outcome_6);
                                     eventObject.SetOption(option_6);
                                 }
                                 else { Game.SetError(new Error(73, "Invalid actorID from AutoCreateEvent (null from dict)")); }
                             }
+                            break;
+                        case EventFilter.WantSomething:
+                            //Character has a desire that you can meet in return for a relationship boost
+                            Actor personWant = Game.world.GetAnyActor(actorID);
+                            if (personWant != null)
+                            {
+                                if (personWant is Passive)
+                                {
+                                    Passive passive = personWant as Passive;
+                                    eventObject.Name = "WantSomething";
+                                    eventObject.Text = $"{passive.Title} {passive.Name}, ActID {passive.ActID} has a desire for {passive.Desire}.";
+                                    tempText = string.Format("You sit down and discuss what you can do for {0} {1} \"{2}\", ActID {3}, at {4}", passive.Title, passive.Name, 
+                                        passive.Handle, passive.ActID, loc.LocName);
+                                    //default
+                                    OptionInteractive option_w0 = new OptionInteractive("You can't help") { ActorID = actorID };
+                                    option_w0.ReplyGood = $"{actorText} shrugs their shoulders";
+                                    OutEventChain outcome_w0 = new OutEventChain(eventObject.EventPID, EventFilter.Interact);
+                                    option_w0.SetGoodOutcome(outcome_w0);
+                                    eventObject.SetOption(option_w0);
+                                    //Give it some thought
+                                    OptionInteractive option_w1 = new OptionInteractive("You'll give it some serious thought") { ActorID = actorID };
+                                    option_w1.ReplyGood = $"{actorText} nods in agreement";
+                                    OutNone outcome_w1 = new OutNone(eventObject.EventPID); ;
+                                    option_w1.SetGoodOutcome(outcome_w1);
+                                    eventObject.SetOption(option_w1);
+                                }
+                            }
+
                             break;
                         default:
                             Game.SetError(new Error(118, string.Format("Invalid EventFilter (\"{0}\")", filter)));
