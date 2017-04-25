@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
     public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
-    Follower, Promise, Introduction, Favour};
+    Follower, Promise, RelPlyr};
 
     /// <summary>
     /// Option outcome, event system
@@ -134,8 +134,27 @@ namespace Next_Game.Event_System
         {
             this.Data = type;
             this.Amount = amount;
-            this.Calc = apply;
+            Calc = apply;
             Type = OutcomeType.Game;
+        }
+    }
+
+
+    /// <summary>
+    /// Player outcome -> NPC character changes their relationship level with Player
+    /// </summary>
+    class OutRelPlyr : Outcome
+    {
+        public string Tag { get; set; } //short (max 4 words) tag
+        public string Description { get; set; } //longer description
+
+        public OutRelPlyr(int eventID, int amount, EventCalc apply, string description, string tag) : base(eventID)
+        {
+            this.Amount = amount;
+            Calc = apply;
+            this.Description = description;
+            this.Tag = tag;
+            Type = OutcomeType.RelPlyr;
         }
     }
 

@@ -1617,7 +1617,7 @@ namespace Next_Game
                                     eventObject.SetOption(option_5);
                                     //Desire (NPC wants something from you)
                                     OptionInteractive option_6 = new OptionInteractive("They want something") { ActorID = actorID };
-                                    option_6.ReplyGood = $"{actorText} leans forward enthusiastically to discuss the matter with you";
+                                    option_6.ReplyGood = string.Format("{0} leans forward enthusiastically to discuss {1} needs with you", actorText, person.Sex == ActorSex.Male ? "his" : "her");
                                     List<Trigger> listTriggers_6 = new List<Trigger>();
                                     listTriggers_6.Add(new Trigger(TriggerCheck.Desire, 0, 0, EventCalc.None));
                                     option_6.SetTriggers(listTriggers_6);
@@ -1634,8 +1634,15 @@ namespace Next_Game
                             Actor personWant = Game.world.GetAnyActor(actorID);
                             if (personWant != null)
                             {
+                                if (personWant is Advisor)
+                                {
+                                    Advisor advisor = personWant as Advisor;
+                                    if (advisor.advisorRoyal > AdvisorRoyal.None) { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
+                                    else { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
+                                }
                                 if (personWant is Passive)
                                 {
+                                    int strength; // strength of promise, 1 to 5
                                     Passive passive = personWant as Passive;
                                     eventObject.Name = "WantSomething";
                                     eventObject.Text = $"{passive.Title} {passive.Name}, ActID {passive.ActID} has a desire for {passive.Desire}.";
@@ -1648,22 +1655,32 @@ namespace Next_Game
                                     option_w0.SetGoodOutcome(outcome_w0);
                                     eventObject.SetOption(option_w0);
                                     //Give it some thought
-                                    OptionInteractive option_w1 = new OptionInteractive("You promise to give it some serious thought") { ActorID = actorID };
+                                    OptionInteractive option_w1 = new OptionInteractive("You promise to give it some thought") { ActorID = actorID };
                                     option_w1.ReplyGood = $"{actorText} nods in agreement";
-                                    OutPromise outcome_w1 = new OutPromise(eventObject.EventPID, passive.Desire, 1);
-                                    option_w1.SetGoodOutcome(outcome_w1);
+                                    strength = 1;
+                                    OutPromise outcome_w1_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
+                                    OutRelPlyr outcome_w1_1 = new OutRelPlyr(eventObject.EventPID, 10 * strength, EventCalc.Add, $"Ursurper Promises to think about {passive.Desire}", "Promise");
+                                    option_w1.SetGoodOutcome(outcome_w1_0);
+                                    option_w1.SetGoodOutcome(outcome_w1_1);
                                     eventObject.SetOption(option_w1);
                                     //Promise to Take Care of it
                                     OptionInteractive option_w2 = new OptionInteractive("You promise to take care of it") { ActorID = actorID };
                                     option_w2.ReplyGood = $"{actorText} nods in agreement";
-                                    OutPromise outcome_w2 = new OutPromise(eventObject.EventPID, passive.Desire, 3);
-                                    option_w2.SetGoodOutcome(outcome_w2);
+                                    strength = 3;
+                                    OutPromise outcome_w2_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
+                                    OutRelPlyr outcome_w2_1 = new OutRelPlyr(eventObject.EventPID, 10 * strength, EventCalc.Add, $"Ursurper Promises to take care off {passive.Desire}", "Promise");
+                                    option_w2.SetGoodOutcome(outcome_w2_0);
+                                    option_w2.SetGoodOutcome(outcome_w2_1);
                                     eventObject.SetOption(option_w2);
                                     //Swear on your Father's Grave
                                     OptionInteractive option_w3 = new OptionInteractive("You swear on your father's grave that you'll fix it") { ActorID = actorID };
                                     option_w3.ReplyGood = $"{actorText} nods in agreement";
-                                    OutPromise outcome_w3 = new OutPromise(eventObject.EventPID, passive.Desire, 5);
-                                    option_w3.SetGoodOutcome(outcome_w3);
+                                    strength = 5;
+                                    OutPromise outcome_w3_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
+                                    OutRelPlyr outcome_w3_1 = new OutRelPlyr(eventObject.EventPID, 10 * strength, EventCalc.Add,
+                                        $"Ursurper Swears on their Father's grave to deal with {passive.Desire}", "Promise");
+                                    option_w3.SetGoodOutcome(outcome_w3_0);
+                                    option_w3.SetGoodOutcome(outcome_w3_1);
                                     eventObject.SetOption(option_w3);
                                 }
                             }
@@ -2484,6 +2501,17 @@ namespace Next_Game
                                             outcomeText = ChangePlayerEventStatus(statusOutcome.Data, statusOutcome.NewStatus);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            break;
+                                        case OutcomeType.RelPlyr:
+                                            //change NPC's relationship with Player
+                                            OutRelPlyr relPlyrOutcome = outcome as OutRelPlyr;
+                                            outcomeText = ChangePlyrRelStatus(option.ActorID, relPlyrOutcome.Amount, relPlyrOutcome.Calc, relPlyrOutcome.Description, relPlyrOutcome.Tag);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
                                             break;
                                         case OutcomeType.Item:
                                             //Player gains or loses an item
@@ -3310,6 +3338,8 @@ namespace Next_Game
                             //add PossID to Player & NPC
                             player.AddPromise(promise.PossID);
                             actor.AddPromise(promise.PossID);
+                            resultText = $"You promise {actor.Title} {actor.Name} that you will attend to their desire for {actor.Desire} once you are Ruler";
+                            actor.Satisfied = true;
                         }
                         else { Game.SetError(new Error(230, "Error in AddPossession -> Promise not created")); }
                     }
@@ -3318,6 +3348,33 @@ namespace Next_Game
                 else { Game.SetError(new Error(230, $"Invalid actorID \"{actorID}\" -> Promise not created")); }
             }
             else { Game.SetError(new Error(230, "Invalid Player (null)")); }
+            return resultText;
+        }
+
+        /// <summary>
+        /// Change an NPC actor's relationship with Player
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        private string ChangePlyrRelStatus(int actorID, int amount, EventCalc apply, string description, string tag)
+        {
+            string resultText = "";
+            if (actorID > 1)
+            {
+                Actor person = Game.world.GetAnyActor(actorID);
+                if (person != null)
+                {
+                    int change = Math.Abs(amount);
+                    if (apply == EventCalc.Subtract) { amount *= -1; } // if it's not Subtract then default to 'Add'
+                    person.AddRelEventPlyr(new Relation(description, tag, amount));
+                    resultText = string.Format("{0} {1}'s relationship with you has {2} by {3}{4}", person.Title, person.Name,
+                       amount > 0 ? "improved" : "worsened", amount > 0 ? "+" : "", amount);
+                }
+                else { Game.SetError(new Error(231, $"Invalid person (null), ActID {actorID}")); }
+            }
+            else { Game.SetError(new Error(231, $"Invalid actorID \"{actorID}\"")); }
             return resultText;
         }
 
