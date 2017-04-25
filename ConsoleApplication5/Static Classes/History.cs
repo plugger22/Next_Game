@@ -492,11 +492,11 @@ namespace Next_Game
                         inquisitor.Known = false;
                         inquisitor.TurnsUnknown = 1;
                         //wait if at capital, move if assigned to a branch
-                        if (inquisitor.AssignedBranch == 0) { inquisitor.Goal = ActorGoal.Wait; }
-                        else { inquisitor.Goal = ActorGoal.Move; }
+                        if (inquisitor.AssignedBranch == 0) { inquisitor.Goal = ActorAIGoal.Wait; }
+                        else { inquisitor.Goal = ActorAIGoal.Move; }
                         inquisitor.LastKnownLocID = locID;
                         inquisitor.LastKnownPos = loc.GetPosition();
-                        inquisitor.LastKnownGoal = ActorGoal.Wait;
+                        inquisitor.LastKnownGoal = ActorAIGoal.Wait;
                         //relationship
                         inquisitor.AddRelEventPlyr(new Relation("Sworn to hunt down Player", "Agents of Doom", -50));
                         inquisitor.AddRelEventLord(new Relation("Loyal to the point of death", "Totally loyal", +50));
@@ -547,11 +547,11 @@ namespace Next_Game
                         nemesis.Known = false;
                         nemesis.TurnsUnknown = 1;
                         //wait if at capital, move if assigned to a branch
-                        if (nemesis.AssignedBranch == 0) { nemesis.Goal = ActorGoal.Wait; }
-                        else { nemesis.Goal = ActorGoal.Move; }
+                        if (nemesis.AssignedBranch == 0) { nemesis.Goal = ActorAIGoal.Wait; }
+                        else { nemesis.Goal = ActorAIGoal.Move; }
                         nemesis.LastKnownLocID = locID;
                         nemesis.LastKnownPos = loc.GetPosition();
-                        nemesis.LastKnownGoal = ActorGoal.Wait;
+                        nemesis.LastKnownGoal = ActorAIGoal.Wait;
                         //relationship
                         nemesis.AddRelEventPlyr(new Relation("Answers only to the Gods", "Irrelevant", -50));
                         nemesis.AddRelEventLord(new Relation("Answers only to the Gods", "Irrelevant", -50));
@@ -2959,7 +2959,7 @@ namespace Next_Game
             else { Game.SetError(new Error(134, "Invalid Dictionary (Major Houses or Passive Actors) -> Null")); }
         }
 
-  
+
         /// <summary>
         /// sub method to handle calc's for an NPC's relationship with their Lord (used by InitialiseLordRelations)
         /// </summary>

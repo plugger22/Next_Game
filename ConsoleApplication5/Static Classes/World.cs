@@ -96,12 +96,14 @@ namespace Next_Game
             timer_2.Start();
             //need to be here for sequencing issues
             Game.history.InitialiseOverthrow(dictPassiveActors);
+
             Game.history.InitialisePastHistoryHouses();
             Game.history.InitialiseLordRelations();
             Game.history.InitialiseSpecialCharacters(Game.file.GetCharacters("Characters.txt"));
             Game.StopTimer(timer_2, "W: InitialiseHistory");
             timer_2.Start();
             InitialiseSecrets();
+            InitialiseDesires();
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
             timer_2.Start();
             InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors
@@ -450,8 +452,8 @@ namespace Next_Game
                                     if (person is Enemy)
                                     {
                                         Enemy enemy = person as Enemy;
-                                        if (enemy.HuntMode == true) { enemy.Goal = ActorGoal.Search; }
-                                        else { enemy.Goal = ActorGoal.Wait; }
+                                        if (enemy.HuntMode == true) { enemy.Goal = ActorAIGoal.Search; }
+                                        else { enemy.Goal = ActorAIGoal.Wait; }
                                         Game.logTurn?.Write(string.Format(" [Goal -> Arrival] {0} {1}, ActID {2}, currently at {3}, new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, loc.LocName, enemy.Goal));
                                     }
                                 }
@@ -635,13 +637,13 @@ namespace Next_Game
                         string activity = "?";
                         switch (enemy.Value.Goal)
                         {
-                            case ActorGoal.Hide:
+                            case ActorAIGoal.Hide:
                                 activity = "Hiding";
                                 break;
-                            case ActorGoal.Search:
+                            case ActorAIGoal.Search:
                                 activity = "Searching";
                                 break;
-                            case ActorGoal.Wait:
+                            case ActorAIGoal.Wait:
                                 activity = "Waiting";
                                 break;
                         }
@@ -655,20 +657,20 @@ namespace Next_Game
                 {
                     locID = enemy.Value.LastKnownLocID;
                     locName = GetLocationName(locID);
-                    if (enemy.Value.LastKnownGoal == ActorGoal.Move)
+                    if (enemy.Value.LastKnownGoal == ActorAIGoal.Move)
                     { locStatus = "Moving to " + locName; }
                     else
                     {
                         string activity = "?";
                         switch (enemy.Value.LastKnownGoal)
                         {
-                            case ActorGoal.Hide:
+                            case ActorAIGoal.Hide:
                                 activity = "Hiding";
                                 break;
-                            case ActorGoal.Search:
+                            case ActorAIGoal.Search:
                                 activity = "Searching";
                                 break;
-                            case ActorGoal.Wait:
+                            case ActorAIGoal.Wait:
                                 activity = "Waiting";
                                 break;
                         }
@@ -2389,6 +2391,25 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// assigns each Passive character a desire
+        /// </summary>
+        private void InitialiseDesires()
+        {
+            Game.logStart?.Write("--- InitialiseDesires (World.cs)");
+            for(int i = 0; i < dictPassiveActors.Count; i++)
+            {
+                Passive actor = dictPassiveActors.ElementAt(i).Value;
+                //lords, bannerlords & Regents
+                if (actor.Realm > ActorRealm.None)
+                {
+                    actor.Desire = (ActorDesire)rnd.Next((int)ActorDesire.Count);
+                    Game.logStart?.Write($"{actor.Title} {actor.Name} ActID {actor.ActID} assigned Desire -> {actor.Desire}");
+                }
+            }
+        }
+
+
+        /// <summary>
         /// populates Possession dictionary with Secrets
         /// </summary>
         private void InitialiseSecrets()
@@ -4082,18 +4103,18 @@ namespace Next_Game
                     if (enemy.Value is Inquisitor || enemy.Value is Nemesis)
                     {
                         //inquisitors -> if Move then automatic (continues on with Move)
-                        if (enemy.Value.Goal != ActorGoal.Move)
+                        if (enemy.Value.Goal != ActorAIGoal.Move)
                         {
                             huntStatus = enemy.Value.HuntMode;
                             turnsDM = enemy.Value.GoalTurns; //+1 % chance of changing goal per turn spent on existing goal
                             enemy.Value.GoalTurns++;
                             switch (enemy.Value.Goal)
                             {
-                                case ActorGoal.None:
+                                case ActorAIGoal.None:
                                     //auto assign new goal
                                     SetEnemyGoal(enemy.Value, huntStatus, playerLocID, turnsUnknown);
                                     break;
-                                case ActorGoal.Wait:
+                                case ActorAIGoal.Wait:
                                     if (huntStatus == true)
                                     {
                                         //Player Known -> Will Search if same Loc
@@ -4107,7 +4128,7 @@ namespace Next_Game
                                         else { Game.logTurn?.Write(string.Format(" [Enemy -> Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal)); }
                                     }
                                     break;
-                                case ActorGoal.Search:
+                                case ActorAIGoal.Search:
                                     if (huntStatus == true)
                                     {
                                         //Player Known -> if actor at different location then new goal
@@ -4122,7 +4143,7 @@ namespace Next_Game
                                         else { Game.logTurn?.Write(string.Format(" [Enemy -> Goal] {0}, ActID {1} retains Goal -> {2}", enemy.Value.Name, enemy.Value.ActID, enemy.Value.Goal)); }
                                     }
                                     break;
-                                case ActorGoal.Hide:
+                                case ActorAIGoal.Hide:
                                     if (huntStatus == true)
                                     {
                                         //Player Known -> if actor at different location then new goal
@@ -4165,7 +4186,7 @@ namespace Next_Game
             bool huntMoveFlag = false;
             int rndNum, refID, tempDistance, enemyDistance, tempLocID;
             int currentBranch = -1;
-            ActorGoal newGoal = ActorGoal.None;
+            ActorAIGoal newGoal = ActorAIGoal.None;
             if (enemy != null)
             {
                 if (playerLocID > 0)
@@ -4194,11 +4215,11 @@ namespace Next_Game
                                 //Player Known, Hunt Mode -> not at same location
                                 if (enemy.LocID != playerLocID)
                                 {
-                                    newGoal = ActorGoal.Move;
+                                    newGoal = ActorAIGoal.Move;
                                     huntMoveFlag = true;
                                 }
                                 //Player Known, Hunt Mode -> Same location -> Search
-                                else { newGoal = ActorGoal.Search; }
+                                else { newGoal = ActorAIGoal.Search; }
                             }
                             else
                             {
@@ -4210,22 +4231,22 @@ namespace Next_Game
                                     if (house is MajorHouse)
                                     {
                                         //Major House -> Wait 30, Hide 20, Move 50
-                                        if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
-                                        else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
-                                        else { newGoal = ActorGoal.Hide; }
+                                        if (rndNum <= 30) { newGoal = ActorAIGoal.Wait; }
+                                        else if (rndNum >= 50) { newGoal = ActorAIGoal.Move; }
+                                        else { newGoal = ActorAIGoal.Hide; }
                                     }
                                     else if (house is MinorHouse)
                                     {
                                         //Minor House -> Wait 30, Move 70
-                                        if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
-                                        else { newGoal = ActorGoal.Move; }
+                                        if (rndNum <= 30) { newGoal = ActorAIGoal.Wait; }
+                                        else { newGoal = ActorAIGoal.Move; }
                                     }
                                     else if (house is InnHouse)
                                     {
                                         //Inn -> Wait 20, Hide 30, Move 50
-                                        if (rndNum <= 20) { newGoal = ActorGoal.Wait; }
-                                        else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
-                                        else { newGoal = ActorGoal.Hide; }
+                                        if (rndNum <= 20) { newGoal = ActorAIGoal.Wait; }
+                                        else if (rndNum >= 50) { newGoal = ActorAIGoal.Move; }
+                                        else { newGoal = ActorAIGoal.Hide; }
                                     }
                                     else { Game.SetError(new Error(156, "Invalid House type (not in list)")); }
                                 }
@@ -4235,15 +4256,15 @@ namespace Next_Game
                                     if (enemy.AssignedBranch == 0)
                                     {
                                         //Capital (where enemy should be) -> Wait 70, Hide 30
-                                        if (rndNum <= 70) { newGoal = ActorGoal.Wait; }
-                                        else { newGoal = ActorGoal.Hide; }
+                                        if (rndNum <= 70) { newGoal = ActorAIGoal.Wait; }
+                                        else { newGoal = ActorAIGoal.Hide; }
                                     }
                                     else
                                     {
                                         //Capital -> Wait 30, Hide 20, Move 50
-                                        if (rndNum <= 30) { newGoal = ActorGoal.Wait; }
-                                        else if (rndNum >= 50) { newGoal = ActorGoal.Move; }
-                                        else { newGoal = ActorGoal.Hide; }
+                                        if (rndNum <= 30) { newGoal = ActorAIGoal.Wait; }
+                                        else if (rndNum >= 50) { newGoal = ActorAIGoal.Move; }
+                                        else { newGoal = ActorAIGoal.Hide; }
                                     }
                                 }
                             }
@@ -4252,7 +4273,7 @@ namespace Next_Game
                         {
                             Game.SetError(new Error(156, string.Format("Enemy {0}, ID {1}, LocID {2} has an Invalid RefID (zero or less)", enemy.Name, enemy.ActID, enemy.LocID)));
                             //give default goal of Move
-                            newGoal = ActorGoal.Move;
+                            newGoal = ActorAIGoal.Move;
                         }
 
                         //reset Goal turns if new goal different to old goal
@@ -4267,7 +4288,7 @@ namespace Next_Game
                         //
                         // --- Handle all Move logic here
                         //
-                        if (newGoal == ActorGoal.Move)
+                        if (newGoal == ActorAIGoal.Move)
                         {
                             Position posOrigin = enemy.GetActorPosition();
                             List<int> listNeighbours = loc.GetNeighboursLocID();
@@ -4517,16 +4538,16 @@ namespace Next_Game
                                         //chance varies depending on current enemy activity
                                         switch (enemy.Value.Goal)
                                         {
-                                            case ActorGoal.Hide:
+                                            case ActorAIGoal.Hide:
                                                 threshold = ai_hide + knownDM;
                                                 break;
-                                            case ActorGoal.Move:
+                                            case ActorAIGoal.Move:
                                                 threshold = ai_move + knownDM;
                                                 break;
-                                            case ActorGoal.Search:
+                                            case ActorAIGoal.Search:
                                                 threshold = ai_search + knownDM;
                                                 break;
-                                            case ActorGoal.Wait:
+                                            case ActorAIGoal.Wait:
                                                 threshold = ai_wait + knownDM;
                                                 break;
                                         }
@@ -4678,16 +4699,16 @@ namespace Next_Game
                                         //chance depends on enemies current activity
                                         switch (enemy.Goal)
                                         {
-                                            case ActorGoal.Hide:
+                                            case ActorAIGoal.Hide:
                                                 threshold = ai_hide + knownDM;
                                                 break;
-                                            case ActorGoal.Move:
+                                            case ActorAIGoal.Move:
                                                 threshold = ai_move + knownDM;
                                                 break;
-                                            case ActorGoal.Search:
+                                            case ActorAIGoal.Search:
                                                 threshold = ai_search + knownDM;
                                                 break;
-                                            case ActorGoal.Wait:
+                                            case ActorAIGoal.Wait:
                                                 threshold = ai_wait + knownDM;
                                                 break;
                                         }

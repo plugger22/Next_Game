@@ -17,7 +17,7 @@ namespace Next_Game
         public int ActID { get; set; }
         public Position Pos { get; set; } //position at start of turn
         public ActorStatus Status { get; set; } //at end of ProcessStartTurn
-        public ActorGoal Goal { get; set; } //enemy Actors only -> at end of ProcessStartTurn
+        public ActorAIGoal Goal { get; set; } //enemy Actors only -> at end of ProcessStartTurn
         public bool Known { get; set; } //actor known or not (all) -> at end of ProcessStartTurn
         public bool HuntMode { get; set; } //enemy Actors only -> at end of ProcessStartTurn
 
@@ -31,7 +31,7 @@ namespace Next_Game
         /// <param name="status"></param>
         /// <param name="known"></param>
         /// <param name="goal"></param>
-        public ActorSpy(int actID, Position pos, ActorStatus status, bool known, ActorGoal goal = ActorGoal.None, bool huntMode = false)
+        public ActorSpy(int actID, Position pos, ActorStatus status, bool known, ActorAIGoal goal = ActorAIGoal.None, bool huntMode = false)
         {
             if (actID > 0)
             {

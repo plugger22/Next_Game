@@ -1567,10 +1567,11 @@ namespace Next_Game
                                     tempText = string.Format("You are granted an audience with {0} {1} \"{2}\", ActID {3}, at {4}", person.Title, person.Name, person.Handle, person.ActID, loc.LocName);
                                     //default
                                     OptionInteractive option_0 = new OptionInteractive("Make yourself known") { ActorID = actorID };
-                                    option_0.ReplyGood = string.Format("{0} acknowledges your presence", actorText);
+                                    option_0.ReplyGood = $"{actorText} acknowledges your presence";
                                     OutNone outcome_0 = new OutNone(eventObject.EventPID);
                                     option_0.SetGoodOutcome(outcome_0);
                                     eventObject.SetOption(option_0);
+
                                     //improve relationship (befriend)
                                     OptionInteractive option_1 = new OptionInteractive("Befriend") { ActorID = actorID };
                                     option_1.ReplyGood = string.Format("{0} looks at you expectantly", actorText);
@@ -1615,6 +1616,21 @@ namespace Next_Game
                                     OutItem outcome_5 = new OutItem(eventObject.EventPID, 0, EventCalc.Subtract);
                                     option_5.SetGoodOutcome(outcome_5);
                                     eventObject.SetOption(option_5);
+
+                                    //Desire (NPC wants something from you)
+                                    if (person is Passive)
+                                    {
+                                        Passive passive = person as Passive;
+                                        ActorDesire theyWant = passive.Desire;
+                                        if (theyWant > ActorDesire.None && passive.Satisfied == false)
+                                        {
+                                            OptionInteractive option_6 = new OptionInteractive($"{actorText} desires {theyWant}. Offer to help.") { ActorID = actorID };
+                                            option_6.ReplyGood = $"{actorText} leans forward enthusiastically to discuss the matter with you";
+                                            OutNone outcome_6 = new OutNone(eventObject.EventPID);
+                                            option_6.SetGoodOutcome(outcome_6);
+                                            eventObject.SetOption(option_6);
+                                        }
+                                    }
                                 }
                                 else { Game.SetError(new Error(73, "Invalid actorID from AutoCreateEvent (null from dict)")); }
                             }

@@ -18,7 +18,8 @@ namespace Next_Game
     public enum ActorGone { None, Missing, Childbirth, Battle, Executed, Murdered, Accident, Disease, Injuries } //how died (or gone missing)?
     public enum WifeStatus { None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife }
     public enum ActorRelation { None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister }
-    public enum ActorGoal { None, Wait, Hide, Search, Move} //specific for AI controlled actors
+    public enum ActorAIGoal { None, Wait, Hide, Search, Move} //specific for AI controlled actors
+    public enum ActorDesire { None, Land, CourtTitle, Resources, Marriage, Item, Problem, Count }
 
     public class Actor
     {
@@ -810,6 +811,8 @@ namespace Next_Game
         public int RefID { get; set; } = 0; //house assignment, eg. Lannister (not HouseID).
         public int HouseID { get; set; } = 0; //dynamically assigned great house alignment 
         public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
+        public bool Satisfied { get; set; } = false; //has their desire been satisfied? (Act I only, typically means issuing a promise)
+        public ActorDesire Desire { get; set; } //what does the actor want?
 
 
         public Passive()
@@ -925,9 +928,9 @@ namespace Next_Game
         public int Revert { get; set; } //# of turns before Known status reverts to unknown
         public int LastKnownLocID { get; set; } //last known locId (could be destination if moving) -> updated every turn that actor is known
         public Position LastKnownPos { get; set; } //last known Position -> updated every turn that actor is known
-        public ActorGoal LastKnownGoal { get; set; } //last known activity status -> updated every turn actor is known
+        public ActorAIGoal LastKnownGoal { get; set; } //last known activity status -> updated every turn actor is known
         public int TurnsUnknown { get; set; } //how many turns ago was the last known position? -> increments when actor unknown, reset to zero when known
-        public ActorGoal Goal { get; set; } //current goal (mission) for an AI controlled actor
+        public ActorAIGoal Goal { get; set; } //current goal (mission) for an AI controlled actor
         public int GoalTurns { get; set; } //number of turns currently spent on existing goal
         //ai related
         public int AssignedBranch { get; set; } //branch allocated at start of game, '0' indicates capital
