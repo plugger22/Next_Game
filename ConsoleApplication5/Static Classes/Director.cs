@@ -1571,7 +1571,6 @@ namespace Next_Game
                                     OutNone outcome_0 = new OutNone(eventObject.EventPID);
                                     option_0.SetGoodOutcome(outcome_0);
                                     eventObject.SetOption(option_0);
-
                                     //improve relationship (befriend)
                                     OptionInteractive option_1 = new OptionInteractive("Befriend") { ActorID = actorID };
                                     option_1.ReplyGood = string.Format("{0} looks at you expectantly", actorText);
@@ -1616,21 +1615,15 @@ namespace Next_Game
                                     OutItem outcome_5 = new OutItem(eventObject.EventPID, 0, EventCalc.Subtract);
                                     option_5.SetGoodOutcome(outcome_5);
                                     eventObject.SetOption(option_5);
-
                                     //Desire (NPC wants something from you)
-                                    if (person is Passive)
-                                    {
-                                        Passive passive = person as Passive;
-                                        ActorDesire theyWant = passive.Desire;
-                                        if (theyWant > ActorDesire.None && passive.Satisfied == false)
-                                        {
-                                            OptionInteractive option_6 = new OptionInteractive($"{actorText} desires {theyWant}") { ActorID = actorID };
-                                            option_6.ReplyGood = $"{actorText} leans forward enthusiastically to discuss the matter with you";
-                                            OutNone outcome_6 = new OutNone(eventObject.EventPID);
-                                            option_6.SetGoodOutcome(outcome_6);
-                                            eventObject.SetOption(option_6);
-                                        }
-                                    }
+                                    OptionInteractive option_6 = new OptionInteractive("They want something") { ActorID = actorID };
+                                    option_6.ReplyGood = $"{actorText} leans forward enthusiastically to discuss the matter with you";
+                                    List<Trigger> listTriggers_6 = new List<Trigger>();
+                                    listTriggers_6.Add(new Trigger(TriggerCheck.Desire, 0, 0, EventCalc.None));
+                                    option_6.SetTriggers(listTriggers_6);
+                                    OutNone outcome_6 = new OutNone(eventObject.EventPID);
+                                    option_6.SetGoodOutcome(outcome_6);
+                                    eventObject.SetOption(option_6);
                                 }
                                 else { Game.SetError(new Error(73, "Invalid actorID from AutoCreateEvent (null from dict)")); }
                             }
@@ -2132,7 +2125,7 @@ namespace Next_Game
                         foreach(OptionInteractive option in listOptions)
                         {
                             //check any option triggers 
-                            if (CheckOptionTrigger(option) == true)
+                            if (ResolveOptionTrigger(option) == true)
                             { optionColor = RLColor.Blue; option.Active = true; }
                             else
                             {
@@ -2182,7 +2175,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
-        private bool CheckOptionTrigger(OptionInteractive option)
+        private bool ResolveOptionTrigger(OptionInteractive option)
         {
             bool validCheck = true;
             int checkValue;
@@ -2209,42 +2202,47 @@ namespace Next_Game
                                 Game.SetError(new Error(76, string.Format("Invalid Trigger Data (\"{0}\"), default Combat trait used instead, for Option \"{1}\"", trigger.Data, option.Text)));
                             }
                             Game.logTurn?.Write(string.Format(" \"{0}\" {1} Trigger, if type {2} is {3} to {4}", option.Text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold));
-                            if (ResolveOptionTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == false) { return false; }
+                            if (CheckTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == false) { return false; }
                             break;
                         case TriggerCheck.GameVar:
                             //get % value for required gamevar
                             if (trigger.Data > 0 && trigger.Data < (int)DataPoint.Count)
                             {
                                 checkValue = CheckGameState((DataPoint)trigger.Data);
-                                if (ResolveOptionTrigger(checkValue, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: GameVar value incorrect"); return false; }
+                                if (CheckTrigger(checkValue, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: GameVar value incorrect"); return false; }
                             }
                             else { Game.SetError(new Error(76, $"Invalid trigger.Data \"{trigger.Data}\" for option {option.Text} -> trigger ignored")); }
                             break;
                         case TriggerCheck.RelPlyr:
-                            if (ResolveOptionTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { return false; }
+                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { return false; }
                             break;
                         case TriggerCheck.Sex:
                             //Threshold = (int)ActorSex -> Male 1, Female 2 (sex of actor). Must be opposite sex (seduction
-                            if (ResolveOptionTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Same sex, Seduction not possible"); return false; }
+                            if (CheckTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Same sex, Seduction not possible"); return false; }
+                            break;
+                        case TriggerCheck.Desire:
+                            Actor actor = Game.world.GetAnyActor(option.ActorID);
+                            if (actor != null && actor is Passive)
+                            {
+                                Passive person = actor as Passive;
+                                if (person.Desire > ActorDesire.None && person.Satisfied == false)
+                                { Game.logTurn?.Write($"Trigger: {person.Name} has desire {person.Desire} and Satisified {person.Satisfied} -> passed"); }
+                                else { Game.logTurn?.Write("Trigger: Desire is None or Satisified is True"); return false; }
+                            }
+                            else { Game.logTurn?.Write("Trigger: Desire, actor is Null or Not Passive"); return false; }
                             break;
                         case TriggerCheck.ActorType:
                             //Data = ActorType, Threshold is required type. Must be equal
-                            if (ResolveOptionTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Incorrect ActorType"); return false; }
+                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Incorrect ActorType"); return false; }
                             break;
                         case TriggerCheck.ResourcePlyr:
-                            if (ResolveOptionTrigger(player.Resources, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player has wrong amount of Resources"); return false; }
+                            if (CheckTrigger(player.Resources, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player has wrong amount of Resources"); return false; }
                             break;
                         case TriggerCheck.Known:
                             checkValue = 0;
                             if (player.Known == true) { checkValue = 1; }
-                            if(ResolveOptionTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player is wrong type of Known status"); return false; }
+                            if(CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player is wrong type of Known status"); return false; }
                             break;
-                        /*case TriggerCheck.NumFollowers:
-                            int numFollowers = Game.world.GetNumFollowers();
-                            int maxFollowers = Game.constant.GetValue(Global.MAX_FOLLOWERS);
-                            if (numFollowers >= maxFollowers) { Game.logTurn?.Write(" Trigger: Player has max. allowed number of Followers already"); return false; }
-                            else { Game.logTurn?.Write($"Trigger NumFollowers PASSED -> currentNum {numFollowers}, maxNum {maxFollowers}");}
-                            break;*/
                         default:
                             Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\"", trigger.Check, option.Text)));
                             break;
@@ -2261,7 +2259,7 @@ namespace Next_Game
         /// <param name="comparator"></param>
         /// <param name="threshold"></param>
         /// <returns></returns>
-        private bool ResolveOptionTrigger(int data, EventCalc comparator, int threshold)
+        private bool CheckTrigger(int data, EventCalc comparator, int threshold)
         {
             bool validCheck = true;
             switch(comparator)
