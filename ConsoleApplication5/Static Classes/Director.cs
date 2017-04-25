@@ -1642,17 +1642,29 @@ namespace Next_Game
                                     tempText = string.Format("You sit down and discuss what you can do for {0} {1} \"{2}\", ActID {3}, at {4}", passive.Title, passive.Name, 
                                         passive.Handle, passive.ActID, loc.LocName);
                                     //default
-                                    OptionInteractive option_w0 = new OptionInteractive("You can't help") { ActorID = actorID };
+                                    OptionInteractive option_w0 = new OptionInteractive("Sorry, you can't help") { ActorID = actorID };
                                     option_w0.ReplyGood = $"{actorText} shrugs their shoulders";
                                     OutEventChain outcome_w0 = new OutEventChain(eventObject.EventPID, EventFilter.Interact);
                                     option_w0.SetGoodOutcome(outcome_w0);
                                     eventObject.SetOption(option_w0);
                                     //Give it some thought
-                                    OptionInteractive option_w1 = new OptionInteractive("You'll give it some serious thought") { ActorID = actorID };
+                                    OptionInteractive option_w1 = new OptionInteractive("You promise to give it some serious thought") { ActorID = actorID };
                                     option_w1.ReplyGood = $"{actorText} nods in agreement";
-                                    OutNone outcome_w1 = new OutNone(eventObject.EventPID); ;
+                                    OutPromise outcome_w1 = new OutPromise(eventObject.EventPID, passive.Desire, 1);
                                     option_w1.SetGoodOutcome(outcome_w1);
                                     eventObject.SetOption(option_w1);
+                                    //Promise to Take Care of it
+                                    OptionInteractive option_w2 = new OptionInteractive("You promise to take care of it") { ActorID = actorID };
+                                    option_w2.ReplyGood = $"{actorText} nods in agreement";
+                                    OutPromise outcome_w2 = new OutPromise(eventObject.EventPID, passive.Desire, 3);
+                                    option_w2.SetGoodOutcome(outcome_w2);
+                                    eventObject.SetOption(option_w2);
+                                    //Swear on your Father's Grave
+                                    OptionInteractive option_w3 = new OptionInteractive("You swear on your father's grave that you'll fix it") { ActorID = actorID };
+                                    option_w3.ReplyGood = $"{actorText} nods in agreement";
+                                    OutPromise outcome_w3 = new OutPromise(eventObject.EventPID, passive.Desire, 5);
+                                    option_w3.SetGoodOutcome(outcome_w3);
+                                    eventObject.SetOption(option_w3);
                                 }
                             }
 
@@ -2254,7 +2266,7 @@ namespace Next_Game
                             if (actor != null && actor is Passive)
                             {
                                 Passive person = actor as Passive;
-                                if (person.Desire > ActorDesire.None && person.Satisfied == false)
+                                if (person.Desire > PossPromiseType.None && person.Satisfied == false)
                                 { Game.logTurn?.Write($"Trigger: {person.Name} has desire {person.Desire} and Satisified {person.Satisfied} -> passed"); }
                                 else { Game.logTurn?.Write("Trigger: Desire is None or Satisified is True"); return false; }
                             }

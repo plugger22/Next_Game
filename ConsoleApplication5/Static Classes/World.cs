@@ -2402,7 +2402,7 @@ namespace Next_Game
                 //lords, bannerlords & Regents
                 if (actor.Type == ActorType.Lord || actor.Type == ActorType.BannerLord || actor.Realm == ActorRealm.Regent)
                 {
-                    actor.Desire = (ActorDesire)rnd.Next((int)ActorDesire.Count);
+                    actor.Desire = (PossPromiseType)rnd.Next((int)PossPromiseType.Count);
                     Game.logStart?.Write($"{actor.Title} {actor.Name} ActID {actor.ActID} assigned Desire -> {actor.Desire}");
                 }
             }

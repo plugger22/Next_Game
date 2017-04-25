@@ -19,7 +19,6 @@ namespace Next_Game
     public enum WifeStatus { None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife }
     public enum ActorRelation { None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister }
     public enum ActorAIGoal { None, Wait, Hide, Search, Move} //specific for AI controlled actors
-    public enum ActorDesire { None, Land, CourtTitle, Resources, Marriage, Item, Help, Count }
 
     public class Actor
     {
@@ -812,7 +811,7 @@ namespace Next_Game
         public int HouseID { get; set; } = 0; //dynamically assigned great house alignment 
         public int BornRefID { get; set; } = 0; //house born in (eg. wife married into another house), if 0 then ignore
         public bool Satisfied { get; set; } = false; //has their desire been satisfied? (Act I only, typically means issuing a promise)
-        public ActorDesire Desire { get; set; } //what does the actor want?
+        public PossPromiseType Desire { get; set; } //what does the actor want?
 
 
         public Passive()

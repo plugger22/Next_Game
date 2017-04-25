@@ -1,170 +1,188 @@
-//Exile Game File "LogTurn.txt" opened at: 25/04/2017 17:02:33
+//Exile Game File "LogTurn.txt" opened at: 25/04/2017 17:21:26
 --- ProcessStartTurn (World.cs)
-Day 13, Turn 12
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Usurper Leyton Lannister, ActID 1 travelling to Dorne (current Loc 19:28)
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Astaroth, ID 111 at 17:15, Active Leyton Lannister, ID 1, at 19:28
- [Search -> Debug] Enemy, Brother Mastema, ID 112 at 13:10, Active Leyton Lannister, ID 1, at 19:28
- [Search -> Debug] Enemy, Brother Amon, ID 113 at 21:11, Active Leyton Lannister, ID 1, at 19:28
- [Search -> Debug] Enemy, Brother Kali, ID 114 at 19:21, Active Leyton Lannister, ID 1, at 19:28
- [Search -> Debug] Enemy, The Unrelenting, ID 115 at 17:15, Active Leyton Lannister, ID 1, at 19:28
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Astaroth, ID 111 at 17:15, Active Leyton Lannister, ID 1, at 19:29
- [Search -> Debug] Enemy, Brother Mastema, ID 112 at 13:10, Active Leyton Lannister, ID 1, at 19:29
- [Search -> Debug] Enemy, Brother Amon, ID 113 at 21:11, Active Leyton Lannister, ID 1, at 19:29
- [Search -> Debug] Enemy, Brother Kali, ID 114 at 19:21, Active Leyton Lannister, ID 1, at 19:29
- [Search -> Debug] Enemy, The Unrelenting, ID 115 at 17:15, Active Leyton Lannister, ID 1, at 19:29
- [Move -> MoveObject] Inquisitor Brother Mastema, ActID 112 travelling to Greenstone (current Loc 13:10)
+Day 14, Turn 13
+--- MoveActors -> 3 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Gorgo, ActID 125 travelling to Riverrun (current Loc 20:16)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Leyton Lannister, ID 1 at 18:29, Enemy at 13:10 (Brother Mastema, ID 112
+ [Search -> Debug] Active Dickon Lannister, ID 1 at 24:20, Enemy at 20:16 (Brother Gorgo, ID 125
+ [Move -> MoveObject] Inquisitor Brother Set, ActID 126 travelling to Riverrun (current Loc 24:16)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Leyton Lannister, ID 1 at 18:29, Enemy at 13:11 (Brother Mastema, ID 112
+ [Search -> Debug] Active Dickon Lannister, ID 1 at 24:20, Enemy at 24:16 (Brother Set, ID 126
+ [Move -> MoveObject] Nemesis The Unrelenting, ActID 129 travelling to Riverrun (current Loc 20:16)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Dickon Lannister, ID 1 at 24:20, Enemy at 20:16 (The Unrelenting, ID 129
 --- UpdatePlayerStatus (World.cs)
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Leyton Lannister, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Dickon Lannister, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Astaroth, ID 111 at 17:15, Active Leyton Lannister, ID 1, at 18:29
- [Search -> Debug] Enemy, Brother Mastema, ID 112 at 13:12, Active Leyton Lannister, ID 1, at 18:29
- [Search -> Debug] Enemy, Brother Amon, ID 113 at 21:11, Active Leyton Lannister, ID 1, at 18:29
- [Search -> Debug] Enemy, Brother Kali, ID 114 at 19:21, Active Leyton Lannister, ID 1, at 18:29
- [Search -> Debug] Enemy, The Unrelenting, ID 115 at 17:15, Active Leyton Lannister, ID 1, at 18:29
- [Search -> Stationary] Follower The Waif, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Jester, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 3 is AtLocation
+ [Search -> Debug] Enemy, Brother Gorgo, ID 125 at 21:16, Active Dickon Lannister, ID 1, at 24:20
+ [Search -> Debug] Enemy, Brother Set, ID 126 at 23:16, Active Dickon Lannister, ID 1, at 24:20
+ [Search -> Debug] Enemy, Brother Shaitan, ID 127 at 19:24, Active Dickon Lannister, ID 1, at 24:20
+ [Search -> Debug] Enemy, Brother Amon, ID 128 at 16:19, Active Dickon Lannister, ID 1, at 24:20
+ [Search -> Debug] Enemy, The Unrelenting, ID 129 at 21:16, Active Dickon Lannister, ID 1, at 24:20
+ [Search -> Stationary] Follower The Beast, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 5 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Astaroth, Act ID 111 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 113 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 114 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 115 Mode -> Normal
+ [AI -> Notification] Inquisitor Brother Gorgo, ActID 125 is Travelling to Riverrun
+ [AI -> Notification] Inquisitor Brother Set, ActID 126 is Travelling to Riverrun
+ [AI -> Notification] Nemesis The Unrelenting, ActID 129 is Travelling to Riverrun
+ [AI -> Mode] enemyID 127,  distance -> 13  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 128,  distance -> 15  Threshold (turns) -> 4  Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Astaroth, ActID 111 retains Goal -> Wait
- [Enemy -> Goal] Brother Amon, ActID 113 retains Goal -> Wait
- [Enemy -> Goal] Brother Kali, ActID 114 retains Goal -> Wait
- [Enemy -> Unknown] The Unrelenting ActID 115 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] The Unrelenting, ActID 115 retains Goal -> Wait
+ [Enemy -> Known] Brother Gorgo ActID 125 has become KNOWN
+ [Enemy -> Goal] Brother Shaitan, ActID 127 retains Goal -> Wait
+ [Enemy -> Goal] Brother Amon, ActID 128 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joffery Martell", ID 18 added to list of Actors
- [AutoEvent -> ActorList] "Myrielle Martell", ID 19 added to list of Actors
- [AutoEvent -> ActorList] "Hullen Maukolum", ID 21 added to list of Actors
- [AutoEvent -> ActorList] "Trystane Charles", ID 22 added to list of Actors
- [AutoEvent -> ActorList] "Vortimer Timm", ID 23 added to list of Actors
- [AutoEvent -> ActorList] "Genna Martell", ID 24 added to list of Actors
- [AutoEvent -> ActorList] "Davos Martell", ID 71 added to list of Actors
- [AutoEvent -> LocalList] "Joffery Martell", ID 18 added to list of Locals
- [AutoEvent -> LocalList] "Myrielle Martell", ID 19 added to list of Locals
- [AutoEvent -> AdvisorList] "Hullen Maukolum", ID 21 added to list of Advisors
- [AutoEvent -> AdvisorList] "Trystane Charles", ID 22 added to list of Advisors
- [AutoEvent -> AdvisorList] "Vortimer Timm", ID 23 added to list of Advisors
- [AutoEvent -> LocalList] "Genna Martell", ID 24 added to list of Locals
- [AutoEvent -> LocalList] "Davos Martell", ID 71 added to list of Locals
+ [AutoEvent -> ActorList] "Barristan Tully", ID 50 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Daven Roley", ID 52 added to list of Actors
+ [AutoEvent -> ActorList] "Salemon Heimart", ID 53 added to list of Actors
+ [AutoEvent -> ActorList] "Peter Reinald", ID 54 added to list of Actors
+ [AutoEvent -> ActorList] "Gilibertus Tankard", ID 55 added to list of Actors
+ [AutoEvent -> ActorList] "Yvonne Tully", ID 56 added to list of Actors
+ [AutoEvent -> ActorList] "Beves Tully", ID 57 added to list of Actors
+ [AutoEvent -> ActorList] "Warnerus Tully", ID 58 added to list of Actors
+ [AutoEvent -> LocalList] "Barristan Tully", ID 50 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Daven Roley", ID 52 added to list of Locals
+ [AutoEvent -> AdvisorList] "Salemon Heimart", ID 53 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Peter Reinald", ID 54 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Gilibertus Tankard", ID 55 added to list of Advisors
+ [AutoEvent -> LocalList] "Yvonne Tully", ID 56 added to list of Locals
+ [AutoEvent -> LocalList] "Beves Tully", ID 57 added to list of Locals
+ [AutoEvent -> LocalList] "Warnerus Tully", ID 58 added to list of Locals
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Leyton Lannister has had their TurnsUnknown Timer increased from 111 to 112
- Follower The Waif has had their TurnsUnknown Timer increased from 11 to 12
- Follower The Jester has had their TurnsUnknown Timer increased from 11 to 12
- Follower The Spider has had their TurnsUnknown Timer increased from 11 to 12
+ Usurper Dickon Lannister has had their Revert Timer reduced from 4 to 3
+ Follower The Beast has had their TurnsUnknown Timer increased from 13 to 14
+ Follower The Crone has had their TurnsUnknown Timer increased from 13 to 14
+ Follower The Spider has had their TurnsUnknown Timer increased from 13 to 14
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joffery Martell", ID 18 added to list of Actors
- [AutoEvent -> ActorList] "Myrielle Martell", ID 19 added to list of Actors
- [AutoEvent -> ActorList] "Hullen Maukolum", ID 21 added to list of Actors
- [AutoEvent -> ActorList] "Trystane Charles", ID 22 added to list of Actors
- [AutoEvent -> ActorList] "Vortimer Timm", ID 23 added to list of Actors
- [AutoEvent -> ActorList] "Genna Martell", ID 24 added to list of Actors
- [AutoEvent -> ActorList] "Davos Martell", ID 71 added to list of Actors
- [AutoEvent -> LocalList] "Joffery Martell", ID 18 added to list of Locals
- [AutoEvent -> LocalList] "Myrielle Martell", ID 19 added to list of Locals
- [AutoEvent -> AdvisorList] "Hullen Maukolum", ID 21 added to list of Advisors
- [AutoEvent -> AdvisorList] "Trystane Charles", ID 22 added to list of Advisors
- [AutoEvent -> AdvisorList] "Vortimer Timm", ID 23 added to list of Advisors
- [AutoEvent -> LocalList] "Genna Martell", ID 24 added to list of Locals
- [AutoEvent -> LocalList] "Davos Martell", ID 71 added to list of Locals
+ [AutoEvent -> ActorList] "Barristan Tully", ID 50 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Daven Roley", ID 52 added to list of Actors
+ [AutoEvent -> ActorList] "Salemon Heimart", ID 53 added to list of Actors
+ [AutoEvent -> ActorList] "Peter Reinald", ID 54 added to list of Actors
+ [AutoEvent -> ActorList] "Gilibertus Tankard", ID 55 added to list of Actors
+ [AutoEvent -> ActorList] "Yvonne Tully", ID 56 added to list of Actors
+ [AutoEvent -> ActorList] "Beves Tully", ID 57 added to list of Actors
+ [AutoEvent -> ActorList] "Warnerus Tully", ID 58 added to list of Actors
+ [AutoEvent -> LocalList] "Barristan Tully", ID 50 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Daven Roley", ID 52 added to list of Locals
+ [AutoEvent -> AdvisorList] "Salemon Heimart", ID 53 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Peter Reinald", ID 54 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Gilibertus Tankard", ID 55 added to list of Advisors
+ [AutoEvent -> LocalList] "Yvonne Tully", ID 56 added to list of Locals
+ [AutoEvent -> LocalList] "Beves Tully", ID 57 added to list of Locals
+ [AutoEvent -> LocalList] "Warnerus Tully", ID 58 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "89" GreaterThanOrEqual 50
+ Trigger passed on "76" GreaterThanOrEqual 50
+ Trigger passed on "76" GreaterThanOrEqual 50
+ Trigger passed on "56" GreaterThanOrEqual 50
  Trigger passed on "69" GreaterThanOrEqual 50
- Trigger passed on "63" GreaterThanOrEqual 50
- Trigger passed on "87" GreaterThanOrEqual 50
+ Trigger passed on "68" GreaterThanOrEqual 50
  Event "Talk to Locals" Timer Repeat now 999
  Event "Talk to Locals" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- CheckPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 37 %
+--- UpdateActiveActors (World.cs)
+ Usurper Dickon Lannister has had their Revert Timer reduced from 3 to 2
+ Follower The Beast has had their TurnsUnknown Timer increased from 14 to 15
+ Follower The Crone has had their TurnsUnknown Timer increased from 14 to 15
+ Follower The Spider has had their TurnsUnknown Timer increased from 14 to 15
+ERROR_171 "Invalid gameTurn "13", (duplicate Entry) -> Bloodhound entry Not added"
+Method: UpdateBloodHound,  Line: 4943,  Object: World.cs,  Turn: 13,  Local Time: 17:21:37 UTC +10:00
+--- CheckPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 18 %
+--- UpdateActiveActors (World.cs)
+ Usurper Dickon Lannister has had their Revert Timer reduced from 2 to 1
+ Follower The Beast has had their TurnsUnknown Timer increased from 15 to 16
+ Follower The Crone has had their TurnsUnknown Timer increased from 15 to 16
+ Follower The Spider has had their TurnsUnknown Timer increased from 15 to 16
+ERROR_171 "Invalid gameTurn "13", (duplicate Entry) -> Bloodhound entry Not added"
+Method: UpdateBloodHound,  Line: 4943,  Object: World.cs,  Turn: 13,  Local Time: 17:21:40 UTC +10:00
+--- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joffery Martell", ID 18 added to list of Actors
- [AutoEvent -> ActorList] "Myrielle Martell", ID 19 added to list of Actors
- [AutoEvent -> ActorList] "Hullen Maukolum", ID 21 added to list of Actors
- [AutoEvent -> ActorList] "Trystane Charles", ID 22 added to list of Actors
- [AutoEvent -> ActorList] "Vortimer Timm", ID 23 added to list of Actors
- [AutoEvent -> ActorList] "Genna Martell", ID 24 added to list of Actors
- [AutoEvent -> ActorList] "Davos Martell", ID 71 added to list of Actors
- [AutoEvent -> LocalList] "Joffery Martell", ID 18 added to list of Locals
- [AutoEvent -> LocalList] "Myrielle Martell", ID 19 added to list of Locals
- [AutoEvent -> AdvisorList] "Hullen Maukolum", ID 21 added to list of Advisors
- [AutoEvent -> AdvisorList] "Trystane Charles", ID 22 added to list of Advisors
- [AutoEvent -> AdvisorList] "Vortimer Timm", ID 23 added to list of Advisors
- [AutoEvent -> LocalList] "Genna Martell", ID 24 added to list of Locals
- [AutoEvent -> LocalList] "Davos Martell", ID 71 added to list of Locals
+ [AutoEvent -> ActorList] "Barristan Tully", ID 50 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Daven Roley", ID 52 added to list of Actors
+ [AutoEvent -> ActorList] "Salemon Heimart", ID 53 added to list of Actors
+ [AutoEvent -> ActorList] "Peter Reinald", ID 54 added to list of Actors
+ [AutoEvent -> ActorList] "Gilibertus Tankard", ID 55 added to list of Actors
+ [AutoEvent -> ActorList] "Yvonne Tully", ID 56 added to list of Actors
+ [AutoEvent -> ActorList] "Beves Tully", ID 57 added to list of Actors
+ [AutoEvent -> ActorList] "Warnerus Tully", ID 58 added to list of Actors
+ [AutoEvent -> LocalList] "Barristan Tully", ID 50 added to list of Locals
+ [AutoEvent -> LocalList]D 57 added to list of Locals
+ [AutoEvent -> LocalList] "Warnerus Tully", ID 58 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "89" GreaterThanOrEqual 50
- Trigger passed on "89" GreaterThanOrEqual 40
- Trigger passed on "89" GreaterThanOrEqual 60
+ Trigger passed on "76" GreaterThanOrEqual 50
+ Trigger passed on "76" GreaterThanOrEqual 40
+ Trigger passed on "76" GreaterThanOrEqual 60
  Trigger FAILED on "1" NotEqual 1
  Trigger: Same sex, Seduction not possible
- Trigger passed on "89" GreaterThanOrEqual 70
+ Trigger passed on "76" GreaterThanOrEqual 70
  Trigger passed on "3" Equals 3
-Trigger: Joffery Martell has desire Resources and Satisified False -> passed
+Trigger: Barristan Tully has desire Item and Satisified False -> passed
  Event "Interact" Timer Repeat now 999
  Event "Interact" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joffery Martell", ID 18 added to list of Actors
- [AutoEvent -> ActorList] "Myrielle Martell", ID 19 added to list of Actors
- [AutoEvent -> ActorList] "Hullen Maukolum", ID 21 added to list of Actors
- [AutoEvent -> ActorList] "Trystane Charles", ID 22 added to list of Actors
- [AutoEvent -> ActorList] "Vortimer Timm", ID 23 added to list of Actors
- [AutoEvent -> ActorList] "Genna Martell", ID 24 added to list of Actors
- [AutoEvent -> ActorList] "Davos Martell", ID 71 added to list of Actors
- [AutoEvent -> LocalList] "Joffery Martell", ID 18 added to list of Locals
- [AutoEvent -> LocalList] "Myrielle Martell", ID 19 added to list of Locals
- [AutoEvent -> AdvisorList] "Hullen Maukolum", ID 21 added to list of Advisors
- [AutoEvent -> AdvisorList] "Trystane Charles", ID 22 added to list of Advisors
- [AutoEvent -> AdvisorList] "Vortimer Timm", ID 23 added to list of Advisors
- [AutoEvent -> LocalList] "Genna Martell", ID 24 added to list of Locals
- [AutoEvent -> LocalList] "Davos Martell", ID 71 added to list of Locals
+ [AutoEvent -> ActorList] "Barristan Tully", ID 50 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Daven Roley", ID 52 added to list of Actors
+ [AutoEvent -> ActorList] "Salemon Heimart", ID 53 added to list of Actors
+ [AutoEvent -> ActorList] "Peter Reinald", ID 54 added to list of Actors
+ [AutoEvent -> ActorList] "Gilibertus Tankard", ID 55 added to list of Actors
+ [AutoEvent -> ActorList] "Yvonne Tully", ID 56 added to list of Actors
+ [AutoEvent -> ActorList] "Beves Tully", ID 57 added to list of Actors
+ [AutoEvent -> ActorList] "Warnerus Tully", ID 58 added to list of Actors
+ [AutoEvent -> LocalList] "Barristan Tully", ID 50 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Daven Roley", ID 52 added to list of Locals
+ [AutoEvent -> AdvisorList] "Salemon Heimart", ID 53 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Peter Reinald", ID 54 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Gilibertus Tankard", ID 55 added to list of Advisors
+ [AutoEvent -> LocalList] "Yvonne Tully", ID 56 added to list of Locals
+ [AutoEvent -> LocalList] "Beves Tully", ID 57 added to list of Locals
+ [AutoEvent -> LocalList] "Warnerus Tully", ID 58 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
  Event "WantSomething" Timer Repeat now 999
  Event "WantSomething" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joffery Martell", ID 18 added to list of Actors
- [AutoEvent -> ActorList] "Myrielle Martell", ID 19 added to list of Actors
- [AutoEvent -> ActorList] "Hullen Maukolum", ID 21 added to list of Actors
- [AutoEvent -> ActorList] "Trystane Charles", ID 22 added to list of Actors
- [AutoEvent -> ActorList] "Vortimer Timm", ID 23 added to list of Actors
- [AutoEvent -> ActorList] "Genna Martell", ID 24 added to list of Actors
- [AutoEvent -> ActorList] "Davos Martell", ID 71 added to list of Actors
- [AutoEvent -> LocalList] "Joffery Martell", ID 18 added to list of Locals
- [AutoEvent -> LocalList] "Myrielle Martell", ID 19 added to list of Locals
- [AutoEvent -> AdvisorList] "Hullen Maukolum", ID 21 added to list of Advisors
- [AutoEvent -> AdvisorList] "Trystane Charles", ID 22 added to list of Advisors
- [AutoEvent -> AdvisorList] "Vortimer Timm", ID 23 added to list of Advisors
- [AutoEvent -> LocalList] "Genna Martell", ID 24 added to list of Locals
- [AutoEvent -> LocalList] "Davos Martell", ID 71 added to list of Locals
+--- CheckPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Event "Search and Detain" has no attached Conditions
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 37 %
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "89" GreaterThanOrEqual 50
- Trigger passed on "89" GreaterThanOrEqual 40
- Trigger passed on "89" GreaterThanOrEqual 60
- Trigger FAILED on "1" NotEqual 1
- Trigger: Same sex, Seduction not possible
- Trigger passed on "89" GreaterThanOrEqual 70
- Trigger passed on "3" Equals 3
-Trigger: Joffery Martell has desire Resources and Satisified False -> passed
- Event "Interact" Timer Repeat now 999
- Event "Interact" Cooldown Timer has been reset to 0
+ "Stay Calm" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger FAILED on "2" GreaterThanOrEqual 3
+ "Run straight at them" Trait Trigger, if type 1 is GreaterThanOrEqual to 3
+ Trigger passed on "4" GreaterThanOrEqual 3
+ Event "Search and Detain" Timer Repeat now 999
+ Event "Search and Detain" Cooldown Timer has been reset to 4
+--- UpdateActiveActors (World.cs)
+ Usurper Dickon Lannister has had their TurnsUnknown Timer increased from 111 to 112
+ Follower The Beast has had their TurnsUnknown Timer increased from 11 to 12
+ Follower The Crone has had their TurnsUnknown Timer increased from 11 to 12
+ Follower The Spider has had their TurnsUnknown Timer increased from 11 to 12
+ERROR_171 "Invalid gameTurn "11", (duplicate Entry) -> Bloodhound entry Not added"
+Method: UpdateBloodHound,  Line: 4943,  Object: World.cs,  Turn: 11,  Local Time: 17:21:20 UTC +10:00
 --- ResolveOutcome (Director.cs)
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 25/04/2017 17:04:21
+ [Variable Option] "Leg it!" Failed test (60 % needed, rolled 66)  Roll 76 + DMskill -10 + DMtouched 0 -> modifiedRoll 66
+--- ProcessEndTurn (World.cs)
+Day 12, Turn 11
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 9
+ "Search and Detain" event, Cooldown Timer decremented from 4 to 3
+//Exile Game File "LogTurn.txt" Close completed at: 25/04/2017 17:21:25
