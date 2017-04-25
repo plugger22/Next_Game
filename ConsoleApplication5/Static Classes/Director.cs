@@ -2193,35 +2193,35 @@ namespace Next_Game
                                 Game.SetError(new Error(76, string.Format("Invalid Trigger Data (\"{0}\"), default Combat trait used instead, for Option \"{1}\"", trigger.Data, option.Text)));
                             }
                             Game.logTurn?.Write(string.Format(" \"{0}\" {1} Trigger, if type {2} is {3} to {4}", option.Text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold));
-                            if (CheckTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == false) { return false; }
+                            if (ResolveOptionTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == false) { return false; }
                             break;
                         case TriggerCheck.GameVar:
                             //get % value for required gamevar
                             if (trigger.Data > 0 && trigger.Data < (int)DataPoint.Count)
                             {
                                 checkValue = CheckGameState((DataPoint)trigger.Data);
-                                if (CheckTrigger(checkValue, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: GameVar value incorrect"); return false; }
+                                if (ResolveOptionTrigger(checkValue, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: GameVar value incorrect"); return false; }
                             }
                             else { Game.SetError(new Error(76, $"Invalid trigger.Data \"{trigger.Data}\" for option {option.Text} -> trigger ignored")); }
                             break;
                         case TriggerCheck.RelPlyr:
-                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { return false; }
+                            if (ResolveOptionTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { return false; }
                             break;
                         case TriggerCheck.Sex:
                             //Threshold = (int)ActorSex -> Male 1, Female 2 (sex of actor). Must be opposite sex (seduction
-                            if (CheckTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Same sex, Seduction not possible"); return false; }
+                            if (ResolveOptionTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Same sex, Seduction not possible"); return false; }
                             break;
                         case TriggerCheck.ActorType:
                             //Data = ActorType, Threshold is required type. Must be equal
-                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Incorrect ActorType"); return false; }
+                            if (ResolveOptionTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Incorrect ActorType"); return false; }
                             break;
                         case TriggerCheck.ResourcePlyr:
-                            if (CheckTrigger(player.Resources, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player has wrong amount of Resources"); return false; }
+                            if (ResolveOptionTrigger(player.Resources, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player has wrong amount of Resources"); return false; }
                             break;
                         case TriggerCheck.Known:
                             checkValue = 0;
                             if (player.Known == true) { checkValue = 1; }
-                            if(CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player is wrong type of Known status"); return false; }
+                            if(ResolveOptionTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player is wrong type of Known status"); return false; }
                             break;
                         /*case TriggerCheck.NumFollowers:
                             int numFollowers = Game.world.GetNumFollowers();
@@ -2245,7 +2245,7 @@ namespace Next_Game
         /// <param name="comparator"></param>
         /// <param name="threshold"></param>
         /// <returns></returns>
-        private bool CheckTrigger(int data, EventCalc comparator, int threshold)
+        private bool ResolveOptionTrigger(int data, EventCalc comparator, int threshold)
         {
             bool validCheck = true;
             switch(comparator)
@@ -2434,6 +2434,17 @@ namespace Next_Game
                                             //Player gains or loses an item
                                             OutItem itemOutcome = outcome as OutItem;
                                             outcomeText = ChangePlayerItemStatus(itemOutcome.Calc, itemOutcome.Data, option.ActorID);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
+                                            break;
+                                        case OutcomeType.Promise:
+                                            //Player hands out a promise (IOU) to a Passive character
+                                            OutPromise promiseOutcome = outcome as OutPromise;
+                                            outcomeText = ChangePlayerPromiseStatus(option.ActorID, promiseOutcome.PromiseType, promiseOutcome.Data);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
@@ -3214,6 +3225,44 @@ namespace Next_Game
                 }
             }
             else { Game.SetError(new Error(207, "Invalid Player or Opponent (null)")); }
+            return resultText;
+        }
+
+        /// <summary>
+        /// Player issues a Promise to a Passive actor (promises come due in Act II)
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <param name="type"></param>
+        /// <param name="strength"></param>
+        /// <returns></returns>
+        private string ChangePlayerPromiseStatus(int actorID, PossPromiseType type, int strength)
+        {
+            string resultText = "";
+            Active player = Game.world.GetActiveActor(1);
+            if (player != null)
+            {
+                //check valid NPC character who receives the promise
+                if (actorID > 10)
+                {
+                    Passive actor = Game.world.GetPassiveActor(actorID);
+                    if (actor != null)
+                    {
+                        string details = Game.world.GetActorDetails(actorID, false);
+                        Promise promise = new Promise(type, actorID, details, strength);
+                        //add to Possessions dictionary
+                        if (Game.world.AddPossession(promise.PossID, promise) == true)
+                        {
+                            //add PossID to Player & NPC
+                            player.AddPromise(promise.PossID);
+                            actor.AddPromise(promise.PossID);
+                        }
+                        else { Game.SetError(new Error(230, "Error in AddPossession -> Promise not created")); }
+                    }
+                    else { Game.SetError(new Error(230, "Invalid NPC actor (null) -> Promise not created")); }
+                }
+                else { Game.SetError(new Error(230, $"Invalid actorID \"{actorID}\" -> Promise not created")); }
+            }
+            else { Game.SetError(new Error(230, "Invalid Player (null)")); }
             return resultText;
         }
 

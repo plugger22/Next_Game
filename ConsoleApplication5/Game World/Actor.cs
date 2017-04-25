@@ -63,6 +63,7 @@ namespace Next_Game
         //lists
         private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
         private List<int> listOfItems; //items have a PossID which can be referenced in the dictPossessionss (world.cs)
+        private List<int> listOfPromises; //promises (Player issued), PossID
         private List<int> listOfFollowerEvents; //archetype events
         private List<int> listOfPlayerEvents; //archetype events
         private List<Relation> listOfRelLord; //list of relation messages relating to all actors other than the Player
@@ -82,17 +83,7 @@ namespace Next_Game
             Sex = ActorSex.Male;
             relPlyr = 50; //neutral
             relLord = 50; //neutral
-            arrayOfSkillID = new int[(int)SkillType.Count];
-            arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
-            arrayOfTraitNames = new string[(int)SkillType.Count];
-            arrayOfConditions = new int[(int)SkillType.Count];
-            listOfSecrets = new List<int>();
-            listOfItems = new List<int>();
-            listOfFollowerEvents = new List<int>();
-            listOfPlayerEvents = new List<int>();
-            listOfRelLord = new List<Relation>();
-            listOfRelPlyr = new List<Relation>();
-            listOfConditions = new List<Condition>();
+            InitialiseDataCollections();
             //set title but only if not already set by lower level constructor
             if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
@@ -113,20 +104,28 @@ namespace Next_Game
             this.Sex = sex;
             relPlyr = 50; //neutral
             relLord = 50; //neutral
-            
+            InitialiseDataCollections();
+            //set title but only if not already set by lower level constructor
+            if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
+        }
+
+        /// <summary>
+        /// used by both constructors (single source to avoid duplication and update/change errors)
+        /// </summary>
+        private void InitialiseDataCollections()
+        {
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
             arrayOfConditions = new int[(int)SkillType.Count];
             listOfSecrets = new List<int>();
             listOfItems = new List<int>();
+            listOfPromises = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
             listOfRelLord = new List<Relation>();
             listOfRelPlyr = new List<Relation>();
             listOfConditions = new List<Condition>();
-            //set title but only if not already set by lower level constructor
-            if (String.IsNullOrEmpty(Title) == true) { Title = string.Format("{0}", Type); }
         }
 
         public void SetActorPosition(Position posLoc)
@@ -356,6 +355,12 @@ namespace Next_Game
 
         public void SetSecrets(List<int> secrets)
         { if (secrets != null) { listOfSecrets.Clear(); listOfSecrets.AddRange(secrets); } }
+
+        public void AddPromise(int possID)
+        { if (possID > 0) { listOfPromises.Add(possID); } }
+
+        public List<int> GetPromises()
+        { return listOfPromises; }
 
         /// <summary>
         /// Items -> auto updates Item.WhoHas property
@@ -747,6 +752,7 @@ namespace Next_Game
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
         private List<int> listOfFavours; //stores possessionId of favours granted to Player
         private List<int> listOfIntroductions; //stores possessionId of introductions granted to the Player
+        
 
         public Player(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
@@ -776,6 +782,7 @@ namespace Next_Game
 
         public List<int> GetIntroductions()
         { return listOfIntroductions; }
+
     }
 
     //Player controlled Minions
