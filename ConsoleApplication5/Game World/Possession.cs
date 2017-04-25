@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum PossessionType { None, Secret, Promise, Favour, Introduction, Disguise, Item }
-    public enum PossSecretType {Parents, Trait, Wound, Torture, Murder, Loyalty, Glory,Fertility };
-    public enum PossItemEffect { None }
+    public enum PossSecretType { None, Parents, Trait, Wound, Torture, Murder, Loyalty, Glory,Fertility }
+    public enum PossPromiseType { None, Land, Court, Resource, Marriage } //court is a court title, Land is a Location
     public enum PossItemType { None, Passive, Active, Both} //active items provide benefits, passive items are used as bargaining chips, both is used for method filtering in Actor.cs -> CAREFUL!!!
+    public enum PossItemEffect { None }
     //public enum PossSecretRef { Actor, House, GeoCluster, Location, Item }
 
     public class Possession
@@ -29,7 +30,7 @@ namespace Next_Game
         public Possession(string description, int year)
         {
             PossID = possessionIndex++;
-            this.Year = year;
+            if (year == 0) { Year = Game.gameYear; } else { this.Year = year; }
             this.Description = description;
             this.Active = true;
         }
@@ -149,14 +150,21 @@ namespace Next_Game
     public class Favour : Possession
     {
         public int Strength { get; set; } //strength 1 to 5
-        public int ActorID { get; set; } //which actor granted the favour
+        public int WhoGave { get; set; } //which actor granted the favour
 
-        public Favour( string description, int year, int strength, int actorID) : base(description, year)
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="strength"></param>
+        /// <param name="actorID"></param>
+        /// <param name="year">if ignored, default value of '0' gets converted to current year</param>
+        public Favour( string description, int strength, int actorID, int year = 0) : base(description, year)
         {
             this.Strength = strength;
             Strength = Math.Min(5, Strength);
             Strength = Math.Max(1, Strength);
-            if (actorID > 0) { this.ActorID = actorID; } else { Game.SetError(new Error(122, "Invalid ActorID input (zero or less) Favour.cs")); }
+            if (actorID > 0) { this.WhoGave = actorID; } else { Game.SetError(new Error(122, $"Invalid ActorID input \"{actorID}\" -> given Bad value 1")); WhoGave = 1; }
             Type = PossessionType.Favour;
         }
     }
@@ -166,23 +174,59 @@ namespace Next_Game
     public class Introduction : Possession
     {
         public int Strength { get; set; } //strength 1 to 5
-        public int ActorID { get; set; } //which actor granted the favour
+        public int WhoGave { get; set; } //which actor granted the favour
 
-        public Introduction(string description, int year, int strength, int actorID) : base(description, year)
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="strength"></param>
+        /// <param name="actorID"></param>
+        /// <param name="year">if ignored, default value of '0' gets converted to current year</param>
+        public Introduction(string description, int strength, int actorID, int year = 0) : base(description, year)
         {
             this.Strength = strength;
             Strength = Math.Min(5, Strength);
             Strength = Math.Max(1, Strength);
-            if (actorID > 0) { this.ActorID = actorID; } else { Game.SetError(new Error(122, "Invalid ActorID input (zero or less) Introduction.cs")); }
+            if (actorID > 0) { this.WhoGave = actorID; } else { Game.SetError(new Error(122, $"Invalid ActorID input \"{actorID}\" -> given Bad value 1")); WhoGave = 1; }
             Type = PossessionType.Favour;
         }
     }
 
+    // Promises ---
+
+    /// <summary>
+    /// Promises that the Player makes to other NPC's, in order to gain their support, prior to taking power
+    /// </summary>
+    public class Promise : Possession
+    {
+        //description is used to hold combined title + name of person (WhoHas) holding promise for quickreference
+        public int Strength { get; set; } //1 to 5
+        public PossPromiseType PromiseType { get; set; }
+        
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        /// <param name="promiseType"></param>
+        /// <param name="actorID"></param>
+        /// <param name="description"></param>
+        /// <param name="strength"></param>
+        /// <param name="year">if ignored, default '0' gets converted to current Year</param>
+        public Promise(PossPromiseType promiseType, int actorID, string description, int strength, int year = 0) : base(description, year)
+        {
+            PromiseType = promiseType;
+            if (actorID > 0) { WhoHas = actorID; } else { Game.SetError(new Error(228, $"Invalid ActorID input \"{actorID}\" -> given Bad value 1")); WhoHas = 1; }
+            if (strength > 0 && strength < 6) { this.Strength = strength; } else { Game.SetError(new Error(228, $"Invalid strength input \"{strength}\" -> given default value 3")); Strength = 3; }
+            Type = PossessionType.Promise;
+        }
+
+    }
+
     // Items ---
 
-        /// <summary>
-        /// Items -> player or NPC
-        /// </summary>
+    /// <summary>
+    /// Items -> player or NPC
+    /// </summary>
     public class Item : Possession
     {
         public int ItemID { get; set; } //unique item ID (in addition to autoassigned PossID)

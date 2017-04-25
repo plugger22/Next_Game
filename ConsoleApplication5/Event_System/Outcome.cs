@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
     public enum OutcomeType { None, Delay, Conflict, Game, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
-    Follower};
+    Follower, Promise, Introduction, Favour};
 
     /// <summary>
     /// Option outcome, event system
@@ -176,6 +176,22 @@ namespace Next_Game.Event_System
             Data = itemType;
             this.Calc = calc;
             Type = OutcomeType.Item;
+        }
+    }
+
+    /// <summary>
+    /// Player makes a promise
+    /// </summary>
+    class OutPromise : Outcome
+    {
+        //Data -> strength
+        public PossPromiseType PromiseType { get; set; }
+
+        public OutPromise(int eventID, PossPromiseType type, int strength) : base(eventID)
+        {
+            if (strength > 0 && strength < 6) { Data = strength; } else { Game.SetError(new Error(229, $"Invalid Strength input \"{strength}\" -> given default value 3")); Data = 3; }
+            PromiseType = type;
+            Type = OutcomeType.Promise;
         }
     }
 

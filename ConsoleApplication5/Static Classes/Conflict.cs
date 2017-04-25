@@ -2273,7 +2273,7 @@ namespace Next_Game
                             case ResultType.Favour:
                                 //data indicates the strength of the favour granted to Player
                                 tempText = string.Format("{0} {1} grants you a Favour", opponent.Title, opponent.Name);
-                                Favour newFavour = new Favour(tempText, Game.gameYear, data, opponent.ActID);
+                                Favour newFavour = new Favour(tempText, data, opponent.ActID);
                                 //add to dictionary and Player's list
                                 if (Game.world.AddPossession(newFavour.PossID, newFavour) == true)
                                 {
@@ -2286,7 +2286,7 @@ namespace Next_Game
                             case ResultType.Introduction:
                                 //data indicates the strength of the introduction granted to Player
                                 tempText = string.Format("{0} {1} grants you an Introduction", opponent.Title, opponent.Name);
-                                Introduction newIntroduction = new Introduction(tempText, Game.gameYear, data, opponent.ActID);
+                                Introduction newIntroduction = new Introduction(tempText, data, opponent.ActID);
                                 //add to dictionary and Player's list
                                 if (Game.world.AddPossession(newIntroduction.PossID, newIntroduction) == true)
                                 {
