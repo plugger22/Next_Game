@@ -1137,7 +1137,7 @@ namespace Next_Game
                         }
                     }
                 }
-                //player specific Soft possessions - Favours & Introductions & Promises
+                //player specific Soft possessions - Favours & Introductions
                 if (person is Player)
                 {
                     //favours (Player only)
@@ -1172,7 +1172,7 @@ namespace Next_Game
                     }
                 }
                 //Promises
-                List<int> listOfPromises = person.GetPromises();
+                    List<int> listOfPromises = person.GetPromises();
                 if (listOfPromises.Count > 0)
                 {
                     listToDisplay.Add(new Snippet("Promises", RLColor.Brown, RLColor.Black));
@@ -1181,8 +1181,8 @@ namespace Next_Game
                         Promise promise = (Promise)GetPossession(possessionID);
                         if (promise != null)
                         {
-                            listToDisplay.Add(new Snippet(string.Format("{0} {1} ", promise.Year, promise.Description), false));
-                            listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(promise.Strength)), RLColor.LightRed, RLColor.Black));
+                            listToDisplay.Add(new Snippet(string.Format("{0} {1}", promise.Year, promise.Description ), false));
+                            listToDisplay.Add(new Snippet(string.Format("    {0}", GetStars(promise.Strength)), RLColor.LightRed, RLColor.Black));
                         }
                     }
                 }
@@ -2411,13 +2411,16 @@ namespace Next_Game
         private void InitialiseDesires()
         {
             Game.logStart?.Write("--- InitialiseDesires (World.cs)");
-            for(int i = 0; i < dictPassiveActors.Count; i++)
+            //note array should correspond exactly to enum PossPromiseType
+            string [] arrayOfPromiseTexts = new string[] { "None", "more Land", "a Court Title", "more Resources", "a Favourable Marriage", "a Specific Item" };
+            for (int i = 0; i < dictPassiveActors.Count; i++)
             {
                 Passive actor = dictPassiveActors.ElementAt(i).Value;
                 //lords, bannerlords & Regents
                 if (actor.Type == ActorType.Lord || actor.Type == ActorType.BannerLord || actor.Realm == ActorRealm.Regent)
                 {
                     actor.Desire = (PossPromiseType)rnd.Next((int)PossPromiseType.Count);
+                    actor.DesireText = arrayOfPromiseTexts[(int)actor.Desire];
                     Game.logStart?.Write($"{actor.Title} {actor.Name} ActID {actor.ActID} assigned Desire -> {actor.Desire}");
                 }
             }

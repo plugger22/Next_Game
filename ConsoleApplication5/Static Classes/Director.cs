@@ -3333,7 +3333,7 @@ namespace Next_Game
                     Passive actor = Game.world.GetPassiveActor(actorID);
                     if (actor != null)
                     {
-                        string details = Game.world.GetActorDetails(actorID, false);
+                        string details = string.Format("The Ursurper has promised {0} {1}, ActID {2}, {3}", actor.Title, actor.Name, actor.ActID, actor.DesireText);
                         Promise promise = new Promise(type, actorID, details, strength);
                         //add to Possessions dictionary
                         if (Game.world.AddPossession(promise.PossID, promise) == true)
@@ -3342,7 +3342,6 @@ namespace Next_Game
                             player.AddPromise(promise.PossID);
                             actor.AddPromise(promise.PossID);
                             actor.Satisfied = true;
-                            actor.DesireText = promise.GetPromiseText();
                             resultText = $"{player.Title} {player.Name} promises {actor.Title} {actor.Name}, ActID {actor.ActID}, that they will attend to their desire for {actor.DesireText}";
                         }
                         else { Game.SetError(new Error(230, "Error in AddPossession -> Promise not created")); }

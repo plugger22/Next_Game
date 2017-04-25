@@ -8,7 +8,7 @@ namespace Next_Game
 {
     public enum PossessionType { None, Secret, Promise, Favour, Introduction, Disguise, Item }
     public enum PossSecretType { None, Parents, Trait, Wound, Torture, Murder, Loyalty, Glory,Fertility }
-    public enum PossPromiseType { None, Land, Court, Resource, Marriage, Item, Count } //NOTE: Order corresponds identically to arrayOfPromiseTexts -> Change one, change the other
+    public enum PossPromiseType { None, Land, Court, Resource, Marriage, Item, Count } //NOTE: Order corresponds identically to World.InitialiseDesires array -> Change one, change the other
     public enum PossItemType { None, Passive, Active, Both} //active items provide benefits, passive items are used as bargaining chips, both is used for method filtering in Actor.cs -> CAREFUL!!!
     public enum PossItemEffect { None }
     //public enum PossSecretRef { Actor, House, GeoCluster, Location, Item }
@@ -204,7 +204,6 @@ namespace Next_Game
         //description is used to hold combined title + name of person (WhoHas) holding promise for quickreference
         public int Strength { get; set; } //1 to 5
         public PossPromiseType PromiseType { get; set; }
-        private string[] arrayOfPromiseTexts;
 
         /// <summary>
         /// default constructor
@@ -217,12 +216,14 @@ namespace Next_Game
         public Promise(PossPromiseType promiseType, int actorID, string description, int strength, int year = 0) : base(description, year)
         {
             PromiseType = promiseType;
+
             if (actorID > 0) { WhoHas = actorID; } else { Game.SetError(new Error(228, $"Invalid ActorID input \"{actorID}\" -> given Bad value 1")); WhoHas = 1; }
             if (strength > 0 && strength < 6) { this.Strength = strength; } else { Game.SetError(new Error(228, $"Invalid strength input \"{strength}\" -> given default value 3")); Strength = 3; }
-            InitialisePromiseArray();
+            //InitialisePromiseArray();
             Type = PossessionType.Promise;
         }
 
+        /*
         /// <summary>
         /// Texts that correspond to PossPromiseType and used as descriptors -> Keep order identical to enum
         /// </summary>
@@ -235,7 +236,7 @@ namespace Next_Game
         /// <returns></returns>
         public string GetPromiseText()
         { return arrayOfPromiseTexts[(int)Type]; }
-
+        */
     }
 
     // Items ---
