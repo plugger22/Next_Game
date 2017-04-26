@@ -2317,15 +2317,15 @@ namespace Next_Game
                                                                         validData = false;
                                                                     }
                                                                     break;
-                                                                case "Game":
-                                                                    //check that GameVars (DataPoints) are only 'add' or 'random'
+                                                                case "DataPoint":
+                                                                    //check that DataPoints are only 'add' or 'random'
                                                                     if (outTemp.Data <= 6 && outTemp.Calc != EventCalc.Add && outTemp.Calc != EventCalc.Random)
                                                                     {
                                                                         Game.SetError(new Error(49, string.Format("Outcome \"apply: {0}\" changed to \"Add\" for Event (\"{1}\")",
                                                                             outTemp.Calc, structEvent.Name)));
                                                                         outTemp.Calc = EventCalc.Add;
                                                                     }
-                                                                    outObject = new OutGame(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Calc);
+                                                                    outObject = new OutDataPoint(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Calc);
                                                                     break;
                                                                 case "Known":
                                                                     if (outTemp.Data != 0)

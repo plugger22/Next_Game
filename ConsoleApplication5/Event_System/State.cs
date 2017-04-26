@@ -18,7 +18,7 @@ namespace Next_Game.Event_System
     /// <summary>
     /// Enables Player events to change game state variables (not constants). Only accessed through Director.cs
     /// </summary>
-    public class State
+    /*public class State
     {
         static Random rnd;
 
@@ -102,7 +102,8 @@ namespace Next_Game.Event_System
             return resultText;
         }
 
-
+    
         //add new methods above here
     }
+    */
 }
