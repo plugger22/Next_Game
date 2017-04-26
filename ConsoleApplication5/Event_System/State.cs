@@ -26,7 +26,7 @@ namespace Next_Game.Event_System
         { rnd = new Random(seed); }
 
         /// <summary>
-        /// adjusts a state
+        /// adjusts a state -> NOTE: for GameVars other than Justice, etc., use the Director methods to do so)
         /// </summary>
         /// <param name="outType">GameVar enum index. If positive then DataState.Good, if negative then DataState.Bad</param>
         /// <param name="amount">how much</param>

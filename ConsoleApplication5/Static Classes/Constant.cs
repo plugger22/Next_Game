@@ -86,6 +86,10 @@ namespace Next_Game
         AI_HUNT_THRESHOLD,
         //Incarceration
         LOSS_OF_LEGEND,
+        //Promises
+        PROMISES_BASE,
+        PROMISES_HALVED,
+        PROMISES_MAX,
         //keep as last
         Count 
     }
@@ -170,6 +174,9 @@ namespace Next_Game
             arrayOfGlobals[66] = Global.TEST_MULTIPLIER;
             arrayOfGlobals[67] = Global.MAX_FOLLOWERS;
             arrayOfGlobals[68] = Global.RECRUIT_FOLLOWERS;
+            arrayOfGlobals[69] = Global.PROMISES_BASE;
+            arrayOfGlobals[70] = Global.PROMISES_HALVED;
+            arrayOfGlobals[71] = Global.PROMISES_MAX;
         }
 
         /// <summary>

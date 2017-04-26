@@ -1172,7 +1172,7 @@ namespace Next_Game
                     }
                 }
                 //Promises
-                    List<int> listOfPromises = person.GetPromises();
+                List<int> listOfPromises = person.GetPromises();
                 if (listOfPromises.Count > 0)
                 {
                     listToDisplay.Add(new Snippet("Promises", RLColor.Brown, RLColor.Black));

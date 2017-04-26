@@ -176,5 +176,13 @@
 # LOSS_OF_LEGEND -> amount of increase to 'Good' value of Legend_King each turn the Usurper is held in a dungeon by the King
 57: 1 @ 0 @ 4
 
+# Promises ---
 
-# Next valid number -> 69
+# PROMISES_BASE
+69: 10 @ 5 @ 15
+# PROMISES_HALVED
+70: 5 @ 4 @ 10
+# PROMISES_MAX
+71: 10 @ 5 @ 20
+
+# Next valid number -> 72
