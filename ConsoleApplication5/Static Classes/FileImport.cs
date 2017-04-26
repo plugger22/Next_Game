@@ -1790,8 +1790,8 @@ namespace Next_Game
                                     {
                                         case "conflict":
                                         case "Conflict":
-                                        case "game":
-                                        case "Game":
+                                        case "dataPoint":
+                                        case "DataPoint":
                                         case "known":
                                         case "Known":
                                         case "item":
@@ -1949,50 +1949,6 @@ namespace Next_Game
                                             break;
                                     }
                                     break;
-                                /*case "plyrRes":
-                                    //Change Resource outcomes only -> if true then Player's resources are changed, otherwise opponents
-                                    switch (cleanToken)
-                                    {
-                                        case "Yes":
-                                        case "yes":
-                                        case "True":
-                                        case "true":
-                                            structOutcome.PlayerRes = true;
-                                            break;
-                                        case "No":
-                                        case "no":
-                                        case "False":
-                                        case "false":
-                                            structOutcome.PlayerRes = false;
-                                            break;
-                                        default:
-                                            Game.SetError(new Error(49, string.Format("Invalid Input, PlyrRes, (\"{0}\")", arrayOfEvents[i])));
-                                            validData = false;
-                                            break;
-                                    }
-                                    break;*/
-                                /*case "conPlyr":
-                                    //Condition outcomes - if true applies to Player, otherwise NPC actor
-                                    switch (cleanToken)
-                                    {
-                                        case "Yes":
-                                        case "yes":
-                                        case "True":
-                                        case "true":
-                                            structOutcome.PlayerCondition = true;
-                                            break;
-                                        case "No":
-                                        case "no":
-                                        case "False":
-                                        case "false":
-                                            structOutcome.PlayerCondition = false;
-                                            break;
-                                        default:
-                                            Game.SetError(new Error(49, string.Format("Invalid Input, conPlyr, (\"{0}\")", arrayOfEvents[i])));
-                                            validData = false;
-                                            break;
-                                    }
-                                    break;*/
                                 case "conText":
                                     //Condition outcomes - name of condition, eg. "Old Age"
                                     structOutcome.ConditionText = cleanToken;
@@ -2056,28 +2012,6 @@ namespace Next_Game
                                     }
                                     catch { Game.SetError(new Error(49, string.Format("Invalid Input, Outcome conTimer, (Conversion) \"{0}\"", arrayOfEvents[i]))); validData = false; }
                                     break;
-                                /*case "chall":
-                                    //conflict outcomes - is the Player the challenger?
-                                    switch (cleanToken)
-                                    {
-                                        case "Yes":
-                                        case "yes":
-                                        case "True":
-                                        case "true":
-                                            structOutcome.Challenger = true;
-                                            break;
-                                        case "No":
-                                        case "no":
-                                        case "False":
-                                        case "false":
-                                            structOutcome.Challenger = false;
-                                            break;
-                                        default:
-                                            Game.SetError(new Error(49, string.Format("Invalid Input, Challenger, (\"{0}\")", arrayOfEvents[i])));
-                                            validData = false;
-                                            break;
-                                    }
-                                    break;*/
                                 case "CsubType":
                                     //Conflict outcome subtype
                                     switch (cleanToken)
