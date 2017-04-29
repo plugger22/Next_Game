@@ -2552,6 +2552,17 @@ namespace Next_Game
                                                 Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
+                                        case OutcomeType.GameVar:
+                                            //Change a GameVar
+                                            OutGameVar gamevarOutcome = outcome as OutGameVar;
+                                            outcomeText = ChangeGameVarStatus(gamevarOutcome.gameVar, gamevarOutcome.Amount, gamevarOutcome.Calc);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
+                                            break;
                                         case OutcomeType.Passage:
                                             //Player goes on a sea voyage
                                             OutPassage passageOutcome = outcome as OutPassage;
@@ -3355,8 +3366,8 @@ namespace Next_Game
                             //add PossID to Player & NPC
                             player.AddPromise(promise.PossID);
                             actor.AddPromise(promise.PossID);
-                            //actor.Satisfied = true;
-                            Game.variable.SetValue(GameVar.Promises_Num, 1, EventCalc.Add);
+                            actor.Satisfied = true;
+                            Game.variable.ChangeValue(GameVar.Promises_Num, 1, EventCalc.Add);
                             resultText = $"{player.Title} {player.Name} promises {actor.Title} {actor.Name}, ActID {actor.ActID}, that they will attend to their desire for {actor.DesireText}";
                         }
                         else { Game.SetError(new Error(230, "Error in AddPossession -> Promise not created")); }
@@ -3482,6 +3493,24 @@ namespace Next_Game
                 else { player.DeathTimer = 10; Game.SetError(new Error(221, "Invalid Death Timer ( must be > 1) -> given default value of 10")); }
             }
             else { Game.SetError(new Error(221, "Invalid Player (null)")); }
+            return resultText;
+        }
+
+
+        /// <summary>
+        /// change a GameVar
+        /// </summary>
+        /// <param name="gamevar"></param>
+        /// <param name="amount"></param>
+        /// <param name="apply"></param>
+        /// <returns></returns>
+        private string ChangeGameVarStatus(GameVar gamevar, int amount, EventCalc apply)
+        {
+            string resultText = "";
+            int origValue = Game.variable.GetValue(gamevar);
+            Game.variable.ChangeValue(gamevar, amount, apply);
+            int newValue = Game.variable.GetValue(gamevar);
+            resultText = $"GameVar {gamevar} has changed from {origValue} to {newValue}";
             return resultText;
         }
 

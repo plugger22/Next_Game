@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
     public enum OutcomeType { None, Delay, Conflict, DataPoint, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
-    Follower, Promise, RelPlyr};
+    Follower, Promise, RelPlyr, GameVar};
 
     /// <summary>
     /// Option outcome, event system
@@ -168,6 +168,25 @@ namespace Next_Game.Event_System
             Data = known;
             Type = OutcomeType.Known;
         }
+    }
+
+
+    /// <summary>
+    /// Change a GameVar by an amount
+    /// </summary>
+    class OutGameVar : Outcome
+    {
+        public GameVar gameVar { get; set; }
+
+        public OutGameVar(int eventID, GameVar gamevar, int amount, EventCalc apply) : base(eventID)
+        {
+            this.gameVar = gamevar;
+            this.Amount = amount;
+            Calc = apply;
+            Type = OutcomeType.GameVar;
+        }
+
+
     }
 
     /// <summary>

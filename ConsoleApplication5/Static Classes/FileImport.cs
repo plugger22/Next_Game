@@ -128,6 +128,8 @@ namespace Next_Game
         public SkillType ConditionSkill { get; set; } //Combat, Charm, Wits etc.
         public int ConditionEffect { get; set; } //+/- 1 or 2
         public int ConditionTimer { get; set; } //set to 999 for a permanent condition, otherwise equal to the number of days that condition applies for
+        //GameVar
+        public GameVar gamevar { get; set; }
 
         /// <summary>
         /// copy constructor
@@ -157,6 +159,8 @@ namespace Next_Game
             ConditionSkill = outcome.ConditionSkill;
             ConditionEffect = outcome.ConditionEffect;
             ConditionTimer = outcome.ConditionTimer;
+            //GameVar
+            gamevar = outcome.gamevar;
         }
     }
 
@@ -1166,6 +1170,7 @@ namespace Next_Game
                                             structOutcome.ConditionSkill = SkillType.None;
                                             structOutcome.ConditionEffect = 0;
                                             structOutcome.ConditionTimer = 0;
+                                            structOutcome.gamevar = GameVar.None;
                                         }
                                         listAllOutcomes.Add(listSubOutcomes);
                                         OptionStruct structOptionCopy = new OptionStruct(structOption);
@@ -1238,6 +1243,7 @@ namespace Next_Game
                                         structOutcome.ConditionSkill = SkillType.None;
                                         structOutcome.ConditionEffect = 0;
                                         structOutcome.ConditionTimer = 0;
+                                        structOutcome.gamevar = GameVar.None;
                                     }
                                     else
                                     {
@@ -1792,6 +1798,8 @@ namespace Next_Game
                                         case "Conflict":
                                         case "dataPoint":
                                         case "DataPoint":
+                                        case "gameVar":
+                                        case "GameVar":
                                         case "known":
                                         case "Known":
                                         case "item":
@@ -2315,6 +2323,15 @@ namespace Next_Game
                                                                         validData = false;
                                                                     }
                                                                     break;
+                                                                case "GameVar":
+                                                                    if (outTemp.Amount != 0 && outTemp.gamevar != GameVar.None)
+                                                                    { outObject = new OutGameVar(structEvent.EventID, outTemp.gamevar, outTemp.Amount, outTemp.Calc); }
+                                                                    else
+                                                                    {
+                                                                        Game.SetError(new Error(49, $"Invalid Input, Outcome Amount (\"{outTemp.Amount}\"), or GameVar \"{outTemp.gamevar}\""));
+                                                                        validData = false;
+                                                                    }
+                                                                    break;
                                                                 case "DeathTimer":
                                                                     if (outTemp.Calc == EventCalc.Add || outTemp.Calc == EventCalc.Subtract)
                                                                     { outObject = new OutDeathTimer(structEvent.EventID, Math.Abs(outTemp.Amount), outTemp.Calc); }
@@ -2435,6 +2452,40 @@ namespace Next_Game
                             string[] tokens = name.Split('.');
                             //strip out leading spaces
                             cleanTag = tokens[tokens.Length - 1].Trim();
+                            switch (outcomeObject.Type)
+                            {
+                                case OutcomeType.EventStatus:
+                                    OutEventStatus tempOutcome_0 = outcomeObject as OutEventStatus;
+                                    Game.logStart?.Write(string.Format("    {0} -> Target EventID {1}, New Status {2}", cleanTag, tempOutcome_0.Data, tempOutcome_0.NewStatus));
+                                    break;
+                                case OutcomeType.EventChain:
+                                    OutEventChain tempOutcome_1 = outcomeObject as OutEventChain;
+                                    Game.logStart?.Write(string.Format("    {0} -> Target EventID {1}", cleanTag, tempOutcome_1.Data));
+                                    break;
+                                case OutcomeType.EventTimer:
+                                    OutEventTimer tempOutcome_2 = outcomeObject as OutEventTimer;
+                                    Game.logStart?.Write(string.Format("    {0} -> Target EventID {1}, {2} timer, amount {3} apply {4}", cleanTag, tempOutcome_2.Data, tempOutcome_2.Timer,
+                                        tempOutcome_2.Amount, tempOutcome_2.Calc));
+                                    break;
+                                case OutcomeType.Conflict:
+                                    OutConflict tempOutcome_3 = outcomeObject as OutConflict;
+                                    Game.logStart?.Write(string.Format("    {0} -> subType {1}, oppID {2}, Challenger {3}", cleanTag, tempOutcome_3.SubType, tempOutcome_3.Data, 
+                                        tempOutcome_3.Challenger));
+                                    break;
+                                case OutcomeType.Resource:
+                                    OutResource tempOutcome_4 = outcomeObject as OutResource;
+                                    Game.logStart?.Write(string.Format("    {0} -> Player? {1}, amount {2}, apply {3}", cleanTag, tempOutcome_4.PlayerRes, tempOutcome_4.Amount, tempOutcome_4.Calc));
+                                    break;
+                                case OutcomeType.GameVar:
+                                    OutGameVar tempOutcome_5 = outcomeObject as OutGameVar;
+                                    Game.logStart?.Write(string.Format("    {0} -> GameVar {1}, Amount {2}, EventCalc {3}", cleanTag, tempOutcome_5.Amount, tempOutcome_5.Calc));
+                                    break;
+                                default:
+                                    Game.logStart?.Write(string.Format("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc));
+                                    break;
+                            }
+                            /*
+                            }
                             if (outcomeObject is OutEventStatus)
                             {
                                 OutEventStatus tempOutcome = outcomeObject as OutEventStatus;
@@ -2467,8 +2518,14 @@ namespace Next_Game
                                 Game.logStart?.Write(string.Format("    {0} -> Player? {1}, Condition \"{2}\", {3} {4}, Timer {5}", cleanTag, tempOutcome.PlayerCondition, tempOutcome.NewCondition.Text, 
                                     tempOutcome.NewCondition.Skill, tempOutcome.NewCondition.Effect, tempOutcome.NewCondition.Timer));
                             }
+                            else if (outcomeObject is OutGameVar)
+                            {
+                                OutGameVar tempOutcome = outcomeObject as OutGameVar;
+                                Game.logStart?.Write(string.Format("    {0} -> GameVar {1}, Amount {2}, EventCalc {3}", cleanTag, tempOutcome.Amount, tempOutcome.Calc));
+                            }
                             else
                             { Game.logStart?.Write(string.Format("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc)); }
+                            */
                         }
                     }
                 }

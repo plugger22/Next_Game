@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
 
-    public enum GameVar { None,
+    /*public enum GameVar { None,
         Justice, //don't change order -> corresponds to Director DataPoint
         Legend_Usurper, //don't change order -> corresponds to Director DataPoint
         Legend_King, //don't change order -> corresponds to Director DataPoint
@@ -18,7 +18,7 @@ namespace Next_Game.Event_System
     /// <summary>
     /// Enables Player events to change game state variables (not constants). Only accessed through Director.cs
     /// </summary>
-    /*public class State
+    public class State
     {
         static Random rnd;
 

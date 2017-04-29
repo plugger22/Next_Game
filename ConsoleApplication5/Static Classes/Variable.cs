@@ -44,7 +44,7 @@ namespace Next_Game
 
 
         /// <summary>
-        /// straight GameVar equals this
+        /// Set GameVar directly to this
         /// </summary>
         /// <param name="index"></param>
         /// <param name="data"></param>
@@ -66,7 +66,7 @@ namespace Next_Game
         /// <param name="index"></param>
         /// <param name="amount"></param>
         /// <param name="apply"></param>
-        public void SetValue(GameVar index, int amount, EventCalc apply)
+        public void ChangeValue(GameVar index, int amount, EventCalc apply)
         {
             if ((int)index < arrayOfVariables.Length)
             {
