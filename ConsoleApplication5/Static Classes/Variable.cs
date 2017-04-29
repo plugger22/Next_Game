@@ -54,7 +54,7 @@ namespace Next_Game
             {
                 int origValue = arrayOfVariables[(int)index];
                 arrayOfVariables[(int)index] = data;
-                Game.logTurn?.Write($"{index} changed from {origValue} to {data}");
+                Game.logTurn?.Write($"[GameVar] {index} changed from {origValue} to {data}");
             }
             else
             { Game.SetError(new Error(232, string.Format("index for {0} is out of range, data {1}", index, data))); }
@@ -94,7 +94,7 @@ namespace Next_Game
                             break;
                     }
                     arrayOfVariables[(int)index] = newValue;
-                    Game.logTurn?.Write($"{index} changed from {origValue} to {newValue} as a result of {apply} {amount}");
+                    Game.logTurn?.Write($"[GameVar] {index} changed from {origValue} to {newValue} as a result of {apply} {amount}");
                 }
                 else { Game.SetError(new Error(232, $"Invalid amount input (zero) -> {index} not changed")); }
             }

@@ -1,83 +1,202 @@
-//Exile Game File "LogTurn.txt" opened at: 26/04/2017 14:04:00
+//Exile Game File "LogTurn.txt" opened at: 29/04/2017 14:02:28
 --- ProcessStartTurn (World.cs)
-Day 24, Turn 23
---- MoveActors -> 4 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Beelzebub, ActID 114 travelling to Winterfell (current Loc 17:23)
+Day 13, Turn 12
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Set, ActID 112 travelling to Bloodkeep (current Loc 16:8)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Rodrik Tyrell, ID 1 at 3:10, Enemy at 17:23 (Brother Beelzebub, ID 114
+ [Search -> Debug] Active Rodrik Tyrell, ID 1 at 14:8, Enemy at 16:8 (Brother Set, ID 112
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Rodrik Tyrell, ID 1 at 3:10, Enemy at 18:23 (Brother Beelzebub, ID 114
- [Goal -> Arrival] Inquisitor Brother Beelzebub, ActID 114, currently at Winterfell, new Goal -> Wait
- [Move -> MoveObject] Nemesis The Unrelenting, ActID 116 travelling to Barrow Hill (current Loc 12:14)
+ [Search -> Debug] Active Rodrik Tyrell, ID 1 at 14:8, Enemy at 15:8 (Brother Set, ID 112
+ [Goal -> Arrival] Inquisitor Brother Set, ActID 112, currently at Bloodkeep, new Goal -> Wait
+ [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 113 travelling to The Yellow Huntress (current Loc 16:12)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Rodrik Tyrell, ID 1 at 3:10, Enemy at 12:14 (The Unrelenting, ID 116
+ [Search -> Debug] Active Rodrik Tyrell, ID 1 at 14:8, Enemy at 16:12 (Brother Diabolous, ID 113
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Rodrik Tyrell, ID 1 at 3:10, Enemy at 12:15 (The Unrelenting, ID 116
- [Move -> MoveObject] Inquisitor Brother Behemoth, ActID 115 travelling to Barrow Hill (current Loc 8:12)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Rodrik Tyrell, ID 1 at 3:10, Enemy at 8:12 (Brother Behemoth, ID 115
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Rodrik Tyrell, ID 1 at 3:10, Enemy at 8:11 (Brother Behemoth, ID 115
- [Move -> MoveObject] Inquisitor Brother Set, ActID 112 travelling to Kingskeep (current Loc 14:9)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Rodrik Tyrell, ID 1 at 3:10, Enemy at 14:9 (Brother Set, ID 112
+ [Search -> Debug] Active Rodrik Tyrell, ID 1 at 14:8, Enemy at 17:12 (Brother Diabolous, ID 113
+ [Goal -> Arrival] Inquisitor Brother Diabolous, ActID 113, currently at The Yellow Huntress, new Goal -> Wait
 --- UpdatePlayerStatus (World.cs)
 --- CheckStationaryActiveActors (World.cs)
  [Search -> Stationary] Usurper Rodrik Tyrell, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Set, ID 112 at 14:10, Active Rodrik Tyrell, ID 1, at 3:10
- [Search -> Debug] Enemy, Brother Diabolous, ID 113 at 24:10, Active Rodrik Tyrell, ID 1, at 3:10
- [Search -> Debug] Enemy, Brother Beelzebub, ID 114 at 18:23, Active Rodrik Tyrell, ID 1, at 3:10
- [Search -> Debug] Enemy, Brother Behemoth, ID 115 at 8:10, Active Rodrik Tyrell, ID 1, at 3:10
- [Search -> Debug] Enemy, The Unrelenting, ID 116 at 12:16, Active Rodrik Tyrell, ID 1, at 3:10
+ [Search -> Debug] Enemy, Brother Set, ID 112 at 14:8, Active Rodrik Tyrell, ID 1, at 14:8
+ [Search -> Alert] Inquisitor Brother Set, ActID 112, is in the same place as Active Rodrik Tyrell, ID 1, (loc 14:8)
+ [SEARCH -> Active] Random 74 < 50 (ai 20 + known 30) -> Fail 
+ [Search -> ListSearched] Usurper Rodrik Tyrell, ActID 1 Searched -> Enemy ActID 112 added
+ [Search -> Debug] Enemy, Brother Diabolous, ID 113 at 17:11, Active Rodrik Tyrell, ID 1, at 14:8
+ [Search -> Debug] Enemy, Brother Beelzebub, ID 114 at 14:12, Active Rodrik Tyrell, ID 1, at 14:8
+ [Search -> Debug] Enemy, Brother Behemoth, ID 115 at 8:14, Active Rodrik Tyrell, ID 1, at 14:8
+ [Search -> Debug] Enemy, The Unrelenting, ID 116 at 14:12, Active Rodrik Tyrell, ID 1, at 14:8
  [Search -> Stationary] Follower The Jester, ActID 6 is AtLocation
  [Search -> Stationary] Follower The Waif, ActID 7 is AtLocation
  [Search -> Stationary] Follower The Duchess, ActID 4 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Notification] Inquisitor Brother Set, ActID 112 is Travelling to Kingskeep
- [AI -> Notification] Inquisitor Brother Behemoth, ActID 115 is Travelling to Barrow Hill
- [AI -> Notification] Nemesis The Unrelenting, ActID 116 is Travelling to Barrow Hill
- [AI -> Mode] enemyID 113,  distance -> 35  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 114,  distance -> 40  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 112,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
+ [AI -> Mode] enemyID 114,  distance -> 4  Threshold (turns) -> 4  Mode -> Hunt
+ [AI -> Mode] enemyID 116,  distance -> 4  Threshold (turns) -> 8  Mode -> Hunt
+ [AI -> Mode] enemyID 113,  distance -> 8  Threshold (turns) -> 4  Mode -> Hunt
+ [AI -> Mode] enemyID 115,  distance -> 18  Threshold (turns) -> 4  Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Unknown] Brother Set ActID 112 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] Brother Diabolous, ActID 113 retains Goal -> Hide
- [Enemy -> Known] Brother Beelzebub ActID 114 has become KNOWN
- [Enemy -> Goal] Brother Beelzebub, ActID 114 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Set, ActID 112 Assigned Branch -> 1 Current Branch -> 1
+ [Goal -> New] Brother Set, ActID 112, (loc 14:8), assigned new Goal -> Search
+ [Enemy -> Known] Brother Diabolous ActID 113 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Diabolous, ActID 113 Assigned Branch -> 2 Current Branch -> 2
+ [Goal -> New] Brother Diabolous, ActID 113, (loc 17:11), assigned new Goal -> Move
+ [Goal -> Move] Brother Diabolous, ActID 113 -> Player's last known location -> Bloodkeep, LocID 2
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Beelzebub, ActID 114 Assigned Branch -> 3 Current Branch -> 0
+ [Goal -> New] Brother Beelzebub, ActID 114, (loc 14:12), assigned new Goal -> Move
+ [Goal -> Move] Brother Beelzebub, ActID 114 -> Player's last known location -> Bloodkeep, LocID 2
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Behemoth, ActID 115 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 116 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] The Unrelenting, ActID 116, (loc 14:12), assigned new Goal -> Move
+ [Goal -> Move] The Unrelenting, ActID 116 -> Player's last known location -> Bloodkeep, LocID 2
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Guntard Dondarrion", ID 98 added to list of Actors
- [AutoEvent -> LocalList] "Guntard Dondarrion", ID 98 added to list of Locals
+ [AutoEvent -> ActorList] "Pate Baratheon", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Matild Baratheon", ID 26 added to list of Actors
+ [AutoEvent -> ActorList] "Audry Althalos", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Aunger Rannulf", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Barristan Rannulf", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Rechemay Baratheon", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Amory Baratheon", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "The Duchess", ID 4 added to list of Actors
+ [AutoEvent -> ActorList] "Brother Set", ID 112 added to list of Actors
+ [AutoEvent -> LocalList] "Pate Baratheon", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Matild Baratheon", ID 26 added to list of Locals
+ [AutoEvent -> AdvisorList] "Audry Althalos", ID 28 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aunger Rannulf", ID 29 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Barristan Rannulf", ID 30 added to list of Advisors
+ [AutoEvent -> LocalList] "Rechemay Baratheon", ID 31 added to list of Locals
+ [AutoEvent -> LocalList] "Amory Baratheon", ID 32 added to list of Locals
+ [AutoEvent -> FollowerList] "The Duchess", ID 4 added to list of Followers
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Rodrik Tyrell has had their Revert Timer reduced from 1 to 0
-Usurper Rodrik Tyrell is no longer "Known" as sufficient time has passed
- Follower The Jester has had their TurnsUnknown Timer increased from 22 to 23
- Follower The Waif has had their TurnsUnknown Timer increased from 22 to 23
- Follower The Duchess has had their TurnsUnknown Timer increased from 22 to 23
+ Usurper Rodrik Tyrell has had their Revert Timer reduced from 5 to 4
+ Follower The Jester has had their TurnsUnknown Timer increased from 11 to 12
+ Follower The Waif has had their TurnsUnknown Timer increased from 11 to 12
+ Follower The Duchess has had their TurnsUnknown Timer increased from 11 to 12
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Guntard Dondarrion", ID 98 added to list of Actors
- [AutoEvent -> LocalList] "Guntard Dondarrion", ID 98 added to list of Locals
+ [AutoEvent -> ActorList] "Pate Baratheon", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Matild Baratheon", ID 26 added to list of Actors
+ [AutoEvent -> ActorList] "Audry Althalos", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Aunger Rannulf", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Barristan Rannulf", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Rechemay Baratheon", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Amory Baratheon", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "The Duchess", ID 4 added to list of Actors
+ [AutoEvent -> ActorList] "Brother Set", ID 112 added to list of Actors
+ [AutoEvent -> LocalList] "Pate Baratheon", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Matild Baratheon", ID 26 added to list of Locals
+ [AutoEvent -> AdvisorList] "Audry Althalos", ID 28 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aunger Rannulf", ID 29 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Barristan Rannulf", ID 30 added to list of Advisors
+ [AutoEvent -> LocalList] "Rechemay Baratheon", ID 31 added to list of Locals
+ [AutoEvent -> LocalList] "Amory Baratheon", ID 32 added to list of Locals
+ [AutoEvent -> FollowerList] "The Duchess", ID 4 added to list of Followers
 --- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "5" GreaterThanOrEqual 50
+ Trigger passed on "100" GreaterThanOrEqual 50
+ Trigger passed on "75" GreaterThanOrEqual 50
+ Trigger passed on "73" GreaterThanOrEqual 50
+ Trigger passed on "72" GreaterThanOrEqual 50
  Event "Talk to Locals" Timer Repeat now 999
  Event "Talk to Locals" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Pate Baratheon", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Matild Baratheon", ID 26 added to list of Actors
+ [AutoEvent -> ActorList] "Audry Althalos", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Aunger Rannulf", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Barristan Rannulf", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Rechemay Baratheon", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Amory Baratheon", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "The Duchess", ID 4 added to list of Actors
+ [AutoEvent -> ActorList] "Brother Set", ID 112 added to list of Actors
+ [AutoEvent -> LocalList] "Pate Baratheon", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Matild Baratheon", ID 26 added to list of Locals
+ [AutoEvent -> AdvisorList] "Audry Althalos", ID 28 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aunger Rannulf", ID 29 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Barristan Rannulf", ID 30 added to list of Advisors
+ [AutoEvent -> LocalList] "Rechemay Baratheon", ID 31 added to list of Locals
+ [AutoEvent -> LocalList] "Amory Baratheon", ID 32 added to list of Locals
+ [AutoEvent -> FollowerList] "The Duchess", ID 4 added to list of Followers
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "100" GreaterThanOrEqual 50
+ Trigger passed on "100" GreaterThanOrEqual 40
+ Trigger passed on "100" GreaterThanOrEqual 60
+ Trigger FAILED on "1" NotEqual 1
+ Trigger: Same sex, Seduction not possible
+ Trigger passed on "100" GreaterThanOrEqual 70
+ Trigger passed on "3" Equals 3
+Trigger: Pate Baratheon has desire a Specific Item and Satisified False -> passed
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Pate Baratheon", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Matild Baratheon", ID 26 added to list of Actors
+ [AutoEvent -> ActorList] "Audry Althalos", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Aunger Rannulf", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Barristan Rannulf", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Rechemay Baratheon", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Amory Baratheon", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "The Duchess", ID 4 added to list of Actors
+ [AutoEvent -> ActorList] "Brother Set", ID 112 added to list of Actors
+ [AutoEvent -> LocalList] "Pate Baratheon", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Matild Baratheon", ID 26 added to list of Locals
+ [AutoEvent -> AdvisorList] "Audry Althalos", ID 28 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aunger Rannulf", ID 29 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Barristan Rannulf", ID 30 added to list of Advisors
+ [AutoEvent -> LocalList] "Rechemay Baratheon", ID 31 added to list of Locals
+ [AutoEvent -> LocalList] "Amory Baratheon", ID 32 added to list of Locals
+ [AutoEvent -> FollowerList] "The Duchess", ID 4 added to list of Followers
+[Notification] 4 handed out is >= 2, relationship baseValue halved to 5
+--- ResolvePlayerEvents (Director.cs)
+ Event "Need Something" Timer Repeat now 999
+ Event "Need Something" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Pate Baratheon", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Matild Baratheon", ID 26 added to list of Actors
+ [AutoEvent -> ActorList] "Audry Althalos", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Aunger Rannulf", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Barristan Rannulf", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Rechemay Baratheon", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Amory Baratheon", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "The Duchess", ID 4 added to list of Actors
+ [AutoEvent -> ActorList] "Brother Set", ID 112 added to list of Actors
+ [AutoEvent -> LocalList] "Pate Baratheon", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Matild Baratheon", ID 26 added to list of Locals
+ [AutoEvent -> AdvisorList] "Audry Althalos", ID 28 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aunger Rannulf", ID 29 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Barristan Rannulf", ID 30 added to list of Advisors
+ [AutoEvent -> LocalList] "Rechemay Baratheon", ID 31 added to list of Locals
+ [AutoEvent -> LocalList] "Amory Baratheon", ID 32 added to list of Locals
+ [AutoEvent -> FollowerList] "The Duchess", ID 4 added to list of Followers
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "100" GreaterThanOrEqual 50
+ Trigger passed on "100" GreaterThanOrEqual 40
+ Trigger passed on "100" GreaterThanOrEqual 60
+ Trigger FAILED on "1" NotEqual 1
+ Trigger: Same sex, Seduction not possible
+ Trigger passed on "100" GreaterThanOrEqual 70
+ Trigger passed on "3" Equals 3
+Trigger: Pate Baratheon has desire a Specific Item and Satisified False -> passed
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 26/04/2017 14:04:22
-been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Rodrik Tyrell has had their Revert Timer reduced from 2 to 1
- Follower The Jester has had their TurnsUnknown Timer increased from 21 to 22
- Follower The Waif has had their TurnsUnknown Timer increased from 21 to 22
- Follower The Duchess has had their TurnsUnknown Timer increased from 21 to 22
---- ResolveOutcome (Director.cs)
---- ProcessEndTurn (World.cs)
-Day 23, Turn 22
---- CheckEventTimers (Director.cs)
-//Exile Game File "LogTurn.txt" Close completed at: 26/04/2017 14:04:00
+//Exile Game file ops "LogTurn.txt" Completed at: 29/04/2017 14:02:51

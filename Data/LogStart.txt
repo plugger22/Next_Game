@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 26/04/2017 14:01:10
+//Exile Game file ops "LogStart.txt" commenced at: 29/04/2017 12:07:26
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -69,10 +69,10 @@ AI_CONNECTOR -> 4 Min 0 Max 10
 AI_HUNT_THRESHOLD -> 4 Min 4 Max 12
 LOSS_OF_LEGEND -> 1 Min 0 Max 4
 PROMISES_BASE -> 10 Min 5 Max 15
-PROMISES_HALVED -> 5 Min 4 Max 10
-PROMISES_MAX -> 10 Min 5 Max 20
+PROMISES_HALVED -> 2 Min 2 Max 10
+PROMISES_MAX -> 3 Min 3 Max 20
 ERROR_29 "Location Deleted 1:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:01:10 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 12:07:26 UTC +10:00
 --- Network Analysis (Network.cs)
 Dir 0         1 Locations     0 Connections
 Dir 1         4 Locations     4 Connections
@@ -1224,5 +1224,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 26/04/2017 14:01:11
-//Elapsed Time 699 ms
+//Exile Game file ops "LogStart.txt" Completed at: 29/04/2017 12:07:27
+//Elapsed Time 905 ms

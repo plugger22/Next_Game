@@ -1620,6 +1620,7 @@ namespace Next_Game
                                     option_6.ReplyGood = string.Format("{0} leans forward enthusiastically to discuss {1} needs with you", actorText, person.Sex == ActorSex.Male ? "his" : "her");
                                     List<Trigger> listTriggers_6 = new List<Trigger>();
                                     listTriggers_6.Add(new Trigger(TriggerCheck.Desire, 0, 0, EventCalc.None));
+                                    listTriggers_6.Add(new Trigger(TriggerCheck.Promise, 0, 0, EventCalc.None));
                                     option_6.SetTriggers(listTriggers_6);
                                     OutEventChain outcome_6 = new OutEventChain(eventObject.EventPID, EventFilter.WantSomething);
                                     //OutNone outcome_6 = new OutNone(eventObject.EventPID);
@@ -1646,6 +1647,12 @@ namespace Next_Game
                                 if (personWant is Passive)
                                 {
                                     int strength; // strength of promise, 1 to 5
+                                    int baseValue = Game.constant.GetValue(Global.PROMISES_BASE);
+                                    //if too many promises have been handed out, effect is halved
+                                    int numPromises = Game.variable.GetValue(GameVar.PromisesNum);
+                                    int numHalved = Game.constant.GetValue(Global.PROMISES_HALVED);
+                                    if ( numPromises >= numHalved )
+                                    { baseValue /= 2; Game.logTurn?.Write($"[Promises] {numPromises} handed out is >= {numHalved}, relationship baseValue halved to {baseValue}"); }
                                     Passive passive = personWant as Passive;
                                     eventObject.Name = "Need Something";
                                     eventObject.Text = $"{passive.Title} {passive.Name}, ActID {passive.ActID} has a desire for {passive.DesireText}.";
@@ -1662,7 +1669,7 @@ namespace Next_Game
                                     option_w1.ReplyGood = $"{actorText} nods in agreement";
                                     strength = 1;
                                     OutPromise outcome_w1_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
-                                    OutRelPlyr outcome_w1_1 = new OutRelPlyr(eventObject.EventPID, 10 * strength, EventCalc.Add, $"Ursurper Promises to think about {passive.DesireText}", "Promise");
+                                    OutRelPlyr outcome_w1_1 = new OutRelPlyr(eventObject.EventPID, baseValue * strength, EventCalc.Add, $"Ursurper Promises to think about {passive.DesireText}", "Promise");
                                     option_w1.SetGoodOutcome(outcome_w1_0);
                                     option_w1.SetGoodOutcome(outcome_w1_1);
                                     eventObject.SetOption(option_w1);
@@ -1671,7 +1678,7 @@ namespace Next_Game
                                     option_w2.ReplyGood = $"{actorText} nods in agreement";
                                     strength = 3;
                                     OutPromise outcome_w2_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
-                                    OutRelPlyr outcome_w2_1 = new OutRelPlyr(eventObject.EventPID, 10 * strength, EventCalc.Add, $"Ursurper Promises to take care off {passive.DesireText}", "Promise");
+                                    OutRelPlyr outcome_w2_1 = new OutRelPlyr(eventObject.EventPID, baseValue * strength, EventCalc.Add, $"Ursurper Promises to take care off {passive.DesireText}", "Promise");
                                     option_w2.SetGoodOutcome(outcome_w2_0);
                                     option_w2.SetGoodOutcome(outcome_w2_1);
                                     eventObject.SetOption(option_w2);
@@ -1680,7 +1687,7 @@ namespace Next_Game
                                     option_w3.ReplyGood = $"{actorText} nods in agreement";
                                     strength = 5;
                                     OutPromise outcome_w3_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
-                                    OutRelPlyr outcome_w3_1 = new OutRelPlyr(eventObject.EventPID, 10 * strength, EventCalc.Add,
+                                    OutRelPlyr outcome_w3_1 = new OutRelPlyr(eventObject.EventPID, baseValue * strength, EventCalc.Add,
                                         $"Ursurper Swears on their Father's grave to deal with {passive.DesireText}", "Promise");
                                     option_w3.SetGoodOutcome(outcome_w3_0);
                                     option_w3.SetGoodOutcome(outcome_w3_1);
@@ -2281,6 +2288,11 @@ namespace Next_Game
                             //Threshold = (int)ActorSex -> Male 1, Female 2 (sex of actor). Must be opposite sex (seduction
                             if (CheckTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Same sex, Seduction not possible"); return false; }
                             break;
+                        case TriggerCheck.Promise:
+                            //number of promises handed out is greater than the max. num. of promises allowed
+                            if (CheckTrigger(Game.variable.GetValue(GameVar.PromisesNum), EventCalc.LessThanOrEqual, Game.constant.GetValue(Global.PROMISES_MAX)) == false)
+                            { Game.logTurn?.Write("Trigger: Trigger count has exceeded Max. allowed, option not allowed"); }
+                            break;
                         case TriggerCheck.Desire:
                             Actor actor = Game.world.GetAnyActor(option.ActorID);
                             if (actor != null && actor is Passive)
@@ -2292,6 +2304,7 @@ namespace Next_Game
                             }
                             else { Game.logTurn?.Write("Trigger: Desire, actor is Null or Not Passive"); return false; }
                             break;
+
                         case TriggerCheck.ActorType:
                             //Data = ActorType, Threshold is required type. Must be equal
                             if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Incorrect ActorType"); return false; }
@@ -3341,7 +3354,7 @@ namespace Next_Game
                             //add PossID to Player & NPC
                             player.AddPromise(promise.PossID);
                             actor.AddPromise(promise.PossID);
-                            actor.Satisfied = true;
+                            //actor.Satisfied = true;
                             Game.variable.SetValue(GameVar.PromisesNum, 1, EventCalc.Add);
                             resultText = $"{player.Title} {player.Name} promises {actor.Title} {actor.Name}, ActID {actor.ActID}, that they will attend to their desire for {actor.DesireText}";
                         }
