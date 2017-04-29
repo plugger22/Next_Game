@@ -1764,12 +1764,12 @@ namespace Next_Game
         public static void SetEndGame(string text)
         {
             RLColor foreColor = RLColor.Black;
-            RLColor backColor = Color._background1;
+            RLColor backColor = Color._background3;
             logTurn?.Write("--- SetEndGame (Game.cs)");
             logTurn?.Write("[Alert] " + text);
             List<Snippet> msgList = new List<Snippet>();
             msgList.Add(new Snippet(""));
-            msgList.Add(new Snippet("You are exiting the Game", RLColor.LightRed, backColor));
+            msgList.Add(new Snippet("You are exiting the Game", RLColor.White, backColor));
             msgList.Add(new Snippet(""));
             msgList.Add(new Snippet(text, foreColor, backColor));
             msgList.Add(new Snippet(""));

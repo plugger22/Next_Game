@@ -1,6 +1,4 @@
-//Exile Game file ops "LogError.txt" commenced at: 29/04/2017 12:07:26
+//Exile Game file ops "LogError.txt" commenced at: 29/04/2017 15:25:30
 ERROR_29 "Location Deleted 1:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 12:07:26 UTC +10:00
-ERROR_78 ""Active" identical to existing, eventID 4 status unchanged"
-Method: ChangePlayerEventStatus,  Line: 3257,  Object: Director.cs,  Turn: 7,  Local Time: 12:10:33 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 29/04/2017 14:02:51
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 15:25:30 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 29/04/2017 15:28:43

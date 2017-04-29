@@ -334,15 +334,33 @@ namespace Next_Game
         {
             switch (mode)
             {
+                case SpecialMode.Notification:
+                    //ignore if nothing to display -> Khaki background
+                    if (eventList.Count > 0)
+                    {
+                        dynamicBox = new Box(boxWidth, eventList.Count + 2, 10, Color._background2, RLColor.Black);
+                        dynamicBox.SetText(eventList);
+                        //draw box
+                        dynamicBox.Draw(multiConsole);
+                    }
+                    break;
+                case SpecialMode.Confirm:
+                    //ignore if nothing to display -> Salmon background
+                    if (eventList.Count > 0)
+                    {
+                        dynamicBox = new Box(boxWidth, eventList.Count +2, 10, Color._background3, RLColor.Black);
+                        dynamicBox.SetText(eventList);
+                        //draw box
+                        dynamicBox.Draw(multiConsole);
+                    }
+                    break;
                 case SpecialMode.PlayerEvent:
                 case SpecialMode.FollowerEvent:
                 case SpecialMode.Outcome:
-                case SpecialMode.Notification:
-                case SpecialMode.Confirm:
-                    //ignore if nothing to display
+                    //ignore if nothing to display -> Pale yellow background
                     if (eventList.Count > 0)
                     {
-                        dynamicBox = new Box(boxWidth, eventList.Count +2, 10, Color._background1, RLColor.Black);
+                        dynamicBox = new Box(boxWidth, eventList.Count + 2, 10, Color._background1, RLColor.Black);
                         dynamicBox.SetText(eventList);
                         //draw box
                         dynamicBox.Draw(multiConsole);

@@ -11,7 +11,7 @@ namespace Next_Game
     {
         None,
         //promises
-        PromisesNum,
+        Promises_Num,
         //keep as last
         Count
     }
@@ -31,7 +31,7 @@ namespace Next_Game
             arrayOfGameVars = new GameVar[(int)GameVar.Count];
             arrayOfVariables = new int[(int)GameVar.Count];
             //set up array of Globals
-            arrayOfGameVars[1] = GameVar.PromisesNum;
+            arrayOfGameVars[1] = GameVar.Promises_Num;
         }
 
         /// <summary>

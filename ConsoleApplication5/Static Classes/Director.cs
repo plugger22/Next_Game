@@ -1649,7 +1649,7 @@ namespace Next_Game
                                     int strength; // strength of promise, 1 to 5
                                     int baseValue = Game.constant.GetValue(Global.PROMISES_BASE);
                                     //if too many promises have been handed out, effect is halved
-                                    int numPromises = Game.variable.GetValue(GameVar.PromisesNum);
+                                    int numPromises = Game.variable.GetValue(GameVar.Promises_Num);
                                     int numHalved = Game.constant.GetValue(Global.PROMISES_HALVED);
                                     if ( numPromises >= numHalved )
                                     { baseValue /= 2; Game.logTurn?.Write($"[Promises] {numPromises} handed out is >= {numHalved}, relationship baseValue halved to {baseValue}"); }
@@ -2290,8 +2290,8 @@ namespace Next_Game
                             break;
                         case TriggerCheck.Promise:
                             //number of promises handed out is greater than the max. num. of promises allowed
-                            if (CheckTrigger(Game.variable.GetValue(GameVar.PromisesNum), EventCalc.LessThanOrEqual, Game.constant.GetValue(Global.PROMISES_MAX)) == false)
-                            { Game.logTurn?.Write("Trigger: Trigger count has exceeded Max. allowed, option not allowed"); }
+                            if (CheckTrigger(Game.variable.GetValue(GameVar.Promises_Num), EventCalc.LessThanOrEqual, Game.constant.GetValue(Global.PROMISES_MAX)) == false)
+                            { Game.logTurn?.Write("Trigger: Promise count has exceeded Max. allowed, option not allowed"); return false; }
                             break;
                         case TriggerCheck.Desire:
                             Actor actor = Game.world.GetAnyActor(option.ActorID);
@@ -2527,6 +2527,7 @@ namespace Next_Game
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
                                                 Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetCurrentRecord(new Record(eventText + outcomeText, option.ActorID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Item:
@@ -3355,7 +3356,7 @@ namespace Next_Game
                             player.AddPromise(promise.PossID);
                             actor.AddPromise(promise.PossID);
                             //actor.Satisfied = true;
-                            Game.variable.SetValue(GameVar.PromisesNum, 1, EventCalc.Add);
+                            Game.variable.SetValue(GameVar.Promises_Num, 1, EventCalc.Add);
                             resultText = $"{player.Title} {player.Name} promises {actor.Title} {actor.Name}, ActID {actor.ActID}, that they will attend to their desire for {actor.DesireText}";
                         }
                         else { Game.SetError(new Error(230, "Error in AddPossession -> Promise not created")); }
