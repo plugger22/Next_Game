@@ -221,7 +221,7 @@ namespace Next_Game
                 Game.logStart?.Write($"{index} -> {data} Min {low} Max {high}");
             }
             else
-            { Game.SetError(new Error(9, string.Format("{0} out of range, data {1}", index, data))); }
+            { Game.SetError(new Error(9, string.Format("index for {0} is out of range, data {1}", index, data))); }
         }
 
         /// <summary>

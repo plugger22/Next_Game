@@ -75,9 +75,10 @@
     <Compile Include="Event_System\Result.cs" />
     <Compile Include="Event_System\Situation.cs" />
     <Compile Include="Game World\Condition.cs" />
+    <Compile Include="Static Classes\Variable.cs" />
     <Compile Include="Static Classes\Conflict.cs" />
     <Compile Include="Event_System\Trigger.cs" />
-    <Compile Include="Event_System\State.cs" />
+    <Compile Include="Archive\State.cs" />
     <Compile Include="Event_System\Outcome.cs" />
     <Compile Include="Event_System\Option.cs" />
     <Compile Include="Game World\Actor.cs" />

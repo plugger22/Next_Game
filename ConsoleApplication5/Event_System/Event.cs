@@ -9,7 +9,7 @@ namespace Next_Game.Event_System
     public enum EventFrequency { None, Very_Rare, Rare, Low, Normal, Common, High, Very_High } //determines how many entries are placed in the event pool -> (int)EventFrequency (1 to 7)
     public enum EventCategory { None, Generic, Archetype, AutoCreate, AutoReact } //archetypes only for arc's, generics apply to all, AutoCreate (eg. do what?), AutoReact (eg. 'Angry Lord')
     public enum EventStatus { None, Active, Live, Dormant, Dead} //sequential event states from dead to activated
-    public enum EventCalc { None, Add, Subtract, Random, Equals, NotEqual, GreaterThanOrEqual, LessThanOrEqual, Count} //used within events for triggers (>, <, =, !=) and outcomes (+, -, Rnd)
+    public enum EventCalc { None, Add, Subtract, Random, Equals, NotEqual, GreaterThanOrEqual, LessThanOrEqual, RandomPlus, RandomMinus, Count} //used within events for triggers (>, <, =, !=) and outcomes (+, -, Rnd)
     public enum EventTimer { None, Repeat, Dormant, Live, Cool } //used for EventTimer outcomes to specify a timer -> Cool is Cooldown timer
     public enum EventType { None, Location, Travelling, Sea, Dungeon, Adrift }
     public enum EventFilter { None, Court, Visitors, Followers, Advisors, Interact, Docks, FindShip, BribeCaptain, Recruit, WantSomething} //used by autoloc plyr events to determine which group of actors to show as options

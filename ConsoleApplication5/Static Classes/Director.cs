@@ -3342,6 +3342,7 @@ namespace Next_Game
                             player.AddPromise(promise.PossID);
                             actor.AddPromise(promise.PossID);
                             actor.Satisfied = true;
+                            Game.variable.SetValue(GameVar.PromisesNum, 1, EventCalc.Add);
                             resultText = $"{player.Title} {player.Name} promises {actor.Title} {actor.Name}, ActID {actor.ActID}, that they will attend to their desire for {actor.DesireText}";
                         }
                         else { Game.SetError(new Error(230, "Error in AddPossession -> Promise not created")); }

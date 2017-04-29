@@ -72,6 +72,7 @@ namespace Next_Game
         public static Director director;
         public static InfoChannel infoChannel;
         public static Constant constant;
+        public static Variable variable;
         public static FileImport file;
         public static Utility utility;
         public static Layout layout;
@@ -128,6 +129,7 @@ namespace Next_Game
             //initialise game objects
             Stopwatch timer_1 = new Stopwatch();
             constant = new Constant();
+            variable = new Variable(seed);
             utility = new Utility();
             logStart = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogStart.txt", true);
             logError = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogError.txt");
