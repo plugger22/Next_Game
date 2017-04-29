@@ -1871,6 +1871,15 @@ namespace Next_Game
                                         case "Random":
                                             structOutcome.Calc = EventCalc.Random;
                                             break;
+                                        case "randomPlus":
+                                        case "RandomPlus":
+                                            structOutcome.Calc = EventCalc.RandomPlus;
+                                            break;
+                                        case "randomMinus":
+                                        case "RandomMinus":
+                                            structOutcome.Calc = EventCalc.RandomMinus;
+                                            break;
+
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Apply, (\"{0}\")", arrayOfEvents[i])));
                                             validData = false;

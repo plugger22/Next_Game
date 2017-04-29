@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 29/04/2017 15:25:30
+//Exile Game file ops "LogStart.txt" commenced at: 29/04/2017 17:20:55
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -69,10 +69,10 @@ AI_CONNECTOR -> 4 Min 0 Max 10
 AI_HUNT_THRESHOLD -> 4 Min 4 Max 12
 LOSS_OF_LEGEND -> 1 Min 0 Max 4
 PROMISES_BASE -> 10 Min 5 Max 15
-PROMISES_HALVED -> 2 Min 2 Max 10
-PROMISES_MAX -> 3 Min 3 Max 20
+PROMISES_HALVED -> 4 Min 4 Max 10
+PROMISES_MAX -> 6 Min 6 Max 20
 ERROR_29 "Location Deleted 1:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 15:25:30 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:20:55 UTC +10:00
 --- Network Analysis (Network.cs)
 Dir 0         1 Locations     0 Connections
 Dir 1         4 Locations     4 Connections
@@ -765,9 +765,9 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
     OutDataPoint -> data 5, amount 10, apply Random
   Option "Run straight at them" 
    Trigger -> if Trait 1 is GreaterThanOrEqual to 3
-    OutDataPoint -> data -1, amount 5, apply Random
+    OutDataPoint -> data -1, amount 3, apply Random
     OutEventStatus -> Target EventID 5, New Status Live
-    OutCondition -> Player? True, Condition "Shock", Wits -1, Timer 4
+    OutCondition -> data 0, amount 0, apply None
 "Mysterious Stranger" Event, ID 3, Type Location, Repeat 10, Dormant 0, Live 0, Status Active
   Option "Ignore them" 
     OutNone -> data 0, amount 0, apply None
@@ -844,10 +844,10 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
 "Drinks with Captain" Event, ID 21, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Decline the invitation."  [Variable -> 70 % Success, Charm DM]
     OutNone -> data 0, amount 0, apply None
-    OutCondition -> Player? True, Condition "Loss of Face", Leadership -1, Timer 5
+    OutCondition -> data 0, amount 0, apply None
   Option "Join the Captain for a quiet drink, or two."  [Variable -> 50 % Success, Treachery DM]
     OutNone -> data 0, amount 0, apply None
-    OutCondition -> Player? True, Condition "Hungover", Wits -1, Timer 5
+    OutCondition -> data 0, amount 0, apply None
   Option "Drink the Captain under the table."  [Variable -> 50 % Success, Treachery DM]
    Trigger -> if Known 1 is Equals to 0
     OutResource -> Player? True, amount 1, apply Add
@@ -903,53 +903,53 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
     OutRescued -> data 0, amount 0, apply None
 "Torture" Event, ID 11, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
   Option "Stretch me on the wrack please. My back is giving me trouble." 
-    OutCondition -> Player? True, Condition "Pulled Tendons", Combat -1, Timer 20
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Subtract
   Option "Chop off a finger or two, I've got plenty to spare." 
-    OutCondition -> Player? True, Condition "Missing Fingers", Combat -1, Timer 30
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Subtract
   Option "Teeth. Feel free to knock a few out. They'll grow back one day." 
-    OutCondition -> Player? True, Condition "Missing Teeth", Charm -1, Timer 40
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Subtract
 "Rats" Event, ID 12, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
   Option "Ignore them. So what if they chew your toes?" 
-    OutCondition -> Player? True, Condition "Rat Bites", Combat -1, Timer 10
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Add
   Option "Mmmmm. Raw Rat. What a treat." 
-    OutCondition -> Player? True, Condition "Rat Food Energy Boost", Combat 1, Timer 5
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Add
   Option "Kill them with your bare hands if you can." 
-    OutCondition -> Player? True, Condition "Exhausted", Combat -1, Timer 5
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Add
 "Terrible Food" Event, ID 13, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
   Option "Hold your tongue and wolf down the inedible mixture as fast as you can." 
-    OutCondition -> Player? True, Condition "Indigestion", Wits -1, Timer 4
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Add
   Option "Refuse to eat anything until better food arrives." 
-    OutCondition -> Player? True, Condition "Hungry", Combat -1, Timer 4
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Subtract
   Option "Hurl the pail of swill into the face of your Goaler." 
-    OutCondition -> Player? True, Condition "Beaten up by Goaler", Charm -1, Timer 5
+    OutCondition -> data 0, amount 0, apply None
     OutDataPoint -> data 2, amount 1, apply Add
     OutDeathTimer -> data 0, amount 2, apply Subtract
 "The Bucket" Event, ID 14, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
   Option "Who wants to lie in their own waste?" 
-    OutCondition -> Player? True, Condition "Dehydrated", Wits -1, Timer 4
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Subtract
   Option "Water, give me water." 
     OutNone -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Add
   Option "Do both. It's a multipurpose bucket." 
-    OutCondition -> Player? True, Condition "Diarrhoea", Charm -1, Timer 6
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 4, apply Subtract
 "Bribe Goaler" Event, ID 15, Type Dungeon, Repeat 2, Dormant 0, Live 4, Status Active
   Option "It's to risky. Say nothing." 
     OutNone -> data 0, amount 0, apply None
   Option "Offer your fat, piggy, Goaler a better life" 
-    OutCondition -> Player? True, Condition "Broken nose", Charm -1, Timer 30
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Subtract
   Option "Offer your peasant brained Goaler untold wealth and women" 
-    OutCondition -> Player? True, Condition "Black Eyes", Charm -1, Timer 5
+    OutCondition -> data 0, amount 0, apply None
     OutDeathTimer -> data 0, amount 2, apply Subtract
 --- Import AutoReact Events (Director.cs)
 --- Player Events (FileImport.cs)
@@ -1224,5 +1224,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 29/04/2017 15:25:30
-//Elapsed Time 761 ms
+//Exile Game file ops "LogStart.txt" Completed at: 29/04/2017 17:20:55
+//Elapsed Time 778 ms

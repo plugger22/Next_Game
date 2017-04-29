@@ -37,7 +37,7 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, DataPoint, EventChain, Known)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, DataPoint, EventChain, Known, GameVar)
 # bad: OPTIONAL -> any value > 0 (use '1') flags this as a bad outcome (can have multiple)
 
 # [outcome] -> DataPoint
@@ -45,13 +45,17 @@
 # data -> if +ve then Good, if -ve then Bad
 # if data <= 5 then data -> 1 Justice, 2 Legend_Urs, 3 Legend_King, 4 Honour_Urs, 5 Honour_King (apply: Add or Random only)
 # amount: outcome amount to change by (if applicable) multi-purpose, depends on type of effect, default '0', CAN'T BE NEGATIVE
-# apply: how the amount is applied -> None / Add / Subtract / Equals / Random   where 'Random' is Add random range (amount). Default 'None'
+# apply: how the amount is applied -> None / Add / Subtract / Equals / Random,   default 'None'
 
 # [outcome] effect -> None
 # outText: OPTIONAL short descriptive text (shows up as a message & player record)
 
 # [outcome] effect -> Known
 # data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to UNKNOWN
+
+# [outcome] effect -> GameVar
+# amount: any number other than '0' -> amount to change by
+# apply: Add / Subtract / RandomPlus / RandomMinus (Random options +/- rnd.Next(Amount)
 
 # [outcome] -> EventStatus
 # data: target EventID
