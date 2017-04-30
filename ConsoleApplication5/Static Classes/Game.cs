@@ -568,7 +568,10 @@ namespace Next_Game
                                         infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- ALL RECORDS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
-
+                                    case MenuMode.Debug:
+                                        //ShowGameVars
+                                        infoChannel.SetInfoList(world.ShowGameVarsRL(), ConsoleDisplay.Multi);
+                                        break;
                                 }
                                 break;
                             case RLKey.C:

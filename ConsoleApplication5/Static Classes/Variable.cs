@@ -33,6 +33,12 @@ namespace Next_Game
             arrayOfGameVars[1] = GameVar.Promises_Num;
         }
 
+        public GameVar[] GetArrayOfGameVars()
+        { return arrayOfGameVars; }
+
+        public int[] GetArrayOfVariables()
+        { return arrayOfVariables; }
+
         /// <summary>
         /// returns GameVar value
         /// </summary>

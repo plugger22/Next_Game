@@ -760,6 +760,34 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Display a list of all GameVars and their current values
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowGameVarsRL()
+        {
+            List<Snippet> listToDisplay = new List<Snippet>();
+            GameVar[] tempGameVars = Game.variable.GetArrayOfGameVars();
+            int[] tempVariables = Game.variable.GetArrayOfVariables();
+            listToDisplay.Add(new Snippet("--- GameVars with Current Values", RLColor.Yellow, RLColor.Black));
+            if (tempGameVars.Length > 0 && tempGameVars.Length == tempVariables.Length)
+            {
+                string description;
+                for(int i = 1; i < tempGameVars.Length; i++)
+                {
+                    description = $"{i, -3}:  {tempGameVars[i], -20} -> {tempVariables[i], 4}";
+                    listToDisplay.Add(new Snippet(description));
+                }
+            }
+            else
+            {
+                string errorText = $"arrayOfGameVars.Length \"{tempGameVars.Length}\" doesn't match arrayOfVariables.Length \"{tempVariables.Length}\"";
+                Game.SetError(new Error(233, errorText));
+                listToDisplay.Add(new Snippet(errorText, RLColor.LightRed, RLColor.Black));
+            }
+            return listToDisplay;
+        }
+
+        /// <summary>
         /// Display a single Actor in detail
         /// </summary>
         /// <param name="ActID"></param>
