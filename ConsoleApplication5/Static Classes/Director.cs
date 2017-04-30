@@ -2555,7 +2555,7 @@ namespace Next_Game
                                         case OutcomeType.GameVar:
                                             //Change a GameVar
                                             OutGameVar gamevarOutcome = outcome as OutGameVar;
-                                            outcomeText = ChangeGameVarStatus(gamevarOutcome.gameVar, gamevarOutcome.Amount, gamevarOutcome.Calc);
+                                            outcomeText = ChangeGameVarStatus(gamevarOutcome.GameVar, gamevarOutcome.Amount, gamevarOutcome.Calc);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
@@ -3504,7 +3504,7 @@ namespace Next_Game
         /// <param name="amount"></param>
         /// <param name="apply"></param>
         /// <returns></returns>
-        private string ChangeGameVarStatus(GameVar gamevar, int amount, EventCalc apply)
+        public string ChangeGameVarStatus(GameVar gamevar, int amount, EventCalc apply)
         {
             string resultText = "";
             int origValue = Game.variable.GetValue(gamevar);

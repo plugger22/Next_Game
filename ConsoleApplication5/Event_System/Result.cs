@@ -59,6 +59,8 @@ namespace Next_Game.Event_System
                         this.Data = data;
                         this.Calc = calc;
                         this.Amount = amount;
+                        if (type == ResultType.GameVar)
+                        { GameVar = Game.variable.GetGameVar(data); }
                     }
                     else { Game.SetError(new Error(114, "Invalid ResultType input (\"None\")")); }
                 }

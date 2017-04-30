@@ -142,13 +142,13 @@ OutLossMinor: Your relationship deteriorates (Rel-)
 OutLoss: You have become disliked (Rel--)
 OutLossMajor: Your opponent is actively campaigning against you (Rel---)
 OutNone: Indifference is the only outcome today. Nobody cares one way or another.
-ResWinMinor: 14, 47
-ResWin: 15, 51
-ResWinMajor: 16, 5, 47
-ResLossMinor: 17, 48
-ResLoss: 18, 50
-ResLossMajor: 19, 48
-ResNone: 1
+ResWinMinor: 14, 47, 53
+ResWin: 15, 51, 53
+ResWinMajor: 16, 5, 47, 53
+ResLossMinor: 17, 48, 53
+ResLoss: 18, 50, 53
+ResLossMajor: 19, 48, 53
+ResNone: 1, 53
 [End]
 
 Type: Social

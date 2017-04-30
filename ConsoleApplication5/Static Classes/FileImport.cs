@@ -1865,10 +1865,12 @@ namespace Next_Game
                                         case "Random":
                                             structOutcome.Calc = EventCalc.Random;
                                             break;
+                                        case "randomplus":
                                         case "randomPlus":
                                         case "RandomPlus":
                                             structOutcome.Calc = EventCalc.RandomPlus;
                                             break;
+                                        case "randomminus":
                                         case "randomMinus":
                                         case "RandomMinus":
                                             structOutcome.Calc = EventCalc.RandomMinus;
@@ -2481,7 +2483,7 @@ namespace Next_Game
                                     break;
                                 case OutcomeType.GameVar:
                                     OutGameVar tempOutcome_5 = outcomeObject as OutGameVar;
-                                    Game.logStart?.Write(string.Format("    {0} -> GameVar {1}, Amount {2}, EventCalc {3}", cleanTag, tempOutcome_5.gameVar, tempOutcome_5.Amount, tempOutcome_5.Calc));
+                                    Game.logStart?.Write(string.Format("    {0} -> GameVar {1}, Amount {2}, EventCalc {3}", cleanTag, tempOutcome_5.GameVar, tempOutcome_5.Amount, tempOutcome_5.Calc));
                                     break;
                                 default:
                                     Game.logStart?.Write(string.Format("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc));
@@ -4969,18 +4971,33 @@ namespace Next_Game
                                 {
                                     switch (cleanToken)
                                     {
+                                        case "add":
                                         case "Add":
                                             structResult.Calc = EventCalc.Add;
                                             break;
+                                        case "subtract":
                                         case "Subtract":
                                             structResult.Calc = EventCalc.Subtract;
                                             break;
+                                        case "random":
                                         case "Random":
                                             structResult.Calc = EventCalc.Random;
                                             break;
+                                        case "randomplus":
+                                        case "randomPlus":
+                                        case "RandomPlus":
+                                            structResult.Calc = EventCalc.RandomPlus;
+                                            break;
+                                        case "randomminus":
+                                        case "randomMinus":
+                                        case "RandomMinus":
+                                            structResult.Calc = EventCalc.RandomMinus;
+                                            break;
+                                        case "equals":
                                         case "Equals":
                                             structResult.Calc = EventCalc.Equals;
                                             break;
+                                        case "none":
                                         case "None":
                                             structResult.Calc = EventCalc.None;
                                             break;

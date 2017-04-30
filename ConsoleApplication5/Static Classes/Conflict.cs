@@ -2171,6 +2171,13 @@ namespace Next_Game
                                 }
                                 break;
                             case ResultType.GameVar:
+                                //Change a GameVar
+                                tempText = Game.director.ChangeGameVarStatus(result.GameVar, result.Amount, result.Calc);
+                                if (tempText.Length > 0)
+                                {
+                                    tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                    message = new Message(tempText, MessageType.Conflict);
+                                }
                                 break;
                             case ResultType.Known:
                                 //change Player's Known status

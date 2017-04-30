@@ -6,7 +6,7 @@
 # Type: (ResultType) -> DataPoint/GameVar/RelPlyr/RelOther/Condition/Resource/Item/Secret/Army/Event/Favour/Introduction/Freedom/Known
 
 # Data: OPTIONAL -> multipurpose integer (context depends on Type) (default '0')
-# Calc: OPTIONAL( EventCalc) -> None / Add / Subtract / Random / Equals (default 'None')
+# Calc: OPTIONAL( EventCalc) -> None / Add / Subtract / Random / RandomPlus / RandomMinus / Equals (default 'None')
 # Amount: OPTIONAL int amt applied by Calc (if Calc is 'Random' then it's random Amt, eg. if amount 100 then random d100) (default '0'), neg. #'s to
 # Test: OPTIONAL - integer > 0. A rnd 1d100 must be <= Test number in order for result to apply (otherwise result treated as ResultType.None & ignored)
 
@@ -27,6 +27,11 @@
 
 # Type -> Known (changes Player's Known status)
 # Data: +ve -> player Unknown, -ve -> player Known
+
+# Type -> GameVar
+# data: index of GameVar variable
+# Amount: any number other than '0' -> amount to change by
+# Calc: Add / Subtract / RandomPlus / RandomMinus (Random options +/- rnd.Next(Amount)
 
 # Type -> Condition
 # conPlyr: Yes / No ( Yes -> condition applies to Player, No -> condition applies to NPC actor)
@@ -480,7 +485,14 @@ Calc: Subtract
 Data: 0
 [End]
 
+Name: Extra Promise (debug test)
+RID: 53
+Type: GameVar
+Data: 1
+Amount: 1
+Calc: Add
+[End]
 
 
 
-# next is 53
+# next is 54

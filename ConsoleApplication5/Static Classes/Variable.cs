@@ -7,10 +7,9 @@ using Next_Game.Event_System;
 
 namespace Next_Game
 {
-    public enum GameVar
+    public enum GameVar  //NOTE: KEEP order the same as in arrayOfGameVar, eg. enum 1 is arrayOfGameVars[1]
     {
         None,
-        //promises
         Promises_Num,
         //keep as last
         Count
@@ -94,7 +93,13 @@ namespace Next_Game
                             newValue = origValue + amount;
                             break;
                         case EventCalc.Subtract:
+                            //can't go below zero
                             newValue = origValue - amount;
+                            if (newValue < 0)
+                            {
+                                Game.logTurn?.Write($"[Alert] GameVar \"{index}\" has a negative value of {newValue}. MinCapped at Zero");
+                                newValue = Math.Max(0, newValue);
+                            }
                             break;
                         case EventCalc.RandomPlus:
                             tempNum = rnd.Next(amount);
