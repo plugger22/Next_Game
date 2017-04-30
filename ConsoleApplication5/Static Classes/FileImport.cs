@@ -128,8 +128,6 @@ namespace Next_Game
         public SkillType ConditionSkill { get; set; } //Combat, Charm, Wits etc.
         public int ConditionEffect { get; set; } //+/- 1 or 2
         public int ConditionTimer { get; set; } //set to 999 for a permanent condition, otherwise equal to the number of days that condition applies for
-        //GameVar
-        public GameVar gamevar { get; set; }
 
         /// <summary>
         /// copy constructor
@@ -159,8 +157,6 @@ namespace Next_Game
             ConditionSkill = outcome.ConditionSkill;
             ConditionEffect = outcome.ConditionEffect;
             ConditionTimer = outcome.ConditionTimer;
-            //GameVar
-            gamevar = outcome.gamevar;
         }
     }
 
@@ -1170,7 +1166,6 @@ namespace Next_Game
                                             structOutcome.ConditionSkill = SkillType.None;
                                             structOutcome.ConditionEffect = 0;
                                             structOutcome.ConditionTimer = 0;
-                                            structOutcome.gamevar = GameVar.None;
                                         }
                                         listAllOutcomes.Add(listSubOutcomes);
                                         OptionStruct structOptionCopy = new OptionStruct(structOption);
@@ -1243,7 +1238,6 @@ namespace Next_Game
                                         structOutcome.ConditionSkill = SkillType.None;
                                         structOutcome.ConditionEffect = 0;
                                         structOutcome.ConditionTimer = 0;
-                                        structOutcome.gamevar = GameVar.None;
                                     }
                                     else
                                     {
@@ -2333,11 +2327,11 @@ namespace Next_Game
                                                                     }
                                                                     break;
                                                                 case "GameVar":
-                                                                    if (outTemp.Amount != 0 && outTemp.gamevar != GameVar.None)
-                                                                    { outObject = new OutGameVar(structEvent.EventID, outTemp.gamevar, outTemp.Amount, outTemp.Calc); }
+                                                                    if (outTemp.Amount != 0 && outTemp.Data > 0)
+                                                                    { outObject = new OutGameVar(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Calc); }
                                                                     else
                                                                     {
-                                                                        Game.SetError(new Error(49, $"Invalid Input, Outcome Amount (\"{outTemp.Amount}\"), or GameVar \"{outTemp.gamevar}\""));
+                                                                        Game.SetError(new Error(49, $"Invalid Input, Outcome Amount (\"{outTemp.Amount}\"), or index (zero) \"{outTemp.Data}\""));
                                                                         validData = false;
                                                                     }
                                                                     break;
@@ -2487,7 +2481,7 @@ namespace Next_Game
                                     break;
                                 case OutcomeType.GameVar:
                                     OutGameVar tempOutcome_5 = outcomeObject as OutGameVar;
-                                    Game.logStart?.Write(string.Format("    {0} -> GameVar {1}, Amount {2}, EventCalc {3}", cleanTag, tempOutcome_5.Amount, tempOutcome_5.Calc));
+                                    Game.logStart?.Write(string.Format("    {0} -> GameVar {1}, Amount {2}, EventCalc {3}", cleanTag, tempOutcome_5.gameVar, tempOutcome_5.Amount, tempOutcome_5.Calc));
                                     break;
                                 default:
                                     Game.logStart?.Write(string.Format("    {0} -> data {1}, amount {2}, apply {3}", cleanTag, outcomeObject.Data, outcomeObject.Amount, outcomeObject.Calc));

@@ -68,7 +68,7 @@
 # data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to UNKNOWN
 
 # [outcome] effect -> GameVar
-# 
+# data: index of GameVar variable
 # amount: any number other than '0' -> amount to change by
 # apply: Add / Subtract / RandomPlus / RandomMinus (Random options +/- rnd.Next(Amount)
 
@@ -223,6 +223,11 @@ effect: DataPoint
 data: 5
 amount: 10
 apply: Random
+[outcome]
+effect: GameVar
+data: 1
+amount: 3
+apply: RandomPlus
 [option]
 text: Run straight at them
 reply: Surprise is the key. Wait until they are almost upon you, draw your sword and charge.

@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 29/04/2017 17:20:55
+//Exile Game file ops "LogStart.txt" commenced at: 30/04/2017 09:55:53
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -72,7 +72,7 @@ PROMISES_BASE -> 10 Min 5 Max 15
 PROMISES_HALVED -> 4 Min 4 Max 10
 PROMISES_MAX -> 6 Min 6 Max 20
 ERROR_29 "Location Deleted 1:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 17:20:55 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 09:55:53 UTC +10:00
 --- Network Analysis (Network.cs)
 Dir 0         1 Locations     0 Connections
 Dir 1         4 Locations     4 Connections
@@ -763,6 +763,7 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
   Option "Stay Calm" 
    Trigger -> if Trait 3 is GreaterThanOrEqual to 3
     OutDataPoint -> data 5, amount 10, apply Random
+    OutGameVar -> GameVar Promises_Num, Amount 3, EventCalc RandomPlus
   Option "Run straight at them" 
    Trigger -> if Trait 1 is GreaterThanOrEqual to 3
     OutDataPoint -> data -1, amount 3, apply Random
@@ -1224,5 +1225,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 29/04/2017 17:20:55
-//Elapsed Time 778 ms
+//Exile Game file ops "LogStart.txt" Completed at: 30/04/2017 09:55:54
+//Elapsed Time 765 ms

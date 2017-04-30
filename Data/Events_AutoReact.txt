@@ -54,6 +54,7 @@
 # data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to UNKNOWN
 
 # [outcome] effect -> GameVar
+# data: index of GameVar variable
 # amount: any number other than '0' -> amount to change by
 # apply: Add / Subtract / RandomPlus / RandomMinus (Random options +/- rnd.Next(Amount)
 

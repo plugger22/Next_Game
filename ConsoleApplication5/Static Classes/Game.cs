@@ -1769,7 +1769,7 @@ namespace Next_Game
             logTurn?.Write("[Alert] " + text);
             List<Snippet> msgList = new List<Snippet>();
             msgList.Add(new Snippet(""));
-            msgList.Add(new Snippet("Are you sure you want to exit the Game?", RLColor.White, backColor));
+            msgList.Add(new Snippet("Are you sure you want to exit the Game?", foreColor, backColor));
             msgList.Add(new Snippet(""));
             msgList.Add(new Snippet(text, RLColor.Gray, backColor));
             msgList.Add(new Snippet(""));

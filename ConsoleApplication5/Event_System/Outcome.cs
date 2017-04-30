@@ -178,15 +178,14 @@ namespace Next_Game.Event_System
     {
         public GameVar gameVar { get; set; }
 
-        public OutGameVar(int eventID, GameVar gamevar, int amount, EventCalc apply) : base(eventID)
+        public OutGameVar(int eventID, int index, int amount, EventCalc apply) : base(eventID)
         {
-            this.gameVar = gamevar;
+            Data = index;
+            gameVar = Game.variable.GetGameVar(index);
             this.Amount = amount;
             Calc = apply;
             Type = OutcomeType.GameVar;
         }
-
-
     }
 
     /// <summary>

@@ -42,6 +42,19 @@ namespace Next_Game
         public int GetValue(GameVar globalVar)
         { return arrayOfVariables[(int)globalVar]; }
 
+        /// <summary>
+        /// returns a GameVar enum from the arrayOfVariables
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public GameVar GetGameVar(int index)
+        {
+            if (index < arrayOfGameVars.Length && index > 0)
+            { return arrayOfGameVars[index]; }
+            //return default value if an incorrect index
+            return GameVar.None;
+        }
+
 
         /// <summary>
         /// Set GameVar directly to this
@@ -73,6 +86,7 @@ namespace Next_Game
                 if (amount != 0)
                 {
                     int newValue = 0;
+                    int tempNum;
                     int origValue = arrayOfVariables[(int)index];
                     switch (apply)
                     {
@@ -83,10 +97,14 @@ namespace Next_Game
                             newValue = origValue - amount;
                             break;
                         case EventCalc.RandomPlus:
-                            newValue = origValue + rnd.Next(amount);
+                            tempNum = rnd.Next(amount);
+                            tempNum = Math.Max(1, tempNum);
+                            newValue = origValue + tempNum;
                             break;
                         case EventCalc.RandomMinus:
-                            newValue = origValue - rnd.Next(amount);
+                            tempNum = rnd.Next(amount);
+                            tempNum = Math.Max(1, tempNum);
+                            newValue = origValue - tempNum;
                             break;
                         default:
                             Game.SetError(new Error(232, $"Invalid EventCalc input \"{apply}\" for {index} -> GameVar not changed"));

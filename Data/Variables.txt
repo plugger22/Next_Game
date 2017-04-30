@@ -1,0 +1,5 @@
+# list of Variables -> Info only
+# Format -> Index Number (used in events) & Variable Name
+
+
+1: Promises_Num     # Number of Promises made
