@@ -1,2 +1,4 @@
-//Exile Game file ops "LogError.txt" commenced at: 01/05/2017 15:24:48
-//Exile Game file ops "LogError.txt" Completed at: 01/05/2017 15:25:51
+//Exile Game file ops "LogError.txt" commenced at: 01/05/2017 17:05:23
+ERROR_234 "Invalid Passive relative (null) -> Family member not checked"
+Method: InitialiseDesires,  Line: 2511,  Object: World.cs,  Turn: 0,  Local Time: 17:09:56 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 01/05/2017 17:12:47
