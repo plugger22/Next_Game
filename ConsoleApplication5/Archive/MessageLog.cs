@@ -5,7 +5,7 @@ using RLNET;
 
 namespace Next_Game
 {
-    public class MessageLog
+    /*public class MessageLog
     {
         private readonly Queue<Snippet> messageQueue; //short term queue to display recent messages
         private readonly List<Snippet> messageList; //long term list of all messages
@@ -58,5 +58,5 @@ namespace Next_Game
         public List<Snippet> GetMessageList()
         { return messageList; }
 
-    }
+    }*/
 }

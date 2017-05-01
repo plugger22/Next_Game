@@ -3,15 +3,15 @@
 
 # Name: Description
 # RID: (ResultID) Unique number, 1+
-# Type: (ResultType) -> DataPoint/GameVar/RelPlyr/RelOther/Condition/Resource/Item/Secret/Army/Event/Favour/Introduction/Freedom/Known
+# Type: (ResultType) -> GameState/GameVar/RelPlyr/RelOther/Condition/Resource/Item/Secret/Army/Event/Favour/Introduction/Freedom/Known
 
 # Data: OPTIONAL -> multipurpose integer (context depends on Type) (default '0')
 # Calc: OPTIONAL( EventCalc) -> None / Add / Subtract / Random / RandomPlus / RandomMinus / Equals (default 'None')
 # Amount: OPTIONAL int amt applied by Calc (if Calc is 'Random' then it's random Amt, eg. if amount 100 then random d100) (default '0'), neg. #'s to
 # Test: OPTIONAL - integer > 0. A rnd 1d100 must be <= Test number in order for result to apply (otherwise result treated as ResultType.None & ignored)
 
-# Type -> DataPoint
-# DataPoint:  Invisibility / Justice / Legend_Usurper / Legend_King / Honour_Usurper / Honour_King
+# Type -> GameState
+# GameState:  Invisibility / Justice / Legend_Usurper / Legend_King / Honour_Usurper / Honour_King
 # Tag: OPTIONAL -> short descriptor, applies if Type is  RelPlyr or RelOther 
 # Key Stats Generic Results, eg. Invisibility, Justice, etc. -> Data +ve ADD to Good, otherwise ADD to Bad
 
@@ -65,8 +65,8 @@ Data: -1
 
 Name: The Cause is Just
 RID: 3
-Type: DataPoint
-DataPoint: Justice
+Type: GameState
+GameState: Justice
 Data: 1
 Calc: Random
 Amount: 10
@@ -74,8 +74,8 @@ Amount: 10
 
 Name: Unjustly Accused!
 RID: 4
-Type: DataPoint
-DataPoint: Justice
+Type: GameState
+GameState: Justice
 Data: -1
 Calc: Random
 Amount: 10
@@ -83,8 +83,8 @@ Amount: 10
 
 Name: We're Famous
 RID: 5
-Type: DataPoint
-DataPoint: Legend_Usurper
+Type: GameState
+GameState: Legend_Usurper
 Data: 1
 Calc: Random
 Amount: 10
@@ -92,8 +92,8 @@ Amount: 10
 
 Name: Nobody heard the news
 RID: 6
-Type: DataPoint
-DataPoint: Legend_Usurper
+Type: GameState
+GameState: Legend_Usurper
 Data: -1
 Calc: Random
 Amount: 10
@@ -101,8 +101,8 @@ Amount: 10
 
 Name: Long Live the King
 RID: 7
-Type: DataPoint
-DataPoint: Legend_King
+Type: GameState
+GameState: Legend_King
 Data: 1
 Calc: Random
 Amount: 10
@@ -110,8 +110,8 @@ Amount: 10
 
 Name: Down with the King
 RID: 8
-Type: DataPoint
-DataPoint: Legend_King
+Type: GameState
+GameState: Legend_King
 Data: -1
 Calc: Random
 Amount: 10
@@ -119,8 +119,8 @@ Amount: 10
 
 Name: Honour and Liberty!
 RID: 9
-Type: DataPoint
-DataPoint: Honour_Usurper
+Type: GameState
+GameState: Honour_Usurper
 Data: 1
 Calc: Random
 Amount: 10
@@ -128,8 +128,8 @@ Amount: 10
 
 Name: Oops, shouldn't have done that
 RID: 10
-Type: DataPoint
-DataPoint: Honour_Usurper
+Type: GameState
+GameState: Honour_Usurper
 Data: -1
 Calc: Random
 Amount: 10
@@ -137,8 +137,8 @@ Amount: 10
 
 Name: The King Does the Right Thing
 RID: 11
-Type: DataPoint
-DataPoint: Honour_King
+Type: GameState
+GameState: Honour_King
 Data: 1
 Calc: Random
 Amount: 10
@@ -146,8 +146,8 @@ Amount: 10
 
 Name: The King is a Bastard
 RID: 12
-Type: DataPoint
-DataPoint: Honour_King
+Type: GameState
+GameState: Honour_King
 Data: -1
 Calc: Random
 Amount: 10
@@ -155,8 +155,8 @@ Amount: 10
 
 Name: The King is a Great Man
 RID: 13
-Type: DataPoint
-DataPoint: Honour_King
+Type: GameState
+GameState: Honour_King
 Data: 1
 Calc: Random
 Amount: 10

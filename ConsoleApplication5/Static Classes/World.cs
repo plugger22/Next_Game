@@ -2568,46 +2568,46 @@ namespace Next_Game
             //Date
             listStats.Add(new Snippet(Game.utility.ShowDate(), RLColor.Yellow, RLColor.Black));
             //justice
-            data = Game.director.CheckGameState(DataPoint.Justice);
-            good = Game.director.GetGameState(DataPoint.Justice, DataState.Good);
-            bad = Game.director.GetGameState(DataPoint.Justice, DataState.Bad);
-            change = Game.director.CheckGameStateChange(DataPoint.Justice);
+            data = Game.director.CheckGameState(GameState.Justice);
+            good = Game.director.GetGameState(GameState.Justice, DataState.Good);
+            bad = Game.director.GetGameState(GameState.Justice, DataState.Bad);
+            change = Game.director.CheckGameStateChange(GameState.Justice);
             foreground = RLColor.White;
             if (change > 0) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }
             listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Justice (Cause)", data, good, bad), foreground, RLColor.Black));
             //legend_usurper
-            data = Game.director.CheckGameState(DataPoint.Legend_Usurper);
-            good = Game.director.GetGameState(DataPoint.Legend_Usurper, DataState.Good);
-            bad = Game.director.GetGameState(DataPoint.Legend_Usurper, DataState.Bad);
-            change = Game.director.CheckGameStateChange(DataPoint.Legend_Usurper);
+            data = Game.director.CheckGameState(GameState.Legend_Usurper);
+            good = Game.director.GetGameState(GameState.Legend_Usurper, DataState.Good);
+            bad = Game.director.GetGameState(GameState.Legend_Usurper, DataState.Bad);
+            change = Game.director.CheckGameStateChange(GameState.Legend_Usurper);
             foreground = RLColor.White;
             if (change > 0) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }
             listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Legend (You)", data, good, bad), foreground, RLColor.Black));
             //legend_king
-            data = Game.director.CheckGameState(DataPoint.Legend_King);
-            good = Game.director.GetGameState(DataPoint.Legend_King, DataState.Good);
-            bad = Game.director.GetGameState(DataPoint.Legend_King, DataState.Bad);
-            change = Game.director.CheckGameStateChange(DataPoint.Legend_King);
+            data = Game.director.CheckGameState(GameState.Legend_King);
+            good = Game.director.GetGameState(GameState.Legend_King, DataState.Good);
+            bad = Game.director.GetGameState(GameState.Legend_King, DataState.Bad);
+            change = Game.director.CheckGameStateChange(GameState.Legend_King);
             foreground = RLColor.White;
             if (change > 0) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }
             listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Legend (King)", data, good, bad), foreground, RLColor.Black));
             //honour_usurper
-            data = Game.director.CheckGameState(DataPoint.Honour_Usurper);
-            good = Game.director.GetGameState(DataPoint.Honour_Usurper, DataState.Good);
-            bad = Game.director.GetGameState(DataPoint.Honour_Usurper, DataState.Bad);
-            change = Game.director.CheckGameStateChange(DataPoint.Honour_Usurper);
+            data = Game.director.CheckGameState(GameState.Honour_Usurper);
+            good = Game.director.GetGameState(GameState.Honour_Usurper, DataState.Good);
+            bad = Game.director.GetGameState(GameState.Honour_Usurper, DataState.Bad);
+            change = Game.director.CheckGameStateChange(GameState.Honour_Usurper);
             foreground = RLColor.White;
             if (change > 0) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }
             listStats.Add(new Snippet(string.Format("{0, -18} {1} %  (good {2} bad {3})", "Honour (You)", data, good, bad), foreground, RLColor.Black));
             //honour_king
-            data = Game.director.CheckGameState(DataPoint.Honour_King);
-            good = Game.director.GetGameState(DataPoint.Honour_King, DataState.Good);
-            bad = Game.director.GetGameState(DataPoint.Honour_King, DataState.Bad);
-            change = Game.director.CheckGameStateChange(DataPoint.Honour_King);
+            data = Game.director.CheckGameState(GameState.Honour_King);
+            good = Game.director.GetGameState(GameState.Honour_King, DataState.Good);
+            bad = Game.director.GetGameState(GameState.Honour_King, DataState.Bad);
+            change = Game.director.CheckGameStateChange(GameState.Honour_King);
             foreground = RLColor.White;
             if (change > 0) { foreground = increase; }
             else if (change < 0) { foreground = decrease; }
@@ -3732,9 +3732,9 @@ namespace Next_Game
                         actor.Value.Known = true; actor.Value.Revert = 2;
                         //raise Legend_King each turn player is held in dungeon
                         int legendLoss = Game.constant.GetValue(Global.LOSS_OF_LEGEND);
-                        int currentValue = Game.director.GetGameState(DataPoint.Legend_King, DataState.Good);
+                        int currentValue = Game.director.GetGameState(GameState.Legend_King, DataState.Good);
                         int newValue = Math.Abs(Game.director.ChangeData(currentValue, legendLoss, Event_System.EventCalc.Add));
-                        Game.director.SetGameState(DataPoint.Legend_King, DataState.Good, newValue, true);
+                        Game.director.SetGameState(GameState.Legend_King, DataState.Good, newValue, true);
                         //message
                         string description = string.Format("The Legend of {0} {1} grows (+{2}) while the Usurper is incarcerated", Game.lore.NewKing.Title, Game.lore.NewKing.Name, legendLoss);
                         SetMessage(new Message(description, MessageType.Incarceration));

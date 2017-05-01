@@ -1852,19 +1852,19 @@ namespace Next_Game
                     break;
                 case ConflictState.Relative_Fame:
                     //Usurpers Legend - Kings Legend
-                    difference = Game.director.CheckGameState(DataPoint.Legend_Usurper) - Game.director.CheckGameState(DataPoint.Legend_King);
+                    difference = Game.director.CheckGameState(GameState.Legend_Usurper) - Game.director.CheckGameState(GameState.Legend_King);
                     modifier = Math.Abs(difference);
                     description = string.Format("difference between Your's and the King's Legend is {0}{1} %", difference > 0 ? "+" : "", difference);
                     break;
                 case ConflictState.Relative_Honour:
                     //Usurpers Honour - Kings Honour
-                    difference = Game.director.CheckGameState(DataPoint.Honour_Usurper) - Game.director.CheckGameState(DataPoint.Honour_King);
+                    difference = Game.director.CheckGameState(GameState.Honour_Usurper) - Game.director.CheckGameState(GameState.Honour_King);
                     modifier = Math.Abs(difference);
                     description = string.Format("difference between Your's and the King's Honour is {0}{1} %", difference > 0 ? "+" : "", difference);
                     break;
                 case ConflictState.Relative_Justice:
                     //Relative Justice of the Usurpers Cause
-                    difference = Game.director.CheckGameState(DataPoint.Justice) - 50;
+                    difference = Game.director.CheckGameState(GameState.Justice) - 50;
                     modifier = Math.Abs(difference);
                     description = string.Format("relative Justice of Your Cause is {0}{1} %", difference > 0 ? "+" : "", difference);
                     break;
@@ -1876,9 +1876,6 @@ namespace Next_Game
                     { modifier = player.TurnsUnknown * 20; difference = 100; description = "you are Unknown (Good)"; }
                     modifier = Math.Min(100, modifier);
                     description = string.Format("how well you are Known in the Land {0}{1} %", difference > 0 ? "+" : "", difference);
-                    /*difference = Game.director.CheckGameState(DataPoint.Invisibility) - 50;
-                    modifier = Math.Abs(difference);
-                    description = string.Format("relative Invisibility of Your Cause is {0}{1} %", difference > 0 ? "+" : "", difference);*/
                     break;
             }
             //First couple of situation modifiers
@@ -2136,28 +2133,28 @@ namespace Next_Game
                         int refID = Game.world.GetRefID(player.LocID);
                         switch (type)
                         {
-                            case ResultType.DataPoint:
+                            case ResultType.GameState:
                                 Game.logTurn?.Write(string.Format("A {0} Result, ID {1}, Data {2}, Calc {3}, Amount {4}", type, result.ResultID, result.Data, result.Calc, result.Amount));
-                                if (result.DataPoint > DataPoint.None)
+                                if (result.GameState > GameState.None)
                                 {
                                     if (amount != 0)
                                     {
                                         //automatic ADD by amount. If Data > 0 then Good, otherwise Bad
                                         if (data > 0)
                                         {
-                                            int oldValue = Game.director.GetGameState(result.DataPoint, DataState.Good);
+                                            int oldValue = Game.director.GetGameState(result.GameState, DataState.Good);
                                             int newValue = Math.Abs(amount) + oldValue;
-                                            Game.director.SetGameState(result.DataPoint, DataState.Good, newValue, true);
-                                            tempText = string.Format("{0} has increased by {1} as a result of the {2} conflict", result.DataPoint, amount, Conflict_Type);
+                                            Game.director.SetGameState(result.GameState, DataState.Good, newValue, true);
+                                            tempText = string.Format("{0} has increased by {1} as a result of the {2} conflict", result.GameState, amount, Conflict_Type);
                                             tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                             message = new Message(string.Format("{0}", tempText), MessageType.Conflict);
                                         }
                                         else
                                         {
-                                            int oldValue = Game.director.GetGameState(result.DataPoint, DataState.Bad);
+                                            int oldValue = Game.director.GetGameState(result.GameState, DataState.Bad);
                                             int newValue = Math.Abs(amount) + oldValue;
-                                            Game.director.SetGameState(result.DataPoint, DataState.Bad, newValue, true);
-                                            tempText = string.Format("{0} has decreased by {1} as a result of the {2} conflict", result.DataPoint, amount, Conflict_Type);
+                                            Game.director.SetGameState(result.GameState, DataState.Bad, newValue, true);
+                                            tempText = string.Format("{0} has decreased by {1} as a result of the {2} conflict", result.GameState, amount, Conflict_Type);
                                             tempList.Add(new Snippet(tempText, RLColor.Red, backColor));
                                             message = new Message(tempText, MessageType.Conflict);
                                         }
@@ -2167,7 +2164,7 @@ namespace Next_Game
                                             Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
                                         }
                                     }
-                                    else Game.SetError(new Error(113, "Invalid DataPoint Amount (zero)"));
+                                    else Game.SetError(new Error(113, "Invalid GameState Amount (zero)"));
                                 }
                                 break;
                             case ResultType.GameVar:

@@ -52,9 +52,9 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, DataPoint, Resource, Condition, Known, Freedom, Item, VoyageTime, Adrift, Rescued, DeathTimer, GameVar)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, GameState, Resource, Condition, Known, Freedom, Item, VoyageTime, Adrift, Rescued, DeathTimer, GameVar)
 
-# [outcome] effect -> DataPoint
+# [outcome] effect -> GameState
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
 # data -> if +ve then Good, if -ve then Bad
 # if data <= 5 then data -> 1 Justice, 2 Legend_Urs, 3 Legend_King, 4 Honour_Urs, 5 Honour_King (apply: Add or Random only)
@@ -141,7 +141,7 @@ reply: Giddee Up Trigger! You attempt to gallop away to safety
 effect: Known
 data: -1
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 2
 amount: 1
 apply: Add
@@ -154,7 +154,7 @@ item: Charm
 thresh: 2
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 5
 amount: 2
 apply: Add
@@ -170,12 +170,12 @@ item: Treachery
 thresh: 3
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 4
 amount: 2
 apply: Add
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 1
 amount: 1
 apply: Add
@@ -202,7 +202,7 @@ effect: EventStatus
 data: 4
 newStatus: Active
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 5
 amount: 1
 apply: Add
@@ -219,7 +219,7 @@ item: Charm
 thresh: 3
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 5
 amount: 10
 apply: Random
@@ -237,7 +237,7 @@ item: Combat
 thresh: 3
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -1
 amount: 3
 apply: Random
@@ -276,7 +276,7 @@ item: 3
 thresh: 3
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 5
 amount: 1
 apply: Add
@@ -292,7 +292,7 @@ item: Treachery
 thresh: 3
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -3
 amount: 1
 apply: Add
@@ -324,7 +324,7 @@ apply: Add
 text: Offer assistance
 reply: You immediately dismount and approach her on foot only to be assaulted by the incensed hag.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 5
 amount: 1
 apply: Add
@@ -342,7 +342,7 @@ item: Treachery
 thresh: 3
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -5
 amount: 1
 apply: Add
@@ -379,7 +379,7 @@ item: Legend_Urs
 thresh: 50
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 4
 amount: 1
 apply: Add
@@ -392,7 +392,7 @@ item: Treachery
 thresh: 3
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -4
 amount: 1
 apply: Add
@@ -417,7 +417,7 @@ data: -1
 text: Deal with his Insolence
 reply: You slap the surprised citizen who recoils backwards before regaining his balance and yelling at the top of his voice "Guards! Guards!". You have no choice but to run for your life.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -2
 amount: 2
 apply: Add
@@ -436,7 +436,7 @@ item: Wits
 thresh: 3
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 3
 amount: 1
 apply: Add
@@ -488,7 +488,7 @@ effect: VoyageTime
 amount: 2
 apply: Add
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 2
 amount: 1
 apply: Add
@@ -549,7 +549,7 @@ Cool: 10
 text: Stand aside and let it happen.
 reply: Nobody wants to be sailing on a cursed ship. If the woman is a Jonah then she needs to be heaved overboard immediately.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -4
 amount: 2
 apply: Add
@@ -557,7 +557,7 @@ apply: Add
 text: Over my dead body! Protect the woman.
 reply: Superstituous nonsense! You draw your sword and make it clear that they will have to kill you first.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 4
 amount: 2
 apply: Add
@@ -565,7 +565,7 @@ apply: Add
 text:  Negotiate with the crew. Giving the woman ten lashes of the whip will be sufficent
 reply: There is no need for the woman to die. While ten lashes might cripple her, it's better than drowning.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -4
 amount: 1
 apply: Add
@@ -584,7 +584,7 @@ Cool: 10
 text: Keep walking. It's none of your business.
 reply: It's a tough world. The boy needs to learn that the only person who will help you is yourself.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -4
 amount: 2
 apply: Add
@@ -592,7 +592,7 @@ apply: Add
 text: Speak to the Captain and demand he make an example of the man.
 reply: Moral standards must be upheld. Explain to the Captain that he is only as good as the standards he upholds. Sadly the Captain fails to see it your way and orders you off his ship, immediately.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 4
 amount: 1
 apply: Add
@@ -604,7 +604,7 @@ bool: No
 text: He's just a young boy. Draw your sword and protect him.
 reply: It's your duty to protect the weak and vulnerable. Cold steel will teach this filthy rapist a lesson.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 4
 amount: 1
 apply: Add
@@ -707,7 +707,7 @@ test: 85
 skill: Leadership
 replyBad: You pump and pump but it is, in the end, pointless. The battered old lady of the sea succumbs to the ingress of water and you are forced to abandon ship.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 2
 amount: 1
 apply: Add
@@ -793,7 +793,7 @@ reply: The Captain can handle this one. It's his job to keep you alive. You remi
 test: 33
 replyBad: The ship moves alarmingly beneath your feet and all you can hear is screaming and the sound of splintering wood. It doesn't bode well.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -4
 amount: 1
 apply: Add
@@ -814,7 +814,7 @@ item: Leadership
 thresh: 3
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 3
 amount: 1
 apply: Add
@@ -830,7 +830,7 @@ test: 50
 skill: Treachery
 replyBad: You watch, wet and cold, from your bobbing raft as the beast descends into the depths and the ship sails off over the horizon. Damn!
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -4
 amount: 2
 apply: Add
@@ -859,7 +859,7 @@ effect: DeathTimer
 amount: 4
 apply: Subtract
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 4
 amount: 2
 apply: Add
@@ -867,7 +867,7 @@ apply: Add
 text: It's not going to work. Heave him back into the water.
 reply: You're on a raft. You can't be expected to feed and water every passing seaman. Somebody else can deal with him.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -4
 amount: 1
 apply: Add
@@ -875,7 +875,7 @@ apply: Add
 text: Hit him on the head with the paddle. Hard.
 reply: There's your food problem solved, right there and then.
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -4
 amount: 2
 apply: Add
@@ -1083,7 +1083,7 @@ conSkill: Charm
 conEffect: -1
 conTimer: 5
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 2
 amount: 1
 apply: Add

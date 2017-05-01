@@ -1,6 +1,105 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 30/04/2017 15:38:27
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
+//Exile Game File "LogTurn.txt" opened at: 01/05/2017 10:38:18
+--- ProcessStartTurn (World.cs)
+Day 7, Turn 6
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Beelzebub, ActID 114 travelling to The Raucous Rat (current Loc 14:18)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Rodrik Tyrell, ID 1 at 14:8, Enemy at 14:18 (Brother Beelzebub, ID 114
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Rodrik Tyrell, ID 1 at 14:8, Enemy at 14:19 (Brother Beelzebub, ID 114
+ [Goal -> Arrival] Inquisitor Brother Beelzebub, ActID 114, currently at The Raucous Rat, new Goal -> Wait
+ [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 113 travelling to Pyke (current Loc 20:10)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Rodrik Tyrell, ID 1 at 14:8, Enemy at 20:10 (Brother Diabolous, ID 113
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Rodrik Tyrell, ID 1 at 14:8, Enemy at 21:10 (Brother Diabolous, ID 113
+--- UpdatePlayerStatus (World.cs)
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Rodrik Tyrell, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Set, ID 112 at 14:8, Active Rodrik Tyrell, ID 1, at 14:8
+ [Search -> Alert] Inquisitor Brother Set, ActID 112, is in the same place as Active Rodrik Tyrell, ID 1, (loc 14:8)
+ [SEARCH -> Active] Random 86 < 30 (ai 30 + known 0) -> Fail 
+ [Search -> ListSearched] Usurper Rodrik Tyrell, ActID 1 Searched -> Enemy ActID 112 added
+ [Search -> Debug] Enemy, Brother Diabolous, ID 113 at 22:10, Active Rodrik Tyrell, ID 1, at 14:8
+ [Search -> Debug] Enemy, Brother Beelzebub, ID 114 at 13:19, Active Rodrik Tyrell, ID 1, at 14:8
+ [Search -> Debug] Enemy, Brother Behemoth, ID 115 at 14:12, Active Rodrik Tyrell, ID 1, at 14:8
+ [Search -> Debug] Enemy, The Unrelenting, ID 116 at 14:12, Active Rodrik Tyrell, ID 1, at 14:8
+ [Search -> Stationary] Follower The Jester, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 7 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 4 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Set, Act ID 112 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 114 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 115 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 116 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Set, ActID 112 retains Goal -> Hide
+ [Enemy -> Goal] Brother Beelzebub, ActID 114 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Behemoth, ActID 115 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Behemoth, ActID 115, (loc 14:12), assigned new Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 116 Assigned Branch -> 0 Current Branch -> 0
+--- CheckPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Event "Search and Detain" has no attached Conditions
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 37 %
+--- ResolvePlayerEvents (Director.cs)
+ "Stay Calm" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger passed on "3" GreaterThanOrEqual 3
+ "Run straight at them" Trait Trigger, if type 1 is GreaterThanOrEqual to 3
+ Trigger FAILED on "2" GreaterThanOrEqual 3
+ Event "Search and Detain" Timer Repeat now 999
+ Event "Search and Detain" Cooldown Timer has been reset to 4
+--- UpdateActiveActors (World.cs)
+ Usurper Rodrik Tyrell has had their TurnsUnknown Timer increased from 105 to 106
+ Follower The Jester has had their TurnsUnknown Timer increased from 5 to 6
+ Follower The Waif has had their TurnsUnknown Timer increased from 5 to 6
+ Follower The Duchess has had their TurnsUnknown Timer increased from 5 to 6
+--- ResolveOutcome (Director.cs)
+[GameVar] Promises_Num changed from 0 to 1 as a result of RandomPlus 3
+--- ResolveFollowerEvents (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 30/04/2017 15:38:48
+//Exile Game file ops "LogTurn.txt" Completed at: 01/05/2017 10:39:08
+--- UpdateActiveActors (World.cs)
+ Usurper Rodrik Tyrell has had their TurnsUnknown Timer increased from 104 to 105
+ Follower The Jester has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Waif has had their TurnsUnknown Timer increased from 4 to 5
+ Follower The Duchess has had their TurnsUnknown Timer increased from 4 to 5
+--- ResolveOutcome (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 6, Turn 5
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 15
+//Exile Game File "LogTurn.txt" Close completed at: 01/05/2017 10:38:18
+ added to list of Actors
+ [AutoEvent -> ActorList] "Amory Baratheon", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "The Duchess", ID 4 added to list of Actors
+ [AutoEvent -> ActorList] "Brother Set", ID 112 added to list of Actors
+ [AutoEvent -> LocalList] "Pate Baratheon", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Matild Baratheon", ID 26 added to list of Locals
+ [AutoEvent -> AdvisorList] "Audry Althalos", ID 28 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aunger Rannulf", ID 29 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Barristan Rannulf", ID 30 added to list of Advisors
+ [AutoEvent -> LocalList] "Rechemay Baratheon", ID 31 added to list of Locals
+ [AutoEvent -> LocalList] "Amory Baratheon", ID 32 added to list of Locals
+ [AutoEvent -> FollowerList] "The Duchess", ID 4 added to list of Followers
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Rodrik Tyrell has had their TurnsUnknown Timer increased from 103 to 104
+ Follower The Jester has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Waif has had their TurnsUnknown Timer increased from 3 to 4
+ Follower The Duchess has had their TurnsUnknown Timer increased from 3 to 4
+--- ResolveOutcome (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 5, Turn 4
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 16
+//Exile Game File "LogTurn.txt" Close completed at: 01/05/2017 10:38:15

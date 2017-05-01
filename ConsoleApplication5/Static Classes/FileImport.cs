@@ -302,7 +302,7 @@ namespace Next_Game
         public string Tag { get; set; }
         public int ResultID { get; set; }
         public ResultType Type { get; set; }
-        public DataPoint DataPoint { get; set; }
+        public GameState gameState { get; set; }
         public int Data { get; set; }
         public int Test { get; set; }
         public EventCalc Calc { get; set;}
@@ -477,7 +477,7 @@ namespace Next_Game
                                     break;
                                 case "[end]":
                                 case "[End]":
-                                    //last datapoint - save structure to list
+                                    //last Datapoint in record - save structure to list
                                     if (dataCounter > 0 && validData == true)
                                     { listHouses.Add(houseStruct); }
                                     break;
@@ -1790,8 +1790,8 @@ namespace Next_Game
                                     {
                                         case "conflict":
                                         case "Conflict":
-                                        case "dataPoint":
-                                        case "DataPoint":
+                                        case "gameState":
+                                        case "GameState":
                                         case "gameVar":
                                         case "GameVar":
                                         case "known":
@@ -2264,15 +2264,15 @@ namespace Next_Game
                                                                         validData = false;
                                                                     }
                                                                     break;
-                                                                case "DataPoint":
-                                                                    //check that DataPoints are only 'add' or 'random'
+                                                                case "GameState":
+                                                                    //check that GameStates are only 'add' or 'random'
                                                                     if (outTemp.Data <= 6 && outTemp.Calc != EventCalc.Add && outTemp.Calc != EventCalc.Random)
                                                                     {
                                                                         Game.SetError(new Error(49, string.Format("Outcome \"apply: {0}\" changed to \"Add\" for Event (\"{1}\")",
                                                                             outTemp.Calc, structEvent.Name)));
                                                                         outTemp.Calc = EventCalc.Add;
                                                                     }
-                                                                    outObject = new OutDataPoint(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Calc);
+                                                                    outObject = new OutGameState(structEvent.EventID, outTemp.Data, outTemp.Amount, outTemp.Calc);
                                                                     break;
                                                                 case "Known":
                                                                     if (outTemp.Data != 0)
@@ -4893,8 +4893,8 @@ namespace Next_Game
                                 {
                                     switch (cleanToken)
                                     {
-                                        case "DataPoint":
-                                            structResult.Type = ResultType.DataPoint;
+                                        case "GameState":
+                                            structResult.Type = ResultType.GameState;
                                             break;
                                         case "GameVar":
                                             structResult.Type = ResultType.GameVar;
@@ -5026,30 +5026,30 @@ namespace Next_Game
                                 { Game.SetError(new Error(115, string.Format("Empty input field (Amount), record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                                 break;
                             //optional tags
-                            case "DataPoint":
+                            case "GameState":
                                 if (cleanToken.Length == 0)
-                                { Game.SetError(new Error(115, string.Format("Empty DataPoint field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                                { Game.SetError(new Error(115, string.Format("Empty GameState field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
                                 else
                                 {
                                     switch (cleanToken)
                                     {
                                         case "Justice":
-                                            structResult.DataPoint = DataPoint.Justice;
+                                            structResult.gameState = GameState.Justice;
                                             break;
                                         case "Legend_Usurper":
-                                            structResult.DataPoint = DataPoint.Legend_Usurper;
+                                            structResult.gameState = GameState.Legend_Usurper;
                                             break;
                                         case "Legend_King":
-                                            structResult.DataPoint = DataPoint.Legend_King;
+                                            structResult.gameState = GameState.Legend_King;
                                             break;
                                         case "Honour_Usurper":
-                                            structResult.DataPoint = DataPoint.Honour_Usurper;
+                                            structResult.gameState = GameState.Honour_Usurper;
                                             break;
                                         case "Honour_King":
-                                            structResult.DataPoint = DataPoint.Honour_King;
+                                            structResult.gameState = GameState.Honour_King;
                                             break;
                                         default:
-                                            Game.SetError(new Error(115, string.Format("Invalid Input, DataPoint (\"{0}\")", arrayOfResults[i])));
+                                            Game.SetError(new Error(115, string.Format("Invalid Input, GameState (\"{0}\")", arrayOfResults[i])));
                                             validData = false;
                                             break;
                                     }
@@ -5156,8 +5156,8 @@ namespace Next_Game
                                     //special case Results
                                     switch (structResult.Type)
                                     {
-                                        case ResultType.DataPoint:
-                                            if (structResult.DataPoint > DataPoint.None) { resultObject.DataPoint = structResult.DataPoint; }
+                                        case ResultType.GameState:
+                                            if (structResult.gameState > GameState.None) { resultObject.GameState = structResult.gameState; }
                                             break;
                                         case ResultType.Condition:
                                             resultObject.ConPlayer = structResult.ConPlayer;

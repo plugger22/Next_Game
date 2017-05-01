@@ -37,10 +37,10 @@
 
 # [outcome]: Outcome block (can have up to 3 outcome's for each option). Place block header at top
 # outcome -> Each option requires an outcome. For a 'do nothing' outcome use '[outcome]' plus 'effect: None' (out, amount and apply aren't needed)
-# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, DataPoint, EventChain, Known, GameVar)
+# effect: type of outcome Effect ( None, Conflict, EventTimer, EventStatus, GameState, EventChain, Known, GameVar)
 # bad: OPTIONAL -> any value > 0 (use '1') flags this as a bad outcome (can have multiple)
 
-# [outcome] -> DataPoint
+# [outcome] -> GameState
 # data: multi-purpose outcome type, usually and ID of some form (depends on effect, must be an Integer), default '0'
 # data -> if +ve then Good, if -ve then Bad
 # if data <= 5 then data -> 1 Justice, 2 Legend_Urs, 3 Legend_King, 4 Honour_Urs, 5 Honour_King (apply: Add or Random only)
@@ -106,13 +106,13 @@ check: ResourcePlyr
 thresh: 1
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: 4
 amount: 1
 apply: Add
 [outcome]
 bad: Yes
-effect: DataPoint
+effect: GameState
 data: -4
 amount: 1
 apply: Add
@@ -132,7 +132,7 @@ item: 4
 thresh: 3
 calc: >=
 [outcome]
-effect: DataPoint
+effect: GameState
 data: -2
 amount: 2
 apply: Add

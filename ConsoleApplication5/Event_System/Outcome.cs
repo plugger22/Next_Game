@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Next_Game.Event_System
 {
-    public enum OutcomeType { None, Delay, Conflict, DataPoint, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
-    Follower, Promise, RelPlyr, GameVar};
+    public enum OutcomeType { None, Delay, Conflict, GameState, GameVar, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
+    Follower, Promise, RelPlyr};
 
     /// <summary>
     /// Option outcome, event system
@@ -126,16 +126,16 @@ namespace Next_Game.Event_System
 
 
     /// <summary>
-    /// Player outcome -> changes a DataPoint variable, eg. Justice
+    /// Player outcome -> changes a GameState variable, eg. Justice
     /// </summary>
-    class OutDataPoint : Outcome
+    class OutGameState : Outcome
     {
-        public OutDataPoint(int eventID, int type, int amount, EventCalc apply = EventCalc.None) : base(eventID)
+        public OutGameState(int eventID, int type, int amount, EventCalc apply = EventCalc.None) : base(eventID)
         {
             this.Data = type;
             this.Amount = amount;
             Calc = apply;
-            Type = OutcomeType.DataPoint;
+            Type = OutcomeType.GameState;
         }
     }
 

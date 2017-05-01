@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
 
-    public enum ResultType { None, DataPoint, GameVar, RelPlyr, RelOther, Condition, Resource, Item, Secret, Favour, Introduction, Army, Event, Known, Freedom, Count} 
+    public enum ResultType { None, GameState, GameVar, RelPlyr, RelOther, Condition, Resource, Item, Secret, Favour, Introduction, Army, Event, Known, Freedom, Count} 
     //relationship change with actor (RelPlyr -> actors rel. with Plyr, RelOther -> actors rel with another actor), condition affect on actor, event triggered
-    //use datapoints for main game state adjustements (eg. relative fame) and gamevars for everything else.
+    //use GameStates for main game state adjustements (eg. relative fame) and GameVars for everything else.
     //NOTE: Conflict.cs ResolveResults uses the above for a switch statement that needs to be tweaked if the above ResultType enum is changed or added to.
 
     /// <summary>
@@ -25,7 +25,7 @@ namespace Next_Game.Event_System
         public EventCalc Calc { get; set; }
         public int Amount { get; set; }
         public int Test { get; set; } = 0; //optional -> if > 0 then a 1d100 <= Test must occur for result to happen, otherwise ignored.
-        public DataPoint DataPoint { get; set; } //optional -> DataPoint
+        public GameState GameState { get; set; } //optional -> GameState
         public GameVar GameVar { get; set; } //optional -> GameVar
         public bool ConPlayer { get; set; } //optional -> Conditions
         public string ConText { get; set; } //optional -> Conditions

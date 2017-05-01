@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 30/04/2017 15:38:26
+//Exile Game file ops "LogStart.txt" commenced at: 01/05/2017 10:37:35
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -72,7 +72,7 @@ PROMISES_BASE -> 10 Min 5 Max 15
 PROMISES_HALVED -> 4 Min 4 Max 10
 PROMISES_MAX -> 6 Min 6 Max 20
 ERROR_29 "Location Deleted 1:1"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 15:38:26 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 10:37:35 UTC +10:00
 --- Network Analysis (Network.cs)
 Dir 0         1 Locations     0 Connections
 Dir 1         4 Locations     4 Connections
@@ -746,27 +746,27 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
 "The King's Men" Event, ID 1, Type Road, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Run for it!" 
     OutKnown -> data -1, amount 0, apply None
-    OutDataPoint -> data 2, amount 1, apply Add
+    OutGameState -> data 2, amount 1, apply Add
   Option "Talk your way through" 
    Trigger -> if Trait 3 is GreaterThanOrEqual to 2
-    OutDataPoint -> data 5, amount 2, apply Add
+    OutGameState -> data 5, amount 2, apply Add
     OutKnown -> data 1, amount 0, apply None
   Option "Bluff your way through" 
    Trigger -> if Trait 4 is GreaterThanOrEqual to 3
-    OutDataPoint -> data 4, amount 2, apply Add
-    OutDataPoint -> data 1, amount 1, apply Add
+    OutGameState -> data 4, amount 2, apply Add
+    OutGameState -> data 1, amount 1, apply Add
 "Search and Detain" Event, ID 2, Type Location, Repeat 1000, Dormant 21, Live 0, Status Active
   Option "Leg it!"  [Variable -> 60 % Success, Combat DM]
     OutEventStatus -> Target EventID 4, New Status Active
-    OutDataPoint -> data 5, amount 1, apply Add
+    OutGameState -> data 5, amount 1, apply Add
     OutKnown -> data -1, amount 0, apply None
   Option "Stay Calm" 
    Trigger -> if Trait 3 is GreaterThanOrEqual to 3
-    OutDataPoint -> data 5, amount 10, apply Random
+    OutGameState -> data 5, amount 10, apply Random
     OutGameVar -> GameVar Promises_Num, Amount 3, EventCalc RandomPlus
   Option "Run straight at them" 
    Trigger -> if Trait 1 is GreaterThanOrEqual to 3
-    OutDataPoint -> data -1, amount 3, apply Random
+    OutGameState -> data -1, amount 3, apply Random
     OutEventStatus -> Target EventID 5, New Status Live
     OutCondition -> data 0, amount 0, apply None
 "Mysterious Stranger" Event, ID 3, Type Location, Repeat 10, Dormant 0, Live 0, Status Active
@@ -774,39 +774,39 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
     OutNone -> data 0, amount 0, apply None
   Option "Talk to them" 
    Trigger -> if Trait 3 is GreaterThanOrEqual to 3
-    OutDataPoint -> data 5, amount 1, apply Add
+    OutGameState -> data 5, amount 1, apply Add
   Option "Curse all strangers"  [Variable -> 50 % Success, Treachery DM]
    Trigger -> if Trait 4 is GreaterThanOrEqual to 3
-    OutDataPoint -> data -3, amount 1, apply Add
+    OutGameState -> data -3, amount 1, apply Add
     OutKnown -> data -1, amount 0, apply None
 "Crazy Old Woman" Event, ID 6, Type Road, Repeat 3, Dormant 0, Live 0, Status Active
   Option "Ride past, ignoring her"  [Variable -> 50 % Success, Treachery DM]
     OutEventTimer -> Target EventID 6, Cool timer, amount 1 apply Add
   Option "Offer assistance" 
-    OutDataPoint -> data 5, amount 1, apply Add
+    OutGameState -> data 5, amount 1, apply Add
     OutResource -> Player? True, amount 1, apply Subtract
   Option "Ride her down!" 
    Trigger -> if Trait 4 is GreaterThanOrEqual to 3
-    OutDataPoint -> data -5, amount 1, apply Add
+    OutGameState -> data -5, amount 1, apply Add
     OutConflict -> subType Personal, oppID 2, Challenger True
 "Naked Woman" Event, ID 4, Type Road, Repeat 10, Dormant 0, Live 0, Status Dormant
   Option "Ride past, ignoring her" 
     OutNone -> data 0, amount 0, apply None
   Option "Offer assistance" 
    Trigger -> if GameVar 2 is GreaterThanOrEqual to 50
-    OutDataPoint -> data 4, amount 1, apply Add
+    OutGameState -> data 4, amount 1, apply Add
   Option "Ride her down!" 
    Trigger -> if Trait 4 is GreaterThanOrEqual to 3
-    OutDataPoint -> data -4, amount 1, apply Add
+    OutGameState -> data -4, amount 1, apply Add
 "The Hand of the King" Event, ID 5, Type Location, Repeat 1000, Dormant 0, Live 4, Status Dormant
   Option "Thank the Citizen" 
     OutKnown -> data -1, amount 0, apply None
   Option "Deal with his Insolence" 
-    OutDataPoint -> data -2, amount 2, apply Add
+    OutGameState -> data -2, amount 2, apply Add
     OutEventTimer -> Target EventID 5, Repeat timer, amount 3 apply Equals
   Option "Pay the Citizen" 
    Trigger -> if Trait 2 is GreaterThanOrEqual to 3
-    OutDataPoint -> data 3, amount 1, apply Add
+    OutGameState -> data 3, amount 1, apply Add
 "Storm" Event, ID 7, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Seek shelter below decks in the relative safety of your cabin" 
     OutVoyageTime -> data 0, amount 3, apply Add
@@ -816,7 +816,7 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
   Option "Climb the mast and howl at the wind. Uncage your inner beast."  [Variable -> 75 % Success, Combat DM]
    Trigger -> if Trait 1 is GreaterThanOrEqual to 3
     OutVoyageTime -> data 0, amount 2, apply Add
-    OutDataPoint -> data 2, amount 1, apply Add
+    OutGameState -> data 2, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
 "Becalmed" Event, ID 8, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "What can you do but go below and drink more wine?"  [Variable -> 75 % Success, Combat DM]
@@ -828,19 +828,19 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
     OutConflict -> subType Personal, oppID 3, Challenger True
 "Jonah" Event, ID 9, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Stand aside and let it happen." 
-    OutDataPoint -> data -4, amount 2, apply Add
+    OutGameState -> data -4, amount 2, apply Add
   Option "Over my dead body! Protect the woman." 
-    OutDataPoint -> data 4, amount 2, apply Add
+    OutGameState -> data 4, amount 2, apply Add
   Option "Negotiate with the crew. Giving the woman ten lashes of the whip will be sufficent" 
-    OutDataPoint -> data -4, amount 1, apply Add
+    OutGameState -> data -4, amount 1, apply Add
 "Cabin Boy" Event, ID 10, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Keep walking. It's none of your business." 
-    OutDataPoint -> data -4, amount 2, apply Add
+    OutGameState -> data -4, amount 2, apply Add
   Option "Speak to the Captain and demand he make an example of the man." 
-    OutDataPoint -> data 4, amount 1, apply Add
+    OutGameState -> data 4, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
   Option "He's just a young boy. Draw your sword and protect him." 
-    OutDataPoint -> data 4, amount 1, apply Add
+    OutGameState -> data 4, amount 1, apply Add
     OutConflict -> subType Personal, oppID 3, Challenger True
 "Drinks with Captain" Event, ID 21, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Decline the invitation."  [Variable -> 70 % Success, Charm DM]
@@ -858,7 +858,7 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
     OutNone -> data 0, amount 0, apply None
     OutAdrift -> data 0, amount 0, apply None
   Option "Volunteer to help man the pumps."  [Variable -> 85 % Success, Leadership DM]
-    OutDataPoint -> data 2, amount 1, apply Add
+    OutGameState -> data 2, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
   Option "Offer a gold coin to every crew member if they can keep the ship afloat" 
    Trigger -> if ResourcePlyr 1 is GreaterThanOrEqual to 2
@@ -875,23 +875,23 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
     OutEventStatus -> Target EventID 20, New Status Active
 "Kraken Attacks" Event, ID 20, Type GeoCluster, Repeat 1, Dormant 31, Live 0, Status Dormant
   Option "Go below and hope for the best."  [Variable -> 33 % Success, None DM]
-    OutDataPoint -> data -4, amount 1, apply Add
+    OutGameState -> data -4, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
   Option "Insist that the Captain call all crew to Arms"  [Variable -> 60 % Success, Leadership DM]
    Trigger -> if Trait 5 is GreaterThanOrEqual to 3
-    OutDataPoint -> data 3, amount 1, apply Add
+    OutGameState -> data 3, amount 1, apply Add
     OutAdrift -> data 0, amount 0, apply None
   Option "Grab a nearby raft and abandon ship"  [Variable -> 50 % Success, Treachery DM]
-    OutDataPoint -> data -4, amount 2, apply Add
+    OutGameState -> data -4, amount 2, apply Add
     OutAdrift -> data 0, amount 0, apply None
 "Drowning seaman" Event, ID 17, Type Adrift, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Despite the lack of food and water you decide to share what you have."  [Variable -> 50 % Success, Treachery DM]
-    OutDataPoint -> data 4, amount 2, apply Add
+    OutGameState -> data 4, amount 2, apply Add
     OutDeathTimer -> data 0, amount 4, apply Subtract
   Option "It's not going to work. Heave him back into the water." 
-    OutDataPoint -> data -4, amount 1, apply Add
+    OutGameState -> data -4, amount 1, apply Add
   Option "Hit him on the head with the paddle. Hard." 
-    OutDataPoint -> data -4, amount 2, apply Add
+    OutGameState -> data -4, amount 2, apply Add
     OutDeathTimer -> data 0, amount 4, apply Add
 "Passing Gypsy Vessel" Event, ID 19, Type Adrift, Repeat 1000, Dormant 0, Live 0, Status Active
   Option "Ignore the ship." 
@@ -931,7 +931,7 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
     OutDeathTimer -> data 0, amount 2, apply Subtract
   Option "Hurl the pail of swill into the face of your Goaler." 
     OutCondition -> data 0, amount 0, apply None
-    OutDataPoint -> data 2, amount 1, apply Add
+    OutGameState -> data 2, amount 1, apply Add
     OutDeathTimer -> data 0, amount 2, apply Subtract
 "The Bucket" Event, ID 14, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
   Option "Who wants to lie in their own waste?" 
@@ -959,13 +959,13 @@ ItemID 10, "Elixir of Wellness", given to lady Rechemay Baratheon, ActID 31, at 
     OutNone -> data 0, amount 0, apply None
   Option "Attempt to Bribe the Thugs"  [Variable -> 50 % Success, None DM]
    Trigger -> if ResourcePlyr 0 is GreaterThanOrEqual to 1
-    OutDataPoint -> data 4, amount 1, apply Add
+    OutGameState -> data 4, amount 1, apply Add
     OutKnown -> data -1, amount 0, apply None
-    OutDataPoint -> data -4, amount 1, apply Add
+    OutGameState -> data -4, amount 1, apply Add
     OutKnown -> data -1, amount 0, apply None
   Option "Curse all strangers" 
    Trigger -> if Trait 4 is GreaterThanOrEqual to 3
-    OutDataPoint -> data -2, amount 2, apply Add
+    OutGameState -> data -2, amount 2, apply Add
 "Vengeful <text_1> (Seduction attempt)" successfully added to DictAutoEvents
 --- Import Archetypes (Director.cs)
 Dire Wolf Forest, ArcID 1, [GeoCluster], has 2 events
@@ -1226,5 +1226,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 30/04/2017 15:38:27
-//Elapsed Time 789 ms
+//Exile Game file ops "LogStart.txt" Completed at: 01/05/2017 10:37:36
+//Elapsed Time 775 ms

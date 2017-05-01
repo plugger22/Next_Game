@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
-    public enum DataPoint { None, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfDataPoints primary index -> DON"T CHANGE ORDER (mirrored in State.cs)
+    public enum GameState { None, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfGameStates primary index
     public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
     public enum ConflictType { None, Combat, Social, Stealth, Special} //broad category (special is solely for overriding default challenge data -> used by autocreate events only)
     public enum ConflictCombat { None, Personal, Tournament, Battle, Hunting} //sub category -> a copy should be in ConflictSubType
@@ -47,7 +47,7 @@ namespace Next_Game
         //State state;
         public int EventAutoID { get; set; } = 2000; //used to provide a unique Player Event ID for auto created events
         public int NumAutoReactEvents { get; set; } = 0; //number of active autoReact events currently out there as Player events
-        private int[,] arrayOfDataPoints; //tracks DataPoints (enum DataPoints), all are index 0 -> good, index 1 -> bad
+        private int[,] arrayOfGameStates; //tracks s (enum GameStates), all are index 0 -> good, index 1 -> bad
         //events
         List<int> listOfActiveGeoClusters; //clusters that have a road through them (GeoID's)
         List<int> listGenFollEventsForest; //generic events for followers
@@ -107,7 +107,7 @@ namespace Next_Game
         {
             rnd = new Random(seed);
             //state = new State(seed);
-            arrayOfDataPoints = new int[(int)DataPoint.Count, (int)DataState.Count];
+            arrayOfGameStates = new int[(int)GameState.Count, (int)DataState.Count];
             //follower generic events
             listOfActiveGeoClusters = new List<int>();
             listGenFollEventsForest = new List<int>();
@@ -211,33 +211,33 @@ namespace Next_Game
             int multiplier = Game.constant.GetValue(Global.GAME_STATE);
             //Justice -> Old King popularity (charm) - New King
             int popularity = Game.lore.OldKing.GetSkill(SkillType.Charm);
-            Game.director.SetGameState(DataPoint.Justice, DataState.Good, popularity * multiplier);
+            Game.director.SetGameState(GameState.Justice, DataState.Good, popularity * multiplier);
             popularity = Game.lore.NewKing.GetSkill(SkillType.Charm);
-            Game.director.SetGameState(DataPoint.Justice, DataState.Bad, popularity * multiplier);
+            Game.director.SetGameState(GameState.Justice, DataState.Bad, popularity * multiplier);
             //Legend_Usurper -> Combat
             int legend = Game.lore.OldHeir.GetSkill(SkillType.Combat);
             if (legend > 3)
-            { Game.director.SetGameState(DataPoint.Legend_Usurper, DataState.Good, (legend - 3) * multiplier); }
+            { Game.director.SetGameState(GameState.Legend_Usurper, DataState.Good, (legend - 3) * multiplier); }
             else if (legend < 3)
-            { Game.director.SetGameState(DataPoint.Legend_Usurper, DataState.Bad, (3 - legend) * multiplier); }
+            { Game.director.SetGameState(GameState.Legend_Usurper, DataState.Bad, (3 - legend) * multiplier); }
             //Legend_New King -> Combat
             legend = Game.lore.NewKing.GetSkill(SkillType.Combat);
             if (legend > 3)
-            { Game.director.SetGameState(DataPoint.Legend_King, DataState.Good, (legend - 3) * multiplier); }
+            { Game.director.SetGameState(GameState.Legend_King, DataState.Good, (legend - 3) * multiplier); }
             else if (legend < 3)
-            { Game.director.SetGameState(DataPoint.Legend_King, DataState.Bad, (3 - legend) * multiplier); }
+            { Game.director.SetGameState(GameState.Legend_King, DataState.Bad, (3 - legend) * multiplier); }
             //Honour_Usurper -> Treachery (good is < 3)
             int treachery = Game.lore.OldHeir.GetSkill(SkillType.Treachery);
             if (treachery > 3)
-            { Game.director.SetGameState(DataPoint.Honour_Usurper, DataState.Bad, (treachery - 3) * multiplier); }
+            { Game.director.SetGameState(GameState.Honour_Usurper, DataState.Bad, (treachery - 3) * multiplier); }
             else if (treachery < 3)
-            { Game.director.SetGameState(DataPoint.Honour_Usurper, DataState.Good, (3 - treachery) * multiplier); }
+            { Game.director.SetGameState(GameState.Honour_Usurper, DataState.Good, (3 - treachery) * multiplier); }
             //Honour_King -> Treachery (good is < 3)
             treachery = Game.lore.NewKing.GetSkill(SkillType.Treachery);
             if (treachery > 3)
-            { Game.director.SetGameState(DataPoint.Honour_King, DataState.Bad, (treachery - 3) * multiplier); }
+            { Game.director.SetGameState(GameState.Honour_King, DataState.Bad, (treachery - 3) * multiplier); }
             else if (treachery < 3)
-            { Game.director.SetGameState(DataPoint.Honour_King, DataState.Good, (3 - treachery) * multiplier); }
+            { Game.director.SetGameState(GameState.Honour_King, DataState.Good, (3 - treachery) * multiplier); }
         }
 
         /// <summary>
@@ -2274,9 +2274,9 @@ namespace Next_Game
                             break;
                         case TriggerCheck.GameVar:
                             //get % value for required gamevar
-                            if (trigger.Data > 0 && trigger.Data < (int)DataPoint.Count)
+                            if (trigger.Data > 0 && trigger.Data < (int)GameState.Count)
                             {
-                                checkValue = CheckGameState((DataPoint)trigger.Data);
+                                checkValue = CheckGameState((GameState)trigger.Data);
                                 if (CheckTrigger(checkValue, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: GameVar value incorrect"); return false; }
                             }
                             else { Game.SetError(new Error(76, $"Invalid trigger.Data \"{trigger.Data}\" for option {option.Text} -> trigger ignored")); }
@@ -2469,7 +2469,7 @@ namespace Next_Game
                                                 Game.world.SetPlayerRecord(new Record(eventText + noneOutcome.Description, 1, noneOutcome.Data, Game.world.GetRefID(noneOutcome.Data), CurrentActorIncident.Event));
                                             }
                                             break;
-                                        case OutcomeType.DataPoint:
+                                        case OutcomeType.GameState:
                                             //Change a Game state variable, eg. Honour, Justice, etc.
                                             outcomeText = SetState(eventObject.Name, option.Text, outcome.Data, outcome.Amount, outcome.Calc);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
@@ -3128,20 +3128,20 @@ namespace Next_Game
         /// <param name="state"></param>
         /// <param name="value"></param>
         /// <param name="setChange">True if you want color highlight on UI of change</param>
-        public void SetGameState(DataPoint point, DataState state, int value, bool setChange = false)
+        public void SetGameState(GameState point, DataState state, int value, bool setChange = false)
         {
-            if (point <= DataPoint.Count && state <= DataState.Count)
+            if (point <= GameState.Count && state <= DataState.Count)
             {
-                arrayOfDataPoints[(int)point, (int)state] = value;
+                arrayOfGameStates[(int)point, (int)state] = value;
                 //change - will show color highlight on UI
                 if (setChange == true)
                 {
-                    if (state == DataState.Good) { arrayOfDataPoints[(int)point, (int)DataState.Change] = 1; }
-                    else if (state == DataState.Bad) { arrayOfDataPoints[(int)point, (int)DataState.Change] = -1; }
+                    if (state == DataState.Good) { arrayOfGameStates[(int)point, (int)DataState.Change] = 1; }
+                    else if (state == DataState.Bad) { arrayOfGameStates[(int)point, (int)DataState.Change] = -1; }
                 }
             }
             else
-            { Game.SetError(new Error(75, "Invalid DataPoint, or DataState, Input (exceeds enum)")); }
+            { Game.SetError(new Error(75, "Invalid GameState, or DataState, Input (exceeds enum)")); }
         }
 
         /// <summary>
@@ -3150,10 +3150,10 @@ namespace Next_Game
         /// <param name="point"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        public int GetGameState(DataPoint point, DataState state)
+        public int GetGameState(GameState point, DataState state)
         {
-            if (point <= DataPoint.Count && state <= DataState.Count)
-            { return arrayOfDataPoints[(int)point, (int)state]; }
+            if (point <= GameState.Count && state <= DataState.Count)
+            { return arrayOfGameStates[(int)point, (int)state]; }
             else
             { Game.SetError(new Error(75, "Invalid Input (exceeds enum)")); }
             return -999;
@@ -3164,11 +3164,11 @@ namespace Next_Game
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        public int CheckGameState(DataPoint point)
+        public int CheckGameState(GameState point)
         {
             int returnValue = 0;
-            float good = arrayOfDataPoints[(int)point, (int)DataState.Good];
-            float bad = arrayOfDataPoints[(int)point, (int)DataState.Bad];
+            float good = arrayOfGameStates[(int)point, (int)DataState.Good];
+            float bad = arrayOfGameStates[(int)point, (int)DataState.Bad];
             float difference = good - bad;
             if (difference == 0 || good + bad == 0) { returnValue = 50; }
             else
@@ -3186,12 +3186,12 @@ namespace Next_Game
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        public int CheckGameStateChange(DataPoint point)
+        public int CheckGameStateChange(GameState point)
         {
-            int change = arrayOfDataPoints[(int)point, (int)DataState.Change];
+            int change = arrayOfGameStates[(int)point, (int)DataState.Change];
             //zero out any change, once queried
             if (change != 0)
-            { arrayOfDataPoints[(int)point, (int)DataState.Change] = 0; }
+            { arrayOfGameStates[(int)point, (int)DataState.Change] = 0; }
             return change;
         }
 
@@ -3843,66 +3843,66 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// adjusts a DataPoint
+        /// adjusts a GameState
         /// </summary>
-        /// <param name="outType">DataPoint enum index. If positive then DataState.Good, if negative then DataState.Bad</param>
+        /// <param name="outType">GameState enum index. If positive then DataState.Good, if negative then DataState.Bad</param>
         /// <param name="amount">how much</param>
         /// <param name="apply">how to apply it</param>
         public string SetState(string eventTxt, string optionTxt, int outType, int amount, EventCalc apply)
         {
             string resultText = "";
             int amountNum = Math.Abs(amount); //must be positive 
-            DataPoint dataPoint;
+            GameState gameState;
             bool stateChanged = false;
             DataState state = DataState.Good;
             if (outType < 0) { state = DataState.Bad; outType *= -1; }
             int newData = 0;
             int oldData = 0;
-            //convert to a DataPoint enum
-            if (outType <= (int)DataPoint.Count)
+            //convert to a GameState enum
+            if (outType <= (int)GameState.Count)
             {
-                dataPoint = (DataPoint)outType;
+                gameState = (GameState)outType;
                 stateChanged = true;
                 OptionInteractive option = new OptionInteractive();
-                switch (dataPoint)
+                switch (gameState)
                 {
-                    case DataPoint.Justice:
-                        oldData = GetGameState(DataPoint.Justice, state);
+                    case GameState.Justice:
+                        oldData = GetGameState(GameState.Justice, state);
                         //apply change (positive #)
                         newData = Math.Abs(ChangeData(oldData, amountNum, apply));
                         //update 
-                        SetGameState(DataPoint.Justice, state, newData, true);
+                        SetGameState(GameState.Justice, state, newData, true);
                         break;
-                    case DataPoint.Legend_Usurper:
-                        oldData = GetGameState(DataPoint.Legend_Usurper, state);
+                    case GameState.Legend_Usurper:
+                        oldData = GetGameState(GameState.Legend_Usurper, state);
                         //apply change (positive #)
                         newData = Math.Abs(ChangeData(oldData, amountNum, apply));
                         //update 
-                        SetGameState(DataPoint.Legend_Usurper, state, newData, true);
+                        SetGameState(GameState.Legend_Usurper, state, newData, true);
                         break;
-                    case DataPoint.Legend_King:
-                        oldData = GetGameState(DataPoint.Legend_King, state);
+                    case GameState.Legend_King:
+                        oldData = GetGameState(GameState.Legend_King, state);
                         //apply change (positive #)
                         newData = Math.Abs(ChangeData(oldData, amountNum, apply));
                         //update 
-                        SetGameState(DataPoint.Legend_King, state, newData, true);
+                        SetGameState(GameState.Legend_King, state, newData, true);
                         break;
-                    case DataPoint.Honour_Usurper:
-                        oldData = GetGameState(DataPoint.Honour_Usurper, state);
+                    case GameState.Honour_Usurper:
+                        oldData = GetGameState(GameState.Honour_Usurper, state);
                         //apply change (positive #)
                         newData = Math.Abs(ChangeData(oldData, amountNum, apply));
                         //update 
-                        SetGameState(DataPoint.Honour_Usurper, state, newData, true);
+                        SetGameState(GameState.Honour_Usurper, state, newData, true);
                         break;
-                    case DataPoint.Honour_King:
-                        oldData = GetGameState(DataPoint.Honour_King, state);
+                    case GameState.Honour_King:
+                        oldData = GetGameState(GameState.Honour_King, state);
                         //apply change (positive #)
                         newData = Math.Abs(ChangeData(oldData, amountNum, apply));
                         //update 
-                        SetGameState(DataPoint.Honour_King, state, newData, true);
+                        SetGameState(GameState.Honour_King, state, newData, true);
                         break;
                     default:
-                        Game.SetError(new Error(74, string.Format("Invalid input (enum \"{0}\") for eventPID {1}", dataPoint, eventTxt)));
+                        Game.SetError(new Error(74, string.Format("Invalid input (enum \"{0}\") for eventPID {1}", gameState, eventTxt)));
                         stateChanged = false;
                         break;
                 }
@@ -3910,7 +3910,7 @@ namespace Next_Game
                 if (stateChanged == true)
                 {
                     //message
-                    resultText = string.Format("{0} \"{1}\" {2} from {3} to {4}", dataPoint, state, oldData > newData ? "decreased" : "increased", oldData, newData);
+                    resultText = string.Format("{0} \"{1}\" {2} from {3} to {4}", gameState, state, oldData > newData ? "decreased" : "increased", oldData, newData);
                     Message message = new Message(string.Format("Event \"{0}\", {1}", eventTxt, resultText), 1, 0, MessageType.Event);
                     Game.world.SetMessage(message);
                 }
