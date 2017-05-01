@@ -155,8 +155,8 @@ namespace Next_Game
         { return listOfPlayerEvents.Count; }
 
         //needed for sub classes (world.cs -> ShowActorRL) Duplicate methods in subclasses, return null is correct
-        internal SortedDictionary<int, ActorRelation> GetFamily()
-        { return null; }
+        /*internal SortedDictionary<int, ActorRelation> GetFamily()
+        { return null; }*/
 
         /// <summary>
         /// adds event & updates relPlyr & figures out new value (Level) after changes
@@ -768,7 +768,7 @@ namespace Next_Game
             { this.dictFamily = dictFamily; }
         }
 
-        public new SortedDictionary<int, ActorRelation> GetFamily()
+        public SortedDictionary<int, ActorRelation> GetFamily()
         { return dictFamily; }
 
         public void AddFavour(int possID)
@@ -813,6 +813,7 @@ namespace Next_Game
         public bool Satisfied { get; set; } = false; //has their desire been satisfied? (Act I only, typically means issuing a promise)
         public PossPromiseType Desire { get; set; } //what does the actor want?
         public string DesireText { get; set; } //descriptor for desire
+        public int DesireData { get; set; } //multi purpose data point related to specific desire
 
 
         public Passive()
@@ -861,7 +862,7 @@ namespace Next_Game
         /// returns sorted dict of Family members (sorted by enum Actor.cs Relation order)
         /// </summary>
         /// <returns></returns>
-        public new SortedDictionary<int, ActorRelation> GetFamily()
+        public SortedDictionary<int, ActorRelation> GetFamily()
         { return dictFamily; }
     }
 
