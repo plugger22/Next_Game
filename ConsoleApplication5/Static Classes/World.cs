@@ -2477,20 +2477,24 @@ namespace Next_Game
                                     {
                                         case ActorRelation.Brother:
                                         case ActorRelation.Half_Brother:
-                                            //store brothers as a negative ActID to differentiate between Sons
+                                            //store brothers as a negative ActID to differentiate between Sons (two entries for each brother)
                                             listOfSonsAndBrothers.Add(familyMember.Key * -1);
-                                            Game.logStart?.Write($"  Desire -> Court, Brother {relative.Name} ActID {relative.ActID}");
                                             listOfPossibleDesires.Add(PossPromiseType.Court);
+                                            listOfPossibleDesires.Add(PossPromiseType.Court);
+                                            Game.logStart?.Write($"  Desire -> Court, Brother {relative.Name} ActID {relative.ActID}");
                                             break;
                                         case ActorRelation.Son:
-                                            //store Sons as a positive (normal) ActID
+                                            //store Sons as a positive (normal) ActID (two entries for each son)
+                                            listOfSonsAndBrothers.Add(familyMember.Key);
                                             listOfSonsAndBrothers.Add(familyMember.Key);
                                             Game.logStart?.Write($"  Desire -> Court, Son {relative.Name} ActID {relative.ActID}");
                                             listOfPossibleDesires.Add(PossPromiseType.Court);
                                             break;
                                         case ActorRelation.Daughter:
+                                            //store Daughter's ActID (two entries for each daughter)
                                             listOfDaughters.Add(familyMember.Key);
                                             Game.logStart?.Write($"  Desire -> Marriage, Daughter {relative.Name} ActID {relative.ActID}");
+                                            listOfPossibleDesires.Add(PossPromiseType.Marriage);
                                             listOfPossibleDesires.Add(PossPromiseType.Marriage);
                                             break;
                                     }
@@ -2500,11 +2504,16 @@ namespace Next_Game
                         }
                         break;
                     case ActorType.BannerLord:
-                        //Gold (if poor), Lordship (if treacherous)
-                        if (house.Resources <= 2)
-                        { listOfPossibleDesires.Add(PossPromiseType.Gold); }
-                        if (actor.GetSkill(SkillType.Treachery) >= 4)
-                        { listOfPossibleDesires.Add(PossPromiseType.Lordship); }
+                        House tempHouse = GetHouse(actor.RefID);
+                        if (tempHouse != null)
+                        {
+                            //Gold (if poor), Lordship (if treacherous)
+                            if (tempHouse.Resources <= 2)
+                            { listOfPossibleDesires.Add(PossPromiseType.Gold); }
+                            if (actor.GetSkill(SkillType.Treachery) >= 4)
+                            { listOfPossibleDesires.Add(PossPromiseType.Lordship); }
+                        }
+                        else { Game.SetError(new Error(234, "Invalid tempHouse (null) for BannerLord")); }
                         break;
                 }
                 //always a None option
@@ -2549,7 +2558,8 @@ namespace Next_Game
                         actor.Desire = PossPromiseType.None;
                         break;
                 }
-                Game.logStart?.Write($"{actor.Title} {actor.Name} ActID {actor.ActID} wants {actor.DesireText} -> Desire: {actor.Desire}, DesireData: {actor.DesireData}");
+                if (actor.Desire > PossPromiseType.None)
+                { Game.logStart?.Write($"{actor.Title} {actor.Name} ActID {actor.ActID} wants {actor.DesireText} -> Desire: {actor.Desire}, DesireData: {actor.DesireData}"); }
 
 
             }
