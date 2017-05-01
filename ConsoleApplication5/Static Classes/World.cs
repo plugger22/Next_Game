@@ -2472,43 +2472,47 @@ namespace Next_Game
                                 if (house != null)
                                 {
                                     SortedDictionary<int, ActorRelation> dictFamily = lord.GetFamily();
-                                    Game.logStart?.Write($"Lord {lord.Name}  \"{lord.Handle}\" of House {house.Name}, ActID {lord.ActID}");
+                                    //Game.logStart?.Write($"Lord {lord.Name}  \"{lord.Handle}\" of House {house.Name}, ActID {lord.ActID}");
                                     foreach (var familyMember in dictFamily)
                                     {
                                         Passive relative = GetPassiveActor(familyMember.Key);
-                                        if (relative != null && relative.Status != ActorStatus.Gone)
+                                        if (relative != null)
                                         {
-                                            //Court Position for a brother or son, or Marriage for a daughter
-                                            if (relative.Age >= 15)
+                                            if (relative.Status != ActorStatus.Gone)
                                             {
-                                                switch (familyMember.Value)
+                                                //Game.logStart?.Write($"ActID {familyMember.Key} Relationship {familyMember.Value}, {relative.Title} {relative.Name} Age {relative.Age}");
+                                                //Court Position for a brother or son, or Marriage for a daughter
+                                                if ((relative.Age + Game.gameExile) >= 15)
                                                 {
-                                                    case ActorRelation.Brother:
-                                                    case ActorRelation.Half_Brother:
-                                                        //store brothers as a negative ActID to differentiate between Sons (two entries for each brother)
-                                                        listOfSonsAndBrothers.Add(familyMember.Key * -1);
-                                                        listOfPossibleDesires.Add(PossPromiseType.Court);
-                                                        listOfPossibleDesires.Add(PossPromiseType.Court);
-                                                        Game.logStart?.Write($"  Desire -> Court, Brother {relative.Name} ActID {relative.ActID}");
-                                                        break;
-                                                    case ActorRelation.Son:
-                                                        //store Sons as a positive (normal) ActID (two entries for each son)
-                                                        listOfSonsAndBrothers.Add(familyMember.Key);
-                                                        listOfSonsAndBrothers.Add(familyMember.Key);
-                                                        Game.logStart?.Write($"  Desire -> Court, Son {relative.Name} ActID {relative.ActID}");
-                                                        listOfPossibleDesires.Add(PossPromiseType.Court);
-                                                        break;
-                                                    case ActorRelation.Daughter:
-                                                        //store Daughter's ActID (two entries for each daughter)
-                                                        listOfDaughters.Add(familyMember.Key);
-                                                        Game.logStart?.Write($"  Desire -> Marriage, Daughter {relative.Name} ActID {relative.ActID}");
-                                                        listOfPossibleDesires.Add(PossPromiseType.Marriage);
-                                                        listOfPossibleDesires.Add(PossPromiseType.Marriage);
-                                                        break;
+                                                    switch (familyMember.Value)
+                                                    {
+                                                        case ActorRelation.Brother:
+                                                        case ActorRelation.Half_Brother:
+                                                            //store brothers as a negative ActID to differentiate between Sons (two entries for each brother)
+                                                            listOfSonsAndBrothers.Add(familyMember.Key * -1);
+                                                            listOfPossibleDesires.Add(PossPromiseType.Court);
+                                                            listOfPossibleDesires.Add(PossPromiseType.Court);
+                                                            //Game.logStart?.Write($"  Desire -> Court, Brother {relative.Name} ActID {relative.ActID}");
+                                                            break;
+                                                        case ActorRelation.Son:
+                                                            //store Sons as a positive (normal) ActID (two entries for each son)
+                                                            listOfSonsAndBrothers.Add(familyMember.Key);
+                                                            listOfSonsAndBrothers.Add(familyMember.Key);
+                                                            //Game.logStart?.Write($"  Desire -> Court, Son {relative.Name} ActID {relative.ActID}");
+                                                            listOfPossibleDesires.Add(PossPromiseType.Court);
+                                                            break;
+                                                        case ActorRelation.Daughter:
+                                                            //store Daughter's ActID (two entries for each daughter)
+                                                            listOfDaughters.Add(familyMember.Key);
+                                                            //Game.logStart?.Write($"  Desire -> Marriage, Daughter {relative.Name} ActID {relative.ActID}");
+                                                            listOfPossibleDesires.Add(PossPromiseType.Marriage);
+                                                            listOfPossibleDesires.Add(PossPromiseType.Marriage);
+                                                            break;
+                                                    }
                                                 }
                                             }
                                         }
-                                        else { Game.SetError(new Error(234, "Invalid Passive relative (null) -> Family member not checked")); }
+                                        else { Game.SetError(new Error(234, $"Invalid Passive relative (null) {familyMember.Value}, ActID {familyMember.Key} -> Family member not checked")); }
                                     }
                                     //Gold -> lvl 1 gives 3 entries, lvl 2 gives 2, lvl 3 gives 1
                                     if (house.Resources <= 3)
@@ -2516,7 +2520,7 @@ namespace Next_Game
                                         for (int k = 0; k < (4 - house.Resources); k++)
                                         {
                                             listOfPossibleDesires.Add(PossPromiseType.Gold);
-                                            Game.logStart?.Write("   Desire -> Gold");
+                                            //Game.logStart?.Write("   Desire -> Gold");
                                         }
                                     }
 
@@ -2534,8 +2538,19 @@ namespace Next_Game
                                 //Gold (if poor), Lordship (if treacherous)
                                 if (tempHouse.Resources <= 2)
                                 { listOfPossibleDesires.Add(PossPromiseType.Gold); }
-                                if (actor.GetSkill(SkillType.Treachery) >= 4)
-                                { listOfPossibleDesires.Add(PossPromiseType.Lordship); }
+                                int treachery = actor.GetSkill(SkillType.Treachery);
+                                switch (treachery)
+                                {
+                                    case 4:
+                                        listOfPossibleDesires.Add(PossPromiseType.Lordship);
+                                        listOfPossibleDesires.Add(PossPromiseType.Lordship);
+                                        break;
+                                    case 5:
+                                        listOfPossibleDesires.Add(PossPromiseType.Lordship);
+                                        listOfPossibleDesires.Add(PossPromiseType.Lordship);
+                                        listOfPossibleDesires.Add(PossPromiseType.Lordship);
+                                        break;
+                                }
                             }
                             else { Game.SetError(new Error(234, "Invalid tempHouse (null) for BannerLord")); }
                             break;
@@ -2572,7 +2587,7 @@ namespace Next_Game
                             break;
                         case PossPromiseType.Lordship:
                             actor.DesireData = actor.HouseID;
-                            actor.DesireText = $"the Lordship of House {GetHouseName(actor.HouseID)}";
+                            actor.DesireText = $"the Lordship of House {GetMajorHouseName(actor.HouseID)}";
                             break;
                         case PossPromiseType.None:
                             actor.DesireText = "nothing";

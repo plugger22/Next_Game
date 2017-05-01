@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 01/05/2017 17:05:23
+//Exile Game file ops "LogStart.txt" commenced at: 01/05/2017 20:58:52
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -559,35 +559,22 @@ Old Lady Holy Haggard has a confirmed Combat trait
 Holy Haggard, Aid 101, specID 2 -> initialised O.K
 Saladin Kinghit, Aid 102, specID 3 -> initialised O.K
 --- InitialiseDesires (World.cs)
-Lord Brynden Lannister  "The Green Eyed" of House Lannister, ActID 17
-Lord Brynden Lannister ActID 17 wants nothing -> Desire: None, DesireData: 0
-Lord Desmond Martell  "The Tedious" of House Martell, ActID 18
-   Desire -> Gold
-   Desire -> Gold
-Lord Desmond Martell ActID 18 wants more Gold -> Desire: Gold, DesireData: 0
-Lord Geoff Baratheon  "The Red Cobra" of House Baratheon, ActID 33
-   Desire -> Gold
-   Desire -> Gold
-Lord Geoff Baratheon ActID 33 wants more Gold -> Desire: Gold, DesireData: 0
+Lord Brynden Lannister ActID 17 wants a court position for his brother Kevan Lannister "The Audacious" ActID 16 -> Desire: Court, DesireData: 16
+Lord Desmond Martell ActID 18 wants a court position for his son Trystane Martell "The Towering" ActID 24 -> Desire: Court, DesireData: 24
+Lord Geoff Baratheon ActID 33 wants a court position for his brother Kevan Lannister "The Audacious" ActID 16 -> Desire: Court, DesireData: 16
 King Varly Tyrell ActID 40 wants nothing -> Desire: None, DesireData: 0
-Lord Stafford Targaryen  "The Average" of House Targaryen, ActID 48
-ERROR_234 "Invalid Passive relative (null) -> Family member not checked"
-Method: InitialiseDesires,  Line: 2511,  Object: World.cs,  Turn: 0,  Local Time: 17:09:56 UTC +10:00
-   Desire -> Gold
-Lord Stafford Targaryen ActID 48 wants nothing -> Desire: None, DesireData: 0
-BannerLord Lancel Karstark ActID 59 wants more Gold -> Desire: Gold, DesireData: 0
+Lord Stafford Targaryen ActID 48 wants more Gold -> Desire: Gold, DesireData: 0
 BannerLord Hervey Botley ActID 60 wants more Gold -> Desire: Gold, DesireData: 0
-Lord Joffery Cerwyn  "The Skilled" of House Cerwyn, ActID 61
-Lord Joffery Cerwyn ActID 61 wants nothing -> Desire: None, DesireData: 0
-BannerLord Patrek Dondarrion ActID 63 wants the Lordship of House Baratheon -> Desire: Lordship, DesireData: 7
+Lord Joffery Cerwyn ActID 61 wants the marriage of his daughter, Cristene Cerwyn "The Charming" ActID 96, to the one true King -> Desire: Marriage, DesireData: 96
+BannerLord Rodrik Estermont ActID 62 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Tytos Wull ActID 65 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Segarus Hornwood ActID 66 wants more Gold -> Desire: Gold, DesireData: 0
 BannerLord Gilibertus Harlaw ActID 67 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Roose Clegane ActID 68 wants more Gold -> Desire: Gold, DesireData: 0
 BannerLord Giradin Flint ActID 69 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Audry Redwyne ActID 71 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Gerion Tarly ActID 72 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Rankin Tallhart ActID 73 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Huchon Hightower ActID 74 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Iamys Westerling ActID 76 wants the Lordship of House Lannister -> Desire: Lordship, DesireData: 2
-BannerLord Beuves Hunt ActID 88 wants the Lordship of House Lannister -> Desire: Lordship, DesireData: 2
+BannerLord Iamys Westerling ActID 76 wants the Lordship of House Targaryen -> Desire: Lordship, DesireData: 2
+BannerLord Nycolas Mullendore ActID 86 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Paxter Mormont ActID 87 wants more Gold -> Desire: Gold, DesireData: 0
 BannerLord Daue Brax ActID 89 wants more Gold -> Desire: Gold, DesireData: 0
 --- InitialiseAI (World.cs)
  Capital 0 -> Current 0 -> Desired 0 -> adjusted Loc's 0
@@ -610,14 +597,14 @@ Nemesis The Unrelenting has a confirmed Touched trait
  [Goal -> Inquisitor] Brother Mormo, ActID 106 Branch -> 4
  [Goal -> Nemesis] The Unrelenting, ActID 107 Branch -> 0
 --- InitialiseWorldDevelopment (World.cs)
-ItemID 1, "Dragon Eggs", given to Hand_of_the_King Galbart Gervasius, ActID 98, at Kingskeep (loc 15:17)
-ItemID 4, "Goblin Mug", given to Knight Ser Randyll Manfred, ActID 93, at Brightwater Keep (loc 8:24)
-ItemID 5, "Mammoth Boots", given to King Varly Tyrell, ActID 40, at Kingskeep (loc 15:17)
-ItemID 6, "Lion Dagger", given to BannerLord Lancel Karstark, ActID 59, at Karhold (loc 27:8)
-ItemID 7, "Chalice of Pain", given to lady Hele Tyrell, ActID 47, at Kingskeep (loc 15:17)
-ItemID 8, "Amulet of Passion", given to Septon Desmond Giff, ActID 38, at Bloodkeep (loc 5:21)
-ItemID 9, "Book of the Dead", given to Castellan Galbart Josse, ActID 90, at Brightwater Keep (loc 8:24)
-ItemID 10, "Elixir of Wellness", given to Castellan Jack Harding, ActID 36, at Bloodkeep (loc 5:21)
+ItemID 1, "Dragon Eggs", given to lady Hele Tyrell, ActID 47, at Kingskeep (loc 15:17)
+ItemID 4, "Goblin Mug", given to King Varly Tyrell, ActID 40, at Kingskeep (loc 15:17)
+ItemID 5, "Mammoth Boots", given to Maester Theon Charles, ActID 91, at Brightwater Keep (loc 8:24)
+ItemID 6, "Lion Dagger", given to Maester Jaime Richardin, ActID 37, at Bloodkeep (loc 5:21)
+ItemID 7, "Chalice of Pain", given to BannerLord Aerys Fowler, ActID 75, at Skyreach (loc 28:0)
+ItemID 8, "Amulet of Passion", given to BannerLord Paxter Mormont, ActID 87, at Bearpit (loc 12:27)
+ItemID 9, "Book of the Dead", given to Hand_of_the_King Galbart Gervasius, ActID 98, at Kingskeep (loc 15:17)
+ItemID 10, "Elixir of Wellness", given to Master_of_Laws Rainald Oudin, ActID 97, at Kingskeep (loc 15:17)
 --- Import Follower Events (Director.cs)
 "Spiders", FID 1, [GeoCluster, Generic], Freq Low, Status Active, Trait Wits, Delay 2
 "Wolves", FID 2, [GeoCluster, Generic], Freq Normal, Status Active, Trait Combat, Delay 2
@@ -1130,5 +1117,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 01/05/2017 17:09:57
-//Elapsed Time 658 ms
+//Exile Game file ops "LogStart.txt" Completed at: 01/05/2017 20:58:53
+//Elapsed Time 768 ms
