@@ -2456,9 +2456,13 @@ namespace Next_Game
             //list to hold specific desires
             List<int> listOfSonsAndBrothers = new List<int>();
             List<int> listOfDaughters = new List<int>();
+
+            //Land
+            int[,] networkAnalysis = Game.network.GetNetworkAnalysis();
+
             //item reason texts, 'because it...'
             string[] itemReasons = new string[] { "is their birthright", "was forseen", "has been predicted by prophecy", "is an ancestral heirloom", "belongs to their house", "belongs to them",
-                "might help their enemies" };
+                "might help their enemies", "is their destiny" };
             string reason;
             bool itemProceed = true;
             //List of all Passive Items
@@ -2502,6 +2506,21 @@ namespace Next_Game
                                 House house = GetHouse(actor.RefID);
                                 if (house != null)
                                 {
+                                    //Land
+                                    if (house is MajorHouse)
+                                    {
+                                        MajorHouse majorHouse = house as MajorHouse;
+                                        List<int> listBannerLords = majorHouse.GetBannerLordLocations();
+                                        int numHouses = listBannerLords.Count;
+                                        int branch = majorHouse.Branch;
+                                        int totalHouses = networkAnalysis[branch, (int)NetGrid.Houses];
+                                        //are there any houses on the same branch of a different house?
+                                        if ((totalHouses - numHouses - 1) > 0)
+                                        {
+
+                                        }
+                                    }
+                                    //Family
                                     SortedDictionary<int, ActorRelation> dictFamily = lord.GetFamily();
                                     //Game.logStart?.Write($"Lord {lord.Name}  \"{lord.Handle}\" of House {house.Name}, ActID {lord.ActID}");
                                     foreach (var familyMember in dictFamily)

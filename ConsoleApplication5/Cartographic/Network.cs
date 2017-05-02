@@ -50,7 +50,7 @@ namespace Next_Game.Cartographic
             ListOfLocations = Game.map.GetLocations();
             ListOfConnectorRoutes = Game.map.GetConnectors();
             ArrayOfConnectors = Game.map.GetArrayOfConnectors();
-            arrayOfNetworkAnalysis = new int[5, (int)NetGrid.Count + 1];
+            arrayOfNetworkAnalysis = new int[5, (int)NetGrid.Count]; //edit -> previously (net)NetGrid.Count + 1
             listNorthBranch = new List<Location>();
             listEastBranch = new List<Location>();
             listSouthBranch = new List<Location>();
@@ -2331,6 +2331,10 @@ namespace Next_Game.Cartographic
             else { Game.SetError(new Error(220, $"Invalid port LocID (zero, or less), originLocID { originLocID} destinationLocID { destinationLocID}")); }
             return seaName;
         }
+
+
+        public int[,] GetNetworkAnalysis()
+        { return arrayOfNetworkAnalysis; }
 
         //methods above here
     }
