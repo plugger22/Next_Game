@@ -1271,7 +1271,7 @@ namespace Next_Game
             if (person.Touched != 0)
             {
                 string description = string.Format("{0}, Aid {1}, was born under a Dark Moon (Touched)", person.Name, person.ActID);
-                Secret_Actor secret = new Secret_Actor(PossSecretType.Trait, person.Born, description, person.Touched, person.ActID);
+                SecretActor secret = new SecretActor(PossSecretType.Trait, person.Born, description, person.Touched, person.ActID);
                 listOfSecrets.Add(secret);
                 person.AddSecret(secret.PossID);
             }
@@ -1836,7 +1836,7 @@ namespace Next_Game
             //secret present?
             if (secretText != null)
             {
-                Secret_Actor secret = new Secret_Actor(PossSecretType.Parents, year, secretText, secretStrength, child.ActID);
+                SecretActor secret = new SecretActor(PossSecretType.Parents, year, secretText, secretStrength, child.ActID);
                 listOfSecrets.Add(secret);
                 Lord.AddSecret(secret.PossID);
                 Lady.AddSecret(secret.PossID);
@@ -1870,7 +1870,7 @@ namespace Next_Game
                         {
                             Lady.Fertile = false;
                             descriptor = string.Format("{0}, Aid {1} suffered complications during birth and is unable to have anymore children", Lady.Name, Lady.ActID);
-                            Secret_Actor secret = new Secret_Actor(PossSecretType.Fertility, year, descriptor, 2, Lady.ActID);
+                            SecretActor secret = new SecretActor(PossSecretType.Fertility, year, descriptor, 2, Lady.ActID);
                             listOfSecrets.Add(secret);
                             Lady.AddSecret(secret.PossID);
                         }

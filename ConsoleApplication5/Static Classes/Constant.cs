@@ -47,6 +47,7 @@ namespace Next_Game
         GAME_REVOLT,
         GAME_STATE,
         GAME_PAST,
+        //World
         KNOWN_REVERT,
         INQUISITORS,
         //Events

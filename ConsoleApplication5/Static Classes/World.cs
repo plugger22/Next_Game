@@ -1113,7 +1113,10 @@ namespace Next_Game
                         //add possession label for all non-Lords who wouldn't normally have one
                         if (person is Passive && (person.Type != ActorType.Lord && person.Type != ActorType.BannerLord))
                         { listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black)); }
-                        listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType)));
+                        //debug -> display item in grey if it isn't known (eg. a secret)
+                        if (item.Active == true)
+                        { listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType))); }
+                        else { listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType), RLColor.Gray, RLColor.Black)); }
                     }
                 }
                 //family
@@ -5310,7 +5313,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// seeds procgen world with all the interesting stuff
+        /// seeds procgen world with all the interesting stuff -> Items
         /// </summary>
         private void InitialiseWorldDevelopment()
         {
@@ -5329,7 +5332,20 @@ namespace Next_Game
             List<Passive> listPassiveActors = listActors.ToList();
 
             int rndIndex;
-            //assign each passive item to a random actor
+            int itemIndex;
+            string startText;
+            string endText;
+            bool proceedFlag = true;
+            //descriptive texts
+            string[] arrayOfStartTexts = new string[] { "has been entrusted with keeping the", "has come into possession of the", "has stolen the", "is hording the" };
+            string[] arrayOfEndTexts = new string[] { "safe from harm", "in mysterious circumstances", "and is desperate to keep it quiet", "safe from pyring eyes"  };
+            //note that both Text arrays need to be identical lengths
+            if (arrayOfStartTexts.Length != arrayOfEndTexts.Length)
+            {
+                proceedFlag = false;
+                Game.SetError(new Error(235, "Text arrays have different lengths -> No secrets assigned"));
+            }
+            //assign all passive items to random actors
             for (int i = 0; i < listPassiveItems.Count; i++)
             {
                 Item item = listPassiveItems[i];
@@ -5338,6 +5354,23 @@ namespace Next_Game
                 passive.AddItem(item.PossID);
                 Game.logStart?.Write(string.Format("ItemID {0}, \"{1}\", given to {2} {3}, ActID {4}, at {5} {6}", item.ItemID, item.Description, passive.Title, passive.Name, passive.ActID,
                     GetLocationName(passive.LocID), ShowLocationCoords(passive.LocID)));
+                //item possession a secret? Not for a Lord (known)
+                if (proceedFlag == true)
+                {
+                    if (passive.Type != ActorType.Lord)
+                    {
+                        itemIndex = rnd.Next(arrayOfStartTexts.Length);
+                        startText = arrayOfStartTexts[itemIndex];
+                        endText = arrayOfEndTexts[itemIndex];
+                        string description = $"{passive.Name}, ActID {passive.ActID}, {startText} {item.Description}, ItemID {item.ItemID}, {endText}";
+                        SecretActor secret = new SecretActor(PossSecretType.Item, Game.gameYear, description, 4, passive.ActID);
+                        passive.AddSecret(secret.PossID);
+                        AddPossession(secret.PossID, secret);
+                        item.Active = false;
+                        Game.logStart?.Write($"[Secret -> Item] {description}");
+                    }
+                    else { item.Active = true; }
+                }
                 listPassiveActors.RemoveAt(rndIndex);
             }
 

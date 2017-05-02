@@ -1,6 +1,6 @@
 # Items.txt -> list of all special items that may be found in game
 
-# Name: (string) descriptive name (max 4 words)
+# Name: (string) descriptive name (max 4 words), eg 'the...'
 # ItemID: <int> unique number, 1+
 # Type (PossItemType enum) -> Passive (no effect) / Active (have an effect)
 # Lore: (string) background information. (single sentence)
