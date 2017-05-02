@@ -2445,22 +2445,20 @@ namespace Next_Game
             //list to hold specific desires
             List<int> listOfSonsAndBrothers = new List<int>();
             List<int> listOfDaughters = new List<int>();
-
+            
+            //List of all Passive Items
+            IEnumerable<Item> listItems =
+                from items in dictPossessions.Values.OfType<Item>()
+                where items.ItemType == PossItemType.Passive
+                select items;
+            List<Item> listOfPassiveItems = listItems.ToList();
+            int itemID;
             //note array should correspond exactly to enum PossPromiseType
-            //string[] arrayOfPromiseTexts = new string[] { "None", "more Land", "a Court Position", "more Resources", "a Favourable Marriage", "a Specific Item", "a Title", "a Lordship" };
             for (int i = 0; i < dictPassiveActors.Count; i++)
             {
                 //clear out list of desires
                 listOfPossibleDesires.Clear();
                 Passive actor = dictPassiveActors.ElementAt(i).Value;
-
-                //lords, bannerlords & Regents
-                /*if (actor.Type == ActorType.Lord || actor.Type == ActorType.BannerLord || actor.Realm == ActorRealm.Regent)
-                {
-                    actor.Desire = (PossPromiseType)rnd.Next((int)PossPromiseType.Count);
-                    actor.DesireText = arrayOfPromiseTexts[(int)actor.Desire];
-                    Game.logStart?.Write($"{actor.Title} {actor.Name} ActID {actor.ActID} assigned Desire -> {actor.Desire}");
-                }*/
                 if (actor.Status != ActorStatus.Gone)
                 {
                     //load up listOfPossibleDesires with relevant Desires
@@ -2530,6 +2528,8 @@ namespace Next_Game
                                     //Land
 
                                     //Item
+                                    itemID = listOfPassiveItems(rnd.Next(listOfPassiveItems.Count));
+
                                 }
                                 else { Game.SetError(new Error(234, $"Invalid House (null) for {actor.Name} ActID {actor.ActID}")); }
                             }
@@ -5318,7 +5318,7 @@ namespace Next_Game
         private void InitialiseWorldDevelopment()
         {
             Game.logStart?.Write("--- InitialiseWorldDevelopment (World.cs)");
-            //Placeholder -> List of all Passive Items
+            //List of all Passive Items
             IEnumerable<Item> listItems =
                 from items in dictPossessions.Values.OfType<Item>()
                 where items.ItemType == PossItemType.Passive
