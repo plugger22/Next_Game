@@ -1116,7 +1116,17 @@ namespace Next_Game
                         //debug -> display item in grey if it isn't known (eg. a secret)
                         if (item.Active == true)
                         { listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType))); }
-                        else { listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType), RLColor.Gray, RLColor.Black)); }
+                        else { listToDisplay.Add(new Snippet(string.Format("Item ID {0}, \"{1}\", {2}", item.ItemID, item.Description, item.ItemType), RLColor.LightGray, RLColor.Black)); }
+                    }
+                }
+                //Desires 
+                if (person is Passive)
+                {
+                    Passive passivePerson = person as Passive;
+                    if (passivePerson.Desire > PossPromiseType.None)
+                    {
+                        listToDisplay.Add(new Snippet("Desire", RLColor.Brown, RLColor.Black));
+                        listToDisplay.Add(new Snippet($"Wants {passivePerson.DesireText}", RLColor.LightGray, RLColor.Black));
                     }
                 }
                 //family
@@ -2435,6 +2445,7 @@ namespace Next_Game
             { dictTraits.Add(trait.SkillID, trait); }
         }
 
+
         /// <summary>
         /// assigns each Passive character a desire
         /// </summary>
@@ -2445,20 +2456,39 @@ namespace Next_Game
             //list to hold specific desires
             List<int> listOfSonsAndBrothers = new List<int>();
             List<int> listOfDaughters = new List<int>();
-            
+            //item reason texts, 'because it...'
+            string[] itemReasons = new string[] { "is their birthright", "was forseen", "has been predicted by prophecy", "is an ancestral heirloom", "belongs to their house", "belongs to them",
+                "might help their enemies" };
+            string reason;
+            bool itemProceed = true;
             //List of all Passive Items
             IEnumerable<Item> listItems =
                 from items in dictPossessions.Values.OfType<Item>()
                 where items.ItemType == PossItemType.Passive
                 select items;
             List<Item> listOfPassiveItems = listItems.ToList();
-            int itemID;
+            int possID;
             //note array should correspond exactly to enum PossPromiseType
             for (int i = 0; i < dictPassiveActors.Count; i++)
             {
                 //clear out list of desires
                 listOfPossibleDesires.Clear();
                 Passive actor = dictPassiveActors.ElementAt(i).Value;
+
+                //Item (applies to all but is assigned seperately)
+                Item item = listOfPassiveItems[rnd.Next(listOfPassiveItems.Count)];
+                possID = item.PossID;
+                //check item not already owned by actor
+                if (actor.CheckItems(PossItemType.Passive) == true)
+                {
+                    List<int> tempList = actor.GetItems(PossItemType.Passive);
+                    foreach(var objectID in tempList)
+                    {
+                        if (objectID == item.PossID)
+                        { itemProceed = false;  break; }
+                    }
+                }
+
                 if (actor.Status != ActorStatus.Gone)
                 {
                     //load up listOfPossibleDesires with relevant Desires
@@ -2524,11 +2554,11 @@ namespace Next_Game
                                             //Game.logStart?.Write("   Desire -> Gold");
                                         }
                                     }
+                                    //Item
+                                    if (itemProceed == true)
+                                    { listOfPossibleDesires.Add(PossPromiseType.Item); }
 
                                     //Land
-
-                                    //Item
-                                    itemID = listOfPassiveItems(rnd.Next(listOfPassiveItems.Count));
 
                                 }
                                 else { Game.SetError(new Error(234, $"Invalid House (null) for {actor.Name} ActID {actor.ActID}")); }
@@ -2556,55 +2586,63 @@ namespace Next_Game
                                 }
                             }
                             else { Game.SetError(new Error(234, "Invalid tempHouse (null) for BannerLord")); }
+                            //Item
+                            if (itemProceed == true)
+                            { listOfPossibleDesires.Add(PossPromiseType.Item); }
+                            //None -> possible with Bannerlords but not Lords (they all want something)
+                            listOfPossibleDesires.Add(PossPromiseType.None);
                             break;
                     }
-                    //always a None option
-                    listOfPossibleDesires.Add(PossPromiseType.None);
-                    //randomly choose a Desire
-                    PossPromiseType desire = listOfPossibleDesires[rnd.Next(listOfPossibleDesires.Count)];
-                    //assign to actor
-                    actor.Desire = desire;
-                    int data;
-                    //choose specific option for the desire
-                    switch (desire)
+
+                    //actor has desires?
+                    if (listOfPossibleDesires.Count > 0)
                     {
-                        case PossPromiseType.Land:
-                            break;
-                        case PossPromiseType.Court:
-                            data = listOfSonsAndBrothers[rnd.Next(listOfSonsAndBrothers.Count)];
-                            actor.DesireData = Math.Abs(data);
-                            Passive brother = GetPassiveActor(actor.DesireData);
-                            actor.DesireText = string.Format("a court position for his {0} {1} \"{2}\" ActID {3}", data > 0 ? "son" : "brother", brother.Name, brother.Handle, brother.ActID);
-                            break;
-                        case PossPromiseType.Gold:
-                            actor.DesireText = "more Gold";
-                            break;
-                        case PossPromiseType.Marriage:
-                            actor.DesireData = listOfDaughters[rnd.Next(listOfDaughters.Count)];
-                            Passive daughter = GetPassiveActor(actor.DesireData);
-                            actor.DesireText = $"the marriage of his daughter, {daughter.Name} \"{daughter.Handle}\" ActID {daughter.ActID}, to the one true King";
-                            break;
-                        case PossPromiseType.Item:
-                            break;
-                        case PossPromiseType.Title:
-                            break;
-                        case PossPromiseType.Lordship:
-                            actor.DesireData = actor.HouseID;
-                            actor.DesireText = $"the Lordship of House {GetMajorHouseName(actor.HouseID)}";
-                            break;
-                        case PossPromiseType.None:
-                            actor.DesireText = "nothing";
-                            break;
-                        default:
-                            Game.SetError(new Error(234, $"Invalid PossPromiseType for desire \"{desire}\" -> {actor.Title} {actor.Name}, ActID {actor.ActID} desire revoked"));
-                            actor.Desire = PossPromiseType.None;
-                            break;
+                        //randomly choose a Desire
+                        PossPromiseType desire = listOfPossibleDesires[rnd.Next(listOfPossibleDesires.Count)];
+                        //assign to actor
+                        actor.Desire = desire;
+                        int data;
+                        //choose specific option for the desire
+                        switch (desire)
+                        {
+                            case PossPromiseType.Land:
+                                break;
+                            case PossPromiseType.Court:
+                                data = listOfSonsAndBrothers[rnd.Next(listOfSonsAndBrothers.Count)];
+                                actor.DesireData = Math.Abs(data);
+                                Passive brother = GetPassiveActor(actor.DesireData);
+                                actor.DesireText = string.Format("a court position for his {0} {1} \"{2}\" ActID {3}", data > 0 ? "son" : "brother", brother.Name, brother.Handle, brother.ActID);
+                                break;
+                            case PossPromiseType.Gold:
+                                actor.DesireText = "more Gold";
+                                break;
+                            case PossPromiseType.Marriage:
+                                actor.DesireData = listOfDaughters[rnd.Next(listOfDaughters.Count)];
+                                Passive daughter = GetPassiveActor(actor.DesireData);
+                                actor.DesireText = $"the marriage of his daughter, {daughter.Name} \"{daughter.Handle}\" ActID {daughter.ActID}, to the one true King";
+                                break;
+                            case PossPromiseType.Item:
+                                actor.DesireData = possID;
+                                reason = itemReasons[rnd.Next(itemReasons.Length)];
+                                actor.DesireText = $"the {item.Description} because it {reason}";
+                                break;
+                            case PossPromiseType.Title:
+                                break;
+                            case PossPromiseType.Lordship:
+                                actor.DesireData = actor.HouseID;
+                                actor.DesireText = $"the Lordship of House {GetMajorHouseName(actor.HouseID)}";
+                                break;
+                            case PossPromiseType.None:
+                                actor.DesireText = "nothing";
+                                break;
+                            default:
+                                Game.SetError(new Error(234, $"Invalid PossPromiseType for desire \"{desire}\" -> {actor.Title} {actor.Name}, ActID {actor.ActID} desire revoked"));
+                                actor.Desire = PossPromiseType.None;
+                                break;
+                        }
+                        Game.logStart?.Write($"{actor.Title} {actor.Name} ActID {actor.ActID} wants {actor.DesireText} -> Desire: {actor.Desire}, DesireData: {actor.DesireData}");
                     }
-                    if (actor.Desire > PossPromiseType.None || actor.Type == ActorType.Lord)
-                    { Game.logStart?.Write($"{actor.Title} {actor.Name} ActID {actor.ActID} wants {actor.DesireText} -> Desire: {actor.Desire}, DesireData: {actor.DesireData}"); }
-
                 }
-
             }
         }
 

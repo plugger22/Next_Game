@@ -59,12 +59,12 @@ GoodDef: Mage Ring good def
 BadDef: Mage ring bad def
 [End]
 
-# Passive Items -> NPC's and Followers
+# Passive Items -> NPC's and Followers (must be singular, eg. 'dragon egg' not 'dragon eggs')
 
-Name: Dragon Eggs
+Name: Dragon Egg
 ItemID: 1
 Type: Passive
-Lore: The last vestiges of the Great Age of Dragons. When will they hatch? Can they ever hatch?
+Lore: The last vestiges of the Great Age of Dragons. When will it hatch? Can it ever hatch?
 Year: -1000
 Effect: None
 Amount: 0
@@ -83,10 +83,10 @@ Known: Yes
 Chall: No
 [End]
 
-Name: Mammoth Boots
+Name: Mammoth Cloak
 ItemID: 5
 Type: Passive
-Lore: Supremely warm boots made from the cured skin of long extinct Mammoths
+Lore: Supremely warm cloak made from the cured skin of long extinct Mammoths
 Year: -2000
 Effect: None
 Amount: 0

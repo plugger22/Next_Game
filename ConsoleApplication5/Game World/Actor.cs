@@ -379,7 +379,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// returns a list of items -> Active/Passive or Both (default)
+        /// returns a list of items (PossID's) -> Active/Passive or Both (default)
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
