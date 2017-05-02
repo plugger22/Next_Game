@@ -8,7 +8,7 @@ using RLNET;
 
 namespace Next_Game.Cartographic
 {
-    public enum NetGrid { Locations, Connections, Houses, WorkingLocs, Specials, Count } //arrayOfNetworkAnalysis -> Connections is the # Connections for first Loc out from Capital on branch
+    public enum NetGrid { Locations, Connections, MajorHouses, WorkingLocs, Specials, Count } //arrayOfNetworkAnalysis -> Connections is the # Connections for first Loc out from Capital on branch
 
     public class Network
     {
@@ -98,9 +98,9 @@ namespace Next_Game.Cartographic
                 //create list of routes from locations back to the capital
                 InitialiseRoutesToCapital();
                 InitialiseRoutesToConnectors();
-                ShowNetworkAnalysis();
                 InitialiseHouseLocations(8, 3);
                 InitialisePorts();
+                ShowNetworkAnalysis();
             }
         }
 
@@ -1542,7 +1542,9 @@ namespace Next_Game.Cartographic
             {
                 int locConsole = arrayOfNetworkAnalysis[i, (int)NetGrid.Locations];
                 int connConsole = arrayOfNetworkAnalysis[i, (int)NetGrid.Connections];
-                Game.logStart?.Write(string.Format($"Dir {i, -5} {locConsole, 5} Locations {connConsole, 5} Connections"));
+                int houseConsole = arrayOfNetworkAnalysis[i, (int)NetGrid.MajorHouses];
+                int specialConsole = arrayOfNetworkAnalysis[i, (int)NetGrid.Specials];
+                Game.logStart?.Write(string.Format($"Dir {i, -5} {locConsole, 5} Locations {connConsole, 5} Connections {houseConsole, 5} Houses {specialConsole, 5} Specials"));
             }
         }
 
@@ -1583,7 +1585,7 @@ namespace Next_Game.Cartographic
                     if (arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] >= 2)
                     {
                         // [,2] is used to keep a tally of houses in each branch
-                        arrayOfNetworkAnalysis[i, (int)NetGrid.Houses]++;
+                        arrayOfNetworkAnalysis[i, (int)NetGrid.MajorHouses]++;
                         housesTally--;
                     }
                 }
@@ -1607,10 +1609,10 @@ namespace Next_Game.Cartographic
                 for(int i = 1; i < numBranches; i++)
                 {
                     //enough locs in branch to support a house?
-                    int branchHouses = arrayOfNetworkAnalysis[i, (int)NetGrid.Houses];
+                    int branchHouses = arrayOfNetworkAnalysis[i, (int)NetGrid.MajorHouses];
                     if(arrayOfNetworkAnalysis[i, (int)NetGrid.WorkingLocs] >= idealLocs * (branchHouses + 1) && housesTally > 0)
                     {
-                        arrayOfNetworkAnalysis[i, (int)NetGrid.Houses]++;
+                        arrayOfNetworkAnalysis[i, (int)NetGrid.MajorHouses]++;
                         housesTally--;
                         changeFlag = true;
                     }
@@ -1627,7 +1629,7 @@ namespace Next_Game.Cartographic
             Game.logStart?.Write($"Number of Houses {numHouses}, Max Cap on House Numbers {maxHouses}");
             for(int i = 1; i < numBranches; i++)
             { Game.logStart?.Write(string.Format("Branch {0} has {1} Houses allocated, Special Locations {2}",
-                i, arrayOfNetworkAnalysis[i, (int)NetGrid.Houses], arrayOfNetworkAnalysis[i, (int)NetGrid.Specials])); }
+                i, arrayOfNetworkAnalysis[i, (int)NetGrid.MajorHouses], arrayOfNetworkAnalysis[i, (int)NetGrid.Specials])); }
             Game.logStart?.Write(string.Format("Total Houses Allocated {0} out of {1}", numHouses - housesTally, numHouses));
 
             List<Location> branchList = new List<Location>();
@@ -1683,7 +1685,7 @@ namespace Next_Game.Cartographic
                 if (countLocs > 1)
                 {
                     //how many houses assigned to branch
-                    branchHouseTally = arrayOfNetworkAnalysis[branch, (int)NetGrid.Houses];
+                    branchHouseTally = arrayOfNetworkAnalysis[branch, (int)NetGrid.MajorHouses];
                     //number of loc's assigned to a house
                     houseLocTally = 0;
                     bool foundFlag = false;

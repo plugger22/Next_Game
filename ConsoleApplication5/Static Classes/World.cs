@@ -211,7 +211,7 @@ namespace Next_Game
             //loop list again and assign all remaining followers to inns
             if (listOfInns.Count > 0)
             {
-                Game.logStart?.Write("--- Assign LeftOver Followers to Inns");
+                Game.logStart?.Write("--- Assign LeftOver Followers to Inns (World.cs)");
                 int indexInns = 0;
                 for (int i = 0; i < listOfActiveActors.Count; i++)
                 {
@@ -2513,11 +2513,30 @@ namespace Next_Game
                                         List<int> listBannerLords = majorHouse.GetBannerLordLocations();
                                         int numHouses = listBannerLords.Count;
                                         int branch = majorHouse.Branch;
-                                        int totalHouses = networkAnalysis[branch, (int)NetGrid.Houses];
+                                        int majorHouses = networkAnalysis[branch, (int)NetGrid.MajorHouses];
+                                        int totalLocs = networkAnalysis[branch, (int)NetGrid.Locations];
+                                        int specials = networkAnalysis[branch, (int)NetGrid.Specials];
                                         //are there any houses on the same branch of a different house?
-                                        if ((totalHouses - numHouses - 1) > 0)
+                                        if ((totalLocs - majorHouses - specials - numHouses) > 0)
                                         {
+                                            Game.logStart?.Write($"There are enough houses on branch {house.Branch} for \"{house.Name}\" to desire Land");
+                                        }
+                                        else
+                                        {
+                                            Game.logStart?.Write($"Insufficient houses for \"{house.Name}\", branch {house.Branch} -> totalLoc {totalLocs} MajorH {majorHouses} Specials {specials} ActorH {numHouses}");
+                                            //only one house on branch
+                                            if (majorHouses == 1)
+                                            {
+                                                //Is there a connector to another branch?
+                                                int[,] connectorAnalysis = Game.map.GetArrayOfConnectors();
+                                                int branchConnection = connectorAnalysis[branch, 0];
+                                                if (branchConnection > 0)
+                                                {
+                                                    Game.logStart?.Write($"[Alert] Connection exists between branch {branch} and {branchConnection}");
+                                                }
+                                                else { Game.logStart?.Write($"[Alert] NO Connection exists between branch {branch} and {branchConnection}"); }
 
+                                            }
                                         }
                                     }
                                     //Family
