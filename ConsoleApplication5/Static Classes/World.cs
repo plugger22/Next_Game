@@ -2456,6 +2456,7 @@ namespace Next_Game
             //list to hold specific desires
             List<int> listOfSonsAndBrothers = new List<int>();
             List<int> listOfDaughters = new List<int>();
+            List<int> listOfMinorHouses = new List<int>();
             //Land
             int[,] networkAnalysis = Game.network.GetNetworkAnalysis();
             //item reason texts, 'because it...'
@@ -2475,8 +2476,11 @@ namespace Next_Game
             //note array should correspond exactly to enum PossPromiseType
             for (int i = 0; i < dictPassiveActors.Count; i++)
             {
-                //clear out list of desires
+                //clear out lists
                 listOfPossibleDesires.Clear();
+                listOfSonsAndBrothers.Clear();
+                listOfMinorHouses.Clear();
+                listOfDaughters.Clear();
                 Passive actor = dictPassiveActors.ElementAt(i).Value;
                 //Item (applies to all but is assigned seperately)
                 Item item = listOfPassiveItems[rnd.Next(listOfPassiveItems.Count)];
@@ -2518,6 +2522,8 @@ namespace Next_Game
                                         if ((totalLocs - majorHouses - specials - numHouses) > 0)
                                         {
                                             Game.logStart?.Write($"There are enough houses on branch {house.Branch} for \"{house.Name}\" to desire Land");
+                                            //need to figure out neighbouring minorhouses of a different House
+
                                         }
                                         else
                                         {
@@ -2542,7 +2548,11 @@ namespace Next_Game
                                                         {
                                                             if (connHouse is MinorHouse)
                                                             {
+                                                                //this minor house is the only possibility
                                                                 Game.logStart?.Write($"[Alert -> Connector] Minor House \"{connHouse.Name}\" exists at end of Connector");
+                                                                listOfMinorHouses.Add(connHouse.RefID);
+                                                                listOfPossibleDesires.Add(PossPromiseType.Land);
+                                                                listOfPossibleDesires.Add(PossPromiseType.Land);
                                                             }
                                                             else { Game.logStart?.Write($"[Alert -> Connector] A minor house does NOT exist at the end of the connector"); }
                                                         }
@@ -2582,16 +2592,22 @@ namespace Next_Game
                                                         case ActorRelation.Son:
                                                             //store Sons as a positive (normal) ActID (two entries for each son)
                                                             listOfSonsAndBrothers.Add(familyMember.Key);
-                                                            listOfSonsAndBrothers.Add(familyMember.Key);
                                                             //Game.logStart?.Write($"  Desire -> Court, Son {relative.Name} ActID {relative.ActID}");
+                                                            listOfPossibleDesires.Add(PossPromiseType.Court);
                                                             listOfPossibleDesires.Add(PossPromiseType.Court);
                                                             break;
                                                         case ActorRelation.Daughter:
-                                                            //store Daughter's ActID (two entries for each daughter)
-                                                            listOfDaughters.Add(familyMember.Key);
-                                                            //Game.logStart?.Write($"  Desire -> Marriage, Daughter {relative.Name} ActID {relative.ActID}");
-                                                            listOfPossibleDesires.Add(PossPromiseType.Marriage);
-                                                            listOfPossibleDesires.Add(PossPromiseType.Marriage);
+                                                            Noble daughter = relative as Noble;
+                                                            //check that she is available
+                                                            if (daughter.Married == 0)
+                                                            {
+                                                                //store Daughter's ActID (two entries for each daughter)
+                                                                listOfDaughters.Add(familyMember.Key);
+                                                                //Game.logStart?.Write($"  Desire -> Marriage, Daughter {relative.Name} ActID {relative.ActID}");
+                                                                listOfPossibleDesires.Add(PossPromiseType.Marriage);
+                                                                listOfPossibleDesires.Add(PossPromiseType.Marriage);
+                                                            }
+                                                            else { Game.logStart?.Write($"[Alert -> Daughter] {daughter.Title} {daughter.Name}, ActID {daughter.ActID} already Married in {daughter.Married}"); }
                                                             break;
                                                     }
                                                 }
@@ -2665,6 +2681,11 @@ namespace Next_Game
                         switch (desire)
                         {
                             case PossPromiseType.Land:
+                                actor.DesireData = listOfMinorHouses[rnd.Next(listOfMinorHouses.Count)];
+                                House tempHouse = GetHouse(actor.DesireData);
+                                Actor tempLord = GetAnyActor(tempHouse.LordID);
+                                Location loc = Game.network.GetLocation(tempHouse.LocID);
+                                actor.DesireText = $"to have {tempLord.Title} {tempLord.Name} of House {tempHouse.Name} at {tempHouse.LocName} (Loc {loc.GetPosX()}:{loc.GetPosY()}) bend his knee and return to the fold";
                                 break;
                             case PossPromiseType.Court:
                                 data = listOfSonsAndBrothers[rnd.Next(listOfSonsAndBrothers.Count)];

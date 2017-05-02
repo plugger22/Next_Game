@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 02/05/2017 20:28:41
+//Exile Game file ops "LogStart.txt" commenced at: 02/05/2017 20:46:41
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -641,35 +641,35 @@ Lord Hervey Lannister ActID 10 wants the Dragon Egg because it is their destiny 
 Insufficient houses for "Florent", branch 4 -> totalLoc 2 MajorH 1 Specials 0 ActorH 1
 [Alert] Connection exists between branch 4 and 2
 [Alert -> Connector] Minor House "Codd" exists at end of Connector
-Lord Walcher Florent ActID 17 wants more Gold -> Desire: Gold, DesireData: 0
+Lord Walcher Florent ActID 17 wants a court position for his son Leyton Florent "The Stumped" ActID 23 -> Desire: Court, DesireData: 23
 There are enough houses on branch 3 for "Greyjoy" to desire Land
 Lord Luwin Greyjoy ActID 31 wants more Gold -> Desire: Gold, DesireData: 0
 There are enough houses on branch 3 for "Baratheon" to desire Land
-Lord Areo Baratheon ActID 43 wants a court position for his son Frederick Baratheon II "The Purposeless" ActID 50 -> Desire: Court, DesireData: 50
+Lord Areo Baratheon ActID 43 wants a court position for his son Frederick Baratheon "The Active" ActID 49 -> Desire: Court, DesireData: 49
 There are enough houses on branch 3 for "Stark" to desire Land
-Lord Gerbertus Stark ActID 54 wants a court position for his son Leyton Florent "The Stumped" ActID 23 -> Desire: Court, DesireData: 23
-BannerLord Brynden Harlaw ActID 72 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Salemon Bracken ActID 74 wants nothing -> Desire: None, DesireData: 0
-BannerLord Ywain Dondarrion ActID 75 wants nothing -> Desire: None, DesireData: 0
-BannerLord Patrek Slynt ActID 77 wants more Gold -> Desire: Gold, DesireData: 0
+Lord Gerbertus Stark ActID 54 wants a court position for his son Tion Stark "The Bruised" ActID 60 -> Desire: Court, DesireData: 60
+BannerLord Brynden Harlaw ActID 72 wants the Lordship of House Lannister -> Desire: Lordship, DesireData: 2
+BannerLord Salemon Bracken ActID 74 wants the Elixir of Wellness because it is their destiny -> Desire: Item, DesireData: 14
+BannerLord Ywain Dondarrion ActID 75 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Patrek Slynt ActID 77 wants the Lion Dagger because it has been predicted by prophecy -> Desire: Item, DesireData: 10
 [Alert -> BannerLord] "Clegane" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Chett Clegane ActID 78 wants the Lion Dagger because it has been predicted by prophecy -> Desire: Item, DesireData: 10
+BannerLord Chett Clegane ActID 78 wants the Amulet of Passion because it might help their enemies -> Desire: Item, DesireData: 12
 [Alert -> BannerLord] "Codd" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Aerys Codd ActID 79 wants the Amulet of Passion because it might help their enemies -> Desire: Item, DesireData: 12
+BannerLord Aerys Codd ActID 79 wants nothing -> Desire: None, DesireData: 0
 [Alert -> BannerLord] "Cerwyn" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Fraunk Cerwyn ActID 81 wants the Book of the Dead because it has been predicted by prophecy -> Desire: Item, DesireData: 13
-BannerLord Ferri Mooton ActID 82 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Henry Ambrose ActID 83 wants the Amulet of Passion because it is their birthright -> Desire: Item, DesireData: 12
+BannerLord Fraunk Cerwyn ActID 81 wants the Mammoth Cloak because it was forseen -> Desire: Item, DesireData: 9
+BannerLord Ferri Mooton ActID 82 wants the Lordship of House Stark -> Desire: Lordship, DesireData: 3
+BannerLord Henry Ambrose ActID 83 wants more Gold -> Desire: Gold, DesireData: 0
 There are enough houses on branch 3 for "Karstark" to desire Land
-Lord Rainald Karstark ActID 85 wants a court position for his son Frederick Baratheon "The Active" ActID 49 -> Desire: Court, DesireData: 49
-BannerLord Leyton Wull ActID 96 wants the Lordship of House Karstark -> Desire: Lordship, DesireData: 8
+Lord Rainald Karstark ActID 85 wants a court position for his son Willas Karstark "The Static" ActID 108 -> Desire: Court, DesireData: 108
+BannerLord Leyton Wull ActID 96 wants nothing -> Desire: None, DesireData: 0
 [Alert -> BannerLord] "Mullendore" is a member of the Royal Household -> Lordship desire not valid
 BannerLord Jack Mullendore ActID 97 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Willas Fowler ActID 98 wants nothing -> Desire: None, DesireData: 0
-BannerLord Dreu Peake ActID 99 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Daue Leygood ActID 100 wants nothing -> Desire: None, DesireData: 0
-BannerLord Aerys Tarth ActID 101 wants the Mammoth Cloak because it is their destiny -> Desire: Item, DesireData: 9
-BannerLord Tyrek Hightower ActID 102 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Willas Fowler ActID 98 wants the Amulet of Passion because it was forseen -> Desire: Item, DesireData: 12
+BannerLord Dreu Peake ActID 99 wants nothing -> Desire: None, DesireData: 0
+BannerLord Daue Leygood ActID 100 wants the Mammoth Cloak because it is their destiny -> Desire: Item, DesireData: 9
+BannerLord Aerys Tarth ActID 101 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Tyrek Hightower ActID 102 wants the Amulet of Passion because it is an ancestral heirloom -> Desire: Item, DesireData: 12
 --- InitialiseAI (World.cs)
  Capital 0 -> Current 0 -> Desired 0 -> adjusted Loc's 0
  Branch  1 -> Current 0 -> Desired 0 -> adjusted Loc's 1
@@ -691,21 +691,21 @@ Nemesis The Unrelenting has a confirmed Touched trait
  [Goal -> Inquisitor] Brother Mastema, ActID 117 Branch -> 4
  [Goal -> Nemesis] The Unrelenting, ActID 118 Branch -> 0
 --- InitialiseWorldDevelopment (World.cs)
-ItemID 1, "Dragon Egg", given to Heir Lancel Lannister, ActID 71, at Casterly Rock (loc 6:14)
-[Secret -> Item] Lancel Lannister, ActID 71, is hording the Dragon Egg, ItemID 1, safe from pyring eyes
-ItemID 4, "Goblin Mug", given to Heir Frederick Baratheon, ActID 49, at Bloodkeep (loc 0:13)
-[Secret -> Item] Frederick Baratheon, ActID 49, has come into possession of the Goblin Mug, ItemID 4, in mysterious circumstances
-ItemID 5, "Mammoth Cloak", given to King Ivo Arryn, ActID 36, at Kingskeep (loc 14:11)
-ItemID 6, "Lion Dagger", given to Lady Shireen Florent, ActID 18, at Brightwater Keep (loc 13:6)
-[Secret -> Item] Shireen Florent, ActID 18, has been entrusted with keeping the Lion Dagger, ItemID 6, safe from harm
-ItemID 7, "Chalice of Pain", given to Maester Preston Remfrey, ActID 58, at Winterfell (loc 6:26)
-[Secret -> Item] Preston Remfrey, ActID 58, has stolen the Chalice of Pain, ItemID 7, and is desperate to keep it quiet
-ItemID 8, "Amulet of Passion", given to Lady Auelin Stark, ActID 55, at Winterfell (loc 6:26)
-[Secret -> Item] Auelin Stark, ActID 55, has come into possession of the Amulet of Passion, ItemID 8, in mysterious circumstances
-ItemID 9, "Book of the Dead", given to BannerLord Leyton Wull, ActID 96, at Sodhall (loc 24:20)
-[Secret -> Item] Leyton Wull, ActID 96, has stolen the Book of the Dead, ItemID 9, and is desperate to keep it quiet
-ItemID 10, "Elixir of Wellness", given to Septon Viserys Ferrand, ActID 41, at Eyrie (loc 24:2)
-[Secret -> Item] Viserys Ferrand, ActID 41, is hording the Elixir of Wellness, ItemID 10, safe from pyring eyes
+ItemID 1, "Dragon Egg", given to Maester Samwell Jeff, ActID 47, at Bloodkeep (loc 0:13)
+[Secret -> Item] Samwell Jeff, ActID 47, has come into possession of the Dragon Egg, ItemID 1, in mysterious circumstances
+ItemID 4, "Goblin Mug", given to Lady Shireen Florent, ActID 18, at Brightwater Keep (loc 13:6)
+[Secret -> Item] Shireen Florent, ActID 18, has been entrusted with keeping the Goblin Mug, ItemID 4, safe from harm
+ItemID 5, "Mammoth Cloak", given to Septon Urien Tybout, ActID 59, at Winterfell (loc 6:26)
+[Secret -> Item] Urien Tybout, ActID 59, has stolen the Mammoth Cloak, ItemID 5, and is desperate to keep it quiet
+ItemID 6, "Lion Dagger", given to Lady Auelin Stark, ActID 55, at Winterfell (loc 6:26)
+[Secret -> Item] Auelin Stark, ActID 55, has come into possession of the Lion Dagger, ItemID 6, in mysterious circumstances
+ItemID 7, "Chalice of Pain", given to Lord Rainald Karstark, ActID 85, at Highgarden (loc 21:20)
+ItemID 8, "Amulet of Passion", given to BannerLord Henry Ambrose, ActID 83, at Blackwater (loc 4:26)
+[Secret -> Item] Henry Ambrose, ActID 83, has come into possession of the Amulet of Passion, ItemID 8, in mysterious circumstances
+ItemID 9, "Book of the Dead", given to Castellan Aunger Gervasius, ActID 103, at Highgarden (loc 21:20)
+[Secret -> Item] Aunger Gervasius, ActID 103, has come into possession of the Book of the Dead, ItemID 9, in mysterious circumstances
+ItemID 10, "Elixir of Wellness", given to lady Iselota Greyjoy, ActID 35, at Pyke (loc 14:19)
+[Secret -> Item] Iselota Greyjoy, ActID 35, is hording the Elixir of Wellness, ItemID 10, safe from pyring eyes
 --- Import Follower Events (Director.cs)
 "Spiders", FID 1, [GeoCluster, Generic], Freq Low, Status Active, Trait Wits, Delay 2
 "Wolves", FID 2, [GeoCluster, Generic], Freq Normal, Status Active, Trait Combat, Delay 2
@@ -1218,5 +1218,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 02/05/2017 20:28:42
-//Elapsed Time 836 ms
+//Exile Game file ops "LogStart.txt" Completed at: 02/05/2017 20:46:42
+//Elapsed Time 772 ms
