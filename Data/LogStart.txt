@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 02/05/2017 17:11:25
+//Exile Game file ops "LogStart.txt" commenced at: 02/05/2017 20:28:41
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -291,7 +291,7 @@ Amulet of Passion, ItemID 8, Whoever wears the Amulet has the sexual stamina of 
 Book of the Dead, ItemID 9, An ancient tome that possesses the secret to Eternal Life. Scholars have been searching for this book for hundreds of years., Year -1500
 Elixir of Wellness, ItemID 10, Those who drink from the Exilir have their digestive systems purged, cleaned and cured. Greatly valued by Gastronomes., Year 300
 [Item] The Mage Ring, PossID 6, ItemID 3 added to Player's Inventory
---- Assign LeftOver Followers to Inns
+--- Assign LeftOver Followers to Inns (World.cs)
  Inn "One Eyed Pete's" -> Follower ActID 3 added
  Inn "The Pickled Prune" -> Follower ActID 4 added
  Inn "The Clumsy Hog" -> Follower ActID 6 added
@@ -640,6 +640,7 @@ There are enough houses on branch 3 for "Lannister" to desire Land
 Lord Hervey Lannister ActID 10 wants the Dragon Egg because it is their destiny -> Desire: Item, DesireData: 7
 Insufficient houses for "Florent", branch 4 -> totalLoc 2 MajorH 1 Specials 0 ActorH 1
 [Alert] Connection exists between branch 4 and 2
+[Alert -> Connector] Minor House "Codd" exists at end of Connector
 Lord Walcher Florent ActID 17 wants more Gold -> Desire: Gold, DesireData: 0
 There are enough houses on branch 3 for "Greyjoy" to desire Land
 Lord Luwin Greyjoy ActID 31 wants more Gold -> Desire: Gold, DesireData: 0
@@ -651,14 +652,18 @@ BannerLord Brynden Harlaw ActID 72 wants more Gold -> Desire: Gold, DesireData: 
 BannerLord Salemon Bracken ActID 74 wants nothing -> Desire: None, DesireData: 0
 BannerLord Ywain Dondarrion ActID 75 wants nothing -> Desire: None, DesireData: 0
 BannerLord Patrek Slynt ActID 77 wants more Gold -> Desire: Gold, DesireData: 0
+[Alert -> BannerLord] "Clegane" is a member of the Royal Household -> Lordship desire not valid
 BannerLord Chett Clegane ActID 78 wants the Lion Dagger because it has been predicted by prophecy -> Desire: Item, DesireData: 10
+[Alert -> BannerLord] "Codd" is a member of the Royal Household -> Lordship desire not valid
 BannerLord Aerys Codd ActID 79 wants the Amulet of Passion because it might help their enemies -> Desire: Item, DesireData: 12
+[Alert -> BannerLord] "Cerwyn" is a member of the Royal Household -> Lordship desire not valid
 BannerLord Fraunk Cerwyn ActID 81 wants the Book of the Dead because it has been predicted by prophecy -> Desire: Item, DesireData: 13
 BannerLord Ferri Mooton ActID 82 wants more Gold -> Desire: Gold, DesireData: 0
 BannerLord Henry Ambrose ActID 83 wants the Amulet of Passion because it is their birthright -> Desire: Item, DesireData: 12
 There are enough houses on branch 3 for "Karstark" to desire Land
 Lord Rainald Karstark ActID 85 wants a court position for his son Frederick Baratheon "The Active" ActID 49 -> Desire: Court, DesireData: 49
 BannerLord Leyton Wull ActID 96 wants the Lordship of House Karstark -> Desire: Lordship, DesireData: 8
+[Alert -> BannerLord] "Mullendore" is a member of the Royal Household -> Lordship desire not valid
 BannerLord Jack Mullendore ActID 97 wants more Gold -> Desire: Gold, DesireData: 0
 BannerLord Willas Fowler ActID 98 wants nothing -> Desire: None, DesireData: 0
 BannerLord Dreu Peake ActID 99 wants more Gold -> Desire: Gold, DesireData: 0
@@ -1213,5 +1218,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 02/05/2017 17:11:26
-//Elapsed Time 800 ms
+//Exile Game file ops "LogStart.txt" Completed at: 02/05/2017 20:28:42
+//Elapsed Time 836 ms

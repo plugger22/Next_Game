@@ -2456,15 +2456,15 @@ namespace Next_Game
             //list to hold specific desires
             List<int> listOfSonsAndBrothers = new List<int>();
             List<int> listOfDaughters = new List<int>();
-
             //Land
             int[,] networkAnalysis = Game.network.GetNetworkAnalysis();
-
             //item reason texts, 'because it...'
             string[] itemReasons = new string[] { "is their birthright", "was forseen", "has been predicted by prophecy", "is an ancestral heirloom", "belongs to their house", "belongs to them",
                 "might help their enemies", "is their destiny" };
             string reason;
             bool itemProceed = true;
+            //Royal household (new King)
+            MajorHouse royalHouse = (MajorHouse)GetHouse(Game.lore.RoyalRefIDNew);
             //List of all Passive Items
             IEnumerable<Item> listItems =
                 from items in dictPossessions.Values.OfType<Item>()
@@ -2478,7 +2478,6 @@ namespace Next_Game
                 //clear out list of desires
                 listOfPossibleDesires.Clear();
                 Passive actor = dictPassiveActors.ElementAt(i).Value;
-
                 //Item (applies to all but is assigned seperately)
                 Item item = listOfPassiveItems[rnd.Next(listOfPassiveItems.Count)];
                 possID = item.PossID;
@@ -2492,7 +2491,6 @@ namespace Next_Game
                         { itemProceed = false;  break; }
                     }
                 }
-
                 if (actor.Status != ActorStatus.Gone)
                 {
                     //load up listOfPossibleDesires with relevant Desires
@@ -2533,8 +2531,26 @@ namespace Next_Game
                                                 if (branchConnection > 0)
                                                 {
                                                     Game.logStart?.Write($"[Alert] Connection exists between branch {branch} and {branchConnection}");
+                                                    //is the location on the other end of the connection a minor house?
+                                                    int posX = connectorAnalysis[branch, 4];
+                                                    int posY = connectorAnalysis[branch, 5];
+                                                    int refID = Game.map.GetMapInfo(MapLayer.RefID, posX, posY);
+                                                    if (refID > 0)
+                                                    {
+                                                        House connHouse = GetHouse(refID);
+                                                        if (connHouse != null)
+                                                        {
+                                                            if (connHouse is MinorHouse)
+                                                            {
+                                                                Game.logStart?.Write($"[Alert -> Connector] Minor House \"{connHouse.Name}\" exists at end of Connector");
+                                                            }
+                                                            else { Game.logStart?.Write($"[Alert -> Connector] A minor house does NOT exist at the end of the connector"); }
+                                                        }
+                                                        else { Game.SetError(new Error(234, "Invalid connHouse (null)")); }
+                                                    }
+                                                    else { Game.SetError(new Error(234, "Invalid refID (zero, or less)")); }
                                                 }
-                                                else { Game.logStart?.Write($"[Alert] NO Connection exists between branch {branch} and {branchConnection}"); }
+                                                else { Game.logStart?.Write($"[Alert] NO Connection exists on branch {branch}"); }
 
                                             }
                                         }
@@ -2609,19 +2625,24 @@ namespace Next_Game
                                 //Gold (if poor), Lordship (if treacherous)
                                 if (tempHouse.Resources <= 2)
                                 { listOfPossibleDesires.Add(PossPromiseType.Gold); }
-                                int treachery = actor.GetSkill(SkillType.Treachery);
-                                switch (treachery)
+                                //Lordship -> Not if a member of Royal house
+                                if (actor.HouseID != royalHouse.HouseID)
                                 {
-                                    case 4:
-                                        listOfPossibleDesires.Add(PossPromiseType.Lordship);
-                                        listOfPossibleDesires.Add(PossPromiseType.Lordship);
-                                        break;
-                                    case 5:
-                                        listOfPossibleDesires.Add(PossPromiseType.Lordship);
-                                        listOfPossibleDesires.Add(PossPromiseType.Lordship);
-                                        listOfPossibleDesires.Add(PossPromiseType.Lordship);
-                                        break;
+                                    int treachery = actor.GetSkill(SkillType.Treachery);
+                                    switch (treachery)
+                                    {
+                                        case 4:
+                                            listOfPossibleDesires.Add(PossPromiseType.Lordship);
+                                            listOfPossibleDesires.Add(PossPromiseType.Lordship);
+                                            break;
+                                        case 5:
+                                            listOfPossibleDesires.Add(PossPromiseType.Lordship);
+                                            listOfPossibleDesires.Add(PossPromiseType.Lordship);
+                                            listOfPossibleDesires.Add(PossPromiseType.Lordship);
+                                            break;
+                                    }
                                 }
+                                else { Game.logStart?.Write($"[Alert -> BannerLord] \"{tempHouse.Name}\" is a member of the Royal Household -> Lordship desire not valid"); }
                             }
                             else { Game.SetError(new Error(234, "Invalid tempHouse (null) for BannerLord")); }
                             //Item
