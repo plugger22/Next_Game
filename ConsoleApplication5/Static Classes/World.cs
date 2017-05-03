@@ -2560,9 +2560,11 @@ namespace Next_Game
                                                                         break;
                                                                     }
                                                                 }
+                                                                else { Game.SetError(new Error(234, "Invalid searchHouse (null) -> Out")); }
                                                             }
                                                         }
                                                     }
+                                                    else { Game.logStart?.Write("[Alert -> Index] listOfBranchLocs Index is too high"); }
                                                     if ((index - 1) >= 0)
                                                     {
                                                         //loop backwards looking for first minor House belonging to someone else
@@ -2581,12 +2583,54 @@ namespace Next_Game
                                                                         break;
                                                                     }
                                                                 }
+                                                                else { Game.SetError(new Error(234, "Invalid searchHouse (null) -> In")); }
                                                             }
                                                         }
                                                     }
+                                                    else { Game.logStart?.Write("[Alert -> Index] listOfBranchLocs Index is too low"); }
+                                                    //if two possible minor houses delete the one that is furthest away
+                                                    if (listOfMinorHouses.Count > 1)
+                                                    {
+                                                        Game.logStart?.Write("There are two minor houses, furthest will be eliminated");
+                                                        Location locMajor = Game.network.GetLocation(majorHouse.LocID);
+                                                        int[] arrayDistance = new int[listOfMinorHouses.Count];
+                                                        for(int p = 0; p < listOfMinorHouses.Count; p++)
+                                                        {
+                                                            //work out distances
+                                                            House checkHouse = GetHouse(listOfMinorHouses[p]);
+                                                            if (checkHouse != null)
+                                                            {
+                                                                Location locMinor = Game.network.GetLocation(checkHouse.LocID);
+                                                                List<Route> route = Game.network.GetRouteAnywhere(locMajor.GetPosition(), locMinor.GetPosition());
+                                                                arrayDistance[p] = Game.network.GetDistance(route);
+                                                                Game.logStart?.Write($"[Alert -> Distance] MinorHouse \"{checkHouse.Name}\", RefID {checkHouse.RefID}, (Loc {locMinor.GetPosX()}:{locMinor.GetPosY()}) -> Distance {arrayDistance[p]}");
+                                                            }
+                                                        }
+                                                        //find shortest distance
+                                                        int minDistance = 999;
+                                                        int minIndex = 999;
+                                                        for(int q = 0; q < arrayDistance.Length; q++)
+                                                        {
+                                                            if (arrayDistance[q] < minDistance)
+                                                            {
+                                                                minDistance = arrayDistance[q];
+                                                                minIndex = q;
+                                                            }
+                                                        }
+                                                        //make sure only the shortest distance minorHouse loc remains in the list
+                                                        if (minIndex < 999)
+                                                        {
+                                                            int shortestRefID = listOfMinorHouses[minIndex];
+                                                            listOfMinorHouses.Clear();
+                                                            listOfMinorHouses.Add(shortestRefID);
+                                                            Game.logStart?.Write($"Minor House RefID {shortestRefID} retained, others deleted");
+                                                        }
+                                                        else { Game.SetError(new Error(234, "Invalid minIndex (999)")); }
+                                                    }
                                                 }
-
+                                                else { Game.SetError(new Error(234, $"Major House \"{majorHouse.Name}\" not found in listOfBranchLocs")); }
                                             }
+                                            else { Game.SetError(new Error(234, "Invalid listBranchLocs (null)")); }
                                             /*//need to figure out neighbouring minorhouses of a different House
                                             //List<int> housesToCapital = majorHouse.GetHousesToCapital();
                                             //List<int> housesToConnector = majorHouse.GetHousesToConnector();
@@ -2772,7 +2816,7 @@ namespace Next_Game
                                             break;
                                     }
                                 }
-                                else { Game.logStart?.Write($"[Alert -> BannerLord] \"{tempHouse.Name}\" is a member of the Royal Household -> Lordship desire not valid"); }
+                                else { Game.logStart?.Write($"[Alert -> Royal] Bannerlord House \"{tempHouse.Name}\" is a member of the Royal Household -> Lordship desire not valid"); }
                             }
                             else { Game.SetError(new Error(234, "Invalid tempHouse (null) for BannerLord")); }
                             //Item
@@ -2799,7 +2843,7 @@ namespace Next_Game
                                 House tempHouse = GetHouse(actor.DesireData);
                                 Actor tempLord = GetAnyActor(tempHouse.LordID);
                                 Location loc = Game.network.GetLocation(tempHouse.LocID);
-                                actor.DesireText = $"to have {tempLord.Title} {tempLord.Name} of House {tempHouse.Name} at {tempHouse.LocName} (Loc {loc.GetPosX()}:{loc.GetPosY()}) bend his knee and return to the fold";
+                                actor.DesireText = $"to have {tempLord.Title} {tempLord.Name} of House {tempHouse.Name} at {tempHouse.LocName} (Loc {loc.GetPosX()}:{loc.GetPosY()}) swear allegiance";
                                 break;
                             case PossPromiseType.Court:
                                 data = listOfSonsAndBrothers[rnd.Next(listOfSonsAndBrothers.Count)];
