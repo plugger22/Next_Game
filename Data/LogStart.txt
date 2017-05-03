@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 03/05/2017 11:56:09
+//Exile Game file ops "LogStart.txt" commenced at: 03/05/2017 13:26:55
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -587,8 +587,8 @@ Holy Haggard, Aid 108, specID 2 -> initialised O.K
 Saladin Kinghit, Aid 109, specID 3 -> initialised O.K
 --- InitialiseDesires (World.cs)
 There are enough houses on branch 1 for "Lannister" to desire Land
-[Alert -> Extended Search Rqd] No neighbouring minor houses found on straight shot routes
-Lord Tyrek Lannister ActID 10 wants a court position for his son Raff Lannister "The Vigilant" ActID 66 -> Desire: Court, DesireData: 66
+[Alert -> Out Neighbour] MinorHouse "Estermont", RefID 111, added to listOfMinorHouses
+Lord Tyrek Lannister ActID 10 wants to have BannerLord Ywain Estermont of House Estermont at Greenstone (Loc 27:12) bend his knee and return to the fold -> Desire: Land, DesireData: 111
 Insufficient houses for "Florent", branch 2 -> totalLoc 3 MajorH 1 Specials 0 ActorH 2
 [Alert] Connection exists between branch 2 and 1
 [Alert -> Connector] Minor House "Estermont" exists at end of Connector
@@ -598,7 +598,7 @@ Insufficient houses for "Arryn", branch 4 -> totalLoc 3 MajorH 1 Specials 0 Acto
 [Alert -> Connector] Minor House "Hornwood" exists at end of Connector
 Lord Ywain Arryn ActID 37 wants the marriage of his daughter, Sari Arryn "The Gracious" ActID 44, to the one true King -> Desire: Marriage, DesireData: 44
 There are enough houses on branch 1 for "Targaryen" to desire Land
-[Alert -> Extended Search Rqd] No neighbouring minor houses found on straight shot routes
+[Alert -> Out Neighbour] MinorHouse "Tarly", RefID 129, added to listOfMinorHouses
 Lord Cristal Targaryen II ActID 67 wants more Gold -> Desire: Gold, DesireData: 0
 BannerLord Garth Tarly ActID 68 wants more Gold -> Desire: Gold, DesireData: 0
 BannerLord Andry Peake ActID 70 wants more Gold -> Desire: Gold, DesireData: 0
@@ -609,8 +609,8 @@ BannerLord Ilyn Dondarrion ActID 75 wants nothing -> Desire: None, DesireData: 0
 BannerLord Addam Karstark ActID 76 wants nothing -> Desire: None, DesireData: 0
 BannerLord Rodrik Oakheart ActID 77 wants more Gold -> Desire: Gold, DesireData: 0
 There are enough houses on branch 1 for "Westerling" to desire Land
-[Alert -> Extended Search Rqd] No neighbouring minor houses found on straight shot routes
-Lord Victarion Westerling ActID 78 wants the Elixir of Wellness because it was forseen -> Desire: Item, DesireData: 12
+[Alert -> In Neighbour] MinorHouse "Estermont", RefID 111, added to listOfMinorHouses
+Lord Victarion Westerling ActID 78 wants to have BannerLord Ywain Estermont of House Estermont at Greenstone (Loc 27:12) bend his knee and return to the fold -> Desire: Land, DesireData: 111
 BannerLord Ywain Estermont ActID 80 wants the Mammoth Cloak because it belongs to them -> Desire: Item, DesireData: 7
 [Alert -> BannerLord] "Hornwood" is a member of the Royal Household -> Lordship desire not valid
 BannerLord Dick Hornwood ActID 89 wants nothing -> Desire: None, DesireData: 0
@@ -1159,5 +1159,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 03/05/2017 11:56:10
-//Elapsed Time 685 ms
+//Exile Game file ops "LogStart.txt" Completed at: 03/05/2017 13:26:56
+//Elapsed Time 722 ms

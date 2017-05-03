@@ -1,6 +1,59 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 03/05/2017 11:56:10
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
+//Exile Game File "LogTurn.txt" opened at: 03/05/2017 13:34:14
+--- ProcessStartTurn (World.cs)
+Day 2, Turn 1
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Samwell Tyrell, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Astaroth, ID 110 at 15:18, Active Samwell Tyrell, ID 1, at 16:24
+ [Search -> Debug] Enemy, Brother Set, ID 111 at 15:18, Active Samwell Tyrell, ID 1, at 16:24
+ [Search -> Debug] Enemy, Brother Damballa, ID 112 at 15:18, Active Samwell Tyrell, ID 1, at 16:24
+ [Search -> Debug] Enemy, Brother Shiva, ID 113 at 15:18, Active Samwell Tyrell, ID 1, at 16:24
+ [Search -> Debug] Enemy, The Unrelenting, ID 114 at 15:18, Active Samwell Tyrell, ID 1, at 16:24
+ [Search -> Stationary] Follower The Waif, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 4 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Astaroth, Act ID 110 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Set, Act ID 111 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 112 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 113 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 114 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Astaroth, ActID 110 retains Goal -> Wait
+ [Enemy -> Known] Brother Set ActID 111 has become KNOWN
+ [Enemy -> Goal] Brother Set, ActID 111 retains Goal -> Wait
+ [Enemy -> Goal] Brother Damballa, ActID 112 retains Goal -> Wait
+ [Enemy -> Known] Brother Shiva ActID 113 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Shiva, ActID 113 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Shiva, ActID 113, (loc 15:18), assigned new Goal -> Hide
+ [Enemy -> Known] The Unrelenting ActID 114 has become KNOWN
+ [Enemy -> Goal] The Unrelenting, ActID 114 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Ser Mikken Humfrye", ID 27 added to list of Actors
+ [AutoEvent -> ActorList] "Forley Reyner", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Garth Godelot", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Joseth Hamelin", ID 30 added to list of Actors
+ [AutoEvent -> LocalList] "Ser Mikken Humfrye", ID 27 added to list of Locals
+ [AutoEvent -> AdvisorList] "Forley Reyner", ID 28 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Garth Godelot", ID 29 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Joseth Hamelin", ID 30 added to list of Advisors
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Samwell Tyrell has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- MultiKeyInput (Game.cs)
+10 input
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 03/05/2017 11:57:46
+//Exile Game file ops "LogTurn.txt" Completed at: 03/05/2017 13:37:11

@@ -568,7 +568,7 @@ namespace Next_Game
                         {
                             //player (no distance display)
                             textColor = Color._player;
-                            switch(actor.Value.Status)
+                            switch (actor.Value.Status)
                             {
                                 case ActorStatus.AtLocation:
                                 case ActorStatus.Travelling:
@@ -773,9 +773,9 @@ namespace Next_Game
             if (tempGameVars.Length > 0 && tempGameVars.Length == tempVariables.Length)
             {
                 string description;
-                for(int i = 1; i < tempGameVars.Length; i++)
+                for (int i = 1; i < tempGameVars.Length; i++)
                 {
-                    description = $"{i, -3}:  {tempGameVars[i], -20} -> {tempVariables[i], 4}";
+                    description = $"{i,-3}:  {tempGameVars[i],-20} -> {tempVariables[i],4}";
                     listToDisplay.Add(new Snippet(description));
                 }
             }
@@ -1223,7 +1223,7 @@ namespace Next_Game
                         Promise promise = (Promise)GetPossession(possessionID);
                         if (promise != null)
                         {
-                            listToDisplay.Add(new Snippet(string.Format("{0} {1}", promise.Year, promise.Description ), false));
+                            listToDisplay.Add(new Snippet(string.Format("{0} {1}", promise.Year, promise.Description), false));
                             listToDisplay.Add(new Snippet(string.Format("    {0}", GetStars(promise.Strength)), RLColor.LightRed, RLColor.Black));
                         }
                     }
@@ -2492,10 +2492,10 @@ namespace Next_Game
                 if (actor.CheckItems(PossItemType.Passive) == true)
                 {
                     List<int> tempList = actor.GetItems(PossItemType.Passive);
-                    foreach(var objectID in tempList)
+                    foreach (var objectID in tempList)
                     {
                         if (objectID == item.PossID)
-                        { itemProceed = false;  break; }
+                        { itemProceed = false; break; }
                     }
                 }
                 if (actor.Status != ActorStatus.Gone)
@@ -2521,10 +2521,72 @@ namespace Next_Game
                                         int majorHouses = networkAnalysis[branch, (int)NetGrid.MajorHouses];
                                         int totalLocs = networkAnalysis[branch, (int)NetGrid.Locations];
                                         int specials = networkAnalysis[branch, (int)NetGrid.Specials];
+                                        int locID = majorHouse.LocID;
+                                        int index = 999;
+                                        int houseID = majorHouse.HouseID;
                                         //are there any houses on the same branch of a different house?
                                         if ((totalLocs - majorHouses - specials - numHouses) > 0)
                                         {
                                             Game.logStart?.Write($"There are enough houses on branch {house.Branch} for \"{house.Name}\" to desire Land");
+
+                                            List<Location> listBranchLocs = Game.network.GetBranchLocs(branch);
+                                            //find major house position in list (sorted by distance from capital)
+                                            if (listBranchLocs != null)
+                                            {
+                                                for (int j = 0; j < listBranchLocs.Count; j++)
+                                                {
+                                                    Location loc = listBranchLocs[j];
+                                                    if (loc.LocationID == locID)
+                                                    { index = j; break; }
+                                                }
+                                                //found MajorHouse?
+                                                if (index < 999)
+                                                {
+                                                    if ((index + 1) < listBranchLocs.Count)
+                                                    {
+                                                        //loop forward looking for first minor House belonging to someone else
+                                                        for (int m = index + 1; m < listBranchLocs.Count; m++)
+                                                        {
+                                                            Location loc = listBranchLocs[m];
+                                                            if (loc.HouseID != houseID)
+                                                            {
+                                                                House searchHouse = GetHouse(loc.RefID);
+                                                                if (searchHouse != null)
+                                                                {
+                                                                    if (searchHouse is MinorHouse)
+                                                                    {
+                                                                        listOfMinorHouses.Add(searchHouse.RefID); 
+                                                                        Game.logStart?.Write($"[Alert -> Out Neighbour] MinorHouse \"{searchHouse.Name}\", RefID {searchHouse.RefID}, added to listOfMinorHouses");
+                                                                        break;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    if ((index - 1) >= 0)
+                                                    {
+                                                        //loop backwards looking for first minor House belonging to someone else
+                                                        for (int m = index - 1; m >= 0; m--)
+                                                        {
+                                                            Location loc = listBranchLocs[m];
+                                                            if (loc.HouseID != houseID)
+                                                            {
+                                                                House searchHouse = GetHouse(loc.RefID);
+                                                                if (searchHouse != null)
+                                                                {
+                                                                    if (searchHouse is MinorHouse)
+                                                                    {
+                                                                        listOfMinorHouses.Add(searchHouse.RefID);
+                                                                        Game.logStart?.Write($"[Alert -> In Neighbour] MinorHouse \"{searchHouse.Name}\", RefID {searchHouse.RefID}, added to listOfMinorHouses");
+                                                                        break;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                            }
                                             /*//need to figure out neighbouring minorhouses of a different House
                                             //List<int> housesToCapital = majorHouse.GetHousesToCapital();
                                             //List<int> housesToConnector = majorHouse.GetHousesToConnector();
