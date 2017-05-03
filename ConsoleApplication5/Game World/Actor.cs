@@ -814,6 +814,7 @@ namespace Next_Game
         public PossPromiseType Desire { get; set; } //what does the actor want?
         public string DesireText { get; set; } //descriptor for desire
         public int DesireData { get; set; } //multi purpose data point related to specific desire
+        public bool DesireKnown { get; set; } //if true then desire is shown, otherwise hidden (greyed out)
 
 
         public Passive()

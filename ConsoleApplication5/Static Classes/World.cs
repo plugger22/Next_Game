@@ -1128,7 +1128,9 @@ namespace Next_Game
                     if (passivePerson.Desire > PossPromiseType.None)
                     {
                         listToDisplay.Add(new Snippet("Desire", RLColor.Brown, RLColor.Black));
-                        listToDisplay.Add(new Snippet($"Wants {passivePerson.DesireText}", RLColor.LightGray, RLColor.Black));
+                        if (passivePerson.DesireKnown == true)
+                        { listToDisplay.Add(new Snippet($"Wants {passivePerson.DesireText}", RLColor.White, RLColor.Black)); } //visible if known
+                        else { listToDisplay.Add(new Snippet($"Wants {passivePerson.DesireText}", RLColor.LightGray, RLColor.Black)); } //hidden if not
                     }
                 }
                 //family
@@ -2861,6 +2863,7 @@ namespace Next_Game
                         PossPromiseType desire = listOfPossibleDesires[rnd.Next(listOfPossibleDesires.Count)];
                         //assign to actor
                         actor.Desire = desire;
+                        actor.DesireKnown = false;
                         int data;
                         //choose specific option for the desire
                         switch (desire)

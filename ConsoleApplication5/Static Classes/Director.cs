@@ -1646,6 +1646,10 @@ namespace Next_Game
                                 else { actorText = string.Format("{0} {1}", personWant.Type, personWant.Name); }
                                 if (personWant is Passive)
                                 {
+                                    //You've spoken to the character so you know their desire (if you didn't previously)
+                                    Passive tempPassive = personWant as Passive;
+                                    tempPassive.DesireKnown = true;
+                                    //set up promises
                                     int strength; // strength of promise, 1 to 5
                                     int baseValue = Game.constant.GetValue(Global.PROMISES_BASE);
                                     //if too many promises have been handed out, effect is halved
