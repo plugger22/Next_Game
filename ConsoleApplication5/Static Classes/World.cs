@@ -2821,6 +2821,23 @@ namespace Next_Game
                                 else { Game.SetError(new Error(234, $"Invalid Passive relative (null) {familyMember.Value}, ActID {familyMember.Key} -> Family member not checked")); }
                             }
                             break;
+                        case ActorType.Knight:
+                            //Title or gold, if treacherous
+                            switch (actor.GetSkill(SkillType.Treachery))
+                            {
+                                case 4:
+                                    listOfPossibleDesires.Add(PossPromiseType.Title);
+                                    listOfPossibleDesires.Add(PossPromiseType.Title);
+                                    listOfPossibleDesires.Add(PossPromiseType.Gold);
+                                    break;
+                                case 5:
+                                    listOfPossibleDesires.Add(PossPromiseType.Title);
+                                    listOfPossibleDesires.Add(PossPromiseType.Title);
+                                    listOfPossibleDesires.Add(PossPromiseType.Title);
+                                    listOfPossibleDesires.Add(PossPromiseType.Gold);
+                                    break;
+                            }
+                            break;
                         case ActorType.Advisor:
                             //all advisors, Royal and Noble -> Desire gold if high treachery, there is no 'None' option
                             int advisorTreachery = actor.GetSkill(SkillType.Treachery);
@@ -2875,6 +2892,7 @@ namespace Next_Game
                                 actor.DesireText = $"the {item.Description} because it {reason}";
                                 break;
                             case PossPromiseType.Title:
+                                actor.DesireText = "wants to become a BannerLord with their own castle";
                                 break;
                             case PossPromiseType.Lordship:
                                 actor.DesireData = actor.HouseID;
