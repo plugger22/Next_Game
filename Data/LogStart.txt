@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 03/05/2017 11:00:59
+//Exile Game file ops "LogStart.txt" commenced at: 03/05/2017 11:56:09
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -585,18 +585,6 @@ Luigi HandsUp, Aid 107, specID 1 -> initialised O.K
 Old Lady Holy Haggard has a confirmed Combat trait
 Holy Haggard, Aid 108, specID 2 -> initialised O.K
 Saladin Kinghit, Aid 109, specID 3 -> initialised O.K
-ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
-Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
-ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
-Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
-ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
-Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
-ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
-Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
-ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
-Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
-ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
-Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
 --- InitialiseDesires (World.cs)
 There are enough houses on branch 1 for "Lannister" to desire Land
 [Alert -> Extended Search Rqd] No neighbouring minor houses found on straight shot routes
@@ -1171,5 +1159,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 03/05/2017 11:00:59
-//Elapsed Time 792 ms
+//Exile Game file ops "LogStart.txt" Completed at: 03/05/2017 11:56:10
+//Elapsed Time 685 ms

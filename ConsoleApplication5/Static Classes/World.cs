@@ -35,7 +35,6 @@ namespace Next_Game
         private Dictionary<int, Passive> dictRoyalCourt; //advisors and royal retainers (assumed to always be at Kingskeep) excludes family
         private Dictionary<int, int> dictConvertLocToRef; //dictionary to convert LocID's to RefID's (key is LocID, value is RefID)
         private Dictionary<int, int> dictConvertRefToLoc; //dictionary to convert RefID's to LocID's (key is RefID, value is LocID)
-        private Dictionary<int, int> dictConvertHouseToRef; //dictonary to convert HouseID's to RefID's (key is houseID, value is RefID)
         private Dictionary<int, int> dictConvertRefToHouse; //dictionary to convert RefID's to HouseID's (key is RefID, value is HouseID)
         private Dictionary<int, BloodHound> dictBloodHound; //dictionary of all active & enemy actors movements (key is Turn #)
 
@@ -67,7 +66,6 @@ namespace Next_Game
             dictRoyalCourt = new Dictionary<int, Passive>();
             dictConvertLocToRef = new Dictionary<int, int>();
             dictConvertRefToLoc = new Dictionary<int, int>();
-            dictConvertHouseToRef = new Dictionary<int, int>();
             dictConvertRefToHouse = new Dictionary<int, int>();
             dictBloodHound = new Dictionary<int, BloodHound>();
         }
@@ -2527,15 +2525,15 @@ namespace Next_Game
                                         if ((totalLocs - majorHouses - specials - numHouses) > 0)
                                         {
                                             Game.logStart?.Write($"There are enough houses on branch {house.Branch} for \"{house.Name}\" to desire Land");
-                                            //need to figure out neighbouring minorhouses of a different House
-                                            List<int> housesToCapital = majorHouse.GetHousesToCapital();
-                                            List<int> housesToConnector = majorHouse.GetHousesToConnector();
+                                            /*//need to figure out neighbouring minorhouses of a different House
+                                            //List<int> housesToCapital = majorHouse.GetHousesToCapital();
+                                            //List<int> housesToConnector = majorHouse.GetHousesToConnector();
                                             int tempHouseID;
                                             //loop to Capital looking for a non-house neighbouring minor house
                                             for (int h = 0; h < housesToCapital.Count; h++)
                                             {
                                                 tempHouseID = housesToCapital[h];
-                                                House searchHouseIn = GetHouse(ConvertHouseToRef(tempHouseID));
+                                                House searchHouseIn = GetHouse(ConvertRefToHouse(tempHouseID));
                                                 if (searchHouseIn != null)
                                                 {
                                                     if (searchHouseIn.HouseID != majorHouse.HouseID)
@@ -2570,7 +2568,7 @@ namespace Next_Game
                                                     }
                                                     else { Game.SetError(new Error(234, "Invalid searchHouseOut (null)")); }
                                                 }
-                                            }
+                                            }*/
                                             //if no neighbours have been found on straight shot routes then need to get a random minor house from the branch
                                             if (listOfMinorHouses.Count == 0)
                                             {
@@ -4265,10 +4263,6 @@ namespace Next_Game
                             { dictConvertRefToHouse.Add(refID, houseID); }
                             catch (ArgumentException)
                             { Game.SetError(new Error(145, "Invalid refID, Record already exists (RefID -> HouseID)")); }
-                            try
-                            { dictConvertHouseToRef.Add(houseID, refID); }
-                            catch (ArgumentException)
-                            { Game.SetError(new Error(145, "Invalid houseID, Record already exists (HouseID -> RefID)")); }
                         }
                     }
                 }
@@ -4324,21 +4318,7 @@ namespace Next_Game
             return 0;
         }
 
-        /// <summary>
-        /// get corresponding HouseID from RefID. Returns 0 if not found.
-        /// </summary>
-        /// <param name="houseID"></param>
-        /// <returns></returns>
-        internal int ConvertHouseToRef(int houseID)
-        {
-            if (houseID > 0)
-            {
-                if (dictConvertHouseToRef.ContainsKey(houseID) == true)
-                { return dictConvertHouseToRef[houseID]; }
-                else { Game.SetError(new Error(237, "Invalid refID (record not found")); }
-            }
-            return 0;
-        }
+
 
         /// <summary>
         /// Master AI controller, checked each turn, determines HuntMode for each enemy based on big picture analysis

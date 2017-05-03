@@ -153,15 +153,15 @@ namespace Next_Game
     {
         private List<int> listLordLocations; //locID of all bannerlords
         private List<int> listBannerLords; //refID of all bannerlords
-        private List<int> listHousesToCapital; //unique houses (HID), ignoring special locations
-        private List<int> listHousesToConnector; //unique houses (HID), ignoring special locations
+        //private List<int> listHousesToCapital; //unique houses (HID), ignoring special locations -> NOT hooked up
+        //private List<int> listHousesToConnector; //unique houses (HID), ignoring special locations -> NOT hooked up
         
 
         public MajorHouse()
         {
             listLordLocations = new List<int>();
-            listHousesToCapital = new List<int>();
-            listHousesToConnector = new List<int>();
+            //listHousesToCapital = new List<int>();  NOT hooked up
+            //listHousesToConnector = new List<int>(); NOT hooked up
             listBannerLords = new List<int>();
         }
 
@@ -180,7 +180,7 @@ namespace Next_Game
         /// add a house ID to list of unique houses to capital
         /// </summary>
         /// <param name="houseID"></param>
-        public void AddHousesToCapital(int houseID)
+        /*public void AddHousesToCapital(int houseID)
         {
             //check houseID isn't already in list (only unique HouseID's are stored)
             if (houseID > 0)
@@ -188,7 +188,7 @@ namespace Next_Game
                 if (listHousesToCapital.Contains(houseID) == false)
                 { listHousesToCapital.Add(houseID); }
             }
-        }
+        }*/
 
         
 
@@ -205,23 +205,23 @@ namespace Next_Game
         public int GetNumBannerLords()
         { return listLordLocations.Count; }
 
-        public List<int> GetHousesToCapital()
+        /*public List<int> GetHousesToCapital()
         { return listHousesToCapital; }
 
         public List<int> GetHousesToConnector()
         { return listHousesToConnector; }
 
-        public void SetBannerLords(List<int> tempList)
-        { listBannerLords.Clear();  listBannerLords.AddRange(tempList); }
-
         public void SetHousesToCapital(List<int> tempList)
         { listHousesToCapital.Clear(); listHousesToCapital.AddRange(tempList); }
 
         public void SetHousesToConnector(List<int> tempList)
-        { listHousesToConnector.Clear(); listHousesToConnector.AddRange(tempList); }
+        { listHousesToConnector.Clear(); listHousesToConnector.AddRange(tempList); }*/
 
         public void SetLordLocations(List<int> tempList)
         { listLordLocations.Clear(); listLordLocations.AddRange(tempList); }
+
+        public void SetBannerLords(List<int> tempList)
+        { listBannerLords.Clear();  listBannerLords.AddRange(tempList); }
 
 
     }

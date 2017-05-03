@@ -2166,7 +2166,7 @@ namespace Next_Game.Cartographic
             int houseID;
             int capitalLocID;
             int locID;
-            int minorHouseID;
+            //int minorHouseID;
             //Console.WriteLine();
             for(int i = 0; i < listOfHouses.Count; i++)
             {
@@ -2198,7 +2198,7 @@ namespace Next_Game.Cartographic
                         }
                     }
                     //Work out unique Loc's from house capital to kingdom capital
-                    List<Route> tempListOfRoutes = loc.GetRouteToCapital();
+                    /*List<Route> tempListOfRoutes = loc.GetRouteToCapital();
                     //Console.WriteLine("--- House {0}", houseID);
                     foreach (Route route in tempListOfRoutes)
                     {
@@ -2208,7 +2208,7 @@ namespace Next_Game.Cartographic
                         if (minorHouseID != houseID && minorHouseID != 99)
                         { house.AddHousesToCapital(minorHouseID); }
                         //Console.WriteLine("House {0}", minorHouseID);
-                    }
+                    }*/
                 }
                 else { Game.SetError(new Error(177, "Invalid loc (null)")); }
             }

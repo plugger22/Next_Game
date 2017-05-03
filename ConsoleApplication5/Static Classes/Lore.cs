@@ -967,8 +967,8 @@ namespace Next_Game
                 newMajorhouse.Loyalty_AtStart = KingLoyalty.Old_King;
                 newMajorhouse.SetBannerLords(oldkingHouse.GetBannerLords());
                 newMajorhouse.SetLordLocations(oldkingHouse.GetBannerLordLocations());
-                newMajorhouse.SetHousesToCapital(oldkingHouse.GetHousesToCapital());
-                newMajorhouse.SetHousesToConnector(oldkingHouse.GetHousesToConnector());
+                //newMajorhouse.SetHousesToCapital(oldkingHouse.GetHousesToCapital());
+                //newMajorhouse.SetHousesToConnector(oldkingHouse.GetHousesToConnector());
                 newMajorhouse.SetSecrets(turncoatHouse.GetSecrets());
                 newMajorhouse.Resources = oldkingHouse.Resources;
 
