@@ -473,7 +473,7 @@ namespace Next_Game
         {
             if (locID > 0)
             {
-                int refID = Game.world.GetRefID(locID);
+                int refID = Game.world.ConvertLocToRef(locID);
                 //create new inquisitor -> random name
                 string name = GetInquisitorName();
                 if (String.IsNullOrEmpty(name) == false)
@@ -527,7 +527,7 @@ namespace Next_Game
             if (locID > 0)
             {
                 Game.logStart?.Write("---  CreateNemesis (History.cs)");
-                int refID = Game.world.GetRefID(locID);
+                int refID = Game.world.ConvertLocToRef(locID);
                 //create new inquisitor -> random name
                 string name = "The Unrelenting";
                 if (String.IsNullOrEmpty(name) == false)

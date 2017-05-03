@@ -2130,7 +2130,7 @@ namespace Next_Game
                         }
                         //resolve the actual result
                         Message message = null;
-                        int refID = Game.world.GetRefID(player.LocID);
+                        int refID = Game.world.ConvertLocToRef(player.LocID);
                         switch (type)
                         {
                             case ResultType.GameState:

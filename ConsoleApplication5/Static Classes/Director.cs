@@ -971,7 +971,7 @@ namespace Next_Game
                         string tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", player.Name, player.ActID, locText, eventObject.Type, eventObject.Name);
                         Message message = new Message(tempText, MessageType.Event);
                         Game.world.SetMessage(message);
-                        Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, Game.world.GetRefID(player.LocID), CurrentActorIncident.Event));
+                        Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, Game.world.ConvertLocToRef(player.LocID), CurrentActorIncident.Event));
                     }
                     else { Game.SetError(new Error(173, "Invalid enemy (null) from search for the highest threat rated enemy loop")); }
                 }
@@ -2400,7 +2400,7 @@ namespace Next_Game
                     {
                         OptionInteractive option = listOptions[optionNum - 1];
                         Active player = Game.world.GetActiveActor(1);
-                        int refID = Game.world.GetRefID(player.LocID);
+                        int refID = Game.world.ConvertLocToRef(player.LocID);
                         //Active option?
                         if (option.Active == true)
                         {
@@ -2466,7 +2466,7 @@ namespace Next_Game
                                             if (noneOutcome.Description.Length > 0)
                                             {
                                                 Game.world.SetMessage(new Message(eventText + noneOutcome.Description, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + noneOutcome.Description, 1, noneOutcome.Data, Game.world.GetRefID(noneOutcome.Data), CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + noneOutcome.Description, 1, noneOutcome.Data, Game.world.ConvertLocToRef(noneOutcome.Data), CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.GameState:
@@ -3311,7 +3311,7 @@ namespace Next_Game
                         resultText = string.Format("You have gained possession of \"{0}\", itemID {1}, from {2} {3} \"{4}\", ActID {5}", item.Description, item.ItemID, opponent.Title,
                             opponent.Name, opponent.Handle, opponent.ActID);
                         tempText = string.Format("{0} {1} has lost possession of \"{2}\", itemID {1}, to the Ursurper", opponent.Title, opponent.Name, item.Description, item.ItemID);
-                        Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.GetRefID(opponent.LocID), CurrentActorIncident.Event));
+                        Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.ConvertLocToRef(opponent.LocID), CurrentActorIncident.Event));
                         Game.logTurn?.Write(tempText);
 
                     }
@@ -3330,7 +3330,7 @@ namespace Next_Game
                         resultText = string.Format("You have lost possession of \"{0}\", itemID {1}, to {2} {3} \"{4}\", ActID {5}", item.Description, item.ItemID, opponent.Title,
                             opponent.Name, opponent.Handle, opponent.ActID);
                         tempText = string.Format("{0} {1} has gained possession of \"{2}\", itemID {3}, from the Ursurper", opponent.Title, opponent.Name, item.Description, item.ItemID);
-                        Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.GetRefID(opponent.LocID), CurrentActorIncident.Event));
+                        Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.ConvertLocToRef(opponent.LocID), CurrentActorIncident.Event));
                         Game.logTurn?.Write(tempText);
                     }
                 }
@@ -3579,7 +3579,7 @@ namespace Next_Game
                     //Add to dictionaries
                     Game.world.SetActiveActor(follower);
                     //Remove from InnHouse listOfFollowers
-                    int refID = Game.world.GetRefID(locID);
+                    int refID = Game.world.ConvertLocToRef(locID);
                     if (refID > 0)
                     {
                         InnHouse inn = (InnHouse)Game.world.GetHouse(refID);

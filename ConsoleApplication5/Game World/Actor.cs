@@ -597,7 +597,7 @@ namespace Next_Game
             {
                 Message message = new Message(messageText, MessageType.Event);
                 Game.world.SetMessage(message);
-                int refID = Game.world.GetRefID(LocID);
+                int refID = Game.world.ConvertLocToRef(LocID);
                 if (ActID == 1)
                 { Game.world.SetPlayerRecord(new Record(messageText, ActID, LocID, refID, CurrentActorIncident.Resource)); }
                 else if (ActID > 1)

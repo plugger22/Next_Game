@@ -66,7 +66,7 @@ namespace Next_Game.Event_System
                 {
                     actor.Delay += Delay;
                     actor.DelayReason = eventObject.Name;
-                    int refID = Game.world.GetRefID(actor.LocID);
+                    int refID = Game.world.ConvertLocToRef(actor.LocID);
                     //message
                     string messageText = string.Format("{0} has been {1} (\"{2}\") for {3} {4}", actor.Name, eventObject.Type == ArcType.Location ? "indisposed" : "delayed",
                         actor.DelayReason, Delay, Delay == 1 ? "Day" : "Day's");

@@ -35,6 +35,8 @@ namespace Next_Game
         private Dictionary<int, Passive> dictRoyalCourt; //advisors and royal retainers (assumed to always be at Kingskeep) excludes family
         private Dictionary<int, int> dictConvertLocToRef; //dictionary to convert LocID's to RefID's (key is LocID, value is RefID)
         private Dictionary<int, int> dictConvertRefToLoc; //dictionary to convert RefID's to LocID's (key is RefID, value is LocID)
+        private Dictionary<int, int> dictConvertHouseToRef; //dictonary to convert HouseID's to RefID's (key is houseID, value is RefID)
+        private Dictionary<int, int> dictConvertRefToHouse; //dictionary to convert RefID's to HouseID's (key is RefID, value is HouseID)
         private Dictionary<int, BloodHound> dictBloodHound; //dictionary of all active & enemy actors movements (key is Turn #)
 
         //default constructor
@@ -65,6 +67,8 @@ namespace Next_Game
             dictRoyalCourt = new Dictionary<int, Passive>();
             dictConvertLocToRef = new Dictionary<int, int>();
             dictConvertRefToLoc = new Dictionary<int, int>();
+            dictConvertHouseToRef = new Dictionary<int, int>();
+            dictConvertRefToHouse = new Dictionary<int, int>();
             dictBloodHound = new Dictionary<int, BloodHound>();
         }
 
@@ -346,7 +350,7 @@ namespace Next_Game
                                 person.LocID = locID_Destination;
                                 //admin
                                 SetMessage(new Message(returnText, person.ActID, locID_Destination, MessageType.Move));
-                                int refID = GetRefID(locID_Destination);
+                                int refID = ConvertLocToRef(locID_Destination);
                                 if (charID == 1)
                                 { Game.world.SetPlayerRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
                                 else if (charID > 1)
@@ -439,7 +443,7 @@ namespace Next_Game
                                     person.Status = ActorStatus.AtLocation;
                                     person.SetActorPosition(posDestination);
                                     person.LocID = locID;
-                                    int refID = GetRefID(locID);
+                                    int refID = ConvertLocToRef(locID);
                                     string tempText = string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, loc.LocName);
                                     Message message = new Message(tempText, person.ActID, loc.LocationID, MessageType.Move);
                                     SetMessage(message);
@@ -799,7 +803,7 @@ namespace Next_Game
             if (dictAllActors.TryGetValue(actorID, out person))
             {
                 int locID = person.LocID;
-                int refID = GetRefID(locID);
+                int refID = ConvertLocToRef(locID);
                 //Set up people types
                 Player player = null;
                 Active active = null;
@@ -1392,7 +1396,8 @@ namespace Next_Game
                         {
                             int resources = house.Resources;
                             //normal houses - major / minor / capital 
-                            locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}, Rid {3}, Branch {4}", house.Name, loc.LocName, loc.LocationID, loc.RefID, loc.GetBranch()), color, RLColor.Black));
+                            locList.Add(new Snippet(string.Format("House {0} of {1}, Lid {2}, Rid {3}, Hid {4}, Branch {5}", house.Name, loc.LocName, loc.LocationID, loc.RefID,
+                                loc.HouseID, loc.GetBranch()), color, RLColor.Black));
                             locList.Add(new Snippet(string.Format("Motto \"{0}\"", house.Motto)));
                             locList.Add(new Snippet(string.Format("Banner \"{0}\"", house.Banner)));
                             locList.Add(new Snippet(string.Format("Seated at {0} {1}", house.LocName, ShowLocationCoords(locID))));
@@ -2523,7 +2528,54 @@ namespace Next_Game
                                         {
                                             Game.logStart?.Write($"There are enough houses on branch {house.Branch} for \"{house.Name}\" to desire Land");
                                             //need to figure out neighbouring minorhouses of a different House
-
+                                            List<int> housesToCapital = majorHouse.GetHousesToCapital();
+                                            List<int> housesToConnector = majorHouse.GetHousesToConnector();
+                                            int tempRefID;
+                                            //loop to Capital looking for a non-house neighbouring minor house
+                                            for (int h = 0; h < housesToCapital.Count; h++)
+                                            {
+                                                tempRefID = housesToCapital[h];
+                                                House searchHouseIn = GetHouse(tempRefID);
+                                                if (searchHouseIn != null)
+                                                {
+                                                    if (searchHouseIn.HouseID != majorHouse.HouseID)
+                                                    {
+                                                        if (searchHouseIn is MinorHouse)
+                                                        {
+                                                            listOfMinorHouses.Add(searchHouseIn.RefID);
+                                                            Game.logStart?.Write($"[Alert -> Neighbour In] MinorHouse \"{searchHouseIn.Name}\", RefID {searchHouseIn.RefID}, added to listOfMinorHouses");
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                else { Game.SetError(new Error(234, "Invalid searchHouseIn (null)")); }
+                                            }
+                                            //loop to Connector looking for a non-house neighbouring minor house
+                                            if (housesToConnector.Count > 0)
+                                            {
+                                                for (int h = 0; h < housesToConnector.Count; h++)
+                                                {
+                                                    House searchHouseOut = GetHouse(housesToConnector[h]);
+                                                    if (searchHouseOut != null)
+                                                    {
+                                                        if (searchHouseOut.HouseID != majorHouse.HouseID)
+                                                        {
+                                                            if (searchHouseOut is MinorHouse)
+                                                            {
+                                                                listOfMinorHouses.Add(searchHouseOut.RefID);
+                                                                Game.logStart?.Write($"[Alert -> Neighbour Out] MinorHouse \"{searchHouseOut.Name}\", RefID {searchHouseOut.RefID}, added to listOfMinorHouses");
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                    else { Game.SetError(new Error(234, "Invalid searchHouseOut (null)")); }
+                                                }
+                                            }
+                                            //if no neighbours have been found on straight shot routes then need to get a random minor house from the branch
+                                            if (listOfMinorHouses.Count == 0)
+                                            {
+                                                Game.logStart?.Write($"[Alert -> Extended Search Rqd] No neighbouring minor houses found on straight shot routes");
+                                            }
                                         }
                                         else
                                         {
@@ -2551,8 +2603,6 @@ namespace Next_Game
                                                                 //this minor house is the only possibility
                                                                 Game.logStart?.Write($"[Alert -> Connector] Minor House \"{connHouse.Name}\" exists at end of Connector");
                                                                 listOfMinorHouses.Add(connHouse.RefID);
-                                                                listOfPossibleDesires.Add(PossPromiseType.Land);
-                                                                listOfPossibleDesires.Add(PossPromiseType.Land);
                                                             }
                                                             else { Game.logStart?.Write($"[Alert -> Connector] A minor house does NOT exist at the end of the connector"); }
                                                         }
@@ -2561,7 +2611,6 @@ namespace Next_Game
                                                     else { Game.SetError(new Error(234, "Invalid refID (zero, or less)")); }
                                                 }
                                                 else { Game.logStart?.Write($"[Alert] NO Connection exists on branch {branch}"); }
-
                                             }
                                         }
                                     }
@@ -2627,9 +2676,14 @@ namespace Next_Game
                                     //Item
                                     if (itemProceed == true)
                                     { listOfPossibleDesires.Add(PossPromiseType.Item); }
-
-                                    //Land
-
+                                    //Land -> 4 entries
+                                    if (listOfMinorHouses.Count > 0)
+                                    {
+                                        listOfPossibleDesires.Add(PossPromiseType.Land);
+                                        listOfPossibleDesires.Add(PossPromiseType.Land);
+                                        listOfPossibleDesires.Add(PossPromiseType.Land);
+                                        listOfPossibleDesires.Add(PossPromiseType.Land);
+                                    }
                                 }
                                 else { Game.SetError(new Error(234, $"Invalid House (null) for {actor.Name} ActID {actor.ActID}")); }
                             }
@@ -2910,7 +2964,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Returns name of house (major, minor or Inn) using Ref ID
+        /// Returns name of house (major, minor or Inn) using Ref ID. 
         /// </summary>
         /// <param name="refID"></param>
         /// <returns></returns>
@@ -2920,6 +2974,7 @@ namespace Next_Game
             House house = new House();
             if (dictAllHouses.TryGetValue(refID, out house))
             { houseName = house.Name; }
+            else if (refID == 9999) { houseName = "KingsKeep"; }
             return houseName;
         }
 
@@ -2943,7 +2998,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Returns house (any type) if found, otherwise null, keyed off refID)
+        /// Returns house (any type) if found, otherwise null, keyed off refID). Note: Capital returns null
         /// </summary>
         /// <param name="refID"></param>
         /// <returns></returns>
@@ -3710,7 +3765,7 @@ namespace Next_Game
                         //arrived at Location
                         string locName = GetLocationName(player.LocID);
                         description = string.Format("{0} {1} has arrived at {2} onboard the S.S \"{3}\"", player.Title, player.Name, locName, player.ShipName);
-                        SetPlayerRecord(new Record(description, 1, player.LocID, GetRefID(player.LocID), CurrentActorIncident.Travel));
+                        SetPlayerRecord(new Record(description, 1, player.LocID, ConvertLocToRef(player.LocID), CurrentActorIncident.Travel));
                         SetMessage(new Message(description, MessageType.Move));
                         //notification message
                         List<Snippet> msgList = new List<Snippet>();
@@ -4161,7 +4216,7 @@ namespace Next_Game
                         string eventText = string.Format("{0} {1} is no longer \"Known\" as sufficient time has passed", actor.Value.Title, actor.Value.Name);
                         Message message = new Message(eventText, MessageType.Known);
                         SetMessage(message);
-                        int refID = GetRefID(actor.Value.LocID);
+                        int refID = ConvertLocToRef(actor.Value.LocID);
                         if (actor.Value.ActID == 1)
                         { SetPlayerRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, CurrentActorIncident.Known)); }
                         else if (actor.Value.ActID > 1)
@@ -4186,23 +4241,35 @@ namespace Next_Game
             List<Location> listOfLocations = Game.map.GetLocations();
             if (listOfLocations != null)
             {
-                int refID, locID;
+                int refID, locID, houseID;
                 //get all other Loc & Ref data directly from map
                 foreach (Location loc in listOfLocations)
                 {
                     locID = loc.LocationID;
                     //set up conversion dictionaries
                     refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
+                    houseID = Game.map.GetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY());
                     if (refID > 0)
                     {
                         try
                         { dictConvertLocToRef.Add(locID, refID); }
                         catch (ArgumentException)
-                        { Game.SetError(new Error(145, "Invalid LocID, Record already exists")); }
+                        { Game.SetError(new Error(145, "Invalid LocID, Record already exists (LocID -> RefID)")); }
                         try
                         { dictConvertRefToLoc.Add(refID, locID); }
                         catch (ArgumentException)
-                        { Game.SetError(new Error(145, "Invalid RefID, Record already exists")); }
+                        { Game.SetError(new Error(145, "Invalid RefID, Record already exists (RefID -> LocID)")); }
+                        if (houseID > 0)
+                        {
+                            try
+                            { dictConvertRefToHouse.Add(refID, houseID); }
+                            catch (ArgumentException)
+                            { Game.SetError(new Error(145, "Invalid refID, Record already exists (RefID -> HouseID)")); }
+                            try
+                            { dictConvertHouseToRef.Add(houseID, refID); }
+                            catch (ArgumentException)
+                            { Game.SetError(new Error(145, "Invalid houseID, Record already exists (HouseID -> RefID)")); }
+                        }
                     }
                 }
             }
@@ -4214,7 +4281,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="locID"></param>
         /// <returns></returns>
-        internal int GetRefID(int locID)
+        internal int ConvertLocToRef(int locID)
         {
             if (locID > 0)
             {
@@ -4230,13 +4297,45 @@ namespace Next_Game
         /// </summary>
         /// <param name="refID"></param>
         /// <returns></returns>
-        internal int GetLocID(int refID)
+        internal int ConvertRefToLoc(int refID)
         {
             if (refID > 0)
             {
                 if (dictConvertRefToLoc.ContainsKey(refID) == true)
                 { return dictConvertRefToLoc[refID]; }
                 else { Game.SetError(new Error(147, "Invalid refID (record not found")); }
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// get corresponding HouseID from RefID. Returns 0 if not found.
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        internal int ConvertRefToHouse(int refID)
+        {
+            if (refID > 0)
+            {
+                if (dictConvertRefToHouse.ContainsKey(refID) == true)
+                { return dictConvertRefToHouse[refID]; }
+                else { Game.SetError(new Error(236, "Invalid refID (record not found")); }
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// get corresponding HouseID from RefID. Returns 0 if not found.
+        /// </summary>
+        /// <param name="houseID"></param>
+        /// <returns></returns>
+        internal int ConvertHouseToRef(int houseID)
+        {
+            if (houseID > 0)
+            {
+                if (dictConvertHouseToRef.ContainsKey(houseID) == true)
+                { return dictConvertHouseToRef[houseID]; }
+                else { Game.SetError(new Error(237, "Invalid refID (record not found")); }
             }
             return 0;
         }
@@ -4514,7 +4613,7 @@ namespace Next_Game
                     if (loc != null)
                     {
                         //get branch info
-                        refID = GetRefID(enemy.LocID);
+                        refID = ConvertLocToRef(enemy.LocID);
                         if (refID > 0)
                         {
                             House house = null;
@@ -5390,7 +5489,7 @@ namespace Next_Game
                         }
                         //found a dungeon?
                         if (tempRefID > 0)
-                        { heldLocID = GetLocID(tempRefID); }
+                        { heldLocID = ConvertRefToLoc(tempRefID); }
                         else { Game.SetError(new Error(174, "Unable to find a suitable location for Incarceration -> Default to KingsKeep")); heldLocID = 1; }
                         //update Player LocID (dungeon), set Known to true (should be already)
                         player.LocID = heldLocID;

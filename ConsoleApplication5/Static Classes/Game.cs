@@ -25,7 +25,7 @@ namespace Next_Game
 
         //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        private static int seed = 46566;
+        private static int seed = 34089;
 
         static Random rnd;
         
@@ -509,7 +509,7 @@ namespace Next_Game
                                                     if ((_posSelect1 != null && _posSelect2 != null) && (_posSelect1.PosX != _posSelect2.PosX || _posSelect1.PosY != _posSelect2.PosY))
                                                     {
                                                         //int locID = map.GetMapInfo(MapLayer.LocID, _posSelect2.PosX, _posSelect2.PosY);
-                                                        //int refID = world.GetRefID(locID);
+                                                        //int refID = world.ConvertLocToRef(locID);
                                                         //List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
                                                         /*string infoText = */
                                                         world.InitiateMoveActor(_charIDSelected, _posSelect1, _posSelect2/*, pathToTravel*/);
