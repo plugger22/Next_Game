@@ -2631,55 +2631,9 @@ namespace Next_Game
                                                 else { Game.SetError(new Error(234, $"Major House \"{majorHouse.Name}\" not found in listOfBranchLocs")); }
                                             }
                                             else { Game.SetError(new Error(234, "Invalid listBranchLocs (null)")); }
-                                            /*//need to figure out neighbouring minorhouses of a different House
-                                            //List<int> housesToCapital = majorHouse.GetHousesToCapital();
-                                            //List<int> housesToConnector = majorHouse.GetHousesToConnector();
-                                            int tempHouseID;
-                                            //loop to Capital looking for a non-house neighbouring minor house
-                                            for (int h = 0; h < housesToCapital.Count; h++)
-                                            {
-                                                tempHouseID = housesToCapital[h];
-                                                House searchHouseIn = GetHouse(ConvertRefToHouse(tempHouseID));
-                                                if (searchHouseIn != null)
-                                                {
-                                                    if (searchHouseIn.HouseID != majorHouse.HouseID)
-                                                    {
-                                                        if (searchHouseIn is MinorHouse)
-                                                        {
-                                                            listOfMinorHouses.Add(searchHouseIn.RefID);
-                                                            Game.logStart?.Write($"[Alert -> Neighbour In] MinorHouse \"{searchHouseIn.Name}\", RefID {searchHouseIn.RefID}, added to listOfMinorHouses");
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                                else { Game.SetError(new Error(234, "Invalid searchHouseIn (null)")); }
-                                            }
-                                            //loop to Connector looking for a non-house neighbouring minor house
-                                            if (housesToConnector.Count > 0)
-                                            {
-                                                for (int h = 0; h < housesToConnector.Count; h++)
-                                                {
-                                                    House searchHouseOut = GetHouse(housesToConnector[h]);
-                                                    if (searchHouseOut != null)
-                                                    {
-                                                        if (searchHouseOut.HouseID != majorHouse.HouseID)
-                                                        {
-                                                            if (searchHouseOut is MinorHouse)
-                                                            {
-                                                                listOfMinorHouses.Add(searchHouseOut.RefID);
-                                                                Game.logStart?.Write($"[Alert -> Neighbour Out] MinorHouse \"{searchHouseOut.Name}\", RefID {searchHouseOut.RefID}, added to listOfMinorHouses");
-                                                                break;
-                                                            }
-                                                        }
-                                                    }
-                                                    else { Game.SetError(new Error(234, "Invalid searchHouseOut (null)")); }
-                                                }
-                                            }*/
                                             //if no neighbours have been found on straight shot routes then need to get a random minor house from the branch
                                             if (listOfMinorHouses.Count == 0)
-                                            {
-                                                Game.logStart?.Write($"[Alert -> Extended Search Rqd] No neighbouring minor houses found on straight shot routes");
-                                            }
+                                            { Game.logStart?.Write($"[Alert -> Cancelled] No neighbouring minor houses found"); }
                                         }
                                         else
                                         {
@@ -2822,8 +2776,64 @@ namespace Next_Game
                             //Item
                             if (itemProceed == true)
                             { listOfPossibleDesires.Add(PossPromiseType.Item); }
-                            //None -> possible with Bannerlords but not Lords (they all want something)
+                            //None -> possible for Bannerlords but not Lords (they all want something)
                             listOfPossibleDesires.Add(PossPromiseType.None);
+                            break;
+                        case ActorType.Lady:
+                            Noble lady = actor as Noble;
+                            //Family => cares only for son or daughter, there is no 'None' option
+                            SortedDictionary<int, ActorRelation> dictFamilyWife = lady.GetFamily();
+                            foreach (var familyMember in dictFamilyWife)
+                            {
+                                Passive relative = GetPassiveActor(familyMember.Key);
+                                if (relative != null)
+                                {
+                                    if (relative.Status != ActorStatus.Gone)
+                                    {
+                                        //Court Position for a brother or son, or Marriage for a daughter
+                                        if ((relative.Age + Game.gameExile) >= 15)
+                                        {
+                                            switch (familyMember.Value)
+                                            {
+                                                case ActorRelation.Son:
+                                                    //store Sons as a positive (normal) ActID (two entries for each son)
+                                                    listOfSonsAndBrothers.Add(familyMember.Key);
+                                                    //Game.logStart?.Write($"  Desire -> Court, Son {relative.Name} ActID {relative.ActID}");
+                                                    listOfPossibleDesires.Add(PossPromiseType.Court);
+                                                    listOfPossibleDesires.Add(PossPromiseType.Court);
+                                                    break;
+                                                case ActorRelation.Daughter:
+                                                    Noble daughter = relative as Noble;
+                                                    //check that she is available
+                                                    if (daughter.Married == 0)
+                                                    {
+                                                        //store Daughter's ActID (two entries for each daughter)
+                                                        listOfDaughters.Add(familyMember.Key);
+                                                        listOfPossibleDesires.Add(PossPromiseType.Marriage);
+                                                        listOfPossibleDesires.Add(PossPromiseType.Marriage);
+                                                    }
+                                                    else { Game.logStart?.Write($"[Alert -> Daughter] {daughter.Title} {daughter.Name}, ActID {daughter.ActID} already Married in {daughter.Married}"); }
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                }
+                                else { Game.SetError(new Error(234, $"Invalid Passive relative (null) {familyMember.Value}, ActID {familyMember.Key} -> Family member not checked")); }
+                            }
+                            break;
+                        case ActorType.Advisor:
+                            //all advisors, Royal and Noble -> Desire gold if high treachery, there is no 'None' option
+                            int advisorTreachery = actor.GetSkill(SkillType.Treachery);
+                            switch (advisorTreachery)
+                            {
+                                case 4:
+                                    listOfPossibleDesires.Add(PossPromiseType.Gold);
+                                    break;
+                                case 5:
+                                    listOfPossibleDesires.Add(PossPromiseType.Gold);
+                                    listOfPossibleDesires.Add(PossPromiseType.Gold);
+                                    break;
+                            }
                             break;
                     }
 
@@ -2849,7 +2859,7 @@ namespace Next_Game
                                 data = listOfSonsAndBrothers[rnd.Next(listOfSonsAndBrothers.Count)];
                                 actor.DesireData = Math.Abs(data);
                                 Passive brother = GetPassiveActor(actor.DesireData);
-                                actor.DesireText = string.Format("a court position for his {0} {1} \"{2}\" ActID {3}", data > 0 ? "son" : "brother", brother.Name, brother.Handle, brother.ActID);
+                                actor.DesireText = string.Format("a court position for their {0} {1} \"{2}\" ActID {3}", data > 0 ? "son" : "brother", brother.Name, brother.Handle, brother.ActID);
                                 break;
                             case PossPromiseType.Gold:
                                 actor.DesireText = "more Gold";
@@ -2857,7 +2867,7 @@ namespace Next_Game
                             case PossPromiseType.Marriage:
                                 actor.DesireData = listOfDaughters[rnd.Next(listOfDaughters.Count)];
                                 Passive daughter = GetPassiveActor(actor.DesireData);
-                                actor.DesireText = $"the marriage of his daughter, {daughter.Name} \"{daughter.Handle}\" ActID {daughter.ActID}, to the one true King";
+                                actor.DesireText = $"the marriage of their daughter, {daughter.Name} \"{daughter.Handle}\" ActID {daughter.ActID}, to the one true King";
                                 break;
                             case PossPromiseType.Item:
                                 actor.DesireData = possID;
