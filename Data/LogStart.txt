@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 03/05/2017 10:29:55
+//Exile Game file ops "LogStart.txt" commenced at: 03/05/2017 11:00:59
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -512,4 +512,664 @@ King Azer Greyjoy, The Steadfast, actID 25, Treachery 2, "Greyjoy", houseID 5
    Relationship with Lord 28 
   Commander_of_City_Watch Renoldus Thomassin, actID 88, houseID 9999
    Relationship with Lord 39 
-Lord Ywain Arryn, The Spirited, actID 37, Treachery 4, "Arryn"
+Lord Ywain Arryn, The Spirited, actID 37, Treachery 4, "Arryn", houseID 6
+  Lady Margaret Arryn, actID 38, houseID 6
+   Relationship with Lord 77 
+  Knight Ser Wilmot Jeremiah, actID 39, houseID 6
+   Relationship with Lord 94 ***
+  Castellan Urian Mikael, actID 40, houseID 6
+   Relationship with Lord 39 
+  Maester Rickard Charles, actID 41, houseID 6
+   Relationship with Lord 65 
+  Septon Mikken Harding, actID 42, houseID 6
+   Relationship with Lord 100 ***
+  lady Mylle Arryn, actID 43, houseID 6
+   Relationship with Lord 31 
+  lady Sari Arryn, actID 44, houseID 6
+   Relationship with Lord 73 
+  lady Johamma Arryn, actID 45, houseID 6
+   Relationship with Lord 23 
+  Heir Will Arryn, actID 46, houseID 6
+   Relationship with Lord 37 
+  lady Ymanie Arryn, actID 47, houseID 6
+   Relationship with Lord 40 
+  BannerLord Ilyn Dondarrion, actID 75, houseID 6
+   Relationship with Lord 60 
+  BannerLord Addam Karstark, actID 76, houseID 6
+   Relationship with Lord 83 ***
+Lord Victarion Westerling, The Fearless, actID 78, Treachery 4, "Westerling", houseID 7
+  BannerLord Rodrik Oakheart, actID 77, houseID 7
+   Relationship with Lord 68 
+  BannerLord Gualtier Caron, actID 91, houseID 7
+   Relationship with Lord 86 ***
+  BannerLord Patrek Leygood, actID 93, houseID 7
+   Relationship with Lord 66 
+  Castellan Renoldus Walcher, actID 94, houseID 7
+   Relationship with Lord 36 
+  Maester Charles Sansum, actID 95, houseID 7
+   Relationship with Lord 50 
+  Septon Bernier Alainon, actID 96, houseID 7
+   Relationship with Lord 30 
+  Knight Ser Hunfridus Artus, actID 97, houseID 7
+   Relationship with Lord 43 
+  Lady Cerenna Westerling, actID 98, houseID 7
+   Relationship with Lord 25 
+  lady Brienne Westerling, actID 99, houseID 7
+   Relationship with Lord 44 
+  Heir Dreu Westerling, actID 100, houseID 7
+   Relationship with Lord 87 ***
+  lord Anderewe Westerling, actID 101, houseID 7
+   Relationship with Lord 41 
+  lord Druet Westerling, actID 102, houseID 7
+   Relationship with Lord 77 
+Lord Cristal Targaryen II, The Resolute, actID 67, Treachery 3, "Targaryen", houseID 2
+  Lady Rikilda Targaryen, actID 59, houseID 2
+   Relationship with Lord 29 
+  Knight Ser Viserys Giff, actID 60, houseID 2
+   Relationship with Lord 61 
+  Castellan Cayn Guarin, actID 61, houseID 2
+   Relationship with Lord 28 
+  Maester Druettus Richemanus, actID 62, houseID 2
+   Relationship with Lord 34 
+  Septon Albar Michell, actID 63, houseID 2
+   Relationship with Lord 26 
+  lady Mordane Targaryen, actID 64, houseID 2
+   Relationship with Lord 54 
+  lady Esclamonde Targaryen, actID 65, houseID 2
+   Relationship with Lord 34 
+  BannerLord Ywain Estermont, actID 80, houseID 2
+   Relationship with Lord 39 
+---  InitialiseCharacters (History.cs)
+Bandit Boss Luigi HandsUp has a confirmed Combat trait
+Luigi HandsUp, Aid 107, specID 1 -> initialised O.K
+Old Lady Holy Haggard has a confirmed Combat trait
+Holy Haggard, Aid 108, specID 2 -> initialised O.K
+Saladin Kinghit, Aid 109, specID 3 -> initialised O.K
+ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
+Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
+ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
+Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
+ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
+Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
+ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
+Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
+ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
+Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
+ERROR_145 "Invalid houseID, Record already exists (HouseID -> RefID)"
+Method: InitialiseConversionDicts,  Line: 4271,  Object: World.cs,  Turn: 0,  Local Time: 11:00:59 UTC +10:00
+--- InitialiseDesires (World.cs)
+There are enough houses on branch 1 for "Lannister" to desire Land
+[Alert -> Extended Search Rqd] No neighbouring minor houses found on straight shot routes
+Lord Tyrek Lannister ActID 10 wants a court position for his son Raff Lannister "The Vigilant" ActID 66 -> Desire: Court, DesireData: 66
+Insufficient houses for "Florent", branch 2 -> totalLoc 3 MajorH 1 Specials 0 ActorH 2
+[Alert] Connection exists between branch 2 and 1
+[Alert -> Connector] Minor House "Estermont" exists at end of Connector
+Lord Rainald Florent ActID 24 wants to have BannerLord Ywain Estermont of House Estermont at Greenstone (Loc 27:12) bend his knee and return to the fold -> Desire: Land, DesireData: 111
+Insufficient houses for "Arryn", branch 4 -> totalLoc 3 MajorH 1 Specials 0 ActorH 2
+[Alert] Connection exists between branch 4 and 3
+[Alert -> Connector] Minor House "Hornwood" exists at end of Connector
+Lord Ywain Arryn ActID 37 wants the marriage of his daughter, Sari Arryn "The Gracious" ActID 44, to the one true King -> Desire: Marriage, DesireData: 44
+There are enough houses on branch 1 for "Targaryen" to desire Land
+[Alert -> Extended Search Rqd] No neighbouring minor houses found on straight shot routes
+Lord Cristal Targaryen II ActID 67 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Garth Tarly ActID 68 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Andry Peake ActID 70 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Samwell Wull ActID 71 wants nothing -> Desire: None, DesireData: 0
+[Alert -> BannerLord] "Mormont" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Mikken Mormont ActID 74 wants the Dragon Egg because it was forseen -> Desire: Item, DesireData: 5
+BannerLord Ilyn Dondarrion ActID 75 wants nothing -> Desire: None, DesireData: 0
+BannerLord Addam Karstark ActID 76 wants nothing -> Desire: None, DesireData: 0
+BannerLord Rodrik Oakheart ActID 77 wants more Gold -> Desire: Gold, DesireData: 0
+There are enough houses on branch 1 for "Westerling" to desire Land
+[Alert -> Extended Search Rqd] No neighbouring minor houses found on straight shot routes
+Lord Victarion Westerling ActID 78 wants the Elixir of Wellness because it was forseen -> Desire: Item, DesireData: 12
+BannerLord Ywain Estermont ActID 80 wants the Mammoth Cloak because it belongs to them -> Desire: Item, DesireData: 7
+[Alert -> BannerLord] "Hornwood" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Dick Hornwood ActID 89 wants nothing -> Desire: None, DesireData: 0
+[Alert -> BannerLord] "Penrose" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Leo Penrose ActID 90 wants the Elixir of Wellness because it might help their enemies -> Desire: Item, DesireData: 12
+BannerLord Gualtier Caron ActID 91 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Beuves Hightower ActID 92 wants the Mammoth Cloak because it has been predicted by prophecy -> Desire: Item, DesireData: 7
+BannerLord Patrek Leygood ActID 93 wants more Gold -> Desire: Gold, DesireData: 0
+--- InitialiseAI (World.cs)
+ Capital 0 -> Current 0 -> Desired 0 -> adjusted Loc's 0
+ Branch  1 -> Current 0 -> Desired 1 -> adjusted Loc's 14
+ Branch  2 -> Current 0 -> Desired 1 -> adjusted Loc's 7
+ Branch  3 -> Current 0 -> Desired 1 -> adjusted Loc's 8
+ Branch  4 -> Current 0 -> Desired 1 -> adjusted Loc's 7
+--- InitialiseEnemyActors (World.cs)
+Inquisitor Brother Astaroth has a confirmed Treachery trait
+Inquisitor Brother Set has a confirmed Treachery trait
+Inquisitor Brother Damballa has a confirmed Treachery trait
+Inquisitor Brother Shiva has a confirmed Treachery trait
+---  CreateNemesis (History.cs)
+Nemesis The Unrelenting has a confirmed Treachery trait
+Nemesis The Unrelenting has a confirmed Touched trait
+- Assign Enemies
+ [Goal -> Inquisitor] Brother Astaroth, ActID 110 Branch -> 1
+ [Goal -> Inquisitor] Brother Set, ActID 111 Branch -> 2
+ [Goal -> Inquisitor] Brother Damballa, ActID 112 Branch -> 3
+ [Goal -> Inquisitor] Brother Shiva, ActID 113 Branch -> 4
+ [Goal -> Nemesis] The Unrelenting, ActID 114 Branch -> 0
+--- InitialiseWorldDevelopment (World.cs)
+ItemID 1, "Dragon Egg", given to BannerLord Ywain Estermont, ActID 80, at Greenstone (loc 27:12)
+[Secret -> Item] Ywain Estermont, ActID 80, has been entrusted with keeping the Dragon Egg, ItemID 1, safe from harm
+ItemID 4, "Goblin Mug", given to Septon Lancel Eden, ActID 22, at Brightwater Keep (loc 22:21)
+[Secret -> Item] Lancel Eden, ActID 22, is hording the Goblin Mug, ItemID 4, safe from pyring eyes
+ItemID 5, "Mammoth Cloak", given to Lord Cristal Targaryen II, ActID 67, at Valyria (loc 25:5)
+ItemID 6, "Lion Dagger", given to Maester Charles Sansum, ActID 95, at Highgarden (loc 5:5)
+[Secret -> Item] Charles Sansum, ActID 95, is hording the Lion Dagger, ItemID 6, safe from pyring eyes
+ItemID 7, "Chalice of Pain", given to lady Bethia Greyjoy, ActID 35, at Kingskeep (loc 15:18)
+[Secret -> Item] Bethia Greyjoy, ActID 35, is hording the Chalice of Pain, ItemID 7, safe from pyring eyes
+ItemID 8, "Amulet of Passion", given to BannerLord Patrek Leygood, ActID 93, at The Crag (loc 9:9)
+[Secret -> Item] Patrek Leygood, ActID 93, is hording the Amulet of Passion, ItemID 8, safe from pyring eyes
+ItemID 9, "Book of the Dead", given to Lady Rikilda Targaryen, ActID 59, at Valyria (loc 25:5)
+[Secret -> Item] Rikilda Targaryen, ActID 59, has come into possession of the Book of the Dead, ItemID 9, in mysterious circumstances
+ItemID 10, "Elixir of Wellness", given to BannerLord Rodrik Oakheart, ActID 77, at Old Oak (loc 6:11)
+[Secret -> Item] Rodrik Oakheart, ActID 77, has been entrusted with keeping the Elixir of Wellness, ItemID 10, safe from harm
+--- Import Follower Events (Director.cs)
+"Spiders", FID 1, [GeoCluster, Generic], Freq Low, Status Active, Trait Wits, Delay 2
+"Wolves", FID 2, [GeoCluster, Generic], Freq Normal, Status Active, Trait Combat, Delay 2
+"Rockfall", FID 3, [GeoCluster, Generic], Freq Low, Status Active, Trait Wits, Delay 2
+"Shadow Cat", FID 4, [GeoCluster, Generic], Freq Normal, Status Active, Trait Combat, Delay 2
+"Dire Wolf Tracks", FID 5, [GeoCluster, Archetype], Freq Normal, Status Active, Trait Wits, Delay 1
+"Dire Wolves Attack", FID 6, [GeoCluster, Archetype], Freq Normal, Status Active, Trait Combat, Delay 2
+"Bad Going", FID 7, [Road, Generic], Freq Normal, Status Active, Trait Combat, Delay 1
+"Peasants", FID 8, [Road, Generic], Freq Normal, Status Active, Trait Leadership, Delay 1
+"Heavy Rain", FID 9, [Road, Generic], Freq Low, Status Active, Trait Wits, Delay 2
+"Priest", FID 10, [Road, Generic], Freq Rare, Status Active, Trait Charm, Delay 1
+"Rowdy Peasants", FID 11, [Road, Generic], Freq Low, Status Active, Trait Charm, Delay 1
+"Merchant", FID 12, [Road, Generic], Freq Normal, Status Active, Trait Charm, Delay 1
+"Horse Throws a Shoe", FID 13, [Road, Generic], Freq Normal, Status Active, Trait Combat, Delay 2
+"Thick Mud", FID 14, [Road, Generic], Freq Normal, Status Active, Trait Wits, Delay 2
+"Collapsed Bridge", FID 15, [Road, Generic], Freq Low, Status Active, Trait Leadership, Delay 3
+"Noble", FID 16, [Location, Generic], Freq Low, Status Active, Trait Charm, Delay 1
+"Pickpocket", FID 17, [Location, Generic], Freq Low, Status Active, Trait Combat, Delay 1
+"Knight", FID 18, [Location, Generic], Freq Low, Status Active, Trait Charm, Delay 1
+"Squire", FID 19, [Location, Generic], Freq Normal, Status Active, Trait Wits, Delay 1
+"Beggar", FID 20, [Location, Generic], Freq Normal, Status Active, Trait Combat, Delay 1
+"Vendor", FID 21, [Location, Generic], Freq Low, Status Active, Trait Wits, Delay 1
+"Drunken Thugs", FID 22, [Location, Generic], Freq Low, Status Active, Trait Leadership, Delay 1
+"Pleasures of the Flesh", FID 23, [Location, Generic], Freq Low, Status Active, Trait Wits, Delay 1
+"Guard Inspection", FID 24, [Location, Archetype], Freq Low, Status Active, Trait Wits, Delay 2
+"City Watch", FID 25, [Location, Archetype], Freq Low, Status Active, Trait Treachery, Delay 2
+"The Shadow", FID 26, [Actor, Archetype], Freq Low, Status Active, Trait Wits, Delay 2
+"The Voices", FID 27, [Actor, Archetype], Freq Low, Status Active, Trait Wits, Delay 2
+--- Import Player Events (Director.cs)
+--- Player Events (FileImport.cs)
+"The King's Men" Event, ID 1, Type Road, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "Run for it!" 
+    OutKnown -> data -1, amount 0, apply None
+    OutGameState -> data 2, amount 1, apply Add
+  Option "Talk your way through" 
+   Trigger -> if Trait 3 is GreaterThanOrEqual to 2
+    OutGameState -> data 5, amount 2, apply Add
+    OutKnown -> data 1, amount 0, apply None
+  Option "Bluff your way through" 
+   Trigger -> if Trait 4 is GreaterThanOrEqual to 3
+    OutGameState -> data 4, amount 2, apply Add
+    OutGameState -> data 1, amount 1, apply Add
+"Search and Detain" Event, ID 2, Type Location, Repeat 1000, Dormant 21, Live 0, Status Active
+  Option "Leg it!"  [Variable -> 60 % Success, Combat DM]
+    OutEventStatus -> Target EventID 4, New Status Active
+    OutGameState -> data 5, amount 1, apply Add
+    OutKnown -> data -1, amount 0, apply None
+  Option "Stay Calm" 
+   Trigger -> if Trait 3 is GreaterThanOrEqual to 3
+    OutGameState -> data 5, amount 10, apply Random
+    OutGameVar -> GameVar Promises_Num, Amount 3, EventCalc RandomPlus
+  Option "Run straight at them" 
+   Trigger -> if Trait 1 is GreaterThanOrEqual to 3
+    OutGameState -> data -1, amount 3, apply Random
+    OutEventStatus -> Target EventID 5, New Status Live
+    OutCondition -> data 0, amount 0, apply None
+"Mysterious Stranger" Event, ID 3, Type Location, Repeat 10, Dormant 0, Live 0, Status Active
+  Option "Ignore them" 
+    OutNone -> data 0, amount 0, apply None
+  Option "Talk to them" 
+   Trigger -> if Trait 3 is GreaterThanOrEqual to 3
+    OutGameState -> data 5, amount 1, apply Add
+  Option "Curse all strangers"  [Variable -> 50 % Success, Treachery DM]
+   Trigger -> if Trait 4 is GreaterThanOrEqual to 3
+    OutGameState -> data -3, amount 1, apply Add
+    OutKnown -> data -1, amount 0, apply None
+"Crazy Old Woman" Event, ID 6, Type Road, Repeat 3, Dormant 0, Live 0, Status Active
+  Option "Ride past, ignoring her"  [Variable -> 50 % Success, Treachery DM]
+    OutEventTimer -> Target EventID 6, Cool timer, amount 1 apply Add
+  Option "Offer assistance" 
+    OutGameState -> data 5, amount 1, apply Add
+    OutResource -> Player? True, amount 1, apply Subtract
+  Option "Ride her down!" 
+   Trigger -> if Trait 4 is GreaterThanOrEqual to 3
+    OutGameState -> data -5, amount 1, apply Add
+    OutConflict -> subType Personal, oppID 2, Challenger True
+"Naked Woman" Event, ID 4, Type Road, Repeat 10, Dormant 0, Live 0, Status Dormant
+  Option "Ride past, ignoring her" 
+    OutNone -> data 0, amount 0, apply None
+  Option "Offer assistance" 
+   Trigger -> if GameVar 2 is GreaterThanOrEqual to 50
+    OutGameState -> data 4, amount 1, apply Add
+  Option "Ride her down!" 
+   Trigger -> if Trait 4 is GreaterThanOrEqual to 3
+    OutGameState -> data -4, amount 1, apply Add
+"The Hand of the King" Event, ID 5, Type Location, Repeat 1000, Dormant 0, Live 4, Status Dormant
+  Option "Thank the Citizen" 
+    OutKnown -> data -1, amount 0, apply None
+  Option "Deal with his Insolence" 
+    OutGameState -> data -2, amount 2, apply Add
+    OutEventTimer -> Target EventID 5, Repeat timer, amount 3 apply Equals
+  Option "Pay the Citizen" 
+   Trigger -> if Trait 2 is GreaterThanOrEqual to 3
+    OutGameState -> data 3, amount 1, apply Add
+"Storm" Event, ID 7, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "Seek shelter below decks in the relative safety of your cabin" 
+    OutVoyageTime -> data 0, amount 3, apply Add
+  Option "Stand next to the Captain on the quarter deck and set an example for the crew." 
+   Trigger -> if Trait 5 is GreaterThanOrEqual to 3
+    OutVoyageTime -> data 0, amount 1, apply Add
+  Option "Climb the mast and howl at the wind. Uncage your inner beast."  [Variable -> 75 % Success, Combat DM]
+   Trigger -> if Trait 1 is GreaterThanOrEqual to 3
+    OutVoyageTime -> data 0, amount 2, apply Add
+    OutGameState -> data 2, amount 1, apply Add
+    OutAdrift -> data 0, amount 0, apply None
+"Becalmed" Event, ID 8, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "What can you do but go below and drink more wine?"  [Variable -> 75 % Success, Combat DM]
+    OutVoyageTime -> data 0, amount 4, apply Add
+  Option "Join the crew in their prays to the Harpies." 
+    OutVoyageTime -> data 0, amount 1, apply Add
+  Option "Pick a fight with the biggest, narliest, looking crew member." 
+    OutVoyageTime -> data 0, amount 2, apply Add
+    OutConflict -> subType Personal, oppID 3, Challenger True
+"Jonah" Event, ID 9, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "Stand aside and let it happen." 
+    OutGameState -> data -4, amount 2, apply Add
+  Option "Over my dead body! Protect the woman." 
+    OutGameState -> data 4, amount 2, apply Add
+  Option "Negotiate with the crew. Giving the woman ten lashes of the whip will be sufficent" 
+    OutGameState -> data -4, amount 1, apply Add
+"Cabin Boy" Event, ID 10, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "Keep walking. It's none of your business." 
+    OutGameState -> data -4, amount 2, apply Add
+  Option "Speak to the Captain and demand he make an example of the man." 
+    OutGameState -> data 4, amount 1, apply Add
+    OutAdrift -> data 0, amount 0, apply None
+  Option "He's just a young boy. Draw your sword and protect him." 
+    OutGameState -> data 4, amount 1, apply Add
+    OutConflict -> subType Personal, oppID 3, Challenger True
+"Drinks with Captain" Event, ID 21, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "Decline the invitation."  [Variable -> 70 % Success, Charm DM]
+    OutNone -> data 0, amount 0, apply None
+    OutCondition -> data 0, amount 0, apply None
+  Option "Join the Captain for a quiet drink, or two."  [Variable -> 50 % Success, Treachery DM]
+    OutNone -> data 0, amount 0, apply None
+    OutCondition -> data 0, amount 0, apply None
+  Option "Drink the Captain under the table."  [Variable -> 50 % Success, Treachery DM]
+   Trigger -> if Known 1 is Equals to 0
+    OutResource -> Player? True, amount 1, apply Add
+    OutKnown -> data -1, amount 0, apply None
+"Sprung a Leak" Event, ID 18, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "Stand back and let the professionals deal with it."  [Variable -> 45 % Success, Treachery DM]
+    OutNone -> data 0, amount 0, apply None
+    OutAdrift -> data 0, amount 0, apply None
+  Option "Volunteer to help man the pumps."  [Variable -> 85 % Success, Leadership DM]
+    OutGameState -> data 2, amount 1, apply Add
+    OutAdrift -> data 0, amount 0, apply None
+  Option "Offer a gold coin to every crew member if they can keep the ship afloat" 
+   Trigger -> if ResourcePlyr 1 is GreaterThanOrEqual to 2
+    OutResource -> Player? True, amount 1, apply Subtract
+"Kraken Sighted" Event, ID 16, Type GeoCluster, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "Superstitious nonsense. It must have been a whale." 
+    OutNone -> data 0, amount 0, apply None
+    OutEventStatus -> Target EventID 20, New Status Active
+  Option "Insist that the Captain takes a wide detour around the area." 
+    OutVoyageTime -> data 0, amount 1, apply Add
+    OutEventStatus -> Target EventID 20, New Status Active
+  Option "Demand that the Captain have the ship come about and reverse course immediately." 
+    OutVoyageTime -> data 0, amount 4, apply Add
+    OutEventStatus -> Target EventID 20, New Status Active
+"Kraken Attacks" Event, ID 20, Type GeoCluster, Repeat 1, Dormant 31, Live 0, Status Dormant
+  Option "Go below and hope for the best."  [Variable -> 33 % Success, None DM]
+    OutGameState -> data -4, amount 1, apply Add
+    OutAdrift -> data 0, amount 0, apply None
+  Option "Insist that the Captain call all crew to Arms"  [Variable -> 60 % Success, Leadership DM]
+   Trigger -> if Trait 5 is GreaterThanOrEqual to 3
+    OutGameState -> data 3, amount 1, apply Add
+    OutAdrift -> data 0, amount 0, apply None
+  Option "Grab a nearby raft and abandon ship"  [Variable -> 50 % Success, Treachery DM]
+    OutGameState -> data -4, amount 2, apply Add
+    OutAdrift -> data 0, amount 0, apply None
+"Drowning seaman" Event, ID 17, Type Adrift, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "Despite the lack of food and water you decide to share what you have."  [Variable -> 50 % Success, Treachery DM]
+    OutGameState -> data 4, amount 2, apply Add
+    OutDeathTimer -> data 0, amount 4, apply Subtract
+  Option "It's not going to work. Heave him back into the water." 
+    OutGameState -> data -4, amount 1, apply Add
+  Option "Hit him on the head with the paddle. Hard." 
+    OutGameState -> data -4, amount 2, apply Add
+    OutDeathTimer -> data 0, amount 4, apply Add
+"Passing Gypsy Vessel" Event, ID 19, Type Adrift, Repeat 1000, Dormant 0, Live 0, Status Active
+  Option "Ignore the ship." 
+    OutNone -> data 0, amount 0, apply None
+  Option "Wave your arms frantically."  [Variable -> 70 % Success, Combat DM]
+    OutRescued -> data 0, amount 0, apply None
+    OutNone -> data 0, amount 0, apply None
+  Option "Use the sun to flash your shiny knife at the ship" 
+   Trigger -> if Trait 2 is GreaterThanOrEqual to 3
+    OutRescued -> data 0, amount 0, apply None
+"Torture" Event, ID 11, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
+  Option "Stretch me on the wrack please. My back is giving me trouble." 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Subtract
+  Option "Chop off a finger or two, I've got plenty to spare." 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Subtract
+  Option "Teeth. Feel free to knock a few out. They'll grow back one day." 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Subtract
+"Rats" Event, ID 12, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
+  Option "Ignore them. So what if they chew your toes?" 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Add
+  Option "Mmmmm. Raw Rat. What a treat." 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Add
+  Option "Kill them with your bare hands if you can." 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Add
+"Terrible Food" Event, ID 13, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
+  Option "Hold your tongue and wolf down the inedible mixture as fast as you can." 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Add
+  Option "Refuse to eat anything until better food arrives." 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Subtract
+  Option "Hurl the pail of swill into the face of your Goaler." 
+    OutCondition -> data 0, amount 0, apply None
+    OutGameState -> data 2, amount 1, apply Add
+    OutDeathTimer -> data 0, amount 2, apply Subtract
+"The Bucket" Event, ID 14, Type Dungeon, Repeat 2, Dormant 0, Live 0, Status Active
+  Option "Who wants to lie in their own waste?" 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Subtract
+  Option "Water, give me water." 
+    OutNone -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Add
+  Option "Do both. It's a multipurpose bucket." 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 4, apply Subtract
+"Bribe Goaler" Event, ID 15, Type Dungeon, Repeat 2, Dormant 0, Live 4, Status Active
+  Option "It's to risky. Say nothing." 
+    OutNone -> data 0, amount 0, apply None
+  Option "Offer your fat, piggy, Goaler a better life" 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Subtract
+  Option "Offer your peasant brained Goaler untold wealth and women" 
+    OutCondition -> data 0, amount 0, apply None
+    OutDeathTimer -> data 0, amount 2, apply Subtract
+--- Import AutoReact Events (Director.cs)
+--- Player Events (FileImport.cs)
+"Vengeful <text_1> (Seduction attempt)" Event, ID 1003, Type Location, Repeat 1, Dormant 0, Live 3, Status Live
+  Option "Run like the wind" 
+    OutNone -> data 0, amount 0, apply None
+  Option "Attempt to Bribe the Thugs"  [Variable -> 50 % Success, None DM]
+   Trigger -> if ResourcePlyr 0 is GreaterThanOrEqual to 1
+    OutGameState -> data 4, amount 1, apply Add
+    OutKnown -> data -1, amount 0, apply None
+    OutGameState -> data -4, amount 1, apply Add
+    OutKnown -> data -1, amount 0, apply None
+  Option "Curse all strangers" 
+   Trigger -> if Trait 4 is GreaterThanOrEqual to 3
+    OutGameState -> data -2, amount 2, apply Add
+"Vengeful <text_1> (Seduction attempt)" successfully added to DictAutoEvents
+--- Import Archetypes (Director.cs)
+Dire Wolf Forest, ArcID 1, [GeoCluster], has 2 events
+Bandit Mountains, ArcID 2, [GeoCluster], has 2 events
+Kraken Sea, ArcID 3, [GeoCluster], has 1 events
+Creaky Ship, ArcID 24, [GeoCluster], has 1 events
+Goblin Road, ArcID 4, [Road], has 2 events
+Dwarf Road, ArcID 5, [Road], has 2 events
+Orc Hunting Party, ArcID 6, [Road], has 2 events
+Attentive Guards, ArcID 7, [Location], has 2 events
+Attentive Guards, ArcID 8, [Location], has 2 events
+Entertainers, ArcID 9, [Location], has 2 events
+Willowy Wenches, ArcID 10, [Location], has 2 events
+Crazy Starks, ArcID 11, [House], has 2 events
+Foxy Foxes, ArcID 12, [House], has 2 events
+Leaping Trout, ArcID 13, [House], has 2 events
+Lazy Lions, ArcID 14, [House], has 2 events
+Stop and Go, ArcID 15, [House], has 2 events
+Cloud Climbers, ArcID 16, [House], has 2 events
+Golden Kraken, ArcID 17, [House], has 2 events
+Sunny Sons, ArcID 18, [House], has 2 events
+Lusty Stags, ArcID 19, [House], has 2 events
+Strong Men, ArcID 20, [House], has 2 events
+Dragon Lovers, ArcID 21, [House], has 2 events
+Evil Tavern, ArcID 22, [House], has 2 events
+The Ghosts Within, ArcID 23, [Actor], has 2 events
+--- Import Stories (Director.cs)
+Steady Eddy, StoryID 1
+--- Initialise Archetypes (Director.cs)
+ Wallaby Woods, geoID 4, has been initialised with "Dire Wolf Forest", arcID 1
+Normal roads have been initialised with "Goblin Road", arcID 4
+Kings roads have been initialised with "Dwarf Road", arcID 5
+Connector roads have been initialised with "Orc Hunting Party", arcID 6
+The Capital at KingsKeep has been initialised with "Entertainers", arcID 9
+House One Eyed Pete's, refID 1006, has been initialised with "Evil Tavern", arcID 22
+House Lannister, refID 2, has been initialised with "Lazy Lions", arcID 14
+Oldtown, locID 5, has been initialised with "Attentive Guards", arcID 8
+Valyria, locID 10, has been initialised with "Attentive Guards", arcID 7
+House Targaryen, refID 11, has been initialised with "Dragon Lovers", arcID 21
+House Florent, refID 4, has been initialised with "Foxy Foxes", arcID 12
+Sodhall, locID 14, has been initialised with "Attentive Guards", arcID 8
+House Greyjoy, refID 5, has been initialised with "Golden Kraken", arcID 17
+House Arryn, refID 6, has been initialised with "Cloud Climbers", arcID 16
+"The Waif", AiD 8, has been initialised with "The Ghosts Within", arcID 23
+"The Spider", AiD 6, has been initialised with "The Ghosts Within", arcID 23
+"The Duchess", AiD 4, has been initialised with "The Ghosts Within", arcID 23
+--- Initialise Normal Situations (Director.cs)
+"A Defendable Hill", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"A Defendable Hill", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Muddy Ground", a Battle conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
+"Hold Back until Needed", a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Hold Back until Needed", a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Cheers of the Crowd", a Tournament conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
+"Favoured Side of the Fence", a Tournament conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
+"Freedom of Movement", a Personal conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Freedom of Movement", a Personal conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Glare of the Sun", a Personal conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
+"Uneven Ground", a Personal conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
+"Take the Moral High Ground", a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Take the Moral High Ground", a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"An Unspoken Threat", a Blackmail conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
+"An Austere Venue", a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"An Austere Venue", a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Minstrel Musicians", a Seduce conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
+"Hostile Whispers", a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Hostile Whispers", a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"A Fine Arbor Wine", a Befriend conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
+"A Pleasant Lunch", a Befriend conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
+"A Crowded Market", a Evade conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 2
+"A Crowded Market", a Evade conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 2
+"Morning Mist", a Evade conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
+"Morning Mist", a Evade conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
+"Shadows", a Evade conflict, 3 good records & 3 bad, SitNum 1, Def 0, Data 0
+--- Initialise Game Specific Situations (Director.cs)
+"Relative Army Size", 3 good records & 3 bad, SitNum 1
+"Relative Army Size", 3 good records & 3 bad, SitNum 0
+"Relative Army Size", 3 good records & 3 bad, SitNum -1
+"Relative Fame", 3 good records & 3 bad, SitNum 1
+"Relative Fame", 3 good records & 3 bad, SitNum 0
+"Relative Fame", 3 good records & 3 bad, SitNum -1
+"Relative Honour", 3 good records & 3 bad, SitNum 1
+"Relative Honour", 3 good records & 3 bad, SitNum 0
+"Relative Honour", 3 good records & 3 bad, SitNum -1
+"Relative Justice", 3 good records & 3 bad, SitNum 1
+"Relative Justice", 3 good records & 3 bad, SitNum 0
+"Relative Justice", 3 good records & 3 bad, SitNum -1
+"Known Status", 3 good records & 3 bad, SitNum 1
+"Known Status", 3 good records & 3 bad, SitNum 0
+"Known Status", 3 good records & 3 bad, SitNum -1
+--- Initialise Special Situations (Director.cs)
+"Fortified Position", 3 good records & 3 bad, Def 1
+"Fortified Position", 3 good records & 3 bad, Def -1
+"Mountain Terrain", 3 good records & 3 bad, Def 1
+"Mountain Terrain", 3 good records & 3 bad, Def -1
+"Forest Terrain", 3 good records & 3 bad, Def 1
+"Forest Terrain", 3 good records & 3 bad, Def -1
+"Castle Walls", 3 good records & 3 bad, Def 1
+"Castle Walls", 3 good records & 3 bad, Def -1
+--- Initialise Skill Situations (Director.cs)
+"Leadership", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Leadership", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Leadership", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
+"Leadership", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
+"Combat", a Personal conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Combat", a Personal conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Combat", a Personal conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
+"Combat", a Personal conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
+"Combat", a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Combat", a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Combat", a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
+"Combat", a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
+"Wits", a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Wits", a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Wits", a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
+"Wits", a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
+"Treachery", a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Treachery", a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Treachery", a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
+"Treachery", a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
+"Charm", a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Charm", a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Charm", a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
+"Charm", a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
+"Charm", a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Charm", a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Charm", a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
+"Charm", a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
+"Wits", a Evade conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Wits", a Evade conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Wits", a Evade conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 1
+"Wits", a Evade conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 1
+--- Initialise Touched Situations (Director.cs)
+"Leadership", a Battle conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
+"Leadership", a Battle conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
+"Leadership", a Battle conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
+"Leadership", a Battle conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
+"Combat", a Personal conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
+"Combat", a Personal conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
+"Combat", a Personal conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
+"Combat", a Personal conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
+"Combat", a Tournament conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
+"Combat", a Tournament conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
+"Combat", a Tournament conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
+"Combat", a Tournament conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
+"Wits", a Hunting conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
+"Wits", a Hunting conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
+"Wits", a Hunting conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
+"Wits", a Hunting conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
+"Treachery", a Blackmail conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
+"Treachery", a Blackmail conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
+"Treachery", a Blackmail conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
+"Treachery", a Blackmail conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
+"Charm", a Seduce conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
+"Charm", a Seduce conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
+"Charm", a Seduce conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
+"Charm", a Seduce conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
+"Charm", a Befriend conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
+"Charm", a Befriend conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
+"Charm", a Befriend conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
+"Charm", a Befriend conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
+"Wits", a Evade conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 0
+"Wits", a Evade conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 0
+"Wits", a Evade conflict, 5 good records & 5 bad, SitNum 0, Def 1, Data 1
+"Wits", a Evade conflict, 5 good records & 5 bad, SitNum 0, Def -1, Data 1
+--- Initialise Supporter Situations (Director.cs)
+"Battle -> Plyr Def", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Battle -> Opp Def", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Tournament -> Plyr Def", a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Tournament -> Opp Def", a Tournament conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Personal -> Plyr Def", a Personal conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Personal -> Opp Def", a Personal conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Hunting -> Plry Def", a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Hunting -> Opp Def", a Hunting conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"BlackMail -> Plyr Def", a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Blackmail -> Opp Def", a Blackmail conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Seduce -> Plyr Def", a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Seduce -> Opp Def", a Seduce conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Befriend -> Plyr Def", a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Befriend -> Opp Def", a Befriend conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Infiltrate -> Plyr Def", a Infiltrate conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Infiltrate -> Opp Def", a Infiltrate conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Evade -> Plyr Def", a Evade conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Evade -> Opp Def", a Evade conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+"Escape -> Plyr Def", a Escape conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
+"Escape -> Opp Def", a Escape conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
+--- Initialise Results (Director.cs)
+RecordID 1 ("Blend in More")
+RecordID 2 ("Been Spotted!")
+RecordID 35 ("You're Presence is known")
+RecordID 3 ("The Cause is Just")
+RecordID 4 ("Unjustly Accused!")
+RecordID 5 ("We're Famous")
+RecordID 6 ("Nobody heard the news")
+RecordID 7 ("Long Live the King")
+RecordID 8 ("Down with the King")
+RecordID 9 ("Honour and Liberty!")
+RecordID 10 ("Oops, shouldn't have done that")
+RecordID 11 ("The King Does the Right Thing")
+RecordID 12 ("The King is a Bastard")
+RecordID 13 ("The King is a Great Man")
+RecordID 14 ("Rel improved due to Befriend Minor Win")
+RecordID 15 ("Rel improved due to Befriend Win")
+RecordID 16 ("Rel improved due to Befriend Major Win")
+RecordID 40 ("Intro given due to Befriend Win")
+RecordID 39 ("Intro given due to a Befriend Major Win")
+RecordID 17 ("Rel worsened due to Befriend Minor Loss")
+RecordID 18 ("Rel worsened due to Befriend Loss")
+RecordID 19 ("Rel worsened due to Befriend Major Loss")
+RecordID 20 ("Rel improved due to Seduce Minor Win")
+RecordID 21 ("Rel improved due to Seduce Win")
+RecordID 22 ("Rel improved due to Seduce Major Win")
+RecordID 36 ("Intro given due to Seduce Minor Win")
+RecordID 37 ("Intro given due to Seduce Win")
+RecordID 38 ("Favour given due to Seduce Major Win")
+RecordID 23 ("Rel worsened due to Seduce Minor Loss")
+RecordID 24 ("Rel worsened due to Seduce Loss")
+RecordID 25 ("Rel worsened due to Seduce Major Loss")
+RecordID 41 ("Chance of a Jealous Lord finding out")
+RecordID 29 ("Favour given due to Blackmail Minor Win")
+RecordID 30 ("Favour given due to Blackmail Win")
+RecordID 31 ("Favour given due to Blackmail Major Win")
+RecordID 32 ("Rel worsened due to Blackmail Minor Loss")
+RecordID 33 ("Rel worsened due to Blackmail Loss")
+RecordID 34 ("Rel worsened due to Blackmail Major Loss")
+RecordID 26 ("Shocked by Blackmail attempt")
+RecordID 27 ("Power mad after Blackmail")
+RecordID 42 ("Wounded in Combat")
+RecordID 43 ("Pumped up after a win in Combat")
+RecordID 44 ("Free at Last")
+RecordID 45 ("Captured")
+RecordID 28 ("Dazed in Combat")
+RecordID 46 ("Exhausted")
+RecordID 47 ("Gain any Item")
+RecordID 48 ("Lose any Item")
+RecordID 49 ("Gain any Active Item")
+RecordID 50 ("Lose any Active Item")
+RecordID 51 ("Gain any Passive Item")
+RecordID 52 ("Lose any Passive Item")
+RecordID 53 ("Extra Promise (debug test)")
+--- Initialise Challenges (Director.cs)
+Personal Challenge (Combat)
+Tournament Challenge (Combat)
+Battle Challenge (Combat)
+Hunting Challenge (Combat)
+Befriend Challenge (Social)
+Blackmail Challenge (Social)
+Seduce Challenge (Social)
+Infiltrate Challenge (Stealth)
+Evade Challenge (Stealth)
+Escape Challenge (Stealth)
+--- InitialiseGameStates (Director.cs)
+//Exile Game file ops "LogStart.txt" Completed at: 03/05/2017 11:00:59
+//Elapsed Time 792 ms

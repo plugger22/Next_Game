@@ -105,11 +105,11 @@ namespace Next_Game
             Game.history.InitialiseSpecialCharacters(Game.file.GetCharacters("Characters.txt"));
             Game.StopTimer(timer_2, "W: InitialiseHistory");
             timer_2.Start();
+            InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors (below)
             InitialiseSecrets();
             InitialiseDesires();
             Game.StopTimer(timer_2, "W: InitialiseSecrets");
             timer_2.Start();
-            InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors
             InitialiseAI();
             InitialiseEnemyActors();
             InitialiseWorldDevelopment();
@@ -2530,12 +2530,12 @@ namespace Next_Game
                                             //need to figure out neighbouring minorhouses of a different House
                                             List<int> housesToCapital = majorHouse.GetHousesToCapital();
                                             List<int> housesToConnector = majorHouse.GetHousesToConnector();
-                                            int tempRefID;
+                                            int tempHouseID;
                                             //loop to Capital looking for a non-house neighbouring minor house
                                             for (int h = 0; h < housesToCapital.Count; h++)
                                             {
-                                                tempRefID = housesToCapital[h];
-                                                House searchHouseIn = GetHouse(tempRefID);
+                                                tempHouseID = housesToCapital[h];
+                                                House searchHouseIn = GetHouse(ConvertHouseToRef(tempHouseID));
                                                 if (searchHouseIn != null)
                                                 {
                                                     if (searchHouseIn.HouseID != majorHouse.HouseID)
