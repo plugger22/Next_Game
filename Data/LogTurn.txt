@@ -1,134 +1,120 @@
-//Exile Game File "LogTurn.txt" opened at: 03/05/2017 20:31:42
+//Exile Game File "LogTurn.txt" opened at: 04/05/2017 11:10:01
 --- ProcessStartTurn (World.cs)
-Day 7, Turn 6
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Gorgo, ActID 103 travelling to Parchments (current Loc 18:8)
+Day 4, Turn 3
+--- MoveActors -> 3 Records (World.cs)
+ [Move -> MoveObject] Usurper Patrek Florent, ActID 1 travelling to Bloodkeep (current Loc 20:12)
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Diabolous, ID 119 at 15:17, Active Patrek Florent, ID 1, at 20:12
+ [Search -> Debug] Enemy, Brother Nergal, ID 120 at 15:17, Active Patrek Florent, ID 1, at 20:12
+ [Search -> Debug] Enemy, Brother Damballa, ID 121 at 15:17, Active Patrek Florent, ID 1, at 20:12
+ [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 13:17, Active Patrek Florent, ID 1, at 20:12
+ [Search -> Debug] Enemy, The Unrelenting, ID 123 at 15:17, Active Patrek Florent, ID 1, at 20:12
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Diabolous, ID 119 at 15:17, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Debug] Enemy, Brother Nergal, ID 120 at 15:17, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Debug] Enemy, Brother Damballa, ID 121 at 15:17, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 13:17, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Debug] Enemy, The Unrelenting, ID 123 at 15:17, Active Patrek Florent, ID 1, at 21:12
+ [Move -> MoveObject] Inquisitor Brother Behemoth, ActID 122 travelling to The Singing Ghost (current Loc 13:17)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Beves Baratheon, ID 1 at 7:14, Enemy at 18:8 (Brother Gorgo, ID 103
+ [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 13:17 (Brother Behemoth, ID 122
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Beves Baratheon, ID 1 at 7:14, Enemy at 18:7 (Brother Gorgo, ID 103
- [Goal -> Arrival] Inquisitor Brother Gorgo, ActID 103, currently at Parchments, new Goal -> Wait
- [Move -> MoveObject] Inquisitor Brother Demogorgon, ActID 104 travelling to The Singing Ghost (current Loc 14:14)
+ [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 12:17 (Brother Behemoth, ID 122
+ [Move -> MoveObject] Inquisitor Brother Damballa, ActID 121 travelling to The Raucous Rat (current Loc 15:16)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Beves Baratheon, ID 1 at 7:14, Enemy at 14:14 (Brother Demogorgon, ID 104
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Beves Baratheon, ID 1 at 7:14, Enemy at 13:14 (Brother Demogorgon, ID 104
+ [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 15:16 (Brother Damballa, ID 121
 --- UpdatePlayerStatus (World.cs)
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Beves Baratheon, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Patrek Florent, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Amon, ID 102 at 14:12, Active Beves Baratheon, ID 1, at 7:14
- [Search -> Debug] Enemy, Brother Gorgo, ID 103 at 18:6, Active Beves Baratheon, ID 1, at 7:14
- [Search -> Debug] Enemy, Brother Demogorgon, ID 104 at 12:14, Active Beves Baratheon, ID 1, at 7:14
- [Search -> Debug] Enemy, Brother Adramalech, ID 105 at 11:12, Active Beves Baratheon, ID 1, at 7:14
- [Search -> Debug] Enemy, The Unrelenting, ID 106 at 14:12, Active Beves Baratheon, ID 1, at 7:14
- [Search -> Stationary] Follower The Spider, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Haggler, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Waif, ActID 2 is AtLocation
+ [Search -> Debug] Enemy, Brother Diabolous, ID 119 at 15:17, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Debug] Enemy, Brother Nergal, ID 120 at 15:17, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Debug] Enemy, Brother Damballa, ID 121 at 15:15, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 12:18, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Debug] Enemy, The Unrelenting, ID 123 at 15:17, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Stationary] Follower The Beast, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 4 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 7 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 102 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Gorgo, Act ID 103 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Adramalech, Act ID 105 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 106 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 119 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 120 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 123 Mode -> Normal
 --- SetEnemyActivity (World.cs)
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Amon, ActID 102 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] Brother Amon, ActID 102, (loc 14:12), assigned new Goal -> Hide
- [Enemy -> Goal] Brother Gorgo, ActID 103 retains Goal -> Wait
- [Enemy -> Unknown] Brother Demogorgon ActID 104 has reverted to Unknown status (timer elapsed)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Adramalech, ActID 105 Assigned Branch -> 4 Current Branch -> 4
- [Enemy -> Goal] The Unrelenting, ActID 106 retains Goal -> Wait
+ [Goal -> Branch] Brother Diabolous, ActID 119 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] Brother Diabolous, ActID 119, (loc 15:17), assigned new Goal -> Hide
+ [Enemy -> Goal] Brother Nergal, ActID 120 retains Goal -> Wait
+ [Enemy -> Known] The Unrelenting ActID 123 has become KNOWN
+ [Enemy -> Goal] The Unrelenting, ActID 123 retains Goal -> Hide
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Ilyn Stark", ID 36 added to list of Actors
- [AutoEvent -> ActorList] "Isopel Stark", ID 37 added to list of Actors
- [AutoEvent -> ActorList] "Jaime Roley", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Herriot Dodd", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Gualtier Galeran", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Gualtier Stark", ID 42 added to list of Actors
- [AutoEvent -> LocalList] "Ilyn Stark", ID 36 added to list of Locals
- [AutoEvent -> LocalList] "Isopel Stark", ID 37 added to list of Locals
- [AutoEvent -> AdvisorList] "Jaime Roley", ID 39 added to list of Advisors
- [AutoEvent -> AdvisorList] "Herriot Dodd", ID 40 added to list of Advisors
- [AutoEvent -> AdvisorList] "Gualtier Galeran", ID 41 added to list of Advisors
- [AutoEvent -> LocalList] "Gualtier Stark", ID 42 added to list of Locals
+ [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
+ [AutoEvent -> ActorList] "Jodoca Baratheon", ID 39 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Audry Raimund", ID 40 added to list of Actors
+ [AutoEvent -> ActorList] "Addam Anselet", ID 41 added to list of Actors
+ [AutoEvent -> ActorList] "Iamys Tankard", ID 42 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Jame", ID 43 added to list of Actors
+ [AutoEvent -> ActorList] "Robert Baratheon", ID 44 added to list of Actors
+ [AutoEvent -> LocalList] "Herriot Baratheon", ID 38 added to list of Locals
+ [AutoEvent -> LocalList] "Jodoca Baratheon", ID 39 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Audry Raimund", ID 40 added to list of Locals
+ [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
+ [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Beves Baratheon has had their TurnsUnknown Timer increased from 105 to 106
- Follower The Spider has had their TurnsUnknown Timer increased from 5 to 6
- Follower The Haggler has had their TurnsUnknown Timer increased from 5 to 6
- Follower The Waif has had their TurnsUnknown Timer increased from 5 to 6
+ Usurper Patrek Florent has had their TurnsUnknown Timer increased from 102 to 103
+ Follower The Beast has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Viper has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Spider has had their TurnsUnknown Timer increased from 2 to 3
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Ilyn Stark", ID 36 added to list of Actors
- [AutoEvent -> ActorList] "Isopel Stark", ID 37 added to list of Actors
- [AutoEvent -> ActorList] "Jaime Roley", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Herriot Dodd", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Gualtier Galeran", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Gualtier Stark", ID 42 added to list of Actors
- [AutoEvent -> LocalList] "Ilyn Stark", ID 36 added to list of Locals
- [AutoEvent -> LocalList] "Isopel Stark", ID 37 added to list of Locals
- [AutoEvent -> AdvisorList] "Jaime Roley", ID 39 added to list of Advisors
- [AutoEvent -> AdvisorList] "Herriot Dodd", ID 40 added to list of Advisors
- [AutoEvent -> AdvisorList] "Gualtier Galeran", ID 41 added to list of Advisors
- [AutoEvent -> LocalList] "Gualtier Stark", ID 42 added to list of Locals
+ [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
+ [AutoEvent -> ActorList] "Jodoca Baratheon", ID 39 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Audry Raimund", ID 40 added to list of Actors
+ [AutoEvent -> ActorList] "Addam Anselet", ID 41 added to list of Actors
+ [AutoEvent -> ActorList] "Iamys Tankard", ID 42 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Jame", ID 43 added to list of Actors
+ [AutoEvent -> ActorList] "Robert Baratheon", ID 44 added to list of Actors
+ [AutoEvent -> LocalList] "Herriot Baratheon", ID 38 added to list of Locals
+ [AutoEvent -> LocalList] "Jodoca Baratheon", ID 39 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Audry Raimund", ID 40 added to list of Locals
+ [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
+ [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "79" GreaterThanOrEqual 50
- Trigger passed on "87" GreaterThanOrEqual 50
- Trigger passed on "85" GreaterThanOrEqual 50
+ Trigger passed on "63" GreaterThanOrEqual 50
+ Trigger passed on "54" GreaterThanOrEqual 50
+ Trigger passed on "69" GreaterThanOrEqual 50
+ Trigger passed on "80" GreaterThanOrEqual 50
  Event "Talk to Locals" Timer Repeat now 999
  Event "Talk to Locals" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Ilyn Stark", ID 36 added to list of Actors
- [AutoEvent -> ActorList] "Isopel Stark", ID 37 added to list of Actors
- [AutoEvent -> ActorList] "Jaime Roley", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Herriot Dodd", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Gualtier Galeran", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Gualtier Stark", ID 42 added to list of Actors
- [AutoEvent -> LocalList] "Ilyn Stark", ID 36 added to list of Locals
- [AutoEvent -> LocalList] "Isopel Stark", ID 37 added to list of Locals
- [AutoEvent -> AdvisorList] "Jaime Roley", ID 39 added to list of Advisors
- [AutoEvent -> AdvisorList] "Herriot Dodd", ID 40 added to list of Advisors
- [AutoEvent -> AdvisorList] "Gualtier Galeran", ID 41 added to list of Advisors
- [AutoEvent -> LocalList] "Gualtier Stark", ID 42 added to list of Locals
+ [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
+ [AutoEvent -> ActorList] "Jodoca Baratheon", ID 39 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Audry Raimund", ID 40 added to list of Actors
+ [AutoEvent -> ActorList] "Addam Anselet", ID 41 added to list of Actors
+ [AutoEvent -> ActorList] "Iamys Tankard", ID 42 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Jame", ID 43 added to list of Actors
+ [AutoEvent -> ActorList] "Robert Baratheon", ID 44 added to list of Actors
+ [AutoEvent -> LocalList] "Herriot Baratheon", ID 38 added to list of Locals
+ [AutoEvent -> LocalList] "Jodoca Baratheon", ID 39 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Audry Raimund", ID 40 added to list of Locals
+ [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
+ [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "79" GreaterThanOrEqual 50
- Trigger passed on "79" GreaterThanOrEqual 40
- Trigger passed on "79" GreaterThanOrEqual 60
+ Trigger passed on "63" GreaterThanOrEqual 50
+ Trigger passed on "63" GreaterThanOrEqual 40
+ Trigger passed on "63" GreaterThanOrEqual 60
  Trigger FAILED on "1" NotEqual 1
  Trigger: Same sex, Seduction not possible
- Trigger passed on "79" GreaterThanOrEqual 70
- Trigger passed on "3" Equals 3
-Trigger: Ilyn Stark has desire the Dragon Egg because it is their birthright and Satisified False -> passed
- Trigger passed on "0" LessThanOrEqual 6
- Event "Interact" Timer Repeat now 999
- Event "Interact" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Ilyn Stark", ID 36 added to list of Actors
- [AutoEvent -> ActorList] "Isopel Stark", ID 37 added to list of Actors
- [AutoEvent -> ActorList] "Jaime Roley", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Herriot Dodd", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Gualtier Galeran", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Gualtier Stark", ID 42 added to list of Actors
- [AutoEvent -> LocalList] "Ilyn Stark", ID 36 added to list of Locals
- [AutoEvent -> LocalList] "Isopel Stark", ID 37 added to list of Locals
- [AutoEvent -> AdvisorList] "Jaime Roley", ID 39 added to list of Advisors
- [AutoEvent -> AdvisorList] "Herriot Dodd", ID 40 added to list of Advisors
- [AutoEvent -> AdvisorList] "Gualtier Galeran", ID 41 added to list of Advisors
- [AutoEvent -> LocalList] "Gualtier Stark", ID 42 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Event "Need Something" Timer Repeat now 999
- Event "Need Something" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-[GameVar] Promises_Num changed from 0 to 1 as a result of Add 1
---- MultiKeyInput (Game.cs)
-36 input
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 03/05/2017 20:34:55
+ Trigger FAILED on "63" GreaterThanOrEqual 70
+Trigger: Herriot Baratheon has desire a court position for t

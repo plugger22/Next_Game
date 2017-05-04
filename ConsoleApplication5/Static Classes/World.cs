@@ -3348,7 +3348,16 @@ namespace Next_Game
             if (message != null)
             {
                 RLColor color = RLColor.White;
-                if (message.Type == MessageType.Activation) { color = Color._active; }
+                //certain message types are color coded
+                switch (message.Type)
+                {
+                    case MessageType.Activation:
+                        color = Color._active;
+                        break;
+                    case MessageType.Error:
+                        color = RLColor.LightRed;
+                        break;
+                }
                 //queue for the most recent messages to display at bottom right console window
                 Snippet snippet = new Snippet(string.Format("Day {0}, {1}, {2}", message.Day, message.Year, message.Text), color, RLColor.Black);
                 messageQueue.Enqueue(snippet);

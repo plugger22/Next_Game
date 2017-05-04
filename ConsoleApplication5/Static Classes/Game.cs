@@ -23,9 +23,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        //private static int seed = 35421;
+        private static int seed = 46545;
 
         static Random rnd;
         
@@ -1680,7 +1680,12 @@ namespace Next_Game
                     logStart?.Write("Multiple repeats of same error...", console, ConsoleColor.Red); console = false;
                     logTurn?.Write(string.Format("Multiple repeats of same error..."), console, ConsoleColor.Red);
                 }
-                
+                //print a message (only from gameStart)
+                if (logStart == null)
+                {
+                    Message message = new Message(error.Text, MessageType.Error);
+                    world.SetMessage(message);
+                }
             }
             catch(ArgumentNullException)
             {

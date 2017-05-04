@@ -1674,8 +1674,10 @@ namespace Next_Game
                                     strength = 1;
                                     OutPromise outcome_w1_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
                                     OutRelPlyr outcome_w1_1 = new OutRelPlyr(eventObject.EventPID, baseValue * strength, EventCalc.Add, $"Ursurper Promises to think about {passive.DesireText}", "Promise");
+                                    OutFavour outcome_w1_2 = new OutFavour(eventObject.EventPID, strength);
                                     option_w1.SetGoodOutcome(outcome_w1_0);
                                     option_w1.SetGoodOutcome(outcome_w1_1);
+                                    option_w1.SetGoodOutcome(outcome_w1_2);
                                     eventObject.SetOption(option_w1);
                                     //Promise to Take Care of it
                                     OptionInteractive option_w2 = new OptionInteractive("You promise to take care of it") { ActorID = actorID };
@@ -1683,8 +1685,10 @@ namespace Next_Game
                                     strength = 3;
                                     OutPromise outcome_w2_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
                                     OutRelPlyr outcome_w2_1 = new OutRelPlyr(eventObject.EventPID, baseValue * strength, EventCalc.Add, $"Ursurper Promises to take care off {passive.DesireText}", "Promise");
+                                    OutFavour outcome_w2_2 = new OutFavour(eventObject.EventPID, strength);
                                     option_w2.SetGoodOutcome(outcome_w2_0);
                                     option_w2.SetGoodOutcome(outcome_w2_1);
+                                    option_w2.SetGoodOutcome(outcome_w2_2);
                                     eventObject.SetOption(option_w2);
                                     //Swear on your Father's Grave
                                     OptionInteractive option_w3 = new OptionInteractive("You swear on your father's grave that you'll fix it") { ActorID = actorID };
@@ -1693,8 +1697,10 @@ namespace Next_Game
                                     OutPromise outcome_w3_0 = new OutPromise(eventObject.EventPID, passive.Desire, strength);
                                     OutRelPlyr outcome_w3_1 = new OutRelPlyr(eventObject.EventPID, baseValue * strength, EventCalc.Add,
                                         $"Ursurper Swears on their Father's grave to deal with {passive.DesireText}", "Promise");
+                                    OutFavour outcome_w3_2 = new OutFavour(eventObject.EventPID, strength);
                                     option_w3.SetGoodOutcome(outcome_w3_0);
                                     option_w3.SetGoodOutcome(outcome_w3_1);
+                                    option_w3.SetGoodOutcome(outcome_w3_2);
                                     eventObject.SetOption(option_w3);
                                 }
                             }
@@ -2556,6 +2562,16 @@ namespace Next_Game
                                                 Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
+                                        case OutcomeType.Favour:
+                                            //NPC (passive) hands out a Favour to the Player
+                                            outcomeText = ChangePlayerFavourStatus(option.ActorID, outcome.Data);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
+                                            break;
                                         case OutcomeType.GameVar:
                                             //Change a GameVar
                                             OutGameVar gamevarOutcome = outcome as OutGameVar;
@@ -3378,9 +3394,49 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(230, "Invalid NPC actor (null) -> Promise not created")); }
                 }
-                else { Game.SetError(new Error(230, $"Invalid actorID \"{actorID}\" -> Promise not created")); }
+                else { Game.SetError(new Error(230, $"Invalid Passive actorID \"{actorID}\" -> Promise not created")); }
             }
             else { Game.SetError(new Error(230, "Invalid Player (null)")); }
+            return resultText;
+        }
+
+
+        /// <summary>
+        /// Passive Actor issues a favour to the Player (can be cashed in at any time)
+        /// </summary>
+        /// <param name="actorID"></param>
+        /// <param name="strength"></param>
+        /// <returns></returns>
+        private string ChangePlayerFavourStatus(int actorID, int strength)
+        {
+            string resultText = "";
+            Player player = (Player)Game.world.GetActiveActor(1);
+            if (player != null)
+            {
+                //check valid NPC character who receives the promise
+                if (actorID > 10)
+                {
+                    Passive actor = Game.world.GetPassiveActor(actorID);
+                    if (actor != null)
+                    {
+                        if (strength > 0 && strength < 6)
+                        {
+                            resultText = $"{actor.Title} {actor.Name} \"{actor.Handle}\" has agreed to do the Ursurper a level {strength} Favour, when requested";
+                            Favour favour = new Favour(resultText, strength, actorID);
+                            //add to Possessions dictionary
+                            if (Game.world.AddPossession(favour.PossID, favour) == true)
+                            {
+                                //add favour to Player
+                                player.AddFavour(favour.PossID);
+                            }
+                        }
+                        else { Game.SetError(new Error(239, $"Invalid strength input (\"{strength}\"), must be between 1 & 5 -> Favour not created")); }
+                    }
+                    else { Game.SetError(new Error(239, "Invalid NPC actor (null) -> Favour not created")); }
+                }
+                else { Game.SetError(new Error(239, $"Invalid Passive actorID \"{actorID}\" -> Favour not created")); }
+            }
+            else { Game.SetError(new Error(239, "Invalid Player (null)")); }
             return resultText;
         }
 
