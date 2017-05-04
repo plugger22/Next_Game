@@ -2288,17 +2288,23 @@ namespace Next_Game
                                 }
                                 break;
                             case ResultType.Introduction:
-                                //data indicates the strength of the introduction granted to Player
-                                tempText = string.Format("{0} {1} grants you an Introduction", opponent.Title, opponent.Name);
-                                Introduction newIntroduction = new Introduction(tempText, data, opponent.ActID);
-                                //add to dictionary and Player's list
-                                if (Game.world.AddPossession(newIntroduction.PossID, newIntroduction) == true)
+                                //data holds the HouseID of where the introduction can be used
+                                if (opponent is Passive)
                                 {
-                                    player.AddIntroduction(newIntroduction.PossID);
-                                    tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
-                                    message = new Message(tempText, MessageType.Conflict);
-                                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
+                                    Passive passive = opponent as Passive;
+                                    data = Game.world.GetIntroduction(passive.HouseID);
+                                    tempText = $"{opponent.Title} {opponent.Name} \"{opponent.Handle}\" grants you an Introduction to House \"{Game.world.GetHouseName(data)}\"";
+                                    Introduction newIntroduction = new Introduction(tempText, data, opponent.ActID);
+                                    //add to dictionary and Player's list
+                                    if (Game.world.AddPossession(newIntroduction.PossID, newIntroduction) == true)
+                                    {
+                                        player.AddIntroduction(newIntroduction.PossID);
+                                        tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                        message = new Message(tempText, MessageType.Conflict);
+                                        Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
+                                    }
                                 }
+                                else { Game.SetError(new Error(113, "Invalid opponent (Not Passive) -> Introduction not created")); }
                                 break;
                             case ResultType.Army:
                                 break;

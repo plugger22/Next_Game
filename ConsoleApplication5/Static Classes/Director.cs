@@ -1094,13 +1094,13 @@ namespace Next_Game
                                 if (locType != 1)
                                 {
                                     option = new OptionInteractive(string.Format("Seek an Audience with a member of House {0} ({1} present)", houseName, listCourt.Count));
-                                    option.ReplyGood = string.Format("House {0} is willing to consider the matter", houseName);
+                                    option.ReplyGood = string.Format("House {0} has agreed to allow the Ursurper to enter the Court", houseName);
                                 }
                                 else
                                 {
                                     //capital
                                     option = new OptionInteractive(string.Format("Seek an Audience with a member of the Royal Household ({0} present)", listCourt.Count));
-                                    option.ReplyGood = string.Format("The Royal Clerk has advised that the household is willing to consider the matter");
+                                    option.ReplyGood = string.Format("The Royal Clerk has advised that the Ursurper has permission to enter the Court");
                                 }
                                 OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Court);
                                 option.SetGoodOutcome(outcome);
@@ -1160,6 +1160,10 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
+                            //option -> Use an introduction
+
+                            //does player have an introduction to this House?
+
                             //option -> recruit follower (only at Inns)
                             if (locType == 4)
                             {
@@ -1241,7 +1245,7 @@ namespace Next_Game
                             eventObject.SetOption(option_L);
                             break;
                         case EventAutoFilter.Court:
-                            eventObject.Name = "Talk to Locals";
+                            eventObject.Name = "Talk to members of the Court";
                             eventObject.Text = string.Format("Which members of House {0} do you wish to talk to?", houseName);
                             //options -> one for each member present
                             limit = listCourt.Count();
@@ -1584,8 +1588,8 @@ namespace Next_Game
                                     eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
                                     tempText = string.Format("You are granted an audience with {0} {1} \"{2}\", ActID {3}, at {4}", person.Title, person.Name, person.Handle, person.ActID, loc.LocName);
                                     //default
-                                    OptionInteractive option_0 = new OptionInteractive("Make yourself known") { ActorID = actorID };
-                                    option_0.ReplyGood = $"{actorText} acknowledges your presence";
+                                    OptionInteractive option_0 = new OptionInteractive("Excuse Yourself") { ActorID = actorID };
+                                    option_0.ReplyGood = $"{actorText} stares at you with narrowed eyes";
                                     OutNone outcome_0 = new OutNone(eventObject.EventPID);
                                     option_0.SetGoodOutcome(outcome_0);
                                     eventObject.SetOption(option_0);

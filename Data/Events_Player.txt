@@ -65,7 +65,7 @@
 # outText: OPTIONAL short descriptive text (shows up as a message & player record)
 
 # [outcome] effect -> Known
-# data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to UNKNOWN
+# data: 1 (+ve) sets Actor's status to UNKNOWN, -1 (-ve) sets Actor to KNOWN
 
 # [outcome] effect -> GameVar
 # data: index of GameVar variable
