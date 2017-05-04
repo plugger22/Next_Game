@@ -1,149 +1,167 @@
-//Exile Game File "LogTurn.txt" opened at: 04/05/2017 11:33:14
+//Exile Game File "LogTurn.txt" opened at: 04/05/2017 11:52:01
 --- ProcessStartTurn (World.cs)
-Day 4, Turn 3
---- MoveActors -> 3 Records (World.cs)
- [Move -> MoveObject] Usurper Patrek Florent, ActID 1 travelling to Bloodkeep (current Loc 20:12)
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Diabolous, ID 119 at 15:17, Active Patrek Florent, ID 1, at 20:12
- [Search -> Debug] Enemy, Brother Nergal, ID 120 at 15:17, Active Patrek Florent, ID 1, at 20:12
- [Search -> Debug] Enemy, Brother Damballa, ID 121 at 15:17, Active Patrek Florent, ID 1, at 20:12
- [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 13:17, Active Patrek Florent, ID 1, at 20:12
- [Search -> Debug] Enemy, The Unrelenting, ID 123 at 15:17, Active Patrek Florent, ID 1, at 20:12
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Diabolous, ID 119 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, Brother Nergal, ID 120 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, Brother Damballa, ID 121 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 13:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, The Unrelenting, ID 123 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Move -> MoveObject] Inquisitor Brother Behemoth, ActID 122 travelling to The Singing Ghost (current Loc 13:17)
+Day 18, Turn 17
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Nemesis The Unrelenting, ActID 110 travelling to Casterly Rock (current Loc 19:9)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 13:17 (Brother Behemoth, ID 122
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 12:17 (Brother Behemoth, ID 122
- [Move -> MoveObject] Inquisitor Brother Damballa, ActID 121 travelling to The Raucous Rat (current Loc 15:16)
+ [Move -> MoveObject] Inquisitor Brother Set, ActID 108 travelling to Highgarden (current Loc 21:5)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 15:16 (Brother Damballa, ID 121
+--- CheckIfFoundEnemy (World.cs)
 --- UpdatePlayerStatus (World.cs)
+Usurper Areo Arryn Death Timer reduced by 1 to 18
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Patrek Florent, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Diabolous, ID 119 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, Brother Nergal, ID 120 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, Brother Damballa, ID 121 at 15:15, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 12:18, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, The Unrelenting, ID 123 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Stationary] Follower The Beast, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 7 is AtLocation
+ [Search -> Stationary] Usurper Areo Arryn, ActID 1 is Captured
+ [Search -> Stationary] Follower The Crone, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 4 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 119 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 120 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 123 Mode -> Normal
+ [AI -> Player Captured] Inquisitor Brother Nergal, Act ID 106 Mode -> Normal
+ [AI -> Player Captured] Inquisitor Brother Shiva, Act ID 107 Mode -> Normal
+ [AI -> Player Captured] Inquisitor Brother Amon, Act ID 109 Mode -> Normal
 --- SetEnemyActivity (World.cs)
+ [Enemy -> Unknown] Brother Nergal ActID 106 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Nergal, ActID 106 retains Goal -> Hide
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Diabolous, ActID 119 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] Brother Diabolous, ActID 119, (loc 15:17), assigned new Goal -> Hide
- [Enemy -> Goal] Brother Nergal, ActID 120 retains Goal -> Wait
- [Enemy -> Known] The Unrelenting ActID 123 has become KNOWN
- [Enemy -> Goal] The Unrelenting, ActID 123 retains Goal -> Hide
+ [Goal -> Branch] Brother Shiva, ActID 107 Assigned Branch -> 1 Current Branch -> 1
+ [Goal -> New] Brother Shiva, ActID 107, (loc 16:11), assigned new Goal -> Move
+ [Goal -> Move] Brother Shiva, ActID 107 -> Move Outwards -> Old Oak, LocID 3
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Amon, ActID 109 retains Goal -> Search
 --- CheckPlayerEvents (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
- [AutoEvent -> ActorList] "Jodoca Baratheon", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Ser Audry Raimund", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Addam Anselet", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Iamys Tankard", ID 42 added to list of Actors
- [AutoEvent -> ActorList] "Guarnier Jame", ID 43 added to list of Actors
- [AutoEvent -> ActorList] "Robert Baratheon", ID 44 added to list of Actors
- [AutoEvent -> LocalList] "Herriot Baratheon", ID 38 added to list of Locals
- [AutoEvent -> LocalList] "Jodoca Baratheon", ID 39 added to list of Locals
- [AutoEvent -> LocalList] "Ser Audry Raimund", ID 40 added to list of Locals
- [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
- [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
- [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
- [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
+--- GetValidPlayerEvents (Director.cs)
+ Event "Torture" has no attached Conditions
+ Event "Rats" has no attached Conditions
+ Event "Terrible Food" has no attached Conditions
+ Event "The Bucket" has no attached Conditions
+ Event "Bribe Goaler" has no attached Conditions
+--- ResolvePlayerEvents (Director.cs)
+ Event "The Bucket" Timer Repeat now 1
+ Event "The Bucket" Cooldown Timer has been reset to 5
+--- UpdateActiveActors (World.cs)
+ Usurper Areo Arryn has had their Revert Timer reduced from 2 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 16 to 17
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 16 to 17
+ Follower The Waif has had their TurnsUnknown Timer increased from 16 to 17
+--- ResolveOutcome (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 04/05/2017 11:56:39
+rch -> Debug] Enemy, The Unrelenting, ID 110 at 19:11, Active Areo Arryn, ID 1, at 17:6
+ [Search -> Stationary] Follower The Crone, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 4 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Notification] Inquisitor Brother Set, ActID 108 is Travelling to Highgarden
+ [AI -> Notification] Nemesis The Unrelenting, ActID 110 is Travelling to Casterly Rock
+ [AI -> Mode] enemyID 109,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
+ [AI -> Mode] enemyID 107,  distance -> 12  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 106,  distance -> 17  Threshold (turns) -> 4  Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Nergal, ActID 106 retains Goal -> Hide
+ [Enemy -> Goal] Brother Shiva, ActID 107 retains Goal -> Wait
+ [Enemy -> Unknown] The Unrelenting ActID 110 has reverted to Unknown status (timer elapsed)
+--- CheckPlayerEvents (Director.cs)
+--- ResolvePlayerEvents (Director.cs)
+ Event "Enemy Afoot" Timer Repeat now 999
+ Event "Enemy Afoot" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Areo Arryn has had their Revert Timer reduced from 5 to 4
+ Follower The Crone has had their TurnsUnknown Timer increased from 14 to 15
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 14 to 15
+ Follower The Waif has had their TurnsUnknown Timer increased from 14 to 15
+--- ResolveOutcome (Director.cs)
+--- SetPlayerCaptured (World.cs)
+ [Captured] Major House dungeon
+ERROR_174 "Unable to find a suitable location for Incarceration -> Default to KingsKeep"
+Method: SetPlayerCaptured,  Line: 5619,  Object: World.cs,  Turn: 15,  Local Time: 11:50:06 UTC +10:00
+Item with PossID 7 has been removed from Areo Arryn's inventory
+--- ProcessEndTurn (World.cs)
+Day 16, Turn 15
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 5
+ "Search and Detain" event, Cooldown Timer decremented from 3 to 2
+ "Crazy Old Woman" event, Cooldown Timer decremented from 2 to 1
+//Exile Game File "LogTurn.txt" Close completed at: 04/05/2017 11:51:57
+iame Charles", ID 12 added to list of Locals
+ [AutoEvent -> AdvisorList] "Herriot Raimund", ID 13 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Robett Rannulf", ID 14 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Varamyr Wilkin", ID 15 added to list of Advisors
+ [AutoEvent -> LocalList] "Melisandre Lannister", ID 16 added to list of Locals
+ [AutoEvent -> LocalList] "Bernier Lannister", ID 64 added to list of Locals
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Patrek Florent has had their TurnsUnknown Timer increased from 102 to 103
- Follower The Beast has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Viper has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Spider has had their TurnsUnknown Timer increased from 2 to 3
+ Usurper Areo Arryn has had their Revert Timer reduced from 2 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 12 to 13
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 12 to 13
+ Follower The Waif has had their TurnsUnknown Timer increased from 12 to 13
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
- [AutoEvent -> ActorList] "Jodoca Baratheon", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Ser Audry Raimund", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Addam Anselet", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Iamys Tankard", ID 42 added to list of Actors
- [AutoEvent -> ActorList] "Guarnier Jame", ID 43 added to list of Actors
- [AutoEvent -> ActorList] "Robert Baratheon", ID 44 added to list of Actors
- [AutoEvent -> LocalList] "Herriot Baratheon", ID 38 added to list of Locals
- [AutoEvent -> LocalList] "Jodoca Baratheon", ID 39 added to list of Locals
- [AutoEvent -> LocalList] "Ser Audry Raimund", ID 40 added to list of Locals
- [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
- [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
- [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
- [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
+ [AutoEvent -> ActorList] "Doran Lannister", ID 10 added to list of Actors
+ [AutoEvent -> ActorList] "Ala Lannister", ID 11 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Jiame Charles", ID 12 added to list of Actors
+ [AutoEvent -> ActorList] "Herriot Raimund", ID 13 added to list of Actors
+ [AutoEvent -> ActorList] "Robett Rannulf", ID 14 added to list of Actors
+ [AutoEvent -> ActorList] "Varamyr Wilkin", ID 15 added to list of Actors
+ [AutoEvent -> ActorList] "Melisandre Lannister", ID 16 added to list of Actors
+ [AutoEvent -> ActorList] "Bernier Lannister", ID 64 added to list of Actors
+ [AutoEvent -> LocalList] "Doran Lannister", ID 10 added to list of Locals
+ [AutoEvent -> LocalList] "Ala Lannister", ID 11 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Jiame Charles", ID 12 added to list of Locals
+ [AutoEvent -> AdvisorList] "Herriot Raimund", ID 13 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Robett Rannulf", ID 14 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Varamyr Wilkin", ID 15 added to list of Advisors
+ [AutoEvent -> LocalList] "Melisandre Lannister", ID 16 added to list of Locals
+ [AutoEvent -> LocalList] "Bernier Lannister", ID 64 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "63" GreaterThanOrEqual 50
- Trigger passed on "54" GreaterThanOrEqual 50
- Trigger passed on "69" GreaterThanOrEqual 50
+ Trigger passed on "85" GreaterThanOrEqual 50
+ Trigger passed on "73" GreaterThanOrEqual 50
+ Trigger passed on "74" GreaterThanOrEqual 50
  Trigger passed on "80" GreaterThanOrEqual 50
+ Trigger passed on "51" GreaterThanOrEqual 50
  Event "Talk to Locals" Timer Repeat now 999
  Event "Talk to Locals" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
- [AutoEvent -> ActorList] "Jodoca Baratheon", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Ser Audry Raimund", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Addam Anselet", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Iamys Tankard", ID 42 added to list of Actors
- [AutoEvent -> ActorList] "Guarnier Jame", ID 43 added to list of Actors
- [AutoEvent -> ActorList] "Robert Baratheon", ID 44 added to list of Actors
- [AutoEvent -> LocalList] "Herriot Baratheon", ID 38 added to list of Locals
- [AutoEvent -> LocalList] "Jodoca Baratheon", ID 39 added to list of Locals
- [AutoEvent -> LocalList] "Ser Audry Raimund", ID 40 added to list of Locals
- [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
- [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
- [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
- [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
+ [AutoEvent -> ActorList] "Doran Lannister", ID 10 added to list of Actors
+ [AutoEvent -> ActorList] "Ala Lannister", ID 11 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Jiame Charles", ID 12 added to list of Actors
+ [AutoEvent -> ActorList] "Herriot Raimund", ID 13 added to list of Actors
+ [AutoEvent -> ActorList] "Robett Rannulf", ID 14 added to list of Actors
+ [AutoEvent -> ActorList] "Varamyr Wilkin", ID 15 added to list of Actors
+ [AutoEvent -> ActorList] "Melisandre Lannister", ID 16 added to list of Actors
+ [AutoEvent -> ActorList] "Bernier Lannister", ID 64 added to list of Actors
+ [AutoEvent -> LocalList] "Doran Lannister", ID 10 added to list of Locals
+ [AutoEvent -> LocalList] "Ala Lannister", ID 11 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Jiame Charles", ID 12 added to list of Locals
+ [AutoEvent -> AdvisorList] "Herriot Raimund", ID 13 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Robett Rannulf", ID 14 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Varamyr Wilkin", ID 15 added to list of Advisors
+ [AutoEvent -> LocalList] "Melisandre Lannister", ID 16 added to list of Locals
+ [AutoEvent -> LocalList] "Bernier Lannister", ID 64 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "63" GreaterThanOrEqual 50
- Trigger passed on "63" GreaterThanOrEqual 40
- Trigger passed on "63" GreaterThanOrEqual 60
- Trigger FAILED on "1" NotEqual 1
- Trigger: Same sex, Seduction not possible
- Trigger FAILED on "63" GreaterThanOrEqual 70
-Trigger: Herriot Baratheon has desire a court position for their son Robert Baratheon "The Confused" ActID 44 and Satisified False -> passed
+ Trigger passed on "73" GreaterThanOrEqual 50
+ Trigger passed on "73" GreaterThanOrEqual 40
+ Trigger passed on "73" GreaterThanOrEqual 60
+ Trigger passed on "1" NotEqual 2
+ Trigger passed on "73" GreaterThanOrEqual 70
+ Trigger FAILED on "4" Equals 3
+ Trigger: Incorrect ActorType
+Trigger: Ala Lannister has desire a court position for their son Bernier Lannister "The Skilled" ActID 64 and Satisified False -> passed
  Trigger passed on "0" LessThanOrEqual 6
  Event "Interact" Timer Repeat now 999
  Event "Interact" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
- [AutoEvent -> ActorList] "Jodoca Baratheon", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Ser Audry Raimund", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Addam Anselet", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Iamys Tankard", ID 42 added to list of Actors
- [AutoEvent -> ActorList] "Guarnier Jame", ID 43 added to list of Actors
- [AutoEvent -> ActorList] "Robert Baratheon", ID 44 added to list of Actors
- [AutoEvent -> LocalList] "Herriot Baratheon", ID 38 added to list of Locals
- [AutoEvent -> LocalList] "Jodoca Baratheon", ID 39 added to list of Locals
- [AutoEvent -> LocalList] "Ser Audry Raimund", ID 40 added to list of Locals
- [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
- [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
- [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
- [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Event "Need Something" Timer Repeat now 999
- Event "Need Something" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-[GameVar] Promises_Num changed from 0 to 1 as a result of Add 1
---- MultiKeyInput (Game.cs)
-1 input
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 04/05/2017 11:35:09
+--- ResolveFollowerEvents (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 14, Turn 13
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 7
+ "Crazy Old Woman" event, Cooldown Timer decremented from 4 to 3
+//Exile Game File "LogTurn.txt" Close completed at: 04/05/2017 11:50:01
