@@ -5845,6 +5845,53 @@ namespace Next_Game
             return notificationStatus;
         }
 
+
+        /// <summary>
+        /// Given an NPC's house, it works out another refID where the introduction can be used. Randomly chooses from any other house where it has +rel's. Returns '0' if none.
+        /// </summary>
+        /// <param name="origRefID">RefID of house of NPC (assumed to be Major)</param>
+        /// <returns></returns>
+        public int GetIntroduction(int origRefID)
+        {
+            int introHouse = 0;
+            int refID = 0;
+            int currentRel = 0;
+            House npcHouse = GetHouse(origRefID);
+            List<int> listTempRefID = new List<int>(); //holds all Major houses where origHouse has +ve rel's. 
+            Game.logTurn?.Write("--- GetIntroduction (World.cs)");
+            if (npcHouse != null)
+            {
+                //loop great Houses and get current relations
+                foreach (var house in dictMajorHouses)
+                {
+
+                    refID = house.Value.RefID;
+                    if (refID != origRefID)
+                    {
+                        List<Relation> tempRelations = house.Value.GetSpecificRelations(refID);
+                        if (tempRelations.Count > 0)
+                        {
+                            currentRel = tempRelations[0].Level; //first entry must be most recent relationship as list is sorted by TrackerID in descending order
+                            if (currentRel > 0)
+                            { listTempRefID.Add(tempRelations[0].RefID); }
+                        }
+                        else { Game.logTurn?.Write($"[Alert] House \"{GetHouseName(refID)}\" has no relations with other houses -> Introduction cancelled"); }
+                    }
+                }
+                //Randomly choose one RefID from list (if any)
+                if (listTempRefID.Count > 0)
+                {
+                    introHouse = listTempRefID[rnd.Next(listTempRefID.Count)];
+                    Game.logTurn?.Write($"House {GetHouseName(origRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
+                }
+                else { Game.logTurn?.Write("[Alert] There are no positive inter-House Relationships -> Introduction cancelled"); }
+            }
+            else { Game.SetError(new Error(240, $"Invalid npcHouse (null) for refID {origRefID}")); }
+
+
+            return introHouse;
+        }
+
         //new Methods above here
     }
 }

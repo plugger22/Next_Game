@@ -16,7 +16,7 @@
 # Key Stats Generic Results, eg. Invisibility, Justice, etc. -> Data +ve ADD to Good, otherwise ADD to Bad
 
 # Type -> Introduction
-# Data: HouseID of GreatHouse where it can be used (show as '0' -> correct data inserted by Code)
+# Data: RefID of GreatHouse where it can be used (show as '0' -> correct data inserted by Code)
 
 # Type -> Favour
 # Data: is the strength of the item, eg. 1 (weak) to 5 (strong)

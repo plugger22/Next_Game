@@ -125,7 +125,7 @@ namespace Next_Game
         { return listOfRelations; }
 
         /// <summary>
-        /// Return a list of Relations that apply to the House with the input refID. Returns null if none.
+        /// Return a sorted (recent -> distant) list of Relations that apply to the House with the input refID. Returns null if none.
         /// </summary>
         /// <param name="refID"></param>
         /// <returns></returns>
@@ -138,7 +138,7 @@ namespace Next_Game
                 IEnumerable<Relation> houseRels =
                     from relation in listOfRelations
                     where relation.RefID == refID
-                    orderby relation.Year
+                    orderby relation.trackerID descending
                     select relation;
                 tempList = houseRels.ToList();
             }
