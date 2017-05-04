@@ -295,7 +295,7 @@ Data: 0
 Good1: Who can resist a good wine? Not I, not <name>. 
 Good2: Monks have harvested and fermented the wine with care and love. Both <name> and I are impressed.
 Good3: The sweet liquid gold that pours from the bottle is to be savoured among the company of friends.
-Bad1: Whoever said that the Arbor made fine wines clearly hadn't drunk anyone. Straight, unadulterated, horse piss.
+Bad1: Whoever said that the Arbor made fine wines clearly hadn't tasted any of them. Straight, unadulterated, horse piss.
 Bad2: <name> spits out their first taste of the wine. Something about it doesn't agree with them.
 Bad3: Wine? Rubbish, it's nothing but horse piss. The seal on the bottle had already been broken. The merchant was crooked.
 [end]

@@ -5869,7 +5869,7 @@ namespace Next_Game
                     if (refID != origRefID)
                     {
                         List<Relation> tempRelations = house.Value.GetSpecificRelations(refID);
-                        if (tempRelations.Count > 0)
+                        if (tempRelations?.Count > 0)
                         {
                             currentRel = tempRelations[0].Level; //first entry must be most recent relationship as list is sorted by TrackerID in descending order
                             if (currentRel > 0)

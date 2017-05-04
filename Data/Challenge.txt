@@ -142,13 +142,13 @@ OutLossMinor: Your relationship deteriorates (Rel-)
 OutLoss: You have become disliked (Rel--)
 OutLossMajor: Your opponent is actively campaigning against you (Rel---)
 OutNone: Indifference is the only outcome today. Nobody cares one way or another.
-ResWinMinor: 14, 47
-ResWin: 15, 51
-ResWinMajor: 16, 5, 47
-ResLossMinor: 17, 48
-ResLoss: 18, 50
-ResLossMajor: 19, 48
-ResNone: 1
+ResWinMinor: 14, 47, 40
+ResWin: 15, 51, 40
+ResWinMajor: 16, 5, 47, 40
+ResLossMinor: 17, 48, 40
+ResLoss: 18, 50, 40
+ResLossMajor: 19, 48, 40
+ResNone: 1, 40
 [End]
 
 Type: Social
@@ -196,8 +196,8 @@ OutLossMinor: Your relationship has deteriorated (Rel-)
 OutLoss: You have been firmly rebuffed (Rel--)
 OutLossMajor: Your opponent has taken offence and is now your enemy (Rel---)
 OutNone: Love and lust are not on the menu today. It didn't happen.
-ResWinMinor: 20, 36, 41, 51
-ResWin: 21, 37, 41, 51
+ResWinMinor: 20, 40, 41, 51
+ResWin: 21, 40, 41, 51
 ResWinMajor: 22, 38, 41, 47
 ResLossMinor: 23, 41, 48
 ResLoss: 24, 41, 48

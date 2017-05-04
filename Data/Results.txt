@@ -193,13 +193,8 @@ Calc: Random
 Amount: 70
 [End]
 
-Name: Intro given due to Befriend Win
+Name: Introduction
 RID: 40
-Type: Introduction
-[End]
-
-Name: Intro given due to a Befriend Major Win
-RID: 39
 Type: Introduction
 [End]
 
@@ -259,15 +254,6 @@ Calc: Random
 Amount: 90
 [End]
 
-Name: Intro given due to Seduce Minor Win
-RID: 36
-Type: Introduction
-[End]
-
-Name: Intro given due to Seduce Win
-RID: 37
-Type: Introduction
-[End]
 
 Name: Favour given due to Seduce Major Win
 RID: 38
@@ -492,4 +478,4 @@ Calc: Add
 
 
 
-# next is 54
+# next is 54 - 39, 36, 37 free

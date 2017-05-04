@@ -2294,14 +2294,18 @@ namespace Next_Game
                                     Passive passive = opponent as Passive;
                                     data = Game.world.GetIntroductionHouse(passive.RefID);
                                     tempText = $"{opponent.Title} {opponent.Name} \"{opponent.Handle}\" grants you an Introduction to House \"{Game.world.GetHouseName(data)}\"";
-                                    Introduction newIntroduction = new Introduction(tempText, data, opponent.ActID);
-                                    //add to dictionary and Player's list
-                                    if (Game.world.AddPossession(newIntroduction.PossID, newIntroduction) == true)
+                                    //it's possible that no introduction is possible
+                                    if (tempText.Length > 0)
                                     {
-                                        player.AddIntroduction(newIntroduction.PossID);
-                                        tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
-                                        message = new Message(tempText, MessageType.Conflict);
-                                        Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
+                                        Introduction newIntroduction = new Introduction(tempText, data, opponent.ActID);
+                                        //add to dictionary and Player's list
+                                        if (Game.world.AddPossession(newIntroduction.PossID, newIntroduction) == true)
+                                        {
+                                            player.AddIntroduction(newIntroduction.PossID);
+                                            tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
+                                            message = new Message(tempText, MessageType.Conflict);
+                                            Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
+                                        }
                                     }
                                 }
                                 else { Game.SetError(new Error(113, "Invalid opponent (Not Passive) -> Introduction not created")); }
