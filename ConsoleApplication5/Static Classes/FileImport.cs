@@ -110,7 +110,7 @@ namespace Next_Game
         public EventCalc Calc { get; set; }
         public EventStatus NewStatus { get; set; } //specific to EventStatus outcomes
         public EventTimer Timer { get; set; } //specific to EventTimer outcomes
-        public EventFilter Filter { get; set; } //which group of people to focus on?
+        public EventAutoFilter Filter { get; set; } //which group of people to focus on?
         //Generic bool Outcomes (multipurpose)
         public bool boolGeneric { get; set; }
         //OutNone descriptive text
@@ -1887,19 +1887,19 @@ namespace Next_Game
                                     {
                                         case "none":
                                         case "None":
-                                            structOutcome.Filter = EventFilter.None;
+                                            structOutcome.Filter = EventAutoFilter.None;
                                             break;
                                         case "locals":
                                         case "Locals":
-                                            structOutcome.Filter = EventFilter.Court;
+                                            structOutcome.Filter = EventAutoFilter.Court;
                                             break;
                                         case "visitors":
                                         case "Visitors":
-                                            structOutcome.Filter = EventFilter.Visitors;
+                                            structOutcome.Filter = EventAutoFilter.Visitors;
                                             break;
                                         case "followers":
                                         case "Followers":
-                                            structOutcome.Filter = EventFilter.Followers;
+                                            structOutcome.Filter = EventAutoFilter.Followers;
                                             break;
                                         default:
                                             Game.SetError(new Error(49, string.Format("Invalid Input, Outcome Filter, (\"{0}\")", arrayOfEvents[i])));

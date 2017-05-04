@@ -297,9 +297,9 @@ namespace Next_Game.Event_System
     /// </summary>
     class OutEventChain : Outcome
     {
-        public EventFilter Filter { get; set; }
+        public EventAutoFilter Filter { get; set; }
        
-        public OutEventChain(int eventID, EventFilter filter) : base(eventID)
+        public OutEventChain(int eventID, EventAutoFilter filter) : base(eventID)
         {
             Data = 0;
             this.Filter = filter;
