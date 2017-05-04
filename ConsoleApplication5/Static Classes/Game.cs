@@ -1683,7 +1683,7 @@ namespace Next_Game
                 //print a message (only from gameStart)
                 if (logStart == null)
                 {
-                    Message message = new Message(error.Text, MessageType.Error);
+                    Message message = new Message($"[Error_{error.Code}] {error.Text}", MessageType.Error);
                     world.SetMessage(message);
                 }
             }

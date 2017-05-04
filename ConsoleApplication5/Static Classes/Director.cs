@@ -3421,7 +3421,7 @@ namespace Next_Game
                     {
                         if (strength > 0 && strength < 6)
                         {
-                            resultText = $"{actor.Title} {actor.Name} \"{actor.Handle}\" has agreed to do the Ursurper a level {strength} Favour, when requested";
+                            resultText = $"{actor.Title} {actor.Name} \"{actor.Handle}\" has agreed to provide a level {strength} Favour";
                             Favour favour = new Favour(resultText, strength, actorID);
                             //add to Possessions dictionary
                             if (Game.world.AddPossession(favour.PossID, favour) == true)

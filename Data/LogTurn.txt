@@ -1,4 +1,4 @@
-//Exile Game File "LogTurn.txt" opened at: 04/05/2017 11:10:01
+//Exile Game File "LogTurn.txt" opened at: 04/05/2017 11:33:14
 --- ProcessStartTurn (World.cs)
 Day 4, Turn 3
 --- MoveActors -> 3 Records (World.cs)
@@ -117,4 +117,33 @@ Day 4, Turn 3
  Trigger FAILED on "1" NotEqual 1
  Trigger: Same sex, Seduction not possible
  Trigger FAILED on "63" GreaterThanOrEqual 70
-Trigger: Herriot Baratheon has desire a court position for t
+Trigger: Herriot Baratheon has desire a court position for their son Robert Baratheon "The Confused" ActID 44 and Satisified False -> passed
+ Trigger passed on "0" LessThanOrEqual 6
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
+ [AutoEvent -> ActorList] "Jodoca Baratheon", ID 39 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Audry Raimund", ID 40 added to list of Actors
+ [AutoEvent -> ActorList] "Addam Anselet", ID 41 added to list of Actors
+ [AutoEvent -> ActorList] "Iamys Tankard", ID 42 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Jame", ID 43 added to list of Actors
+ [AutoEvent -> ActorList] "Robert Baratheon", ID 44 added to list of Actors
+ [AutoEvent -> LocalList] "Herriot Baratheon", ID 38 added to list of Locals
+ [AutoEvent -> LocalList] "Jodoca Baratheon", ID 39 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Audry Raimund", ID 40 added to list of Locals
+ [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
+ [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Need Something" Timer Repeat now 999
+ Event "Need Something" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+[GameVar] Promises_Num changed from 0 to 1 as a result of Add 1
+--- MultiKeyInput (Game.cs)
+1 input
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 04/05/2017 11:35:09

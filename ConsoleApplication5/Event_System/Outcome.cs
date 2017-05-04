@@ -235,7 +235,7 @@ namespace Next_Game.Event_System
             { Data = actorID; }
             else { Game.SetError(new Error(238, "Invalid actorID (zero, or less) -> assigned default value 10")); Data = 10; }*/
             if (strength > 0 && strength < 6)
-            { Amount = strength; }
+            { Data = strength; }
             else { Game.SetError(new Error(238, "Invalid strength input (\"{strength}\") must be between 1 & 5 -> assigned default value 1")); Data = 1; }
             Type = OutcomeType.Favour;
         }
