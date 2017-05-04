@@ -2292,7 +2292,7 @@ namespace Next_Game
                                 if (opponent is Passive)
                                 {
                                     Passive passive = opponent as Passive;
-                                    data = Game.world.GetIntroduction(passive.RefID);
+                                    data = Game.world.GetIntroductionHouse(passive.RefID);
                                     tempText = $"{opponent.Title} {opponent.Name} \"{opponent.Handle}\" grants you an Introduction to House \"{Game.world.GetHouseName(data)}\"";
                                     Introduction newIntroduction = new Introduction(tempText, data, opponent.ActID);
                                     //add to dictionary and Player's list

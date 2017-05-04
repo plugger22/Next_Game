@@ -1209,8 +1209,8 @@ namespace Next_Game
                             Introduction introduction = (Introduction)GetPossession(possessionID);
                             if (introduction != null)
                             {
-                                listToDisplay.Add(new Snippet(string.Format("{0} {1} ", introduction.Year, introduction.Description), false));
-                                listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(introduction.Strength)), RLColor.LightRed, RLColor.Black));
+                                listToDisplay.Add(new Snippet(string.Format("{0} {1} ", introduction.Year, introduction.Description)));
+                                //listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(introduction.Strength)), RLColor.LightRed, RLColor.Black));
                             }
                         }
                     }
@@ -5851,14 +5851,14 @@ namespace Next_Game
         /// </summary>
         /// <param name="origRefID">RefID of house of NPC (assumed to be Major)</param>
         /// <returns></returns>
-        public int GetIntroduction(int origRefID)
+        public int GetIntroductionHouse(int origRefID)
         {
             int introHouse = 0;
             int refID = 0;
             int currentRel = 0;
             House npcHouse = GetHouse(origRefID);
             List<int> listTempRefID = new List<int>(); //holds all Major houses where origHouse has +ve rel's. 
-            Game.logTurn?.Write("--- GetIntroduction (World.cs)");
+            Game.logTurn?.Write("--- GetIntroductionHouse (World.cs)");
             if (npcHouse != null)
             {
                 //loop great Houses and get current relations
@@ -5887,8 +5887,6 @@ namespace Next_Game
                 else { Game.logTurn?.Write("[Alert] There are no positive inter-House Relationships -> Introduction cancelled"); }
             }
             else { Game.SetError(new Error(240, $"Invalid npcHouse (null) for refID {origRefID}")); }
-
-
             return introHouse;
         }
 

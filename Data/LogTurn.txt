@@ -1,51 +1,41 @@
-//Exile Game File "LogTurn.txt" opened at: 04/05/2017 14:49:02
+//Exile Game File "LogTurn.txt" opened at: 04/05/2017 19:50:25
 --- ProcessStartTurn (World.cs)
-Day 4, Turn 3
---- MoveActors -> 3 Records (World.cs)
- [Move -> MoveObject] Usurper Patrek Florent, ActID 1 travelling to Bloodkeep (current Loc 20:12)
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Diabolous, ID 119 at 15:17, Active Patrek Florent, ID 1, at 20:12
- [Search -> Debug] Enemy, Brother Nergal, ID 120 at 15:17, Active Patrek Florent, ID 1, at 20:12
- [Search -> Debug] Enemy, Brother Damballa, ID 121 at 15:17, Active Patrek Florent, ID 1, at 20:12
- [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 13:17, Active Patrek Florent, ID 1, at 20:12
- [Search -> Debug] Enemy, The Unrelenting, ID 123 at 15:17, Active Patrek Florent, ID 1, at 20:12
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Diabolous, ID 119 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, Brother Nergal, ID 120 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, Brother Damballa, ID 121 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 13:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, The Unrelenting, ID 123 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Move -> MoveObject] Inquisitor Brother Behemoth, ActID 122 travelling to The Singing Ghost (current Loc 13:17)
+Day 9, Turn 8
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Nemesis The Unrelenting, ActID 123 travelling to Bloodkeep (current Loc 15:11)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 13:17 (Brother Behemoth, ID 122
+ [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 15:11 (The Unrelenting, ID 123
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 12:17 (Brother Behemoth, ID 122
- [Move -> MoveObject] Inquisitor Brother Damballa, ActID 121 travelling to The Raucous Rat (current Loc 15:16)
+ [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 16:11 (The Unrelenting, ID 123
+ [Move -> MoveObject] Inquisitor Brother Damballa, ActID 121 travelling to Bloodkeep (current Loc 18:12)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 15:16 (Brother Damballa, ID 121
+ [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 18:12 (Brother Damballa, ID 121
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Patrek Florent, ID 1 at 21:12, Enemy at 19:12 (Brother Damballa, ID 121
 --- UpdatePlayerStatus (World.cs)
 --- CheckStationaryActiveActors (World.cs)
  [Search -> Stationary] Usurper Patrek Florent, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
  [Search -> Debug] Enemy, Brother Diabolous, ID 119 at 15:17, Active Patrek Florent, ID 1, at 21:12
  [Search -> Debug] Enemy, Brother Nergal, ID 120 at 15:17, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, Brother Damballa, ID 121 at 15:15, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 12:18, Active Patrek Florent, ID 1, at 21:12
- [Search -> Debug] Enemy, The Unrelenting, ID 123 at 15:17, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Debug] Enemy, Brother Damballa, ID 121 at 20:12, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 12:25, Active Patrek Florent, ID 1, at 21:12
+ [Search -> Debug] Enemy, The Unrelenting, ID 123 at 17:11, Active Patrek Florent, ID 1, at 21:12
  [Search -> Stationary] Follower The Beast, ActID 8 is AtLocation
  [Search -> Stationary] Follower The Viper, ActID 4 is AtLocation
  [Search -> Stationary] Follower The Spider, ActID 7 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 119 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 120 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 123 Mode -> Normal
+ [AI -> Notification] Inquisitor Brother Damballa, ActID 121 is Travelling to Bloodkeep
+ [AI -> Notification] Nemesis The Unrelenting, ActID 123 is Travelling to Bloodkeep
+ [AI -> Mode] enemyID 119,  distance -> 13  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 120,  distance -> 13  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 122,  distance -> 24  Threshold (turns) -> 4  Mode -> Normal
 --- SetEnemyActivity (World.cs)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Diabolous, ActID 119 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] Brother Diabolous, ActID 119, (loc 15:17), assigned new Goal -> Hide
+ [Enemy -> Goal] Brother Diabolous, ActID 119 retains Goal -> Hide
  [Enemy -> Goal] Brother Nergal, ActID 120 retains Goal -> Wait
- [Enemy -> Known] The Unrelenting ActID 123 has become KNOWN
- [Enemy -> Goal] The Unrelenting, ActID 123 retains Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Behemoth, ActID 122 Assigned Branch -> 4 Current Branch -> 4
+ [Goal -> New] Brother Behemoth, ActID 122, (loc 12:25), assigned new Goal -> Hide
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
  [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
@@ -64,17 +54,16 @@ Day 4, Turn 3
  [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status
+ Trigger passed on "1" Equals 1
+ Trigger passed on "1" Equals 1
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Patrek Florent has had their TurnsUnknown Timer increased from 102 to 103
- Follower The Beast has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Viper has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Spider has had their TurnsUnknown Timer increased from 2 to 3
+ Usurper Patrek Florent has had their Revert Timer reduced from 1 to 0
+Usurper Patrek Florent is no longer "Known" as sufficient time has passed
+ Follower The Beast has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Viper has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Spider has had their TurnsUnknown Timer increased from 7 to 8
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
  [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
@@ -92,33 +81,12 @@ Day 4, Turn 3
  [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
  [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "1" Equals 1
- Trigger passed on "1" Equals 1
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
- [AutoEvent -> ActorList] "Jodoca Baratheon", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Ser Audry Raimund", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Addam Anselet", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Iamys Tankard", ID 42 added to list of Actors
- [AutoEvent -> ActorList] "Guarnier Jame", ID 43 added to list of Actors
- [AutoEvent -> ActorList] "Robert Baratheon", ID 44 added to list of Actors
- [AutoEvent -> LocalList] "Herriot Baratheon", ID 38 added to list of Locals
- [AutoEvent -> LocalList] "Jodoca Baratheon", ID 39 added to list of Locals
- [AutoEvent -> LocalList] "Ser Audry Raimund", ID 40 added to list of Locals
- [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
- [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
- [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
- [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Trigger passed on "63" GreaterThanOrEqual 50
+ Trigger FAILED on "48" GreaterThanOrEqual 50
  Trigger passed on "54" GreaterThanOrEqual 50
  Trigger passed on "69" GreaterThanOrEqual 50
  Trigger passed on "80" GreaterThanOrEqual 50
- Event "Talk to Locals" Timer Repeat now 999
- Event "Talk to Locals" Cooldown Timer has been reset to 0
+ Event "Talk to members of the Court" Timer Repeat now 999
+ Event "Talk to members of the Court" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
  [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
@@ -131,6 +99,48 @@ Day 4, Turn 3
  [AutoEvent -> LocalList] "Herriot Baratheon", ID 38 added to list of Locals
  [AutoEvent -> LocalList] "Jodoca Baratheon", ID 39 added to list of Locals
  [AutoEvent -> LocalList] "Ser Audry Raimund", ID 40 added to list of Locals
+ [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
+ [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "54" GreaterThanOrEqual 50
+ Trigger passed on "54" GreaterThanOrEqual 40
+ Trigger FAILED on "54" GreaterThanOrEqual 60
+ Trigger FAILED on "54" GreaterThanOrEqual 70
+Trigger: Jodoca Baratheon has desire a court position for their son Robert Baratheon "The Confused" ActID 44 and Satisified False -> passed
+ Trigger passed on "0" LessThanOrEqual 6
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+SetGameSituation] -> "difference between Your's and the King's Honour is -50 %", difference -50 Modifier 50 numCards 3
+- Initialise Social Challenge
+--- SetSupporters (Conflict.cs)
+ [Notification] dictPlyrSupporters has 2 records
+ [Supporter -> Good] Maester Iamys Tankard "The Retentive", Friend, ActID 42, relPlyr 81
+ [Supporter -> Good] Heir Robert Baratheon "The Confused", Friend, ActID 44, relPlyr 80
+ [Notification] dictOppSupporters has 0 records
+--- SetItems (Conflict.cs)
+ [Notification] Player has no Items
+ [Notification] Opponent has no Items
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 22, net 22, numCards 1
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 69, net 69, numCards 2
+--- SetOpponentStrategy (Conflict.cs)
+[Conflict -> Debug] Good -> 10 Bad -> 13 Margin -> 2 rndFactor -> 3 Opp Wits -> 3 Opp PSkill -> 4 Def Spec -> 1 Challenger -> True
+[Conflict -> Opp Def's] Bad 13 - Good 10 > margin 2
+--- ResolveResults (Conflict.cs)
+RelPlyr amount beforehand -25
+RelPlyr amount afterwards -25
+--- ResolveFollowerEvents (Director.cs)
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 04/05/2017 20:01:24
+earch and Detain" Dormant Timer decremented to 15
+ "Search and Detain" event, Cooldown Timer decremented from 3 to 2
+//Exile Game File "LogTurn.txt" Close completed at: 04/05/2017 19:50:23
+ added to list of Locals
  [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
  [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
  [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
@@ -147,6 +157,28 @@ Trigger: Herriot Baratheon has desire a court position for their son Robert Bara
  Event "Interact" Timer Repeat now 999
  Event "Interact" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 04/05/2017 14:52:05
+SetGameSituation] -> "difference between Your's and the King's Honour is 0 %", difference 0 Modifier 0 numCards 1
+- Initialise Social Challenge
+--- SetSupporters (Conflict.cs)
+ [Notification] dictPlyrSupporters has 2 records
+ [Supporter -> Good] Maester Iamys Tankard "The Retentive", Friend, ActID 42, relPlyr 81
+ [Supporter -> Good] Heir Robert Baratheon "The Confused", Friend, ActID 44, relPlyr 80
+ [Notification] dictOppSupporters has 0 records
+--- SetItems (Conflict.cs)
+ [Notification] Player Item "Head Lopper" isn't valid for this Challenge
+ [Notification] Opponent has no Items
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 4, net 4, numCards 1
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 75, net 75, numCards 2
+--- SetOpponentStrategy (Conflict.cs)
+[Conflict -> Debug] Good -> 10 Bad -> 9 Margin -> 2 rndFactor -> 0 Opp Wits -> 1 Opp PSkill -> 3 Def Spec -> 1 Challenger -> True
+--- ResolveResults (Conflict.cs)
+RelPlyr amount beforehand -14
+RelPlyr amount afterwards -15
+Item with PossID 8 has been removed from Patrek Florent's inventory
+--- ProcessEndTurn (World.cs)
+Day 4, Turn 3
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 17
+//Exile Game File "LogTurn.txt" Close completed at: 04/05/2017 19:48:50
