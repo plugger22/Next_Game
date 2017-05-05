@@ -173,23 +173,21 @@ namespace Next_Game
 
     public class Introduction : Possession
     {
-        public int Strength { get; set; } //strength 1 to 5
+        public int RefID { get; set; } //Major House refID
         public int WhoGave { get; set; } //which actor granted the favour
 
         /// <summary>
         /// default constructor
         /// </summary>
         /// <param name="description"></param>
-        /// <param name="strength"></param>
+        /// <param name="refID"></param>
         /// <param name="actorID"></param>
         /// <param name="year">if ignored, default value of '0' gets converted to current year</param>
-        public Introduction(string description, int strength, int actorID, int year = 0) : base(description, year)
+        public Introduction(string description, int refID, int actorID, int year = 0) : base(description, year)
         {
-            this.Strength = strength;
-            Strength = Math.Min(5, Strength);
-            Strength = Math.Max(1, Strength);
+            this.RefID = refID;
             if (actorID > 0) { this.WhoGave = actorID; } else { Game.SetError(new Error(122, $"Invalid ActorID input \"{actorID}\" -> given Bad value 1")); WhoGave = 1; }
-            Type = PossessionType.Favour;
+            Type = PossessionType.Introduction;
         }
     }
 

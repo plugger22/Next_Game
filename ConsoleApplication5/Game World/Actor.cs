@@ -833,7 +833,7 @@ namespace Next_Game
             if (dictOfIntroductions.ContainsKey(refID))
             { return dictOfIntroductions[refID]; }
             //entry not found
-            Game.SetError(new Error(244, $"[Notification] No entry found in dictOfIntroductions for RefID \"{refID}\""));
+            Game.logTurn?.Write($"[Notification] No entry found in dictOfIntroductions for RefID {refID}");
             return 0;
         }
 

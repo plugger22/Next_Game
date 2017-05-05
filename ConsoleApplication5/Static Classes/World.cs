@@ -1200,20 +1200,6 @@ namespace Next_Game
                         }
                     }
                     //Introductions (Player only)
-                    /*List<int> listOfIntroductions = player.GetIntroductions();
-                    if (listOfIntroductions.Count > 0)
-                    {
-                        listToDisplay.Add(new Snippet("Introductions", RLColor.Brown, RLColor.Black));
-                        foreach (int possessionID in listOfIntroductions)
-                        {
-                            Introduction introduction = (Introduction)GetPossession(possessionID);
-                            if (introduction != null)
-                            {
-                                listToDisplay.Add(new Snippet(string.Format("{0} {1} ", introduction.Year, introduction.Description)));
-                                //listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(introduction.Strength)), RLColor.LightRed, RLColor.Black));
-                            }
-                        }
-                    }*/
                     Dictionary<int, int> dictOfIntroductions = player.GetIntroductions();
                     if (dictOfIntroductions != null)
                     {
@@ -5881,7 +5867,7 @@ namespace Next_Game
         /// <returns></returns>
         public int GetIntroductionHouse(int origRefID)
         {
-            int introHouse = 0;
+            int introRefID = 0;
             int refID = 0;
             int currentRel = 0;
             House npcHouse = GetHouse(origRefID);
@@ -5911,16 +5897,16 @@ namespace Next_Game
                     //Randomly choose one RefID from list of positive relations (first choice)
                     if (listTempRefIDPositive.Count > 0)
                     {
-                        introHouse = listTempRefIDPositive[rnd.Next(listTempRefIDPositive.Count)];
-                        player.AddIntroduction(refID);
+                        introRefID = listTempRefIDPositive[rnd.Next(listTempRefIDPositive.Count)];
+                        player.AddIntroduction(introRefID);
                         Game.logTurn?.Write($"There are {listTempRefIDPositive.Count} records in listPositive to select from");
                         Game.logTurn?.Write($"House {GetHouseName(origRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
                     }
                     //Look to list of houses with a neutral relationship as a second choice, if none with +ve rel's
                     else if (listTempRefIDNeutral.Count > 0)
                     {
-                        introHouse = listTempRefIDNeutral[rnd.Next(listTempRefIDNeutral.Count)];
-                        player.AddIntroduction(refID);
+                        introRefID = listTempRefIDNeutral[rnd.Next(listTempRefIDNeutral.Count)];
+                        player.AddIntroduction(introRefID);
                         Game.logTurn?.Write($"There are {listTempRefIDNeutral.Count} records in listNeutral to select from");
                         Game.logTurn?.Write($"House {GetHouseName(origRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
                     }
@@ -5929,7 +5915,7 @@ namespace Next_Game
                 else { Game.SetError(new Error(240, $"Invalid npcHouse (null) for refID {origRefID}")); }
             }
             else { Game.SetError(new Error(240, "Invalid player (null)")); }
-            return introHouse;
+            return introRefID;
         }
 
         //new Methods above here

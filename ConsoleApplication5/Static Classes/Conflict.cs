@@ -2301,7 +2301,6 @@ namespace Next_Game
                                         //add to dictionary and Player's list
                                         if (Game.world.AddPossession(newIntroduction.PossID, newIntroduction) == true)
                                         {
-                                            player.AddIntroduction(newIntroduction.PossID);
                                             message = new Message(tempText, MessageType.Conflict);
                                             Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
                                         }
