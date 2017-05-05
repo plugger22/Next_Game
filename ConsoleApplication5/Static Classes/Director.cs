@@ -988,7 +988,7 @@ namespace Next_Game
         private void CreateAutoLocEvent(EventAutoFilter filter, int actorID = 0)
         {
             //get player
-            Active player = Game.world.GetActiveActor(1);
+            Player player = (Player)Game.world.GetActiveActor(1);
             if (player != null)
             {
                 Game.logTurn?.Write("- CreateAutoLocEvent (Director.cs)");
@@ -1149,9 +1149,10 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
-                            //option -> Make yourself Known
+                            
                             if (player.Known == false)
                             {
+                                //option -> Make yourself Known
                                 OptionInteractive option = new OptionInteractive("Make yourself Known");
                                 option.ReplyGood = "You reveal your identity and gain access to the Court";
                                 OutKnown outKnown = new OutKnown(eventObject.EventPID, -1);
@@ -1159,9 +1160,24 @@ namespace Next_Game
                                 option.SetGoodOutcome(outKnown);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
-                            }
-                            //option -> Use an introduction
 
+                                //option -> Use an introduction
+                                int numIntros = player.GetNumOfIntroductions(refID);
+                                if ( numIntros > 0)
+                                {
+                                    OptionInteractive optionIntro = new OptionInteractive($"Use an Introduction (you have {numIntros})");
+                                    option.ReplyGood = $"You present your written Introduction to House \"{houseName}\"";
+                                    OutKnown outKnow = new OutKnown(eventObject.EventPID, -1);
+                                    OutIntroduction outIntro = new OutIntroduction(eventObject.EventPID, refID);
+                                    OutEventChain outEvent = new OutEventChain(1000, EventAutoFilter.None);
+                                    optionIntro.SetGoodOutcome(outKnown);
+                                    optionIntro.SetGoodOutcome(outIntro);
+                                    optionIntro.SetGoodOutcome(outEvent);
+                                    eventObject.SetOption(optionIntro);
+                                }
+                            }
+                            
+                            
                             //does player have an introduction to this House?
 
                             //option -> recruit follower (only at Inns)
@@ -2594,6 +2610,16 @@ namespace Next_Game
                                                 Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             }
                                             break;
+                                        case OutcomeType.Introduction:
+                                            //Player uses an introduction to gain access to a House court audience
+                                            outcomeText = ChangePlayerIntroductionStatus(outcome.Data);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            {
+                                                resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            }
+                                            break;
                                         case OutcomeType.GameVar:
                                             //Change a GameVar
                                             OutGameVar gamevarOutcome = outcome as OutGameVar;
@@ -3457,6 +3483,24 @@ namespace Next_Game
                     else { Game.SetError(new Error(239, "Invalid NPC actor (null) -> Favour not created")); }
                 }
                 else { Game.SetError(new Error(239, $"Invalid Passive actorID \"{actorID}\" -> Favour not created")); }
+            }
+            else { Game.SetError(new Error(239, "Invalid Player (null)")); }
+            return resultText;
+        }
+
+        /// <summary>
+        /// Player uses an introduction to gain access to a House court audience
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        private string ChangePlayerIntroductionStatus(int refID)
+        {
+            string resultText = "";
+            Player player = (Player)Game.world.GetActiveActor(1);
+            if (player != null)
+            {
+                player.DeleteIntroduction(refID);
+                resultText = $"You have used your introduction to gain access to the court of House \"{Game.world.GetHouseName(refID)}\"";
             }
             else { Game.SetError(new Error(239, "Invalid Player (null)")); }
             return resultText;

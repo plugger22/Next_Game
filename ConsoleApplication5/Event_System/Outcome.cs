@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
     public enum OutcomeType { None, Delay, Conflict, GameState, GameVar, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
-    Follower, Promise, RelPlyr, Favour};
+    Follower, Promise, RelPlyr, Favour, Introduction};
 
     /// <summary>
     /// Option outcome, event system
@@ -238,6 +238,20 @@ namespace Next_Game.Event_System
             { Data = strength; }
             else { Game.SetError(new Error(238, "Invalid strength input (\"{strength}\") must be between 1 & 5 -> assigned default value 1")); Data = 1; }
             Type = OutcomeType.Favour;
+        }
+    }
+
+    /// <summary>
+    /// Player uses an introduction to gain access to a House court audience
+    /// </summary>
+    class OutIntroduction : Outcome
+    {
+        //Data is the RefID of the Major house where the introduction applies
+
+        public OutIntroduction(int eventID, int refID) : base(eventID)
+        {
+            Data = refID;
+            Type = OutcomeType.Introduction;
         }
     }
 

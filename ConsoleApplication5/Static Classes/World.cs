@@ -5875,40 +5875,47 @@ namespace Next_Game
             List<int> listTempRefIDPositive = new List<int>(); //holds all Major houses where origHouse has +ve rel's (first choice for an introduction)
             List<int> listTempRefIDNeutral = new List<int>(); //holds all Major houses where origHouse has a neutral rel (second choice)
             Game.logTurn?.Write("--- GetIntroductionHouse (World.cs)");
-            if (npcHouse != null)
+            Player player = (Player)GetActiveActor(1);
+            if (player != null)
             {
-                Game.logTurn?.Write($"Check Relations for House \"{npcHouse.Name}\" at {npcHouse.LocName}, RefID {origRefID}");
-                //loop great Houses and get current relations
-                foreach (var house in dictMajorHouses)
+                if (npcHouse != null)
                 {
-                    refID = house.Value.RefID;
-                    if (refID != origRefID)
+                    Game.logTurn?.Write($"Check Relations for House \"{npcHouse.Name}\" at {npcHouse.LocName}, RefID {origRefID}");
+                    //loop great Houses and get current relations
+                    foreach (var house in dictMajorHouses)
                     {
-                        currentRel = npcHouse.GetCurrentRelationship(refID);
-                        if (currentRel > 0)
-                        { listTempRefIDPositive.Add(refID); }
-                        else if (currentRel == 0)
-                        { listTempRefIDNeutral.Add(refID); }
-                        else { Game.logTurn?.Write($"House \"{house.Value.Name}\" at {house.Value.LocName}, RefID {house.Value.RefID}, has a Rel level of {currentRel} and is ignored"); }
+                        refID = house.Value.RefID;
+                        if (refID != origRefID)
+                        {
+                            currentRel = npcHouse.GetCurrentRelationship(refID);
+                            if (currentRel > 0)
+                            { listTempRefIDPositive.Add(refID); }
+                            else if (currentRel == 0)
+                            { listTempRefIDNeutral.Add(refID); }
+                            else { Game.logTurn?.Write($"House \"{house.Value.Name}\" at {house.Value.LocName}, RefID {house.Value.RefID}, has a Rel level of {currentRel} and is ignored"); }
+                        }
                     }
+                    //Randomly choose one RefID from list of positive relations (first choice)
+                    if (listTempRefIDPositive.Count > 0)
+                    {
+                        introHouse = listTempRefIDPositive[rnd.Next(listTempRefIDPositive.Count)];
+                        player.AddIntroduction(refID);
+                        Game.logTurn?.Write($"There are {listTempRefIDPositive.Count} records in listPositive to select from");
+                        Game.logTurn?.Write($"House {GetHouseName(origRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
+                    }
+                    //Look to list of houses with a neutral relationship as a second choice, if none with +ve rel's
+                    else if (listTempRefIDNeutral.Count > 0)
+                    {
+                        introHouse = listTempRefIDNeutral[rnd.Next(listTempRefIDNeutral.Count)];
+                        player.AddIntroduction(refID);
+                        Game.logTurn?.Write($"There are {listTempRefIDNeutral.Count} records in listNeutral to select from");
+                        Game.logTurn?.Write($"House {GetHouseName(origRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
+                    }
+                    else { Game.logTurn?.Write("[Alert] There are no positive inter-House Relationships -> Introduction cancelled"); }
                 }
-                //Randomly choose one RefID from list of positive relations (first choice)
-                if (listTempRefIDPositive.Count > 0)
-                {
-                    introHouse = listTempRefIDPositive[rnd.Next(listTempRefIDPositive.Count)];
-                    Game.logTurn?.Write($"There are {listTempRefIDPositive.Count} records in listPositive to select from");
-                    Game.logTurn?.Write($"House {GetHouseName(origRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
-                }
-                //Look to list of houses with a neutral relationship as a second choice, if none with +ve rel's
-                else if (listTempRefIDNeutral.Count > 0)
-                {
-                    introHouse = listTempRefIDNeutral[rnd.Next(listTempRefIDNeutral.Count)];
-                    Game.logTurn?.Write($"There are {listTempRefIDNeutral.Count} records in listNeutral to select from");
-                    Game.logTurn?.Write($"House {GetHouseName(origRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
-                }
-                else { Game.logTurn?.Write("[Alert] There are no positive inter-House Relationships -> Introduction cancelled"); }
+                else { Game.SetError(new Error(240, $"Invalid npcHouse (null) for refID {origRefID}")); }
             }
-            else { Game.SetError(new Error(240, $"Invalid npcHouse (null) for refID {origRefID}")); }
+            else { Game.SetError(new Error(240, "Invalid player (null)")); }
             return introHouse;
         }
 
