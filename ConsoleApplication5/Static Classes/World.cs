@@ -5868,7 +5868,7 @@ namespace Next_Game
                     refID = house.Value.RefID;
                     if (refID != origRefID)
                     {
-                        currentRel = npcHouse.GetHouseCurrentRelationship(refID);
+                        currentRel = npcHouse.GetCurrentRelationship(refID);
                         if (currentRel > 0)
                         { listTempRefID.Add(refID); }
                         else { Game.logTurn?.Write($"House \"{house.Value.Name}\" at {house.Value.LocName}, RefID {house.Value.RefID}, has a Rel level of {currentRel} and is ignored"); }

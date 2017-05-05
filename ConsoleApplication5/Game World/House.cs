@@ -34,7 +34,8 @@ namespace Next_Game
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
-        private List<Relation> listOfRelations; //relationships with other houses (can have multiple relations with another house)
+        private List<Relation> listOfRelations; //relationships (records) with other houses (can have multiple relations with another house)
+        private Dictionary<int, int> dictCurrentRelations; //current Relationship levels, key is RefID, value is current Rel lvl
 
         /// <summary>
         /// default constructor
@@ -46,6 +47,7 @@ namespace Next_Game
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
             listOfRelations = new List<Relation>();
+            dictCurrentRelations = new Dictionary<int, int>();
         }
 
 
@@ -104,20 +106,33 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// import a list of Relations and add to House Relations List
+        /// import a list of Relations and add to House Relations List (auto  updates current Rel dict)
         /// </summary>
         /// <param name="tempList"></param>
         internal void SetRelations(List<Relation> tempList)
         {
             if (tempList != null && tempList.Count > 0)
-            { listOfRelations.AddRange(tempList); }
+            {
+                listOfRelations.AddRange(tempList);
+                //update current rel dictionary
+                foreach(var relation in tempList)
+                {  UpdateRelations(relation.RefID, relation.Change);  }
+            }
             else { Game.SetError(new Error(132, "Invalid List of Relations Input (null or empty)")); }
         }
 
+        /// <summary>
+        /// Add a relationship record (auto  updates current Rel dict)
+        /// </summary>
+        /// <param name="relation"></param>
         internal void AddRelations(Relation relation)
         {
             if (relation != null)
-            { listOfRelations.Add(relation); }
+            {
+                listOfRelations.Add(relation);
+                //update current Rel dict
+                UpdateRelations(relation.RefID, relation.Change);
+            }
             else { Game.SetError(new Error(135, "Invalid Relation (null)")); }
         }
 
@@ -129,7 +144,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="refID"></param>
         /// <returns></returns>
-        internal List<Relation> GetSpecificRelations(int refID)
+        internal List<Relation> GetSpecificRelations(int refID) //NOT SURE IF THIS WORKS
         {
             List<Relation> tempList = new List<Relation>();
             if (listOfRelations.Count > 0)
@@ -144,7 +159,7 @@ namespace Next_Game
             return tempList;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// returns current relationship level with calling House and specified, refID, one. Returns 0 as a default (neutral relationship level)
         /// </summary>
         /// <param name="refID"></param>
@@ -163,6 +178,43 @@ namespace Next_Game
                 }
             }
             return 0;
+        }*/
+
+        /// <summary>
+        /// updates current rel dict with latest data, creates new entry if refID doesn't exist. All relationships assumed to start at a base of zero. Auto called whenever a new Relationship record is added
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <param name="change"></param>
+        private void UpdateRelations(int refID, int change)
+        {
+            int relLevel = 0;
+            if (dictCurrentRelations.ContainsKey(refID))
+            {
+                relLevel = dictCurrentRelations[refID];
+                //update with change amount to current Rel level
+                dictCurrentRelations[refID] = relLevel + change;
+            }
+            else
+            {
+                //no entry found, create new one
+                try
+                { dictCurrentRelations.Add(refID, change); }
+                catch (ArgumentException)
+                { Game.SetError(new Error(241, $"Invalid RefID \"{refID}\" (duplicate record) -> Relationship not updated")); }
+            }
+        }
+
+        /// <summary>
+        /// looks up house in Dictionary and returns current rel level, '0' if not found (neutral)
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        internal int GetCurrentRelationship(int refID)
+        {
+            int relLevel = 0;
+            if (dictCurrentRelations.ContainsKey(refID))
+            { relLevel = dictCurrentRelations[refID];  }
+            return relLevel;
         }
 
     }

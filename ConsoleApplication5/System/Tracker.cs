@@ -324,7 +324,7 @@ namespace Next_Game
         public int RefID { get; set; } //house to whom this relationship effect applies (used for House -> House relationships)
         public string Tag { get; set; } //short form description (max 4 words)
         public int Change { get; set; } //the effect on a relationship level, eg. +25
-        public int Level { get; set; } //current relationship level with that character, AFTER change has been applied
+        public int Level { get; set; } //current relationship level with that character, AFTER change has been applied (handled automatically by code based on change, NO NEED to specify directly)
 
         /// <summary>
         /// for relationships with Player
