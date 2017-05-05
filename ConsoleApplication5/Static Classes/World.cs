@@ -5861,27 +5861,24 @@ namespace Next_Game
             Game.logTurn?.Write("--- GetIntroductionHouse (World.cs)");
             if (npcHouse != null)
             {
+                Game.logTurn?.Write($"Check Relations for House \"{npcHouse.Name}\" at {npcHouse.LocName}, RefID {origRefID}");
                 //loop great Houses and get current relations
                 foreach (var house in dictMajorHouses)
                 {
-
                     refID = house.Value.RefID;
                     if (refID != origRefID)
                     {
-                        List<Relation> tempRelations = house.Value.GetSpecificRelations(refID);
-                        if (tempRelations?.Count > 0)
-                        {
-                            currentRel = tempRelations[0].Level; //first entry must be most recent relationship as list is sorted by TrackerID in descending order
-                            if (currentRel > 0)
-                            { listTempRefID.Add(tempRelations[0].RefID); }
-                        }
-                        else { Game.logTurn?.Write($"[Alert] House \"{GetHouseName(refID)}\" has no relations with other houses -> Introduction cancelled"); }
+                        currentRel = npcHouse.GetHouseCurrentRelationship(refID);
+                        if (currentRel > 0)
+                        { listTempRefID.Add(refID); }
+                        else { Game.logTurn?.Write($"House \"{house.Value.Name}\" at {house.Value.LocName}, RefID {house.Value.RefID}, has a Rel level of {currentRel} and is ignored"); }
                     }
                 }
                 //Randomly choose one RefID from list (if any)
                 if (listTempRefID.Count > 0)
                 {
                     introHouse = listTempRefID[rnd.Next(listTempRefID.Count)];
+                    Game.logTurn?.Write($"There are {listTempRefID.Count} records in listTempRefID to select from");
                     Game.logTurn?.Write($"House {GetHouseName(origRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
                 }
                 else { Game.logTurn?.Write("[Alert] There are no positive inter-House Relationships -> Introduction cancelled"); }

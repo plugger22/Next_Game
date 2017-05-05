@@ -2295,7 +2295,7 @@ namespace Next_Game
                                     data = Game.world.GetIntroductionHouse(passive.RefID);
                                     tempText = $"{opponent.Title} {opponent.Name} \"{opponent.Handle}\" grants you an Introduction to House \"{Game.world.GetHouseName(data)}\"";
                                     //it's possible that no introduction is possible
-                                    if (tempText.Length > 0)
+                                    if (data > 0)
                                     {
                                         Introduction newIntroduction = new Introduction(tempText, data, opponent.ActID);
                                         //add to dictionary and Player's list

@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Next_Game
 {
-    public enum KingLoyalty {None, Old_King, New_King}
-    public enum HouseSpecial { None, Inn}
-    public enum CastleDefences { None, Minimal, Weak, Average, Strong, Formidable}
+    public enum KingLoyalty { None, Old_King, New_King }
+    public enum HouseSpecial { None, Inn }
+    public enum CastleDefences { None, Minimal, Weak, Average, Strong, Formidable }
 
     //
     // Base class
@@ -98,7 +98,7 @@ namespace Next_Game
         internal void SetSecrets(List<int> tempSecrets)
         {
             if (tempSecrets != null)
-            { listOfSecrets.Clear();  listOfSecrets.AddRange(tempSecrets); }
+            { listOfSecrets.Clear(); listOfSecrets.AddRange(tempSecrets); }
             else
             { Game.SetError(new Error(57, "Invalid list of Secrets input (null)")); }
         }
@@ -125,16 +125,15 @@ namespace Next_Game
         { return listOfRelations; }
 
         /// <summary>
-        /// Return a sorted (recent -> distant) list of Relations that apply to the House with the input refID. Returns null if none.
+        /// Return a sorted (recent -> distant) list of Relations that apply to the House with the input refID. Returns list, (count 0), if none
         /// </summary>
         /// <param name="refID"></param>
         /// <returns></returns>
         internal List<Relation> GetSpecificRelations(int refID)
         {
-            List<Relation> tempList = null;
+            List<Relation> tempList = new List<Relation>();
             if (listOfRelations.Count > 0)
             {
-                tempList = new List<Relation>();
                 IEnumerable<Relation> houseRels =
                     from relation in listOfRelations
                     where relation.RefID == refID
@@ -144,7 +143,30 @@ namespace Next_Game
             }
             return tempList;
         }
+
+        /// <summary>
+        /// returns current relationship level with calling House and specified, refID, one. Returns 0 as a default (neutral relationship level)
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        internal int GetHouseCurrentRelationship(int refID)
+        {
+            if (listOfRelations.Count > 0)
+            {
+                //count backwards through list and get first record which will be the latest
+                for (int i = listOfRelations.Count - 1; i >= 0; i--)
+                {
+                    Relation relation = listOfRelations[i];
+                    if (relation.RefID == refID)
+                    { return relation.Level; }
+
+                }
+            }
+            return 0;
+        }
+
     }
+    
 
     //
     // Major (Great) house ---

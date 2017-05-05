@@ -2757,7 +2757,6 @@ namespace Next_Game
                 if (tempListRelations.Count > 0)
                 { house.SetRelations(tempListRelations); }
             }
-
             //Add special relations for each Major House in regard to their view of the newly appointed TurnCoat major house
             year = Game.gameRevolt;
             relText = "";

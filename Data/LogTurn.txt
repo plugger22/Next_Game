@@ -1,4 +1,4 @@
-//Exile Game File "LogTurn.txt" opened at: 04/05/2017 20:40:59
+//Exile Game File "LogTurn.txt" opened at: 05/05/2017 12:25:58
 --- ProcessStartTurn (World.cs)
 Day 4, Turn 3
 --- MoveActors -> 3 Records (World.cs)
@@ -118,64 +118,4 @@ Day 4, Turn 3
  Trigger passed on "69" GreaterThanOrEqual 50
  Trigger passed on "80" GreaterThanOrEqual 50
  Event "Talk to members of the Court" Timer Repeat now 999
- Event "Talk to members of the Court" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Herriot Baratheon", ID 38 added to list of Actors
- [AutoEvent -> ActorList] "Jodoca Baratheon", ID 39 added to list of Actors
- [AutoEvent -> ActorList] "Ser Audry Raimund", ID 40 added to list of Actors
- [AutoEvent -> ActorList] "Addam Anselet", ID 41 added to list of Actors
- [AutoEvent -> ActorList] "Iamys Tankard", ID 42 added to list of Actors
- [AutoEvent -> ActorList] "Guarnier Jame", ID 43 added to list of Actors
- [AutoEvent -> ActorList] "Robert Baratheon", ID 44 added to list of Actors
- [AutoEvent -> LocalList] "Herriot Baratheon", ID 38 added to list of Locals
- [AutoEvent -> LocalList] "Jodoca Baratheon", ID 39 added to list of Locals
- [AutoEvent -> LocalList] "Ser Audry Raimund", ID 40 added to list of Locals
- [AutoEvent -> AdvisorList] "Addam Anselet", ID 41 added to list of Advisors
- [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
- [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
- [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Trigger passed on "63" GreaterThanOrEqual 50
- Trigger passed on "63" GreaterThanOrEqual 40
- Trigger passed on "63" GreaterThanOrEqual 60
- Trigger FAILED on "1" NotEqual 1
- Trigger: Same sex, Seduction not possible
- Trigger FAILED on "63" GreaterThanOrEqual 70
-Trigger: Herriot Baratheon has desire a court position for their son Robert Baratheon "The Confused" ActID 44 and Satisified False -> passed
- Trigger passed on "0" LessThanOrEqual 6
- Event "Interact" Timer Repeat now 999
- Event "Interact" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-SetGameSituation] -> "difference between Your's and the King's Honour is 0 %", difference 0 Modifier 0 numCards 1
-- Initialise Social Challenge
---- SetSupporters (Conflict.cs)
- [Notification] dictPlyrSupporters has 2 records
- [Supporter -> Good] Maester Iamys Tankard "The Retentive", Friend, ActID 42, relPlyr 81
- [Supporter -> Good] Heir Robert Baratheon "The Confused", Friend, ActID 44, relPlyr 80
- [Notification] dictOppSupporters has 0 records
---- SetItems (Conflict.cs)
- [Notification] Player Item "Head Lopper" isn't valid for this Challenge
- [Notification] Opponent has no Items
---- GetSituationCardNumber (Conflict.cs)
- modifier 0, rndNum 4, net 4, numCards 1
---- GetSituationCardNumber (Conflict.cs)
- modifier 0, rndNum 75, net 75, numCards 2
---- SetOpponentStrategy (Conflict.cs)
-[Conflict -> Debug] Good -> 10 Bad -> 9 Margin -> 2 rndFactor -> 0 Opp Wits -> 1 Opp PSkill -> 3 Def Spec -> 1 Challenger -> True
---- ResolveResults (Conflict.cs)
-RelPlyr amount beforehand -14
-RelPlyr amount afterwards -15
-Item with PossID 8 has been removed from Patrek Florent's inventory
---- GetIntroductionHouse (World.cs)
-[Alert] House "Martell" has no relations with other houses -> Introduction cancelled
-[Alert] House "Clegane" has no relations with other houses -> Introduction cancelled
-[Alert] House "Greyjoy" has no relations with other houses -> Introduction cancelled
-[Alert] House "Arryn" has no relations with other houses -> Introduction cancelled
-[Alert] House "Stark" has no relations with other houses -> Introduction cancelled
-[Alert] House "Tully" has no relations with other houses -> Introduction cancelled
-[Alert] House "Tyrell" has no relations with other houses -> Introduction cancelled
-[Alert] There are no positive inter-House Relationships -> Introduction cancelled
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 04/05/2017 20:43:42
+ Event "Talk to members of the Court" Cooldow
