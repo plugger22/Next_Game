@@ -751,15 +751,18 @@ namespace Next_Game
         public int HistoryID { get; set; } //actorID of character who becomes the usurper
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
         private List<int> listOfFavours; //stores possessionId of favours granted to Player
-        private List<int> listOfIntroductions; //stores possessionId of introductions granted to the Player
-        
+        //private List<int> listOfIntroductions; //stores possessionId of introductions granted to the Player
+        private Dictionary<int, int> dictOfIntroductions; //Major House introductions, key is RefID, value is # of introductions to that house (all intro's are considered equal)
+
+
 
         public Player(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {
             Activated = true;
             Title = string.Format("{0}", Type);
             listOfFavours = new List<int>();
-            listOfIntroductions = new List<int>();
+            //listOfIntroductions = new List<int>();
+            dictOfIntroductions = new Dictionary<int, int>();
         }
 
         public void SetFamily(SortedDictionary<int, ActorRelation> dictFamily)
@@ -777,11 +780,64 @@ namespace Next_Game
         public List<int> GetFavours()
         { return listOfFavours; }
 
-        public void AddIntroduction(int possID)
+        /*public void AddIntroduction(int possID)
         { if (possID > 0) { listOfIntroductions.Add(possID); } }
 
         public List<int> GetIntroductions()
-        { return listOfIntroductions; }
+        { return listOfIntroductions; }*/
+
+        /// <summary>
+        /// adds intro to dictionary (increments tally if an existing record, creates a new record if none exists).
+        /// </summary>
+        /// <param name="refID"></param>
+        public void AddIntroduction(int refID)
+        {
+            //record exists -> increment number of introductions
+            if (dictOfIntroductions.ContainsKey(refID))
+            { dictOfIntroductions[refID] += 1; }
+            //no entry found, create new one
+            else
+            {
+                try
+                { dictOfIntroductions.Add(refID, 1); }
+                catch (ArgumentException)
+                { Game.SetError(new Error(242, $"Invalid RefID \"{refID}\" (duplicate record) -> Introduction dict entry cancelled")); }
+            }
+        }
+
+        /// <summary>
+        /// decrements the # of introductions for the specified house. If it drops to zero, the record is maintained (for future use) but it's mincapped at zero
+        /// </summary>
+        /// <param name="refID"></param>
+        public void DeleteIntroduction(int refID)
+        {
+            if (dictOfIntroductions.ContainsKey(refID))
+            {
+                int tally = dictOfIntroductions[refID];
+                tally -= 1;
+                tally = Math.Max(0, tally);
+                dictOfIntroductions[refID] = tally;
+            }
+            else { Game.SetError(new Error(243, $"dictOfIntroductions doesn't contain an entry with RefID \"{refID}\"")); }
+        }
+
+        /// <summary>
+        /// returns the # of introductions to the specified house, '0' if none
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        public int GetNumOfIntroductions(int refID)
+        {
+            if (dictOfIntroductions.ContainsKey(refID))
+            { return dictOfIntroductions[refID]; }
+            //entry not found
+            Game.SetError(new Error(244, $"[Notification] No entry found in dictOfIntroductions for RefID \"{refID}\""));
+            return 0;
+        }
+
+
+        public Dictionary<int, int> GetIntroductions()
+        { return dictOfIntroductions; }
 
     }
 

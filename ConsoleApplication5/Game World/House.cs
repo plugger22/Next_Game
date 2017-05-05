@@ -144,7 +144,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="refID"></param>
         /// <returns></returns>
-        internal List<Relation> GetSpecificRelations(int refID) //NOT SURE IF THIS WORKS
+        internal List<Relation> GetSpecificRelations(int refID) //NOT SURE IF THIS method WORKS
         {
             List<Relation> tempList = new List<Relation>();
             if (listOfRelations.Count > 0)

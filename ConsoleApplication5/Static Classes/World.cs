@@ -1200,7 +1200,7 @@ namespace Next_Game
                         }
                     }
                     //Introductions (Player only)
-                    List<int> listOfIntroductions = player.GetIntroductions();
+                    /*List<int> listOfIntroductions = player.GetIntroductions();
                     if (listOfIntroductions.Count > 0)
                     {
                         listToDisplay.Add(new Snippet("Introductions", RLColor.Brown, RLColor.Black));
@@ -1213,7 +1213,21 @@ namespace Next_Game
                                 //listToDisplay.Add(new Snippet(string.Format("{0}", GetStars(introduction.Strength)), RLColor.LightRed, RLColor.Black));
                             }
                         }
+                    }*/
+                    Dictionary<int, int> dictOfIntroductions = player.GetIntroductions();
+                    if (dictOfIntroductions != null)
+                    {
+                        if (dictOfIntroductions.Count > 0)
+                        {
+                            listToDisplay.Add(new Snippet("Introductions", RLColor.Brown, RLColor.Black));
+                            foreach (var intro in dictOfIntroductions)
+                            {
+                                if (intro.Value > 0)
+                                { listToDisplay.Add(new Snippet(string.Format("You have {0} introduction{1} to House \"{2}\"", intro.Value, intro.Value != 1 ? "s" : "", GetHouseName(intro.Key)))); }
+                            }
+                        }
                     }
+                    else { Game.SetError(new Error(245, "Invalid dictOfIntroductions (null)")); }
                 }
                 //Promises
                 List<int> listOfPromises = person.GetPromises();
