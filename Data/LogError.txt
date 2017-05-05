@@ -1,4 +1,6 @@
-//Exile Game file ops "LogError.txt" commenced at: 05/05/2017 14:41:21
+//Exile Game file ops "LogError.txt" commenced at: 05/05/2017 19:45:08
 ERROR_29 "Location Deleted 27:27"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:41:21 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 05/05/2017 14:45:37
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 19:45:08 UTC +10:00
+ERROR_244 "[Notification] No entry found in dictOfIntroductions for RefID "7""
+Method: GetNumOfIntroductions,  Line: 836,  Object: Actor.cs,  Turn: 3,  Local Time: 19:45:28 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 05/05/2017 19:50:05

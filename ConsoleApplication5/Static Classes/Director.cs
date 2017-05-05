@@ -1286,8 +1286,11 @@ namespace Next_Game
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
                                 listTriggers.Clear();
+                                /*
+                                // Everybody will talk to you but with limited options
                                 listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, local.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
                                 option.SetTriggers(listTriggers);
+                                */
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
                                 OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Interact);
                                 option.SetGoodOutcome(outcome);

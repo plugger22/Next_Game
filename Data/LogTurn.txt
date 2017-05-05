@@ -1,4 +1,4 @@
-//Exile Game File "LogTurn.txt" opened at: 05/05/2017 14:41:34
+//Exile Game File "LogTurn.txt" opened at: 05/05/2017 19:45:27
 --- ProcessStartTurn (World.cs)
 Day 4, Turn 3
 --- MoveActors -> 3 Records (World.cs)
@@ -62,6 +62,8 @@ Day 4, Turn 3
  [AutoEvent -> AdvisorList] "Iamys Tankard", ID 42 added to list of Advisors
  [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
  [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
+ERROR_244 "[Notification] No entry found in dictOfIntroductions for RefID "7""
+Method: GetNumOfIntroductions,  Line: 836,  Object: Actor.cs,  Turn: 3,  Local Time: 19:45:28 UTC +10:00
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Trigger FAILED on "0" Equals 1
@@ -113,10 +115,6 @@ Day 4, Turn 3
  [AutoEvent -> AdvisorList] "Guarnier Jame", ID 43 added to list of Advisors
  [AutoEvent -> LocalList] "Robert Baratheon", ID 44 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "63" GreaterThanOrEqual 50
- Trigger passed on "54" GreaterThanOrEqual 50
- Trigger passed on "69" GreaterThanOrEqual 50
- Trigger passed on "80" GreaterThanOrEqual 50
  Event "Talk to members of the Court" Timer Repeat now 999
  Event "Talk to members of the Court" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
@@ -176,4 +174,4 @@ House Baratheon has a +0 Relationship with House "Tyrell -> Introduction Created
 1 input
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 05/05/2017 14:45:37
+//Exile Game file ops "LogTurn.txt" Completed at: 05/05/2017 19:50:05
