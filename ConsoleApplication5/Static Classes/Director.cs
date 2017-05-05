@@ -459,7 +459,8 @@ namespace Next_Game
         /// </summary>
         public void CheckPlayerEvents()
         {
-            Active player = Game.world.GetActiveActor(1);
+            //Active player = Game.world.GetActiveActor(1);
+            Player player = Game.world.GetPlayer();
             if (player != null && player.Status != ActorStatus.Gone && player.Delay == 0)
             {
                 Game.logTurn?.Write("--- CheckPlayerEvents (Director.cs)");
@@ -780,7 +781,7 @@ namespace Next_Game
                     { listEventPool.AddRange(GetValidPlayerEvents(seaCluster.GetPlayerEvents())); }
                     else { Game.SetError(new Error(72, "Invalid cluster Sea (null)")); }
                     //Player at sea on a risky vessel
-                    Active player = Game.world.GetActiveActor(1);
+                    Player player = Game.world.GetPlayer();
                     if (player != null)
                     { if (player.VoyageSafe == false) { listEventPool.AddRange(GetValidPlayerEvents(listGenPlyrEventsUnsafe)); } }
                     else { Game.SetError(new Error(72, "Invalid Player (null)")); }
@@ -863,7 +864,7 @@ namespace Next_Game
         private void CreateAutoEnemyEvent()
         {
             //get player
-            Active player = Game.world.GetActiveActor(1);
+            Player player = Game.world.GetPlayer();
             if (player != null)
             {
                 //assumes Player.Captured == true and Player.listOfEnemies.Count > 0

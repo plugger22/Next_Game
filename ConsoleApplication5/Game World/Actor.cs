@@ -755,6 +755,8 @@ namespace Next_Game
         private Dictionary<int, int> dictOfIntroductions; //Major House introductions, key is RefID, value is # of introductions to that house (all intro's are considered equal)
 
 
+        public Player() : base()
+        { }
 
         public Player(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         {

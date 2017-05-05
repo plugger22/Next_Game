@@ -1894,6 +1894,19 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// returns Player player, otherwise null
+        /// </summary>
+        /// <returns></returns>
+        internal Player GetPlayer()
+        {
+            Player player = new Player();
+            if (dictActiveActors.ContainsKey(1))
+            { player = (Player)dictActiveActors[1]; }
+            else { player = null; }
+            return player;
+        }
+
+        /// <summary>
         /// return an Enemy actor from dictenemyActors, otherwise null
         /// </summary>
         /// <param name="actorID"></param>
@@ -3910,7 +3923,7 @@ namespace Next_Game
         {
             bool updateStatus = false; //does a message need to be shown?
             Game.logTurn?.Write("--- UpdatePlayerStatus (World.cs)");
-            Active player = GetActiveActor(1);
+            Player player = GetPlayer();
             if (player != null)
             {
                 //Sea Voyage Status
@@ -4005,7 +4018,7 @@ namespace Next_Game
         {
             int distance, chance;
             //Player is assumed to be the first record in dictActiveActors
-            Player player = (Player)GetActiveActor(1);
+            Player player = GetPlayer();
             Position posPlayer = player.GetActorPosition();
             //Top up Player Crows to the maximum allowed
             player.CrowsNumber = Game.constant.GetValue(Global.CROW_NUMBER);
@@ -4079,7 +4092,7 @@ namespace Next_Game
             string description, messageText, locName;
             int chance, num;
             Active actor = GetActiveActor(actorID);
-            Player player = (Player)GetActiveActor(1);
+            Player player = GetPlayer();
             int bonus = Game.constant.GetValue(Global.CROW_BONUS);
             if (player.Status == ActorStatus.AtLocation)
             {
@@ -4178,7 +4191,7 @@ namespace Next_Game
         /// <returns></returns>
         public int GetCrowsAvailable()
         {
-            Player player = (Player)GetActiveActor(1);
+            Player player = GetPlayer();
             //snippet = new Snippet(string.Format("You have {0} {1} remaining", numCrows, numCrows == 1 ? "Crow" : "Crows"));
             return player.CrowsNumber;
         }
@@ -4491,7 +4504,7 @@ namespace Next_Game
             int turnsToDestination = 0; //# of turns for Player to reach their destination if travelling (used to adjust threshold)
             Game.logTurn?.Write("--- UpdateAIController (World.cs)");
             //get player
-            Player player = (Player)GetActiveActor(1);
+            Player player = GetPlayer();
             if (player != null)
             {
                 //Travelling? Allow for time taken to reach destination
@@ -4618,7 +4631,7 @@ namespace Next_Game
         /// </summary>
         private void SetEnemyActivity()
         {
-            Player player = (Player)GetActiveActor(1);
+            Player player = GetPlayer();
             if (player != null)
             {
                 int turnsDM; //DM for the # of turns spent on the same goal (prevents enemy being locked into a set goal due to bad rolls)
@@ -5509,7 +5522,7 @@ namespace Next_Game
         {
             Game.logTurn?.Write("--- SetPlayerCaptured (World.cs)");
             string description, dungeonLoc;
-            Player player = (Player)GetActiveActor(1);
+            Player player = GetPlayer();
             if (player != null)
             {
                 //player travelling when captured?
@@ -5804,7 +5817,7 @@ namespace Next_Game
             List<Snippet> eventList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
             RLColor backColor = Color._background1;
-            Active player = GetActiveActor(1);
+            Player player = GetPlayer();
             if (player != null)
             {
                 switch (player.Status)
@@ -5875,7 +5888,7 @@ namespace Next_Game
             List<int> listTempRefIDPositive = new List<int>(); //holds all Major houses where origHouse has +ve rel's (first choice for an introduction)
             List<int> listTempRefIDNeutral = new List<int>(); //holds all Major houses where origHouse has a neutral rel (second choice)
             Game.logTurn?.Write("--- GetIntroductionHouse (World.cs)");
-            Player player = (Player)GetActiveActor(1);
+            Player player = GetPlayer();
             if (player != null)
             {
                 if (npcHouse != null)
