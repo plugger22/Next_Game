@@ -2302,11 +2302,13 @@ namespace Next_Game
                                         if (Game.world.AddPossession(newIntroduction.PossID, newIntroduction) == true)
                                         {
                                             player.AddIntroduction(newIntroduction.PossID);
-                                            tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                             message = new Message(tempText, MessageType.Conflict);
                                             Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
                                         }
                                     }
+                                    else
+                                    { tempText = $"{opponent.Title} {opponent.Name} \"{opponent.Handle}\" can provide no introductions as they have poor relations with the other Houses"; }
+                                    tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                 }
                                 else { Game.SetError(new Error(113, "Invalid opponent (Not Passive) -> Introduction not created")); }
                                 break;
