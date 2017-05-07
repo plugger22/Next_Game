@@ -1106,8 +1106,8 @@ namespace Next_Game
                                 OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Court);
                                 option.SetGoodOutcome(outcome);
                                 listTriggers.Clear();
-                                listTriggers.Add(new Trigger(TriggerCheck.Known, 0, 1, EventCalc.Equals));
-                                listTriggers.Add(new Trigger(TriggerCheck.Introduction, 0, 1, EventCalc.Equals));
+                                listTriggers.Add(new Trigger(TriggerCheck.Known, 0, 1, EventCalc.Equals, false));
+                                listTriggers.Add(new Trigger(TriggerCheck.Introduction, 0, 1, EventCalc.Equals, false));
                                 option.SetTriggers(listTriggers);
                                 eventObject.SetOption(option);
                             }
@@ -1129,8 +1129,8 @@ namespace Next_Game
                                 OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Advisors);
                                 option.SetGoodOutcome(outcome);
                                 listTriggers.Clear();
-                                listTriggers.Add(new Trigger(TriggerCheck.Known, 0, 1, EventCalc.Equals));
-                                listTriggers.Add(new Trigger(TriggerCheck.Introduction, 0, 1, EventCalc.Equals));
+                                listTriggers.Add(new Trigger(TriggerCheck.Known, 0, 1, EventCalc.Equals, false));
+                                listTriggers.Add(new Trigger(TriggerCheck.Introduction, 0, 1, EventCalc.Equals, false));
                                 option.SetTriggers(listTriggers);
                                 eventObject.SetOption(option);
                             }
@@ -1177,10 +1177,6 @@ namespace Next_Game
                                     eventObject.SetOption(optionIntro);
                                 }
                             }
-                            
-                            
-                            //does player have an introduction to this House?
-
                             //option -> recruit follower (only at Inns)
                             if (locType == 4)
                             {
@@ -1287,8 +1283,7 @@ namespace Next_Game
                                 optionText = string.Format("Seek an audience with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
-                                listTriggers.Clear();
-                                /*
+                                /*listTriggers.Clear();
                                 // Everybody will talk to you but with limited options
                                 listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, local.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
                                 option.SetTriggers(listTriggers);
@@ -2293,13 +2288,13 @@ namespace Next_Game
 
 
         /// <summary>
-        /// Checks any triggers for the option and determines if it's active (triggers are all good -> returns true), or not
+        /// Checks any triggers for the option and determines if it's active (returns true if any trigger passes, fails if any compulsory trigger fails)
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
         private bool ResolveOptionTrigger(OptionInteractive option)
         {
-            bool validCheck = true;
+            bool validCheck = false;
             int checkValue;
             List<Trigger> listTriggers = option.GetTriggers();
             if (listTriggers.Count > 0)
@@ -2319,65 +2314,112 @@ namespace Next_Game
                             { type = (SkillType)trigger.Data; }
                             catch
                             {
-                                //set to combat to get the job done but generate an error
+                                //set to combat to get the job done but generates an error
                                 type = SkillType.Combat;
                                 Game.SetError(new Error(76, string.Format("Invalid Trigger Data (\"{0}\"), default Combat trait used instead, for Option \"{1}\"", trigger.Data, option.Text)));
                             }
                             Game.logTurn?.Write(string.Format(" \"{0}\" {1} Trigger, if type {2} is {3} to {4}", option.Text, trigger.Check, trigger.Data, trigger.Calc, trigger.Threshold));
-                            if (CheckTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == false) { return false; }
+                            if (CheckTrigger(player.GetSkill(type), trigger.Calc, trigger.Threshold) == true) { validCheck = true; }
+                            else
+                            {
+                                Game.logTurn?.Write("Trait trigger failed");
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Trait trigger Compulsory fail check"); return false; }
+                            }
                             break;
                         case TriggerCheck.GameVar:
                             //get % value for required gamevar
                             if (trigger.Data > 0 && trigger.Data < (int)GameState.Count)
                             {
                                 checkValue = CheckGameState((GameState)trigger.Data);
-                                if (CheckTrigger(checkValue, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: GameVar value incorrect"); return false; }
+                                if (CheckTrigger(checkValue, trigger.Calc, trigger.Threshold) == true)
+                                { validCheck = true; }
+                                else {
+                                    Game.logTurn?.Write(" Trigger: GameVar value incorrect -> Trigger failed");
+                                    if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] GameVar trigger Compulsory fail check"); return false; }
+                                }
                             }
-                            else { Game.SetError(new Error(76, $"Invalid trigger.Data \"{trigger.Data}\" for option {option.Text} -> trigger ignored")); }
+                            else { Game.SetError(new Error(76, $"Invalid trigger.Data \"{trigger.Data}\" for option {option.Text} -> Trigger Ignored")); }
                             break;
                         case TriggerCheck.RelPlyr:
-                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { return false; }
+                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == true) { return true; }
+                            else
+                            {
+                                Game.logTurn?.Write($" RelPlyr is too low -> Trigger failed");
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] RelPlyr trigger Compulsory fail check"); return false; }
+                            }
                             break;
                         case TriggerCheck.Sex:
                             //Threshold = (int)ActorSex -> Male 1, Female 2 (sex of actor). Must be opposite sex (seduction
-                            if (CheckTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Same sex, Seduction not possible"); return false; }
+                            if (CheckTrigger((int)player.Sex, trigger.Calc, trigger.Threshold) == true) { validCheck = true; }
+                            else
+                            {
+                                Game.logTurn?.Write(" Trigger: Same sex, seduction impossible -> Trigger failed");
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Sex trigger Compulsory fail check"); return false; }
+                            }
                             break;
                         case TriggerCheck.Promise:
                             //number of promises handed out is greater than the max. num. of promises allowed
-                            if (CheckTrigger(Game.variable.GetValue(GameVar.Promises_Num), EventCalc.LessThanOrEqual, Game.constant.GetValue(Global.PROMISES_MAX)) == false)
-                            { Game.logTurn?.Write("Trigger: Promise count has exceeded Max. allowed, option not allowed"); return false; }
+                            if (CheckTrigger(Game.variable.GetValue(GameVar.Promises_Num), EventCalc.LessThanOrEqual, Game.constant.GetValue(Global.PROMISES_MAX)) == true) { validCheck = true; }
+                            else
+                            {
+                                Game.logTurn?.Write("Trigger: Promise count has exceeded Max. allowed -> Trigger failed");
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Promise trigger Compulsory fail check"); return false; }
+                            }
                             break;
                         case TriggerCheck.Desire:
                             Actor actor = Game.world.GetAnyActor(option.ActorID);
                             if (actor != null && actor is Passive)
                             {
                                 Passive person = actor as Passive;
-                                if (person.Desire > PossPromiseType.None && person.Satisfied == false)
-                                { Game.logTurn?.Write($"Trigger: {person.Name} has desire {person.DesireText} and Satisified {person.Satisfied} -> passed"); }
-                                else { Game.logTurn?.Write("Trigger: Desire is None or Satisified is True"); return false; }
+                                if (person.Desire > PossPromiseType.None && person.Satisfied == true)
+                                { Game.logTurn?.Write($"Trigger: {person.Name} has desire {person.DesireText} and Satisified {person.Satisfied} -> passed");  validCheck = true;}
+                                else
+                                {
+                                    Game.logTurn?.Write("Trigger: Desire is None or Satisified is True -> Trigger failed");
+                                    if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Desire trigger Compulsory fail check"); return false; }
+                                }
                             }
-                            else { Game.logTurn?.Write("Trigger: Desire, actor is Null or Not Passive"); return false; }
+                            else { Game.logTurn?.Write("Trigger: Desire, actor is Null or Not Passive -> Trigger ignored"); return false; }
                             break;
-
                         case TriggerCheck.ActorType:
                             //Data = ActorType, Threshold is required type. Must be equal
-                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Incorrect ActorType"); return false; }
+                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == true) { validCheck = true; }
+                            else
+                            {
+                                Game.logTurn?.Write(" Trigger: Incorrect ActorType -> Trigger failed");
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] ActorType trigger Compulsory fail check"); return false; }
+                            }
                             break;
                         case TriggerCheck.ResourcePlyr:
-                            if (CheckTrigger(player.Resources, trigger.Calc, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player has wrong amount of Resources"); return false; }
+                            if (CheckTrigger(player.Resources, trigger.Calc, trigger.Threshold) == true) { validCheck = true; }
+                            else
+                            {
+                                Game.logTurn?.Write(" Trigger: Player has wrong amount of Resources -> Trigger failed");
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] ResourcePlyr trigger Compulsory fail check"); return false; }
+                            }
                             break;
                         case TriggerCheck.Known:
                             checkValue = 0;
                             if (player.Known == true) { checkValue = 1; }
-                            if(CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player is wrong type of Known status"); return false; }
+                            if(CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == true) { validCheck = true; }
+                            else
+                            {
+                                Game.logTurn?.Write(" Trigger: Player is wrong type of Known status -> Trigger failed");
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Known trigger Compulsory fail check"); return false; }
+                            }
                             break;
                         case TriggerCheck.Introduction:
                             checkValue = 0;
                             if (player.IntroPresented == true) { checkValue = 1; }
-                            if (CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player is wrong type of Known status"); return false; }
+                            if (CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == true) { validCheck = true; }
+                            else
+                            {
+                                Game.logTurn?.Write(" Trigger: Player is wrong type of Known status -> Trigger failed"); 
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Introduction trigger Compulsory fail check"); return false; }
+                            }
                             break;
                         default:
-                            Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\"", trigger.Check, option.Text)));
+                            Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\" -> Trigger ignored", trigger.Check, option.Text)));
                             break;
                     }
                 }

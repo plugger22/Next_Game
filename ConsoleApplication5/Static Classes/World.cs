@@ -364,6 +364,7 @@ namespace Next_Game
                                     //place character at destination
                                     if (CharacterAtDestination(posDestination, charID) == false)
                                     { Game.SetError(new Error(175, $"ActorID {charID} has not had their details updated upon arriving at their Destination")); }
+                                    else { Game.logTurn?.Write($"[God Mode] Player teleports from {originLocation} to {destinationLocation}"); }
                                 }
                                 //show route (Player only)
                                 if (person is Active)
