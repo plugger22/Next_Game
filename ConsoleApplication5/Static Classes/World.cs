@@ -364,7 +364,7 @@ namespace Next_Game
                                     //place character at destination
                                     if (CharacterAtDestination(posDestination, charID) == false)
                                     { Game.SetError(new Error(175, $"ActorID {charID} has not had their details updated upon arriving at their Destination")); }
-                                    else { Game.logTurn?.Write($"[God Mode] Player teleports from {originLocation} to {destinationLocation}"); }
+                                    else { Game.logTurn?.Write($"[God Mode] Player teleports from {originLocation} to {destinationLocation}");}
                                 }
                                 //show route (Player only)
                                 if (person is Active)
@@ -5950,15 +5950,15 @@ namespace Next_Game
         /// <returns></returns>
         public int GetIntroductionHouse(int origRefID)
         {
-            int introRefID = 0;
-            int refID = 0;
+            int introRefID = 0; //introduction house (output)
+            int refID = 0; //temp var
             int currentRel = 0;
-            int newRefID = origRefID; //newRefID used for search
+            int searchRefID = origRefID; //searchRefID used for search
             //Bannerlord?
             if (origRefID > 100 && origRefID < 1000)
-            { newRefID = Game.world.GetLiegeLord(origRefID); }
+            { searchRefID = Game.world.GetLiegeLord(origRefID); }
 
-            House npcHouse = GetHouse(newRefID);
+            House npcHouse = GetHouse(searchRefID);
             List<int> listTempRefIDPositive = new List<int>(); //holds all Major houses where origHouse has +ve rel's (first choice for an introduction)
             List<int> listTempRefIDNeutral = new List<int>(); //holds all Major houses where origHouse has a neutral rel (second choice)
             Game.logTurn?.Write("--- GetIntroductionHouse (World.cs)");
@@ -5967,19 +5967,25 @@ namespace Next_Game
             {
                 if (npcHouse != null)
                 {
-                    Game.logTurn?.Write($"Check Relations for House \"{npcHouse.Name}\" at {npcHouse.LocName}, RefID {newRefID}");
+                    Game.logTurn?.Write($"Check Relations for House \"{npcHouse.Name}\" at {npcHouse.LocName}, RefID {searchRefID}");
                     //loop great Houses and get current relations
                     foreach (var house in dictMajorHouses)
                     {
                         refID = house.Value.RefID;
-                        if (refID != newRefID)
+                        if (refID != searchRefID)
                         {
                             currentRel = npcHouse.GetCurrentRelationship(refID);
                             if (currentRel > 0)
-                            { listTempRefIDPositive.Add(refID); }
+                            {
+                                listTempRefIDPositive.Add(refID);
+                                Game.logTurn?.Write($"House \"{house.Value.Name}\" at {house.Value.LocName}, RefID {house.Value.RefID}, has a Rel level of +{currentRel} -> Added to List +ve's");
+                            }
                             else if (currentRel == 0)
-                            { listTempRefIDNeutral.Add(refID); }
-                            else { Game.logTurn?.Write($"House \"{house.Value.Name}\" at {house.Value.LocName}, RefID {house.Value.RefID}, has a Rel level of {currentRel} and is ignored"); }
+                            {
+                                listTempRefIDNeutral.Add(refID);
+                                Game.logTurn?.Write($"House \"{house.Value.Name}\" at {house.Value.LocName}, RefID {house.Value.RefID}, has a Rel level of {currentRel} -> Added to List Neutrals");
+                            }
+                            else { Game.logTurn?.Write($"House \"{house.Value.Name}\" at {house.Value.LocName}, RefID {house.Value.RefID}, has a Rel level of {currentRel} -> Ignored"); }
                         }
                     }
                     //Randomly choose one RefID from list of positive relations (first choice)
@@ -5988,7 +5994,7 @@ namespace Next_Game
                         introRefID = listTempRefIDPositive[rnd.Next(listTempRefIDPositive.Count)];
                         player.AddIntroduction(introRefID);
                         Game.logTurn?.Write($"There are {listTempRefIDPositive.Count} records in listPositive to select from");
-                        Game.logTurn?.Write($"House {GetHouseName(newRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
+                        Game.logTurn?.Write($"House {GetHouseName(searchRefID)} has a {currentRel} Relationship lvl with House \"{GetHouseName(introRefID)} -> Introduction Created");
                     }
                     //Look to list of houses with a neutral relationship as a second choice, if none with +ve rel's
                     else if (listTempRefIDNeutral.Count > 0)
@@ -5996,11 +6002,11 @@ namespace Next_Game
                         introRefID = listTempRefIDNeutral[rnd.Next(listTempRefIDNeutral.Count)];
                         player.AddIntroduction(introRefID);
                         Game.logTurn?.Write($"There are {listTempRefIDNeutral.Count} records in listNeutral to select from");
-                        Game.logTurn?.Write($"House {GetHouseName(newRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
+                        Game.logTurn?.Write($"House {GetHouseName(searchRefID)} has a {currentRel} Relationship lvl with House \"{GetHouseName(introRefID)} -> Introduction Created");
                     }
-                    else { Game.logTurn?.Write("[Alert] There are no positive inter-House Relationships -> Introduction cancelled"); }
+                    else { Game.logTurn?.Write("[Alert] There are no Positive, or Neutral interHouse Relationships -> Introduction cancelled"); }
                 }
-                else { Game.SetError(new Error(240, $"Invalid npcHouse (null) for refID {newRefID}")); }
+                else { Game.SetError(new Error(240, $"Invalid npcHouse (null) for refID {searchRefID}")); }
             }
             else { Game.SetError(new Error(240, "Invalid player (null)")); }
             return introRefID;

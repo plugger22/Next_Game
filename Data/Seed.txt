@@ -24,3 +24,8 @@ Seed 50366 -> Sunday, 7 May 2017 3:43 PM
 Seed 41026 -> Sunday, 7 May 2017 4:28 PM
 Seed 21206 -> Sunday, 7 May 2017 5:15 PM
 Seed 681 -> Sunday, 7 May 2017 5:19 PM
+Seed 1723 -> Sunday, 7 May 2017 7:33 PM
+Seed 37494 -> Sunday, 7 May 2017 7:38 PM
+Seed 5912 -> Sunday, 7 May 2017 7:48 PM
+Seed 41558 -> Sunday, 7 May 2017 8:28 PM
+Seed 1981 -> Sunday, 7 May 2017 8:57 PM

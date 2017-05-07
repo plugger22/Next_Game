@@ -2084,11 +2084,11 @@ namespace Next_Game
         /// </summary>
         /// <param name="result"></param>
         /// <returns>A snippet list describing each individual result, suitable for display, green for good, red for bad</returns>
-        internal List<Snippet> ResolveResults(ConflictResult outcome)
+        internal List<Snippet> ResolveResults(ConflictResult resultOutcome)
         {
             Game.logTurn?.Write("--- ResolveResults (Conflict.cs)");
             List<Snippet> tempList = new List<Snippet>();
-            List<int> resultList = challenge.GetResults(outcome);
+            List<int> resultList = challenge.GetResults(resultOutcome);
             int resultID;
             string tempText;
             string testText = "";
@@ -2434,7 +2434,7 @@ namespace Next_Game
                     { Game.logTurn?.Write(string.Format("[Result -> Notification] Invalid, or Missing, result (null returned, resultID \"{0}\")", resultID)); }
                 }
             }
-            else { Game.SetError(new Error(113, string.Format("Invalid Input (no results from \"{0}\")", outcome))); }
+            else { Game.SetError(new Error(113, string.Format("Invalid Input (no results from \"{0}\")", resultOutcome))); }
             return tempList;
         }
 

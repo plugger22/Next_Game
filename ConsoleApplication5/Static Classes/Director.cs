@@ -1155,21 +1155,23 @@ namespace Next_Game
                             
                             if (player.Known == false)
                             {
-                                //option -> Make yourself Known
-                                OptionInteractive option = new OptionInteractive("Make yourself Known");
-                                option.ReplyGood = "You reveal your identity and gain access to the Court";
-                                OutKnown outKnown = new OutKnown(eventObject.EventPID, -1);
-                                OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.None);
-                                option.SetGoodOutcome(outKnown);
-                                option.SetGoodOutcome(outcome);
-                                eventObject.SetOption(option);
-
+                                if (player.IntroPresented == false)
+                                {
+                                    //option -> Make yourself Known
+                                    OptionInteractive optionKnown = new OptionInteractive("Make yourself Known");
+                                    optionKnown.ReplyGood = "You reveal your identity and gain access to the Court";
+                                    OutKnown outKnown = new OutKnown(eventObject.EventPID, -1);
+                                    OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.None);
+                                    optionKnown.SetGoodOutcome(outKnown);
+                                    optionKnown.SetGoodOutcome(outcome);
+                                    eventObject.SetOption(optionKnown);
+                                }
                                 //option -> Use an introduction
                                 int numIntros = player.GetNumOfIntroductions(refID);
                                 if ( numIntros > 0)
                                 {
                                     OptionInteractive optionIntro = new OptionInteractive($"Use an Introduction (you have {numIntros})");
-                                    option.ReplyGood = $"You present your written Introduction to House \"{houseName}\"";
+                                    optionIntro.ReplyGood = $"You present your written Introduction to House \"{houseName}\"";
                                     OutIntroduction outIntro = new OutIntroduction(eventObject.EventPID, refID);
                                     OutEventChain outEvent = new OutEventChain(1000, EventAutoFilter.None);
                                     optionIntro.SetGoodOutcome(outIntro);
@@ -1604,11 +1606,12 @@ namespace Next_Game
                                     eventObject.Name = "Interact";
                                     eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
                                     tempText = string.Format("You are granted an audience with {0} {1} \"{2}\", ActID {3}, at {4}", person.Title, person.Name, person.Handle, person.ActID, loc.LocName);
-                                    //default
+                                    //default -> flip back to court or advisor options
                                     OptionInteractive option_0 = new OptionInteractive("Excuse Yourself") { ActorID = actorID };
                                     option_0.ReplyGood = $"{actorText} stares at you with narrowed eyes";
-                                    OutNone outcome_0 = new OutNone(eventObject.EventPID);
-                                    option_0.SetGoodOutcome(outcome_0);
+                                    if (person is Advisor) { OutEventChain outcome_0 = new OutEventChain(1000, EventAutoFilter.Advisors); option_0.SetGoodOutcome(outcome_0); }
+                                    else {OutEventChain outcome_0 = new OutEventChain(1000, EventAutoFilter.Court); option_0.SetGoodOutcome(outcome_0); }
+                                    //OutNone outcome_0 = new OutNone(eventObject.EventPID);
                                     eventObject.SetOption(option_0);
                                     //improve relationship (befriend)
                                     OptionInteractive option_1 = new OptionInteractive("Befriend") { ActorID = actorID };
@@ -2294,13 +2297,14 @@ namespace Next_Game
         /// <returns></returns>
         private bool ResolveOptionTrigger(OptionInteractive option)
         {
-            bool validCheck = false;
+            bool validCheck = true;
             int checkValue;
             List<Trigger> listTriggers = option.GetTriggers();
             if (listTriggers.Count > 0)
             {
                 Active player = Game.world.GetActiveActor(1);
                 //check each trigger
+                validCheck = false;
                 foreach (Trigger trigger in listTriggers)
                 {
                     checkValue = 0;
@@ -2341,7 +2345,7 @@ namespace Next_Game
                             else { Game.SetError(new Error(76, $"Invalid trigger.Data \"{trigger.Data}\" for option {option.Text} -> Trigger Ignored")); }
                             break;
                         case TriggerCheck.RelPlyr:
-                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == true) { return true; }
+                            if (CheckTrigger(trigger.Data, trigger.Calc, trigger.Threshold) == true) { validCheck = true; }
                             else
                             {
                                 Game.logTurn?.Write($" RelPlyr is too low -> Trigger failed");

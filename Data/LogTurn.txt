@@ -1,65 +1,231 @@
-//Exile Game File "LogTurn.txt" opened at: 07/05/2017 17:21:07
+//Exile Game File "LogTurn.txt" opened at: 07/05/2017 21:03:38
 --- ProcessStartTurn (World.cs)
-Day 2, Turn 1
---- MoveActors -> 0 Records (World.cs)
+Day 9, Turn 8
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Nemesis The Unrelenting, ActID 116 travelling to Brightwater Keep (current Loc 20:17)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Huchon Tyrell, ID 1 at 26:22, Enemy at 20:17 (The Unrelenting, ID 116
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Huchon Tyrell, ID 1 at 26:22, Enemy at 21:17 (The Unrelenting, ID 116
 --- UpdatePlayerStatus (World.cs)
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Geoff Baratheon, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Huchon Tyrell, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Mantus, ID 119 at 18:15, Active Geoff Baratheon, ID 1, at 24:2
- [Search -> Debug] Enemy, Brother Shaitan, ID 120 at 18:15, Active Geoff Baratheon, ID 1, at 24:2
- [Search -> Debug] Enemy, Brother Beelzebub, ID 121 at 18:15, Active Geoff Baratheon, ID 1, at 24:2
- [Search -> Debug] Enemy, Brother Amon, ID 122 at 18:15, Active Geoff Baratheon, ID 1, at 24:2
- [Search -> Debug] Enemy, The Unrelenting, ID 123 at 18:15, Active Geoff Baratheon, ID 1, at 24:2
- [Search -> Stationary] Follower The Crone, ActID 7 is AtLocation
- [Search -> Stationary] Follower The Dark Eminence, ActID 2 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 3 is AtLocation
+ [Search -> Debug] Enemy, Brother Azazel, ID 112 at 14:13, Active Huchon Tyrell, ID 1, at 26:22
+ [Search -> Debug] Enemy, Brother Kali, ID 113 at 19:16, Active Huchon Tyrell, ID 1, at 26:22
+ [Search -> Debug] Enemy, Brother Damballa, ID 114 at 19:16, Active Huchon Tyrell, ID 1, at 26:22
+ [Search -> Debug] Enemy, Brother Shiva, ID 115 at 14:13, Active Huchon Tyrell, ID 1, at 26:22
+ [Search -> Debug] Enemy, The Unrelenting, ID 116 at 22:17, Active Huchon Tyrell, ID 1, at 26:22
+ [Search -> Stationary] Follower The Spider, ActID 4 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 8 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 119 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 120 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 121 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 122 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 123 Mode -> Normal
+ [AI -> Notification] Nemesis The Unrelenting, ActID 116 is Travelling to Brightwater Keep
+ [AI -> Mode] enemyID 113,  distance -> 13  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 114,  distance -> 13  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 112,  distance -> 21  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 115,  distance -> 21  Threshold (turns) -> 4  Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Mantus ActID 119 has become KNOWN
- [Enemy -> Goal] Brother Mantus, ActID 119 retains Goal -> Wait
- [Enemy -> Known] Brother Shaitan ActID 120 has become KNOWN
- [Enemy -> Goal] Brother Shaitan, ActID 120 retains Goal -> Wait
- [Enemy -> Goal] Brother Beelzebub, ActID 121 retains Goal -> Wait
+ [Enemy -> Goal] Brother Azazel, ActID 112 retains Goal -> Hide
+ [Enemy -> Unknown] Brother Kali ActID 113 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Kali, ActID 113 retains Goal -> Hide
+ [Enemy -> Known] Brother Damballa ActID 114 has become KNOWN
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Amon, ActID 122 Assigned Branch -> 4 Current Branch -> 0
- [Enemy -> Known] The Unrelenting ActID 123 has become KNOWN
- [Enemy -> Goal] The Unrelenting, ActID 123 retains Goal -> Wait
+ [Goal -> Branch] Brother Damballa, ActID 114 Assigned Branch -> 2 Current Branch -> 2
+ [Goal -> New] Brother Damballa, ActID 114, (loc 19:16), assigned new Goal -> Hide
+ [Enemy -> Goal] Brother Shiva, ActID 115 retains Goal -> Hide
+ [Enemy -> Known] The Unrelenting ActID 116 has become KNOWN
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Davos Tyrell", ID 58 added to list of Actors
- [AutoEvent -> ActorList] "Jodoca Tyrell", ID 59 added to list of Actors
- [AutoEvent -> ActorList] "Ser Hullen Bartolomeus", ID 60 added to list of Actors
- [AutoEvent -> ActorList] "Bertelot Jankin", ID 61 added to list of Actors
- [AutoEvent -> ActorList] "Addam Hodgkin", ID 62 added to list of Actors
- [AutoEvent -> ActorList] "Aerys Frideric", ID 63 added to list of Actors
- [AutoEvent -> ActorList] "Leyton Tyrell", ID 64 added to list of Actors
- [AutoEvent -> LocalList] "Davos Tyrell", ID 58 added to list of Locals
- [AutoEvent -> LocalList] "Jodoca Tyrell", ID 59 added to list of Locals
- [AutoEvent -> LocalList] "Ser Hullen Bartolomeus", ID 60 added to list of Locals
- [AutoEvent -> AdvisorList] "Bertelot Jankin", ID 61 added to list of Advisors
- [AutoEvent -> AdvisorList] "Addam Hodgkin", ID 62 added to list of Advisors
- [AutoEvent -> AdvisorList] "Aerys Frideric", ID 63 added to list of Advisors
- [AutoEvent -> LocalList] "Leyton Tyrell", ID 64 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 10
+ [AutoEvent -> ActorList] "Karyl Florent", ID 18 added to list of Actors
+ [AutoEvent -> ActorList] "Havisa Florent", ID 19 added to list of Actors
+ [AutoEvent -> ActorList] "Will Vauquelin", ID 21 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Voldamore", ID 22 added to list of Actors
+ [AutoEvent -> ActorList] "Haimmon Hary", ID 23 added to list of Actors
+ [AutoEvent -> ActorList] "Beuves Florent", ID 24 added to list of Actors
+ [AutoEvent -> ActorList] "Desmond Florent", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Florent", ID 26 added to list of Actors
+ [AutoEvent -> LocalList] "Karyl Florent", ID 18 added to list of Locals
+ [AutoEvent -> LocalList] "Havisa Florent", ID 19 added to list of Locals
+ [AutoEvent -> AdvisorList] "Will Vauquelin", ID 21 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Voldamore", ID 22 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Haimmon Hary", ID 23 added to list of Advisors
+ [AutoEvent -> LocalList] "Beuves Florent", ID 24 added to list of Locals
+ [AutoEvent -> LocalList] "Desmond Florent", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Lyanna Florent", ID 26 added to list of Locals
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "1" Equals 1
  Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger passed on "1" Equals 1
  Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status
+ Trigger: Player is wrong type of Known status -> Trigger failed
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Geoff Baratheon has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Viper has had their TurnsUnknown Timer increased from 0 to 1
+ Usurper Huchon Tyrell has had their Revert Timer reduced from 3 to 2
+ Follower The Spider has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Duchess has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 7 to 8
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Davos Tyrell", ID 58 added to li
+ [AutoEvent -> ActorList] "Karyl Florent", ID 18 added to list of Actors
+ [AutoEvent -> ActorList] "Havisa Florent", ID 19 added to list of Actors
+ [AutoEvent -> ActorList] "Will Vauquelin", ID 21 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Voldamore", ID 22 added to list of Actors
+ [AutoEvent -> ActorList] "Haimmon Hary", ID 23 added to list of Actors
+ [AutoEvent -> ActorList] "Beuves Florent", ID 24 added to list of Actors
+ [AutoEvent -> ActorList] "Desmond Florent", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Florent", ID 26 added to list of Actors
+ [AutoEvent -> LocalList] "Karyl Florent", ID 18 added to list of Locals
+ [AutoEvent -> LocalList] "Havisa Florent", ID 19 added to list of Locals
+ [AutoEvent -> AdvisorList] "Will Vauquelin", ID 21 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Voldamore", ID 22 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Haimmon Hary", ID 23 added to list of Advisors
+ [AutoEvent -> LocalList] "Beuves Florent", ID 24 added to list of Locals
+ [AutoEvent -> LocalList] "Desmond Florent", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Lyanna Florent", ID 26 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Talk to members of the Court" Timer Repeat now 999
+ Event "Talk to members of the Court" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Karyl Florent", ID 18 added to list of Actors
+ [AutoEvent -> ActorList] "Havisa Florent", ID 19 added to list of Actors
+ [AutoEvent -> ActorList] "Will Vauquelin", ID 21 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Voldamore", ID 22 added to list of Actors
+ [AutoEvent -> ActorList] "Haimmon Hary", ID 23 added to list of Actors
+ [AutoEvent -> ActorList] "Beuves Florent", ID 24 added to list of Actors
+ [AutoEvent -> ActorList] "Desmond Florent", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Florent", ID 26 added to list of Actors
+ [AutoEvent -> LocalList] "Karyl Florent", ID 18 added to list of Locals
+ [AutoEvent -> LocalList] "Havisa Florent", ID 19 added to list of Locals
+ [AutoEvent -> AdvisorList] "Will Vauquelin", ID 21 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Voldamore", ID 22 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Haimmon Hary", ID 23 added to list of Advisors
+ [AutoEvent -> LocalList] "Beuves Florent", ID 24 added to list of Locals
+ [AutoEvent -> LocalList] "Desmond Florent", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Lyanna Florent", ID 26 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "27" GreaterThanOrEqual 50
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+ Trigger FAILED on "27" GreaterThanOrEqual 40
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+ Trigger FAILED on "27" GreaterThanOrEqual 60
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+ Trigger FAILED on "27" GreaterThanOrEqual 70
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+Trigger: Desire is None or Satisified is True -> Trigger failed
+[Notification] Desire trigger Compulsory fail check
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Karyl Florent", ID 18 added to list of Actors
+ [AutoEvent -> ActorList] "Havisa Florent", ID 19 added to list of Actors
+ [AutoEvent -> ActorList] "Will Vauquelin", ID 21 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Voldamore", ID 22 added to list of Actors
+ [AutoEvent -> ActorList] "Haimmon Hary", ID 23 added to list of Actors
+ [AutoEvent -> ActorList] "Beuves Florent", ID 24 added to list of Actors
+ [AutoEvent -> ActorList] "Desmond Florent", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Florent", ID 26 added to list of Actors
+ [AutoEvent -> LocalList] "Karyl Florent", ID 18 added to list of Locals
+ [AutoEvent -> LocalList] "Havisa Florent", ID 19 added to list of Locals
+ [AutoEvent -> AdvisorList] "Will Vauquelin", ID 21 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Voldamore", ID 22 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Haimmon Hary", ID 23 added to list of Advisors
+ [AutoEvent -> LocalList] "Beuves Florent", ID 24 added to list of Locals
+ [AutoEvent -> LocalList] "Desmond Florent", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Lyanna Florent", ID 26 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Talk to members of the Court" Timer Repeat now 999
+ Event "Talk to members of the Court" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 07/05/2017 21:04:17
+orent", ID 18 added to list of Actors
+ [AutoEvent -> ActorList] "Havisa Florent", ID 19 added to list of Actors
+ [AutoEvent -> ActorList] "Will Vauquelin", ID 21 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Voldamore", ID 22 added to list of Actors
+ [AutoEvent -> ActorList] "Haimmon Hary", ID 23 added to list of Actors
+ [AutoEvent -> ActorList] "Beuves Florent", ID 24 added to list of Actors
+ [AutoEvent -> ActorList] "Desmond Florent", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Florent", ID 26 added to list of Actors
+ [AutoEvent -> LocalList] "Karyl Florent", ID 18 added to list of Locals
+ [AutoEvent -> LocalList] "Havisa Florent", ID 19 added to list of Locals
+ [AutoEvent -> AdvisorList] "Will Vauquelin", ID 21 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Voldamore", ID 22 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Haimmon Hary", ID 23 added to list of Advisors
+ [AutoEvent -> LocalList] "Beuves Florent", ID 24 added to list of Locals
+ [AutoEvent -> LocalList] "Desmond Florent", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Lyanna Florent", ID 26 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Talk to members of the Court" Timer Repeat now 999
+ Event "Talk to members of the Court" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Karyl Florent", ID 18 added to list of Actors
+ [AutoEvent -> ActorList] "Havisa Florent", ID 19 added to list of Actors
+ [AutoEvent -> ActorList] "Will Vauquelin", ID 21 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Voldamore", ID 22 added to list of Actors
+ [AutoEvent -> ActorList] "Haimmon Hary", ID 23 added to list of Actors
+ [AutoEvent -> ActorList] "Beuves Florent", ID 24 added to list of Actors
+ [AutoEvent -> ActorList] "Desmond Florent", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Florent", ID 26 added to list of Actors
+ [AutoEvent -> LocalList] "Karyl Florent", ID 18 added to list of Locals
+ [AutoEvent -> LocalList] "Havisa Florent", ID 19 added to list of Locals
+ [AutoEvent -> AdvisorList] "Will Vauquelin", ID 21 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Voldamore", ID 22 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Haimmon Hary", ID 23 added to list of Advisors
+ [AutoEvent -> LocalList] "Beuves Florent", ID 24 added to list of Locals
+ [AutoEvent -> LocalList] "Desmond Florent", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Lyanna Florent", ID 26 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "40" GreaterThanOrEqual 50
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+ Trigger passed on "40" GreaterThanOrEqual 40
+ Trigger FAILED on "40" GreaterThanOrEqual 60
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+ Trigger FAILED on "40" GreaterThanOrEqual 70
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+Trigger: Desire is None or Satisified is True -> Trigger failed
+[Notification] Desire trigger Compulsory fail check
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Karyl Florent", ID 18 added to list of Actors
+ [AutoEvent -> ActorList] "Havisa Florent", ID 19 added to list of Actors
+ [AutoEvent -> ActorList] "Will Vauquelin", ID 21 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Voldamore", ID 22 added to list of Actors
+ [AutoEvent -> ActorList] "Haimmon Hary", ID 23 added to list of Actors
+ [AutoEvent -> ActorList] "Beuves Florent", ID 24 added to list of Actors
+ [AutoEvent -> ActorList] "Desmond Florent", ID 25 added to list of Actors
+ [AutoEvent -> ActorList] "Lyanna Florent", ID 26 added to list of Actors
+ [AutoEvent -> LocalList] "Karyl Florent", ID 18 added to list of Locals
+ [AutoEvent -> LocalList] "Havisa Florent", ID 19 added to list of Locals
+ [AutoEvent -> AdvisorList] "Will Vauquelin", ID 21 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Guarnier Voldamore", ID 22 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Haimmon Hary", ID 23 added to list of Advisors
+ [AutoEvent -> LocalList] "Beuves Florent", ID 24 added to list of Locals
+ [AutoEvent -> LocalList] "Desmond Florent", ID 25 added to list of Locals
+ [AutoEvent -> LocalList] "Lyanna Florent", ID 26 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Talk to members of the Court" Timer Repeat now 999
+ Event "Talk to members of the Court" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 8, Turn 7
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 13
+ "Search and Detain" event, Cooldown Timer decremented from 2 to 1
+//Exile Game File "LogTurn.txt" Close completed at: 07/05/2017 21:03:38

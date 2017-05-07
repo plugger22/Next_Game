@@ -144,7 +144,7 @@ OutLossMajor: Your opponent is actively campaigning against you (Rel---)
 OutNone: Indifference is the only outcome today. Nobody cares one way or another.
 ResWinMinor: 14, 47, 40
 ResWin: 15, 51, 40
-ResWinMajor: 16, 5, 47, 40
+ResWinMajor: 16, 5, 40, 47
 ResLossMinor: 17, 48, 40
 ResLoss: 18, 50, 40
 ResLossMajor: 19, 48, 40
