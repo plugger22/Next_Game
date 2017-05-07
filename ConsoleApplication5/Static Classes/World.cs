@@ -547,6 +547,7 @@ namespace Next_Game
                     Location locDestination = Game.network.GetLocation(locID);
                     if (locDestination != null)
                     {
+                        MessageType messageType = MessageType.Move;
                         //add character to destination
                         locDestination.AddActor(actorID);
                         //find character and update details
@@ -559,7 +560,13 @@ namespace Next_Game
                             person.LocID = locID;
                             int refID = ConvertLocToRef(locID);
                             string tempText = string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, locDestination.LocName);
-                            Message message = new Message(tempText, person.ActID, locDestination.LocationID, MessageType.Move);
+                            if(Game._menuMode == MenuMode.God && actorID < 10)
+                            {
+                                tempText = string.Format("[GodMode] {0}, Aid {1}, has teleported safely to {2}", person.Name, person.ActID, locDestination.LocName);
+                                messageType = MessageType.God;
+                            }
+                            
+                            Message message = new Message(tempText, person.ActID, locDestination.LocationID, messageType);
                             SetMessage(message);
                             if (person.ActID == 1)
                             { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
@@ -3441,6 +3448,9 @@ namespace Next_Game
                         break;
                     case MessageType.Error:
                         color = RLColor.LightRed;
+                        break;
+                    case MessageType.God:
+                        color = Color._godMode;
                         break;
                 }
                 //queue for the most recent messages to display at bottom right console window

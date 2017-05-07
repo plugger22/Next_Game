@@ -140,7 +140,7 @@ namespace Next_Game
                     break;
                 case MenuMode.God:
                     menuColorFore = Color._godMode;
-                    menuColorBack = RLColor.LightGray;
+                    menuColorBack = RLColor.Gray;
                     //input categories
                     menuArrayCategories[0] = "God MENU ---";
                     menuArrayCategories[1] = "Player Menu ---";
