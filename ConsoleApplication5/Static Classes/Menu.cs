@@ -88,13 +88,13 @@ namespace Next_Game
                     menuArrayText[1, 3] = "[G] Show Generator Stats";
                     menuArrayText[1, 4] = "[A] Show Actor";
                     menuArrayText[1, 5] = "[E] Show Enemies";
-                    
                     //sub Menu commands
                     menuArrayText[3, 0] = "[1..9] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
-                    menuArrayText[3, 2] = "[R] Records MENU";
-                    menuArrayText[3, 3] = "[L] Lore MENU";
-                    menuArrayText[3, 4] = "[X] Quit";
+                    menuArrayText[3, 2] = "[O] God MENU";
+                    menuArrayText[3, 3] = "[R] Records MENU";
+                    menuArrayText[3, 4] = "[L] Lore MENU";
+                    menuArrayText[3, 5] = "[X] Quit";
                     break;
                 case MenuMode.Actor_Active:
                     menuColorFore = RLColor.Blue;
@@ -104,8 +104,8 @@ namespace Next_Game
                     menuArrayCategories[3] = "Switch ---";
                     //Character menu commands
                     menuArrayText[0, 0] = "[M] Map";
-                    menuArrayText[0, 1] = "[P] Move Player Character";
-
+                    menuArrayText[0, 1] = "[P] Move Player Actor";
+                    //switch commands
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
@@ -121,7 +121,7 @@ namespace Next_Game
                     menuArrayText[0, 2] = "[D] Dead Actors";
                     menuArrayText[0, 3] = "[G] Marriages";
                     menuArrayText[0, 4] = "[K] Kingdom Events";
-
+                    //switch commands
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
@@ -134,7 +134,21 @@ namespace Next_Game
                     //Lore menu commands
                     menuArrayText[0, 0] = "[U] Uprising";
                     menuArrayText[0, 1] = "[F] Fate of Royals";
-
+                    //switch commands
+                    menuArrayText[3, 0] = "[ESC] Main Menu";
+                    menuArrayText[3, 1] = "[ENTER] End Turn";
+                    break;
+                case MenuMode.God:
+                    menuColorFore = RLColor.Yellow;
+                    menuColorBack = RLColor.LightGray;
+                    //input categories
+                    menuArrayCategories[0] = "God MENU ---";
+                    menuArrayCategories[1] = "Player Menu ---";
+                    menuArrayCategories[3] = "Switch ---";
+                    //Main God Menu
+                    menuArrayText[1, 0] = "[P] Move Player";
+                    //menuArrayText[1, 1] = "[K] Known Status";
+                    //Switch commands
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;

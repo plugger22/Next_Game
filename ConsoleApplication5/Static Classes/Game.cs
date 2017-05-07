@@ -12,7 +12,7 @@ using System.IO;
 
 namespace Next_Game
 {
-    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record, Special, Lore} //distinct menu sets (Menu.cs)
+    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record, Special, Lore, God} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome, Notification, Confirm} //if MenuMode.Special then -> type of special (Notification -> msg, Confirm -> Y/N)
@@ -734,7 +734,7 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
-                                        //witch to Lore Menu
+                                        //switch to Lore Menu
                                         _menuMode = menu.SwitchMenuMode(MenuMode.Lore);
                                         break;
                                     case MenuMode.Debug:
@@ -759,6 +759,15 @@ namespace Next_Game
                                         break;
                                 }
                                 break;
+                            case RLKey.O:
+                                switch(_menuMode)
+                                {
+                                    case MenuMode.Main:
+                                        //switch to God Menu
+                                        _menuMode = menu.SwitchMenuMode(MenuMode.God);
+                                        break;
+                                }
+                                break;
                             case RLKey.P:
                                 switch (_menuMode)
                                 {
@@ -770,16 +779,29 @@ namespace Next_Game
                                         //move Active characters around map (must be AtLocation in order to move)
                                         List<Snippet> charList = new List<Snippet>();
                                         charList.Add(world.GetActorStatusRL(_charIDSelected));
-                                        if (world.CheckActorStatus(_charIDSelected, ActorStatus.AtLocation) == true)
-                                        {
+                                        //if (world.CheckActorStatus(_charIDSelected, ActorStatus.AtLocation) == true)
+                                        //{
                                             _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
                                             if (_posSelect1 != null)
                                             { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); _mouseOn = true; }
                                             else
                                             { charList.Add(new Snippet("The character is not currently at your disposal", RLColor.Red, RLColor.Black)); _mouseOn = false; }
                                             _inputState = 1;
-                                        }
+                                        //}
                                         infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
+                                        break;
+                                    case MenuMode.God:
+                                        //teleport Active Actor to a new location (must be already at a location)
+                                        List<Snippet> playerList = new List<Snippet>();
+                                        playerList.Add(new Snippet("Teleport Player"));
+                                        _charIDSelected = 1;
+                                        _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
+                                        if (_posSelect1 != null)
+                                        { playerList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); _mouseOn = true; }
+                                        else
+                                        { playerList.Add(new Snippet("The character is not currently at your disposal", RLColor.Red, RLColor.Black)); _mouseOn = false; }
+                                        _inputState = 1;
+                                        infoChannel.SetInfoList(playerList, ConsoleDisplay.Input);
                                         break;
                                     case MenuMode.Debug:
                                         //Show Duplicates (imported files)

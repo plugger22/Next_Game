@@ -1,4 +1,2 @@
-//Exile Game file ops "LogError.txt" commenced at: 07/05/2017 10:46:32
-ERROR_243 "dictOfIntroductions doesn't contain an entry with RefID "114""
-Method: DeleteIntroduction,  Line: 823,  Object: Actor.cs,  Turn: 24,  Local Time: 10:51:15 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 07/05/2017 10:56:06
+//Exile Game file ops "LogError.txt" commenced at: 07/05/2017 12:43:20
+//Exile Game file ops "LogError.txt" Completed at: 07/05/2017 12:45:35

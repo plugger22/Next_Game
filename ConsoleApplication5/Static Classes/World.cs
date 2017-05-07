@@ -2095,7 +2095,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// selects an active actor for movement orders if at a location and activated
+        /// selects an active actor for movement orders if at a location and activated, returns null otherwise
         /// </summary>
         /// <param name="charID"></param>
         /// <returns></returns>
@@ -2107,6 +2107,8 @@ namespace Next_Game
             {
                 Active person = dictActiveActors[charID];
                 pos = person.GetActorPosition();
+                //can't be selected if not at a Location
+                if (person.Status != ActorStatus.AtLocation) { pos = null; }
                 //can't be selected if not activated
                 if (person.Activated == false) { pos = null; }
             }
