@@ -473,6 +473,7 @@ namespace Next_Game
                                 case RLKey.P:
                                     switch (_menuMode)
                                     {
+                                        case MenuMode.God:
                                         case MenuMode.Actor_Active:
                                             //move Player character from A to B
                                             _renderRequired = true;
@@ -793,13 +794,13 @@ namespace Next_Game
                                     case MenuMode.God:
                                         //teleport Active Actor to a new location (must be already at a location)
                                         List<Snippet> playerList = new List<Snippet>();
-                                        playerList.Add(new Snippet("Teleport Player"));
+                                        playerList.Add(new Snippet("Teleport Player", Color._godMode, RLColor.Black));
                                         _charIDSelected = 1;
                                         _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
                                         if (_posSelect1 != null)
                                         {
                                             playerList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); _mouseOn = true;
-                                            _menuMode = menu.SwitchMenuMode(MenuMode.Actor_Active);
+                                            //_menuMode = menu.SwitchMenuMode(MenuMode.Actor_Active);
                                             _inputState = 1;
                                             _mouseOn = true;
                                         }

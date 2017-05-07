@@ -1,54 +1,41 @@
-//Exile Game File "LogTurn.txt" opened at: 07/05/2017 14:17:37
+//Exile Game File "LogTurn.txt" opened at: 07/05/2017 15:23:08
 --- ProcessStartTurn (World.cs)
-Day 9, Turn 8
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Usurper Ilyn Lannister, ActID 1 travelling to Parchments (current Loc 20:23)
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Set, ID 120 at 13:16, Active Ilyn Lannister, ID 1, at 20:23
- [Search -> Debug] Enemy, Brother Demogorgon, ID 121 at 10:9, Active Ilyn Lannister, ID 1, at 20:23
- [Search -> Debug] Enemy, Brother Diabolous, ID 122 at 16:22, Active Ilyn Lannister, ID 1, at 20:23
- [Search -> Debug] Enemy, Brother Mantus, ID 123 at 13:16, Active Ilyn Lannister, ID 1, at 20:23
- [Search -> Debug] Enemy, The Unrelenting, ID 124 at 13:16, Active Ilyn Lannister, ID 1, at 20:23
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Set, ID 120 at 13:16, Active Ilyn Lannister, ID 1, at 20:22
- [Search -> Debug] Enemy, Brother Demogorgon, ID 121 at 10:9, Active Ilyn Lannister, ID 1, at 20:22
- [Search -> Debug] Enemy, Brother Diabolous, ID 122 at 16:22, Active Ilyn Lannister, ID 1, at 20:22
- [Search -> Debug] Enemy, Brother Mantus, ID 123 at 13:16, Active Ilyn Lannister, ID 1, at 20:22
- [Search -> Debug] Enemy, The Unrelenting, ID 124 at 13:16, Active Ilyn Lannister, ID 1, at 20:22
- [Move -> MoveObject] Inquisitor Brother Diabolous, ActID 122 travelling to Dorne (current Loc 15:22)
+Day 13, Turn 12
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Behemoth, ActID 121 travelling to Bloodkeep (current Loc 18:12)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Ilyn Lannister, ID 1 at 20:21, Enemy at 15:22 (Brother Diabolous, ID 122
+ [Search -> Debug] Active Nycolas Martell, ID 1 at 2:28, Enemy at 18:12 (Brother Behemoth, ID 121
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Nycolas Martell, ID 1 at 2:28, Enemy at 18:11 (Brother Behemoth, ID 121
 --- UpdatePlayerStatus (World.cs)
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Ilyn Lannister, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Nycolas Martell, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Set, ID 120 at 13:16, Active Ilyn Lannister, ID 1, at 20:21
- [Search -> Debug] Enemy, Brother Demogorgon, ID 121 at 10:9, Active Ilyn Lannister, ID 1, at 20:21
- [Search -> Debug] Enemy, Brother Diabolous, ID 122 at 15:23, Active Ilyn Lannister, ID 1, at 20:21
- [Search -> Debug] Enemy, Brother Mantus, ID 123 at 13:16, Active Ilyn Lannister, ID 1, at 20:21
- [Search -> Debug] Enemy, The Unrelenting, ID 124 at 13:16, Active Ilyn Lannister, ID 1, at 20:21
- [Search -> Stationary] Follower The Dark Eminence, ActID 9 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 7 is AtLocation
- [Search -> Stationary] Follower The Haggler, ActID 2 is AtLocation
+ [Search -> Debug] Enemy, Brother Diabolous, ID 120 at 18:14, Active Nycolas Martell, ID 1, at 2:28
+ [Search -> Debug] Enemy, Brother Behemoth, ID 121 at 18:10, Active Nycolas Martell, ID 1, at 2:28
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 122 at 18:14, Active Nycolas Martell, ID 1, at 2:28
+ [Search -> Debug] Enemy, Brother Dagon, ID 123 at 18:14, Active Nycolas Martell, ID 1, at 2:28
+ [Search -> Debug] Enemy, The Unrelenting, ID 124 at 18:14, Active Nycolas Martell, ID 1, at 2:28
+ [Search -> Stationary] Follower The Viper, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 5 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Set, Act ID 120 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 121 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 123 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 120 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 122 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 123 Mode -> Normal
  [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 124 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Set ActID 120 has become KNOWN
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Set, ActID 120 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] Brother Set, ActID 120, (loc 13:16), assigned new Goal -> Hide
- [Enemy -> Goal] Brother Demogorgon, ActID 121 retains Goal -> Wait
- [Enemy -> Goal] Brother Mantus, ActID 123 retains Goal -> Hide
+ [Enemy -> Goal] Brother Diabolous, ActID 120 retains Goal -> Wait
+ [Enemy -> Goal] Brother Demogorgon, ActID 122 retains Goal -> Wait
+ [Enemy -> Known] Brother Dagon ActID 123 has become KNOWN
+ [Enemy -> Goal] Brother Dagon, ActID 123 retains Goal -> Wait
  [Enemy -> Known] The Unrelenting ActID 124 has become KNOWN
  [Enemy -> Goal] The Unrelenting, ActID 124 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Tion Penrose", ID 103 added to list of Actors
- [AutoEvent -> LocalList] "Tion Penrose", ID 103 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 99
+ [AutoEvent -> ActorList] "Paxter Mooton", ID 91 added to list of Actors
+ [AutoEvent -> LocalList] "Paxter Mooton", ID 91 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 9
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Trigger FAILED on "0" Equals 1
@@ -56,21 +43,31 @@ Day 9, Turn 8
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Ilyn Lannister has had their TurnsUnknown Timer increased from 107 to 108
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Viper has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Haggler has had their TurnsUnknown Timer increased from 7 to 8
+ Usurper Nycolas Martell has had their TurnsUnknown Timer increased from 111 to 112
+ Follower The Viper has had their TurnsUnknown Timer increased from 11 to 12
+ Follower The Beast has had their TurnsUnknown Timer increased from 11 to 12
+ Follower The Spider has had their TurnsUnknown Timer increased from 11 to 12
 --- ResolveOutcome (Director.cs)
---- ResolveFollowerEvents (Director.cs)
---- ResolveFollowerEvents (Director.cs)
+--- MultiKeyInput (Game.cs)
+1 input
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 07/05/2017 14:17:50
-o list of Advisors
- [AutoEvent -> AdvisorList] "Druet Gervasius", ID 23 added to list of Advisors
- [AutoEvent -> LocalList] "Bethia Martell", ID 24 added to list of Locals
- [AutoEvent -> LocalList] "Iamys Martell", ID 25 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 3
+//Exile Game file ops "LogTurn.txt" Completed at: 07/05/2017 15:23:29
+ors
+ [AutoEvent -> ActorList] "Ser Houdouyn Fulchard", ID 35 added to list of Actors
+ [AutoEvent -> ActorList] "Varamyr Lijart", ID 36 added to list of Actors
+ [AutoEvent -> ActorList] "Ingrannus Stephanus", ID 37 added to list of Actors
+ [AutoEvent -> ActorList] "Mandon Conan", ID 38 added to list of Actors
+ [AutoEvent -> ActorList] "Auisia Arryn", ID 39 added to list of Actors
+ [AutoEvent -> ActorList] "Petyr Arryn", ID 74 added to list of Actors
+ [AutoEvent -> LocalList] "Martyn Arryn", ID 33 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Houdouyn Fulchard", ID 35 added to list of Locals
+ [AutoEvent -> AdvisorList] "Varamyr Lijart", ID 36 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Ingrannus Stephanus", ID 37 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Mandon Conan", ID 38 added to list of Advisors
+ [AutoEvent -> LocalList] "Auisia Arryn", ID 39 added to list of Locals
+ [AutoEvent -> LocalList] "Petyr Arryn", ID 74 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 6
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Trigger FAILED on "0" Equals 1
@@ -80,15 +77,15 @@ o list of Advisors
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Ilyn Lannister has had their TurnsUnknown Timer increased from 101 to 102
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Viper has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Haggler has had their TurnsUnknown Timer increased from 1 to 2
+ Usurper Nycolas Martell has had their TurnsUnknown Timer increased from 110 to 111
+ Follower The Viper has had their TurnsUnknown Timer increased from 10 to 11
+ Follower The Beast has had their TurnsUnknown Timer increased from 10 to 11
+ Follower The Spider has had their TurnsUnknown Timer increased from 10 to 11
 --- ResolveOutcome (Director.cs)
 --- InitiateMoveActor (World.cs)
 --- Move Actor (Director.cs)
 --- ProcessEndTurn (World.cs)
-Day 3, Turn 2
+Day 12, Turn 11
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 18
-//Exile Game File "LogTurn.txt" Close completed at: 07/05/2017 14:17:32
+ Event "Search and Detain" Dormant Timer decremented to 9
+//Exile Game File "LogTurn.txt" Close completed at: 07/05/2017 15:23:08

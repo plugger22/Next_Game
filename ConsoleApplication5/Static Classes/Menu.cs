@@ -139,7 +139,7 @@ namespace Next_Game
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
                 case MenuMode.God:
-                    menuColorFore = RLColor.Yellow;
+                    menuColorFore = Color._godMode;
                     menuColorBack = RLColor.LightGray;
                     //input categories
                     menuArrayCategories[0] = "God MENU ---";

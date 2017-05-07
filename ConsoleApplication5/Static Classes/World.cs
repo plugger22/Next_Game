@@ -541,7 +541,7 @@ namespace Next_Game
             if (posDestination != null)
             {
                 //active actor?
-                if (actorID > 0 && actorID < 10)
+                if (actorID > 0)
                 {
                     int locID = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
                     Location locDestination = Game.network.GetLocation(locID);
@@ -579,7 +579,7 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(247, "Invalid locDestination (null)")); return false; }
                 }
-                else { Game.SetError(new Error(247, $"Invalid actorID \"{actorID}\"-> must be between 1 & 9")); return false; }
+                else { Game.SetError(new Error(247, $"Invalid actorID \"{actorID}\"-> must be > 0")); return false; }
             }
             else { Game.SetError(new Error(247, "Invalid posDestination (null)")); return false; }
             return true;
