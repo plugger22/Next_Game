@@ -1168,10 +1168,8 @@ namespace Next_Game
                                 {
                                     OptionInteractive optionIntro = new OptionInteractive($"Use an Introduction (you have {numIntros})");
                                     option.ReplyGood = $"You present your written Introduction to House \"{houseName}\"";
-                                    //OutKnown outKnow = new OutKnown(eventObject.EventPID, -1);
                                     OutIntroduction outIntro = new OutIntroduction(eventObject.EventPID, refID);
                                     OutEventChain outEvent = new OutEventChain(1000, EventAutoFilter.None);
-                                    optionIntro.SetGoodOutcome(outKnown);
                                     optionIntro.SetGoodOutcome(outIntro);
                                     optionIntro.SetGoodOutcome(outEvent);
                                     eventObject.SetOption(optionIntro);
@@ -1230,8 +1228,8 @@ namespace Next_Game
                             {
                                 OptionInteractive option = new OptionInteractive("Ask around for Information");
                                 option.ReplyGood = "You make some discreet enquiries";
-                                //OutNone outcome = new OutNone(eventObject.EventPID);
-                                OutKnown outcome = new OutKnown(eventObject.EventPID, -1);
+                                OutNone outcome = new OutNone(eventObject.EventPID);
+                                //OutKnown outcome = new OutKnown(eventObject.EventPID, -1);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
@@ -1250,8 +1248,10 @@ namespace Next_Game
                             {
                                 OptionInteractive option = new OptionInteractive("Lay Low");
                                 option.ReplyGood = "You find a safe house of a loyal supporter who offers you refuge";
-                                OutNone outcome = new OutNone(eventObject.EventPID);
-                                option.SetGoodOutcome(outcome);
+                                //OutNone outcome = new OutNone(eventObject.EventPID);
+                                OutKnown outKnown = new OutKnown(eventObject.EventPID, 1);
+                                //option.SetGoodOutcome(outcome);
+                                option.SetGoodOutcome(outKnown);
                                 eventObject.SetOption(option);
                             }
                             //option -> Leave

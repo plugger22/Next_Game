@@ -1,218 +1,189 @@
-//Exile Game File "LogTurn.txt" opened at: 07/05/2017 10:23:29
+//Exile Game File "LogTurn.txt" opened at: 07/05/2017 10:51:04
 --- ProcessStartTurn (World.cs)
-Day 30, Turn 29
---- MoveActors -> 1 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Damballa, ActID 121 travelling to Riverrun (current Loc 21:13)
+Day 25, Turn 24
+--- MoveActors -> 4 Records (World.cs)
+ [Move -> MoveObject] Usurper Helman Tyrell, ActID 1 travelling to Deepwood Motte (current Loc 11:3)
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Haborym, ID 122 at 9:4, Active Helman Tyrell, ID 1, at 11:3
+ [Search -> Debug] Enemy, Brother Mormo, ID 123 at 7:2, Active Helman Tyrell, ID 1, at 11:3
+ [Search -> Debug] Enemy, Brother Diabolous, ID 124 at 25:22, Active Helman Tyrell, ID 1, at 11:3
+ [Search -> Debug] Enemy, Brother Shiva, ID 125 at 12:25, Active Helman Tyrell, ID 1, at 11:3
+ [Search -> Debug] Enemy, The Unrelenting, ID 126 at 9:4, Active Helman Tyrell, ID 1, at 11:3
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Haborym, ID 122 at 9:4, Active Helman Tyrell, ID 1, at 12:3
+ [Search -> Debug] Enemy, Brother Mormo, ID 123 at 7:2, Active Helman Tyrell, ID 1, at 12:3
+ [Search -> Debug] Enemy, Brother Diabolous, ID 124 at 25:22, Active Helman Tyrell, ID 1, at 12:3
+ [Search -> Debug] Enemy, Brother Shiva, ID 125 at 12:25, Active Helman Tyrell, ID 1, at 12:3
+ [Search -> Debug] Enemy, The Unrelenting, ID 126 at 9:4, Active Helman Tyrell, ID 1, at 12:3
+ [Move -> MoveObject] Inquisitor Brother Haborym, ActID 122 travelling to Deepwood Motte (current Loc 9:4)
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Patrek Florent, ID 1 at 23:16, Enemy at 21:13 (Brother Damballa, ID 121
+ [Search -> Debug] Active Helman Tyrell, ID 1 at 13:3, Enemy at 9:4 (Brother Haborym, ID 122
 --- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Patrek Florent, ID 1 at 23:16, Enemy at 22:13 (Brother Damballa, ID 121
+ [Search -> Debug] Active Helman Tyrell, ID 1 at 13:3, Enemy at 9:3 (Brother Haborym, ID 122
+ [Move -> MoveObject] Nemesis The Unrelenting, ActID 126 travelling to Deepwood Motte (current Loc 9:4)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Helman Tyrell, ID 1 at 13:3, Enemy at 9:4 (The Unrelenting, ID 126
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Helman Tyrell, ID 1 at 13:3, Enemy at 9:3 (The Unrelenting, ID 126
+ [Move -> MoveObject] Inquisitor Brother Mormo, ActID 123 travelling to Deepwood Motte (current Loc 7:2)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Helman Tyrell, ID 1 at 13:3, Enemy at 7:2 (Brother Mormo, ID 123
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Helman Tyrell, ID 1 at 13:3, Enemy at 7:3 (Brother Mormo, ID 123
 --- UpdatePlayerStatus (World.cs)
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Patrek Florent, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Helman Tyrell, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Diabolous, ID 119 at 23:16, Active Patrek Florent, ID 1, at 23:16
- [Search -> Alert] Inquisitor Brother Diabolous, ActID 119, is in the same place as Active Patrek Florent, ID 1, (loc 23:16)
- [SEARCH -> Active] Random 11 < 60 (ai 30 + known 30) -> Success 
- [Search -> ListSearched] Usurper Patrek Florent, ActID 1 Searched -> Enemy ActID 119 added
- [SEARCH -> Active] Usurper Patrek Florent has been Spotted by Brother Diabolous, ActID 119 at loc 23:16 -> Activated True
- [Search -> ListEnemy] Usurper Patrek Florent, ActID 1 as Spotted -> True and Enemy ActID 119 added
- [Search -> Debug] Enemy, Brother Nergal, ID 120 at 23:16, Active Patrek Florent, ID 1, at 23:16
- [Search -> Alert] Inquisitor Brother Nergal, ActID 120, is in the same place as Active Patrek Florent, ID 1, (loc 23:16)
- [SEARCH -> Active] Random 66 < 50 (ai 20 + known 30) -> Fail 
- [Search -> ListSearched] Usurper Patrek Florent, ActID 1 Searched -> Enemy ActID 120 added
- [Search -> Debug] Enemy, Brother Damballa, ID 121 at 23:13, Active Patrek Florent, ID 1, at 23:16
- [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 23:16, Active Patrek Florent, ID 1, at 23:16
- [Search -> Alert] Inquisitor Brother Behemoth, ActID 122, is in the same place as Active Patrek Florent, ID 1, (loc 23:16)
- [SEARCH -> Active] Random 57 < 50 (ai 20 + known 30) -> Fail 
- [Search -> ListSearched] Usurper Patrek Florent, ActID 1 Searched -> Enemy ActID 122 added
- [Search -> Debug] Enemy, The Unrelenting, ID 123 at 23:16, Active Patrek Florent, ID 1, at 23:16
- [Search -> Alert] Nemesis The Unrelenting, ActID 123, is in the same place as Active Patrek Florent, ID 1, (loc 23:16)
- [SEARCH -> Active] Random 41 < 50 (ai 20 + known 30) -> Success 
- [Search -> ListSearched] Usurper Patrek Florent, ActID 1 Searched -> Enemy ActID 123 added
- [SEARCH -> Active] Usurper Patrek Florent has been Spotted by The Unrelenting, ActID 123 at loc 23:16 -> Activated False
- [Search -> ListEnemy] Usurper Patrek Florent, ActID 1 as Spotted -> True and Enemy ActID 123 added
- [AddEnemy -> Notification] enemyID 123 activated False and isn't added to the list
- [Search -> Previous] Nemesis The Unrelenting, ActID 123 has already Found Player this turn -> Result Cancelled
- [Search -> Stationary] Follower The Beast, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 7 is AtLocation
+ [Search -> Debug] Enemy, Brother Haborym, ID 122 at 10:3, Active Helman Tyrell, ID 1, at 13:3
+ [Search -> Debug] Enemy, Brother Mormo, ID 123 at 7:4, Active Helman Tyrell, ID 1, at 13:3
+ [Search -> Debug] Enemy, Brother Diabolous, ID 124 at 25:22, Active Helman Tyrell, ID 1, at 13:3
+ [Search -> Debug] Enemy, Brother Shiva, ID 125 at 12:25, Active Helman Tyrell, ID 1, at 13:3
+ [Search -> Debug] Enemy, The Unrelenting, ID 126 at 10:3, Active Helman Tyrell, ID 1, at 13:3
+ [Search -> Stationary] Follower The Waif, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 4 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 2 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Notification] Inquisitor Brother Damballa, ActID 121 is Travelling to Riverrun
- [AI -> Mode] enemyID 119,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 120,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 122,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 123,  distance -> 0  Threshold (turns) -> 8  Mode -> Hunt
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 124 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 125 Mode -> Normal
 --- SetEnemyActivity (World.cs)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Nergal, ActID 120 Assigned Branch -> 0 Current Branch -> 2
- [Goal -> New] Brother Nergal, ActID 120, (loc 23:16), assigned new Goal -> Search
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Behemoth, ActID 122 Assigned Branch -> 4 Current Branch -> 2
- [Goal -> New] Brother Behemoth, ActID 122, (loc 23:16), assigned new Goal -> Search
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 123 Assigned Branch -> 0 Current Branch -> 2
- [Goal -> New] The Unrelenting, ActID 123, (loc 23:16), assigned new Goal -> Search
---- CheckPlayerEvents (Director.cs)
---- ResolvePlayerEvents (Director.cs)
- Event "Enemy Afoot" Timer Repeat now 999
- Event "Enemy Afoot" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Patrek Florent has had their Revert Timer reduced from 5 to 4
- Follower The Beast has had their TurnsUnknown Timer increased from 28 to 29
- Follower The Viper has had their TurnsUnknown Timer increased from 28 to 29
- Follower The Spider has had their TurnsUnknown Timer increased from 28 to 29
---- ResolveOutcome (Director.cs)
---- SetPlayerCaptured (World.cs)
- [Captured] Major House dungeon
-ERROR_174 "Unable to find a suitable location for Incarceration -> Default to KingsKeep"
-Method: SetPlayerCaptured,  Line: 5632,  Object: World.cs,  Turn: 29,  Local Time: 10:23:33 UTC +10:00
---- ResolveFollowerEvents (Director.cs)
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 07/05/2017 10:26:12
-s (timer elapsed)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Behemoth, ActID 122 Assigned Branch -> 4 Current Branch -> 2
- [Enemy -> Goal] The Unrelenting, ActID 123 retains Goal -> Wait
+ [Enemy -> Unknown] Brother Haborym ActID 122 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Known] Brother Diabolous ActID 124 has become KNOWN
+ [Enemy -> Goal] Brother Diabolous, ActID 124 retains Goal -> Wait
+ [Enemy -> Goal] Brother Shiva, ActID 125 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Wyman Tully", ID 55 added to list of Actors
- [AutoEvent -> ActorList] "Izot Tully", ID 56 added to list of Actors
- [AutoEvent -> ActorList] "Varly Simonnet", ID 58 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Hewerald", ID 59 added to list of Actors
- [AutoEvent -> ActorList] "Druet Reignolde", ID 60 added to list of Actors
- [AutoEvent -> ActorList] "Dick Tully", ID 61 added to list of Actors
- [AutoEvent -> ActorList] "Brother Diabolous", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Brother Nergal", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "The Unrelenting", ID 123 added to list of Actors
- [AutoEvent -> ActorList] "Brother Behemoth", ID 122 added to list of Actors
- [AutoEvent -> LocalList] "Wyman Tully", ID 55 added to list of Locals
- [AutoEvent -> LocalList] "Izot Tully", ID 56 added to list of Locals
- [AutoEvent -> AdvisorList] "Varly Simonnet", ID 58 added to list of Advisors
- [AutoEvent -> AdvisorList] "Salemon Hewerald", ID 59 added to list of Advisors
- [AutoEvent -> AdvisorList] "Druet Reignolde", ID 60 added to list of Advisors
- [AutoEvent -> LocalList] "Dick Tully", ID 61 added to list of Locals
+ [AutoEvent -> ActorList] "Garth Glover", ID 89 added to list of Actors
+ [AutoEvent -> LocalList] "Garth Glover", ID 89 added to list of Locals
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Trigger FAILED on "0" Equals 1
  Trigger: Player is wrong type of Known status
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Patrek Florent has had their TurnsUnknown Timer increased from 18 to 19
- Follower The Beast has had their TurnsUnknown Timer increased from 27 to 28
- Follower The Viper has had their TurnsUnknown Timer increased from 27 to 28
- Follower The Spider has had their TurnsUnknown Timer increased from 27 to 28
+ Usurper Helman Tyrell has had their TurnsUnknown Timer increased from 8 to 9
+ Follower The Waif has had their TurnsUnknown Timer increased from 23 to 24
+ Follower The Beast has had their TurnsUnknown Timer increased from 23 to 24
+ Follower The Crone has had their TurnsUnknown Timer increased from 23 to 24
 --- ResolveOutcome (Director.cs)
+ERROR_243 "dictOfIntroductions doesn't contain an entry with RefID "114""
+Method: DeleteIntroduction,  Line: 823,  Object: Actor.cs,  Turn: 24,  Local Time: 10:51:15 UTC +10:00
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Wyman Tully", ID 55 added to list of Actors
- [AutoEvent -> ActorList] "Izot Tully", ID 56 added to list of Actors
- [AutoEvent -> ActorList] "Varly Simonnet", ID 58 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Hewerald", ID 59 added to list of Actors
- [AutoEvent -> ActorList] "Druet Reignolde", ID 60 added to list of Actors
- [AutoEvent -> ActorList] "Dick Tully", ID 61 added to list of Actors
- [AutoEvent -> ActorList] "Brother Diabolous", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Brother Nergal", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "The Unrelenting", ID 123 added to list of Actors
- [AutoEvent -> ActorList] "Brother Behemoth", ID 122 added to list of Actors
- [AutoEvent -> LocalList] "Wyman Tully", ID 55 added to list of Locals
- [AutoEvent -> LocalList] "Izot Tully", ID 56 added to list of Locals
- [AutoEvent -> AdvisorList] "Varly Simonnet", ID 58 added to list of Advisors
- [AutoEvent -> AdvisorList] "Salemon Hewerald", ID 59 added to list of Advisors
- [AutoEvent -> AdvisorList] "Druet Reignolde", ID 60 added to list of Advisors
- [AutoEvent -> LocalList] "Dick Tully", ID 61 added to list of Locals
+ [AutoEvent -> ActorList] "Garth Glover", ID 89 added to list of Actors
+ [AutoEvent -> LocalList] "Garth Glover", ID 89 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "1" Equals 1
  Trigger passed on "1" Equals 1
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Wyman Tully", ID 55 added to list of Actors
- [AutoEvent -> ActorList] "Izot Tully", ID 56 added to list of Actors
- [AutoEvent -> ActorList] "Varly Simonnet", ID 58 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Hewerald", ID 59 added to list of Actors
- [AutoEvent -> ActorList] "Druet Reignolde", ID 60 added to list of Actors
- [AutoEvent -> ActorList] "Dick Tully", ID 61 added to list of Actors
- [AutoEvent -> ActorList] "Brother Diabolous", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Brother Nergal", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "The Unrelenting", ID 123 added to list of Actors
- [AutoEvent -> ActorList] "Brother Behemoth", ID 122 added to list of Actors
- [AutoEvent -> LocalList] "Wyman Tully", ID 55 added to list of Locals
- [AutoEvent -> LocalList] "Izot Tully", ID 56 added to list of Locals
- [AutoEvent -> AdvisorList] "Varly Simonnet", ID 58 added to list of Advisors
- [AutoEvent -> AdvisorList] "Salemon Hewerald", ID 59 added to list of Advisors
- [AutoEvent -> AdvisorList] "Druet Reignolde", ID 60 added to list of Advisors
- [AutoEvent -> LocalList] "Dick Tully", ID 61 added to list of Locals
+ [AutoEvent -> ActorList] "Garth Glover", ID 89 added to list of Actors
+ [AutoEvent -> LocalList] "Garth Glover", ID 89 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
  Event "Talk to members of the Court" Timer Repeat now 999
  Event "Talk to members of the Court" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Wyman Tully", ID 55 added to list of Actors
- [AutoEvent -> ActorList] "Izot Tully", ID 56 added to list of Actors
- [AutoEvent -> ActorList] "Varly Simonnet", ID 58 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Hewerald", ID 59 added to list of Actors
- [AutoEvent -> ActorList] "Druet Reignolde", ID 60 added to list of Actors
- [AutoEvent -> ActorList] "Dick Tully", ID 61 added to list of Actors
- [AutoEvent -> ActorList] "Brother Diabolous", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Brother Nergal", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "The Unrelenting", ID 123 added to list of Actors
- [AutoEvent -> ActorList] "Brother Behemoth", ID 122 added to list of Actors
- [AutoEvent -> LocalList] "Wyman Tully", ID 55 added to list of Locals
- [AutoEvent -> LocalList] "Izot Tully", ID 56 added to list of Locals
- [AutoEvent -> AdvisorList] "Varly Simonnet", ID 58 added to list of Advisors
- [AutoEvent -> AdvisorList] "Salemon Hewerald", ID 59 added to list of Advisors
- [AutoEvent -> AdvisorList] "Druet Reignolde", ID 60 added to list of Advisors
- [AutoEvent -> LocalList] "Dick Tully", ID 61 added to list of Locals
+ [AutoEvent -> ActorList] "Garth Glover", ID 89 added to list of Actors
+ [AutoEvent -> LocalList] "Garth Glover", ID 89 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger passed on "78" GreaterThanOrEqual 50
- Trigger passed on "78" GreaterThanOrEqual 40
- Trigger passed on "78" GreaterThanOrEqual 60
+ Trigger FAILED on "42" GreaterThanOrEqual 50
+ Trigger passed on "42" GreaterThanOrEqual 40
+ Trigger FAILED on "42" GreaterThanOrEqual 60
+ Trigger FAILED on "42" GreaterThanOrEqual 70
+Trigger: Desire is None or Satisified is True
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+Item with PossID 7 has been removed from Helman Tyrell's inventory
+BannerLord Garth Glover has gained possession of "The Mage Ring", itemID 3, from the Ursurper
+--- MultiKeyInput (Game.cs)
+1 input
+--- MultiKeyInput (Game.cs)
+54 input
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 07/05/2017 10:56:06
+ist] "Humfredus Arryn", ID 42 added to list of Locals
+ [AutoEvent -> LocalList] "Gerion Arryn", ID 103 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "1" Equals 1
+ Trigger passed on "1" Equals 1
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Emelina Arryn", ID 37 added to list of Actors
+ [AutoEvent -> ActorList] "Jonos Manfred", ID 39 added to list of Actors
+ [AutoEvent -> ActorList] "Wilmot Hugelin", ID 40 added to list of Actors
+ [AutoEvent -> ActorList] "Renoldus Wyon", ID 41 added to list of Actors
+ [AutoEvent -> ActorList] "Humfredus Arryn", ID 42 added to list of Actors
+ [AutoEvent -> ActorList] "Gerion Arryn", ID 103 added to list of Actors
+ [AutoEvent -> LocalList] "Emelina Arryn", ID 37 added to list of Locals
+ [AutoEvent -> AdvisorList] "Jonos Manfred", ID 39 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Wilmot Hugelin", ID 40 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Renoldus Wyon", ID 41 added to list of Advisors
+ [AutoEvent -> LocalList] "Humfredus Arryn", ID 42 added to list of Locals
+ [AutoEvent -> LocalList] "Gerion Arryn", ID 103 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Talk to members of the Court" Timer Repeat now 999
+ Event "Talk to members of the Court" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Emelina Arryn", ID 37 added to list of Actors
+ [AutoEvent -> ActorList] "Jonos Manfred", ID 39 added to list of Actors
+ [AutoEvent -> ActorList] "Wilmot Hugelin", ID 40 added to list of Actors
+ [AutoEvent -> ActorList] "Renoldus Wyon", ID 41 added to list of Actors
+ [AutoEvent -> ActorList] "Humfredus Arryn", ID 42 added to list of Actors
+ [AutoEvent -> ActorList] "Gerion Arryn", ID 103 added to list of Actors
+ [AutoEvent -> LocalList] "Emelina Arryn", ID 37 added to list of Locals
+ [AutoEvent -> AdvisorList] "Jonos Manfred", ID 39 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Wilmot Hugelin", ID 40 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Renoldus Wyon", ID 41 added to list of Advisors
+ [AutoEvent -> LocalList] "Humfredus Arryn", ID 42 added to list of Locals
+ [AutoEvent -> LocalList] "Gerion Arryn", ID 103 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "88" GreaterThanOrEqual 50
+ Trigger passed on "88" GreaterThanOrEqual 40
+ Trigger passed on "88" GreaterThanOrEqual 60
  Trigger FAILED on "1" NotEqual 1
  Trigger: Same sex, Seduction not possible
- Trigger passed on "78" GreaterThanOrEqual 70
+ Trigger passed on "88" GreaterThanOrEqual 70
  Trigger passed on "3" Equals 3
-Trigger: Wyman Tully has desire a court position for their son Dick Tully "The Dextrous" ActID 61 and Satisified False -> passed
- Trigger passed on "1" LessThanOrEqual 6
+Trigger: Humfredus Arryn has desire to have BannerLord Garth Glover of House Glover at Deepwood Motte (Loc 13:3) swear allegiance and Satisified False -> passed
+ Trigger passed on "0" LessThanOrEqual 6
  Event "Interact" Timer Repeat now 999
  Event "Interact" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
 SetGameSituation] -> "difference between Your's and the King's Honour is -50 %", difference -50 Modifier 50 numCards 3
 - Initialise Social Challenge
 --- SetSupporters (Conflict.cs)
- [Notification] dictPlyrSupporters has 2 records
- [Supporter -> Good] Castellan Varly Simonnet "The Scaled", Friend, ActID 58, relPlyr 89
- [Supporter -> Good] Lady Izot Tully "The Suspicious", Friend, ActID 56, relPlyr 74
- [Notification] dictOppSupporters has 4 records
- [Supporter -> Bad] Inquisitor Brother Diabolous "The Loyal", Enemy, ActID 119, relPlyr 0
- [Supporter -> Bad] Inquisitor Brother Nergal "The Loyal", Enemy, ActID 120, relPlyr 0
- [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 123, relPlyr 0
+ [Notification] dictPlyrSupporters has 4 records
+ [Supporter -> Good] Maester Wilmot Hugelin "The Bold", Friend, ActID 40, relPlyr 89
+ [Supporter -> Good] lord Gerion Arryn "The Never Well", Friend, ActID 103, relPlyr 83
+ [Supporter -> Good] Castellan Jonos Manfred "The Retentive", Friend, ActID 39, relPlyr 74
+ [Notification] dictOppSupporters has 0 records
 --- SetItems (Conflict.cs)
- [Notification] Player has no Items
+ [Notification] Player Item "The Mage Ring" isn't valid for this Challenge
  [Notification] Opponent has no Items
 --- GetSituationCardNumber (Conflict.cs)
- modifier 0, rndNum 35, net 35, numCards 1
+ modifier 0, rndNum 49, net 49, numCards 1
 --- GetSituationCardNumber (Conflict.cs)
- modifier 0, rndNum 91, net 91, numCards 4
+ modifier 0, rndNum 88, net 88, numCards 3
 --- SetOpponentStrategy (Conflict.cs)
-[Conflict -> Debug] Good -> 9 Bad -> 14 Margin -> 2 rndFactor -> 0 Opp Wits -> 3 Opp PSkill -> 3 Def Spec -> 1 Challenger -> True
-[Conflict -> Opp Def's] Bad 14 - Good 9 > margin 2
+[Conflict -> Debug] Good -> 12 Bad -> 12 Margin -> 2 rndFactor -> -1 Opp Wits -> 3 Opp PSkill -> 2 Def Spec -> 1 Challenger -> True
 --- ResolveResults (Conflict.cs)
-RelPlyr amount beforehand -26
-RelPlyr amount afterwards -26
 --- GetIntroductionHouse (World.cs)
-Check Relations for House "Tully" at Riverrun, RefID 9
-House "Martell" at Dorne, RefID 3, has a Rel level of -17 and is ignored
-House "Clegane" at Brightwater Keep, RefID 99, has a Rel level of -11 and is ignored
-There are 5 records in listNeutral to select from
-House Tully has a +0 Relationship with House "Tyrell -> Introduction Created
---- MultiKeyInput (Game.cs)
-1 input
+Check Relations for House "Arryn" at Eyrie, RefID 6
+House "Crane" at Highgarden, RefID 99, has a Rel level of -28 and is ignored
+There are 6 records in listNeutral to select from
+House Arryn has a +0 Relationship with House "Targaryen -> Introduction Created
+--- ResolveFollowerEvents (Director.cs)
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
 --- ProcessEndTurn (World.cs)
-Day 29, Turn 28
+Day 16, Turn 15
 --- CheckEventTimers (Director.cs)
-//Exile Game File "LogTurn.txt" Close completed at: 07/05/2017 10:23:29
+ Event "Search and Detain" Dormant Timer decremented to 5
+ "Crazy Old Woman" event, Cooldown Timer decremented from 2 to 1
+//Exile Game File "LogTurn.txt" Close completed at: 07/05/2017 10:50:52

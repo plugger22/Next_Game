@@ -96,7 +96,7 @@
 # World ---
 
 # KNOWN_REVERT -> number of turns before Known status reverts to Unknown (player and enemies) (also how long old info shown for)
-44: 5 @ 1 @ 5
+44: 3 @ 1 @ 5
 # INQUISITORS -> base number of inquisitors at game start (normal difficulty)
 45: 4 @ 2 @ 8
 

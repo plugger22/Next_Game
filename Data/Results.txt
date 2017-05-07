@@ -59,12 +59,6 @@ Type: Known
 Data: -1
 [End]
 
-Name: You're Presence is known
-RID: 35
-Type: Known
-Data: -1
-[End]
-
 Name: The Cause is Just
 RID: 3
 Type: GameState
@@ -478,4 +472,4 @@ Calc: Add
 
 
 
-# next is 54 - 39, 36, 37 free
+# next is 54 - 39, 35, 36, 37 free

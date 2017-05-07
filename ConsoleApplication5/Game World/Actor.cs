@@ -813,14 +813,18 @@ namespace Next_Game
         /// <param name="refID"></param>
         public void DeleteIntroduction(int refID)
         {
-            if (dictOfIntroductions.ContainsKey(refID))
+            int newRefID = refID; //newRefID used for search
+            //Bannerlord?
+            if (refID > 100 && refID < 1000)
+            { newRefID = Game.world.GetLiegeLord(newRefID); }
+            if (dictOfIntroductions.ContainsKey(newRefID))
             {
-                int tally = dictOfIntroductions[refID];
+                int tally = dictOfIntroductions[newRefID];
                 tally -= 1;
                 tally = Math.Max(0, tally);
-                dictOfIntroductions[refID] = tally;
+                dictOfIntroductions[newRefID] = tally;
             }
-            else { Game.SetError(new Error(243, $"dictOfIntroductions doesn't contain an entry with RefID \"{refID}\"")); }
+            else { Game.SetError(new Error(243, $"dictOfIntroductions doesn't contain an entry with RefID \"{newRefID}\"")); }
         }
 
         /// <summary>
@@ -833,20 +837,7 @@ namespace Next_Game
             int newRefID = refID; //newRefID used for search
             //Bannerlord?
             if (refID > 100 && refID < 1000)
-            {
-                int houseID = Game.world.ConvertRefToHouse(refID);
-                if (houseID > 0)
-                {
-                    MajorHouse majorHouse = Game.world.GetMajorHouse(houseID);
-                    if (majorHouse != null)
-                    {
-                        //search on RefID of Bannerlord's liege Lord (introductions for a house are valid for Major and Minor houses)
-                        newRefID = majorHouse.RefID;
-                    }
-                    else { Game.SetError(new Error(244, "Invalid MajorHouse (null)")); }
-                }
-                else { Game.SetError(new Error(244, "Invalid HouseID (zero, or less)")); }
-            }
+            { newRefID = Game.world.GetLiegeLord(refID); }
             if (dictOfIntroductions.ContainsKey(newRefID))
             { return dictOfIntroductions[newRefID]; }
             //entry not found

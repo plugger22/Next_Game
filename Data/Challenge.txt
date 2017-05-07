@@ -148,7 +148,7 @@ ResWinMajor: 16, 5, 47, 40
 ResLossMinor: 17, 48, 40
 ResLoss: 18, 50, 40
 ResLossMajor: 19, 48, 40
-ResNone: 1, 40
+ResNone: 40
 [End]
 
 Type: Social
@@ -175,7 +175,7 @@ ResWinMajor:  31, 27, 47
 ResLossMinor: 32, 26, 48
 ResLoss: 33, 26, 50
 ResLossMajor: 34, 10, 26, 50
-ResNone: 35
+ResNone: 2
 [End]
 
 Type: Social

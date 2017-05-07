@@ -1,6 +1,4 @@
-//Exile Game file ops "LogError.txt" commenced at: 07/05/2017 10:16:35
-ERROR_29 "Location Deleted 27:27"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 10:16:35 UTC +10:00
-ERROR_174 "Unable to find a suitable location for Incarceration -> Default to KingsKeep"
-Method: SetPlayerCaptured,  Line: 5632,  Object: World.cs,  Turn: 29,  Local Time: 10:23:33 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 07/05/2017 10:26:12
+//Exile Game file ops "LogError.txt" commenced at: 07/05/2017 10:46:32
+ERROR_243 "dictOfIntroductions doesn't contain an entry with RefID "114""
+Method: DeleteIntroduction,  Line: 823,  Object: Actor.cs,  Turn: 24,  Local Time: 10:51:15 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 07/05/2017 10:56:06

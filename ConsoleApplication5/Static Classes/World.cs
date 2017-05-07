@@ -5870,7 +5870,12 @@ namespace Next_Game
             int introRefID = 0;
             int refID = 0;
             int currentRel = 0;
-            House npcHouse = GetHouse(origRefID);
+            int newRefID = origRefID; //newRefID used for search
+            //Bannerlord?
+            if (origRefID > 100 && origRefID < 1000)
+            { newRefID = Game.world.GetLiegeLord(origRefID); }
+
+            House npcHouse = GetHouse(newRefID);
             List<int> listTempRefIDPositive = new List<int>(); //holds all Major houses where origHouse has +ve rel's (first choice for an introduction)
             List<int> listTempRefIDNeutral = new List<int>(); //holds all Major houses where origHouse has a neutral rel (second choice)
             Game.logTurn?.Write("--- GetIntroductionHouse (World.cs)");
@@ -5879,12 +5884,12 @@ namespace Next_Game
             {
                 if (npcHouse != null)
                 {
-                    Game.logTurn?.Write($"Check Relations for House \"{npcHouse.Name}\" at {npcHouse.LocName}, RefID {origRefID}");
+                    Game.logTurn?.Write($"Check Relations for House \"{npcHouse.Name}\" at {npcHouse.LocName}, RefID {newRefID}");
                     //loop great Houses and get current relations
                     foreach (var house in dictMajorHouses)
                     {
                         refID = house.Value.RefID;
-                        if (refID != origRefID)
+                        if (refID != newRefID)
                         {
                             currentRel = npcHouse.GetCurrentRelationship(refID);
                             if (currentRel > 0)
@@ -5900,7 +5905,7 @@ namespace Next_Game
                         introRefID = listTempRefIDPositive[rnd.Next(listTempRefIDPositive.Count)];
                         player.AddIntroduction(introRefID);
                         Game.logTurn?.Write($"There are {listTempRefIDPositive.Count} records in listPositive to select from");
-                        Game.logTurn?.Write($"House {GetHouseName(origRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
+                        Game.logTurn?.Write($"House {GetHouseName(newRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
                     }
                     //Look to list of houses with a neutral relationship as a second choice, if none with +ve rel's
                     else if (listTempRefIDNeutral.Count > 0)
@@ -5908,14 +5913,43 @@ namespace Next_Game
                         introRefID = listTempRefIDNeutral[rnd.Next(listTempRefIDNeutral.Count)];
                         player.AddIntroduction(introRefID);
                         Game.logTurn?.Write($"There are {listTempRefIDNeutral.Count} records in listNeutral to select from");
-                        Game.logTurn?.Write($"House {GetHouseName(origRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
+                        Game.logTurn?.Write($"House {GetHouseName(newRefID)} has a +{currentRel} Relationship with House \"{GetHouseName(refID)} -> Introduction Created");
                     }
                     else { Game.logTurn?.Write("[Alert] There are no positive inter-House Relationships -> Introduction cancelled"); }
                 }
-                else { Game.SetError(new Error(240, $"Invalid npcHouse (null) for refID {origRefID}")); }
+                else { Game.SetError(new Error(240, $"Invalid npcHouse (null) for refID {newRefID}")); }
             }
             else { Game.SetError(new Error(240, "Invalid player (null)")); }
             return introRefID;
+        }
+
+        /// <summary>
+        /// Takes a BannerLord's RefID and returns the RefID of their Liege Lord. Returns '0' for an invalid conversion.
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <returns></returns>
+        public int GetLiegeLord(int refID)
+        {
+            int liegeRefID = refID; //newRefID used for search
+            //Bannerlord?
+            if (refID > 100 && refID < 1000)
+            {
+                int houseID = ConvertRefToHouse(refID);
+                if (houseID > 0)
+                {
+                    MajorHouse majorHouse = GetMajorHouse(houseID);
+                    if (majorHouse != null)
+                    {
+                        //search on RefID of Bannerlord's liege Lord (introductions for a house are valid for Major and Minor houses)
+                        liegeRefID = majorHouse.RefID;
+                    }
+                    else { Game.SetError(new Error(246, "Invalid MajorHouse (null) -> No conversion")); liegeRefID = 0; }
+                }
+                else { Game.SetError(new Error(246, "Invalid HouseID (zero, or less) -> No conversion")); liegeRefID = 0; }
+            }
+            else if (refID >= 1000)
+            { Game.SetError(new Error(246, $"Invalid refID \"{refID}\" (too high) -> No conversion")); liegeRefID = 0; }
+            return liegeRefID;
         }
 
         //new Methods above here
