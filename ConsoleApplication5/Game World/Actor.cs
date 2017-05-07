@@ -830,10 +830,27 @@ namespace Next_Game
         /// <returns></returns>
         public int GetNumOfIntroductions(int refID)
         {
-            if (dictOfIntroductions.ContainsKey(refID))
-            { return dictOfIntroductions[refID]; }
+            int newRefID = refID; //newRefID used for search
+            //Bannerlord?
+            if (refID > 100 && refID < 1000)
+            {
+                int houseID = Game.world.ConvertRefToHouse(refID);
+                if (houseID > 0)
+                {
+                    MajorHouse majorHouse = Game.world.GetMajorHouse(houseID);
+                    if (majorHouse != null)
+                    {
+                        //search on RefID of Bannerlord's liege Lord (introductions for a house are valid for Major and Minor houses)
+                        newRefID = majorHouse.RefID;
+                    }
+                    else { Game.SetError(new Error(244, "Invalid MajorHouse (null)")); }
+                }
+                else { Game.SetError(new Error(244, "Invalid HouseID (zero, or less)")); }
+            }
+            if (dictOfIntroductions.ContainsKey(newRefID))
+            { return dictOfIntroductions[newRefID]; }
             //entry not found
-            Game.logTurn?.Write($"[Notification] No entry found in dictOfIntroductions for RefID {refID}");
+            Game.logTurn?.Write($"[Notification] No entry found in dictOfIntroductions for RefID {newRefID}");
             return 0;
         }
 

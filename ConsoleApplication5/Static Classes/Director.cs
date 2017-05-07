@@ -1168,7 +1168,7 @@ namespace Next_Game
                                 {
                                     OptionInteractive optionIntro = new OptionInteractive($"Use an Introduction (you have {numIntros})");
                                     option.ReplyGood = $"You present your written Introduction to House \"{houseName}\"";
-                                    OutKnown outKnow = new OutKnown(eventObject.EventPID, -1);
+                                    //OutKnown outKnow = new OutKnown(eventObject.EventPID, -1);
                                     OutIntroduction outIntro = new OutIntroduction(eventObject.EventPID, refID);
                                     OutEventChain outEvent = new OutEventChain(1000, EventAutoFilter.None);
                                     optionIntro.SetGoodOutcome(outKnown);

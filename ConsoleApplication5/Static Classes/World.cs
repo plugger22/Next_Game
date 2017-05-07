@@ -5629,7 +5629,7 @@ namespace Next_Game
                         //found a dungeon?
                         if (tempRefID > 0)
                         { heldLocID = ConvertRefToLoc(tempRefID); }
-                        else { Game.SetError(new Error(174, "Unable to find a suitable location for Incarceration -> Default to KingsKeep")); heldLocID = 1; }
+                        else { Game.logTurn?.Write("Unable to find a suitable location for Incarceration -> Default to KingsKeep"); heldLocID = 1; }
                         //update Player LocID (dungeon), set Known to true (should be already)
                         player.LocID = heldLocID;
                         player.Known = true;

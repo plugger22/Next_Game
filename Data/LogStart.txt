@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 05/05/2017 20:49:31
+//Exile Game file ops "LogStart.txt" commenced at: 07/05/2017 10:16:35
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -72,7 +72,7 @@ PROMISES_BASE -> 10 Min 5 Max 15
 PROMISES_HALVED -> 4 Min 4 Max 10
 PROMISES_MAX -> 6 Min 6 Max 20
 ERROR_29 "Location Deleted 27:27"
-Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 20:49:31 UTC +10:00
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 10:16:35 UTC +10:00
 --- InitialiseHouseLocations (Network.cs)
 Total Locations (excluding Capital) 31
 Number of Houses 8, Max Cap on House Numbers 8
@@ -1292,5 +1292,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 05/05/2017 20:49:32
-//Elapsed Time 890 ms
+//Exile Game file ops "LogStart.txt" Completed at: 07/05/2017 10:16:36
+//Elapsed Time 732 ms
