@@ -66,7 +66,7 @@ namespace Next_Game.Cartographic
         { return (pathList.Count - currentPosIndex) / speed; }
 
         /// <summary>
-        /// Moves party at speed clicks down list of Positions
+        /// Moves party at speed clicks down list of Positions, returns True if party at Destination
         /// </summary>
         /// <returns>True if party has reached destination</returns>
         public bool MoveParty()

@@ -280,7 +280,7 @@ namespace Next_Game
         /// <param name="posOrigin"></param>
         /// <param name="posDestination"></param>
         /// <param name="path">sequenced List of Positions to destination</param>
-        internal string InitiateMoveActor(int charID, Position posOrigin, Position posDestination/*, List<Position> path*/)
+        internal string InitialiseMoveActor(int charID, Position posOrigin, Position posDestination/*, List<Position> path*/)
         {
             Game.logTurn?.Write("--- InitiateMoveActor (World.cs)");
             string returnText = "Error in World.InitiateMoveCharacters";
@@ -315,46 +315,57 @@ namespace Next_Game
                             Location loc = Game.network.GetLocation(locID_Origin);
                             if (loc != null)
                             {
-                                //check an existing Move object doesn't already exist, e.g if user issued > 1 move orders during a turn
-                                //reverse loop, deleting any that contain the Player as you go
-                                for (int i = listMoveObjects.Count - 1; i >= 0; i--)
+                                //normal travel
+                                if (Game._menuMode != MenuMode.God)
                                 {
-                                    Move tempMove = listMoveObjects[i];
-                                    if (tempMove.GetPrimaryCharacter() == charID)
+                                    //check an existing Move object doesn't already exist, e.g if user issued > 1 move orders during a turn
+                                    //reverse loop, deleting any that contain the Player as you go
+                                    for (int i = listMoveObjects.Count - 1; i >= 0; i--)
                                     {
-                                        Position pos = tempMove.GetCurrentPosition();
-                                        Game.logTurn?.Write(string.Format("[Move -> Alert] Move Object DELETED PlayerInParty -> {0}, charID {1} at Loc {2}:{3}", tempMove.PlayerInParty, tempMove.GetPrimaryCharacter(),
-                                            pos.PosX, pos.PosY));
-                                        Active tempActive = Game.world.GetActiveActor(charID);
-                                        if (tempActive != null)
+                                        Move tempMove = listMoveObjects[i];
+                                        if (tempMove.GetPrimaryCharacter() == charID)
                                         {
-                                            Game.world.SetMessage(new Message(string.Format("{0} {1}'s journey to {2} has been cancelled", tempActive.Title, tempActive.Name, tempMove.GetDestination()),
-                                              MessageType.Move));
+                                            Position pos = tempMove.GetCurrentPosition();
+                                            Game.logTurn?.Write(string.Format("[Move -> Alert] Move Object DELETED PlayerInParty -> {0}, charID {1} at Loc {2}:{3}", tempMove.PlayerInParty, tempMove.GetPrimaryCharacter(),
+                                                pos.PosX, pos.PosY));
+                                            Active tempActive = Game.world.GetActiveActor(charID);
+                                            if (tempActive != null)
+                                            {
+                                                Game.world.SetMessage(new Message(string.Format("{0} {1}'s journey to {2} has been cancelled", tempActive.Title, tempActive.Name, tempMove.GetDestination()),
+                                                  MessageType.Move));
+                                            }
+                                            else { Game.SetError(new Error(175, "Invalid Player (null)")); }
+                                            listMoveObjects.RemoveAt(i);
                                         }
-                                        else { Game.SetError(new Error(175, "Invalid Player (null)")); }
-                                        listMoveObjects.RemoveAt(i);
                                     }
+                                    //housekeep all move tasks
+                                    loc.RemoveActor(charID);
+                                    //create new move object
+                                    Move moveObject = new Move(path, party, speed, playerInParty, Game.gameTurn);
+                                    //insert into moveList
+                                    listMoveObjects.Add(moveObject);
+                                    //update character status to 'travelling'
+                                    person.Status = ActorStatus.Travelling;
+                                    //update characterLocationID (now becomes destination)
+                                    int locID_Destination = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
+                                    person.LocID = locID_Destination;
+                                    //admin
+                                    SetMessage(new Message(returnText, person.ActID, locID_Destination, MessageType.Move));
+                                    int refID = ConvertLocToRef(locID_Destination);
+                                    if (charID == 1)
+                                    { Game.world.SetPlayerRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
+                                    else if (charID > 1)
+                                    { Game.world.SetCurrentRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
                                 }
-                                //housekeep all move tasks
-                                loc.RemoveActor(charID);
-                                //create new move object
-                                Move moveObject = new Move(path, party, speed, playerInParty, Game.gameTurn);
-                                //insert into moveList
-                                listMoveObjects.Add(moveObject);
-                                //update character status to 'travelling'
-                                person.Status = ActorStatus.Travelling;
-                                //update characterLocationID (now becomes destination)
-                                int locID_Destination = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
-                                person.LocID = locID_Destination;
-                                //admin
-                                SetMessage(new Message(returnText, person.ActID, locID_Destination, MessageType.Move));
-                                int refID = ConvertLocToRef(locID_Destination);
-                                if (charID == 1)
-                                { Game.world.SetPlayerRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
-                                else if (charID > 1)
-                                { Game.world.SetCurrentRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
+                                //God Mode Teleport Travel
+                                else
+                                {
+                                    returnText = string.Format("{0} instantly Teleports from {2} to {3}", name, time, originLocation, destinationLocation);
+                                    //place character at destination
+                                    if (CharacterAtDestination(posDestination, charID) == false)
+                                    { Game.SetError(new Error(175, $"ActorID {charID} has not had their details updated upon arriving at their Destination")); }
+                                }
                                 //show route (Player only)
-                                //if (playerInParty == true)
                                 if (person is Active)
                                 {
                                     Game.map.UpdateMap();
@@ -420,50 +431,56 @@ namespace Next_Game
                 moveObject.UpdatePartyStatus();
                 if (moveObject.Status == PartyStatus.Active)
                 {
+                    //Arrived at Destination
                     if (moveObject.MoveParty() == true)
                     {
-                        //update location list at destination
+                        //update all relevant details for character arriving at destination
                         Position posDestination = moveObject.GetCurrentPosition();
-                        int locID = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
-                        Location loc = Game.network.GetLocation(locID);
+                        /*int locID = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
+                        Location loc = Game.network.GetLocation(locID);*/
                         List<int> charListMoveObject = new List<int>(moveObject.GetCharacterList());
                         //find location, get list, update for each character
-                        if (loc != null)
+                        /*if (loc != null)
+                        {*/
+                        foreach (int charID in charListMoveObject)
                         {
-                            foreach (int charID in charListMoveObject)
+                            if (CharacterAtDestination(posDestination, charID) == false)
+                            { Game.SetError(new Error(42, $"ActorID {actorID} has not had their details updated upon arriving at their Destination")); }
+                            /*
+                            //Add to destination
+                            loc.AddActor(charID);
+                            //find character and update details
+                            if (dictAllActors.ContainsKey(charID))
                             {
-                                loc.AddActor(charID);
-                                //find character and update details
-                                if (dictAllActors.ContainsKey(charID))
+                                Actor person = new Actor();
+                                person = dictAllActors[charID];
+                                person.Status = ActorStatus.AtLocation;
+                                person.SetActorPosition(posDestination);
+                                person.LocID = locID;
+                                int refID = ConvertLocToRef(locID);
+                                string tempText = string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, loc.LocName);
+                                Message message = new Message(tempText, person.ActID, loc.LocationID, MessageType.Move);
+                                SetMessage(message);
+                                if (person.ActID == 1)
+                                { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
+                                else if (person.ActID > 1)
+                                { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
+                                //enemy -> arrives at destination, assign goal
+                                if (person is Enemy)
                                 {
-                                    Actor person = new Actor();
-                                    person = dictAllActors[charID];
-                                    person.Status = ActorStatus.AtLocation;
-                                    person.SetActorPosition(posDestination);
-                                    person.LocID = locID;
-                                    int refID = ConvertLocToRef(locID);
-                                    string tempText = string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, loc.LocName);
-                                    Message message = new Message(tempText, person.ActID, loc.LocationID, MessageType.Move);
-                                    SetMessage(message);
-                                    if (person.ActID == 1)
-                                    { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
-                                    else if (person.ActID > 1)
-                                    { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
-                                    //enemy -> arrives at destination, assign goal
-                                    if (person is Enemy)
-                                    {
-                                        Enemy enemy = person as Enemy;
-                                        if (enemy.HuntMode == true) { enemy.Goal = ActorAIGoal.Search; }
-                                        else { enemy.Goal = ActorAIGoal.Wait; }
-                                        Game.logTurn?.Write(string.Format(" [Goal -> Arrival] {0} {1}, ActID {2}, currently at {3}, new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, loc.LocName, enemy.Goal));
-                                    }
+                                    Enemy enemy = person as Enemy;
+                                    if (enemy.HuntMode == true) { enemy.Goal = ActorAIGoal.Search; }
+                                    else { enemy.Goal = ActorAIGoal.Wait; }
+                                    Game.logTurn?.Write(string.Format(" [Goal -> Arrival] {0} {1}, ActID {2}, currently at {3}, new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, loc.LocName, enemy.Goal));
                                 }
-                                else
-                                { Game.SetError(new Error(42, "Character not found")); }
                             }
+                            else
+                            { Game.SetError(new Error(42, "Character not found")); }
+                        */
                         }
-                        else
-                        { Game.SetError(new Error(42, "Character not found")); }
+                        //}
+                        //else
+                        //{ Game.SetError(new Error(42, "Character not found")); }
                         //update Party status to enable deletion of moveObject from list (below)
                         moveObject.Status = PartyStatus.Done;
                     }
@@ -514,6 +531,59 @@ namespace Next_Game
             return dictMapMarkers;
         }
 
+        /// <summary>
+        /// internal method to handle an active actor arriving at a destination (updates all relevant details). Returns true if all O.K
+        /// </summary>
+        /// <param name="posDestination"></param>
+        /// <param name="actorID"></param>
+        private bool CharacterAtDestination(Position posDestination, int actorID)
+        {
+            if (posDestination != null)
+            {
+                //active actor?
+                if (actorID > 0 && actorID < 10)
+                {
+                    int locID = Game.map.GetMapInfo(MapLayer.LocID, posDestination.PosX, posDestination.PosY);
+                    Location locDestination = Game.network.GetLocation(locID);
+                    if (locDestination != null)
+                    {
+                        //add character to destination
+                        locDestination.AddActor(actorID);
+                        //find character and update details
+                        if (dictAllActors.ContainsKey(actorID))
+                        {
+                            Actor person = new Actor();
+                            person = dictAllActors[actorID];
+                            person.Status = ActorStatus.AtLocation;
+                            person.SetActorPosition(posDestination);
+                            person.LocID = locID;
+                            int refID = ConvertLocToRef(locID);
+                            string tempText = string.Format("{0}, Aid {1}, has arrived safely at {2}", person.Name, person.ActID, locDestination.LocName);
+                            Message message = new Message(tempText, person.ActID, locDestination.LocationID, MessageType.Move);
+                            SetMessage(message);
+                            if (person.ActID == 1)
+                            { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
+                            else if (person.ActID > 1)
+                            { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
+                            //enemy -> arrives at destination, assign goal
+                            if (person is Enemy)
+                            {
+                                Enemy enemy = person as Enemy;
+                                if (enemy.HuntMode == true) { enemy.Goal = ActorAIGoal.Search; }
+                                else { enemy.Goal = ActorAIGoal.Wait; }
+                                Game.logTurn?.Write(string.Format(" [Goal -> Arrival] {0} {1}, ActID {2}, currently at {3}, new Goal -> {4}", enemy.Title, enemy.Name, enemy.ActID, locDestination.LocName, enemy.Goal));
+                            }
+                        }
+                        else
+                        { Game.SetError(new Error(247, $"Character not found, actorID {actorID}")); return false; }
+                    }
+                    else { Game.SetError(new Error(247, "Invalid locDestination (null)")); return false; }
+                }
+                else { Game.SetError(new Error(247, $"Invalid actorID \"{actorID}\"-> must be between 1 & 9")); return false; }
+            }
+            else { Game.SetError(new Error(247, "Invalid posDestination (null)")); return false; }
+            return true;
+        }
 
         /// <summary>
         /// Returns a list of characters in string format to pass to InfoChannel to display in multi-Console
@@ -5032,7 +5102,7 @@ namespace Next_Game
                             {
                                 Position posDestination = locMove.GetPosition();
                                 //List<Position> pathToTravel = Game.network.GetPathAnywhere(posOrigin, posDestination);
-                                InitiateMoveActor(enemy.ActID, posOrigin, posDestination);
+                                InitialiseMoveActor(enemy.ActID, posOrigin, posDestination);
                             }
                             else { Game.SetError(new Error(156, "Invalid locMove (null) Enemy isn't Moved")); }
                         }

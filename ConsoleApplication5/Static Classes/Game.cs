@@ -512,7 +512,7 @@ namespace Next_Game
                                                         //int refID = world.ConvertLocToRef(locID);
                                                         //List<Position> pathToTravel = network.GetPathAnywhere(_posSelect1, _posSelect2);
                                                         /*string infoText = */
-                                                        world.InitiateMoveActor(_charIDSelected, _posSelect1, _posSelect2/*, pathToTravel*/);
+                                                        world.InitialiseMoveActor(_charIDSelected, _posSelect1, _posSelect2/*, pathToTravel*/);
                                                         /*Message message = new Message(infoText, _charIDSelected, locID, MessageType.Move);
                                                         world.SetMessage(message);
                                                         if (_charIDSelected == 1)
@@ -779,15 +779,15 @@ namespace Next_Game
                                         //move Active characters around map (must be AtLocation in order to move)
                                         List<Snippet> charList = new List<Snippet>();
                                         charList.Add(world.GetActorStatusRL(_charIDSelected));
-                                        //if (world.CheckActorStatus(_charIDSelected, ActorStatus.AtLocation) == true)
-                                        //{
-                                            _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
-                                            if (_posSelect1 != null)
-                                            { charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); _mouseOn = true; }
-                                            else
-                                            { charList.Add(new Snippet("The character is not currently at your disposal", RLColor.Red, RLColor.Black)); _mouseOn = false; }
+                                        _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
+                                        if (_posSelect1 != null)
+                                        {
+                                            charList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel"));
+                                            _mouseOn = true;
                                             _inputState = 1;
-                                        //}
+                                        }
+                                        else
+                                        { charList.Add(new Snippet("The character is not currently at your disposal", RLColor.Red, RLColor.Black)); _mouseOn = false; }
                                         infoChannel.SetInfoList(charList, ConsoleDisplay.Input);
                                         break;
                                     case MenuMode.God:
@@ -797,10 +797,15 @@ namespace Next_Game
                                         _charIDSelected = 1;
                                         _posSelect1 = world.GetActiveActorLocationByPos(_charIDSelected);
                                         if (_posSelect1 != null)
-                                        { playerList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); _mouseOn = true; }
+                                        {
+                                            playerList.Add(new Snippet("Click on the Destination location or press [Right Click] to cancel")); _mouseOn = true;
+                                            _menuMode = menu.SwitchMenuMode(MenuMode.Actor_Active);
+                                            _inputState = 1;
+                                            _mouseOn = true;
+                                        }
                                         else
                                         { playerList.Add(new Snippet("The character is not currently at your disposal", RLColor.Red, RLColor.Black)); _mouseOn = false; }
-                                        _inputState = 1;
+                                        
                                         infoChannel.SetInfoList(playerList, ConsoleDisplay.Input);
                                         break;
                                     case MenuMode.Debug:
