@@ -631,6 +631,7 @@ namespace Next_Game
         public int Revert { get; set; } //# of turns before Known status reverts to unknown
         public int TurnsUnknown { get; set; } //# of continuous turns spent 'Unknown' (used by conflict for game situations)
         public int LastKnownLocID { get; set; } //updated every turn Actor is known
+        public bool IntroPresented { get; set; } //true if actor has presented an introduction to gain access to a court
         public bool Found { get; set; } //found by enemies if true, reset each at end of each turn
         public bool Capture { get; set; } //if found when already Known, then 'true' and enemy about to capture active actor, reset at the end of each turn
         private List<int> listOfEnemies; //if found, contains actID of all enemies who found you, cleared at end of each turn

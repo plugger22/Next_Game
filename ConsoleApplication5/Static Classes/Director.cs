@@ -1106,7 +1106,8 @@ namespace Next_Game
                                 OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Court);
                                 option.SetGoodOutcome(outcome);
                                 listTriggers.Clear();
-                                listTriggers.Add(new Trigger(TriggerCheck.Known, 0, 1, EventCalc.Equals ));
+                                listTriggers.Add(new Trigger(TriggerCheck.Known, 0, 1, EventCalc.Equals));
+                                listTriggers.Add(new Trigger(TriggerCheck.Introduction, 0, 1, EventCalc.Equals));
                                 option.SetTriggers(listTriggers);
                                 eventObject.SetOption(option);
                             }
@@ -1129,6 +1130,7 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 listTriggers.Clear();
                                 listTriggers.Add(new Trigger(TriggerCheck.Known, 0, 1, EventCalc.Equals));
+                                listTriggers.Add(new Trigger(TriggerCheck.Introduction, 0, 1, EventCalc.Equals));
                                 option.SetTriggers(listTriggers);
                                 eventObject.SetOption(option);
                             }
@@ -2369,6 +2371,11 @@ namespace Next_Game
                             if (player.Known == true) { checkValue = 1; }
                             if(CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player is wrong type of Known status"); return false; }
                             break;
+                        case TriggerCheck.Introduction:
+                            checkValue = 0;
+                            if (player.IntroPresented == true) { checkValue = 1; }
+                            if (CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == false) { Game.logTurn?.Write(" Trigger: Player is wrong type of Known status"); return false; }
+                            break;
                         default:
                             Game.SetError(new Error(76, string.Format("Invalid Trigger Check Type (\"{0}\") for Option \"{1}\"", trigger.Check, option.Text)));
                             break;
@@ -2742,6 +2749,9 @@ namespace Next_Game
                                             //chain events -> used by CreateAuto Loc Events
                                             actorID = option.ActorID;
                                             OutEventChain chainOutcome = outcome as OutEventChain;
+                                            //if introduction used to gain access to Court, or Advisors, make sure it can't be reused
+                                            if (chainOutcome.Filter == EventAutoFilter.Court || chainOutcome.Filter == EventAutoFilter.Advisors)
+                                            { player.IntroPresented = false; }
                                             CreateAutoLocEvent(chainOutcome.Filter, actorID);
                                             Game._eventID = eventObject.EventPID;
                                             break;
@@ -3503,6 +3513,7 @@ namespace Next_Game
             Player player = (Player)Game.world.GetActiveActor(1);
             if (player != null)
             {
+                player.IntroPresented = true;
                 player.DeleteIntroduction(refID);
                 resultText = $"You have used your introduction to gain access to the court of House \"{Game.world.GetHouseName(refID)}\"";
             }

@@ -1,53 +1,192 @@
-//Exile Game File "LogTurn.txt" opened at: 07/05/2017 15:43:54
+//Exile Game File "LogTurn.txt" opened at: 07/05/2017 16:33:35
 --- ProcessStartTurn (World.cs)
-Day 2, Turn 1
---- MoveActors -> 0 Records (World.cs)
+Day 9, Turn 8
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Nemesis The Unrelenting, ActID 114 travelling to Highgarden (current Loc 16:16)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Trystane Martell, ID 1 at 8:15, Enemy at 16:16 (The Unrelenting, ID 114
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Trystane Martell, ID 1 at 8:15, Enemy at 15:16 (The Unrelenting, ID 114
 --- UpdatePlayerStatus (World.cs)
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Wyl Lannister, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Trystane Martell, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Shaitan, ID 120 at 14:15, Active Wyl Lannister, ID 1, at 29:23
- [Search -> Debug] Enemy, Brother Shiva, ID 121 at 14:15, Active Wyl Lannister, ID 1, at 29:23
- [Search -> Debug] Enemy, Brother Behemoth, ID 122 at 14:15, Active Wyl Lannister, ID 1, at 29:23
- [Search -> Debug] Enemy, Brother Mantus, ID 123 at 14:15, Active Wyl Lannister, ID 1, at 29:23
- [Search -> Debug] Enemy, The Unrelenting, ID 124 at 14:15, Active Wyl Lannister, ID 1, at 29:23
- [Search -> Stationary] Follower The Leper, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Jester, ActID 7 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Debug] Enemy, Brother Adramalech, ID 110 at 18:16, Active Trystane Martell, ID 1, at 8:15
+ [Search -> Debug] Enemy, Brother Mastema, ID 111 at 23:14, Active Trystane Martell, ID 1, at 8:15
+ [Search -> Debug] Enemy, Brother Mormo, ID 112 at 18:16, Active Trystane Martell, ID 1, at 8:15
+ [Search -> Debug] Enemy, Brother Gorgo, ID 113 at 14:19, Active Trystane Martell, ID 1, at 8:15
+ [Search -> Debug] Enemy, The Unrelenting, ID 114 at 14:16, Active Trystane Martell, ID 1, at 8:15
+ [Search -> Stationary] Follower The Viper, ActID 4 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 2 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 120 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 121 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 122 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 123 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 124 Mode -> Normal
+ [AI -> Notification] Nemesis The Unrelenting, ActID 114 is Travelling to Highgarden
+ [AI -> Mode] enemyID 113,  distance -> 10  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 110,  distance -> 17  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 112,  distance -> 17  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 111,  distance -> 24  Threshold (turns) -> 4  Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Shaitan, ActID 120 retains Goal -> Wait
- [Enemy -> Known] Brother Shiva ActID 121 has become KNOWN
- [Enemy -> Goal] Brother Shiva, ActID 121 retains Goal -> Wait
- [Enemy -> Known] Brother Behemoth ActID 122 has become KNOWN
- [Enemy -> Goal] Brother Behemoth, ActID 122 retains Goal -> Wait
- [Enemy -> Known] Brother Mantus ActID 123 has become KNOWN
- [Enemy -> Goal] Brother Mantus, ActID 123 retains Goal -> Wait
- [Enemy -> Goal] The Unrelenting, ActID 124 retains Goal -> Wait
+ [Enemy -> Goal] Brother Adramalech, ActID 110 retains Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mastema, ActID 111 Assigned Branch -> 1 Current Branch -> 1
+ [Goal -> New] Brother Mastema, ActID 111, (loc 23:14), assigned new Goal -> Move
+ [Goal -> Move] Brother Mastema, ActID 111 -> Move Outwards -> Barrow Hill, LocID 3
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Known] Brother Mormo ActID 112 has become KNOWN
+ [Enemy -> Goal] Brother Mormo, ActID 112 retains Goal -> Hide
+ [Enemy -> Goal] Brother Gorgo, ActID 113 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Ivo Wull", ID 86 added to list of Actors
- [AutoEvent -> ActorList] "The Crone", ID 3 added to list of Actors
- [AutoEvent -> LocalList] "Ivo Wull", ID 86 added to list of Locals
- [AutoEvent -> FollowerList] "The Crone", ID 3 added to list of Followers
-[Notification] No entry found in dictOfIntroductions for RefID 7
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status
- Event "What to do?" Timer Repeat now 999
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 37 %
+--- UpdateActiveActors (World.cs)
+ Usurper Trystane Martell has had their Revert Timer reduced from 1 to 0
+Usurper Trystane Martell is no longer "Known" as sufficient time has passed
+ Follower The Viper has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Crone has had their TurnsUnknown Timer increased from 7 to 8
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 9, Turn 8
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 12
+ "Search and Detain" event, Cooldown Timer decremented from 2 to 1
+//Exile Game File "LogTurn.txt" Close completed at: 07/05/2017 16:36:31
+er Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Wyl Lannister has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Leper has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Jester has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+ Usurper Trystane Martell has had their Revert Timer reduced from 2 to 1
+ Follower The Viper has had their TurnsUnknown Timer increased from 6 to 7
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 6 to 7
+ Follower The Crone has had their TurnsUnknown Timer increased from 6 to 7
 --- ResolveOutcome (Director.cs)
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 07/05/2017 15:44:09
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Morton Ivo", ID 51 added to list of Actors
+ [AutoEvent -> ActorList] "Varys Reyner", ID 52 added to list of Actors
+ [AutoEvent -> ActorList] "Salemon Artus", ID 53 added to list of Actors
+ [AutoEvent -> ActorList] "Grizzel Tyrell", ID 54 added to list of Actors
+ [AutoEvent -> ActorList] "Vargo Tyrell", ID 55 added to list of Actors
+ [AutoEvent -> ActorList] "Pate Tyrell", ID 95 added to list of Actors
+ [AutoEvent -> AdvisorList] "Morton Ivo", ID 51 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Varys Reyner", ID 52 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Salemon Artus", ID 53 added to list of Advisors
+ [AutoEvent -> LocalList] "Grizzel Tyrell", ID 54 added to list of Locals
+ [AutoEvent -> LocalList] "Vargo Tyrell", ID 55 added to list of Locals
+ [AutoEvent -> LocalList] "Pate Tyrell", ID 95 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Talk to members of the Court" Timer Repeat now 999
+ Event "Talk to members of the Court" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Morton Ivo", ID 51 added to list of Actors
+ [AutoEvent -> ActorList] "Varys Reyner", ID 52 added to list of Actors
+ [AutoEvent -> ActorList] "Salemon Artus", ID 53 added to list of Actors
+ [AutoEvent -> ActorList] "Grizzel Tyrell", ID 54 added to list of Actors
+ [AutoEvent -> ActorList] "Vargo Tyrell", ID 55 added to list of Actors
+ [AutoEvent -> ActorList] "Pate Tyrell", ID 95 added to list of Actors
+ [AutoEvent -> AdvisorList] "Morton Ivo", ID 51 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Varys Reyner", ID 52 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Salemon Artus", ID 53 added to list of Advisors
+ [AutoEvent -> LocalList] "Grizzel Tyrell", ID 54 added to list of Locals
+ [AutoEvent -> LocalList] "Vargo Tyrell", ID 55 added to list of Locals
+ [AutoEvent -> LocalList] "Pate Tyrell", ID 95 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "78" GreaterThanOrEqual 50
+ Trigger passed on "78" GreaterThanOrEqual 40
+ Trigger passed on "78" GreaterThanOrEqual 60
+ Trigger FAILED on "1" NotEqual 1
+ Trigger: Same sex, Seduction not possible
+ Trigger passed on "78" GreaterThanOrEqual 70
+ Trigger passed on "3" Equals 3
+Trigger: Vargo Tyrell has desire more Gold and Satisified False -> passed
+ Trigger passed on "2" LessThanOrEqual 6
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+SetGameSituation] -> "difference between Your's and the King's Honour is -100 %", difference -100 Modifier 100 numCards 5
+- Initialise Social Challenge
+--- SetSupporters (Conflict.cs)
+ [Notification] dictPlyrSupporters has 1 records
+ [Supporter -> Good] Castellan Morton Ivo "The Lion Hearted", Friend, ActID 51, relPlyr 82
+ [Notification] dictOppSupporters has 0 records
+--- SetItems (Conflict.cs)
+ [Notification] Player has no Items
+ [Notification] Opponent Item "Dragon Egg" has no challenge effect
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 64, net 64, numCards 2
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 99, net 99, numCards 5
+--- SetOpponentStrategy (Conflict.cs)
+[Conflict -> Debug] Good -> 9 Bad -> 16 Margin -> 2 rndFactor -> 0 Opp Wits -> 4 Opp PSkill -> 3 Def Spec -> 2 Challenger -> True
+[Conflict -> Opp Def's] Bad 16 - Good 9 > margin 2
+--- ResolveResults (Conflict.cs)
+RelPlyr amount beforehand 17
+RelPlyr amount afterwards 17
+Item with PossID 6 has been removed from Vargo Tyrell's inventory
+--- GetIntroductionHouse (World.cs)
+Check Relations for House "Tyrell" at Highgarden, RefID 10
+House "Westerling" at Dorne, RefID 99, has a Rel level of -19 and is ignored
+House "Arryn" at Eyrie, RefID 6, has a Rel level of -24 and is ignored
+There are 1 records in listPositive to select from
+House Tyrell has a +5 Relationship with House "Targaryen -> Introduction Created
+--- ProcessEndTurn (World.cs)
+Day 8, Turn 7
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 13
+ "Search and Detain" event, Cooldown Timer decremented from 3 to 2
+ "Crazy Old Woman" event, Cooldown Timer decremented from 1 to 0
+//Exile Game File "LogTurn.txt" Close completed at: 07/05/2017 16:33:35
+st] "Vargo Tyrell", ID 55 added to list of Actors
+ [AutoEvent -> ActorList] "Pate Tyrell", ID 95 added to list of Actors
+ [AutoEvent -> AdvisorList] "Morton Ivo", ID 51 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Varys Reyner", ID 52 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Salemon Artus", ID 53 added to list of Advisors
+ [AutoEvent -> LocalList] "Grizzel Tyrell", ID 54 added to list of Locals
+ [AutoEvent -> LocalList] "Vargo Tyrell", ID 55 added to list of Locals
+ [AutoEvent -> LocalList] "Pate Tyrell", ID 95 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "64" GreaterThanOrEqual 50
+ Trigger passed on "64" GreaterThanOrEqual 40
+ Trigger passed on "64" GreaterThanOrEqual 60
+ Trigger passed on "1" NotEqual 2
+ Trigger FAILED on "64" GreaterThanOrEqual 70
+Trigger: Desire is None or Satisified is True
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+SetGameSituation] -> "difference between Your's and the King's Honour is -50 %", difference -50 Modifier 50 numCards 3
+- Initialise Social Challenge
+--- SetSupporters (Conflict.cs)
+ [Notification] dictPlyrSupporters has 2 records
+ [Supporter -> Good] Castellan Morton Ivo "The Lion Hearted", Friend, ActID 51, relPlyr 82
+ [Supporter -> Good] Lord Vargo Tyrell "The Laborious", Friend, ActID 55, relPlyr 78
+ [Notification] dictOppSupporters has 0 records
+--- SetItems (Conflict.cs)
+ [Notification] Player Item "Head Lopper" isn't valid for this Challenge
+ [Notification] Opponent has no Items
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 99, net 99, numCards 5
+--- GetSituationCardNumber (Conflict.cs)
+ modifier 0, rndNum 46, net 46, numCards 1
+--- SetOpponentStrategy (Conflict.cs)
+[Conflict -> Debug] Good -> 9 Bad -> 15 Margin -> 2 rndFactor -> 0 Opp Wits -> 3 Opp PSkill -> 3 Def Spec -> 5 Challenger -> True
+[Conflict -> Opp Def's] Bad 15 - Good 9 > margin 2
+--- ResolveResults (Conflict.cs)
+RelPlyr amount beforehand -22
+RelPlyr amount afterwards -22
+Item with PossID 4 has been removed from Trystane Martell's inventory
+--- GetIntroductionHouse (World.cs)
+Check Relations for House "Tyrell" at Highgarden, RefID 10
+House "Westerling" at Dorne, RefID 99, has a Rel level of -19 and is ignored
+House "Arryn" at Eyrie, RefID 6, has a Rel level of -24 and is ignored
+There are 1 records in listPositive to select from
+House Tyrell has a +5 Relationship with House "Targaryen -> Introduction Created
+--- ProcessEndTurn (World.cs)
+Day 6, Turn 5
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 15
+ "Crazy Old Woman" event, Cooldown Timer decremented from 3 to 2
+//Exile Game File "LogTurn.txt" Close completed at: 07/05/2017 16:30:18

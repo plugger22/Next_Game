@@ -252,6 +252,7 @@ namespace Next_Game.Event_System
         {
             Data = refID;
             Type = OutcomeType.Introduction;
+
         }
     }
 
