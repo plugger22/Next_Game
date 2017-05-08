@@ -106,7 +106,8 @@ namespace Next_Game
             InitialiseConversionDicts(); //needs to be after history methods (above) & before InitialiseEnemyActors (below)
             InitialiseSecrets();
             InitialiseDesires();
-            Game.StopTimer(timer_2, "W: InitialiseSecrets");
+            InitialiseSafeHouses();
+            Game.StopTimer(timer_2, "W: InitialiseVarious");
             timer_2.Start();
             InitialiseAI();
             InitialiseEnemyActors();
@@ -6075,6 +6076,42 @@ namespace Next_Game
             listText.Add(new Snippet(text));
             return listText;
         }
+
+
+        /// <summary>
+        /// Sets up Safe Houses at Game Start
+        /// </summary>
+        internal void InitialiseSafeHouses()
+        {
+            Game.logStart?.Write("--- InitialiseSafeHouse (History.cs)");
+            //Major Houses
+            for (int i = 0; i < dictAllHouses.Count; i++)
+            {
+                House house = dictAllHouses.ElementAt(i).Value;
+                if (house != null)
+                {
+                    //supports old King?
+                    if (house.Loyalty_Current == KingLoyalty.Old_King)
+                    {
+                        if (house is MajorHouse)
+                        {
+                            //randomly allocate a safe house rating of between 3 and 5
+                            house.SafeHouse = rnd.Next(3, 6);
+                            Game.logStart?.Write($"House {house.Name} at \"{house.LocName}\" has a SafeHouse rating of {house.SafeHouse} stars");
+                        }
+                        else if (house is MinorHouse)
+                        {
+                            //randomly allocate a safe house rating of between 1 and 2
+                            house.SafeHouse = rnd.Next(1, 3);
+                            Game.logStart?.Write($"BannerLord House {house.Name} at \"{house.LocName}\" has a SafeHouse rating of {house.SafeHouse} stars");
+                        }
+                    }
+                }
+                else { Game.SetError(new Error(249, "Invalid house (null)")); }
+            }
+        }
+
+
 
         //new Methods above here
     }

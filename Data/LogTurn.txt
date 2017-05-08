@@ -1,76 +1,46 @@
-//Exile Game File "LogTurn.txt" opened at: 08/05/2017 11:55:10
+//Exile Game File "LogTurn.txt" opened at: 08/05/2017 13:55:49
 --- ProcessStartTurn (World.cs)
-Day 10, Turn 9
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Nemesis The Unrelenting, ActID 136 travelling to Brightwater Keep (current Loc 14:8)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Martyn Florent, ID 1 at 12:6, Enemy at 14:8 (The Unrelenting, ID 136
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Martyn Florent, ID 1 at 12:6, Enemy at 14:7 (The Unrelenting, ID 136
- [Move -> MoveObject] Inquisitor Brother Kali, ActID 134 travelling to Torrhen's Square (current Loc 11:25)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Martyn Florent, ID 1 at 12:6, Enemy at 11:25 (Brother Kali, ID 134
+Day 4, Turn 3
+--- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Martyn Florent, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Andry Stark, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Behemoth, ID 132 at 12:14, Active Martyn Florent, ID 1, at 12:6
- [Search -> Debug] Enemy, Brother Shaitan, ID 133 at 12:14, Active Martyn Florent, ID 1, at 12:6
- [Search -> Debug] Enemy, Brother Kali, ID 134 at 11:26, Active Martyn Florent, ID 1, at 12:6
- [Search -> Debug] Enemy, Brother Set, ID 135 at 10:21, Active Martyn Florent, ID 1, at 12:6
- [Search -> Debug] Enemy, The Unrelenting, ID 136 at 14:6, Active Martyn Florent, ID 1, at 12:6
- [Search -> Stationary] Follower The Beast, ActID 3 is AtLocation
- [Search -> Stationary] Follower The Dark Eminence, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 7 is AtLocation
+ [Search -> Debug] Enemy, Brother Diabolous, ID 102 at 14:11, Active Andry Stark, ID 1, at 10:23
+ [Search -> Debug] Enemy, Brother Set, ID 103 at 14:11, Active Andry Stark, ID 1, at 10:23
+ [Search -> Debug] Enemy, Brother Kali, ID 104 at 14:11, Active Andry Stark, ID 1, at 10:23
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 105 at 14:11, Active Andry Stark, ID 1, at 10:23
+ [Search -> Debug] Enemy, The Unrelenting, ID 106 at 14:11, Active Andry Stark, ID 1, at 10:23
+ [Search -> Stationary] Follower The Haggler, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 2 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Notification] Inquisitor Brother Kali, ActID 134 is Travelling to Torrhen's Square
- [AI -> Notification] Nemesis The Unrelenting, ActID 136 is Travelling to Brightwater Keep
- [AI -> Mode] enemyID 132,  distance -> 12  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 133,  distance -> 12  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 135,  distance -> 21  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 102,  distance -> 28  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 103,  distance -> 28  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 104,  distance -> 28  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 105,  distance -> 28  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 106,  distance -> 28  Threshold (turns) -> 8  Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Behemoth, ActID 132 retains Goal -> Hide
- [Enemy -> Known] Brother Shaitan ActID 133 has become KNOWN
- [Enemy -> Goal] Brother Shaitan, ActID 133 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Set, ActID 135 Assigned Branch -> 4 Current Branch -> 4
- [Goal -> New] Brother Set, ActID 135, (loc 10:21), assigned new Goal -> Move
- [Goal -> Move] Brother Set, ActID 135 -> Move Outwards -> Last Hearth, LocID 30
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Goal -> Arrival] Inquisitor Brother Set, ActID 135, currently at Last Hearth, new Goal -> Wait
-[God Mode] Player teleports from The Pickled Prune to Last Hearth
+ [Enemy -> Goal] Brother Diabolous, ActID 102 retains Goal -> Wait
+ [Enemy -> Known] Brother Set ActID 103 has become KNOWN
+ [Enemy -> Goal] Brother Set, ActID 103 retains Goal -> Wait
+ [Enemy -> Goal] Brother Kali, ActID 104 retains Goal -> Wait
+ [Enemy -> Unknown] Brother Demogorgon ActID 105 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Demogorgon, ActID 105 retains Goal -> Hide
+ [Enemy -> Known] The Unrelenting ActID 106 has become KNOWN
+ [Enemy -> Goal] The Unrelenting, ActID 106 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
- Event "Search and Detain" has no attached Conditions
---- GetValidPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
- Chance of Player Location event 37 %
---- ResolvePlayerEvents (Director.cs)
- "Stay Calm" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
- Trigger FAILED on "2" GreaterThanOrEqual 3
-Trait trigger failed
-[Notification] Trait trigger Compulsory fail check
- "Run straight at them" Trait Trigger, if type 1 is GreaterThanOrEqual to 3
- Trigger passed on "4" GreaterThanOrEqual 3
- Event "Search and Detain" Timer Repeat now 998
- Event "Search and Detain" Cooldown Timer has been reset to 4
---- UpdateActiveActors (World.cs)
- Usurper Martyn Florent has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Beast has had their TurnsUnknown Timer increased from 8 to 9
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 8 to 9
- Follower The Crone has had their TurnsUnknown Timer increased from 8 to 9
---- ResolveOutcome (Director.cs)
- [Variable Option] "Leg it!" Passed test (60 % needed, rolled 51)  Roll 61 + DMskill -10 + DMtouched 0 -> modifiedRoll 51
-ERROR_78 ""Active" identical to existing, eventID 4 status unchanged"
-Method: ChangePlayerEventStatus,  Line: 3398,  Object: Director.cs,  Turn: 9,  Local Time: 11:55:16 UTC +10:00
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 08/05/2017 11:55:23
-", ID 120 added to list of Locals
- [AutoEvent -> LocalList] "Salemon Glover", ID 121 added to list of Locals
- [AutoEvent -> LocalList] "Gynuara Glover", ID 122 added to list of Locals
- [AutoEvent -> LocalList] "Rankin Glover", ID 123 added to list of Locals
+- CreateAutoLocEvent (Director.cs)
+ERROR_118 "Invalid house (null)"
+Method: CreateAutoLocEvent,  Line: 1017,  Object: Director.cs,  Turn: 3,  Local Time: 13:55:55 UTC +10:00
+ [AutoEvent -> ActorList] "Ser Trystane Rolandus", ID 21 added to list of Actors
+ [AutoEvent -> ActorList] "Wyl Humpty", ID 22 added to list of Actors
+ [AutoEvent -> ActorList] "Daue Basuin", ID 23 added to list of Actors
+ [AutoEvent -> ActorList] "Peter Gervasius", ID 24 added to list of Actors
+ [AutoEvent -> LocalList] "Ser Trystane Rolandus", ID 21 added to list of Locals
+ [AutoEvent -> AdvisorList] "Wyl Humpty", ID 22 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Daue Basuin", ID 23 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Peter Gervasius", ID 24 added to list of Advisors
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Trigger passed on "1" Equals 1
@@ -82,259 +52,36 @@ Method: ChangePlayerEventStatus,  Line: 3398,  Object: Director.cs,  Turn: 9,  L
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Martyn Florent has had their Revert Timer reduced from 2 to 1
- Follower The Beast has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Crone has had their TurnsUnknown Timer increased from 7 to 8
+ Usurper Andry Stark has had their Revert Timer reduced from 3 to 2
+ Follower The Haggler has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Spider has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Viper has had their TurnsUnknown Timer increased from 2 to 3
 --- ResolveOutcome (Director.cs)
---- ResolveFollowerEvents (Director.cs)
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 08/05/2017 13:56:06
+)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Andry Stark has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Haggler has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Viper has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+[God Mode] Player teleports from Riverrun to Highgarden
 --- ProcessEndTurn (World.cs)
-Day 9, Turn 8
+Day 2, Turn 1
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 12
-//Exile Game File "LogTurn.txt" Close completed at: 08/05/2017 11:55:10
-d from 5 to 6
- Follower The Crone has had their TurnsUnknown Timer increased from 5 to 6
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joseth Glover", ID 80 added to list of Actors
- [AutoEvent -> ActorList] "Robett Godelot", ID 116 added to list of Actors
- [AutoEvent -> ActorList] "Viserys Henry", ID 117 added to list of Actors
- [AutoEvent -> ActorList] "Chett Michell", ID 118 added to list of Actors
- [AutoEvent -> ActorList] "Ser Robett Digory", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Margaret Glover", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Glover", ID 121 added to list of Actors
- [AutoEvent -> ActorList] "Gynuara Glover", ID 122 added to list of Actors
- [AutoEvent -> ActorList] "Rankin Glover", ID 123 added to list of Actors
- [AutoEvent -> LocalList] "Joseth Glover", ID 80 added to list of Locals
- [AutoEvent -> AdvisorList] "Robett Godelot", ID 116 added to list of Advisors
- [AutoEvent -> AdvisorList] "Viserys Henry", ID 117 added to list of Advisors
- [AutoEvent -> AdvisorList] "Chett Michell", ID 118 added to list of Advisors
- [AutoEvent -> LocalList] "Ser Robett Digory", ID 119 added to list of Locals
- [AutoEvent -> LocalList] "Margaret Glover", ID 120 added to list of Locals
- [AutoEvent -> LocalList] "Salemon Glover", ID 121 added to list of Locals
- [AutoEvent -> LocalList] "Gynuara Glover", ID 122 added to list of Locals
- [AutoEvent -> LocalList] "Rankin Glover", ID 123 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Event "Talk to members of the Court" Timer Repeat now 999
- Event "Talk to members of the Court" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joseth Glover", ID 80 added to list of Actors
- [AutoEvent -> ActorList] "Robett Godelot", ID 116 added to list of Actors
- [AutoEvent -> ActorList] "Viserys Henry", ID 117 added to list of Actors
- [AutoEvent -> ActorList] "Chett Michell", ID 118 added to list of Actors
- [AutoEvent -> ActorList] "Ser Robett Digory", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Margaret Glover", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Glover", ID 121 added to list of Actors
- [AutoEvent -> ActorList] "Gynuara Glover", ID 122 added to list of Actors
- [AutoEvent -> ActorList] "Rankin Glover", ID 123 added to list of Actors
- [AutoEvent -> LocalList] "Joseth Glover", ID 80 added to list of Locals
- [AutoEvent -> AdvisorList] "Robett Godelot", ID 116 added to list of Advisors
- [AutoEvent -> AdvisorList] "Viserys Henry", ID 117 added to list of Advisors
- [AutoEvent -> AdvisorList] "Chett Michell", ID 118 added to list of Advisors
- [AutoEvent -> LocalList] "Ser Robett Digory", ID 119 added to list of Locals
- [AutoEvent -> LocalList] "Margaret Glover", ID 120 added to list of Locals
- [AutoEvent -> LocalList] "Salemon Glover", ID 121 added to list of Locals
- [AutoEvent -> LocalList] "Gynuara Glover", ID 122 added to list of Locals
- [AutoEvent -> LocalList] "Rankin Glover", ID 123 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "5" GreaterThanOrEqual 50
- RelPlyr is too low -> Trigger failed
-[Notification] RelPlyr trigger Compulsory fail check
- Trigger FAILED on "5" GreaterThanOrEqual 40
- RelPlyr is too low -> Trigger failed
-[Notification] RelPlyr trigger Compulsory fail check
- Trigger FAILED on "5" GreaterThanOrEqual 60
- RelPlyr is too low -> Trigger failed
-[Notification] RelPlyr trigger Compulsory fail check
- Trigger FAILED on "5" GreaterThanOrEqual 70
- RelPlyr is too low -> Trigger failed
-[Notification] RelPlyr trigger Compulsory fail check
-Trigger: Joseth Glover has desire a court position for their son Rankin Glover "The Believing" ActID 123 and Satisified False -> passed
- Trigger passed on "0" LessThanOrEqual 6
- Event "Interact" Timer Repeat now 999
- Event "Interact" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joseth Glover", ID 80 added to list of Actors
- [AutoEvent -> ActorList] "Robett Godelot", ID 116 added to list of Actors
- [AutoEvent -> ActorList] "Viserys Henry", ID 117 added to list of Actors
- [AutoEvent -> ActorList] "Chett Michell", ID 118 added to list of Actors
- [AutoEvent -> ActorList] "Ser Robett Digory", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Margaret Glover", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Glover", ID 121 added to list of Actors
- [AutoEvent -> ActorList] "Gynuara Glover", ID 122 added to list of Actors
- [AutoEvent -> ActorList] "Rankin Glover", ID 123 added to list of Actors
- [AutoEvent -> LocalList] "Joseth Glover", ID 80 added to list of Locals
- [AutoEvent -> AdvisorList] "Robett Godelot", ID 116 added to list of Advisors
- [AutoEvent -> AdvisorList] "Viserys Henry", ID 117 added to list of Advisors
- [AutoEvent -> AdvisorList] "Chett Michell", ID 118 added to list of Advisors
- [AutoEvent -> LocalList] "Ser Robett Digory", ID 119 added to list of Locals
- [AutoEvent -> LocalList] "Margaret Glover", ID 120 added to list of Locals
- [AutoEvent -> LocalList] "Salemon Glover", ID 121 added to list of Locals
- [AutoEvent -> LocalList] "Gynuara Glover", ID 122 added to list of Locals
- [AutoEvent -> LocalList] "Rankin Glover", ID 123 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Event "Need Something" Timer Repeat now 999
- Event "Need Something" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-[GameVar] Promises_Num changed from 0 to 1 as a result of Add 1
---- ProcessEndTurn (World.cs)
-Day 7, Turn 6
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 14
- "Search and Detain" event, Cooldown Timer decremented from 2 to 1
-//Exile Game File "LogTurn.txt" Close completed at: 08/05/2017 11:54:51
-s been reset to 0
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joseth Glover", ID 80 added to list of Actors
- [AutoEvent -> ActorList] "Robett Godelot", ID 116 added to list of Actors
- [AutoEvent -> ActorList] "Viserys Henry", ID 117 added to list of Actors
- [AutoEvent -> ActorList] "Chett Michell", ID 118 added to list of Actors
- [AutoEvent -> ActorList] "Ser Robett Digory", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Margaret Glover", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Glover", ID 121 added to list of Actors
- [AutoEvent -> ActorList] "Gynuara Glover", ID 122 added to list of Actors
- [AutoEvent -> ActorList] "Rankin Glover", ID 123 added to list of Actors
- [AutoEvent -> LocalList] "Joseth Glover", ID 80 added to list of Locals
- [AutoEvent -> AdvisorList] "Robett Godelot", ID 116 added to list of Advisors
- [AutoEvent -> AdvisorList] "Viserys Henry", ID 117 added to list of Advisors
- [AutoEvent -> AdvisorList] "Chett Michell", ID 118 added to list of Advisors
- [AutoEvent -> LocalList] "Ser Robett Digory", ID 119 added to list of Locals
- [AutoEvent -> LocalList] "Margaret Glover", ID 120 added to list of Locals
- [AutoEvent -> LocalList] "Salemon Glover", ID 121 added to list of Locals
- [AutoEvent -> LocalList] "Gynuara Glover", ID 122 added to list of Locals
- [AutoEvent -> LocalList] "Rankin Glover", ID 123 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Event "Talk to members of the Court" Timer Repeat now 999
- Event "Talk to members of the Court" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joseth Glover", ID 80 added to list of Actors
- [AutoEvent -> ActorList] "Robett Godelot", ID 116 added to list of Actors
- [AutoEvent -> ActorList] "Viserys Henry", ID 117 added to list of Actors
- [AutoEvent -> ActorList] "Chett Michell", ID 118 added to list of Actors
- [AutoEvent -> ActorList] "Ser Robett Digory", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Margaret Glover", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Glover", ID 121 added to list of Actors
- [AutoEvent -> ActorList] "Gynuara Glover", ID 122 added to list of Actors
- [AutoEvent -> ActorList] "Rankin Glover", ID 123 added to list of Actors
- [AutoEvent -> LocalList] "Joseth Glover", ID 80 added to list of Locals
- [AutoEvent -> AdvisorList] "Robett Godelot", ID 116 added to list of Advisors
- [AutoEvent -> AdvisorList] "Viserys Henry", ID 117 added to list of Advisors
- [AutoEvent -> AdvisorList] "Chett Michell", ID 118 added to list of Advisors
- [AutoEvent -> LocalList] "Ser Robett Digory", ID 119 added to list of Locals
- [AutoEvent -> LocalList] "Margaret Glover", ID 120 added to list of Locals
- [AutoEvent -> LocalList] "Salemon Glover", ID 121 added to list of Locals
- [AutoEvent -> LocalList] "Gynuara Glover", ID 122 added to list of Locals
- [AutoEvent -> LocalList] "Rankin Glover", ID 123 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "5" GreaterThanOrEqual 50
- RelPlyr is too low -> Trigger failed
-[Notification] RelPlyr trigger Compulsory fail check
- Trigger FAILED on "5" GreaterThanOrEqual 40
- RelPlyr is too low -> Trigger failed
-[Notification] RelPlyr trigger Compulsory fail check
- Trigger FAILED on "5" GreaterThanOrEqual 60
- RelPlyr is too low -> Trigger failed
-[Notification] RelPlyr trigger Compulsory fail check
- Trigger FAILED on "5" GreaterThanOrEqual 70
- RelPlyr is too low -> Trigger failed
-[Notification] RelPlyr trigger Compulsory fail check
-Trigger: Desire is None or Satisified is True -> Trigger failed
-[Notification] Desire trigger Compulsory fail check
- Event "Interact" Timer Repeat now 999
- Event "Interact" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joseth Glover", ID 80 added to list of Actors
- [AutoEvent -> ActorList] "Robett Godelot", ID 116 added to list of Actors
- [AutoEvent -> ActorList] "Viserys Henry", ID 117 added to list of Actors
- [AutoEvent -> ActorList] "Chett Michell", ID 118 added to list of Actors
- [AutoEvent -> ActorList] "Ser Robett Digory", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Margaret Glover", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Glover", ID 121 added to list of Actors
- [AutoEvent -> ActorList] "Gynuara Glover", ID 122 added to list of Actors
- [AutoEvent -> ActorList] "Rankin Glover", ID 123 added to list of Actors
- [AutoEvent -> LocalList] "Joseth Glover", ID 80 added to list of Locals
- [AutoEvent -> AdvisorList] "Robett Godelot", ID 116 added to list of Advisors
- [AutoEvent -> AdvisorList] "Viserys Henry", ID 117 added to list of Advisors
- [AutoEvent -> AdvisorList] "Chett Michell", ID 118 added to list of Advisors
- [AutoEvent -> LocalList] "Ser Robett Digory", ID 119 added to list of Locals
- [AutoEvent -> LocalList] "Margaret Glover", ID 120 added to list of Locals
- [AutoEvent -> LocalList] "Salemon Glover", ID 121 added to list of Locals
- [AutoEvent -> LocalList] "Gynuara Glover", ID 122 added to list of Locals
- [AutoEvent -> LocalList] "Rankin Glover", ID 123 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Event "Talk to members of the Court" Timer Repeat now 999
- Event "Talk to members of the Court" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joseth Glover", ID 80 added to list of Actors
- [AutoEvent -> ActorList] "Robett Godelot", ID 116 added to list of Actors
- [AutoEvent -> ActorList] "Viserys Henry", ID 117 added to list of Actors
- [AutoEvent -> ActorList] "Chett Michell", ID 118 added to list of Actors
- [AutoEvent -> ActorList] "Ser Robett Digory", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Margaret Glover", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Glover", ID 121 added to list of Actors
- [AutoEvent -> ActorList] "Gynuara Glover", ID 122 added to list of Actors
- [AutoEvent -> ActorList] "Rankin Glover", ID 123 added to list of Actors
- [AutoEvent -> LocalList] "Joseth Glover", ID 80 added to list of Locals
- [AutoEvent -> AdvisorList] "Robett Godelot", ID 116 added to list of Advisors
- [AutoEvent -> AdvisorList] "Viserys Henry", ID 117 added to list of Advisors
- [AutoEvent -> AdvisorList] "Chett Michell", ID 118 added to list of Advisors
- [AutoEvent -> LocalList] "Ser Robett Digory", ID 119 added to list of Locals
- [AutoEvent -> LocalList] "Margaret Glover", ID 120 added to list of Locals
- [AutoEvent -> LocalList] "Salemon Glover", ID 121 added to list of Locals
- [AutoEvent -> LocalList] "Gynuara Glover", ID 122 added to list of Locals
- [AutoEvent -> LocalList] "Rankin Glover", ID 123 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "47" GreaterThanOrEqual 50
- RelPlyr is too low -> Trigger failed
-[Notification] RelPlyr trigger Compulsory fail check
- Trigger passed on "47" GreaterThanOrEqual 40
- Trigger FAILED on "47" GreaterThanOrEqual 60
- RelPlyr is too low -> Trigger failed
-[Notification] RelPlyr trigger Compulsory fail check
- Trigger FAILED on "47" GreaterThanOrEqual 70
- RelPlyr is too low -> Trigger failed
-[Notification] RelPlyr trigger Compulsory fail check
-Trigger: Desire is None or Satisified is True -> Trigger failed
-[Notification] Desire trigger Compulsory fail check
- Event "Interact" Timer Repeat now 999
- Event "Interact" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Joseth Glover", ID 80 added to list of Actors
- [AutoEvent -> ActorList] "Robett Godelot", ID 116 added to list of Actors
- [AutoEvent -> ActorList] "Viserys Henry", ID 117 added to list of Actors
- [AutoEvent -> ActorList] "Chett Michell", ID 118 added to list of Actors
- [AutoEvent -> ActorList] "Ser Robett Digory", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Margaret Glover", ID 120 added to list of Actors
- [AutoEvent -> ActorList] "Salemon Glover", ID 121 added to list of Actors
- [AutoEvent -> ActorList] "Gynuara Glover", ID 122 added to list of Actors
- [AutoEvent -> ActorList] "Rankin Glover", ID 123 added to list of Actors
- [AutoEvent -> LocalList] "Joseth Glover", ID 80 added to list of Locals
- [AutoEvent -> AdvisorList] "Robett Godelot", ID 116 added to list of Advisors
- [AutoEvent -> AdvisorList] "Viserys Henry", ID 117 added to list of Advisors
- [AutoEvent -> AdvisorList] "Chett Michell", ID 118 added to list of Advisors
- [AutoEvent -> LocalList] "Ser Robett Digory", ID 119 added to list of Locals
- [AutoEvent -> LocalList] "Margaret Glover", ID 120 added to list of Locals
- [AutoEvent -> LocalList] "Salemon Glover", ID 121 added to list of Locals
- [AutoEvent -> LocalList] "Gynuara Glover", ID 122 added to list of Locals
- [AutoEvent -> LocalList] "Rankin Glover", ID 123 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Event "Talk to members of the Court" Timer Repeat now 999
- Event "Talk to members of the Court" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
---- MultiKeyInput (Game.cs)
-80 input
---- MultiKeyInput (Game.cs)
-120 input
---- ProcessEndTurn (World.cs)
-Day 4, Turn 3
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 17
-//Exile Game File "LogTurn.txt" Close completed at: 08/05/2017 11:46:33
+ Event "Search and Detain" Dormant Timer decremented to 19
+//Exile Game File "LogTurn.txt" Close completed at: 08/05/2017 13:55:14

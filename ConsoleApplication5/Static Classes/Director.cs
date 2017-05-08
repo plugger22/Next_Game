@@ -1013,6 +1013,8 @@ namespace Next_Game
                 else { Game.SetError(new Error(73, "Invalid Loc (null)")); }
                 int houseID = Game.map.GetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY());
                 int refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
+                House house = Game.world.GetHouse(refID);
+                if (house != null) { Game.SetError(new Error(118, "Invalid house (null)")); }
                 string houseName = "Unknown";
                 string tempText;
                 if (refID > 0) { houseName = Game.world.GetHouseName(refID); }
@@ -1244,10 +1246,10 @@ namespace Next_Game
                                 eventObject.SetOption(option);
                             }
                             //option -> lay low (only if not known)
-                            if (player.Known == false)
+                            if (house.SafeHouse > 0)
                             {
-                                OptionInteractive option = new OptionInteractive("Lay Low");
-                                option.ReplyGood = "You find a safe house of a loyal supporter who offers you refuge";
+                                OptionInteractive option = new OptionInteractive($"Lay Low ({house.SafeHouse} stars)");
+                                option.ReplyGood = $"You seek refuge at a Safe House ({house.SafeHouse} stars). You are immune from discovery while ever the place of refuge retains at least one star";
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
                                 OutKnown outKnown = new OutKnown(eventObject.EventPID, 1);
                                 //option.SetGoodOutcome(outcome);
@@ -1392,7 +1394,6 @@ namespace Next_Game
                             eventObject.Name = "Recruit a Follower";
                             eventObject.Text = string.Format("You are at {0}. Which follower do you wish to Recruit?", locName);
                             //options -> one for each recruit present
-                            House house = Game.world.GetHouse(refID);
                             if (house != null)
                             {
                                 InnHouse inn = house as InnHouse;

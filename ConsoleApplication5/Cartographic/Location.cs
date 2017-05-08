@@ -69,7 +69,7 @@ namespace Next_Game.Cartographic
         public int DistanceToConnector { get; set; }
         public int HouseID { get; set; } //location house ID if applicable
         public int RefID { get; set; } //location ref ID if applicable
-        public int ArcID { get; set; } //location archetype ID if applicable
+        public int ArcID { get; set; } //location archetype ID if applicable        
         private List<Position> listOfNeighboursPos; //list of immediate neighbours, by Position
         private List<int> listOfNeighboursLocID; //list of immediate neighbours, by LocID
         private readonly List<Route> routeToCapital; //Loc -> Capital

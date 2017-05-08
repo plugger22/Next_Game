@@ -32,3 +32,7 @@ Seed 1981 -> Sunday, 7 May 2017 8:57 PM
 Seed 32403 -> Monday, 8 May 2017 11:19 AM
 Seed 34459 -> Monday, 8 May 2017 11:40 AM
 Seed 54728 -> Monday, 8 May 2017 11:44 AM
+Seed 26958 -> Monday, 8 May 2017 1:35 PM
+Seed 28618 -> Monday, 8 May 2017 1:45 PM
+Seed 13590 -> Monday, 8 May 2017 1:46 PM
+Seed 61504 -> Monday, 8 May 2017 1:50 PM
