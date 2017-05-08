@@ -729,6 +729,9 @@ namespace Next_Game
                                     case MenuMode.Debug:
                                         infoChannel.SetInfoList(world.ShowHouseRL(0, lore.OldKing.RefID), ConsoleDisplay.Multi);
                                         break;
+                                    case MenuMode.God:
+                                        infoChannel.SetInfoList(world.GodChangeKnownStatus(), ConsoleDisplay.Input);
+                                        break;
                                 }
                                 break;
                             case RLKey.L:

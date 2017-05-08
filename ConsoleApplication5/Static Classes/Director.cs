@@ -2375,7 +2375,7 @@ namespace Next_Game
                             if (actor != null && actor is Passive)
                             {
                                 Passive person = actor as Passive;
-                                if (person.Desire > PossPromiseType.None && person.Satisfied == true)
+                                if (person.Desire > PossPromiseType.None && person.Satisfied == false)
                                 { Game.logTurn?.Write($"Trigger: {person.Name} has desire {person.DesireText} and Satisified {person.Satisfied} -> passed");  validCheck = true;}
                                 else
                                 {

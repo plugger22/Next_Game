@@ -5994,7 +5994,7 @@ namespace Next_Game
                         introRefID = listTempRefIDPositive[rnd.Next(listTempRefIDPositive.Count)];
                         player.AddIntroduction(introRefID);
                         Game.logTurn?.Write($"There are {listTempRefIDPositive.Count} records in listPositive to select from");
-                        Game.logTurn?.Write($"House {GetHouseName(searchRefID)} has a {currentRel} Relationship lvl with House \"{GetHouseName(introRefID)} -> Introduction Created");
+                        Game.logTurn?.Write($"House {GetHouseName(searchRefID)} has a Positive Relationship lvl with House \"{GetHouseName(introRefID)} -> Introduction Created");
                     }
                     //Look to list of houses with a neutral relationship as a second choice, if none with +ve rel's
                     else if (listTempRefIDNeutral.Count > 0)
@@ -6002,7 +6002,7 @@ namespace Next_Game
                         introRefID = listTempRefIDNeutral[rnd.Next(listTempRefIDNeutral.Count)];
                         player.AddIntroduction(introRefID);
                         Game.logTurn?.Write($"There are {listTempRefIDNeutral.Count} records in listNeutral to select from");
-                        Game.logTurn?.Write($"House {GetHouseName(searchRefID)} has a {currentRel} Relationship lvl with House \"{GetHouseName(introRefID)} -> Introduction Created");
+                        Game.logTurn?.Write($"House {GetHouseName(searchRefID)} has a Neutral Relationship lvl with House \"{GetHouseName(introRefID)} -> Introduction Created");
                     }
                     else { Game.logTurn?.Write("[Alert] There are no Positive, or Neutral interHouse Relationships -> Introduction cancelled"); }
                 }
@@ -6039,6 +6039,41 @@ namespace Next_Game
             else if (refID >= 1000)
             { Game.SetError(new Error(246, $"Invalid refID \"{refID}\" (too high) -> No conversion")); liegeRefID = 0; }
             return liegeRefID;
+        }
+
+        /// <summary>
+        /// God Mode -> Change Player's known status to the opposite of whatever it is
+        /// </summary>
+        public List<Snippet> GodChangeKnownStatus()
+        {
+            Player player = GetPlayer();
+            string text = "";
+            List<Snippet> listText = new List<Snippet>();
+            listText.Add(new Snippet("God Mode -> Change Player's Known Status", Color._godMode, RLColor.Black));
+            if (player != null)
+            {
+                if (player.Known == true)
+                {
+                    //player becomes UNKNOWN
+                    player.Known = false;
+                    player.Revert = 0;
+                    text = $"[God Mode] {player.Title} {player.Name} \"{player.Handle}\" Known Status changed to Unknown";
+                    Game.world.SetMessage(new Message(text, MessageType.God));
+                }
+                else
+                {
+                    //player becomes KNOWN
+                    player.Known = true;
+                    player.Revert = Game.constant.GetValue(Global.KNOWN_REVERT);
+                    player.TurnsUnknown = 0;
+                    player.LastKnownLocID = player.LocID;
+                    text = $"[God Mode] {player.Title} {player.Name} \"{player.Handle}\" Known Status changed to Known (reverts in {player.Revert} days)";
+                    Game.world.SetMessage(new Message(text, MessageType.God));
+                }
+            }
+            else { Game.SetError(new Error(248, "Invalid Player (null)"));}
+            listText.Add(new Snippet(text));
+            return listText;
         }
 
         //new Methods above here

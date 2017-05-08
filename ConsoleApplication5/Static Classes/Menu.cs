@@ -147,7 +147,7 @@ namespace Next_Game
                     menuArrayCategories[3] = "Switch ---";
                     //Main God Menu
                     menuArrayText[1, 0] = "[P] Move Player";
-                    //menuArrayText[1, 1] = "[K] Known Status";
+                    menuArrayText[1, 1] = "[K] Known Status";
                     //Switch commands
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
