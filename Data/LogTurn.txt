@@ -1,68 +1,112 @@
-//Exile Game File "LogTurn.txt" opened at: 08/05/2017 16:31:18
+//Exile Game File "LogTurn.txt" opened at: 08/05/2017 20:23:09
 --- ProcessStartTurn (World.cs)
-Day 6, Turn 5
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Damballa, ActID 113 travelling to One Eyed Pete's (current Loc 14:16)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Gualtier Targaryen, ID 1 at 21:6, Enemy at 14:16 (Brother Damballa, ID 113
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Gualtier Targaryen, ID 1 at 21:6, Enemy at 14:17 (Brother Damballa, ID 113
- [Move -> MoveObject] Nemesis The Unrelenting, ActID 114 travelling to The Twins (current Loc 17:12)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Gualtier Targaryen, ID 1 at 21:6, Enemy at 17:12 (The Unrelenting, ID 114
+Day 2, Turn 1
+--- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
-Usurper Gualtier Targaryen is laying low at a safe house at The Twins (2 stars)
+[Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Gualtier Targaryen, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Tomard Arryn, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Beelzebub, ID 110 at 17:13, Active Gualtier Targaryen, ID 1, at 21:6
- [Search -> Debug] Enemy, Brother Amon, ID 111 at 17:13, Active Gualtier Targaryen, ID 1, at 21:6
- [Search -> Debug] Enemy, Brother Mormo, ID 112 at 17:13, Active Gualtier Targaryen, ID 1, at 21:6
- [Search -> Debug] Enemy, Brother Damballa, ID 113 at 14:18, Active Gualtier Targaryen, ID 1, at 21:6
- [Search -> Debug] Enemy, The Unrelenting, ID 114 at 17:11, Active Gualtier Targaryen, ID 1, at 21:6
- [Search -> Stationary] Follower The Spider, ActID 7 is AtLocation
- [Search -> Stationary] Follower The Dark Eminence, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Beast, ActID 3 is AtLocation
+ [Search -> Debug] Enemy, Brother Diabolous, ID 124 at 18:15, Active Tomard Arryn, ID 1, at 3:7
+ [Search -> Debug] Enemy, Brother Amon, ID 125 at 18:15, Active Tomard Arryn, ID 1, at 3:7
+ [Search -> Debug] Enemy, Brother Dagon, ID 126 at 18:15, Active Tomard Arryn, ID 1, at 3:7
+ [Search -> Debug] Enemy, Brother Haborym, ID 127 at 18:15, Active Tomard Arryn, ID 1, at 3:7
+ [Search -> Debug] Enemy, The Unrelenting, ID 128 at 18:15, Active Tomard Arryn, ID 1, at 3:7
+ [Search -> Stationary] Follower The Spider, ActID 4 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 8 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Notification] Inquisitor Brother Damballa, ActID 113 is Travelling to One Eyed Pete's
- [AI -> Notification] Nemesis The Unrelenting, ActID 114 is Travelling to The Twins
- [AI -> Mode] enemyID 110,  distance -> 11  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 111,  distance -> 11  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 112,  distance -> 11  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 124 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 125 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 126 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 127 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 128 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Unknown] Brother Beelzebub ActID 110 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] Brother Beelzebub, ActID 110 retains Goal -> Wait
- [Enemy -> Goal] Brother Amon, ActID 111 retains Goal -> Wait
- [Enemy -> Goal] Brother Mormo, ActID 112 retains Goal -> Wait
+ [Enemy -> Goal] Brother Diabolous, ActID 124 retains Goal -> Wait
+ [Enemy -> Known] Brother Amon ActID 125 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Amon, ActID 125 Assigned Branch -> 1 Current Branch -> 0
+ [Goal -> New] Brother Amon, ActID 125, (loc 18:15), assigned new Goal -> Move
+ [Goal -> Move] Brother Amon, ActID 125 -> Capital to Correct Branch -> The Clumsy Hog, LocID 2
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Dagon, ActID 126 retains Goal -> Wait
+ [Enemy -> Known] Brother Haborym ActID 127 has become KNOWN
+ [Enemy -> Goal] Brother Haborym, ActID 127 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 128 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Robert Frey", ID 83 added to list of Actors
- [AutoEvent -> LocalList] "Robert Frey", ID 83 added to list of Locals
+ [AutoEvent -> ActorList] "The Spider", ID 4 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Nycolas Willcock", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Galeran", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Rankin Artus", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Sagard Richemanus", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "Aerys Greyjoy", ID 33 added to list of Actors
+ [AutoEvent -> ActorList] "Leo Greyjoy", ID 101 added to list of Actors
+ [AutoEvent -> FollowerList] "The Spider", ID 4 added to list of Followers
+ [AutoEvent -> LocalList] "Ser Nycolas Willcock", ID 29 added to list of Locals
+ [AutoEvent -> AdvisorList] "Guarnier Galeran", ID 30 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Rankin Artus", ID 31 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Sagard Richemanus", ID 32 added to list of Advisors
+ [AutoEvent -> LocalList] "Aerys Greyjoy", ID 33 added to list of Locals
+ [AutoEvent -> LocalList] "Leo Greyjoy", ID 101 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 5
+ Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
- Event "Safe House at The Twins (2 stars)" Timer Repeat now 999
- Event "Safe House at The Twins (2 stars)" Cooldown Timer has been reset to 0
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Gualtier Targaryen has had their TurnsUnknown Timer increased from 1 to 2
- Follower The Spider has had their TurnsUnknown Timer increased from 4 to 5
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 4 to 5
- Follower The Beast has had their TurnsUnknown Timer increased from 4 to 5
+ Usurper Tomard Arryn has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 0 to 1
 --- ResolveOutcome (Director.cs)
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 08/05/2017 16:31:46
-s had their TurnsUnknown Timer increased from 3 to 4
---- ResolveOutcome (Director.cs)
---- ResolveFollowerEvents (Director.cs)
---- ProcessEndTurn (World.cs)
-Day 5, Turn 4
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 16
-//Exile Game File "LogTurn.txt" Close completed at: 08/05/2017 16:31:18
-99
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "The Spider", ID 4 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Nycolas Willcock", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Guarnier Galeran", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Rankin Artus", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Sagard Richemanus", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "Aerys Greyjoy", ID 33 added to list of Actors
+ [AutoEvent -> ActorList] "Leo Greyjoy", ID 101 added to list of Actors
+ [AutoEvent -> FollowerList] "The Spider", ID 4 added to list of Followers
+ [AutoEvent -> LocalList] "Ser Nycolas Willcock", ID 29 added to list of Locals
+ [AutoEvent -> AdvisorList] "Guarnier Galeran", ID 30 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Rankin Artus", ID 31 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Sagard Richemanus", ID 32 added to list of Advisors
+ [AutoEvent -> LocalList] "Aerys Greyjoy", ID 33 added to list of Locals
+ [AutoEvent -> LocalList] "Leo Greyjoy", ID 101 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "1" Equals 1
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger passed on "1" Equals 1
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
---- ProcessEndTurn (World.cs)
-Day 4, Turn 3
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 17
-//Exile Game File "LogTurn.txt" Close completed at: 08/05/2017 16:30:18
+Usurper Tomard Arryn has found refuge in the safe house at Pyke (5 stars)
+--- MultiKeyInput (Game.cs)
+1 input
+--- MultiKeyInput (Game.cs)
+1 input
+ERROR_00   (Main Game Loop)
+--- Error Message
+Object reference not set to an instance of an object.
+--- Source
+ConsoleApplication5
+--- Stack Trace
+   at Next_Game.World.ShowActorRL(Int32 actorID)
+   at Next_Game.Game.OnRootConsoleUpdate(Object sender, UpdateEventArgs e)
+--- TargetSite
+System.Collections.Generic.List`1[Next_Game.Snippet] ShowActorRL(Int32)
+//Exile Game file ops "LogTurn.txt" Completed at: 08/05/2017 20:28:20

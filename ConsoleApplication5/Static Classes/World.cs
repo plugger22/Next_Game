@@ -605,7 +605,7 @@ namespace Next_Game
             listToDisplay.Add(new Snippet("--- Player Characters", RLColor.Yellow, RLColor.Black));
             int chance, locID;
             ActorStatus status;
-            string locName, coordinates, distText, crowText;
+            string locName, safeHouse, coordinates, distText, crowText;
             string locStatus = "who knows?";
             string charString; //overall string
             RLColor textColor = RLColor.White;
@@ -613,6 +613,7 @@ namespace Next_Game
             foreach (var actor in dictActiveActors)
             {
                 status = actor.Value.Status;
+                safeHouse = "";
                 //ignore dead actors
                 if (status != ActorStatus.Gone)
                 {
@@ -622,6 +623,12 @@ namespace Next_Game
                     {
                         case ActorStatus.AtLocation:
                             locStatus = $"At {locName}";
+                            if (actor.Value is Player)
+                            {
+                                Player player = actor.Value as Player;
+                                if (player.InSafeHouse == true)
+                                { safeHouse = "At SafeHouse"; }
+                            }
                             break;
                         case ActorStatus.Travelling:
                             locStatus = $"Moving to {locName}";
@@ -651,7 +658,7 @@ namespace Next_Game
                             {
                                 case ActorStatus.AtLocation:
                                 case ActorStatus.Travelling:
-                                    charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15}", actor.Key, actor.Value.Name, locStatus, coordinates);
+                                    charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11}", actor.Key, actor.Value.Name, locStatus, coordinates, safeHouse);
                                     break;
                                 case ActorStatus.AtSea:
                                 case ActorStatus.Adrift:
@@ -881,6 +888,7 @@ namespace Next_Game
             {
                 int locID = person.LocID;
                 int refID = ConvertLocToRef(locID);
+                House house = GetHouse(refID);
                 //Set up people types
                 Player player = null;
                 Active active = null;
@@ -953,6 +961,12 @@ namespace Next_Game
                             break;
                     }
                     listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
+                    //In safe House
+                    if (player.InSafeHouse == true)
+                    {
+                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "At SafeHouse"), RLColor.Yellow, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(house.SafeHouse)), RLColor.LightRed, RLColor.Black));
+                    }
                 }
                 else { listToDisplay.Add(new Snippet(person.Description)); }
                 //Delayed
@@ -4117,9 +4131,9 @@ namespace Next_Game
                     chance = 100 - (distance * 2) + actor.Value.CrowBonus;
                     chance = Math.Min(100, chance);
 
-                    if (player.Status != ActorStatus.AtLocation)
+                    if (player.Status != ActorStatus.AtLocation || player.InSafeHouse == true)
                     {
-                        //no crows can be sent if Player isn't at a Location
+                        //no crows can be sent if Player isn't at a Location, or is in a SafeHouse
                         actor.Value.CrowChance = 0;
                         actor.Value.CrowBonus = 0;
                         actor.Value.CrowDistance = distance;
@@ -4179,82 +4193,88 @@ namespace Next_Game
             int bonus = Game.constant.GetValue(Global.CROW_BONUS);
             if (player.Status == ActorStatus.AtLocation)
             {
-                if (player.CrowsNumber > 0)
-                {
-                    if (actor != null)
+                if (player.InSafeHouse == false)
+                { 
+                    if (player.CrowsNumber > 0)
                     {
-                        if (actorID != 1)
+                        if (actor != null)
                         {
-                            if (actor.Status == ActorStatus.AtLocation)
+                            if (actorID != 1)
                             {
-                                if (actor.LocID != player.LocID)
+                                if (actor.Status == ActorStatus.AtLocation)
                                 {
-                                    if (actor.Delay == 0)
+                                    if (actor.LocID != player.LocID)
                                     {
-                                        if (actor.Activated == false)
+                                        if (actor.Delay == 0)
                                         {
-                                            locName = GetLocationName(actor.LocID);
-                                            num = rnd.Next(100);
-                                            chance = actor.CrowChance + actor.CrowBonus;
-                                            description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", chance, num);
-                                            listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0}, Aid {1}, at {2} (distance {3} leagues)", actor.Name, actor.ActID, locName, actor.CrowDistance)));
-                                            player.CrowsNumber--;
-                                            messageText = string.Format("Crow sent to {0}, Aid {1}, at {2} ({3}% chance of arriving, roll {4}, {5})", actor.Name, actor.ActID, locName, chance,
-                                                num, num < chance ? "Arrived" : "Failed");
-                                            Message message = new Message(messageText, actor.ActID, actor.LocID, MessageType.Crow);
-                                            SetMessage(message);
-                                            if (num < chance)
+                                            if (actor.Activated == false)
                                             {
-                                                //success!
-                                                actor.Activated = true;
-                                                actor.CrowBonus = 0;
-                                                listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
-                                                //Game.messageLog.Add(new Snippet(string.Format("Crow arrived, {0} activated", actor.Name)));
-                                                Message message_1 = new Message(string.Format("{0}, Aid {1}, has been Activated", actor.Name, actor.ActID), MessageType.Activation);
-                                                SetMessage(message_1);
+                                                locName = GetLocationName(actor.LocID);
+                                                num = rnd.Next(100);
+                                                chance = actor.CrowChance + actor.CrowBonus;
+                                                description = string.Format("chance of Crow arriving {0}%, or less. Roll {1}", chance, num);
+                                                listSnippet.Add(new Snippet(string.Format("Crow dispatched to {0}, Aid {1}, at {2} (distance {3} leagues)", actor.Name, actor.ActID, locName, actor.CrowDistance)));
+                                                player.CrowsNumber--;
+                                                messageText = string.Format("Crow sent to {0}, Aid {1}, at {2} ({3}% chance of arriving, roll {4}, {5})", actor.Name, actor.ActID, locName, chance,
+                                                    num, num < chance ? "Arrived" : "Failed");
+                                                Message message = new Message(messageText, actor.ActID, actor.LocID, MessageType.Crow);
+                                                SetMessage(message);
+                                                if (num < chance)
+                                                {
+                                                    //success!
+                                                    actor.Activated = true;
+                                                    actor.CrowBonus = 0;
+                                                    listSnippet.Add(new Snippet(string.Format("Crow success! {0} activated ({1})", actor.Name, description), RLColor.Yellow, RLColor.Black));
+                                                    //Game.messageLog.Add(new Snippet(string.Format("Crow arrived, {0} activated", actor.Name)));
+                                                    Message message_1 = new Message(string.Format("{0}, Aid {1}, has been Activated", actor.Name, actor.ActID), MessageType.Activation);
+                                                    SetMessage(message_1);
+                                                }
+                                                else
+                                                //failed the roll, apply bonus
+                                                {
+                                                    actor.Activated = false;
+                                                    listSnippet.Add(new Snippet(string.Format("The Crow failed to arrive ({0})", description)));
+                                                    actor.CrowBonus += bonus;
+                                                    actor.AddCrowTooltip(string.Format("An additional bonus of +{0}% applies from a previous failed crow that might have been delayed", bonus));
+                                                }
+                                                listSnippet.Add(new Snippet(string.Format("You have {0} {1} remaining", player.CrowsNumber, player.CrowsNumber == 1 ? "Crow" : "Crows")));
                                             }
                                             else
-                                            //failed the roll, apply bonus
-                                            {
-                                                actor.Activated = false;
-                                                listSnippet.Add(new Snippet(string.Format("The Crow failed to arrive ({0})", description)));
-                                                actor.CrowBonus += bonus;
-                                                actor.AddCrowTooltip(string.Format("An additional bonus of +{0}% applies from a previous failed crow that might have been delayed", bonus));
-                                            }
-                                            listSnippet.Add(new Snippet(string.Format("You have {0} {1} remaining", player.CrowsNumber, player.CrowsNumber == 1 ? "Crow" : "Crows")));
+                                            //already activated
+                                            { listSnippet.Add(new Snippet(string.Format("{0} is already activated and awaiting your orders!", actor.Name))); }
                                         }
                                         else
-                                        //already activated
-                                        { listSnippet.Add(new Snippet(string.Format("{0} is already activated and awaiting your orders!", actor.Name))); }
+                                        {
+                                            //actor delayed
+                                            { listSnippet.Add(new Snippet(string.Format("Crow can NOT be dispatched to {0} as they are delayed (\"{1}\"", actor.Name, actor.DelayReason))); }
+                                        }
                                     }
                                     else
                                     {
-                                        //actor delayed
-                                        { listSnippet.Add(new Snippet(string.Format("Crow can NOT be dispatched to {0} as they are delayed (\"{1}\"", actor.Name, actor.DelayReason))); }
+                                        //at same location as player
+                                        listSnippet.Add(new Snippet(string.Format("No crow required as {0} is present at the same location as yourself", actor.Name)));
+                                        actor.Activated = true;
                                     }
                                 }
                                 else
-                                {
-                                    //at same location as player
-                                    listSnippet.Add(new Snippet(string.Format("No crow required as {0} is present at the same location as yourself", actor.Name)));
-                                    actor.Activated = true;
-                                }
+                                //actor not at a location
+                                { listSnippet.Add(new Snippet(string.Format("Crow can NOT be dispatched to {0} as they aren't at a location", actor.Name))); }
                             }
                             else
-                            //actor not at a location
-                            { listSnippet.Add(new Snippet(string.Format("Crow can NOT be dispatched to {0} as they aren't at a location", actor.Name))); }
+                            //sending a crow to yourself
+                            { listSnippet.Add(new Snippet("There is no need to send a crow to yourself!")); }
                         }
                         else
-                        //sending a crow to yourself
-                        { listSnippet.Add(new Snippet("There is no need to send a crow to yourself!")); }
+                        //invalid actor
+                        { listSnippet.Add(new Snippet("Unknown Actor. No crow sent.")); }
                     }
                     else
-                    //invalid actor
-                    { listSnippet.Add(new Snippet("Unknown Actor. No crow sent.")); }
+                    //run out of crows
+                    { listSnippet.Add(new Snippet("You have run out of crows. More will be available next turn")); }
                 }
                 else
-                //run out of crows
-                { listSnippet.Add(new Snippet("You have run out of crows. More will be available next turn")); }
+                //Player at safe house
+                { listSnippet.Add(new Snippet("You are unable to dispatch crows while in a Safe House", RLColor.LightRed, RLColor.Black)); }
             }
             else
             {
@@ -5903,53 +5923,57 @@ namespace Next_Game
             Player player = GetPlayer();
             if (player != null)
             {
-                switch (player.Status)
+                if (player.InSafeHouse == false)
                 {
-                    case ActorStatus.AtLocation:
-                        //debug
-                        eventList.Add(new Snippet("Blight has hit wheat crops at The Twins. Food shortages loom.", foreColor, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("Rumour that the King has the pox and that he is going mad", foreColor, backColor));
-                        eventList.Add(new Snippet(""));
-                        eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
-                        eventList.Add(new Snippet(""));
-                        break;
-                    case ActorStatus.Travelling:
-                        if (rnd.Next(100) < 20)
-                        {
-                            eventList.Add(new Snippet("A passing Merchant tells of trouble in the Court of Casterly Rock", foreColor, backColor));
+                    switch (player.Status)
+                    {
+                        case ActorStatus.AtLocation:
+                            //debug
+                            eventList.Add(new Snippet("Blight has hit wheat crops at The Twins. Food shortages loom.", foreColor, backColor));
                             eventList.Add(new Snippet(""));
                             eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
                             eventList.Add(new Snippet(""));
-                        }
-                        break;
-                    case ActorStatus.AtSea:
-                        if (rnd.Next(100) < 20)
-                        {
-                            eventList.Add(new Snippet("The Captain tells tales of war in the far-off-lands", foreColor, backColor));
+                            eventList.Add(new Snippet("Rumour that the King has the pox and that he is going mad", foreColor, backColor));
                             eventList.Add(new Snippet(""));
                             eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
                             eventList.Add(new Snippet(""));
-                        }
-                        break;
-                    case ActorStatus.Captured:
-                        if (rnd.Next(100) < 20)
-                        {
-                            eventList.Add(new Snippet("You overhear a guard arguing with another prison about food shortages in the Castle", foreColor, backColor));
-                            eventList.Add(new Snippet(""));
-                            eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
-                            eventList.Add(new Snippet(""));
-                        }
-                        break;
+                            break;
+                        case ActorStatus.Travelling:
+                            if (rnd.Next(100) < 20)
+                            {
+                                eventList.Add(new Snippet("A passing Merchant tells of trouble in the Court of Casterly Rock", foreColor, backColor));
+                                eventList.Add(new Snippet(""));
+                                eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                                eventList.Add(new Snippet(""));
+                            }
+                            break;
+                        case ActorStatus.AtSea:
+                            if (rnd.Next(100) < 20)
+                            {
+                                eventList.Add(new Snippet("The Captain tells tales of war in the far-off-lands", foreColor, backColor));
+                                eventList.Add(new Snippet(""));
+                                eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                                eventList.Add(new Snippet(""));
+                            }
+                            break;
+                        case ActorStatus.Captured:
+                            if (rnd.Next(100) < 20)
+                            {
+                                eventList.Add(new Snippet("You overhear a guard arguing with another prison about food shortages in the Castle", foreColor, backColor));
+                                eventList.Add(new Snippet(""));
+                                eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                                eventList.Add(new Snippet(""));
+                            }
+                            break;
+                    }
+                    //any world message to display?
+                    if (eventList.Count > 0)
+                    {
+                        notificationStatus = true;
+                        SetNotification(eventList);
+                    }
                 }
-                //any world message to display?
-                if (eventList.Count > 0)
-                {
-                    notificationStatus = true;
-                    SetNotification(eventList);
-                }
+                Game.logTurn?.Write("[Notification] Player in SafeHouse -> World events cancelled");
             }
             else { Game.SetError(new Error(224, "Invalid player (null)")); }
             return notificationStatus;

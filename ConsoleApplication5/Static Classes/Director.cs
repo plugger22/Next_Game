@@ -3795,6 +3795,7 @@ namespace Next_Game
                 else { Game.SetError(new Error(250, "House SafeHouse has a zero, or less, value. -> SafeHouse Status NOT changed")); }
             }
             else { Game.SetError(new Error(250, "Invalid house (null)")); }
+            Game.logTurn?.Write(resultText);
             return resultText;
         }
 
