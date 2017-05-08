@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
     public enum OutcomeType { None, Delay, Conflict, GameState, GameVar, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
-    Follower, Promise, RelPlyr, Favour, Introduction};
+    Follower, Promise, RelPlyr, Favour, Introduction, SafeHouse};
 
     /// <summary>
     /// Option outcome, event system
@@ -159,10 +159,12 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// Change Known Status (Known/Unknown). Data +ve then UnKnown, Data -ve then known
+    /// Change Known Status (Known/Unknown). 
     /// </summary>
     class OutKnown : Outcome
     {
+        // Data +ve then UnKnown, Data -ve then known
+
         public OutKnown(int eventID, int known) : base(eventID)
         {
             Data = known;
@@ -170,6 +172,19 @@ namespace Next_Game.Event_System
         }
     }
 
+    /// <summary>
+    /// Change SafeHouse status (in / out)
+    /// </summary>
+    class OutSafeHouse : Outcome
+    {
+        // Data is +ve then entering safehouse, -ve then has left safehouse
+
+        public OutSafeHouse(int eventID, int status) : base(eventID)
+        {
+            Data = status;
+            Type = OutcomeType.SafeHouse;
+        }
+    }
 
     /// <summary>
     /// Change a GameVar by an amount
@@ -252,7 +267,6 @@ namespace Next_Game.Event_System
         {
             Data = refID;
             Type = OutcomeType.Introduction;
-
         }
     }
 

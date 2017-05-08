@@ -12,16 +12,16 @@ namespace Next_Game
     public enum StoryAI { None, Benevolent, Balanced, Evil, Tricky }
     public enum GameState { None, Justice, Legend_Usurper, Legend_King, Honour_Usurper, Honour_King, Count } //arrayOfGameStates primary index
     public enum DataState { Good, Bad, Change, Count } //arrayOfGameStates secondary index (change indicates item changed since last redraw, +ve # is good, -ve is bad)
-    public enum ConflictType { None, Combat, Social, Stealth, Special} //broad category (special is solely for overriding default challenge data -> used by autocreate events only)
-    public enum ConflictCombat { None, Personal, Tournament, Battle, Hunting} //sub category -> a copy should be in ConflictSubType
-    public enum ConflictSocial { None, Blackmail, Seduce, Befriend} //sub category -> a copy should be in ConflictSubType
-    public enum ConflictStealth { None, Infiltrate, Evade, Escape} //sub category -> a copy should be in ConflictSubType
-    public enum ConflictSubType { None, Personal, Tournament, Battle, Hunting, Blackmail, Seduce, Befriend, Infiltrate, Evade, Escape, Special} //combined list of all subtypes (add to as needed)
+    public enum ConflictType { None, Combat, Social, Stealth, Special } //broad category (special is solely for overriding default challenge data -> used by autocreate events only)
+    public enum ConflictCombat { None, Personal, Tournament, Battle, Hunting } //sub category -> a copy should be in ConflictSubType
+    public enum ConflictSocial { None, Blackmail, Seduce, Befriend } //sub category -> a copy should be in ConflictSubType
+    public enum ConflictStealth { None, Infiltrate, Evade, Escape } //sub category -> a copy should be in ConflictSubType
+    public enum ConflictSubType { None, Personal, Tournament, Battle, Hunting, Blackmail, Seduce, Befriend, Infiltrate, Evade, Escape, Special } //combined list of all subtypes (add to as needed)
     public enum ConflictSpecial { None, Fortified_Position, Mountain_Country, Forest_Country, Castle_Walls } //special situations
-    public enum ConflictResult { None, MinorWin, Win, MajorWin, MinorLoss, Loss, MajorLoss, Count} //result of challenge
+    public enum ConflictResult { None, MinorWin, Win, MajorWin, MinorLoss, Loss, MajorLoss, Count } //result of challenge
     public enum ConflictState { None, Relative_Army_Size, Relative_Fame, Relative_Honour, Relative_Justice, Known_Status } //game specific states that are used for situations
-    public enum ResourceLevel { None, Meagre, Moderate, Substantial, Wealthy, Excessive}
-   
+    public enum ResourceLevel { None, Meagre, Moderate, Substantial, Wealthy, Excessive }
+
 
     /// <summary>
     /// used to store all triggered events for the current turn
@@ -248,7 +248,7 @@ namespace Next_Game
         {
             if (autoDictionary.Count > 0)
             {
-                foreach(var eventObject in autoDictionary)
+                foreach (var eventObject in autoDictionary)
                 {
                     try
                     { dictAutoEvents.Add(eventObject.Value.EventPID, eventObject.Value); Game.logStart?.Write(string.Format("\"{0}\" successfully added to DictAutoEvents", eventObject.Value.Name)); }
@@ -355,7 +355,7 @@ namespace Next_Game
         {
             int eventID;
             //assign to the correct list
-                eventID = eventObject.EventPID;
+            eventID = eventObject.EventPID;
             switch (eventObject.Type)
             {
                 case ArcType.GeoCluster:
@@ -466,26 +466,32 @@ namespace Next_Game
                 Game.logTurn?.Write("--- CheckPlayerEvents (Director.cs)");
                 //check first if any enemy is about to capture the Player
                 if (player.Capture == true && player.Status != ActorStatus.Captured)
-                {  CreateAutoEnemyEvent(); }
+                { CreateAutoEnemyEvent(); }
                 else
                 {
                     switch (player.Status)
                     {
                         case ActorStatus.AtLocation:
-                            //Location event
-                            if (rnd.Next(100) <= story.Ev_Player_Loc_Current)
-                            {
-                                DeterminePlayerEvent(player, EventType.Location);
-                                //chance of event halved after each occurence (prevents a long string of random events and gives space for necessary system events)
-                                story.Ev_Player_Loc_Current /= 2;
-                                Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
-                            }
+                            //in a safe house
+                            if (player.InSafeHouse == true)
+                            { }
                             else
                             {
-                                CreateAutoLocEvent(EventAutoFilter.None);
-                                //reset back to base figure
-                                story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
-                                Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
+                                //Location event
+                                if (rnd.Next(100) <= story.Ev_Player_Loc_Current)
+                                {
+                                    DeterminePlayerEvent(player, EventType.Location);
+                                    //chance of event halved after each occurence (prevents a long string of random events and gives space for necessary system events)
+                                    story.Ev_Player_Loc_Current /= 2;
+                                    Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
+                                }
+                                else
+                                {
+                                    CreateAutoLocEvent(EventAutoFilter.None);
+                                    //reset back to base figure
+                                    story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
+                                    Game.logTurn?.Write(string.Format(" Chance of Player Location event {0} %", story.Ev_Player_Loc_Current));
+                                }
                             }
                             break;
                         case ActorStatus.Travelling:
@@ -826,11 +832,11 @@ namespace Next_Game
                             tempText = string.Format("{0}, Aid {1} at Sea onboard the S.S \"{2}\", [{3} Event] \"{4}\"", player.Name, player.ActID, player.ShipName,
                           type, eventChosen.Name);
                         }
-                        else {  tempText = "unknown actor at sea"; }
+                        else { tempText = "unknown actor at sea"; }
                         message = new Message(tempText, MessageType.Event);
                         break;
                     case EventType.Dungeon:
-                        tempText = string.Format("{0}, Aid {1} incarcerated in the dungeons of {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID, 
+                        tempText = string.Format("{0}, Aid {1} incarcerated in the dungeons of {2}, [{3} Event] \"{4}\"", actor.Name, actor.ActID,
                             Game.world.GetLocationName(actor.LocID), type, eventChosen.Name);
                         message = new Message(tempText, MessageType.Event);
                         break;
@@ -843,7 +849,7 @@ namespace Next_Game
                         Game.SetError(new Error(72, $"Invalid EventType \"{type}\""));
                         break;
                 }
-                
+
                 if (message != null)
                 {
                     Game.world.SetMessage(message);
@@ -855,7 +861,7 @@ namespace Next_Game
                 EventPackage current = new EventPackage() { Person = actor, EventObject = eventChosen, Done = false };
                 listPlyrCurrentEvents.Add(current);
             }
-            
+
         }
 
         /// <summary>
@@ -912,7 +918,7 @@ namespace Next_Game
                         eventObject.SetOption(option_1);
 
                         //fight option
-                        OptionInteractive option_2 = new OptionInteractive("Draw your Sword") { ActorID = enemy.ActID }; 
+                        OptionInteractive option_2 = new OptionInteractive("Draw your Sword") { ActorID = enemy.ActID };
                         option_2.ReplyGood = string.Format("{0} reaches for his weapon and lunges at you", enemy.Name);
                         OutConflict outcome_2 = new OutConflict(eventObject.EventPID, enemy.ActID, ConflictType.Combat) { Combat_Type = ConflictCombat.Personal, SubType = ConflictSubType.Personal };
                         //customise conflict data -> Outcome texts and results
@@ -951,7 +957,7 @@ namespace Next_Game
                         outcome_3.challenge.SetResults(ConflictResult.MajorWin, new List<int> { 5 });
                         outcome_3.challenge.SetResults(ConflictResult.MinorWin, new List<int> { 46 });
                         outcome_3.challenge.SetResults(ConflictResult.MinorLoss, new List<int> { 45 });
-                        outcome_3.challenge.SetResults(ConflictResult.Loss, new List<int> { 45, 46});
+                        outcome_3.challenge.SetResults(ConflictResult.Loss, new List<int> { 45, 46 });
                         outcome_3.challenge.SetResults(ConflictResult.MajorLoss, new List<int> { 45, 42 });
                         outcome_3.challenge.SetOveride(true);
                         option_3.SetGoodOutcome(outcome_3);
@@ -1014,7 +1020,7 @@ namespace Next_Game
                 int houseID = Game.map.GetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY());
                 int refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
                 House house = Game.world.GetHouse(refID);
-                if (house != null) { Game.SetError(new Error(118, "Invalid house (null)")); }
+                if (house == null) { Game.SetError(new Error(118, "Invalid house (null)")); }
                 string houseName = "Unknown";
                 string tempText;
                 if (refID > 0) { houseName = Game.world.GetHouseName(refID); }
@@ -1154,7 +1160,7 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
-                            
+
                             if (player.Known == false)
                             {
                                 if (player.IntroPresented == false)
@@ -1170,7 +1176,7 @@ namespace Next_Game
                                 }
                                 //option -> Use an introduction
                                 int numIntros = player.GetNumOfIntroductions(refID);
-                                if ( numIntros > 0)
+                                if (numIntros > 0)
                                 {
                                     OptionInteractive optionIntro = new OptionInteractive($"Use an Introduction (you have {numIntros})");
                                     optionIntro.ReplyGood = $"You present your written Introduction to House \"{houseName}\"";
@@ -1245,20 +1251,21 @@ namespace Next_Game
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
                             }
-                            //option -> lay low (only if not known)
-                            if (house.SafeHouse > 0)
+                            //option -> Lay low (only if not known)
+                            if (house.SafeHouse > 0 && player.InSafeHouse == false)
                             {
                                 OptionInteractive option = new OptionInteractive($"Lay Low ({house.SafeHouse} stars)");
                                 option.ReplyGood = $"You seek refuge at a Safe House ({house.SafeHouse} stars). You are immune from discovery while ever the place of refuge retains at least one star";
-                                //OutNone outcome = new OutNone(eventObject.EventPID);
                                 OutKnown outKnown = new OutKnown(eventObject.EventPID, 1);
-                                //option.SetGoodOutcome(outcome);
+                                OutSafeHouse outSafe = new OutSafeHouse(eventObject.EventPID, 1);
                                 option.SetGoodOutcome(outKnown);
+                                option.SetGoodOutcome(outSafe);
                                 eventObject.SetOption(option);
                             }
                             //option -> Leave
                             OptionInteractive option_L = new OptionInteractive("Leave");
-                            option_L.ReplyGood = "It's a mistake to be here. Time to go.";
+                            if (player.Known == true) { option_L.ReplyGood = "You depart, head held high, shoulders back"; }
+                            else { option_L.ReplyGood = "You quietly slink away, staying in the shadows"; }
                             OutNone outcome_L = new OutNone(eventObject.EventPID);
                             option_L.SetGoodOutcome(outcome_L);
                             eventObject.SetOption(option_L);
@@ -1416,7 +1423,7 @@ namespace Next_Game
                                     {
                                         //get follower
                                         Follower follower = null;
-                                        foreach(Active actor in listRemainingFollowers)
+                                        foreach (Active actor in listRemainingFollowers)
                                         {
                                             if (actor.ActID == listRecruits[i])
                                             {
@@ -1493,7 +1500,7 @@ namespace Next_Game
                                     voyageTime = Math.Max(1, voyageTime);
                                     chance = (rnd.Next(1, 10) - 1) * 10;
                                     chance = Math.Max(10, chance);
-                                    optionText = string.Format("Obtain passage to {0} {1}, a voyage of {2} day{3}. {4}% chance of success.", locDestination.LocName, 
+                                    optionText = string.Format("Obtain passage to {0} {1}, a voyage of {2} day{3}. {4}% chance of success.", locDestination.LocName,
                                         Game.world.ShowLocationCoords(locDestination.LocationID), voyageTime, voyageTime != 1 ? "s" : "", chance);
                                     OptionInteractive option = new OptionInteractive(optionText) { LocID = locDestination.LocationID, Test = chance };
                                     option.ReplyGood = "A suitable ship is available. You board immediately";
@@ -1611,7 +1618,7 @@ namespace Next_Game
                                     OptionInteractive option_0 = new OptionInteractive("Excuse Yourself") { ActorID = actorID };
                                     option_0.ReplyGood = $"{actorText} stares at you with narrowed eyes";
                                     if (person is Advisor) { OutEventChain outcome_0 = new OutEventChain(1000, EventAutoFilter.Advisors); option_0.SetGoodOutcome(outcome_0); }
-                                    else {OutEventChain outcome_0 = new OutEventChain(1000, EventAutoFilter.Court); option_0.SetGoodOutcome(outcome_0); }
+                                    else { OutEventChain outcome_0 = new OutEventChain(1000, EventAutoFilter.Court); option_0.SetGoodOutcome(outcome_0); }
                                     //OutNone outcome_0 = new OutNone(eventObject.EventPID);
                                     eventObject.SetOption(option_0);
                                     //improve relationship (befriend)
@@ -1698,12 +1705,12 @@ namespace Next_Game
                                     //if too many promises have been handed out, effect is halved
                                     int numPromises = Game.variable.GetValue(GameVar.Promises_Num);
                                     int numHalved = Game.constant.GetValue(Global.PROMISES_HALVED);
-                                    if ( numPromises >= numHalved )
+                                    if (numPromises >= numHalved)
                                     { baseValue /= 2; Game.logTurn?.Write($"[Promises] {numPromises} handed out is >= {numHalved}, relationship baseValue halved to {baseValue}"); }
                                     Passive passive = personWant as Passive;
                                     eventObject.Name = "Need Something";
                                     eventObject.Text = $"{passive.Title} {passive.Name}, ActID {passive.ActID} has a desire for {passive.DesireText}.";
-                                    tempText = string.Format("You sit down and discuss what you can do for {0} {1} \"{2}\", ActID {3}, at {4}", passive.Title, passive.Name, 
+                                    tempText = string.Format("You sit down and discuss what you can do for {0} {1} \"{2}\", ActID {3}, at {4}", passive.Title, passive.Name,
                                         passive.Handle, passive.ActID, loc.LocName);
                                     //default
                                     OptionInteractive option_w0 = new OptionInteractive("Sorry, you can't help") { ActorID = actorID };
@@ -1764,7 +1771,7 @@ namespace Next_Game
                     dictPlayerEvents.Add(1000, eventObject);
                     //message
                     //tempText = string.Format("{0}, Aid {1} at {2} {3}, [{4} Event] \"{5}\"", player.Name, player.ActID, locName, Game.world.ShowLocationCoords(player.LocID),
-                          //eventObject.Type, eventObject.Name);
+                    //eventObject.Type, eventObject.Name);
                     if (tempText.Length > 0)
                     {
                         Game.world.SetMessage(new Message(tempText, MessageType.Event));
@@ -1797,7 +1804,7 @@ namespace Next_Game
                         counter++;
                         Game.logTurn?.Write(string.Format(" \"{0}\" autoReact Event found, Status {1}", eventObject.Value.Name, eventObject.Value.Status));
                     }
-                    
+
                 }
                 //any to remove?
                 if (counter > 0)
@@ -2197,7 +2204,7 @@ namespace Next_Game
                     {
                         case ArcType.GeoCluster:
                             if (eventObject.GeoType == ArcGeo.Sea || eventObject.GeoType == ArcGeo.Unsafe)
-                            { eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Sea, bound for {2} (Loc {3}:{4})", actor.Name, actor.ActID, locName, pos.PosX, pos.PosY), 
+                            { eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Sea, bound for {2} (Loc {3}:{4})", actor.Name, actor.ActID, locName, pos.PosX, pos.PosY),
                                     RLColor.LightGray, backColor)); }
                             else
                             { eventList.Add(new Snippet(string.Format("{0}, Aid {1}, at Loc {2}:{3} travelling towards {4}", actor.Name, actor.ActID, pos.PosX, pos.PosY,
@@ -2221,7 +2228,7 @@ namespace Next_Game
                                 locName, pos.PosX, pos.PosY, actor.DeathTimer), RLColor.LightGray, backColor));
                             break;
                         case ArcType.Adrift:
-                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}, adrift in {2}. Survival time {3} days", actor.Name, actor.ActID, actor.SeaName, 
+                            eventList.Add(new Snippet(string.Format("{0}, Aid {1}, adrift in {2}. Survival time {3} days", actor.Name, actor.ActID, actor.SeaName,
                                 actor.DeathTimer), RLColor.LightGray, backColor));
                             break;
                         default:
@@ -2243,7 +2250,7 @@ namespace Next_Game
                     RLColor optionColor;
                     if (listOptions != null)
                     {
-                        foreach(OptionInteractive option in listOptions)
+                        foreach (OptionInteractive option in listOptions)
                         {
                             //check any option triggers 
                             if (ResolveOptionTrigger(option) == true)
@@ -2261,7 +2268,7 @@ namespace Next_Game
                         }
                     }
                     else { Game.SetError(new Error(70, "Invalid ListOfOptions Player input (null)")); break; }
-                    
+
                     //repeat timer (set # of activations till event goes dormant)
                     if (eventObject.TimerRepeat > 0)
                     {
@@ -2377,7 +2384,7 @@ namespace Next_Game
                             {
                                 Passive person = actor as Passive;
                                 if (person.Desire > PossPromiseType.None && person.Satisfied == false)
-                                { Game.logTurn?.Write($"Trigger: {person.Name} has desire {person.DesireText} and Satisified {person.Satisfied} -> passed");  validCheck = true;}
+                                { Game.logTurn?.Write($"Trigger: {person.Name} has desire {person.DesireText} and Satisified {person.Satisfied} -> passed"); validCheck = true; }
                                 else
                                 {
                                     Game.logTurn?.Write("Trigger: Desire is None or Satisified is True -> Trigger failed");
@@ -2406,7 +2413,7 @@ namespace Next_Game
                         case TriggerCheck.Known:
                             checkValue = 0;
                             if (player.Known == true) { checkValue = 1; }
-                            if(CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == true) { validCheck = true; }
+                            if (CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == true) { validCheck = true; }
                             else
                             {
                                 Game.logTurn?.Write(" Trigger: Player is wrong type of Known status -> Trigger failed");
@@ -2419,7 +2426,7 @@ namespace Next_Game
                             if (CheckTrigger(checkValue, EventCalc.Equals, trigger.Threshold) == true) { validCheck = true; }
                             else
                             {
-                                Game.logTurn?.Write(" Trigger: Player is wrong type of Known status -> Trigger failed"); 
+                                Game.logTurn?.Write(" Trigger: Player is wrong type of Known status -> Trigger failed");
                                 if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Introduction trigger Compulsory fail check"); return false; }
                             }
                             break;
@@ -2442,7 +2449,7 @@ namespace Next_Game
         private bool CheckTrigger(int data, EventCalc comparator, int threshold)
         {
             bool validCheck = true;
-            switch(comparator)
+            switch (comparator)
             {
                 case EventCalc.GreaterThanOrEqual:
                     if (data < threshold) { validCheck = false; }
@@ -2524,7 +2531,7 @@ namespace Next_Game
                                     {
                                         int skill = player.GetSkill(option.Skill);
                                         //DM modifier to rndNum roll if any skill level other than 3 (average)
-                                        switch(skill)
+                                        switch (skill)
                                         {
                                             case 1: DMskill = modBase * 2; skillTrait = player.GetTraitName(option.Skill); break;
                                             case 2: DMskill = modBase * 1; skillTrait = player.GetTraitName(option.Skill); break;
@@ -2552,7 +2559,7 @@ namespace Next_Game
                                     else
                                     {
                                         listOutcomes = option.GetBadOutcomes(); optionReply = option.ReplyBad;
-                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Failed test ({1} % needed, rolled {2})  Roll {3} + DMskill {4} + DMtouched {5} -> modifiedRoll {6}", 
+                                        Game.logTurn?.Write(string.Format(" [Variable Option] \"{0}\" Failed test ({1} % needed, rolled {2})  Roll {3} + DMskill {4} + DMtouched {5} -> modifiedRoll {6}",
                                             option.Text, option.Test, numModified, rndNum, DMskill, DMtouched, numModified));
                                         rndResult = "Fail";
                                     }
@@ -2584,6 +2591,16 @@ namespace Next_Game
                                         case OutcomeType.Known:
                                             //change an Active Actor's Known/Unknown status
                                             outcomeText = Game.world.SetActiveActorKnownStatus(1, outcome.Data);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            //message
+                                            tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
+                                            Game.world.SetMessage(new Message(tempText, 1, 0, MessageType.Event));
+                                            Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            break;
+                                        case OutcomeType.SafeHouse:
+                                            //change Player's SafeHouse status
+                                            outcomeText = ChangePlayerSafeHouseStatus(outcome.Data);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             //message
@@ -2842,7 +2859,7 @@ namespace Next_Game
                                                 switch (conflictOutcome.Conflict_Type)
                                                 {
                                                     case ConflictType.Combat:
-                                                        switch(conflictOutcome.Combat_Type)
+                                                        switch (conflictOutcome.Combat_Type)
                                                         {
                                                             case ConflictCombat.Battle:
                                                                 state = ConflictState.Relative_Army_Size;
@@ -2855,7 +2872,7 @@ namespace Next_Game
                                                         }
                                                         break;
                                                     case ConflictType.Social:
-                                                        switch(conflictOutcome.Social_Type)
+                                                        switch (conflictOutcome.Social_Type)
                                                         {
                                                             case ConflictSocial.Befriend:
                                                                 state = ConflictState.Relative_Honour;
@@ -2871,11 +2888,11 @@ namespace Next_Game
                                                         break;
                                                 }
                                                 if (state == ConflictState.None)
-                                                { Game.SetError(new Error(73, "Invalid state (ConflictState.None) -> changed to Justice")); state = ConflictState.Relative_Justice; } 
+                                                { Game.SetError(new Error(73, "Invalid state (ConflictState.None) -> changed to Justice")); state = ConflictState.Relative_Justice; }
                                                 Game.conflict.SetGameSituation(state);
                                             }
                                             else
-                                            { Game.SetError(new Error(73, string.Format("Invalid actorID (derived from SpecialID) for OutConflict (zero or less) \"{0}\", option # {1}", 
+                                            { Game.SetError(new Error(73, string.Format("Invalid actorID (derived from SpecialID) for OutConflict (zero or less) \"{0}\", option # {1}",
                                                 eventObject.Name, optionNum))); }
                                             break;
                                     }
@@ -2951,7 +2968,7 @@ namespace Next_Game
                             Game.logTurn?.Write(string.Format(" Inactive (greyed out) Option chosen for \"{0}\", option # {1}", eventObject.Name, optionNum));
                         }
                     }
-                    else { validOption = 0;  Game.SetError(new Error(73, string.Format("No valid option present for \"{0}\", option # {1}", eventObject.Name, optionNum))); }
+                    else { validOption = 0; Game.SetError(new Error(73, string.Format("No valid option present for \"{0}\", option # {1}", eventObject.Name, optionNum))); }
                 }
                 else { Game.SetError(new Error(73, string.Format("No options present for \"{0}\"", eventObject.Name))); }
             }
@@ -3013,7 +3030,7 @@ namespace Next_Game
         /// <returns></returns>
         private Story SetStory(int storyID)
         {
-            if( dictStories.TryGetValue(storyID, out story))
+            if (dictStories.TryGetValue(storyID, out story))
             { return story; }
             return null;
         }
@@ -3035,7 +3052,7 @@ namespace Next_Game
                 GeoCluster cluster = Game.world.GetGeoCluster(geoID);
                 if (cluster != null)
                 {
-                    switch(cluster.Terrain)
+                    switch (cluster.Terrain)
                     {
                         case Cluster.Sea:
                             if (arcSea != null)
@@ -3123,8 +3140,8 @@ namespace Next_Game
             Archetype arcInn = GetArchetype(story.Arc_Loc_Inn);
             //Initialise Locations
             Dictionary<int, Location> tempLocations = Game.network.GetLocations();
-            
-            foreach(var loc in tempLocations)
+
+            foreach (var loc in tempLocations)
             {
                 refID = loc.Value.RefID;
                 //location present (excludes capital)
@@ -3195,7 +3212,7 @@ namespace Next_Game
             Dictionary<int, Active> tempActiveActors = Game.world.GetAllActiveActors();
             if (tempActiveActors != null)
             {
-                foreach(var actor in tempActiveActors)
+                foreach (var actor in tempActiveActors)
                 {
                     arcID = actor.Value.ArcID;
                     if (arcID > 0)
@@ -3352,7 +3369,7 @@ namespace Next_Game
                         if (eventObject.Value.TimerCoolDown > 0)
                         {
                             eventObject.Value.TimerCoolDown--;
-                            Game.logTurn?.Write(string.Format(" \"{0}\" event, Cooldown Timer decremented from {1} to {2}", eventObject.Value.Name, eventObject.Value.TimerCoolDown + 1, 
+                            Game.logTurn?.Write(string.Format(" \"{0}\" event, Cooldown Timer decremented from {1} to {2}", eventObject.Value.Name, eventObject.Value.TimerCoolDown + 1,
                                 eventObject.Value.TimerCoolDown));
                         }
                         break;
@@ -3622,7 +3639,7 @@ namespace Next_Game
                         string locNameOrigin = Game.world.GetLocationName(currentLocID);
                         string locNameDestination = Game.world.GetLocationName(destID);
                         resultText = string.Format("{0} {1} boards the S.S \"{2}\" at {3}, bound for {4}. Estimated voyage time {5} day{6}", player.Title, player.Name, player.ShipName,
-                            locNameOrigin, locNameDestination, player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "" );
+                            locNameOrigin, locNameDestination, player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
                     }
                     else { Game.SetError(new Error(217, "Invalid voyageTime (zero, or less)")); }
                 }
@@ -3710,7 +3727,7 @@ namespace Next_Game
         private string ChangePlayerRescuedStatus(bool safeShip)
         {
             string resultText = "";
-            Active player = Game.world.GetActiveActor(1);
+            Player player = Game.world.GetPlayer();
             if (player != null)
             {
                 player.DeathTimer = 999;
@@ -3723,6 +3740,45 @@ namespace Next_Game
                     Game.world.GetLocationName(player.LocID), player.VoyageTimer, player.VoyageTimer != 1 ? "s" : "");
             }
             else { Game.SetError(new Error(222, "Invalid Player (null)")); }
+            return resultText;
+        }
+
+        /// <summary>
+        /// Player enters/leaves a SafeHouse (status +ve -> enter, status -ve -> depart)
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        private string ChangePlayerSafeHouseStatus(int status)
+        {
+            string resultText = "";
+            Player player = Game.world.GetPlayer();
+            int refID = Game.world.ConvertLocToRef(player.LocID);
+            House house = Game.world.GetHouse(refID);
+            if (house != null)
+            {
+                if (house.SafeHouse > 0)
+                {
+                    if (player != null)
+                    {
+                        if (status > 0)
+                        {
+                            //Enter a SafeHouse
+                            player.InSafeHouse = true;
+                            resultText = $"{player.Title} {player.Name} has found refuge in the safe house at {house.LocName} ({house.SafeHouse} stars)";
+                        }
+                        else if (status < 0)
+                        {
+                            //Depart a SafeHouse
+                            player.InSafeHouse = false;
+                            resultText = $"{player.Title} {player.Name} has left the refuge of the safe house at {house.LocName} ({house.SafeHouse} stars)";
+                        }
+                        else { Game.SetError(new Error(250, $"Invalid status \"{status}\" (can't be zero) -> SafeHouse Status NOT changed")); }
+                    }
+                    else { Game.SetError(new Error(250, "Invalid Player (null)")); }
+                }
+                else { Game.SetError(new Error(250, "House SafeHouse has a zero, or less, value. -> SafeHouse Status NOT changed")); }
+            }
+            else { Game.SetError(new Error(250, "Invalid house (null)")); }
             return resultText;
         }
 

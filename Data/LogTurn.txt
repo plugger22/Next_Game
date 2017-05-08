@@ -1,70 +1,61 @@
-//Exile Game File "LogTurn.txt" opened at: 08/05/2017 13:55:49
+//Exile Game File "LogTurn.txt" opened at: 08/05/2017 15:24:30
 --- ProcessStartTurn (World.cs)
 Day 4, Turn 3
---- MoveActors -> 0 Records (World.cs)
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Astaroth, ActID 111 travelling to The Shaggy Parrot (current Loc 16:18)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Victarion Tully, ID 1 at 1:7, Enemy at 16:18 (Brother Astaroth, ID 111
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Victarion Tully, ID 1 at 1:7, Enemy at 16:19 (Brother Astaroth, ID 111
 --- UpdatePlayerStatus (World.cs)
+Usurper Victarion Tully is laying low at a safe house at Torrhen's Square (2 stars)
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Andry Stark, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Victarion Tully, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Diabolous, ID 102 at 14:11, Active Andry Stark, ID 1, at 10:23
- [Search -> Debug] Enemy, Brother Set, ID 103 at 14:11, Active Andry Stark, ID 1, at 10:23
- [Search -> Debug] Enemy, Brother Kali, ID 104 at 14:11, Active Andry Stark, ID 1, at 10:23
- [Search -> Debug] Enemy, Brother Demogorgon, ID 105 at 14:11, Active Andry Stark, ID 1, at 10:23
- [Search -> Debug] Enemy, The Unrelenting, ID 106 at 14:11, Active Andry Stark, ID 1, at 10:23
- [Search -> Stationary] Follower The Haggler, ActID 3 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 2 is AtLocation
+ [Search -> Debug] Enemy, Brother Dagon, ID 108 at 18:18, Active Victarion Tully, ID 1, at 1:7
+ [Search -> Debug] Enemy, Brother Azazel, ID 109 at 18:18, Active Victarion Tully, ID 1, at 1:7
+ [Search -> Debug] Enemy, Brother Behemoth, ID 110 at 18:18, Active Victarion Tully, ID 1, at 1:7
+ [Search -> Debug] Enemy, Brother Astaroth, ID 111 at 16:20, Active Victarion Tully, ID 1, at 1:7
+ [Search -> Debug] Enemy, The Unrelenting, ID 112 at 18:18, Active Victarion Tully, ID 1, at 1:7
+ [Search -> Stationary] Follower The Jester, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 4 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 6 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Mode] enemyID 102,  distance -> 28  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 103,  distance -> 28  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 104,  distance -> 28  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 105,  distance -> 28  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 106,  distance -> 28  Threshold (turns) -> 8  Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 108 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 109 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 110 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 112 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Diabolous, ActID 102 retains Goal -> Wait
- [Enemy -> Known] Brother Set ActID 103 has become KNOWN
- [Enemy -> Goal] Brother Set, ActID 103 retains Goal -> Wait
- [Enemy -> Goal] Brother Kali, ActID 104 retains Goal -> Wait
- [Enemy -> Unknown] Brother Demogorgon ActID 105 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] Brother Demogorgon, ActID 105 retains Goal -> Hide
- [Enemy -> Known] The Unrelenting ActID 106 has become KNOWN
- [Enemy -> Goal] The Unrelenting, ActID 106 retains Goal -> Wait
+ [Enemy -> Unknown] Brother Dagon ActID 108 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Goal] Brother Dagon, ActID 108 retains Goal -> Hide
+ [Enemy -> Goal] Brother Azazel, ActID 109 retains Goal -> Wait
+ [Enemy -> Goal] Brother Behemoth, ActID 110 retains Goal -> Wait
+ [Enemy -> Known] The Unrelenting ActID 112 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 112 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] The Unrelenting, ActID 112, (loc 18:18), assigned new Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
-- CreateAutoLocEvent (Director.cs)
-ERROR_118 "Invalid house (null)"
-Method: CreateAutoLocEvent,  Line: 1017,  Object: Director.cs,  Turn: 3,  Local Time: 13:55:55 UTC +10:00
- [AutoEvent -> ActorList] "Ser Trystane Rolandus", ID 21 added to list of Actors
- [AutoEvent -> ActorList] "Wyl Humpty", ID 22 added to list of Actors
- [AutoEvent -> ActorList] "Daue Basuin", ID 23 added to list of Actors
- [AutoEvent -> ActorList] "Peter Gervasius", ID 24 added to list of Actors
- [AutoEvent -> LocalList] "Ser Trystane Rolandus", ID 21 added to list of Locals
- [AutoEvent -> AdvisorList] "Wyl Humpty", ID 22 added to list of Advisors
- [AutoEvent -> AdvisorList] "Daue Basuin", ID 23 added to list of Advisors
- [AutoEvent -> AdvisorList] "Peter Gervasius", ID 24 added to list of Advisors
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Trigger passed on "1" Equals 1
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger passed on "1" Equals 1
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
+--- ResolveFollowerEvents (Director.cs)
 --- UpdateActiveActors (World.cs)
- Usurper Andry Stark has had their Revert Timer reduced from 3 to 2
- Follower The Haggler has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Spider has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Viper has had their TurnsUnknown Timer increased from 2 to 3
---- ResolveOutcome (Director.cs)
+ Usurper Victarion Tully has had their TurnsUnknown Timer increased from 102 to 103
+ Follower The Jester has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Duchess has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Crone has had their TurnsUnknown Timer increased from 2 to 3
+--- MultiKeyInput (Game.cs)
+1 input
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 08/05/2017 13:56:06
-)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
+//Exile Game file ops "LogTurn.txt" Completed at: 08/05/2017 15:25:15
+s)
+ [Goal -> Branch] The Unrelenting, ActID 112 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] The Unrelenting, ActID 112, (loc 18:18), assigned new Goal -> Hide
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Helman Tallhart", ID 83 added to list of Actors
+ [AutoEvent -> LocalList] "Helman Tallhart", ID 83 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 99
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
  Trigger FAILED on "0" Equals 1
  Trigger: Player is wrong type of Known status -> Trigger failed
  Trigger FAILED on "0" Equals 1
@@ -72,16 +63,14 @@ Method: CreateAutoLocEvent,  Line: 1017,  Object: Director.cs,  Turn: 3,  Local 
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Andry Stark has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Haggler has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Viper has had their TurnsUnknown Timer increased from 0 to 1
+ Usurper Victarion Tully has had their TurnsUnknown Timer increased from 101 to 102
+ Follower The Jester has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Duchess has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Crone has had their TurnsUnknown Timer increased from 1 to 2
 --- ResolveOutcome (Director.cs)
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
-[God Mode] Player teleports from Riverrun to Highgarden
+--- ResolveFollowerEvents (Director.cs)
 --- ProcessEndTurn (World.cs)
-Day 2, Turn 1
+Day 3, Turn 2
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 19
-//Exile Game File "LogTurn.txt" Close completed at: 08/05/2017 13:55:14
+ Event "Search and Detain" Dormant Timer decremented to 18
+//Exile Game File "LogTurn.txt" Close completed at: 08/05/2017 15:24:30

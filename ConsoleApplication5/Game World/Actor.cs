@@ -750,6 +750,7 @@ namespace Next_Game
     {
         public int CrowsNumber { get; set; }
         public int HistoryID { get; set; } //actorID of character who becomes the usurper
+        public bool InSafeHouse { get; set; } //true if actor in safe house
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
         private List<int> listOfFavours; //stores possessionId of favours granted to Player
         //private List<int> listOfIntroductions; //stores possessionId of introductions granted to the Player

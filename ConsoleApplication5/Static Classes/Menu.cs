@@ -154,7 +154,7 @@ namespace Next_Game
                     break;
                 case MenuMode.Debug:
                     menuColorFore = RLColor.Red;
-                    menuColorBack = RLColor.LightGray;
+                    menuColorBack = RLColor.Gray;
                     //input categories
                     menuArrayCategories[0] = "Debug Map ---";
                     menuArrayCategories[1] = "Info ---";

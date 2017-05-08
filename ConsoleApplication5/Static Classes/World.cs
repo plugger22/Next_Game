@@ -1483,7 +1483,9 @@ namespace Next_Game
                             RLColor loyaltyColor = Color._goodTrait;
                             if (house.Loyalty_Current == KingLoyalty.New_King) { loyaltyColor = Color._badTrait; }
                             locList.Add(new Snippet(string.Format("Loyal to the {0}", house.Loyalty_Current), loyaltyColor, RLColor.Black));
-
+                            if (house.SafeHouse > 0) {
+                                locList.Add(new Snippet($"Safe House available ", false));
+                                locList.Add(new Snippet(string.Format("{0}", GetStars(house.SafeHouse)), RLColor.LightRed, RLColor.Black)); }
                             locList.Add(new Snippet(string.Format("Strength of Castle Walls ({0}) ", (CastleDefences)house.CastleWalls), false));
                             locList.Add(new Snippet(string.Format("{0}", GetStars((int)house.CastleWalls)), RLColor.LightRed, RLColor.Black));
                             locList.Add(new Snippet(string.Format("House Resources ({0}) ", (ResourceLevel)resources), false));
@@ -3992,6 +3994,7 @@ namespace Next_Game
         private bool UpdatePlayerStatus()
         {
             bool updateStatus = false; //does a message need to be shown?
+            string description;
             Game.logTurn?.Write("--- UpdatePlayerStatus (World.cs)");
             Player player = GetPlayer();
             if (player != null)
@@ -3999,7 +4002,6 @@ namespace Next_Game
                 //Sea Voyage Status
                 if (player.Status == ActorStatus.AtSea)
                 {
-                    string description;
                     player.VoyageTimer--;
                     if (player.VoyageTimer == 0)
                     {
@@ -4021,7 +4023,6 @@ namespace Next_Game
                         player.ShipName = "Unknown";
                         player.SeaName = "Unknown";
                         player.VoyageSafe = true;
-                        
                     }
                     else
                     {
@@ -4030,6 +4031,18 @@ namespace Next_Game
                         SetMessage(new Message(description, MessageType.Move));
                     }
                     Game.logTurn?.Write(description);
+                }
+                //In a safe House
+                if ( player.InSafeHouse == true &&player.Status == ActorStatus.AtLocation )
+                {
+                    House house = GetHouse(ConvertLocToRef(player.LocID));
+                    if (house != null)
+                    {
+                        description = string.Format("{0} {1} is laying low at a safe house at {2} ({3} stars)", player.Title, player.Name, house.LocName, house.SafeHouse);
+                        SetMessage(new Message(description, MessageType.Move));
+                        Game.logTurn?.Write(description);
+                    }
+                    else { Game.SetError(new Error(219, "Invalid house (null) -> SafeHouse message not created")); }
                 }
                 //Death Timer active
                 if (player.DeathTimer < 999)
@@ -6084,14 +6097,15 @@ namespace Next_Game
         internal void InitialiseSafeHouses()
         {
             Game.logStart?.Write("--- InitialiseSafeHouse (History.cs)");
+            int oldKingRefID = Game.lore.RoyalRefIDOld;
             //Major Houses
             for (int i = 0; i < dictAllHouses.Count; i++)
             {
                 House house = dictAllHouses.ElementAt(i).Value;
                 if (house != null)
                 {
-                    //supports old King?
-                    if (house.Loyalty_Current == KingLoyalty.Old_King)
+                    //supports old King & not the deceased Old King (player's) hose?
+                    if (house.Loyalty_Current == KingLoyalty.Old_King && house.RefID != oldKingRefID )
                     {
                         if (house is MajorHouse)
                         {
