@@ -474,10 +474,10 @@ namespace Next_Game
                         case ActorStatus.AtLocation:
                             //in a safe house
                             if (player.InSafeHouse == true)
-                            { }
+                            { CreateAutoLocEvent(EventAutoFilter.SafeHouse); }
+                            //Location event
                             else
                             {
-                                //Location event
                                 if (rnd.Next(100) <= story.Ev_Player_Loc_Current)
                                 {
                                     DeterminePlayerEvent(player, EventType.Location);
@@ -1252,7 +1252,7 @@ namespace Next_Game
                                 eventObject.SetOption(option);
                             }
                             //option -> Lay low (only if not known)
-                            if (house.SafeHouse > 0 && player.InSafeHouse == false)
+                            if (player.Known == true && house.SafeHouse > 0 && player.InSafeHouse == false)
                             {
                                 OptionInteractive option = new OptionInteractive($"Lay Low ({house.SafeHouse} stars)");
                                 option.ReplyGood = $"You seek refuge at a Safe House ({house.SafeHouse} stars). You are immune from discovery while ever the place of refuge retains at least one star";
@@ -1264,11 +1264,27 @@ namespace Next_Game
                             }
                             //option -> Leave
                             OptionInteractive option_L = new OptionInteractive("Leave");
-                            if (player.Known == true) { option_L.ReplyGood = "You depart, head held high, shoulders back"; }
-                            else { option_L.ReplyGood = "You quietly slink away, staying in the shadows"; }
+                            if (player.Known == true) { option_L.ReplyGood = "You depart, head held high, shoulders back, meeting the eye of everyone you pass"; }
+                            else { option_L.ReplyGood = "You quietly depart, sliding through the mottled shadows"; }
                             OutNone outcome_L = new OutNone(eventObject.EventPID);
                             option_L.SetGoodOutcome(outcome_L);
                             eventObject.SetOption(option_L);
+                            break;
+                        case EventAutoFilter.SafeHouse:
+                            eventObject.Name = $"Safe House at {house.LocName} ({house.SafeHouse} stars)";
+                            eventObject.Text = "What do you wish to do, Sire?";
+                            //option -> Remain in the safe house (default)
+                            OptionInteractive optionStay = new OptionInteractive("Continue Laying Low");
+                            optionStay.ReplyGood = "You choose to remain in your refuge, safe from the prying eyes of your enemies";
+                            OutNone outcomeStay = new OutNone(eventObject.EventPID);
+                            optionStay.SetGoodOutcome(outcomeStay);
+                            eventObject.SetOption(optionStay);
+                            //option -> Leave the safe house
+                            OptionInteractive optionLeave = new OptionInteractive("Leave the Safe House");
+                            optionLeave.ReplyGood = "Carefully, checking the lane, you leave the security of your safe house and venture back out into the world";
+                            OutSafeHouse outcomeLeave = new OutSafeHouse(eventObject.EventPID, -1);
+                            optionLeave.SetGoodOutcome(outcomeLeave);
+                            eventObject.SetOption(optionLeave);
                             break;
                         case EventAutoFilter.Court:
                             eventObject.Name = "Talk to members of the Court";

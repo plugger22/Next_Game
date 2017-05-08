@@ -153,7 +153,7 @@ namespace Next_Game
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
                 case MenuMode.Debug:
-                    menuColorFore = RLColor.Red;
+                    menuColorFore = RLColor.LightRed;
                     menuColorBack = RLColor.Gray;
                     //input categories
                     menuArrayCategories[0] = "Debug Map ---";
