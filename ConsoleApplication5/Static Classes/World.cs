@@ -2198,15 +2198,27 @@ namespace Next_Game
                 {
                     if (data < 0)
                     {
-                        //KNOWN -> if already known resert Revert timer to the max.
-                        if (active.Known == true)
-                        { resultText = string.Format("{0} {1} has had their Known timer increased to the maximum ({2} days)", active.Title, active.Name, maxRevert); }
-                        else
-                        { active.Known = true; resultText = string.Format("{0} {1} is now KNOWN ({2} days)", active.Title, active.Name, maxRevert); }
-                        active.Revert = maxRevert;
-                        //reset TurnsUnknown timer back to zero
-                        active.TurnsUnknown = 0;
-                        active.LastKnownLocID = active.LocID;
+                        bool proceedFlag = true;
+                        //Known -> if already known resert Revert timer to the max.
+                        if (active is Player)
+                        {
+                            //player in disguise? -> serves to soak up the hit (disguise loses a level)
+                            Player player = active as Player;
+                            if (player.Conceal == ActorConceal.Disguise)
+                            { CheckConcealment(); proceedFlag = false; }
+                        }
+                        //Non-Player, or player who isn't in Disguise
+                        if (proceedFlag == true)
+                        {
+                            if (active.Known == true)
+                            { resultText = string.Format("{0} {1} has had their Known timer increased to the maximum ({2} days)", active.Title, active.Name, maxRevert); }
+                            else
+                            { active.Known = true; resultText = string.Format("{0} {1} is now KNOWN ({2} days)", active.Title, active.Name, maxRevert); }
+                            active.Revert = maxRevert;
+                            //reset TurnsUnknown timer back to zero
+                            active.TurnsUnknown = 0;
+                            active.LastKnownLocID = active.LocID;
+                        }
                     }
                     else if (data > 0)
                     {
@@ -5903,10 +5915,10 @@ namespace Next_Game
                             player.ConcealText = "";
                         }
                         //Player any most Resources they have
-                        if (player.Resources > 0)
+                        if (player.Resources > 1)
                         {
-                            player.Resources = 0;
-                            description = $"{player.Name} \"{player.Handle}\", has had all their gold confiscated by the {dungeonLoc} Dungeon Master";
+                            player.Resources = 1;
+                            description = $"{player.Name} \"{player.Handle}\", has had most of their gold confiscated by the {dungeonLoc} Dungeon Master";
                             SetMessage(new Message(description, MessageType.Incarceration));
                             SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Challenge));
                         }
