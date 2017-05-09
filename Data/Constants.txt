@@ -164,7 +164,7 @@
 # AI_SEARCH_MOVE -> % chance to find active character when enemy has the Move goal
 51: 20 @ 5 @ 80
 # AI_SEARCH_SEARCH -> % chance to find active character when enemy has the Search goal
-52: 40 @ 5 @ 80
+52: 60 @ 5 @ 80
 # AI_SEARCH_WAIT -> % chance to find active character when enemy has the Wait goal
 53: 20 @ 5 @ 80
 # AI_CAPITAL -> Min % of total Enemies who should remain in the Capital during normal operations (player location unknown)

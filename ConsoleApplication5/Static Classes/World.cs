@@ -908,7 +908,7 @@ namespace Next_Game
                     if (player.ConcealDisguise > 0)
                     {
                         Possession possession = GetPossession(player.ConcealDisguise);
-                        if (possession is Disguise)
+                        if (possession != null && possession is Disguise)
                         { disguise = possession as Disguise; }
                     }
                 }
@@ -990,7 +990,7 @@ namespace Next_Game
                             case ActorConceal.Disguise:
                                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "In Disguise"), RLColor.Yellow, RLColor.Black, false));
                                 listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(player.ConcealLevel)), RLColor.LightRed, RLColor.Black, false));
-                                listToDisplay.Add(new Snippet($"{disguise.Description}", RLColor.LightGray, RLColor.Black));
+                                listToDisplay.Add(new Snippet($"{disguise?.Description}", RLColor.LightGray, RLColor.Black));
                                 break;
                         }
                     }
@@ -1216,7 +1216,7 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
                     listToDisplay.Add(new Snippet(string.Format("{0}", (ResourceLevel)resources), true));
                     //Disguise
-                    if (player.ConcealDisguise > 0)
+                    if (player.ConcealDisguise > 0 && disguise != null)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Disguise"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(disguise.Strength)), RLColor.LightRed, RLColor.Black, false));
@@ -5567,6 +5567,7 @@ namespace Next_Game
         {
             Player player = GetPlayer();
             int refID = ConvertLocToRef(player.LocID);
+            string lostText = "";
             //player not found but concealment level takes a hit
             player.ConcealLevel--;
             Game.logTurn?.Write($" [Search -> Concealment] Player has been spotted by an Enemy but their concealment keeps their presence hidden");
@@ -5574,7 +5575,28 @@ namespace Next_Game
             switch (player.Conceal)
             {
                 case ActorConceal.Disguise:
-                    //TO DO
+                    if (player.ConcealDisguise > 0)
+                    {
+                        Possession possession = GetPossession(player.ConcealDisguise);
+                        if (possession != null)
+                        {
+                            if (possession is Disguise)
+                            {
+                                Disguise disguise = possession as Disguise;
+                                disguise.Strength--;
+                                //only show msg if remaining concealment otherwise just doubling up on msg's
+                                if (disguise.Strength > 0)
+                                {
+                                    lostText = $"{player.ConcealText} Disguise has lost a level of concealment (now {disguise.Strength} stars)";
+                                    Game.logTurn?.Write(lostText);
+                                    SetMessage(new Message(lostText, MessageType.Search));
+                                }
+                            }
+                            else { Game.SetError(new Error(251, $"Invalid possession type (not a disguise) for PossID {possession.PossID}")); }
+                        }
+                        else { Game.SetError(new Error(251, "Invalid Possession (null)")); }
+                    }
+                    else { Game.SetError(new Error(251, "Invalid player.ConcealDisguise (zero or less)")); }
                     break;
                 case ActorConceal.SafeHouse:
                     House house = GetHouse(refID);
@@ -5584,7 +5606,7 @@ namespace Next_Game
                         //only show msg if remaining concealment otherwise just doubling up on msg's
                         if (house.SafeHouse > 0)
                         {
-                            string lostText = $"{player.ConcealText} Safe House at {house.LocName} has lost a level of concealment (now {house.SafeHouse} stars)";
+                            lostText = $"{player.ConcealText} Safe House at {house.LocName} has lost a level of concealment (now {house.SafeHouse} stars)";
                             Game.logTurn?.Write(lostText);
                             SetMessage(new Message(lostText, MessageType.Search));
                         }

@@ -1,66 +1,94 @@
-//Exile Game File "LogTurn.txt" opened at: 09/05/2017 16:24:27
+//Exile Game File "LogTurn.txt" opened at: 09/05/2017 16:45:00
 --- ProcessStartTurn (World.cs)
-Day 8, Turn 7
---- MoveActors -> 0 Records (World.cs)
+Day 7, Turn 6
+--- MoveActors -> 2 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Gorgo, ActID 107 travelling to Starpike (current Loc 20:22)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Rainald Tully, ID 1 at 17:16, Enemy at 20:22 (Brother Gorgo, ID 107
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Rainald Tully, ID 1 at 17:16, Enemy at 21:22 (Brother Gorgo, ID 107
+ [Goal -> Arrival] Inquisitor Brother Gorgo, ActID 107, currently at Starpike, new Goal -> Wait
+ [Move -> MoveObject] Usurper Rainald Tully, ActID 1 travelling to Kingskeep (current Loc 17:16)
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Nergal, ID 105 at 17:17, Active Rainald Tully, ID 1, at 17:16
+ [Search -> Debug] Enemy, Brother Adramalech, ID 106 at 17:17, Active Rainald Tully, ID 1, at 17:16
+ [Search -> Debug] Enemy, Brother Gorgo, ID 107 at 21:22, Active Rainald Tully, ID 1, at 17:16
+ [Search -> Debug] Enemy, Brother Astaroth, ID 108 at 17:17, Active Rainald Tully, ID 1, at 17:16
+ [Search -> Debug] Enemy, The Unrelenting, ID 109 at 17:17, Active Rainald Tully, ID 1, at 17:16
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Nergal, ID 105 at 17:17, Active Rainald Tully, ID 1, at 17:17
+ [Search -> Alert] Inquisitor Brother Nergal, ActID 105, is in the same place as Active Rainald Tully, ID 1, (loc 17:17)
+ [SEARCH -> Active] Random 47 < 60 (ai 60 + known 0) -> Success 
+ [Search -> ListSearched] Usurper Rainald Tully, ActID 1 Searched -> Enemy ActID 105 added
+ [SEARCH -> Active] Usurper Rainald Tully has been Spotted by Brother Nergal, ActID 105 at loc 17:17 -> Activated True
+ [Search -> ListEnemy] Usurper Rainald Tully, ActID 1 as Spotted -> True and Enemy ActID 105 added
+ [Search -> Concealment] Player has been spotted by an Enemy but their concealment keeps their presence hidden
+a Novice belonging to the Holy Faith Disguise has lost a level of concealment (now 1 stars)
+ [Search -> Debug] Enemy, Brother Adramalech, ID 106 at 17:17, Active Rainald Tully, ID 1, at 17:17
+ [Search -> Alert] Inquisitor Brother Adramalech, ActID 106, is in the same place as Active Rainald Tully, ID 1, (loc 17:17)
+ [SEARCH -> Active] Random 92 < 60 (ai 60 + known 0) -> Fail 
+ [Search -> ListSearched] Usurper Rainald Tully, ActID 1 Searched -> Enemy ActID 106 added
+ [Search -> Debug] Enemy, Brother Gorgo, ID 107 at 21:22, Active Rainald Tully, ID 1, at 17:17
+ [Search -> Debug] Enemy, Brother Astaroth, ID 108 at 17:17, Active Rainald Tully, ID 1, at 17:17
+ [Search -> Alert] Inquisitor Brother Astaroth, ActID 108, is in the same place as Active Rainald Tully, ID 1, (loc 17:17)
+ [SEARCH -> Active] Random 59 < 60 (ai 60 + known 0) -> Success 
+ [Search -> ListSearched] Usurper Rainald Tully, ActID 1 Searched -> Enemy ActID 108 added
+ [SEARCH -> Active] Usurper Rainald Tully has been Spotted by Brother Astaroth, ActID 108 at loc 17:17 -> Activated True
+ [Search -> ListEnemy] Usurper Rainald Tully, ActID 1 as Spotted -> True and Enemy ActID 108 added
+ [Search -> Concealment] Player has been spotted by an Enemy but their concealment keeps their presence hidden
+ [Search -> Conceal] The Disguise "a Novice belonging to the Holy Faith" has become known to the Enemy and no longer provides any benefit
+ [Search -> Debug] Enemy, The Unrelenting, ID 109 at 17:17, Active Rainald Tully, ID 1, at 17:17
+ [Search -> Alert] Nemesis The Unrelenting, ActID 109, is in the same place as Active Rainald Tully, ID 1, (loc 17:17)
+ [SEARCH -> Active] Random 76 < 30 (ai 30 + known 0) -> Fail 
+ [Search -> ListSearched] Usurper Rainald Tully, ActID 1 Searched -> Enemy ActID 109 added
 --- UpdatePlayerStatus (World.cs)
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Wyschardus Tyrell, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Rainald Tully, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Azazel, ID 111 at 14:19, Active Wyschardus Tyrell, ID 1, at 28:12
- [Search -> Debug] Enemy, Brother Mastema, ID 112 at 14:19, Active Wyschardus Tyrell, ID 1, at 28:12
- [Search -> Debug] Enemy, Brother Shiva, ID 113 at 14:19, Active Wyschardus Tyrell, ID 1, at 28:12
- [Search -> Debug] Enemy, Brother Set, ID 114 at 14:19, Active Wyschardus Tyrell, ID 1, at 28:12
- [Search -> Debug] Enemy, The Unrelenting, ID 115 at 14:19, Active Wyschardus Tyrell, ID 1, at 28:12
- [Search -> Stationary] Follower The Haggler, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 3 is AtLocation
+ [Search -> Debug] Enemy, Brother Nergal, ID 105 at 17:17, Active Rainald Tully, ID 1, at 17:17
+ [Search -> Alert] Inquisitor Brother Nergal, ActID 105, is in the same place as Active Rainald Tully, ID 1, (loc 17:17)
+ [Search -> Notification] Usurper Rainald Tully, ActID 1 Already on List, no Search -> Enemy ActID 105
+ [Search -> Debug] Enemy, Brother Adramalech, ID 106 at 17:17, Active Rainald Tully, ID 1, at 17:17
+ [Search -> Alert] Inquisitor Brother Adramalech, ActID 106, is in the same place as Active Rainald Tully, ID 1, (loc 17:17)
+ [Search -> Notification] Usurper Rainald Tully, ActID 1 Already on List, no Search -> Enemy ActID 106
+ [Search -> Debug] Enemy, Brother Gorgo, ID 107 at 21:22, Active Rainald Tully, ID 1, at 17:17
+ [Search -> Debug] Enemy, Brother Astaroth, ID 108 at 17:17, Active Rainald Tully, ID 1, at 17:17
+ [Search -> Alert] Inquisitor Brother Astaroth, ActID 108, is in the same place as Active Rainald Tully, ID 1, (loc 17:17)
+ [Search -> Notification] Usurper Rainald Tully, ActID 1 Already on List, no Search -> Enemy ActID 108
+ [Search -> Debug] Enemy, The Unrelenting, ID 109 at 17:17, Active Rainald Tully, ID 1, at 17:17
+ [Search -> Alert] Nemesis The Unrelenting, ActID 109, is in the same place as Active Rainald Tully, ID 1, (loc 17:17)
+ [Search -> Notification] Usurper Rainald Tully, ActID 1 Already on List, no Search -> Enemy ActID 109
+ [Search -> Stationary] Follower The Jester, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Haggler, ActID 4 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 3 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Mode] enemyID 111,  distance -> 29  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 112,  distance -> 29  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 113,  distance -> 29  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 114,  distance -> 29  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 115,  distance -> 29  Threshold (turns) -> 8  Mode -> Normal
+ [AI -> Mode] enemyID 105,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
+ [AI -> Mode] enemyID 106,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
+ [AI -> Mode] enemyID 108,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
+ [AI -> Mode] enemyID 109,  distance -> 0  Threshold (turns) -> 8  Mode -> Hunt
+ [AI -> Mode] enemyID 107,  distance -> 9  Threshold (turns) -> 4  Mode -> Hunt
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Azazel, ActID 111 retains Goal -> Wait
- [Enemy -> Unknown] Brother Mastema ActID 112 has reverted to Unknown status (timer elapsed)
+ [Enemy -> Known] Brother Nergal ActID 105 has become KNOWN
+ [Enemy -> Unknown] Brother Gorgo ActID 107 has reverted to Unknown status (timer elapsed)
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Mastema, ActID 112 Assigned Branch -> 1 Current Branch -> 0
- [Goal -> New] Brother Mastema, ActID 112, (loc 14:19), assigned new Goal -> Move
- [Goal -> Move] Brother Mastema, ActID 112 -> Capital to Correct Branch -> The Yellow Huntress, LocID 2
+ [Goal -> Branch] Brother Gorgo, ActID 107 Assigned Branch -> 3 Current Branch -> 3
+ [Goal -> New] Brother Gorgo, ActID 107, (loc 21:22), assigned new Goal -> Move
+ [Goal -> Move] Brother Gorgo, ActID 107 -> Player's last known location -> Kingskeep, LocID 1
 --- InitiateMoveActor (World.cs)
 --- Move Actor (Director.cs)
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Shiva, ActID 113 Assigned Branch -> 1 Current Branch -> 0
- [Goal -> New] Brother Shiva, ActID 113, (loc 14:19), assigned new Goal -> Move
- [Goal -> Move] Brother Shiva, ActID 113 -> Capital to Correct Branch -> The Yellow Huntress, LocID 2
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Goal] Brother Set, ActID 114 retains Goal -> Wait
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 115 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] The Unrelenting, ActID 115, (loc 14:19), assigned new Goal -> Hide
+ [Enemy -> Unknown] The Unrelenting ActID 109 has reverted to Unknown status (timer elapsed)
 --- CheckPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
- Event "Mysterious Stranger" has no attached Conditions
 --- GetValidPlayerEvents (Director.cs)
 --- GetValidPlayerEvents (Director.cs)
  Chance of Player Location event 37 %
---- ResolvePlayerEvents (Director.cs)
- "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
- Trigger passed on "4" GreaterThanOrEqual 3
- "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
- Trigger FAILED on "2" GreaterThanOrEqual 3
-Trait trigger failed
-[Notification] Trait trigger Compulsory fail check
- Event "Mysterious Stranger" Timer Repeat now 7
- Event "Mysterious Stranger" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Wyschardus Tyrell has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Haggler has had their TurnsUnknown Timer increased from 6 to 7
- Follower The Viper has had their TurnsUnknown Timer increased from 6 to 7
- Follower The Spider has had their TurnsUnknown Timer increased from 6 to 7
---- ResolveOutcome (Director.cs)
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 09/05/2017 16:25:21
+ Usurper Rainald Tully has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Jester has had their TurnsUnknown Timer increased from 5 to 6
+ Follower The Haggler has had their TurnsUnknown Timer increased from 5 to 6
+ Follower The Beast has had their TurnsUnknown Timer increased from 5 to 6
+--- ProcessEndTurn (World.cs)
+Day 7, Turn 6
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 14
+//Exile Game File "LogTurn.txt" Close completed at: 09/05/2017 16:45:13
