@@ -19,3 +19,5 @@ Seed 9561 -> Tuesday, 9 May 2017 3:25 PM
 Seed 48544 -> Tuesday, 9 May 2017 4:08 PM
 Seed 17738 -> Tuesday, 9 May 2017 4:21 PM
 Seed 18 -> Tuesday, 9 May 2017 4:42 PM
+Seed 42896 -> Tuesday, 9 May 2017 7:42 PM
+Seed 41481 -> Tuesday, 9 May 2017 8:18 PM

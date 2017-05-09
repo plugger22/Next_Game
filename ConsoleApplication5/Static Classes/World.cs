@@ -632,9 +632,9 @@ namespace Next_Game
                             {
                                 Player player = actor.Value as Player;
                                 if (player.Conceal == ActorConceal.SafeHouse)
-                                { concealText = $"At SafeHouse ({player.ConcealLevel} stars)"; }
+                                { concealText = string.Format("At SafeHouse ({0} star{1})", player.ConcealLevel, player.ConcealLevel != 1 ? "s" : ""); }
                                 else if (player.Conceal == ActorConceal.Disguise)
-                                { concealText = $"In Disguise ({player.ConcealLevel} stars)"; }
+                                { concealText = string.Format("In Disguise ({0} star{1})", player.ConcealLevel, player.ConcealLevel != 1 ? "s" : ""); }
                             }
                             break;
                         case ActorStatus.Travelling:
@@ -5587,9 +5587,14 @@ namespace Next_Game
                                 //only show msg if remaining concealment otherwise just doubling up on msg's
                                 if (disguise.Strength > 0)
                                 {
-                                    lostText = $"{player.ConcealText} Disguise has lost a level of concealment (now {disguise.Strength} stars)";
+                                    lostText = $"The disguise, {player.ConcealText}, has lost a level of concealment (now {disguise.Strength} stars)";
                                     Game.logTurn?.Write(lostText);
                                     SetMessage(new Message(lostText, MessageType.Search));
+                                }
+                                else
+                                {
+                                    //disguise revealed, no longer of any use
+                                    player.ConcealDisguise = 0;
                                 }
                             }
                             else { Game.SetError(new Error(251, $"Invalid possession type (not a disguise) for PossID {possession.PossID}")); }
@@ -5885,6 +5890,25 @@ namespace Next_Game
                                     SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Challenge));
                                 }
                             }
+                        }
+                        //Player loses a disguise if they have one
+                        if (player.ConcealDisguise > 0)
+                        {
+                            description = $"The disguise, {player.ConcealText}, has been confiscated by the {dungeonLoc} Dungeon Master";
+                            SetMessage(new Message(description, MessageType.Incarceration));
+                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Challenge));
+                            player.ConcealDisguise = 0;
+                            player.Conceal = ActorConceal.None;
+                            player.ConcealLevel = 0;
+                            player.ConcealText = "";
+                        }
+                        //Player any most Resources they have
+                        if (player.Resources > 0)
+                        {
+                            player.Resources = 0;
+                            description = $"{player.Name} \"{player.Handle}\", has had all their gold confiscated by the {dungeonLoc} Dungeon Master";
+                            SetMessage(new Message(description, MessageType.Incarceration));
+                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Challenge));
                         }
                         //administration
                         description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID, dungeonLoc);

@@ -2408,13 +2408,13 @@ namespace Next_Game
                                 else if (data < 0)
                                 {
                                     tempColor = RLColor.Red;
-                                    tempText = string.Format("You have been Captured by {0} {1}, ActID {2}", opponent.Title, opponent.Name, opponent.ActID);
+                                    tempText = "You have been Captured";
                                     //items lost
                                     if (player.CheckItems() == true)
                                     {
                                         List<int> tempItems = player.GetItems();
                                         int numItems = tempItems.Count();
-                                        tempText += " and any items that you possess will be confiscated";
+                                        tempText += " and any Possessions that you possess will be confiscated";
                                     }
                                     //Incarcerated
                                     Game.world.SetPlayerCaptured(opponent.ActID);
