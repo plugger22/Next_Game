@@ -899,9 +899,19 @@ namespace Next_Game
                 //Set up people types
                 Player player = null;
                 Active active = null;
+                Disguise disguise = null;
                 //player
                 if (person is Player)
-                { player = person as Player; }
+                {
+                    player = person as Player;
+                    //disguise
+                    if (player.Conceal == ActorConceal.Disguise)
+                    {
+                        Possession possession = GetPossession(player.ConcealDisguise);
+                        if (possession is Disguise)
+                        { disguise = possession as Disguise; }
+                    }
+                }
                 if (person is Active)
                 { active = person as Active; }
                 //advisors can be one of three different categories
@@ -979,7 +989,8 @@ namespace Next_Game
                                 break;
                             case ActorConceal.Disguise:
                                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "In Disguise"), RLColor.Yellow, RLColor.Black, false));
-                                listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(player.ConcealLevel)), RLColor.LightRed, RLColor.Black));
+                                listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(player.ConcealLevel)), RLColor.LightRed, RLColor.Black, false));
+                                listToDisplay.Add(new Snippet(string.Format("{0} {1}", disguise.Description, RLColor.White, RLColor.Black)));
                                 break;
                         }
                     }
@@ -1024,13 +1035,13 @@ namespace Next_Game
                     else { traitColor = Color._goodTrait; }
                     //display
                     newLine = true;
-                    if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                    if (abilityStars != 3)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                        if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
                     //Wits
@@ -1042,13 +1053,13 @@ namespace Next_Game
                     else { traitColor = Color._goodTrait; }
                     //display
                     newLine = true;
-                    if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                    if (abilityStars != 3)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                        if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
                     //charm
@@ -1060,13 +1071,13 @@ namespace Next_Game
                     else { traitColor = Color._goodTrait; }
                     //display
                     newLine = true;
-                    if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                    if (abilityStars != 3)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                        if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
                     //treachery
@@ -1078,13 +1089,13 @@ namespace Next_Game
                     else { traitColor = Color._goodTrait; }
                     //display
                     newLine = true;
-                    if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                    if (abilityStars != 3)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                        if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
                     //Leadership
@@ -1096,13 +1107,13 @@ namespace Next_Game
                     else { traitColor = Color._goodTrait; }
                     //display
                     newLine = true;
-                    if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                    if (abilityStars != 3)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                        if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
                     //Touched
@@ -1116,13 +1127,13 @@ namespace Next_Game
                         else { traitColor = Color._goodTrait; }
                         //display
                         newLine = true;
-                        if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                        if (abilityStars != 3)
                         { newLine = false; }
                         if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                         {
                             listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Touched"), false));
                             listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
-                            if (abilityStars != 3 /*|| influenceDisplay == true*/)
+                            if (abilityStars != 3)
                             { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                         }
                     }
@@ -1197,12 +1208,20 @@ namespace Next_Game
                 //Possessions -> active followers
                 if (person is Active)
                 {
+                    //Resources
                     int resources = active.Resources;
                     resources = Math.Min(5, resources);
                     listToDisplay.Add(new Snippet("Possessions", RLColor.Brown, RLColor.Black));
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Resources"), false));
                     listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
                     listToDisplay.Add(new Snippet(string.Format("{0}", (ResourceLevel)resources), true));
+                    //Disguise
+                    if (player.ConcealDisguise > 0)
+                    {
+                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Disguise"), false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(disguise.Strength)), RLColor.LightRed, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(string.Format("{0}", disguise.Description), true));
+                    }
                 }
                 //Possessions -> Lords and BannerLords
                 else if (person.Type == ActorType.Lord || person.Type == ActorType.BannerLord)
@@ -6247,7 +6266,7 @@ namespace Next_Game
                         {
                             case ActorConceal.Disguise:
                                 //remove disguise
-                                description = $"{player.Name} \"{player.Handle}\" has removed their disguise (\"{disguise.Description})\"";
+                                description = $"{player.Name} \"{player.Handle}\" has removed their disguise of {disguise.Description}";
                                 SetMessage(new Message(description, MessageType.Search));
                                 SetPlayerRecord(new Record(description, 1, player.LocID, ConvertLocToRef(player.LocID), CurrentActorIncident.Search));
                                 Game.logTurn?.Write(description);
@@ -6267,6 +6286,14 @@ namespace Next_Game
                                 description = $"{player.Name} \"{player.Handle}\" has assumed the disguise of {disguise.Description}";
                                 SetMessage(new Message(description, MessageType.Search));
                                 SetPlayerRecord(new Record(description, 1, player.LocID, ConvertLocToRef(player.LocID), CurrentActorIncident.Search));
+                                //player becomes UNKNOWN, if already Known
+                                if (player.Known == true)
+                                {
+                                    string knownText = $"{player.Name} \"{player.Handle}\" Known Status changed to Unknown as a result of assuming their Disguise";
+                                    Game.world.SetMessage(new Message(knownText, MessageType.Search));
+                                    player.Known = false;
+                                    player.Revert = 0;
+                                }
                                 break;
                             default:
                                 Game.SetError(new Error(253, $"Invalid player.Conceal type \"{player.Conceal}\""));

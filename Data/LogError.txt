@@ -1,2 +1,18 @@
-//Exile Game file ops "LogError.txt" commenced at: 09/05/2017 14:52:40
-//Exile Game file ops "LogError.txt" Completed at: 09/05/2017 14:53:10
+//Exile Game file ops "LogError.txt" commenced at: 09/05/2017 15:25:53
+ERROR_29 "Location Deleted 25:2"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 15:25:53 UTC +10:00
+ERROR_29 "Location Deleted 29:2"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 15:25:53 UTC +10:00
+ERROR_29 "Location Deleted 20:3"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 15:25:53 UTC +10:00
+ERROR_00   (Main Game Loop)
+--- Error Message
+Object reference not set to an instance of an object.
+--- Source
+ConsoleApplication5
+--- Stack Trace
+   at Next_Game.World.ShowActorRL(Int32 actorID) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\World.cs:line 1222
+   at Next_Game.Game.OnRootConsoleUpdate(Object sender, UpdateEventArgs e) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 302
+--- TargetSite
+System.Collections.Generic.List`1[Next_Game.Snippet] ShowActorRL(Int32)
+//Exile Game file ops "LogError.txt" Completed at: 09/05/2017 15:26:08

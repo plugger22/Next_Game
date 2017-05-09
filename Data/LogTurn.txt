@@ -1,6 +1,16 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 09/05/2017 14:52:41
+//Exile Game file ops "LogTurn.txt" commenced at: 09/05/2017 15:25:54
 --- ProcessStartGame (World.cs)
 --- AgePassiveCharacters (History.cs)
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 09/05/2017 14:53:10
+--- MultiKeyInput (Game.cs)
+1 input
+ERROR_00   (Main Game Loop)
+--- Error Message
+Object reference not set to an instance of an object.
+--- Source
+ConsoleApplication5
+--- Stack Trace
+   at Next_Game.World.ShowActorRL(Int32 actorID) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\World.cs:line 1222
+   at Next_Game.Game.OnRootConsoleUpdate(Object sender, UpdateEventArgs e) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 302
+--- TargetSite
+System.Collections.Generic.List`1[Next_Game.Snippet] ShowActorRL(Int32)
+//Exile Game file ops "LogTurn.txt" Completed at: 09/05/2017 15:26:08
