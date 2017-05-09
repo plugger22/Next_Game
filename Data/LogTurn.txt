@@ -1,98 +1,66 @@
-//Exile Game File "LogTurn.txt" opened at: 09/05/2017 16:15:46
+//Exile Game File "LogTurn.txt" opened at: 09/05/2017 16:24:27
 --- ProcessStartTurn (World.cs)
-Day 9, Turn 8
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Nemesis The Unrelenting, ActID 95 travelling to Brightwater Keep (current Loc 21:15)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Frederick Martell, ID 1 at 24:16, Enemy at 21:15 (The Unrelenting, ID 95
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Frederick Martell, ID 1 at 24:16, Enemy at 22:15 (The Unrelenting, ID 95
- [Move -> MoveObject] Inquisitor Brother Astaroth, ActID 92 travelling to Riverrun (current Loc 17:11)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Frederick Martell, ID 1 at 24:16, Enemy at 17:11 (Brother Astaroth, ID 92
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Frederick Martell, ID 1 at 24:16, Enemy at 17:10 (Brother Astaroth, ID 92
+Day 8, Turn 7
+--- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Frederick Martell, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Wyschardus Tyrell, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Amon, ID 91 at 17:13, Active Frederick Martell, ID 1, at 24:16
- [Search -> Debug] Enemy, Brother Astaroth, ID 92 at 17:9, Active Frederick Martell, ID 1, at 24:16
- [Search -> Debug] Enemy, Brother Kali, ID 93 at 17:13, Active Frederick Martell, ID 1, at 24:16
- [Search -> Debug] Enemy, Brother Mastema, ID 94 at 17:13, Active Frederick Martell, ID 1, at 24:16
- [Search -> Debug] Enemy, The Unrelenting, ID 95 at 23:15, Active Frederick Martell, ID 1, at 24:16
- [Search -> Stationary] Follower The Viper, ActID 2 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Waif, ActID 4 is AtLocation
+ [Search -> Debug] Enemy, Brother Azazel, ID 111 at 14:19, Active Wyschardus Tyrell, ID 1, at 28:12
+ [Search -> Debug] Enemy, Brother Mastema, ID 112 at 14:19, Active Wyschardus Tyrell, ID 1, at 28:12
+ [Search -> Debug] Enemy, Brother Shiva, ID 113 at 14:19, Active Wyschardus Tyrell, ID 1, at 28:12
+ [Search -> Debug] Enemy, Brother Set, ID 114 at 14:19, Active Wyschardus Tyrell, ID 1, at 28:12
+ [Search -> Debug] Enemy, The Unrelenting, ID 115 at 14:19, Active Wyschardus Tyrell, ID 1, at 28:12
+ [Search -> Stationary] Follower The Haggler, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 3 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Notification] Inquisitor Brother Astaroth, ActID 92 is Travelling to Riverrun
- [AI -> Notification] Nemesis The Unrelenting, ActID 95 is Travelling to Brightwater Keep
- [AI -> Mode] enemyID 91,  distance -> 10  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 93,  distance -> 10  Threshold (turns) -> 4  Mode -> Normal
- [AI -> Mode] enemyID 94,  distance -> 10  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 111,  distance -> 29  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 112,  distance -> 29  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 113,  distance -> 29  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 114,  distance -> 29  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 115,  distance -> 29  Threshold (turns) -> 8  Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Amon, ActID 91 retains Goal -> Wait
- [Enemy -> Unknown] Brother Kali ActID 93 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] Brother Kali, ActID 93 retains Goal -> Hide
+ [Enemy -> Goal] Brother Azazel, ActID 111 retains Goal -> Wait
+ [Enemy -> Unknown] Brother Mastema ActID 112 has reverted to Unknown status (timer elapsed)
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Mastema, ActID 94 Assigned Branch -> 4 Current Branch -> 0
- [Goal -> New] Brother Mastema, ActID 94, (loc 17:13), assigned new Goal -> Hide
- [Enemy -> Unknown] The Unrelenting ActID 95 has reverted to Unknown status (timer elapsed)
+ [Goal -> Branch] Brother Mastema, ActID 112 Assigned Branch -> 1 Current Branch -> 0
+ [Goal -> New] Brother Mastema, ActID 112, (loc 14:19), assigned new Goal -> Move
+ [Goal -> Move] Brother Mastema, ActID 112 -> Capital to Correct Branch -> The Yellow Huntress, LocID 2
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Shiva, ActID 113 Assigned Branch -> 1 Current Branch -> 0
+ [Goal -> New] Brother Shiva, ActID 113, (loc 14:19), assigned new Goal -> Move
+ [Goal -> Move] Brother Shiva, ActID 113 -> Capital to Correct Branch -> The Yellow Huntress, LocID 2
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Set, ActID 114 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 115 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] The Unrelenting, ActID 115, (loc 14:19), assigned new Goal -> Hide
 --- CheckPlayerEvents (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Gib Florent", ID 18 added to list of Actors
- [AutoEvent -> ActorList] "Joanna Florent", ID 19 added to list of Actors
- [AutoEvent -> ActorList] "Audry Bertol", ID 21 added to list of Actors
- [AutoEvent -> ActorList] "Dreu Umbert", ID 22 added to list of Actors
- [AutoEvent -> ActorList] "Stafford Nicholaus", ID 23 added to list of Actors
- [AutoEvent -> ActorList] "Mandon Florent", ID 24 added to list of Actors
- [AutoEvent -> LocalList] "Gib Florent", ID 18 added to list of Locals
- [AutoEvent -> LocalList] "Joanna Florent", ID 19 added to list of Locals
- [AutoEvent -> AdvisorList] "Audry Bertol", ID 21 added to list of Advisors
- [AutoEvent -> AdvisorList] "Dreu Umbert", ID 22 added to list of Advisors
- [AutoEvent -> AdvisorList] "Stafford Nicholaus", ID 23 added to list of Advisors
- [AutoEvent -> LocalList] "Mandon Florent", ID 24 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 4
- Chance of Player Location event 75 %
+--- GetValidPlayerEvents (Director.cs)
+ Event "Mysterious Stranger" has no attached Conditions
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 37 %
 --- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
+ "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger passed on "4" GreaterThanOrEqual 3
+ "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
+ Trigger FAILED on "2" GreaterThanOrEqual 3
+Trait trigger failed
+[Notification] Trait trigger Compulsory fail check
+ Event "Mysterious Stranger" Timer Repeat now 7
+ Event "Mysterious Stranger" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Frederick Martell has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Viper has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Spider has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Waif has had their TurnsUnknown Timer increased from 7 to 8
+ Usurper Wyschardus Tyrell has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Haggler has had their TurnsUnknown Timer increased from 6 to 7
+ Follower The Viper has had their TurnsUnknown Timer increased from 6 to 7
+ Follower The Spider has had their TurnsUnknown Timer increased from 6 to 7
 --- ResolveOutcome (Director.cs)
- Inactive (greyed out) Option chosen for "What to do?", option # 1
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 09/05/2017 16:15:50
-dded to list of Advisors
- [AutoEvent -> AdvisorList] "Stafford Nicholaus", ID 23 added to list of Advisors
- [AutoEvent -> LocalList] "Mandon Florent", ID 24 added to list of Locals
---- ResolvePlayerEvents (Director.cs)
- Trigger passed on "1" Equals 1
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger passed on "1" Equals 1
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- ResolveOutcome (Director.cs)
-Usurper Frederick Martell has found refuge in the safe house at Brightwater Keep (3 stars)
---- ProcessEndTurn (World.cs)
-Day 6, Turn 5
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 15
- "Search and Detain" event, Cooldown Timer decremented from 1 to 0
-//Exile Game File "LogTurn.txt" Close completed at: 09/05/2017 16:15:08
+//Exile Game file ops "LogTurn.txt" Completed at: 09/05/2017 16:25:21

@@ -632,9 +632,9 @@ namespace Next_Game
                             {
                                 Player player = actor.Value as Player;
                                 if (player.Conceal == ActorConceal.SafeHouse)
-                                { concealText = "At SafeHouse"; }
+                                { concealText = $"At SafeHouse ({player.ConcealLevel} stars)"; }
                                 else if (player.Conceal == ActorConceal.Disguise)
-                                { concealText = "In Disguise"; }
+                                { concealText = $"In Disguise ({player.ConcealLevel} stars)"; }
                             }
                             break;
                         case ActorStatus.Travelling:
@@ -990,7 +990,7 @@ namespace Next_Game
                             case ActorConceal.Disguise:
                                 listToDisplay.Add(new Snippet(string.Format("{0, -16}", "In Disguise"), RLColor.Yellow, RLColor.Black, false));
                                 listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(player.ConcealLevel)), RLColor.LightRed, RLColor.Black, false));
-                                listToDisplay.Add(new Snippet(string.Format("{0} {1}", disguise.Description, RLColor.White, RLColor.Black)));
+                                listToDisplay.Add(new Snippet($"{disguise.Description}", RLColor.LightGray, RLColor.Black));
                                 break;
                         }
                     }
@@ -6253,6 +6253,7 @@ namespace Next_Game
             Game.logTurn?.Write("--- ChangeDisguise (World.cs)");
             Player player = GetPlayer();
             List<Snippet> listToDisplay = new List<Snippet>();
+            RLColor concealColor = RLColor.Yellow;
             string description = "";
             if (player != null)
             {
@@ -6277,6 +6278,7 @@ namespace Next_Game
                             case ActorConceal.SafeHouse:
                                 //can't use disguises within a safe house
                                 description = $"{player.Name} is currently at {player.ConcealText} SafeHouse and is unable to don a disguise";
+                                concealColor = RLColor.LightRed;
                                 break;
                             case ActorConceal.None:
                                 //puts the disguise on
@@ -6307,7 +6309,7 @@ namespace Next_Game
             else { Game.SetError(new Error(253, "Invalid Player (null)")); }
             //set up snippet list
             if (description.Length > 0)
-            { listToDisplay.Add(new Snippet(description, RLColor.Yellow, RLColor.Black)); }
+            { listToDisplay.Add(new Snippet(description, concealColor, RLColor.Black)); }
             else { listToDisplay.Add(new Snippet("Error in ChangeDisguise", RLColor.LightRed, RLColor.Black)); }
             return listToDisplay;
         }
