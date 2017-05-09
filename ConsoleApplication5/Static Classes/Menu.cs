@@ -81,6 +81,7 @@ namespace Next_Game
                     menuArrayText[0, 0] = "[C] Crow";
                     menuArrayText[0, 1] = "[ENTER] End Turn";
                     menuArrayText[0, 2] = "[I] Toggle Info";
+                    menuArrayText[0, 3] = "[U] Toggle Disguise";
                     //Info category commands
                     menuArrayText[1, 0] = "[P] Show Player Actors";
                     menuArrayText[1, 1] = "[M] Show Messages";

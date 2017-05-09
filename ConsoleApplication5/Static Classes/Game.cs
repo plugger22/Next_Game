@@ -850,39 +850,6 @@ namespace Next_Game
                                 switch (_menuMode)
                                 {
                                     case MenuMode.Main:
-                                        /*
-                                        _menuMode = MenuMode.Special;
-                                        _specialMode = SpecialMode.Conflict;
-                                        _conflictMode = ConflictMode.Intro;
-                                        //debug
-                                        if (rnd.Next(100) < 55)
-                                        {
-                                            Noble newKing = lore.NewKing;
-                                            //NOTE: Stick to this sequence
-                                            conflict.Conflict_Type = ConflictType.Combat;
-                                            conflict.Combat_Type = (ConflictCombat)rnd.Next(1, 4);
-                                            //conflict.Combat_Type = ConflictCombat.Battle;
-                                            conflict.SetOpponent(newKing.ActID, Convert.ToBoolean(rnd.Next(2)));
-                                            conflict.SetSpecialSituation((ConflictSpecial)rnd.Next(1, 5), rnd.Next(1, 5));
-                                            conflict.SetGameSituation(ConflictState.Relative_Army_Size);
-                                        }
-                                        else
-                                        {
-                                            Noble newQueen = lore.NewQueen;
-                                            conflict.Conflict_Type = ConflictType.Social;
-                                            conflict.Social_Type = (ConflictSocial)rnd.Next(1, 4);
-                                            conflict.SetOpponent(newQueen.ActID, Convert.ToBoolean(rnd.Next(0, 2)));
-                                            ConflictState debugState = (ConflictState)rnd.Next(2, 6);
-                                            //conflict.SetGameSituation(debugState, string.Format("Your {0}", debugState));
-                                            conflict.SetGameSituation(debugState);
-                                        }
-                                        if (conflict.InitialiseConflict() == false)
-                                        {
-                                            //invalid conflict setup, revert to normal
-                                            _menuMode = MenuMode.Main;
-                                            _specialMode = SpecialMode.None;
-                                            _conflictMode = ConflictMode.None;
-                                        }*/
                                         //debug
                                         List<Snippet> tempList = new List<Snippet>();
                                         tempList.Add(new Snippet("Test Notification"));
@@ -909,6 +876,10 @@ namespace Next_Game
                             case RLKey.U:
                                 switch (_menuMode)
                                 {
+                                    case MenuMode.Main:
+                                        //Toggle Disguise on/off
+                                        infoChannel.SetInfoList(world.ChangeDisguise(), ConsoleDisplay.Multi);
+                                        break;
                                     case MenuMode.Lore:
                                         //Uprising Lore
                                         infoChannel.SetInfoList(world.GetLoreSet(keyPress), ConsoleDisplay.Multi);

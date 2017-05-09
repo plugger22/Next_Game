@@ -215,25 +215,24 @@ namespace Next_Game
             PromiseType = promiseType;
 
             if (actorID > 0) { WhoHas = actorID; } else { Game.SetError(new Error(228, $"Invalid ActorID input \"{actorID}\" -> given Bad value 1")); WhoHas = 1; }
-            if (strength > 0 && strength < 6) { this.Strength = strength; } else { Game.SetError(new Error(228, $"Invalid strength input \"{strength}\" -> given default value 3")); Strength = 3; }
-            //InitialisePromiseArray();
+            if (strength > 0 && strength < 6) { this.Strength = strength; } else { Game.SetError(new Error(228, $"Invalid  Promise strength input \"{strength}\" -> given default value 3")); Strength = 3; }
             Type = PossessionType.Promise;
         }
+    }
 
-        /*
-        /// <summary>
-        /// Texts that correspond to PossPromiseType and used as descriptors -> Keep order identical to enum
-        /// </summary>
-        private void InitialisePromiseArray()
-        { arrayOfPromiseTexts = new string[] { "None", "more Land", "a Court Title", "more Resources", "a Favourable Marriage", "a Specific Item" }; }
+    /// <summary>
+    /// A Disguise that the Player can use to avoid detection by his enemies
+    /// </summary>
+    public class Disguise : Possession
+    {
+        //description should be in form "..has assumed the disguise of... "an acoloyte of the Holy Church"
+        public int Strength { get; set; } //1 to 5
 
-        /// <summary>
-        /// Gives a text descriptor for desires, as in, 'has a desire for...' 
-        /// </summary>
-        /// <returns></returns>
-        public string GetPromiseText()
-        { return arrayOfPromiseTexts[(int)Type]; }
-        */
+        public Disguise(string description, int strength, int year = 0) : base(description, year)
+        {
+            if (strength > 0 && strength < 6) { this.Strength = strength; } else { Game.SetError(new Error(252, $"Invalid Disguise strength input \"{strength}\" -> given default value 3")); Strength = 3; }
+            Type = PossessionType.Disguise;
+        }
     }
 
     // Items ---

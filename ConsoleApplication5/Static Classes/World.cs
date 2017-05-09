@@ -197,6 +197,11 @@ namespace Next_Game
                                     listItems[rndIndex].ItemID));
                             }
                         }
+                        //Create a disguise, add to dictionary, give to Player
+                        Disguise disguise = new Disguise("a Novice belonging to the Holy Faith", 2);
+                        AddPossession(disguise.PossID, disguise);
+                        player.ConcealDisguise = disguise.PossID;
+                        Game.logStart?.Write($"[Disguise] \"{disguise.Description}\", PossID {disguise.PossID}, added to the Player's Inventory");
                         //
                         //DEBUG --- (end) ---
 
@@ -605,7 +610,7 @@ namespace Next_Game
             listToDisplay.Add(new Snippet("--- Player Characters", RLColor.Yellow, RLColor.Black));
             int chance, locID;
             ActorStatus status;
-            string locName, safeHouse, coordinates, distText, crowText;
+            string locName, concealText, coordinates, distText, crowText;
             string locStatus = "who knows?";
             string charString; //overall string
             RLColor textColor = RLColor.White;
@@ -613,7 +618,7 @@ namespace Next_Game
             foreach (var actor in dictActiveActors)
             {
                 status = actor.Value.Status;
-                safeHouse = "";
+                concealText = "";
                 //ignore dead actors
                 if (status != ActorStatus.Gone)
                 {
@@ -627,7 +632,9 @@ namespace Next_Game
                             {
                                 Player player = actor.Value as Player;
                                 if (player.Conceal == ActorConceal.SafeHouse)
-                                { safeHouse = "At SafeHouse"; }
+                                { concealText = "At SafeHouse"; }
+                                else if (player.Conceal == ActorConceal.Disguise)
+                                { concealText = "In Disguise"; }
                             }
                             break;
                         case ActorStatus.Travelling:
@@ -658,7 +665,7 @@ namespace Next_Game
                             {
                                 case ActorStatus.AtLocation:
                                 case ActorStatus.Travelling:
-                                    charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11}", actor.Key, actor.Value.Name, locStatus, coordinates, safeHouse);
+                                    charString = string.Format("Aid {0,-2} {1,-18} {2,-30}{3,-15} {4,-11}", actor.Key, actor.Value.Name, locStatus, coordinates, concealText);
                                     break;
                                 case ActorStatus.AtSea:
                                 case ActorStatus.Adrift:
@@ -961,11 +968,20 @@ namespace Next_Game
                             break;
                     }
                     listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
-                    //In safe House
-                    if (player.Conceal == ActorConceal.SafeHouse)
+                    //Concealed
+                    if (player.Conceal > ActorConceal.None)
                     {
-                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "At SafeHouse"), RLColor.Yellow, RLColor.Black, false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(house.SafeHouse)), RLColor.LightRed, RLColor.Black));
+                        switch (player.Conceal)
+                        {
+                            case ActorConceal.SafeHouse:
+                                listToDisplay.Add(new Snippet(string.Format("{0, -16}", "At SafeHouse"), RLColor.Yellow, RLColor.Black, false));
+                                listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(player.ConcealLevel)), RLColor.LightRed, RLColor.Black));
+                                break;
+                            case ActorConceal.Disguise:
+                                listToDisplay.Add(new Snippet(string.Format("{0, -16}", "In Disguise"), RLColor.Yellow, RLColor.Black, false));
+                                listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(player.ConcealLevel)), RLColor.LightRed, RLColor.Black));
+                                break;
+                        }
                     }
                 }
                 else { listToDisplay.Add(new Snippet(person.Description)); }
@@ -6210,6 +6226,64 @@ namespace Next_Game
         }
 
 
+        /// <summary>
+        /// Toggles disguise on/off
+        /// </summary>
+        internal List<Snippet> ChangeDisguise()
+        {
+            Game.logTurn?.Write("--- ChangeDisguise (World.cs)");
+            Player player = GetPlayer();
+            List<Snippet> listToDisplay = new List<Snippet>();
+            string description = "";
+            if (player != null)
+            {
+                if (player.ConcealDisguise > 0)
+                {
+                    Possession possession = GetPossession(player.ConcealDisguise);
+                    if (possession is Disguise)
+                    {
+                        Disguise disguise = possession as Disguise;
+                        switch (player.Conceal)
+                        {
+                            case ActorConceal.Disguise:
+                                //remove disguise
+                                description = $"{player.Name} \"{player.Handle}\" has removed their disguise (\"{disguise.Description})\"";
+                                SetMessage(new Message(description, MessageType.Search));
+                                SetPlayerRecord(new Record(description, 1, player.LocID, ConvertLocToRef(player.LocID), CurrentActorIncident.Search));
+                                Game.logTurn?.Write(description);
+                                player.Conceal = ActorConceal.None;
+                                player.ConcealLevel = 0;
+                                player.ConcealText = "None";
+                                break;
+                            case ActorConceal.SafeHouse:
+                                //can't use disguises within a safe house
+                                description = $"{player.Name} is currently at {player.ConcealText} SafeHouse and is unable to don a disguise";
+                                break;
+                            case ActorConceal.None:
+                                //puts the disguise on
+                                player.Conceal = ActorConceal.Disguise;
+                                player.ConcealLevel = disguise.Strength;
+                                player.ConcealText = disguise.Description;
+                                description = $"{player.Name} \"{player.Handle}\" has assumed the disguise of {disguise.Description}";
+                                SetMessage(new Message(description, MessageType.Search));
+                                SetPlayerRecord(new Record(description, 1, player.LocID, ConvertLocToRef(player.LocID), CurrentActorIncident.Search));
+                                break;
+                            default:
+                                Game.SetError(new Error(253, $"Invalid player.Conceal type \"{player.Conceal}\""));
+                                break;
+                        }
+                    }
+                    else { Game.SetError(new Error(253, $"Invalid possession type (Not disguise) for player.ConcealDisguise PossID {player.ConcealDisguise}")); }
+                }
+                else { Game.SetError(new Error(253, "The Player does not possess a valid disguise (ConcealDisguise = 0)")); }
+            }
+            else { Game.SetError(new Error(253, "Invalid Player (null)")); }
+            //set up snippet list
+            if (description.Length > 0)
+            { listToDisplay.Add(new Snippet(description, RLColor.Yellow, RLColor.Black)); }
+            else { listToDisplay.Add(new Snippet("Error in ChangeDisguise", RLColor.LightRed, RLColor.Black)); }
+            return listToDisplay;
+        }
 
         //new Methods above here
     }

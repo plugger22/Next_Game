@@ -3803,6 +3803,7 @@ namespace Next_Game
             return resultText;
         }
 
+
         /// <summary>
         /// Follower recruited from an Inn.
         /// </summary>
