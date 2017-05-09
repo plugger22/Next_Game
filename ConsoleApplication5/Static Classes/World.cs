@@ -5248,7 +5248,7 @@ namespace Next_Game
                                             {
                                                 Player player = active as Player;
                                                 //player has concealment
-                                                if (player.Conceal > ActorConceal.None)
+                                                if (player.Conceal > ActorConceal.None && enemy.Value.Activated == true)
                                                 { CheckConcealment(); }
                                                 //no concealment -> normal
                                                 else
@@ -5417,7 +5417,7 @@ namespace Next_Game
                                             {
                                                 Player player = active.Value as Player;
                                                 //player has concealment
-                                                if (player.Conceal > ActorConceal.None)
+                                                if (player.Conceal > ActorConceal.None && enemy.Activated == true)
                                                 { CheckConcealment(); }
                                                 //no concealment -> normal
                                                 else
@@ -5534,7 +5534,7 @@ namespace Next_Game
             int refID = ConvertLocToRef(player.LocID);
             //player not found but concealment level takes a hit
             player.ConcealLevel--;
-            Game.logTurn?.Write($"[Search -> Concealment] Player has been spotted by an Enemy but their concealment keeps their presence hidden");
+            Game.logTurn?.Write($" [Search -> Concealment] Player has been spotted by an Enemy but their concealment keeps their presence hidden");
             //update concealment method
             switch (player.Conceal)
             {
@@ -5546,9 +5546,13 @@ namespace Next_Game
                     if (house != null)
                     {
                         house.SafeHouse--;
-                        string lostText = $"{player.ConcealText}'s Safe House at {house.LocName} has lost a level of concealment (now {house.SafeHouse} stars)";
-                        Game.logTurn?.Write(lostText);
-                        SetMessage(new Message(lostText, MessageType.Search));
+                        //only show msg if remaining concealment otherwise just doubling up on msg's
+                        if (house.SafeHouse > 0)
+                        {
+                            string lostText = $"{player.ConcealText} Safe House at {house.LocName} has lost a level of concealment (now {house.SafeHouse} stars)";
+                            Game.logTurn?.Write(lostText);
+                            SetMessage(new Message(lostText, MessageType.Search));
+                        }
                     }
                     else { Game.SetError(new Error(251, "Invalid house (null)")); }
                     break;
@@ -5559,11 +5563,11 @@ namespace Next_Game
             if (player.ConcealLevel <= 0)
             {
                 //concealment has expired
+                string expireText = $"The {player.Conceal} \"{player.ConcealText}\" has become known to the Enemy and no longer provides any benefit";
+                Game.logTurn?.Write($" [Search -> Conceal] {expireText}");
+                SetMessage(new Message(expireText, MessageType.Search));
                 player.Conceal = ActorConceal.None;
                 player.ConcealText = "None";
-                string expireText = $"[Search -> Conceal] The {player.Conceal} \"{player.ConcealText}\" has become known to the Enemy and no longer provides any benefit";
-                Game.logTurn?.Write(expireText);
-                SetMessage(new Message(expireText, MessageType.Search));
             }
         }
 
