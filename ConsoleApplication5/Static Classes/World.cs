@@ -905,7 +905,7 @@ namespace Next_Game
                 {
                     player = person as Player;
                     //disguise
-                    if (player.Conceal == ActorConceal.Disguise)
+                    if (player.ConcealDisguise > 0)
                     {
                         Possession possession = GetPossession(player.ConcealDisguise);
                         if (possession is Disguise)
