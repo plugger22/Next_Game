@@ -3781,12 +3781,15 @@ namespace Next_Game
                             //Enter a SafeHouse
                             player.Conceal = ActorConceal.SafeHouse;
                             player.ConcealLevel = house.SafeHouse;
+                            player.ConcealText = "Mr Magoo's Basement";
                             resultText = $"{player.Title} {player.Name} has found refuge in the safe house at {house.LocName} ({house.SafeHouse} stars)";
                         }
                         else if (status < 0)
                         {
                             //Depart a SafeHouse
                             player.Conceal = ActorConceal.None;
+                            player.ConcealLevel = 0;
+                            player.ConcealText = "None";
                             resultText = $"{player.Title} {player.Name} has left the refuge of the safe house at {house.LocName} ({house.SafeHouse} stars)";
                         }
                         else { Game.SetError(new Error(250, $"Invalid status \"{status}\" (can't be zero) -> SafeHouse Status NOT changed")); }

@@ -1,89 +1,87 @@
-//Exile Game File "LogTurn.txt" opened at: 08/05/2017 20:23:09
+//Exile Game File "LogTurn.txt" opened at: 09/05/2017 11:04:07
 --- ProcessStartTurn (World.cs)
-Day 2, Turn 1
---- MoveActors -> 0 Records (World.cs)
+Day 4, Turn 3
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Behemoth, ActID 124 travelling to The Yellow Huntress (current Loc 14:18)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Jason Tyrell, ID 1 at 3:6, Enemy at 14:18 (Brother Behemoth, ID 124
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Jason Tyrell, ID 1 at 3:6, Enemy at 15:18 (Brother Behemoth, ID 124
 --- UpdatePlayerStatus (World.cs)
+Usurper Jason Tyrell is laying low at a safe house at Pyke (4 stars)
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Tomard Arryn, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Jason Tyrell, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Diabolous, ID 124 at 18:15, Active Tomard Arryn, ID 1, at 3:7
- [Search -> Debug] Enemy, Brother Amon, ID 125 at 18:15, Active Tomard Arryn, ID 1, at 3:7
- [Search -> Debug] Enemy, Brother Dagon, ID 126 at 18:15, Active Tomard Arryn, ID 1, at 3:7
- [Search -> Debug] Enemy, Brother Haborym, ID 127 at 18:15, Active Tomard Arryn, ID 1, at 3:7
- [Search -> Debug] Enemy, The Unrelenting, ID 128 at 18:15, Active Tomard Arryn, ID 1, at 3:7
- [Search -> Stationary] Follower The Spider, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Beast, ActID 2 is AtLocation
- [Search -> Stationary] Follower The Dark Eminence, ActID 8 is AtLocation
+ [Search -> Debug] Enemy, Brother Mantus, ID 121 at 12:18, Active Jason Tyrell, ID 1, at 3:6
+ [Search -> Debug] Enemy, Brother Mormo, ID 122 at 12:18, Active Jason Tyrell, ID 1, at 3:6
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 123 at 12:18, Active Jason Tyrell, ID 1, at 3:6
+ [Search -> Debug] Enemy, Brother Behemoth, ID 124 at 16:18, Active Jason Tyrell, ID 1, at 3:6
+ [Search -> Debug] Enemy, The Unrelenting, ID 125 at 12:18, Active Jason Tyrell, ID 1, at 3:6
+ [Search -> Stationary] Follower The Viper, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 4 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 124 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 125 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 126 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 127 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 128 Mode -> Normal
+ [AI -> Notification] Inquisitor Brother Behemoth, ActID 124 is Travelling to The Yellow Huntress
+ [AI -> Mode] enemyID 121,  distance -> 21  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 122,  distance -> 21  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 123,  distance -> 21  Threshold (turns) -> 4  Mode -> Normal
+ [AI -> Mode] enemyID 125,  distance -> 21  Threshold (turns) -> 8  Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Diabolous, ActID 124 retains Goal -> Wait
- [Enemy -> Known] Brother Amon ActID 125 has become KNOWN
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Amon, ActID 125 Assigned Branch -> 1 Current Branch -> 0
- [Goal -> New] Brother Amon, ActID 125, (loc 18:15), assigned new Goal -> Move
- [Goal -> Move] Brother Amon, ActID 125 -> Capital to Correct Branch -> The Clumsy Hog, LocID 2
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Goal] Brother Dagon, ActID 126 retains Goal -> Wait
- [Enemy -> Known] Brother Haborym ActID 127 has become KNOWN
- [Enemy -> Goal] Brother Haborym, ActID 127 retains Goal -> Wait
- [Enemy -> Goal] The Unrelenting, ActID 128 retains Goal -> Wait
+ [Goal -> Branch] Brother Mantus, ActID 121 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Known] Brother Mormo ActID 122 has become KNOWN
+ [Enemy -> Goal] Brother Mormo, ActID 122 retains Goal -> Wait
+ [Enemy -> Goal] Brother Demogorgon, ActID 123 retains Goal -> Wait
+ [Enemy -> Unknown] Brother Behemoth ActID 124 has reverted to Unknown status (timer elapsed)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 125 Assigned Branch -> 0 Current Branch -> 0
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "The Spider", ID 4 added to list of Actors
- [AutoEvent -> ActorList] "Ser Nycolas Willcock", ID 29 added to list of Actors
- [AutoEvent -> ActorList] "Guarnier Galeran", ID 30 added to list of Actors
- [AutoEvent -> ActorList] "Rankin Artus", ID 31 added to list of Actors
- [AutoEvent -> ActorList] "Sagard Richemanus", ID 32 added to list of Actors
- [AutoEvent -> ActorList] "Aerys Greyjoy", ID 33 added to list of Actors
- [AutoEvent -> ActorList] "Leo Greyjoy", ID 101 added to list of Actors
- [AutoEvent -> FollowerList] "The Spider", ID 4 added to list of Followers
- [AutoEvent -> LocalList] "Ser Nycolas Willcock", ID 29 added to list of Locals
- [AutoEvent -> AdvisorList] "Guarnier Galeran", ID 30 added to list of Advisors
- [AutoEvent -> AdvisorList] "Rankin Artus", ID 31 added to list of Advisors
- [AutoEvent -> AdvisorList] "Sagard Richemanus", ID 32 added to list of Advisors
- [AutoEvent -> LocalList] "Aerys Greyjoy", ID 33 added to list of Locals
- [AutoEvent -> LocalList] "Leo Greyjoy", ID 101 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 5
- Chance of Player Location event 75 %
+ [AutoEvent -> ActorList] "Gervesin Greyjoy", ID 27 added to list of Actors
+ [AutoEvent -> ActorList] "Ymanie Greyjoy", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Wyschardus Galeran", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Urian Ferrand", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Jaime Wilkin", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Gerbod Hugelin", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "Robett Greyjoy", ID 33 added to list of Actors
+ [AutoEvent -> LocalList] "Gervesin Greyjoy", ID 27 added to list of Locals
+ [AutoEvent -> LocalList] "Ymanie Greyjoy", ID 28 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Wyschardus Galeran", ID 29 added to list of Locals
+ [AutoEvent -> AdvisorList] "Urian Ferrand", ID 30 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Jaime Wilkin", ID 31 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Gerbod Hugelin", ID 32 added to list of Advisors
+ [AutoEvent -> LocalList] "Robett Greyjoy", ID 33 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
+ Event "Safe House at Pyke (4 stars)" Timer Repeat now 999
+ Event "Safe House at Pyke (4 stars)" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Tomard Arryn has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 0 to 1
+ Usurper Jason Tyrell has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Viper has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 2 to 3
+ Follower The Beast has had their TurnsUnknown Timer increased from 2 to 3
 --- ResolveOutcome (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "The Spider", ID 4 added to list of Actors
- [AutoEvent -> ActorList] "Ser Nycolas Willcock", ID 29 added to list of Actors
- [AutoEvent -> ActorList] "Guarnier Galeran", ID 30 added to list of Actors
- [AutoEvent -> ActorList] "Rankin Artus", ID 31 added to list of Actors
- [AutoEvent -> ActorList] "Sagard Richemanus", ID 32 added to list of Actors
- [AutoEvent -> ActorList] "Aerys Greyjoy", ID 33 added to list of Actors
- [AutoEvent -> ActorList] "Leo Greyjoy", ID 101 added to list of Actors
- [AutoEvent -> FollowerList] "The Spider", ID 4 added to list of Followers
- [AutoEvent -> LocalList] "Ser Nycolas Willcock", ID 29 added to list of Locals
- [AutoEvent -> AdvisorList] "Guarnier Galeran", ID 30 added to list of Advisors
- [AutoEvent -> AdvisorList] "Rankin Artus", ID 31 added to list of Advisors
- [AutoEvent -> AdvisorList] "Sagard Richemanus", ID 32 added to list of Advisors
- [AutoEvent -> LocalList] "Aerys Greyjoy", ID 33 added to list of Locals
- [AutoEvent -> LocalList] "Leo Greyjoy", ID 101 added to list of Locals
+Usurper Jason Tyrell has left the refuge of the safe house at Pyke (4 stars)
+--- ResolveFollowerEvents (Director.cs)
+--- MultiKeyInput (Game.cs)
+1 input
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 09/05/2017 11:04:51
+D 27 added to list of Actors
+ [AutoEvent -> ActorList] "Ymanie Greyjoy", ID 28 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Wyschardus Galeran", ID 29 added to list of Actors
+ [AutoEvent -> ActorList] "Urian Ferrand", ID 30 added to list of Actors
+ [AutoEvent -> ActorList] "Jaime Wilkin", ID 31 added to list of Actors
+ [AutoEvent -> ActorList] "Gerbod Hugelin", ID 32 added to list of Actors
+ [AutoEvent -> ActorList] "Robett Greyjoy", ID 33 added to list of Actors
+ [AutoEvent -> LocalList] "Gervesin Greyjoy", ID 27 added to list of Locals
+ [AutoEvent -> LocalList] "Ymanie Greyjoy", ID 28 added to list of Locals
+ [AutoEvent -> LocalList] "Ser Wyschardus Galeran", ID 29 added to list of Locals
+ [AutoEvent -> AdvisorList] "Urian Ferrand", ID 30 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Jaime Wilkin", ID 31 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Gerbod Hugelin", ID 32 added to list of Advisors
+ [AutoEvent -> LocalList] "Robett Greyjoy", ID 33 added to list of Locals
 --- ResolvePlayerEvents (Director.cs)
  Trigger passed on "1" Equals 1
  Trigger FAILED on "0" Equals 1
@@ -94,19 +92,11 @@ Day 2, Turn 1
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- ResolveOutcome (Director.cs)
-Usurper Tomard Arryn has found refuge in the safe house at Pyke (5 stars)
---- MultiKeyInput (Game.cs)
-1 input
---- MultiKeyInput (Game.cs)
-1 input
-ERROR_00   (Main Game Loop)
---- Error Message
-Object reference not set to an instance of an object.
---- Source
-ConsoleApplication5
---- Stack Trace
-   at Next_Game.World.ShowActorRL(Int32 actorID)
-   at Next_Game.Game.OnRootConsoleUpdate(Object sender, UpdateEventArgs e)
---- TargetSite
-System.Collections.Generic.List`1[Next_Game.Snippet] ShowActorRL(Int32)
-//Exile Game file ops "LogTurn.txt" Completed at: 08/05/2017 20:28:20
+Usurper Jason Tyrell has found refuge in the safe house at Pyke (4 stars)
+--- ResolveFollowerEvents (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- ProcessEndTurn (World.cs)
+Day 2, Turn 1
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 19
+//Exile Game File "LogTurn.txt" Close completed at: 09/05/2017 11:03:37

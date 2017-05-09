@@ -5246,46 +5246,53 @@ namespace Next_Game
                                             //different outcomes for Player and Followers
                                             if (active is Player)
                                             {
-                                                //if unknown then becomes known
-                                                if (active.Known == false)
+                                                Player player = active as Player;
+                                                //player has concealment
+                                                if (player.Conceal > ActorConceal.None)
+                                                { CheckConcealment(); }
+                                                //no concealment -> normal
+                                                else
                                                 {
-                                                    if (active.AddEnemy(enemy.Value.ActID, enemy.Value.Activated) == true)
+                                                    //if unknown then becomes known
+                                                    if (active.Known == false)
                                                     {
-                                                        active.Known = true; active.Revert = known_revert;
-                                                        description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
-                                                            enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
-                                                        Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Known);
-                                                        SetPlayerRecord(record);
-                                                        SetMessage(new Message(description, MessageType.Search));
-                                                    }
-                                                }
-                                                else if (active.Known == true)
-                                                {
-                                                    if (active.CheckEnemyOnList(enemy.Value.ActID) == false)
-                                                    {
-                                                        //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
                                                         if (active.AddEnemy(enemy.Value.ActID, enemy.Value.Activated) == true)
                                                         {
-                                                            active.Revert = known_revert;
-                                                            description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
-                                                                    enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
-                                                            if (enemy.Value.Activated == true)
-                                                            {
-                                                                //only activated enemies can capture (Inquisitors ae always activated, Nemesis only if the gods are angry)
-                                                                active.Capture = true;
-                                                            }
-                                                            Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
+                                                            active.Known = true; active.Revert = known_revert;
+                                                            description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
+                                                                enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
+                                                            Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Known);
                                                             SetPlayerRecord(record);
                                                             SetMessage(new Message(description, MessageType.Search));
                                                         }
-                                                        else
+                                                    }
+                                                    else if (active.Known == true)
+                                                    {
+                                                        if (active.CheckEnemyOnList(enemy.Value.ActID) == false)
                                                         {
-                                                            //enemy has already found Player this turn
-                                                            Game.logTurn?.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has already Found Player this turn -> Result Cancelled", enemy.Value.Title,
-                                                                enemy.Value.Name, enemy.Value.ActID));
+                                                            //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
+                                                            if (active.AddEnemy(enemy.Value.ActID, enemy.Value.Activated) == true)
+                                                            {
+                                                                active.Revert = known_revert;
+                                                                description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
+                                                                        enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
+                                                                if (enemy.Value.Activated == true)
+                                                                {
+                                                                    //only activated enemies can capture (Inquisitors ae always activated, Nemesis only if the gods are angry)
+                                                                    active.Capture = true;
+                                                                }
+                                                                Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
+                                                                SetPlayerRecord(record);
+                                                                SetMessage(new Message(description, MessageType.Search));
+                                                            }
+                                                            else
+                                                            {
+                                                                //enemy has already found Player this turn
+                                                                Game.logTurn?.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has already Found Player this turn -> Result Cancelled", enemy.Value.Title,
+                                                                    enemy.Value.Name, enemy.Value.ActID));
+                                                            }
                                                         }
                                                     }
-
                                                 }
                                             }
                                             else if (active is Follower)
@@ -5408,47 +5415,54 @@ namespace Next_Game
                                             int refID = Game.map.GetMapInfo(MapLayer.RefID, pos.PosX, pos.PosY);
                                             if (active.Value is Player)
                                             {
-                                                //if unknown then becomes known
-                                                if (active.Value.Known == false)
+                                                Player player = active.Value as Player;
+                                                //player has concealment
+                                                if (player.Conceal > ActorConceal.None)
+                                                { CheckConcealment(); }
+                                                //no concealment -> normal
+                                                else
                                                 {
-                                                    if (active.Value.AddEnemy(enemy.ActID, enemy.Activated) == true)
+                                                    //if unknown then becomes known
+                                                    if (active.Value.Known == false)
                                                     {
-                                                        active.Value.Known = true; active.Value.Revert = known_revert;
-                                                        description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name,
-                                                            active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
-                                                        Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Known);
-                                                        SetPlayerRecord(record);
-                                                        SetMessage(new Message(description, MessageType.Search));
-                                                    }
-                                                }
-                                                else if (active.Value.Known == true)
-                                                {
-                                                    if (active.Value.CheckEnemyOnList(enemy.ActID) == false)
-                                                    {
-                                                        //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
                                                         if (active.Value.AddEnemy(enemy.ActID, enemy.Activated) == true)
                                                         {
-                                                            active.Value.Revert = known_revert;
-                                                            description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name,
+                                                            active.Value.Known = true; active.Value.Revert = known_revert;
+                                                            description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name,
                                                                 active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
-                                                            if (enemy.Activated == true)
-                                                            {
-                                                                //only activated enemies can capture (Inquisitors are always activated, Nemesis only when gods are angry)
-                                                                active.Value.Capture = true;
-                                                            }
-                                                            Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
+                                                            Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Known);
                                                             SetPlayerRecord(record);
                                                             SetMessage(new Message(description, MessageType.Search));
                                                         }
                                                     }
-                                                    else
+                                                    else if (active.Value.Known == true)
                                                     {
-                                                        //enemy has already found player this turn
-                                                        Game.logTurn?.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has previously Found the Player -> Result Cancelled", enemy.Title, enemy.Name,
-                                                            enemy.ActID));
+                                                        if (active.Value.CheckEnemyOnList(enemy.ActID) == false)
+                                                        {
+                                                            //if already known then challenge/capture (But only if character hasn't already found player in the same turn -> must be another character)
+                                                            if (active.Value.AddEnemy(enemy.ActID, enemy.Activated) == true)
+                                                            {
+                                                                active.Value.Revert = known_revert;
+                                                                description = string.Format("{0} {1}, ActID {2}, has been Found by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name,
+                                                                    active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
+                                                                if (enemy.Activated == true)
+                                                                {
+                                                                    //only activated enemies can capture (Inquisitors are always activated, Nemesis only when gods are angry)
+                                                                    active.Value.Capture = true;
+                                                                }
+                                                                Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
+                                                                SetPlayerRecord(record);
+                                                                SetMessage(new Message(description, MessageType.Search));
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            //enemy has already found player this turn
+                                                            Game.logTurn?.Write(string.Format(" [Search -> Previous] {0} {1}, ActID {2} has previously Found the Player -> Result Cancelled", enemy.Title, enemy.Name,
+                                                                enemy.ActID));
+                                                        }
                                                     }
                                                 }
-
                                             }
                                             else if (active.Value is Follower)
                                             {
@@ -5508,6 +5522,48 @@ namespace Next_Game
                     }
                 }
                 else { Game.logTurn?.Write(string.Format(" [Search -> Stationary] {0} {1}, ActID {2} is {3}", actor.Value.Title, actor.Value.Name, actor.Value.ActID, actor.Value.Status)); }
+            }
+        }
+
+        /// <summary>
+        /// sub method to check a Player's concealment when spotted. Handles all details of Concealment changes.
+        /// </summary>
+        private void CheckConcealment()
+        {
+            Player player = GetPlayer();
+            int refID = ConvertLocToRef(player.LocID);
+            //player not found but concealment level takes a hit
+            player.ConcealLevel--;
+            Game.logTurn?.Write($"[Search -> Concealment] Player has been spotted by an Enemy but their concealment keeps their presence hidden");
+            //update concealment method
+            switch (player.Conceal)
+            {
+                case ActorConceal.Disguise:
+                    //TO DO
+                    break;
+                case ActorConceal.SafeHouse:
+                    House house = GetHouse(refID);
+                    if (house != null)
+                    {
+                        house.SafeHouse--;
+                        string lostText = $"{player.ConcealText}'s Safe House at {house.LocName} has lost a level of concealment (now {house.SafeHouse} stars)";
+                        Game.logTurn?.Write(lostText);
+                        SetMessage(new Message(lostText, MessageType.Search));
+                    }
+                    else { Game.SetError(new Error(251, "Invalid house (null)")); }
+                    break;
+                default:
+                    Game.SetError(new Error(251, $"Unknown player.Conceal method \"{player.Conceal}\""));
+                    break;
+            }
+            if (player.ConcealLevel <= 0)
+            {
+                //concealment has expired
+                player.Conceal = ActorConceal.None;
+                player.ConcealText = "None";
+                string expireText = $"[Search -> Conceal] The {player.Conceal} \"{player.ConcealText}\" has become known to the Enemy and no longer provides any benefit";
+                Game.logTurn?.Write(expireText);
+                SetMessage(new Message(expireText, MessageType.Search));
             }
         }
 

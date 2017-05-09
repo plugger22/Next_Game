@@ -751,9 +751,9 @@ namespace Next_Game
     {
         public int CrowsNumber { get; set; }
         public int HistoryID { get; set; } //actorID of character who becomes the usurper
-        public bool InSafeHouse { get; set; } //true if actor in safe house
         public ActorConceal Conceal { get; set; } //type of Concealment (disguise, safehouse)
         public int ConcealLevel { get; set; } //number of stars the current type of concealment offers
+        public string ConcealText { get; set; } //short descriptive text giving name of Safe house or type of disguise
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
         private List<int> listOfFavours; //stores possessionId of favours granted to Player
         //private List<int> listOfIntroductions; //stores possessionId of introductions granted to the Player
