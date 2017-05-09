@@ -473,7 +473,7 @@ namespace Next_Game
                     {
                         case ActorStatus.AtLocation:
                             //in a safe house
-                            if (player.InSafeHouse == true)
+                            if (player.Conceal == ActorConceal.SafeHouse)
                             { CreateAutoLocEvent(EventAutoFilter.SafeHouse); }
                             //Location event
                             else
@@ -1252,7 +1252,7 @@ namespace Next_Game
                                 eventObject.SetOption(option);
                             }
                             //option -> Lay low (only if not known)
-                            if (player.Known == true && house.SafeHouse > 0 && player.InSafeHouse == false)
+                            if (player.Known == true && house.SafeHouse > 0 && player.Conceal != ActorConceal.SafeHouse)
                             {
                                 OptionInteractive option = new OptionInteractive($"Lay Low ({house.SafeHouse} stars)");
                                 option.ReplyGood = $"You seek refuge at a Safe House ({house.SafeHouse} stars). You are immune from discovery while ever the place of refuge retains at least one star";
@@ -3779,13 +3779,14 @@ namespace Next_Game
                         if (status > 0)
                         {
                             //Enter a SafeHouse
-                            player.InSafeHouse = true;
+                            player.Conceal = ActorConceal.SafeHouse;
+                            player.ConcealLevel = house.SafeHouse;
                             resultText = $"{player.Title} {player.Name} has found refuge in the safe house at {house.LocName} ({house.SafeHouse} stars)";
                         }
                         else if (status < 0)
                         {
                             //Depart a SafeHouse
-                            player.InSafeHouse = false;
+                            player.Conceal = ActorConceal.None;
                             resultText = $"{player.Title} {player.Name} has left the refuge of the safe house at {house.LocName} ({house.SafeHouse} stars)";
                         }
                         else { Game.SetError(new Error(250, $"Invalid status \"{status}\" (can't be zero) -> SafeHouse Status NOT changed")); }

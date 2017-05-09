@@ -19,6 +19,7 @@ namespace Next_Game
     public enum WifeStatus { None, First_Wife, Second_Wife, Third_Wife, Fourth_Wife, Fifth_Wife, Sixth_Wife, Seventh_Wife }
     public enum ActorRelation { None, Wife, Husband, Son, Daughter, Father, Mother, Brother, Sister, Half_Brother, Half_Sister }
     public enum ActorAIGoal { None, Wait, Hide, Search, Move} //specific for AI controlled actors
+    public enum ActorConceal { None, Disguise, SafeHouse} //specific to Player
 
     public class Actor
     {
@@ -751,6 +752,8 @@ namespace Next_Game
         public int CrowsNumber { get; set; }
         public int HistoryID { get; set; } //actorID of character who becomes the usurper
         public bool InSafeHouse { get; set; } //true if actor in safe house
+        public ActorConceal Conceal { get; set; } //type of Concealment (disguise, safehouse)
+        public int ConcealLevel { get; set; } //number of stars the current type of concealment offers
         private SortedDictionary<int, ActorRelation> dictFamily; //stores list of all relations (keyed off actorID)
         private List<int> listOfFavours; //stores possessionId of favours granted to Player
         //private List<int> listOfIntroductions; //stores possessionId of introductions granted to the Player

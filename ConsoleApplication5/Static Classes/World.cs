@@ -626,7 +626,7 @@ namespace Next_Game
                             if (actor.Value is Player)
                             {
                                 Player player = actor.Value as Player;
-                                if (player.InSafeHouse == true)
+                                if (player.Conceal == ActorConceal.SafeHouse)
                                 { safeHouse = "At SafeHouse"; }
                             }
                             break;
@@ -962,7 +962,7 @@ namespace Next_Game
                     }
                     listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
                     //In safe House
-                    if (player.InSafeHouse == true)
+                    if (player.Conceal == ActorConceal.SafeHouse)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "At SafeHouse"), RLColor.Yellow, RLColor.Black, false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(house.SafeHouse)), RLColor.LightRed, RLColor.Black));
@@ -4047,7 +4047,7 @@ namespace Next_Game
                     Game.logTurn?.Write(description);
                 }
                 //In a safe House
-                if ( player.InSafeHouse == true &&player.Status == ActorStatus.AtLocation )
+                if ( player.Conceal == ActorConceal.SafeHouse &&player.Status == ActorStatus.AtLocation )
                 {
                     House house = GetHouse(ConvertLocToRef(player.LocID));
                     if (house != null)
@@ -4131,7 +4131,7 @@ namespace Next_Game
                     chance = 100 - (distance * 2) + actor.Value.CrowBonus;
                     chance = Math.Min(100, chance);
 
-                    if (player.Status != ActorStatus.AtLocation || player.InSafeHouse == true)
+                    if (player.Status != ActorStatus.AtLocation || player.Conceal == ActorConceal.SafeHouse)
                     {
                         //no crows can be sent if Player isn't at a Location, or is in a SafeHouse
                         actor.Value.CrowChance = 0;
@@ -4193,7 +4193,7 @@ namespace Next_Game
             int bonus = Game.constant.GetValue(Global.CROW_BONUS);
             if (player.Status == ActorStatus.AtLocation)
             {
-                if (player.InSafeHouse == false)
+                if (player.Conceal != ActorConceal.SafeHouse)
                 { 
                     if (player.CrowsNumber > 0)
                     {
@@ -5923,7 +5923,7 @@ namespace Next_Game
             Player player = GetPlayer();
             if (player != null)
             {
-                if (player.InSafeHouse == false)
+                if (player.Conceal != ActorConceal.SafeHouse)
                 {
                     switch (player.Status)
                     {
