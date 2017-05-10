@@ -186,7 +186,7 @@ ID: 2
 Type: Location
 subType: Major
 Cat: Generic
-Freq: Low
+Freq: High
 Status: Active
 Cool: 3
 Dormant: 20
@@ -194,7 +194,7 @@ Event: You there, Halt! A group of red coated guards move purposely towards you.
 [option]
 text: Leg it!
 reply: Do they know who you are? Why take the chance?
-test: 60
+test: 10
 skill: Combat
 replyBad: Your foot snags the corner of a building as you run past. Regaining your feet you manage to evade the guards but they have recognised you.
 [outcome]

@@ -2198,27 +2198,30 @@ namespace Next_Game
                 {
                     if (data < 0)
                     {
-                        bool proceedFlag = true;
+                        bool disguiseFlag = false;
                         //Known -> if already known resert Revert timer to the max.
                         if (active is Player)
                         {
                             //player in disguise? -> serves to soak up the hit (disguise loses a level)
                             Player player = active as Player;
                             if (player.Conceal == ActorConceal.Disguise)
-                            { CheckConcealment(); proceedFlag = false; }
+                            { CheckConcealment(); disguiseFlag = true; }
                         }
                         //Non-Player, or player who isn't in Disguise
-                        if (proceedFlag == true)
+                        if (active.Known == true)
+                        { resultText = string.Format("{0} {1} has had their Known timer increased to the maximum ({2} days)", active.Title, active.Name, maxRevert); }
+                        else
                         {
-                            if (active.Known == true)
-                            { resultText = string.Format("{0} {1} has had their Known timer increased to the maximum ({2} days)", active.Title, active.Name, maxRevert); }
+                            active.Known = true;
+                            if (disguiseFlag == false)
+                            { resultText = string.Format("{0} {1} is now KNOWN ({2} days)", active.Title, active.Name, maxRevert); }
                             else
-                            { active.Known = true; resultText = string.Format("{0} {1} is now KNOWN ({2} days)", active.Title, active.Name, maxRevert); }
-                            active.Revert = maxRevert;
-                            //reset TurnsUnknown timer back to zero
-                            active.TurnsUnknown = 0;
-                            active.LastKnownLocID = active.LocID;
+                            { resultText = $"{active.Title} {active.Name}'s disguise has prevented {active.SexText} from becoming Known"; }
                         }
+                        active.Revert = maxRevert;
+                        //reset TurnsUnknown timer back to zero
+                        active.TurnsUnknown = 0;
+                        active.LastKnownLocID = active.LocID;
                     }
                     else if (data > 0)
                     {

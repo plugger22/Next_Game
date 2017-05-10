@@ -40,6 +40,7 @@ namespace Next_Game
         private int relLord; //relationship with their Lord (0 to 100), higher the better (ignore if a Lord)
         public string DelayReason { get; set; }
         public string Title { get; set; } //text description of whatever relevant title they have. Automatically set by constructors. Used for display purposes.
+        public string SexText { get; } // 'him' or 'her' -> set in constructor
         public ActorStatus Status { get; set; } = 0;
         public ActorType Type { get; set; } = 0;
         public ActorOffice Office { get; set; } = 0; //official title, if any
@@ -82,6 +83,7 @@ namespace Next_Game
             Age = 30;
             Type = ActorType.None;
             Sex = ActorSex.Male;
+            SexText = "Unknown";
             relPlyr = 50; //neutral
             relLord = 50; //neutral
             InitialiseDataCollections();
@@ -103,6 +105,7 @@ namespace Next_Game
             Age = 30;
             this.Type = type;
             this.Sex = sex;
+            if (Sex == ActorSex.Male) { SexText = "him"; } else { SexText = "her"; }
             relPlyr = 50; //neutral
             relLord = 50; //neutral
             InitialiseDataCollections();

@@ -1,130 +1,83 @@
-//Exile Game File "LogTurn.txt" opened at: 09/05/2017 20:30:55
+//Exile Game File "LogTurn.txt" opened at: 10/05/2017 10:54:48
 --- ProcessStartTurn (World.cs)
-Day 10, Turn 9
+Day 3, Turn 2
 --- MoveActors -> 1 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Nergal, ActID 126 travelling to Brightwater Keep (current Loc 14:20)
+ [Move -> MoveObject] Inquisitor Brother Astaroth, ActID 113 travelling to The Yellow Huntress (current Loc 17:16)
 --- CheckIfFoundEnemy (World.cs)
---- CheckIfFoundEnemy (World.cs)
- [Goal -> Arrival] Inquisitor Brother Nergal, ActID 126, currently at Brightwater Keep, new Goal -> Wait
+ [Search -> Debug] Active Paxter Baratheon, ID 1 at 4:21, Enemy at 17:16 (Brother Astaroth, ID 113
 --- UpdatePlayerStatus (World.cs)
-Usurper Samwell Greyjoy Death Timer reduced by 1 to 19
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Samwell Greyjoy, ActID 1 is Captured
- [Search -> Stationary] Follower The Spider, ActID 7 is AtLocation
- [Search -> Stationary] Follower The Beast, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 6 is AtLocation
+ [Search -> Stationary] Usurper Paxter Baratheon, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Azazel, ID 110 at 17:15, Active Paxter Baratheon, ID 1, at 4:21
+ [Search -> Debug] Enemy, Brother Mormo, ID 111 at 17:15, Active Paxter Baratheon, ID 1, at 4:21
+ [Search -> Debug] Enemy, Brother Gorgo, ID 112 at 17:15, Active Paxter Baratheon, ID 1, at 4:21
+ [Search -> Debug] Enemy, Brother Astaroth, ID 113 at 17:17, Active Paxter Baratheon, ID 1, at 4:21
+ [Search -> Debug] Enemy, The Unrelenting, ID 114 at 17:15, Active Paxter Baratheon, ID 1, at 4:21
+ [Search -> Stationary] Follower The Spider, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 6 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Captured] Inquisitor Brother Kali, Act ID 124 Mode -> Normal
- [AI -> Player Captured] Inquisitor Brother Shaitan, Act ID 125 Mode -> Normal
- [AI -> Player Captured] Inquisitor Brother Nergal, Act ID 126 Mode -> Normal
- [AI -> Player Captured] Inquisitor Brother Behemoth, Act ID 127 Mode -> Normal
- [AI -> Player Captured] Nemesis The Unrelenting, Act ID 128 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Azazel, Act ID 110 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mormo, Act ID 111 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Gorgo, Act ID 112 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 114 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Unknown] Brother Kali ActID 124 has reverted to Unknown status (timer elapsed)
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Kali, ActID 124 Assigned Branch -> 1 Current Branch -> 2
- [Goal -> New] Brother Kali, ActID 124, (loc 18:16), assigned new Goal -> Move
- [Goal -> Move] Brother Kali, ActID 124 -> Return to Capital -> Kingskeep, LocID 1
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
+ [Goal -> Branch] Brother Azazel, ActID 110 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Goal] Brother Mormo, ActID 111 retains Goal -> Wait
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Shaitan, ActID 125 Assigned Branch -> 2 Current Branch -> 2
- [Goal -> New] Brother Shaitan, ActID 125, (loc 18:16), assigned new Goal -> Hide
- [Enemy -> Unknown] Brother Nergal ActID 126 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] Brother Nergal, ActID 126 retains Goal -> Wait
- [Enemy -> Known] Brother Behemoth ActID 127 has become KNOWN
- [Enemy -> Goal] Brother Behemoth, ActID 127 retains Goal -> Search
- [Enemy -> Goal] The Unrelenting, ActID 128 retains Goal -> Search
+ [Goal -> Branch] Brother Gorgo, ActID 112 Assigned Branch -> 1 Current Branch -> 0
+ [Goal -> New] Brother Gorgo, ActID 112, (loc 17:15), assigned new Goal -> Hide
+ [Enemy -> Known] Brother Astaroth ActID 113 has become KNOWN
+ [Enemy -> Goal] The Unrelenting, ActID 114 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
 --- GetValidPlayerEvents (Director.cs)
- Event "Torture" has no attached Conditions
- Event "Rats" has no attached Conditions
- Event "Terrible Food" has no attached Conditions
- Event "The Bucket" has no attached Conditions
- Event "Bribe Goaler" has no attached Conditions
+ Event "Search and Detain" has no attached Conditions
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 37 %
 --- ResolvePlayerEvents (Director.cs)
- Event "Rats" Timer Repeat now 1
- Event "Rats" Cooldown Timer has been reset to 5
+ "Stay Calm" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger FAILED on "2" GreaterThanOrEqual 3
+Trait trigger failed
+[Notification] Trait trigger Compulsory fail check
+ "Run straight at them" Trait Trigger, if type 1 is GreaterThanOrEqual to 3
+ Trigger passed on "4" GreaterThanOrEqual 3
+ Event "Search and Detain" Timer Repeat now 999
+ Event "Search and Detain" Cooldown Timer has been reset to 4
 --- UpdateActiveActors (World.cs)
- Usurper Samwell Greyjoy has had their Revert Timer reduced from 2 to 1
- Follower The Spider has had their TurnsUnknown Timer increased from 8 to 9
- Follower The Beast has had their TurnsUnknown Timer increased from 8 to 9
- Follower The Crone has had their TurnsUnknown Timer increased from 8 to 9
+ Usurper Paxter Baratheon has had their TurnsUnknown Timer increased from 101 to 102
+ Follower The Spider has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Duchess has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Waif has had their TurnsUnknown Timer increased from 1 to 2
 --- ResolveOutcome (Director.cs)
---- ResolveFollowerEvents (Director.cs)
+ [Variable Option] "Leg it!" Failed test (10 % needed, rolled 58)  Roll 68 + DMskill -10 + DMtouched 0 -> modifiedRoll 58
+ [Search -> Concealment] Player has been spotted by an Enemy but their concealment keeps their presence hidden
+The disguise, a Novice belonging to the Holy Faith, has lost a level of concealment (now 1 stars)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 09/05/2017 20:32:15
-is turn -> Result Cancelled
- [Search -> Stationary] Follower The Spider, ActID 7 is AtLocation
- [Search -> Stationary] Follower The Beast, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 6 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Notification] Inquisitor Brother Nergal, ActID 126 is Travelling to Brightwater Keep
- [AI -> Mode] enemyID 124,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 125,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 127,  distance -> 0  Threshold (turns) -> 4  Mode -> Hunt
- [AI -> Mode] enemyID 128,  distance -> 0  Threshold (turns) -> 8  Mode -> Hunt
---- SetEnemyActivity (World.cs)
- [Enemy -> Known] Brother Shaitan ActID 125 has become KNOWN
- [Enemy -> Known] The Unrelenting ActID 128 has become KNOWN
---- CheckPlayerEvents (Director.cs)
---- ResolvePlayerEvents (Director.cs)
- Event "Enemy Afoot" Timer Repeat now 999
- Event "Enemy Afoot" Cooldown Timer has been reset to 0
+//Exile Game file ops "LogTurn.txt" Completed at: 10/05/2017 10:55:19
+layerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Samwell Greyjoy has had their Revert Timer reduced from 4 to 3
- Follower The Spider has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Beast has had their TurnsUnknown Timer increased from 7 to 8
- Follower The Crone has had their TurnsUnknown Timer increased from 7 to 8
+ Usurper Paxter Baratheon has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
 --- ResolveOutcome (Director.cs)
-SetGameSituation] -> "difference between Your's and the King's Legend is 0 %", difference 0 Modifier 0 numCards 1
-- Initialise Combat Challenge
---- SetSupporters (Conflict.cs)
- [Notification] dictPlyrSupporters has 0 records
- [Notification] dictOppSupporters has 3 records
- [Supporter -> Bad] Inquisitor Brother Shaitan "The Loyal", Enemy, ActID 125, relPlyr 0
- [Supporter -> Bad] Inquisitor Brother Behemoth "The Loyal", Enemy, ActID 127, relPlyr 0
- [Supporter -> Bad] Nemesis The Unrelenting "Who Cannot be Named", Enemy, ActID 128, relPlyr 0
---- SetItems (Conflict.cs)
- [Notification] Opponent has no Items
---- GetSituationCardNumber (Conflict.cs)
- modifier 0, rndNum 99, net 99, numCards 5
---- GetSituationCardNumber (Conflict.cs)
- modifier 0, rndNum 30, net 30, numCards 1
---- SetOpponentStrategy (Conflict.cs)
-[Conflict -> Debug] Good -> 9 Bad -> 17 Margin -> 2 rndFactor -> 0 Opp Wits -> 2 Opp PSkill -> 3 Def Spec -> 5 Challenger -> True
-[Conflict -> Opp Def's] Bad 17 - Good 9 > margin 2
---- ResolveResults (Conflict.cs)
---- SetPlayerCaptured (World.cs)
- [Captured] dungeon -> In (distance <= out)
- [Captured -> Debug] refIn -> 9999 distIn -> 5 refOut -> 7 distOut -> 11 tempRefID -> 9999
-Item with PossID 9 has been removed from Samwell Greyjoy's inventory
---- MultiKeyInput (Game.cs)
-1 input
 --- ProcessEndTurn (World.cs)
-Day 9, Turn 8
+Day 2, Turn 1
 --- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 12
-//Exile Game File "LogTurn.txt" Close completed at: 09/05/2017 20:30:55
-de] enemyID 126,  distance -> 12  Threshold (turns) -> 4  Mode -> Normal
---- SetEnemyActivity (World.cs)
- [Enemy -> Unknown] Brother Kali ActID 124 has reverted to Unknown status (timer elapsed)
- [Enemy -> Goal] Brother Nergal, ActID 126 retains Goal -> Wait
---- CheckPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
---- GetValidPlayerEvents (Director.cs)
- Chance of Player Location event 18 %
---- ResolveFollowerEvents (Director.cs)
---- UpdateActiveActors (World.cs)
- Usurper Samwell Greyjoy has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Spider has had their TurnsUnknown Timer increased from 4 to 5
- Follower The Beast has had their TurnsUnknown Timer increased from 4 to 5
- Follower The Crone has had their TurnsUnknown Timer increased from 4 to 5
---- ProcessEndTurn (World.cs)
-Day 6, Turn 5
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 15
-//Exile Game File "LogTurn.txt" Close completed at: 09/05/2017 20:23:39
+ Event "Search and Detain" Dormant Timer decremented to 19
+//Exile Game File "LogTurn.txt" Close completed at: 10/05/2017 10:54:48
