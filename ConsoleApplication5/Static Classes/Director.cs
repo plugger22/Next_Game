@@ -1310,11 +1310,6 @@ namespace Next_Game
                                 optionText = string.Format("Seek an audience with {0}", actorText);
                                 OptionInteractive option = new OptionInteractive(optionText) { ActorID = local.ActID };
                                 option.ReplyGood = string.Format("{0} has agreed to meet with you", actorText);
-                                /*listTriggers.Clear();
-                                // Everybody will talk to you but with limited options
-                                listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, local.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
-                                option.SetTriggers(listTriggers);
-                                */
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
                                 OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Interact);
                                 option.SetGoodOutcome(outcome);
@@ -1346,7 +1341,6 @@ namespace Next_Game
                                 listTriggers.Clear();
                                 listTriggers.Add(new Trigger(TriggerCheck.RelPlyr, local.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
                                 option.SetTriggers(listTriggers);
-                                //OutNone outcome = new OutNone(eventObject.EventPID);
                                 OutEventChain outcome = new OutEventChain(1000, EventAutoFilter.Interact);
                                 option.SetGoodOutcome(outcome);
                                 eventObject.SetOption(option);
@@ -1675,11 +1669,14 @@ namespace Next_Game
                                     OutNone outcome_4 = new OutNone(eventObject.EventPID);
                                     option_4.SetGoodOutcome(outcome_4);
                                     eventObject.SetOption(option_4);
-                                    //gift -> debug: used to test OutItem outcomes
-                                    OptionInteractive option_5 = new OptionInteractive("Give Information or a Gift") { ActorID = actorID };
-                                    option_5.ReplyGood = string.Format("{0} thanks you for your gift", actorText);
-                                    OutItem outcome_5 = new OutItem(eventObject.EventPID, 0, EventCalc.Subtract);
+                                    //You want Something from them
+                                    OptionInteractive option_5 = new OptionInteractive("You want something") { ActorID = actorID };
+                                    option_5.ReplyGood = $"{actorText} sits back and reluctantly agrees to discuss your needs";
+                                    OutEventChain outcome_5 = new OutEventChain(eventObject.EventPID, EventAutoFilter.YouWant);
                                     option_5.SetGoodOutcome(outcome_5);
+                                    List<Trigger> listTriggers_5 = new List<Trigger>();
+                                    listTriggers_5.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
+                                    option_5.SetTriggers(listTriggers_5);
                                     eventObject.SetOption(option_5);
                                     //Desire (NPC wants something from you)
                                     OptionInteractive option_6 = new OptionInteractive("They want something") { ActorID = actorID };
@@ -1688,7 +1685,7 @@ namespace Next_Game
                                     listTriggers_6.Add(new Trigger(TriggerCheck.Desire, 0, 0, EventCalc.None));
                                     listTriggers_6.Add(new Trigger(TriggerCheck.Promise, 0, 0, EventCalc.None));
                                     option_6.SetTriggers(listTriggers_6);
-                                    OutEventChain outcome_6 = new OutEventChain(eventObject.EventPID, EventAutoFilter.WantSomething);
+                                    OutEventChain outcome_6 = new OutEventChain(eventObject.EventPID, EventAutoFilter.TheyWant);
                                     //OutNone outcome_6 = new OutNone(eventObject.EventPID);
                                     option_6.SetGoodOutcome(outcome_6);
                                     eventObject.SetOption(option_6);
@@ -1696,7 +1693,7 @@ namespace Next_Game
                                 else { Game.SetError(new Error(73, "Invalid actorID from AutoCreateEvent (null from dict)")); }
                             }
                             break;
-                        case EventAutoFilter.WantSomething:
+                        case EventAutoFilter.TheyWant:
                             //Character has a desire that you can meet in return for a relationship boost
                             Actor personWant = Game.world.GetAnyActor(actorID);
                             if (personWant != null)
@@ -1724,7 +1721,7 @@ namespace Next_Game
                                     if (numPromises >= numHalved)
                                     { baseValue /= 2; Game.logTurn?.Write($"[Promises] {numPromises} handed out is >= {numHalved}, relationship baseValue halved to {baseValue}"); }
                                     Passive passive = personWant as Passive;
-                                    eventObject.Name = "Need Something";
+                                    eventObject.Name = "They Want Something";
                                     eventObject.Text = $"{passive.Title} {passive.Name}, ActID {passive.ActID} has a desire for {passive.DesireText}.";
                                     tempText = string.Format("You sit down and discuss what you can do for {0} {1} \"{2}\", ActID {3}, at {4}", passive.Title, passive.Name,
                                         passive.Handle, passive.ActID, loc.LocName);
@@ -1770,8 +1767,66 @@ namespace Next_Game
                                     eventObject.SetOption(option_w3);
                                 }
                             }
-
                             break;
+                        case EventAutoFilter.YouWant:
+                            //You want something from the NPC character
+                            Actor personNeed = Game.world.GetAnyActor(actorID);
+                            if (personNeed != null)
+                            {
+                                if (personNeed is Advisor)
+                                {
+                                    Advisor advisor = personNeed as Advisor;
+                                    if (advisor.advisorRoyal > AdvisorRoyal.None) { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
+                                    else { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
+                                }
+                                else if (personNeed.Office > ActorOffice.None)
+                                {
+                                    actorText = string.Format("{0} {1}", personNeed.Office, personNeed.Name);
+                                }
+                                else { actorText = string.Format("{0} {1}", personNeed.Type, personNeed.Name); }
+                                if (personNeed is Passive)
+                                {
+                                    eventObject.Name = "You Want Something";
+                                    eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
+                                    tempText = string.Format("You sit down and discuss your needs with {0} {1} \"{2}\", ActID {3}, at {4}", personNeed.Title, personNeed.Name, 
+                                        personNeed.Handle, personNeed.ActID, loc.LocName);
+                                    //default -> flip back to advisor options
+                                    OptionInteractive option_n0 = new OptionInteractive("Excuse Yourself") { ActorID = actorID };
+                                    option_n0.ReplyGood = $"{actorText} stares at you with narrowed eyes";
+                                    OutEventChain outcome_n0 = new OutEventChain(1000, EventAutoFilter.Advisors);
+                                    option_n0.SetGoodOutcome(outcome_n0);
+                                    eventObject.SetOption(option_n0);
+
+                                    //Cash in a Favour
+                                    OptionInteractive option_n1 = new OptionInteractive("Cash in a Favour") { ActorID = actorID };
+                                    option_n1.ReplyGood = $"{actorText} squirms in their seat. It doesn't appear comfortable";
+                                    OutNone outcome_n1 = new OutNone(eventObject.EventPID);
+                                    option_n1.SetGoodOutcome(outcome_n1);
+                                    eventObject.SetOption(option_n1);
+
+                                    //Hand over a disguise
+                                    if (personNeed is Advisor)
+                                    {
+                                        Advisor advisor = personNeed as Advisor;
+                                        if (advisor.CheckAnyDisguises() == true)
+                                        {
+                                            OptionInteractive option_n2 = new OptionInteractive("Ask for a Disguise") { ActorID = actorID };
+                                            option_n2.ReplyGood = $"{actorText} nods solmenly and reaches for a nearby sack";
+                                            OutDisguise outcome_n2 = new OutDisguise(eventObject.EventPID);
+                                            option_n2.SetGoodOutcome(outcome_n2);
+                                            eventObject.SetOption(option_n2);
+                                        }
+                                    }
+
+                                    //Become an informant
+                                    OptionInteractive option_n3 = new OptionInteractive("Ask to keep me Informed") { ActorID = actorID };
+                                    option_n3.ReplyGood = $"{actorText} agrees to keep their ear to the ground and lete you know if anything interesting occurs";
+                                    OutNone outcome_n3 = new OutNone(eventObject.EventPID);
+                                    option_n3.SetGoodOutcome(outcome_n3);
+                                    eventObject.SetOption(option_n3);
+                                }
+                            }
+                                break;
                         default:
                             Game.SetError(new Error(118, string.Format("Invalid EventFilter (\"{0}\")", filter)));
                             break;
@@ -3850,7 +3905,7 @@ namespace Next_Game
                             }
                             else { Game.SetError(new Error(254, $"Invalid possession (null) from possID {possID}")); }
                         }
-                        else { Game.logTurn?.Write("[Alert] Invalid possID (zero, or less)"; }
+                        else { Game.logTurn?.Write("[Alert] Invalid possID (zero, or less)"); }
                     }
                     else { Game.SetError(new Error(254, $"Invalid passive (NOT an advisor) from actorID {actorID}")); }
                 }

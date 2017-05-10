@@ -12,7 +12,7 @@ namespace Next_Game.Event_System
     public enum EventCalc { None, Add, Subtract, Random, Equals, NotEqual, GreaterThanOrEqual, LessThanOrEqual, RandomPlus, RandomMinus, Count} //used within events for triggers (>, <, =, !=) and outcomes (+, -, Rnd)
     public enum EventTimer { None, Repeat, Dormant, Live, Cool } //used for EventTimer outcomes to specify a timer -> Cool is Cooldown timer
     public enum EventType { None, Location, Travelling, Sea, Dungeon, Adrift }
-    public enum EventAutoFilter { None, Court, Visitors, Followers, Advisors, Interact, Docks, FindShip, BribeCaptain, Recruit, WantSomething, NeedSomething, SafeHouse} //used by autoloc plyr events to determine which group of actors to show as options
+    public enum EventAutoFilter { None, Court, Visitors, Followers, Advisors, Interact, Docks, FindShip, BribeCaptain, Recruit, TheyWant, YouWant, SafeHouse} //used by autoloc plyr events to determine which group of actors to show as options
 
     /// <summary>
     /// Base Event class
