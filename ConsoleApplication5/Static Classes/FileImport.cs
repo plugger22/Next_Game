@@ -314,6 +314,14 @@ namespace Next_Game
         public int ConTimer { get; set; } //optional -> Conditions
     }
 
+    //Disguises
+    struct DisguiseStruct
+    {
+        public string Name { get; set; }
+        public int Strength { get; set; }
+        public AdvisorNoble Type { get; set; }
+    }
+
     /// <summary>
     /// Handles all file Import duties
     /// </summary>
@@ -5205,8 +5213,111 @@ namespace Next_Game
             return dictOfResults;
         }
 
-
-
+        /// <summary>
+        /// Import disguises
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        internal List<DisguiseStruct> GetDisguises(string fileName)
+        {
+            int dataCounter = 0;
+            string cleanTag;
+            string cleanToken;
+            bool newResult = false;
+            bool validData = true;
+            List<DisguiseStruct> listOfDisguises = new List<DisguiseStruct>();
+            string[] arrayOfDisguises = ImportDataFile(fileName);
+            if (arrayOfDisguises != null)
+            {
+                DisguiseStruct structDisguise = new DisguiseStruct();
+                //loop imported array of strings
+                for (int i = 0; i < arrayOfDisguises.Length; i++)
+                {
+                    if (arrayOfDisguises[i] != "" && !arrayOfDisguises[i].StartsWith("#"))
+                    {
+                        //set up for a new house
+                        if (newResult == false)
+                        {
+                            newResult = true;
+                            validData = true;
+                            dataCounter++;
+                            //new Trait object
+                            structDisguise = new DisguiseStruct();
+                        }
+                        string[] tokens = arrayOfDisguises[i].Split(new Char[] { ':', ';' });
+                        //strip out leading spaces
+                        cleanTag = tokens[0].Trim();
+                        if (cleanTag[0] == '[') { cleanToken = "1"; } //any value > 0, irrelevant what it is
+                                                                      //check for random text elements in the file
+                        else
+                        {
+                            try { cleanToken = tokens[1].Trim(); }
+                            catch (System.IndexOutOfRangeException)
+                            { Game.SetError(new Error(258, string.Format("Invalid token[1] (empty or null) for label \"{0}\"", cleanTag))); cleanToken = ""; }
+                        }
+                        switch (cleanTag)
+                        {
+                            case "Name":
+                                if (cleanToken.Length == 0)
+                                { Game.SetError(new Error(258, string.Format("Empty Name field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                                else { structDisguise.Name = cleanToken; }
+                                break;
+                            case "Strength":
+                                try
+                                { structDisguise.Strength = Convert.ToInt32(cleanToken); }
+                                catch
+                                { Game.SetError(new Error(258, string.Format("Invalid input for Strength {0}, (\"{1}\")", cleanToken, structDisguise.Name))); validData = false; }
+                                break;
+                            case "Type":
+                                if (cleanToken.Length == 0)
+                                { Game.SetError(new Error(258, string.Format("Empty Type data field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
+                                else
+                                {
+                                    switch (cleanToken)
+                                    {
+                                        case "measter":
+                                        case "maester":
+                                        case "Measter":
+                                        case "Maester":
+                                            structDisguise.Type = AdvisorNoble.Maester;
+                                            break;
+                                        case "castellan":
+                                        case "Castellan":
+                                            structDisguise.Type = AdvisorNoble.Castellan;
+                                            break;
+                                        case "septon":
+                                        case "Septon":
+                                            structDisguise.Type = AdvisorNoble.Septon;
+                                            break;
+                                        default:
+                                            Game.SetError(new Error(258, string.Format("Invalid Input, Type, (\"{0}\")", arrayOfDisguises[i])));
+                                            validData = false;
+                                            break;
+                                    }
+                                }
+                                break;
+                            case "[end]":
+                            case "[End]":
+                                //last Datapoint in record - save structure to list
+                                if (dataCounter > 0 && validData == true)
+                                {
+                                    listOfDisguises.Add(structDisguise);
+                                    Game.logStart?.Write($"Disguise \"{structDisguise.Name}\", Strength {structDisguise.Strength}, Type {structDisguise.Type} -> successfully Imported");
+                                }
+                                else { Game.SetError(new Error(258, $"Disguise \"{structDisguise.Name}\" validData false -> Not imported")); }
+                                break;
+                            default:
+                                Game.SetError(new Error(258, string.Format("Invalid Input, CleanTag \"{0}\", \"{1}\"", cleanTag, structDisguise.Name)));
+                                break;
+                        }
+                    }
+                    else { newResult = false; }
+                }
+            }
+            else
+            { Game.SetError(new Error(258, string.Format("File not found (\"{0}\")", fileName))); }
+            return listOfDisguises;
+        }
 
         //methods above here
     }

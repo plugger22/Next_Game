@@ -1804,7 +1804,7 @@ namespace Next_Game
                                     option_n1.SetGoodOutcome(outcome_n1);
                                     eventObject.SetOption(option_n1);
 
-                                    //Hand over a disguise
+                                    //Hand over a disguise (Player can't already have a disguise in his inventory)
                                     if (personNeed is Advisor)
                                     {
                                         Advisor advisor = personNeed as Advisor;
@@ -1814,6 +1814,9 @@ namespace Next_Game
                                             option_n2.ReplyGood = $"{actorText} nods solmenly and reaches for a nearby sack";
                                             OutDisguise outcome_n2 = new OutDisguise(eventObject.EventPID);
                                             option_n2.SetGoodOutcome(outcome_n2);
+                                            List<Trigger> listTriggers_n2 = new List<Trigger>();
+                                            listTriggers_n2.Add(new Trigger(TriggerCheck.Disguise, 0, 0, EventCalc.None));
+                                            option_n2.SetTriggers(listTriggers_n2);
                                             eventObject.SetOption(option_n2);
                                         }
                                     }
@@ -2381,7 +2384,7 @@ namespace Next_Game
             List<Trigger> listTriggers = option.GetTriggers();
             if (listTriggers.Count > 0)
             {
-                Active player = Game.world.GetActiveActor(1);
+                Player player = Game.world.GetPlayer();
                 //check each trigger
                 validCheck = false;
                 foreach (Trigger trigger in listTriggers)
@@ -2438,6 +2441,15 @@ namespace Next_Game
                             {
                                 Game.logTurn?.Write(" Trigger: Same sex, seduction impossible -> Trigger failed");
                                 if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Sex trigger Compulsory fail check"); return false; }
+                            }
+                            break;
+                        case TriggerCheck.Disguise:
+                            //Passes if Player Does NOT have a current disguise in his Inventory
+                            if (player.ConcealDisguise == 0) { validCheck = true; }
+                            else
+                            {
+                                Game.logTurn?.Write(" Trigger: Disguise, Player already has a disguise -> Trigger failed");
+                                if (trigger.Compulsory == true) { Game.logTurn?.Write("[Notification] Disguise trigger Compulsory fail check"); return false; }
                             }
                             break;
                         case TriggerCheck.Promise:

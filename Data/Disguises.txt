@@ -7,8 +7,53 @@
 # [End] -> Don't forget!
 
 
-Name:
-Strength:
-Type:
+# Maester disguises ---
+
+Name: a Lamp Oil Dispenser
+Strength: 3
+Type: Maester
 [End]
 
+Name: a Frocked Scribe
+Strength: 4
+Type: Maester
+[End]
+
+Name: a Wandering Wick Trader
+Strength: 5
+Type: Maester
+[End]
+
+# Castellan disguises ---
+
+Name: a Pardoned Criminal
+Strength: 3
+Type: Castellan
+[End]
+
+Name: a SellSword Squire
+Strength: 4
+Type: Castellan
+[End]
+
+Name: an Injured Ex-Soldier
+Strength: 5
+Type: Castellan
+[End]
+
+# Septon disguise ---
+
+Name: a Novice of a Holy Order
+Strength: 3
+Type: Septon
+[End]
+
+Name: a Pious Priest
+Strength: 4
+Type: Septon
+[End]
+
+Name: a Weeping Prayer Acolyte
+Strength: 5
+Type: Septon
+[End]

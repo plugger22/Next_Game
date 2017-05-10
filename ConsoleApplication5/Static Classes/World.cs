@@ -107,6 +107,7 @@ namespace Next_Game
             InitialiseSecrets();
             InitialiseDesires();
             InitialiseSafeHouses();
+            InitialiseDisguises();
             Game.StopTimer(timer_2, "W: InitialiseVarious");
             timer_2.Start();
             InitialiseAI();
@@ -121,7 +122,7 @@ namespace Next_Game
         /// <param name="listOfActiveActors"></param>
         internal void InitialiseActiveActors(List<Active> listOfActiveActors)
         {
-
+            Game.logStart?.Write("--- InitialiseActiveActors (World.cs)");
             int numFollowers = Game.constant.GetValue(Global.START_FOLLOWERS);
             int locID, index;
 
@@ -151,6 +152,7 @@ namespace Next_Game
                             follower.Activated = true;
                             //add to Location list of Characters
                             loc.AddActor(follower.ActID);
+                            Game.logStart?.Write($"Follower {follower.Name}, ActorID {follower.ActID}, added and placed at {loc.LocName}, LocID {loc.LocationID}");
                         }
                         else { Game.SetError(new Error(63, "Invalid Loc (null) Active Actor not placed on map")); }
                     }
@@ -204,8 +206,6 @@ namespace Next_Game
                         Game.logStart?.Write($"[Disguise] \"{disguise.Description}\", PossID {disguise.PossID}, added to the Player's Inventory");
                         //
                         //DEBUG --- (end) ---
-
-
                     }
                     else
                     { Game.SetError(new Error(63, "Invalid Player in listOfActiveActors")); }
@@ -6276,7 +6276,7 @@ namespace Next_Game
         /// </summary>
         internal void InitialiseSafeHouses()
         {
-            Game.logStart?.Write("--- InitialiseSafeHouse (History.cs)");
+            Game.logStart?.Write("--- InitialiseSafeHouse (World.cs)");
             int oldKingRefID = Game.lore.RoyalRefIDOld;
             //Major Houses
             for (int i = 0; i < dictAllHouses.Count; i++)
@@ -6303,6 +6303,17 @@ namespace Next_Game
                 }
                 else { Game.SetError(new Error(249, "Invalid house (null)")); }
             }
+        }
+
+
+        /// <summary>
+        /// Imports Disguises and seeds them with friendly advisors in the world
+        /// </summary>
+        internal void InitialiseDisguises()
+        {
+            Game.logStart?.Write("--- InitialiseDisguises (World.cs)");
+            List<DisguiseStruct> listOfDisguises = Game.file.GetDisguises("Disguises.txt");
+
         }
 
 
