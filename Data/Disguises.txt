@@ -1,0 +1,14 @@
+# Disguises.txt -> list of all available Player disguises (seeded throughout the world)
+
+# NOTE: All fields must have a value
+# Name; Description of disguise in the form 'has assumed the disguise of...'
+# Strength: 1 to 5 (best)
+# Type: which advisor has this type of disguise -> Maester / Castellan / Septon
+# [End] -> Don't forget!
+
+
+Name:
+Strength:
+Type:
+[End]
+

@@ -969,10 +969,52 @@ namespace Next_Game
         public AdvisorRoyal advisorRoyal { get; set; } = AdvisorRoyal.None;
         public AdvisorNoble advisorNoble { get; set; } = AdvisorNoble.None;
         public int CommenceService { get; set; } //year commenced service with the Great House
-        public int HasDisguise { get; set; } //if > 0 -> the PossID of a disguise that the advisor has and one that can be given to the Player.
+        private List<int> listOfDisguises; //list of Disguise PossID's
 
         public Advisor(string name, ActorType type = ActorType.Advisor, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, type, sex)
-        { } //Title set in history.CreateAdvisor
+        {
+            //Title set in history.CreateAdvisor
+            listOfDisguises = new List<int>();
+        } 
+
+        public void AddDisguise(int possID)
+        {
+            if (possID > 0)
+            { listOfDisguises.Add(possID); }
+            else { Game.SetError(new Error(256, "Invalid possID (zero, or less) -> Disguise NOT added to List")); }
+        }
+
+        /// <summary>
+        /// get PossID of first disguise in list, returns 0 if none
+        /// </summary>
+        /// <returns></returns>
+        public int GetNextDisguise()
+        {
+            if (listOfDisguises != null)
+            { return listOfDisguises[0]; }
+            else { return 0; }
+        }
+
+        /// <summary>
+        /// delete a specific disguise possID in list
+        /// </summary>
+        /// <param name="possID"></param>
+        public void DeleteDisguise(int possID)
+        {
+            if (listOfDisguises.Remove(possID) == false)
+            { Game.SetError(new Error(255, $"Disguise entry not found in listOfDisguises (possID {possID}) -> entry NOT deleted")); }
+            else { Game.logTurn?.Write($"Disguise PossID {possID} has been deleted from {Title} {Name}. {listOfDisguises.Count} Disguises remaining"); }
+        }
+
+        /// <summary>
+        /// returns true if the Advisor has ANY disguises
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckAnyDisguises()
+        { if (listOfDisguises.Count > 0) { return true; } else { return false; } }
+
+        public List<int> GetDisguises()
+        { return listOfDisguises; }
     }
 
     //Special NPC's

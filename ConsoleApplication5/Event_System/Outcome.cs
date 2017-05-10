@@ -187,17 +187,12 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
-    /// Give a disguise to the Player (from an Advisor)
+    /// Give a disguise to the Player (from an Advisor) (actorID provided by option.ActorID and all details handled automatically)
     /// </summary>
     class OutDisguise : Outcome
     {
-        //Data is the PossID of the disguise
-
-        public OutDisguise(int eventID, int possID) : base(eventID)
-        {
-            Data = possID;
-            Type = OutcomeType.Disguise;
-        }
+        public OutDisguise(int eventID) : base(eventID)
+        { Type = OutcomeType.Disguise; }
 
     }
 

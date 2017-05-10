@@ -7,7 +7,7 @@
 # Resources: Starting amount of resources, default value of '1', range 1 to 5
 # ..._Mod -> +ve gives a higher trait value, -ve gives a lower, '0' is neutral (could go either way)
 # ..._Auto -> 1  / 0 (default), if '1' then a trait is automatically assigned, if '0' then there is the normal chance of trait
-
+# [End] -> Don't forget!
 
 
 Name: Luigi HandsUp

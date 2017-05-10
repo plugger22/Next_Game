@@ -18,6 +18,7 @@
 # GoodDef: (string) outcome text for when you Play the card and are the Defender (one sentence)
 # GoodChall: (string) outcome text for when you Play the card and are the Challenger (one sentence)
 # BadDef: & BadChall: (string) as above but when you Ignore the card (one sentence)
+# [End] -> Don't forget!
 
 # Active Items -> Player only
 
