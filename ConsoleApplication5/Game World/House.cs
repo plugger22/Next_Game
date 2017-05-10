@@ -343,7 +343,7 @@ namespace Next_Game
             if (actID > 0 && actID < 10)
             {
                 listOfFollowers.Add(actID);
-                Game.logStart?.Write($" Inn \"{Name}\" -> Follower ActID {actID} added");
+                Game.logStart?.Write($"Inn \"{Name}\" -> Follower ActID {actID} added");
             }
         }
 

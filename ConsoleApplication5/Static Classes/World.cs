@@ -6313,6 +6313,69 @@ namespace Next_Game
         {
             Game.logStart?.Write("--- InitialiseDisguises (World.cs)");
             List<DisguiseStruct> listOfDisguises = Game.file.GetDisguises("Disguises.txt");
+            int relThreshold = Game.constant.GetValue(Global.TALK_THRESHOLD);
+            List<Advisor> listOfMaesters = new List<Advisor>();
+            List<Advisor> listOfCastellans = new List<Advisor>();
+            List<Advisor> listOfSeptons = new List<Advisor>();
+            //Obtain a list of Friendly Noble Advisors
+            IEnumerable<Advisor> advisorActors =
+                from actors in dictPassiveActors.Values.OfType<Advisor>()
+                where actors.advisorNoble > AdvisorNoble.None && actors.Loyalty_Current == KingLoyalty.Old_King
+                select actors;
+            List<Advisor> listLoyalAdvisors = advisorActors.ToList();
+            int numAdvisors = listLoyalAdvisors.Count();
+            if (numAdvisors <= 0) { Game.SetError(new Error(259, "Invalid numAdvisors (zero) -> No disguises allocated within world"));}
+            else { Game.logStart?.Write($"There are {numAdvisors} in listLoyalAdvisors"); }
+            //loop advisors and assign to correct list
+            foreach(var advisor in listLoyalAdvisors)
+            {
+                switch(advisor.advisorNoble)
+                {
+                    case AdvisorNoble.Maester:
+                        listOfMaesters.Add(advisor);
+                        break;
+                    case AdvisorNoble.Castellan:
+                        listOfCastellans.Add(advisor);
+                        break;
+                    case AdvisorNoble.Septon:
+                        listOfSeptons.Add(advisor);
+                        break;
+                    default:
+                        Game.SetError(new Error(259, $"Invalid advisorNoble type \"{advisor.advisorNoble}\""));
+                        break;
+                }
+            }
+            //loop through disguises
+            foreach(var structDisguise in listOfDisguises)
+            {
+                //create instance of object
+                Disguise disguise = new Disguise(structDisguise.Name, structDisguise.Strength);
+                if (disguise != null)
+                {
+                    //add to Possessions dict
+                    if (AddPossession(disguise.PossID, disguise) == true)
+                    {
+                        //assign to a random Advisor
+                        if (numAdvisors > 0)
+                        {
+                                switch(structDisguise.Type)
+                                {
+                                    case AdvisorNoble.Maester:
+                                    
+                                        if (listOfMaesters.Count > 0)
+                                        {
+                                            Advisor advisor = listLoyalAdvisors[rnd.Next(numAdvisors)];
+                                            advisor.AddDisguise(disguise.PossID);
+                                        }
+                                        break;
+                                }
+                                
+                                Game.logStart?.Write($"{advisor.Title} {advisor.Name}, ActID {advisor.ActID} assigned Disguise \"{disguise.Description}\", PossID {disguise.PossID}");
+                        }
+                    }
+                }
+                else { Game.SetError(new Error(259, "Invalid disguise (null) -> not added to Dictionary")); }
+            }
 
         }
 
