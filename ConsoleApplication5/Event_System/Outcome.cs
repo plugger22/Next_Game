@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
     public enum OutcomeType { None, Delay, Conflict, GameState, GameVar, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
-    Follower, Promise, RelPlyr, Favour, Introduction, SafeHouse};
+    Follower, Promise, RelPlyr, Favour, Introduction, SafeHouse, Disguise};
 
     /// <summary>
     /// Option outcome, event system
@@ -187,6 +187,21 @@ namespace Next_Game.Event_System
     }
 
     /// <summary>
+    /// Give a disguise to the Player (from an Advisor)
+    /// </summary>
+    class OutDisguise : Outcome
+    {
+        //Data is the PossID of the disguise
+
+        public OutDisguise(int eventID, int possID) : base(eventID)
+        {
+            Data = possID;
+            Type = OutcomeType.Disguise;
+        }
+
+    }
+
+    /// <summary>
     /// Change a GameVar by an amount
     /// </summary>
     class OutGameVar : Outcome
@@ -242,13 +257,9 @@ namespace Next_Game.Event_System
         /// default constructor
         /// </summary>
         /// <param name="eventID"></param>
-        /// <param name="actorID">of NPC who issued favour</param>
         /// <param name="strength">between 1 and 5 (highest)</param>
         public OutFavour(int eventID, int strength) : base(eventID)
         {
-            /*if (actorID > 0)
-            { Data = actorID; }
-            else { Game.SetError(new Error(238, "Invalid actorID (zero, or less) -> assigned default value 10")); Data = 10; }*/
             if (strength > 0 && strength < 6)
             { Data = strength; }
             else { Game.SetError(new Error(238, "Invalid strength input (\"{strength}\") must be between 1 & 5 -> assigned default value 1")); Data = 1; }

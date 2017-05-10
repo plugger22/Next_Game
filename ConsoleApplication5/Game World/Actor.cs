@@ -969,6 +969,7 @@ namespace Next_Game
         public AdvisorRoyal advisorRoyal { get; set; } = AdvisorRoyal.None;
         public AdvisorNoble advisorNoble { get; set; } = AdvisorNoble.None;
         public int CommenceService { get; set; } //year commenced service with the Great House
+        public int HasDisguise { get; set; } //if > 0 -> the PossID of a disguise that the advisor has and one that can be given to the Player.
 
         public Advisor(string name, ActorType type = ActorType.Advisor, int locID = 1, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { } //Title set in history.CreateAdvisor

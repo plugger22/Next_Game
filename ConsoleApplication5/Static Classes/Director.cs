@@ -2624,6 +2624,16 @@ namespace Next_Game
                                             Game.world.SetMessage(new Message(tempText, 1, 0, MessageType.Event));
                                             Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
                                             break;
+                                        case OutcomeType.Disguise:
+                                            //transfer a disguise from an Advisor to the Player
+                                            outcomeText = ChangePlayerDisguiseStatus(outcome.Data, option.ActorID);
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            //message
+                                            tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
+                                            Game.world.SetMessage(new Message(tempText, 1, 0, MessageType.Event));
+                                            Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            break;
                                         case OutcomeType.Freedom:
                                             //change a player's status
                                             if (outcome.Data > 0)
@@ -3803,6 +3813,50 @@ namespace Next_Game
             return resultText;
         }
 
+        /// <summary>
+        /// Player given a disguise from an NPC advisor (noble or royal)
+        /// </summary>
+        /// <param name="possID"></param>
+        /// <param name="actorID"></param>
+        /// <returns></returns>
+        private string ChangePlayerDisguiseStatus(int possID, int actorID)
+        {
+            string resultText = "";
+            Player player = Game.world.GetPlayer();
+            if (player != null)
+            {
+                //Get Disguise
+                Possession possession = Game.world.GetPossession(possID);
+                if (possession != null)
+                {
+                    if (possession is Disguise)
+                    {
+                        Disguise disguise = possession as Disguise;
+                        //Get NPC advisor
+                        Passive passive = Game.world.GetPassiveActor(actorID);
+                        if (passive != null)
+                        {
+                            if (passive is Advisor)
+                            {
+                                Advisor advisor = passive as Advisor;
+                                //remove disguise from NPC
+                                advisor.HasDisguise = 0;
+                                //give to player
+                                player.ConcealDisguise = disguise.PossID;
+                                resultText = $"{player.Name} has obtained the disguise, \"{disguise.Description}\" ({disguise.Strength}), from {advisor.Title} {advisor.Name}";
+                            }
+                            else { Game.SetError(new Error(254, $"Invalid passive (NOT an advisor) from actorID {actorID}")); }
+                        }
+                        else { Game.SetError(new Error(254, $"Invalid passive actor (null) from actorID {actorID}")); }
+                    }
+                    else { Game.SetError(new Error(254, $"Invalid possession (not a Disguise) from possID {possID}"); }
+                }
+                else { Game.SetError(new Error(254, $"Invalid possession (null) from possID {possID}")); }
+            }
+            else { Game.SetError(new Error(254, "Invalid Player (null)")); }
+            Game.logTurn?.Write(resultText);
+            return resultText;
+        }
 
         /// <summary>
         /// Follower recruited from an Inn.
