@@ -1235,6 +1235,7 @@ namespace Next_Game
                 }
                 else if (person is Advisor)
                 {
+                    //Show any Disguises available to give to the Player
                     Advisor advisor = person as Advisor;
                     if (advisor.CheckAnyDisguises() == true)
                     {
@@ -1250,7 +1251,7 @@ namespace Next_Game
                                     if (possession is Disguise)
                                     {
                                         Disguise tempDisguise = possession as Disguise;
-                                        listToDisplay.Add(new Snippet($"Disguise \"{disguise.Description}\", PossID {disguise.PossID} {GetStars(disguise.Strength)}"));
+                                        listToDisplay.Add(new Snippet($"Disguise \"{tempDisguise.Description}\", PossID {tempDisguise.PossID} {GetStars(tempDisguise.Strength)}"));
                                     }
                                     else { Game.SetError(new Error(245, $"Invalid Possession (not a Disguise) for PossID {possession.PossID}")); }
                                 }
@@ -3185,7 +3186,7 @@ namespace Next_Game
                 housePower = string.Format("Hid {0} House {1} has {2} BannerLords  {3}, Loyal to the {4} (orig {5})", house.HouseID, house.Name, house.GetNumBannerLords(),
                     ShowLocationCoords(house.LocID), house.Loyalty_Current, house.Loyalty_AtStart);
                 //highlight great houses still loyal to the old king
-                if (house.Loyalty_Current == KingLoyalty.Old_King) { houseColor = RLColor.White; }
+                if (house.Loyalty_Current == KingLoyalty.New_King) { houseColor = RLColor.White; }
                 else { houseColor = Color._goodTrait; }
                 listStats.Add(new Snippet(housePower, houseColor, RLColor.Black));
             }
