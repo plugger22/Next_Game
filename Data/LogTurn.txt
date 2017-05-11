@@ -1,8 +1,105 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 11/05/2017 16:53:02
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
+//Exile Game File "LogTurn.txt" opened at: 11/05/2017 17:31:57
+--- ProcessStartTurn (World.cs)
+Day 2, Turn 1
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+[Notification] Player in SafeHouse -> World events cancelled
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Stannis Greyjoy, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Mantus, ID 136 at 12:16, Active Stannis Greyjoy, ID 1, at 8:26
+ [Search -> Debug] Enemy, Brother Nergal, ID 137 at 12:16, Active Stannis Greyjoy, ID 1, at 8:26
+ [Search -> Debug] Enemy, Brother Mastema, ID 138 at 12:16, Active Stannis Greyjoy, ID 1, at 8:26
+ [Search -> Debug] Enemy, Brother Shiva, ID 139 at 12:16, Active Stannis Greyjoy, ID 1, at 8:26
+ [Search -> Debug] Enemy, The Unrelenting, ID 140 at 12:16, Active Stannis Greyjoy, ID 1, at 8:26
+ [Search -> Stationary] Follower The Waif, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Haggler, ActID 5 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 136 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 137 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 138 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 139 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 140 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Known] Brother Mantus ActID 136 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mantus, ActID 136 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Known] Brother Nergal ActID 137 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Nergal, ActID 137 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Goal] Brother Mastema, ActID 138 retains Goal -> Wait
+ [Enemy -> Known] Brother Shiva ActID 139 has become KNOWN
+ [Enemy -> Goal] Brother Shiva, ActID 139 retains Goal -> Wait
+ [Enemy -> Known] The Unrelenting ActID 140 has become KNOWN
+ [Enemy -> Goal] The Unrelenting, ActID 140 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Brandon Umber", ID 88 added to list of Actors
+ [AutoEvent -> LocalList] "Brandon Umber", ID 88 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 6
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Stannis Greyjoy has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Haggler has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Brandon Umber", ID 88 added to list of Actors
+ [AutoEvent -> LocalList] "Brandon Umber", ID 88 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "1" Equals 1
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Brandon Umber", ID 88 added to list of Actors
+ [AutoEvent -> LocalList] "Brandon Umber", ID 88 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Talk to members of the Court" Timer Repeat now 999
+ Event "Talk to members of the Court" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Brandon Umber", ID 88 added to list of Actors
+ [AutoEvent -> LocalList] "Brandon Umber", ID 88 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "13" GreaterThanOrEqual 50
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+ Trigger FAILED on "13" GreaterThanOrEqual 40
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+ Trigger FAILED on "13" GreaterThanOrEqual 60
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+ Trigger FAILED on "13" GreaterThanOrEqual 50
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+Trigger: Desire is None or Satisified is True -> Trigger failed
+[Notification] Desire trigger Compulsory fail check
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Brandon Umber", ID 88 added to list of Actors
+ [AutoEvent -> LocalList] "Brandon Umber", ID 88 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Event "Talk to members of the Court" Timer Repeat now 999
+ Event "Talk to members of the Court" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
 --- MultiKeyInput (Game.cs)
-50 input
+1 input
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 11/05/2017 16:53:38
+//Exile Game file ops "LogTurn.txt" Completed at: 11/05/2017 17:32:27

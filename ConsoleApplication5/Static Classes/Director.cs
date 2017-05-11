@@ -461,6 +461,7 @@ namespace Next_Game
         {
             //Active player = Game.world.GetActiveActor(1);
             Player player = Game.world.GetPlayer();
+            
             if (player != null && player.Status != ActorStatus.Gone && player.Delay == 0)
             {
                 Game.logTurn?.Write("--- CheckPlayerEvents (Director.cs)");
@@ -487,6 +488,16 @@ namespace Next_Game
                                 }
                                 else
                                 {
+                                    //intro record/msg (only one that mentions 'event', all the rest are narrative
+                                    Location loc = Game.network.GetLocation(player.LocID);
+                                    if (loc != null)
+                                    {
+                                        string tempText = $"Ursurper {player.Name} at {loc.LocName}, {Game.world.ShowLocationCoords(loc.LocationID)}, [Event] \"What to do?\"";
+                                        Record recordEvent = new Record(tempText, 1, loc.LocationID, CurrentActorIncident.Event);
+                                        Game.world.SetPlayerRecord(recordEvent);
+                                        Game.world.SetMessage(new Message(tempText, MessageType.Event));
+                                    }
+                                    else { Game.SetError(new Error(71, "Invalid loc (null) in Player AutoLocEvent -> No Record created")); }
                                     CreateAutoLocEvent(EventAutoFilter.None);
                                     //reset back to base figure
                                     story.Ev_Player_Loc_Current = story.Ev_Player_Loc_Base;
@@ -521,7 +532,7 @@ namespace Next_Game
                 }
             }
             else
-            { Game.SetError(new Error(71, "Player not found")); }
+            { Game.SetError(new Error(71, "Player not found (null)")); }
         }
 
         /// <summary>
@@ -1091,14 +1102,12 @@ namespace Next_Game
                     }
                     //new event (auto location events always have eventPID of '1000' -> old version in Player dict is deleted before new one added)
                     EventPlayer eventObject = new EventPlayer(1000, "What to do?", EventFrequency.Low) { Category = EventCategory.AutoCreate, Status = EventStatus.Active, Type = ArcType.Location };
-                    //intro record (only one that mentions 'event', all the rest are narrative
-                    Record recordEvent = new Record($"[Event] {eventObject.Name} at {loc.LocName}", 1, loc.LocationID, CurrentActorIncident.Event);
-                    Game.world.SetPlayerRecord(recordEvent);
                     tempText = "";
                     switch (filter)
                     {
                         case EventAutoFilter.None:
                             eventObject.Text = string.Format("You are at {0}. How will you fill your day?", locName);
+                            
                             //option -> audience with local House member
                             if (listCourt.Count() > 0)
                             {
