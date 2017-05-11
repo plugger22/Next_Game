@@ -199,11 +199,11 @@ namespace Next_Game
                                     listItems[rndIndex].ItemID));
                             }
                         }
-                        //Create a disguise, add to dictionary, give to Player
+                        /*//Create a disguise, add to dictionary, give to Player
                         Disguise disguise = new Disguise("a Novice belonging to the Holy Faith", 2);
                         AddPossession(disguise.PossID, disguise);
                         player.ConcealDisguise = disguise.PossID;
-                        Game.logStart?.Write($"[Disguise] \"{disguise.Description}\", PossID {disguise.PossID}, added to the Player's Inventory");
+                        Game.logStart?.Write($"[Disguise] \"{disguise.Description}\", PossID {disguise.PossID}, added to the Player's Inventory");*/
                         //
                         //DEBUG --- (end) ---
                     }
@@ -979,7 +979,7 @@ namespace Next_Game
                     }
                     listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
                     //Concealed
-                    if (player.Conceal > ActorConceal.None)
+                    if (person is Player && player.Conceal > ActorConceal.None)
                     {
                         switch (player.Conceal)
                         {
@@ -1232,6 +1232,33 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Resources"), false));
                     listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
                     listToDisplay.Add(new Snippet(string.Format("{0}", (ResourceLevel)resources), true));
+                }
+                else if (person is Advisor)
+                {
+                    Advisor advisor = person as Advisor;
+                    if (advisor.CheckAnyDisguises() == true)
+                    {
+                        listToDisplay.Add(new Snippet("Disguises", RLColor.Brown, RLColor.Black));
+                        List<int> listOfDisguises = advisor.GetDisguises();
+                        if (listOfDisguises != null)
+                        {
+                            foreach(var costume in listOfDisguises)
+                            {
+                                Possession possession = GetPossession(costume);
+                                if (possession != null)
+                                {
+                                    if (possession is Disguise)
+                                    {
+                                        Disguise tempDisguise = possession as Disguise;
+                                        listToDisplay.Add(new Snippet($"Disguise \"{disguise.Description}\", PossID {disguise.PossID} {GetStars(disguise.Strength)}"));
+                                    }
+                                    else { Game.SetError(new Error(245, $"Invalid Possession (not a Disguise) for PossID {possession.PossID}")); }
+                                }
+                                else { Game.SetError(new Error(245, "Invalid Possession (null) for Advisor Disguises")); }
+                            }
+                        }
+                        else { Game.SetError(new Error(245, "Invalid listOfDisguises (null) for Advisors")); }
+                    }
                 }
                 //Possessions -> Items
                 List<int> listItems = person.GetItems();
@@ -3125,6 +3152,7 @@ namespace Next_Game
         public void ShowGeneratorStatsRL()
         {
             List<Snippet> listStats = new List<Snippet>();
+            RLColor houseColor;
             //calcs
             int numLocs = Game.network.GetNumLocations();
             int numGreatHouses = dictMajorHouses.Count;
@@ -3156,7 +3184,10 @@ namespace Next_Game
                 MajorHouse house = GetMajorHouse(kvp.Key);
                 housePower = string.Format("Hid {0} House {1} has {2} BannerLords  {3}, Loyal to the {4} (orig {5})", house.HouseID, house.Name, house.GetNumBannerLords(),
                     ShowLocationCoords(house.LocID), house.Loyalty_Current, house.Loyalty_AtStart);
-                listStats.Add(new Snippet(housePower));
+                //highlight great houses still loyal to the old king
+                if (house.Loyalty_Current == KingLoyalty.Old_King) { houseColor = RLColor.White; }
+                else { houseColor = Color._goodTrait; }
+                listStats.Add(new Snippet(housePower, houseColor, RLColor.Black));
             }
 
             //if start of game also show Errors
@@ -6320,12 +6351,12 @@ namespace Next_Game
             //Obtain a list of Friendly Noble Advisors
             IEnumerable<Advisor> advisorActors =
                 from actors in dictPassiveActors.Values.OfType<Advisor>()
-                where actors.advisorNoble > AdvisorNoble.None && actors.Loyalty_Current == KingLoyalty.Old_King
+                where actors.advisorNoble > AdvisorNoble.None && actors.Status == ActorStatus.AtLocation && actors.Loyalty_Current == KingLoyalty.Old_King
                 select actors;
             List<Advisor> listLoyalAdvisors = advisorActors.ToList();
             int numAdvisors = listLoyalAdvisors.Count();
-            if (numAdvisors <= 0) { Game.SetError(new Error(259, "Invalid numAdvisors (zero) -> No disguises allocated within world"));}
-            else { Game.logStart?.Write($"There are {numAdvisors} in listLoyalAdvisors"); }
+            if (numAdvisors <= 0) { Game.SetError(new Error(259, "Invalid numAdvisors (zero) -> No disguises allocated within world")); }
+            else { Game.logStart?.Write($"listLoyalAdvisors -> {numAdvisors} records"); }
             //loop advisors and assign to correct list
             foreach(var advisor in listLoyalAdvisors)
             {
@@ -6341,12 +6372,16 @@ namespace Next_Game
                         listOfSeptons.Add(advisor);
                         break;
                     default:
-                        Game.SetError(new Error(259, $"Invalid advisorNoble type \"{advisor.advisorNoble}\""));
+                        Game.SetError(new Error(259, $"Invalid advisorNoble type \"{advisor.advisorNoble}\" -> Advisor not placed in specailised list"));
                         break;
                 }
             }
+            //how many in each
+            int countMaesters = listOfMaesters.Count; Game.logStart?.Write($"listOfMaesters -> {countMaesters} records");
+            int countCastellans = listOfCastellans.Count; Game.logStart?.Write($"listOfCastellans -> {countCastellans} records");
+            int countSeptons = listOfSeptons.Count; Game.logStart?.Write($"listOfSeptons -> {countSeptons} records");
             //loop through disguises
-            foreach(var structDisguise in listOfDisguises)
+            foreach (var structDisguise in listOfDisguises)
             {
                 //create instance of object
                 Disguise disguise = new Disguise(structDisguise.Name, structDisguise.Strength);
@@ -6358,25 +6393,49 @@ namespace Next_Game
                         //assign to a random Advisor
                         if (numAdvisors > 0)
                         {
-                                switch(structDisguise.Type)
-                                {
-                                    case AdvisorNoble.Maester:
-                                    
-                                        if (listOfMaesters.Count > 0)
-                                        {
-                                            Advisor advisor = listLoyalAdvisors[rnd.Next(numAdvisors)];
-                                            advisor.AddDisguise(disguise.PossID);
-                                        }
-                                        break;
-                                }
-                                
-                                Game.logStart?.Write($"{advisor.Title} {advisor.Name}, ActID {advisor.ActID} assigned Disguise \"{disguise.Description}\", PossID {disguise.PossID}");
+                            Advisor advisor = null;
+                            switch (structDisguise.Type)
+                            {
+                                case AdvisorNoble.Maester:
+                                    //prioritise giving disguise to a Maester
+                                    if (countMaesters > 0)
+                                    { advisor = listOfMaesters[rnd.Next(countMaesters)];  }
+                                    break;
+                                case AdvisorNoble.Castellan:
+                                    //prioritise giving disguise to a Castellan
+                                    if ( countCastellans > 0)
+                                    { advisor = listOfCastellans[rnd.Next(countCastellans)]; }
+                                    break;
+                                case AdvisorNoble.Septon:
+                                    //prioritise giving disguise to a Septon
+                                    if (countSeptons > 0)
+                                    { advisor = listOfSeptons[rnd.Next(countSeptons)]; }
+                                    break;
+                                default:
+                                    Game.SetError(new Error(259, $"Invalid advisorNoble type \"{advisor.advisorNoble}\" -> Disguise not assigned to an Advisor"));
+                                    break;
+                            }
+                            //found an advisor of the correct type?
+                            if (advisor != null)
+                            { advisor.AddDisguise(disguise.PossID); }
+                            else
+                            {
+                                //if not then use another advisor from master list
+                                advisor = listLoyalAdvisors[rnd.Next(numAdvisors)];
+                                if (advisor != null)
+                                { advisor.AddDisguise(disguise.PossID); }
+                                else { Game.SetError(new Error(259, "Invalid advisor (null)")); }
+                            }
+                            //admin
+                            if (advisor != null)
+                            { Game.logStart?.Write($"{advisor.Title} {advisor.Name}, ActID {advisor.ActID} assigned Disguise \"{disguise.Description}\", PossID {disguise.PossID}"); }
+                            else
+                            { Game.logStart?.Write($"[Alert] Invalid advisor (null), Disguise \"{disguise.Description}\", PossID {disguise.PossID} Not placed in the world)"); }
                         }
                     }
                 }
                 else { Game.SetError(new Error(259, "Invalid disguise (null) -> not added to Dictionary")); }
             }
-
         }
 
 

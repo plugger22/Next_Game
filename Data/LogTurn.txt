@@ -1,6 +1,177 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 10/05/2017 17:14:36
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
+//Exile Game File "LogTurn.txt" opened at: 11/05/2017 11:17:04
+--- ProcessStartTurn (World.cs)
+Day 2, Turn 1
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+[Notification] Player in SafeHouse -> World events cancelled
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Oggery Martell, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 117 at 14:15, Active Oggery Martell, ID 1, at 11:8
+ [Search -> Debug] Enemy, Brother Shaitan, ID 118 at 14:15, Active Oggery Martell, ID 1, at 11:8
+ [Search -> Debug] Enemy, Brother Mormo, ID 119 at 14:15, Active Oggery Martell, ID 1, at 11:8
+ [Search -> Debug] Enemy, Brother Diabolous, ID 120 at 14:15, Active Oggery Martell, ID 1, at 11:8
+ [Search -> Debug] Enemy, The Unrelenting, ID 121 at 14:15, Active Oggery Martell, ID 1, at 11:8
+ [Search -> Stationary] Follower The Waif, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 7 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 117 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 118 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mormo, Act ID 119 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 120 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 121 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Demogorgon, ActID 117 Assigned Branch -> 1 Current Branch -> 0
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Shaitan, ActID 118 Assigned Branch -> 2 Current Branch -> 0
+ [Goal -> New] Brother Shaitan, ActID 118, (loc 14:15), assigned new Goal -> Move
+ [Goal -> Move] Brother Shaitan, ActID 118 -> Capital to Correct Branch -> Barrow Hill, LocID 12
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mormo, ActID 119 Assigned Branch -> 3 Current Branch -> 0
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Diabolous, ActID 120 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Diabolous, ActID 120, (loc 14:15), assigned new Goal -> Move
+ [Goal -> Move] Brother Diabolous, ActID 120 -> Capital to Correct Branch -> Valyria, LocID 25
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 121 Assigned Branch -> 0 Current Branch -> 0
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Galbart Stark", ID 44 added to list of Actors
+ [AutoEvent -> ActorList] "Davos Alainon", ID 47 added to list of Actors
+ [AutoEvent -> ActorList] "Aeron Hugue", ID 48 added to list of Actors
+ [AutoEvent -> ActorList] "Trystane Charles", ID 49 added to list of Actors
+ [AutoEvent -> ActorList] "Ferri Stark", ID 50 added to list of Actors
+ [AutoEvent -> LocalList] "Galbart Stark", ID 44 added to list of Locals
+ [AutoEvent -> AdvisorList] "Davos Alainon", ID 47 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aeron Hugue", ID 48 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Trystane Charles", ID 49 added to list of Advisors
+ [AutoEvent -> LocalList] "Ferri Stark", ID 50 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 8
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Oggery Martell has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Viper has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Galbart Stark", ID 44 added to list of Actors
+ [AutoEvent -> ActorList] "Davos Alainon", ID 47 added to list of Actors
+ [AutoEvent -> ActorList] "Aeron Hugue", ID 48 added to list of Actors
+ [AutoEvent -> ActorList] "Trystane Charles", ID 49 added to list of Actors
+ [AutoEvent -> ActorList] "Ferri Stark", ID 50 added to list of Actors
+ [AutoEvent -> LocalList] "Galbart Stark", ID 44 added to list of Locals
+ [AutoEvent -> AdvisorList] "Davos Alainon", ID 47 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aeron Hugue", ID 48 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Trystane Charles", ID 49 added to list of Advisors
+ [AutoEvent -> LocalList] "Ferri Stark", ID 50 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "1" Equals 1
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger passed on "1" Equals 1
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Galbart Stark", ID 44 added to list of Actors
+ [AutoEvent -> ActorList] "Davos Alainon", ID 47 added to list of Actors
+ [AutoEvent -> ActorList] "Aeron Hugue", ID 48 added to list of Actors
+ [AutoEvent -> ActorList] "Trystane Charles", ID 49 added to list of Actors
+ [AutoEvent -> ActorList] "Ferri Stark", ID 50 added to list of Actors
+ [AutoEvent -> LocalList] "Galbart Stark", ID 44 added to list of Locals
+ [AutoEvent -> AdvisorList] "Davos Alainon", ID 47 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aeron Hugue", ID 48 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Trystane Charles", ID 49 added to list of Advisors
+ [AutoEvent -> LocalList] "Ferri Stark", ID 50 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "64" GreaterThanOrEqual 50
+ Trigger passed on "58" GreaterThanOrEqual 50
+ Trigger passed on "87" GreaterThanOrEqual 50
+ Event "Talk to Advisors" Timer Repeat now 999
+ Event "Talk to Advisors" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Galbart Stark", ID 44 added to list of Actors
+ [AutoEvent -> ActorList] "Davos Alainon", ID 47 added to list of Actors
+ [AutoEvent -> ActorList] "Aeron Hugue", ID 48 added to list of Actors
+ [AutoEvent -> ActorList] "Trystane Charles", ID 49 added to list of Actors
+ [AutoEvent -> ActorList] "Ferri Stark", ID 50 added to list of Actors
+ [AutoEvent -> LocalList] "Galbart Stark", ID 44 added to list of Locals
+ [AutoEvent -> AdvisorList] "Davos Alainon", ID 47 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aeron Hugue", ID 48 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Trystane Charles", ID 49 added to list of Advisors
+ [AutoEvent -> LocalList] "Ferri Stark", ID 50 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "64" GreaterThanOrEqual 50
+ Trigger passed on "64" GreaterThanOrEqual 40
+ Trigger passed on "64" GreaterThanOrEqual 60
+ Trigger FAILED on "1" NotEqual 1
+ Trigger: Same sex, seduction impossible -> Trigger failed
+[Notification] Sex trigger Compulsory fail check
+ Trigger FAILED on "64" GreaterThanOrEqual 70
+ RelPlyr is too low -> Trigger failed
+[Notification] RelPlyr trigger Compulsory fail check
+ Trigger passed on "64" GreaterThanOrEqual 50
+Trigger: Desire is None or Satisified is True -> Trigger failed
+[Notification] Desire trigger Compulsory fail check
+ Event "Interact" Timer Repeat now 999
+ Event "Interact" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Galbart Stark", ID 44 added to list of Actors
+ [AutoEvent -> ActorList] "Davos Alainon", ID 47 added to list of Actors
+ [AutoEvent -> ActorList] "Aeron Hugue", ID 48 added to list of Actors
+ [AutoEvent -> ActorList] "Trystane Charles", ID 49 added to list of Actors
+ [AutoEvent -> ActorList] "Ferri Stark", ID 50 added to list of Actors
+ [AutoEvent -> LocalList] "Galbart Stark", ID 44 added to list of Locals
+ [AutoEvent -> AdvisorList] "Davos Alainon", ID 47 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aeron Hugue", ID 48 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Trystane Charles", ID 49 added to list of Advisors
+ [AutoEvent -> LocalList] "Ferri Stark", ID 50 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger: Disguise, Player already has a disguise -> Trigger failed
+[Notification] Disguise trigger Compulsory fail check
+ Event "You Want Something" Timer Repeat now 999
+ Event "You Want Something" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Galbart Stark", ID 44 added to list of Actors
+ [AutoEvent -> ActorList] "Davos Alainon", ID 47 added to list of Actors
+ [AutoEvent -> ActorList] "Aeron Hugue", ID 48 added to list of Actors
+ [AutoEvent -> ActorList] "Trystane Charles", ID 49 added to list of Actors
+ [AutoEvent -> ActorList] "Ferri Stark", ID 50 added to list of Actors
+ [AutoEvent -> LocalList] "Galbart Stark", ID 44 added to list of Locals
+ [AutoEvent -> AdvisorList] "Davos Alainon", ID 47 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Aeron Hugue", ID 48 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Trystane Charles", ID 49 added to list of Advisors
+ [AutoEvent -> LocalList] "Ferri Stark", ID 50 added to list of Locals
+--- ResolvePlayerEvents (Director.cs)
+ Trigger passed on "64" GreaterThanOrEqual 50
+ Trigger passed on "58" GreaterThanOrEqual 50
+ Trigger passed on "87" GreaterThanOrEqual 50
+ Event "Talk to Advisors" Timer Repeat now 999
+ Event "Talk to Advisors" Cooldown Timer has been reset to 0
+--- ResolveOutcome (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 10/05/2017 17:15:56
+//Exile Game file ops "LogTurn.txt" Completed at: 11/05/2017 11:19:02
