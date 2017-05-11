@@ -2161,7 +2161,7 @@ namespace Next_Game
                                         if (message != null)
                                         {
                                             //record
-                                            Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
+                                            Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, CurrentActorIncident.Challenge));
                                         }
                                     }
                                     else Game.SetError(new Error(113, "Invalid GameState Amount (zero)"));
@@ -2182,7 +2182,7 @@ namespace Next_Game
                                 if (result.Data > 0) { tempList.Add(new Snippet(tempText, RLColor.Green, backColor)); }
                                 else { tempList.Add(new Snippet(tempText, RLColor.Red, backColor)); }
                                 message = new Message(tempText, MessageType.Conflict);
-                                Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
+                                Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, CurrentActorIncident.Challenge));
                                 break;
                             case ResultType.RelPlyr:
                                 //change Opponent's relationship with Player
@@ -2191,8 +2191,8 @@ namespace Next_Game
                                    amount > 0 ? "improved" : "worsened", amount > 0 ? "+" : "", amount);
                                 tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                 message = new Message(tempText, MessageType.Conflict);
-                                Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
-                                Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, refID, CurrentActorIncident.Challenge));
+                                Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, CurrentActorIncident.Challenge));
+                                Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, CurrentActorIncident.Challenge));
                                 break;
                             case ResultType.RelOther:
                                 break;
@@ -2284,7 +2284,7 @@ namespace Next_Game
                                     player.AddFavour(newFavour.PossID);
                                     tempList.Add(new Snippet(tempText, RLColor.Green, backColor));
                                     message = new Message(tempText, MessageType.Conflict);
-                                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
+                                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, CurrentActorIncident.Challenge));
                                 }
                                 break;
                             case ResultType.Introduction:
@@ -2302,7 +2302,7 @@ namespace Next_Game
                                         if (Game.world.AddPossession(newIntroduction.PossID, newIntroduction) == true)
                                         {
                                             message = new Message(tempText, MessageType.Conflict);
-                                            Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
+                                            Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, CurrentActorIncident.Challenge));
                                         }
                                     }
                                     else

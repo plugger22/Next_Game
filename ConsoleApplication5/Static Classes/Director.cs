@@ -655,7 +655,7 @@ namespace Next_Game
                 {
                     Game.world.SetMessage(message);
                     if (String.IsNullOrEmpty(tempText) == false)
-                    { Game.world.SetCurrentRecord(new Record(tempText, actor.ActID, actor.LocID, refID, CurrentActorIncident.Event)); }
+                    { Game.world.SetCurrentRecord(new Record(tempText, actor.ActID, actor.LocID, CurrentActorIncident.Event)); }
                 }
                 else { Game.SetError(new Error(52, "Invalid Message (null)")); }
                 //store in list of Current Events
@@ -854,7 +854,7 @@ namespace Next_Game
                 {
                     Game.world.SetMessage(message);
                     if (String.IsNullOrEmpty(tempText) == false)
-                    { Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, refID, CurrentActorIncident.Event)); }
+                    { Game.world.SetPlayerRecord(new Record(tempText, actor.ActID, actor.LocID, CurrentActorIncident.Event)); }
                 }
                 else { Game.SetError(new Error(72, "Invalid Message (null)")); }
                 //store in list of Current Events
@@ -978,7 +978,7 @@ namespace Next_Game
                         string tempText = string.Format("{0}, Aid {1} {2}, [{3} Event] \"{4}\"", player.Name, player.ActID, locText, eventObject.Type, eventObject.Name);
                         Message message = new Message(tempText, MessageType.Event);
                         Game.world.SetMessage(message);
-                        Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, Game.world.ConvertLocToRef(player.LocID), CurrentActorIncident.Event));
+                        Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, CurrentActorIncident.Event));
                     }
                     else { Game.SetError(new Error(173, "Invalid enemy (null) from search for the highest threat rated enemy loop")); }
                 }
@@ -1091,6 +1091,9 @@ namespace Next_Game
                     }
                     //new event (auto location events always have eventPID of '1000' -> old version in Player dict is deleted before new one added)
                     EventPlayer eventObject = new EventPlayer(1000, "What to do?", EventFrequency.Low) { Category = EventCategory.AutoCreate, Status = EventStatus.Active, Type = ArcType.Location };
+                    //intro record (only one that mentions 'event', all the rest are narrative
+                    Record recordEvent = new Record($"[Event] {eventObject.Name} at {loc.LocName}", 1, loc.LocationID, CurrentActorIncident.Event);
+                    Game.world.SetPlayerRecord(recordEvent);
                     tempText = "";
                     switch (filter)
                     {
@@ -1612,15 +1615,21 @@ namespace Next_Game
                                 Actor person = Game.world.GetAnyActor(actorID);
                                 if (person != null)
                                 {
-                                    if (person is Advisor)
+                                    /*if (person is Advisor)
                                     {
                                         Advisor advisor = person as Advisor;
-                                        if (advisor.advisorRoyal > AdvisorRoyal.None) { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
-                                        else { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
+                                        actorText = $"{advisor.Title} {advisor.Name}";
+                                        //if (advisor.advisorRoyal > AdvisorRoyal.None) { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
+                                        //else { actorText = string.Format("{0} {1}", advisor.advisorNoble, advisor.Name); }
                                     }
                                     else if (person.Office > ActorOffice.None)
                                     { actorText = string.Format("{0} {1}", person.Office, person.Name); }
+                                    else { actorText = string.Format("{0} {1}", person.Type, person.Name); }*/
+
+                                    if (person is Advisor){ actorText = $"{Game.world.GetAdvisorType((Advisor)person)} {person.Name}"; }
                                     else { actorText = string.Format("{0} {1}", person.Type, person.Name); }
+
+                                    actorText = $"{person.Title} {person.Name}";
                                     eventObject.Name = "Interact";
                                     eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
                                     tempText = string.Format("You are granted an audience with {0} {1} \"{2}\", ActID {3}, at {4}", person.Title, person.Name, person.Handle, person.ActID, loc.LocName);
@@ -1689,7 +1698,7 @@ namespace Next_Game
                             Actor personWant = Game.world.GetAnyActor(actorID);
                             if (personWant != null)
                             {
-                                if (personWant is Advisor)
+                                /*if (personWant is Advisor)
                                 {
                                     Advisor advisor = personWant as Advisor;
                                     if (advisor.advisorRoyal > AdvisorRoyal.None) { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
@@ -1697,6 +1706,8 @@ namespace Next_Game
                                 }
                                 else if (personWant.Office > ActorOffice.None)
                                 { actorText = string.Format("{0} {1}", personWant.Office, personWant.Name); }
+                                else { actorText = string.Format("{0} {1}", personWant.Type, personWant.Name); }*/
+                                if (personWant is Advisor) { actorText = $"{Game.world.GetAdvisorType((Advisor)personWant)} {personWant.Name}"; }
                                 else { actorText = string.Format("{0} {1}", personWant.Type, personWant.Name); }
                                 if (personWant is Passive)
                                 {
@@ -1764,7 +1775,7 @@ namespace Next_Game
                             Actor personNeed = Game.world.GetAnyActor(actorID);
                             if (personNeed != null)
                             {
-                                if (personNeed is Advisor)
+                                /*if (personNeed is Advisor)
                                 {
                                     Advisor advisor = personNeed as Advisor;
                                     if (advisor.advisorRoyal > AdvisorRoyal.None) { actorText = string.Format("{0} {1}", advisor.advisorRoyal, advisor.Name); }
@@ -1774,6 +1785,8 @@ namespace Next_Game
                                 {
                                     actorText = string.Format("{0} {1}", personNeed.Office, personNeed.Name);
                                 }
+                                else { actorText = string.Format("{0} {1}", personNeed.Type, personNeed.Name); }*/
+                                if (personNeed is Advisor) { actorText = $"{Game.world.GetAdvisorType((Advisor)personNeed)} {personNeed.Name}"; }
                                 else { actorText = string.Format("{0} {1}", personNeed.Type, personNeed.Name); }
                                 if (personNeed is Passive)
                                 {
@@ -1850,7 +1863,7 @@ namespace Next_Game
                     if (tempText.Length > 0)
                     {
                         Game.world.SetMessage(new Message(tempText, MessageType.Event));
-                        Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                        Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, CurrentActorIncident.Event));
                     }
                 }
                 else { Game.SetError(new Error(118, "Invalid List of Actors (Zero present at Location")); }
@@ -2663,7 +2676,7 @@ namespace Next_Game
                                             if (noneOutcome.Description.Length > 0)
                                             {
                                                 Game.world.SetMessage(new Message(eventText + noneOutcome.Description, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + noneOutcome.Description, 1, noneOutcome.Data, Game.world.ConvertLocToRef(noneOutcome.Data), CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + noneOutcome.Description, 1, noneOutcome.Data, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.GameState:
@@ -2678,9 +2691,9 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             //message
-                                            tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
-                                            Game.world.SetMessage(new Message(tempText, 1, 0, MessageType.Event));
-                                            Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            //tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
+                                            Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
+                                            Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             break;
                                         case OutcomeType.SafeHouse:
                                             //change Player's SafeHouse status
@@ -2688,9 +2701,9 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             //message
-                                            tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
-                                            Game.world.SetMessage(new Message(tempText, 1, 0, MessageType.Event));
-                                            Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            //tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
+                                            Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
+                                            Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             break;
                                         case OutcomeType.Disguise:
                                             //transfer a disguise from an Advisor to the Player
@@ -2698,9 +2711,8 @@ namespace Next_Game
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
                                             //message
-                                            tempText = string.Format("Event \"{0}\", Option \"{1}\", {2}", eventObject.Name, option.Text, outcomeText);
-                                            Game.world.SetMessage(new Message(tempText, 1, 0, MessageType.Event));
-                                            Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                            Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
+                                            Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             break;
                                         case OutcomeType.Freedom:
                                             //change a player's status
@@ -2713,7 +2725,7 @@ namespace Next_Game
                                                     player.Status = ActorStatus.AtLocation;
                                                     tempText = string.Format("{0} {1} has escaped from the dungeons of {2}", player.Title, player.Name, Game.world.GetLocationName(player.LocID));
                                                     Game.world.SetMessage(new Message(tempText, 1, 0, MessageType.Event));
-                                                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                                 }
                                                 else { Game.SetError(new Error(73, "Player Status isn't currently 'Captured' (Outcome)")); }
                                             }
@@ -2743,8 +2755,8 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
-                                                Game.world.SetCurrentRecord(new Record(eventText + outcomeText, option.ActorID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
+                                                Game.world.SetCurrentRecord(new Record(eventText + outcomeText, option.ActorID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Item:
@@ -2755,7 +2767,7 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Promise:
@@ -2766,7 +2778,7 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Favour:
@@ -2776,7 +2788,7 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Introduction:
@@ -2786,7 +2798,7 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.GameVar:
@@ -2797,7 +2809,7 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Passage:
@@ -2808,7 +2820,7 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.VoyageTime:
@@ -2818,7 +2830,7 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Adrift:
@@ -2829,7 +2841,7 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Rescued:
@@ -2840,7 +2852,7 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Follower:
@@ -2850,7 +2862,7 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.DeathTimer:
@@ -2861,7 +2873,7 @@ namespace Next_Game
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
                                                 Game.world.SetMessage(new Message(eventText + outcomeText, 1, player.LocID, MessageType.Event));
-                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, refID, CurrentActorIncident.Event));
+                                                Game.world.SetPlayerRecord(new Record(eventText + outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             }
                                             break;
                                         case OutcomeType.Resource:
@@ -2946,7 +2958,7 @@ namespace Next_Game
                                                     tempText = string.Format("A {0} {1} Conflict initiated with {2} {3}, Aid {4}", conflictOutcome.SubType,
                                                         conflictOutcome.Conflict_Type, opponent.Title, opponent.Name, opponent.ActID);
                                                     Game.world.SetMessage(new Message(tempText, MessageType.Conflict));
-                                                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, refID, CurrentActorIncident.Challenge));
+                                                    Game.world.SetPlayerRecord(new Record(tempText, player.ActID, player.LocID, CurrentActorIncident.Challenge));
                                                 }
                                                 //which state to use?
                                                 ConflictState state = ConflictState.None;
@@ -3551,7 +3563,7 @@ namespace Next_Game
                         resultText = string.Format("You have gained possession of \"{0}\", itemID {1}, from {2} {3} \"{4}\", ActID {5}", item.Description, item.ItemID, opponent.Title,
                             opponent.Name, opponent.Handle, opponent.ActID);
                         tempText = string.Format("{0} {1} has lost possession of \"{2}\", itemID {1}, to the Ursurper", opponent.Title, opponent.Name, item.Description, item.ItemID);
-                        Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.ConvertLocToRef(opponent.LocID), CurrentActorIncident.Event));
+                        Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, CurrentActorIncident.Event));
                         Game.logTurn?.Write(tempText);
 
                     }
@@ -3570,7 +3582,7 @@ namespace Next_Game
                         resultText = string.Format("You have lost possession of \"{0}\", itemID {1}, to {2} {3} \"{4}\", ActID {5}", item.Description, item.ItemID, opponent.Title,
                             opponent.Name, opponent.Handle, opponent.ActID);
                         tempText = string.Format("{0} {1} has gained possession of \"{2}\", itemID {3}, from the Ursurper", opponent.Title, opponent.Name, item.Description, item.ItemID);
-                        Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, Game.world.ConvertLocToRef(opponent.LocID), CurrentActorIncident.Event));
+                        Game.world.SetCurrentRecord(new Record(tempText, opponent.ActID, opponent.LocID, CurrentActorIncident.Event));
                         Game.logTurn?.Write(tempText);
                     }
                 }
@@ -3910,9 +3922,12 @@ namespace Next_Game
                                     //give to player
                                     player.ConcealDisguise = possID;
                                     disguise.WhoHas = 1;
-                                    resultText = $"{player.Name} has obtained the disguise, \"{disguise.Description}\" ({disguise.Strength}), from {advisor.Title} {advisor.Name}";
+                                    resultText = $"{player.Name} has obtained the disguise, \"{disguise.Description}\" ({disguise.Strength} stars), from {advisor.Title} {advisor.Name}";
                                     //delete disguise from advisor's list
                                     advisor.DeleteDisguise(possID);
+                                    //advisor record
+                                    Record record = new Record(resultText, advisor.ActID, advisor.LocID, CurrentActorIncident.Event);
+                                    Game.world.SetCurrentRecord(record);
                                 }
                                 else { Game.SetError(new Error(254, $"Invalid possession (not a Disguise) from possID {possID}")); }
                             }

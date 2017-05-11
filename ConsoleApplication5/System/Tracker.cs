@@ -101,16 +101,15 @@ namespace Next_Game
         /// <param name="description"></param>
         /// <param name="actorID"></param>
         /// <param name="locID"></param>
-        /// <param name="refID"></param>
         /// <param name="year"></param>
         /// <param name="histActorIncident"></param>
         /// <param name="happened"></param>
-        public Record(string description, int actorID, int locID, int refID, int year, HistActorIncident histActorIncident = HistActorIncident.None, bool happened = true)
+        public Record(string description, int actorID, int locID, int refID = 0, int year = 0, HistActorIncident histActorIncident = HistActorIncident.None, bool happened = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                this.Year = year;
+                if (year == 0) { year = Game.gameYear; } else { this.Year = year;}
                 Actual = happened;
                 //initialise lists
                 listOfActors = new List<int>();
@@ -123,16 +122,11 @@ namespace Next_Game
                 listOfCurrentActorIncidents = new List<CurrentActorIncident>();
                 //lists
                 Text = description;
-                if (actorID > 0)
-                { listOfActors.Add(actorID); }
-                if (locID > 0)
-                { listOfLocs.Add(locID); }
-                if (refID > 0)
-                { listOfHouses.Add(refID); }
+                if (actorID > 0) { listOfActors.Add(actorID); }
+                if (locID > 0) { listOfLocs.Add(locID); }
+                if (refID > 0) { listOfHouses.Add(refID); }
                 if (histActorIncident > 0)
                 { listOfHistoricalActorIncidents.Add(histActorIncident); }
-                //debug
-                Console.WriteLine("ACTOR RECORD: {0}", description);
             }
             else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
@@ -143,11 +137,10 @@ namespace Next_Game
         /// <param name="description"></param>
         /// <param name="actorID"></param>
         /// <param name="locID"></param>
-        /// <param name="refID"></param>
         /// <param name="year"></param>
         /// <param name="histActorIncident"></param>
         /// <param name="happened"></param>
-        public Record(string description, int actorID, int locID, int refID, CurrentActorIncident currentActorIncident = CurrentActorIncident.None, bool happened = true)
+        public Record(string description, int actorID, int locID, CurrentActorIncident currentActorIncident = CurrentActorIncident.None, bool happened = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
@@ -167,13 +160,12 @@ namespace Next_Game
                 if (actorID > 0)
                 { listOfActors.Add(actorID); }
                 if (locID > 0)
-                { listOfLocs.Add(locID); }
-                if (refID > 0)
-                { listOfHouses.Add(refID); }
+                {
+                    listOfLocs.Add(locID);
+                    listOfHouses.Add(Game.world.ConvertLocToRef(locID));
+                }
                 if (currentActorIncident > 0)
                 { listOfCurrentActorIncidents.Add(currentActorIncident); }
-                //debug
-                Console.WriteLine("ACTOR RECORD: ID {0}, {1}", actorID, description);
             }
             else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
@@ -183,16 +175,15 @@ namespace Next_Game
         /// </summary>
         /// <param name="description"></param>
         /// <param name="locID"></param>
-        /// <param name="refID"></param>
         /// <param name="year"></param>
         /// <param name="histHouseIncident"></param>
         /// <param name="happened"></param>
-        public Record(string description, int locID, int refID, int year, HistHouseIncident histHouseIncident = HistHouseIncident.None, bool happened = true)
+        public Record(string description, int locID, int refID = 0, int year = 0, HistHouseIncident histHouseIncident = HistHouseIncident.None, bool happened = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                this.Year = year;
+                if (year == 0) { year = Game.gameYear; } else { this.Year = year; }
                 //initialise lists
                 listOfActors = new List<int>();
                 listOfLocs = new List<int>();
@@ -204,14 +195,10 @@ namespace Next_Game
 
                 //lists
                 Text = description;
-                if (locID > 0)
-                { listOfLocs.Add(locID); }
-                if (refID > 0)
-                { listOfHouses.Add(refID); }
+                if (locID > 0) { listOfLocs.Add(locID); }
+                if (refID > 0) { listOfHouses.Add(refID); }
                 if (histHouseIncident > 0)
                 { listOfHouseIncidents.Add(histHouseIncident); }
-                //debug
-                Console.WriteLine("HOUSE RECORD: refID {0}, {1}", refID, description);
             }
             else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }
@@ -221,16 +208,15 @@ namespace Next_Game
         /// </summary>
         /// <param name="description"></param>
         /// <param name="locID"></param>
-        /// <param name="refID"></param>
         /// <param name="year"></param>
         /// <param name="happened"></param>
         /// <param name="happened"></param>
-        public Record(string description, int locID, int refID, int year, HistKingdomIncident histKingdomIncident = HistKingdomIncident.None, bool happened = true)
+        public Record(string description, int locID, int refID = 0, int year = 0, HistKingdomIncident histKingdomIncident = HistKingdomIncident.None, bool happened = true)
         {
             //it's a valid record only if there is a descriptive text
             if (description != null)
             {
-                this.Year = year;
+                if (year == 0) { year = Game.gameYear; } else { this.Year = year; }
                 Actual = happened;
                 //initialise lists
                 listOfActors = new List<int>();
@@ -243,14 +229,10 @@ namespace Next_Game
                 listOfCurrentActorIncidents = new List<CurrentActorIncident>();
                 //lists
                 Text = description;
-                if (locID > 0)
-                { listOfLocs.Add(locID); }
-                if (refID > 0)
-                { listOfHouses.Add(refID); }
+                if (locID > 0) { listOfLocs.Add(locID); }
+                if (refID > 0) { listOfHouses.Add(refID); }
                 if (histKingdomIncident > 0)
                 { listOfKingdomIncidents.Add(histKingdomIncident); }
-                //debug
-                Console.WriteLine("KINGDOM RECORD: {0}", description);
             }
             else { Game.SetError(new Error(119, "Invalid Description (null) in Relation Constructor")); }
         }

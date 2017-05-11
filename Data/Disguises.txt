@@ -10,7 +10,7 @@
 # Maester disguises ---
 
 Name: a Lamp Oil Dispenser
-Strength: 3
+Strength: 4
 Type: Maester
 [End]
 
@@ -36,7 +36,7 @@ Strength: 4
 Type: Castellan
 [End]
 
-Name: an Injured Ex-Soldier
+Name: a limping Old Soldier
 Strength: 5
 Type: Castellan
 [End]
@@ -44,16 +44,16 @@ Type: Castellan
 # Septon disguise ---
 
 Name: a Novice of a Holy Order
-Strength: 3
+Strength: 2
 Type: Septon
 [End]
 
 Name: a Pious Priest
-Strength: 4
+Strength: 3
 Type: Septon
 [End]
 
 Name: a Weeping Prayer Acolyte
-Strength: 5
+Strength: 3
 Type: Septon
 [End]

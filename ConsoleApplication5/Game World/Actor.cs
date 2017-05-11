@@ -472,7 +472,7 @@ namespace Next_Game
                     string timerText = string.Format("{0}", condition.Timer == 999 ? "permanent effect" : string.Format("lasts for {0} days", condition.Timer));
                     string conditionText = string.Format("\"{0}\" condition acquired, {1} {2}{3}, {4}", condition.Text, condition.Skill, condition.Effect > 0 ? "+" : "",
                         condition.Effect, timerText);
-                    Record record = new Record(conditionText, ActID, LocID, 0, CurrentActorIncident.Condition);
+                    Record record = new Record(conditionText, ActID, LocID, CurrentActorIncident.Condition);
                     if (ActID > 1) { Game.world.SetCurrentRecord(record); }
                     else if (ActID == 1) { Game.world.SetPlayerRecord(record); }
                     returnText = conditionText;
@@ -515,7 +515,7 @@ namespace Next_Game
                         //record event
                         string conditionText = string.Format("\"{0}\", {1} {2}{3}, condition removed ", condition.Text, condition.Skill,
                             condition.Effect > 0 ? "+" : "", condition.Effect);
-                        Record record = new Record(conditionText, ActID, LocID, 0, CurrentActorIncident.Condition);
+                        Record record = new Record(conditionText, ActID, LocID, CurrentActorIncident.Condition);
                         if (ActID > 1) { Game.world.SetCurrentRecord(record); }
                         else if (ActID == 1) { Game.world.SetPlayerRecord(record); }
                         //update array
@@ -560,7 +560,7 @@ namespace Next_Game
                         Console.WriteLine("RESET: \"{0}\" Condition Timer was {1} now {2}", condition.Text, condition.Timer, timer);
                         //record event
                         string conditionText = string.Format("\"{0}\" condition already acquired, timer reset from {1} to {2} days", condition.Text, condition.Timer, timer);
-                        Record record = new Record(conditionText, ActID, LocID, 0, CurrentActorIncident.Condition);
+                        Record record = new Record(conditionText, ActID, LocID, CurrentActorIncident.Condition);
                         if (ActID > 1) { Game.world.SetCurrentRecord(record); }
                         else if (ActID == 1) { Game.world.SetPlayerRecord(record); }
                         //reset timer
@@ -601,11 +601,11 @@ namespace Next_Game
             {
                 Message message = new Message(messageText, MessageType.Event);
                 Game.world.SetMessage(message);
-                int refID = Game.world.ConvertLocToRef(LocID);
+                //int refID = Game.world.ConvertLocToRef(LocID);
                 if (ActID == 1)
-                { Game.world.SetPlayerRecord(new Record(messageText, ActID, LocID, refID, CurrentActorIncident.Resource)); }
+                { Game.world.SetPlayerRecord(new Record(messageText, ActID, LocID, CurrentActorIncident.Resource)); }
                 else if (ActID > 1)
-                { Game.world.SetCurrentRecord(new Record(messageText, ActID, LocID, refID, CurrentActorIncident.Resource)); }
+                { Game.world.SetCurrentRecord(new Record(messageText, ActID, LocID, CurrentActorIncident.Resource)); }
             }
             //keep within paramters
             Resources = Math.Min(5, Resources);

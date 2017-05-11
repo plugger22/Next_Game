@@ -359,9 +359,9 @@ namespace Next_Game
                                     SetMessage(new Message(returnText, person.ActID, locID_Destination, MessageType.Move));
                                     int refID = ConvertLocToRef(locID_Destination);
                                     if (charID == 1)
-                                    { Game.world.SetPlayerRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
+                                    { Game.world.SetPlayerRecord(new Record(returnText, charID, locID_Destination, CurrentActorIncident.Travel)); }
                                     else if (charID > 1)
-                                    { Game.world.SetCurrentRecord(new Record(returnText, charID, locID_Destination, refID, CurrentActorIncident.Travel)); }
+                                    { Game.world.SetCurrentRecord(new Record(returnText, charID, locID_Destination, CurrentActorIncident.Travel)); }
                                 }
                                 //God Mode Teleport Travel
                                 else
@@ -576,9 +576,9 @@ namespace Next_Game
                             Message message = new Message(tempText, person.ActID, locDestination.LocationID, messageType);
                             SetMessage(message);
                             if (person.ActID == 1)
-                            { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
+                            { SetPlayerRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel)); }
                             else if (person.ActID > 1)
-                            { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, refID, CurrentActorIncident.Travel)); }
+                            { SetCurrentRecord(new Record(tempText, person.ActID, person.LocID, CurrentActorIncident.Travel)); }
                             //enemy -> arrives at destination, assign goal
                             if (person is Enemy)
                             {
@@ -639,6 +639,12 @@ namespace Next_Game
                             break;
                         case ActorStatus.Travelling:
                             locStatus = $"Moving to {locName}";
+                            if (actor.Value is Player)
+                            {
+                                Player player = actor.Value as Player;
+                                if (player.Conceal == ActorConceal.Disguise)
+                                { concealText = string.Format("In Disguise ({0} star{1})", player.ConcealLevel, player.ConcealLevel != 1 ? "s" : ""); }
+                            }
                             break;
                         case ActorStatus.AtSea:
                             locStatus = string.Format("On a ship to {0}, arriving in {1} day{2}", locName, actor.Value.VoyageTimer, actor.Value.VoyageTimer != 1 ? "s" : "");
@@ -3911,7 +3917,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="advisor"></param>
         /// <returns></returns>
-        private string GetAdvisorType(Advisor advisor)
+        internal string GetAdvisorType(Advisor advisor)
         {
             string type = "unknown";
             if (advisor.advisorRoyal > 0)
@@ -4104,7 +4110,7 @@ namespace Next_Game
                         //arrived at Location
                         string locName = GetLocationName(player.LocID);
                         description = string.Format("{0} {1} has arrived at {2} onboard the S.S \"{3}\"", player.Title, player.Name, locName, player.ShipName);
-                        SetPlayerRecord(new Record(description, 1, player.LocID, ConvertLocToRef(player.LocID), CurrentActorIncident.Travel));
+                        SetPlayerRecord(new Record(description, 1, player.LocID, CurrentActorIncident.Travel));
                         SetMessage(new Message(description, MessageType.Move));
                         //notification message
                         List<Snippet> msgList = new List<Snippet>();
@@ -4574,9 +4580,9 @@ namespace Next_Game
                         SetMessage(message);
                         int refID = ConvertLocToRef(actor.Value.LocID);
                         if (actor.Value.ActID == 1)
-                        { SetPlayerRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, CurrentActorIncident.Known)); }
+                        { SetPlayerRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, CurrentActorIncident.Known)); }
                         else if (actor.Value.ActID > 1)
-                        { SetCurrentRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, refID, CurrentActorIncident.Known)); }
+                        { SetCurrentRecord(new Record(eventText, actor.Value.ActID, actor.Value.LocID, CurrentActorIncident.Known)); }
                         Game.logTurn?.Write(eventText);
                     }
                 }
@@ -5343,7 +5349,7 @@ namespace Next_Game
                                                             active.Known = true; active.Revert = known_revert;
                                                             description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
                                                                 enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
-                                                            Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Known);
+                                                            Record record = new Record(description, active.ActID, locID, CurrentActorIncident.Known);
                                                             SetPlayerRecord(record);
                                                             SetMessage(new Message(description, MessageType.Search));
                                                         }
@@ -5363,7 +5369,7 @@ namespace Next_Game
                                                                     //only activated enemies can capture (Inquisitors ae always activated, Nemesis only if the gods are angry)
                                                                     active.Capture = true;
                                                                 }
-                                                                Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
+                                                                Record record = new Record(description, active.ActID, locID, CurrentActorIncident.Search);
                                                                 SetPlayerRecord(record);
                                                                 SetMessage(new Message(description, MessageType.Search));
                                                             }
@@ -5388,7 +5394,7 @@ namespace Next_Game
                                                         active.Known = true; active.Revert = known_revert;
                                                         description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Title, active.Name, active.ActID,
                                                             enemy.Value.Title, enemy.Value.Name, enemy.Value.ActID, locName);
-                                                        Record record = new Record(description, active.ActID, locID, refID, CurrentActorIncident.Search);
+                                                        Record record = new Record(description, active.ActID, locID, CurrentActorIncident.Search);
                                                         SetCurrentRecord(record);
                                                         SetMessage(new Message(description, MessageType.Search));
                                                     }
@@ -5512,7 +5518,7 @@ namespace Next_Game
                                                             active.Value.Known = true; active.Value.Revert = known_revert;
                                                             description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name,
                                                                 active.Value.ActID, enemy.Title, enemy.Name, enemy.ActID, locName);
-                                                            Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Known);
+                                                            Record record = new Record(description, active.Value.ActID, locID, CurrentActorIncident.Known);
                                                             SetPlayerRecord(record);
                                                             SetMessage(new Message(description, MessageType.Search));
                                                         }
@@ -5532,7 +5538,7 @@ namespace Next_Game
                                                                     //only activated enemies can capture (Inquisitors are always activated, Nemesis only when gods are angry)
                                                                     active.Value.Capture = true;
                                                                 }
-                                                                Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
+                                                                Record record = new Record(description, active.Value.ActID, locID, CurrentActorIncident.Search);
                                                                 SetPlayerRecord(record);
                                                                 SetMessage(new Message(description, MessageType.Search));
                                                             }
@@ -5556,7 +5562,7 @@ namespace Next_Game
                                                         active.Value.Known = true; active.Value.Revert = known_revert; active.Value.Capture = true;
                                                         description = string.Format("{0} {1}, ActID {2}, has been Spotted by {3} {4}, ActID {5} at {6}", active.Value.Title, active.Value.Name, active.Value.ActID,
                                                             enemy.Title, enemy.Name, enemy.ActID, locName);
-                                                        Record record = new Record(description, active.Value.ActID, locID, refID, CurrentActorIncident.Search);
+                                                        Record record = new Record(description, active.Value.ActID, locID, CurrentActorIncident.Search);
                                                         SetCurrentRecord(record);
                                                         SetMessage(new Message(description, MessageType.Search));
                                                     }
@@ -5934,7 +5940,7 @@ namespace Next_Game
                                     //admin
                                     description = string.Format("ItemID {0}, {1}, has been confiscated by the {2} Dungeon Master", item.ItemID, item.Description, dungeonLoc);
                                     SetMessage(new Message(description, MessageType.Incarceration));
-                                    SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Challenge));
+                                    SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorIncident.Challenge));
                                 }
                             }
                         }
@@ -5943,7 +5949,7 @@ namespace Next_Game
                         {
                             description = $"The disguise, {player.ConcealText}, has been confiscated by the {dungeonLoc} Dungeon Master";
                             SetMessage(new Message(description, MessageType.Incarceration));
-                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Challenge));
+                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorIncident.Challenge));
                             player.ConcealDisguise = 0;
                             player.Conceal = ActorConceal.None;
                             player.ConcealLevel = 0;
@@ -5955,13 +5961,13 @@ namespace Next_Game
                             player.Resources = 1;
                             description = $"{player.Name} \"{player.Handle}\", has had most of their gold confiscated by the {dungeonLoc} Dungeon Master";
                             SetMessage(new Message(description, MessageType.Incarceration));
-                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Challenge));
+                            SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorIncident.Challenge));
                         }
                         //administration
                         description = string.Format("{0} has been Captured by {1} {2}, ActID {3} and is to be held at {4}", player.Name, enemy.Title, enemy.Name, enemy.ActID, dungeonLoc);
                         SetMessage(new Message(description, MessageType.Search));
-                        SetPlayerRecord(new Record(description, player.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
-                        SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, tempRefID, CurrentActorIncident.Search));
+                        SetPlayerRecord(new Record(description, player.ActID, player.LocID, CurrentActorIncident.Search));
+                        SetCurrentRecord(new Record(description, enemy.ActID, player.LocID, CurrentActorIncident.Search));
                     }
                     else if (enemy is Nemesis)
                     {
@@ -6464,7 +6470,7 @@ namespace Next_Game
                                 //remove disguise
                                 description = $"{player.Name} \"{player.Handle}\" has removed their disguise of {disguise.Description}";
                                 SetMessage(new Message(description, MessageType.Search));
-                                SetPlayerRecord(new Record(description, 1, player.LocID, ConvertLocToRef(player.LocID), CurrentActorIncident.Search));
+                                SetPlayerRecord(new Record(description, 1, player.LocID, CurrentActorIncident.Search));
                                 Game.logTurn?.Write(description);
                                 player.Conceal = ActorConceal.None;
                                 player.ConcealLevel = 0;
@@ -6482,7 +6488,7 @@ namespace Next_Game
                                 player.ConcealText = disguise.Description;
                                 description = $"{player.Name} \"{player.Handle}\" has assumed the disguise of {disguise.Description}";
                                 SetMessage(new Message(description, MessageType.Search));
-                                SetPlayerRecord(new Record(description, 1, player.LocID, ConvertLocToRef(player.LocID), CurrentActorIncident.Search));
+                                SetPlayerRecord(new Record(description, 1, player.LocID, CurrentActorIncident.Search));
                                 //player becomes UNKNOWN, if already Known
                                 if (player.Known == true)
                                 {

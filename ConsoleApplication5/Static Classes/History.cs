@@ -503,8 +503,7 @@ namespace Next_Game
                         //personal history
                         int year = Game.gameRevolt;
                         string description = string.Format("{0}, ActID {1}, Took a lifetime oath of service to the Dark Brotherhood of Inquisitioners", inquisitor.Name, inquisitor.ActID);
-                        Record record = new Record(description, inquisitor.ActID, locID, refID, year,
-                            HistActorIncident.Service);
+                        Record record = new Record(description, inquisitor.ActID, locID, loc.RefID, year, HistActorIncident.Service);
                         Game.world.SetHistoricalRecord(record);
                         //place characters at Location
                         inquisitor.LocID = locID;
@@ -558,8 +557,7 @@ namespace Next_Game
                         //personal history
                         int year = Game.gameRevolt;
                         string description = string.Format("{0}, ActID {1}, was created in the image of Man by the Gods above", nemesis.Name, nemesis.ActID);
-                        Record record = new Record(description, nemesis.ActID, locID, refID, year,
-                            HistActorIncident.Service);
+                        Record record = new Record(description, nemesis.ActID, locID, loc.RefID, year, HistActorIncident.Service);
                         Game.world.SetHistoricalRecord(record);
                         //place characters at Location
                         nemesis.LocID = locID;
@@ -687,7 +685,7 @@ namespace Next_Game
             if (type == ActorType.Lord)
             {
                 descriptor = string.Format("{0} born, Aid {1}, at {2}", actor.Name, actor.ActID, Game.world.GetLocationName(locID));
-                Record recordLord = new Record(descriptor, actor.ActID, locID, refID, actor.Born, HistActorIncident.Born);
+                Record recordLord = new Record(descriptor, actor.ActID, locID, loc.RefID, actor.Born, HistActorIncident.Born);
                 Game.world.SetHistoricalRecord(recordLord);
             }
             else if (type == ActorType.Lady)
