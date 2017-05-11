@@ -932,7 +932,8 @@ namespace Next_Game
                 if (person.Age >= 15)
                 {
                     newLine = false;
-                    handle = string.Format(" \"{0}\"", person.Handle);
+                    if (String.IsNullOrEmpty(person.Handle) == true) { handle = ""; }
+                    else { handle = string.Format(" \"{0}\"", person.Handle); }
                 }
                 RLColor color = RLColor.White;
                 RLColor locColor = RLColor.White;
@@ -985,7 +986,7 @@ namespace Next_Game
                     }
                     listToDisplay.Add(new Snippet(locString, locColor, RLColor.Black));
                     //Concealed
-                    if (person is Player && player.Conceal > ActorConceal.None)
+                    if (player?.Conceal > ActorConceal.None)
                     {
                         switch (player.Conceal)
                         {
@@ -1222,7 +1223,7 @@ namespace Next_Game
                     listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(resources)), RLColor.LightRed, RLColor.Black, false));
                     listToDisplay.Add(new Snippet(string.Format("{0}", (ResourceLevel)resources), true));
                     //Disguise
-                    if (player.ConcealDisguise > 0 && disguise != null)
+                    if (player?.ConcealDisguise > 0 && disguise != null)
                     {
                         listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Disguise"), false));
                         listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(disguise.Strength)), RLColor.LightRed, RLColor.Black, false));
@@ -1257,7 +1258,7 @@ namespace Next_Game
                                     if (possession is Disguise)
                                     {
                                         Disguise tempDisguise = possession as Disguise;
-                                        listToDisplay.Add(new Snippet($"Disguise \"{tempDisguise.Description}\", PossID {tempDisguise.PossID} {GetStars(tempDisguise.Strength)}"));
+                                        listToDisplay.Add(new Snippet($"Disguise \"{tempDisguise.Description}\", PossID {tempDisguise.PossID} {GetStars(tempDisguise.Strength)}", RLColor.LightGray, RLColor.Black));
                                     }
                                     else { Game.SetError(new Error(245, $"Invalid Possession (not a Disguise) for PossID {possession.PossID}")); }
                                 }
