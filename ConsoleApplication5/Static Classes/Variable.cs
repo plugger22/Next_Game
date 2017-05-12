@@ -16,7 +16,7 @@ namespace Next_Game
     }
 
     /// <summary>
-    /// Variables that are tracked game wide
+    /// Variables that are tracked game wide, mostly used by Events
     /// </summary>
     public class Variable
     {

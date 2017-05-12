@@ -1,4 +1,4 @@
-# list of Variables -> Info only
+# list of Variables -> Info only as Hardcoded
 # Format -> Index Number (used in events) & Variable Name
 
 

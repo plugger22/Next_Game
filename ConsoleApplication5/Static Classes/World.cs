@@ -888,6 +888,34 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Display a list of all GameStats and their current values
+        /// </summary>
+        /// <returns></returns>
+        public List<Snippet> ShowGameStatsRL()
+        {
+            List<Snippet> listToDisplay = new List<Snippet>();
+            GameStat[] tempGameStats = Game.statistic.GetArrayOfGameStats();
+            int[] tempStatistics = Game.statistic.GetArrayOfStatistics();
+            listToDisplay.Add(new Snippet("--- GameStats with Current Values", RLColor.Yellow, RLColor.Black));
+            if (tempGameStats.Length > 0 && tempGameStats.Length == tempStatistics.Length)
+            {
+                string description;
+                for (int i = 1; i < tempGameStats.Length; i++)
+                {
+                    description = $"{i,-3}:  {tempGameStats[i],-20} -> {tempStatistics[i],4}";
+                    listToDisplay.Add(new Snippet(description));
+                }
+            }
+            else
+            {
+                string errorText = $"arrayOfGameStats.Length \"{tempGameStats.Length}\" doesn't match arrayOfStatistics.Length \"{tempStatistics.Length}\"";
+                Game.SetError(new Error(260, errorText));
+                listToDisplay.Add(new Snippet(errorText, RLColor.LightRed, RLColor.Black));
+            }
+            return listToDisplay;
+        }
+
+        /// <summary>
         /// Display a single Actor in detail
         /// </summary>
         /// <param name="ActID"></param>
@@ -4049,6 +4077,8 @@ namespace Next_Game
             //Enemies
             UpdateAIController();
             SetEnemyActivity();
+            //debug
+            
             return notificationStatus;
         }
 

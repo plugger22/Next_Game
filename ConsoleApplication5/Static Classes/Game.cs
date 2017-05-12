@@ -23,9 +23,9 @@ namespace Next_Game
     {
         // The screen height and width are in number of tiles
 
-        //private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+        private static int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
         //DEBUG: insert seed here to test a particular map
-        private static int seed = 29635;
+        //private static int seed = 29635;
 
         static Random rnd;
         
@@ -73,6 +73,7 @@ namespace Next_Game
         public static InfoChannel infoChannel;
         public static Constant constant;
         public static Variable variable;
+        public static Statistic statistic;
         public static FileImport file;
         public static Utility utility;
         public static Layout layout;
@@ -130,6 +131,7 @@ namespace Next_Game
             Stopwatch timer_1 = new Stopwatch();
             constant = new Constant();
             variable = new Variable(seed);
+            statistic = new Statistic();
             utility = new Utility();
             logStart = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogStart.txt", true);
             logError = new Logger("c:/Users/cameron/documents/visual studio 2015/Projects/Next_Game/Data/LogError.txt");
@@ -597,6 +599,10 @@ namespace Next_Game
                                         //Custom report (debugging)
                                         infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- CUSTOM", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
+                                        break;
+                                    case MenuMode.Debug:
+                                        //ShowGameStats
+                                        infoChannel.SetInfoList(world.ShowGameStatsRL(), ConsoleDisplay.Multi);
                                         break;
                                 }
                                 break;
