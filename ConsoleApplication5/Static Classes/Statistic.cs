@@ -10,7 +10,13 @@ namespace Next_Game
     public enum GameStat  //NOTE: KEEP order the same as in arrayOfGameStat, eg. enum 1 is arrayOfGameVars[1]
     {
         None,
-        Disguise_DaysIn,
+        Disguise_Days,
+        SafeHouse_Days,
+        Dungeon_Days,
+        Location_Days,
+        Travelling_Days,
+        AtSea_Days,
+        Adrift_Days,
         //keep as last
         Count
     }
@@ -28,7 +34,13 @@ namespace Next_Game
             arrayOfGameStats = new GameStat[(int)GameStat.Count];
             arrayOfStatistics = new int[(int)GameStat.Count];
             //set up array of Globals
-            arrayOfGameStats[1] = GameStat.Disguise_DaysIn;
+            arrayOfGameStats[1] = GameStat.Disguise_Days;
+            arrayOfGameStats[2] = GameStat.SafeHouse_Days;
+            arrayOfGameStats[3] = GameStat.Dungeon_Days;
+            arrayOfGameStats[4] = GameStat.Location_Days;
+            arrayOfGameStats[5] = GameStat.Travelling_Days;
+            arrayOfGameStats[6] = GameStat.AtSea_Days;
+            arrayOfGameStats[7] = GameStat.Adrift_Days;
         }
 
         public int[] GetArrayOfStatistics()

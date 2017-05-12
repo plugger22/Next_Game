@@ -4446,6 +4446,7 @@ namespace Next_Game
                 //Player
                 if (actor.Value.ActID == 1)
                 {
+                    Player player = actor.Value as Player;
                     //incarcerated?
                     if (actor.Value.Status == ActorStatus.Captured)
                     {
@@ -4458,7 +4459,15 @@ namespace Next_Game
                         //message
                         string description = string.Format("The Legend of {0} {1} grows (+{2}) while the Usurper is incarcerated", Game.lore.NewKing.Title, Game.lore.NewKing.Name, legendLoss);
                         SetMessage(new Message(description, MessageType.Incarceration));
+                        Game.statistic.AddStat(GameStat.Dungeon_Days);
                     }
+                    //stats
+                    if (player.Conceal == ActorConceal.Disguise) { Game.statistic.AddStat(GameStat.Disguise_Days); }
+                    if (player.Conceal == ActorConceal.SafeHouse) { Game.statistic.AddStat(GameStat.SafeHouse_Days); }
+                    if (player.Status == ActorStatus.AtLocation) { Game.statistic.AddStat(GameStat.Location_Days); }
+                    if (player.Status == ActorStatus.Travelling) { Game.statistic.AddStat(GameStat.Travelling_Days); }
+                    if (player.Status == ActorStatus.AtSea) { Game.statistic.AddStat(GameStat.AtSea_Days); }
+                    if (player.Status == ActorStatus.Adrift) { Game.statistic.AddStat(GameStat.Adrift_Days); }
                 }
             }
         }

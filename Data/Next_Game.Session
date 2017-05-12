@@ -1,6 +1,6 @@
 <NotepadPlus>
     <Session activeView="0">
-        <mainView activeIndex="34">
+        <mainView activeIndex="12">
             <File firstVisibleLine="124" xOffset="0" scrollWidth="1" startPos="1459" endPos="1459" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\FirstMale.txt" />
             <File firstVisibleLine="57" xOffset="0" scrollWidth="1036" startPos="1085" endPos="1085" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\FirstFemale.txt" />
             <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="930" endPos="930" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Surnames.txt" />
@@ -12,20 +12,21 @@
             <File firstVisibleLine="114" xOffset="0" scrollWidth="1057" startPos="247" endPos="247" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_All.txt" />
             <File firstVisibleLine="322" xOffset="0" scrollWidth="1967" startPos="6796" endPos="6796" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_Female.txt" />
             <File firstVisibleLine="806" xOffset="0" scrollWidth="1589" startPos="16035" endPos="16035" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Traits_Male.txt" />
-            <File firstVisibleLine="131" xOffset="0" scrollWidth="1036" startPos="8440" endPos="8440" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Constants.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1253" startPos="76" endPos="76" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Variables.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="308" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Seed.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1022" startPos="0" endPos="0" selMode="0" lang="Exile_Logger" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\LogStart.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1022" startPos="0" endPos="0" selMode="0" lang="Exile_Logger" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\LogTurn.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1022" startPos="0" endPos="0" selMode="0" lang="Exile_Logger" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\LogError.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="189" endPos="81" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Constants.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="169" endPos="169" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Statistics.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="155" endPos="0" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Variables.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Seed.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="0" endPos="0" selMode="0" lang="Exile_Logger" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\LogStart.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="0" endPos="0" selMode="0" lang="Exile_Logger" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\LogTurn.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="0" endPos="0" selMode="0" lang="Exile_Logger" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\LogError.txt" />
             <File firstVisibleLine="14" xOffset="0" scrollWidth="1253" startPos="1657" endPos="1657" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Events_Follower.txt" />
-            <File firstVisibleLine="1055" xOffset="0" scrollWidth="1771" startPos="30843" endPos="30843" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Events_Player.txt" />
+            <File firstVisibleLine="598" xOffset="0" scrollWidth="1834" startPos="18892" endPos="18897" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Events_Player.txt" />
             <File firstVisibleLine="32" xOffset="0" scrollWidth="1022" startPos="6338" endPos="6338" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Events_AutoReact.txt" />
             <File firstVisibleLine="57" xOffset="0" scrollWidth="1771" startPos="254" endPos="254" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Archetypes.txt" />
             <File firstVisibleLine="0" xOffset="0" scrollWidth="1036" startPos="38" endPos="38" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Stories.txt" />
             <File firstVisibleLine="0" xOffset="0" scrollWidth="1365" startPos="4644" endPos="4644" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Followers.txt" />
-            <File firstVisibleLine="114" xOffset="0" scrollWidth="1771" startPos="5465" endPos="5465" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Challenge.txt" />
-            <File firstVisibleLine="284" xOffset="0" scrollWidth="1330" startPos="6251" endPos="6257" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Results.txt" />
+            <File firstVisibleLine="138" xOffset="0" scrollWidth="1057" startPos="5517" endPos="5517" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Challenge.txt" />
+            <File firstVisibleLine="27" xOffset="0" scrollWidth="1057" startPos="0" endPos="0" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Results.txt" />
             <File firstVisibleLine="12" xOffset="0" scrollWidth="987" startPos="1492" endPos="1492" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\SitNormal.txt" />
             <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="3760" endPos="3763" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\SitGame.txt" />
             <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="318" endPos="255" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\SitSpecial.txt" />
@@ -34,8 +35,9 @@
             <File firstVisibleLine="0" xOffset="0" scrollWidth="735" startPos="5245" endPos="5245" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\RelLists.txt" />
             <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="269" endPos="269" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Inquisitors.txt" />
             <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="35577" endPos="35577" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\SitTouched.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1204" startPos="2840" endPos="2840" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Items.txt" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="882" startPos="0" endPos="0" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Characters.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="1024" endPos="1024" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Items.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1057" startPos="562" endPos="562" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Characters.txt" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1358" startPos="411" endPos="411" selMode="0" lang="Exile" encoding="-1" filename="C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\Data\Disguises.txt" />
         </mainView>
         <subView activeIndex="0" />
     </Session>

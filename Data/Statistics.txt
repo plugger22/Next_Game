@@ -1,0 +1,11 @@
+# list of Statistics -> Info only as Hardcoded
+# Format -> Index Number (used in events) & Statistic Name
+
+
+1: Disguise_Days        # Number of Days spent in disguise
+2: SafeHouse_Days       # Number of Days spent in a Safe House
+3: Dungeon_Days  	    # Number of Days spent in a Dungeon
+4: Location_Days		# Number of Days spent at a Location
+5: Travelling_Days		# Number of Days spent Travelling
+6: AtSea_Days			# Number of Days spent At Sea
+7: Adrift_Days			# Number of Days spent Adrift
