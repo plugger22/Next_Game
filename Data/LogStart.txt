@@ -1,4 +1,4 @@
-//Exile Game file ops "LogStart.txt" commenced at: 12/05/2017 15:25:54
+//Exile Game file ops "LogStart.txt" commenced at: 12/05/2017 19:51:37
 --- Initialise Constants (FileImport.cs)
 INHERIT_TRAIT -> 50 Min 0 Max 100
 CHILDBIRTH_DEATH -> 15 Min 0 Max 100
@@ -71,252 +71,245 @@ LOSS_OF_LEGEND -> 1 Min 0 Max 4
 PROMISES_BASE -> 10 Min 5 Max 15
 PROMISES_HALVED -> 4 Min 4 Max 10
 PROMISES_MAX -> 6 Min 6 Max 20
+ERROR_29 "Location Deleted 1:17"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 19:51:37 UTC +10:00
+ERROR_29 "Location Deleted 2:20"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 19:51:37 UTC +10:00
 --- InitialiseHouseLocations (Network.cs)
-Total Locations (excluding Capital) 38
+Total Locations (excluding Capital) 33
 Number of Houses 8, Max Cap on House Numbers 8
-Branch 1 has 1 Houses allocated, Special Locations 0
+Branch 1 has 2 Houses allocated, Special Locations 1
 Branch 2 has 2 Houses allocated, Special Locations 1
-Branch 3 has 0 Houses allocated, Special Locations 0
-Branch 4 has 5 Houses allocated, Special Locations 1
+Branch 3 has 2 Houses allocated, Special Locations 1
+Branch 4 has 2 Houses allocated, Special Locations 1
 Total Houses Allocated 8 out of 8
 --- House Analysis (Network.cs)
 Unique Houses: 8
 - House 0
 - House 1
-LocID 2 has 3 connections and is 1 routes from the Capital
-LocID 3 has 1 connections and is 2 routes from the Capital
-LocID 4 has 2 connections and is 2 routes from the Capital
-LocID 5 has 2 connections and is 3 routes from the Capital
-LocID 6 has 1 connections and is 4 routes from the Capital
+LocID 7 has 1 connections and is 2 routes from the Capital
 - House 2
-LocID 8 has 3 connections and is 2 routes from the Capital
-LocID 11 has 2 connections and is 2 routes from the Capital
-LocID 10 has 1 connections and is 3 routes from the Capital
-LocID 12 has 2 connections and is 3 routes from the Capital
+LocID 3 has 3 connections and is 2 routes from the Capital
+LocID 8 has 2 connections and is 2 routes from the Capital
+LocID 6 has 1 connections and is 3 routes from the Capital
+LocID 4 has 2 connections and is 3 routes from the Capital
 LocID 9 has 1 connections and is 3 routes from the Capital
-LocID 13 has 1 connections and is 4 routes from the Capital
+LocID 5 has 1 connections and is 4 routes from the Capital
 - House 3
-LocID 14 has 1 connections and is 2 routes from the Capital
+LocID 11 has 1 connections and is 2 routes from the Capital
 - House 4
-LocID 33 has 3 connections and is 2 routes from the Capital
-LocID 37 has 1 connections and is 3 routes from the Capital
+LocID 12 has 3 connections and is 2 routes from the Capital
+LocID 13 has 1 connections and is 3 routes from the Capital
+LocID 14 has 3 connections and is 3 routes from the Capital
+LocID 15 has 1 connections and is 4 routes from the Capital
+LocID 16 has 1 connections and is 4 routes from the Capital
 - House 5
-LocID 38 has 2 connections and is 2 routes from the Capital
-LocID 39 has 1 connections and is 3 routes from the Capital
+LocID 18 has 2 connections and is 2 routes from the Capital
+LocID 19 has 3 connections and is 3 routes from the Capital
+LocID 20 has 1 connections and is 4 routes from the Capital
+LocID 21 has 1 connections and is 4 routes from the Capital
 - House 6
-LocID 16 has 4 connections and is 2 routes from the Capital
-LocID 17 has 2 connections and is 3 routes from the Capital
-LocID 18 has 1 connections and is 4 routes from the Capital
-LocID 19 has 4 connections and is 3 routes from the Capital
-LocID 27 has 4 connections and is 4 routes from the Capital
-LocID 25 has 2 connections and is 4 routes from the Capital
-LocID 30 has 1 connections and is 5 routes from the Capital
-LocID 28 has 1 connections and is 5 routes from the Capital
-LocID 20 has 3 connections and is 4 routes from the Capital
-LocID 29 has 1 connections and is 5 routes from the Capital
-LocID 24 has 1 connections and is 5 routes from the Capital
-LocID 26 has 1 connections and is 5 routes from the Capital
-LocID 21 has 3 connections and is 5 routes from the Capital
-LocID 22 has 1 connections and is 6 routes from the Capital
-LocID 23 has 1 connections and is 6 routes from the Capital
+LocID 22 has 2 connections and is 2 routes from the Capital
+LocID 23 has 1 connections and is 3 routes from the Capital
 - House 7
+LocID 25 has 4 connections and is 2 routes from the Capital
+LocID 30 has 3 connections and is 2 routes from the Capital
+LocID 29 has 1 connections and is 3 routes from the Capital
+LocID 28 has 1 connections and is 3 routes from the Capital
+LocID 33 has 2 connections and is 3 routes from the Capital
+LocID 26 has 2 connections and is 3 routes from the Capital
 LocID 31 has 2 connections and is 3 routes from the Capital
 LocID 32 has 1 connections and is 4 routes from the Capital
+LocID 34 has 1 connections and is 4 routes from the Capital
 - House 8
-LocID 34 has 3 connections and is 3 routes from the Capital
-LocID 36 has 1 connections and is 4 routes from the Capital
-LocID 35 has 1 connections and is 4 routes from the Capital
+LocID 27 has 1 connections and is 4 routes from the Capital
 --- listOfAllHouses (Network.cs)
-Branch 1 has 1 records
+Branch 1 has 2 records
 Branch 2 has 2 records
-Branch 3 has 5 records
+Branch 3 has 2 records
+Branch 4 has 2 records
 --- listIndividualHouseLocID (Network.cs)
 House 0 has 0 records
-House 1 has 5 records
+House 1 has 1 records
 House 2 has 6 records
 House 3 has 1 records
-House 4 has 2 records
-House 5 has 2 records
-House 6 has 15 records
-House 7 has 2 records
-House 8 has 3 records
+House 4 has 5 records
+House 5 has 4 records
+House 6 has 2 records
+House 7 has 9 records
+House 8 has 1 records
 --- House Capitals (Network.cs)
 House 0 has ID 0 as it's capital
-House 1 has ID 2 as it's capital
-House 2 has ID 8 as it's capital
-House 3 has ID 14 as it's capital
-House 4 has ID 33 as it's capital
-House 5 has ID 38 as it's capital
-House 6 has ID 27 as it's capital
-House 7 has ID 31 as it's capital
-House 8 has ID 34 as it's capital
+House 1 has ID 7 as it's capital
+House 2 has ID 3 as it's capital
+House 3 has ID 11 as it's capital
+House 4 has ID 14 as it's capital
+House 5 has ID 19 as it's capital
+House 6 has ID 22 as it's capital
+House 7 has ID 25 as it's capital
+House 8 has ID 27 as it's capital
 --- InitialisePorts (Network.cs)
-LocID 4 has been added to the ListPorts for GeoID 1
-LocID 6 has been added to the ListPorts for GeoID 11
-[Notification] LocID 6 is already present in ListPorts for GeoID 11
-LocID 12 has been added to the ListPorts for GeoID 1
-LocID 13 has been added to the ListPorts for GeoID 1
-[Notification] LocID 13 is already present in ListPorts for GeoID 1
-LocID 14 has been added to the ListPorts for GeoID 1
-LocID 23 has been added to the ListPorts for GeoID 6
-LocID 29 has been added to the ListPorts for GeoID 16
-LocID 30 has been added to the ListPorts for GeoID 24
-LocID 30 has been added to the ListPorts for GeoID 15
-LocID 32 has been added to the ListPorts for GeoID 15
-LocID 34 has been added to the ListPorts for GeoID 11
-LocID 35 has been added to the ListPorts for GeoID 15
-LocID 36 has been added to the ListPorts for GeoID 23
-LocID 39 has been added to the ListPorts for GeoID 11
-[Notification] LocID 39 is already present in ListPorts for GeoID 11
+LocID 4 has been added to the ListPorts for GeoID 6
+LocID 5 has been added to the ListPorts for GeoID 6
+[Notification] LocID 5 is already present in ListPorts for GeoID 6
+LocID 6 has been added to the ListPorts for GeoID 6
+LocID 9 has been added to the ListPorts for GeoID 6
+LocID 13 has been added to the ListPorts for GeoID 18
+LocID 20 has been added to the ListPorts for GeoID 26
+LocID 21 has been added to the ListPorts for GeoID 26
+LocID 21 has been added to the ListPorts for GeoID 11
+LocID 23 has been added to the ListPorts for GeoID 1
+LocID 26 has been added to the ListPorts for GeoID 2
+LocID 32 has been added to the ListPorts for GeoID 1
+LocID 34 has been added to the ListPorts for GeoID 1
+[Notification] LocID 34 is already present in ListPorts for GeoID 1
+[Notification] LocID 34 is already present in ListPorts for GeoID 1
 --- Port Summary (Network.cs)
-GeoCluster GeoID 1 -> 4 Ports
-[Notification] Unknown GeoID 1 with 4 Ports -> added to dictActiveSeas
-Port -> LocID 4 at 3:9
-[Notification] LocID 12 distance 23 added to dictSeaDistance for Port LocID 4
-[Notification] LocID 13 distance 30 added to dictSeaDistance for Port LocID 4
-[Notification] LocID 14 distance 14 added to dictSeaDistance for Port LocID 4
-Port -> LocID 12 at 24:7
-[Notification] LocID 4 distance 23 added to dictSeaDistance for Port LocID 12
-[Notification] LocID 13 distance 7 added to dictSeaDistance for Port LocID 12
-[Notification] LocID 14 distance 9 added to dictSeaDistance for Port LocID 12
-Port -> LocID 13 at 29:5
-[Notification] LocID 4 distance 30 added to dictSeaDistance for Port LocID 13
-[Notification] LocID 12 distance 7 added to dictSeaDistance for Port LocID 13
-[Notification] LocID 14 distance 16 added to dictSeaDistance for Port LocID 13
-Port -> LocID 14 at 15:7
-[Notification] LocID 4 distance 14 added to dictSeaDistance for Port LocID 14
-[Notification] LocID 12 distance 9 added to dictSeaDistance for Port LocID 14
-[Notification] LocID 13 distance 16 added to dictSeaDistance for Port LocID 14
-GeoCluster GeoID 11 -> 3 Ports
-[Notification] Unknown GeoID 11 with 3 Ports -> added to dictActiveSeas
-Port -> LocID 6 at 1:17
-[Notification] LocID 34 distance 6 added to dictSeaDistance for Port LocID 6
-[Notification] LocID 39 distance 4 added to dictSeaDistance for Port LocID 6
-Port -> LocID 34 at 2:22
-[Notification] LocID 6 distance 6 added to dictSeaDistance for Port LocID 34
-[Notification] LocID 39 distance 4 added to dictSeaDistance for Port LocID 34
-Port -> LocID 39 at 3:19
-[Notification] LocID 6 distance 4 added to dictSeaDistance for Port LocID 39
-[Notification] LocID 34 distance 4 added to dictSeaDistance for Port LocID 39
-GeoCluster GeoID 15 -> 3 Ports
-[Notification] Unknown GeoID 15 with 3 Ports -> added to dictActiveSeas
-Port -> LocID 30 at 18:29
-[Notification] LocID 32 distance 16 added to dictSeaDistance for Port LocID 30
-[Notification] LocID 35 distance 12 added to dictSeaDistance for Port LocID 30
-Port -> LocID 32 at 7:24
-[Notification] LocID 30 distance 16 added to dictSeaDistance for Port LocID 32
-[Notification] LocID 35 distance 6 added to dictSeaDistance for Port LocID 32
-Port -> LocID 35 at 6:29
-[Notification] LocID 30 distance 12 added to dictSeaDistance for Port LocID 35
-[Notification] LocID 32 distance 6 added to dictSeaDistance for Port LocID 35
+GeoCluster GeoID 1 -> 3 Ports
+[Notification] Unknown GeoID 1 with 3 Ports -> added to dictActiveSeas
+Port -> LocID 23 at 1:12
+[Notification] LocID 32 distance 16 added to dictSeaDistance for Port LocID 23
+[Notification] LocID 34 distance 8 added to dictSeaDistance for Port LocID 23
+Port -> LocID 32 at 6:1
+[Notification] LocID 23 distance 16 added to dictSeaDistance for Port LocID 32
+[Notification] LocID 34 distance 8 added to dictSeaDistance for Port LocID 32
+Port -> LocID 34 at 2:5
+[Notification] LocID 23 distance 8 added to dictSeaDistance for Port LocID 34
+[Notification] LocID 32 distance 8 added to dictSeaDistance for Port LocID 34
+GeoCluster GeoID 6 -> 4 Ports
+[Notification] Unknown GeoID 6 with 4 Ports -> added to dictActiveSeas
+Port -> LocID 4 at 22:3
+[Notification] LocID 5 distance 4 added to dictSeaDistance for Port LocID 4
+[Notification] LocID 6 distance 9 added to dictSeaDistance for Port LocID 4
+[Notification] LocID 9 distance 19 added to dictSeaDistance for Port LocID 4
+Port -> LocID 5 at 20:1
+[Notification] LocID 4 distance 4 added to dictSeaDistance for Port LocID 5
+[Notification] LocID 6 distance 13 added to dictSeaDistance for Port LocID 5
+[Notification] LocID 9 distance 23 added to dictSeaDistance for Port LocID 5
+Port -> LocID 6 at 26:8
+[Notification] LocID 4 distance 9 added to dictSeaDistance for Port LocID 6
+[Notification] LocID 5 distance 13 added to dictSeaDistance for Port LocID 6
+[Notification] LocID 9 distance 10 added to dictSeaDistance for Port LocID 6
+Port -> LocID 9 at 29:15
+[Notification] LocID 4 distance 19 added to dictSeaDistance for Port LocID 9
+[Notification] LocID 5 distance 23 added to dictSeaDistance for Port LocID 9
+[Notification] LocID 6 distance 10 added to dictSeaDistance for Port LocID 9
+GeoCluster GeoID 26 -> 2 Ports
+[Notification] Unknown GeoID 26 with 2 Ports -> added to dictActiveSeas
+Port -> LocID 20 at 9:29
+[Notification] LocID 21 distance 3 added to dictSeaDistance for Port LocID 20
+Port -> LocID 21 at 6:29
+[Notification] LocID 20 distance 3 added to dictSeaDistance for Port LocID 21
 --- Network Analysis (Network.cs)
 Dir 0         1 Locations     0 Connections     0 Houses     0 Specials
-Dir 1         5 Locations     3 Connections     1 Houses     0 Specials
-Dir 2         8 Locations     4 Connections     2 Houses     1 Specials
-Dir 3         0 Locations     0 Connections     0 Houses     0 Specials
-Dir 4        25 Locations     4 Connections     5 Houses     1 Specials
+Dir 1         8 Locations     4 Connections     2 Houses     1 Specials
+Dir 2         7 Locations     3 Connections     2 Houses     1 Specials
+Dir 3         7 Locations     3 Connections     2 Houses     1 Specials
+Dir 4        11 Locations     3 Connections     2 Houses     1 Specials
 ---  InitialiseMajorHouses (History.cs)
-Great House Florent removed
-Great House Tully removed
+Great House Tyrell removed
+Great House Martell removed
 -0-
 Major House Lannister added at Casterly Rock, RefID 2, ArcID 14
-Major House Martell added at Dorne, RefID 3, ArcID 18
+Major House Florent added at Brightwater Keep, RefID 4, ArcID 12
 Major House Greyjoy added at Pyke, RefID 5, ArcID 17
 Major House Arryn added at Eyrie, RefID 6, ArcID 16
 Major House Baratheon added at Bloodkeep, RefID 7, ArcID 19
 Major House Stark added at Winterfell, RefID 8, ArcID 11
-Major House Tyrell added at Highgarden, RefID 10, ArcID 20
+Major House Tully added at Riverrun, RefID 9, ArcID 13
 Major House Targaryen added at Valyria, RefID 11, ArcID 21
 ---  InitialiseGeoClusters (History.cs)
-24 Geoclusters initialised
+27 Geoclusters initialised
 ---  InitialisePlayer (History.cs)
 Usurper William Tell, ActID William Tell, Resources 1
 ---  InitialiseCapital (History.cs)
-CapitalWalls 5, CapitalTreasury 4
+CapitalWalls 5, CapitalTreasury 3
 ---  InitialiseFollowers (History.cs)
-The Crone, Aid 2, FID 8, ArcID 23, "Old Woman" Loyalty 58
+The Waif, Aid 2, FID 10, ArcID 23, "Lost Child" Loyalty 57
 The Haggler, Aid 3, FID 9, ArcID 23, "Merchant" Loyalty 56
-The Beast, Aid 4, FID 7, ArcID 23, "Enforcer" Loyalty 95
-The Duchess, Aid 5, FID 6, ArcID 23, "Seductress" Loyalty 75
-The Waif, Aid 6, FID 10, ArcID 23, "Lost Child" Loyalty 57
-The Dark Eminence, Aid 7, FID 5, ArcID 23, "Manipulator" Loyalty 35
+The Leper, Aid 4, FID 4, ArcID 23, "Beggar" Loyalty 55
+The Viper, Aid 5, FID 3, ArcID 23, "Assassin" Loyalty 55
+The Duchess, Aid 6, FID 6, ArcID 23, "Seductress" Loyalty 75
+The Crone, Aid 7, FID 8, ArcID 23, "Old Woman" Loyalty 58
 The Spider, Aid 8, FID 1, ArcID 23, "Spy" Loyalty 60
-The Leper, Aid 9, FID 4, ArcID 23, "Beggar" Loyalty 55
+The Beast, Aid 9, FID 7, ArcID 23, "Enforcer" Loyalty 95
 --- InitialiseWorld (World.cs)
 ---  UpdateHouses (Network.cs)
-House Lannister assigned LocID 2 and HouseID 6
-House Martell assigned LocID 8 and HouseID 8
-House Greyjoy assigned LocID 14 and HouseID 4
-House Arryn assigned LocID 33 and HouseID 7
-House Baratheon assigned LocID 38 and HouseID 5
-House Stark assigned LocID 27 and HouseID 2
-House Tyrell assigned LocID 31 and HouseID 1
-House Targaryen assigned LocID 34 and HouseID 3
+House Lannister assigned LocID 7 and HouseID 2
+House Florent assigned LocID 3 and HouseID 5
+House Greyjoy assigned LocID 11 and HouseID 7
+House Arryn assigned LocID 14 and HouseID 4
+House Baratheon assigned LocID 19 and HouseID 6
+House Stark assigned LocID 22 and HouseID 8
+House Tully assigned LocID 25 and HouseID 1
+House Targaryen assigned LocID 27 and HouseID 3
 - Initialise BannerLords for House Lannister
-Minor House Mooton added at Maidenpool, RefID 121, LocID 16, ArcID 0
-Minor House Hightower added at Oldtown, RefID 116, LocID 17, ArcID 0
-Minor House Clegane added at Clegane's Keep, RefID 107, LocID 18, ArcID 0
-Minor House Dondarrion added at Blackhaven, RefID 110, LocID 19, ArcID 0
-Minor House Botley added at Lordsport, RefID 102, LocID 25, ArcID 0
-Minor House Karstark added at Karhold, RefID 119, LocID 30, ArcID 0
-Minor House Flint added at Widow's Watch, RefID 136, LocID 28, ArcID 0
-Minor House Caron added at Nightsong, RefID 105, LocID 20, ArcID 0
-Minor House Fowler added at Skyreach, RefID 112, LocID 29, ArcID 0
-Minor House Cerwyn added at Cerwyn, RefID 106, LocID 24, ArcID 0
-Minor House Crane added at Red Lake, RefID 109, LocID 26, ArcID 0
-Minor House Umber added at Last Hearth, RefID 131, LocID 21, ArcID 0
-Minor House Wull added at Sodhall, RefID 133, LocID 22, ArcID 0
-Minor House Brax added at Hornvale, RefID 104, LocID 23, ArcID 0
-- Initialise BannerLords for House Martell
-Minor House Oakheart added at Old Oak, RefID 124, LocID 36, ArcID 0
-Minor House Codd added at Fishfork, RefID 108, LocID 35, ArcID 0
+Minor House Slynt added at Harrenhal, RefID 127, LocID 8, ArcID 0
+Minor House Estermont added at Greenstone, RefID 111, LocID 6, ArcID 0
+Minor House Penrose added at Parchments, RefID 125, LocID 4, ArcID 0
+Minor House Tarth added at Evenfall, RefID 130, LocID 9, ArcID 0
+Minor House Hornwood added at Hornwood, RefID 117, LocID 5, ArcID 0
+- Initialise BannerLords for House Florent
+Minor House Tallhart added at Torrhen's Square, RefID 128, LocID 18, ArcID 0
+Minor House Mormont added at Bearpit, RefID 122, LocID 20, ArcID 0
+Minor House Oakheart added at Old Oak, RefID 124, LocID 21, ArcID 0
 - Initialise BannerLords for House Greyjoy
-Minor House Tallhart added at Torrhen's Square, RefID 128, LocID 37, ArcID 0
+Minor House Frey added at The Twins, RefID 113, LocID 30, ArcID 0
+Minor House Glover added at Deepwood Motte, RefID 114, LocID 29, ArcID 0
+Minor House Harlaw added at Ten Towers, RefID 115, LocID 28, ArcID 0
+Minor House Yronwood added at Yronwood Castle, RefID 135, LocID 33, ArcID 0
+Minor House Mooton added at Maidenpool, RefID 121, LocID 26, ArcID 0
+Minor House Crane added at Red Lake, RefID 109, LocID 31, ArcID 0
+Minor House Clegane added at Clegane's Keep, RefID 107, LocID 32, ArcID 0
+Minor House Codd added at Fishfork, RefID 108, LocID 34, ArcID 0
 - Initialise BannerLords for House Arryn
-Minor House Slynt added at Harrenhal, RefID 127, LocID 32, ArcID 0
+Minor House Westerling added at The Crag, RefID 132, LocID 12, ArcID 0
+Minor House Brax added at Hornvale, RefID 104, LocID 13, ArcID 0
+Minor House Karstark added at Karhold, RefID 119, LocID 15, ArcID 0
+Minor House Ambrose added at Blackwater, RefID 100, LocID 16, ArcID 0
 - Initialise BannerLords for House Baratheon
-Minor House Bracken added at Stone Hedge, RefID 103, LocID 39, ArcID 0
+Minor House Dondarrion added at Blackhaven, RefID 110, LocID 23, ArcID 0
 - Initialise BannerLords for House Stark
-Minor House Ambrose added at Blackwater, RefID 100, LocID 11, ArcID 0
-Minor House Harlaw added at Ten Towers, RefID 115, LocID 10, ArcID 0
-Minor House Hornwood added at Hornwood, RefID 117, LocID 12, ArcID 0
-Minor House Frey added at The Twins, RefID 113, LocID 9, ArcID 0
-Minor House Tarth added at Evenfall, RefID 130, LocID 13, ArcID 0
-- Initialise BannerLords for House Tyrell
-Minor House Redwyne added at The Arbor, RefID 126, LocID 3, ArcID 0
-Minor House Mormont added at Bearpit, RefID 122, LocID 4, ArcID 0
-Minor House Tarly added at Horn Hill, RefID 129, LocID 5, ArcID 0
-Minor House Penrose added at Parchments, RefID 125, LocID 6, ArcID 0
+- Initialise BannerLords for House Tully
 - Initialise BannerLords for House Targaryen
 ---  InitialiseHouses (World.cs) ---
 --- InitialiseSpecialHouse (History.cs)
-"The Singing Ghost" Inn initialised, RefID 1002, LocID 7, HouseID 99
-"The Yellow Huntress" Inn initialised, RefID 1003, LocID 15, HouseID 99
+"The Pickled Prune" Inn initialised, RefID 1005, LocID 2, HouseID 99
+"The Shaggy Parrot" Inn initialised, RefID 1004, LocID 10, HouseID 99
+"The Raucous Rat" Inn initialised, RefID 1001, LocID 17, HouseID 99
+"The Yellow Huntress" Inn initialised, RefID 1003, LocID 24, HouseID 99
 - House Genetics (add Lords and Ladies)
-Inherited Treachery trait, Actor ID 16, Parent ID 11
-Inherited Treachery trait, Actor ID 17, Parent ID 11
-Inherited Combat trait, Actor ID 18, Parent ID 11
-Inherited Treachery trait, Actor ID 18, Parent ID 11
-Inherited Wits trait, Actor ID 26, Parent ID 19
-Inherited Charm trait, Actor ID 26, Parent ID 19
-Inherited Wits trait, Actor ID 27, Parent ID 19
-Vardis Greyjoy, Aid 29 is Touched
-Inherited Combat trait, Actor ID 35, Parent ID 30
-Inherited Treachery trait, Actor ID 35, Parent ID 30
-Inherited Treachery trait, Actor ID 36, Parent ID 29
-Emmot Arryn, Aid 38 is Touched
-Inherited Leadership trait, Actor ID 44, Parent ID 37
-Inherited Combat trait, Actor ID 51, Parent ID 45
-Inherited Leadership trait, Actor ID 52, Parent ID 46
-Inherited Wits trait, Actor ID 59, Parent ID 53
-Inherited Combat trait, Actor ID 66, Parent ID 60
-[Notification] Repeating Name in house 1: Walcher Tyrell II
-Inherited Combat trait, Actor ID 67, Parent ID 60
-Inherited Wits trait, Actor ID 74, Parent ID 69
-Inherited Leadership trait, Actor ID 75, Parent ID 10
-Inherited Wits trait, Actor ID 76, Parent ID 68
-Donnel Clegane, Aid 79 is Touched
-Jarvis Slynt, Aid 94 is Touched
+Inherited Charm trait, Actor ID 16, Parent ID 10
+Inherited Combat trait, Actor ID 23, Parent ID 17
+Inherited Combat trait, Actor ID 37, Parent ID 31
+Inherited Charm trait, Actor ID 37, Parent ID 31
+Inherited Leadership trait, Actor ID 37, Parent ID 31
+Inherited Combat trait, Actor ID 38, Parent ID 32
+Inherited Wits trait, Actor ID 39, Parent ID 32
+Inherited Charm trait, Actor ID 39, Parent ID 32
+Inherited Combat trait, Actor ID 40, Parent ID 32
+Inherited Wits trait, Actor ID 40, Parent ID 32
+Inherited Combat trait, Actor ID 47, Parent ID 42
+Inherited Charm trait, Actor ID 47, Parent ID 42
+Inherited Leadership trait, Actor ID 47, Parent ID 42
+Inherited Wits trait, Actor ID 54, Parent ID 48
+Inherited Leadership trait, Actor ID 54, Parent ID 48
+Inherited Combat trait, Actor ID 61, Parent ID 56
+Elison Tully, Aid 61 is Touched
+Inherited Combat trait, Actor ID 68, Parent ID 63
+Inherited Leadership trait, Actor ID 70, Parent ID 62
+Inherited Leadership trait, Actor ID 71, Parent ID 62
+Inherited Combat trait, Actor ID 73, Parent ID 63
+Inherited Combat trait, Actor ID 74, Parent ID 63
+Inherited Charm trait, Actor ID 75, Parent ID 63
+Inherited Combat trait, Actor ID 76, Parent ID 63
+Inherited Charm trait, Actor ID 76, Parent ID 63
+Inherited Charm trait, Actor ID 77, Parent ID 24
+Inherited Leadership trait, Actor ID 77, Parent ID 24
+Inherited Combat trait, Actor ID 78, Parent ID 41
+Inherited Combat trait, Actor ID 79, Parent ID 55
+Inherited Wits trait, Actor ID 79, Parent ID 55
+Inherited Treachery trait, Actor ID 79, Parent ID 55
 --- InitialiseItems (World.cs)
 Head Lopper, ItemID 2, A great sword forged hundreds of years ago from Valyrian steel by skilled craftsmen., Year 100
 The Mage Ring, ItemID 3, An enchanted ring made by the mute, Hermoine the Horrible, which glows brightly when enemies are near, Year 250
@@ -329,504 +322,461 @@ Amulet of Passion, ItemID 8, Whoever wears the Amulet has the sexual stamina of 
 Book of the Dead, ItemID 9, An ancient tome that possesses the secret to Eternal Life. Scholars have been searching for this book for hundreds of years., Year -1500
 Elixir of Wellness, ItemID 10, Those who drink from the Exilir have their digestive systems purged, cleaned and cured. Greatly valued by Gastronomes., Year 300
 --- InitialiseActiveActors (World.cs)
-[Item] The Mage Ring, PossID 8, ItemID 3 added to Player's Inventory
-Follower The Spider, ActorID 8, added and placed at Hornwood, LocID 12
-Follower The Beast, ActorID 4, added and placed at Widow's Watch, LocID 28
-Follower The Duchess, ActorID 5, added and placed at The Twins, LocID 9
+[Item] The Mage Ring, PossID 7, ItemID 3 added to Player's Inventory
+Follower The Haggler, ActorID 3, added and placed at Clegane's Keep, LocID 32
+Follower The Beast, ActorID 9, added and placed at Hornwood, LocID 5
+Follower The Spider, ActorID 8, added and placed at Red Lake, LocID 31
 --- Assign LeftOver Followers to Inns (World.cs)
-Inn "The Singing Ghost" -> Follower ActID 2 added
-Inn "The Yellow Huntress" -> Follower ActID 3 added
-Inn "The Singing Ghost" -> Follower ActID 6 added
-Inn "The Yellow Huntress" -> Follower ActID 7 added
-Inn "The Singing Ghost" -> Follower ActID 9 added
+Inn "The Pickled Prune" -> Follower ActID 2 added
+Inn "The Shaggy Parrot" -> Follower ActID 4 added
+Inn "The Raucous Rat" -> Follower ActID 5 added
+Inn "The Yellow Huntress" -> Follower ActID 6 added
+Inn "The Pickled Prune" -> Follower ActID 7 added
 --- CreateOldKingBackStory (Lore.cs)
-Old King Wits 2, Aid 53, Albar Stark
-New King Treachery 3, Aid 10, Houdouyn Lannister
-WhyRevolt: Incapacited_OldKing
-King Albar Stark was tolerated by his people
-His Queen, Auphrey Stark, was tolerated by the common folk
+Old King Wits 4, Aid 10, Hullen Lannister
+New King Treachery 3, Aid 24, Ywain Greyjoy
+WhyRevolt: External_Event
+King Hullen Lannister was liked by his people
+His Queen, Lyanna Lannister, was liked by the common folk
 In 1200 there was a great Revolt
 --- Royalist Army -> CreateOldKingBackStory (Lore.cs)
-Aid 53, Albar Stark has provided 7200 men
-Aid 96, Farlen Ambrose has provided 3600 men
-Aid 97, Vardis Harlaw has provided 3600 men
-Aid 98, Galbart Hornwood has provided 3600 men
-Aid 99, Kevan Frey has provided 2400 men
-Aid 100, Elyes Tarth has provided 1200 men
-Aid 19, Victarion Martell has provided 7200 men
-Aid 91, Vayon Oakheart has provided 3600 men
-Aid 92, Tybaut Codd has provided 3600 men
-Aid 37, Frank Arryn has provided 7200 men
-Aid 94, Jarvis Slynt has provided 3600 men
-Aid 68, Nycolas Targaryen has provided 7200 men
-The Royalists fielded 54,000 Men At Arms
+Aid 10, Hullen Lannister has provided 7200 men
+Aid 80, Vargo Slynt has provided 3600 men
+Aid 81, Cristal Estermont has provided 3600 men
+Aid 82, Chett Penrose has provided 4800 men
+Aid 83, Samwell Tarth has provided 4800 men
+Aid 84, Tytos Hornwood has provided 3600 men
+Aid 17, Hervey Florent has provided 7200 men
+Aid 85, Gregor Tallhart has provided 4800 men
+Aid 86, Davos Mormont has provided 2400 men
+Aid 87, Jiame Oakheart has provided 4800 men
+Aid 48, Varamyr Stark has provided 7200 men
+Aid 62, Gerbod Targaryen has provided 7200 men
+The Royalists fielded 61,200 Men At Arms
 --- Rebel Army -> CreateOldKingBackStory (Lore.cs)
-Aid 10, Houdouyn Lannister has provided 7200 men
-Aid 77, Nycolas Mooton has provided 3600 men
-Aid 78, Huchon Hightower has provided 3600 men
-Aid 79, Donnel Clegane has provided 2400 men
-Aid 80, Mandon Dondarrion has provided 2400 men
-Aid 81, Danyll Botley has provided 3600 men
-Aid 82, Chayle Karstark has provided 4800 men
-Aid 83, Hodgkin Flint has provided 1200 men
-Aid 84, Anderewe Caron has provided 3600 men
-Aid 85, Hervey Fowler has provided 2400 men
-Aid 86, Benjen Cerwyn has provided 2400 men
-Aid 87, Karyl Crane has provided 3600 men
-Aid 88, Marq Umber has provided 2400 men
-Aid 89, Jack Wull has provided 2400 men
-Aid 90, Humfredus Brax has provided 3600 men
-Aid 60, Walcher Tyrell has provided 7200 men
-Aid 101, Morton Redwyne has provided 3600 men
-Aid 102, Beves Mormont has provided 3600 men
-Aid 103, Robett Tarly has provided 3600 men
-Aid 104, Wilmot Penrose has provided 3600 men
-Aid 29, Vardis Greyjoy has provided 9600 men
-Aid 93, Daven Tallhart has provided 3600 men
-Aid 45, Walcher Baratheon has provided 9600 men
-Aid 95, Elyes Bracken has provided 3600 men
-The Rebels fielded 97,200 Men At Arms
-King Houdouyn Lannister was tolerated by his people
-His Queen, Rechemay Lannister, was disliked by the common folk
+Aid 24, Ywain Greyjoy has provided 7200 men
+Aid 88, Guarnier Frey has provided 4800 men
+Aid 89, Elyes Glover has provided 4800 men
+Aid 90, Viserys Harlaw has provided 4800 men
+Aid 91, Rankin Yronwood has provided 4800 men
+Aid 92, Warnerus Mooton has provided 3600 men
+Aid 93, Ywain Crane has provided 3600 men
+Aid 94, Gervesin Clegane has provided 3600 men
+Aid 95, Barristan Codd has provided 2400 men
+Aid 31, Leo Arryn has provided 7200 men
+Aid 96, Roose Westerling has provided 3600 men
+Aid 97, Tion Brax has provided 3600 men
+Aid 98, Areo Karstark has provided 3600 men
+Aid 99, Urian Ambrose has provided 3600 men
+Aid 41, Mace Baratheon has provided 4800 men
+Aid 100, Dick Dondarrion has provided 6000 men
+Aid 55, Aunger Tully has provided 4800 men
+The Rebels fielded 76,800 Men At Arms
+King Ywain Greyjoy was liked by his people
+His Queen, Ozanne Greyjoy, was tolerated by the common folk
 --- Royalist Locations -> CreateOldKingBackStory (Lore.cs)
 Capital -> Kingskeep, distance 0
-Stark -> Winterfell, distance 8
-Stark -> Blackwater, distance 10
-Stark -> Ten Towers, distance 11
+Florent -> Torrhen's Square, distance 10
 Targaryen -> Valyria, distance 11
-Stark -> Hornwood, distance 16
-Arryn -> Eyrie, distance 18
-Stark -> The Twins, distance 19
-Martell -> Dorne, distance 21
-Stark -> Evenfall, distance 23
-Arryn -> Harrenhal, distance 24
-Martell -> Old Oak, distance 30
-Martell -> Fishfork, distance 32
+Lannister -> Casterly Rock, distance 15
+Lannister -> Harrenhal, distance 18
+Florent -> Brightwater Keep, distance 18
+Lannister -> Greenstone, distance 20
+Florent -> Bearpit, distance 20
+Lannister -> Parchments, distance 23
+Florent -> Old Oak, distance 23
+Lannister -> Evenfall, distance 24
+Stark -> Winterfell, distance 24
+Lannister -> Hornwood, distance 27
 --- Battles -> CreateOldKingBackStory (Lore.cs)
-1199 The Battle of Hornwood (loc 24:7)
-Under the commanding leadership of the Rebel Lord Houdouyn Lannister his 48,600 men at arms threw themselves at a Royalist force of 13,500 at The Battle of Hornwood. 
-King Albar Stark's firm direction failed to overcome the royalist's poor position but kept losses to a minimum.
+1199 The Battle of Casterly Rock (loc 23:10)
+Under the strong leadership of the Rebel Lord Ywain Greyjoy his 38,400 men at arms launched themselves at a Royalist force of 15,300 at The Battle of Casterly Rock. 
+King Hullen Lannister's firm direction fended off a succession of rebel assaults and withdrew the royalist forces largely intact.
 --- Events -> CreateOldKingBackStory (Lore.cs)
-Knight Ser Dreu Drake, Aid 47, was killed by the Royalists during The Battle of Hornwood
-BannerLord Vayon Oakheart, Aid 91, was killed by the Rebels during The Battle of Hornwood
-New Bannerlord for House Oakheart -> Tomard Oakheart, Aid 113
-BannerLord Humfredus Brax, Aid 90, was captured by the Royalists during The Battle of Hornwood
-Knight Ser Stafford Peares, Aid 21, was killed by the Rebels during The Battle of Hornwood
-Vardis Harlaw, Aid 97, exhibited outstanding leadership during The Battle of Hornwood
-BannerLord Beves Mormont, Aid 102, was captured by the Royalists during The Battle of Hornwood
-Ser Ferri Colley, Aid 62, recklessly risked his life to save others during The Battle of Hornwood
-BannerLord Galbart Hornwood, Aid 98, was wounded by the Rebels during The Battle of Hornwood
-BannerLord Anderewe Caron, Aid 84, was wounded by the Royalists during The Battle of Hornwood
-Knight Ser Ferri Colley, Aid 62, was wounded by the Royalists during The Battle of Hornwood
-Jarvis Slynt, Aid 94, charged with his men in a ferocious counterattack during The Battle of Hornwood
-Jarvis Slynt, Aid 94, cowardly stole somebody else's glory during The Battle of Hornwood
-Huchon Hightower, Aid 78, charged with his men in a ferocious counterattack during The Battle of Hornwood
-1199 The Battle of Blackwater (loc 21:10)
-The Battle of Blackwater, resulted in an inconclusive outcome with heavy losses on both sides. 
-King Albar Stark would never more dream of taking the fight to the Rebels from this day forward.
+Knight Ser Jaime Stephanus, Aid 64, was captured by the Rebels during The Battle of Casterly Rock
+Vargo Slynt, Aid 80, stiffened the resolve of all around him with his bravery during The Battle of Casterly Rock
+BannerLord Guarnier Frey, Aid 88, after a time was nowhere to be seen during The Battle of Casterly Rock
+Moved to Rebel List
+Knight Ser Willem Heylot, Aid 50, was killed by the Rebels during The Battle of Casterly Rock
+Lord Hervey Florent, Aid 17, was compelled to swap sides at the point of a spear during The Battle of Casterly Rock
+Hervey Florent, Aid 17, shored up a crumbling line with his presence during The Battle of Casterly Rock
+Hervey Florent, Aid 17, cowardly stole somebody else's glory during The Battle of Casterly Rock
+Knight Ser Kevan Hamelin, Aid 43, was killed by the Royalists during The Battle of Casterly Rock
+BannerLord Cristal Estermont, Aid 81, had his family held hostage and was forced to change sides during The Battle of Casterly Rock
+Lord Leo Arryn, Aid 31, was captured by the Royalists during The Battle of Casterly Rock
+Knight Ser Rhaegar Gill, Aid 57, was captured by the Royalists during The Battle of Casterly Rock
+Davos Mormont, Aid 86, led from the front and set a fine example during The Battle of Casterly Rock
+Elyes Glover, Aid 89, charged with his men in a ferocious counterattack during The Battle of Casterly Rock
+Elyes Glover, Aid 89, cowardly stole somebody else's glory during The Battle of Casterly Rock
+1199 The Siege of Greenstone (loc 26:8)
+The Siege of Greenstone, a day best forgotten by the Royalists. 
+King Hullen Lannister girded himself for the inevitable from this day forward.
 --- Events -> CreateOldKingBackStory (Lore.cs)
-Knight Ser Warnerus Hamelin, Aid 31, was wounded by the Royalists during The Battle of Blackwater
-BannerLord Farlen Ambrose, Aid 96, was captured by the Rebels during The Battle of Blackwater
-BannerLord Karyl Crane, Aid 87, was wounded by the Royalists during The Battle of Blackwater
-Knight Ser David Warnerus, Aid 12, was wounded by the Royalists during The Battle of Blackwater
-BannerLord Galbart Hornwood, Aid 98, was captured by the Rebels during The Battle of Blackwater
-BannerLord Anderewe Caron, Aid 84, was captured by the Royalists during The Battle of Blackwater
-Ser Wyman Selles, Aid 70, Reigned in his horse and shied away from combat during The Battle of Blackwater
-Lord Frank Arryn, Aid 37, was wounded by the Rebels during The Battle of Blackwater
-Lord Vardis Greyjoy, Aid 29, was captured by the Royalists during The Battle of Blackwater
-Knight Ser Wyman Selles, Aid 70, was wounded by the Rebels during The Battle of Blackwater
-BannerLord Vardis Harlaw, Aid 97, was captured by the Rebels during The Battle of Blackwater
-BannerLord Nycolas Mooton, Aid 77, was killed by the Royalists during The Battle of Blackwater
-New Bannerlord for House Mooton -> Areo Mooton, Aid 114
-1199 The Battle of Kingskeep (loc 14:13)
-King Albar Stark, with a failing kingdom before him, made a last stand with his remaining 18,000 loyal men at arms at The Battle of Kingskeep. Like a roaring, blood-crazed, demon, Lord Houdouyn Lannister launched a Royalist force 97,200 strong straight at them. 
-The King fought ferociously but it was to no avail. The rebel Lord Houdouyn Lannister entered Kingskeep, drowning multitudes of loyal royalists like bagged rats thrown into the river, before proclaiming himself King of the Iron Throne and ruler of the Seven Kingdoms. Long live the King!
+Knight Ser Benjen Sansum, Aid 33, was wounded by the Royalists during The Siege of Greenstone
+BannerLord Tytos Hornwood, Aid 84, was wounded by the Rebels during The Siege of Greenstone
+Urian Ambrose, Aid 99, bravely held an outnumbered flank until help arrived during The Siege of Greenstone
+Knight Ser Marq Wyliame, Aid 26, was killed by the Royalists during The Siege of Greenstone
+BannerLord Davos Mormont, Aid 86, was captured by the Rebels during The Siege of Greenstone
+Roose Westerling, Aid 96, exhibited outstanding leadership during The Siege of Greenstone
+Roose Westerling, Aid 96, cowardly stole somebody else's glory during The Siege of Greenstone
+Knight Ser Benjen Sansum, Aid 33, was captured by the Royalists during The Siege of Greenstone
+Gregor Tallhart, Aid 85, charged with his men in a ferocious counterattack during The Siege of Greenstone
+Gervesin Clegane, Aid 94, charged with his men in a ferocious counterattack during The Siege of Greenstone
+Gervesin Clegane, Aid 94, cowardly stole somebody else's glory during The Siege of Greenstone
+Knight Ser Wyschardus Colinus, Aid 19, was captured by the Rebels during The Siege of Greenstone
+BannerLord Jiame Oakheart, Aid 87, was killed by the Rebels during The Siege of Greenstone
+New Bannerlord for House Oakheart -> Oggery Oakheart, Aid 109
+BannerLord Elyes Glover, Aid 89, was wounded by the Royalists during The Siege of Greenstone
+1199 The Siege of Kingskeep (loc 15:17)
+King Hullen Lannister, with naught but hope remaining, made a last stand with his remaining 30,600 loyal men at arms at The Siege of Kingskeep. Like the hell raised Son of Satan, Lord Ywain Greyjoy launched a Royalist force 76,800 strong straight at them. 
+The King fought  savagely but it was an exercise in futility. The rebel Lord Ywain Greyjoy entered Kingskeep, beheading Royalists wherever he found them, before proclaiming himself King of the Iron Throne and ruler of the Seven Kingdoms. Long live the King!
 --- Events -> CreateOldKingBackStory (Lore.cs)
-Knight Ser Ferri Colley, Aid 62, was captured by the Royalists during The Battle of Kingskeep
-Lord Victarion Martell, Aid 19, was wounded by the Rebels during The Battle of Kingskeep
-Walcher Baratheon, Aid 45, bravely held an outnumbered flank until help arrived during The Battle of Kingskeep
-Knight Ser Warnerus Hamelin, Aid 31, was killed by the Royalists during The Battle of Kingskeep
-BannerLord Jarvis Slynt, Aid 94, was wounded by the Rebels during The Battle of Kingskeep
-BannerLord Elyes Bracken, Aid 95, was wounded by the Royalists during The Battle of Kingskeep
-Knight Ser David Warnerus, Aid 12, was wounded by the Royalists during The Battle of Kingskeep
-BannerLord Elyes Tarth, Aid 100, was captured by the Rebels during The Battle of Kingskeep
-BannerLord Donnel Clegane, Aid 79, was captured by the Royalists during The Battle of Kingskeep
-Knight Ser Wyman Selles, Aid 70, was killed by the Rebels during The Battle of Kingskeep
-Kevan Frey, Aid 99, bravely held an outnumbered flank until help arrived during The Battle of Kingskeep
-Kevan Frey, Aid 99, cowardly stole somebody else's glory during The Battle of Kingskeep
-Robett Tarly, Aid 103, led his men with valour and distinction during The Battle of Kingskeep
-New Bannerlord for House Caron -> Theon Caron, Aid 115
-New Bannerlord for House Tarth -> Galot Tarth, Aid 116
+BannerLord Vargo Slynt, Aid 80, was captured by the Rebels during The Siege of Kingskeep
+Gervesin Clegane, Aid 94, led from the front and set a fine example during The Siege of Kingskeep
+BannerLord Gregor Tallhart, Aid 85, was wounded by the Rebels during The Siege of Kingskeep
+BannerLord Gervesin Clegane, Aid 94, was killed by the Royalists during The Siege of Kingskeep
+New Bannerlord for House Clegane -> Aunger Clegane, Aid 110
+Tytos Hornwood, Aid 84, stiffened the resolve of all around him with his bravery during The Siege of Kingskeep
+BannerLord Cristal Estermont, Aid 81, was wounded by the Royalists during The Siege of Kingskeep
+BannerLord Gregor Tallhart, Aid 85, was wounded by the Rebels during The Siege of Kingskeep
+Viserys Harlaw, Aid 90, bravely held an outnumbered flank until help arrived during The Siege of Kingskeep
+New Bannerlord for House Mormont -> Hervey Mormont, Aid 111
+New Bannerlord for House Slynt -> Helman Slynt, Aid 112
 --- CreateNewMajorHouse (Lore.cs)
-turncoatActor Tybaut Codd, The Astute, ActID: 92 RefID: 108 Loc: Fishfork
-Old King House Stark, Winter is Coming
-loc 17:8, houseID: 9, refID: 99
-Estermont, Hard as a Shell, RefID: 111
-bannerlord comes from Fishfork, LocID: 35 (6:29)
-new Bannerlord Humfredus Estermont, ActID: 117
-Liege Lord House Martell
-Remove index: 1, Add RefID: 111
-BannerLord loc 21:10, houseID: 9
-BannerLord loc 18:6, houseID: 9
-BannerLord loc 24:7, houseID: 9
-BannerLord loc 22:2, houseID: 9
-BannerLord loc 29:5, houseID: 9
-Updating MapLayer -> loc 6:29, refID: 111
-Inherited Charm trait, Actor ID 124, Parent ID 92
-Inherited Charm trait, Actor ID 125, Parent ID 92
+turncoatActor Chett Penrose, The Staunch, ActID: 82 RefID: 125 Loc: Parchments
+Old King House Lannister, Hear Me Roar!
+loc 23:10, houseID: 9, refID: 99
+Bolton, A Naked Man has few Secrets, but a Flayed Man has None., RefID: 101
+bannerlord comes from Parchments, LocID: 4 (22:3)
+new Bannerlord Galbart Bolton, ActID: 113
+Liege Lord House Penrose
+Remove index: 2, Add RefID: 101
+BannerLord loc 26:18, houseID: 9
+BannerLord loc 26:8, houseID: 9
+BannerLord loc 22:3, houseID: 9
+BannerLord loc 29:15, houseID: 9
+BannerLord loc 20:1, houseID: 9
+Updating MapLayer -> loc 22:3, refID: 101
+Inherited Combat trait, Actor ID 120, Parent ID 118
+Inherited Treachery trait, Actor ID 120, Parent ID 118
 --- InitialisePastHistoryHouses (History.cs)
-- House Arryn, refID 6, "Fought a small skirmish with us over disputed land" -21 in 1149
-MASTER: 1149 Lannister -> Arryn, "Fought a small skirmish with us over disputed land", rel -21
+- House Florent, refID 4, "Rumoured to mate with livestock as a disgusting rite-of-passage" -8 in 1030
+MASTER: 1030 Lannister -> Florent, "Rumoured to mate with livestock as a disgusting rite-of-passage", rel -8
+- House Stark, refID 8, "Saved the life of one of our Ancestral Lords on a hunting trip" +28 in 1138
+MASTER: 1138 Lannister -> Stark, "Saved the life of one of our Ancestral Lords on a hunting trip", rel +28
 House Lannister, refID 2, Relations
-- Minor House Hightower, refID 116, "Have proven to be virtuous and upstanding members of our House" +20 in 1148
-MASTER: 1148 Lannister -> (Minor) Hightower, "Have proven to be virtuous and upstanding members of our House", rel +20
-- Minor House Clegane, refID 107, "Provided a safe haven for Witches on occasion" -19 in 1025
-MASTER: 1025 Lannister -> (Minor) Clegane, "Provided a safe haven for Witches on occasion", rel -19
-- Minor House Dondarrion, refID 110, "Have been openly contemptuous of our House in the past" -7 in 1074
-MASTER: 1074 Lannister -> (Minor) Dondarrion, "Have been openly contemptuous of our House in the past", rel -7
-- Minor House Karstark, refID 119, "Went ahead with a scandalous marriage that brought shame upon our House" -10 in 1044
-MASTER: 1044 Lannister -> (Minor) Karstark, "Went ahead with a scandalous marriage that brought shame upon our House", rel -10
-- Minor House Flint, refID 136, "Refused to answer the Banners when called" -28 in 1093
-MASTER: 1093 Lannister -> (Minor) Flint, "Refused to answer the Banners when called", rel -28
-- Minor House Caron, refID 105, "Practise interbreeding and marry their own Sisters" -25 in 1045
-MASTER: 1045 Lannister -> (Minor) Caron, "Practise interbreeding and marry their own Sisters", rel -25
-- Minor House Crane, refID 109, "Unreliable in battle and prone to holding back" -22 in 1077
-MASTER: 1077 Lannister -> (Minor) Crane, "Unreliable in battle and prone to holding back", rel -22
-- Minor House Umber, refID 131, "Have proven to be fickle and wayward allies in our times of need" -13 in 1143
-MASTER: 1143 Lannister -> (Minor) Umber, "Have proven to be fickle and wayward allies in our times of need", rel -13
-- Minor House Wull, refID 133, "Refused to acknowledge, or pay back, a past loan from our Ancestral Lord" -5 in 1130
-MASTER: 1130 Lannister -> (Minor) Wull, "Refused to acknowledge, or pay back, a past loan from our Ancestral Lord", rel -5
-- Minor House Brax, refID 104, "Refused to recognise the authority of our past Ancestral Lord" -8 in 1080
-MASTER: 1080 Lannister -> (Minor) Brax, "Refused to recognise the authority of our past Ancestral Lord", rel -8
-- House Targaryen, refID 11, "Claim our Title by virtue of a distant, dubious, marriage" -18 in 1059
-MASTER: 1059 Martell -> Targaryen, "Claim our Title by virtue of a distant, dubious, marriage", rel -18
-House Martell, refID 3, Relations
-- Minor House Oakheart, refID 124, "Rescued our Ancestral Lord from marauding Sell Swords" +19 in 1078
-MASTER: 1078 Martell -> (Minor) Oakheart, "Rescued our Ancestral Lord from marauding Sell Swords", rel +19
-- House Tyrell, refID 10, "Allegedly attempted to infiltrate an Assassin into the court of an Ancestral Lord" -24 in 1103
-MASTER: 1103 Greyjoy -> Tyrell, "Allegedly attempted to infiltrate an Assassin into the court of an Ancestral Lord", rel -24
+- House Lannister, refID 2, "Saved the day in a past Battle" +21 in 1054
+MASTER: 1054 Florent -> Lannister, "Saved the day in a past Battle", rel +21
+- House Greyjoy, refID 5, "An ancestral Lord was humiliated by their daughter being spurned at the Altar" -22 in 1050
+MASTER: 1050 Florent -> Greyjoy, "An ancestral Lord was humiliated by their daughter being spurned at the Altar", rel -22
+House Florent, refID 4, Relations
+- Minor House Tallhart, refID 128, "Deliberately breed Dire Wolves and let them feed on our livestock" -29 in 1084
+MASTER: 1084 Florent -> (Minor) Tallhart, "Deliberately breed Dire Wolves and let them feed on our livestock", rel -29
+- Minor House Mormont, refID 122, "Spread disease to neighbouring lands through poor sanitation practices" -6 in 1044
+MASTER: 1044 Florent -> (Minor) Mormont, "Spread disease to neighbouring lands through poor sanitation practices", rel -6
+- Minor House Oakheart, refID 124, "Have proven to be virtuous and upstanding members of our House" +23 in 1134
+MASTER: 1134 Florent -> (Minor) Oakheart, "Have proven to be virtuous and upstanding members of our House", rel +23
+- House Lannister, refID 2, "Engaged in a long standing blood feud" -11 in 1104
+MASTER: 1104 Greyjoy -> Lannister, "Engaged in a long standing blood feud", rel -11
 House Greyjoy, refID 5, Relations
-- Minor House Tallhart, refID 128, "Provided valuable advice in a past crisis" +5 in 1079
-MASTER: 1079 Greyjoy -> (Minor) Tallhart, "Provided valuable advice in a past crisis", rel +5
-- House Targaryen, refID 11, "Rumoured to mate with livestock as a disgusting rite-of-passage" -26 in 1037
-MASTER: 1037 Arryn -> Targaryen, "Rumoured to mate with livestock as a disgusting rite-of-passage", rel -26
-- House Greyjoy, refID 5, "Proved to be a reliable ally on many past occasions" +10 in 1066
-MASTER: 1066 Arryn -> Greyjoy, "Proved to be a reliable ally on many past occasions", rel +10
+- Minor House Glover, refID 114, "Have proven to be fickle and wayward allies in our times of need" -5 in 1102
+MASTER: 1102 Greyjoy -> (Minor) Glover, "Have proven to be fickle and wayward allies in our times of need", rel -5
+- Minor House Harlaw, refID 115, "A past BannerLord displayed exceptional Loyalty to our House" +22 in 1051
+MASTER: 1051 Greyjoy -> (Minor) Harlaw, "A past BannerLord displayed exceptional Loyalty to our House", rel +22
+- Minor House Yronwood, refID 135, "A past BannerLord came to our Houses aid when it was needed most" +7 in 1032
+MASTER: 1032 Greyjoy -> (Minor) Yronwood, "A past BannerLord came to our Houses aid when it was needed most", rel +7
+- Minor House Mooton, refID 121, "Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten" -27 in 1117
+MASTER: 1117 Greyjoy -> (Minor) Mooton, "Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten", rel -27
+- Minor House Clegane, refID 107, "Unreliable in battle and prone to holding back" -20 in 1097
+MASTER: 1097 Greyjoy -> (Minor) Clegane, "Unreliable in battle and prone to holding back", rel -20
+- House Greyjoy, refID 5, "Allegedly attempted to infiltrate an Assassin into the court of an Ancestral Lord" -23 in 1040
+MASTER: 1040 Arryn -> Greyjoy, "Allegedly attempted to infiltrate an Assassin into the court of an Ancestral Lord", rel -23
 House Arryn, refID 6, Relations
-- House Arryn, refID 6, "Raided our lands and carried off women from our villages" -14 in 1093
-MASTER: 1093 Baratheon -> Arryn, "Raided our lands and carried off women from our villages", rel -14
-- House Greyjoy, refID 5, "Provided a good education to wards of the House" +26 in 1067
-MASTER: 1067 Baratheon -> Greyjoy, "Provided a good education to wards of the House", rel +26
+- Minor House Westerling, refID 132, "Refused to answer the Banners when called" -13 in 1102
+MASTER: 1102 Arryn -> (Minor) Westerling, "Refused to answer the Banners when called", rel -13
+- Minor House Brax, refID 104, "Have managed their lands in a sensible and progressive manner" +10 in 1042
+MASTER: 1042 Arryn -> (Minor) Brax, "Have managed their lands in a sensible and progressive manner", rel +10
+- Minor House Karstark, refID 119, "Illegally graze their animals on neighbouring land" -18 in 1076
+MASTER: 1076 Arryn -> (Minor) Karstark, "Illegally graze their animals on neighbouring land", rel -18
+- Minor House Ambrose, refID 100, "Have been meticulous in repaying past loans from our House" +23 in 1008
+MASTER: 1008 Arryn -> (Minor) Ambrose, "Have been meticulous in repaying past loans from our House", rel +23
+- House Tully, refID 9, "Accused of Stealing herds of our Livestock" -18 in 1007
+MASTER: 1007 Baratheon -> Tully, "Accused of Stealing herds of our Livestock", rel -18
 House Baratheon, refID 7, Relations
-- Minor House Bracken, refID 103, "Bad Blood from perceived injustices on their part due to past rulings" +29 in 1037
-MASTER: 1037 Baratheon -> (Minor) Bracken, "Bad Blood from perceived injustices on their part due to past rulings", rel +29
-- House Arryn, refID 6, "Blood bonds forged between past Lords" +10 in 1008
-MASTER: 1008 Stark -> Arryn, "Blood bonds forged between past Lords", rel +10
 House Stark, refID 8, Relations
-- House Martell, refID 3, "Helped out in times of Trouble" +27 in 1121
-MASTER: 1121 Tyrell -> Martell, "Helped out in times of Trouble", rel +27
-House Tyrell, refID 10, Relations
-- Minor House Redwyne, refID 126, "Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten" -26 in 1116
-MASTER: 1116 Tyrell -> (Minor) Redwyne, "Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten", rel -26
-- Minor House Mormont, refID 122, "Moonlight as highway robbers and exert an unofficial toll on trade" -22 in 1035
-MASTER: 1035 Tyrell -> (Minor) Mormont, "Moonlight as highway robbers and exert an unofficial toll on trade", rel -22
-- Minor House Tarly, refID 129, "Spread disease to neighbouring lands through poor sanitation practices" -7 in 1000
-MASTER: 1000 Tyrell -> (Minor) Tarly, "Spread disease to neighbouring lands through poor sanitation practices", rel -7
-- Minor House Penrose, refID 125, "Have managed their lands in a sensible and progressive manner" +8 in 1051
-MASTER: 1051 Tyrell -> (Minor) Penrose, "Have managed their lands in a sensible and progressive manner", rel +8
-- House Lannister, refID 2, "Engaged in a long standing blood feud" -28 in 1052
-MASTER: 1052 Targaryen -> Lannister, "Engaged in a long standing blood feud", rel -28
+- House Targaryen, refID 11, "Helped out in times of Trouble" +13 in 1089
+MASTER: 1089 Tully -> Targaryen, "Helped out in times of Trouble", rel +13
+House Tully, refID 9, Relations
+- House Florent, refID 4, "Blood bonds forged between past Lords" +3 in 1082
+MASTER: 1082 Targaryen -> Florent, "Blood bonds forged between past Lords", rel +3
 House Targaryen, refID 11, Relations
 -Turncoat Relations
-1200 Lannister -> (Major) Codd, "The King is grateful for the assistance provided during the Revolt", rel +12
-1200 Martell -> (Major) Codd, "The Turncoat Traitor and his House should burn in Hell", rel -13
-1200 Greyjoy -> (Major) Codd, "Their traitorous actions, while beneficial, leave a bad taste in our mouth", rel -2
-1200 Arryn -> (Major) Codd, "The Turncoat Traitor and his House should burn in Hell", rel -17
-1200 Baratheon -> (Major) Codd, "Their traitorous actions, while beneficial, leave a bad taste in our mouth", rel -14
-1200 Stark -> (Major) Codd, "The Turncoat Traitor and his House should burn in Hell", rel -29
-1200 Tyrell -> (Major) Codd, "Their traitorous actions, while beneficial, leave a bad taste in our mouth", rel -1
-1200 Targaryen -> (Major) Codd, "The Turncoat Traitor and his House should burn in Hell", rel -18
+1200 Lannister -> (Major) Penrose, "The Turncoat Traitor and his House should burn in Hell", rel -25
+1200 Florent -> (Major) Penrose, "The Turncoat Traitor and his House should burn in Hell", rel -28
+1200 Greyjoy -> (Major) Penrose, "The King is grateful for the assistance provided during the Revolt", rel +10
+1200 Arryn -> (Major) Penrose, "Their traitorous actions, while beneficial, leave a bad taste in our mouth", rel -6
+1200 Baratheon -> (Major) Penrose, "Their traitorous actions, while beneficial, leave a bad taste in our mouth", rel -7
+1200 Stark -> (Major) Penrose, "The Turncoat Traitor and his House should burn in Hell", rel -14
+1200 Tully -> (Major) Penrose, "Their traitorous actions, while beneficial, leave a bad taste in our mouth", rel -7
+1200 Targaryen -> (Major) Penrose, "The Turncoat Traitor and his House should burn in Hell", rel -27
 --- InitialiseLordRelations (History.cs)
-King Houdouyn Lannister, The Unseeing, actID 10, Treachery 3, "Lannister", houseID 6
-  Knight Ser David Warnerus, actID 12, houseID 6
-   Relationship with Lord 29 
-  Castellan Hamlin Ansure, actID 13, houseID 6
-   Relationship with Lord 53 
-  Maester Martyn Edon, actID 14, houseID 6
-   Relationship with Lord 47 
-  Septon Harys Segar, actID 15, houseID 6
-   Relationship with Lord 59 
-  lady Ymanie Lannister, actID 16, houseID 6
-   Relationship with Lord 61 
-  lady Genna Lannister, actID 17, houseID 6
-   Relationship with Lord 70 
-  lady Rikilda Lannister, actID 18, houseID 6
-   Relationship with Lord 46 
-  Heir Wyschardus Lannister, actID 75, houseID 6
-   Relationship with Lord 22 
-  BannerLord Huchon Hightower, actID 78, houseID 6
-   Relationship with Lord 71 
-  BannerLord Donnel Clegane, actID 79, houseID 6
-   Relationship with Lord 20 
-  BannerLord Mandon Dondarrion, actID 80, houseID 6
-   Relationship with Lord 32 
-  BannerLord Danyll Botley, actID 81, houseID 6
-   Relationship with Lord 38 
-  BannerLord Chayle Karstark, actID 82, houseID 6
-   Relationship with Lord 22 
-  BannerLord Hodgkin Flint, actID 83, houseID 6
-   Relationship with Lord 75 
-  BannerLord Hervey Fowler, actID 85, houseID 6
-   Relationship with Lord 74 
-  BannerLord Benjen Cerwyn, actID 86, houseID 6
-   Relationship with Lord 25 
-  BannerLord Karyl Crane, actID 87, houseID 6
-   Relationship with Lord 65 
-  BannerLord Marq Umber, actID 88, houseID 6
-   Relationship with Lord 73 
-  BannerLord Jack Wull, actID 89, houseID 6
-   Relationship with Lord 67 
-  BannerLord Humfredus Brax, actID 90, houseID 6
-   Relationship with Lord 26 
-  BannerLord Areo Mooton, actID 114, houseID 6
-   Relationship with Lord 65 
-  BannerLord Theon Caron, actID 115, houseID 6
-   Relationship with Lord 16 ***
-  High_Septon Mikken Frideric, actID 105, houseID 9999
-   Relationship with Lord 38 
-  Master_of_Coin Morton Artus, actID 106, houseID 9999
-   Relationship with Lord 44 
-  Master_of_Laws Tyrek Lijart, actID 107, houseID 9999
-   Relationship with Lord 26 
-  Master_of_Ships Eon Jehan, actID 108, houseID 9999
-   Relationship with Lord 64 
-  Master_of_Whisperers Eon Houdoin, actID 109, houseID 9999
-   Relationship with Lord 72 
-  Hand_of_the_King Donnel Manfred, actID 126, houseID 9999
-   Relationship with Lord 27 
-  Commander_of_Kings_Guard Iamys Jehan, actID 127, houseID 9999
-   Relationship with Lord 43 
-  Commander_of_City_Watch Helies Ran, actID 112, houseID 9999
-   Relationship with Lord 28 
-Lord Victarion Martell, Dog Breath, actID 19, Treachery 3, "Martell", houseID 8
-  Castellan Raff Terryn, actID 22, houseID 8
-   Relationship with Lord 23 
-  Maester Morton Aymeri, actID 23, houseID 8
-   Relationship with Lord 20 
-  Septon Dreu Nicholaus, actID 24, houseID 8
-   Relationship with Lord 71 
-  Heir Samwell Martell, actID 25, houseID 8
-   Relationship with Lord 75 
-  lord Gylbard Martell, actID 26, houseID 8
-   Relationship with Lord 74 
-  lord Daven Martell, actID 27, houseID 8
-   Relationship with Lord 45 
-  lady Libet Martell, actID 28, houseID 8
-   Relationship with Lord 42 
-  BannerLord Tomard Oakheart, actID 113, houseID 8
-   Relationship with Lord 23 
-Lord Vardis Greyjoy, The Lifeless, actID 29, Treachery 2, "Greyjoy", houseID 4
-  Castellan Gerbertus Oudin, actID 32, houseID 4
-   Relationship with Lord 34 
-  Maester Jory Michell, actID 33, houseID 4
-   Relationship with Lord 65 
-  Septon Gib Jehan, actID 34, houseID 4
-   Relationship with Lord 41 
-  lady Essylt Greyjoy, actID 35, houseID 4
-   Relationship with Lord 43 
-  Heir Rowan Greyjoy, actID 36, houseID 4
-   Relationship with Lord 61 
-  BannerLord Daven Tallhart, actID 93, houseID 4
-   Relationship with Lord 47 
-Lord Frank Arryn, The Itchy, actID 37, Treachery 3, "Arryn", houseID 7
-  Lady Emmot Arryn, actID 38, houseID 7
-   Relationship with Lord 30 
-  Knight Ser Jacquelin Huchon, actID 39, houseID 7
-   Relationship with Lord 67 
-  Castellan Luwin Renouart, actID 40, houseID 7
-   Relationship with Lord 74 
-  Maester Audry Colley, actID 41, houseID 7
-   Relationship with Lord 37 
-  Septon Joseth Amauri, actID 42, houseID 7
-   Relationship with Lord 48 
-  Heir Tolly Arryn, actID 43, houseID 7
-   Relationship with Lord 51 
-  lord Harys Arryn, actID 44, houseID 7
-   Relationship with Lord 60 
-  BannerLord Jarvis Slynt, actID 94, houseID 7
-   Relationship with Lord 41 
-Lord Walcher Baratheon, The Imposing, actID 45, Treachery 2, "Baratheon", houseID 5
-  Castellan Farlen Humpty, actID 48, houseID 5
-   Relationship with Lord 59 
-  Maester Jason Timm, actID 49, houseID 5
-   Relationship with Lord 70 
-  Septon Chayle Charles, actID 50, houseID 5
-   Relationship with Lord 39 
-  Heir Rowan Baratheon, actID 51, houseID 5
-   Relationship with Lord 63 
-  lady Yvonne Baratheon, actID 52, houseID 5
-   Relationship with Lord 77 
-  BannerLord Elyes Bracken, actID 95, houseID 5
-   Relationship with Lord 30 
-Lord Tybaut Codd, The Astute, actID 92, Treachery 3, "Codd", houseID 9
-  BannerLord Farlen Ambrose, actID 96, houseID 9
-   Relationship with Lord 61 
-  BannerLord Vardis Harlaw, actID 97, houseID 9
+Lord Chett Penrose, The Staunch, actID 82, Treachery 2, "Penrose", houseID 9
+  BannerLord Cristal Estermont, actID 81, houseID 9
+   Relationship with Lord 56 
+  BannerLord Samwell Tarth, actID 83, houseID 9
+   Relationship with Lord 79 
+  BannerLord Tytos Hornwood, actID 84, houseID 9
    Relationship with Lord 66 
-  BannerLord Galbart Hornwood, actID 98, houseID 9
-   Relationship with Lord 80 
-  BannerLord Kevan Frey, actID 99, houseID 9
-   Relationship with Lord 33 
-  BannerLord Galot Tarth, actID 116, houseID 9
-   Relationship with Lord 26 
-  BannerLord Humfredus Estermont, actID 117, houseID 9
-   Relationship with Lord 70 
-  Castellan Jory Hughoc, actID 118, houseID 9
-   Relationship with Lord 44 
-  Maester Bran Hamelin, actID 119, houseID 9
-   Relationship with Lord 31 
-  Septon Hallis Rouland, actID 120, houseID 9
-   Relationship with Lord 60 
-  Knight Ser Robert Artus, actID 121, houseID 9
-   Relationship with Lord 72 
-  Heir Helies Codd, actID 123, houseID 9
-   Relationship with Lord 75 
-  lord Renoldus Codd, actID 124, houseID 9
-   Relationship with Lord 26 
-  lord Hunfridus Codd, actID 125, houseID 9
-   Relationship with Lord 75 
-Lord Walcher Tyrell, The Droll, actID 60, Treachery 3, "Tyrell", houseID 1
-  Lady Darlessa Tyrell, actID 61, houseID 1
-   Relationship with Lord 22 
-  Castellan Godet Isemberd, actID 63, houseID 1
-   Relationship with Lord 73 
-  Maester Leo Ivo, actID 64, houseID 1
-   Relationship with Lord 25 
-  Septon Rankin Saunsum, actID 65, houseID 1
-   Relationship with Lord 34 
-  Heir Karyl Tyrell, actID 66, houseID 1
-   Relationship with Lord 70 
-  lord Walcher Tyrell II, actID 67, houseID 1
-   Relationship with Lord 65 
-  BannerLord Morton Redwyne, actID 101, houseID 1
+  BannerLord Helman Slynt, actID 112, houseID 9
    Relationship with Lord 68 
-  BannerLord Beves Mormont, actID 102, houseID 1
-   Relationship with Lord 25 
-  BannerLord Robett Tarly, actID 103, houseID 1
-   Relationship with Lord 32 
-  BannerLord Wilmot Penrose, actID 104, houseID 1
-   Relationship with Lord 35 
-Lord Nycolas Targaryen, The Alcoholic, actID 68, Treachery 3, "Targaryen", houseID 3
-  Castellan Robett Noy, actID 71, houseID 3
-   Relationship with Lord 62 
-  Maester Beuves Dodd, actID 72, houseID 3
-   Relationship with Lord 22 
-  Septon Segarus Hugue, actID 73, houseID 3
-   Relationship with Lord 61 
-  lady Arya Targaryen, actID 74, houseID 3
+  BannerLord Galbart Bolton, actID 113, houseID 9
+   Relationship with Lord 34 
+  Castellan Cleos Francis, actID 114, houseID 9
+   Relationship with Lord 37 
+  Maester Hallis Artus, actID 115, houseID 9
    Relationship with Lord 60 
-  Heir Audry Targaryen, actID 76, houseID 3
+  Septon Tyrion Ademar, actID 116, houseID 9
+   Relationship with Lord 1 ***
+  Knight Ser Rankin Rannulf, actID 117, houseID 9
+   Relationship with Lord 60 
+  Heir Vardis Penrose, actID 119, houseID 9
+   Relationship with Lord 62 
+  lady Desmera Penrose, actID 120, houseID 9
+   Relationship with Lord 7 ***
+Lord Hervey Florent, The Cow, actID 17, Treachery 3, "Florent", houseID 5
+  Castellan Tyrion Arnoldus, actID 20, houseID 5
+   Relationship with Lord 66 
+  Maester Jon Hughoc, actID 21, houseID 5
+   Relationship with Lord 67 
+  Septon Randyll Harding, actID 22, houseID 5
+   Relationship with Lord 34 
+  Heir Merrett Florent, actID 23, houseID 5
+   Relationship with Lord 37 
+  BannerLord Gregor Tallhart, actID 85, houseID 5
+   Relationship with Lord 32 
+  BannerLord Oggery Oakheart, actID 109, houseID 5
+   Relationship with Lord 43 
+  BannerLord Hervey Mormont, actID 111, houseID 5
+   Relationship with Lord 33 
+King Ywain Greyjoy, The Stargazer, actID 24, Treachery 3, "Greyjoy", houseID 7
+  Queen Ozanne Greyjoy, actID 25, houseID 7
+   Relationship with Lord 26 
+  Castellan Aeron Gervasius, actID 27, houseID 7
+   Relationship with Lord 66 
+  Maester Walcher Dumphry, actID 28, houseID 7
+   Relationship with Lord 21 
+  Septon Albar Ademar, actID 29, houseID 7
+   Relationship with Lord 63 
+  lady Yvonne Greyjoy, actID 30, houseID 7
+   Relationship with Lord 33 
+  Heir Roose Greyjoy, actID 77, houseID 7
+   Relationship with Lord 27 
+  BannerLord Guarnier Frey, actID 88, houseID 7
    Relationship with Lord 64 
+  BannerLord Elyes Glover, actID 89, houseID 7
+   Relationship with Lord 67 
+  BannerLord Viserys Harlaw, actID 90, houseID 7
+   Relationship with Lord 44 
+  BannerLord Rankin Yronwood, actID 91, houseID 7
+   Relationship with Lord 61 
+  BannerLord Warnerus Mooton, actID 92, houseID 7
+   Relationship with Lord 69 
+  BannerLord Ywain Crane, actID 93, houseID 7
+   Relationship with Lord 79 
+  BannerLord Barristan Codd, actID 95, houseID 7
+   Relationship with Lord 60 
+  BannerLord Aunger Clegane, actID 110, houseID 7
+   Relationship with Lord 37 
+  High_Septon Harding Artor, actID 121, houseID 9999
+   Relationship with Lord 21 
+  Master_of_Coin Aerys Rab, actID 102, houseID 9999
+   Relationship with Lord 67 
+  Master_of_Laws Viserys Ouin, actID 103, houseID 9999
+   Relationship with Lord 48 
+  Master_of_Ships Beves Mosseus, actID 122, houseID 9999
+   Relationship with Lord 38 
+  Master_of_Whisperers Paxter Ivo, actID 123, houseID 9999
+   Relationship with Lord 29 
+  Hand_of_the_King Walcher Jeff, actID 124, houseID 9999
+   Relationship with Lord 54 
+  Commander_of_Kings_Guard Roose Hue, actID 125, houseID 9999
+   Relationship with Lord 71 
+  Commander_of_City_Watch Godet Alainon, actID 108, houseID 9999
+   Relationship with Lord 43 
+Lord Leo Arryn, The Beautiful, actID 31, Treachery 3, "Arryn", houseID 4
+  Knight Ser Benjen Sansum, actID 33, houseID 4
+   Relationship with Lord 89 ***
+  Castellan Rankin Thomassin, actID 34, houseID 4
+   Relationship with Lord 78 
+  Maester Guarnier Oudin, actID 35, houseID 4
+   Relationship with Lord 80 
+  Septon Godet Humpty, actID 36, houseID 4
+   Relationship with Lord 25 
+  Heir Gylbard Arryn, actID 37, houseID 4
+   Relationship with Lord 51 
+  lady Shireen Arryn, actID 38, houseID 4
+   Relationship with Lord 12 ***
+  lady Beth Arryn, actID 39, houseID 4
+   Relationship with Lord 66 
+  lady Miriild Arryn, actID 40, houseID 4
+   Relationship with Lord 58 
+  BannerLord Roose Westerling, actID 96, houseID 4
+   Relationship with Lord 56 
+  BannerLord Tion Brax, actID 97, houseID 4
+   Relationship with Lord 37 
+  BannerLord Areo Karstark, actID 98, houseID 4
+   Relationship with Lord 24 
+  BannerLord Urian Ambrose, actID 99, houseID 4
+   Relationship with Lord 75 
+Lord Mace Baratheon, The Bruised, actID 41, Treachery 4, "Baratheon", houseID 6
+  Lady Mina Baratheon, actID 42, houseID 6
+   Relationship with Lord 63 
+  Castellan Rankin Reyner, actID 44, houseID 6
+   Relationship with Lord 73 
+  Maester Wyman Tolly, actID 45, houseID 6
+   Relationship with Lord 38 
+  Septon Hamlin Francis, actID 46, houseID 6
+   Relationship with Lord 36 
+  lady Bela Baratheon, actID 47, houseID 6
+   Relationship with Lord 100 ***
+  Heir Ywain Baratheon, actID 78, houseID 6
+   Relationship with Lord 60 
+  BannerLord Dick Dondarrion, actID 100, houseID 6
+   Relationship with Lord 79 
+Lord Varamyr Stark, The Uneducated, actID 48, Treachery 3, "Stark", houseID 8
+  Castellan Bertelot Nicolin, actID 51, houseID 8
+   Relationship with Lord 73 
+  Maester Cleos Hugue, actID 52, houseID 8
+   Relationship with Lord 22 
+  Septon Tolly Amauri, actID 53, houseID 8
+   Relationship with Lord 16 ***
+  Heir Viserys Stark, actID 54, houseID 8
+   Relationship with Lord 48 
+Lord Aunger Tully, The Obstinate, actID 55, Treachery 4, "Tully", houseID 1
+  Knight Ser Rhaegar Gill, actID 57, houseID 1
+   Relationship with Lord 14 ***
+  Castellan Trystane Mikael, actID 58, houseID 1
+   Relationship with Lord 50 
+  Maester Leyton Voldamore, actID 59, houseID 1
+   Relationship with Lord 72 
+  Septon Willem Arnoldus, actID 60, houseID 1
+   Relationship with Lord 50 
+  lady Elison Tully, actID 61, houseID 1
+   Relationship with Lord 56 
+  Heir Tomard Tully, actID 79, houseID 1
+   Relationship with Lord 41 
+Lord Gerbod Targaryen, The Doubtful, actID 62, Treachery 3, "Targaryen", houseID 3
+  Lady Belet Targaryen, actID 63, houseID 3
+   Relationship with Lord 57 
+  Knight Ser Jaime Stephanus, actID 64, houseID 3
+   Relationship with Lord 27 
+  Castellan Vayon Walcher, actID 65, houseID 3
+   Relationship with Lord 38 
+  Maester Wilmot Reyner, actID 66, houseID 3
+   Relationship with Lord 70 
+  Septon Ivo Galeran, actID 67, houseID 3
+   Relationship with Lord 70 
+  lady Mordane Targaryen, actID 68, houseID 3
+   Relationship with Lord 42 
+  Heir Paulinus Targaryen, actID 69, houseID 3
+   Relationship with Lord 30 
+  lord Renoldus Targaryen, actID 70, houseID 3
+   Relationship with Lord 43 
+  lord Leyton Targaryen, actID 71, houseID 3
+   Relationship with Lord 74 
+  lady Arwyn Targaryen, actID 72, houseID 3
+   Relationship with Lord 39 
+  lady Adhelina Targaryen, actID 73, houseID 3
+   Relationship with Lord 65 
+  lady Auisia Targaryen, actID 74, houseID 3
+   Relationship with Lord 62 
+  lady Lyn Targaryen, actID 75, houseID 3
+   Relationship with Lord 75 
+  lady Lysa Targaryen, actID 76, houseID 3
+   Relationship with Lord 31 
 ---  InitialiseCharacters (History.cs)
 Bandit Boss Luigi HandsUp has a confirmed Combat trait
-Luigi HandsUp, Aid 128, specID 1 -> initialised O.K
+Luigi HandsUp, Aid 126, specID 1 -> initialised O.K
 Old Lady Holy Haggard has a confirmed Combat trait
-Holy Haggard, Aid 129, specID 2 -> initialised O.K
-Saladin Kinghit, Aid 130, specID 3 -> initialised O.K
+Holy Haggard, Aid 127, specID 2 -> initialised O.K
+Saladin Kinghit, Aid 128, specID 3 -> initialised O.K
 --- InitialiseDesires (World.cs)
-There are enough houses on branch 4 for "Martell" to desire Land
+There are enough houses on branch 3 for "Florent" to desire Land
+[Alert -> Out Neighbour] MinorHouse "Dondarrion", RefID 110, added to listOfMinorHouses
+Lord Hervey Florent ActID 17 wants the Dragon Egg because it belongs to them -> Desire: Item, DesireData: 8
+Queen Ozanne Greyjoy ActID 25 wants a court position for their son Roose Greyjoy "The Listless" ActID 77 -> Desire: Court, DesireData: 77
+Maester Walcher Dumphry ActID 28 wants more Gold -> Desire: Gold, DesireData: 0
+Insufficient houses for "Arryn", branch 2 -> totalLoc 7 MajorH 2 Specials 1 ActorH 4
+Lord Leo Arryn ActID 31 wants the marriage of their daughter, Shireen Arryn "The All Thumbs" ActID 38, to the one true King -> Desire: Marriage, DesireData: 38
+There are enough houses on branch 3 for "Baratheon" to desire Land
+[Alert -> Out Neighbour] MinorHouse "Mormont", RefID 122, added to listOfMinorHouses
+[Alert -> In Neighbour] MinorHouse "Tallhart", RefID 128, added to listOfMinorHouses
+There are two minor houses, furthest will be eliminated
+[Alert -> Distance] MinorHouse "Mormont", RefID 122, (Loc 9:29) -> Distance 21
+[Alert -> Distance] MinorHouse "Tallhart", RefID 128, (Loc 10:20) -> Distance 11
+Minor House RefID 128 retained, others deleted
+Lord Mace Baratheon ActID 41 wants a court position for their son Ywain Baratheon "The Stiff" ActID 78 -> Desire: Court, DesireData: 78
+Lady Mina Baratheon ActID 42 wants a court position for their son Ywain Baratheon "The Stiff" ActID 78 -> Desire: Court, DesireData: 78
+There are enough houses on branch 4 for "Stark" to desire Land
 [Alert -> Out Neighbour] MinorHouse "Clegane", RefID 107, added to listOfMinorHouses
-[Alert -> In Neighbour] MinorHouse "Bracken", RefID 103, added to listOfMinorHouses
+[Alert -> In Neighbour] MinorHouse "Crane", RefID 109, added to listOfMinorHouses
 There are two minor houses, furthest will be eliminated
-[Alert -> Distance] MinorHouse "Clegane", RefID 107, (Loc 19:20) -> Distance 31
-[Alert -> Distance] MinorHouse "Bracken", RefID 103, (Loc 3:19) -> Distance 28
-Minor House RefID 103 retained, others deleted
-Lord Victarion Martell ActID 19 wants the marriage of their daughter, Libet Martell "The Average" ActID 28, to the one true King -> Desire: Marriage, DesireData: 28
-There are enough houses on branch 4 for "Greyjoy" to desire Land
-[Alert -> Out Neighbour] MinorHouse "Mooton", RefID 121, added to listOfMinorHouses
-Lord Vardis Greyjoy ActID 29 wants the marriage of their daughter, Essylt Greyjoy "The Poet" ActID 35, to the one true King -> Desire: Marriage, DesireData: 35
-There are enough houses on branch 4 for "Arryn" to desire Land
-[Alert -> Out Neighbour] MinorHouse "Bracken", RefID 103, added to listOfMinorHouses
-[Alert -> In Neighbour] MinorHouse "Hightower", RefID 116, added to listOfMinorHouses
-There are two minor houses, furthest will be eliminated
-[Alert -> Distance] MinorHouse "Bracken", RefID 103, (Loc 3:19) -> Distance 25
-[Alert -> Distance] MinorHouse "Hightower", RefID 116, (Loc 16:22) -> Distance 13
-Minor House RefID 116 retained, others deleted
-Lord Frank Arryn ActID 37 wants to have BannerLord Huchon Hightower of House Hightower at Oldtown (Loc 16:22) swear allegiance -> Desire: Land, DesireData: 116
-Lady Emmot Arryn ActID 38 wants a court position for their son Harys Arryn "The Anxious" ActID 44 -> Desire: Court, DesireData: 44
-There are enough houses on branch 4 for "Baratheon" to desire Land
-[Alert -> Out Neighbour] MinorHouse "Mooton", RefID 121, added to listOfMinorHouses
-Lord Walcher Baratheon ActID 45 wants a court position for their son Rowan Baratheon "The Unfaltering" ActID 51 -> Desire: Court, DesireData: 51
-Insufficient houses for "Tyrell", branch 1 -> totalLoc 5 MajorH 1 Specials 0 ActorH 4
-[Alert] Connection exists between branch 1 and 2
-[Alert -> Connector] A minor house does NOT exist at the end of the connector
-Lord Walcher Tyrell ActID 60 wants a court position for their son Karyl Tyrell "The Devoted" ActID 66 -> Desire: Court, DesireData: 66
-Lady Darlessa Tyrell ActID 61 wants a court position for their son Walcher Tyrell II "The Hobbled" ActID 67 -> Desire: Court, DesireData: 67
+[Alert -> Distance] MinorHouse "Clegane", RefID 107, (Loc 6:1) -> Distance 41
+[Alert -> Distance] MinorHouse "Crane", RefID 109, (Loc 7:5) -> Distance 36
+Minor House RefID 109 retained, others deleted
+Lord Varamyr Stark ActID 48 wants the Amulet of Passion because it belongs to them -> Desire: Item, DesireData: 13
+Maester Cleos Hugue ActID 52 wants more Gold -> Desire: Gold, DesireData: 0
+There are enough houses on branch 1 for "Tully" to desire Land
+[Alert -> Out Neighbour] MinorHouse "Slynt", RefID 127, added to listOfMinorHouses
+Lord Aunger Tully ActID 55 wants the marriage of their daughter, Elison Tully "The Addled" ActID 61, to the one true King -> Desire: Marriage, DesireData: 61
 There are enough houses on branch 2 for "Targaryen" to desire Land
-[Alert -> Out Neighbour] MinorHouse "Hornwood", RefID 117, added to listOfMinorHouses
-[Alert -> In Neighbour] MinorHouse "Harlaw", RefID 115, added to listOfMinorHouses
-There are two minor houses, furthest will be eliminated
-[Alert -> Distance] MinorHouse "Hornwood", RefID 117, (Loc 24:7) -> Distance 19
-[Alert -> Distance] MinorHouse "Harlaw", RefID 115, (Loc 18:6) -> Distance 14
-Minor House RefID 115 retained, others deleted
-Lord Nycolas Targaryen ActID 68 wants a court position for their son Audry Targaryen "The Nervous" ActID 76 -> Desire: Court, DesireData: 76
-[Alert -> Royal] Bannerlord House "Hightower" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Huchon Hightower ActID 78 wants the Amulet of Passion because it is an ancestral heirloom -> Desire: Item, DesireData: 14
-[Alert -> Royal] Bannerlord House "Clegane" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Donnel Clegane ActID 79 wants nothing -> Desire: None, DesireData: 0
-[Alert -> Royal] Bannerlord House "Dondarrion" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Mandon Dondarrion ActID 80 wants the Elixir of Wellness because it was forseen -> Desire: Item, DesireData: 16
-[Alert -> Royal] Bannerlord House "Botley" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Danyll Botley ActID 81 wants the Lion Dagger because it is an ancestral heirloom -> Desire: Item, DesireData: 12
-[Alert -> Royal] Bannerlord House "Karstark" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Chayle Karstark ActID 82 wants the Amulet of Passion because it is their destiny -> Desire: Item, DesireData: 14
-[Alert -> Royal] Bannerlord House "Flint" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Hodgkin Flint ActID 83 wants the Goblin Mug because it is their destiny -> Desire: Item, DesireData: 10
-[Alert -> Royal] Bannerlord House "Fowler" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Hervey Fowler ActID 85 wants more Gold -> Desire: Gold, DesireData: 0
-[Alert -> Royal] Bannerlord House "Cerwyn" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Benjen Cerwyn ActID 86 wants more Gold -> Desire: Gold, DesireData: 0
-[Alert -> Royal] Bannerlord House "Crane" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Karyl Crane ActID 87 wants more Gold -> Desire: Gold, DesireData: 0
-[Alert -> Royal] Bannerlord House "Umber" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Marq Umber ActID 88 wants the Dragon Egg because it might help their enemies -> Desire: Item, DesireData: 9
-[Alert -> Royal] Bannerlord House "Wull" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Jack Wull ActID 89 wants more Gold -> Desire: Gold, DesireData: 0
-[Alert -> Royal] Bannerlord House "Brax" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Humfredus Brax ActID 90 wants nothing -> Desire: None, DesireData: 0
-Insufficient houses for "Codd", branch 2 -> totalLoc 8 MajorH 2 Specials 1 ActorH 5
-Lord Tybaut Codd ActID 92 wants a court position for their son Renoldus Codd "The Winged" ActID 124 -> Desire: Court, DesireData: 124
-BannerLord Daven Tallhart ActID 93 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Jarvis Slynt ActID 94 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Elyes Bracken ActID 95 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Farlen Ambrose ActID 96 wants nothing -> Desire: None, DesireData: 0
-BannerLord Vardis Harlaw ActID 97 wants nothing -> Desire: None, DesireData: 0
-BannerLord Galbart Hornwood ActID 98 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Kevan Frey ActID 99 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Morton Redwyne ActID 101 wants the Mammoth Cloak because it has been predicted by prophecy -> Desire: Item, DesireData: 11
-BannerLord Beves Mormont ActID 102 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Robett Tarly ActID 103 wants more Gold -> Desire: Gold, DesireData: 0
-BannerLord Wilmot Penrose ActID 104 wants nothing -> Desire: None, DesireData: 0
-BannerLord Tomard Oakheart ActID 113 wants more Gold -> Desire: Gold, DesireData: 0
+[Alert -> Out Neighbour] MinorHouse "Westerling", RefID 132, added to listOfMinorHouses
+Lord Gerbod Targaryen ActID 62 wants to have BannerLord Roose Westerling of House Westerling at The Crag (Loc 26:23) swear allegiance -> Desire: Land, DesireData: 132
+Lady Belet Targaryen ActID 63 wants a court position for their son Renoldus Targaryen "The Doubtful" ActID 70 -> Desire: Court, DesireData: 70
+BannerLord Cristal Estermont ActID 81 wants the Mammoth Cloak because it is their destiny -> Desire: Item, DesireData: 10
+Insufficient houses for "Penrose", branch 1 -> totalLoc 8 MajorH 2 Specials 1 ActorH 5
+Lord Chett Penrose ActID 82 wants the marriage of their daughter, Desmera Penrose "The Patched" ActID 120, to the one true King -> Desire: Marriage, DesireData: 120
+BannerLord Samwell Tarth ActID 83 wants nothing -> Desire: None, DesireData: 0
+BannerLord Tytos Hornwood ActID 84 wants the Mammoth Cloak because it is their destiny -> Desire: Item, DesireData: 10
+BannerLord Gregor Tallhart ActID 85 wants more Gold -> Desire: Gold, DesireData: 0
+[Alert -> Royal] Bannerlord House "Frey" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Guarnier Frey ActID 88 wants nothing -> Desire: None, DesireData: 0
+[Alert -> Royal] Bannerlord House "Glover" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Elyes Glover ActID 89 wants more Gold -> Desire: Gold, DesireData: 0
+[Alert -> Royal] Bannerlord House "Harlaw" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Viserys Harlaw ActID 90 wants the Chalice of Pain because it has been predicted by prophecy -> Desire: Item, DesireData: 12
+[Alert -> Royal] Bannerlord House "Yronwood" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Rankin Yronwood ActID 91 wants more Gold -> Desire: Gold, DesireData: 0
 [Alert -> Royal] Bannerlord House "Mooton" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Areo Mooton ActID 114 wants more Gold -> Desire: Gold, DesireData: 0
-[Alert -> Royal] Bannerlord House "Caron" is a member of the Royal Household -> Lordship desire not valid
-BannerLord Theon Caron ActID 115 wants the Book of the Dead because it belongs to their house -> Desire: Item, DesireData: 15
-BannerLord Galot Tarth ActID 116 wants the Lordship of House Codd -> Desire: Lordship, DesireData: 9
-BannerLord Humfredus Estermont ActID 117 wants more Gold -> Desire: Gold, DesireData: 0
-Master_of_Coin Morton Artus ActID 106 wants more Gold -> Desire: Gold, DesireData: 0
-Master_of_Ships Eon Jehan ActID 108 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Warnerus Mooton ActID 92 wants more Gold -> Desire: Gold, DesireData: 0
+[Alert -> Royal] Bannerlord House "Crane" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Ywain Crane ActID 93 wants nothing -> Desire: None, DesireData: 0
+[Alert -> Royal] Bannerlord House "Codd" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Barristan Codd ActID 95 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Roose Westerling ActID 96 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Tion Brax ActID 97 wants nothing -> Desire: None, DesireData: 0
+BannerLord Areo Karstark ActID 98 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Urian Ambrose ActID 99 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Dick Dondarrion ActID 100 wants the Goblin Mug because it has been predicted by prophecy -> Desire: Item, DesireData: 9
+BannerLord Oggery Oakheart ActID 109 wants the Elixir of Wellness because it might help their enemies -> Desire: Item, DesireData: 15
+[Alert -> Royal] Bannerlord House "Clegane" is a member of the Royal Household -> Lordship desire not valid
+BannerLord Aunger Clegane ActID 110 wants the Goblin Mug because it is their birthright -> Desire: Item, DesireData: 9
+BannerLord Hervey Mormont ActID 111 wants nothing -> Desire: None, DesireData: 0
+BannerLord Helman Slynt ActID 112 wants more Gold -> Desire: Gold, DesireData: 0
+BannerLord Galbart Bolton ActID 113 wants nothing -> Desire: None, DesireData: 0
+Master_of_Ships Beves Mosseus ActID 122 wants more Gold -> Desire: Gold, DesireData: 0
+Master_of_Whisperers Paxter Ivo ActID 123 wants more Gold -> Desire: Gold, DesireData: 0
 --- InitialiseSafeHouse (World.cs)
-House Martell at "Dorne" has a SafeHouse rating of 5 stars
-House Arryn at "Eyrie" has a SafeHouse rating of 5 stars
-House Targaryen at "Valyria" has a SafeHouse rating of 4 stars
-BannerLord House Oakheart at "Old Oak" has a SafeHouse rating of 1 stars
+House Florent at "Brightwater Keep" has a SafeHouse rating of 4 stars
+House Stark at "Winterfell" has a SafeHouse rating of 4 stars
+House Targaryen at "Valyria" has a SafeHouse rating of 3 stars
 BannerLord House Slynt at "Harrenhal" has a SafeHouse rating of 2 stars
-BannerLord House Ambrose at "Blackwater" has a SafeHouse rating of 2 stars
-BannerLord House Harlaw at "Ten Towers" has a SafeHouse rating of 1 stars
-BannerLord House Hornwood at "Hornwood" has a SafeHouse rating of 1 stars
-BannerLord House Frey at "The Twins" has a SafeHouse rating of 2 stars
-BannerLord House Tarth at "Evenfall" has a SafeHouse rating of 1 stars
+BannerLord House Estermont at "Greenstone" has a SafeHouse rating of 2 stars
+BannerLord House Tarth at "Evenfall" has a SafeHouse rating of 2 stars
+BannerLord House Hornwood at "Hornwood" has a SafeHouse rating of 2 stars
+BannerLord House Tallhart at "Torrhen's Square" has a SafeHouse rating of 2 stars
+BannerLord House Mormont at "Bearpit" has a SafeHouse rating of 1 stars
+BannerLord House Oakheart at "Old Oak" has a SafeHouse rating of 2 stars
 --- InitialiseDisguises (World.cs)
 Disguise "a Lamp Oil Dispenser", Strength 4, Type Maester -> successfully Imported
 Disguise "a Frocked Scribe", Strength 4, Type Maester -> successfully Imported
@@ -841,52 +791,52 @@ listLoyalAdvisors -> 9 records
 listOfMaesters -> 3 records
 listOfCastellans -> 3 records
 listOfSeptons -> 3 records
-Maester Morton Aymeri, ActID 23 assigned Disguise "a Lamp Oil Dispenser", PossID 27
-Maester Beuves Dodd, ActID 72 assigned Disguise "a Frocked Scribe", PossID 28
-Maester Beuves Dodd, ActID 72 assigned Disguise "a Wandering Wick Trader", PossID 29
-Castellan Raff Terryn, ActID 22 assigned Disguise "a Pardoned Criminal", PossID 30
-Castellan Luwin Renouart, ActID 40 assigned Disguise "a SellSword Squire", PossID 31
-Castellan Robett Noy, ActID 71 assigned Disguise "a limping Old Soldier", PossID 32
-Septon Segarus Hugue, ActID 73 assigned Disguise "a Novice of a Holy Order", PossID 33
-Septon Joseth Amauri, ActID 42 assigned Disguise "a Pious Priest", PossID 34
-Septon Segarus Hugue, ActID 73 assigned Disguise "a Weeping Prayer Acolyte", PossID 35
+Maester Wilmot Reyner, ActID 66 assigned Disguise "a Lamp Oil Dispenser", PossID 31
+Maester Wilmot Reyner, ActID 66 assigned Disguise "a Frocked Scribe", PossID 32
+Maester Cleos Hugue, ActID 52 assigned Disguise "a Wandering Wick Trader", PossID 33
+Castellan Vayon Walcher, ActID 65 assigned Disguise "a Pardoned Criminal", PossID 34
+Castellan Vayon Walcher, ActID 65 assigned Disguise "a SellSword Squire", PossID 35
+Castellan Bertelot Nicolin, ActID 51 assigned Disguise "a limping Old Soldier", PossID 36
+Septon Randyll Harding, ActID 22 assigned Disguise "a Novice of a Holy Order", PossID 37
+Septon Ivo Galeran, ActID 67 assigned Disguise "a Pious Priest", PossID 38
+Septon Ivo Galeran, ActID 67 assigned Disguise "a Weeping Prayer Acolyte", PossID 39
 --- InitialiseAI (World.cs)
- Capital 0 -> Current 0 -> Desired 1 -> adjusted Loc's 0
- Branch  1 -> Current 0 -> Desired 1 -> adjusted Loc's 9
- Branch  2 -> Current 0 -> Desired 1 -> adjusted Loc's 12
- Branch  3 -> Current 0 -> Desired 0 -> adjusted Loc's 0
- Branch  4 -> Current 0 -> Desired 1 -> adjusted Loc's 25
+ Capital 0 -> Current 0 -> Desired 0 -> adjusted Loc's 0
+ Branch  1 -> Current 0 -> Desired 1 -> adjusted Loc's 12
+ Branch  2 -> Current 0 -> Desired 1 -> adjusted Loc's 11
+ Branch  3 -> Current 0 -> Desired 1 -> adjusted Loc's 11
+ Branch  4 -> Current 0 -> Desired 1 -> adjusted Loc's 15
 --- InitialiseEnemyActors (World.cs)
-Inquisitor Brother Amon has a confirmed Treachery trait
-Inquisitor Brother Kali has a confirmed Treachery trait
-Inquisitor Brother Nergal has a confirmed Treachery trait
-Inquisitor Brother Astaroth has a confirmed Treachery trait
+Inquisitor Brother Gorgo has a confirmed Treachery trait
+Inquisitor Brother Haborym has a confirmed Treachery trait
+Inquisitor Brother Beelzebub has a confirmed Treachery trait
+Inquisitor Brother Behemoth has a confirmed Treachery trait
 ---  CreateNemesis (History.cs)
 Nemesis The Unrelenting has a confirmed Treachery trait
 Nemesis The Unrelenting has a confirmed Touched trait
 - Assign Enemies
- [Goal -> Inquisitor] Brother Amon, ActID 131 Branch -> 0
- [Goal -> Inquisitor] Brother Kali, ActID 132 Branch -> 1
- [Goal -> Inquisitor] Brother Nergal, ActID 133 Branch -> 2
- [Goal -> Inquisitor] Brother Astaroth, ActID 134 Branch -> 4
- [Goal -> Nemesis] The Unrelenting, ActID 135 Branch -> 0
+ [Goal -> Inquisitor] Brother Gorgo, ActID 129 Branch -> 1
+ [Goal -> Inquisitor] Brother Haborym, ActID 130 Branch -> 2
+ [Goal -> Inquisitor] Brother Beelzebub, ActID 131 Branch -> 3
+ [Goal -> Inquisitor] Brother Behemoth, ActID 132 Branch -> 4
+ [Goal -> Nemesis] The Unrelenting, ActID 133 Branch -> 0
 --- InitialiseWorldDevelopment (World.cs)
-ItemID 1, "Dragon Egg", given to Septon Gib Jehan, ActID 34, at Pyke (loc 8:17)
-[Secret -> Item] Gib Jehan, ActID 34, is hording the Dragon Egg, ItemID 1, safe from pyring eyes
-ItemID 4, "Goblin Mug", given to Master_of_Coin Morton Artus, ActID 106, at Kingskeep (loc 14:13)
-[Secret -> Item] Morton Artus, ActID 106, has stolen the Goblin Mug, ItemID 4, and is desperate to keep it quiet
-ItemID 5, "Mammoth Cloak", given to Septon Dreu Nicholaus, ActID 24, at Dorne (loc 2:22)
-[Secret -> Item] Dreu Nicholaus, ActID 24, is hording the Mammoth Cloak, ItemID 5, safe from pyring eyes
-ItemID 6, "Lion Dagger", given to BannerLord Donnel Clegane, ActID 79, at Clegane's Keep (loc 19:20)
-[Secret -> Item] Donnel Clegane, ActID 79, has come into possession of the Lion Dagger, ItemID 6, in mysterious circumstances
-ItemID 7, "Chalice of Pain", given to Castellan Raff Terryn, ActID 22, at Dorne (loc 2:22)
-[Secret -> Item] Raff Terryn, ActID 22, is hording the Chalice of Pain, ItemID 7, safe from pyring eyes
-ItemID 8, "Amulet of Passion", given to BannerLord Danyll Botley, ActID 81, at Lordsport (loc 21:21)
-[Secret -> Item] Danyll Botley, ActID 81, has come into possession of the Amulet of Passion, ItemID 8, in mysterious circumstances
-ItemID 9, "Book of the Dead", given to lord Harys Arryn, ActID 44, at Eyrie (loc 11:22)
-[Secret -> Item] Harys Arryn, ActID 44, has come into possession of the Book of the Dead, ItemID 9, in mysterious circumstances
-ItemID 10, "Elixir of Wellness", given to Castellan Jory Hughoc, ActID 118, at Winterfell (loc 17:8)
-[Secret -> Item] Jory Hughoc, ActID 118, has stolen the Elixir of Wellness, ItemID 10, and is desperate to keep it quiet
+ItemID 1, "Dragon Egg", given to BannerLord Galbart Bolton, ActID 113, at Parchments (loc 22:3)
+[Secret -> Item] Galbart Bolton, ActID 113, is hording the Dragon Egg, ItemID 1, safe from pyring eyes
+ItemID 4, "Goblin Mug", given to lord Leyton Targaryen, ActID 71, at Valyria (loc 22:21)
+[Secret -> Item] Leyton Targaryen, ActID 71, has been entrusted with keeping the Goblin Mug, ItemID 4, safe from harm
+ItemID 5, "Mammoth Cloak", given to Septon Hamlin Francis, ActID 46, at Bloodkeep (loc 5:14)
+[Secret -> Item] Hamlin Francis, ActID 46, has come into possession of the Mammoth Cloak, ItemID 5, in mysterious circumstances
+ItemID 6, "Lion Dagger", given to BannerLord Cristal Estermont, ActID 81, at Greenstone (loc 26:8)
+[Secret -> Item] Cristal Estermont, ActID 81, is hording the Lion Dagger, ItemID 6, safe from pyring eyes
+ItemID 7, "Chalice of Pain", given to Septon Godet Humpty, ActID 36, at Eyrie (loc 28:25)
+[Secret -> Item] Godet Humpty, ActID 36, has come into possession of the Chalice of Pain, ItemID 7, in mysterious circumstances
+ItemID 8, "Amulet of Passion", given to Commander_of_Kings_Guard Roose Hue, ActID 125, at Kingskeep (loc 15:17)
+[Secret -> Item] Roose Hue, ActID 125, has stolen the Amulet of Passion, ItemID 8, and is desperate to keep it quiet
+ItemID 9, "Book of the Dead", given to BannerLord Samwell Tarth, ActID 83, at Evenfall (loc 29:15)
+[Secret -> Item] Samwell Tarth, ActID 83, is hording the Book of the Dead, ItemID 9, safe from pyring eyes
+ItemID 10, "Elixir of Wellness", given to Maester Wilmot Reyner, ActID 66, at Valyria (loc 22:21)
+[Secret -> Item] Wilmot Reyner, ActID 66, is hording the Elixir of Wellness, ItemID 10, safe from pyring eyes
 --- Import Follower Events (Director.cs)
 "Spiders", FID 1, [GeoCluster, Generic], Freq Low, Status Active, Trait Wits, Delay 2
 "Wolves", FID 2, [GeoCluster, Generic], Freq Normal, Status Active, Trait Combat, Delay 2
@@ -1169,29 +1119,38 @@ The Ghosts Within, ArcID 23, [Actor], has 2 events
 --- Import Stories (Director.cs)
 Steady Eddy, StoryID 1
 --- Initialise Archetypes (Director.cs)
- The Gray Sea, geoID 1, has been initialised with "Kraken Sea", arcID 3
- The Quiet Expanse, geoID 15, has been initialised with "Kraken Sea", arcID 3
- Krils Highlands, geoID 21, has been initialised with "Bandit Mountains", arcID 2
+ The Dancing Ocean, geoID 6, has been initialised with "Kraken Sea", arcID 3
+ Curk Mountains, geoID 12, has been initialised with "Bandit Mountains", arcID 2
+ Desolate Heights, geoID 17, has been initialised with "Bandit Mountains", arcID 2
+ Thin Man Woods, geoID 22, has been initialised with "Dire Wolf Forest", arcID 1
+ Bat Friar's Copse, geoID 23, has been initialised with "Dire Wolf Forest", arcID 1
+ Pest Thicket, geoID 24, has been initialised with "Dire Wolf Forest", arcID 1
 Normal roads have been initialised with "Goblin Road", arcID 4
 Kings roads have been initialised with "Dwarf Road", arcID 5
 Connector roads have been initialised with "Orc Hunting Party", arcID 6
 The Capital at KingsKeep has been initialised with "Entertainers", arcID 9
-House Tyrell, refID 10, has been initialised with "Strong Men", arcID 20
-Horn Hill, locID 5, has been initialised with "Attentive Guards", arcID 8
-House The Singing Ghost, refID 1002, has been initialised with "Evil Tavern", arcID 22
-Winterfell, locID 8, has been initialised with "Attentive Guards", arcID 7
+The Pickled Prune, locID 2, has been initialised with "Willowy Wenches", arcID 10
+House The Pickled Prune, refID 1005, has been initialised with "Evil Tavern", arcID 22
+Casterly Rock, locID 3, has been initialised with "Attentive Guards", arcID 7
+House Tully, refID 9, has been initialised with "Leaping Trout", arcID 13
+House The Shaggy Parrot, refID 1004, has been initialised with "Evil Tavern", arcID 22
 House Targaryen, refID 11, has been initialised with "Dragon Lovers", arcID 21
-House The Yellow Huntress, refID 1003, has been initialised with "Evil Tavern", arcID 22
-Blackhaven, locID 19, has been initialised with "Attentive Guards", arcID 8
-House Lannister, refID 2, has been initialised with "Lazy Lions", arcID 14
-Eyrie, locID 31, has been initialised with "Attentive Guards", arcID 7
+Hornvale, locID 13, has been initialised with "Attentive Guards", arcID 8
 House Arryn, refID 6, has been initialised with "Cloud Climbers", arcID 16
-House Greyjoy, refID 5, has been initialised with "Golden Kraken", arcID 17
-House Martell, refID 3, has been initialised with "Sunny Sons", arcID 18
+House The Raucous Rat, refID 1001, has been initialised with "Evil Tavern", arcID 22
+Torrhen's Square, locID 18, has been initialised with "Attentive Guards", arcID 8
+House Florent, refID 4, has been initialised with "Foxy Foxes", arcID 12
+Old Oak, locID 21, has been initialised with "Attentive Guards", arcID 8
+Bloodkeep, locID 22, has been initialised with "Attentive Guards", arcID 7
 House Baratheon, refID 7, has been initialised with "Lusty Stags", arcID 19
+The Yellow Huntress, locID 24, has been initialised with "Willowy Wenches", arcID 10
+House The Yellow Huntress, refID 1003, has been initialised with "Evil Tavern", arcID 22
+House Greyjoy, refID 5, has been initialised with "Golden Kraken", arcID 17
+House Stark, refID 8, has been initialised with "Crazy Starks", arcID 11
+Red Lake, locID 31, has been initialised with "Attentive Guards", arcID 8
+"The Haggler", AiD 3, has been initialised with "The Ghosts Within", arcID 23
+"The Beast", AiD 9, has been initialised with "The Ghosts Within", arcID 23
 "The Spider", AiD 8, has been initialised with "The Ghosts Within", arcID 23
-"The Beast", AiD 4, has been initialised with "The Ghosts Within", arcID 23
-"The Duchess", AiD 5, has been initialised with "The Ghosts Within", arcID 23
 --- Initialise Normal Situations (Director.cs)
 "A Defendable Hill", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def 1, Data 0
 "A Defendable Hill", a Battle conflict, 3 good records & 3 bad, SitNum 0, Def -1, Data 0
@@ -1393,5 +1352,5 @@ Infiltrate Challenge (Stealth)
 Evade Challenge (Stealth)
 Escape Challenge (Stealth)
 --- InitialiseGameStates (Director.cs)
-//Exile Game file ops "LogStart.txt" Completed at: 12/05/2017 15:25:55
-//Elapsed Time 815 ms
+//Exile Game file ops "LogStart.txt" Completed at: 12/05/2017 19:51:38
+//Elapsed Time 849 ms

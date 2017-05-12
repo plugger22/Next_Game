@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
 
-    public enum GameStat  //NOTE: KEEP order the same as in arrayOfGameStat, eg. enum 1 is arrayOfGameVars[1]
+    public enum GameStatistic  //NOTE: KEEP order the same as in arrayOfGameStat, eg. enum 1 is arrayOfGameVars[1]
     {
         None,
         Disguise_Days,
@@ -17,6 +17,7 @@ namespace Next_Game
         Travelling_Days,
         AtSea_Days,
         Adrift_Days,
+        Known_Days,
         //keep as last
         Count
     }
@@ -26,27 +27,28 @@ namespace Next_Game
     /// </summary>
     public class Statistic
     {
-        private readonly GameStat[] arrayOfGameStats; //holds enums which provide indexes for arrayOfStatistics
+        private readonly GameStatistic[] arrayOfGameStats; //holds enums which provide indexes for arrayOfStatistics
         private readonly int[] arrayOfStatistics; //data which that's used in code, index is a Global enum
 
         public Statistic()
         {
-            arrayOfGameStats = new GameStat[(int)GameStat.Count];
-            arrayOfStatistics = new int[(int)GameStat.Count];
+            arrayOfGameStats = new GameStatistic[(int)GameStatistic.Count];
+            arrayOfStatistics = new int[(int)GameStatistic.Count];
             //set up array of Globals
-            arrayOfGameStats[1] = GameStat.Disguise_Days;
-            arrayOfGameStats[2] = GameStat.SafeHouse_Days;
-            arrayOfGameStats[3] = GameStat.Dungeon_Days;
-            arrayOfGameStats[4] = GameStat.Location_Days;
-            arrayOfGameStats[5] = GameStat.Travelling_Days;
-            arrayOfGameStats[6] = GameStat.AtSea_Days;
-            arrayOfGameStats[7] = GameStat.Adrift_Days;
+            arrayOfGameStats[1] = GameStatistic.Disguise_Days;
+            arrayOfGameStats[2] = GameStatistic.SafeHouse_Days;
+            arrayOfGameStats[3] = GameStatistic.Dungeon_Days;
+            arrayOfGameStats[4] = GameStatistic.Location_Days;
+            arrayOfGameStats[5] = GameStatistic.Travelling_Days;
+            arrayOfGameStats[6] = GameStatistic.AtSea_Days;
+            arrayOfGameStats[7] = GameStatistic.Adrift_Days;
+            arrayOfGameStats[8] = GameStatistic.Known_Days;
         }
 
         public int[] GetArrayOfStatistics()
         { return arrayOfStatistics; }
 
-        public GameStat[] GetArrayOfGameStats()
+        public GameStatistic[] GetArrayOfGameStats()
         { return arrayOfGameStats; }
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="stat"></param>
         /// <returns></returns>
-        public int GetStatistic(GameStat stat)
+        public int GetStatistic(GameStatistic stat)
         { return arrayOfStatistics[(int)stat]; }
 
         /// <summary>
@@ -62,7 +64,7 @@ namespace Next_Game
         /// </summary>
         /// <param name="stat"></param>
         /// <param name="amount"></param>
-        public void AddStat(GameStat stat, int amount = 0)
+        public void AddStat(GameStatistic stat, int amount = 0)
         {
             int origValue = arrayOfStatistics[(int)stat];
             if (amount == 0)

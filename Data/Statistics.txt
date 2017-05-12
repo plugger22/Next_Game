@@ -9,3 +9,4 @@
 5: Travelling_Days		# Number of Days spent Travelling
 6: AtSea_Days			# Number of Days spent At Sea
 7: Adrift_Days			# Number of Days spent Adrift
+8: Known_Days			# Number of Days spent Known

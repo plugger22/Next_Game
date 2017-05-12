@@ -58,3 +58,7 @@ Seed 37034 -> Friday, 12 May 2017 2:50 PM
 Seed 40017 -> Friday, 12 May 2017 3:02 PM
 Seed 42477 -> Friday, 12 May 2017 3:05 PM
 Seed 2099 -> Friday, 12 May 2017 3:25 PM
+Seed 47193 -> Friday, 12 May 2017 5:46 PM
+Seed 59019 -> Friday, 12 May 2017 7:46 PM
+Seed 31955 -> Friday, 12 May 2017 7:49 PM
+Seed 65447 -> Friday, 12 May 2017 7:51 PM

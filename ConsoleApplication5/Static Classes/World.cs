@@ -894,7 +894,7 @@ namespace Next_Game
         public List<Snippet> ShowGameStatsRL()
         {
             List<Snippet> listToDisplay = new List<Snippet>();
-            GameStat[] tempGameStats = Game.statistic.GetArrayOfGameStats();
+            GameStatistic[] tempGameStats = Game.statistic.GetArrayOfGameStats();
             int[] tempStatistics = Game.statistic.GetArrayOfStatistics();
             listToDisplay.Add(new Snippet("--- GameStats with Current Values", RLColor.Yellow, RLColor.Black));
             if (tempGameStats.Length > 0 && tempGameStats.Length == tempStatistics.Length)
@@ -4459,15 +4459,17 @@ namespace Next_Game
                         //message
                         string description = string.Format("The Legend of {0} {1} grows (+{2}) while the Usurper is incarcerated", Game.lore.NewKing.Title, Game.lore.NewKing.Name, legendLoss);
                         SetMessage(new Message(description, MessageType.Incarceration));
-                        Game.statistic.AddStat(GameStat.Dungeon_Days);
+                        
                     }
                     //stats
-                    if (player.Conceal == ActorConceal.Disguise) { Game.statistic.AddStat(GameStat.Disguise_Days); }
-                    if (player.Conceal == ActorConceal.SafeHouse) { Game.statistic.AddStat(GameStat.SafeHouse_Days); }
-                    if (player.Status == ActorStatus.AtLocation) { Game.statistic.AddStat(GameStat.Location_Days); }
-                    if (player.Status == ActorStatus.Travelling) { Game.statistic.AddStat(GameStat.Travelling_Days); }
-                    if (player.Status == ActorStatus.AtSea) { Game.statistic.AddStat(GameStat.AtSea_Days); }
-                    if (player.Status == ActorStatus.Adrift) { Game.statistic.AddStat(GameStat.Adrift_Days); }
+                    if (player.Known == true) { Game.statistic.AddStat(GameStatistic.Known_Days); }
+                    if (player.Conceal == ActorConceal.Disguise) { Game.statistic.AddStat(GameStatistic.Disguise_Days); }
+                    if (player.Conceal == ActorConceal.SafeHouse) { Game.statistic.AddStat(GameStatistic.SafeHouse_Days); }
+                    if (player.Status == ActorStatus.AtLocation) { Game.statistic.AddStat(GameStatistic.Location_Days); }
+                    if (player.Status == ActorStatus.Travelling) { Game.statistic.AddStat(GameStatistic.Travelling_Days); }
+                    if (player.Status == ActorStatus.AtSea) { Game.statistic.AddStat(GameStatistic.AtSea_Days); }
+                    if (player.Status == ActorStatus.Adrift) { Game.statistic.AddStat(GameStatistic.Adrift_Days); }
+                    if (player.Status == ActorStatus.Captured) { Game.statistic.AddStat(GameStatistic.Dungeon_Days); }
                 }
             }
         }
@@ -6545,7 +6547,12 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(253, $"Invalid possession type (Not disguise) for player.ConcealDisguise PossID {player.ConcealDisguise}")); }
                 }
-                else { Game.SetError(new Error(253, "The Player does not possess a valid disguise (ConcealDisguise = 0)")); }
+                else
+                {
+                    description = "The Player doesn't have a disguise";
+                    concealColor = RLColor.LightRed;
+                    Game.logTurn?.Write($"[Alert] {description} (Player attempted to don a disguise");
+                }
             }
             else { Game.SetError(new Error(253, "Invalid Player (null)")); }
             //set up snippet list
