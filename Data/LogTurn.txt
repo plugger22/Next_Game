@@ -1,8 +1,10 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 12/05/2017 19:51:38
+//Exile Game file ops "LogTurn.txt" commenced at: 13/05/2017 11:49:45
 --- ProcessStartGame (World.cs)
 --- AgePassiveCharacters (History.cs)
---- ChangeDisguise (World.cs)
-[Alert -> Disguise] The Player doesn't have a disguise (Player attempted to don a disguise
+--- MultiKeyInput (Game.cs)
+76 input
+--- MultiKeyInput (Game.cs)
+99 input
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 12/05/2017 19:51:55
+//Exile Game file ops "LogTurn.txt" Completed at: 13/05/2017 11:56:37

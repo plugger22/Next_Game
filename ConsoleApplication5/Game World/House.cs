@@ -35,6 +35,7 @@ namespace Next_Game
         private List<int> listOfSecrets;
         private List<int> listOfFollowerEvents;
         private List<int> listOfPlayerEvents;
+        private List<int> listOfRumours;
         private List<Relation> listOfRelations; //relationships (records) with other houses (can have multiple relations with another house)
         private Dictionary<int, int> dictCurrentRelations; //current Relationship levels, key is RefID, value is current Rel lvl
 
@@ -45,6 +46,7 @@ namespace Next_Game
         {
             listOfFirstNames = new List<int>();
             listOfSecrets = new List<int>();
+            listOfRumours = new List<int>();
             listOfFollowerEvents = new List<int>();
             listOfPlayerEvents = new List<int>();
             listOfRelations = new List<Relation>();
@@ -104,6 +106,16 @@ namespace Next_Game
             { listOfSecrets.Clear(); listOfSecrets.AddRange(tempSecrets); }
             else
             { Game.SetError(new Error(57, "Invalid list of Secrets input (null)")); }
+        }
+
+        internal List<int> GetRumours()
+        { return listOfRumours; }
+
+        internal void AddRumour(int rumourID)
+        {
+            if (rumourID > 0)
+            { listOfRumours.Add(rumourID); }
+            else { Game.SetError(new Error(267, "Invalid rumourID (zero, or less)")); }
         }
 
         /// <summary>

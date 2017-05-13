@@ -84,6 +84,8 @@ namespace Next_Game
         List<int> listArcPlyrRoadEventsKings;
         List<int> listArcPlyrRoadEventsConnector;
         List<int> listArcPlyrCapitalEvents;
+        //Rumours
+
         //other
         List<Follower> listOfFollowers;
         List<EventPackage> listFollCurrentEvents; //follower

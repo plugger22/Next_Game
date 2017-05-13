@@ -320,6 +320,7 @@ namespace Next_Game
         public string GetTraitName(SkillType skill)
         { return arrayOfTraitNames[(int)skill]; }
 
+
         /// <summary>
         /// returns relationship (Player) as a integer between 1 and 5 (stars) by breaking down input (0 - 100) into chunks of 20
         /// </summary>
