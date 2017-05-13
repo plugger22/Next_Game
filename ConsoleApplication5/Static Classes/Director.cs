@@ -4358,7 +4358,7 @@ namespace Next_Game
             {
                 Game.logStart?.Write("--- InitialiseRumours (World.cs)");
                 int skill, strength;
-                string trait, rumourText;
+                string trait, rumourText, immersionText;
                 string[] arrayOfImmersionTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all" };
                 //loop through all Passive Actors 
                 for (int i = 0; i < dictPassiveActors.Count - 1; i++)
@@ -4385,8 +4385,30 @@ namespace Next_Game
                                                 if (String.IsNullOrEmpty(trait) == false)
                                                 {
                                                     //create a rumour
-                                                    strength = 3;
-                                                    rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID}, is {arrayOfImmersionTexts[rnd.Next(arrayOfImmersionTexts.Length)]} {actor.GetPrefixName((SkillType)skillIndex)} {trait}";
+                                                    switch(actor.Type)
+                                                    {
+                                                        case ActorType.Lord:
+                                                            strength = 5;
+                                                            break;
+                                                        case ActorType.Lady:
+                                                            strength = 4;
+                                                            break;
+                                                        case ActorType.BannerLord:
+                                                            strength = 4;
+                                                            break;
+                                                        case ActorType.Heir:
+                                                            strength = 3;
+                                                            break;
+                                                        case ActorType.lady:
+                                                        case ActorType.lord:
+                                                            strength = 1;
+                                                            break;
+                                                        default:
+                                                            strength = 2;
+                                                            break;
+                                                    }
+                                                    immersionText = $"{arrayOfImmersionTexts[rnd.Next(arrayOfImmersionTexts.Length)]} {actor.GetPrefixName((SkillType)skillIndex)}";
+                                                    rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID}, is {immersionText} {trait}";
                                                     Rumour rumour = new Rumour(rumourText, strength, RumourType.Local, RumourTopic.Character) { RefID = actor.RefID };
                                                     //add to dictionary and house list
                                                     Game.world.AddRumour(rumour.RumourID, rumour);

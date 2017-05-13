@@ -10,7 +10,7 @@ Skill: Combat
 Effect: 2
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Mountain, The Gargantuan, The Enormous, The Hulking, The Mammoth
 [End]
 
@@ -19,7 +19,7 @@ Skill: Combat
 Effect: 2
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to have the power of 
 Nicknames: The Unhurt, The Meditative, The Directed, The Painless
 [End]
 
@@ -46,7 +46,7 @@ Skill: Combat
 Effect: 2
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to have
 Nicknames: The Swift, The Blue Streak, The Red Flash, The Lightning Flash, The Red Viper, The Black Viper, The Red Cobra, The Blue Cobra, The Green Viper
 [End]
 
@@ -55,7 +55,7 @@ Skill: Combat
 Effect: 2
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Sword Arm, The Thruster, The Sword Master. The Mace Master, The Axe Master
 [End]
 
@@ -65,7 +65,7 @@ Name: Sharp Reflexes
 Skill: Combat
 Effect: 1
 Chance: 50
-IsKnown: to be
+IsKnown: to have
 Age: 5
 Nicknames: The Agile, The Winged, The Quick, The Fox
 [End]
@@ -203,7 +203,7 @@ Skill: Combat
 Effect: -1
 Chance: 50
 Age: 5
-IsKnown: to be
+IsKnown: to have a
 Nicknames: The Hobbled, Crooked Foot, Twisted Foot, Crooked Walk
 [End]
 
@@ -230,7 +230,7 @@ Skill: Combat
 Effect: -1
 Chance: 50
 Age: 5
-IsKnown: to be
+IsKnown: to have a
 Nicknames: The Hobbler, The Limper, The Clumper
 [End]
 
@@ -270,12 +270,12 @@ IsKnown: to be
 Nicknames: The Pained, The Hurt, The Suffering
 [End]
 
-Name: Upset Stomach
+Name: Delicate Stomach
 Skill: Combat
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to have a
 Nicknames: The Crapper, The Sh*tter, The Squatter
 [End]
 
@@ -331,7 +331,7 @@ Skill: Combat
 Effect: -2
 Chance: 25
 Age: 5
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Dwarf, The Stunted, The Imp, The Runt, The HalfMan
 [End]
 
@@ -349,7 +349,7 @@ Skill: Combat
 Effect: -2
 Chance: 25
 Age: 5
-IsKnown: to be
+IsKnown: to have
 Nicknames: The Fitter, The Thrasher, The Wild
 [End]
 
@@ -367,7 +367,7 @@ Skill: Combat
 Effect: -2
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Peaceful, The Peacemaker, The Dove, The Non Violent, The Passive
 [End]
 
@@ -378,7 +378,7 @@ Skill: Wits
 Effect: 2
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to have a
 Nicknames: The Instinctive, The Clairvoyant, The Perceptive
 [End]
 
@@ -394,7 +394,7 @@ Skill: Wits
 Effect: -1
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Wobbly, The Inebriated, The Alcoholic, The Debauched, The Drinker
 [End]
 
@@ -405,7 +405,7 @@ Skill: Wits
 Effect: -2
 Chance: 25
 Age: 5
-IsKnown: to be
+IsKnown: to be an
 Nicknames: The Fool, The Unknowing, The Idiot, The Simpleton
 [End]
 
@@ -437,7 +437,7 @@ Skill: Charm
 Effect: 1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Womaniser, The Charmer, The Prodigious
 [End]
 
@@ -466,7 +466,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 5
-IsKnown: to be
+IsKnown: to be an
 Nicknames: The White, The Ghostly, The Pale
 [End]
 
@@ -475,7 +475,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 5
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Bowed, The Crippled, The Gnarled, The Misshapen, The Twisted
 [End]
 
@@ -484,7 +484,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 5
-IsKnown: to be
+IsKnown: to be cursed with 
 Nicknames: Pig Breath, Dog Breath, Swine Breath
 [End]
 
@@ -493,7 +493,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 5
-IsKnown: to be
+IsKnown: to have
 Nicknames: The Marked, The Spotted, The Itchy, The Scaled
 [End]
 
@@ -502,7 +502,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 5
-IsKnown: to be
+IsKnown: to be a person who
 Nicknames: Fish Tongue, The Hisser, Frog Tongue
 [End]
 
@@ -511,7 +511,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 5
-IsKnown: to be
+IsKnown: to be a person who
 Nicknames: The Stammerer, Duck Voice, The Sputterer
 [End]
 
@@ -520,7 +520,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 5
-IsKnown: to be
+IsKnown: to be someone who
 Nicknames: The Slobberer, The Dribbler, The Spitter
 [End]
 
@@ -529,7 +529,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to have
 Nicknames: The Stinky, The Smelly, The Malodorous, The Rancid, The Foul, The Putrid, The Reeking, The Whiffy
 [End]
 
@@ -538,25 +538,25 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to have a
 Nicknames: The Squirmer, The Twitcher, The Jiggler, The Wiggler, The Spooked, The Nervous
 [End]
 
-Name: Nose Picker
+Name: Chronic Nose Picker
 Skill: Charm 
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Excavator, The Nasal Explorer, The Disgusting, The Gross
 [End]
 
-Name: Nail Biter
+Name: Chronic Nail Biter
 Skill: Charm 
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Apprehensive, The Tense, The Uneasy, The Weak, The Bothered, The Fidgety, The Flustered, The Timorous, The Worried
 [End]
 
@@ -565,7 +565,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be a person who
 Nicknames: The Whisperer, The Hard to Hear, The Quiet
 [End]
 
@@ -601,7 +601,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Beast, The Animal, The Creature, The Degenerate, The Devil, The Fiend, The Monster, The Ogre, The Savage, The Swine
 [End]
 
@@ -628,7 +628,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Ill, The Imaginary, The Distraught, The Never Well
 [End]
 
@@ -639,7 +639,7 @@ Skill: Charm
 Effect: -2
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Animal Lover, The Sheep Humper, The Ox Humper, The Cow Humper, The Donkey Humper
 [End]
 
@@ -670,7 +670,7 @@ Skill: Treachery
 Effect: 1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to have the
 Nicknames: The Stygian Rat, The Insipid Rodent, The Black Rat, The Dark Rodent
 [End]
 
@@ -690,7 +690,7 @@ Skill: Treachery
 Effect: -1
 Chance: 75
 Age: 15
-IsKnown: to be
+IsKnown: to possess a
 Nicknames: The Straight, The Upstanding, The Reliable, The Saintly, The Laudable
 [End]
 
@@ -761,7 +761,7 @@ Skill: Leadership
 Effect: 1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be an excellent
 Nicknames: The Motivator, The Orator, The Preacher
 [End]
 
@@ -797,7 +797,7 @@ Skill: Leadership
 Effect: 1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to have a
 Nicknames: The Loud, The Fog Horn, The Boisterous, The Deafening, The Raucous, The Roaring, The Thundering, The Ear Piercing, The Resonant, The Sonorous
 [End]
 
@@ -824,7 +824,7 @@ Skill: Leadership
 Effect: 1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to have
 Nicknames: The Serene, The Mild, The Smooth, The Even, The Tranquil, The Unruffled, The Undisturbed
 [End]
 
@@ -929,7 +929,7 @@ Skill: Touched
 Effect: +2
 Chance: 30
 Age: 5
-IsKnown: to be
+IsKnown: to be a
 Nicknames:
 [End]
 
@@ -940,7 +940,7 @@ Skill: Touched
 Effect: +1
 Chance: 60
 Age: 5
-IsKnown: to be
+IsKnown: to be a
 Nicknames:
 [End]
 
@@ -951,7 +951,7 @@ Skill: Touched
 Effect: -1
 Chance: 60
 Age: 5
-IsKnown: to be
+IsKnown: to be a
 Nicknames:
 [End]
 
@@ -962,6 +962,6 @@ Skill: Touched
 Effect: -2
 Chance: 30
 Age: 5
-IsKnown: to be
+IsKnown: to be an
 Nicknames:
 [End]

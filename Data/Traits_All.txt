@@ -74,7 +74,7 @@ Skill: Wits
 Effect: 1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to have a
 Nicknames: The Recaller, The Recollector, The Retentive
 [End]
 
@@ -139,7 +139,7 @@ Skill: Wits
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to have a
 Nicknames: The Forgetful, The Hazy, The Confused, The Muddled, The Blank
 [End]
 
@@ -148,7 +148,7 @@ Skill: Wits
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Adamant, The Exacting, The Stern, The Unyielding, The Uncompromising, The Hard, The Inflexible, The Locked, The Static, The Unchanging
 [End]
 
@@ -166,16 +166,16 @@ Skill: Wits
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be a person who
 Nicknames: The Troubled, The Distraught, The Haunted, The Disturbed, The Unsettled, The Harrowed, The Perturbed, The Vexed
 [End]
 
-Name: Lacks Common Sense
+Name: No Common Sense
 Skill: Wits 
 Effect: -1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to have
 Nicknames: The Inept, The Stupid, The Ignorant, The Unable, The Artless
 [End]
 
@@ -262,7 +262,7 @@ Skill: Charm
 Effect: 1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Devotee, The Aficionado, The Buff, The Dilettante, The Gourmet, The Epicure
 [End]
 
@@ -280,7 +280,7 @@ Skill: Charm
 Effect: 1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be an
 Nicknames: The Dreamer, The Idealist, The Romancer, The Stargazer, The Visionary
 [End]
 
@@ -365,7 +365,7 @@ Skill: Charm
 Effect: -2
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Lunatic, The Maniac, The Psychotic, The Crazy, The Deranged, The Insane, The Mad
 [End]
 
@@ -383,7 +383,7 @@ Skill: Charm
 Effect: -2
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to have an
 Nicknames: The Shriek, The Shrill, The Squealer, The Unbearable
 [End]
 
@@ -403,7 +403,7 @@ Skill: Treachery
 Effect: 2
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Mad, The Crazy, The Devil, The Evil, The Unstable, The Insane
 [End]
 
@@ -421,7 +421,7 @@ Skill: Treachery
 Effect: 2
 Chance: 25
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Egotistical, The Ambitious, The Proud, The Superior, The Swollen, The Inflated, The Boastful
 [End]
 
@@ -459,7 +459,7 @@ Skill: Treachery
 Effect: 1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Cheater, The Phony, The Deceiver, The Fabricator, The Trickster
 [End]
 
@@ -486,7 +486,7 @@ Skill: Treachery
 Effect: 1
 Chance: 50
 Age: 15
-IsKnown: to be
+IsKnown: to be a
 Nicknames: The Conspirator, The Controller, The Rogue, The Conductor
 [End]
 
