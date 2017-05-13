@@ -1054,6 +1054,9 @@ namespace Next_Game
                 string effectText = null;
                 int abilityStars;
                 RLColor traitColor;
+                RLColor starColor;
+                RLColor skillColor;
+                RLColor unknownColor = RLColor.LightGray;
                 SkillType trait;
                 //age of actor
                 SkillAge age = SkillAge.Fifteen;
@@ -1071,14 +1074,17 @@ namespace Next_Game
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
                     else { traitColor = Color._goodTrait; }
+                    //Combat skill known?
+                    if (person.GetSkillKnown(SkillType.Combat) == true) { starColor = Color._star; skillColor = RLColor.White; }
+                    else { skillColor = unknownColor; traitColor = unknownColor; starColor = unknownColor;  }
                     //display
                     newLine = true;
                     if (abilityStars != 3)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
-                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Combat"), skillColor, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                         if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -1089,14 +1095,17 @@ namespace Next_Game
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
                     else { traitColor = Color._goodTrait; }
+                    //Wits skill known?
+                    if (person.GetSkillKnown(SkillType.Wits) == true) { starColor = Color._star; skillColor = RLColor.White; }
+                    else { skillColor = unknownColor; traitColor = unknownColor; starColor = unknownColor; }
                     //display
                     newLine = true;
                     if (abilityStars != 3)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
-                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Wits"), skillColor, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                         if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -1107,32 +1116,38 @@ namespace Next_Game
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
                     else { traitColor = Color._goodTrait; }
+                    //Charm skill known?
+                    if (person.GetSkillKnown(SkillType.Charm) == true) { starColor = Color._star; skillColor = RLColor.White; }
+                    else { skillColor = unknownColor; traitColor = unknownColor; starColor = unknownColor; }
                     //display
                     newLine = true;
                     if (abilityStars != 3)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
-                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Charm"), skillColor, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                         if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
-                    //treachery
+                    //Treachery
                     trait = SkillType.Treachery;
                     effectText = person.GetTraitEffectText(trait, age);
                     abilityStars = person.GetSkill(trait, age);
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
                     else { traitColor = Color._goodTrait; }
+                    //Treachery skill known?
+                    if (person.GetSkillKnown(SkillType.Treachery) == true) { starColor = Color._star; skillColor = RLColor.White; }
+                    else { skillColor = unknownColor; traitColor = unknownColor; starColor = unknownColor; }
                     //display
                     newLine = true;
                     if (abilityStars != 3)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
-                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Treachery"), skillColor, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                         if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -1143,14 +1158,17 @@ namespace Next_Game
                     if (abilityStars < 3) { traitColor = Color._badTrait; }
                     else if (abilityStars == 3) { traitColor = Color._star; }
                     else { traitColor = Color._goodTrait; }
+                    //Leadership skill known?
+                    if (person.GetSkillKnown(SkillType.Leadership) == true) { starColor = Color._star; skillColor = RLColor.White; }
+                    else { skillColor = unknownColor; traitColor = unknownColor; starColor = unknownColor; }
                     //display
                     newLine = true;
                     if (abilityStars != 3)
                     { newLine = false; }
                     if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                     {
-                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), false));
-                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Leadership"), skillColor, RLColor.Black, false));
+                        listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                         if (abilityStars != 3)
                         { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                     }
@@ -1163,14 +1181,17 @@ namespace Next_Game
                         if (abilityStars < 3) { traitColor = Color._badTrait; }
                         else if (abilityStars == 3) { traitColor = Color._star; }
                         else { traitColor = Color._goodTrait; }
+                        //Touched skill known?
+                        if (person.GetSkillKnown(SkillType.Touched) == true) { starColor = Color._star; skillColor = RLColor.White; }
+                        else { skillColor = unknownColor; traitColor = unknownColor; starColor = unknownColor; }
                         //display
                         newLine = true;
                         if (abilityStars != 3)
                         { newLine = false; }
                         if ((age == SkillAge.Five && abilityStars != 3) || age == SkillAge.Fifteen)
                         {
-                            listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Touched"), false));
-                            listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), Color._star, RLColor.Black, newLine));
+                            listToDisplay.Add(new Snippet(string.Format("{0, -16}", "Touched"), skillColor, RLColor.Black, false));
+                            listToDisplay.Add(new Snippet(string.Format("{0, -12}", GetStars(abilityStars)), starColor, RLColor.Black, newLine));
                             if (abilityStars != 3)
                             { listToDisplay.Add(new Snippet(string.Format("{0} {1}", person.arrayOfTraitNames[(int)trait], effectText), traitColor, RLColor.Black)); }
                         }

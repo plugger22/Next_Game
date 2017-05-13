@@ -352,6 +352,7 @@ namespace Next_Game
                 //randomly assign resource level (placeholder)
                 player.Resources = rnd.Next(1, 6);
                 player.Type = ActorType.Usurper;
+                player.SetSkillsKnownStatus(true);
                 //add to Location list of Characters
                 loc.AddActor(player.ActID);
                 Game.logStart?.Write(string.Format("{0} {1}, ActID {1}, Resources {2}", player.Title, player.Name, player.ActID, player.Resources));
@@ -417,6 +418,7 @@ namespace Next_Game
                         follower.arrayOfTraitNames[(int)SkillType.Treachery] = data.Treachery_Trait;
                         follower.arrayOfTraitNames[(int)SkillType.Leadership] = data.Leadership_Trait;
                         follower.arrayOfTraitNames[(int)SkillType.Touched] = data.Touched_Trait;
+                        follower.SetSkillsKnownStatus(true);
                         //trait ID's not needed
                         //add to list
                         listOfActiveActors.Add(follower);
@@ -1334,9 +1336,11 @@ namespace Next_Game
                     person.arrayOfTraitEffects[(int)skillAge, (int)skill] = effect; //any age 5 effect also needs to set for age 15
                     person.arrayOfTraitNames[(int)skill] = name;
                     person.arrayOfPrefixes[(int)skill] = rndTrait.IsKnown;
-                    if (effect != 0) { person.arrayOfKnown[(int)skill] = false; } else { person.arrayOfKnown[(int)skill] = true; } //true for any skill with the average 3 stars
+                    person.arrayOfKnown[(int)skill] = false;
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
+                else
+                { person.arrayOfKnown[(int)skill] = true; } //true for any skill with the average 3 stars}
             }
             else
             { Game.SetError(new Error(153, "Invalid Range (zero or less)")); }

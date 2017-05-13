@@ -324,7 +324,23 @@ namespace Next_Game
         public string GetTraitName(SkillType skill)
         { return arrayOfTraitNames[(int)skill]; }
 
+        /// <summary>
+        /// returns true if actor's skill is known to the player
+        /// </summary>
+        /// <param name="skill"></param>
+        /// <returns></returns>
+        public bool GetSkillKnown(SkillType skill)
+        { return arrayOfKnown[(int)skill]; }
 
+        /// <summary>
+        /// Set the entire arrayOfKnown to one state or another
+        /// </summary>
+        /// <param name="status"></param>
+        public void SetSkillsKnownStatus(bool status)
+        {
+            for(int i = 0; i < arrayOfKnown.Length; i++)
+            { arrayOfKnown[i] = status; }
+        }
 
         /// <summary>
         /// returns prefix for trait name, eg. 'to be', 'to have a'
