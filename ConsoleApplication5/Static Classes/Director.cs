@@ -85,7 +85,7 @@ namespace Next_Game
         List<int> listArcPlyrRoadEventsConnector;
         List<int> listArcPlyrCapitalEvents;
         //Rumours
-
+        List<int> listCapitalRumours;
         //other
         List<Follower> listOfFollowers;
         List<EventPackage> listFollCurrentEvents; //follower
@@ -146,6 +146,8 @@ namespace Next_Game
             listArcPlyrRoadEventsKings = new List<int>();
             listArcPlyrRoadEventsConnector = new List<int>();
             listArcPlyrCapitalEvents = new List<int>();
+            //Rumours
+            listCapitalRumours = new List<int>();
             //other
             listFollCurrentEvents = new List<EventPackage>(); //follower events
             listPlyrCurrentEvents = new List<EventPackage>(); //player events
@@ -202,6 +204,7 @@ namespace Next_Game
             Game.logStart?.Write("--- Initialise Challenges (Director.cs)"); //run AFTER GetResults
             dictChallenges = Game.file.GetChallenges("Challenge.txt");
             Game.logStart?.Write("--- InitialiseGameStates (Director.cs)");
+            InitialiseRumours();
             InitialiseGameStates();
         }
 
@@ -4336,6 +4339,78 @@ namespace Next_Game
             return resultText;
         }
 
-        //place Director methods above here
+
+        public void AddRumourToCapital(int rumourID)
+        {
+            if (rumourID > 0)
+            { listCapitalRumours.Add(rumourID); }
+            else { Game.SetError(new Error(269, "Invalid rumourID (zero, or less)")); }
+        }
+
+
+        /// <summary>
+        /// create rumours out of the generated game state
+        /// </summary>
+        private void InitialiseRumours()
+        {
+            Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
+            if (dictPassiveActors != null)
+            {
+                Game.logStart?.Write("--- InitialiseRumours (World.cs)");
+                int skill, strength;
+                string trait, rumourText;
+                string[] arrayOfImmersionTexts = new string[] { "rumoured to be", "said to be", "known to be", "suspected of being", "well known to be", "known by all to be" };
+                //loop through all Passive Actors 
+                for (int i = 0; i < dictPassiveActors.Count - 1; i++)
+                {
+                    Passive actor = dictPassiveActors.ElementAt(i).Value;
+                    if (actor != null)
+                    {
+                        //ignore special actors
+                        if (!(actor is Special))
+                        {
+                            House house = Game.world.GetHouse(actor.RefID);
+                            if (house != null || actor.RefID == 9999)
+                            {
+                                switch (actor.Status)
+                                {
+                                    case ActorStatus.AtLocation:
+                                        //rumour of current character -> Skills (all skills except touched)
+                                        for (int skillIndex = 1; skillIndex < (int)SkillType.Count; skillIndex++)
+                                        {
+                                            skill = actor.GetSkill((SkillType)skillIndex);
+                                            if (skill != 3)
+                                            {
+                                                trait = actor.GetTraitName((SkillType)skillIndex);
+                                                if (String.IsNullOrEmpty(trait) == false)
+                                                {
+                                                    //create a rumour
+                                                    strength = 3;
+                                                    rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\" is {arrayOfImmersionTexts[rnd.Next(arrayOfImmersionTexts.Length)]} {trait}";
+                                                    Rumour rumour = new Rumour(rumourText, strength, RumourType.Local, RumourTopic.Character) { RefID = actor.RefID };
+                                                    //add to dictionary and house list
+                                                    Game.world.AddRumour(rumour.RumourID, rumour);
+                                                    if (actor.RefID != 9999) { house.AddRumour(rumour.RumourID); }
+                                                    else { Game.director.AddRumourToCapital(rumour.RumourID); }
+                                                    Game.logStart?.Write($"{rumourText} -> added to dict and house list");
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    case ActorStatus.Gone:
+                                        //rumour of past character
+                                        break;
+                                }
+                            }
+                            else { Game.SetError(new Error(268, $"Invalid house (null) for Passive ActID {actor.ActID} and RefID {actor.RefID}")); }
+                        }
+                    }
+                    else { Game.SetError(new Error(268, "Invalid Passive actor (null)")); }
+                }
+            }
+            else { Game.SetError(new Error(268, "Invalid dictOfPassiveActors (null)")); }
+        }
+
+        //place new methods above here
     }
 }

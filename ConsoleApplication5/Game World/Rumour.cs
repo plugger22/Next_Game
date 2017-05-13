@@ -43,12 +43,12 @@ namespace Next_Game
         public Rumour(string text, int strength, RumourType type, RumourTopic topic, RumourGlobal global = RumourGlobal.None, bool isActive = true)
         {
             RumourID = rumourIndex++;
-            Text = this.Text;
+            this.Text = text;
             if (strength > 0 && strength < 6) { this.Strength = strength; }
             else { Game.SetError(new Error(261, $"Invalid Rumour Strength (\"{strength}\") for \"{text}\" -> assigned default Strength of 3")); Strength = 3; }
-            Type = this.Type;
-            Topic = this.Topic;
-            Global = this.Global;
+            this.Type = type;
+            this.Topic = topic;
+            this.Global = global;
             Active = isActive;
             TurnCreated = Game.gameTurn;
         }

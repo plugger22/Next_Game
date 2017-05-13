@@ -110,7 +110,7 @@ namespace Next_Game
             InitialiseDesires();
             InitialiseSafeHouses();
             InitialiseDisguises();
-            InitialiseRumours();
+            
             Game.StopTimer(timer_2, "W: InitialiseVarious");
             timer_2.Start();
             InitialiseAI();
@@ -3158,58 +3158,7 @@ namespace Next_Game
             }
         }
 
-        /// <summary>
-        /// create rumours out of the generated game state
-        /// </summary>
-        private void InitialiseRumours()
-        {
-            Game.logStart?.Write("--- InitialiseRumours (World.cs)");
-            int skill, strength;
-            string trait, rumourText;
-            string[] arrayOfImmersionTexts = new string[] { "rumoured to be", "said to be", "known to be", "suspected of being", "well known to be", "known by all to be" };
-            //loop through all Passive Actors 
-            for (int i = 0; i < dictPassiveActors.Count - 1; i++)
-            {
-                Passive actor = dictPassiveActors.ElementAt(i).Value;
-                if (actor != null)
-                {
-                    House house = GetHouse(actor.RefID);
-                    if (house != null)
-                    {
-                        switch (actor.Status)
-                        {
-                            case ActorStatus.AtLocation:
-                                //rumour of current character -> Skills (all skills except touched)
-                                for (int skillIndex = 1; skillIndex < (int)SkillType.Count; skillIndex++)
-                                {
-                                    skill = actor.GetSkill((SkillType)skillIndex);
-                                    if (skill != 3)
-                                    {
-                                        trait = actor.GetTraitName((SkillType)skillIndex);
-                                        if (String.IsNullOrEmpty(trait) == false)
-                                        {
-                                            //create a rumour
-                                            strength = 3;
-                                            rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\" is {arrayOfImmersionTexts[rnd.Next(arrayOfImmersionTexts.Length)]} {trait}";
-                                            Rumour rumour = new Rumour(rumourText, strength, RumourType.Local, RumourTopic.Character) { RefID = actor.RefID };
-                                            //add to dictionary and house list
-                                            AddRumour(rumour.RumourID, rumour);
-                                            house.AddRumour(rumour.RumourID);
-                                            Game.logStart?.Write($"\"{rumourText}\" -> added to dict and house list");
-                                        }
-                                    }
-                                }
-                                break;
-                            case ActorStatus.Gone:
-                                //rumour of past character
-                                break;
-                        }
-                    }
-                    else { Game.SetError(new Error(268, $"Invalid house (null) for Passive ActID {actor.ActID} and RefID {actor.RefID}")); }
-                }
-                else { Game.SetError(new Error(268, "Invalid Passive actor (null)")); }
-            }
-        }
+
 
         /// <summary>
         /// populates Possession dictionary with Secrets
