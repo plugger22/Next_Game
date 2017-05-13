@@ -31,6 +31,7 @@ namespace Next_Game
         public SkillAge Age { get; set; }
         public int Effect { get; set; }
         public int Chance { get; set; }
+        public string IsKnown { get; set; }
     }
 
     //Follower Events
@@ -617,6 +618,9 @@ namespace Next_Game
                                 case "Name":
                                     structTrait.Name = cleanToken;
                                     break;
+                                case "IsKnown":
+                                    structTrait.IsKnown = cleanToken;
+                                    break;
                                 case "Skill":
                                     switch (cleanToken)
                                     {
@@ -687,7 +691,7 @@ namespace Next_Game
                                     {
                                         //pass info over to a class instance
                                         Skill classTrait = new Skill(structTrait.Name, structTrait.Type, structTrait.Effect, structTrait.Sex, structTrait.Age,
-                                            structTrait.Chance, listOfNickNames);
+                                            structTrait.Chance, structTrait.IsKnown, listOfNickNames);
                                         //last datapoint - save object to list
                                         if (dataCounter > 0)
                                         { listOfTraits.Add(classTrait); }

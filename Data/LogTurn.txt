@@ -1,6 +1,6 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 13/05/2017 12:26:27
+//Exile Game file ops "LogTurn.txt" commenced at: 13/05/2017 14:12:56
 --- ProcessStartGame (World.cs)
 --- AgePassiveCharacters (History.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 13/05/2017 12:26:34
+//Exile Game file ops "LogTurn.txt" Completed at: 13/05/2017 14:13:21

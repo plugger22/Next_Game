@@ -61,6 +61,7 @@ namespace Next_Game
         public int[] arrayOfSkillID { get; set; } //array index corresponds to skill type in Skill.cs SkillType enum, eg. Combat = 1
         public int[,] arrayOfTraitEffects { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
+        public string[] arrayOfPrefixes { get; set; } //used to describe traits, eg. 'to be' <trait>, or 'to have a' <trait> (rumours)
         public int[] arrayOfConditions { get; set; } //net effect of any conditions
         //lists
         private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
@@ -121,6 +122,7 @@ namespace Next_Game
             arrayOfSkillID = new int[(int)SkillType.Count];
             arrayOfTraitEffects = new int[(int)SkillAge.Count, (int)SkillType.Count];
             arrayOfTraitNames = new string[(int)SkillType.Count];
+            arrayOfPrefixes = new string[(int)SkillType.Count];
             arrayOfConditions = new int[(int)SkillType.Count];
             listOfSecrets = new List<int>();
             listOfItems = new List<int>();
@@ -319,6 +321,16 @@ namespace Next_Game
         /// <returns></returns>
         public string GetTraitName(SkillType skill)
         { return arrayOfTraitNames[(int)skill]; }
+
+
+
+        /// <summary>
+        /// returns prefix for trait name, eg. 'to be', 'to have a'
+        /// </summary>
+        /// <param name="skill"></param>
+        /// <returns></returns>
+        public string GetPrefixName(SkillType skill)
+        { return arrayOfPrefixes[(int)skill]; }
 
 
         /// <summary>

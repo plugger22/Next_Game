@@ -17,6 +17,7 @@ namespace Next_Game
         public SkillAge Age { get; set; } = SkillAge.Fifteen; //what age does the trait kick in?
         public string Name { get; set; } = "Unknown";
         public string Conflict { get; set; } = "Unknown"; //generic text used for a conflict card, eg. Upset Stomach -> "You feel an urgent need to empty your bowels"
+        public string IsKnown { get; set; } //prefix texts for Rumours
         public int Effect { get; set; } = 0;
         public int Chance { get; set; } = 50;
         private List<string> listOfNicknames;
@@ -24,7 +25,7 @@ namespace Next_Game
         public Skill()
         { listOfNicknames = new List<string>(); }
 
-        public Skill(string name, SkillType skill, int effect, SkillSex sex, SkillAge age, int chance, List<string> nicknames)
+        public Skill(string name, SkillType skill, int effect, SkillSex sex, SkillAge age, int chance, string isKnown, List<string> nicknames)
         {
             SkillID = skillIndex++;
             this.Name = name;
@@ -33,6 +34,7 @@ namespace Next_Game
             this.Sex = sex;
             this.Age = age;
             this.Chance = chance;
+            IsKnown = isKnown;
             listOfNicknames = new List<string>(nicknames);
         }
 

@@ -1,6 +1,7 @@
 # Traits_Female
 # Notes: Age is either 5 or 15, Skill is one of 'Combat/Wits/Charm/Treachery/Leadership/Administration', Chance is % roll or less
 # Notes: Effect is +/- 1 or 2
+# IsKnown: text prefix for Name of Trait in format "is known..." <prefix> Name, eg. "to be"
 
 # Combat --- +2 ------------------------- Combat
 
@@ -9,6 +10,7 @@ Skill: Combat
 Effect: 2
 Chance: 4
 Age: 15
+IsKnown: to be
 Nicknames: The Dragon, The Fire Eater, The Ogress, The She-Devil, The Tigress, The Hell Cat, The She-Wolf
 [End]
 
@@ -23,6 +25,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 5
+IsKnown: to be
 Nicknames: The Petal, The Fragile Rose, The Porcelain Rose
 [End]
 
@@ -31,6 +34,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Sewer, The Purled, The Woven
 [End]
 
@@ -39,6 +43,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Patched, The Plaid, The Stitcher
 [End]
 
@@ -47,6 +52,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Benevolent, The Gracious, The Caring
 [End]
 
@@ -55,6 +61,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Kind, The Soft, The Tender, The Soft Hearted
 [End]
 
@@ -63,6 +70,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Hoofer, The Danseur, The Figurante
 [End]
 
@@ -71,6 +79,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Jolly, The Jovial, The Sunny, The Glad
 [End]
 
@@ -79,6 +88,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Lacer, The Cross-Stitch, The Sampler, The Brocader
 [End]
 
@@ -87,6 +97,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Troubadour, The Bard, The Player
 [End]
 
@@ -95,6 +106,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Minstrel, The Musician, The Performer
 [End]
 
@@ -103,6 +115,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Jongleur, The Poet, The Ingenue
 [End]
 
@@ -111,6 +124,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Dove, The Pigeon, The Nightingale
 [End]
 
@@ -119,6 +133,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Blower, The Dramatic, The Vivid
 [End]
 
@@ -127,6 +142,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Breathtaking, The Startling, The Thrilling
 [End]
 
@@ -135,6 +151,7 @@ Skill: Combat
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames: The Astounding, The Sparrow, The White Falcon
 [End]
 
@@ -145,6 +162,7 @@ Skill: Wits
 Effect: 2
 Chance: 25
 Age: 15
+IsKnown: to be
 Nicknames: The Diviner, The Second Sight, The Savvy
 [End]
 
@@ -157,6 +175,7 @@ Skill: Wits
 Effect: -1
 Chance: 50
 Age: 15
+IsKnown: to be
 Nicknames: The Addled, The Dazed, The Unsteady, The Woozy, The Fuddled, The Mellow, The Merry, The Stewed
 [End]
 
@@ -169,6 +188,7 @@ Skill: Charm
 Effect: 2
 Chance: 25
 Age: 15
+IsKnown: to be
 Nicknames: The Sensational, The Dazzling, The Gorgeous
 [End]
 
@@ -177,6 +197,7 @@ Skill: Charm
 Effect: 2
 Chance: 25
 Age: 15
+IsKnown: to be
 Nicknames: The Lovely, The Striking, The Ravishing, The Fair, The Beauteous, The Heavenly, The Pretty
 [End]
 
@@ -185,6 +206,7 @@ Skill: Charm
 Effect: 2
 Chance: 25
 Age: 15
+IsKnown: to be
 Nicknames: The Crafty, The Trickster, The Misleading, The Tempting, The Alluring, The Temptress
 [End]
 
@@ -193,6 +215,7 @@ Skill: Charm
 Effect: 2
 Chance: 25
 Age: 15
+IsKnown: to be
 Nicknames: The Enticing, The Fascinating, The Adorable, The Fetching, The Goddess
 [End]
 
@@ -201,6 +224,7 @@ Skill: Charm
 Effect: 2
 Chance: 25
 Age: 15
+IsKnown: to be
 Nicknames: The Provocative, The Captivating, The Siren, The Beguiling, The Irresistible, The Flirtatious, The Attractive
 [End]
 
@@ -211,6 +235,7 @@ Skill: Charm
 Effect: 1
 Chance: 75
 Age: 15
+IsKnown: to be
 Nicknames: The Supple, The Fair, The Attractive, The Comely, The Tasteful, The Slender
 [End]
 
@@ -219,6 +244,7 @@ Skill: Charm
 Effect: 1
 Chance: 75
 Age: 15
+IsKnown: to be
 Nicknames: The Captivating, The Charming, The Elegant, The Glittering, The Exciting, The Refined
 [End]
 
@@ -227,6 +253,7 @@ Skill: Charm
 Effect: 1
 Chance: 75
 Age: 15
+IsKnown: to be
 Nicknames: The Dulcet, The Honey Tongued, The Lyre Bird
 [End]
 
@@ -235,6 +262,7 @@ Skill: Charm
 Effect: 1
 Chance: 75
 Age: 15
+IsKnown: to be
 Nicknames: The Fascinating, The Winsome, The Desirable, The Lovely, The Enticing, The Entrancing
 [End]
 
@@ -243,6 +271,7 @@ Skill: Charm
 Effect: 1
 Chance: 75
 Age: 15
+IsKnown: to be
 Nicknames: The Rhythmic, The Tasteful, The Flowing, The Lissome, The Poised, The Statuesque
 [End]
 
@@ -251,6 +280,7 @@ Skill: Charm
 Effect: 1
 Chance: 75
 Age: 15
+IsKnown: to be
 Nicknames: The Agreeable, The Appealing, The Angelic, The Pleasing, The Radiant, The Sublime
 [End]
 
@@ -261,6 +291,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 15
+IsKnown: to be
 Nicknames: The Plain, The Dour, The Severe, The Spartan, The Unembellished, The Bleak, The Austere
 [End]
 
@@ -269,6 +300,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 15
+IsKnown: to be
 Nicknames: The Crude, The Crass, The Boorish, The Rough, The Rude, The Uncivilised, The Uncultivated, The Unpolished, The Vulgar
 [End]
 
@@ -277,6 +309,7 @@ Skill: Charm
 Effect: -1
 Chance: 50
 Age: 15
+IsKnown: to be
 Nicknames: The Narcissistic, The Self-Absorbed, The Self-Serving, The Selfish, The Self-Indulgent, The Self-Interested, The Vainglorious
 [End]
 
@@ -289,6 +322,7 @@ Skill: Treachery
 Effect: 2
 Chance: 25
 Age: 15
+IsKnown: to be
 Nicknames: The Huntress, The Black Widow Spider, The Maneater, The Devourer of Men
 [End]
 
@@ -301,6 +335,7 @@ Skill: Treachery
 Effect: -1
 Chance: 75
 Age: 15
+IsKnown: to be
 Nicknames: The Dreamy, The Day Dreamer, The Unreal, The Celestial, The Ethereal
 [End]
 
@@ -309,6 +344,7 @@ Skill: Treachery
 Effect: -1
 Chance: 75
 Age: 15
+IsKnown: to be
 Nicknames: The Tender, The Pitying, The Understanding, The Softhearted, The Kindhearted, The Humane
 [End]
 
@@ -321,6 +357,7 @@ Skill: Leadership
 Effect: 2
 Chance: 4
 Age: 15
+IsKnown: to be
 Nicknames: Queen of the Battlefield, Demon Killer, Queen of Men, Goddess of War
 [End]
 
@@ -335,6 +372,7 @@ Skill: Leadership
 Effect: -2
 Chance: 100
 Age: 15
+IsKnown: to be
 Nicknames:
 [End]
 
@@ -347,6 +385,7 @@ Skill: Touched
 Effect: +2
 Chance: 30
 Age: 5
+IsKnown: to be
 Nicknames:
 [End]
 
@@ -357,6 +396,7 @@ Skill: Touched
 Effect: +1
 Chance: 60
 Age: 5
+IsKnown: to be
 Nicknames:
 [End]
 
@@ -367,6 +407,7 @@ Skill: Touched
 Effect: -1
 Chance: 60
 Age: 5
+IsKnown: to be
 Nicknames:
 [End]
 
@@ -377,5 +418,6 @@ Skill: Touched
 Effect: -2
 Chance: 30
 Age: 5
+IsKnown: to be
 Nicknames:
 [End]

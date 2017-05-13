@@ -1001,6 +1001,7 @@ namespace Next_Game
                             person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Combat] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Combat];
                             person.arrayOfSkillID[(int)SkillType.Combat] = parent.arrayOfSkillID[(int)SkillType.Combat];
                             person.arrayOfTraitNames[(int)SkillType.Combat] = parent.arrayOfTraitNames[(int)SkillType.Combat];
+                            person.arrayOfPrefixes[(int)SkillType.Combat] = parent.arrayOfPrefixes[(int)SkillType.Combat];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -1049,6 +1050,7 @@ namespace Next_Game
                             person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Wits] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Wits];
                             person.arrayOfSkillID[(int)SkillType.Wits] = parent.arrayOfSkillID[(int)SkillType.Wits];
                             person.arrayOfTraitNames[(int)SkillType.Wits] = parent.arrayOfTraitNames[(int)SkillType.Wits];
+                            person.arrayOfPrefixes[(int)SkillType.Wits] = parent.arrayOfPrefixes[(int)SkillType.Wits];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -1096,6 +1098,7 @@ namespace Next_Game
                             person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Charm] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Charm];
                             person.arrayOfSkillID[(int)SkillType.Charm] = parent.arrayOfSkillID[(int)SkillType.Charm];
                             person.arrayOfTraitNames[(int)SkillType.Charm] = parent.arrayOfTraitNames[(int)SkillType.Charm];
+                            person.arrayOfPrefixes[(int)SkillType.Charm] = parent.arrayOfPrefixes[(int)SkillType.Charm];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -1143,6 +1146,7 @@ namespace Next_Game
                             person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Treachery] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Treachery];
                             person.arrayOfSkillID[(int)SkillType.Treachery] = parent.arrayOfSkillID[(int)SkillType.Treachery];
                             person.arrayOfTraitNames[(int)SkillType.Treachery] = parent.arrayOfTraitNames[(int)SkillType.Treachery];
+                            person.arrayOfPrefixes[(int)SkillType.Treachery] = parent.arrayOfPrefixes[(int)SkillType.Treachery];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -1190,6 +1194,7 @@ namespace Next_Game
                             person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Leadership] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Leadership];
                             person.arrayOfSkillID[(int)SkillType.Leadership] = parent.arrayOfSkillID[(int)SkillType.Leadership];
                             person.arrayOfTraitNames[(int)SkillType.Leadership] = parent.arrayOfTraitNames[(int)SkillType.Leadership];
+                            person.arrayOfPrefixes[(int)SkillType.Leadership] = parent.arrayOfPrefixes[(int)SkillType.Leadership];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -1239,6 +1244,7 @@ namespace Next_Game
                             person.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Touched] = parent.arrayOfTraitEffects[(int)SkillAge.Fifteen, (int)SkillType.Touched];
                             person.arrayOfSkillID[(int)SkillType.Touched] = parent.arrayOfSkillID[(int)SkillType.Touched];
                             person.arrayOfTraitNames[(int)SkillType.Touched] = parent.arrayOfTraitNames[(int)SkillType.Touched];
+                            person.arrayOfPrefixes[(int)SkillType.Touched] = parent.arrayOfPrefixes[(int)SkillType.Touched];
                             //add trait nicknames to list of possible handles
                             tempHandles.AddRange(trait.GetNickNames());
                             needRandomTrait = false;
@@ -1318,6 +1324,7 @@ namespace Next_Game
                     person.arrayOfTraitEffects[(int)age, (int)skill] = effect;
                     person.arrayOfTraitEffects[(int)skillAge, (int)skill] = effect; //any age 5 effect also needs to set for age 15
                     person.arrayOfTraitNames[(int)skill] = name;
+                    person.arrayOfPrefixes[(int)skill] = rndTrait.IsKnown;
                     tempHandles.AddRange(rndTrait.GetNickNames());
                 }
             }

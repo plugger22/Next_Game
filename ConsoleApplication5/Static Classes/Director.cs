@@ -4359,7 +4359,7 @@ namespace Next_Game
                 Game.logStart?.Write("--- InitialiseRumours (World.cs)");
                 int skill, strength;
                 string trait, rumourText;
-                string[] arrayOfImmersionTexts = new string[] { "rumoured to be", "said to be", "known to be", "suspected of being", "well known to be", "known by all to be" };
+                string[] arrayOfImmersionTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all" };
                 //loop through all Passive Actors 
                 for (int i = 0; i < dictPassiveActors.Count - 1; i++)
                 {
@@ -4386,7 +4386,7 @@ namespace Next_Game
                                                 {
                                                     //create a rumour
                                                     strength = 3;
-                                                    rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\" is {arrayOfImmersionTexts[rnd.Next(arrayOfImmersionTexts.Length)]} {trait}";
+                                                    rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID}, is {arrayOfImmersionTexts[rnd.Next(arrayOfImmersionTexts.Length)]} {actor.GetPrefixName((SkillType)skillIndex)} {trait}";
                                                     Rumour rumour = new Rumour(rumourText, strength, RumourType.Local, RumourTopic.Character) { RefID = actor.RefID };
                                                     //add to dictionary and house list
                                                     Game.world.AddRumour(rumour.RumourID, rumour);
