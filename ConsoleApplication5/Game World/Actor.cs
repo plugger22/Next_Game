@@ -63,6 +63,7 @@ namespace Next_Game
         public string[] arrayOfTraitNames { get; set; } //array index corresponds to trait type in Trait.cs TraitType enum, eg. Combat = 1
         public string[] arrayOfPrefixes { get; set; } //used to describe traits, eg. 'to be' <trait>, or 'to have a' <trait> (rumours)
         public int[] arrayOfConditions { get; set; } //net effect of any conditions
+        public bool[] arrayOfKnown { get; set; } //if true that skill is known
         //lists
         private List<int> listOfSecrets; //secrets have a PossID which can be referenced in the dictPossessions (world.cs)
         private List<int> listOfItems; //items have a PossID which can be referenced in the dictPossessionss (world.cs)
@@ -124,6 +125,7 @@ namespace Next_Game
             arrayOfTraitNames = new string[(int)SkillType.Count];
             arrayOfPrefixes = new string[(int)SkillType.Count];
             arrayOfConditions = new int[(int)SkillType.Count];
+            arrayOfKnown = new bool[(int)SkillType.Count];
             listOfSecrets = new List<int>();
             listOfItems = new List<int>();
             listOfPromises = new List<int>();
