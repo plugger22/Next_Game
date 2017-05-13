@@ -4409,12 +4409,12 @@ namespace Next_Game
                                                     }
                                                     immersionText = $"{arrayOfImmersionTexts[rnd.Next(arrayOfImmersionTexts.Length)]} {actor.GetPrefixName((SkillType)skillIndex)}";
                                                     rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID}, is {immersionText} {trait}";
-                                                    Rumour rumour = new Rumour(rumourText, strength, RumourType.Local, RumourTopic.Character) { RefID = actor.RefID };
+                                                    RumourSkill rumour = new RumourSkill(rumourText, strength, actor.ActID, (SkillType)skillIndex, RumourScope.Local) { RefID = actor.RefID };
                                                     //add to dictionary and house list
                                                     Game.world.AddRumour(rumour.RumourID, rumour);
                                                     if (actor.RefID != 9999) { house.AddRumour(rumour.RumourID); }
                                                     else { Game.director.AddRumourToCapital(rumour.RumourID); }
-                                                    Game.logStart?.Write($"{rumourText} -> added to dict and house list");
+                                                    Game.logStart?.Write($"{rumourText} -> added to dict");
                                                 }
                                             }
                                         }
