@@ -2741,6 +2741,15 @@ namespace Next_Game
                                             Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
                                             Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             break;
+                                        case OutcomeType.Rumour:
+                                            //the Player gains rumours from 'asking around for information'
+                                            outcomeText = ChangePlayerRumourStatus();
+                                            if (String.IsNullOrEmpty(outcomeText) == false)
+                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            //message
+                                            Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
+                                            Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
+                                            break;
                                         case OutcomeType.Freedom:
                                             //change a player's status
                                             if (outcome.Data > 0)
@@ -3972,6 +3981,25 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Player gains rumours from 'asking around for information'
+        /// </summary>
+        /// <returns></returns>
+        private string ChangePlayerRumourStatus()
+        {
+            Game.logTurn?.Write("--- ChangePlayerRumourStatus (Director.cs)");
+            string resultText = "";
+            Player player = Game.world.GetPlayer();
+            if (player != null)
+            {
+
+            }
+            else { Game.SetError(new Error(272, "Invalid Player (null)")); }
+            Game.logTurn?.Write(resultText);
+            return resultText;
+        }
+
+
+        /// <summary>
         /// Follower recruited from an Inn.
         /// </summary>
         /// <returns></returns>
@@ -4352,12 +4380,49 @@ namespace Next_Game
             return resultText;
         }
 
-
+        /// <summary>
+        /// Add rumour to Capital (eg. all rumours with refID 9999)
+        /// </summary>
+        /// <param name="rumourID"></param>
         public void AddRumourToCapital(int rumourID)
         {
             if (rumourID > 0)
             { listRumoursCapital.Add(rumourID); }
             else { Game.SetError(new Error(269, "Invalid rumourID (zero, or less)")); }
+        }
+
+
+        /// <summary>
+        /// Add's a global rumour to appropriate director list and master dictionary
+        /// </summary>
+        /// <param name="rumourID"></param>
+        /// <param name="global"></param>
+        internal void AddGlobalRumour(Rumour rumour)
+        {
+            if (Game.world.AddRumour(rumour.RumourID, rumour) == false)
+            { Game.SetError(new Error(270, $"RumourID {rumour.RumourID} failed to Add to Dictionary -> not added to Global lists")); }
+            else
+            {
+                //add to appropraite Global list
+                switch (rumour.Global)
+                {
+                    case RumourGlobal.All:
+                        listRumoursGlobal.Add(rumour.RumourID);
+                        break;
+                    case RumourGlobal.North:
+                        listRumoursNorth.Add(rumour.RumourID);
+                        break;
+                    case RumourGlobal.East:
+                        listRumoursEast.Add(rumour.RumourID);
+                        break;
+                    case RumourGlobal.South:
+                        listRumoursSouth.Add(rumour.RumourID);
+                        break;
+                    case RumourGlobal.West:
+                        listRumoursWest.Add(rumour.RumourID);
+                        break;
+                }
+            }
         }
 
 
@@ -4463,8 +4528,10 @@ namespace Next_Game
         /// <summary>
         /// Generates a rumour from a pool of possibles and returns the RumourID -> returns '0' if none found
         /// </summary>
+        /// <param name="refID">The refID of the current location</param>
+        /// <param name="actorID">The actorID of the actor learning of the rumour</param>
         /// <returns></returns>
-        public int GetRumour(int refID)
+        public int GetRumour(int refID, int actorID)
         {
             Game.logTurn?.Write("--- GetRumour (Director.cs)");
             int rumourID = 0;
@@ -4472,7 +4539,7 @@ namespace Next_Game
             int branch = 0;
             int[] arrayOfRumours = new int[6];  //selected rumourID's -> [0] global All [1 to 4] branch N/E/S/W [5] house [6] Capital
             List<int> listRumourPool = new List<int>();
-            List<int> listTempRumours = new List<int>();
+            List<int> listRumoursHouse = new List<int>();
             //get local rumours
             if (refID != 9999)
             {
@@ -4482,13 +4549,13 @@ namespace Next_Game
                     //get branch rumour
                     branch = house.Branch;
                     //get local rumours
-                    listTempRumours.AddRange(house.GetRumours());
-                    if (listTempRumours != null)
+                    listRumoursHouse = house.GetRumours();
+                    if (listRumoursHouse != null)
                     {
-                        if (listTempRumours.Count > 0)
+                        if (listRumoursHouse.Count > 0)
                         {
-                            index = rnd.Next(listTempRumours.Count);
-                            tempRumourID = listTempRumours[index];
+                            index = rnd.Next(listRumoursHouse.Count);
+                            tempRumourID = listRumoursHouse[index];
                             //keep track of which rumour was selected (might have to delete it)
                             arrayOfRumours[5] = tempRumourID;
                         }
@@ -4588,6 +4655,13 @@ namespace Next_Game
             {
                 rumourID = listRumourPool[rnd.Next(listRumourPool.Count)];
                 Game.logTurn?.Write($"RumourID {rumourID} selected from the Pool");
+                //update rumour for the actor who learned of it and the turn it was revealed
+                Rumour rumour = Game.world.GetRumour(rumourID);
+                rumour.TurnRevealed = Game.gameTurn;
+                if (actorID > 0 && actorID < 10)
+                { rumour.WhoHeard = actorID; }
+                else { Game.SetError(new Error(271, $"Invalid actorID {actorID} (not Player or a follower) -> rumour.WhoHeard not updated")); }
+                Game.logTurn?.Write($"Rumour \"{rumour.Text}\" revealed to ActorID{actorID} on turn {rumour.TurnRevealed}");
             }
             else { Game.logTurn?.Write("[Notification] No rumours available (listRumourPool empty)  -> none selected"); }
             //delete rumour from appropriate list (so it can't be used again)
@@ -4607,51 +4681,52 @@ namespace Next_Game
                 {
                     case 0:
                         //global all
+                        index = listRumoursGlobal.Find(id => id == rumourID);
+                        listRumoursGlobal.RemoveAt(index);
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursGlobal[ {index} ]");
                         break;
                     case 1:
                         //north branch
-
+                        index = listRumoursNorth.Find(id => id == rumourID);
+                        listRumoursNorth.RemoveAt(index);
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursNorth[ {index} ]");
                         break;
-
+                    case 2:
+                        //east branch
+                        index = listRumoursEast.Find(id => id == rumourID);
+                        listRumoursEast.RemoveAt(index);
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursEast[ {index} ]");
+                        break;
+                    case 3:
+                        //south branch
+                        index = listRumoursSouth.Find(id => id == rumourID);
+                        listRumoursSouth.RemoveAt(index);
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursSouth[ {index} ]");
+                        break;
+                    case 4:
+                        //west branch
+                        index = listRumoursWest.Find(id => id == rumourID);
+                        listRumoursWest.RemoveAt(index);
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursWest[ {index} ]");
+                        break;
+                    case 5:
+                        //House list
+                        index = listRumoursHouse.Find(id => id == rumourID);
+                        listRumoursHouse.RemoveAt(index);
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursHouse[ {index} ]");
+                        break;
+                    case 6:
+                        //Capital
+                        index = listRumoursCapital.Find(id => id == rumourID);
+                        listRumoursCapital.RemoveAt(index);
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursCapital[ {index} ]");
+                        break;
                 }
             }
             else { Game.SetError(new Error(271, "Selected Rumour not found in arrayOfRumours (deleteIndex -1) -> rumour cancelled")); rumourID = 0; }
             return rumourID;
         }
 
-
-        /// <summary>
-        /// Add's a global rumour to appropriate director list and master dictionary
-        /// </summary>
-        /// <param name="rumourID"></param>
-        /// <param name="global"></param>
-        internal void AddGlobalRumour(Rumour rumour)
-        {
-            if (Game.world.AddRumour(rumour.RumourID, rumour) == false)
-            { Game.SetError(new Error(270, $"RumourID {rumour.RumourID} failed to Add to Dictionary -> not added to Global lists")); }
-            else
-            {
-                //add to appropraite Global list
-                switch (rumour.Global)
-                {
-                    case RumourGlobal.All:
-                        listRumoursGlobal.Add(rumour.RumourID);
-                        break;
-                    case RumourGlobal.North:
-                        listRumoursNorth.Add(rumour.RumourID);
-                        break;
-                    case RumourGlobal.East:
-                        listRumoursEast.Add(rumour.RumourID);
-                        break;
-                    case RumourGlobal.South:
-                        listRumoursSouth.Add(rumour.RumourID);
-                        break;
-                    case RumourGlobal.West:
-                        listRumoursWest.Add(rumour.RumourID);
-                        break;
-                }
-            }
-        }
 
         //place new methods above here
     }

@@ -188,4 +188,9 @@
 # PROMISES_MAX -> max. num of Promises that can be handed out. No more promises beyond this point ('>')
 71: 6 @ 6 @ 20
 
-# Next valid number -> 72
+# Rumours ---
+
+# PLAYER_RUMOURS -> number of rumours the player gets when 'asking around for information' at a location
+72: 2 @ 1 @ 3
+
+# Next valid number -> 73

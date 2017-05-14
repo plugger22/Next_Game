@@ -91,6 +91,8 @@ namespace Next_Game
         PROMISES_BASE,
         PROMISES_HALVED,
         PROMISES_MAX,
+        //Rumours
+        PLAYER_RUMORS,
         //keep as last
         Count 
     }
@@ -178,6 +180,7 @@ namespace Next_Game
             arrayOfGlobals[69] = Global.PROMISES_BASE;
             arrayOfGlobals[70] = Global.PROMISES_HALVED;
             arrayOfGlobals[71] = Global.PROMISES_MAX;
+            arrayOfGlobals[72] = Global.PLAYER_RUMORS;
         }
 
         /// <summary>

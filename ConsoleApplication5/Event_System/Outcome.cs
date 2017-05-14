@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game.Event_System
 {
     public enum OutcomeType { None, Delay, Conflict, GameState, GameVar, Known, EventTimer, EventStatus, EventChain, Resource, Condition, Freedom, Item, Passage, VoyageTime, Adrift, DeathTimer, Rescued,
-    Follower, Promise, RelPlyr, Favour, Introduction, SafeHouse, Disguise};
+    Follower, Promise, RelPlyr, Favour, Introduction, SafeHouse, Disguise, Rumour};
 
     /// <summary>
     /// Option outcome, event system
@@ -194,6 +194,15 @@ namespace Next_Game.Event_System
         public OutDisguise(int eventID) : base(eventID)
         { Type = OutcomeType.Disguise; }
 
+    }
+
+    /// <summary>
+    /// Player asks around for information at a location (CreateAutoLocEvent) and receives rumours
+    /// </summary>
+    class OutRumour : Outcome
+    {
+        public OutRumour(int eventID) : base(eventID)
+        { Type = OutcomeType.Rumour; }
     }
 
     /// <summary>

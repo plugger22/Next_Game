@@ -22,8 +22,10 @@ namespace Next_Game
         public bool Active { get; set; } //rumour only used if Active is true
         public int RefID { get; set; } //Optional -> location specific rumour, default '0'
         public int TurnCreated { get; set; } //Turn when rumour became active (used to show age of rumour)
+        public int TurnRevealed { get; set; } //Turn when rumour was revealed, eg. became known
         public int TimerStart { get; set; } //Turns before rumour becomes active, default '0'
         public int TimerExpire { get; set; } //Turns before rumour becomes inactive (expires), default '0'
+        public int WhoHeard { get; set; } //ActorID of character (player or follower) who first heard the rumour
         public RumourScope Scope { get; set; }
         public RumourType Type { get; set; } //Corresponds to Rumour subclasses, set in subclass
         public RumourGlobal Global { get; set; } //Optional -> only applies if Type is RumourType.Global
