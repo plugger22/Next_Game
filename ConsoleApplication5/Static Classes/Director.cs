@@ -1263,14 +1263,13 @@ namespace Next_Game
                             {
                                 OptionInteractive option = new OptionInteractive("Ask around for Information");
                                 option.ReplyGood = "You make some discreet enquiries";
-                                OutNone outcome = new OutNone(eventObject.EventPID);
-                                //OutKnown outcome = new OutKnown(eventObject.EventPID, -1);
-                                option.SetGoodOutcome(outcome);
+                                OutRumour outRumour = new OutRumour(eventObject.EventPID);
+                                option.SetGoodOutcome(outRumour);
                                 eventObject.SetOption(option);
                             }
                             //option -> seek passage to another port (if applicable)
                             if (loc.Port == true)
-                            {
+                            { 
                                 OptionInteractive option = new OptionInteractive("Seek Sea Passage to another Port");
                                 option.ReplyGood = "You head to the harbour and search for a suitable ship";
                                 //OutNone outcome = new OutNone(eventObject.EventPID);
@@ -3986,14 +3985,37 @@ namespace Next_Game
         /// <returns></returns>
         private string ChangePlayerRumourStatus()
         {
+            int rumourID;
+            int rumourCount = 0;
             Game.logTurn?.Write("--- ChangePlayerRumourStatus (Director.cs)");
             string resultText = "";
             Player player = Game.world.GetPlayer();
+            int refID = Game.world.ConvertLocToRef(player.LocID);
+            int numRumours = Game.constant.GetValue(Global.PLAYER_RUMORS);
             if (player != null)
             {
-
+                for (int i = 0; i < numRumours; i++)
+                {
+                    rumourID = GetRumour(refID, player.ActID);
+                    if (rumourID > 0)
+                    {
+                        Rumour rumour = Game.world.GetRumour(rumourID);
+                        if (rumour != null)
+                        {
+                            if (Game.world.AddRumourKnown(rumourID, rumour) == true)
+                            {
+                                Game.logTurn?.Write($"Rumour \"{rumour.Text}\", rumourID {rumour.RumourID}, added to dictRumoursKnown");
+                                rumourCount++;
+                            }
+                            else { Game.SetError(new Error(272, $"RumourID {rumourID} failed to be added to dictRumoursKnown")); }
+                        }
+                        else { Game.SetError(new Error(272, $"Invalid rumour (null) for rumourID {rumourID} -> not added to dictRumoursKnown")); }
+                    }
+                    else { Game.logTurn?.Write("[Notification] RumourID zero or less -> not added to dictRumoursKnown"); }
+                }
             }
             else { Game.SetError(new Error(272, "Invalid Player (null)")); }
+            resultText = string.Format("{0} \"{1}\" has learned of {2} rumour{3}", player.Name, player.Handle, rumourCount, rumourCount != 1 ? "s" : "");
             Game.logTurn?.Write(resultText);
             return resultText;
         }
@@ -4526,7 +4548,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Generates a rumour from a pool of possibles and returns the RumourID -> returns '0' if none found
+        /// Returns a rumourID from a pool of possibles and returns the RumourID -> returns '0' if none found
         /// </summary>
         /// <param name="refID">The refID of the current location</param>
         /// <param name="actorID">The actorID of the actor learning of the rumour</param>
@@ -4538,7 +4560,8 @@ namespace Next_Game
             int tempRumourID, index;
             int branch = 0;
             int[] arrayOfRumours = new int[6];  //selected rumourID's -> [0] global All [1 to 4] branch N/E/S/W [5] house [6] Capital
-            List<int> listRumourPool = new List<int>();
+            List<int> listRumoursReturn = new List<int>();
+            List<int> listRumoursPool = new List<int>();
             List<int> listRumoursHouse = new List<int>();
             //get local rumours
             if (refID != 9999)
@@ -4645,35 +4668,35 @@ namespace Next_Game
                         Game.logTurn?.Write($"arrayOfRumours [{i}] -> RumourID {tempRumourID}, Strength {rumour.Strength}, Scope {rumour.Scope}, Type {rumour.Type}, Global {rumour.Global}");
                         //add one instance of the rumour to the pool for every level of strength
                         for (int k = 0; k < rumour.Strength; k++)
-                        { listRumourPool.Add(rumour.RumourID); }
+                        { listRumoursPool.Add(rumour.RumourID); }
                     }
                     else { Game.SetError(new Error(271, $"Invalid rumour (null) for RumourID {tempRumourID}, arrayOfRumours index {i} -> Not added to pool")); }
                 }
             }
-            //select a rumour from pool
-            if (listRumourPool.Count > 0)
+            //select the correct number of rumours from the pool
+            if (listRumoursPool.Count > 0)
             {
-                rumourID = listRumourPool[rnd.Next(listRumourPool.Count)];
-                Game.logTurn?.Write($"RumourID {rumourID} selected from the Pool");
-                //update rumour for the actor who learned of it and the turn it was revealed
-                Rumour rumour = Game.world.GetRumour(rumourID);
-                rumour.TurnRevealed = Game.gameTurn;
-                if (actorID > 0 && actorID < 10)
-                { rumour.WhoHeard = actorID; }
-                else { Game.SetError(new Error(271, $"Invalid actorID {actorID} (not Player or a follower) -> rumour.WhoHeard not updated")); }
-                Game.logTurn?.Write($"Rumour \"{rumour.Text}\" revealed to ActorID{actorID} on turn {rumour.TurnRevealed}");
+                    rumourID = listRumoursPool[rnd.Next(listRumoursPool.Count)];
+                    Game.logTurn?.Write($"RumourID {rumourID} selected from the Pool");
+                    //update rumour for the actor who learned of it and the turn it was revealed
+                    Rumour rumour = Game.world.GetRumour(rumourID);
+                    rumour.TurnRevealed = Game.gameTurn;
+                    if (actorID > 0 && actorID < 10)
+                    { rumour.WhoHeard = actorID; }
+                    else { Game.SetError(new Error(271, $"Invalid actorID {actorID} (not Player or a follower) -> rumour.WhoHeard not updated")); }
+                    Game.logTurn?.Write($"Rumour \"{rumour.Text}\" revealed to ActorID{actorID} on turn {rumour.TurnRevealed} -> added to List");
             }
             else { Game.logTurn?.Write("[Notification] No rumours available (listRumourPool empty)  -> none selected"); }
             //delete rumour from appropriate list (so it can't be used again)
             int deleteIndex = -1;
-            for (int i = 0; i < arrayOfRumours.Length; i++)
-            {
-                if (arrayOfRumours[i] == rumourID)
-                {
-                    deleteIndex = i;
-                    break;
-                }
-            }
+                    for (int i = 0; i < arrayOfRumours.Length; i++)
+                    {
+                        if (arrayOfRumours[i] == rumourID)
+                        {
+                            deleteIndex = i;
+                            break;
+                        }
+                    }
             //delete from specific list of rumours
             if (deleteIndex > -1)
             {

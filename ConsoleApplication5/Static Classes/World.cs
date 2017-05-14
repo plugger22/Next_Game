@@ -32,6 +32,7 @@ namespace Next_Game
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         private Dictionary<int, Skill> dictTraits; //all triats (key is traitID)
         private Dictionary<int, Rumour> dictRumours; //all rumours (key is rumourID)
+        private Dictionary<int, Rumour> dictRumoursKnown; //all rumours known to the Player (key is rumourID)
         private Dictionary<int, Possession> dictPossessions; //all possession (key is PossID)
         private Dictionary<int, Passive> dictRoyalCourt; //advisors and royal retainers (assumed to always be at Kingskeep) excludes family
         private Dictionary<int, int> dictConvertLocToRef; //dictionary to convert LocID's to RefID's (key is LocID, value is RefID)
@@ -40,6 +41,10 @@ namespace Next_Game
         private Dictionary<int, BloodHound> dictBloodHound; //dictionary of all active & enemy actors movements (key is Turn #)
 
         //default constructor
+        /// <summary>
+        /// o
+        /// </summary>
+        /// <param name="seed"></param>
         public World(int seed)
         {
             rnd = new Random(seed);
@@ -64,6 +69,7 @@ namespace Next_Game
             dictGeoClusters = new Dictionary<int, GeoCluster>();
             dictTraits = new Dictionary<int, Skill>();
             dictRumours = new Dictionary<int, Rumour>();
+            dictRumoursKnown = new Dictionary<int, Rumour>();
             dictPossessions = new Dictionary<int, Possession>();
             dictRoyalCourt = new Dictionary<int, Passive>();
             dictConvertLocToRef = new Dictionary<int, int>();
@@ -2610,6 +2616,23 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Add a rumour to the dictRumoursKnown (to Player), returns true if successful
+        /// </summary>
+        /// <param name="rumourID"></param>
+        /// <param name="rumourObject"></param>
+        /// <returns></returns>
+        internal bool AddRumourKnown(int rumourID, Rumour rumourObject)
+        {
+            try
+            { dictRumoursKnown.Add(rumourID, rumourObject); return true; }
+            catch (ArgumentNullException)
+            { Game.SetError(new Error(273, $"Invalid Rumour Object (null), rumourID {rumourID}")); }
+            catch (ArgumentException)
+            { Game.SetError(new Error(273, $"Invalid rumourID (duplicate ID), rumourID {rumourID}")); }
+            return false;
+        }
+
+        /// <summary>
         /// find entry with same RefID in dictAllHouses and removes it if present (used by lore.cs CreateNewMajorHouse)
         /// </summary>
         /// <param name="refID"></param>
@@ -3582,6 +3605,7 @@ namespace Next_Game
             else { Game.SetError(new Error(265, $"Invalid rumourID \"{rumourID}\" -> Not found in dictionary")); }
             return null;
         }
+
 
         /// <summary>
         /// returns an Item from the Possessions Dict, null if not found
