@@ -85,7 +85,12 @@ namespace Next_Game
         List<int> listArcPlyrRoadEventsConnector;
         List<int> listArcPlyrCapitalEvents;
         //Rumours
-        List<int> listCapitalRumours;
+        List<int> listRumoursCapital; //specific to capital
+        List<int> listRumoursGlobal; //world wide
+        List<int> listRumoursNorth; //north branch
+        List<int> listRumoursEast;
+        List<int> listRumoursSouth;
+        List<int> listRumoursWest;
         //other
         List<Follower> listOfFollowers;
         List<EventPackage> listFollCurrentEvents; //follower
@@ -147,7 +152,12 @@ namespace Next_Game
             listArcPlyrRoadEventsConnector = new List<int>();
             listArcPlyrCapitalEvents = new List<int>();
             //Rumours
-            listCapitalRumours = new List<int>();
+            listRumoursCapital = new List<int>();
+            listRumoursGlobal = new List<int>();
+            listRumoursNorth = new List<int>();
+            listRumoursEast = new List<int>();
+            listRumoursSouth = new List<int>();
+            listRumoursWest = new List<int>();
             //other
             listFollCurrentEvents = new List<EventPackage>(); //follower events
             listPlyrCurrentEvents = new List<EventPackage>(); //player events
@@ -466,7 +476,7 @@ namespace Next_Game
         {
             //Active player = Game.world.GetActiveActor(1);
             Player player = Game.world.GetPlayer();
-            
+
             if (player != null && player.Status != ActorStatus.Gone && player.Delay == 0)
             {
                 Game.logTurn?.Write("--- CheckPlayerEvents (Director.cs)");
@@ -1112,7 +1122,7 @@ namespace Next_Game
                     {
                         case EventAutoFilter.None:
                             eventObject.Text = string.Format("You are at {0}. How will you fill your day?", locName);
-                            
+
                             //option -> audience with local House member
                             if (listCourt.Count() > 0)
                             {
@@ -1640,7 +1650,7 @@ namespace Next_Game
                                     { actorText = string.Format("{0} {1}", person.Office, person.Name); }
                                     else { actorText = string.Format("{0} {1}", person.Type, person.Name); }*/
 
-                                    if (person is Advisor){ actorText = $"{Game.world.GetAdvisorType((Advisor)person)} {person.Name}"; }
+                                    if (person is Advisor) { actorText = $"{Game.world.GetAdvisorType((Advisor)person)} {person.Name}"; }
                                     else { actorText = string.Format("{0} {1}", person.Type, person.Name); }
 
                                     actorText = $"{person.Title} {person.Name}";
@@ -1652,7 +1662,6 @@ namespace Next_Game
                                     option_0.ReplyGood = $"{actorText} stares at you with narrowed eyes";
                                     if (person is Advisor) { OutEventChain outcome_0 = new OutEventChain(1000, EventAutoFilter.Advisors); option_0.SetGoodOutcome(outcome_0); }
                                     else { OutEventChain outcome_0 = new OutEventChain(1000, EventAutoFilter.Court); option_0.SetGoodOutcome(outcome_0); }
-                                    //OutNone outcome_0 = new OutNone(eventObject.EventPID);
                                     eventObject.SetOption(option_0);
                                     //improve relationship (befriend)
                                     OptionInteractive option_1 = new OptionInteractive("Befriend") { ActorID = actorID };
@@ -1663,6 +1672,7 @@ namespace Next_Game
                                     OutConflict outcome_1 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Befriend, SubType = ConflictSubType.Befriend };
                                     option_1.SetGoodOutcome(outcome_1);
                                     eventObject.SetOption(option_1);
+                                    person.SetSkillsKnownStatus(true);
                                     //blackmail
                                     OptionInteractive option_2 = new OptionInteractive("Blackmail") { ActorID = actorID };
                                     option_2.ReplyGood = string.Format("{0} frowns, their expression darkens", actorText);
@@ -1672,6 +1682,7 @@ namespace Next_Game
                                     OutConflict outcome_2 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Blackmail, SubType = ConflictSubType.Blackmail };
                                     option_2.SetGoodOutcome(outcome_2);
                                     eventObject.SetOption(option_2);
+                                    person.SetSkillsKnownStatus(true);
                                     //seduce
                                     OptionInteractive option_3 = new OptionInteractive("Seduce") { ActorID = actorID };
                                     option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
@@ -1682,7 +1693,7 @@ namespace Next_Game
                                     OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce, SubType = ConflictSubType.Seduce };
                                     option_3.SetGoodOutcome(outcome_3);
                                     eventObject.SetOption(option_3);
-
+                                    person.SetSkillsKnownStatus(true);
                                     //You want Something from them
                                     OptionInteractive option_5 = new OptionInteractive("You want something") { ActorID = actorID };
                                     option_5.ReplyGood = $"{actorText} sits back and cautiously agrees to discuss your needs";
@@ -1692,6 +1703,7 @@ namespace Next_Game
                                     listTriggers_5.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
                                     option_5.SetTriggers(listTriggers_5);
                                     eventObject.SetOption(option_5);
+                                    person.SetSkillsKnownStatus(true);
                                     //Desire (NPC wants something from you)
                                     OptionInteractive option_6 = new OptionInteractive("They want something") { ActorID = actorID };
                                     option_6.ReplyGood = string.Format("{0} leans forward enthusiastically to discuss {1} needs with you", actorText, person.Sex == ActorSex.Male ? "his" : "her");
@@ -1703,6 +1715,7 @@ namespace Next_Game
                                     //OutNone outcome_6 = new OutNone(eventObject.EventPID);
                                     option_6.SetGoodOutcome(outcome_6);
                                     eventObject.SetOption(option_6);
+                                    person.SetSkillsKnownStatus(true);
                                 }
                                 else { Game.SetError(new Error(73, "Invalid actorID from AutoCreateEvent (null from dict)")); }
                             }
@@ -1806,7 +1819,7 @@ namespace Next_Game
                                 {
                                     eventObject.Name = "You Want Something";
                                     eventObject.Text = string.Format("How would you like to interact with {0}?", actorText);
-                                    tempText = string.Format("You sit down and discuss your needs with {0} {1} \"{2}\", ActID {3}, at {4}", personNeed.Title, personNeed.Name, 
+                                    tempText = string.Format("You sit down and discuss your needs with {0} {1} \"{2}\", ActID {3}, at {4}", personNeed.Title, personNeed.Name,
                                         personNeed.Handle, personNeed.ActID, loc.LocName);
                                     //default -> flip back to advisor options
                                     OptionInteractive option_n0 = new OptionInteractive("Excuse Yourself") { ActorID = actorID };
@@ -1857,7 +1870,7 @@ namespace Next_Game
                                     eventObject.SetOption(option_4);
                                 }
                             }
-                                break;
+                            break;
                         default:
                             Game.SetError(new Error(118, string.Format("Invalid EventFilter (\"{0}\")", filter)));
                             break;
@@ -3995,7 +4008,7 @@ namespace Next_Game
                         follower.LastKnownLocID = locID;
                         follower.SetActorPosition(loc.GetPosition());
                     }
-                    else { Game.SetError(new Error(227, $"Invalid locID \"{locID}\" -> Follower not added to Location"));}
+                    else { Game.SetError(new Error(227, $"Invalid locID \"{locID}\" -> Follower not added to Location")); }
                     //Add to dictionaries
                     Game.world.SetActiveActor(follower);
                     //Remove from InnHouse listOfFollowers
@@ -4011,7 +4024,7 @@ namespace Next_Game
                     //remove from listActiveActors
                     List<Active> listActiveActors = Game.history.GetActiveActors();
                     bool removed = false;
-                    for(int i = 0; i < listActiveActors.Count; i++)
+                    for (int i = 0; i < listActiveActors.Count; i++)
                     {
                         Active actor = listActiveActors[i];
                         if (actor.ActID == actID)
@@ -4046,17 +4059,17 @@ namespace Next_Game
             if (player != null)
             {
                 int voyageTime = player.VoyageTimer;
-                switch(calc)
+                switch (calc)
                 {
                     case EventCalc.Add:
                         voyageTime += amount;
-                        resultText = string.Format("The voyage of the S.S \"{0}\" has been increased by {1} day{2} to {3} days", player.ShipName, amount, 
+                        resultText = string.Format("The voyage of the S.S \"{0}\" has been increased by {1} day{2} to {3} days", player.ShipName, amount,
                             amount != 1 ? "s" : "", voyageTime);
                         break;
                     case EventCalc.Subtract:
                         voyageTime -= amount;
                         voyageTime = Math.Max(1, voyageTime);
-                        resultText = string.Format("The voyage of the S.S \"{0}\" has been reduced by {1} day{2} to {3} days", player.ShipName, amount, 
+                        resultText = string.Format("The voyage of the S.S \"{0}\" has been reduced by {1} day{2} to {3} days", player.ShipName, amount,
                             amount != 1 ? "s" : "", voyageTime);
                         break;
                     default:
@@ -4343,7 +4356,7 @@ namespace Next_Game
         public void AddRumourToCapital(int rumourID)
         {
             if (rumourID > 0)
-            { listCapitalRumours.Add(rumourID); }
+            { listRumoursCapital.Add(rumourID); }
             else { Game.SetError(new Error(269, "Invalid rumourID (zero, or less)")); }
         }
 
@@ -4360,6 +4373,20 @@ namespace Next_Game
                 int skill, strength;
                 string trait, rumourText, immersionText;
                 string[] arrayOfImmersionTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all" };
+
+                //DEBUG... start
+                Rumour rumour_0 = new Rumour("Global pool rumour, strength 2", 2, RumourScope.Global, RumourGlobal.All);
+                AddGlobalRumour(rumour_0);
+                Rumour rumour_1 = new Rumour("North pool rumour, strength 1", 1, RumourScope.Global, RumourGlobal.North);
+                AddGlobalRumour(rumour_1);
+                Rumour rumour_2 = new Rumour("East pool rumour, strength 3", 3, RumourScope.Global, RumourGlobal.East);
+                AddGlobalRumour(rumour_2);
+                Rumour rumour_3 = new Rumour("South pool rumour, strength 1", 1, RumourScope.Global, RumourGlobal.South);
+                AddGlobalRumour(rumour_3);
+                Rumour rumour_4 = new Rumour("West pool rumour, strength 2", 2, RumourScope.Global, RumourGlobal.West);
+                AddGlobalRumour(rumour_4);
+                //DEBUG... finish
+
                 //loop through all Passive Actors 
                 for (int i = 0; i < dictPassiveActors.Count - 1; i++)
                 {
@@ -4385,7 +4412,7 @@ namespace Next_Game
                                                 if (String.IsNullOrEmpty(trait) == false)
                                                 {
                                                     //create a rumour
-                                                    switch(actor.Type)
+                                                    switch (actor.Type)
                                                     {
                                                         case ActorType.Lord:
                                                             strength = 5;
@@ -4431,6 +4458,199 @@ namespace Next_Game
                 }
             }
             else { Game.SetError(new Error(268, "Invalid dictOfPassiveActors (null)")); }
+        }
+
+        /// <summary>
+        /// Generates a rumour from a pool of possibles and returns the RumourID -> returns '0' if none found
+        /// </summary>
+        /// <returns></returns>
+        public int GetRumour(int refID)
+        {
+            Game.logTurn?.Write("--- GetRumour (Director.cs)");
+            int rumourID = 0;
+            int tempRumourID, index;
+            int branch = 0;
+            int[] arrayOfRumours = new int[6];  //selected rumourID's -> [0] global All [1 to 4] branch N/E/S/W [5] house [6] Capital
+            List<int> listRumourPool = new List<int>();
+            List<int> listTempRumours = new List<int>();
+            //get local rumours
+            if (refID != 9999)
+            {
+                House house = Game.world.GetHouse(refID);
+                if (house != null)
+                {
+                    //get branch rumour
+                    branch = house.Branch;
+                    //get local rumours
+                    listTempRumours.AddRange(house.GetRumours());
+                    if (listTempRumours != null)
+                    {
+                        if (listTempRumours.Count > 0)
+                        {
+                            index = rnd.Next(listTempRumours.Count);
+                            tempRumourID = listTempRumours[index];
+                            //keep track of which rumour was selected (might have to delete it)
+                            arrayOfRumours[5] = tempRumourID;
+                        }
+                        else { Game.logTurn?.Write("[Notification] No house rumours available -> none added to pool"); }
+                    }
+                    else { Game.SetError(new Error(271, "Invalid listTempRumours (null)")); }
+                }
+                else { Game.SetError(new Error(271, $"Invalid house (null) for refID {refID}")); }
+            }
+            else
+            {
+                //Capital
+                if (listRumoursCapital.Count > 0)
+                {
+                    index = rnd.Next(listRumoursCapital.Count);
+                    tempRumourID = listRumoursCapital[index];
+                    arrayOfRumours[6] = tempRumourID;
+                }
+                else { Game.logTurn?.Write("[Notification] No Capital rumours available -> none added to pool"); }
+            }
+            //get global All rumour
+            if (listRumoursGlobal.Count > 0)
+            {
+                index = rnd.Next(listRumoursGlobal.Count);
+                tempRumourID = listRumoursGlobal[index];
+                arrayOfRumours[0] = tempRumourID;
+            }
+            else { Game.logTurn?.Write("[Notification] No Global rumours available -> none added to pool"); }
+            //get branch all rumour
+            if (branch > 0)
+            {
+                switch (branch)
+                {
+                    case 1:
+                        //get North branch rumours
+                        if (listRumoursNorth.Count > 0)
+                        {
+                            index = rnd.Next(listRumoursNorth.Count);
+                            tempRumourID = listRumoursNorth[index];
+                            arrayOfRumours[1] = tempRumourID;
+                        }
+                        else { Game.logTurn?.Write("[Notification] No Branch North rumours available  -> none added to pool"); }
+                        break;
+                    case 2:
+                        //get East branch rumours
+                        if (listRumoursEast.Count > 0)
+                        {
+                            index = rnd.Next(listRumoursEast.Count);
+                            tempRumourID = listRumoursEast[index];
+                            arrayOfRumours[2] = tempRumourID;
+                        }
+                        else { Game.logTurn?.Write("[Notification] No Branch East rumours available  -> none added to pool"); }
+                        break;
+                    case 3:
+                        //get South branch rumours
+                        if (listRumoursSouth.Count > 0)
+                        {
+                            index = rnd.Next(listRumoursSouth.Count);
+                            tempRumourID = listRumoursSouth[index];
+                            arrayOfRumours[3] = tempRumourID;
+                        }
+                        else { Game.logTurn?.Write("[Notification] No Branch South rumours available  -> none added to pool"); }
+                        break;
+                    case 4:
+                        //get North branch rumours
+                        if (listRumoursWest.Count > 0)
+                        {
+                            index = rnd.Next(listRumoursWest.Count);
+                            tempRumourID = listRumoursWest[index];
+                            arrayOfRumours[4] = tempRumourID;
+                        }
+                        else { Game.logTurn?.Write("[Notification] No Branch West rumours available  -> none added to pool"); }
+                        break;
+                }
+            }
+            else { Game.logTurn?.Write("[Notification] No Branch (overall) rumours available  -> none added to pool"); }
+            //add rumours into the pool, one entry per level of strength
+            for (int i = 0; i < arrayOfRumours.Length; i++)
+            {
+                tempRumourID = arrayOfRumours[i];
+                if (tempRumourID > 0)
+                {
+                    //Get Rumour
+                    Rumour rumour = Game.world.GetRumour(tempRumourID);
+                    if (rumour != null)
+                    {
+                        Game.logTurn?.Write($"arrayOfRumours [{i}] -> RumourID {tempRumourID}, Strength {rumour.Strength}, Scope {rumour.Scope}, Type {rumour.Type}, Global {rumour.Global}");
+                        //add one instance of the rumour to the pool for every level of strength
+                        for (int k = 0; k < rumour.Strength; k++)
+                        { listRumourPool.Add(rumour.RumourID); }
+                    }
+                    else { Game.SetError(new Error(271, $"Invalid rumour (null) for RumourID {tempRumourID}, arrayOfRumours index {i} -> Not added to pool")); }
+                }
+            }
+            //select a rumour from pool
+            if (listRumourPool.Count > 0)
+            {
+                rumourID = listRumourPool[rnd.Next(listRumourPool.Count)];
+                Game.logTurn?.Write($"RumourID {rumourID} selected from the Pool");
+            }
+            else { Game.logTurn?.Write("[Notification] No rumours available (listRumourPool empty)  -> none selected"); }
+            //delete rumour from appropriate list (so it can't be used again)
+            int deleteIndex = -1;
+            for (int i = 0; i < arrayOfRumours.Length; i++)
+            {
+                if (arrayOfRumours[i] == rumourID)
+                {
+                    deleteIndex = i;
+                    break;
+                }
+            }
+            //delete from specific list of rumours
+            if (deleteIndex > -1)
+            {
+                switch (deleteIndex)
+                {
+                    case 0:
+                        //global all
+                        break;
+                    case 1:
+                        //north branch
+
+                        break;
+
+                }
+            }
+            else { Game.SetError(new Error(271, "Selected Rumour not found in arrayOfRumours (deleteIndex -1) -> rumour cancelled")); rumourID = 0; }
+            return rumourID;
+        }
+
+
+        /// <summary>
+        /// Add's a global rumour to appropriate director list and master dictionary
+        /// </summary>
+        /// <param name="rumourID"></param>
+        /// <param name="global"></param>
+        internal void AddGlobalRumour(Rumour rumour)
+        {
+            if (Game.world.AddRumour(rumour.RumourID, rumour) == false)
+            { Game.SetError(new Error(270, $"RumourID {rumour.RumourID} failed to Add to Dictionary -> not added to Global lists")); }
+            else
+            {
+                //add to appropraite Global list
+                switch (rumour.Global)
+                {
+                    case RumourGlobal.All:
+                        listRumoursGlobal.Add(rumour.RumourID);
+                        break;
+                    case RumourGlobal.North:
+                        listRumoursNorth.Add(rumour.RumourID);
+                        break;
+                    case RumourGlobal.East:
+                        listRumoursEast.Add(rumour.RumourID);
+                        break;
+                    case RumourGlobal.South:
+                        listRumoursSouth.Add(rumour.RumourID);
+                        break;
+                    case RumourGlobal.West:
+                        listRumoursWest.Add(rumour.RumourID);
+                        break;
+                }
+            }
         }
 
         //place new methods above here
