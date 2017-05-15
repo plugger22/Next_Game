@@ -5851,6 +5851,7 @@ namespace Next_Game
         {
             Game.logTurn?.Write("--- CheckFollowerActivity (World.cs)");
             int rumourID, refID;
+            int numRumours = 0;
             RLColor backColor = Color._background1;
             List<Snippet> listData = new List<Snippet>();
             List<Snippet> listRumours = new List<Snippet>();
@@ -5867,28 +5868,33 @@ namespace Next_Game
                             {
                                 refID = ConvertLocToRef(actor.Value.LocID);
                                 rumourID = Game.director.GetRumourUnknown(refID, actor.Value.ActID);
-                                Rumour rumour = GetRumour(rumourID);
-                                if (rumour != null)
+                                if (rumourID > 0)
                                 {
-                                    listRumours.Add(new Snippet(rumour.Text, RLColor.Black, backColor));
-                                    listData.Add(new Snippet(""));
-                                    AddRumourKnown(rumour.RumourID, rumour);
-                                    Game.logTurn?.Write($"{actor.Value.Title} {actor.Value.Name}, ActID {actor.Value.ActID}, added RumourID {rumour.RumourID}");
-                                    //tweak actor skill if a RumourSkill
-                                    if (rumour is RumourSkill)
+                                    Rumour rumour = GetRumour(rumourID);
+                                    if (rumour != null)
                                     {
-                                        RumourSkill rumourSkill = rumour as RumourSkill;
-                                        Passive passive = GetPassiveActor(rumourSkill.ActorID);
-                                        if (passive != null)
+                                        listRumours.Add(new Snippet(rumour.Text, RLColor.Black, backColor));
+                                        listRumours.Add(new Snippet(""));
+                                        AddRumourKnown(rumour.RumourID, rumour);
+                                        numRumours++;
+                                        Game.logTurn?.Write($"{actor.Value.Title} {actor.Value.Name}, ActID {actor.Value.ActID}, added RumourID {rumour.RumourID}");
+                                        //tweak actor skill if a RumourSkill
+                                        if (rumour is RumourSkill)
                                         {
-                                            if (passive.SetSkillKnownStatus(rumourSkill.Skill, true) == false)
-                                            { Game.SetError(new Error(276, $"{passive.Title} {passive.Name}, ActID {passive.ActID} failed to set Skill {rumourSkill.Skill} to True")); }
-                                            else { Game.logTurn?.Write($"{passive.Title} {passive.Name}, ActID {passive.ActID}, skill {rumourSkill.Skill} set to True"); }
+                                            RumourSkill rumourSkill = rumour as RumourSkill;
+                                            Passive passive = GetPassiveActor(rumourSkill.ActorID);
+                                            if (passive != null)
+                                            {
+                                                if (passive.SetSkillKnownStatus(rumourSkill.Skill, true) == false)
+                                                { Game.SetError(new Error(276, $"{passive.Title} {passive.Name}, ActID {passive.ActID} failed to set Skill {rumourSkill.Skill} to True")); }
+                                                else { Game.logTurn?.Write($"{passive.Title} {passive.Name}, ActID {passive.ActID}, skill {rumourSkill.Skill} set to True"); }
+                                            }
+                                            else { Game.SetError(new Error(276, $"Invalid Passive actor for rumourSkill.ActorID {rumourSkill.ActorID}")); }
                                         }
-                                        else { Game.SetError(new Error(276, $"Invalid Passive actor for rumourSkill.ActorID {rumourSkill.ActorID}")); }
                                     }
+                                    else { Game.SetError(new Error(276, $"Invalid rumour from RumourID {rumourID}")); }
                                 }
-                                else { Game.SetError(new Error(276, $"Invalid rumour from RumourID {rumourID}")); }
+                                else { Game.logTurn?.Write($"[Notification] No rumour returned for {actor.Value.Name} at {GetLocationName(actor.Value.LocID)}"); }
                             }
                             else { Game.logTurn?.Write($"{actor.Value.Title} {actor.Value.Name}, ActID {actor.Value.ActID}, has no contact with the Player -> No rumours"); }
                             break;
@@ -5896,10 +5902,9 @@ namespace Next_Game
                 }
             }
             //if rumours present add to master list
-            int numRumours = listRumours.Count;
-            if (numRumours > 1)
+            if (numRumours > 0)
             {
-                listData.Add(new Snippet(string.Format("Your Followers have overheard {0} rumour{1}", numRumours, numRumours != 1 ? "s" : "", RLColor.Red, backColor)));
+                listData.Add(new Snippet(string.Format("Your Followers have overheard {0} rumour{1}", numRumours, numRumours != 1 ? "s" : ""), RLColor.Red, backColor));
                 listData.Add(new Snippet(""));
                 listData.AddRange(listRumours);
                 listData.Add(new Snippet("- 0 -", RLColor.Gray, backColor));

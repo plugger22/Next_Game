@@ -39,10 +39,10 @@ namespace Next_Game
         /// </summary>
         /// <param name="text"></param>
         /// <param name="strength"></param>
-        /// <param name="type"></param>
-        /// <param name="topic"></param>
+        /// <param name="scope"></param>
+        /// <param name="turnCreated">If '0' then equals current game turn</param>
         /// <param name="global"></param>
-        public Rumour(string text, int strength, RumourScope scope, RumourGlobal global = RumourGlobal.None, bool isActive = true)
+        public Rumour(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true)
         {
             RumourID = rumourIndex++;
             Text = text;
@@ -51,7 +51,13 @@ namespace Next_Game
             Scope = scope;
             Global = global;
             Active = isActive;
-            TurnCreated = Game.gameTurn;
+            //if '0' then defaults to current game turn
+            if (turnCreated == 0) { TurnCreated = Game.gameTurn; }
+            else
+            {
+                if (turnCreated > Game.gameTurn) { TurnCreated = Game.gameTurn; }
+                else { TurnCreated = turnCreated; }
+            }
         }
     }
 
@@ -63,7 +69,18 @@ namespace Next_Game
         public int ActorID { get; set; } //who the rumour refers to
         public SkillType Skill { get; set; } //which skill the rumour refers to
 
-        public RumourSkill(string text, int strength, int actorID, SkillType skill, RumourScope scope, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, global, isActive)
+        /// <summary>
+        /// Skill constructor
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="strength"></param>
+        /// <param name="actorID"></param>
+        /// <param name="skill"></param>
+        /// <param name="scope"></param>
+        /// <param name="turnCreated">If '0' then defaults to current game turn</param>
+        /// <param name="global"></param>
+        /// <param name="isActive"></param>
+        public RumourSkill(string text, int strength, int actorID, SkillType skill, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             ActorID = actorID;
             Skill = skill;

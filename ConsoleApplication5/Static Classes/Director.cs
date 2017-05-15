@@ -4486,15 +4486,15 @@ namespace Next_Game
                 string[] arrayOfImmersionTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all" };
 
                 //DEBUG... start
-                Rumour rumour_0 = new Rumour("Global pool rumour, strength 2", 2, RumourScope.Global, RumourGlobal.All);
+                Rumour rumour_0 = new Rumour("Global pool rumour, strength 2", 2, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.All);
                 AddGlobalRumour(rumour_0);
-                Rumour rumour_1 = new Rumour("North pool rumour, strength 1", 1, RumourScope.Global, RumourGlobal.North);
+                Rumour rumour_1 = new Rumour("North pool rumour, strength 1", 1, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.North);
                 AddGlobalRumour(rumour_1);
-                Rumour rumour_2 = new Rumour("East pool rumour, strength 3", 3, RumourScope.Global, RumourGlobal.East);
+                Rumour rumour_2 = new Rumour("East pool rumour, strength 3", 3, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.East);
                 AddGlobalRumour(rumour_2);
-                Rumour rumour_3 = new Rumour("South pool rumour, strength 1", 1, RumourScope.Global, RumourGlobal.South);
+                Rumour rumour_3 = new Rumour("South pool rumour, strength 1", 1, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.South);
                 AddGlobalRumour(rumour_3);
-                Rumour rumour_4 = new Rumour("West pool rumour, strength 2", 2, RumourScope.Global, RumourGlobal.West);
+                Rumour rumour_4 = new Rumour("West pool rumour, strength 2", 2, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.West);
                 AddGlobalRumour(rumour_4);
                 //DEBUG... finish
 
@@ -4548,7 +4548,7 @@ namespace Next_Game
                                                     locName = Game.world.GetLocationName(actor.LocID);
                                                     immersionText = $"{arrayOfImmersionTexts[rnd.Next(arrayOfImmersionTexts.Length)]} {actor.GetPrefixName((SkillType)skillIndex)}";
                                                     rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID}, at {locName} is {immersionText} {trait}";
-                                                    RumourSkill rumour = new RumourSkill(rumourText, strength, actor.ActID, (SkillType)skillIndex, RumourScope.Local) { RefID = actor.RefID };
+                                                    RumourSkill rumour = new RumourSkill(rumourText, strength, actor.ActID, (SkillType)skillIndex, RumourScope.Local, rnd.Next(100) * -1) { RefID = actor.RefID };
                                                     //add to dictionary and house list
                                                     Game.world.AddRumour(rumour.RumourID, rumour);
                                                     //royal family or royal advisors go to the Capital list, all others to their house list
