@@ -126,6 +126,7 @@ namespace Next_Game
                     menuArrayText[0, 4] = "[K] Kingdom Events";
                     //Rumours menu commands
                     menuArrayText[1, 0] = "[R] All";
+                    menuArrayText[1, 1] = "[S] Show Rumour";
                     //Lore menu commands
                     menuArrayText[2, 0] = "[U] Uprising";
                     menuArrayText[2, 1] = "[F] Fate of Royals";
@@ -133,19 +134,6 @@ namespace Next_Game
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
-                /*case MenuMode.Lore:
-                    menuColorFore = RLColor.Brown;
-                    menuColorBack = RLColor.LightGray;
-                    //input categories
-                    menuArrayCategories[0] = "Lore MENU ---";
-                    menuArrayCategories[3] = "Switch ---";
-                    //Lore menu commands
-                    menuArrayText[0, 0] = "[U] Uprising";
-                    menuArrayText[0, 1] = "[F] Fate of Royals";
-                    //switch commands
-                    menuArrayText[3, 0] = "[ESC] Main Menu";
-                    menuArrayText[3, 1] = "[ENTER] End Turn";
-                    break;*/
                 case MenuMode.God:
                     menuColorFore = Color._godMode;
                     menuColorBack = RLColor.Gray;

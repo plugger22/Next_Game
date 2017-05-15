@@ -319,6 +319,12 @@ namespace Next_Game
                                 infoChannel.SetInfoList(world.ShowSpyRL(actorID), ConsoleDisplay.Multi);
                                 infoChannel.ClearConsole(ConsoleDisplay.Input);
                                 break;
+                            case 4:
+                                //Rumour -> Show specific Rumour
+                                int rumourID = Convert.ToInt32(_multiData);
+                                infoChannel.SetInfoList(world.ShowRumourRL(rumourID), ConsoleDisplay.Multi);
+                                infoChannel.ClearConsole(ConsoleDisplay.Input);
+                                break;
                         }
                         //reset
                         keyPress = null; //to prevent Enter keypress from causing the date to tick up
@@ -866,6 +872,14 @@ namespace Next_Game
                                         tempList.Add(new Snippet("Test Notification"));
                                         _specialMode = SpecialMode.Notification;
                                         world.SetNotification(tempList);
+                                        break;
+                                    case MenuMode.Reference:
+                                        //show Rumour
+                                        infoChannel.ClearConsole(ConsoleDisplay.Input);
+                                        infoChannel.AppendInfoList(new Snippet("---Input Rumour ID ", RLColor.Magenta, RLColor.Black), ConsoleDisplay.Input);
+                                        infoChannel.AppendInfoList(new Snippet("Press ENTER when done, BACKSPACE to change, ESC to exit"), ConsoleDisplay.Input);
+                                        _inputMode = InputMode.MultiKey;
+                                        _multiCaller = 4;
                                         break;
                                     case MenuMode.Debug:
                                         //Show All Possessions log

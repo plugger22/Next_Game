@@ -1,82 +1,53 @@
-//Exile Game File "LogTurn.txt" opened at: 15/05/2017 14:04:36
+//Exile Game File "LogTurn.txt" opened at: 15/05/2017 15:32:32
 --- ProcessStartTurn (World.cs)
 Day 2, Turn 1
 --- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Jiame Florent, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Martyn Tyrell, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Demogorgon, ID 122 at 16:17, Active Jiame Florent, ID 1, at 16:17
- [Search -> Alert] Inquisitor Brother Demogorgon, ActID 122, is in the same place as Active Jiame Florent, ID 1, (loc 16:17)
- [SEARCH -> Active] Random 48 < 20 (ai 20 + known 0) -> Fail 
- [Search -> ListSearched] Usurper Jiame Florent, ActID 1 Searched -> Enemy ActID 122 added
- [Search -> Debug] Enemy, Brother Shaitan, ID 123 at 16:17, Active Jiame Florent, ID 1, at 16:17
- [Search -> Alert] Inquisitor Brother Shaitan, ActID 123, is in the same place as Active Jiame Florent, ID 1, (loc 16:17)
- [SEARCH -> Active] Random 60 < 20 (ai 20 + known 0) -> Fail 
- [Search -> ListSearched] Usurper Jiame Florent, ActID 1 Searched -> Enemy ActID 123 added
- [Search -> Debug] Enemy, Brother Behemoth, ID 124 at 16:17, Active Jiame Florent, ID 1, at 16:17
- [Search -> Alert] Inquisitor Brother Behemoth, ActID 124, is in the same place as Active Jiame Florent, ID 1, (loc 16:17)
- [SEARCH -> Active] Random 69 < 20 (ai 20 + known 0) -> Fail 
- [Search -> ListSearched] Usurper Jiame Florent, ActID 1 Searched -> Enemy ActID 124 added
- [Search -> Debug] Enemy, Brother Nergal, ID 125 at 16:17, Active Jiame Florent, ID 1, at 16:17
- [Search -> Alert] Inquisitor Brother Nergal, ActID 125, is in the same place as Active Jiame Florent, ID 1, (loc 16:17)
- [SEARCH -> Active] Random 40 < 20 (ai 20 + known 0) -> Fail 
- [Search -> ListSearched] Usurper Jiame Florent, ActID 1 Searched -> Enemy ActID 125 added
- [Search -> Debug] Enemy, The Unrelenting, ID 126 at 16:17, Active Jiame Florent, ID 1, at 16:17
- [Search -> Alert] Nemesis The Unrelenting, ActID 126, is in the same place as Active Jiame Florent, ID 1, (loc 16:17)
- [SEARCH -> Active] Random 40 < 20 (ai 20 + known 0) -> Fail 
- [Search -> ListSearched] Usurper Jiame Florent, ActID 1 Searched -> Enemy ActID 126 added
- [Search -> Stationary] Follower The Leper, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Beast, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Jester, ActID 4 is AtLocation
+ [Search -> Debug] Enemy, Brother Haborym, ID 130 at 15:16, Active Martyn Tyrell, ID 1, at 21:21
+ [Search -> Debug] Enemy, Brother Kali, ID 131 at 15:16, Active Martyn Tyrell, ID 1, at 21:21
+ [Search -> Debug] Enemy, Brother Adramalech, ID 132 at 15:16, Active Martyn Tyrell, ID 1, at 21:21
+ [Search -> Debug] Enemy, Brother Diabolous, ID 133 at 15:16, Active Martyn Tyrell, ID 1, at 21:21
+ [Search -> Debug] Enemy, The Unrelenting, ID 134 at 15:16, Active Martyn Tyrell, ID 1, at 21:21
+ [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 4 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 122 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Shaitan, Act ID 123 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 124 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 125 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 126 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 130 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Adramalech, Act ID 132 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 133 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 134 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Demogorgon, ActID 122 retains Goal -> Wait
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Shaitan, ActID 123 Assigned Branch -> 2 Current Branch -> 0
- [Goal -> New] Brother Shaitan, ActID 123, (loc 16:17), assigned new Goal -> Move
- [Goal -> Move] Brother Shaitan, ActID 123 -> Capital to Correct Branch -> Last Hearth, LocID 18
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Known] Brother Behemoth ActID 124 has become KNOWN
- [Enemy -> Goal] Brother Behemoth, ActID 124 retains Goal -> Wait
- [Enemy -> Goal] Brother Nergal, ActID 125 retains Goal -> Wait
- [Enemy -> Known] The Unrelenting ActID 126 has become KNOWN
+ [Goal -> Branch] Brother Haborym, ActID 130 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] Brother Haborym, ActID 130, (loc 15:16), assigned new Goal -> Hide
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] The Unrelenting, ActID 126 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> Branch] Brother Kali, ActID 131 Assigned Branch -> 0 Current Branch -> 0
+ [Enemy -> Known] Brother Adramalech ActID 132 has become KNOWN
+ [Enemy -> Goal] Brother Adramalech, ActID 132 retains Goal -> Wait
+ [Enemy -> Goal] Brother Diabolous, ActID 133 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 134 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Tyrek Arnoldus", ID 97 added to list of Actors
- [AutoEvent -> ActorList] "Martyn Gervasius", ID 98 added to list of Actors
- [AutoEvent -> ActorList] "Renoldus Hughoc", ID 99 added to list of Actors
- [AutoEvent -> ActorList] "Quentyn Tybout", ID 100 added to list of Actors
- [AutoEvent -> ActorList] "Gerion Wymon", ID 101 added to list of Actors
- [AutoEvent -> ActorList] "Samwell Terryn", ID 104 added to list of Actors
- [AutoEvent -> ActorList] "Will Targaryen", ID 68 added to list of Actors
- [AutoEvent -> ActorList] "Jacquelin Targaryen", ID 74 added to list of Actors
- [AutoEvent -> ActorList] "Godet Audri", ID 117 added to list of Actors
- [AutoEvent -> ActorList] "Aldis Lijart", ID 118 added to list of Actors
- [AutoEvent -> ActorList] "Brother Demogorgon", ID 122 added to list of Actors
- [AutoEvent -> ActorList] "Brother Behemoth", ID 124 added to list of Actors
- [AutoEvent -> ActorList] "Brother Nergal", ID 125 added to list of Actors
- [AutoEvent -> ActorList] "The Unrelenting", ID 126 added to list of Actors
- [AutoEvent -> AdvisorList] "Tyrek Arnoldus", ID 97 added to list of Advisors
- [AutoEvent -> AdvisorList] "Martyn Gervasius", ID 98 added to list of Advisors
- [AutoEvent -> AdvisorList] "Renoldus Hughoc", ID 99 added to list of Advisors
- [AutoEvent -> AdvisorList] "Quentyn Tybout", ID 100 added to list of Advisors
- [AutoEvent -> AdvisorList] "Gerion Wymon", ID 101 added to list of Advisors
- [AutoEvent -> AdvisorList] "Samwell Terryn", ID 104 added to list of Advisors
- [AutoEvent -> LocalList] "Will Targaryen", ID 68 added to list of Locals
- [AutoEvent -> LocalList] "Jacquelin Targaryen", ID 74 added to list of Locals
- [AutoEvent -> AdvisorList] "Godet Audri", ID 117 added to list of Advisors
- [AutoEvent -> AdvisorList] "Aldis Lijart", ID 118 added to list of Advisors
-[Notification] No entry found in dictOfIntroductions for RefID 9999
+ [AutoEvent -> ActorList] "Peter Redwyne", ID 93 added to list of Actors
+ [AutoEvent -> ActorList] "Helman Hodgkin", ID 116 added to list of Actors
+ [AutoEvent -> ActorList] "Victarion Hary", ID 117 added to list of Actors
+ [AutoEvent -> ActorList] "Petyr Tybout", ID 118 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Roose Hewerald", ID 119 added to list of Actors
+ [AutoEvent -> ActorList] "Ymanie Redwyne", ID 121 added to list of Actors
+ [AutoEvent -> ActorList] "Willem Redwyne", ID 122 added to list of Actors
+ [AutoEvent -> LocalList] "Peter Redwyne", ID 93 added to list of Locals
+ [AutoEvent -> AdvisorList] "Helman Hodgkin", ID 116 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Victarion Hary", ID 117 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Petyr Tybout", ID 118 added to list of Advisors
+ [AutoEvent -> LocalList] "Ser Roose Hewerald", ID 119 added to list of Locals
+ [AutoEvent -> LocalList] "Ymanie Redwyne", ID 121 added to list of Locals
+ [AutoEvent -> LocalList] "Willem Redwyne", ID 122 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 99
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
  Trigger FAILED on "0" Equals 1
@@ -90,32 +61,34 @@ Day 2, Turn 1
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Jiame Florent has had their TurnsUnknown Timer increased from 100 to 101
+ Usurper Martyn Tyrell has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
  Follower The Leper has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Jester has had their TurnsUnknown Timer increased from 0 to 1
 --- ResolveOutcome (Director.cs)
 --- ChangePlayerRumourStatus (Director.cs)
 --- GetRumour (Director.cs)
-[Notification] No Branch (overall) rumours available  -> none added to pool
 arrayOfRumours [0] -> RumourID 1, Strength 2, Scope Global, Type None, Global All
-arrayOfRumours [6] -> RumourID 137, Strength 3, Scope Local, Type Skill, Global None
-RumourID 137 selected from the Pool
-Rumour "Heir Jacquelin Targaryen "The Twitcher", ActID 74, is known by all to be Manipulative (Treachery)" revealed to ActorID1 on turn 1 -> added to List
-RumourID 137 removed from listRumoursCapital[4]
-Rumour "Heir Jacquelin Targaryen "The Twitcher", ActID 74, is known by all to be Manipulative (Treachery)", rumourID 137, added to dictRumoursKnown
-Heir Jacquelin Targaryen, ActID 74, has their Treachery changed to True
-Heir Jacquelin Targaryen "The Twitcher", ActID 74, is known by all to be Manipulative (Treachery)
---- ChangePlayerRumourStatus (Director.cs)
---- GetRumour (Director.cs)
-[Notification] No Branch (overall) rumours available  -> none added to pool
-arrayOfRumours [0] -> RumourID 1, Strength 2, Scope Global, Type None, Global All
-arrayOfRumours [6] -> RumourID 223, Strength 2, Scope Local, Type Skill, Global None
+arrayOfRumours [3] -> RumourID 4, Strength 1, Scope Global, Type None, Global South
+arrayOfRumours [5] -> RumourID 201, Strength 2, Scope Local, Type Skill, Global None
 RumourID 1 selected from the Pool
 Rumour "Global pool rumour, strength 2" revealed to ActorID1 on turn 1 -> added to List
 RumourID 1 removed from listRumoursGlobal[0]
 Rumour "Global pool rumour, strength 2", rumourID 1, added to dictRumoursKnown
 Global pool rumour, strength 2
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+[Notification] No Global rumours available -> none added to pool
+arrayOfRumours [3] -> RumourID 4, Strength 1, Scope Global, Type None, Global South
+arrayOfRumours [5] -> RumourID 213, Strength 3, Scope Local, Type Skill, Global None
+RumourID 213 selected from the Pool
+Rumour "Heir Willem Redwyne "The Black Rat", ActID 122, is said  Delusional (Wits)" revealed to ActorID1 on turn 1 -> added to List
+RumourID 213 removed from listRumoursHouse[23]
+Rumour "Heir Willem Redwyne "The Black Rat", ActID 122, is said  Delusional (Wits)", rumourID 213, added to dictRumoursKnown
+Heir Willem Redwyne, ActID 122, has their Wits changed to True
+Heir Willem Redwyne "The Black Rat", ActID 122, is said  Delusional (Wits)
+--- MultiKeyInput (Game.cs)
+213 input
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 15/05/2017 14:06:18
+//Exile Game file ops "LogTurn.txt" Completed at: 15/05/2017 15:33:35

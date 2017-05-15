@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum RumourScope { None, Local, Global }
-    public enum RumourType { None, Terrain, Road, Skill }
+    public enum RumourType { None, Terrain, Road, Skill } //Corresponds to Rumour subclasses, set in subclass
     public enum RumourGlobal { None, North, East, South, West, All }
 
     /// <summary>

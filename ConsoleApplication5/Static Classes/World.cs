@@ -3602,7 +3602,24 @@ namespace Next_Game
                 if (dictRumours.TryGetValue(rumourID, out rumour))
                 { return rumour; }
             }
-            else { Game.SetError(new Error(265, $"Invalid rumourID \"{rumourID}\" -> Not found in dictionary")); }
+            else { Game.SetError(new Error(265, $"Invalid rumourID \"{rumourID}\" -> Not found in dictRumours")); }
+            return null;
+        }
+
+        /// <summary>
+        /// get a Known Rumour, returns null if not found
+        /// </summary>
+        /// <param name="rumourID"></param>
+        /// <returns></returns>
+        internal Rumour GetRumourKnown(int rumourID)
+        {
+            if (rumourID > 0)
+            {
+                Rumour rumour = new Rumour();
+                if (dictRumoursKnown.TryGetValue(rumourID, out rumour))
+                { return rumour; }
+            }
+            else { Game.SetError(new Error(274, $"Invalid rumourID \"{rumourID}\" -> Not found in dictRumoursKnown")); }
             return null;
         }
 
@@ -3928,6 +3945,51 @@ namespace Next_Game
                 description = string.Format("RID {0}, \"{1}\", {2} day{3} old", rumour.Key, rumour.Value.Text, age, age != 1 ? "s" : "" );
                 listData.Add(new Snippet(description));
             }
+            return listData;
+        }
+
+        /// <summary>
+        ///Generate a list with all details of a specific rumour (Known or Unknown)
+        /// </summary>
+        /// <param name="rumourID"></param>
+        /// <returns></returns>
+        public List<Snippet> ShowRumourRL(int rumourID, bool knownRumour = true)
+        {
+            List<Snippet> listData = new List<Snippet>();
+            Rumour rumour = null;
+            //get rumour
+            if (knownRumour == true)
+            { rumour = GetRumourKnown(rumourID); }
+            else { rumour = GetRumour(rumourID); }
+            //valid rumour?
+            if (rumour != null)
+            {
+                int age = Game.gameTurn - rumour.TurnCreated;
+                //basic description for all rumours
+                listData.Add(new Snippet($"--- RumourID {rumour.RumourID}", RLColor.Yellow, RLColor.Black));
+                listData.Add(new Snippet(string.Format("{0} day{1} old", age, age != 1 ? "s" : "")));
+                listData.Add(new Snippet($"\"{rumour.Text}\""));
+                Active active = GetActiveActor(rumour.WhoHeard);
+                if (active != null)
+                {
+                    age = Game.gameTurn - rumour.TurnRevealed;
+                    string description = string.Format("First heard by {0} {1}, ActID {2}, {3} day{4} ago at {5}", active.Title,
+                        active.Name, active.ActID, age, age != 0 ? "s" : "", GetLocationName(ConvertRefToLoc(rumour.RefID)));
+                    listData.Add(new Snippet(description));
+                }
+                
+                //rumour specific text
+                switch (rumour.Type)
+                {
+                    case RumourType.Skill:
+                        break;
+                    default:
+                        Game.SetError(new Error(275, $"Invalid Rumour.Type \"{rumour.Type}\""));
+                        listData.Add(new Snippet("Invalid Rumour Type", RLColor.LightRed, RLColor.Black));
+                        break;
+                }
+            }
+            else { Game.SetError(new Error(275, $"Invalid Rumour for rumourID {rumourID}")); }
             return listData;
         }
 
