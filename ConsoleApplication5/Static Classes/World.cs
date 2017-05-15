@@ -3913,6 +3913,12 @@ namespace Next_Game
             return listData;
         }
 
+
+        public List<Snippet> ShowRumoursRL()
+        {
+
+        }
+
         /// <summary>
         /// Generate a list of all Bloodhound Actor info grouped by turns
         /// </summary>

@@ -12,7 +12,7 @@ using System.IO;
 
 namespace Next_Game
 {
-    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Record, Special, Lore, God} //distinct menu sets (Menu.cs)
+    public enum MenuMode {Main, Actor_Active, Actor_Passive, Debug, Reference, Special, God} //distinct menu sets (Menu.cs)
     public enum ConsoleDisplay {Status, Input, Multi, Message, Event, Conflict} //different console windows (Menu window handled independently by Menu.cs) -> Event & Conflict are within Multi
     public enum InputMode {Normal, MultiKey, Scrolling} //special input modes
     public enum SpecialMode {None, FollowerEvent, PlayerEvent, Conflict, Outcome, Notification, Confirm} //if MenuMode.Special then -> type of special (Notification -> msg, Confirm -> Y/N)
@@ -566,7 +566,7 @@ namespace Next_Game
                                         _inputMode = InputMode.MultiKey;
                                         _multiCaller = 1;
                                         break;
-                                    case MenuMode.Record:
+                                    case MenuMode.Reference:
                                         //All Actors
                                         infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- ALL RECORDS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
@@ -595,7 +595,7 @@ namespace Next_Game
                                         { inputList.Add(new Snippet("You have run out of crows!", RLColor.Red, RLColor.Black)); }
                                         infoChannel.SetInfoList(inputList, ConsoleDisplay.Input);
                                         break;
-                                    case MenuMode.Record:
+                                    case MenuMode.Reference:
                                         //Custom report (debugging)
                                         infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- CUSTOM", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
@@ -615,7 +615,7 @@ namespace Next_Game
                                         //switch to Debug menu
                                         _menuMode = menu.SwitchMenuMode(MenuMode.Debug);
                                         break;
-                                    case MenuMode.Record:
+                                    case MenuMode.Reference:
                                         //Dead Actors
                                         infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- all DEATHS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
@@ -648,7 +648,7 @@ namespace Next_Game
                             case RLKey.F:
                                 switch (_menuMode)
                                 {
-                                    case MenuMode.Lore:
+                                    case MenuMode.Reference:
                                         //Fate of Royal Family Lore
                                         infoChannel.SetInfoList(world.GetLoreSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- Fate of Royal Family LORE", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
@@ -661,7 +661,7 @@ namespace Next_Game
                                     case MenuMode.Main:
                                         world.ShowGeneratorStatsRL();
                                         break;
-                                    case MenuMode.Record:
+                                    case MenuMode.Reference:
                                         //Marriages
                                         infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- all MARRIAGES", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
@@ -727,7 +727,7 @@ namespace Next_Game
                             case RLKey.K:
                                 switch (_menuMode)
                                 {
-                                    case MenuMode.Record:
+                                    case MenuMode.Reference:
                                         //Kingdom Events
                                         infoChannel.SetInfoList(world.GetHistoricalRecordSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- all KINGDOM EVENTS", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
@@ -745,7 +745,7 @@ namespace Next_Game
                                 {
                                     case MenuMode.Main:
                                         //switch to Lore Menu
-                                        _menuMode = menu.SwitchMenuMode(MenuMode.Lore);
+                                        //_menuMode = menu.SwitchMenuMode(MenuMode.Lore);
                                         break;
                                     case MenuMode.Debug:
                                         //Show All Items log
@@ -843,7 +843,12 @@ namespace Next_Game
                                     case MenuMode.Main:
                                         //infoChannel.SetInfoList(world.ShowRecordsRL(), ConsoleDisplay.Multi);
                                         //switch to Debug menu
-                                        _menuMode = menu.SwitchMenuMode(MenuMode.Record);
+                                        _menuMode = menu.SwitchMenuMode(MenuMode.Reference);
+                                        break;
+                                    case MenuMode.Reference:
+                                        //Show All Rumours
+                                        infoChannel.SetInfoList(world.ShowRumoursRL(), ConsoleDisplay.Multi);
+                                        infoChannel.InsertHeader(new Snippet("--- Rumours ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
                                     case MenuMode.Debug:
                                         //show debug route
@@ -863,7 +868,7 @@ namespace Next_Game
                                         world.SetNotification(tempList);
                                         break;
                                     case MenuMode.Debug:
-                                        //Show All Secrets log
+                                        //Show All Possessions log
                                         infoChannel.SetInfoList(world.ShowPossessionsRL(PossessionType.Secret), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- Secrets ALL", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);
                                         break;
@@ -886,7 +891,7 @@ namespace Next_Game
                                         //Toggle Disguise on/off
                                         infoChannel.SetInfoList(world.ChangeDisguise(), ConsoleDisplay.Multi);
                                         break;
-                                    case MenuMode.Lore:
+                                    case MenuMode.Reference:
                                         //Uprising Lore
                                         infoChannel.SetInfoList(world.GetLoreSet(keyPress), ConsoleDisplay.Multi);
                                         infoChannel.InsertHeader(new Snippet("--- Uprising LORE", RLColor.Yellow, RLColor.Black), ConsoleDisplay.Multi);

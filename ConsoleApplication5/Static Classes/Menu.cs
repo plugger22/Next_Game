@@ -93,8 +93,8 @@ namespace Next_Game
                     menuArrayText[3, 0] = "[1..9] Character MENU";
                     menuArrayText[3, 1] = "[D] Debug MENU";
                     menuArrayText[3, 2] = "[O] God MENU";
-                    menuArrayText[3, 3] = "[R] Records MENU";
-                    menuArrayText[3, 4] = "[L] Lore MENU";
+                    menuArrayText[3, 3] = "[R] Reference MENU";
+                    //menuArrayText[3, 4] = "[L] Lore MENU";
                     menuArrayText[3, 5] = "[X] Quit";
                     break;
                 case MenuMode.Actor_Active:
@@ -110,11 +110,13 @@ namespace Next_Game
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
-                case MenuMode.Record:
-                    menuColorFore = RLColor.Brown;
+                case MenuMode.Reference:
+                    menuColorFore = RLColor.Red;
                     menuColorBack = RLColor.LightGray;
                     //input categories
                     menuArrayCategories[0] = "Records MENU ---";
+                    menuArrayCategories[1] = "Rumours MENU ---";
+                    menuArrayCategories[2] = "Lore MENU ---";
                     menuArrayCategories[3] = "Switch ---";
                     //Record menu commands
                     menuArrayText[0, 0] = "[A] All";
@@ -122,11 +124,16 @@ namespace Next_Game
                     menuArrayText[0, 2] = "[D] Dead Actors";
                     menuArrayText[0, 3] = "[G] Marriages";
                     menuArrayText[0, 4] = "[K] Kingdom Events";
+                    //Rumours menu commands
+                    menuArrayText[1, 0] = "[R] All";
+                    //Lore menu commands
+                    menuArrayText[2, 0] = "[U] Uprising";
+                    menuArrayText[2, 1] = "[F] Fate of Royals";
                     //switch commands
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
                     break;
-                case MenuMode.Lore:
+                /*case MenuMode.Lore:
                     menuColorFore = RLColor.Brown;
                     menuColorBack = RLColor.LightGray;
                     //input categories
@@ -138,7 +145,7 @@ namespace Next_Game
                     //switch commands
                     menuArrayText[3, 0] = "[ESC] Main Menu";
                     menuArrayText[3, 1] = "[ENTER] End Turn";
-                    break;
+                    break;*/
                 case MenuMode.God:
                     menuColorFore = Color._godMode;
                     menuColorBack = RLColor.Gray;
