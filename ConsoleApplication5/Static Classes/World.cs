@@ -4258,12 +4258,14 @@ namespace Next_Game
             Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}");
             UpdateActorMoveStatus(MoveActors());
             if (UpdatePlayerStatus() == true) { notificationStatus = true; }
+            CalculateCrows();
             if (UpdateWorldStatus() == true) { notificationStatus = true; }
             CheckStationaryActiveActors();
-            CalculateCrows();
+            
             //Enemies
             UpdateAIController();
             SetEnemyActivity();
+            
             //debug
             
             return notificationStatus;
@@ -5843,6 +5845,70 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// handles all specific follower actions, returns a list of Snippets to World.UpdateWorldActivity (combined to generate notification message)
+        /// </summary>
+        private List<Snippet> CheckFollowerActivity()
+        {
+            Game.logTurn?.Write("--- CheckFollowerActivity (World.cs)");
+            int rumourID, refID;
+            RLColor backColor = Color._background1;
+            List<Snippet> listData = new List<Snippet>();
+            List<Snippet> listRumours = new List<Snippet>();
+            //loop all active actors looking for followers
+            foreach(var actor in dictActiveActors)
+            {
+                if (actor.Value is Follower)
+                {
+                    switch (actor.Value.Status)
+                    {
+                        case ActorStatus.AtLocation:
+                            //get a rumour if in crow contact with player (any crow % > 0)
+                            if (actor.Value.CrowChance > 0)
+                            {
+                                refID = ConvertLocToRef(actor.Value.LocID);
+                                rumourID = Game.director.GetRumourUnknown(refID, actor.Value.ActID);
+                                Rumour rumour = GetRumour(rumourID);
+                                if (rumour != null)
+                                {
+                                    listRumours.Add(new Snippet(rumour.Text, RLColor.Black, backColor));
+                                    listData.Add(new Snippet(""));
+                                    AddRumourKnown(rumour.RumourID, rumour);
+                                    Game.logTurn?.Write($"{actor.Value.Title} {actor.Value.Name}, ActID {actor.Value.ActID}, added RumourID {rumour.RumourID}");
+                                    //tweak actor skill if a RumourSkill
+                                    if (rumour is RumourSkill)
+                                    {
+                                        RumourSkill rumourSkill = rumour as RumourSkill;
+                                        Passive passive = GetPassiveActor(rumourSkill.ActorID);
+                                        if (passive != null)
+                                        {
+                                            if (passive.SetSkillKnownStatus(rumourSkill.Skill, true) == false)
+                                            { Game.SetError(new Error(276, $"{passive.Title} {passive.Name}, ActID {passive.ActID} failed to set Skill {rumourSkill.Skill} to True")); }
+                                            else { Game.logTurn?.Write($"{passive.Title} {passive.Name}, ActID {passive.ActID}, skill {rumourSkill.Skill} set to True"); }
+                                        }
+                                        else { Game.SetError(new Error(276, $"Invalid Passive actor for rumourSkill.ActorID {rumourSkill.ActorID}")); }
+                                    }
+                                }
+                                else { Game.SetError(new Error(276, $"Invalid rumour from RumourID {rumourID}")); }
+                            }
+                            else { Game.logTurn?.Write($"{actor.Value.Title} {actor.Value.Name}, ActID {actor.Value.ActID}, has no contact with the Player -> No rumours"); }
+                            break;
+                    }
+                }
+            }
+            //if rumours present add to master list
+            int numRumours = listRumours.Count;
+            if (numRumours > 1)
+            {
+                listData.Add(new Snippet(string.Format("Your Followers have overheard {0} rumour{1}", numRumours, numRumours != 1 ? "s" : "", RLColor.Red, backColor)));
+                listData.Add(new Snippet(""));
+                listData.AddRange(listRumours);
+                listData.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                listData.Add(new Snippet(""));
+            }
+            return listData;
+        }
+
+        /// <summary>
         /// sub method to check a Player's concealment when spotted. Handles all details of Concealment changes.
         /// </summary>
         private void CheckConcealment()
@@ -6339,10 +6405,14 @@ namespace Next_Game
         /// <returns></returns>
         private bool UpdateWorldStatus()
         {
+            Game.logTurn?.Write("--- UpdateWorldStatus (World.cs)");
             bool notificationStatus = false;
             List<Snippet> eventList = new List<Snippet>();
             RLColor foreColor = RLColor.Black;
             RLColor backColor = Color._background1;
+            //Follower Rumours
+            eventList.AddRange(CheckFollowerActivity());
+            //Player Rumours
             Player player = GetPlayer();
             if (player != null)
             {

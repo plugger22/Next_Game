@@ -1,52 +1,82 @@
-//Exile Game File "LogTurn.txt" opened at: 15/05/2017 15:32:32
+//Exile Game File "LogTurn.txt" opened at: 15/05/2017 17:25:31
 --- ProcessStartTurn (World.cs)
 Day 2, Turn 1
 --- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 1, Strength 2, Scope Global, Type None, Global All
+arrayOfRumours [1] -> RumourID 2, Strength 1, Scope Global, Type None, Global North
+arrayOfRumours [5] -> RumourID 139, Strength 4, Scope Local, Type Skill, Global None
+RumourID 139 selected from the Pool
+Rumour "BannerLord Rodrik Ambrose "The Green", ActID 76, at Blackwater is suspected to be Guileless" revealed to ActorID3 on turn 1 -> added to List
+RumourID 139 removed from listRumoursHouse[1]
+Follower The Haggler, ActID 3, added RumourID 139
+BannerLord Rodrik Ambrose, ActID 76, skill Treachery set to True
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+arrayOfRumours [0] -> RumourID 1, Strength 2, Scope Global, Type None, Global All
+arrayOfRumours [3] -> RumourID 4, Strength 1, Scope Global, Type None, Global South
+RumourID 1 selected from the Pool
+Rumour "Global pool rumour, strength 2" revealed to ActorID2 on turn 1 -> added to List
+RumourID 1 removed from listRumoursGlobal[0]
+Follower The Beast, ActID 2, added RumourID 1
+--- GetRumour (Director.cs)
+[Notification] No Global rumours available -> none added to pool
+arrayOfRumours [4] -> RumourID 5, Strength 2, Scope Global, Type None, Global West
+arrayOfRumours [5] -> RumourID 133, Strength 4, Scope Local, Type Skill, Global None
+RumourID 5 selected from the Pool
+Rumour "West pool rumour, strength 2" revealed to ActorID9 on turn 1 -> added to List
+RumourID 5 removed from listRumoursWest[0]
+Follower The Waif, ActID 9, added RumourID 5
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Martyn Tyrell, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Guarnier Stark, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Haborym, ID 130 at 15:16, Active Martyn Tyrell, ID 1, at 21:21
- [Search -> Debug] Enemy, Brother Kali, ID 131 at 15:16, Active Martyn Tyrell, ID 1, at 21:21
- [Search -> Debug] Enemy, Brother Adramalech, ID 132 at 15:16, Active Martyn Tyrell, ID 1, at 21:21
- [Search -> Debug] Enemy, Brother Diabolous, ID 133 at 15:16, Active Martyn Tyrell, ID 1, at 21:21
- [Search -> Debug] Enemy, The Unrelenting, ID 134 at 15:16, Active Martyn Tyrell, ID 1, at 21:21
- [Search -> Stationary] Follower The Crone, ActID 3 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 2 is AtLocation
- [Search -> Stationary] Follower The Leper, ActID 4 is AtLocation
+ [Search -> Debug] Enemy, Brother Mantus, ID 116 at 15:16, Active Guarnier Stark, ID 1, at 20:26
+ [Search -> Debug] Enemy, Brother Diabolous, ID 117 at 15:16, Active Guarnier Stark, ID 1, at 20:26
+ [Search -> Debug] Enemy, Brother Behemoth, ID 118 at 15:16, Active Guarnier Stark, ID 1, at 20:26
+ [Search -> Debug] Enemy, Brother Damballa, ID 119 at 15:16, Active Guarnier Stark, ID 1, at 20:26
+ [Search -> Debug] Enemy, The Unrelenting, ID 120 at 15:16, Active Guarnier Stark, ID 1, at 20:26
+ [Search -> Stationary] Follower The Haggler, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Waif, ActID 9 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 130 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 131 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Adramalech, Act ID 132 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 133 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 134 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mantus, Act ID 116 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 117 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Behemoth, Act ID 118 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 119 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 120 Mode -> Normal
 --- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Mantus, ActID 116 retains Goal -> Wait
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Haborym, ActID 130 Assigned Branch -> 0 Current Branch -> 0
- [Goal -> New] Brother Haborym, ActID 130, (loc 15:16), assigned new Goal -> Hide
+ [Goal -> Branch] Brother Diabolous, ActID 117 Assigned Branch -> 3 Current Branch -> 0
+ [Goal -> New] Brother Diabolous, ActID 117, (loc 15:16), assigned new Goal -> Hide
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Kali, ActID 131 Assigned Branch -> 0 Current Branch -> 0
- [Enemy -> Known] Brother Adramalech ActID 132 has become KNOWN
- [Enemy -> Goal] Brother Adramalech, ActID 132 retains Goal -> Wait
- [Enemy -> Goal] Brother Diabolous, ActID 133 retains Goal -> Wait
- [Enemy -> Goal] The Unrelenting, ActID 134 retains Goal -> Wait
+ [Goal -> Branch] Brother Behemoth, ActID 118 Assigned Branch -> 4 Current Branch -> 0
+ [Enemy -> Goal] Brother Damballa, ActID 119 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] The Unrelenting, ActID 120 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] The Unrelenting, ActID 120, (loc 15:16), assigned new Goal -> Hide
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Peter Redwyne", ID 93 added to list of Actors
- [AutoEvent -> ActorList] "Helman Hodgkin", ID 116 added to list of Actors
- [AutoEvent -> ActorList] "Victarion Hary", ID 117 added to list of Actors
- [AutoEvent -> ActorList] "Petyr Tybout", ID 118 added to list of Actors
- [AutoEvent -> ActorList] "Ser Roose Hewerald", ID 119 added to list of Actors
- [AutoEvent -> ActorList] "Ymanie Redwyne", ID 121 added to list of Actors
- [AutoEvent -> ActorList] "Willem Redwyne", ID 122 added to list of Actors
- [AutoEvent -> LocalList] "Peter Redwyne", ID 93 added to list of Locals
- [AutoEvent -> AdvisorList] "Helman Hodgkin", ID 116 added to list of Advisors
- [AutoEvent -> AdvisorList] "Victarion Hary", ID 117 added to list of Advisors
- [AutoEvent -> AdvisorList] "Petyr Tybout", ID 118 added to list of Advisors
- [AutoEvent -> LocalList] "Ser Roose Hewerald", ID 119 added to list of Locals
- [AutoEvent -> LocalList] "Ymanie Redwyne", ID 121 added to list of Locals
- [AutoEvent -> LocalList] "Willem Redwyne", ID 122 added to list of Locals
+ [AutoEvent -> ActorList] "Bran Bracken", ID 79 added to list of Actors
+ [AutoEvent -> ActorList] "Trystane Conan", ID 103 added to list of Actors
+ [AutoEvent -> ActorList] "Haimmon Bartolomeus", ID 104 added to list of Actors
+ [AutoEvent -> ActorList] "Randyll Noy", ID 105 added to list of Actors
+ [AutoEvent -> ActorList] "Ser Sagard Gill", ID 106 added to list of Actors
+ [AutoEvent -> ActorList] "Jodoca Bracken", ID 107 added to list of Actors
+ [AutoEvent -> ActorList] "Ade Bracken", ID 108 added to list of Actors
+ [AutoEvent -> ActorList] "Ysabella Bracken", ID 109 added to list of Actors
+ [AutoEvent -> LocalList] "Bran Bracken", ID 79 added to list of Locals
+ [AutoEvent -> AdvisorList] "Trystane Conan", ID 103 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Haimmon Bartolomeus", ID 104 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Randyll Noy", ID 105 added to list of Advisors
+ [AutoEvent -> LocalList] "Ser Sagard Gill", ID 106 added to list of Locals
+ [AutoEvent -> LocalList] "Jodoca Bracken", ID 107 added to list of Locals
+ [AutoEvent -> LocalList] "Ade Bracken", ID 108 added to list of Locals
+ [AutoEvent -> LocalList] "Ysabella Bracken", ID 109 added to list of Locals
 [Notification] No entry found in dictOfIntroductions for RefID 99
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
@@ -61,34 +91,34 @@ Day 2, Turn 1
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Martyn Tyrell has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Leper has had their TurnsUnknown Timer increased from 0 to 1
+ Usurper Guarnier Stark has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Haggler has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Waif has had their TurnsUnknown Timer increased from 0 to 1
 --- ResolveOutcome (Director.cs)
---- ChangePlayerRumourStatus (Director.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 1, Strength 2, Scope Global, Type None, Global All
-arrayOfRumours [3] -> RumourID 4, Strength 1, Scope Global, Type None, Global South
-arrayOfRumours [5] -> RumourID 201, Strength 2, Scope Local, Type Skill, Global None
-RumourID 1 selected from the Pool
-Rumour "Global pool rumour, strength 2" revealed to ActorID1 on turn 1 -> added to List
-RumourID 1 removed from listRumoursGlobal[0]
-Rumour "Global pool rumour, strength 2", rumourID 1, added to dictRumoursKnown
-Global pool rumour, strength 2
 --- ChangePlayerRumourStatus (Director.cs)
 --- GetRumour (Director.cs)
 [Notification] No Global rumours available -> none added to pool
 arrayOfRumours [3] -> RumourID 4, Strength 1, Scope Global, Type None, Global South
-arrayOfRumours [5] -> RumourID 213, Strength 3, Scope Local, Type Skill, Global None
-RumourID 213 selected from the Pool
-Rumour "Heir Willem Redwyne "The Black Rat", ActID 122, is said  Delusional (Wits)" revealed to ActorID1 on turn 1 -> added to List
-RumourID 213 removed from listRumoursHouse[23]
-Rumour "Heir Willem Redwyne "The Black Rat", ActID 122, is said  Delusional (Wits)", rumourID 213, added to dictRumoursKnown
-Heir Willem Redwyne, ActID 122, has their Wits changed to True
-Heir Willem Redwyne "The Black Rat", ActID 122, is said  Delusional (Wits)
+arrayOfRumours [5] -> RumourID 149, Strength 5, Scope Local, Type Skill, Global None
+RumourID 149 selected from the Pool
+Rumour "Lord Bran Bracken "The Feeble", ActID 79, at Winterfell is known by all  Multilingual" revealed to ActorID1 on turn 1 -> added to List
+RumourID 149 removed from listRumoursHouse[1]
+Rumour "Lord Bran Bracken "The Feeble", ActID 79, at Winterfell is known by all  Multilingual", rumourID 149, added to dictRumoursKnown
+Lord Bran Bracken, ActID 79, has their Wits changed to True
+Lord Bran Bracken "The Feeble", ActID 79, at Winterfell is known by all  Multilingual
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+[Notification] No Global rumours available -> none added to pool
+arrayOfRumours [3] -> RumourID 4, Strength 1, Scope Global, Type None, Global South
+arrayOfRumours [5] -> RumourID 192, Strength 1, Scope Local, Type Skill, Global None
+RumourID 4 selected from the Pool
+Rumour "South pool rumour, strength 1" revealed to ActorID1 on turn 1 -> added to List
+RumourID 4 removed from listRumoursSouth[0]
+Rumour "South pool rumour, strength 1", rumourID 4, added to dictRumoursKnown
+South pool rumour, strength 1
 --- MultiKeyInput (Game.cs)
-213 input
+149 input
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 15/05/2017 15:33:35
+//Exile Game file ops "LogTurn.txt" Completed at: 15/05/2017 17:31:26

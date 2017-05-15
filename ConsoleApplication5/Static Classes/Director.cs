@@ -4008,7 +4008,7 @@ namespace Next_Game
             int refID = Game.world.ConvertLocToRef(player.LocID);
             if (player != null)
             {
-                rumourID = GetRumour(refID, player.ActID);
+                rumourID = GetRumourUnknown(refID, player.ActID);
                 if (rumourID > 0)
                 {
                     rumour = Game.world.GetRumour(rumourID);
@@ -4482,7 +4482,7 @@ namespace Next_Game
                 Game.logStart?.Write("--- InitialiseRumours (World.cs)");
                 int skill, strength;
                 int royalRefID = Game.lore.RoyalRefIDNew;
-                string trait, rumourText, immersionText;
+                string trait, rumourText, immersionText, locName;
                 string[] arrayOfImmersionTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all" };
 
                 //DEBUG... start
@@ -4545,8 +4545,9 @@ namespace Next_Game
                                                             strength = 2;
                                                             break;
                                                     }
+                                                    locName = Game.world.GetLocationName(actor.LocID);
                                                     immersionText = $"{arrayOfImmersionTexts[rnd.Next(arrayOfImmersionTexts.Length)]} {actor.GetPrefixName((SkillType)skillIndex)}";
-                                                    rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID}, is {immersionText} {trait} ({(SkillType)skillIndex})";
+                                                    rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID}, at {locName} is {immersionText} {trait}";
                                                     RumourSkill rumour = new RumourSkill(rumourText, strength, actor.ActID, (SkillType)skillIndex, RumourScope.Local) { RefID = actor.RefID };
                                                     //add to dictionary and house list
                                                     Game.world.AddRumour(rumour.RumourID, rumour);
@@ -4581,7 +4582,7 @@ namespace Next_Game
         /// <param name="refID">The refID of the current location</param>
         /// <param name="actorID">The actorID of the actor learning of the rumour</param>
         /// <returns></returns>
-        public int GetRumour(int refID, int actorID)
+        public int GetRumourUnknown(int refID, int actorID)
         {
             Game.logTurn?.Write("--- GetRumour (Director.cs)");
             int rumourID = 0;
