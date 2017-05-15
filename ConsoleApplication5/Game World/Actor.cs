@@ -336,12 +336,24 @@ namespace Next_Game
         /// Set the entire arrayOfKnown to one state or another
         /// </summary>
         /// <param name="status"></param>
-        public void SetSkillsKnownStatus(bool status)
+        public void SetAllSkillsKnownStatus(bool status)
         {
             for(int i = 0; i < arrayOfKnown.Length; i++)
             { arrayOfKnown[i] = status; }
         }
 
+        /// <summary>
+        /// Change an individual skill's known status, returns True if successful
+        /// </summary>
+        /// <param name="skill"></param>
+        /// <param name="status"></param>
+        public bool SetSkillKnownStatus(SkillType skill, bool status)
+        {
+            if (skill != SkillType.None)
+            { arrayOfKnown[(int)skill] = status; return true; }
+            return false;
+        }
+            
         /// <summary>
         /// returns prefix for trait name, eg. 'to be', 'to have a'
         /// </summary>

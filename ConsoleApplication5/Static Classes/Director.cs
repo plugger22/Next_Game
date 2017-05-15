@@ -1046,7 +1046,7 @@ namespace Next_Game
                 int houseID = Game.map.GetMapInfo(MapLayer.HouseID, loc.GetPosX(), loc.GetPosY());
                 int refID = Game.map.GetMapInfo(MapLayer.RefID, loc.GetPosX(), loc.GetPosY());
                 House house = Game.world.GetHouse(refID);
-                if (house == null) { Game.SetError(new Error(118, "Invalid house (null)")); }
+                if (house == null && refID != 9999) { Game.SetError(new Error(118, "Invalid house (null)")); }
                 string houseName = "Unknown";
                 string tempText;
                 if (refID > 0) { houseName = Game.world.GetHouseName(refID); }
@@ -1278,7 +1278,7 @@ namespace Next_Game
                                 eventObject.SetOption(option);
                             }
                             //option -> Lay low (only if not known)
-                            if (player.Known == true && house.SafeHouse > 0 && player.Conceal != ActorConceal.SafeHouse)
+                            if (player.Known == true && house?.SafeHouse > 0 && player.Conceal != ActorConceal.SafeHouse)
                             {
                                 OptionInteractive option = new OptionInteractive($"Lay Low ({house.SafeHouse} stars)");
                                 option.ReplyGood = $"You seek refuge at a Safe House ({house.SafeHouse} stars). You are immune from discovery while ever the place of refuge retains at least one star";
@@ -1671,7 +1671,7 @@ namespace Next_Game
                                     OutConflict outcome_1 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Befriend, SubType = ConflictSubType.Befriend };
                                     option_1.SetGoodOutcome(outcome_1);
                                     eventObject.SetOption(option_1);
-                                    person.SetSkillsKnownStatus(true);
+                                    person.SetAllSkillsKnownStatus(true);
                                     //blackmail
                                     OptionInteractive option_2 = new OptionInteractive("Blackmail") { ActorID = actorID };
                                     option_2.ReplyGood = string.Format("{0} frowns, their expression darkens", actorText);
@@ -1681,7 +1681,7 @@ namespace Next_Game
                                     OutConflict outcome_2 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Blackmail, SubType = ConflictSubType.Blackmail };
                                     option_2.SetGoodOutcome(outcome_2);
                                     eventObject.SetOption(option_2);
-                                    person.SetSkillsKnownStatus(true);
+                                    person.SetAllSkillsKnownStatus(true);
                                     //seduce
                                     OptionInteractive option_3 = new OptionInteractive("Seduce") { ActorID = actorID };
                                     option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
@@ -1692,7 +1692,7 @@ namespace Next_Game
                                     OutConflict outcome_3 = new OutConflict(eventObject.EventPID, actorID, ConflictType.Social) { Social_Type = ConflictSocial.Seduce, SubType = ConflictSubType.Seduce };
                                     option_3.SetGoodOutcome(outcome_3);
                                     eventObject.SetOption(option_3);
-                                    person.SetSkillsKnownStatus(true);
+                                    person.SetAllSkillsKnownStatus(true);
                                     //You want Something from them
                                     OptionInteractive option_5 = new OptionInteractive("You want something") { ActorID = actorID };
                                     option_5.ReplyGood = $"{actorText} sits back and cautiously agrees to discuss your needs";
@@ -1702,7 +1702,7 @@ namespace Next_Game
                                     listTriggers_5.Add(new Trigger(TriggerCheck.RelPlyr, person.GetRelPlyr(), talkRel, EventCalc.GreaterThanOrEqual));
                                     option_5.SetTriggers(listTriggers_5);
                                     eventObject.SetOption(option_5);
-                                    person.SetSkillsKnownStatus(true);
+                                    person.SetAllSkillsKnownStatus(true);
                                     //Desire (NPC wants something from you)
                                     OptionInteractive option_6 = new OptionInteractive("They want something") { ActorID = actorID };
                                     option_6.ReplyGood = string.Format("{0} leans forward enthusiastically to discuss {1} needs with you", actorText, person.Sex == ActorSex.Male ? "his" : "her");
@@ -1714,7 +1714,7 @@ namespace Next_Game
                                     //OutNone outcome_6 = new OutNone(eventObject.EventPID);
                                     option_6.SetGoodOutcome(outcome_6);
                                     eventObject.SetOption(option_6);
-                                    person.SetSkillsKnownStatus(true);
+                                    person.SetAllSkillsKnownStatus(true);
                                 }
                                 else { Game.SetError(new Error(73, "Invalid actorID from AutoCreateEvent (null from dict)")); }
                             }
@@ -4015,7 +4015,22 @@ namespace Next_Game
                     if (rumour != null)
                     {
                         if (Game.world.AddRumourKnown(rumourID, rumour) == true)
-                        { Game.logTurn?.Write($"Rumour \"{rumour.Text}\", rumourID {rumour.RumourID}, added to dictRumoursKnown"); }
+                        {
+                            Game.logTurn?.Write($"Rumour \"{rumour.Text}\", rumourID {rumour.RumourID}, added to dictRumoursKnown");
+                            if (rumour is RumourSkill)
+                            {
+                                //set relevant Passive actor skill to true (visible)
+                                RumourSkill rumourSkill = rumour as RumourSkill;
+                                Passive actor = Game.world.GetPassiveActor(rumourSkill.ActorID);
+                                if (actor != null)
+                                {
+                                    if (actor.SetSkillKnownStatus(rumourSkill.Skill, true) == false)
+                                    { Game.SetError(new Error(272, $"Invalid SkillType \"{rumourSkill.Skill}\" prevents change of Known status")); }
+                                    else { Game.logTurn?.Write($"{actor.Title} {actor.Name}, ActID {actor.ActID}, has their {rumourSkill.Skill} changed to True"); }
+                                }
+                                else { Game.SetError(new Error(272, $"Invalid actor (null) for ActID {rumourSkill.ActorID}")); }
+                            }
+                        }
                         else { Game.SetError(new Error(272, $"RumourID {rumourID} failed to be added to dictRumoursKnown")); }
                     }
                     else { Game.SetError(new Error(272, $"Invalid rumour (null) for rumourID {rumourID} -> not added to dictRumoursKnown")); }
@@ -4466,6 +4481,7 @@ namespace Next_Game
             {
                 Game.logStart?.Write("--- InitialiseRumours (World.cs)");
                 int skill, strength;
+                int royalRefID = Game.lore.RoyalRefIDNew;
                 string trait, rumourText, immersionText;
                 string[] arrayOfImmersionTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all" };
 
@@ -4530,11 +4546,15 @@ namespace Next_Game
                                                             break;
                                                     }
                                                     immersionText = $"{arrayOfImmersionTexts[rnd.Next(arrayOfImmersionTexts.Length)]} {actor.GetPrefixName((SkillType)skillIndex)}";
-                                                    rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID}, is {immersionText} {trait}";
+                                                    rumourText = $"{actor.Title} {actor.Name} \"{actor.Handle}\", ActID {actor.ActID}, is {immersionText} {trait} ({(SkillType)skillIndex})";
                                                     RumourSkill rumour = new RumourSkill(rumourText, strength, actor.ActID, (SkillType)skillIndex, RumourScope.Local) { RefID = actor.RefID };
                                                     //add to dictionary and house list
                                                     Game.world.AddRumour(rumour.RumourID, rumour);
-                                                    if (actor.RefID != 9999) { house.AddRumour(rumour.RumourID); }
+                                                    //royal family or royal advisors go to the Capital list, all others to their house list
+                                                    bool proceedFlag = true;
+                                                    if (actor.RefID == 9999) { proceedFlag = false; }
+                                                    if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
+                                                    if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
                                                     else { Game.director.AddRumourToCapital(rumour.RumourID); }
                                                     Game.logStart?.Write($"{rumourText} -> added to dict");
                                                 }
@@ -4567,7 +4587,7 @@ namespace Next_Game
             int rumourID = 0;
             int tempRumourID, index;
             int branch = 0;
-            int[] arrayOfRumours = new int[6];  //selected rumourID's -> [0] global All [1 to 4] branch N/E/S/W [5] house [6] Capital
+            int[] arrayOfRumours = new int[7];  //selected rumourID's -> [0] global All [1 to 4] branch N/E/S/W [5] house [6] Capital
             List<int> listRumoursReturn = new List<int>();
             List<int> listRumoursPool = new List<int>();
             List<int> listRumoursHouse = new List<int>();
@@ -4684,77 +4704,78 @@ namespace Next_Game
             //select the correct number of rumours from the pool
             if (listRumoursPool.Count > 0)
             {
-                    rumourID = listRumoursPool[rnd.Next(listRumoursPool.Count)];
-                    Game.logTurn?.Write($"RumourID {rumourID} selected from the Pool");
-                    //update rumour for the actor who learned of it and the turn it was revealed
-                    Rumour rumour = Game.world.GetRumour(rumourID);
-                    rumour.TurnRevealed = Game.gameTurn;
-                    if (actorID > 0 && actorID < 10)
-                    { rumour.WhoHeard = actorID; }
-                    else { Game.SetError(new Error(271, $"Invalid actorID {actorID} (not Player or a follower) -> rumour.WhoHeard not updated")); }
-                    Game.logTurn?.Write($"Rumour \"{rumour.Text}\" revealed to ActorID{actorID} on turn {rumour.TurnRevealed} -> added to List");
+                rumourID = listRumoursPool[rnd.Next(listRumoursPool.Count)];
+                Game.logTurn?.Write($"RumourID {rumourID} selected from the Pool");
+                //update rumour for the actor who learned of it and the turn it was revealed
+                Rumour rumour = Game.world.GetRumour(rumourID);
+                rumour.TurnRevealed = Game.gameTurn;
+                if (actorID > 0 && actorID < 10)
+                { rumour.WhoHeard = actorID; }
+                else { Game.SetError(new Error(271, $"Invalid actorID {actorID} (not Player or a follower) -> rumour.WhoHeard not updated")); }
+                Game.logTurn?.Write($"Rumour \"{rumour.Text}\" revealed to ActorID{actorID} on turn {rumour.TurnRevealed} -> added to List");
+
+                //delete rumour from appropriate list (so it can't be used again)
+                int deleteIndex = -1;
+                for (int i = 0; i < arrayOfRumours.Length; i++)
+                {
+                    if (arrayOfRumours[i] == rumourID)
+                    {
+                        deleteIndex = i;
+                        break;
+                    }
+                }
+                //delete from specific list of rumours
+                if (deleteIndex > -1)
+                {
+                    switch (deleteIndex)
+                    {
+                        case 0:
+                            //global all
+                            index = listRumoursGlobal.FindIndex(id => id == rumourID);
+                            listRumoursGlobal.RemoveAt(index);
+                            Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursGlobal[{index}]");
+                            break;
+                        case 1:
+                            //north branch
+                            index = listRumoursNorth.FindIndex(id => id == rumourID);
+                            listRumoursNorth.RemoveAt(index);
+                            Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursNorth[{index}]");
+                            break;
+                        case 2:
+                            //east branch
+                            index = listRumoursEast.FindIndex(id => id == rumourID);
+                            listRumoursEast.RemoveAt(index);
+                            Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursEast[{index}]");
+                            break;
+                        case 3:
+                            //south branch
+                            index = listRumoursSouth.FindIndex(id => id == rumourID);
+                            listRumoursSouth.RemoveAt(index);
+                            Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursSouth[{index}]");
+                            break;
+                        case 4:
+                            //west branch
+                            index = listRumoursWest.FindIndex(id => id == rumourID);
+                            listRumoursWest.RemoveAt(index);
+                            Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursWest[{index}]");
+                            break;
+                        case 5:
+                            //House list
+                            index = listRumoursHouse.FindIndex(id => id == rumourID);
+                            listRumoursHouse.RemoveAt(index);
+                            Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursHouse[{index}]");
+                            break;
+                        case 6:
+                            //Capital
+                            index = listRumoursCapital.FindIndex(id => id == rumourID);
+                            listRumoursCapital.RemoveAt(index);
+                            Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursCapital[{index}]");
+                            break;
+                    }
+                }
+                else { Game.SetError(new Error(271, "Selected Rumour not found in arrayOfRumours (deleteIndex -1) -> rumour cancelled")); rumourID = 0; }
             }
             else { Game.logTurn?.Write("[Notification] No rumours available (listRumourPool empty)  -> none selected"); }
-            //delete rumour from appropriate list (so it can't be used again)
-            int deleteIndex = -1;
-                    for (int i = 0; i < arrayOfRumours.Length; i++)
-                    {
-                        if (arrayOfRumours[i] == rumourID)
-                        {
-                            deleteIndex = i;
-                            break;
-                        }
-                    }
-            //delete from specific list of rumours
-            if (deleteIndex > -1)
-            {
-                switch (deleteIndex)
-                {
-                    case 0:
-                        //global all
-                        index = listRumoursGlobal.FindIndex(id => id == rumourID);
-                        listRumoursGlobal.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursGlobal[{index}]");
-                        break;
-                    case 1:
-                        //north branch
-                        index = listRumoursNorth.FindIndex(id => id == rumourID);
-                        listRumoursNorth.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursNorth[{index}]");
-                        break;
-                    case 2:
-                        //east branch
-                        index = listRumoursEast.FindIndex(id => id == rumourID);
-                        listRumoursEast.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursEast[{index}]");
-                        break;
-                    case 3:
-                        //south branch
-                        index = listRumoursSouth.FindIndex(id => id == rumourID);
-                        listRumoursSouth.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursSouth[{index}]");
-                        break;
-                    case 4:
-                        //west branch
-                        index = listRumoursWest.FindIndex(id => id == rumourID);
-                        listRumoursWest.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursWest[{index}]");
-                        break;
-                    case 5:
-                        //House list
-                        index = listRumoursHouse.FindIndex(id => id == rumourID);
-                        listRumoursHouse.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursHouse[{index}]");
-                        break;
-                    case 6:
-                        //Capital
-                        index = listRumoursCapital.FindIndex(id => id == rumourID);
-                        listRumoursCapital.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursCapital[{index}]");
-                        break;
-                }
-            }
-            else { Game.SetError(new Error(271, "Selected Rumour not found in arrayOfRumours (deleteIndex -1) -> rumour cancelled")); rumourID = 0; }
             return rumourID;
         }
 

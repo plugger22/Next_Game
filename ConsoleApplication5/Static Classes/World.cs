@@ -3913,10 +3913,22 @@ namespace Next_Game
             return listData;
         }
 
-
+        /// <summary>
+        /// Generate a list of All Known Rumours
+        /// </summary>
+        /// <returns></returns>
         public List<Snippet> ShowRumoursRL()
         {
-
+            List<Snippet> listData = new List<Snippet>();
+            string description;
+            int age;
+            foreach( var rumour in dictRumoursKnown)
+            {
+                age = Game.gameTurn - rumour.Value.TurnCreated;
+                description = string.Format("RID {0}, \"{1}\", {2} day{3} old", rumour.Key, rumour.Value.Text, age, age != 1 ? "s" : "" );
+                listData.Add(new Snippet(description));
+            }
+            return listData;
         }
 
         /// <summary>

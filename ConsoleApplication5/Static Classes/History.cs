@@ -352,7 +352,7 @@ namespace Next_Game
                 //randomly assign resource level (placeholder)
                 player.Resources = rnd.Next(1, 6);
                 player.Type = ActorType.Usurper;
-                player.SetSkillsKnownStatus(true);
+                player.SetAllSkillsKnownStatus(true);
                 //add to Location list of Characters
                 loc.AddActor(player.ActID);
                 Game.logStart?.Write(string.Format("{0} {1}, ActID {1}, Resources {2}", player.Title, player.Name, player.ActID, player.Resources));
@@ -418,7 +418,7 @@ namespace Next_Game
                         follower.arrayOfTraitNames[(int)SkillType.Treachery] = data.Treachery_Trait;
                         follower.arrayOfTraitNames[(int)SkillType.Leadership] = data.Leadership_Trait;
                         follower.arrayOfTraitNames[(int)SkillType.Touched] = data.Touched_Trait;
-                        follower.SetSkillsKnownStatus(true);
+                        follower.SetAllSkillsKnownStatus(true);
                         //trait ID's not needed
                         //add to list
                         listOfActiveActors.Add(follower);
