@@ -1,40 +1,69 @@
-//Exile Game File "LogTurn.txt" opened at: 14/05/2017 20:48:10
+//Exile Game File "LogTurn.txt" opened at: 15/05/2017 11:29:47
 --- ProcessStartTurn (World.cs)
-Day 2, Turn 1
---- MoveActors -> 0 Records (World.cs)
+Day 9, Turn 8
+--- MoveActors -> 1 Records (World.cs)
+ [Move -> MoveObject] Inquisitor Brother Mantus, ActID 132 travelling to The Shaggy Parrot (current Loc 17:15)
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Walder Tully, ID 1 at 18:6, Enemy at 17:15 (Brother Mantus, ID 132
+--- CheckIfFoundEnemy (World.cs)
+ [Search -> Debug] Active Walder Tully, ID 1 at 18:6, Enemy at 17:16 (Brother Mantus, ID 132
 --- UpdatePlayerStatus (World.cs)
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Marq Tully, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Walder Tully, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Amon, ID 134 at 13:14, Active Marq Tully, ID 1, at 0:18
- [Search -> Debug] Enemy, Brother Gorgo, ID 135 at 13:14, Active Marq Tully, ID 1, at 0:18
- [Search -> Debug] Enemy, Brother Kali, ID 136 at 13:14, Active Marq Tully, ID 1, at 0:18
- [Search -> Debug] Enemy, Brother Set, ID 137 at 13:14, Active Marq Tully, ID 1, at 0:18
- [Search -> Debug] Enemy, The Unrelenting, ID 138 at 13:14, Active Marq Tully, ID 1, at 0:18
- [Search -> Stationary] Follower The Crone, ActID 6 is AtLocation
- [Search -> Stationary] Follower The Dark Eminence, ActID 5 is AtLocation
- [Search -> Stationary] Follower The Leper, ActID 9 is AtLocation
+ [Search -> Debug] Enemy, Brother Damballa, ID 130 at 17:13, Active Walder Tully, ID 1, at 18:6
+ [Search -> Debug] Enemy, Brother Gorgo, ID 131 at 17:13, Active Walder Tully, ID 1, at 18:6
+ [Search -> Debug] Enemy, Brother Mantus, ID 132 at 17:17, Active Walder Tully, ID 1, at 18:6
+ [Search -> Debug] Enemy, Brother Amon, ID 133 at 17:13, Active Walder Tully, ID 1, at 18:6
+ [Search -> Debug] Enemy, The Unrelenting, ID 134 at 17:13, Active Walder Tully, ID 1, at 18:6
+ [Search -> Stationary] Follower The Dark Eminence, ActID 4 is AtLocation
+ [Search -> Stationary] Follower The Jester, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 5 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 134 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Gorgo, Act ID 135 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 136 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Set, Act ID 137 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 138 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 130 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Gorgo, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 133 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 134 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Amon, ActID 134 retains Goal -> Wait
- [Enemy -> Goal] Brother Gorgo, ActID 135 retains Goal -> Wait
- [Enemy -> Goal] Brother Kali, ActID 136 retains Goal -> Wait
- [Enemy -> Goal] Brother Set, ActID 137 retains Goal -> Wait
- [Enemy -> Known] The Unrelenting ActID 138 has become KNOWN
- [Enemy -> Goal] The Unrelenting, ActID 138 retains Goal -> Wait
+ [Enemy -> Unknown] Brother Damballa ActID 130 has reverted to Unknown status (timer elapsed)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Damballa, ActID 130 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] Brother Damballa, ActID 130, (loc 17:13), assigned new Goal -> Wait
+ [Enemy -> Goal] Brother Gorgo, ActID 131 retains Goal -> Wait
+ [Enemy -> Unknown] Brother Amon ActID 133 has reverted to Unknown status (timer elapsed)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Amon, ActID 133 Assigned Branch -> 4 Current Branch -> 0
+ [Goal -> New] Brother Amon, ActID 133, (loc 17:13), assigned new Goal -> Move
+ [Goal -> Move] Brother Amon, ActID 133 -> Capital to Correct Branch -> The Yellow Huntress, LocID 20
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] The Unrelenting, ActID 134 retains Goal -> Hide
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Benjen Mormont", ID 102 added to list of Actors
- [AutoEvent -> LocalList] "Benjen Mormont", ID 102 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 99
+ [AutoEvent -> ActorList] "Quentyn Charles", ID 59 added to list of Actors
+ [AutoEvent -> ActorList] "Brandon Reyner", ID 60 added to list of Actors
+ [AutoEvent -> ActorList] "Hodgkin Josse", ID 61 added to list of Actors
+ [AutoEvent -> ActorList] "Mylecent Tyrell", ID 62 added to list of Actors
+ [AutoEvent -> ActorList] "Richemaya Tyrell", ID 63 added to list of Actors
+ [AutoEvent -> ActorList] "Selyse Tyrell", ID 64 added to list of Actors
+ [AutoEvent -> ActorList] "Tytos Tyrell", ID 78 added to list of Actors
+ [AutoEvent -> ActorList] "Mace Tyrell", ID 110 added to list of Actors
+ [AutoEvent -> AdvisorList] "Quentyn Charles", ID 59 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Brandon Reyner", ID 60 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Hodgkin Josse", ID 61 added to list of Advisors
+ [AutoEvent -> LocalList] "Mylecent Tyrell", ID 62 added to list of Locals
+ [AutoEvent -> LocalList] "Richemaya Tyrell", ID 63 added to list of Locals
+ [AutoEvent -> LocalList] "Selyse Tyrell", ID 64 added to list of Locals
+ [AutoEvent -> LocalList] "Tytos Tyrell", ID 78 added to list of Locals
+ [AutoEvent -> LocalList] "Mace Tyrell", ID 110 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 10
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
  Trigger FAILED on "0" Equals 1
  Trigger: Player is wrong type of Known status -> Trigger failed
  Trigger FAILED on "0" Equals 1
@@ -42,32 +71,32 @@ Day 2, Turn 1
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Marq Tully has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Leper has had their TurnsUnknown Timer increased from 0 to 1
+ Usurper Walder Tully has had their TurnsUnknown Timer increased from 107 to 108
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Jester has had their TurnsUnknown Timer increased from 7 to 8
+ Follower The Spider has had their TurnsUnknown Timer increased from 7 to 8
 --- ResolveOutcome (Director.cs)
 --- ChangePlayerRumourStatus (Director.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 1, Strength 2, Scope Global, Type None, Global All
-arrayOfRumours [1] -> RumourID 2, Strength 1, Scope Global, Type None, Global North
-arrayOfRumours [5] -> RumourID 209, Strength 4, Scope Local, Type Skill, Global None
-RumourID 1 selected from the Pool
-Rumour "Global pool rumour, strength 2" revealed to ActorID1 on turn 1 -> added to List
-ERROR_00   (Main Game Loop)
---- Error Message
-Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
---- Source
-mscorlib
---- Stack Trace
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.RemoveAt(Int32 index)
-   at Next_Game.Director.GetRumour(Int32 refID, Int32 actorID) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Director.cs:line 4708
-   at Next_Game.Director.ChangePlayerRumourStatus() in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Director.cs:line 3999
-   at Next_Game.Director.ResolveOptionOutcome(Int32 eventID, Int32 optionNum) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Director.cs:line 2745
-   at Next_Game.Game.SpecialModeInput(RLKeyPress keyPress, SpecialMode mode) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 1412
-   at Next_Game.Game.OnRootConsoleUpdate(Object sender, UpdateEventArgs e) in C:\Users\cameron\Documents\Visual Studio 2015\Projects\Next_Game\ConsoleApplication5\Static Classes\Game.cs:line 279
---- TargetSite
-Void ThrowArgumentOutOfRangeException(System.ExceptionArgument, System.ExceptionResource)
-//Exile Game file ops "LogTurn.txt" Completed at: 14/05/2017 20:48:15
+[Notification] No Global rumours available -> none added to pool
+[Notification] No Branch West rumours available  -> none added to pool
+arrayOfRumours [5] -> RumourID 112, Strength 1, Scope Local, Type Skill, Global None
+RumourID 112 selected from the Pool
+Rumour "lady Selyse Tyrell "The Trusting", ActID 64, is known by all to be Trustworthy" revealed to ActorID1 on turn 8 -> added to List
+RumourID 112 removed from listRumoursHouse[ 12 ]
+Rumour "lady Selyse Tyrell "The Trusting", ActID 64, is known by all to be Trustworthy", rumourID 112, added to dictRumoursKnown
+lady Selyse Tyrell "The Trusting", ActID 64, is known by all to be Trustworthy
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+[Notification] No Global rumours available -> none added to pool
+[Notification] No Branch West rumours available  -> none added to pool
+arrayOfRumours [5] -> RumourID 187, Strength 1, Scope Local, Type Skill, Global None
+RumourID 187 selected from the Pool
+Rumour "lord Mace Tyrell "The Ghostly", ActID 110, is known to be Competent" revealed to ActorID1 on turn 8 -> added to List
+RumourID 187 removed from listRumoursHouse[ 15 ]
+Rumour "lord Mace Tyrell "The Ghostly", ActID 110, is known to be Competent", rumourID 187, added to dictRumoursKnown
+lord Mace Tyrell "The Ghostly", ActID 110, is known to be Competent
+--- ResolveFollowerEvents (Director.cs)
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 15/05/2017 11:30:43

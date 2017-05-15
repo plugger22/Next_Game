@@ -2742,10 +2742,25 @@ namespace Next_Game
                                             break;
                                         case OutcomeType.Rumour:
                                             //the Player gains rumours from 'asking around for information'
-                                            outcomeText = ChangePlayerRumourStatus();
-                                            if (String.IsNullOrEmpty(outcomeText) == false)
-                                            { resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet("")); }
+                                            int rumourCount = 0;
+                                            for (int i = 0; i < Game.constant.GetValue(Global.PLAYER_RUMORS); i++)
+                                            {
+                                                outcomeText = ChangePlayerRumourStatus();
+                                                if (String.IsNullOrEmpty(outcomeText) == false)
+                                                {
+                                                    if (i == 0)
+                                                    {
+                                                        resultList.Add(new Snippet($"{player.Name}, \"{player.Handle}\", has learned of the following rumours...", foreColor, backColor));
+                                                        resultList.Add(new Snippet(""));
+                                                    }
+                                                    rumourCount++;
+                                                    resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
+                                                }
+                                            }
                                             //message
+                                            if (rumourCount > 0)
+                                            { outcomeText = string.Format("{0}, \"{1}\", has learned of {2} new rumour{3}", player.Name, player.Handle, rumourCount, rumourCount != 1 ? "s" : ""); }
+                                            else { outcomeText = $"{player.Name}, \"{player.Handle}\", heard only old news and stale, out-of-date, rumours"; }
                                             Game.world.SetMessage(new Message(outcomeText, 1, 0, MessageType.Event));
                                             Game.world.SetPlayerRecord(new Record(outcomeText, player.ActID, player.LocID, CurrentActorIncident.Event));
                                             break;
@@ -3980,42 +3995,35 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Player gains rumours from 'asking around for information'
+        /// Player gains  a single rumour from 'asking around for information'
         /// </summary>
         /// <returns></returns>
         private string ChangePlayerRumourStatus()
         {
             int rumourID;
-            int rumourCount = 0;
             Game.logTurn?.Write("--- ChangePlayerRumourStatus (Director.cs)");
             string resultText = "";
+            Rumour rumour = null;
             Player player = Game.world.GetPlayer();
             int refID = Game.world.ConvertLocToRef(player.LocID);
-            int numRumours = Game.constant.GetValue(Global.PLAYER_RUMORS);
             if (player != null)
             {
-                for (int i = 0; i < numRumours; i++)
+                rumourID = GetRumour(refID, player.ActID);
+                if (rumourID > 0)
                 {
-                    rumourID = GetRumour(refID, player.ActID);
-                    if (rumourID > 0)
+                    rumour = Game.world.GetRumour(rumourID);
+                    if (rumour != null)
                     {
-                        Rumour rumour = Game.world.GetRumour(rumourID);
-                        if (rumour != null)
-                        {
-                            if (Game.world.AddRumourKnown(rumourID, rumour) == true)
-                            {
-                                Game.logTurn?.Write($"Rumour \"{rumour.Text}\", rumourID {rumour.RumourID}, added to dictRumoursKnown");
-                                rumourCount++;
-                            }
-                            else { Game.SetError(new Error(272, $"RumourID {rumourID} failed to be added to dictRumoursKnown")); }
-                        }
-                        else { Game.SetError(new Error(272, $"Invalid rumour (null) for rumourID {rumourID} -> not added to dictRumoursKnown")); }
+                        if (Game.world.AddRumourKnown(rumourID, rumour) == true)
+                        { Game.logTurn?.Write($"Rumour \"{rumour.Text}\", rumourID {rumour.RumourID}, added to dictRumoursKnown"); }
+                        else { Game.SetError(new Error(272, $"RumourID {rumourID} failed to be added to dictRumoursKnown")); }
                     }
-                    else { Game.logTurn?.Write("[Notification] RumourID zero or less -> not added to dictRumoursKnown"); }
+                    else { Game.SetError(new Error(272, $"Invalid rumour (null) for rumourID {rumourID} -> not added to dictRumoursKnown")); }
                 }
+                else { Game.logTurn?.Write("[Notification] RumourID zero or less -> not added to dictRumoursKnown"); }
             }
             else { Game.SetError(new Error(272, "Invalid Player (null)")); }
-            resultText = string.Format("{0} \"{1}\" has learned of {2} rumour{3}", player.Name, player.Handle, rumourCount, rumourCount != 1 ? "s" : "");
+            if (rumour != null) { resultText = $"{rumour.Text}"; }
             Game.logTurn?.Write(resultText);
             return resultText;
         }
@@ -4704,45 +4712,45 @@ namespace Next_Game
                 {
                     case 0:
                         //global all
-                        index = listRumoursGlobal.Find(id => id == rumourID);
+                        index = listRumoursGlobal.FindIndex(id => id == rumourID);
                         listRumoursGlobal.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursGlobal[ {index} ]");
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursGlobal[{index}]");
                         break;
                     case 1:
                         //north branch
-                        index = listRumoursNorth.Find(id => id == rumourID);
+                        index = listRumoursNorth.FindIndex(id => id == rumourID);
                         listRumoursNorth.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursNorth[ {index} ]");
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursNorth[{index}]");
                         break;
                     case 2:
                         //east branch
-                        index = listRumoursEast.Find(id => id == rumourID);
+                        index = listRumoursEast.FindIndex(id => id == rumourID);
                         listRumoursEast.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursEast[ {index} ]");
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursEast[{index}]");
                         break;
                     case 3:
                         //south branch
-                        index = listRumoursSouth.Find(id => id == rumourID);
+                        index = listRumoursSouth.FindIndex(id => id == rumourID);
                         listRumoursSouth.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursSouth[ {index} ]");
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursSouth[{index}]");
                         break;
                     case 4:
                         //west branch
-                        index = listRumoursWest.Find(id => id == rumourID);
+                        index = listRumoursWest.FindIndex(id => id == rumourID);
                         listRumoursWest.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursWest[ {index} ]");
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursWest[{index}]");
                         break;
                     case 5:
                         //House list
-                        index = listRumoursHouse.Find(id => id == rumourID);
+                        index = listRumoursHouse.FindIndex(id => id == rumourID);
                         listRumoursHouse.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursHouse[ {index} ]");
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursHouse[{index}]");
                         break;
                     case 6:
                         //Capital
-                        index = listRumoursCapital.Find(id => id == rumourID);
+                        index = listRumoursCapital.FindIndex(id => id == rumourID);
                         listRumoursCapital.RemoveAt(index);
-                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursCapital[ {index} ]");
+                        Game.logTurn?.Write($"RumourID {rumourID} removed from listRumoursCapital[{index}]");
                         break;
                 }
             }
