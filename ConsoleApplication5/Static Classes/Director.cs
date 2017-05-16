@@ -4438,14 +4438,14 @@ namespace Next_Game
 
 
         /// <summary>
-        /// Add's a global rumour to appropriate director list and master dictionary
+        /// Add's a global rumour to appropriate director list and master dictionary, returns True on success
         /// </summary>
         /// <param name="rumourID"></param>
         /// <param name="global"></param>
-        internal void AddGlobalRumour(Rumour rumour)
+        internal bool AddGlobalRumour(Rumour rumour)
         {
             if (Game.world.AddRumour(rumour.RumourID, rumour) == false)
-            { Game.SetError(new Error(270, $"RumourID {rumour.RumourID} failed to Add to Dictionary -> not added to Global lists")); }
+            { Game.SetError(new Error(270, $"RumourID {rumour.RumourID} failed to Add to Dictionary -> not added to Global lists")); return false; }
             else
             {
                 //add to appropraite Global list
@@ -4466,7 +4466,12 @@ namespace Next_Game
                     case RumourGlobal.West:
                         listRumoursWest.Add(rumour.RumourID);
                         break;
+                    default:
+                        listRumoursGlobal.Add(rumour.RumourID);
+                        Game.SetError(new Error(270, $"[Alert] RumourID {rumour.RumourID} has an invalid Global Type \"{rumour.Global}\" -> Added to Global list"));
+                        break;
                 }
+                return true;
             }
         }
 
@@ -4480,13 +4485,14 @@ namespace Next_Game
             if (dictPassiveActors != null)
             {
                 Game.logStart?.Write("--- InitialiseRumours (World.cs)");
-                int skill, strength;
+                int skill, strength, index;
                 bool proceedFlag;
                 int royalRefID = Game.lore.RoyalRefIDNew;
                 string trait, rumourText, immersionText, startText, locName;
-                string[] arrayOfRumourTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all" };
+                string[] arrayOfRumourTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all", "whispered" };
                 string[] arrayOfSecretTexts = new string[] { "has a dark secret", "is keeping something private", "knows more than they let on", "has a mysterious past",
                     "has hidden secrets carefully kept from view", "jealously guards a secret", "knows something important", "conceals a dark truth" };
+                
                 //DEBUG... start
                 Rumour rumour_0 = new Rumour("Global pool rumour, strength 2", 2, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.All);
                 AddGlobalRumour(rumour_0);
@@ -4558,13 +4564,12 @@ namespace Next_Game
                                                     if (actor.RefID == 9999) { proceedFlag = false; }
                                                     if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
                                                     if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
-                                                    else { Game.director.AddRumourToCapital(rumour.RumourID); }
-                                                    Game.logStart?.Write($"{rumourText} -> dict");
+                                                    else { AddRumourToCapital(rumour.RumourID); }
+                                                    Game.logStart?.Write($"[Skill] {rumourText} -> dict");
                                                 }
                                             }
                                         }
-
-                                        //Rumour -> Secrets
+                                        //Rumour -> Secrets (one rumour per character, regardless of how many secrets a character has)
                                         if (actor.CheckSecrets() == true)
                                         {
                                             strength = 2;
@@ -4579,10 +4584,45 @@ namespace Next_Game
                                             if (actor.RefID == 9999) { proceedFlag = false; }
                                             if (actor is Noble && actor.RefID == royalRefID) { proceedFlag = false; }
                                             if (proceedFlag == true) { house.AddRumour(rumour.RumourID); }
-                                            else { Game.director.AddRumourToCapital(rumour.RumourID); }
-                                            Game.logStart?.Write($"{rumourText} -> dict");
+                                            else { AddRumourToCapital(rumour.RumourID); }
+                                            Game.logStart?.Write($"[Secret] {rumourText} -> dict");
                                         }
-
+                                        //Rumours -> Items (one rumour per item possessed, global All)
+                                        if (actor.CheckItems() == true)
+                                        {
+                                            strength = 1;
+                                            List<int> listOfItems = actor.GetItems();
+                                            if (listOfItems != null)
+                                            {
+                                                int numItems = listOfItems.Count;
+                                                if (numItems > 0)
+                                                {
+                                                    //loop items and create a global rumour for each
+                                                    for(index = 0; index < numItems; index++)
+                                                    {
+                                                        Possession possession = Game.world.GetPossession(listOfItems[index]);
+                                                        if (possession != null)
+                                                        {
+                                                            if (possession is Item)
+                                                            {
+                                                                Item item = possession as Item;
+                                                                startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                                                rumourText = $"{startText} that the {item.Prefix} {possession.Description} ({item.ItemType} Item) is to be found at {locName}";
+                                                                RumourItem rumour = new RumourItem(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.All) { RefID = actor.RefID };
+                                                                //add to dictionary and global list
+                                                                if (AddGlobalRumour(rumour) == false)
+                                                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load -> Rumour Cancelled")); }
+                                                                Game.logStart?.Write($"[Item] {rumourText} -> dict");
+                                                            }
+                                                            else { Game.SetError(new Error(268, "Possession is not an Item")); }
+                                                        }
+                                                        else { Game.SetError(new Error(268, "Invalid possession (null)")); }
+                                                    }
+                                                }
+                                                else { Game.SetError(new Error(268, "listOfItems is Empty")); }
+                                            }
+                                            else { Game.SetError(new Error(268, "Invalid listOfItems (null)")); }
+                                        }
                                         break;
                                     case ActorStatus.Gone:
                                         //rumour of past character

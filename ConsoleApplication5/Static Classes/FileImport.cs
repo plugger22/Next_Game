@@ -284,6 +284,7 @@ namespace Next_Game
     {
         public int ItemID { get; set; }
         public string Name { get; set; }
+        public string Prefix { get; set; }
         public string Lore { get; set; }
         public int Year { get; set; }
         public PossItemType Type { get; set; }
@@ -4609,9 +4610,10 @@ namespace Next_Game
                             switch (cleanTag)
                             {
                                 case "Name":
-                                    if (cleanToken.Length == 0)
-                                    { Game.SetError(new Error(200, string.Format("Empty Name field, record {0}, {1}, {2}", i, cleanTag, fileName))); validData = false; }
-                                    else { structItem.Name = cleanToken; }
+                                    structItem.Name = cleanToken;
+                                    break;
+                                case "Prefix":
+                                    structItem.Prefix = cleanToken;
                                     break;
                                 case "ItemID":
                                     try
@@ -4796,7 +4798,8 @@ namespace Next_Game
                                         if (validData == true)
                                         {
                                             Item itemObject = new Item(structItem.Name, structItem.Lore, structItem.Year, structItem.Effect, structItem.Amount)
-                                            { ItemType = structItem.Type, ItemID = structItem.ItemID, ArcID = structItem.ArcID, Active = structItem.Known, ChallengeFlag = structItem.Challenge  };
+                                            { ItemType = structItem.Type, ItemID = structItem.ItemID, ArcID = structItem.ArcID, Active = structItem.Known,
+                                                ChallengeFlag = structItem.Challenge, Prefix = structItem.Prefix };
                                             //challenge effect present?
                                             if (itemObject.ChallengeFlag == true)
                                             {
@@ -4807,7 +4810,7 @@ namespace Next_Game
                                             }
                                             //add to list
                                             listItems.Add(itemObject);
-                                            Game.logStart?.Write(string.Format("{0}, ItemID {1}, {2}, Year {3}", itemObject.Description, itemObject.ItemID,
+                                            Game.logStart?.Write(string.Format("The {0} {1}, ItemID {2}, {3}, Year {4}", itemObject.Prefix, itemObject.Description, itemObject.ItemID,
                                                 itemObject.Lore, itemObject.Year));
                                         }
                                         else

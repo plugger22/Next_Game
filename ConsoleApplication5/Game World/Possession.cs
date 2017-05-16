@@ -244,6 +244,7 @@ namespace Next_Game
     {
         public int ItemID { get; set; } //unique item ID (in addition to autoassigned PossID)
         public int ArcID { get; set; } //archetype ID for related events (optional, default '0')
+        public string Prefix { get; set; } //used for rumours in the format 'the... <Prefix> ...Description', eg. the 'feared' Head Lopper
         public string Lore { get; set; } //background description
         public PossItemType ItemType { get; set; } //if true item is Active (provides beneficial effects to the Player), if false item is Passive (something that can be used for 
         //unique effect

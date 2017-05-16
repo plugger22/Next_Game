@@ -460,7 +460,7 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Returns true if Player possesses any items (of a type), false otherwise (default filter is all items)
+        /// Returns true if Character possesses any items (of a type), false otherwise (default filter is all items)
         /// </summary>
         /// <returns></returns>
         public bool CheckItems(PossItemType type = PossItemType.Both)

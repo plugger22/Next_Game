@@ -1,2 +1,4 @@
-//Exile Game file ops "LogError.txt" commenced at: 16/05/2017 11:23:49
-//Exile Game file ops "LogError.txt" Completed at: 16/05/2017 11:24:24
+//Exile Game file ops "LogError.txt" commenced at: 16/05/2017 13:52:27
+ERROR_275 "Invalid Rumour for rumourID 239"
+Method: ShowRumourRL,  Line: 3992,  Object: World.cs,  Turn: 1,  Local Time: 13:55:42 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 16/05/2017 13:55:57

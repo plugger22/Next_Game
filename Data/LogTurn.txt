@@ -1,4 +1,4 @@
-//Exile Game File "LogTurn.txt" opened at: 16/05/2017 11:23:52
+//Exile Game File "LogTurn.txt" opened at: 16/05/2017 13:52:45
 --- ProcessStartTurn (World.cs)
 Day 2, Turn 1
 --- MoveActors -> 0 Records (World.cs)
@@ -6,63 +6,80 @@ Day 2, Turn 1
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
-arrayOfRumours [0] -> RumourID 1, Strength 2, Scope Global, Type None, Global All
-arrayOfRumours [1] -> RumourID 2, Strength 1, Scope Global, Type None, Global North
-RumourID 1 selected from the Pool
-Rumour "Global pool rumour, strength 2" revealed to ActorID8 on turn 1 -> added to List
-RumourID 1 removed from listRumoursGlobal[0]
-Follower The Crone, ActID 8, added RumourID 1
+arrayOfRumours [0] -> RumourID 186, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 3, Strength 3, Scope Global, Type None, Global East
+arrayOfRumours [5] -> RumourID 179, Strength 4, Scope Local, Type Skill, Global None
+RumourID 179 selected from the Pool
+Rumour "BannerLord Wilmot Bracken "The Clement", ActID 89 at Stone Hedge, is known to be Forgiving" revealed to ActorID5 on turn 1 -> added to List
+RumourID 179 removed from listRumoursHouse[2]
+Follower The Viper, ActID 5, added RumourID 179
+BannerLord Wilmot Bracken, ActID 89, skill Charm set to True
 --- GetRumour (Director.cs)
-[Notification] No Global rumours available -> none added to pool
-arrayOfRumours [1] -> RumourID 2, Strength 1, Scope Global, Type None, Global North
-arrayOfRumours [5] -> RumourID 186, Strength 4, Scope Local, Type Skill, Global None
+arrayOfRumours [0] -> RumourID 186, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 3, Strength 3, Scope Global, Type None, Global East
+arrayOfRumours [5] -> RumourID 189, Strength 4, Scope Local, Type Skill, Global None
+RumourID 189 selected from the Pool
+Rumour "BannerLord Luwin Brax "The Regal", ActID 94 at Hornvale, is rumoured to be Noble" revealed to ActorID8 on turn 1 -> added to List
+RumourID 189 removed from listRumoursHouse[0]
+Follower The Leper, ActID 8, added RumourID 189
+BannerLord Luwin Brax, ActID 94, skill Treachery set to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 186, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 3, Strength 3, Scope Global, Type None, Global East
+arrayOfRumours [5] -> RumourID 177, Strength 4, Scope Local, Type Skill, Global None
 RumourID 186 selected from the Pool
-Rumour "BannerLord Mikken Bracken "The Locked", ActID 90 at Stone Hedge, is said to be a Rigid Thinker" revealed to ActorID3 on turn 1 -> added to List
-RumourID 186 removed from listRumoursHouse[0]
-Follower The Dark Eminence, ActID 3, added RumourID 186
-BannerLord Mikken Bracken, ActID 90, skill Wits set to True
---- GetRumour (Director.cs)
-[Notification] No Global rumours available -> none added to pool
-arrayOfRumours [1] -> RumourID 2, Strength 1, Scope Global, Type None, Global North
-arrayOfRumours [5] -> RumourID 92, Strength 2, Scope Local, Type Skill, Global None
-RumourID 2 selected from the Pool
-Rumour "North pool rumour, strength 1" revealed to ActorID2 on turn 1 -> added to List
-RumourID 2 removed from listRumoursNorth[0]
-Follower The Viper, ActID 2, added RumourID 2
+Rumour "It is whispered that the infamous Goblin Mug (Passive Item) is to be found at Old Oak" revealed to ActorID6 on turn 1 -> added to List
+RumourID 186 removed from listRumoursGlobal[5]
+Follower The Crone, ActID 6, added RumourID 186
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Wyman Stark, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Desmond Arryn, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Mormo, ID 125 at 15:17, Active Wyman Stark, ID 1, at 22:1
- [Search -> Debug] Enemy, Brother Shiva, ID 126 at 15:17, Active Wyman Stark, ID 1, at 22:1
- [Search -> Debug] Enemy, Brother Demogorgon, ID 127 at 15:17, Active Wyman Stark, ID 1, at 22:1
- [Search -> Debug] Enemy, Brother Damballa, ID 128 at 15:17, Active Wyman Stark, ID 1, at 22:1
- [Search -> Debug] Enemy, The Unrelenting, ID 129 at 15:17, Active Wyman Stark, ID 1, at 22:1
- [Search -> Stationary] Follower The Crone, ActID 8 is AtLocation
- [Search -> Stationary] Follower The Dark Eminence, ActID 3 is AtLocation
- [Search -> Stationary] Follower The Viper, ActID 2 is AtLocation
+ [Search -> Debug] Enemy, Brother Mastema, ID 126 at 13:14, Active Desmond Arryn, ID 1, at 19:21
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 127 at 13:14, Active Desmond Arryn, ID 1, at 19:21
+ [Search -> Debug] Enemy, Brother Diabolous, ID 128 at 13:14, Active Desmond Arryn, ID 1, at 19:21
+ [Search -> Debug] Enemy, Brother Haborym, ID 129 at 13:14, Active Desmond Arryn, ID 1, at 19:21
+ [Search -> Debug] Enemy, The Unrelenting, ID 130 at 13:14, Active Desmond Arryn, ID 1, at 19:21
+ [Search -> Stationary] Follower The Viper, ActID 5 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 6 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Mormo, Act ID 125 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 126 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 126 Mode -> Normal
  [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 127 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 128 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 129 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Diabolous, Act ID 128 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 129 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 130 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Mormo, ActID 125 retains Goal -> Wait
- [Enemy -> Goal] Brother Shiva, ActID 126 retains Goal -> Wait
+ [Enemy -> Goal] Brother Mastema, ActID 126 retains Goal -> Wait
  [Enemy -> Known] Brother Demogorgon ActID 127 has become KNOWN
  [Enemy -> Goal] Brother Demogorgon, ActID 127 retains Goal -> Wait
+ [Enemy -> Known] Brother Diabolous ActID 128 has become KNOWN
+ [Enemy -> Goal] Brother Diabolous, ActID 128 retains Goal -> Wait
+ [Enemy -> Goal] Brother Haborym, ActID 129 retains Goal -> Wait
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Damballa, ActID 128 Assigned Branch -> 4 Current Branch -> 0
- [Enemy -> Goal] The Unrelenting, ActID 129 retains Goal -> Wait
+ [Goal -> Branch] The Unrelenting, ActID 130 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] The Unrelenting, ActID 130, (loc 13:14), assigned new Goal -> Hide
 --- CheckPlayerEvents (Director.cs)
 - CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Hervey Harlaw", ID 93 added to list of Actors
- [AutoEvent -> LocalList] "Hervey Harlaw", ID 93 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 99
+ [AutoEvent -> ActorList] "Janna Tully", ID 65 added to list of Actors
+ [AutoEvent -> ActorList] "Charles Fulchard", ID 67 added to list of Actors
+ [AutoEvent -> ActorList] "Joffery Ademar", ID 68 added to list of Actors
+ [AutoEvent -> ActorList] "Rankin Renouart", ID 69 added to list of Actors
+ [AutoEvent -> ActorList] "Merrett Tully", ID 70 added to list of Actors
+ [AutoEvent -> ActorList] "Wentiliana Tully", ID 71 added to list of Actors
+ [AutoEvent -> LocalList] "Janna Tully", ID 65 added to list of Locals
+ [AutoEvent -> AdvisorList] "Charles Fulchard", ID 67 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Joffery Ademar", ID 68 added to list of Advisors
+ [AutoEvent -> AdvisorList] "Rankin Renouart", ID 69 added to list of Advisors
+ [AutoEvent -> LocalList] "Merrett Tully", ID 70 added to list of Locals
+ [AutoEvent -> LocalList] "Wentiliana Tully", ID 71 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 9
  Chance of Player Location event 75 %
 --- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
  Trigger FAILED on "0" Equals 1
  Trigger: Player is wrong type of Known status -> Trigger failed
  Trigger FAILED on "0" Equals 1
@@ -70,11 +87,35 @@ Follower The Viper, ActID 2, added RumourID 2
  Event "What to do?" Timer Repeat now 999
  Event "What to do?" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Wyman Stark has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 0 to 1
+ Usurper Desmond Arryn has had their TurnsUnknown Timer increased from 100 to 101
  Follower The Viper has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Leper has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
 --- ResolveOutcome (Director.cs)
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 253, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 3, Strength 3, Scope Global, Type None, Global East
+arrayOfRumours [5] -> RumourID 132, Strength 1, Scope Local, Type Skill, Global None
+RumourID 3 selected from the Pool
+Rumour "East pool rumour, strength 3" revealed to ActorID1 on turn 1 -> added to List
+RumourID 3 removed from listRumoursEast[0]
+Rumour "East pool rumour, strength 3", rumourID 3, added to dictRumoursKnown
+East pool rumour, strength 3
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+[Notification] No Branch East rumours available  -> none added to pool
+arrayOfRumours [0] -> RumourID 253, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [5] -> RumourID 125, Strength 2, Scope Local, Type Skill, Global None
+RumourID 253 selected from the Pool
+Rumour "It is whispered that the dreaded Chalice of Pain (Passive Item) is to be found at Kingskeep" revealed to ActorID1 on turn 1 -> added to List
+RumourID 253 removed from listRumoursGlobal[7]
+Rumour "It is whispered that the dreaded Chalice of Pain (Passive Item) is to be found at Kingskeep", rumourID 253, added to dictRumoursKnown
+It is whispered that the dreaded Chalice of Pain (Passive Item) is to be found at Kingskeep
+--- MultiKeyInput (Game.cs)
+239 input
+ERROR_275 "Invalid Rumour for rumourID 239"
+Method: ShowRumourRL,  Line: 3992,  Object: World.cs,  Turn: 1,  Local Time: 13:55:42 UTC +10:00
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 16/05/2017 11:24:24
+//Exile Game file ops "LogTurn.txt" Completed at: 16/05/2017 13:55:57
