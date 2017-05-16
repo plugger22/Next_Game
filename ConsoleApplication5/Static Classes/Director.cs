@@ -4529,7 +4529,7 @@ namespace Next_Game
                 string[] arrayOfRumourTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all", "whispered", "murmured amongst friends" };
                 string[] arrayOfSecretTexts = new string[] { "has a dark secret", "is keeping something private", "knows more than they let on", "has a mysterious past",
                     "has hidden secrets carefully kept from view", "jealously guards a secret", "knows something important", "conceals a dark truth" };
-                
+                /*
                 //DEBUG... start
                 Rumour rumour_0 = new Rumour("Global pool rumour, strength 2", 2, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.All);
                 AddGlobalRumour(rumour_0);
@@ -4542,7 +4542,7 @@ namespace Next_Game
                 Rumour rumour_4 = new Rumour("West pool rumour, strength 2", 2, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.West);
                 AddGlobalRumour(rumour_4);
                 //DEBUG... finish
-
+                */
                 //loop through all Passive Actors 
                 for (int i = 0; i < dictPassiveActors.Count - 1; i++)
                 {

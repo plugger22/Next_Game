@@ -107,7 +107,7 @@ namespace Next_Game
         /// <param name="isActive"></param>
         public RumourSecret(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
-            Type = RumourType.Skill;
+            Type = RumourType.Secret;
         }
     }
 
@@ -152,7 +152,7 @@ namespace Next_Game
         /// <param name="isActive"></param>
         public RumourDisguise(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
-            Type = RumourType.Item;
+            Type = RumourType.Disguise;
         }
     }
 

@@ -2805,7 +2805,7 @@ namespace Next_Game
                     {
                         relText = "Their traitorous actions, while beneficial, leave a bad taste in our mouth";
                         tagText = "Wary of Traitor";
-                        tagRumour = "traitorous actions";
+                        tagRumour = "their traitorous actions";
                         relEffect = rnd.Next(1, effectConstant / 2) * -1;
                         relType = RelListType.HousePastBad;
                     }
@@ -2813,7 +2813,7 @@ namespace Next_Game
                     {
                         relText = "The Turncoat Traitor and his House should burn in Hell";
                         tagText = "Betrayed Old King";
-                        tagRumour = "betraying the Old King";
+                        tagRumour = "them betraying the Old King";
                         relEffect = rnd.Next(10, effectConstant) * -1;
                         relType = RelListType.HousePastBad;
                     }
@@ -2823,7 +2823,7 @@ namespace Next_Game
                     //New King -> positive
                     relText = "The King is grateful for the assistance provided during the Revolt";
                     tagText = "Grateful King";
-                    tagRumour = "loyalty to the New King";
+                    tagRumour = "their loyalty to the New King";
                     relEffect = rnd.Next(10, effectConstant);
                     relType = RelListType.HousePastGood;
                 }

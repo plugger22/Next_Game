@@ -1914,14 +1914,6 @@ namespace Next_Game
                 {
                     houseList.Add(new Snippet("Relations with Other Houses", RLColor.Brown, RLColor.Black));
                     //display relations in chronological order
-
-                    /*IEnumerable<string> relRecords =
-                        from relation in tempListRelations
-                        orderby relation.Year
-                        select string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
-                        GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
-                    List<string> tempRelRecords = relRecords.ToList();*/
-
                     IEnumerable<Relation> relOrdered =
                         from relation in tempListRelations
                         orderby relation.Year
@@ -1933,7 +1925,7 @@ namespace Next_Game
                     foreach (var relation in tempRelRecords)
                     {
                         if (relation.Known == true) { foreColor = RLColor.White; }
-                        else { foreColor = RLColor.Gray; }
+                        else { foreColor = RLColor.LightGray; }
                         relText = string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
                         GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
                         houseList.Add(new Snippet(relText, foreColor, RLColor.Black));
@@ -5927,7 +5919,7 @@ namespace Next_Game
                                                     }
                                                     else { Game.SetError(new Error(276, $"Invalid Passive actor for rumourSkill.ActorID {rumourSkill.ActorID}")); }
                                                 }
-                                                else { Game.SetError(new Error(276, $"Rumour Type doesn't match Rumour class (Skill) -> HouseRel not made Known, RumourID {rumour.RumourID}")); }
+                                                else { Game.SetError(new Error(276, $"Rumour Type doesn't match Rumour class (Skill) -> Skill not made Known, RumourID {rumour.RumourID}")); }
                                                 break;
                                             case RumourType.HouseRel:
                                                 //switch relationship to Known
