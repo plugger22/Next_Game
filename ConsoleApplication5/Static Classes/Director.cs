@@ -1838,7 +1838,7 @@ namespace Next_Game
                                     if (personNeed is Advisor)
                                     {
                                         Advisor advisor = personNeed as Advisor;
-                                        if (advisor.CheckAnyDisguises() == true)
+                                        if (advisor.CheckDisguises() == true)
                                         {
                                             OptionInteractive option_n2 = new OptionInteractive("Ask for a Disguise") { ActorID = actorID };
                                             option_n2.ReplyGood = $"{actorText} nods solmenly and reaches for a nearby sack";
@@ -4489,7 +4489,7 @@ namespace Next_Game
                 bool proceedFlag;
                 int royalRefID = Game.lore.RoyalRefIDNew;
                 string trait, rumourText, immersionText, startText, locName;
-                string[] arrayOfRumourTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all", "whispered" };
+                string[] arrayOfRumourTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all", "whispered", "murmured amongst friends" };
                 string[] arrayOfSecretTexts = new string[] { "has a dark secret", "is keeping something private", "knows more than they let on", "has a mysterious past",
                     "has hidden secrets carefully kept from view", "jealously guards a secret", "knows something important", "conceals a dark truth" };
                 
@@ -4611,7 +4611,7 @@ namespace Next_Game
                                                                 RumourItem rumour = new RumourItem(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.All) { RefID = actor.RefID };
                                                                 //add to dictionary and global list
                                                                 if (AddGlobalRumour(rumour) == false)
-                                                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load -> Rumour Cancelled")); }
+                                                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Item) -> Rumour Cancelled")); }
                                                                 Game.logStart?.Write($"[Item] {rumourText} -> dict");
                                                             }
                                                             else { Game.SetError(new Error(268, "Possession is not an Item")); }
@@ -4622,6 +4622,22 @@ namespace Next_Game
                                                 else { Game.SetError(new Error(268, "listOfItems is Empty")); }
                                             }
                                             else { Game.SetError(new Error(268, "Invalid listOfItems (null)")); }
+                                        }
+                                        //Rumours -> Disguises (one rumour regardless of # of disguises, global All)
+                                        if(actor is Advisor)
+                                        {
+                                            Advisor advisor = actor as Advisor;
+                                            if (advisor.CheckDisguises() == true)
+                                            {
+                                                strength = 4;
+                                                startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                                rumourText = $"{startText} that Disguises can be had from {advisor.Title} {advisor.Name}, ActID {advisor.ActID} at {locName}";
+                                                RumourDisguise rumour = new RumourDisguise(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.All) { RefID = actor.RefID };
+                                                //add to dictionary and global list
+                                                if (AddGlobalRumour(rumour) == false)
+                                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Disguise) -> Rumour Cancelled")); }
+                                                Game.logStart?.Write($"[Disguise] {rumourText} -> dict");
+                                            }
                                         }
                                         break;
                                     case ActorStatus.Gone:

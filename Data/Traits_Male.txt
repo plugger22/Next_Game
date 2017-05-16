@@ -530,7 +530,7 @@ Effect: -1
 Chance: 50
 Age: 15
 IsKnown: to have
-Nicknames: The Stinky, The Smelly, The Malodorous, The Rancid, The Foul, The Putrid, The Reeking, The Whiffy
+Nicknames: The Stinky, The Smelly, The Malodorous, The Rancid, The Foul, The Putrid, The Reeking, The Whiffy, The Stinker
 [End]
 
 Name: Nervous Twitch
@@ -845,7 +845,7 @@ Effect: -1
 Chance: 50
 Age: 15
 IsKnown: to be
-Nicknames: The Averse, The Halting, The Hesitant, The Reluctant
+Nicknames: The Averse, The Halting, The Hesitant, The Reluctant, The Mouse, The Squeaker, The Chicken Hearted
 [End]
 
 Name: Indecisive

@@ -1060,7 +1060,7 @@ namespace Next_Game
         /// returns true if the Advisor has ANY disguises
         /// </summary>
         /// <returns></returns>
-        public bool CheckAnyDisguises()
+        public bool CheckDisguises()
         { if (listOfDisguises.Count > 0) { return true; } else { return false; } }
 
         public List<int> GetDisguises()

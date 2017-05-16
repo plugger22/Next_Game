@@ -149,7 +149,7 @@ Effect: -1
 Chance: 50
 Age: 15
 IsKnown: to be a
-Nicknames: The Adamant, The Exacting, The Stern, The Unyielding, The Uncompromising, The Hard, The Inflexible, The Locked, The Static, The Unchanging
+Nicknames: The Adamant, The Stiff Necked, The Exacting, The Stern, The Unyielding, The Uncompromising, The Hard, The Inflexible, The Locked, The Static, The Unchanging
 [End]
 
 Name: Bad Tempered

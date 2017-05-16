@@ -1302,7 +1302,7 @@ namespace Next_Game
                 {
                     //Show any Disguises available to give to the Player
                     Advisor advisor = person as Advisor;
-                    if (advisor.CheckAnyDisguises() == true)
+                    if (advisor.CheckDisguises() == true)
                     {
                         listToDisplay.Add(new Snippet("Disguises", RLColor.Brown, RLColor.Black));
                         List<int> listOfDisguises = advisor.GetDisguises();
@@ -3989,7 +3989,11 @@ namespace Next_Game
                         break;
                 }
             }
-            else { Game.SetError(new Error(275, $"Invalid Rumour for rumourID {rumourID}")); }
+            else
+            {
+                listData.Add(new Snippet($"RumourID {rumourID} doesn't exist. Try again.", RLColor.LightRed, RLColor.Black));
+                //Game.SetError(new Error(275, $"Invalid Rumour for rumourID {rumourID}"));
+            }
             return listData;
         }
 

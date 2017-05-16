@@ -1,4 +1,14 @@
-//Exile Game file ops "LogError.txt" commenced at: 16/05/2017 13:52:27
-ERROR_275 "Invalid Rumour for rumourID 239"
-Method: ShowRumourRL,  Line: 3992,  Object: World.cs,  Turn: 1,  Local Time: 13:55:42 UTC +10:00
-//Exile Game file ops "LogError.txt" Completed at: 16/05/2017 13:55:57
+//Exile Game file ops "LogError.txt" commenced at: 16/05/2017 14:15:37
+ERROR_29 "Location Deleted 2:0"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:15:37 UTC +10:00
+ERROR_29 "Location Deleted 25:11"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:15:37 UTC +10:00
+ERROR_29 "Location Deleted 27:15"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:15:37 UTC +10:00
+ERROR_29 "Location Deleted 22:19"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:15:37 UTC +10:00
+ERROR_29 "Location Deleted 21:21"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:15:37 UTC +10:00
+ERROR_29 "Location Deleted 21:28"
+Method: LocationSweeper,  Line: 1675,  Object: Map.cs,  Turn: 0,  Local Time: 14:15:37 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 16/05/2017 14:18:06
