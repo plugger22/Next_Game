@@ -4017,19 +4017,55 @@ namespace Next_Game
                         if (Game.world.AddRumourKnown(rumourID, rumour) == true)
                         {
                             Game.logTurn?.Write($"Rumour \"{rumour.Text}\", rumourID {rumour.RumourID}, added to dictRumoursKnown");
-                            if (rumour is RumourSkill)
+                            //deal with special cases
+                            switch (rumour.Type)
                             {
-                                //set relevant Passive actor skill to true (visible)
-                                RumourSkill rumourSkill = rumour as RumourSkill;
-                                Passive actor = Game.world.GetPassiveActor(rumourSkill.ActorID);
-                                if (actor != null)
-                                {
-                                    if (actor.SetSkillKnownStatus(rumourSkill.Skill, true) == false)
-                                    { Game.SetError(new Error(272, $"Invalid SkillType \"{rumourSkill.Skill}\" prevents change of Known status")); }
-                                    else { Game.logTurn?.Write($"{actor.Title} {actor.Name}, ActID {actor.ActID}, has their {rumourSkill.Skill} changed to True"); }
-                                }
-                                else { Game.SetError(new Error(272, $"Invalid actor (null) for ActID {rumourSkill.ActorID}")); }
+                                case RumourType.Skill:
+                                    if (rumour is RumourSkill)
+                                    {
+                                        //set relevant Passive actor skill to true (visible)
+                                        RumourSkill rumourSkill = rumour as RumourSkill;
+                                        Passive actor = Game.world.GetPassiveActor(rumourSkill.ActorID);
+                                        if (actor != null)
+                                        {
+                                            if (actor.SetSkillKnownStatus(rumourSkill.Skill, true) == false)
+                                            { Game.SetError(new Error(272, $"Invalid SkillType \"{rumourSkill.Skill}\" prevents change of Known status")); }
+                                            else { Game.logTurn?.Write($"{actor.Title} {actor.Name}, ActID {actor.ActID}, has their {rumourSkill.Skill} changed to True"); }
+                                        }
+                                        else { Game.SetError(new Error(272, $"Invalid actor (null) for ActID {rumourSkill.ActorID}")); }
+                                    }
+                                    else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (Skill) -> Skill not made Known, RumourID {rumour.RumourID}")); }
+                                    break;
+                                case RumourType.HouseRel:
+                                    if (rumour is RumourHouseRel)
+                                    {
+                                        RumourHouseRel rumourHouse = rumour as RumourHouseRel;
+                                        House house = Game.world.GetHouse(rumour.RefID);
+                                        if (house != null)
+                                        {
+                                            //find Relationship
+                                            List <Relation> listHouseRels = house.GetRelations();
+                                            if (listHouseRels != null)
+                                            {
+                                                foreach(var relation in listHouseRels)
+                                                {
+                                                    if (relation.TrackerID == rumourHouse.TrackerID)
+                                                    {
+                                                        //set Relation to Known (so it's visible to the player)
+                                                        relation.Known = true;
+                                                        Game.logTurn?.Write($"[Notification -> HouseRel] \"{relation.Text}\" -> Known is True");
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            else { Game.SetError(new Error(272, "Invalid listHouseRels (null) -> HouseRel not made Known")); }
+                                        }
+                                        else { Game.SetError(new Error(272, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> HouseRel not made Known")); }
+                                    }
+                                    else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (HouseRel) -> HouseRel not made Known, RumourID {rumour.RumourID}")); }
+                                    break;
                             }
+                            
                         }
                         else { Game.SetError(new Error(272, $"RumourID {rumourID} failed to be added to dictRumoursKnown")); }
                     }
@@ -4697,7 +4733,8 @@ namespace Next_Game
                                             if (branch > 0 && branch < 5)
                                             {
                                                 strength = 2;
-                                                RumourHouseRel rumour = new RumourHouseRel(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch) { RefID = houseTo.RefID };
+                                                RumourHouseRel rumour = new RumourHouseRel(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch)
+                                                { RefID = houseFrom.RefID, HouseToRefID = houseTo.RefID, TrackerID = relationship.TrackerID };
                                                 //add to dictionary and global list
                                                 if (AddGlobalRumour(rumour) == false)
                                                 { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (HouseRel) -> Rumour Cancelled")); }

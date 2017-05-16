@@ -1914,15 +1914,30 @@ namespace Next_Game
                 {
                     houseList.Add(new Snippet("Relations with Other Houses", RLColor.Brown, RLColor.Black));
                     //display relations in chronological order
-                    IEnumerable<string> relRecords =
+
+                    /*IEnumerable<string> relRecords =
                         from relation in tempListRelations
                         orderby relation.Year
                         select string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
                         GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
-                    List<string> tempRelRecords = relRecords.ToList();
+                    List<string> tempRelRecords = relRecords.ToList();*/
+
+                    IEnumerable<Relation> relOrdered =
+                        from relation in tempListRelations
+                        orderby relation.Year
+                        select relation;
+                    List<Relation> tempRelRecords = relOrdered.ToList();
                     //add snippets
-                    foreach (string relText in tempRelRecords)
-                    { houseList.Add(new Snippet(relText)); }
+                    RLColor foreColor;
+                    string relText;
+                    foreach (var relation in tempRelRecords)
+                    {
+                        if (relation.Known == true) { foreColor = RLColor.White; }
+                        else { foreColor = RLColor.Gray; }
+                        relText = string.Format("{0}  {1} {2}, \"{3}\", Rel {4}{5}", relation.Year, relation.RefID >= 100 ? "(Minor)" : "(Major)",
+                        GetHouseName(relation.RefID), relation.Text, relation.Change > 0 ? "+" : "", relation.Change);
+                        houseList.Add(new Snippet(relText, foreColor, RLColor.Black));
+                    }
                 }
                 //house history
                 List<string> houseHistory = GetHistoricalHouseRecords(majorHouse.RefID);
@@ -3662,11 +3677,11 @@ namespace Next_Game
         internal void SetHistoricalRecord(Record record)
         {
             try
-            { dictHistoricalRecords.Add(record.trackerID, record); }
+            { dictHistoricalRecords.Add(record.TrackerID, record); }
             catch (ArgumentNullException)
             { Game.SetError(new Error(139, "Invalid record (null)")); }
             catch (ArgumentException)
-            { Game.SetError(new Error(139, string.Format("Invalid Record TrackerID \"{0}\" (duplicate)", record.trackerID))); }
+            { Game.SetError(new Error(139, string.Format("Invalid Record TrackerID \"{0}\" (duplicate)", record.TrackerID))); }
         }
 
         /// <summary>
@@ -3676,11 +3691,11 @@ namespace Next_Game
         internal void SetCurrentRecord(Record record)
         {
             try
-            { dictCurrentRecords.Add(record.trackerID, record); }
+            { dictCurrentRecords.Add(record.TrackerID, record); }
             catch (ArgumentNullException)
             { Game.SetError(new Error(140, "Invalid record (null)")); }
             catch (ArgumentException)
-            { Game.SetError(new Error(140, string.Format("Invalid Record TrackerID \"{0}\" (duplicate)", record.trackerID))); }
+            { Game.SetError(new Error(140, string.Format("Invalid Record TrackerID \"{0}\" (duplicate)", record.TrackerID))); }
         }
 
         /// <summary>
@@ -3690,11 +3705,11 @@ namespace Next_Game
         internal void SetPlayerRecord(Record record)
         {
             try
-            { dictPlayerRecords.Add(record.trackerID, record); }
+            { dictPlayerRecords.Add(record.TrackerID, record); }
             catch (ArgumentNullException)
             { Game.SetError(new Error(141, "Invalid record (null)")); }
             catch (ArgumentException)
-            { Game.SetError(new Error(141, string.Format("Invalid Record TrackerID \"{0}\" (duplicate)", record.trackerID))); }
+            { Game.SetError(new Error(141, string.Format("Invalid Record TrackerID \"{0}\" (duplicate)", record.TrackerID))); }
         }
 
         /// <summary>
@@ -3726,7 +3741,7 @@ namespace Next_Game
                 if (messageQueue.Count > 8)
                 { messageQueue.Dequeue(); }
                 //add to dictionary
-                dictMessages.Add(message.trackerID, message);
+                dictMessages.Add(message.TrackerID, message);
                 //debug -> doesn't work 'cause called by both logStart and logTurn
                 //Game.logTurn.Write(string.Format("Message -> [{0}] Day {1}, {2}, {3}", message.Type, message.Day, message.Year, message.Text));
             }
@@ -3831,7 +3846,7 @@ namespace Next_Game
                     //All records
                     recordList =
                         from record in dictHistoricalRecords
-                        orderby record.Value.Year, record.Value.trackerID
+                        orderby record.Value.Year, record.Value.TrackerID
                         select Convert.ToString(record.Value.Year + " " + record.Value.Text);
                     tempList = recordList.ToList();
                     break;
@@ -5895,19 +5910,56 @@ namespace Next_Game
                                         AddRumourKnown(rumour.RumourID, rumour);
                                         numRumours++;
                                         Game.logTurn?.Write($"{actor.Value.Title} {actor.Value.Name}, ActID {actor.Value.ActID}, added RumourID {rumour.RumourID}");
-                                        //tweak actor skill if a RumourSkill
-                                        if (rumour is RumourSkill)
+                                        //handle special cases -> assumes that rumours are now known to the Player ('cause the Follower has auto sent a crow)
+                                        switch (rumour.Type)
                                         {
-                                            RumourSkill rumourSkill = rumour as RumourSkill;
-                                            Passive passive = GetPassiveActor(rumourSkill.ActorID);
-                                            if (passive != null)
-                                            {
-                                                if (passive.SetSkillKnownStatus(rumourSkill.Skill, true) == false)
-                                                { Game.SetError(new Error(276, $"{passive.Title} {passive.Name}, ActID {passive.ActID} failed to set Skill {rumourSkill.Skill} to True")); }
-                                                else { Game.logTurn?.Write($"{passive.Title} {passive.Name}, ActID {passive.ActID}, skill {rumourSkill.Skill} set to True"); }
-                                            }
-                                            else { Game.SetError(new Error(276, $"Invalid Passive actor for rumourSkill.ActorID {rumourSkill.ActorID}")); }
+                                            case RumourType.Skill:
+                                                //switch skill to Known
+                                                if (rumour is RumourSkill)
+                                                {
+                                                    RumourSkill rumourSkill = rumour as RumourSkill;
+                                                    Passive passive = GetPassiveActor(rumourSkill.ActorID);
+                                                    if (passive != null)
+                                                    {
+                                                        if (passive.SetSkillKnownStatus(rumourSkill.Skill, true) == false)
+                                                        { Game.SetError(new Error(276, $"{passive.Title} {passive.Name}, ActID {passive.ActID} failed to set Skill {rumourSkill.Skill} to True")); }
+                                                        else { Game.logTurn?.Write($"{passive.Title} {passive.Name}, ActID {passive.ActID}, skill {rumourSkill.Skill} set to True"); }
+                                                    }
+                                                    else { Game.SetError(new Error(276, $"Invalid Passive actor for rumourSkill.ActorID {rumourSkill.ActorID}")); }
+                                                }
+                                                else { Game.SetError(new Error(276, $"Rumour Type doesn't match Rumour class (Skill) -> HouseRel not made Known, RumourID {rumour.RumourID}")); }
+                                                break;
+                                            case RumourType.HouseRel:
+                                                //switch relationship to Known
+                                                if (rumour is RumourHouseRel)
+                                                {
+                                                    RumourHouseRel rumourHouse = rumour as RumourHouseRel;
+                                                    House house = GetHouse(rumourHouse.RefID);
+                                                    if (house != null)
+                                                    {
+                                                        //find Relationship
+                                                        List<Relation> listHouseRels = house.GetRelations();
+                                                        if (listHouseRels != null)
+                                                        {
+                                                            foreach (var relation in listHouseRels)
+                                                            {
+                                                                if (relation.TrackerID == rumourHouse.TrackerID)
+                                                                {
+                                                                    //set Relation to Known (so it's visible to the player)
+                                                                    relation.Known = true;
+                                                                    Game.logTurn?.Write($"[Notification -> HouseRel] \"{relation.Text}\" -> Known is True");
+                                                                    break;
+                                                                }
+                                                            }
+                                                        }
+                                                        else { Game.SetError(new Error(276, "Invalid listHouseRels (null) -> HouseRel not made Known")); }
+                                                    }
+                                                    else { Game.SetError(new Error(276, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> HouseRel not made Known")); }
+                                                }
+                                                else { Game.SetError(new Error(276, $"Rumour Type doesn't match Rumour class (HouseRel) -> HouseRel not made Known, RumourID {rumour.RumourID}")); }
+                                                break;
                                         }
+                                        //end switch
                                     }
                                     else { Game.SetError(new Error(276, $"Invalid rumour from RumourID {rumourID}")); }
                                 }

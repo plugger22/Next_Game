@@ -161,6 +161,9 @@ namespace Next_Game
     /// </summary>
     class RumourHouseRel : Rumour
     {
+        public int TrackerID { get; set; } //tracker ID of relationship (needed to find house rel & set to Known)
+        //NOTE: Rumour.RefID is houseFrom.RefID
+        public int HouseToRefID { get; set; } //refID of house the rumour refers to 
 
         /// <summary>
         /// RumourItem constructor

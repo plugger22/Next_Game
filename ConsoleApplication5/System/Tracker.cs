@@ -22,7 +22,7 @@ namespace Next_Game
     public class Tracker
     {
         private static int trackerIndex = 1;
-        public int trackerID { get; }
+        public int TrackerID { get; }
         public int Year { get; set; }
         public int Day { get; set; } = 0; //pre-game start incidents don't need this, hence '0'
         public string Text { get; set; } //descriptor
@@ -36,7 +36,7 @@ namespace Next_Game
 
         public Tracker()
         {
-            trackerID = trackerIndex++;
+            TrackerID = trackerIndex++;
             if (Year == 0) { Year = Game.gameYear; }
             Day = Game.gameTurn + 1;
             //initialise lists
@@ -308,7 +308,9 @@ namespace Next_Game
         public string Rumour { get; set; } //text descriptor used for rumour (reason) in the format "due to... <Rumour>"
         public int Change { get; set; } //the effect on a relationship level, eg. +25
         public int Level { get; set; } //current relationship level with that character, AFTER change has been applied (handled automatically by code based on change, NO NEED to specify directly)
+        public bool Known { get; set; } //allows relations to be 'Knovwn', eg. visible to the Player, or not. Default true.
         public RelListType Type { get; set; } //type of relationship
+
 
         /// <summary>
         /// for relationships with Player
@@ -322,6 +324,7 @@ namespace Next_Game
             {
                 //Level is taken care of by Actor.cs AddRelEventPlyr
                 Text = description;
+                Known = true;
                 this.Tag = tag;
                 this.ActorID = 1; //default Player relationshp for this constructor
                 this.Change = change;

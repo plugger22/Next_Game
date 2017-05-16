@@ -164,7 +164,7 @@ namespace Next_Game
                 IEnumerable<Relation> houseRels =
                     from relation in listOfRelations
                     where relation.RefID == refID
-                    orderby relation.trackerID descending
+                    orderby relation.TrackerID descending
                     select relation;
                 tempList = houseRels.ToList();
             }

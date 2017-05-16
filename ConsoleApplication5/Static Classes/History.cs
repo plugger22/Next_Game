@@ -2692,7 +2692,7 @@ namespace Next_Game
                             MajorHouse rndHouse = listTempHouses[tempIndex];
                             Game.logStart?.Write(string.Format("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year));
                             //add to House list
-                            Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year, Rumour = tagRumour, Type = relType };
+                            Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year, Rumour = tagRumour, Type = relType, Known = false };
                             tempListRelations.Add(relation);
                             //add to Master list
                             masterText = string.Format("{0} {1} -> {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);
@@ -2769,7 +2769,7 @@ namespace Next_Game
                                         Game.logStart?.Write(string.Format("- Minor House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, 
                                             relEffect > 0 ? "+" : "", relEffect, year));
                                         //add to House list
-                                        Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year, Rumour = tagRumour, Type = relType };
+                                        Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year, Rumour = tagRumour, Type = relType, Known = false };
                                         tempListRelations.Add(relation);
                                         //add to Master list
                                         masterText = string.Format("{0} {1} -> (Minor) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, 
@@ -2830,7 +2830,7 @@ namespace Next_Game
                 //add relation
                 if (String.IsNullOrEmpty(relText) == false)
                 {
-                    Relation relation = new Relation(relText, tagText, relEffect) { RefID = turnCoatRefID, ActorID = 0, Year = year, Rumour = tagRumour, Type = relType };
+                    Relation relation = new Relation(relText, tagText, relEffect) { RefID = turnCoatRefID, ActorID = 0, Year = year, Rumour = tagRumour, Type = relType, Known = false };
                     house.AddRelations(relation);
                     //add to Master list
                     masterText = string.Format("{0} {1} -> (Major) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, turnCoatName, relation.Text, relEffect > 0 ? "+" : "", relEffect);
