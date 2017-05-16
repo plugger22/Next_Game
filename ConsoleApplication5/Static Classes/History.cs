@@ -2606,7 +2606,7 @@ namespace Next_Game
             //set up constants
             int rndIndex, year;
             int relEffect = 0;
-            string relText, tagText, masterText;
+            string relText, tagText, tagRumour, masterText;
             int yearStart = Game.constant.GetValue(Global.GAME_PAST);
             int yearEnd = Game.constant.GetValue(Global.GAME_REVOLT);
             int effectConstant = Game.constant.GetValue(Global.HOUSE_REL_EFFECT);
@@ -2639,7 +2639,7 @@ namespace Next_Game
                     //randomly choose a good, bad or none past relationship
                     for (int i = 0; i < numRolls; i++)
                     {
-                        relText = ""; tagText = "";
+                        relText = ""; tagText = ""; tagRumour = "";
                         int rndNum = rnd.Next(100);
                         if (rndNum <= chanceGood)
                         {
@@ -2650,9 +2650,11 @@ namespace Next_Game
                                 //split into text and tag
                                 string[] tokens = listOfHouseRelsGood[rndIndex].Split('@');
                                 cleanTag = tokens[0].Trim();
-                                if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House relText (Good), tag \"{0}\"", tokens[1]))); }
+                                if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House relText (Good), Text \"{0}\"", tokens[0]))); }
                                 cleanTag = tokens[1].Trim();
-                                if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House relTag (Good), text \"{0}\"", tokens[0]))); }
+                                if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House tagText (Good), Tag \"{0}\"", tokens[1]))); }
+                                cleanTag = tokens[2].Trim();
+                                if (cleanTag.Length > 0) { tagRumour = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House tagRumour (Good), Rumour \"{0}\"", tokens[2]))); }
                                 listOfHouseRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
                                 relEffect = 1;
                             }
@@ -2666,9 +2668,11 @@ namespace Next_Game
                                 //split into text and tag
                                 string[] tokens = listOfHouseRelsBad[rndIndex].Split('@');
                                 cleanTag = tokens[0].Trim();
-                                if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House relText (Bad), tag \"{0}\"", tokens[1]))); }
+                                if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House relText (Bad), Text \"{0}\"", tokens[0]))); }
                                 cleanTag = tokens[1].Trim();
-                                if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House relTag (Bad), text \"{0}\"", tokens[0]))); }
+                                if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House tagText (Bad), Tag \"{0}\"", tokens[1]))); }
+                                cleanTag = tokens[2].Trim();
+                                if (cleanTag.Length > 0) { tagRumour = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House tagRumour (Bad), Rumour \"{0}\"", tokens[2]))); }
                                 listOfHouseRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
                                 relEffect = -1;
                             }
@@ -2685,7 +2689,7 @@ namespace Next_Game
                             MajorHouse rndHouse = listTempHouses[tempIndex];
                             Game.logStart?.Write(string.Format("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year));
                             //add to House list
-                            Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
+                            Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year, Rumour = tagRumour };
                             tempListRelations.Add(relation);
                             //add to Master list
                             masterText = string.Format("{0} {1} -> {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);
@@ -2708,7 +2712,7 @@ namespace Next_Game
                             for (int i = 0; i < tempBannerLords.Count; i++)
                             {
                                 //randomly choose a good, bad or none past relationship
-                                relText = ""; tagText = "";
+                                relText = ""; tagText = ""; tagRumour = "";
                                 int rndNum = rnd.Next(100);
                                 if (rndNum <= chanceGood)
                                 {
@@ -2719,9 +2723,11 @@ namespace Next_Game
                                         //split into text and tag
                                         string[] tokens = listOfBannerRelsGood[rndIndex].Split('@');
                                         cleanTag = tokens[0].Trim();
-                                        if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner relText (Good), tag \"{0}\"", tokens[1]))); }
+                                        if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner relText (Good), Text \"{0}\"", tokens[0]))); }
                                         cleanTag = tokens[1].Trim();
-                                        if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner relTag (Good), text \"{0}\"", tokens[0]))); }
+                                        if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner tagText (Good), Tag \"{0}\"", tokens[1]))); }
+                                        cleanTag = tokens[2].Trim();
+                                        if (cleanTag.Length > 0) { tagRumour = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner tagRumour (Good), Rumour \"{0}\"", tokens[2]))); }
                                         listOfBannerRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
                                         relEffect = 1;
                                     }
@@ -2735,9 +2741,11 @@ namespace Next_Game
                                         //split into text and tag
                                         string[] tokens = listOfBannerRelsBad[rndIndex].Split('@');
                                         cleanTag = tokens[0].Trim();
-                                        if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner relText (Bad), tag \"{0}\"", tokens[1]))); }
+                                        if (cleanTag.Length > 0) { relText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner relText (Bad), Text \"{0}\"", tokens[0]))); }
                                         cleanTag = tokens[1].Trim();
-                                        if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner relTag (Bad), text \"{0}\"", tokens[0]))); }
+                                        if (cleanTag.Length > 0) { tagText = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner tagText (Bad), Tag \"{0}\"", tokens[1]))); }
+                                        cleanTag = tokens[2].Trim();
+                                        if (cleanTag.Length > 0) { tagRumour = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner tagRumour (Bad), Rumour \"{0}\"", tokens[2]))); }
                                         listOfBannerRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
                                         relEffect = -1;
                                     }
@@ -2756,7 +2764,7 @@ namespace Next_Game
                                         Game.logStart?.Write(string.Format("- Minor House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, 
                                             relEffect > 0 ? "+" : "", relEffect, year));
                                         //add to House list
-                                        Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year };
+                                        Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year, Rumour = tagRumour };
                                         tempListRelations.Add(relation);
                                         //add to Master list
                                         masterText = string.Format("{0} {1} -> (Minor) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, 
@@ -2792,12 +2800,14 @@ namespace Next_Game
                     {
                         relText = "Their traitorous actions, while beneficial, leave a bad taste in our mouth";
                         tagText = "Wary of Traitor";
+                        tagRumour = "traitorous actions";
                         relEffect = rnd.Next(1, effectConstant / 2) * -1;
                     }
                     else
                     {
                         relText = "The Turncoat Traitor and his House should burn in Hell";
                         tagText = "Betrayed Old King";
+                        tagRumour = "betraying the Old King";
                         relEffect = rnd.Next(10, effectConstant) * -1;
                     }
                 }
@@ -2806,12 +2816,13 @@ namespace Next_Game
                     //New King -> positive
                     relText = "The King is grateful for the assistance provided during the Revolt";
                     tagText = "Grateful King";
+                    tagRumour = "loyalty to the New King"
                     relEffect = rnd.Next(10, effectConstant);
                 }
                 //add relation
                 if (String.IsNullOrEmpty(relText) == false)
                 {
-                    Relation relation = new Relation(relText, tagText, relEffect) { RefID = turnCoatRefID, ActorID = 0, Year = year };
+                    Relation relation = new Relation(relText, tagText, relEffect) { RefID = turnCoatRefID, ActorID = 0, Year = year, Rumour = tagRumour };
                     house.AddRelations(relation);
                     //add to Master list
                     masterText = string.Format("{0} {1} -> (Major) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, turnCoatName, relation.Text, relEffect > 0 ? "+" : "", relEffect);

@@ -1,21 +1,22 @@
 # RelLists -> lists for texts for the various relationship tables
 
 # Past history for relationships between Major Houses
-# FORMAT -> relationship_text @ relationship_tag (2 or 3 words), note '@' symbol between the two
+# FORMAT -> relationship_text '@' relationship_tag (2 or 3 words) '@' relationship_Rumour ("due to ...."), 
+# note the '@' symbol deliminator
 
 [Major_House_Good]
-Helped out in times of Trouble @ Helped out
-Saved the day in a past Battle @ Saved the Day
-Blood bonds forged between past Lords @ Blood Bonds
-Gifted lands to our House @ Gifted us Lands
-Proved to be a reliable ally on many past occasions @ Reliable Ally
-Foiled an evil plot against a past Lord @ Foiled Plot
-Provided valuable Political support in previous councils @ Political Support
-A valued, long term trading partner @ Valued Trading Partner
-Saved the life of one of our Ancestral Lords on a hunting trip @ Saved Lord
-Saved the life of one of our past Lords during a bandit attack @ Saved Lord
-Provided a good education to wards of the House @ Educated Wards
-A strong friendship existed between past Lords of both Houses @ Strong Friendship
+Helped out in times of Trouble @ Helped out @ them helping out during past troubles
+Saved the day in a past Battle @ Saved the Day @ them saving the day in a past battle
+Blood bonds forged between past Lords @ Blood Bonds @ mutual blood bonds
+Gifted lands to our House @ Gifted us Lands @ their gift of land
+Proved to be a reliable ally on many past occasions @ Reliable Ally @ their longstanding support
+Foiled an evil plot against a past Lord @ Foiled Plot @ their foiling a dangerous plot
+Provided valuable Political support in previous councils @ Political Support @ their political support
+A valued, long term trading partner @ Valued Trading Partner @ their ongoing trade
+Saved the life of one of our Ancestral Lords on a hunting trip @ Saved Lord @ their saving a past Lord
+Saved the life of one of our past Lords during a bandit attack @ Saved Lord @ their saving a past Lord
+Provided a good education to wards of the House @ Educated Wards @ them taking and educating family wards
+A strong friendship existed between past Lords of both Houses @ Strong Friendship @ their strong friendship
 
 [Major_House_Bad]
 An ancestral Lord was humiliated by their daughter being spurned at the Altar @ Humiliated our Daughter
