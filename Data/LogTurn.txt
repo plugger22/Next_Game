@@ -1,78 +1,80 @@
-//Exile Game File "LogTurn.txt" opened at: 15/05/2017 20:40:31
+//Exile Game File "LogTurn.txt" opened at: 16/05/2017 11:23:52
 --- ProcessStartTurn (World.cs)
-Day 7, Turn 6
---- MoveActors -> 2 Records (World.cs)
- [Move -> MoveObject] Usurper Chett Lannister, ActID 1 travelling to Highgarden (current Loc 9:19)
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Beelzebub, ID 123 at 13:14, Active Chett Lannister, ID 1, at 9:19
- [Search -> Debug] Enemy, Brother Damballa, ID 124 at 17:12, Active Chett Lannister, ID 1, at 9:19
- [Search -> Debug] Enemy, Brother Mormo, ID 125 at 17:16, Active Chett Lannister, ID 1, at 9:19
- [Search -> Debug] Enemy, Brother Nergal, ID 126 at 13:14, Active Chett Lannister, ID 1, at 9:19
- [Search -> Debug] Enemy, The Unrelenting, ID 127 at 13:14, Active Chett Lannister, ID 1, at 9:19
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Beelzebub, ID 123 at 13:14, Active Chett Lannister, ID 1, at 8:19
- [Search -> Debug] Enemy, Brother Damballa, ID 124 at 17:12, Active Chett Lannister, ID 1, at 8:19
- [Search -> Debug] Enemy, Brother Mormo, ID 125 at 17:16, Active Chett Lannister, ID 1, at 8:19
- [Search -> Debug] Enemy, Brother Nergal, ID 126 at 13:14, Active Chett Lannister, ID 1, at 8:19
- [Search -> Debug] Enemy, The Unrelenting, ID 127 at 13:14, Active Chett Lannister, ID 1, at 8:19
- [Move -> MoveObject] Inquisitor Brother Mormo, ActID 125 travelling to The Raucous Rat (current Loc 17:16)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Chett Lannister, ID 1 at 7:19, Enemy at 17:16 (Brother Mormo, ID 125
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Chett Lannister, ID 1 at 7:19, Enemy at 18:16 (Brother Mormo, ID 125
- [Goal -> Arrival] Inquisitor Brother Mormo, ActID 125, currently at The Raucous Rat, new Goal -> Wait
+Day 2, Turn 1
+--- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
 [Notification] No house rumours available -> none added to pool
-[Notification] No Branch North rumours available  -> none added to pool
 arrayOfRumours [0] -> RumourID 1, Strength 2, Scope Global, Type None, Global All
+arrayOfRumours [1] -> RumourID 2, Strength 1, Scope Global, Type None, Global North
 RumourID 1 selected from the Pool
-Rumour "Global pool rumour, strength 2" revealed to ActorID6 on turn 6 -> added to List
+Rumour "Global pool rumour, strength 2" revealed to ActorID8 on turn 1 -> added to List
 RumourID 1 removed from listRumoursGlobal[0]
-Follower The Waif, ActID 6, added RumourID 1
+Follower The Crone, ActID 8, added RumourID 1
 --- GetRumour (Director.cs)
 [Notification] No Global rumours available -> none added to pool
-arrayOfRumours [3] -> RumourID 4, Strength 1, Scope Global, Type None, Global South
-arrayOfRumours [5] -> RumourID 49, Strength 4, Scope Local, Type Skill, Global None
-RumourID 4 selected from the Pool
-Rumour "South pool rumour, strength 1" revealed to ActorID4 on turn 6 -> added to List
-RumourID 4 removed from listRumoursSouth[0]
-Follower The Viper, ActID 4, added RumourID 4
+arrayOfRumours [1] -> RumourID 2, Strength 1, Scope Global, Type None, Global North
+arrayOfRumours [5] -> RumourID 186, Strength 4, Scope Local, Type Skill, Global None
+RumourID 186 selected from the Pool
+Rumour "BannerLord Mikken Bracken "The Locked", ActID 90 at Stone Hedge, is said to be a Rigid Thinker" revealed to ActorID3 on turn 1 -> added to List
+RumourID 186 removed from listRumoursHouse[0]
+Follower The Dark Eminence, ActID 3, added RumourID 186
+BannerLord Mikken Bracken, ActID 90, skill Wits set to True
 --- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
 [Notification] No Global rumours available -> none added to pool
-[Notification] No Branch West rumours available  -> none added to pool
-[Notification] No rumours available (listRumourPool empty)  -> none selected
-ERROR_265 "Invalid rumourID "0" -> Not found in dictRumours"
-Method: GetRumour,  Line: 3605,  Object: World.cs,  Turn: 6,  Local Time: 20:40:31 UTC +10:00
-ERROR_276 "Invalid rumour from RumourID 0"
-Method: CheckFollowerActivity,  Line: 5893,  Object: World.cs,  Turn: 6,  Local Time: 20:40:31 UTC +10:00
+arrayOfRumours [1] -> RumourID 2, Strength 1, Scope Global, Type None, Global North
+arrayOfRumours [5] -> RumourID 92, Strength 2, Scope Local, Type Skill, Global None
+RumourID 2 selected from the Pool
+Rumour "North pool rumour, strength 1" revealed to ActorID2 on turn 1 -> added to List
+RumourID 2 removed from listRumoursNorth[0]
+Follower The Viper, ActID 2, added RumourID 2
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Chett Lannister, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Wyman Stark, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Beelzebub, ID 123 at 13:14, Active Chett Lannister, ID 1, at 7:19
- [Search -> Debug] Enemy, Brother Damballa, ID 124 at 17:12, Active Chett Lannister, ID 1, at 7:19
- [Search -> Debug] Enemy, Brother Mormo, ID 125 at 18:16, Active Chett Lannister, ID 1, at 7:19
- [Search -> Debug] Enemy, Brother Nergal, ID 126 at 13:14, Active Chett Lannister, ID 1, at 7:19
- [Search -> Debug] Enemy, The Ur The Crone has had their TurnsUnknown Timer increased from 4 to 5
---- ProcessEndTurn (World.cs)
-Day 6, Turn 5
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 15
- "Crazy Old Woman" event, Cooldown Timer decremented from 5 to 4
-[GameStat] "Travelling_Days" -> increased from 4 to 5
-//Exile Game File "LogTurn.txt" Close completed at: 15/05/2017 20:40:31
-to 4
+ [Search -> Debug] Enemy, Brother Mormo, ID 125 at 15:17, Active Wyman Stark, ID 1, at 22:1
+ [Search -> Debug] Enemy, Brother Shiva, ID 126 at 15:17, Active Wyman Stark, ID 1, at 22:1
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 127 at 15:17, Active Wyman Stark, ID 1, at 22:1
+ [Search -> Debug] Enemy, Brother Damballa, ID 128 at 15:17, Active Wyman Stark, ID 1, at 22:1
+ [Search -> Debug] Enemy, The Unrelenting, ID 129 at 15:17, Active Wyman Stark, ID 1, at 22:1
+ [Search -> Stationary] Follower The Crone, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Dark Eminence, ActID 3 is AtLocation
+ [Search -> Stationary] Follower The Viper, ActID 2 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Mormo, Act ID 125 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 126 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 127 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Damballa, Act ID 128 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 129 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Mormo, ActID 125 retains Goal -> Wait
+ [Enemy -> Goal] Brother Shiva, ActID 126 retains Goal -> Wait
+ [Enemy -> Known] Brother Demogorgon ActID 127 has become KNOWN
+ [Enemy -> Goal] Brother Demogorgon, ActID 127 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Damballa, ActID 128 Assigned Branch -> 4 Current Branch -> 0
+ [Enemy -> Goal] The Unrelenting, ActID 129 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Hervey Harlaw", ID 93 added to list of Actors
+ [AutoEvent -> LocalList] "Hervey Harlaw", ID 93 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 99
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Wyman Stark has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Viper has had their TurnsUnknown Timer increased from 0 to 1
 --- ResolveOutcome (Director.cs)
- [Variable Option] "Ride past, ignoring her" Passed test (50 % needed, rolled 18)  Roll 18 + DMskill 0 + DMtouched 0 -> modifiedRoll 18
---- ResolveFollowerEvents (Director.cs)
---- ProcessEndTurn (World.cs)
-Day 5, Turn 4
---- CheckEventTimers (Director.cs)
- Event "Search and Detain" Dormant Timer decremented to 16
- "Crazy Old Woman" event, Cooldown Timer decremented from 6 to 5
-[GameStat] "Travelling_Days" -> increased from 3 to 4
-//Exile Game File "LogTurn.txt" Close completed at: 15/05/2017 20:40:30
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 16/05/2017 11:24:24

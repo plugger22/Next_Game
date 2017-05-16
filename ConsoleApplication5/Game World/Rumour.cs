@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum RumourScope { None, Local, Global }
-    public enum RumourType { None, Terrain, Road, Skill } //Corresponds to Rumour subclasses, set in subclass
+    public enum RumourType { None, Terrain, Road, Skill, Secret } //Corresponds to Rumour subclasses, set in subclass
     public enum RumourGlobal { None, North, East, South, West, All }
 
     /// <summary>
@@ -87,6 +87,28 @@ namespace Next_Game
             Type = RumourType.Skill;
         }
 
+    }
+
+    /// <summary>
+    /// Rumour about an NPC's secret (one rumour regardless of how many secrets they have)
+    /// </summary>
+    class RumourSecret : Rumour
+    {
+
+        /// <summary>
+        /// Skill constructor
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="strength"></param>
+        /// <param name="skill"></param>
+        /// <param name="scope"></param>
+        /// <param name="turnCreated">If '0' then defaults to current game turn</param>
+        /// <param name="global"></param>
+        /// <param name="isActive"></param>
+        public RumourSecret(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        {
+            Type = RumourType.Skill;
+        }
     }
     //add new class instances above here
 }

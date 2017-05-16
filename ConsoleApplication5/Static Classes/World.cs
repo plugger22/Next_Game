@@ -6427,9 +6427,9 @@ namespace Next_Game
                     {
                         case ActorStatus.AtLocation:
                             //debug
-                            eventList.Add(new Snippet("Blight has hit wheat crops at The Twins. Food shortages loom.", foreColor, backColor));
+                            eventList.Add(new Snippet("The Word on the Street", RLColor.Red, backColor));
                             eventList.Add(new Snippet(""));
-                            eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
+                            eventList.Add(new Snippet("Blight has hit wheat crops at The Twins. Food shortages loom.", foreColor, backColor));
                             eventList.Add(new Snippet(""));
                             eventList.Add(new Snippet("Rumour that the King has the pox and that he is going mad", foreColor, backColor));
                             eventList.Add(new Snippet(""));
@@ -6439,6 +6439,8 @@ namespace Next_Game
                         case ActorStatus.Travelling:
                             if (rnd.Next(100) < 20)
                             {
+                                eventList.Add(new Snippet("The Word on the Road", RLColor.Red, backColor));
+                                eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet("A passing Merchant tells of trouble in the Court of Casterly Rock", foreColor, backColor));
                                 eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
@@ -6448,6 +6450,8 @@ namespace Next_Game
                         case ActorStatus.AtSea:
                             if (rnd.Next(100) < 20)
                             {
+                                eventList.Add(new Snippet("The Word at Sea", RLColor.Red, backColor));
+                                eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet("The Captain tells tales of war in the far-off-lands", foreColor, backColor));
                                 eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));
@@ -6457,6 +6461,9 @@ namespace Next_Game
                         case ActorStatus.Captured:
                             if (rnd.Next(100) < 20)
                             {
+                                eventList.Add(new Snippet(""));
+                                eventList.Add(new Snippet("The Word in the Dungeon", RLColor.Red, backColor));
+                                eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet("You overhear a guard arguing with another prison about food shortages in the Castle", foreColor, backColor));
                                 eventList.Add(new Snippet(""));
                                 eventList.Add(new Snippet("- 0 -", RLColor.Gray, backColor));

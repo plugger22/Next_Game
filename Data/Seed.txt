@@ -36,3 +36,10 @@ Seed 41457 -> Monday, 15 May 2017 8:19 PM
 Seed 41866 -> Monday, 15 May 2017 8:32 PM
 Seed 33443 -> Monday, 15 May 2017 8:35 PM
 Seed 38128 -> Monday, 15 May 2017 8:39 PM
+Seed 65040 -> Monday, 15 May 2017 8:51 PM
+Seed 20515 -> Tuesday, 16 May 2017 11:00 AM
+Seed 43474 -> Tuesday, 16 May 2017 11:05 AM
+Seed 55270 -> Tuesday, 16 May 2017 11:11 AM
+Seed 14419 -> Tuesday, 16 May 2017 11:14 AM
+Seed 11908 -> Tuesday, 16 May 2017 11:20 AM
+Seed 25507 -> Tuesday, 16 May 2017 11:23 AM

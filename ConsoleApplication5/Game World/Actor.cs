@@ -400,6 +400,13 @@ namespace Next_Game
         public List<int> GetSecrets()
         { return listOfSecrets; }
 
+        /// <summary>
+        /// returns True if the character has secrets, false otherwise
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckSecrets()
+        { if (listOfSecrets.Count > 0) { return true; } return false; }
+
         public void SetSecrets(List<int> secrets)
         { if (secrets != null) { listOfSecrets.Clear(); listOfSecrets.AddRange(secrets); } }
 
