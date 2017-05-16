@@ -1,83 +1,108 @@
-//Exile Game File "LogTurn.txt" opened at: 16/05/2017 16:19:27
+//Exile Game File "LogTurn.txt" opened at: 16/05/2017 17:39:27
 --- ProcessStartTurn (World.cs)
-Day 2, Turn 1
+Day 3, Turn 2
 --- MoveActors -> 0 Records (World.cs)
 --- UpdatePlayerStatus (World.cs)
 --- UpdateWorldStatus (World.cs)
 --- CheckFollowerActivity (World.cs)
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 96, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [3] -> RumourID 4, Strength 1, Scope Global, Type None, Global South
-arrayOfRumours [5] -> RumourID 210, Strength 4, Scope Local, Type Skill, Global None
-RumourID 210 selected from the Pool
-Rumour "BannerLord Walder Oakheart "The Slobberer", ActID 97 at Old Oak, is suspected to be someone who Drools" revealed to ActorID7 on turn 1 -> added to List
-RumourID 210 removed from listRumoursHouse[0]
-Follower The Dark Eminence, ActID 7, added RumourID 210
-BannerLord Walder Oakheart, ActID 97, skill Charm set to True
+arrayOfRumours [0] -> RumourID 260, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 321, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 209, Strength 4, Scope Local, Type Skill, Global None
+RumourID 260 selected from the Pool
+Rumour "It is known that the infamous Goblin Mug (Passive Item) is to be found at Riverrun" revealed to ActorID8 on turn 2 -> added to List
+RumourID 260 removed from listRumoursGlobal[12]
+Follower The Duchess, ActID 8, added RumourID 260
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 127, Strength 4, Scope Global, Type Item, Global All
-arrayOfRumours [2] -> RumourID 3, Strength 3, Scope Global, Type None, Global East
-arrayOfRumours [5] -> RumourID 119, Strength 2, Scope Local, Type Skill, Global None
-RumourID 119 selected from the Pool
-Rumour "Castellan Desmond Voldamore "The Simple", ActID 53 at Winterfell, is well known to be Level Headed" revealed to ActorID4 on turn 1 -> added to List
-RumourID 119 removed from listRumoursHouse[11]
-Follower The Duchess, ActID 4, added RumourID 119
-Castellan Desmond Voldamore, ActID 53, skill Leadership set to True
+arrayOfRumours [0] -> RumourID 42, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [1] -> RumourID 304, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 204, Strength 4, Scope Local, Type Skill, Global None
+RumourID 204 selected from the Pool
+Rumour "BannerLord Forley Tarth "The Shrill", ActID 96 at Evenfall, is suspected to be Decisive" revealed to ActorID2 on turn 2 -> added to List
+RumourID 204 removed from listRumoursHouse[1]
+Follower The Leper, ActID 2, added RumourID 204
+BannerLord Forley Tarth, ActID 96, skill Leadership set to True
 --- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 40, Strength 1, Scope Global, Type Item, Global All
-arrayOfRumours [3] -> RumourID 4, Strength 1, Scope Global, Type None, Global South
-arrayOfRumours [5] -> RumourID 101, Strength 2, Scope Local, Type Skill, Global None
-RumourID 101 selected from the Pool
-Rumour "Septon Aeron Simonnet "The Respectable", ActID 48 at Bloodkeep, is suspected to be a person who Hears Voices" revealed to ActorID9 on turn 1 -> added to List
-RumourID 101 removed from listRumoursHouse[0]
-Follower The Crone, ActID 9, added RumourID 101
-Septon Aeron Simonnet, ActID 48, skill Wits set to True
+arrayOfRumours [0] -> RumourID 94, Strength 4, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 307, Strength 2, Scope Global, Type HouseRel, Global East
+arrayOfRumours [5] -> RumourID 274, Strength 1, Scope Local, Type Skill, Global None
+RumourID 307 selected from the Pool
+Rumour "House Florent has had bad past relations with their BannerLord at House Estermont due to them providing safe haven for Witches" revealed to ActorID3 on turn 2 -> added to List
+RumourID 307 removed from listRumoursEast[2]
+Follower The Spider, ActID 3, added RumourID 307
 [Notification] Player in SafeHouse -> World events cancelled
 --- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Bertelot Targaryen, ActID 1 is AtLocation
+ [Search -> Stationary] Usurper Guntard Tully, ActID 1 is AtLocation
 --- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Adramalech, ID 136 at 14:14, Active Bertelot Targaryen, ID 1, at 15:9
- [Search -> Debug] Enemy, Brother Nergal, ID 137 at 14:14, Active Bertelot Targaryen, ID 1, at 15:9
- [Search -> Debug] Enemy, Brother Mastema, ID 138 at 14:14, Active Bertelot Targaryen, ID 1, at 15:9
- [Search -> Debug] Enemy, Brother Shiva, ID 139 at 14:14, Active Bertelot Targaryen, ID 1, at 15:9
- [Search -> Debug] Enemy, The Unrelenting, ID 140 at 14:14, Active Bertelot Targaryen, ID 1, at 15:9
- [Search -> Stationary] Follower The Dark Eminence, ActID 7 is AtLocation
- [Search -> Stationary] Follower The Duchess, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Crone, ActID 9 is AtLocation
+ [Search -> Debug] Enemy, Brother Haborym, ID 140 at 17:14, Active Guntard Tully, ID 1, at 11:21
+ [Search -> Debug] Enemy, Brother Beelzebub, ID 141 at 17:14, Active Guntard Tully, ID 1, at 11:21
+ [Search -> Debug] Enemy, Brother Shiva, ID 142 at 17:14, Active Guntard Tully, ID 1, at 11:21
+ [Search -> Debug] Enemy, Brother Mormo, ID 143 at 17:14, Active Guntard Tully, ID 1, at 11:21
+ [Search -> Debug] Enemy, The Unrelenting, ID 144 at 17:14, Active Guntard Tully, ID 1, at 11:21
+ [Search -> Stationary] Follower The Duchess, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Leper, ActID 2 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 3 is AtLocation
 --- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Adramalech, Act ID 136 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 137 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 138 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 139 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 140 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 140 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 141 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 142 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mormo, Act ID 143 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 144 Mode -> Normal
 --- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Adramalech, ActID 136 retains Goal -> Wait
- [Enemy -> Goal] Brother Nergal, ActID 137 retains Goal -> Wait
+ [Enemy -> Goal] Brother Haborym, ActID 140 retains Goal -> Wait
+ [Enemy -> Goal] Brother Beelzebub, ActID 141 retains Goal -> Wait
 --- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Mastema, ActID 138 Assigned Branch -> 2 Current Branch -> 0
- [Goal -> New] Brother Mastema, ActID 138, (loc 14:14), assigned new Goal -> Hide
- [Enemy -> Known] Brother Shiva ActID 139 has become KNOWN
- [Enemy -> Goal] Brother Shiva, ActID 139 retains Goal -> Wait
- [Enemy -> Goal] The Unrelenting, ActID 140 retains Goal -> Wait
+ [Goal -> Branch] Brother Shiva, ActID 142 Assigned Branch -> 2 Current Branch -> 0
+ [Goal -> New] Brother Shiva, ActID 142, (loc 17:14), assigned new Goal -> Move
+ [Goal -> Move] Brother Shiva, ActID 142 -> Capital to Correct Branch -> The Shaggy Parrot, LocID 12
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] Brother Mormo, ActID 143 retains Goal -> Wait
+ [Enemy -> Known] The Unrelenting ActID 144 has become KNOWN
+ [Enemy -> Goal] The Unrelenting, ActID 144 retains Goal -> Wait
 --- CheckPlayerEvents (Director.cs)
-- CreateAutoLocEvent (Director.cs)
- [AutoEvent -> ActorList] "Varys Frey", ID 119 added to list of Actors
- [AutoEvent -> LocalList] "Varys Frey", ID 119 added to list of Locals
-[Notification] No entry found in dictOfIntroductions for RefID 99
- Chance of Player Location event 75 %
+--- GetValidPlayerEvents (Director.cs)
+ Event "Mysterious Stranger" has no attached Conditions
+--- GetValidPlayerEvents (Director.cs)
+--- GetValidPlayerEvents (Director.cs)
+ Chance of Player Location event 37 %
 --- ResolvePlayerEvents (Director.cs)
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Trigger FAILED on "0" Equals 1
- Trigger: Player is wrong type of Known status -> Trigger failed
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
+ "Talk to them" Trait Trigger, if type 3 is GreaterThanOrEqual to 3
+ Trigger FAILED on "1" GreaterThanOrEqual 3
+Trait trigger failed
+[Notification] Trait trigger Compulsory fail check
+ "Curse all strangers" Trait Trigger, if type 4 is GreaterThanOrEqual to 3
+ Trigger passed on "5" GreaterThanOrEqual 3
+ Event "Mysterious Stranger" Timer Repeat now 9
+ Event "Mysterious Stranger" Cooldown Timer has been reset to 0
 --- UpdateActiveActors (World.cs)
- Usurper Bertelot Targaryen has had their TurnsUnknown Timer increased from 100 to 101
- Follower The Dark Eminence has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
- Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+ Usurper Guntard Tully has had their TurnsUnknown Timer increased from 101 to 102
+ Follower The Duchess has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Leper has had their TurnsUnknown Timer increased from 1 to 2
+ Follower The Spider has had their TurnsUnknown Timer increased from 1 to 2
 --- ResolveOutcome (Director.cs)
+--- MultiKeyInput (Game.cs)
+307 input
+ERROR_275 "Invalid Rumour.Type "HouseRel""
+Method: ShowRumourRL,  Line: 3994,  Object: World.cs,  Turn: 2,  Local Time: 17:40:15 UTC +10:00
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 16/05/2017 16:19:49
+//Exile Game file ops "LogTurn.txt" Completed at: 16/05/2017 17:40:31
+It is known that Disguises can be had from Maester Bertelot Ebrardus, ActID 46 at Bloodkeep
+--- ChangePlayerRumourStatus (Director.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 284, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [4] -> RumourID 331, Strength 2, Scope Global, Type HouseRel, Global West
+arrayOfRumours [5] -> RumourID 189, Strength 4, Scope Local, Type Skill, Global None
+RumourID 189 selected from the Pool
+Rumour "BannerLord Mathias Botley "The Fog Horn", ActID 88 at Lordsport, is suspected to have a Booming Voice" revealed to ActorID1 on turn 1 -> added to List
+RumourID 189 removed from listRumoursHouse[0]
+Rumour "BannerLord Mathias Botley "The Fog Horn", ActID 88 at Lordsport, is suspected to have a Booming Voice", rumourID 189, added to dictRumoursKnown
+BannerLord Mathias Botley, ActID 88, has their Leadership changed to True
+BannerLord Mathias Botley "The Fog Horn", ActID 88 at Lordsport, is suspected to have a Booming Voice
+--- ProcessEndTurn (World.cs)
+Day 2, Turn 1
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 19
+[GameStat] "Location_Days" -> increased from 1 to 2
+//Exile Game File "LogTurn.txt" Close completed at: 16/05/2017 17:39:27

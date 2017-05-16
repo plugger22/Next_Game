@@ -3989,6 +3989,12 @@ namespace Next_Game
                 switch (rumour.Type)
                 {
                     case RumourType.Skill:
+                    case RumourType.HouseRel:
+                    case RumourType.Item:
+                    case RumourType.Road:
+                    case RumourType.Secret:
+                    case RumourType.Terrain:
+                    case RumourType.Disguise:
                         break;
                     default:
                         Game.SetError(new Error(275, $"Invalid Rumour.Type \"{rumour.Type}\""));
