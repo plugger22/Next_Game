@@ -308,6 +308,7 @@ namespace Next_Game
         public string Rumour { get; set; } //text descriptor used for rumour (reason) in the format "due to... <Rumour>"
         public int Change { get; set; } //the effect on a relationship level, eg. +25
         public int Level { get; set; } //current relationship level with that character, AFTER change has been applied (handled automatically by code based on change, NO NEED to specify directly)
+        public RelListType Type { get; set; } //type of relationship
 
         /// <summary>
         /// for relationships with Player

@@ -1,0 +1,83 @@
+//Exile Game File "LogTurn.txt" opened at: 16/05/2017 16:19:27
+--- ProcessStartTurn (World.cs)
+Day 2, Turn 1
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 96, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [3] -> RumourID 4, Strength 1, Scope Global, Type None, Global South
+arrayOfRumours [5] -> RumourID 210, Strength 4, Scope Local, Type Skill, Global None
+RumourID 210 selected from the Pool
+Rumour "BannerLord Walder Oakheart "The Slobberer", ActID 97 at Old Oak, is suspected to be someone who Drools" revealed to ActorID7 on turn 1 -> added to List
+RumourID 210 removed from listRumoursHouse[0]
+Follower The Dark Eminence, ActID 7, added RumourID 210
+BannerLord Walder Oakheart, ActID 97, skill Charm set to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 127, Strength 4, Scope Global, Type Item, Global All
+arrayOfRumours [2] -> RumourID 3, Strength 3, Scope Global, Type None, Global East
+arrayOfRumours [5] -> RumourID 119, Strength 2, Scope Local, Type Skill, Global None
+RumourID 119 selected from the Pool
+Rumour "Castellan Desmond Voldamore "The Simple", ActID 53 at Winterfell, is well known to be Level Headed" revealed to ActorID4 on turn 1 -> added to List
+RumourID 119 removed from listRumoursHouse[11]
+Follower The Duchess, ActID 4, added RumourID 119
+Castellan Desmond Voldamore, ActID 53, skill Leadership set to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 40, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [3] -> RumourID 4, Strength 1, Scope Global, Type None, Global South
+arrayOfRumours [5] -> RumourID 101, Strength 2, Scope Local, Type Skill, Global None
+RumourID 101 selected from the Pool
+Rumour "Septon Aeron Simonnet "The Respectable", ActID 48 at Bloodkeep, is suspected to be a person who Hears Voices" revealed to ActorID9 on turn 1 -> added to List
+RumourID 101 removed from listRumoursHouse[0]
+Follower The Crone, ActID 9, added RumourID 101
+Septon Aeron Simonnet, ActID 48, skill Wits set to True
+[Notification] Player in SafeHouse -> World events cancelled
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Bertelot Targaryen, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Adramalech, ID 136 at 14:14, Active Bertelot Targaryen, ID 1, at 15:9
+ [Search -> Debug] Enemy, Brother Nergal, ID 137 at 14:14, Active Bertelot Targaryen, ID 1, at 15:9
+ [Search -> Debug] Enemy, Brother Mastema, ID 138 at 14:14, Active Bertelot Targaryen, ID 1, at 15:9
+ [Search -> Debug] Enemy, Brother Shiva, ID 139 at 14:14, Active Bertelot Targaryen, ID 1, at 15:9
+ [Search -> Debug] Enemy, The Unrelenting, ID 140 at 14:14, Active Bertelot Targaryen, ID 1, at 15:9
+ [Search -> Stationary] Follower The Dark Eminence, ActID 7 is AtLocation
+ [Search -> Stationary] Follower The Duchess, ActID 4 is AtLocation
+ [Search -> Stationary] Follower The Crone, ActID 9 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Adramalech, Act ID 136 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 137 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 138 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 139 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 140 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Goal] Brother Adramalech, ActID 136 retains Goal -> Wait
+ [Enemy -> Goal] Brother Nergal, ActID 137 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mastema, ActID 138 Assigned Branch -> 2 Current Branch -> 0
+ [Goal -> New] Brother Mastema, ActID 138, (loc 14:14), assigned new Goal -> Hide
+ [Enemy -> Known] Brother Shiva ActID 139 has become KNOWN
+ [Enemy -> Goal] Brother Shiva, ActID 139 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 140 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Varys Frey", ID 119 added to list of Actors
+ [AutoEvent -> LocalList] "Varys Frey", ID 119 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 99
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Bertelot Targaryen has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Duchess has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Crone has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+--- SetEndGame (Game.cs)
+[Alert] Player chose to exit (pressed 'X')
+//Exile Game file ops "LogTurn.txt" Completed at: 16/05/2017 16:19:49

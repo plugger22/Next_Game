@@ -2613,6 +2613,7 @@ namespace Next_Game
             int chanceGood = Game.constant.GetValue(Global.HOUSE_REL_GOOD);
             int numRolls = Game.constant.GetValue(Global.HOUSE_REL_NUM);
             string cleanTag;
+            RelListType relType = RelListType.HousePastGood; //default value (ignored)
             chanceGood = Math.Min(50, chanceGood);
             chanceGood = Math.Max(1, chanceGood);
             int interval = yearEnd - yearStart - 50;
@@ -2657,6 +2658,7 @@ namespace Next_Game
                                 if (cleanTag.Length > 0) { tagRumour = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House tagRumour (Good), Rumour \"{0}\"", tokens[2]))); }
                                 listOfHouseRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
                                 relEffect = 1;
+                                relType = RelListType.HousePastGood;
                             }
                         }
                         else if (rndNum <= (chanceGood * 2))
@@ -2675,6 +2677,7 @@ namespace Next_Game
                                 if (cleanTag.Length > 0) { tagRumour = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing House tagRumour (Bad), Rumour \"{0}\"", tokens[2]))); }
                                 listOfHouseRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
                                 relEffect = -1;
+                                relType = RelListType.HousePastBad;
                             }
                         }
                         //relationship between houses present?
@@ -2689,7 +2692,7 @@ namespace Next_Game
                             MajorHouse rndHouse = listTempHouses[tempIndex];
                             Game.logStart?.Write(string.Format("- House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, relEffect > 0 ? "+" : "", relEffect, year));
                             //add to House list
-                            Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year, Rumour = tagRumour };
+                            Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year, Rumour = tagRumour, Type = relType };
                             tempListRelations.Add(relation);
                             //add to Master list
                             masterText = string.Format("{0} {1} -> {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, relEffect > 0 ? "+" : "", relEffect);
@@ -2729,6 +2732,7 @@ namespace Next_Game
                                         cleanTag = tokens[2].Trim();
                                         if (cleanTag.Length > 0) { tagRumour = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner tagRumour (Good), Rumour \"{0}\"", tokens[2]))); }
                                         listOfBannerRelsGood.RemoveAt(rndIndex); //remove instance to prevent repeats
+                                        relType = RelListType.BannerPastGood;
                                         relEffect = 1;
                                     }
                                 }
@@ -2747,6 +2751,7 @@ namespace Next_Game
                                         cleanTag = tokens[2].Trim();
                                         if (cleanTag.Length > 0) { tagRumour = cleanTag; } else { Game.SetError(new Error(131, string.Format("Missing Banner tagRumour (Bad), Rumour \"{0}\"", tokens[2]))); }
                                         listOfBannerRelsBad.RemoveAt(rndIndex); //remove instance to prevent repeats
+                                        relType = RelListType.BannerPastBad;
                                         relEffect = -1;
                                     }
                                 }
@@ -2764,7 +2769,7 @@ namespace Next_Game
                                         Game.logStart?.Write(string.Format("- Minor House {0}, refID {1}, \"{2}\" {3}{4} in {5}", rndHouse.Name, rndHouse.RefID, relText, 
                                             relEffect > 0 ? "+" : "", relEffect, year));
                                         //add to House list
-                                        Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year, Rumour = tagRumour };
+                                        Relation relation = new Relation(relText, tagText, relEffect) { RefID = rndHouse.RefID, ActorID = 0, Year = year, Rumour = tagRumour, Type = relType };
                                         tempListRelations.Add(relation);
                                         //add to Master list
                                         masterText = string.Format("{0} {1} -> (Minor) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, rndHouse.Name, relation.Text, 
@@ -2802,6 +2807,7 @@ namespace Next_Game
                         tagText = "Wary of Traitor";
                         tagRumour = "traitorous actions";
                         relEffect = rnd.Next(1, effectConstant / 2) * -1;
+                        relType = RelListType.HousePastBad;
                     }
                     else
                     {
@@ -2809,6 +2815,7 @@ namespace Next_Game
                         tagText = "Betrayed Old King";
                         tagRumour = "betraying the Old King";
                         relEffect = rnd.Next(10, effectConstant) * -1;
+                        relType = RelListType.HousePastBad;
                     }
                 }
                 else
@@ -2816,13 +2823,14 @@ namespace Next_Game
                     //New King -> positive
                     relText = "The King is grateful for the assistance provided during the Revolt";
                     tagText = "Grateful King";
-                    tagRumour = "loyalty to the New King"
+                    tagRumour = "loyalty to the New King";
                     relEffect = rnd.Next(10, effectConstant);
+                    relType = RelListType.HousePastGood;
                 }
                 //add relation
                 if (String.IsNullOrEmpty(relText) == false)
                 {
-                    Relation relation = new Relation(relText, tagText, relEffect) { RefID = turnCoatRefID, ActorID = 0, Year = year, Rumour = tagRumour };
+                    Relation relation = new Relation(relText, tagText, relEffect) { RefID = turnCoatRefID, ActorID = 0, Year = year, Rumour = tagRumour, Type = relType };
                     house.AddRelations(relation);
                     //add to Master list
                     masterText = string.Format("{0} {1} -> (Major) {2}, \"{3}\", rel {4}{5}", relation.Year, house.Name, turnCoatName, relation.Text, relEffect > 0 ? "+" : "", relEffect);

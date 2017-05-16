@@ -55,7 +55,6 @@ namespace Next_Game
 
 
 
-
         /// <summary>
         /// adds ID to list of names and returns # of like names in list
         /// </summary>
@@ -171,27 +170,6 @@ namespace Next_Game
             }
             return tempList;
         }
-
-        /*/// <summary>
-        /// returns current relationship level with calling House and specified, refID, one. Returns 0 as a default (neutral relationship level)
-        /// </summary>
-        /// <param name="refID"></param>
-        /// <returns></returns>
-        internal int GetHouseCurrentRelationship(int refID)
-        {
-            if (listOfRelations.Count > 0)
-            {
-                //count backwards through list and get first record which will be the latest
-                for (int i = listOfRelations.Count - 1; i >= 0; i--)
-                {
-                    Relation relation = listOfRelations[i];
-                    if (relation.RefID == refID)
-                    { return relation.Level; }
-
-                }
-            }
-            return 0;
-        }*/
 
         /// <summary>
         /// updates current rel dict with latest data, creates new entry if refID doesn't exist. All relationships assumed to start at a base of zero. Auto called whenever a new Relationship record is added

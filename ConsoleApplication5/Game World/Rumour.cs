@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Next_Game
 {
     public enum RumourScope { None, Local, Global }
-    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise } //Corresponds to Rumour subclasses, set in subclass
+    public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel } //Corresponds to Rumour subclasses, set in subclass
     public enum RumourGlobal { None, North, East, South, West, All }
 
     /// <summary>
@@ -155,5 +155,28 @@ namespace Next_Game
             Type = RumourType.Item;
         }
     }
+
+    /// <summary>
+    /// Rumour about House Relationships (one rumour per relationship -> Global Branch)
+    /// </summary>
+    class RumourHouseRel : Rumour
+    {
+
+        /// <summary>
+        /// RumourItem constructor
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="strength"></param>
+        /// <param name="skill"></param>
+        /// <param name="scope"></param>
+        /// <param name="turnCreated">If '0' then defaults to current game turn</param>
+        /// <param name="global"></param>
+        /// <param name="isActive"></param>
+        public RumourHouseRel(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        {
+            Type = RumourType.HouseRel;
+        }
+    }
+
     //add new class instances above here
 }

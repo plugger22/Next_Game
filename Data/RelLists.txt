@@ -5,65 +5,65 @@
 # note the '@' symbol deliminator
 
 [Major_House_Good]
-Helped out in times of Trouble @ Helped out @ them helping out during past troubles
-Saved the day in a past Battle @ Saved the Day @ them saving the day in a past battle
+Helped out in times of Trouble @ Helped out @ them helping out during troubles
+Saved the day in a past Battle @ Saved the Day @ them saving the day in a battle
 Blood bonds forged between past Lords @ Blood Bonds @ mutual blood bonds
 Gifted lands to our House @ Gifted us Lands @ their gift of land
 Proved to be a reliable ally on many past occasions @ Reliable Ally @ their longstanding support
 Foiled an evil plot against a past Lord @ Foiled Plot @ their foiling a dangerous plot
 Provided valuable Political support in previous councils @ Political Support @ their political support
 A valued, long term trading partner @ Valued Trading Partner @ their ongoing trade
-Saved the life of one of our Ancestral Lords on a hunting trip @ Saved Lord @ their saving a past Lord
-Saved the life of one of our past Lords during a bandit attack @ Saved Lord @ their saving a past Lord
+Saved the life of one of our Ancestral Lords on a hunting trip @ Saved Lord @ their rescuing a Lord
+Saved the life of one of our past Lords during a bandit attack @ Saved Lord @ their saving a Lord
 Provided a good education to wards of the House @ Educated Wards @ them taking and educating family wards
 A strong friendship existed between past Lords of both Houses @ Strong Friendship @ their strong friendship
 
 [Major_House_Bad]
-An ancestral Lord was humiliated by their daughter being spurned at the Altar @ Humiliated our Daughter
-The child ward of a past Lord was murdered while in their care @ Murdered our Ward
-Accused of Stealing herds of our Livestock @ Stole Livestock
-Raided our lands and carried off women from our villages @ Raided our Lands
-Fought a small skirmish with us over disputed land @ Fought a Skirmish
-Abandoned a past Lord, in his time of need, on the field of Battle @ Ran from Battle
-Allegedly attempted to infiltrate an Assassin into the court of an Ancestral Lord @ Assassination Attempt
-Engaged in a long standing blood feud @ Blood Feud
-Contested our claim of ownership to a valuable parcel of land @ Contested Land Claims
-Claim our Title by virtue of a distant, dubious, marriage @ Claim our Title
-Rumoured to mate with livestock as a disgusting rite-of-passage @ Sheep Humpers
+An ancestral Lord was humiliated by their daughter being spurned at the Altar @ Humiliated our Daughter @ their deliberate humilation
+The child ward of a past Lord was murdered while in their care @ Murdered our Ward @ their murdering of a ward
+Accused of Stealing herds of our Livestock @ Stole Livestock @ their stealing livestock
+Raided our lands and carried off women from our villages @ Raided our Lands @ their incessant raiding
+Fought a small skirmish with us over disputed land @ Fought a Skirmish @ a skirmish
+Abandoned a past Lord, in his time of need, on the field of Battle @ Ran from Battle @ their cowardice in battle
+Allegedly attempted to infiltrate an Assassin into the court of an Ancestral Lord @ Assassination Attempt @ their assassination attempt
+Engaged in a long standing blood feud @ Blood Feud @ a longstanding blood feud
+Contested our claim of ownership to a valuable parcel of land @ Contested Land Claims @ a claim of contested lands
+Claim our Title by virtue of a distant, dubious, marriage @ Claim our Title @ their claim on a title
+Rumoured to mate with livestock as a disgusting rite-of-passage @ Sheep Humpers @ them being sheep humpers
 
 # Past History for relations between a Major House and it's Bannerlords
 # FORMAT -> relationship_text @ relationship_tag (2 or 3 words), note '@' symbol between the two
 
 [BannerLords_Good]
-Rescued our Ancestral Lord from a raging River @ Rescued our Lord
-Rescued our Ancestral Lord from marauding Sell Swords @ Rescued our Lord
-Saved our Ancestral Lord from dying of the Bloody Flux @  Saved our Lord
-Reliable and proven Men-At-Arms in past battles @ Reliable Fighters
-A past BannerLord displayed exceptional Loyalty to our House @  Exceptional Loyalty
-A past BannerLord came to our Houses aid when it was needed most @ Aided our House
-Have tried to rid their lands of Bandits over the years @ Eradicate Bandits
-Have managed their lands in a sensible and progressive manner @ Sensible Managers
-Have proven to be virtuous and upstanding members of our House @ Virtuous and Upstanding
-Provided valuable advice in a past crisis @ Provided Valuable Advice
-Have been meticulous in repaying past loans from our House @ Repaid Past Loans
-Have produced many fine and fertile wives for our sons @ Fertile Wives
-Bad Blood from perceived injustices on their part due to past rulings @ Bad Blood
+Rescued our Ancestral Lord from a raging River @ Rescued our Lord @ them rescuing a Lord
+Rescued our Ancestral Lord from marauding Sell Swords @ Rescued our Lord @ them rescuing a Lord
+Saved our Ancestral Lord from dying of the Bloody Flux @  Saved our Lord @ them saving a Lord
+Reliable and proven Men-At-Arms in past battles @ Reliable Fighters @ their reliability in battle
+A past BannerLord displayed exceptional Loyalty to our House @  Exceptional Loyalty @ their exceptional loyalty
+A past BannerLord came to our Houses aid when it was needed most @ Aided our House @ their aid in times of need
+Have tried to rid their lands of Bandits over the years @ Eradicate Bandits @ their ongoing bandit eradication
+Have managed their lands in a sensible and progressive manner @ Sensible Managers @ them being likeminded, sensible, managers
+Have proven to be virtuous and upstanding members of our House @ Virtuous and Upstanding @ them being virtuous and upstanding
+Provided valuable advice in a past crisis @ Provided Valuable Advice @ their valuable advice
+Have been meticulous in repaying past loans from our House @ Repaid Past Loans @ their reliability in repaying loans
+Have produced many fine and fertile wives for our sons @ Fertile Wives @ their especially fertile wives
+A past misunderstanding was resolved amicably without Bad Blood @ Amiable Relations @ their amiable disposition
 
 [BannerLords_Bad]
-Refused to answer the Banners when called @ Refused Banners
-Practise interbreeding and marry their own Sisters @ Interbreed with Sisters
-Unreliable in battle and prone to holding back @ Unreliable in Battle
-Moonlight as highway robbers and exert an unofficial toll on trade @ Highway Robbers
-Have been openly contemptuous of our House in the past @ Contemptuous Behaviour
-Spread disease to neighbouring lands through poor sanitation practices @ Spread Disease
-Illegally graze their animals on neighbouring land @ Illegal Practices
-Refused to recognise the authority of our past Ancestral Lord @ Don't Recognise Authority
-Deliberately breed Dire Wolves and let them feed on our livestock @ Breed Dire Wolves
-Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten @ Past Injustice
-Refused to acknowledge, or pay back, a past loan from our Ancestral Lord @ Ignored Past Loan
-Went ahead with a scandalous marriage that brought shame upon our House @ Scandalous Marriage
-Have proven to be fickle and wayward allies in our times of need @ Fickle Allies
-Provided a safe haven for Witches on occasion @ Witch Refuge
+Refused to answer the Banners when called @ Refused Banners @ them refusing the call to Banners
+Practise interbreeding and marry their own Sisters @ Interbreed with Sisters @ their incestuous interbreeding
+Unreliable in battle and prone to holding back @ Unreliable in Battle @ their unreliability in battle
+Moonlight as highway robbers and exert an unofficial toll on trade @ Highway Robbers @ them being highway robbers
+Have been openly contemptuous of our House in the past @ Contemptuous Behaviour @ their contemptuous behaviour
+Spread disease to neighbouring lands through poor sanitation practices @ Spread Disease @ them spreading disease
+Illegally graze their animals on neighbouring land @ Illegal Practices @ their illegal grazing
+Refused to recognise the authority of our past Ancestral Lord @ Don't Recognise Authority @ their refusal to bow to authority
+Deliberately breed Dire Wolves and let them feed on our livestock @ Breed Dire Wolves @ them breeding Dire Wolves
+Our past Lord was forced to hang a recalcitrant BannerLord which they haven't forgotten @ Past Injustice @ a unforgotten injustice
+Refused to acknowledge, or pay back, a past loan from our Ancestral Lord @ Ignored Past Loan @ their refusal to repay a loan
+Went ahead with a scandalous marriage that brought shame upon our House @ Scandalous Marriage @ their scandalous marriage
+Have proven to be fickle and wayward allies in our times of need @ Fickle Allies @ their fickleness as allies
+Provided a safe haven for Witches on occasion @ Witch Refuge @ them providing safe haven for Witches
 
 # Tags for the 5 different levels of relationships between a Lord and their family and advisors
 

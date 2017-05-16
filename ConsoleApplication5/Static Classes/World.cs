@@ -3425,6 +3425,13 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// returns dictMajorHouses (key is houseID)
+        /// </summary>
+        /// <returns></returns>
+        internal Dictionary<int, MajorHouse> GetMajorHouses()
+        { return dictMajorHouses; }
+
+        /// <summary>
         /// Returns house (any type) if found, otherwise null, keyed off refID). Note: Capital returns null
         /// </summary>
         /// <param name="refID"></param>

@@ -1291,7 +1291,7 @@ namespace Next_Game
                             //option -> Leave
                             OptionInteractive option_L = new OptionInteractive("Leave");
                             if (player.Known == true) { option_L.ReplyGood = "You depart, head held high, shoulders back, meeting the eye of everyone you pass"; }
-                            else { option_L.ReplyGood = "You quietly depart, sliding through the mottled shadows"; }
+                            else { option_L.ReplyGood = "You quietly depart, moving quietly through the mottled shadows"; }
                             OutNone outcome_L = new OutNone(eventObject.EventPID);
                             option_L.SetGoodOutcome(outcome_L);
                             eventObject.SetOption(option_L);
@@ -4482,6 +4482,7 @@ namespace Next_Game
         private void InitialiseRumours()
         {
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
+            Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetMajorHouses();
             if (dictPassiveActors != null)
             {
                 Game.logStart?.Write("--- InitialiseRumours (World.cs)");
@@ -4649,6 +4650,69 @@ namespace Next_Game
                         }
                     }
                     else { Game.SetError(new Error(268, "Invalid Passive actor (null)")); }
+                }
+                //Major Houses
+                foreach(var house in dictMajorHouses)
+                {
+                    //Rumours -> Past History between Major Houses, other Major Houses and their Minor Houses (one entry per relationship, global.Branch)
+                    List<Relation> listOfHouseRelationships = house.Value.GetRelations();
+                    if (listOfHouseRelationships != null)
+                    {
+                        if (listOfHouseRelationships.Count > 0)
+                        {
+                            //House who the relationship is From
+                            House houseFrom = Game.world.GetHouse(house.Value.RefID);
+                            if (houseFrom != null)
+                            {
+                                foreach (var relationship in listOfHouseRelationships)
+                                {
+                                    //get house who the relationship is with (relationship To..)
+                                    House houseTo = Game.world.GetHouse(relationship.RefID);
+                                    if (houseTo != null)
+                                    {
+                                        rumourText = "";
+                                        //generate rumour text
+                                        switch(relationship.Type)
+                                        {
+                                            case RelListType.HousePastGood:
+                                                rumourText = $"House {houseFrom.Name} has had good past relations with House {houseTo.Name} due to {relationship.Rumour}";
+                                                break;
+                                            case RelListType.HousePastBad:
+                                                rumourText = $"House {houseFrom.Name} has had bad past relations with House {houseTo.Name} due to {relationship.Rumour}";
+                                                break;
+                                            case RelListType.BannerPastGood:
+                                                rumourText = $"House {houseFrom.Name} has had good past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
+                                                break;
+                                            case RelListType.BannerPastBad:
+                                                rumourText = $"House {houseFrom.Name} has had bad past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
+                                                break;
+                                            default:
+                                                Game.SetError(new Error(268, $"Invalid relationship.Type \"{relationship.Type}\""));
+                                                break;
+                                        }
+                                        //is there a rumour to create?
+                                        if (rumourText.Length > 0)
+                                        {
+                                            int branch = houseFrom.Branch;
+                                            if (branch > 0 && branch < 5)
+                                            {
+                                                strength = 2;
+                                                RumourHouseRel rumour = new RumourHouseRel(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch) { RefID = houseTo.RefID };
+                                                //add to dictionary and global list
+                                                if (AddGlobalRumour(rumour) == false)
+                                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (HouseRel) -> Rumour Cancelled")); }
+                                                Game.logStart?.Write($"[HouseRel] {rumourText} -> dict");
+                                            }
+                                            else { Game.SetError(new Error(268, $"Invalid houseFrom.Branch \"{branch}\" -> rumour cancelled")); }
+                                        }
+                                    }
+                                    else { Game.SetError(new Error(268, $"Invalid houseTo (null), RefID {relationship.RefID} -> Rumour not created")); }
+                                }
+                            }
+                            else { Game.SetError(new Error(268, $"Invalid houseFrom (null), RefID {house.Value.RefID} -> No rumours created ")); }
+                        }
+                    }
+                    else { Game.SetError(new Error(268, "Invalid listOfHouseRelationships (null)")); }
                 }
             }
             else { Game.SetError(new Error(268, "Invalid dictOfPassiveActors (null)")); }
