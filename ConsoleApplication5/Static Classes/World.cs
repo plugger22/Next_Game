@@ -5952,6 +5952,19 @@ namespace Next_Game
                                                 }
                                                 else { Game.SetError(new Error(276, $"Rumour Type doesn't match Rumour class (HouseRel) -> HouseRel not made Known, RumourID {rumour.RumourID}")); }
                                                 break;
+                                            case RumourType.Friends:
+                                                if (rumour is RumourFriends)
+                                                {
+                                                    House house = Game.world.GetHouse(rumour.RefID);
+                                                    if (house != null)
+                                                    {
+                                                        house.FriendsAndEnemies = true;
+                                                        Game.logTurn?.Write($"[Notification -> Friends] \"{rumour.Text}\" -> FriendsAndEnemies is True");
+                                                    }
+                                                    else { Game.SetError(new Error(276, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> FriendsAndEnemies not made Known")); }
+                                                }
+                                                else { Game.SetError(new Error(276, $"Rumour Type doesn't match Rumour class (Friends) -> FriendsAndEnemies not made Known, RumourID {rumour.RumourID}")); }
+                                                break;
                                         }
                                         //end switch
                                     }

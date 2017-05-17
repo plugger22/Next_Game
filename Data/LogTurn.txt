@@ -1,6 +1,85 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 17/05/2017 15:08:30
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
+//Exile Game File "LogTurn.txt" opened at: 17/05/2017 16:36:07
+--- ProcessStartTurn (World.cs)
+Day 2, Turn 1
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+[Notification] No house rumours available -> none added to pool
+[Notification] No Branch West rumours available  -> none added to pool
+arrayOfRumours [0] -> RumourID 272, Strength 3, Scope Global, Type Friends, Global All
+RumourID 272 selected from the Pool
+Rumour "It is It is said that you have no Friends and many Enemies at Dorne" revealed to ActorID9 on turn 1 -> added to List
+RumourID 272 removed from listRumoursGlobal[14]
+Follower The Dark Eminence, ActID 9, added RumourID 272
+[Notification -> Friends] "It is It is said that you have no Friends and many Enemies at Dorne" -> FriendsAndEnemies is True
+--- GetRumour (Director.cs)
+[Notification] No Branch West rumours available  -> none added to pool
+arrayOfRumours [0] -> RumourID 5, Strength 1, Scope Global, Type Item, Global All
+arrayOfRumours [5] -> RumourID 244, Strength 2, Scope Local, Type Skill, Global None
+RumourID 244 selected from the Pool
+Rumour "Septon Marq Giff "The Unwavering", ActID 118 at Pyke, is widely known to be a person who Lisps" revealed to ActorID8 on turn 1 -> added to List
+RumourID 244 removed from listRumoursHouse[7]
+Follower The Spider, ActID 8, added RumourID 244
+Septon Marq Giff, ActID 118, skill Charm set to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 79, Strength 4, Scope Global, Type Disguise, Global All
+arrayOfRumours [1] -> RumourID 292, Strength 2, Scope Global, Type HouseRel, Global North
+arrayOfRumours [5] -> RumourID 201, Strength 4, Scope Local, Type Skill, Global None
+RumourID 292 selected from the Pool
+Rumour "House Tully has had bad past relations with House Penrose due to their traitorous actions" revealed to ActorID7 on turn 1 -> added to List
+RumourID 292 removed from listRumoursNorth[7]
+Follower The Haggler, ActID 7, added RumourID 292
+[Notification -> HouseRel] "Their traitorous actions, while beneficial, leave a bad taste in our mouth" -> Known is True
+[Notification] Player in SafeHouse -> World events cancelled
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Dick Greyjoy, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Demogorgon, ID 128 at 12:15, Active Dick Greyjoy, ID 1, at 21:25
+ [Search -> Debug] Enemy, Brother Shiva, ID 129 at 12:15, Active Dick Greyjoy, ID 1, at 21:25
+ [Search -> Debug] Enemy, Brother Mastema, ID 130 at 12:15, Active Dick Greyjoy, ID 1, at 21:25
+ [Search -> Debug] Enemy, Brother Kali, ID 131 at 12:15, Active Dick Greyjoy, ID 1, at 21:25
+ [Search -> Debug] Enemy, The Unrelenting, ID 132 at 12:15, Active Dick Greyjoy, ID 1, at 21:25
+ [Search -> Stationary] Follower The Dark Eminence, ActID 9 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 8 is AtLocation
+ [Search -> Stationary] Follower The Haggler, ActID 7 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Demogorgon, Act ID 128 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Shiva, Act ID 129 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Mastema, Act ID 130 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 131 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 132 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+ [Enemy -> Known] Brother Demogorgon ActID 128 has become KNOWN
+ [Enemy -> Goal] Brother Demogorgon, ActID 128 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Shiva, ActID 129 Assigned Branch -> 2 Current Branch -> 0
+ [Enemy -> Known] Brother Mastema ActID 130 has become KNOWN
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Mastema, ActID 130 Assigned Branch -> 3 Current Branch -> 0
+ [Goal -> New] Brother Mastema, ActID 130, (loc 12:15), assigned new Goal -> Hide
+ [Enemy -> Goal] Brother Kali, ActID 131 retains Goal -> Wait
+ [Enemy -> Goal] The Unrelenting, ActID 132 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Segarus Ambrose", ID 115 added to list of Actors
+ [AutoEvent -> LocalList] "Segarus Ambrose", ID 115 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 100
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Dick Greyjoy has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Dark Eminence has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Haggler has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 17/05/2017 15:08:58
+//Exile Game file ops "LogTurn.txt" Completed at: 17/05/2017 16:37:36

@@ -4044,10 +4044,10 @@ namespace Next_Game
                                         if (house != null)
                                         {
                                             //find Relationship
-                                            List <Relation> listHouseRels = house.GetRelations();
+                                            List<Relation> listHouseRels = house.GetRelations();
                                             if (listHouseRels != null)
                                             {
-                                                foreach(var relation in listHouseRels)
+                                                foreach (var relation in listHouseRels)
                                                 {
                                                     if (relation.TrackerID == rumourHouse.TrackerID)
                                                     {
@@ -4064,8 +4064,21 @@ namespace Next_Game
                                     }
                                     else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (HouseRel) -> HouseRel not made Known, RumourID {rumour.RumourID}")); }
                                     break;
+                                case RumourType.Friends:
+                                    if (rumour is RumourFriends)
+                                    {
+                                        House house = Game.world.GetHouse(rumour.RefID);
+                                        if (house != null)
+                                        {
+                                            house.FriendsAndEnemies = true;
+                                            Game.logTurn?.Write($"[Notification -> Friends] \"{rumour.Text}\" -> FriendsAndEnemies is True");
+                                        }
+                                        else { Game.SetError(new Error(272, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> FriendsAndEnemies not made Known")); }
+                                    }
+                                    else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (Friends) -> FriendsAndEnemies not made Known, RumourID {rumour.RumourID}")); }
+                                    break;
                             }
-                            
+                            //end switch
                         }
                         else { Game.SetError(new Error(272, $"RumourID {rumourID} failed to be added to dictRumoursKnown")); }
                     }
@@ -4519,6 +4532,7 @@ namespace Next_Game
         {
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetMajorHouses();
+
             if (dictPassiveActors != null)
             {
                 Game.logStart?.Write("--- InitialiseRumours (World.cs)");
@@ -4526,23 +4540,10 @@ namespace Next_Game
                 bool proceedFlag;
                 int royalRefID = Game.lore.RoyalRefIDNew;
                 string trait, rumourText, immersionText, startText, locName;
-                string[] arrayOfRumourTexts = new string[] { "rumoured", "said", "known", "suspected", "well known", "known by all", "whispered", "murmured amongst friends" };
+                string[] arrayOfRumourTexts = new string[] { "rumoured", "rumoured", "said", "known", "widely known", "suspected", "well known", "known by all", "common knowledge", "whispered",
+                    "murmured amongst friends" };
                 string[] arrayOfSecretTexts = new string[] { "has a dark secret", "is keeping something private", "knows more than they let on", "has a mysterious past",
                     "has hidden secrets carefully kept from view", "jealously guards a secret", "knows something important", "conceals a dark truth" };
-                /*
-                //DEBUG... start
-                Rumour rumour_0 = new Rumour("Global pool rumour, strength 2", 2, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.All);
-                AddGlobalRumour(rumour_0);
-                Rumour rumour_1 = new Rumour("North pool rumour, strength 1", 1, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.North);
-                AddGlobalRumour(rumour_1);
-                Rumour rumour_2 = new Rumour("East pool rumour, strength 3", 3, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.East);
-                AddGlobalRumour(rumour_2);
-                Rumour rumour_3 = new Rumour("South pool rumour, strength 1", 1, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.South);
-                AddGlobalRumour(rumour_3);
-                Rumour rumour_4 = new Rumour("West pool rumour, strength 2", 2, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.West);
-                AddGlobalRumour(rumour_4);
-                //DEBUG... finish
-                */
                 //loop through all Passive Actors 
                 for (int i = 0; i < dictPassiveActors.Count - 1; i++)
                 {
@@ -4687,9 +4688,12 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(268, "Invalid Passive actor (null)")); }
                 }
+                //Houses
                 int relFriends = Game.constant.GetValue(Global.FRIEND_THRESHOLD);
                 int relEnemies = Game.constant.GetValue(Global.ENEMY_THRESHOLD);
-                int numFriends = 0; int numEnemies = 0; int relPlyr = 0;
+                int numFriends; int numEnemies; int relPlyr;
+                string friendPrefix, enemyPrefix;
+                string[] arrayOfDescriptors = new string[] { "no", "a", "a few", "a handful of", "many" }; //used for Friends and enemies, index corresponds to #'s, eg. index 0 -> 'no' friends, 4+ -> 'many'
                 //Major Houses
                 foreach (var house in dictMajorHouses)
                 {
@@ -4697,6 +4701,7 @@ namespace Next_Game
                     Location loc = Game.network.GetLocation(house.Value.LocID);
                     if (loc != null)
                     {
+                        numFriends = 0; numEnemies = 0; relPlyr = 0;
                         //characters at location
                         List<int> charList = loc.GetActorList();
                         charList.Sort();
@@ -4716,6 +4721,27 @@ namespace Next_Game
                                     }
                                 }
                             }
+                        }
+                        else { Game.logStart?.Write( $"[Notification] There are no characters at {loc.LocName}, LocID {loc.LocationID}"); }
+                        //any friends or enemies?
+                        friendPrefix = ""; enemyPrefix = "";
+                        if (numFriends > 0 || numEnemies > 0)
+                        {
+                            strength = 3;
+                            index = numFriends;
+                            index = Math.Min(4, numFriends); //cap to size of arrayOfDescriptors
+                            friendPrefix = arrayOfDescriptors[index];
+                            index = numEnemies;
+                            index = Math.Min(4, numEnemies); //cap to size of arrayOfDescriptors
+                            enemyPrefix = arrayOfDescriptors[index];
+                            startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                            rumourText = string.Format("It is {0} that you have {1} Friend{2} and {3} Enem{4} at {5}", startText, friendPrefix, numFriends != 1 ? "s" : "", 
+                                enemyPrefix, numEnemies != 1 ? "ies" : "y", loc.LocName);
+                            RumourFriends rumour = new RumourFriends(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.All) { RefID = loc.RefID };
+                            //add to dictionary and global list
+                            if (AddGlobalRumour(rumour) == false)
+                            { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Friends and Enemies) -> Rumour Cancelled")); }
+                            Game.logStart?.Write($"[Friends and Enemies] {rumourText} -> dict");
                         }
                     }
                     else { Game.SetError(new Error(268, $"Invalid Location (null) from LocID {house.Value.LocID}")); }
