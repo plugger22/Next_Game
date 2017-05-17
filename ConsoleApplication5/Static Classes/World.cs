@@ -1723,15 +1723,17 @@ namespace Next_Game
                                 }
                             }
                             else
-                            { actorDetails = string.Format("unknown ID " + Convert.ToString(charID)); }
+                            { actorDetails = "unknown ID " + Convert.ToString(charID); }
                             locList.Add(new Snippet(actorDetails, textColor, RLColor.Black));
                         }
                         //display friends and enemies
                         if (numFriends > 0 || numEnemies > 0)
                         {
+                            RLColor foreColor = RLColor.White;
+                            if (house?.FriendsAndEnemies == false) { foreColor = RLColor.LightGray; }
                             locList.Add(new Snippet(string.Format("Current Standing at {0}", loc.LocName), RLColor.Brown, RLColor.Black));
                             locList.Add(new Snippet(string.Format("You have {0} Friend{1} and {2} Enem{3} here", numFriends, numFriends != 1 ? "s" : "", numEnemies,
-                                numEnemies != 1 ? "ies" : "y")));
+                                numEnemies != 1 ? "ies" : "y"), foreColor, RLColor.Black));
                         }
                     }
                 }

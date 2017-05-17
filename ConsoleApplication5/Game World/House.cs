@@ -28,6 +28,7 @@ namespace Next_Game
         public int LordID { get; set; } //actorID of noble Lord currently in charge of house
         public int Resources { get; set; } //same as actor resources (0 to 5). Head of house has access to this level of resources.
         public int SafeHouse { get; set; } //Safe House present if > 0. Number represents how many stars (max 5)
+        public bool FriendsAndEnemies { get; set; } //if true, then display number of friends and enemies at a house
         public KingLoyalty Loyalty_AtStart { get; set; }
         public KingLoyalty Loyalty_Current { get; set; }
         public HouseSpecial Special { get; set; }
@@ -51,6 +52,7 @@ namespace Next_Game
             listOfPlayerEvents = new List<int>();
             listOfRelations = new List<Relation>();
             dictCurrentRelations = new Dictionary<int, int>();
+            FriendsAndEnemies = false;
         }
 
 

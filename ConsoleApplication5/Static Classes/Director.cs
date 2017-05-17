@@ -4687,9 +4687,38 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(268, "Invalid Passive actor (null)")); }
                 }
+                int relFriends = Game.constant.GetValue(Global.FRIEND_THRESHOLD);
+                int relEnemies = Game.constant.GetValue(Global.ENEMY_THRESHOLD);
+                int numFriends = 0; int numEnemies = 0; int relPlyr = 0;
                 //Major Houses
-                foreach(var house in dictMajorHouses)
+                foreach (var house in dictMajorHouses)
                 {
+                    //Rumours -> Friends and Enemies
+                    Location loc = Game.network.GetLocation(house.Value.LocID);
+                    if (loc != null)
+                    {
+                        //characters at location
+                        List<int> charList = loc.GetActorList();
+                        charList.Sort();
+                        if (charList.Count > 0)
+                        {
+                            foreach (int charID in charList)
+                            {
+                                Actor actor = Game.world.GetAnyActor(charID);
+                                if (actor != null)
+                                {
+                                    //tally friends and enemies
+                                    if (actor.ActID > 1)
+                                    {
+                                        relPlyr = actor.GetRelPlyr();
+                                        if (relPlyr >= relFriends) { numFriends++; }
+                                        else if (relPlyr <= relEnemies) { numEnemies++; }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else { Game.SetError(new Error(268, $"Invalid Location (null) from LocID {house.Value.LocID}")); }
                     //Rumours -> Past History between Major Houses, other Major Houses and their Minor Houses (one entry per relationship, global.Branch)
                     List<Relation> listOfHouseRelationships = house.Value.GetRelations();
                     if (listOfHouseRelationships != null)

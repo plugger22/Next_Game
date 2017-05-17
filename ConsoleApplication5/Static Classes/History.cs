@@ -171,6 +171,8 @@ namespace Next_Game
                 listOfMajorHouses.Add(house);
                 Game.logStart?.Write(string.Format("Major House {0} added at {1}, RefID {2}, ArcID {3}", house.Name, house.LocName, house.RefID, house.ArcID));
             }
+            //Create Royal House
+            
         }
 
         /// <summary>
