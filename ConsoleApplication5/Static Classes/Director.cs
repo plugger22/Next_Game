@@ -1672,6 +1672,7 @@ namespace Next_Game
                                     option_1.SetGoodOutcome(outcome_1);
                                     eventObject.SetOption(option_1);
                                     person.SetAllSkillsKnownStatus(true);
+                                    house.SetFriendsAndEnemies(true);
                                     //blackmail
                                     OptionInteractive option_2 = new OptionInteractive("Blackmail") { ActorID = actorID };
                                     option_2.ReplyGood = string.Format("{0} frowns, their expression darkens", actorText);
@@ -1682,6 +1683,7 @@ namespace Next_Game
                                     option_2.SetGoodOutcome(outcome_2);
                                     eventObject.SetOption(option_2);
                                     person.SetAllSkillsKnownStatus(true);
+                                    house.SetFriendsAndEnemies(true);
                                     //seduce
                                     OptionInteractive option_3 = new OptionInteractive("Seduce") { ActorID = actorID };
                                     option_3.ReplyGood = string.Format("{0} flutters their eyelids at you", actorText);
@@ -1693,6 +1695,7 @@ namespace Next_Game
                                     option_3.SetGoodOutcome(outcome_3);
                                     eventObject.SetOption(option_3);
                                     person.SetAllSkillsKnownStatus(true);
+                                    house.SetFriendsAndEnemies(true);
                                     //You want Something from them
                                     OptionInteractive option_5 = new OptionInteractive("You want something") { ActorID = actorID };
                                     option_5.ReplyGood = $"{actorText} sits back and cautiously agrees to discuss your needs";
@@ -4540,8 +4543,8 @@ namespace Next_Game
                 bool proceedFlag;
                 int royalRefID = Game.lore.RoyalRefIDNew;
                 string trait, rumourText, immersionText, startText, locName;
-                string[] arrayOfRumourTexts = new string[] { "rumoured", "rumoured", "said", "known", "widely known", "suspected", "well known", "known by all", "common knowledge", "whispered",
-                    "murmured amongst friends" };
+                string[] arrayOfRumourTexts = new string[] { "rumoured", "rumoured", "said", "known", "widely known", "suspected", "well known", "known by all", "commonly known", "whispered",
+                    "whispered", "murmured amongst friends" };
                 string[] arrayOfSecretTexts = new string[] { "has a dark secret", "is keeping something private", "knows more than they let on", "has a mysterious past",
                     "has hidden secrets carefully kept from view", "jealously guards a secret", "knows something important", "conceals a dark truth" };
                 //loop through all Passive Actors 
@@ -4688,16 +4691,18 @@ namespace Next_Game
                     }
                     else { Game.SetError(new Error(268, "Invalid Passive actor (null)")); }
                 }
+                //
                 //Houses
+                //
                 int relFriends = Game.constant.GetValue(Global.FRIEND_THRESHOLD);
                 int relEnemies = Game.constant.GetValue(Global.ENEMY_THRESHOLD);
-                int numFriends; int numEnemies; int relPlyr;
+                int numFriends, numEnemies, relPlyr, branch;
                 string friendPrefix, enemyPrefix;
                 string[] arrayOfDescriptors = new string[] { "no", "a", "a few", "a handful of", "many" }; //used for Friends and enemies, index corresponds to #'s, eg. index 0 -> 'no' friends, 4+ -> 'many'
                 //Major Houses
                 foreach (var house in dictMajorHouses)
                 {
-                    //Rumours -> Friends and Enemies
+                    //Rumours -> Friends and Enemies (one per Major House if any exist, Capital excluded as auto known -> Global.Branches)
                     Location loc = Game.network.GetLocation(house.Value.LocID);
                     if (loc != null)
                     {
@@ -4727,21 +4732,26 @@ namespace Next_Game
                         friendPrefix = ""; enemyPrefix = "";
                         if (numFriends > 0 || numEnemies > 0)
                         {
-                            strength = 3;
-                            index = numFriends;
-                            index = Math.Min(4, numFriends); //cap to size of arrayOfDescriptors
-                            friendPrefix = arrayOfDescriptors[index];
-                            index = numEnemies;
-                            index = Math.Min(4, numEnemies); //cap to size of arrayOfDescriptors
-                            enemyPrefix = arrayOfDescriptors[index];
-                            startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
-                            rumourText = string.Format("It is {0} that you have {1} Friend{2} and {3} Enem{4} at {5}", startText, friendPrefix, numFriends != 1 ? "s" : "", 
-                                enemyPrefix, numEnemies != 1 ? "ies" : "y", loc.LocName);
-                            RumourFriends rumour = new RumourFriends(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, RumourGlobal.All) { RefID = loc.RefID };
-                            //add to dictionary and global list
-                            if (AddGlobalRumour(rumour) == false)
-                            { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Friends and Enemies) -> Rumour Cancelled")); }
-                            Game.logStart?.Write($"[Friends and Enemies] {rumourText} -> dict");
+                            branch = house.Value.Branch;
+                            if (branch > 0 && branch < 5)
+                            {
+                                strength = 3;
+                                index = numFriends;
+                                index = Math.Min(4, numFriends); //cap to size of arrayOfDescriptors
+                                friendPrefix = arrayOfDescriptors[index];
+                                index = numEnemies;
+                                index = Math.Min(4, numEnemies); //cap to size of arrayOfDescriptors
+                                enemyPrefix = arrayOfDescriptors[index];
+                                startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                rumourText = string.Format("It is {0} that you have {1} Friend{2} and {3} Enem{4} at {5} (House {6})", startText, friendPrefix, numFriends != 1 ? "s" : "",
+                                    enemyPrefix, numEnemies != 1 ? "ies" : "y", loc.LocName, house.Value.Name);
+                                RumourFriends rumour = new RumourFriends(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch) { RefID = loc.RefID };
+                                //add to dictionary and global list
+                                if (AddGlobalRumour(rumour) == false)
+                                { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Friends and Enemies) -> Rumour Cancelled")); }
+                                Game.logStart?.Write($"[Friends and Enemies] {rumourText} -> dict");
+                            }
+                            else { Game.SetError(new Error(268, $"Invalid House Branch \"{branch}\" -> Rumour Friends not created")); }
                         }
                     }
                     else { Game.SetError(new Error(268, $"Invalid Location (null) from LocID {house.Value.LocID}")); }
@@ -4784,7 +4794,7 @@ namespace Next_Game
                                         //is there a rumour to create?
                                         if (rumourText.Length > 0)
                                         {
-                                            int branch = houseFrom.Branch;
+                                            branch = houseFrom.Branch;
                                             if (branch > 0 && branch < 5)
                                             {
                                                 strength = 2;

@@ -120,6 +120,16 @@ namespace Next_Game
         }
 
         /// <summary>
+        /// Can be set directly but used to generate a msg
+        /// </summary>
+        /// <param name="status"></param>
+        public void SetFriendsAndEnemies(bool status)
+        {
+            FriendsAndEnemies = status;
+            Game.logTurn?.Write($"[Notification] House {Name} FriendsAndEnemies status changed to \"{status}\"");
+        }
+
+        /// <summary>
         /// import a list of Relations and add to House Relations List (auto  updates current Rel dict)
         /// </summary>
         /// <param name="tempList"></param>

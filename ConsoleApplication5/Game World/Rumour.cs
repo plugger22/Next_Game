@@ -62,7 +62,7 @@ namespace Next_Game
     }
 
     /// <summary>
-    /// Rumour about an NPC's skill
+    /// Rumour about an NPC's skill -> Local
     /// </summary>
     class RumourSkill : Rumour
     {
@@ -90,7 +90,7 @@ namespace Next_Game
     }
 
     /// <summary>
-    /// Rumour about an NPC's secret (one rumour regardless of how many secrets they have)
+    /// Rumour about an NPC's secret (one rumour regardless of how many secrets they have -> Local)
     /// </summary>
     class RumourSecret : Rumour
     {
@@ -113,7 +113,7 @@ namespace Next_Game
 
 
     /// <summary>
-    /// Rumour about an NPC's item (one rumour per item -> Global All)
+    /// Rumour about an NPC's item (one rumour per item -> Global.All)
     /// </summary>
     class RumourItem : Rumour
     {
@@ -135,7 +135,7 @@ namespace Next_Game
     }
 
     /// <summary>
-    /// Rumour about an NPC's who have disguises (one rumour per NPC -> Global All)
+    /// Rumour about an NPC's who have disguises (one rumour per NPC -> Global.All)
     /// </summary>
     class RumourDisguise : Rumour
     {
@@ -157,7 +157,7 @@ namespace Next_Game
     }
 
     /// <summary>
-    /// Rumour about House Relationships (one rumour per relationship -> Global Branch)
+    /// Rumour about House Relationships (one rumour per relationship -> Global.Branch)
     /// </summary>
     class RumourHouseRel : Rumour
     {
@@ -182,7 +182,7 @@ namespace Next_Game
     }
 
     /// <summary>
-    /// Rumour about number of friends and enemies at a House (one rumour per house provided that there are at least some Friends and/or Enemies)
+    /// Rumour about number of friends and enemies at a House (one rumour per house provided that there are at least some Friends and/or Enemies -> Global.Branch)
     /// </summary>
     class RumourFriends : Rumour
     {
