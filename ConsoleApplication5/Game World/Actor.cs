@@ -995,6 +995,20 @@ namespace Next_Game
         /// <returns></returns>
         public SortedDictionary<int, ActorRelation> GetFamily()
         { return dictFamily; }
+
+
+        /// <summary>
+        /// returns relationship, eg. 'son', 'daughter', of actor (eg. the son) with the withActorID (eg. the father). 'Unknown' if non found.
+        /// </summary>
+        /// <param name="whoActorID"></param>
+        /// <param name="withActorID"></param>
+        /// <returns></returns>
+        public string GetFamilyRelationship(int withActorID)
+        {
+            if( dictFamily.ContainsKey(withActorID))
+            { return Convert.ToString(dictFamily[withActorID]); }
+            return "Unknown";
+        }
     }
 
 

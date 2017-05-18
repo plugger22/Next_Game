@@ -1,6 +1,95 @@
-//Exile Game file ops "LogTurn.txt" commenced at: 18/05/2017 14:51:42
---- ProcessStartGame (World.cs)
---- AgePassiveCharacters (History.cs)
+//Exile Game File "LogTurn.txt" opened at: 18/05/2017 15:23:25
+--- ProcessStartTurn (World.cs)
+Day 2, Turn 1
+--- MoveActors -> 0 Records (World.cs)
+--- UpdatePlayerStatus (World.cs)
+--- UpdateWorldStatus (World.cs)
+--- CheckFollowerActivity (World.cs)
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 54, Strength 2, Scope Global, Type Desire, Global All
+arrayOfRumours [2] -> RumourID 274, Strength 3, Scope Global, Type Friends, Global East
+arrayOfRumours [5] -> RumourID 172, Strength 4, Scope Local, Type Skill, Global None
+RumourID 172 selected from the Pool
+Rumour "BannerLord Farlen Clegane "The Principled", ActID 81 at Clegane's Keep, is said to be Overconfident" revealed to ActorID6 on turn 1 -> added to List
+RumourID 172 removed from listRumoursHouse[2]
+Follower The Jester, ActID 6, added RumourID 172
+BannerLord Farlen Clegane, ActID 81, skill Leadership set to True
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 223, Strength 2, Scope Global, Type Desire, Global All
+arrayOfRumours [1] -> RumourID 255, Strength 3, Scope Global, Type Friends, Global North
+arrayOfRumours [5] -> RumourID 144, Strength 4, Scope Local, Type Skill, Global None
+RumourID 255 selected from the Pool
+Rumour "It is It is murmured amongst friends that you have no Friends and a few Enemies at Casterly Rock (House Lannister)" revealed to ActorID7 on turn 1 -> added to List
+RumourID 255 removed from listRumoursNorth[0]
+Follower The Beast, ActID 7, added RumourID 255
+[Notification] House Lannister FriendsAndEnemies status changed to "True"
+--- GetRumour (Director.cs)
+arrayOfRumours [0] -> RumourID 18, Strength 2, Scope Global, Type Desire, Global All
+arrayOfRumours [4] -> RumourID 289, Strength 3, Scope Global, Type Friends, Global West
+arrayOfRumours [5] -> RumourID 189, Strength 4, Scope Local, Type Skill, Global None
+RumourID 189 selected from the Pool
+Rumour "BannerLord Hunfridus Botley "The Short", ActID 86 at Lordsport, is known to be Short" revealed to ActorID3 on turn 1 -> added to List
+RumourID 189 removed from listRumoursHouse[0]
+Follower The Spider, ActID 3, added RumourID 189
+BannerLord Hunfridus Botley, ActID 86, skill Combat set to True
+[Notification] Player in SafeHouse -> World events cancelled
+--- CheckStationaryActiveActors (World.cs)
+ [Search -> Stationary] Usurper Aunger Targaryen, ActID 1 is AtLocation
+--- CheckIfFoundActive (World.cs)
+ [Search -> Debug] Enemy, Brother Haborym, ID 118 at 15:18, Active Aunger Targaryen, ID 1, at 18:14
+ [Search -> Debug] Enemy, Brother Dagon, ID 119 at 15:18, Active Aunger Targaryen, ID 1, at 18:14
+ [Search -> Debug] Enemy, Brother Kali, ID 120 at 15:18, Active Aunger Targaryen, ID 1, at 18:14
+ [Search -> Debug] Enemy, Brother Nergal, ID 121 at 15:18, Active Aunger Targaryen, ID 1, at 18:14
+ [Search -> Debug] Enemy, The Unrelenting, ID 122 at 15:18, Active Aunger Targaryen, ID 1, at 18:14
+ [Search -> Stationary] Follower The Jester, ActID 6 is AtLocation
+ [Search -> Stationary] Follower The Beast, ActID 7 is AtLocation
+ [Search -> Stationary] Follower The Spider, ActID 3 is AtLocation
+--- UpdateAIController (World.cs)
+ [AI -> Player Unknown] Inquisitor Brother Haborym, Act ID 118 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Dagon, Act ID 119 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Kali, Act ID 120 Mode -> Normal
+ [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 121 Mode -> Normal
+ [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 122 Mode -> Normal
+--- SetEnemyActivity (World.cs)
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Haborym, ActID 118 Assigned Branch -> 0 Current Branch -> 0
+ [Goal -> New] Brother Haborym, ActID 118, (loc 15:18), assigned new Goal -> Hide
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Dagon, ActID 119 Assigned Branch -> 1 Current Branch -> 0
+ [Goal -> New] Brother Dagon, ActID 119, (loc 15:18), assigned new Goal -> Move
+ [Goal -> Move] Brother Dagon, ActID 119 -> Capital to Correct Branch -> The Singing Ghost, LocID 2
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Known] Brother Kali ActID 120 has become KNOWN
+ [Enemy -> Goal] Brother Kali, ActID 120 retains Goal -> Wait
+--- SetEnemyGoal (World.cs)
+ [Goal -> Branch] Brother Nergal, ActID 121 Assigned Branch -> 3 Current Branch -> 0
+ [Goal -> New] Brother Nergal, ActID 121, (loc 15:18), assigned new Goal -> Move
+ [Goal -> Move] Brother Nergal, ActID 121 -> Capital to Correct Branch -> Pyke, LocID 23
+--- InitiateMoveActor (World.cs)
+--- Move Actor (Director.cs)
+ [Enemy -> Goal] The Unrelenting, ActID 122 retains Goal -> Wait
+--- CheckPlayerEvents (Director.cs)
+- CreateAutoLocEvent (Director.cs)
+ [AutoEvent -> ActorList] "Aeron Westerling", ID 79 added to list of Actors
+ [AutoEvent -> LocalList] "Aeron Westerling", ID 79 added to list of Locals
+[Notification] No entry found in dictOfIntroductions for RefID 8
+ Chance of Player Location event 75 %
+--- ResolvePlayerEvents (Director.cs)
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Trigger FAILED on "0" Equals 1
+ Trigger: Player is wrong type of Known status -> Trigger failed
+ Event "What to do?" Timer Repeat now 999
+ Event "What to do?" Cooldown Timer has been reset to 0
+--- UpdateActiveActors (World.cs)
+ Usurper Aunger Targaryen has had their TurnsUnknown Timer increased from 100 to 101
+ Follower The Jester has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Beast has had their TurnsUnknown Timer increased from 0 to 1
+ Follower The Spider has had their TurnsUnknown Timer increased from 0 to 1
+--- ResolveOutcome (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
+--- ResolveFollowerEvents (Director.cs)
 --- SetEndGame (Game.cs)
 [Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 18/05/2017 14:53:46
+//Exile Game file ops "LogTurn.txt" Completed at: 18/05/2017 15:24:11

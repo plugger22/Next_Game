@@ -20,3 +20,6 @@ Seed 26984 -> Thursday, 18 May 2017 2:32 PM
 Seed 58555 -> Thursday, 18 May 2017 2:37 PM
 Seed 50654 -> Thursday, 18 May 2017 2:42 PM
 Seed 21356 -> Thursday, 18 May 2017 2:51 PM
+Seed 5968 -> Thursday, 18 May 2017 3:08 PM
+Seed 8281 -> Thursday, 18 May 2017 3:10 PM
+Seed 14595 -> Thursday, 18 May 2017 3:21 PM

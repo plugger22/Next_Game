@@ -4720,7 +4720,14 @@ namespace Next_Game
                                                     Passive sibling = Game.world.GetPassiveActor(data);
                                                     if (sibling != null)
                                                     {
-                                                        desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires that their son, {sibling.Title} {sibling.Name} \"{sibling.Handle}\", ActID {sibling.ActID}, attains a position in the Royal Court";
+                                                        //get family relationship
+                                                        if (actor is Noble)
+                                                        {
+                                                            Noble noble = actor as Noble;
+                                                            string relation = noble.GetFamilyRelationship(sibling.ActID);
+                                                            desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires that their {relation}, {sibling.Title} {sibling.Name} \"{sibling.Handle}\", ActID {sibling.ActID}, attains a position in the Royal Court";
+                                                        }
+                                                        else { Game.SetError(new Error(268, $"Actor {actor.Title} {actor.Name}, ActID {actor.ActID}, is not a Noble -> Court rumour cancelled")); }
                                                     }
                                                     else { Game.SetError(new Error(268, $"Invalid sibling for (actor.DesireData) ActID {data} -> Desire rumour cancelled")); }
                                                     break;
@@ -4729,6 +4736,21 @@ namespace Next_Game
                                                     desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, {arrayOfGoldTexts[rnd.Next(arrayOfGoldTexts.Length)]}";
                                                     break;
                                                 case PossPromiseType.Marriage:
+                                                    //Lord or Lady want to marry their daughter to the Ursurper
+                                                    data = actor.DesireData;
+                                                    Passive daughter = Game.world.GetPassiveActor(data);
+                                                    if (daughter != null)
+                                                    {
+                                                        //get family relationship
+                                                        if (actor is Noble)
+                                                        {
+                                                            Noble noble = actor as Noble;
+                                                            string relation = noble.GetFamilyRelationship(daughter.ActID);
+                                                            desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires that their {relation}, {daughter.Title} {daughter.Name} \"{daughter.Handle}\", ActID {daughter.ActID}, is betrothed to the Ursurper";
+                                                        }
+                                                        else { Game.SetError(new Error(268, $"Actor {actor.Title} {actor.Name}, ActID {actor.ActID}, is not a Noble -> Marriage rumour cancelled")); }
+                                                    }
+                                                    else { Game.SetError(new Error(268, $"Invalid sibling for (actor.DesireData) ActID {data} -> Desire rumour cancelled")); }
                                                     break;
                                                 case PossPromiseType.Item:
                                                     break;
@@ -4827,7 +4849,7 @@ namespace Next_Game
                                 index = Math.Min(4, numEnemies); //cap to size of arrayOfDescriptors
                                 enemyPrefix = arrayOfDescriptors[index];
                                 startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
-                                rumourText = string.Format("It is {0} that you have {1} Friend{2} and {3} Enem{4} at {5} (House {6})", startText, friendPrefix, numFriends != 1 ? "s" : "",
+                                rumourText = string.Format("{0} that you have {1} Friend{2} and {3} Enem{4} at {5} (House {6})", startText, friendPrefix, numFriends != 1 ? "s" : "",
                                     enemyPrefix, numEnemies != 1 ? "ies" : "y", loc.LocName, house.Value.Name);
                                 RumourFriends rumour = new RumourFriends(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch) { RefID = loc.RefID };
                                 //add to dictionary and global list
