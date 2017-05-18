@@ -4539,7 +4539,7 @@ namespace Next_Game
             if (dictPassiveActors != null)
             {
                 Game.logStart?.Write("--- InitialiseRumours (World.cs)");
-                int skill, strength, index;
+                int skill, strength, index, branch;
                 bool proceedFlag;
                 int royalRefID = Game.lore.RoyalRefIDNew;
                 string trait, rumourText, immersionText, startText, locName;
@@ -4680,6 +4680,42 @@ namespace Next_Game
                                                 Game.logStart?.Write($"[Disguise] {rumourText} -> dict");
                                             }
                                         }
+                                        //Rumours -> Desires (one rumour per desire -> global.Branch)
+                                        if (actor.Desire > PossPromiseType.None)
+                                        {
+                                            rumourText = ""; branch = 0;
+                                            switch(actor.Desire)
+                                            {
+                                                case PossPromiseType.Land:
+                                                    break;
+                                                case PossPromiseType.Court:
+                                                    break;
+                                                case PossPromiseType.Gold:
+                                                    break;
+                                                case PossPromiseType.Marriage:
+                                                    break;
+                                                case PossPromiseType.Item:
+                                                    break;
+                                                case PossPromiseType.Title:
+                                                    break;
+                                                case PossPromiseType.Lordship:
+                                                    break;
+                                                default:
+                                                    Game.SetError(new Error(268, $"Invalid actor.Desire \"{actor.Desire}\" -> rumour not created"));
+                                                    break;
+                                            }
+                                            if (rumourText.Length > 0)
+                                            {
+                                                //create rumour
+                                                branch = house?.Branch;
+                                                if (branch > 0 && branch < 5)
+                                                {
+                                                    strength = 2;
+                                                    startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                                }
+                                            }
+                                            else { Game.SetError(new Error(268, $"Invalid House Branch \"{branch}\" -> Rumour Desire not created")); }
+                                        }
                                         break;
                                     case ActorStatus.Gone:
                                         //rumour of past character
@@ -4696,7 +4732,7 @@ namespace Next_Game
                 //
                 int relFriends = Game.constant.GetValue(Global.FRIEND_THRESHOLD);
                 int relEnemies = Game.constant.GetValue(Global.ENEMY_THRESHOLD);
-                int numFriends, numEnemies, relPlyr, branch;
+                int numFriends, numEnemies, relPlyr;
                 string friendPrefix, enemyPrefix;
                 string[] arrayOfDescriptors = new string[] { "no", "a", "a few", "a handful of", "many" }; //used for Friends and enemies, index corresponds to #'s, eg. index 0 -> 'no' friends, 4+ -> 'many'
                 //Major Houses
