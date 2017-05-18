@@ -4554,7 +4554,7 @@ namespace Next_Game
                     "whispered", "murmured amongst friends" };
                 string[] arrayOfSecretTexts = new string[] { "has a dark secret", "is keeping something private", "knows more than they let on", "has a mysterious past",
                     "has hidden secrets carefully kept from view", "jealously guards a secret", "knows something important", "conceals a dark truth" };
-                string[] arrayOfGoldTexts = new string[] { "has a thirst for Gold", "hungers for Gold", "lusts after Gold", "thinks only of Gold", "is in thrall to Gold" };
+                string[] arrayOfPrefixTexts = new string[] { "has an unquenched hunger for", "thirst for", "hungers for", "lusts after", "thinks only of", "is in thrall to" };
                 string[] arrayOfTitleTexts = new string[] { "is impatient for a Title", "desires a Title", "has their eyes set on a Title", "is determined to gain a Title", "would do anything for a Title" };
                 //
                 // Characters ---
@@ -4727,13 +4727,13 @@ namespace Next_Game
                                                             string relation = noble.GetFamilyRelationship(sibling.ActID);
                                                             desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires that their {relation}, {sibling.Title} {sibling.Name} \"{sibling.Handle}\", ActID {sibling.ActID}, attains a position in the Royal Court";
                                                         }
-                                                        else { Game.SetError(new Error(268, $"Actor {actor.Title} {actor.Name}, ActID {actor.ActID}, is not a Noble -> Court rumour cancelled")); }
+                                                        else { Game.SetError(new Error(268, $"Actor {actor.Title} {actor.Name}, ActID {actor.ActID}, is not a Noble -> Desire Court rumour cancelled")); }
                                                     }
                                                     else { Game.SetError(new Error(268, $"Invalid sibling for (actor.DesireData) ActID {data} -> Desire rumour cancelled")); }
                                                     break;
                                                 case PossPromiseType.Gold:
                                                     //actor wants gold
-                                                    desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, {arrayOfGoldTexts[rnd.Next(arrayOfGoldTexts.Length)]}";
+                                                    desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, {arrayOfPrefixTexts[rnd.Next(arrayOfPrefixTexts.Length)]} Gold";
                                                     break;
                                                 case PossPromiseType.Marriage:
                                                     //Lord or Lady want to marry their daughter to the Ursurper
@@ -4746,22 +4746,38 @@ namespace Next_Game
                                                         {
                                                             Noble noble = actor as Noble;
                                                             string relation = noble.GetFamilyRelationship(daughter.ActID);
-                                                            desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires that their {relation}, {daughter.Title} {daughter.Name} \"{daughter.Handle}\", ActID {daughter.ActID}, is betrothed to the Ursurper";
+                                                            string daughterText = $"{daughter.Title} {daughter.Name} \"{daughter.Handle}\", ActID {daughter.ActID}";
+                                                            desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires that their {relation}, {daughterText}, is betrothed to the Ursurper";
                                                         }
-                                                        else { Game.SetError(new Error(268, $"Actor {actor.Title} {actor.Name}, ActID {actor.ActID}, is not a Noble -> Marriage rumour cancelled")); }
+                                                        else { Game.SetError(new Error(268, $"Actor {actor.Title} {actor.Name}, ActID {actor.ActID}, is not a Noble -> Desire Marriage rumour cancelled")); }
                                                     }
                                                     else { Game.SetError(new Error(268, $"Invalid sibling for (actor.DesireData) ActID {data} -> Desire rumour cancelled")); }
                                                     break;
                                                 case PossPromiseType.Item:
+                                                    data = actor.DesireData;
+                                                    Possession possession = Game.world.GetPossession(data);
+                                                    if (possession != null)
+                                                    {
+                                                        if (possession is Item)
+                                                        {
+                                                            Item item = possession as Item;
+                                                            string prefixText = $"{arrayOfPrefixTexts[rnd.Next(arrayOfPrefixTexts.Length)]} the";
+                                                            desireText = $"{actor.Title} { actor.Name}, ActID { actor.ActID} at {locName}, {prefixText} {item.Prefix} {item.Description}";
+                                                        }
+                                                        else { Game.SetError(new Error(268, $"Invalid possession (Not an Item), possID {data} -> Desire Item rumour cancelled")); }
+                                                    }
+                                                    else { Game.SetError(new Error(268, $"Invalid Item possession (Null), possID {data} -> Desire rumour cancelled")); }
                                                     break;
                                                 case PossPromiseType.Title:
                                                     //Knight who wants to become a BannerLord
                                                     desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, {arrayOfTitleTexts[rnd.Next(arrayOfTitleTexts.Length)]}";
                                                     break;
                                                 case PossPromiseType.Lordship:
+                                                    data = actor.DesireData; //houseID of majorHouse
+                                                    desireText = $"{actor.Title} { actor.Name}, ActID { actor.ActID} at {locName}, desires to become Lord of House {Game.world.GetMajorHouseName(data)}";
                                                     break;
                                                 default:
-                                                    Game.SetError(new Error(268, $"Invalid actor.Desire \"{actor.Desire}\" -> rumour not created"));
+                                                    Game.SetError(new Error(268, $"Invalid actor.Desire \"{actor.Desire}\" -> Desire rumour not created"));
                                                     break;
                                             }
                                             if (desireText.Length > 0)
@@ -4887,13 +4903,13 @@ namespace Next_Game
                                                 rumourText = $"House {houseFrom.Name} has had good past relations with House {houseTo.Name} due to {relationship.Rumour}";
                                                 break;
                                             case RelListType.HousePastBad:
-                                                rumourText = $"House {houseFrom.Name} has had bad past relations with House {houseTo.Name} due to {relationship.Rumour}";
+                                                rumourText = $"House {houseFrom.Name} has had poor past relations with House {houseTo.Name} due to {relationship.Rumour}";
                                                 break;
                                             case RelListType.BannerPastGood:
                                                 rumourText = $"House {houseFrom.Name} has had good past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
                                                 break;
                                             case RelListType.BannerPastBad:
-                                                rumourText = $"House {houseFrom.Name} has had bad past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
+                                                rumourText = $"House {houseFrom.Name} has had poor past relations with their BannerLord at House {houseTo.Name} due to {relationship.Rumour}";
                                                 break;
                                             default:
                                                 Game.SetError(new Error(268, $"Invalid relationship.Type \"{relationship.Type}\""));
