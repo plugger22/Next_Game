@@ -2803,7 +2803,7 @@ namespace Next_Game
                                         case OutcomeType.RelPlyr:
                                             //change NPC's relationship with Player
                                             OutRelPlyr relPlyrOutcome = outcome as OutRelPlyr;
-                                            outcomeText = ChangePlyrRelStatus(option.ActorID, relPlyrOutcome.Amount, relPlyrOutcome.Calc, relPlyrOutcome.Description, relPlyrOutcome.Tag);
+                                            outcomeText = ChangePlayerRelStatus(option.ActorID, relPlyrOutcome.Amount, relPlyrOutcome.Calc, relPlyrOutcome.Description, relPlyrOutcome.Tag);
                                             if (String.IsNullOrEmpty(outcomeText) == false)
                                             {
                                                 resultList.Add(new Snippet(outcomeText, foreColor, backColor)); resultList.Add(new Snippet(""));
@@ -3751,7 +3751,7 @@ namespace Next_Game
         /// <param name=""></param>
         /// <param name=""></param>
         /// <returns></returns>
-        private string ChangePlyrRelStatus(int actorID, int amount, EventCalc apply, string description, string tag)
+        private string ChangePlayerRelStatus(int actorID, int amount, EventCalc apply, string description, string tag)
         {
             string resultText = "";
             if (actorID > 1)
@@ -4684,6 +4684,7 @@ namespace Next_Game
                                         if (actor.Desire > PossPromiseType.None)
                                         {
                                             rumourText = ""; branch = 0;
+                                            startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
                                             switch(actor.Desire)
                                             {
                                                 case PossPromiseType.Land:
@@ -4707,11 +4708,12 @@ namespace Next_Game
                                             if (rumourText.Length > 0)
                                             {
                                                 //create rumour
-                                                branch = house?.Branch;
+                                                if (actor.RefID != 9999) { branch = house.Branch; }
                                                 if (branch > 0 && branch < 5)
                                                 {
                                                     strength = 2;
-                                                    startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
+                                                    
+                                                    
                                                 }
                                             }
                                             else { Game.SetError(new Error(268, $"Invalid House Branch \"{branch}\" -> Rumour Desire not created")); }
