@@ -208,6 +208,7 @@ namespace Next_Game
     /// </summary>
     class RumourDesire : Rumour
     {
+        public int Data { get; set; } //multipurpose data, could be actor, refID or possessionID
 
         /// <summary>
         /// RumourItem constructor
@@ -216,11 +217,13 @@ namespace Next_Game
         /// <param name="strength"></param>
         /// <param name="skill"></param>
         /// <param name="scope"></param>
+        /// <param name="data">Multipurpose data point (eg. actorID, RefID, PossID) depending on actor.Desire -> PossPromiseType)</param>
         /// <param name="turnCreated">If '0' then defaults to current game turn</param>
         /// <param name="global"></param>
         /// <param name="isActive"></param>
-        public RumourDesire(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        public RumourDesire(string text, int strength, RumourScope scope, int data, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
+            Data = data;
             Type = RumourType.Desire;
         }
     }

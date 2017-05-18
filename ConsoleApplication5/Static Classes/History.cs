@@ -871,7 +871,7 @@ namespace Next_Game
                 Game.world.SetHistoricalRecord(record);
             }
             else { Game.SetError(new Error(181, "Invalid Loc (null) Knight not added to Loc")); }
-            InitialiseActorTraits(knight, null, null, SkillType.Combat, SkillType.Treachery);
+            InitialiseActorTraits(knight, null, null, SkillType.Combat, SkillType.Charm);
             return knight;
         }
 

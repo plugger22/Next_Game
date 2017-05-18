@@ -939,7 +939,7 @@ namespace Next_Game
         public PossPromiseType Desire { get; set; } //what does the actor want?
         public string DesireText { get; set; } //descriptor for desire
         public int DesireData { get; set; } //multi purpose data point related to specific desire
-        public bool DesireKnown { get; set; } //if true then desire is shown, otherwise hidden (greyed out)
+        public bool DesireKnown { get; private set; } //if true then desire is shown, otherwise hidden (greyed out)
 
 
         public Passive()
@@ -948,10 +948,15 @@ namespace Next_Game
         public Passive(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
         { }
 
-        /*public Passive(string name, ActorType type, ActorSex sex = ActorSex.Male) : base(name, type, sex)
+        /// <summary>
+        /// Can be set directly but used to generate a msg
+        /// </summary>
+        /// <param name="status"></param>
+        public void SetDesireKnown(bool status)
         {
-            dictFamily = new SortedDictionary<int, ActorRelation>();
-        }*/
+            DesireKnown = status;
+            Game.logTurn?.Write($"[Notification] {Title} {Name} \"{Handle}\" DesireKnown status changed to \"{status}\"");
+        }
     }
 
 

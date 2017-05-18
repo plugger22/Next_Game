@@ -3159,7 +3159,7 @@ namespace Next_Game
                         PossPromiseType desire = listOfPossibleDesires[rnd.Next(listOfPossibleDesires.Count)];
                         //assign to actor
                         actor.Desire = desire;
-                        actor.DesireKnown = false;
+                        actor.SetDesireKnown(false);
                         int data;
                         //choose specific option for the desire
                         switch (desire)
@@ -5957,13 +5957,20 @@ namespace Next_Game
                                                 {
                                                     House house = Game.world.GetHouse(rumour.RefID);
                                                     if (house != null)
-                                                    {
-                                                        house.FriendsAndEnemies = true;
-                                                        Game.logTurn?.Write($"[Notification -> Friends] \"{rumour.Text}\" -> FriendsAndEnemies is True");
-                                                    }
+                                                    { house.SetFriendsAndEnemies(true); }
                                                     else { Game.SetError(new Error(276, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> FriendsAndEnemies not made Known")); }
                                                 }
                                                 else { Game.SetError(new Error(276, $"Rumour Type doesn't match Rumour class (Friends) -> FriendsAndEnemies not made Known, RumourID {rumour.RumourID}")); }
+                                                break;
+                                            case RumourType.Desire:
+                                                if (rumour is RumourDesire)
+                                                {
+                                                    RumourDesire rumourDesire = rumour as RumourDesire;
+                                                    Passive passive = Game.world.GetPassiveActor(rumourDesire.Data);
+                                                    if (passive != null)
+                                                    { passive.SetDesireKnown(true); }
+                                                    else { Game.SetError(new Error(276, $"Invalid actor (null) for rumourDesire.ActID {rumourDesire.Data} -> DesireKnown unchanged")); }
+                                                }
                                                 break;
                                         }
                                         //end switch

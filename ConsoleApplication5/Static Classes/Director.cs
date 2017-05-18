@@ -1742,7 +1742,7 @@ namespace Next_Game
                                 {
                                     //You've spoken to the character so you know their desire (if you didn't previously)
                                     Passive tempPassive = personWant as Passive;
-                                    tempPassive.DesireKnown = true;
+                                    tempPassive.SetDesireKnown(true);
                                     //set up promises
                                     int strength; // strength of promise, 1 to 5
                                     int baseValue = Game.constant.GetValue(Global.PROMISES_BASE);
@@ -4035,7 +4035,7 @@ namespace Next_Game
                                             { Game.SetError(new Error(272, $"Invalid SkillType \"{rumourSkill.Skill}\" prevents change of Known status")); }
                                             else { Game.logTurn?.Write($"{actor.Title} {actor.Name}, ActID {actor.ActID}, has their {rumourSkill.Skill} changed to True"); }
                                         }
-                                        else { Game.SetError(new Error(272, $"Invalid actor (null) for ActID {rumourSkill.ActorID}")); }
+                                        else { Game.SetError(new Error(272, $"RumourSkill -> Invalid actor (null) for ActID {rumourSkill.ActorID}")); }
                                     }
                                     else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (Skill) -> Skill not made Known, RumourID {rumour.RumourID}")); }
                                     break;
@@ -4072,13 +4072,20 @@ namespace Next_Game
                                     {
                                         House house = Game.world.GetHouse(rumour.RefID);
                                         if (house != null)
-                                        {
-                                            house.FriendsAndEnemies = true;
-                                            Game.logTurn?.Write($"[Notification -> Friends] \"{rumour.Text}\" -> FriendsAndEnemies is True");
-                                        }
+                                        { house.SetFriendsAndEnemies(true); }
                                         else { Game.SetError(new Error(272, $"Invalid house (null) for rumour.RefID {rumour.RefID} -> FriendsAndEnemies not made Known")); }
                                     }
                                     else { Game.SetError(new Error(272, $"Rumour Type doesn't match Rumour class (Friends) -> FriendsAndEnemies not made Known, RumourID {rumour.RumourID}")); }
+                                    break;
+                                case RumourType.Desire:
+                                    if (rumour is RumourDesire)
+                                    {
+                                        RumourDesire rumourDesire = rumour as RumourDesire;
+                                        Passive actor = Game.world.GetPassiveActor(rumourDesire.Data);
+                                        if (actor != null)
+                                        { actor.SetDesireKnown(true); }
+                                        else { Game.SetError(new Error(272, $"Invalid actor (null) for rumourDesire.ActID {rumourDesire.Data} -> DesireKnown unchanged")); }
+                                    }
                                     break;
                             }
                             //end switch
@@ -4529,7 +4536,7 @@ namespace Next_Game
 
 
         /// <summary>
-        /// create rumours out of the generated game state
+        /// create rumours at game start
         /// </summary>
         private void InitialiseRumours()
         {
@@ -4547,6 +4554,11 @@ namespace Next_Game
                     "whispered", "murmured amongst friends" };
                 string[] arrayOfSecretTexts = new string[] { "has a dark secret", "is keeping something private", "knows more than they let on", "has a mysterious past",
                     "has hidden secrets carefully kept from view", "jealously guards a secret", "knows something important", "conceals a dark truth" };
+                string[] arrayOfGoldTexts = new string[] { "has a thirst for Gold", "hungers for Gold", "lusts after Gold", "thinks only of Gold", "is in thrall to Gold" };
+                string[] arrayOfTitleTexts = new string[] { "is impatient for a Title", "desires a Title", "has their eyes set on a Title", "is determined to gain a Title", "would do anything for a Title" };
+                //
+                // Characters ---
+                //
                 //loop through all Passive Actors 
                 for (int i = 0; i < dictPassiveActors.Count - 1; i++)
                 {
@@ -4563,7 +4575,9 @@ namespace Next_Game
                                 {
                                     case ActorStatus.AtLocation:
                                         locName = Game.world.GetLocationName(actor.LocID);
+                                        //
                                         //rumour -> Skills (all skills except touched)
+                                        //
                                         for (int skillIndex = 1; skillIndex < (int)SkillType.Count; skillIndex++)
                                         {
                                             skill = actor.GetSkill((SkillType)skillIndex);
@@ -4572,7 +4586,7 @@ namespace Next_Game
                                                 trait = actor.GetTraitName((SkillType)skillIndex);
                                                 if (String.IsNullOrEmpty(trait) == false)
                                                 {
-                                                    //create a rumour
+                                                    //create a rumour -> make more important characters rumours more visible (higher strength)
                                                     switch (actor.Type)
                                                     {
                                                         case ActorType.Lord:
@@ -4610,7 +4624,9 @@ namespace Next_Game
                                                 }
                                             }
                                         }
+                                        //
                                         //Rumour -> Secrets (one rumour per character, regardless of how many secrets a character has)
+                                        //
                                         if (actor.CheckSecrets() == true)
                                         {
                                             strength = 2;
@@ -4628,7 +4644,9 @@ namespace Next_Game
                                             else { AddRumourToCapital(rumour.RumourID); }
                                             Game.logStart?.Write($"[Secret] {rumourText} -> dict");
                                         }
+                                        //
                                         //Rumours -> Items (one rumour per item possessed, global All)
+                                        //
                                         if (actor.CheckItems() == true)
                                         {
                                             strength = 1;
@@ -4664,7 +4682,9 @@ namespace Next_Game
                                             }
                                             else { Game.SetError(new Error(268, "Invalid listOfItems (null)")); }
                                         }
+                                        //
                                         //Rumours -> Disguises (one rumour regardless of # of disguises, global All)
+                                        //
                                         if(actor is Advisor)
                                         {
                                             Advisor advisor = actor as Advisor;
@@ -4680,24 +4700,41 @@ namespace Next_Game
                                                 Game.logStart?.Write($"[Disguise] {rumourText} -> dict");
                                             }
                                         }
+                                        //
                                         //Rumours -> Desires (one rumour per desire -> global.Branch)
+                                        //
                                         if (actor.Desire > PossPromiseType.None)
                                         {
-                                            rumourText = ""; branch = 0;
+                                            string desireText = ""; int data = 0;  branch = 0;
                                             startText = $"It is {arrayOfRumourTexts[rnd.Next(arrayOfRumourTexts.Length)]}";
                                             switch(actor.Desire)
                                             {
                                                 case PossPromiseType.Land:
+                                                    //Lord wants neighbouring minor house
+                                                    data = actor.DesireData; //refID of land desired
+                                                    desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires the neighbouring lands belonging to the Bannerlord at {Game.world.GetHouseName(data)}";
                                                     break;
                                                 case PossPromiseType.Court:
+                                                    //Lord's son, or brother, to Court. Lady's son to Court
+                                                    data = actor.DesireData;
+                                                    Passive sibling = Game.world.GetPassiveActor(data);
+                                                    if (sibling != null)
+                                                    {
+                                                        desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, desires that their son, {sibling.Title} {sibling.Name} \"{sibling.Handle}\", ActID {sibling.ActID}, attains a position in the Royal Court";
+                                                    }
+                                                    else { Game.SetError(new Error(268, $"Invalid sibling for (actor.DesireData) ActID {data} -> Desire rumour cancelled")); }
                                                     break;
                                                 case PossPromiseType.Gold:
+                                                    //actor wants gold
+                                                    desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, {arrayOfGoldTexts[rnd.Next(arrayOfGoldTexts.Length)]}";
                                                     break;
                                                 case PossPromiseType.Marriage:
                                                     break;
                                                 case PossPromiseType.Item:
                                                     break;
                                                 case PossPromiseType.Title:
+                                                    //Knight who wants to become a BannerLord
+                                                    desireText = $"{actor.Title} {actor.Name}, ActID {actor.ActID} at {locName}, {arrayOfTitleTexts[rnd.Next(arrayOfTitleTexts.Length)]}";
                                                     break;
                                                 case PossPromiseType.Lordship:
                                                     break;
@@ -4705,22 +4742,29 @@ namespace Next_Game
                                                     Game.SetError(new Error(268, $"Invalid actor.Desire \"{actor.Desire}\" -> rumour not created"));
                                                     break;
                                             }
-                                            if (rumourText.Length > 0)
+                                            if (desireText.Length > 0)
                                             {
                                                 //create rumour
                                                 if (actor.RefID != 9999) { branch = house.Branch; }
-                                                if (branch > 0 && branch < 5)
+                                                else { branch = 5; } //Royal Court
+                                                if (branch > 0 && branch < 6)
                                                 {
                                                     strength = 2;
-                                                    
-                                                    
+                                                    rumourText = $"{startText} that {desireText}";
+                                                    RumourDesire rumour = new RumourDesire(rumourText, strength, RumourScope.Global, data, rnd.Next(100) * -1, RumourGlobal.All) { RefID = actor.RefID };
+                                                    //add to dictionary and global list
+                                                    if (AddGlobalRumour(rumour) == false)
+                                                    { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Desire) -> Rumour Cancelled")); }
+                                                    Game.logStart?.Write($"[Desire] {rumourText} -> dict");
                                                 }
+                                                else { Game.SetError(new Error(268, $"Invalid House Branch \"{branch}\" -> Rumour Desire not created")); }
                                             }
-                                            else { Game.SetError(new Error(268, $"Invalid House Branch \"{branch}\" -> Rumour Desire not created")); }
                                         }
                                         break;
                                     case ActorStatus.Gone:
+                                        //
                                         //rumour of past character
+                                        //
                                         break;
                                 }
                             }
@@ -4730,7 +4774,7 @@ namespace Next_Game
                     else { Game.SetError(new Error(268, "Invalid Passive actor (null)")); }
                 }
                 //
-                //Houses
+                //Houses ---
                 //
                 int relFriends = Game.constant.GetValue(Global.FRIEND_THRESHOLD);
                 int relEnemies = Game.constant.GetValue(Global.ENEMY_THRESHOLD);
@@ -4740,7 +4784,9 @@ namespace Next_Game
                 //Major Houses
                 foreach (var house in dictMajorHouses)
                 {
+                    //
                     //Rumours -> Friends and Enemies (one per Major House if any exist, Capital excluded as auto known -> Global.Branches)
+                    //
                     Location loc = Game.network.GetLocation(house.Value.LocID);
                     if (loc != null)
                     {
@@ -4793,7 +4839,9 @@ namespace Next_Game
                         }
                     }
                     else { Game.SetError(new Error(268, $"Invalid Location (null) from LocID {house.Value.LocID}")); }
+                    //
                     //Rumours -> Past History between Major Houses, other Major Houses and their Minor Houses (one entry per relationship, global.Branch)
+                    //
                     List<Relation> listOfHouseRelationships = house.Value.GetRelations();
                     if (listOfHouseRelationships != null)
                     {
