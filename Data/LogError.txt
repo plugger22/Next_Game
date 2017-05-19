@@ -1,2 +1,4 @@
-//Exile Game file ops "LogError.txt" commenced at: 18/05/2017 17:14:17
-//Exile Game file ops "LogError.txt" Completed at: 18/05/2017 17:18:31
+//Exile Game file ops "LogError.txt" commenced at: 19/05/2017 21:49:27
+ERROR_277 "Invalid houseFrom.Branch "0" -> Enemy rumour cancelled"
+Method: InitialiseDynamicRumours,  Line: 5005,  Object: Director.cs,  Turn: 0,  Local Time: 21:49:41 UTC +10:00
+//Exile Game file ops "LogError.txt" Completed at: 19/05/2017 21:53:36

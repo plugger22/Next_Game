@@ -4497,12 +4497,13 @@ namespace Next_Game
 
 
         /// <summary>
-        /// Add's a global rumour to appropriate director list and master dictionary, returns True on success
+        /// Add's a global rumour to appropriate director list and appropriate master dictionary, returns True on success
         /// </summary>
         /// <param name="rumourID"></param>
         /// <param name="global"></param>
         internal bool AddGlobalRumour(Rumour rumour)
         {
+            //add to appropriate dictionary (handled automatically)
             if (Game.world.AddRumour(rumour.RumourID, rumour) == false)
             { Game.SetError(new Error(270, $"RumourID {rumour.RumourID} failed to Add to Dictionary -> not added to Global lists")); return false; }
             else
@@ -4551,10 +4552,10 @@ namespace Next_Game
                 int royalRefID = Game.lore.RoyalRefIDNew;
                 string trait, rumourText, immersionText, startText, locName;
                 string[] arrayOfRumourTexts = new string[] { "rumoured", "rumoured", "said", "known", "widely known", "suspected", "well known", "known by all", "commonly known", "whispered",
-                    "whispered", "murmured amongst friends" };
+                    "whispered", "murmured among friends" };
                 string[] arrayOfSecretTexts = new string[] { "has a dark secret", "is keeping something private", "knows more than they let on", "has a mysterious past",
                     "has hidden secrets carefully kept from view", "jealously guards a secret", "knows something important", "conceals a dark truth" };
-                string[] arrayOfPrefixTexts = new string[] { "has an unquenched hunger for", "thirst for", "hungers for", "lusts after", "thinks only of", "is in thrall to" };
+                string[] arrayOfPrefixTexts = new string[] { "has an unquenched hunger for", "thirsts for", "hungers for", "lusts after", "thinks only of", "is in thrall to", "is fixated upon" };
                 string[] arrayOfTitleTexts = new string[] { "is impatient for a Title", "desires a Title", "has their eyes set on a Title", "is determined to gain a Title", "would do anything for a Title" };
                 //
                 // Characters ---
@@ -4949,7 +4950,9 @@ namespace Next_Game
         /// </summary>
         public void InitialiseDynamicRumours()
         {
-            int chanceOfRumour, rndNum;
+            Game.logTurn?.Write("--- InitialiseDynamicRumours (Director.cs)");
+            int chanceOfRumour, rndNum, strength, branch, timerExpire;
+            string rumourText;
             //Enemies
             Dictionary<int, Enemy> dictEnemyActors = Game.world.GetEnemyActors();
             if (dictEnemyActors != null)
@@ -4957,6 +4960,7 @@ namespace Next_Game
                 chanceOfRumour = Game.constant.GetValue(Global.ENEMY_RUMOURS);
                 foreach(var enemy in dictEnemyActors)
                 {
+                    rumourText = ""; branch = 0;
                     //no need to check enemy.Status != Gone as enemies can never die
                     if( enemy.Value is Inquisitor || enemy.Value is Nemesis)
                     {
@@ -4964,21 +4968,49 @@ namespace Next_Game
                         if (enemy.Value.Known == false)
                         {
                             rndNum = rnd.Next(100);
-                            switch (enemy.Value.Goal)
+                            strength = 3;
+                            timerExpire = 5;
+                            Location loc = Game.network.GetLocation(enemy.Value.LocID);
+                            if (loc != null)
                             {
-                                case ActorAIGoal.Hide:
-                                    //halved chance for an enemy in hiding
-                                    if (rndNum < (chanceOfRumour / 2))
+                                branch = loc.GetBranch();
+                                switch (enemy.Value.Goal)
+                                {
+                                    case ActorAIGoal.Wait:
+                                        //halved chance for an enemy in hiding
+                                        if (rndNum < (chanceOfRumour / 2))
+                                        {
+                                            if (enemy.Value.HuntMode == true)
+                                            { rumourText = string.Format("{0} {1}, ActID {2} has been spotted laying low in {3} {4} with {5} sword at the ready", enemy.Value.Title, enemy.Value.Name,
+                                                enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID), enemy.Value.Sex == ActorSex.Male ? "his" : "her"); }
+                                            else { rumourText = string.Format("{0} {1}, ActID {2} has been spotted laying low in {3} {4}", enemy.Value.Title, enemy.Value.Name,
+                                                enemy.Value.ActID, loc.LocName, Game.world.ShowLocationCoords(loc.LocationID)); }
+                                        }
+                                        break;
+                                }
+                                //is there a rumour to create?
+                                if (rumourText.Length > 0)
+                                {
+
+
+                                    if (branch > 0 && branch < 5)
                                     {
-                                        //create rumour
+                                        strength = 3;
+                                        RumourEnemy rumour = new RumourEnemy(rumourText, strength, RumourScope.Global, timerExpire, 0, (RumourGlobal)branch);
+                                        //add to appropriate dictionary and appropriate global list
+                                        if (AddGlobalRumour(rumour) == false)
+                                        { Game.SetError(new Error(277, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Enemy) -> Enemy Rumour Cancelled")); }
+                                        Game.logStart?.Write($"[Enemy] {rumourText} -> dict");
                                     }
-                                    break;
+                                    else { Game.SetError(new Error(277, $"Invalid houseFrom.Branch \"{branch}\" -> Enemy rumour cancelled")); }
+                                }
                             }
+                            else { Game.SetError(new Error(277, $"Invalid Location (null) for {enemy.Value.Title} {enemy.Value.Name}, ActID {enemy.Value.ActID}, LocID {enemy.Value.LocID} -> Cancelled")); }
                         }
                     }
                 }
             }
-            else { Game.SetError(new Error(277, "Invalid dictEnemyActors (null)")); }
+            else { Game.SetError(new Error(277, "Invalid dictEnemyActors (null) -> all Enemy rumours cancelled")); }
         }
 
         /// <summary>

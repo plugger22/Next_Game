@@ -4679,6 +4679,7 @@ namespace Next_Game
         /// </summary>
         private void HousekeepActors()
         {
+            Game.logTurn?.Write("--- HouseKeepActors (World.cs)");
             //All actors -> decrement any Condition timers
             foreach (var actor in dictAllActors)
             {
