@@ -9,6 +9,7 @@ namespace Next_Game
     public enum RumourScope { None, Local, Global }
     public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel,Friends, Desire } //Corresponds to Rumour subclasses, set in subclass
     public enum RumourGlobal { None, North, East, South, West, All }
+    public enum RumourStatus { Normal, Timed, Inactive} //Normal -> dictRumoursNormal, Timed (TimerExpire > 0) -> dictRumoursTimed, Inactive (TimerStart > 0) -> dictRumoursInactive
 
     /// <summary>
     /// handles all rumours, eg. 'Ask around for information'
@@ -29,6 +30,7 @@ namespace Next_Game
         public RumourScope Scope { get; set; }
         public RumourType Type { get; set; } //Corresponds to Rumour subclasses, set in subclass
         public RumourGlobal Global { get; set; } //Optional -> only applies if Type is RumourType.Global
+        public RumourStatus Status { get; set; } //Optional -> Default normal, only specify if not
 
 
         public Rumour()
@@ -58,6 +60,8 @@ namespace Next_Game
                 if (turnCreated > Game.gameTurn) { TurnCreated = Game.gameTurn; }
                 else { TurnCreated = turnCreated; }
             }
+            //Status -> default 
+            Status = RumourStatus.Timed;
         }
     }
 

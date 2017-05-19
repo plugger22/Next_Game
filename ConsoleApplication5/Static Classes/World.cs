@@ -31,7 +31,9 @@ namespace Next_Game
         private Dictionary<int, Message> dictMessages; //all Player to Game & Game to Player messages
         private Dictionary<int, GeoCluster> dictGeoClusters; //all GeoClusters (key is geoID)
         private Dictionary<int, Skill> dictTraits; //all triats (key is traitID)
-        private Dictionary<int, Rumour> dictRumours; //all rumours (key is rumourID)
+        private Dictionary<int, Rumour> dictRumoursNormal; //all normal rumours (key is rumourID)
+        private Dictionary<int, Rumour> dictRumoursTimed; //all timed (TimerExpire > 0) rumours (key is rumourID)
+        private Dictionary<int, Rumour> dictRumoursInactive; //all inactive (TimerStart > 0) rumours (key is rumourId)
         private Dictionary<int, Rumour> dictRumoursKnown; //all rumours known to the Player (key is rumourID)
         private Dictionary<int, Possession> dictPossessions; //all possession (key is PossID)
         private Dictionary<int, Passive> dictRoyalCourt; //advisors and royal retainers (assumed to always be at Kingskeep) excludes family
@@ -68,7 +70,9 @@ namespace Next_Game
             dictMessages = new Dictionary<int, Message>();
             dictGeoClusters = new Dictionary<int, GeoCluster>();
             dictTraits = new Dictionary<int, Skill>();
-            dictRumours = new Dictionary<int, Rumour>();
+            dictRumoursNormal = new Dictionary<int, Rumour>();
+            dictRumoursTimed = new Dictionary<int, Rumour>();
+            dictRumoursInactive = new Dictionary<int, Rumour>();
             dictRumoursKnown = new Dictionary<int, Rumour>();
             dictPossessions = new Dictionary<int, Possession>();
             dictRoyalCourt = new Dictionary<int, Passive>();
@@ -2608,15 +2612,36 @@ namespace Next_Game
         }
 
         /// <summary>
-        /// Add a rumour to the dictionary, returns true if successful
+        /// Add a rumour to the Normal, Inactive, or Timed, dictionary (checks rumour is the correct Status first and changes Status if need be) returns true if successful
         /// </summary>
         /// <param name="rumourID"></param>
-        /// <param name="rumourObject"></param>
+        /// <param name="rumour"></param>
         /// <returns></returns>
-        internal bool AddRumour(int rumourID, Rumour rumourObject)
+        internal bool AddRumour(int rumourID, Rumour rumour)
         {
+            //check the logic to prevent rumours being added to the wrong dictionary
+            if (rumour.TimerStart > 0) { rumour.Status = RumourStatus.Inactive; }
+            else if (rumour.TimerExpire > 0) { rumour.Status = RumourStatus.Timed; }
             try
-            { dictRumours.Add(rumourID, rumourObject); return true; }
+            {
+                bool successFlag = false;
+                switch (rumour.Status)
+                {
+                    case RumourStatus.Normal:
+                        dictRumoursNormal.Add(rumourID, rumour);
+                        successFlag = true;
+                        break;
+                    case RumourStatus.Timed:
+                        dictRumoursTimed.Add(rumourID, rumour);
+                        successFlag = true;
+                        break;
+                    case RumourStatus.Inactive:
+                        dictRumoursInactive.Add(rumourID, rumour);
+                        successFlag = true;
+                        break;
+                }
+                if (successFlag == true) { return true; }
+            }
             catch (ArgumentNullException)
             { Game.SetError(new Error(266, $"Invalid Rumour Object (null), rumourID {rumourID}")); }
             catch (ArgumentException)
@@ -3615,10 +3640,13 @@ namespace Next_Game
             if (rumourID > 0)
             {
                 Rumour rumour = new Rumour();
-                if (dictRumours.TryGetValue(rumourID, out rumour))
+                //try Timed Rumour dict first (it's the smallest)
+                if (dictRumoursTimed.TryGetValue(rumourID, out rumour))
+                { return rumour; }
+                if (dictRumoursNormal.TryGetValue(rumourID, out rumour))
                 { return rumour; }
             }
-            else { Game.SetError(new Error(265, $"Invalid rumourID \"{rumourID}\" -> Not found in dictRumours")); }
+            else { Game.SetError(new Error(265, $"Invalid rumourID \"{rumourID}\" -> Not found in dictRumours Normal or Timed")); }
             return null;
         }
 
@@ -4282,6 +4310,7 @@ namespace Next_Game
             Game.infoChannel.ClearConsole(ConsoleDisplay.Event);
             Game.logTurn?.Write("--- ProcessStartTurn (World.cs)");
             Game.logTurn?.Write($"Day {Game.gameTurn + 1}, Turn {Game.gameTurn}");
+            UpdateRumours();
             UpdateActorMoveStatus(MoveActors());
             if (UpdatePlayerStatus() == true) { notificationStatus = true; }
             CalculateCrows();
@@ -4408,6 +4437,13 @@ namespace Next_Game
             return updateStatus;
         }
 
+        /// <summary>
+        /// checks rumours in dict Timed & Inactive, updates timers and moves & deletes rumours where appropriate
+        /// </summary>
+        private void UpdateRumours()
+        {
+
+        }
 
         /// <summary>
         /// updates Movement map layer for the different actors (key is mapMarker which is also the ActID of the character moving) Enemies are only shown if known.
