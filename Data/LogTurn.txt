@@ -1,88 +1,15 @@
-//Exile Game File "LogTurn.txt" opened at: 19/05/2017 21:52:26
---- ProcessStartTurn (World.cs)
-Day 4, Turn 3
---- MoveActors -> 1 Records (World.cs)
- [Move -> MoveObject] Inquisitor Brother Shiva, ActID 135 travelling to The Yellow Huntress (current Loc 17:16)
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Mikken Stark, ID 1 at 14:11, Enemy at 17:16 (Brother Shiva, ID 135
---- CheckIfFoundEnemy (World.cs)
- [Search -> Debug] Active Mikken Stark, ID 1 at 14:11, Enemy at 17:17 (Brother Shiva, ID 135
---- UpdatePlayerStatus (World.cs)
---- UpdateWorldStatus (World.cs)
---- CheckFollowerActivity (World.cs)
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 240, Strength 2, Scope Global, Type Desire, Global All
-arrayOfRumours [1] -> RumourID 325, Strength 2, Scope Global, Type HouseRel, Global North
-arrayOfRumours [5] -> RumourID 219, Strength 2, Scope Local, Type Secret, Global None
-RumourID 240 selected from the Pool
-Rumour "It is known that BannerLord Willas Umber, ActID 100 at Last Hearth, lusts after Gold" revealed to ActorID4 on turn 3 -> added to List
-RumourID 240 removed from listRumoursGlobal[34]
-Follower The Beast, ActID 4, added RumourID 240
-[Notification] None  "" DesireKnown status changed to "True"
---- GetRumour (Director.cs)
-[Notification] No house rumours available -> none added to pool
-arrayOfRumours [0] -> RumourID 105, Strength 4, Scope Global, Type Disguise, Global All
-arrayOfRumours [3] -> RumourID 317, Strength 2, Scope Global, Type HouseRel, Global South
-RumourID 105 selected from the Pool
-Rumour "It is rumoured that Disguises can be had from Septon Robert Bertol, ActID 44 at Brightwater Keep" revealed to ActorID7 on turn 3 -> added to List
-RumourID 105 removed from listRumoursGlobal[14]
-Follower The Duchess, ActID 7, added RumourID 105
---- GetRumour (Director.cs)
-arrayOfRumours [0] -> RumourID 141, Strength 2, Scope Global, Type Desire, Global All
-arrayOfRumours [1] -> RumourID 339, Strength 3, Scope Global, Type Friends, Global North
-arrayOfRumours [5] -> RumourID 218, Strength 4, Scope Local, Type Skill, Global None
-RumourID 218 selected from the Pool
-Rumour "BannerLord Gregor Mullendore "The Oxen", ActID 92 at Uplands, is whispered to be Imposing" revealed to ActorID3 on turn 3 -> added to List
-RumourID 218 removed from listRumoursHouse[1]
-Follower The Spider, ActID 3, added RumourID 218
-BannerLord Gregor Mullendore, ActID 92, skill Charm set to True
-[Notification] Player in SafeHouse -> World events cancelled
---- CheckStationaryActiveActors (World.cs)
- [Search -> Stationary] Usurper Mikken Stark, ActID 1 is AtLocation
---- CheckIfFoundActive (World.cs)
- [Search -> Debug] Enemy, Brother Nergal, ID 133 at 17:14, Active Mikken Stark, ID 1, at 14:11
- [Search -> Debug] Enemy, Brother Beelzebub, ID 134 at 17:14, Active Mikken Stark, ID 1, at 14:11
- [Search -> Debug] Enemy, Brother Shiva, ID 135 at 16:17, Active Mikken Stark, ID 1, at 14:11
- [Search -> Debug] Enemy, Brother Amon, ID 136 at 17:14, Active Mikken Stark, ID 1, at 14:11
- [Search -> Debug] Enemy, The Unrelenting, ID 137 at 17:14, Active Mikken Stark, ID 1, at 14:11
- [Search -> Stationary] Follower The Beast, ActID 4 is AtLocation
- [Search -> Stationary] Follower The Duchess, ActID 7 is AtLocation
- [Search -> Stationary] Follower The Spider, ActID 3 is AtLocation
---- UpdateAIController (World.cs)
- [AI -> Player Unknown] Inquisitor Brother Nergal, Act ID 133 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Beelzebub, Act ID 134 Mode -> Normal
- [AI -> Player Unknown] Inquisitor Brother Amon, Act ID 136 Mode -> Normal
- [AI -> Player Unknown] Nemesis The Unrelenting, Act ID 137 Mode -> Normal
---- SetEnemyActivity (World.cs)
- [Enemy -> Goal] Brother Nergal, ActID 133 retains Goal -> Hide
- [Enemy -> Goal] Brother Beelzebub, ActID 134 retains Goal -> Hide
---- SetEnemyGoal (World.cs)
- [Goal -> Branch] Brother Amon, ActID 136 Assigned Branch -> 4 Current Branch -> 0
- [Goal -> New] Brother Amon, ActID 136, (loc 17:14), assigned new Goal -> Move
- [Goal -> Move] Brother Amon, ActID 136 -> Capital to Correct Branch -> The Singing Ghost, LocID 26
---- InitiateMoveActor (World.cs)
---- Move Actor (Director.cs)
- [Enemy -> Goal] The Unrelenting, ActID 137 retains Goal -> Wait
---- CheckPlayerEvents (Director.cs)
-- CreateAutoLocEvent (Director.cs)
-[Notification] No entry found in dictOfIntroductions for RefID 1002
- Chance of Player Location event 75 %
---- ResolvePlayerEvents (Director.cs)
- Event "What to do?" Timer Repeat now 999
- Event "What to do?" Cooldown Timer has been reset to 0
---- UpdateActiveActors (World.cs)
- Usurper Mikken Stark has had their TurnsUnknown Timer increased from 102 to 103
- Follower The Beast has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Duchess has had their TurnsUnknown Timer increased from 2 to 3
- Follower The Spider has had their TurnsUnknown Timer increased from 2 to 3
---- ResolveOutcome (Director.cs)
---- SetEndGame (Game.cs)
-[Alert] Player chose to exit (pressed 'X')
-//Exile Game file ops "LogTurn.txt" Completed at: 19/05/2017 21:53:36
-Rumours (Director.cs)
-[GameStat] "Location_Days" -> increased from 2 to 3
-//Exile Game File "LogTurn.txt" Close completed at: 19/05/2017 21:52:26
-Event "Search and Detain" Dormant Timer decremented to 19
+//Exile Game file ops "LogTurn.txt" commenced at: 19/05/2017 21:59:48
+--- ProcessStartGame (World.cs)
+--- AgePassiveCharacters (History.cs)
+--- ProcessEndTurn (World.cs)
+Day 1, Turn 0
+--- CheckEventTimers (Director.cs)
+ Event "Search and Detain" Dormant Timer decremented to 20
 --- InitialiseDynamicRumours (Director.cs)
-[GameStat] "Location_Days" -> increased from 1 to 2
-//Exile Game File "LogTurn.txt" Close completed at: 19/05/2017 21:51:12
+ERROR_270 "[Alert] RumourID 332 has an invalid Global Type "None" -> Added to Global list"
+Method: AddGlobalRumour,  Line: 4531,  Object: Director.cs,  Turn: 0,  Local Time: 21:59:55 UTC +10:00
+ERROR_270 "[Alert] RumourID 333 has an invalid Global Type "None" -> Added to Global list"
+Method: AddGlobalRumour,  Line: 4531,  Object: Director.cs,  Turn: 0,  Local Time: 21:59:55 UTC +10:00
+--- HouseKeepActors (World.cs)
+[GameStat] "Location_Days" -> increased from 0 to 1
+//Exile Game File "LogTurn.txt" Close completed at: 19/05/2017 21:59:55

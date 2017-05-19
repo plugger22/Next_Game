@@ -4993,7 +4993,7 @@ namespace Next_Game
                                 {
 
 
-                                    if (branch > 0 && branch < 5)
+                                    if (branch >= 0 && branch < 5)
                                     {
                                         strength = 3;
                                         RumourEnemy rumour = new RumourEnemy(rumourText, strength, RumourScope.Global, timerExpire, 0, (RumourGlobal)branch);
@@ -5002,7 +5002,7 @@ namespace Next_Game
                                         { Game.SetError(new Error(277, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Enemy) -> Enemy Rumour Cancelled")); }
                                         Game.logStart?.Write($"[Enemy] {rumourText} -> dict");
                                     }
-                                    else { Game.SetError(new Error(277, $"Invalid houseFrom.Branch \"{branch}\" -> Enemy rumour cancelled")); }
+                                    else { Game.SetError(new Error(277, $"Invalid branch \"{branch}\" -> Enemy rumour cancelled")); }
                                 }
                             }
                             else { Game.SetError(new Error(277, $"Invalid Location (null) for {enemy.Value.Title} {enemy.Value.Name}, ActID {enemy.Value.ActID}, LocID {enemy.Value.LocID} -> Cancelled")); }
