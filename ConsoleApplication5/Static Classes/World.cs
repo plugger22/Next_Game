@@ -2142,6 +2142,10 @@ namespace Next_Game
             return person;
         }
 
+
+        internal Dictionary<int, Enemy> GetEnemyActors()
+        { return dictEnemyActors; }
+
         /// <summary>
         /// returns any actor -> Passive or Active
         /// </summary>
@@ -4361,6 +4365,7 @@ namespace Next_Game
             Game.map.UpdateMap();
             Game.director.HousekeepEvents();
             Game.director.CheckEventTimers();
+            Game.director.InitialiseDynamicRumours();
             HousekeepActors();
             Game.gameTurn++;
         }

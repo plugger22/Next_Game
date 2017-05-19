@@ -214,7 +214,7 @@ namespace Next_Game
             Game.logStart?.Write("--- Initialise Challenges (Director.cs)"); //run AFTER GetResults
             dictChallenges = Game.file.GetChallenges("Challenge.txt");
             Game.logStart?.Write("--- InitialiseGameStates (Director.cs)");
-            InitialiseRumours();
+            InitialiseStartRumours();
             InitialiseGameStates();
         }
 
@@ -4536,9 +4536,9 @@ namespace Next_Game
 
 
         /// <summary>
-        /// create rumours at game start
+        /// create rumours at game start -> adds to dict and places rumourID in relevant pool
         /// </summary>
-        private void InitialiseRumours()
+        private void InitialiseStartRumours()
         {
             Dictionary<int, Passive> dictPassiveActors = Game.world.GetAllPassiveActors();
             Dictionary<int, MajorHouse> dictMajorHouses = Game.world.GetMajorHouses();
@@ -4942,6 +4942,43 @@ namespace Next_Game
                 }
             }
             else { Game.SetError(new Error(268, "Invalid dictOfPassiveActors (null)")); }
+        }
+
+        /// <summary>
+        /// Creates Rumours during Game -> adds to dict and places rumourID in relevant pool
+        /// </summary>
+        public void InitialiseDynamicRumours()
+        {
+            int chanceOfRumour, rndNum;
+            //Enemies
+            Dictionary<int, Enemy> dictEnemyActors = Game.world.GetEnemyActors();
+            if (dictEnemyActors != null)
+            {
+                chanceOfRumour = Game.constant.GetValue(Global.ENEMY_RUMOURS);
+                foreach(var enemy in dictEnemyActors)
+                {
+                    //no need to check enemy.Status != Gone as enemies can never die
+                    if( enemy.Value is Inquisitor || enemy.Value is Nemesis)
+                    {
+                        //rumour possible only if enemy not already known
+                        if (enemy.Value.Known == false)
+                        {
+                            rndNum = rnd.Next(100);
+                            switch (enemy.Value.Goal)
+                            {
+                                case ActorAIGoal.Hide:
+                                    //halved chance for an enemy in hiding
+                                    if (rndNum < (chanceOfRumour / 2))
+                                    {
+                                        //create rumour
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            else { Game.SetError(new Error(277, "Invalid dictEnemyActors (null)")); }
         }
 
         /// <summary>

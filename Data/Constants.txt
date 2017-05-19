@@ -192,5 +192,7 @@
 
 # PLAYER_RUMOURS -> number of rumours the player gets when 'asking around for information' at a location
 72: 2 @ 1 @ 3
+# ENEMY_RUMOURS -> base % chance of rumour being generated for unknown enemy (chance halved for enemies in hiding)
+73: 50 @ 10 @ 90
 
-# Next valid number -> 73
+# Next valid number -> 74
