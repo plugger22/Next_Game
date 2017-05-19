@@ -8,7 +8,7 @@ namespace Next_Game
 {
     public enum RumourScope { None, Local, Global }
     public enum RumourType { None, Terrain, Road, Skill, Secret, Item, Disguise, HouseRel, Friends, Desire, Enemy } //Corresponds to Rumour subclasses, set in subclass
-    public enum RumourGlobal { None, North, East, South, West, All }
+    public enum RumourGlobal { All, North, East, South, West }
     public enum RumourStatus { Normal, Timed, Inactive} //Normal -> dictRumoursNormal, Timed (TimerExpire > 0) -> dictRumoursTimed, Inactive (TimerStart > 0) -> dictRumoursInactive
 
     /// <summary>
@@ -44,7 +44,7 @@ namespace Next_Game
         /// <param name="scope"></param>
         /// <param name="turnCreated">If '0' then equals current game turn</param>
         /// <param name="global"></param>
-        public Rumour(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true)
+        public Rumour(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true)
         {
             RumourID = rumourIndex++;
             Text = text;
@@ -61,7 +61,7 @@ namespace Next_Game
                 else { TurnCreated = turnCreated; }
             }
             //Status -> default 
-            Status = RumourStatus.Timed;
+            Status = RumourStatus.Normal;
         }
     }
 
@@ -84,7 +84,7 @@ namespace Next_Game
         /// <param name="turnCreated">If '0' then defaults to current game turn</param>
         /// <param name="global"></param>
         /// <param name="isActive"></param>
-        public RumourSkill(string text, int strength, int actorID, SkillType skill, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        public RumourSkill(string text, int strength, int actorID, SkillType skill, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             ActorID = actorID;
             Skill = skill;
@@ -109,7 +109,7 @@ namespace Next_Game
         /// <param name="turnCreated">If '0' then defaults to current game turn</param>
         /// <param name="global"></param>
         /// <param name="isActive"></param>
-        public RumourSecret(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        public RumourSecret(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             Type = RumourType.Secret;
         }
@@ -132,7 +132,7 @@ namespace Next_Game
         /// <param name="turnCreated">If '0' then defaults to current game turn</param>
         /// <param name="global"></param>
         /// <param name="isActive"></param>
-        public RumourItem(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        public RumourItem(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             Type = RumourType.Item;
         }
@@ -154,7 +154,7 @@ namespace Next_Game
         /// <param name="turnCreated">If '0' then defaults to current game turn</param>
         /// <param name="global"></param>
         /// <param name="isActive"></param>
-        public RumourDisguise(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        public RumourDisguise(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             Type = RumourType.Disguise;
         }
@@ -179,7 +179,7 @@ namespace Next_Game
         /// <param name="turnCreated">If '0' then defaults to current game turn</param>
         /// <param name="global"></param>
         /// <param name="isActive"></param>
-        public RumourHouseRel(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        public RumourHouseRel(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             Type = RumourType.HouseRel;
         }
@@ -201,7 +201,7 @@ namespace Next_Game
         /// <param name="turnCreated">If '0' then defaults to current game turn</param>
         /// <param name="global"></param>
         /// <param name="isActive"></param>
-        public RumourFriends(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        public RumourFriends(string text, int strength, RumourScope scope, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             Type = RumourType.Friends;
         }
@@ -225,7 +225,7 @@ namespace Next_Game
         /// <param name="turnCreated">If '0' then defaults to current game turn</param>
         /// <param name="global"></param>
         /// <param name="isActive"></param>
-        public RumourDesire(string text, int strength, RumourScope scope, int data, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        public RumourDesire(string text, int strength, RumourScope scope, int data, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             Data = data;
             Type = RumourType.Desire;
@@ -249,7 +249,7 @@ namespace Next_Game
         /// <param name="turnCreated">If '0' then defaults to current game turn</param>
         /// <param name="global"></param>
         /// <param name="isActive"></param>
-        public RumourEnemy(string text, int strength, RumourScope scope, int timerExpire, int turnCreated = 0, RumourGlobal global = RumourGlobal.None, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
+        public RumourEnemy(string text, int strength, RumourScope scope, int timerExpire, int turnCreated = 0, RumourGlobal global = RumourGlobal.All, bool isActive = true) : base(text, strength, scope, turnCreated, global, isActive)
         {
             if (timerExpire <= 0)
             { Game.SetError(new Error(278, $"Invalid timerExpire \"{timerExpire}\" -> changed to default value of 3")); timerExpire = 3; }

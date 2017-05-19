@@ -4785,12 +4785,12 @@ namespace Next_Game
                                             {
                                                 //create rumour
                                                 if (actor.RefID != 9999) { branch = house.Branch; }
-                                                else { branch = 5; } //Royal Court
-                                                if (branch > 0 && branch < 6)
+                                                else { branch = 0; } //Royal Court
+                                                if (branch >= 0 && branch < 5)
                                                 {
                                                     strength = 2;
                                                     rumourText = $"{startText} that {desireText}";
-                                                    RumourDesire rumour = new RumourDesire(rumourText, strength, RumourScope.Global, data, rnd.Next(100) * -1, RumourGlobal.All) { RefID = actor.RefID };
+                                                    RumourDesire rumour = new RumourDesire(rumourText, strength, RumourScope.Global, data, rnd.Next(100) * -1, (RumourGlobal)branch) { RefID = actor.RefID };
                                                     //add to dictionary and global list
                                                     if (AddGlobalRumour(rumour) == false)
                                                     { Game.SetError(new Error(268, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Desire) -> Rumour Cancelled")); }
@@ -4856,7 +4856,7 @@ namespace Next_Game
                         if (numFriends > 0 || numEnemies > 0)
                         {
                             branch = house.Value.Branch;
-                            if (branch > 0 && branch < 5)
+                            if (branch >= 0 && branch < 5)
                             {
                                 strength = 3;
                                 index = numFriends;
@@ -4920,7 +4920,7 @@ namespace Next_Game
                                         if (rumourText.Length > 0)
                                         {
                                             branch = houseFrom.Branch;
-                                            if (branch > 0 && branch < 5)
+                                            if (branch >= 0 && branch < 5)
                                             {
                                                 strength = 2;
                                                 RumourHouseRel rumour = new RumourHouseRel(rumourText, strength, RumourScope.Global, rnd.Next(100) * -1, (RumourGlobal)branch)
@@ -5000,7 +5000,7 @@ namespace Next_Game
                                         //add to appropriate dictionary and appropriate global list
                                         if (AddGlobalRumour(rumour) == false)
                                         { Game.SetError(new Error(277, $"{rumour.Text}, RumourID {rumour.RumourID}, failed to load (Enemy) -> Enemy Rumour Cancelled")); }
-                                        Game.logStart?.Write($"[Enemy] {rumourText} -> dict");
+                                        Game.logTurn?.Write($"[Enemy] {rumourText} -> dict");
                                     }
                                     else { Game.SetError(new Error(277, $"Invalid branch \"{branch}\" -> Enemy rumour cancelled")); }
                                 }
@@ -5073,7 +5073,7 @@ namespace Next_Game
                 arrayOfRumours[0] = tempRumourID;
             }
             else { Game.logTurn?.Write("[Notification] No Global rumours available -> none added to pool"); }
-            //get branch all rumour
+            //get appropriate branch rumours
             if (branch > 0)
             {
                 switch (branch)

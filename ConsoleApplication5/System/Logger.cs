@@ -122,7 +122,7 @@ namespace Next_Game
         {
             if (File.Exists(path) == true && fileStream != null)
             {
-                Write(string.Format("//Exile Game File \"{0}\" Close completed at: {1}", fileName, DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
+                Write(string.Format(Environment.NewLine + "//Exile Game File \"{0}\" Close completed at: {1}", fileName, DateTime.Now.ToString(culture)), true, ConsoleColor.Red);
                 if (useTimer == true)
                 {
                     timer.Stop();

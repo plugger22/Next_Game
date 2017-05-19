@@ -4018,11 +4018,11 @@ namespace Next_Game
                 listData.Add(new Snippet(string.Format("{0} day{1} old", age, age != 1 ? "s" : "")));
                 listData.Add(new Snippet($"\"{rumour.Text}\""));
                 Active active = GetActiveActor(rumour.WhoHeard);
-                if (active != null)
+                if (active != null && rumour.RefID > 0)
                 {
                     age = Game.gameTurn - rumour.TurnRevealed;
-                    string description = string.Format("First heard by {0} {1}, ActID {2}, {3} day{4} ago at {5}", active.Title,
-                        active.Name, active.ActID, age, age != 0 ? "s" : "", GetLocationName(ConvertRefToLoc(rumour.RefID)));
+                    string description = string.Format("First heard by {0}, ActID {1}, {2} day{3} ago at {4}", active.Name, active.ActID, age, age != 0 ? "s" : "", 
+                        GetLocationName(ConvertRefToLoc(rumour.RefID)));
                     listData.Add(new Snippet(description));
                 }
                 
@@ -4036,6 +4036,9 @@ namespace Next_Game
                     case RumourType.Secret:
                     case RumourType.Terrain:
                     case RumourType.Disguise:
+                    case RumourType.Desire:
+                    case RumourType.Friends:
+                    case RumourType.Enemy:
                         break;
                     default:
                         Game.SetError(new Error(275, $"Invalid Rumour.Type \"{rumour.Type}\""));
