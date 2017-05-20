@@ -34,3 +34,12 @@ Seed 50621 -> Saturday, 20 May 2017 9:09 AM
 Seed 9903 -> Saturday, 20 May 2017 9:29 AM
 Seed 35733 -> Saturday, 20 May 2017 3:02 PM
 Seed 12328 -> Saturday, 20 May 2017 3:35 PM
+Seed 7534 -> Saturday, 20 May 2017 3:56 PM
+Seed 59661 -> Saturday, 20 May 2017 4:27 PM
+Seed 49033 -> Saturday, 20 May 2017 4:34 PM
+Seed 13572 -> Saturday, 20 May 2017 4:48 PM
+Seed 54615 -> Saturday, 20 May 2017 5:08 PM
+Seed 44800 -> Saturday, 20 May 2017 5:12 PM
+Seed 45383 -> Saturday, 20 May 2017 5:18 PM
+Seed 37108 -> Saturday, 20 May 2017 5:27 PM
+Seed 50696 -> Saturday, 20 May 2017 5:30 PM

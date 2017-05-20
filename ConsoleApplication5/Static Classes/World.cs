@@ -3299,8 +3299,8 @@ namespace Next_Game
             int numBannerLords = dictAllHouses.Count - numGreatHouses - 1 - numSpecialLocs;
             int numActors = dictAllActors.Count;
             int numChildren = numActors - (numGreatHouses * 2) - numBannerLords;
-            //int numSecrets = dictSecrets.Count;
             int numSecrets = GetPossessionsCount(PossessionType.Secret);
+            int numRumours = dictRumoursNormal.Count;
             //checksum
             if (numLocs != numGreatHouses + numSpecialLocs + numBannerLords + 1)
             { Game.SetError(new Error(25, "Locations don't tally")); }
@@ -3313,7 +3313,8 @@ namespace Next_Game
             listStats.Add(new Snippet(string.Format("{0} Special Locations", numSpecialLocs)));
             listStats.Add(new Snippet("1 Capital"));
             listStats.Add(new Snippet(string.Format("{0} Actors ({1} Children)", numActors, numChildren)));
-            if (numSecrets > 0) { listStats.Add(new Snippet(string.Format("{0} Secrets", numSecrets))); }
+            listStats.Add(new Snippet(string.Format("{0} Secrets", numSecrets))); 
+            listStats.Add(new Snippet(string.Format("{0} Rumours", numRumours)));
             if (numErrors > 0) { listStats.Add(new Snippet(string.Format("{0} Errors", numErrors), RLColor.LightRed, RLColor.Black)); }
             //list of all Greathouses by power
             listStats.Add(new Snippet("Great Houses", RLColor.Yellow, RLColor.Black));
@@ -3670,6 +3671,14 @@ namespace Next_Game
             else { Game.SetError(new Error(274, $"Invalid rumourID \"{rumourID}\" -> Not found in dictRumoursKnown")); }
             return null;
         }
+
+        /// <summary>
+        /// returns True if rumour present in dict of Known Rumours
+        /// </summary>
+        /// <param name="rumourID"></param>
+        /// <returns></returns>
+        internal bool CheckRumourKnown(int rumourID)
+        { return dictRumoursKnown.ContainsKey(rumourID);  }
 
 
         /// <summary>
@@ -4490,9 +4499,9 @@ namespace Next_Game
                 if (rumourRemoved == true)
                 {
                     //loop dict backwards and remove any rumours with TimerExpire <= 0
-                    for (int i = dictRumoursTimed.Count; i >= 0; i--)
+                    for (int i = dictRumoursTimed.Count - 1 ; i >= 0; i--)
                     {
-                        Rumour rumour = dictRumoursTimed[i];
+                        Rumour rumour = dictRumoursTimed.ElementAt(i).Value;
                         if (rumour.TimerExpire <= 0)
                         {
                             if (dictRumoursTimed.Remove(rumour.RumourID) == true)
