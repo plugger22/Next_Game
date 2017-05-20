@@ -5350,6 +5350,101 @@ namespace Next_Game
             return false;
         }
 
+        /// <summary>
+        /// Gives the word from the street (tied into gamestates) -> rotates through options using GameVar.Street_View
+        /// </summary>
+        /// <returns></returns>
+        public string GetStreetView()
+        {
+            string streetView = "";
+            int streetIndex = Game.variable.GetValue(GameVar.Street_View);
+            string[] arrayOfOccupationsMale = new string[] { "Noble", "Merchant", "Church", "Craftsman", "Craftsman", "Craftsman", "Peasant", "Peasant", "Peasant", "Peasant" };
+            string name, group;
+            string occupation = "Unknown";
+            string view = "";
+            int data;
+            int age = rnd.Next(15, 50);
+            if (rnd.Next(100) <= 50)
+            {
+                //male
+                group = arrayOfOccupationsMale[rnd.Next(arrayOfOccupationsMale.Length)];
+                name = Game.history.GetFirstName(ActorSex.Male);
+            }
+            else
+            {
+                //female
+                group = "peasant";
+                name = Game.history.GetFirstName(ActorSex.Female);
+            }
+            switch (group)
+            {
+                case "Craftsman":
+                    string[] arrayOfCraftsman = new string[] {"Armourer", "Artist", "Baker", "Bookbinder", "Candlemaker", "Blacksmith", "Carpenter", "Dyer", "Forester",
+                    "Engraver", "Brewer", "Bricklayer", "Stonemason", "Glassblower", "Jester", "Furrier", "Clothier", "Weaver", "Engineer", "Cartographer", "Potter", "Scribe", "Musician",
+                    "Poet", "Troubadour", "Tumbler", "Illuminator", "Fiddler", "Barker", "Bard", "Saddler", "Chandler", "Shoemaker", "Tanner", "Locksmith", "Glover", "Butcher", "Scabbard Maker"};
+                    occupation = arrayOfCraftsman[rnd.Next(arrayOfCraftsman.Length)];
+                    break;
+                case "Merchant":
+                    string[] arrayOfMerchants = new string[] { "Innkeeper", "MoneyLender", "Trader", "Brothel Owner", "Glass Seller", "Ironmonger", "Linen Draper", "Peddler", "Mercer",
+                    "Eggler", "Chapman", "Boothman", "Banker", "Apothecary", "Acater", "Oil Merchant", "Oynter", "Skinner", "Spice Merchant", "Spicer", "Stationer", "Thresher", "Taverner",
+                    "Unguentary", "Waferer", "Waterseller", "Woodmonger", "Wool Stapler"};
+                    occupation = arrayOfMerchants[rnd.Next(arrayOfMerchants.Length)];
+                    break;
+                case "Peasant":
+                    string[] arrayOfPeasants = new string[] { "Farmer", "Fowler", "Crofter", "Farmer", "Cook", "Story Teller", "Fortune Teller", "Messenger", "Rat Catcher", "Astrologer",
+                    "Pickpocket", "Boothaler", "Footpad", "Poacher", "Silk Snatcher", "Thimblerigger", "Hermit", "Beggar", "Beggar", "Beggar", "Buffoon", "Dwarf", "Palmer", "Tenter",
+                    "Ferryman", "Sheperd", "Hawker", "Hunter", "Goatherder", "Fewterer", "Falconer", "Sheepshearer", "Reaper", "Trapper", "Molecatcher" };
+                    occupation = arrayOfPeasants[rnd.Next(arrayOfPeasants.Length)];
+                    break;
+                case "Noble":
+                    string[] arrayOfNobles = new string[] { "Bailiff", "Chancellor", "Diplomat", "Constable", "Hayward", "Jailer", "Judge", "Nobleman", "Nobleman", "Nobleman", "Pursuivant", "Sherrif" };
+                    occupation = arrayOfNobles[rnd.Next(arrayOfNobles.Length)];
+                    break;
+                case "Church":
+                    string[] arrayOfChurch = new string[] { "Pilgrim", "Ostiary", "Pardoner", "Sacristan", "Sexton", "Summoner", "Clerk", "Chanty Priest", "Cantor", "Beadle", "Almoner", "Friar", "Monk" };
+                    occupation = arrayOfChurch[rnd.Next(arrayOfChurch.Length)];
+                    break;
+                default:
+                    Game.SetError(new Error(282, $"Invalid Group \"{group}\" -> StreetView cancelled"));
+                    break;
+            }
+            //each turn is a different option to maximise variety
+            switch(streetIndex)
+            {
+                case 1:
+                    //Justice of Cause
+                    data = CheckGameState(GameState.Justice);
+                    break;
+                case 2:
+                    //Relative Legend
+                    if (rnd.Next(100) <= 50)
+                    { data = CheckGameState(GameState.Legend_Usurper); }
+                    else
+                    { data = CheckGameState(GameState.Legend_King); }
+                    view =
+                    break;
+                case 3:
+                    //Relative Honour
+
+                    break;
+                case 4:
+                    //Known / Unknown
+
+                    break;
+                default:
+                    Game.SetError(new Error(282, $"Invalid Street_View \"{streetIndex} -> Street View cancelled"));
+                    break;
+            }
+            //increment index and roll over if need be
+            streetIndex++;
+            if (streetIndex > 4) { streetIndex = 1; }
+            //update GameVar
+            Game.variable.SetValue(GameVar.Street_View, streetIndex);
+            //put string together
+            if (view.Length > 0)
+            { streetView = $"{name}, age {age}, {occupation} \"{view}\""; }
+            return streetView;
+        }
 
         //place new methods above here
     }

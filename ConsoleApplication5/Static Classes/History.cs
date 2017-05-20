@@ -3080,7 +3080,25 @@ namespace Next_Game
         internal List<string> GetShipNamesRisky()
         { return listOfShipNamesRisky; }
 
-
+        /// <summary>
+        /// Gets a random first name, male or female. Returns empty if none.
+        /// </summary>
+        /// <param name="sex"></param>
+        /// <returns></returns>
+        internal string GetFirstName(ActorSex sex)
+        {
+            string firstName = "";
+            switch (sex)
+            {
+                case ActorSex.Male:
+                    firstName = listOfMaleFirstNames[rnd.Next(listOfMaleFirstNames.Count)];
+                    break;
+                case ActorSex.Female:
+                    firstName = listOfFemaleFirstNames[rnd.Next(listOfFemaleFirstNames.Count)];
+                    break;
+            }
+            return firstName;
+        }
 
         //add methods above
     }
